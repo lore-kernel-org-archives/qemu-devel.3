@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1D67C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 09:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BC2C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 09:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trZk2-0002sZ-W9; Mon, 10 Mar 2025 05:48:11 -0400
+	id 1trZq7-0006A4-1S; Mon, 10 Mar 2025 05:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trZjN-0002G5-Jd
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:47:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>)
+ id 1trZq2-00066q-ID; Mon, 10 Mar 2025 05:54:23 -0400
+Received: from 8.mo548.mail-out.ovh.net ([46.105.45.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trZjH-0002Kt-3o
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 05:47:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741600040;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vwid8cmJwzJPJMHnx0+S9nLlm+3HLEBBM0G8MMculGg=;
- b=dybe8Ixuv/UtKtu4JjVpB0RfYVJll6RD3MNx4OyefCtBbYUFaSUEGZut07qL3fyYH6+fGX
- v4gbJntejEcSzwHon4F6VctW+Ih2oqKxiOSh6ne615HxZSKPHFmK2qZElQfbi+lmMRYUR2
- BfuD2QWCkPhdV09EiZ6KJFznbTTQgQM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-MxOP1P-xP7WfZ-MCgby84w-1; Mon,
- 10 Mar 2025 05:47:16 -0400
-X-MC-Unique: MxOP1P-xP7WfZ-MCgby84w-1
-X-Mimecast-MFC-AGG-ID: MxOP1P-xP7WfZ-MCgby84w_1741600035
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6EF8919560BC; Mon, 10 Mar 2025 09:47:14 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB9133000197; Mon, 10 Mar 2025 09:47:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8C6CA21E66C4; Mon, 10 Mar 2025 10:47:11 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell
- <peter.maydell@linaro.org>,  Harmonie Snow <harmonie@gmail.com>
-Subject: Re: [PATCH v2 28/62] docs/qapi-domain: add CSS styling
-In-Reply-To: <20250309083550.5155-29-jsnow@redhat.com> (John Snow's message of
- "Sun, 9 Mar 2025 04:35:15 -0400")
-References: <20250309083550.5155-1-jsnow@redhat.com>
- <20250309083550.5155-29-jsnow@redhat.com>
-Date: Mon, 10 Mar 2025 10:47:11 +0100
-Message-ID: <871pv5gqu8.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>)
+ id 1trZpy-0003Qn-Ku; Mon, 10 Mar 2025 05:54:22 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.108.9.71])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4ZBC0F6fxhz102p;
+ Mon, 10 Mar 2025 09:54:05 +0000 (UTC)
+Received: from kaod.org (37.59.142.104) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Mon, 10 Mar
+ 2025 10:54:05 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-104R005578d41f6-1129-42f9-806d-ba8e3cd77f24,
+ CAA57E8D90FBE7F25A889509E00BEDBA23686665) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Mon, 10 Mar 2025 10:54:04 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>
+Subject: Re: [PATCH v2 2/2] 9pfs: fix FD leak and reduce latency of
+ v9fs_reclaim_fd()
+Message-ID: <20250310105404.185278bb@bahia>
+In-Reply-To: <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
+References: <cover.1741339452.git.qemu_oss@crudebyte.com>
+ <5747469d3f039c53147e850b456943a1d4b5485c.1741339452.git.qemu_oss@crudebyte.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.104]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 13683970-711e-465c-9592-7f9316441a41
+X-Ovh-Tracer-Id: 13167680886166493661
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudeltdehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddruddtgedpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepfedprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvgesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehgeekmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=6BcoR2zEvHmaHt/NNjb5GjA+cUS7/bkq+5D7/7GewOI=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1741600446; v=1;
+ b=c3dNIgtizN6//JEB961xwECEdsAODeCWeW943smm2KbI6R/Lp0a57MNAwyo17Y8dMXoj8hi4
+ 3sidfQiY5+Dn9v58gO5OppxrnC7B1VhX+pWx+3S38sTmxgB5SC8c59gTf2e8iC+NSuT1m5Xr5Tw
+ 4bjBmXPy0F7sCNu5ZBtM4GZa7PKpSzRpwekFta6+mktYnGXgBaxr0cDq3wut4b3ld/0BcroX8yF
+ epC9/nyB25x1CFrl8+cFPIoJFc0gn5QX+xhxP/5gMkp0GLwUExpjj9cZLBLmzh3+1+l86ygXCt9
+ zAOIwKhd3Ju9B3qSsvp7L7AWaH9OSlhjF/EnZ6MfXaZlA==
+Received-SPF: pass client-ip=46.105.45.231; envelope-from=groug@kaod.org;
+ helo=8.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,57 +84,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On Fri, 7 Mar 2025 10:23:02 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-> Improve the general look and feel of generated QAPI docs.
->
-> Attempt to limit line lengths to offer a more comfortable measure on
-> maximized windows, and improve some margin and spacing for field lists.
->
-> Signed-off-by: Harmonie Snow <harmonie@gmail.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> This patch fixes two different bugs in v9fs_reclaim_fd():
+> 
+> 1. Reduce latency:
+> 
+> This function calls v9fs_co_close() and v9fs_co_closedir() in a loop. Each
+> one of the calls adds two thread hops (between main thread and a fs driver
+> background thread). Each thread hop adds latency, which sums up in
+> function's loop to a significant duration.
+> 
+> Reduce overall latency by open coding what v9fs_co_close() and
+> v9fs_co_closedir() do, executing those and the loop itself altogether in
+> only one background thread block, hence reducing the total amount of
+> thread hops to only two.
+> 
+> 2. Fix file descriptor leak:
+> 
+> The existing code called v9fs_co_close() and v9fs_co_closedir() to close
+> file descriptors. Both functions check right at the beginning if the 9p
+> request was cancelled:
+> 
+>     if (v9fs_request_cancelled(pdu)) {
+>         return -EINTR;
+>     }
+> 
+> So if client sent a 'Tflush' message, v9fs_co_close() / v9fs_co_closedir()
+> returned without having closed the file descriptor and v9fs_reclaim_fd()
+> subsequently freed the FID without its file descriptor being closed, hence
+> leaking those file descriptors.
+> 
+> This 2nd bug is fixed by this patch as well by open coding v9fs_co_close()
+> and v9fs_co_closedir() inside of v9fs_reclaim_fd() and not performing the
+> v9fs_request_cancelled(pdu) check there.
+> 
+> Fixes: 7a46274529c ('hw/9pfs: Add file descriptor reclaim support')
+> Fixes: bccacf6c792 ('hw/9pfs: Implement TFLUSH operation')
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > ---
->  docs/sphinx-static/theme_overrides.css | 56 +++++++++++++++++++++++++-
->  1 file changed, 54 insertions(+), 2 deletions(-)
->
-> diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
-> index 3fd326613d9..92f395054a8 100644
-> --- a/docs/sphinx-static/theme_overrides.css
-> +++ b/docs/sphinx-static/theme_overrides.css
-> @@ -18,8 +18,8 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
->  
->  .rst-content dl:not(.docutils) dt {
->      border-top: none;
-> -    border-left: solid 3px #ccc;
-> -    background-color: #f0f0f0;
-> +    border-left: solid 5px #bcc6d2;
-> +    background-color: #eaedf1;
->      color: black;
->  }
->  
-> @@ -211,6 +211,18 @@ div[class^="highlight"] pre {
->  
->  /* QAPI domain theming */
->  
-> +/* most content in a qapi object definition should not eclipse about
 
-QAPI unless there's a reason for lower case.
+Reviewed-by: Greg Kurz <groug@kaod.org>
 
-> +   80ch, but nested field lists are explicitly exempt due to their
-> +   two-column nature */
-> +.qapi dd *:not(dl) {
-> +    max-width: 80ch;
-> +}
-> +
-> +/* but the content column itself should still be less than ~80ch. */
-> +.qapi .field-list dd {
-> +    max-width: 80ch;
-> +}
-> +
->  .qapi-infopips {
->      margin-bottom: 1em;
->  }
+>  hw/9pfs/9p.c | 29 ++++++++++++++++++++---------
+>  1 file changed, 20 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index 4f9c2dde9c..80b190ff5b 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -434,6 +434,8 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>      V9fsFidState *f;
+>      GHashTableIter iter;
+>      gpointer fid;
+> +    int err;
+> +    int nclosed = 0;
+>  
+>      /* prevent multiple coroutines running this function simultaniously */
+>      if (s->reclaiming) {
+> @@ -446,10 +448,10 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>      QSLIST_HEAD(, V9fsFidState) reclaim_list =
+>          QSLIST_HEAD_INITIALIZER(reclaim_list);
+>  
+> +    /* Pick FIDs to be closed, collect them on reclaim_list. */
+>      while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &f)) {
+>          /*
+> -         * Unlink fids cannot be reclaimed. Check
+> -         * for them and skip them. Also skip fids
+> +         * Unlinked fids cannot be reclaimed, skip those, and also skip fids
+>           * currently being operated on.
+>           */
+>          if (f->ref || f->flags & FID_NON_RECLAIMABLE) {
+> @@ -499,17 +501,26 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>          }
+>      }
+>      /*
+> -     * Now close the fid in reclaim list. Free them if they
+> -     * are already clunked.
+> +     * Close the picked FIDs altogether on a background I/O driver thread. Do
+> +     * this all at once to keep latency (i.e. amount of thread hops between main
+> +     * thread <-> fs driver background thread) as low as possible.
+>       */
+> +    v9fs_co_run_in_worker({
+> +        QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
+> +            err = (f->fid_type == P9_FID_DIR) ?
+> +                s->ops->closedir(&s->ctx, &f->fs_reclaim) :
+> +                s->ops->close(&s->ctx, &f->fs_reclaim);
+> +            if (!err) {
+> +                /* total_open_fd must only be mutated on main thread */
+> +                nclosed++;
+> +            }
+> +        }
+> +    });
+> +    total_open_fd -= nclosed;
+> +    /* Free the closed FIDs. */
+>      while (!QSLIST_EMPTY(&reclaim_list)) {
+>          f = QSLIST_FIRST(&reclaim_list);
+>          QSLIST_REMOVE(&reclaim_list, f, V9fsFidState, reclaim_next);
+> -        if (f->fid_type == P9_FID_FILE) {
+> -            v9fs_co_close(pdu, &f->fs_reclaim);
+> -        } else if (f->fid_type == P9_FID_DIR) {
+> -            v9fs_co_closedir(pdu, &f->fs_reclaim);
+> -        }
+>          /*
+>           * Now drop the fid reference, free it
+>           * if clunked.
 
-[...]
 
+
+-- 
+Greg
 
