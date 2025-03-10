@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F229CC2BA1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44AC6C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trYNS-0006ZS-Il; Mon, 10 Mar 2025 04:20:46 -0400
+	id 1trYN8-0006S1-1k; Mon, 10 Mar 2025 04:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1trYNO-0006XU-W2
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:43 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1trYNM-0004U2-6r
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:20:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741594840; x=1773130840;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=mUz3KRZzpMdb9UUDv1l5scZ1u6EFNRr/6avaaV0mfRQ=;
- b=PDmmafLzps/7y+fAeTR0RzTsuTLWzsIXoMmWT2uUpDQOIr7CflSjgTgs
- OMc6RDeJNyP3Fzo98oQQPPtHRDhGUObqMCz1lATDBgdn8/5MnCD02Ko0Q
- mgLOwny5wbAYkZqpL1O0vWlcYTKLbKHHvxk54235Q0yGLl7DSjJSWq58y
- kXD4OePdI0fMtkBI2lpYsBKzPgZEuGqVsCZN2iC7kIJ9k8OlEE/yhVSTA
- KVkF3eMpnU2Sp599lz92MuWF6uaFhvMj4YUK1MlAe9hBneJkMAia/pV9u
- wfSvQH2WLpq+9dzV3teV5zTkPBeUWM5U4scHYw1R/yl4U51xMlht5RQ1S g==;
-X-CSE-ConnectionGUID: 2NskhrB/Q7y2E1HWXY7SsA==
-X-CSE-MsgGUID: E/jGX4xUSKKw/g91Cv3ZYA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="42688519"
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="42688519"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2025 01:20:38 -0700
-X-CSE-ConnectionGUID: oa6bsM18TPihU1XUuN3n/A==
-X-CSE-MsgGUID: xVbdbMIeR62RqMthfT4pbw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="150862852"
-Received: from emr-bkc.sh.intel.com ([10.112.230.82])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2025 01:20:33 -0700
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: [PATCH v3 6/7] memory: Attach MemoryAttributeManager to
- guest_memfd-backed RAMBlocks
-Date: Mon, 10 Mar 2025 16:18:34 +0800
-Message-ID: <20250310081837.13123-7-chenyi.qiang@intel.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250310081837.13123-1-chenyi.qiang@intel.com>
-References: <20250310081837.13123-1-chenyi.qiang@intel.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.16;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trYN5-0006RQ-UW; Mon, 10 Mar 2025 04:20:24 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trYMy-0004Ow-Bm; Mon, 10 Mar 2025 04:20:23 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2feb96064e4so7676984a91.1; 
+ Mon, 10 Mar 2025 01:20:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741594813; x=1742199613; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F7+dPjBTRCbhblzblyjO1734E7lUFfjAC/pEeQZUCi8=;
+ b=cAJ2lFzNS7V3Thwlv2YKYayY9lhf83BePSZfV2MoCEsIot4GK+w0HnpQXmGU64LeiZ
+ wsNReOXXVugXzB/RYLxAYxyrRQi9CBbHrBFj/7RKF+A/FBU9Hlm/ckGyxH73dCbIHmG6
+ pgLjjCCEH+HhoNUsrKJQ4K9aOPDjMtL13M9PDOvjJVSoqYcEBfc4eW5a52DSgZrAls++
+ B0YJsCb208GFkLdfsC9E3JEV8z9o8DUTJzyl6Qx+5P9ktWoBTQWafyj7Dl1BWGB3fh/l
+ q2hPhKCqxMYU/fvcJssb0DVzenbtyFp3mAe7IJoi10sEcTm+og1Ju4Qr6GN2Zh4Oscm1
+ hGyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741594813; x=1742199613;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=F7+dPjBTRCbhblzblyjO1734E7lUFfjAC/pEeQZUCi8=;
+ b=LbLxaUldTOjb+A73dLO770FjvsIJl+92YteilZhp7fIJj/iJFUvYTiQZ5JQ+wTBJO3
+ ldRA8Tqnw8fXMUXZR/kZS0n9eFk4vQ/3b14oB2/hfgll9QGwmAZuHucoMjGh3lXqy5pw
+ Ndp9sJrVcxEcPaxsFKYL6jP9gs+KJt9YCrNEtwOgaIfHOZwldUUXgP5YDLw/xQwNrpe3
+ red2eFyxnKlpUE4OIVv4XgAVdVktMp4U+NCmue3sKG+J7vEwgpGk0Vog+rDpr+tNP/j2
+ q2ds5WPixO+e//ptM/i5sJrC3VCYnxWNLX6/ZFVi1qQvBhYDMkyoreS27M/My/omWjZc
+ taHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVp35H1oKAIPyOBoyZXGq0q1QzFl8kjW9un0VzbR/QpxPN5LRpG1TiC0uU2vI5fdUwFc27da6VJc9RX@nongnu.org
+X-Gm-Message-State: AOJu0YyPaWg32o9qCrN1ayuMDXVTKmABFaPWvmvn1aKpsPHsXu5sjcB1
+ siFNStC+nln8vkJr6Dh2x9+o1Q4udQ0ui+GqmOn+seeG1M8b7n9F
+X-Gm-Gg: ASbGncvy7aTt+L3h9yjjntJMKx7ep62zgkYseVyPSyhsQTzu0dIT3Mf1y7EZa0Q4FU3
+ nZnPXN981z8hYqqSGGxCtQwQ368ee9jAfsdJCTBcqnR3VNkZuS1FBB1k/HzZEpiVuqJmEV6V0Pd
+ gTuWZ9JUe4Uzulua456oWbAMdgxc0QaWCRK9j65Df5IX0EVZcVRo+WhKnKWpqo1TaSPnG8qG9ev
+ Z7KxV8yPXQi6dVOUobPXfuL+YRBsH0uPBLd4Dblwkep06T/JKlq941XMyRNODycxkRHNIsfAcF7
+ rU8DyKQbijmChxWDXR4dv7MLqHUb0iko+qjXOza0
+X-Google-Smtp-Source: AGHT+IEU5yY5vd8BU5gJRxKM/L0k5QDyQyR+QpaYZUJItt58JNvfgK6Zma77e1lR+xluvchpNHMApw==
+X-Received: by 2002:a17:90b:1d52:b0:2ff:6f88:b04a with SMTP id
+ 98e67ed59e1d1-2ff7ce8222emr21587947a91.15.1741594813353; 
+ Mon, 10 Mar 2025 01:20:13 -0700 (PDT)
+Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e75edb2sm10379271a91.4.2025.03.10.01.20.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 01:20:12 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 10 Mar 2025 18:20:06 +1000
+Message-Id: <D8CFU0Q5U2XG.39DSTTJRN6GBU@gmail.com>
+Subject: Re: [PATCH v2 14/14] qtest/xive: Add test of pool interrupts
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
+Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <milesg@linux.ibm.com>,
+ <danielhb413@gmail.com>, <david@gibson.dropbear.id.au>,
+ <harshpb@linux.ibm.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>
+X-Mailer: aerc 0.19.0
+References: <20241210000527.9541-1-kowal@linux.ibm.com>
+ <20241210000527.9541-25-kowal@linux.ibm.com>
+In-Reply-To: <20241210000527.9541-25-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,190 +102,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a new field, memory_attribute_manager, in RAMBlock to link to
-an MemoryAttributeManager object. This change centralizes all
-guest_memfd state information (like fd and shared_bitmap) within a
-RAMBlock, making it easier to manage.
+On Tue Dec 10, 2024 at 10:05 AM AEST, Michael Kowal wrote:
+> From: Glenn Miles <milesg@linux.ibm.com>
+>
+> Added new test for pool interrupts.  Removed all printfs from pnv-xive2-*=
+ qtests.
+>
+> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 
-Use the realize()/unrealize() helpers to initialize/uninitialize the
-MemoryAttributeManager object. Register/unregister the object in the
-target RAMBlock's MemoryRegion when creating guest_memfd.
+This looks good. I split the remove-printfs into its own patch.
 
-In the kvm_convert_memory() function, manage memory state changes by
-using the shared_bitmap to call set_attribute() only on the specific
-memory range. Additionally, use the
-memory_attribute_manager_state_change() helper to notify the reigstered
-RamDiscardListener of these changes.
+I would like to see the irq test code merged into one that can
+just select CAM rings by argument because it's mostly duplicated.
+Should then be able to add an OS ring test with the same code too.
+But okay for now.
 
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
----
-Changes in v3:
-    - Use ram_discard_manager_reply_populated/discarded() to set the
-      memory attribute and add the undo support if state_change()
-      failed.
-    - Didn't add Reviewed-by from Alexey due to the new changes in this
-      commit.
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-Changes in v2:
-    - Introduce a new field memory_attribute_manager in RAMBlock.
-    - Move the state_change() handling during page conversion in this patch.
-    - Undo what we did if it fails to set.
-    - Change the order of close(guest_memfd) and memory_attribute_manager cleanup.
----
- accel/kvm/kvm-all.c     | 50 +++++++++++++++++++++++++++++++++++++++--
- include/exec/ramblock.h |  2 ++
- system/physmem.c        | 13 +++++++++++
- 3 files changed, 63 insertions(+), 2 deletions(-)
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index c1fea69d58..a89c5655e8 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -48,6 +48,7 @@
- #include "kvm-cpus.h"
- #include "system/dirtylimit.h"
- #include "qemu/range.h"
-+#include "system/memory-attribute-manager.h"
- 
- #include "hw/boards.h"
- #include "system/stats.h"
-@@ -3018,6 +3019,25 @@ static void kvm_eat_signals(CPUState *cpu)
-     } while (sigismember(&chkset, SIG_IPI));
- }
- 
-+typedef struct SetMemoryAttribute {
-+    bool to_private;
-+} SetMemoryAttribute;
-+
-+static int kvm_set_memory_attributes_cb(MemoryRegionSection *section,
-+                                        void *opaque)
-+{
-+    hwaddr start = section->offset_within_address_space;
-+    hwaddr size = section->size;
-+    SetMemoryAttribute *args = opaque;
-+    bool to_private = args->to_private;
-+
-+    if (to_private) {
-+        return kvm_set_memory_attributes_private(start, size);
-+    } else {
-+        return kvm_set_memory_attributes_shared(start, size);
-+    }
-+}
-+
- int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
- {
-     MemoryRegionSection section;
-@@ -3026,6 +3046,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-     RAMBlock *rb;
-     void *addr;
-     int ret = -EINVAL;
-+    SetMemoryAttribute args = { .to_private = to_private };
- 
-     trace_kvm_convert_memory(start, size, to_private ? "shared_to_private" : "private_to_shared");
- 
-@@ -3077,9 +3098,13 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-     }
- 
-     if (to_private) {
--        ret = kvm_set_memory_attributes_private(start, size);
-+        ret = ram_discard_manager_replay_populated(mr->rdm, &section,
-+                                                   kvm_set_memory_attributes_cb,
-+                                                   &args);
-     } else {
--        ret = kvm_set_memory_attributes_shared(start, size);
-+        ret = ram_discard_manager_replay_discarded(mr->rdm, &section,
-+                                                   kvm_set_memory_attributes_cb,
-+                                                   &args);
-     }
-     if (ret) {
-         goto out_unref;
-@@ -3088,6 +3113,27 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-     addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
-     rb = qemu_ram_block_from_host(addr, false, &offset);
- 
-+    ret = memory_attribute_manager_state_change(MEMORY_ATTRIBUTE_MANAGER(mr->rdm),
-+                                                offset, size, to_private);
-+    if (ret) {
-+        warn_report("Failed to notify the listener the state change of "
-+                    "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
-+                    start, size, to_private ? "private" : "shared");
-+        args.to_private = !to_private;
-+        if (to_private) {
-+            ret = ram_discard_manager_replay_populated(mr->rdm, &section,
-+                                                       kvm_set_memory_attributes_cb,
-+                                                       &args);
-+        } else {
-+            ret = ram_discard_manager_replay_discarded(mr->rdm, &section,
-+                                                       kvm_set_memory_attributes_cb,
-+                                                       &args);
-+        }
-+        if (ret) {
-+            goto out_unref;
-+        }
-+    }
-+
-     if (to_private) {
-         if (rb->page_size != qemu_real_host_page_size()) {
-             /*
-diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
-index 0babd105c0..06fd365326 100644
---- a/include/exec/ramblock.h
-+++ b/include/exec/ramblock.h
-@@ -23,6 +23,7 @@
- #include "cpu-common.h"
- #include "qemu/rcu.h"
- #include "exec/ramlist.h"
-+#include "system/memory-attribute-manager.h"
- 
- struct RAMBlock {
-     struct rcu_head rcu;
-@@ -42,6 +43,7 @@ struct RAMBlock {
-     int fd;
-     uint64_t fd_offset;
-     int guest_memfd;
-+    MemoryAttributeManager *memory_attribute_manager;
-     size_t page_size;
-     /* dirty bitmap used during migration */
-     unsigned long *bmap;
-diff --git a/system/physmem.c b/system/physmem.c
-index c76503aea8..0ed394c5d2 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -54,6 +54,7 @@
- #include "system/hostmem.h"
- #include "system/hw_accel.h"
- #include "system/xen-mapcache.h"
-+#include "system/memory-attribute-manager.h"
- #include "trace.h"
- 
- #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-@@ -1885,6 +1886,16 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-         }
-+
-+        new_block->memory_attribute_manager = MEMORY_ATTRIBUTE_MANAGER(object_new(TYPE_MEMORY_ATTRIBUTE_MANAGER));
-+        if (memory_attribute_manager_realize(new_block->memory_attribute_manager, new_block->mr)) {
-+            error_setg(errp, "Failed to realize memory attribute manager");
-+            object_unref(OBJECT(new_block->memory_attribute_manager));
-+            close(new_block->guest_memfd);
-+            ram_block_discard_require(false);
-+            qemu_mutex_unlock_ramlist();
-+            goto out_free;
-+        }
-     }
- 
-     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-@@ -2138,6 +2149,8 @@ static void reclaim_ramblock(RAMBlock *block)
-     }
- 
-     if (block->guest_memfd >= 0) {
-+        memory_attribute_manager_unrealize(block->memory_attribute_manager);
-+        object_unref(OBJECT(block->memory_attribute_manager));
-         close(block->guest_memfd);
-         ram_block_discard_require(false);
-     }
--- 
-2.43.5
+> ---
+>  tests/qtest/pnv-xive2-flush-sync.c |  6 +-
+>  tests/qtest/pnv-xive2-nvpg_bar.c   |  7 +--
+>  tests/qtest/pnv-xive2-test.c       | 98 +++++++++++++++++++++++++++---
+>  3 files changed, 94 insertions(+), 17 deletions(-)
+>
+> diff --git a/tests/qtest/pnv-xive2-flush-sync.c b/tests/qtest/pnv-xive2-f=
+lush-sync.c
+> index 3b32446adb..142826bad0 100644
+> --- a/tests/qtest/pnv-xive2-flush-sync.c
+> +++ b/tests/qtest/pnv-xive2-flush-sync.c
+> @@ -178,14 +178,14 @@ void test_flush_sync_inject(QTestState *qts)
+>      int test_nr;
+>      uint8_t byte;
+> =20
+> -    printf("# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D\n");
+> -    printf("# Starting cache flush/queue sync injection tests...\n");
+> +    g_test_message("=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D");
+> +    g_test_message("Starting cache flush/queue sync injection tests...")=
+;
+> =20
+>      for (test_nr =3D 0; test_nr < sizeof(xive_inject_tests);
+>           test_nr++) {
+>          int op_type =3D xive_inject_tests[test_nr];
+> =20
+> -        printf("# Running test %d\n", test_nr);
+> +        g_test_message("Running test %d", test_nr);
+> =20
+>          /* start with status byte set to 0 */
+>          clr_sync(qts, src_pir, ic_topo_id, op_type);
+> diff --git a/tests/qtest/pnv-xive2-nvpg_bar.c b/tests/qtest/pnv-xive2-nvp=
+g_bar.c
+> index 10d4962d1e..8481a70f22 100644
+> --- a/tests/qtest/pnv-xive2-nvpg_bar.c
+> +++ b/tests/qtest/pnv-xive2-nvpg_bar.c
+> @@ -4,8 +4,7 @@
+>   *
+>   * Copyright (c) 2024, IBM Corporation.
+>   *
+> - * This work is licensed under the terms of the GNU GPL, version 2 or
+> - * later. See the COPYING file in the top-level directory.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+>   */
+>  #include "qemu/osdep.h"
+>  #include "libqtest.h"
+> @@ -78,8 +77,8 @@ void test_nvpg_bar(QTestState *qts)
+>      uint32_t count, delta;
+>      uint8_t i;
+> =20
+> -    printf("# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D\n");
+> -    printf("# Testing NVPG BAR operations\n");
+> +    g_test_message("=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D");
+> +    g_test_message("Testing NVPG BAR operations");
+> =20
+>      set_nvg(qts, group_target, 0);
+>      set_nvp(qts, nvp_target, 0x04);
+> diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
+> index a0e9f19313..5313d4ef18 100644
+> --- a/tests/qtest/pnv-xive2-test.c
+> +++ b/tests/qtest/pnv-xive2-test.c
+> @@ -4,6 +4,7 @@
+>   *  - Test 'Pull Thread Context to Odd Thread Reporting Line'
+>   *  - Test irq to hardware group
+>   *  - Test irq to hardware group going through backlog
+> + *  - Test irq to pool thread
+>   *
+>   * Copyright (c) 2024, IBM Corporation.
+>   *
+> @@ -220,8 +221,8 @@ static void test_hw_irq(QTestState *qts)
+>      uint16_t reg16;
+>      uint8_t pq, nsr, cppr;
+> =20
+> -    printf("# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D\n");
+> -    printf("# Testing irq %d to hardware thread %d\n", irq, target_pir);
+> +    g_test_message("=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D");
+> +    g_test_message("Testing irq %d to hardware thread %d", irq, target_p=
+ir);
+> =20
+>      /* irq config */
+>      set_eas(qts, irq, end_index, irq_data);
+> @@ -266,6 +267,79 @@ static void test_hw_irq(QTestState *qts)
+>      g_assert_cmphex(cppr, =3D=3D, 0xFF);
+>  }
+> =20
+> +static void test_pool_irq(QTestState *qts)
+> +{
+> +    uint32_t irq =3D 2;
+> +    uint32_t irq_data =3D 0x600d0d06;
+> +    uint32_t end_index =3D 5;
+> +    uint32_t target_pir =3D 1;
+> +    uint32_t target_nvp =3D 0x100 + target_pir;
+> +    uint8_t priority =3D 5;
+> +    uint32_t reg32;
+> +    uint16_t reg16;
+> +    uint8_t pq, nsr, cppr, ipb;
+> +
+> +    g_test_message("=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D");
+> +    g_test_message("Testing irq %d to pool thread %d", irq, target_pir);
+> +
+> +    /* irq config */
+> +    set_eas(qts, irq, end_index, irq_data);
+> +    set_end(qts, end_index, target_nvp, priority, false /* group */);
+> +
+> +    /* enable and trigger irq */
+> +    get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
+> +    set_esb(qts, irq, XIVE_TRIGGER_PAGE, 0, 0);
+> +
+> +    /* check irq is raised on cpu */
+> +    pq =3D get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
+> +    g_assert_cmpuint(pq, =3D=3D, XIVE_ESB_PENDING);
+> +
+> +    /* check TIMA values in the PHYS ring (shared by POOL ring) */
+> +    reg32 =3D get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
+> +    nsr =3D reg32 >> 24;
+> +    cppr =3D (reg32 >> 16) & 0xFF;
+> +    g_assert_cmphex(nsr, =3D=3D, 0x40);
+> +    g_assert_cmphex(cppr, =3D=3D, 0xFF);
+> +
+> +    /* check TIMA values in the POOL ring */
+> +    reg32 =3D get_tima32(qts, target_pir, TM_QW2_HV_POOL + TM_WORD0);
+> +    nsr =3D reg32 >> 24;
+> +    cppr =3D (reg32 >> 16) & 0xFF;
+> +    ipb =3D (reg32 >> 8) & 0xFF;
+> +    g_assert_cmphex(nsr, =3D=3D, 0);
+> +    g_assert_cmphex(cppr, =3D=3D, 0);
+> +    g_assert_cmphex(ipb, =3D=3D, 0x80 >> priority);
+> +
+> +    /* ack the irq */
+> +    reg16 =3D get_tima16(qts, target_pir, TM_SPC_ACK_HV_REG);
+> +    nsr =3D reg16 >> 8;
+> +    cppr =3D reg16 & 0xFF;
+> +    g_assert_cmphex(nsr, =3D=3D, 0x40);
+> +    g_assert_cmphex(cppr, =3D=3D, priority);
+> +
+> +    /* check irq data is what was configured */
+> +    reg32 =3D qtest_readl(qts, xive_get_queue_addr(end_index));
+> +    g_assert_cmphex((reg32 & 0x7fffffff), =3D=3D, (irq_data & 0x7fffffff=
+));
+> +
+> +    /* check IPB is cleared in the POOL ring */
+> +    reg32 =3D get_tima32(qts, target_pir, TM_QW2_HV_POOL + TM_WORD0);
+> +    ipb =3D (reg32 >> 8) & 0xFF;
+> +    g_assert_cmphex(ipb, =3D=3D, 0);
+> +
+> +    /* End Of Interrupt */
+> +    set_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_STORE_EOI, 0);
+> +    pq =3D get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
+> +    g_assert_cmpuint(pq, =3D=3D, XIVE_ESB_RESET);
+> +
+> +    /* reset CPPR */
+> +    set_tima8(qts, target_pir, TM_QW3_HV_PHYS + TM_CPPR, 0xFF);
+> +    reg32 =3D get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD0);
+> +    nsr =3D reg32 >> 24;
+> +    cppr =3D (reg32 >> 16) & 0xFF;
+> +    g_assert_cmphex(nsr, =3D=3D, 0x00);
+> +    g_assert_cmphex(cppr, =3D=3D, 0xFF);
+> +}
+> +
+>  #define XIVE_ODD_CL 0x80
+>  static void test_pull_thread_ctx_to_odd_thread_cl(QTestState *qts)
+>  {
+> @@ -278,8 +352,9 @@ static void test_pull_thread_ctx_to_odd_thread_cl(QTe=
+stState *qts)
+>      uint32_t cl_word;
+>      uint32_t word2;
+> =20
+> -    printf("# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D\n");
+> -    printf("# Testing 'Pull Thread Context to Odd Thread Reporting Line'=
+\n");
+> +    g_test_message("=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D");
+> +    g_test_message("Testing 'Pull Thread Context to Odd Thread Reporting=
+ " \
+> +                   "Line'");
+> =20
+>      /* clear odd cache line prior to pull operation */
+>      memset(cl_pair, 0, sizeof(cl_pair));
+> @@ -330,8 +405,8 @@ static void test_hw_group_irq(QTestState *qts)
+>      uint16_t reg16;
+>      uint8_t pq, nsr, cppr;
+> =20
+> -    printf("# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D\n");
+> -    printf("# Testing irq %d to hardware group of size 4\n", irq);
+> +    g_test_message("=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D");
+> +    g_test_message("Testing irq %d to hardware group of size 4", irq);
+> =20
+>      /* irq config */
+>      set_eas(qts, irq, end_index, irq_data);
+> @@ -395,10 +470,10 @@ static void test_hw_group_irq_backlog(QTestState *q=
+ts)
+>      uint16_t reg16;
+>      uint8_t pq, nsr, cppr, lsmfb, i;
+> =20
+> -    printf("# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D\n");
+> -    printf("# Testing irq %d to hardware group of size 4 going through "=
+ \
+> -           "backlog\n",
+> -           irq);
+> +    g_test_message("=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D");
+> +    g_test_message("Testing irq %d to hardware group of size 4 going " \
+> +                   "through backlog",
+> +                   irq);
+> =20
+>      /*
+>       * set current priority of all threads in the group to something
+> @@ -484,6 +559,9 @@ static void test_xive(void)
+>      /* omit reset_state here and use settings from test_hw_irq */
+>      test_pull_thread_ctx_to_odd_thread_cl(qts);
+> =20
+> +    reset_state(qts);
+> +    test_pool_irq(qts);
+> +
+>      reset_state(qts);
+>      test_hw_group_irq(qts);
+> =20
 
 
