@@ -4,160 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AD4C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A8EC28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trY6s-0006Lm-6Q; Mon, 10 Mar 2025 04:03:38 -0400
+	id 1trY6c-00065z-UC; Mon, 10 Mar 2025 04:03:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trY6l-00069b-BY
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:03:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1trY6i-0000fb-9T
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:03:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741593807;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xIVSdz2MinvUr+DLjL9xfvKnY1MvlYQJvFa060PTh6o=;
- b=S9YDGwDudI9l7EcTV6LvImsqfF+9VtW9sCqe3sh7jtdE/6TI8bbLG8305Lu/FNFx8VUvZf
- l/uVxXnldoS5CptHBMzlcN4wQNMi06JSngEjCDIYKytk2+PW0gx5n3yqGe//fkIpetGJjM
- TPH5nn4TTn+jRjqhbde5xzJIucp4Fvs=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-463-WTNqXXzOMHutY_eoeU0CIQ-1; Mon, 10 Mar 2025 04:03:22 -0400
-X-MC-Unique: WTNqXXzOMHutY_eoeU0CIQ-1
-X-Mimecast-MFC-AGG-ID: WTNqXXzOMHutY_eoeU0CIQ_1741593802
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39137e17c50so800579f8f.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 01:03:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741593802; x=1742198602;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1trY6a-00065d-AR
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:03:20 -0400
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1trY6W-0000eZ-Lq
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:03:20 -0400
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso69981725ad.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 01:03:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741593794; x=1742198594; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xIVSdz2MinvUr+DLjL9xfvKnY1MvlYQJvFa060PTh6o=;
- b=P8Ho+tf413HheVajMVrq8xz+0jugDX0iwKQbVQ9WbItVDqI1/DtGKh7WkFxeYQgs/a
- 6L4jDewUewQInyDDBMDWGv0oscvknJm9Fc4vYYpg7TW1iRVbA5Y/5ndY3PLWo/Cpr1K2
- p4ZdGo2YNGssWPQQCcVtKx5ZDnFQRxjQJENMPSErYLeoaX3XbLjVbj/7nrz/wTvK4bwL
- abNCzDXm6cARte/tFTEjUwFTBg7hCBKmSDy5eb3PyHrD6eEdqJvjkKe6L6SZASlkCFaq
- +fBRzqqbVbj2hAV3G4upl+kwi8FGbrjgRCMVhGkghteo8AohxyEh/krwPYCCtESXInEd
- Gc4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4ifv3RLJtfIKABvjw3PullhGLtky4r+FglGnBgJcj8flwG6pOGoW5EK9FCXX0muw6kBSqkxyfvRnq@nongnu.org
-X-Gm-Message-State: AOJu0Yy9NQuxSaM7ka5TZk6PTnTGo3urhl4L8rLPRWBXCskym7G/wyvS
- TiE5A4L3F/8OG8cm682y+gIw5kGIpaUVSbUGoekIEu2L9VbI/7kq7ML5jX7LPoRb5rK5JQczZz2
- yBWw7MZLqmWhQBGZrRCTebzwcS3tyMjXye5gqrOxrBbEuZX7SeVJ7
-X-Gm-Gg: ASbGnctnyNzVv9IcPOXmNOg6ISYPdtuV4SKBwhfzFk6QGWYYmDB/I+ocYvWeuBA8rfI
- AYm4pb8YUpT9nsMeg64iLVtdgdjlip8x5rxJU6ldEQTqWZK7NhLTV+SEFt3Mmixsos1pcWLD+KG
- 3YgNEHAI0XTK/uNAWvnSZIqSejzEK+I4ZHX4pzUzOplOXlDuLtQcvIl4Gm26X0LiT+sM1qE8IA0
- ekq7vTrEyifEjduZt3kvkmwu0jgeXM2Yfu/XQB/h7cWalZNAycqM145wX67mfOesZO+oq9wWbS5
- +cnpQH0GPyv4NcmND6lfEV/WbrbShPTFVg6E3k1rw0frhJdEgmcj8A==
-X-Received: by 2002:a05:6000:1448:b0:391:4608:e7be with SMTP id
- ffacd0b85a97d-3914608e99amr2208691f8f.14.1741593801699; 
- Mon, 10 Mar 2025 01:03:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJGh5VB+FGTLMkyV6wBPPMs9rZZ91esPMCh05KZGnJ2K/ObsJwO4lUzb7sUcfkZNMNS8FIjA==
-X-Received: by 2002:a05:6000:1448:b0:391:4608:e7be with SMTP id
- ffacd0b85a97d-3914608e99amr2208659f8f.14.1741593801237; 
- Mon, 10 Mar 2025 01:03:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1037bfsm14127380f8f.96.2025.03.10.01.03.19
+ bh=zYqWeoTf/TKPCfsiXfd/y5tHc55L3g6R544wsr2f890=;
+ b=QhTb1j/Uk/W5ksn6VwIqAuZRw9os9G/Pd+M670Uvl4xhHu5q2QYMZbK2ABpD21d3uV
+ 0LklSKQmzbu/tmKQckFN709kf0YZCtiEegm3m4rycnnVfY47snTfpQ46AHleBIEsyqdb
+ jDvloQqfaoXFWQMrMLlI2ex9/cgzNC3wklAAnGRRAL93YBK19sUqLO2/YfJs8xiOiQCo
+ b/d0OJfkAwosFKstyJmDz7FY5Zpj/bs2omBZ8Sa9pluvsBPpT0YuZDeZp7+IIuRAoqSp
+ b72LhsbyIHF/ZXw/CUf0rbwiV9VfKPLA5HakhyikAHLAmBslpkHkgOBxt2o0VZjQYqNv
+ X0sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741593794; x=1742198594;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zYqWeoTf/TKPCfsiXfd/y5tHc55L3g6R544wsr2f890=;
+ b=cu32fYscJ3SgsOaWfncQfJiKtvEOC4uwHfkmPee+xB28T2bLZ1BRlIGlgSJx1dRaQw
+ ye57Er4sIANgOm4tAT/nWFdqinas2UqdU5IsYVa8ctbfCcFTM6wTKDbIMD+liF53ULOY
+ jUOfxH23SkWGA8DkVgHGCwQh9zCCzh6uHzchnlMN4+TARF0pY5GKubIdhab0lnyRThvw
+ lhsgmmUu45Xnlrr4mw6EqERX35q7drasBUyQmBwA1LzDdLPGJcvPTKpM+CCIPW0S66Vt
+ Uj62lq7x/ICuPStIZon8J3nNc19wU2NmVRbxQ1QShH/poI1CnHf6Dj+AfX/rYpMdDiXj
+ kryA==
+X-Gm-Message-State: AOJu0YxqeHCFyBTYY5ZqgnTvgrFOLIzHigJNS1/u2GuGDDTVK41mMUrt
+ UfCI8bX7NlfHOJAEIIxpJX4H1Ziz8I7N7LucdfqStesjL/tjRmmwtj046FrdSdpF
+X-Gm-Gg: ASbGncusuzpZGpoNNN22a0MGQ4qx7LsD8LS6Y0FPyW/6OqNHeG1zqfta1GJthrmerGz
+ +nuUQJ0SwtqHAa1HBs3iSxsisWNkgDXNPxbOghWm6ev4BgFsH4QShaP7M1iu6VEWLxbk9n7BMVd
+ K9H7S+97xCR6tWK2ejYB0NmgwK2ECL8RgyRRNcskF3GRFLDzYbDajQMgQLdM/BuuTHFGB/0gPCJ
+ s4m4kYfoz0Vqh5d2vt0096Bd6cHy+uwlXwzfoS2RMXDEZnDe8GN7fGn/1yMDC+xa9Oa/GhePRH9
+ R1E3YoeTUbU8/dNda4lj2cVb1R34aReYNMiBsU3RUlPLpK3iFuoKxmh/aobDbCoMH/KJMS4=
+X-Google-Smtp-Source: AGHT+IGt6sXFHNYL8sZtK88TVdNlc0on7bwgv7YCXZ+F7rOUoo3NUBaLys8tuaAN448rSOX+FquTNQ==
+X-Received: by 2002:a05:6a00:23cb:b0:736:55ec:ea8b with SMTP id
+ d2e1a72fcca58-736e1b3e670mr1969090b3a.24.1741593793542; 
+ Mon, 10 Mar 2025 01:03:13 -0700 (PDT)
+Received: from [172.20.10.3] ([58.247.23.80]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73698538ecbsm7842290b3a.176.2025.03.10.01.03.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 01:03:20 -0700 (PDT)
-Message-ID: <ef7dcee1-90fe-44be-aa14-6c016d98369f@redhat.com>
-Date: Mon, 10 Mar 2025 09:03:19 +0100
+ Mon, 10 Mar 2025 01:03:13 -0700 (PDT)
+Message-ID: <9932832b-ae57-417b-8b26-57ef08d827a3@gmail.com>
+Date: Mon, 10 Mar 2025 16:03:05 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/21] hw/vfio: Build various objects once
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Tomita Moeko
- <tomitamoeko@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eric Farman <farman@linux.ibm.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-s390x@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250308230917.18907-1-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250308230917.18907-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v3 07/10] vfio/igd: Decouple common quirks from legacy mode
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
+ <corvin.koehne@gmail.com>
+References: <20250306180131.32970-1-tomitamoeko@gmail.com>
+ <20250306180131.32970-8-tomitamoeko@gmail.com>
+ <20250306154920.0e1936eb.alex.williamson@redhat.com>
+ <46b7c8ff-06b3-4e01-a00d-1a388a0bf6a3@gmail.com>
+ <f394edb5-f8f0-4b5f-ab5f-e40c1e8c9f78@redhat.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <f394edb5-f8f0-4b5f-ab5f-e40c1e8c9f78@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -173,79 +104,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/25 00:08, Philippe Mathieu-Daudé wrote:
-> By doing the following changes:
-> - Clean some headers up
-> - Replace compile-time CONFIG_KVM check by kvm_enabled()
-> - Replace compile-time CONFIG_IOMMUFD check by iommufd_builtin()
-> we can build less vfio objects.
+On 2025/3/10 15:13, Cédric Le Goater wrote:
+> Tomita,
 > 
-> Since v1:
-> - Added R-b tags
-> - Introduce type_is_registered()
-> - Split builtin check VS meson changes (rth)
-> - Consider IGD
+> On 3/7/25 19:37, Tomita Moeko wrote:
+>> On 2025/3/7 6:49, Alex Williamson wrote:
+>>> On Fri,  7 Mar 2025 02:01:27 +0800
+>>> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+>>>
+>>>> So far, IGD-specific quirks all require enabling legacy mode, which is
+>>>> toggled by assigning IGD to 00:02.0. However, some quirks, like the BDSM
+>>>> and GGC register quirks, should be applied to all supported IGD devices.
+>>>> A new config option, x-igd-legacy-mode=[on|off|auto], is introduced to
+>>>> control the legacy mode only quirks. The default value is "auto", which
+>>>> keeps current behavior that enables legacy mode implicitly and continues
+>>>> on error when all following conditions are met.
+>>>> * Machine type is i440fx
+>>>> * IGD device is at guest BDF 00:02.0
+>>>>
+>>>> If any one of the conditions above is not met, the default behavior is
+>>>> equivalent to "off", QEMU will fail immediately if any error occurs.
+>>>>
+>>>> Users can also use "on" to force enabling legacy mode. It checks if all
+>>>> the conditions above are met and set up legacy mode. QEMU will also fail
+>>>> immediately on error in this case.
+>>>>
+>>>> Additionally, the hotplug check in legacy mode is removed as hotplugging
+>>>> IGD device is never supported, and it will be checked when enabling the
+>>>> OpRegion quirk.
+>>>>
+>>>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+>>>> ---
+>>>>   hw/vfio/igd.c | 127 +++++++++++++++++++++++++++++---------------------
+>>>>   hw/vfio/pci.c |   2 +
+>>>>   hw/vfio/pci.h |   1 +
+>>>>   3 files changed, 77 insertions(+), 53 deletions(-)
+>>>>
+>>>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+>>>> index f5e19f1241..ac096e2eb5 100644
+>>>> --- a/hw/vfio/igd.c
+>>>> +++ b/hw/vfio/igd.c
+>>>> @@ -15,6 +15,7 @@
+>>>>   #include "qemu/error-report.h"
+>>>>   #include "qapi/error.h"
+>>>>   #include "qapi/qmp/qerror.h"
+>>>> +#include "hw/boards.h"
+>>>>   #include "hw/hw.h"
+>>>>   #include "hw/nvram/fw_cfg.h"
+>>>>   #include "pci.h"
+>>>> @@ -432,9 +433,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>>>>        * bus address.
+>>>>        */
+>>>>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+>>>> -        !vfio_is_vga(vdev) || nr != 0 ||
+>>>> -        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+>>>> -                                       0, PCI_DEVFN(0x2, 0))) {
+>>>> +        !vfio_is_vga(vdev) || nr != 0) {
+>>>>           return;
+>>>>       }
+>>>>   @@ -482,14 +481,13 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>>>>       QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
+>>>>   }
+>>>>   -bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>>> -                                 Error **errp G_GNUC_UNUSED)
+>>>> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>>>>   {
+>>>> -    g_autofree struct vfio_region_info *rom = NULL;
+>>>>       int ret, gen;
+>>>>       uint64_t gms_size;
+>>>>       uint64_t *bdsm_size;
+>>>>       uint32_t gmch;
+>>>> +    bool legacy_mode_enabled = false;
+>>>>       Error *err = NULL;
+>>>>         /*
+>>>> @@ -498,9 +496,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>>>        * PCI bus address.
+>>>>        */
+>>>>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+>>>> -        !vfio_is_vga(vdev) ||
+>>>> -        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
+>>>> -                                       0, PCI_DEVFN(0x2, 0))) {
+>>>> +        !vfio_is_vga(vdev)) {
+>>>>           return true;
+>>>>       }
+>>>>   @@ -516,56 +512,67 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>>>           return true;
+>>>>       }
+>>>>   -    /*
+>>>> -     * Most of what we're doing here is to enable the ROM to run, so if
+>>>> -     * there's no ROM, there's no point in setting up this quirk.
+>>>> -     * NB. We only seem to get BIOS ROMs, so a UEFI VM would need CSM support.
+>>>> -     */
+>>>> -    ret = vfio_get_region_info(&vdev->vbasedev,
+>>>> -                               VFIO_PCI_ROM_REGION_INDEX, &rom);
+>>>> -    if ((ret || !rom->size) && !vdev->pdev.romfile) {
+>>>> -        error_report("IGD device %s has no ROM, legacy mode disabled",
+>>>> -                     vdev->vbasedev.name);
+>>>> -        return true;
+>>>> -    }
+>>>> -
+>>>> -    /*
+>>>> -     * Ignore the hotplug corner case, mark the ROM failed, we can't
+>>>> -     * create the devices we need for legacy mode in the hotplug scenario.
+>>>> -     */
+>>>> -    if (vdev->pdev.qdev.hotplugged) {
+>>>> -        error_report("IGD device %s hotplugged, ROM disabled, "
+>>>> -                     "legacy mode disabled", vdev->vbasedev.name);
+>>>> -        vdev->rom_read_failed = true;
+>>>> -        return true;
+>>>> -    }
+>>>> -
+>>>>       gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
+>>>>         /*
+>>>> -     * If IGD VGA Disable is clear (expected) and VGA is not already enabled,
+>>>> -     * try to enable it.  Probably shouldn't be using legacy mode without VGA,
+>>>> -     * but also no point in us enabling VGA if disabled in hardware.
+>>>> +     * For backward compatibilty, enable legacy mode when
+>>>> +     * - Machine type is i440fx (pc_piix)
+>>>> +     * - IGD device is at guest BDF 00:02.0
+>>>> +     * - Not manually disabled by x-igd-legacy-mode=off
+>>>>        */
+>>>> -    if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
+>>>> -        error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+>>>> -        error_report("IGD device %s failed to enable VGA access, "
+>>>> -                     "legacy mode disabled", vdev->vbasedev.name);
+>>>> -        return true;
+>>>> -    }
+>>>> +    if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
+>>>> +        !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
+>>>> +        (&vdev->pdev == pci_find_device(pci_device_root_bus(&vdev->pdev),
+>>>> +        0, PCI_DEVFN(0x2, 0)))) {
+>>>> +        /*
+>>>> +         * IGD legacy mode requires:
+>>>> +         * - VBIOS in ROM BAR or file
+>>>> +         * - VGA IO/MMIO ranges are claimed by IGD
+>>>> +         * - OpRegion
+>>>> +         * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+>>>> +         */
+>>>> +        g_autofree struct vfio_region_info *rom = NULL;
+>>>> +
+>>>> +        legacy_mode_enabled = true;
+>>>> +        warn_report("IGD legacy mode enabled, "
+>>>> +                    "use x-igd-legacy-mode=off to disable it if unwanted.");
+>>>
+>>> info_report() maybe?  These aren't great choices for a user, get a
+>>> warning for using the intended mode or silence that warning by
+>>> requiring experimental options that taint the VM relative to libvirt.
+>>
+>> Got it. If possible, please help change this to info_report when
+>> applying.
 > 
-> Philippe Mathieu-Daudé (21):
->    hw/vfio/common: Include missing 'system/tcg.h' header
->    hw/vfio/spapr: Do not include <linux/kvm.h>
->    hw/vfio: Compile some common objects once
->    hw/vfio: Compile more objects once
->    hw/vfio: Compile iommufd.c once
->    system: Declare qemu_[min/max]rampagesize() in 'system/hostmem.h'
->    hw/vfio: Compile display.c once
->    system/kvm: Expose kvm_irqchip_[add,remove]_change_notifier()
->    hw/vfio/pci: Convert CONFIG_KVM check to runtime one
->    qom: Introduce type_is_registered()
->    hw/vfio/igd: Define TYPE_VFIO_PCI_IGD_LPC_BRIDGE
->    hw/vfio/igd: Check CONFIG_VFIO_IGD at runtime using vfio_igd_builtin()
->    hw/vfio/igd: Compile once
->    system/iommufd: Introduce iommufd_builtin() helper
->    hw/vfio/pci: Check CONFIG_IOMMUFD at runtime using iommufd_builtin()
->    hw/vfio/pci: Compile once
->    hw/vfio/ap: Check CONFIG_IOMMUFD at runtime using iommufd_builtin()
->    hw/vfio/ccw: Check CONFIG_IOMMUFD at runtime using iommufd_builtin()
->    hw/vfio/s390x: Compile AP and CCW once
->    hw/vfio/platform: Check CONFIG_IOMMUFD at runtime using
->      iommufd_builtin
->    hw/vfio/platform: Compile once
+> done.
 > 
->   docs/devel/vfio-iommufd.rst  |  2 +-
->   hw/vfio/pci-quirks.h         |  8 +++++
->   include/exec/ram_addr.h      |  3 --
->   include/qom/object.h         |  8 +++++
->   include/system/hostmem.h     |  3 ++
->   include/system/iommufd.h     |  6 ++++
->   include/system/kvm.h         |  8 ++---
->   target/s390x/kvm/kvm_s390x.h |  2 +-
->   hw/ppc/spapr_caps.c          |  1 +
->   hw/s390x/s390-virtio-ccw.c   |  1 +
->   hw/vfio/ap.c                 | 27 ++++++++---------
->   hw/vfio/ccw.c                | 27 ++++++++---------
->   hw/vfio/common.c             |  1 +
->   hw/vfio/igd-stubs.c          | 20 +++++++++++++
->   hw/vfio/igd.c                |  4 +--
->   hw/vfio/iommufd.c            |  1 -
->   hw/vfio/migration.c          |  1 -
->   hw/vfio/pci-quirks.c         |  9 +++---
->   hw/vfio/pci.c                | 57 +++++++++++++++++-------------------
->   hw/vfio/platform.c           | 25 ++++++++--------
->   hw/vfio/spapr.c              |  4 +--
->   qom/object.c                 |  5 ++++
->   hw/vfio/meson.build          | 35 +++++++++++++---------
->   23 files changed, 152 insertions(+), 106 deletions(-)
->   create mode 100644 hw/vfio/igd-stubs.c
+> 
+>>
+>>> Also, why do we list all the requirements then only test a few of them
+>>> before declaring we're using legacy mode?  It seems like the above
+>>> should be moved to the end of this branch.
+>>
+>> Having i440fx machine type and BDF 00:02.0 are the must-have condition
+>> for considering enabling legacy mode, while others are the requirements
+>> for legacy mode itself. In this verison, legacy mode is equivalent to
+>>      romfile=oprom.bin,x-vga=on,x-igd-opregion=on,x-igd-lpc=on
+>>
+>> BDF being 00:02.0 is a requirement of VBIOS, and hacking the LPC DID
+>> currently only works on i440fx. Though for Q35, we can overwrite the
+>> existing ICH9 LPC DID to make IGD driver happy, it won't break ACPI PM
+>> in recent guest kernel, and maybe later making it an option for Q35,
+>> its still too risky to make it an implicit default. That's why I prefer
+>> to check the must-have condtions first, then check other requirements
+>> when setting up them.
+>>
+>> Setting the `legacy_mode_enabled` flag here is for error handling, as
+>> we have to keep the old "continue on error" behavior for legacy mode.
+> 
+> A ducomentation update is welcome ! Could you do that before hard-freeze ?
+> 
+> Thanks,
+> 
+> C.
 > 
 
-Patches 1-9 still look ok and could be merged through the vfio tree
-if maintainers ack patch 6 and 8.
-
-The rest, depending on type_is_registered(), would be nice to have,
-but since there are conflicts and soft freeze is scheduled for
-tomorrow, we would probably have to wait QEMU 10.1.
+Let me try to make it before Mar 18.
 
 Thanks,
+Moeko
 
-C.
+>>> Given the pending release deadline, maybe these aren't blockers, but
+>>> let's follow-up with something that assumes the user wants something
+>>> other than what they're doing.  Thanks,
+>>>
+>>> Alex
+>>>
+>>
+>> Sure.
+>>
+>> Moeko
+>>  
+>>>> +
+>>>> +        /*
+>>>> +         * Most of what we're doing here is to enable the ROM to run, so if
+>>>> +         * there's no ROM, there's no point in setting up this quirk.
+>>>> +         * NB. We only seem to get BIOS ROMs, so UEFI VM would need CSM support.
+>>>> +         */
+>>>> +        ret = vfio_get_region_info(&vdev->vbasedev,
+>>>> +                                   VFIO_PCI_ROM_REGION_INDEX, &rom);
+>>>> +        if ((ret || !rom->size) && !vdev->pdev.romfile) {
+>>>> +            error_setg(&err, "Device has no ROM");
+>>>> +            goto error;
+>>>> +        }
+>>>>   -    /* Setup OpRegion access */
+>>>> -    if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
+>>>> -        error_append_hint(&err, "IGD legacy mode disabled\n");
+>>>> -        error_report_err(err);
+>>>> -        return true;
+>>>> -    }
+>>>> +        /*
+>>>> +         * If IGD VGA Disable is clear (expected) and VGA is not already
+>>>> +         * enabled, try to enable it. Probably shouldn't be using legacy mode
+>>>> +         * without VGA, but also no point in us enabling VGA if disabled in
+>>>> +         * hardware.
+>>>> +         */
+>>>> +        if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
+>>>> +            error_setg(&err, "Unable to enable VGA access");
+>>>> +            goto error;
+>>>> +        }
+>>>>   -    /* Setup LPC bridge / Host bridge PCI IDs */
+>>>> -    if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
+>>>> -        error_append_hint(&err, "IGD legacy mode disabled\n");
+>>>> -        error_report_err(err);
+>>>> -        return true;
+>>>> +        /* Setup OpRegion access */
+>>>> +        if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
+>>>> +            goto error;
+>>>> +        }
+>>>> +
+>>>> +        /* Setup LPC bridge / Host bridge PCI IDs */
+>>>> +        if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
+>>>> +            goto error;
+>>>> +        }
+>>>> +    } else if (vdev->igd_legacy_mode == ON_OFF_AUTO_ON) {
+>>>> +        error_setg(&err,
+>>>> +                   "Machine is not i440fx or assigned BDF is not 00:02.0");
+>>>> +        goto error;
+>>>>       }
+>>>>         /*
+>>>> @@ -627,4 +634,18 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
+>>>>       trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
+>>>>         return true;
+>>>> +
+>>>> +error:
+>>>> +    /*
+>>>> +     * When legacy mode is implicity enabled, continue on error,
+>>>> +     * to keep compatibility
+>>>> +     */
+>>>> +    if (legacy_mode_enabled && (vdev->igd_legacy_mode == ON_OFF_AUTO_AUTO)) {
+>>>> +        error_report_err(err);
+>>>> +        error_report("IGD legacy mode disabled");
+>>>> +        return true;
+>>>> +    }
+>>>> +
+>>>> +    error_propagate(errp, err);
+>>>> +    return false;
+>>>>   }
+>>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>>>> index a58d555934..d5ff8c1ea8 100644
+>>>> --- a/hw/vfio/pci.c
+>>>> +++ b/hw/vfio/pci.c
+>>>> @@ -3363,6 +3363,8 @@ static const Property vfio_pci_dev_properties[] = {
+>>>>                       VFIO_FEATURE_ENABLE_REQ_BIT, true),
+>>>>       DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
+>>>>                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
+>>>> +    DEFINE_PROP_ON_OFF_AUTO("x-igd-legacy-mode", VFIOPCIDevice,
+>>>> +                            igd_legacy_mode, ON_OFF_AUTO_AUTO),
+>>>>       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
+>>>>                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
+>>>>       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+>>>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>>>> index 2e81f9eb19..aa67ceb346 100644
+>>>> --- a/hw/vfio/pci.h
+>>>> +++ b/hw/vfio/pci.h
+>>>> @@ -158,6 +158,7 @@ struct VFIOPCIDevice {
+>>>>       uint32_t display_xres;
+>>>>       uint32_t display_yres;
+>>>>       int32_t bootindex;
+>>>> +    OnOffAuto igd_legacy_mode;
+>>>>       uint32_t igd_gms;
+>>>>       OffAutoPCIBAR msix_relo;
+>>>>       uint8_t pm_cap;
+>>>
+>>
+> 
 
 
