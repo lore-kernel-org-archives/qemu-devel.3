@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA877C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F71BC28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trcA2-0005iH-9J; Mon, 10 Mar 2025 08:23:11 -0400
+	id 1trc9x-0005g9-KG; Mon, 10 Mar 2025 08:23:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1trc9r-0005eV-2C
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:22:59 -0400
+ id 1trc9m-0005dX-M7
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:22:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1trc9o-0004wt-IC
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:22:58 -0400
+ id 1trc9k-0004w0-Nx
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:22:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741609374;
+ s=mimecast20190719; t=1741609370;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oWpLQ5UffopEreR+h80b09wvJlbh0Nvw29HAc/Y4daY=;
- b=FviXPVdw87EirkBrm57WBXM4YdeDZZnlbSDqqjx0FmOWzZ+r5g9VXTdd8h7x7QdiG1AKSK
- arSsL4n2vafjXrt/J7VngfG/9QV3ZhMyme1vZNPfwMJvhS78uxK3R/pkKgrpjlfi679HU2
- QC3HlpA0cV1pJ39JAGHlz/6Y3k/MJlc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rfbkRTKHrJ9RysW18PIFmpIXF0/iB0m/TtNUOoHpQdo=;
+ b=VSDROa5f7SyUOoasba6WQNguCB7bx51zAGmB4tMKmQirGTvXzlwPWagMyC169vwTs3KCSJ
+ py7xF3F8u4a/AcOa8Q10dW+MHTnUVs8fbsFdfbezzV87t0JLP2U4SNK6p/CGNLgD5btics
+ xQ5bCNskkKEZy2oEn0ojjD5A0vdkPm8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-CJpEny4QOQmhWo1hZvRRRg-1; Mon,
- 10 Mar 2025 08:22:53 -0400
-X-MC-Unique: CJpEny4QOQmhWo1hZvRRRg-1
-X-Mimecast-MFC-AGG-ID: CJpEny4QOQmhWo1hZvRRRg_1741609372
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-y9VSIN3pPySRNROo4F83PA-1; Mon,
+ 10 Mar 2025 08:22:49 -0400
+X-MC-Unique: y9VSIN3pPySRNROo4F83PA-1
+X-Mimecast-MFC-AGG-ID: y9VSIN3pPySRNROo4F83PA_1741609368
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7D7219560AD; Mon, 10 Mar 2025 12:22:51 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E8EB1956083
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 12:22:48 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.39])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E7411800370; Mon, 10 Mar 2025 12:22:48 +0000 (UTC)
+ id 7721118001E9; Mon, 10 Mar 2025 12:22:45 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Si-Wei Liu <si-wei.liu@oracle.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 1/5] net: parameterize the removing client from nc list
-Date: Mon, 10 Mar 2025 20:22:36 +0800
-Message-ID: <20250310122240.2908-2-jasowang@redhat.com>
-In-Reply-To: <20250310122240.2908-1-jasowang@redhat.com>
-References: <20250310122240.2908-1-jasowang@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Subject: [PULL 0/5] Net patches
+Date: Mon, 10 Mar 2025 20:22:35 +0800
+Message-ID: <20250310122240.2908-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,67 +82,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eugenio Pérez <eperezma@redhat.com>
+The following changes since commit d9a4282c4b690e45d25c2b933f318bb41eeb271d:
 
-This change is used in later commits so we can avoid the removal of the
-netclient if it is delayed.
+  Merge tag 'pull-tcg-20250308' of https://gitlab.com/rth7680/qemu into staging (2025-03-09 11:45:00 +0800)
 
-No functional change intended.
+are available in the Git repository at:
 
-Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
----
- net/net.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+  https://github.com/jasowang/qemu.git tags/net-pull-request
 
-diff --git a/net/net.c b/net/net.c
-index a3996d5c62..4eb78a1299 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -381,9 +381,12 @@ NetClientState *qemu_get_peer(NetClientState *nc, int queue_index)
-     return ncs->peer;
- }
- 
--static void qemu_cleanup_net_client(NetClientState *nc)
-+static void qemu_cleanup_net_client(NetClientState *nc,
-+                                    bool remove_from_net_clients)
- {
--    QTAILQ_REMOVE(&net_clients, nc, next);
-+    if (remove_from_net_clients) {
-+        QTAILQ_REMOVE(&net_clients, nc, next);
-+    }
- 
-     if (nc->info->cleanup) {
-         nc->info->cleanup(nc);
-@@ -442,14 +445,14 @@ void qemu_del_net_client(NetClientState *nc)
-         }
- 
-         for (i = 0; i < queues; i++) {
--            qemu_cleanup_net_client(ncs[i]);
-+            qemu_cleanup_net_client(ncs[i], true);
-         }
- 
-         return;
-     }
- 
-     for (i = 0; i < queues; i++) {
--        qemu_cleanup_net_client(ncs[i]);
-+        qemu_cleanup_net_client(ncs[i], true);
-         qemu_free_net_client(ncs[i]);
-     }
- }
-@@ -474,7 +477,7 @@ void qemu_del_nic(NICState *nic)
-     for (i = queues - 1; i >= 0; i--) {
-         NetClientState *nc = qemu_get_subqueue(nic, i);
- 
--        qemu_cleanup_net_client(nc);
-+        qemu_cleanup_net_client(nc, true);
-         qemu_free_net_client(nc);
-     }
- 
--- 
-2.42.0
+for you to fetch changes up to ac2ff9b840ce82cc7d5fd9ce4fd3019a434d7dc9:
+
+  tap-linux: Open ipvtap and macvtap (2025-03-10 17:07:16 +0800)
+
+----------------------------------------------------------------
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmfO1zkACgkQ7wSWWzmN
+YhET+wf+PkaGeFTNUrOtWpl35fSMKlmOVbb1fkPfuhVBmeY2Vh1EIN3OjqnzdV0F
+wxpuk+wwmFiuV1n6RNuMHQ0nz1mhgsSlZh93N5rArC/PUr3iViaT0cb82RjwxhaI
+RODBhhy7V9WxEhT9hR8sCP2ky2mrKgcYbjiIEw+IvFZOVQa58rMr2h/cbAb/iH4l
+7T9Wba03JBqOS6qgzSFZOMxvqnYdVjhqXN8M6W9ngRJOjPEAkTB6Evwep6anRjcM
+mCUOgkf2sgQwKve8pYAeTMkzXFctvTc/qCU4ZbN8XcoKVVxe2jllGQqdOpMskPEf
+slOuINeW5M0K5gyjsb/huqcOTfDI2A==
+=/Y0+
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Akihiko Odaki (3):
+      util/iov: Do not assert offset is in iov
+      Revert "hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()"
+      tap-linux: Open ipvtap and macvtap
+
+Eugenio Pérez (2):
+      net: parameterize the removing client from nc list
+      net: move backend cleanup to NIC cleanup
+
+ hw/net/net_tx_pkt.c |  4 ----
+ include/qemu/iov.h  |  5 +++--
+ net/net.c           | 44 ++++++++++++++++++++++++++++++++++----------
+ net/tap-linux.c     | 17 ++++++++++++++---
+ net/vhost-vdpa.c    |  8 --------
+ util/iov.c          |  5 -----
+ 6 files changed, 51 insertions(+), 32 deletions(-)
+
 
 
