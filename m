@@ -4,107 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C40CC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 06:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67AB1C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 06:26:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trWSc-0002cy-Vs; Mon, 10 Mar 2025 02:17:59 -0400
+	id 1trWZt-00059l-2O; Mon, 10 Mar 2025 02:25:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1trWSb-0002cM-46
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:17:57 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1trWSX-0007GF-Fc
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:17:56 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-219f8263ae0so69271195ad.0
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 23:17:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741587471; x=1742192271;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DLwBe2cjMgHJPEz92iz7ArkMS0Lec2n7/WEuV7kR1dI=;
- b=kYLDVYtGxw+sNCElj6uLGBE2cTZKYX6zeUDYO7QZR/3WPAL7Z0/008HXqr5CDMk8/x
- StjBT51YV7+ht9xZXeDgcNUm0nPvYti0c6381VrUI3YW+A4M9KWQ//OUEmYd1urhma1U
- f+WXcUOFagZq6rQZz+PdbBhlYbc8KRqqP0UNTya1MPTo+rNX6z8PqVje84cF2+xYSCNX
- uEl8kSkvzziFt7f81VTXYTo3Y2c8Ak3c1lNGNMsWD51yCn0zydymt6WlU/srUJmjeXc5
- dBRsgcCPCrihJUdTLBylCFYoctWivbypKX8ub6KSgmJ3dVXL1NhHKYQfKbesJM+Tnsxk
- vUrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741587471; x=1742192271;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DLwBe2cjMgHJPEz92iz7ArkMS0Lec2n7/WEuV7kR1dI=;
- b=taQWcMwVmNVcye7VqGH8JsusV/p5wF7d7tnabXCkwcJinchgyT3oVgT6aq4U/tYi7M
- hkE2EKtfc79QaEmf41qiafEZ81IUMtR5pd8FObV5pkQUwoZHBUfkVPNn7L0+wFaxzcHk
- J/flm3zYZsQvrjjssJHrj2pb8gZOFQr/B6hF30kCk0otJe4Sup/hmbae9wrRRKG4XsuQ
- l/KuIhRgYe0iflpQjGK44ikQJquRhj9eS9tEr8m9sE/FXEL6g3dC4mz+cm80qDdULKd8
- puREnk9cEDyBafIYO7Fb6DWPMGTIthlM5sY5uR2SFt7p697ZGMFSHlPu0axYicgjukZ3
- Zj1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjBfg/RwYS9C5rFyjf2c0KTzIzN+kCyGezPnfGbXVEFtxZTN2/9Jb+Tz5r1MXB4ebrbWSQayX4rrFj@nongnu.org
-X-Gm-Message-State: AOJu0YxFDDqcBPmeOs92I5xvT83ne/uKqsfCM0NsAbo295UQ8TILk7Vj
- mI02m67MDDxrqKAYQiABIZc0q+hFEe90I4kCI8C6sfu3yfYeGQjhthiHve0lx3I=
-X-Gm-Gg: ASbGncvTu1F4Ux/5gRSi0CL/p3HuUVPCTOSRWIdRiFvmV3oh3e8EKWQXSnJRO7tto43
- kLcdDS99EyiEBsMplSSiWAleIb5uCeNvqoGmYMG5EX1ZcWz2kinED41wfg1Ukkx3epjTHySQOqV
- 6LAswxph6w5HtSgRTnhp0x9N+FrMH5JhjLiUWV4BC+lB4MJ01p7LnlAhhAJsPg0gNgLfvU3GTlX
- Y855jOaFC6WIg7DLCMCHiSk/KBREG6zhc+h7r/yg9cncFDsuU3zb5QcC6OxiUATiMXqwv2ynt1O
- i5YGyddqo/7QJ50Kh4/UMuUQ5OvKw+zqWef+rQF2xKkZfIGOt/sOf7nEcQ==
-X-Google-Smtp-Source: AGHT+IE60Atd89jsnJwFyH27jYg29WCHbrxurqvw5DSbvgOreQB0wUJMGWz9XYuNjuQn0mkNGsEOVA==
-X-Received: by 2002:a05:6a00:2351:b0:736:4644:86e6 with SMTP id
- d2e1a72fcca58-736aa9fdb77mr17903127b3a.12.1741587470807; 
- Sun, 09 Mar 2025 23:17:50 -0700 (PDT)
-Received: from [157.82.205.237] ([157.82.205.237])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736b064ae4dsm5450730b3a.23.2025.03.09.23.17.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Mar 2025 23:17:50 -0700 (PDT)
-Message-ID: <45c80b4a-530a-4ded-976e-26628556c119@daynix.com>
-Date: Mon, 10 Mar 2025 15:17:44 +0900
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1trWZZ-00057F-G3
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:25:09 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1trWZV-0008SZ-Rh
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 02:25:08 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxieC5hc5n0GqQAA--.5576S3;
+ Mon, 10 Mar 2025 14:24:57 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMDxH+W4hc5n6zRBAA--.46010S2;
+ Mon, 10 Mar 2025 14:24:56 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Fabiano Rosas <farosas@suse.de>,
+	Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH] tests/qtest/cpu-plug-test: Add cpu hotplug support for
+ LoongArch
+Date: Mon, 10 Mar 2025 14:24:56 +0800
+Message-Id: <20250310062456.2453189-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 10/10] docs/system: virtio-gpu: Document host/guest
- requirements
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20250309230539.125374-1-dmitry.osipenko@collabora.com>
- <20250309230539.125374-11-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250309230539.125374-11-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+X-CM-TRANSID: qMiowMDxH+W4hc5n6zRBAA--.46010S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,159 +65,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/03/10 8:05, Dmitry Osipenko wrote:
-> From: Alex Bennée <alex.bennee@linaro.org>
-> 
-> This attempts to tidy up the VirtIO GPU documentation to make the list
-> of requirements clearer. There are still a lot of moving parts and the
-> distros have some catching up to do before this is all handled
-> automatically.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Sergio Lopez Pascual <slp@redhat.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> [dmitry.osipenko@collabora.com: Extended and corrected doc]
-> ---
->   docs/system/devices/virtio-gpu.rst | 90 +++++++++++++++++++++++++++++-
->   1 file changed, 87 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-> index ea3eb052df3c..88c7b6011711 100644
-> --- a/docs/system/devices/virtio-gpu.rst
-> +++ b/docs/system/devices/virtio-gpu.rst
-> @@ -5,14 +5,28 @@ virtio-gpu
->   ==========
->   
->   This document explains the setup and usage of the virtio-gpu device.
-> -The virtio-gpu device paravirtualizes the GPU and display controller.
-> +The virtio-gpu device provides a GPU and display controller
-> +paravirtualized using VirtIO. It supports a number of different modes
-> +from simple 2D displays to fully accelerated 3D graphics.
->   
-> -Linux kernel support
-> ---------------------
-> +Linux guest kernel support
-> +--------------------------
->   
->   virtio-gpu requires a guest Linux kernel built with the
->   ``CONFIG_DRM_VIRTIO_GPU`` option.
->   
-> +3D acceleration
-> +---------------
-> +
-> +3D acceleration of a virtualized GPU is still an evolving field.
-> +Depending on the 3D mode you are running you may need to override
-> +distribution supplied libraries with more recent versions or enable
-> +build options. There are a number of requirements the host must meet
-> +to be able to be able to support guests. QEMU must be able to access the
-> +host's GPU and for the best performance be able to reliably share GPU
-> +memory with the guest. Details of 3D acceleration requirements are
-> +described in a further sections.
-> +
->   QEMU virtio-gpu variants
->   ------------------------
->   
-> @@ -65,8 +79,14 @@ intermediate representation is communicated to the host and the
->   `virglrenderer`_ library on the host translates the intermediate
->   representation back to OpenGL API calls.
->   
-> +By default OpenGL version on guest is limited to 4.3. In order to enable
-> +OpenGL 4.6 support, virtio-gpu  host blobs feature (``hostmem`` and ``blob``
-> +fields) should be enabled.  The ``hostmem`` field specifies the size of
-> +virtio-gpu host memory window. This is typically between 256M and 8G.
-> +
->   .. parsed-literal::
->       -device virtio-gpu-gl
-> +    -device virtio-gpu-gl,hostmem=8G,blob=true
->   
->   .. _virgl: https://docs.mesa3d.org/drivers/virgl.html
->   .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
-> @@ -94,6 +114,52 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
->   
->   .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
->   
-> +.. list-table:: Linux Host Requirements
-> +  :header-rows: 1
-> +
-> +  * - Capability
-> +    - Kernel Version
-> +  * - OpenGL pass-through
-> +    - Any Linux version compatible with QEMU if not using host blobs feature,
-> +      Linux 6.13+ otherwise
-> +  * - Vulkan pass-through
-> +    - Linux 6.13+
-> +  * - AMDGPU DRM native context
-> +    - Linux 6.13+
-> +  * - Freedreno DRM native context
-> +    - Linux 6.4+
-> +  * - Intel i915 DRM native context
-> +    - Linux 6.13+
-> +  * - Asahi DRM native context
-> +    - Downstream version of Asahi Linux kernel
+Add cpu hotplug testcase support for LoongArch system, it passes to
+run with command "make check-qtest-loongarch64" as following:
+  qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 0.64s 1 subtests passed
 
-Having a link for Asahi like one for i915 DRM native context merge 
-request would be nice.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ tests/qtest/cpu-plug-test.c | 28 ++++++++++++++++++++++++++++
+ tests/qtest/meson.build     |  2 +-
+ 2 files changed, 29 insertions(+), 1 deletion(-)
 
-> +
-> +.. list-table:: Linux Guest Requirements
-> +  :header-rows: 1
-> +
-> +  * - Capability
-> +    - Kernel Version
-> +    - Mesa Version
-> +  * - OpenGL pass-through
-> +    - Any Linux version supporting virtio-gpu
-> +    - 16.0.0+
-> +  * - Vulkan pass-through
-> +    - Linux 5.16+
-> +    - 24.2.0+
-> +  * - AMDGPU DRM native context
-> +    - Linux 6.14+
-> +    - 25.0.0+
-> +  * - Freedreno DRM native context
-> +    - Linux 6.14+
-> +    - 23.1.0+
-> +  * - Intel i915 DRM native context
-> +    - Linux 6.14+
-> +    - `mr29870`_
-> +  * - Asahi DRM native context
-> +    - Linux 6.14+
-> +    - 24.2.0+
-> +
-> +.. _mr29870: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
-> +
->   virtio-gpu rutabaga
->   -------------------
->   
-> @@ -133,3 +199,21 @@ Surfaceless is the default if ``wsi`` is not specified.
->   .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
->   .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
->   .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
-> +
-> +.. list-table:: Linux Host Requirements
-> +  :header-rows: 1
-> +
-> +  * - Capability
-> +    - Kernel version
-> +  * - Vulkan+Wayland pass-through
-> +    - Linux 6.13+
-> +
-> +.. list-table:: Linux Guest Requirements
-> +  :header-rows: 1
-> +
-> +  * - Capability
-> +    - Kernel Version
-> +    - Mesa Version
-> +  * - Vulkan pass-through
+diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+index 6633abfc10..790b9693b3 100644
+--- a/tests/qtest/cpu-plug-test.c
++++ b/tests/qtest/cpu-plug-test.c
+@@ -156,6 +156,32 @@ static void add_s390x_test_case(const char *mname)
+     g_free(path);
+ }
+ 
++static void add_loongarch_test_case(const char *mname)
++{
++    char *path;
++    PlugTestData *data;
++
++    if (!g_str_has_prefix(mname, "virt")) {
++        return;
++    }
++
++    data = g_new(PlugTestData, 1);
++    data->machine = g_strdup(mname);
++    data->cpu_model = "la464";
++    data->device_model = g_strdup("la464-loongarch-cpu");
++    data->sockets = 1;
++    data->cores = 3;
++    data->threads = 1;
++    data->maxcpus = data->sockets * data->cores * data->threads;
++
++    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
++                           mname, data->sockets, data->cores,
++                           data->threads, data->maxcpus);
++    qtest_add_data_func_full(path, data, test_plug_with_device_add,
++                             test_data_free);
++    g_free(path);
++}
++
+ int main(int argc, char **argv)
+ {
+     const char *arch = qtest_get_arch();
+@@ -168,6 +194,8 @@ int main(int argc, char **argv)
+         qtest_cb_for_every_machine(add_pseries_test_case, g_test_quick());
+     } else if (g_str_equal(arch, "s390x")) {
+         qtest_cb_for_every_machine(add_s390x_test_case, g_test_quick());
++    } else if (g_str_equal(arch, "loongarch64")) {
++        qtest_cb_for_every_machine(add_loongarch_test_case, g_test_quick());
+     }
+ 
+     return g_test_run();
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 8a6243382a..60e16614b2 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -149,7 +149,7 @@ qtests_hppa = \
+ 
+ qtests_loongarch64 = qtests_filter + \
+   (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+-  ['boot-serial-test']
++  ['boot-serial-test', 'cpu-plug-test']
+ 
+ qtests_m68k = ['boot-serial-test'] + \
+   qtests_filter
 
-The "Linux Host Requirements" refers to "Vulkan+Wayland pass-through" 
-but this table refers to "Vulkan pass-through". Please make them consistent.
-
-Regards,
-Akihiko Odaki
-
-> +    - Linux 5.16+
-> +    - 24.3.0+
-
+base-commit: d9a4282c4b690e45d25c2b933f318bb41eeb271d
+-- 
+2.39.3
 
 
