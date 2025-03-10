@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BF6C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B83C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trh0C-0007QQ-49; Mon, 10 Mar 2025 13:33:25 -0400
+	id 1trh0Z-0007YL-HQ; Mon, 10 Mar 2025 13:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trgzh-0007CR-KP
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:32:52 -0400
+ id 1trgzP-0006zT-Sj
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:32:36 -0400
 Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1trgzf-00045K-I7
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:32:49 -0400
+ id 1trgzO-00040e-7V
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:32:31 -0400
 Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-223a7065ff8so9403475ad.0
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:32:47 -0700 (PDT)
+ d9443c01a7336-22334203781so99648265ad.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741627966; x=1742232766; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741627948; x=1742232748; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Sac58OW9KVD0JTLog6v88FdMndEx1OKs7undtT6nU1Y=;
- b=KgGLchTGltA5Q83KxsqtEqU6FakTOncSpVymHjOephfgngwekIpIdCfYTuaBJS/hdg
- 7rOIcNlHPmfTCr1Nep7Gbojg/yXpJBHCXC4ucUDN/zuNRoqniTyxGnSiQXm/9wOKaeTg
- BfYN9gHwUckvSaHjKS3qqCa6KzfbTPpRxYUAqrOjHJ3GkeW1u34y/dza0UHxPWRMHm32
- SCCRpl4epsuR7EtUSk+djIKOsHLgElKGux1K6mlQEJQ69vWJMWErmGJupZ+bYr4fCx7d
- HTfM4U/apBsK+NG8JCo6PAg1vWK7uV8FOi6kv09KhXxw3c05jUElwluU4W3Nk/Aa2Pjz
- 0/Yw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FKvTTaeAXFeAoKKy/TUEugm6Lvxdb1J/dR+hd8yG8+Q=;
+ b=UyF7QwTmi2x5yzXvD+EAxbhMiAx9+ekPNezr1KE8uMBaFvL++5Y2MSOn66HKIUu/m1
+ WXp4sPrvFlTRxFaxkvVEXG/7JUZkS2wKNhTWjypg1b+DDcCTl9Ncr4bGUHaikdLFOTUo
+ LkNW91MIOO2SuWHWFPIgyoVdWajYa8R61HEWvN+b7hv8eUxFYVuCXSw80zaQ6GmPXBWo
+ t5Ma3eVX/35A8bbpemw6a9jmBi+XJh/nvPch4lv7zdOI524V2Xcx+VUP6vEVkrvwHTLJ
+ ZlXuNPMc2Y6iLB3gNLpcLcUzV7Q8GOnvKgygfBjWmmN3Hx3ljVYwFPhTDscru4rxgYfS
+ MWEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741627966; x=1742232766;
+ d=1e100.net; s=20230601; t=1741627948; x=1742232748;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Sac58OW9KVD0JTLog6v88FdMndEx1OKs7undtT6nU1Y=;
- b=LAbZdQD00GPWYhNVwYwDPFb8sV9KshoFMOIBUXC7KRVJN/N6zXdefdFpNfzwHOIGjn
- mH/IBB4VIJYoIhQGdydaWm0uSzoykZjN0hZclN/HOTemngdXXSGohWcnkq2FxCJNZckW
- m4IbvEOma8CKYrasHRFeWlyybESW75e3G/uwsz5u7So3dg86dKyl0KxQiiB2oLhgh6Rp
- IlW0Sri8iG+He4lggg25hNBS0uGbA4mOc4nxQhpKv+UKEC04Edgl9yZZ5WApTMmveMIK
- LGhGILLvuxUbZ1+u9jwTe7LkG5iUsLSkXuv+f8jiqbWNAfaV/7bqnamVTr2+zphGui/h
- VdYg==
+ bh=FKvTTaeAXFeAoKKy/TUEugm6Lvxdb1J/dR+hd8yG8+Q=;
+ b=TDRDu9Hqur8jWhcW9QXvEwrZLb7utmnvTNTSMbpTLpfs7tD4PpimNVFUYS8J2qLasN
+ +n9pTpwBbxP6wW8i0oSsJFP8RYu+hrfPOUd2rQtSLkrG+jxDRA0hO5XKFcnpMshwrox5
+ nWCvpPzXqYDH3sobTzHP40bTHJfVqWD/T3fRGODgmIQI0yeaO+iIeBz3GNaC94yXIu3s
+ X4QVM7r2ZndV26Dib1MX5V4g8YopZeGGSnQir+cCNdCIiZ5edpOqaGeKE1MrsxGmzSxj
+ yC/8B9QUabHwCpAvPIAO+YE9v4Wqi/4SnzlujS3f3+0Aq6oXJmBXzaXKLdVs52n88JMu
+ 7UDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVedoTewbNzF58ScD5hSk32cxgDe1onHcpQgy/iTdQYKUR3yVu5fqXScaJZYotbib7IYUm3zI+uylvU@nongnu.org
-X-Gm-Message-State: AOJu0YxA0iJIDeoWnlM43FwFq2cZGcdklW6HFJYUrOJemhcgZ9m5/g5v
- lrnIsuas33EEIT08f8mVaKV+vhXYv42XZH5nlu+rmpXnN2GW1ijXMsz5kBVooMc=
-X-Gm-Gg: ASbGncu4yrK6Zk3Ff6/s7TEZm/k/Rj4vNbZB90wnykN5Pc0q9a54ItxiF0y/xvMxyDp
- kc26qkPSOKlI/AwfFG4rh6xlERkVJFQVsxJUkom8Zlg0BnuB8t60DZ/WCOfz7pHXgxrkih+FSik
- 3wOhAiLFEA70hvUj6HyY1jxTukTH21zHBGX4IPLCjCWhfFULnQh6uQB7Uj2aySCD+Cqa58IC550
- /n+stKJ0CEV/ILkqE714yNBMdkH6Fo4fkaun+eoo5C607AEpL90Bi90wvAfZKtU92vXECxH6iZy
- pgMXyzhvYC0DRq7GpCeaJ7UNqBJvfQj12kXJ8+90dWNjM8fPQ7r38J+1jqXCNni4OQuY6LSgvKx
- FsNjvfLB9
-X-Google-Smtp-Source: AGHT+IEdXhMNYK12E8l65pYeo0hi4c9S2R6A7024I/cK/9c3ID+lqjq3Kl4wY90CrakUxoW5Sj9K2A==
-X-Received: by 2002:a17:902:c94d:b0:223:5c33:56a8 with SMTP id
- d9443c01a7336-22428ab89ccmr255617375ad.35.1741627965915; 
- Mon, 10 Mar 2025 10:32:45 -0700 (PDT)
+ AJvYcCWzNhlPAPvGXgJWeaeDt8K4e6Ap8ZWo3sd5/s3EfCp+cBMCylxSP2EuwBKS9zhWtZqTCrBL72/M8qXm@nongnu.org
+X-Gm-Message-State: AOJu0YyQdvGGNPsEtd4Y0r67yBcCnw1k3A51S4CwfcygTUc5KPzlo6X0
+ MnPo+0j3WtPauSy7m1UAyw9xdiGpZMwzK2vvGqRTqaIYmg4dPiL6F/+2BCOF2OY=
+X-Gm-Gg: ASbGncuTCe+FlhSRUt1Y76xly8L3bVGKjYzXqfcx6CtTAXl8ZvSrq07MXnh+AUbUT+5
+ L7kv6VgOABYrn1ViesKXNWaXgGzKTY9mh8V3vxNqw1iwxRdrhOeq4ypTnIVZ2Rq8zy/mX61yHEL
+ LotZ9PPgtdi3ir44yu1BuswtGjnrom/JsyEj9gdRV5YqEAaQplcLlc6wWpc2se3tGtC5nVsNfxv
+ dRgKCQLXWEvxZkY4KvXyQTzHwAcI6BE+281ijrXnNC+sqxhSQukmGu0zTl4NgEL2jAuQuU2gcHy
+ hsdVMMez9DEwV39GvUfABpQ5Fe/WAHZYjyCZ8qGbqbHdahoCCe8bW4QXX0+5M3Kr+xjAEKF0vel
+ Er+Fb6nGi
+X-Google-Smtp-Source: AGHT+IGlsTuVM/mWYGBPfTtazpwhgbmQOPR2gjCm9rQY9M9e9b0UBRTLp/Z541I5JBsXGEodHFeYGw==
+X-Received: by 2002:a05:6a00:1aca:b0:736:aea8:c9b7 with SMTP id
+ d2e1a72fcca58-736ec5c3c05mr456490b3a.2.1741627948521; 
+ Mon, 10 Mar 2025 10:32:28 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a91db3sm81146525ad.170.2025.03.10.10.32.45
+ d2e1a72fcca58-736cc153016sm3620330b3a.173.2025.03.10.10.32.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 10:32:45 -0700 (PDT)
-Message-ID: <8f747909-8b40-4994-b3fa-68d9b9c137af@linaro.org>
-Date: Mon, 10 Mar 2025 10:32:44 -0700
+ Mon, 10 Mar 2025 10:32:28 -0700 (PDT)
+Message-ID: <3dfedea0-baa3-4768-9c6b-033cb8b8adbd@linaro.org>
+Date: Mon, 10 Mar 2025 10:32:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/16] system/physmem: compilation unit is now common to
- all targets
+Subject: Re: [PATCH 13/16] hw/xen: add stubs for various functions
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "open list:X86" <xen-devel@lists.xenproject.org>
 References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
- <20250310045842.2650784-15-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-14-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250310045842.2650784-15-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250310045842.2650784-14-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
@@ -105,33 +105,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/9/25 21:58, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   system/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Those functions are used by system/physmem.c, and are called only if
+> xen is enabled (which happens only if CONFIG_XEN is not set).
 > 
-> diff --git a/system/meson.build b/system/meson.build
-> index c83d80fa248..9d0b0122e54 100644
-> --- a/system/meson.build
-> +++ b/system/meson.build
-> @@ -2,7 +2,6 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
->     'arch_init.c',
->     'ioport.c',
->     'memory.c',
-> -  'physmem.c',
->   )])
->   
->   system_ss.add(files(
-> @@ -15,6 +14,7 @@ system_ss.add(files(
->     'dma-helpers.c',
->     'globals.c',
->     'memory_mapping.c',
-> +  'physmem.c',
->     'qdev-monitor.c',
->     'qtest.c',
->     'rtc.c',
+> So we can crash in case those are called.
+> 
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> ---
+>   hw/xen/xen_stubs.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+>   hw/xen/meson.build |  3 +++
+>   2 files changed, 59 insertions(+)
+>   create mode 100644 hw/xen/xen_stubs.c
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
