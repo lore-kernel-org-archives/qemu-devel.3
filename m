@@ -4,62 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3293C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 14:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF96C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 14:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trdpb-0007aO-VR; Mon, 10 Mar 2025 10:10:12 -0400
+	id 1trdzO-0003dt-Ii; Mon, 10 Mar 2025 10:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trdpY-0007Us-HU; Mon, 10 Mar 2025 10:10:08 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1trdzL-0003Zm-V1; Mon, 10 Mar 2025 10:20:15 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1trdpW-0005KA-0Z; Mon, 10 Mar 2025 10:10:08 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 463A44E6032;
- Mon, 10 Mar 2025 15:10:00 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id XOEKomB5uHDl; Mon, 10 Mar 2025 15:09:58 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4327F4E6029; Mon, 10 Mar 2025 15:09:58 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 40CC574577C;
- Mon, 10 Mar 2025 15:09:58 +0100 (CET)
-Date: Mon, 10 Mar 2025 15:09:58 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>, 
- Joel Stanley <joel@jms.id.au>, Bernhard Beschow <shentey@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Guenter Roeck <linux@roeck-us.net>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org, 
- Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: Re: [PATCH v5 14/14] hw/sd/sdhci: Remove unnecessary 'endianness'
- property
-In-Reply-To: <20250310000620.70120-15-philmd@linaro.org>
-Message-ID: <d97b9dd5-e569-636d-8ee7-b1a48c402429@eik.bme.hu>
-References: <20250310000620.70120-1-philmd@linaro.org>
- <20250310000620.70120-15-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1trdzJ-0007Lr-EO; Mon, 10 Mar 2025 10:20:15 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52AAliwp003753;
+ Mon, 10 Mar 2025 14:20:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=CEBtf3
+ m9bkwc7q5hrkiNNgi3yy6WiwL2n9L2Ei2AwPo=; b=dvsPNOgk5QGwtVmjajMFKq
+ VG+qxNF6d/TcX1kzGc7BZ9JnfaKKHOuvZbBQRxG5uCN79+fXwzqVvvSq2wC/vtOt
+ XM4h80RLeNMeaJiBENdQ20rULh7R8c6U2+IIXulmnaslNN6Sd5XMLx54lvsLsgi3
+ HtzU8c6pOnRq6qtk1sRH8JhbFYqPxz0RlpDipR8Pk/wTRnL2LYYK/XBUj4uZLsD+
+ ULWH1MxE0MarwPQ0vig8qUu0RKAYUUngDHi2uEOMvn/Cr6220IoE4rghDJ5rFvb+
+ k0pNlNHZenogBmiiW+dCh3W/Rco08bcIOgp+RjjstRbhBISpMXhPCnXuta5mOk5w
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 459jd4usar-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Mar 2025 14:20:08 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52ABABA8027494;
+ Mon, 10 Mar 2025 14:20:08 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4591qkewjt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Mar 2025 14:20:08 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52AEK5aK20054730
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Mar 2025 14:20:05 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D8F5758066;
+ Mon, 10 Mar 2025 14:20:06 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C00E15804B;
+ Mon, 10 Mar 2025 14:20:05 +0000 (GMT)
+Received: from [9.61.250.189] (unknown [9.61.250.189])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 10 Mar 2025 14:20:05 +0000 (GMT)
+Message-ID: <27ccfad0-99d1-47a5-8370-2b16ea924ac9@linux.ibm.com>
+Date: Mon, 10 Mar 2025 10:20:05 -0400
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-983117665-1741615798=:72286"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 1/5] linux-headers: NOTFORMERGE - placeholder uapi
+ updates for AP config change
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-s390x@nongnu.org, Vasily Gorbik <gor@linux.ibm.com>
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
+References: <20250204170759.36540-1-rreyes@linux.ibm.com>
+ <20250204170759.36540-2-rreyes@linux.ibm.com>
+ <52dddefa-a9d6-41e7-ad23-a93f65896034@redhat.com>
+Content-Language: en-US
+From: Rorie Reyes <rreyes@linux.ibm.com>
+In-Reply-To: <52dddefa-a9d6-41e7-ad23-a93f65896034@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: CfQTm1-JnsWA1hfSs3aLUwFQ53KIxOnd
+X-Proofpoint-GUID: CfQTm1-JnsWA1hfSs3aLUwFQ53KIxOnd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-10_05,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0
+ phishscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501 mlxscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503100110
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,145 +114,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 2/5/25 3:38 AM, Cédric Le Goater wrote:
 
---3866299591-983117665-1741615798=:72286
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+>
+> Are the kernel changes planned for 6.14 ?
+>
+> FYI, QEMU 10.0 hard freeze is scheduled for 2025-03-18 which is
+> approximately when 6.14-rc7 will be released.
+>
+> Thanks,
+>
+> C. 
 
-On Mon, 10 Mar 2025, Philippe Mathieu-Daudé wrote:
-> The previous commit removed the single use of instance
-> setting the "endianness" property.
->
-> Since classes can register their io_ops with correct
-> endianness, no need to support different ones.
->
-> Remove the code related to SDHCIState::endianess field.
->
-> Remove the now unused SDHCIState::io_ops field, since we
-> directly use the class one.
->
-> Suggested-by: Bernhard Beschow <shentey@gmail.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> hw/sd/sdhci-internal.h |  1 -
-> include/hw/sd/sdhci.h  |  2 --
-> hw/sd/sdhci.c          | 33 +++------------------------------
-> 3 files changed, 3 insertions(+), 33 deletions(-)
->
-> diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-> index d99a8493db2..e4da6c831d1 100644
-> --- a/hw/sd/sdhci-internal.h
-> +++ b/hw/sd/sdhci-internal.h
-> @@ -308,7 +308,6 @@ extern const VMStateDescription sdhci_vmstate;
-> #define SDHC_CAPAB_REG_DEFAULT 0x057834b4
->
-> #define DEFINE_SDHCI_COMMON_PROPERTIES(_state) \
-> -    DEFINE_PROP_UINT8("endianness", _state, endianness, DEVICE_LITTLE_ENDIAN), \
->     DEFINE_PROP_UINT8("sd-spec-version", _state, sd_spec_version, 2), \
->     DEFINE_PROP_UINT8("uhs", _state, uhs_mode, UHS_NOT_SUPPORTED), \
->     \
-> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-> index e8fced5eedc..1016a5b5b77 100644
-> --- a/include/hw/sd/sdhci.h
-> +++ b/include/hw/sd/sdhci.h
-> @@ -54,7 +54,6 @@ struct SDHCIState {
->     AddressSpace sysbus_dma_as;
->     AddressSpace *dma_as;
->     MemoryRegion *dma_mr;
-> -    const MemoryRegionOps *io_ops;
->
->     QEMUTimer *insert_timer;       /* timer for 'changing' sd card. */
->     QEMUTimer *transfer_timer;
-> @@ -105,7 +104,6 @@ struct SDHCIState {
->
->     /* Configurable properties */
->     uint32_t quirks;
-> -    uint8_t endianness;
->     uint8_t sd_spec_version;
->     uint8_t uhs_mode;
-> };
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 47e4bd1a610..cbb9f4ae8c0 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -1391,17 +1391,6 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-> }
->
-> static const MemoryRegionOps sdhci_mmio_le_ops = {
-> -    .read = sdhci_read,
-> -    .write = sdhci_write,
-> -    .valid = {
-> -        .min_access_size = 1,
-> -        .max_access_size = 4,
-> -        .unaligned = false
-> -    },
-> -    .endianness = DEVICE_LITTLE_ENDIAN,
-> -};
-> -
-> -static const MemoryRegionOps sdhci_mmio_be_ops = {
->     .read = sdhci_read,
->     .write = sdhci_write,
->     .impl = {
-> @@ -1413,7 +1402,7 @@ static const MemoryRegionOps sdhci_mmio_be_ops = {
->         .max_access_size = 4,
->         .unaligned = false
->     },
-> -    .endianness = DEVICE_BIG_ENDIAN,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> };
->
-> static void sdhci_init_readonly_registers(SDHCIState *s, Error **errp)
-> @@ -1467,23 +1456,6 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
->     SDHCIClass *sc = s->sc;
->     const char *class_name = object_get_typename(OBJECT(s));
->
-> -    s->io_ops = sc->io_ops ?: &sdhci_mmio_le_ops;
-> -    switch (s->endianness) {
-> -    case DEVICE_LITTLE_ENDIAN:
-> -        /* s->io_ops is little endian by default */
-> -        break;
-> -    case DEVICE_BIG_ENDIAN:
-> -        if (s->io_ops != &sdhci_mmio_le_ops) {
-> -            error_setg(errp, "SD controller doesn't support big endianness");
-> -            return;
-> -        }
-> -        s->io_ops = &sdhci_mmio_be_ops;
-> -        break;
-> -    default:
-> -        error_setg(errp, "Incorrect endianness");
-> -        return;
-> -    }
-> -
->     sdhci_init_readonly_registers(s, errp);
->     if (*errp) {
->         return;
-> @@ -1493,7 +1465,7 @@ void sdhci_common_realize(SDHCIState *s, Error **errp)
->     s->fifo_buffer = g_malloc0(s->buf_maxsz);
->
->     assert(sc->iomem_size >= SDHC_REGISTERS_MAP_SIZE);
-> -    memory_region_init_io(&s->iomem, OBJECT(s), s->io_ops, s, class_name,
-> +    memory_region_init_io(&s->iomem, OBJECT(s), sc->io_ops, s, class_name,
->                           sc->iomem_size);
-> }
->
-> @@ -1578,6 +1550,7 @@ void sdhci_common_class_init(ObjectClass *klass, const void *data)
->     dc->vmsd = &sdhci_vmstate;
->     device_class_set_legacy_reset(dc, sdhci_poweron_reset);
->
-> +    sc->io_ops = &sdhci_mmio_le_ops;
+Vasily - Since you applied my kernel patches already ([RFC PATCH v2] 
+s390/vfio-ap: Notify userspace that guest's AP config changed when mdev 
+removed), would you be able to answer Cedric's
 
-You call common_class_init in subclass class_inits last so this would 
-overwrite what subclass has set, doesn't it? I think you either have to 
-change order in subclass class_init methods or not set this here.
+a question?
 
-Regards,
-BALATON Zoltan
+Cedric - I have some changes I need to make based on Tony's review 
+comments from Friday, but I'll wait to post it once you get an answer 
+for your question. Sorry I took a while to respond. I had to
 
->     sc->iomem_size = SDHC_REGISTERS_MAP_SIZE;
-> }
->
->
---3866299591-983117665-1741615798=:72286--
+make some changes for my kernel code this past month.
+
 
