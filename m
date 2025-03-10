@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF65BC28B2E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C564C28B28
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 00:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trQhU-0003a7-Dq; Sun, 09 Mar 2025 20:08:56 -0400
+	id 1trQi7-0004qw-01; Sun, 09 Mar 2025 20:09:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQgB-0002NE-8k
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQg7-0002MZ-5H
  for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:07:42 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQg9-0007Vf-La
- for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:07:35 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cfa7e7f54so1254185e9.1
- for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:07:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trQg3-0007Tv-Vh
+ for qemu-devel@nongnu.org; Sun, 09 Mar 2025 20:07:29 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3913fdd003bso397810f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Mar 2025 17:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741565251; x=1742170051; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741565246; x=1742170046; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G5cfsxYC6Xjld/r/JqOEermJubm5JBpQoqIXWekO6mg=;
- b=nneatwbfbwVp29rYFzmzKnhJyWbGVwcoEEkNxxnkcVkkC5N8N4QY6UHC3vNBZsaeG8
- ON23bCJpsWrbF65stmMmQSqRmkADUX35HoCKHgWcanB0DIpk2qhcFaxTNZM9SJKoHKf6
- 8GxBwGA5qxX3PHTMVzSuyRsoY26Xxm9la5TveVz0TvZcQS8Qt4Ip+QYqvARc6staAjCt
- naofQY0BqQNEFlTcV9rv46gp05SmPOPFFhVrcIUXKl8+bVRRRGexXol+iP8zkgwUiOTS
- llXoCIMnD58QPY+I+6+wxwfmtsFgK4TworV2A23XK7FEuJRLzyG4hV9TJLN6Bt7qOPdw
- 2F1g==
+ bh=/CV9763Q2OclYQny8AL1J9alx4TgqLIH5/4iLk98ggU=;
+ b=CHZcEKiftzUvXVBTyVosVoBdYFfo/XtsPlWZX0tYfrRMAKFRWG8ZqCsEdQ6yg5sZnS
+ M4Jk2hDD8jN2OXYVIhD6kKHSV37jvSkk5Dk6hv7ZXyaFU6YnWJiJBkLesSgrJeFG4ne5
+ xpo/q22yy+UU/Vg+M5iYiSFPu+bL9mrPbtEr76xq0E2HfknJtescw53A37RZVjVZjDZQ
+ dKtYo12zOvvbf9bUm71zSremsthgxLpnulvsccwc3luuWdWJF+00loUhxiWDihDHAaDx
+ EYluIFuIAn2IL/GrJOauf4VPvyrtIpURgt+oeDB/NOPl6GfNn8krVjtYnepoLAp+XZVn
+ pvPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741565251; x=1742170051;
+ d=1e100.net; s=20230601; t=1741565246; x=1742170046;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G5cfsxYC6Xjld/r/JqOEermJubm5JBpQoqIXWekO6mg=;
- b=NVQM80XAioX2HhFyPXhY5UCNQKzhky4pfDADla9SPLSzLfiWq7bbKmBEInuzCyQ3pN
- bhv4jMH7T/JrFJE0pkUUYDc9SvsWOOBWT9TxtBkpJgvuKDcnftlSnKx2mGeS4CwSBozK
- EpCCyY814sLLr2Yuf8XyEqbXPpBJwErkqsoLPac3Yi/YMFRSdhVjdNcah9lKbvGsyydS
- anrLneLZkqMIG11m0TKB9xjZcdW4r+BW6gatB6QMq/UJ8ymxDLe5Tb2kwVuqA4Ne5aI8
- LRJGpwArdFD0PixOJKBvDf7pwWyO8gYi5k0/i6TUEzzXp25FALGQYT1Sup4yYNSaRLpK
- kk2g==
+ bh=/CV9763Q2OclYQny8AL1J9alx4TgqLIH5/4iLk98ggU=;
+ b=aPSSp4VdqBST+1aChlYZF+ViUjg4XrzPdR7NlAMpyw4ny7OJRGT5gJ8QPxYTZGbM4G
+ ol3dmOpTNQEccM31Scw/ZdtBifeb1xEfbnrboNKBRTjeJXu5Yyu2249R0vzLFFOQOjQ9
+ iApW29ZL2W8QMze/3O5OdxTmNMn1TtIjvxcXq40Lim/wn021L+rpxswhS7KM8TT/Ivmo
+ gPNsioy6+H/XYqw9KG1c7JMNklEd6t745093wZGol0t55RiNiNb5YB8+XtuTuoyBZTMk
+ TNrSSszaAWD6PXY4aqwZowJu11uqY/kXRcB/cOsy3FDLPjOxHWYkvGgKk29Ady5BNZzd
+ GBkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJrOMYmGPDjdGP+gKUf9hNFQg4lNsDeKVsVsKewrSw59mw2ZNO3iZdQ6CotuuWLr1uMKc+iL/XENyC@nongnu.org
-X-Gm-Message-State: AOJu0YwxEyhS6rBNqeUqkJSH2abq0DmA/YuJJZ+X8CGC9JWmllZc9N7T
- fPwr1efhtu84jhqVCxTrWUQUcMsO1Cv7+PPZ/WXTXaQYUATt4ckHaMPf+qsZMhE=
-X-Gm-Gg: ASbGncv3BlDgYr/JbTNcWcRQ8hgV/U0GPTjBCXGKL61Vxwx8OUXwDWK4323p29fZMSc
- 9s1ys+/mfZ5D/GqDikgl0CllLwPCXWHesZLg+4W0Y+A+3HgKzcUprqycOTplXedEgDN79zoNJB2
- mlSW6gk2tTnEvlSOPOGQDatHkC7pOtoBd+BRLF1Qzw1tzZSIcy6XLv6aGkv0fV+Jwpi2Aq9O1Y8
- 2cKbG2nHJ6cbj7rGvi4RdQJoYH0m6yzIPeWR1WbPhfY+8SK7zNBFCXBXM6d7LSOBctKYXB1CR3E
- Sll9Gnkrcihzf+JsYuUOrdJdeKQQHBNAJn6sOkqqMjOqgi3Plv62cxcysLG0G+X6UYBqWpsSYxv
- pJTJvMilBVShFT4IdF3g=
-X-Google-Smtp-Source: AGHT+IEhh9NwzECdI4Tc9MSV2/EcCXRTLQg8iKhWY8DRcCUsXG/E2Q6uVro6pRDyFUpCZzEIGYjSNA==
-X-Received: by 2002:a05:600c:1d01:b0:439:8e95:796a with SMTP id
- 5b1f17b1804b1-43ce4dd80fdmr46685805e9.13.1741565251461; 
- Sun, 09 Mar 2025 17:07:31 -0700 (PDT)
+ AJvYcCUsPtT9g0ZWzRZvfTHMsgdrAAcNZSOhBiNLhAHEOPzOwNg8Y8pq7PSPlFaEwUDbyOGmjtKefSdkX9pI@nongnu.org
+X-Gm-Message-State: AOJu0YxmL5s3OVK6Mtc00ZcWpWdAFi87WvguoCizMapv6LXtmCyTpl1C
+ BohWwokwMXZrq52Qwgl5vQEB8xpBCUCeC+YWJY9J/dmHporMnY52k8d378O36jI=
+X-Gm-Gg: ASbGncsEsi5RMaruXd7tMgMTFVzPIo3dxsLfKaTAdkR8vloGtL4wutpBIvKgcBYLr38
+ Bb5quFZnSU0dZtkCJA4+j6Q8U9fKSTimVk2JMTwClSw3uhDr7IoKGDiPt9lU6xtoEzbVzLqZEBX
+ ZAsrtZVVZrjnt66CzvAoRT++zlVbyveKsUwHDkoQzLKp3Au3YQf768V9gpdyHdwy3d7F3+pAkPS
+ 5+Wqh1NoIKQFYbHTwiShI+PPP76JNqn9yiEUdLWv5cQWtEFCNZ3rB7byhY0cjOXAfF4hfJ0AVwm
+ otpv7cF7nL0CIxFaB+rV8AAM8POcT3uh4+VmqP3CanSIbDTRVKPPDCC8DuWf+D/3nioCUnXOVnA
+ DjMilIpUXhBg5Jd5UcJ8=
+X-Google-Smtp-Source: AGHT+IFoClJlyOuPr/WDQ5vRdtBR9j8N75yyvLBubt7FhRw7WVZWafOinlTST1Q/gVsTUdybjUNFUA==
+X-Received: by 2002:a5d:6c6a:0:b0:38d:dc03:a3d6 with SMTP id
+ ffacd0b85a97d-3913aed81aamr4029381f8f.4.1741565246349; 
+ Sun, 09 Mar 2025 17:07:26 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e222dsm13208524f8f.72.2025.03.09.17.07.30
+ ffacd0b85a97d-3912c103f57sm13217968f8f.91.2025.03.09.17.07.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 09 Mar 2025 17:07:30 -0700 (PDT)
+ Sun, 09 Mar 2025 17:07:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: BALATON Zoltan <balaton@eik.bme.hu>,
 	qemu-devel@nongnu.org
@@ -80,17 +80,18 @@ Cc: Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [PATCH v5 13/14] hw/ppc/e500: Replace generic SDHCI by Freescale eSDHC
-Date: Mon, 10 Mar 2025 01:06:19 +0100
-Message-ID: <20250310000620.70120-14-philmd@linaro.org>
+Subject: [PATCH v5 12/14] hw/sd/sdhci: Implement Freescale eSDHC as
+ TYPE_FSL_ESDHC
+Date: Mon, 10 Mar 2025 01:06:18 +0100
+Message-ID: <20250310000620.70120-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250310000620.70120-1-philmd@linaro.org>
 References: <20250310000620.70120-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,55 +114,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zoltan reported some U-Boot versions seem to want registers
-to be initialized correctly before expecting interrupts.
-
-Now than we have a proper Freescale eSDHC implementation,
-use it.
+Per the MPC8569E reference manual, its SDHC I/O range is 4KiB
+wide, mapped in big endian order, and it only accepts 32-bit
+aligned access. Set the default register reset values.
 
 Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/ppc/e500.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ include/hw/sd/sdhci.h |  2 ++
+ hw/sd/sdhci.c         | 44 ++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 45 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index fe8b9f79621..2de7d94df9c 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -49,7 +49,6 @@
- #include "hw/i2c/i2c.h"
- #include "hw/irq.h"
- #include "hw/sd/sdhci.h"
--#include "hw/misc/unimp.h"
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index b21adcab670..e8fced5eedc 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -171,6 +171,8 @@ DECLARE_CLASS_CHECKERS(SDHCIClass, PCI_SDHCI,
+ #define TYPE_SYSBUS_SDHCI "generic-sdhci"
+ OBJECT_DECLARE_TYPE(SDHCIState, SDHCIClass, SYSBUS_SDHCI)
  
- #define EPAPR_MAGIC                (0x45504150)
- #define DTC_LOAD_PAD               0x1800000
-@@ -1027,22 +1026,13 @@ void ppce500_init(MachineState *machine)
++#define TYPE_FSL_ESDHC "fsl-esdhc"
++
+ #define TYPE_IMX_USDHC "imx-usdhc"
  
-     /* eSDHC */
-     if (pmc->has_esdhc) {
--        dev = qdev_new(TYPE_UNIMPLEMENTED_DEVICE);
--        qdev_prop_set_string(dev, "name", "esdhc");
--        qdev_prop_set_uint64(dev, "size", MPC85XX_ESDHC_REGS_SIZE);
--        s = SYS_BUS_DEVICE(dev);
--        sysbus_realize_and_unref(s, &error_fatal);
--        memory_region_add_subregion(ccsr_addr_space, MPC85XX_ESDHC_REGS_OFFSET,
--                                    sysbus_mmio_get_region(s, 0));
--
-         /*
-          * Compatible with:
-          * - SD Host Controller Specification Version 2.0 Part A2
-          * (See MPC8569E Reference Manual)
-          */
--        dev = qdev_new(TYPE_SYSBUS_SDHCI);
-+        dev = qdev_new(TYPE_FSL_ESDHC);
-         qdev_prop_set_uint8(dev, "sd-spec-version", 2);
--        qdev_prop_set_uint8(dev, "endianness", DEVICE_BIG_ENDIAN);
-         s = SYS_BUS_DEVICE(dev);
-         sysbus_realize_and_unref(s, &error_fatal);
-         sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, MPC85XX_ESDHC_IRQ));
+ #define TYPE_S3C_SDHCI "s3c-sdhci"
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index f731b1a141a..47e4bd1a610 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1667,7 +1667,44 @@ static void sdhci_bus_class_init(ObjectClass *klass, void *data)
+     sbc->set_readonly = sdhci_set_readonly;
+ }
+ 
+-/* --- qdev i.MX eSDHC --- */
++/* --- Freescale eSDHC (MPC8569ERM Rev.2 from 06/2011) --- */
++
++static const MemoryRegionOps fsl_esdhc_mmio_ops = {
++    .read = sdhci_read,
++    .write = sdhci_write,
++    .valid = {
++        /*
++         * Per the reference manual (chapter 16):
++         *
++         * All eSDHC registers must be accessed as aligned 4-byte quantities.
++         * Accesses to the eSDHC registers that are less than 4-bytes are not
++         * supported.
++         */
++        .min_access_size = 4,
++        .unaligned = false
++    },
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
++static void fsl_esdhc_class_init(ObjectClass *oc, void *data)
++{
++    SDHCIClass *sc = SYSBUS_SDHCI_CLASS(oc);
++
++    sc->iomem_size = 0x1000;
++    sc->io_ops = &fsl_esdhc_mmio_ops;
++    sc->ro.capareg = 0x01e30000;
++    sc->reset.sdmasysad = 8;
++    sc->reset.blkcnt = 8;
++    sc->reset.prnsts = 0xff800000;
++    sc->reset.hostctl1 = 0x20; /* Endian mode (address-invariant) */
++    sc->reset.clkcon = 0x8000;
++    sc->reset.norintstsen = 0x013f;
++    sc->reset.errintstsen = 0x117f;
++
++    sdhci_common_class_init(oc, data);
++}
++
++/* --- qdev i.MX uSDHC --- */
+ 
+ #define USDHC_MIX_CTRL                  0x48
+ 
+@@ -1997,6 +2034,11 @@ static const TypeInfo sdhci_types[] = {
+         .class_size = sizeof(SDHCIClass),
+         .class_init = sdhci_sysbus_class_init,
+     },
++    {
++        .name = TYPE_FSL_ESDHC,
++        .parent = TYPE_SYSBUS_SDHCI,
++        .class_init = fsl_esdhc_class_init,
++    },
+     {
+         .name = TYPE_IMX_USDHC,
+         .parent = TYPE_SYSBUS_SDHCI,
 -- 
 2.47.1
 
