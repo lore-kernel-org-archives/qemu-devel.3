@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49780C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 11:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23C0C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trbe8-0006AK-Bi; Mon, 10 Mar 2025 07:50:14 -0400
+	id 1trbuR-00023W-9h; Mon, 10 Mar 2025 08:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trbe5-00069b-7D
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 07:50:10 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trbe1-00075K-Oo
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 07:50:08 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3913958ebf2so1844339f8f.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 04:50:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741607401; x=1742212201; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=68ZVYC3i6pbU9jPpcUojqydpDLEnl4MXVo9+wUYL1ak=;
- b=KQ3a0OUGC4UjpkhBG56NGL/th0fHDmVZP2YyjiTPcO+qabOqYIiGV/70HwMH/ji4Yt
- 3LgFyiSzfVez/74rLVxF3PAwUT8Pmu/w0mHKFS8kNbkyR/ouaonYcKLLfs14cLO7RkQ2
- o1NmYJ3hiv7T19BxGXcXbRu8dKY3ihtekUSTkSgcVrQVQfzSL+bVwE0p8DwUrtIrIZxK
- JEwhlLNTlLglQqUB1FvTqC24elzbjjii0lWC4kxiADgNQ6IxVO4AhcsyIduzxXpbLbOm
- Bwt6qrasmQ5kx6K8mAlCYLP8yRMHC3d3kXFabUizvjr6Eu8cNv0uTaWZskqKaO10LIIr
- GngA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741607401; x=1742212201;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=68ZVYC3i6pbU9jPpcUojqydpDLEnl4MXVo9+wUYL1ak=;
- b=j2MlTURCb3YM4//zld/wTFotlsEEw4fH7jkE5WtP5g/o6e5lGGmwdYlYNg6IVEUJY6
- qTG35AHcpp7Y5DrWdD1QKLJtLLkT++8JL5tb21eZDNODAayQkpm+TZjJ+stUrUl6O/xc
- i064Ezn8PexYM+Tq7P0rpCGAWHcE9/frxMwXWuo5dTaVPmU9gdn+3yEHfKB51jpPF7ML
- /mpJfVyV9cfoRn1AxxAuGvCtq6E/QX6qF8rlSat66bcS91XkSJghe/E49ythMUMh+Kjm
- wRi3W72JFcjWSHjunFvzGiRz1W+04hfy1fwt/68v+7maVCkyaUjOW+wc3e6/QP2slWd3
- sGcA==
-X-Gm-Message-State: AOJu0Yxqq562GpMOcPBa16laUA/wMR6uypovb1cNHGNUFMO3pGnJE1Bp
- +iSrsDewUbp4cRa87sCQVpdipGXSfl8KjgoumGkSgekTz1dj5aG885W1s63KNdM=
-X-Gm-Gg: ASbGnctrCxCQzd/cICYNtT+jwLGWvvM5SGiuJHMvy0nGPGc1hfWWR2RuMkW4iAgneNw
- zN/iPm3g+I+jNmNr0pBFhVF/UjezwI4sapoevuXIsXNRAzQTN7AA8ND10QKHEKZWFnp2dkS/7YU
- 0Q+FG6PhrCB/xfcDcdqTT0O3SG+zY7GZZWchr+MkKg6E/MGNdRTQviIUVmJAmBXj+lCtQ3UUfBC
- ttItBBYy1Ov/QaQU76bSxAfxFO9yfmjSHGi4HPdmwst+JNpP0KL4+oOtese7cJk2cEbvy/SVAOy
- kW8IB/Ymf1ChqbV7iVHWnRwzL3FcJSuEguKhzmrRe8plXK8=
-X-Google-Smtp-Source: AGHT+IE9zqVWenod3+tE+Lc/2jQKybd5NPdnjGjJ7V23kTMrnglmSU2CkTpgywjYOfQNAOQk5iOPOg==
-X-Received: by 2002:a5d:47c8:0:b0:391:30b9:556a with SMTP id
- ffacd0b85a97d-39132d06e7fmr8217394f8f.7.1741607399402; 
- Mon, 10 Mar 2025 04:49:59 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfba848sm14332525f8f.4.2025.03.10.04.49.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Mar 2025 04:49:58 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E22385F748;
- Mon, 10 Mar 2025 11:49:57 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v2 00/31] testing, plugin and maintainer updates
-Date: Mon, 10 Mar 2025 11:49:57 +0000
-Message-Id: <20250310114957.3401710-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1trbuO-00023B-PH
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:07:00 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1trbuL-0002Es-Tj
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:07:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1741608399; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=K7dE3ZflbUSf9swvEuaggL5lfR72iIvw3NGYN2mdX1ePGMfgmIkawwdQitc2pKRfxL8MvKqzKxRG1/AxUS8DUxdkh3n2QSXiR+8QLS/Y4eJeEzGVsInTdrrx5q1XYP15EIdRRImV69K+B5aqCsa4dqoBzZ5GnFw+8bClI1rxWfg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1741608399;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=mNOyTeI2uz0QInJ28/2+zdlfc3dz/VJUIJJs/5uX+xg=; 
+ b=UPV9i9YK12S/WBNBRE9mcAyUxnoAbDl4BZfGW19qFe96K2TFgwZXcp0tfVb9juLj/KlpNCpR0OVvJLkky0PgxZrmayb8R3vQN/BCiuobqyqSNZxM/bYHvss9MaSo77u7DdHwtpTAQB2fmiYyFP/amgaSi5v1HjIyj88bQwkVxHU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741608399; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=mNOyTeI2uz0QInJ28/2+zdlfc3dz/VJUIJJs/5uX+xg=;
+ b=Ji0L5dHLnToi9D15nexNvEU8CYZxV2yRsgB80kCDRzPwlBp7mqrq467bBWHM2//6
+ iHU7csWbMZUPcojS0ZCwnRJjr2KQvTIWZFkrSAHLUH6KFwiLSlEOuGwp2PA43J2FKcs
+ z7J3JpjKUw5S8A2wa5jxjyv00mp9tYpZnjpQAtls=
+Received: by mx.zohomail.com with SMTPS id 1741608396459637.9105127370824;
+ Mon, 10 Mar 2025 05:06:36 -0700 (PDT)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+Subject: [PATCH v11 00/10] Support virtio-gpu DRM native context
+Date: Mon, 10 Mar 2025 15:05:45 +0300
+Message-ID: <20250310120555.150077-1-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,148 +92,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5136598e2667f35ef3dc1d757616a266bd5eb3a2:
+This patchset adds DRM native context support to VirtIO-GPU on Qemu.
 
-  Merge tag 'accel-cpus-20250309' of https://github.com/philmd/qemu into staging (2025-03-10 13:40:48 +0800)
+Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
+DRM native context [1] mediates lower level kernel driver UAPI, which
+reflects in a less CPU overhead and less/simpler code needed to support it.
+DRM context consists of a host and guest parts that have to be implemented
+for each GPU driver. On a guest side, DRM context presents a virtual GPU as
+a real/native host GPU device for GL/VK applications.
 
-are available in the Git repository at:
+[1] https://www.youtube.com/watch?v=9sFP_yddLLQ
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-10.0-for-softfreeze-100325-3
+Today there are four DRM native context drivers existing in a wild:
 
-for you to fetch changes up to 0d3dea7d7a49c22897e7435e8e09d9f587bc56c8:
+  - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+  - AMDGPU, completely upstreamed
+  - Intel (i915), merge requests are opened
+  - Asahi (Apple SoC GPUs), partially merged upstream
 
-  MAINTAINERS: remove widely sanctioned entities (2025-03-10 10:30:01 +0000)
+# How to try out DRM context:
 
-----------------------------------------------------------------
-functional and tcg tests, plugins and MAINTAINERS
+1. DRM context uses host blobs and on host requires latest 6.13 version
+of Linux kernel that contains necessary KVM fixes.
 
-  - update and expand aarch64 GPU tests
-  - fix build dependence for plugins
-  - update libvirt-ci to vulkan-tools
-  - allow plugin tests to run on non-POSIX systems
-  - tweak test/vm times
-  - mark test-vma as linux only
-  - various compiler fixes for tcg tests
-  - add gitlab build unit tracker
-  - error out early on stalled RME tests
-  - compile core plugin code once
-  - update MAINTAINERS
+2. Use latest Mesa (both guest and host) and libvirglrenderer versions.
+ Use build flags documented in tha patch #10 of this series.
 
-----------------------------------------------------------------
-Alex Bennée (26):
-      tests/functional: move aarch64 GPU test into own file
-      tests/functional: factor out common code in gpu test
-      tests/functional: ensure we have a GPU device for tests
-      tests/functional: bail early if vkmark hangs
-      tests/functional: skip vulkan tests with nVidia
-      tests/functional: expand tests to cover virgl
-      tests/functional: update the aarch64_virg_gpu images
-      libvirt-ci: bump to latest for vulkan-tools
-      tests/vm: bump timeout for shutdown
-      tests/tcg: mark test-vma as a linux-only test
-      tests/tcg: add message to _Static_assert in test-avx
-      tests/tcg: fix constraints in test-i386-adcox
-      tests/tcg: enable -fwrapv for test-i386-bmi
-      gitlab: add a new build_unit job to track build size
-      plugins/api: use qemu_target_page_mask() to get value
-      plugins/loader: populate target_name with target_name()
-      include/qemu: plugin-memory.h doesn't need cpu-defs.h
-      plugins/api: clean-up the includes
-      plugins/plugin.h: include queue.h
-      plugins/loader: compile loader only once
-      plugins/api: split out binary path/start/end/entry code
-      plugins/api: split out the vaddr/hwaddr helpers
-      plugins/api: split out time control helpers
-      plugins/api: build only once
-      plugins/core: make a single build unit
-      MAINTAINERS: remove widely sanctioned entities
+3. On guest, use latest Linux kernel v6.14-rc or newer.
 
-Peter Maydell (1):
-      tests/tcg: Suppress compiler false-positive warning on sha1.c
+Example Qemu cmdline that enables DRM context:
 
-Philippe Mathieu-Daudé (2):
-      tests/functional: Introduce the dso_suffix() helper
-      tests/functional: Allow running TCG plugins tests on non-Linux/BSD hosts
+  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=on,drm_native_context=on \
+      -machine q35,accel=kvm,memory-backend=mem1 \
+      -object memory-backend-memfd,id=mem1,size=8G -m 8G
 
-Pierrick Bouvier (2):
-      plugins: add explicit dependency in functional tests
-      tests/functional: add boot error detection for RME tests
+# Note about known performance problem in Qemu:
 
- MAINTAINERS                                        |   8 +-
- meson.build                                        |   1 +
- include/qemu/plugin-memory.h                       |   1 -
- plugins/plugin.h                                   |   7 +
- bsd-user/plugin-api.c                              |  15 ++
- linux-user/plugin-api.c                            |  15 ++
- plugins/api-system.c                               | 131 ++++++++++++++++
- plugins/api-user.c                                 |  57 +++++++
- plugins/api.c                                      | 171 +--------------------
- plugins/core.c                                     |  10 +-
- plugins/loader.c                                   |  15 +-
- plugins/system.c                                   |  24 +++
- plugins/user.c                                     |  19 +++
- tests/tcg/i386/test-avx.c                          |   2 +-
- tests/tcg/i386/test-i386-adcox.c                   |   6 +-
- tests/tcg/multiarch/{ => linux}/test-vma.c         |   0
- common-user/plugin-api.c.inc                       |  43 ++++++
- .gitlab-ci.d/check-units.py                        |  66 ++++++++
- .gitlab-ci.d/cirrus/freebsd-14.vars                |   2 +-
- .gitlab-ci.d/cirrus/macos-14.vars                  |   2 +-
- .gitlab-ci.d/static_checks.yml                     |  22 +++
- bsd-user/meson.build                               |   1 +
- contrib/plugins/meson.build                        |   2 +
- linux-user/meson.build                             |   1 +
- plugins/meson.build                                |  11 +-
- scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml   |   1 +
- scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml     |   1 +
- tests/docker/dockerfiles/alpine.docker             |   5 +-
- tests/docker/dockerfiles/centos9.docker            |   1 +
- tests/docker/dockerfiles/debian-amd64-cross.docker |   3 +-
- tests/docker/dockerfiles/debian-arm64-cross.docker |   3 +-
- tests/docker/dockerfiles/debian-armhf-cross.docker |   3 +-
- tests/docker/dockerfiles/debian-i686-cross.docker  |   3 +-
- .../dockerfiles/debian-mips64el-cross.docker       |   3 +-
- .../docker/dockerfiles/debian-mipsel-cross.docker  |   3 +-
- .../docker/dockerfiles/debian-ppc64el-cross.docker |   3 +-
- tests/docker/dockerfiles/debian-s390x-cross.docker |   3 +-
- tests/docker/dockerfiles/debian.docker             |   3 +-
- .../docker/dockerfiles/fedora-rust-nightly.docker  |   1 +
- tests/docker/dockerfiles/fedora-win64-cross.docker |   1 +
- tests/docker/dockerfiles/fedora.docker             |   1 +
- tests/docker/dockerfiles/opensuse-leap.docker      |   1 +
- tests/docker/dockerfiles/ubuntu2204.docker         |   1 +
- tests/functional/meson.build                       |   6 +-
- tests/functional/qemu_test/__init__.py             |   2 +-
- tests/functional/qemu_test/config.py               |  12 ++
- tests/functional/qemu_test/testcase.py             |  12 +-
- tests/functional/test_aarch64_rme_sbsaref.py       |   3 +-
- tests/functional/test_aarch64_rme_virt.py          |   3 +-
- tests/functional/test_aarch64_tcg_plugins.py       |   5 +-
- tests/functional/test_aarch64_virt.py              |  71 ---------
- tests/functional/test_aarch64_virt_gpu.py          | 137 +++++++++++++++++
- tests/lcitool/libvirt-ci                           |   2 +-
- tests/lcitool/projects/qemu.yml                    |   1 +
- tests/lcitool/refresh                              |   2 +-
- tests/tcg/aarch64/Makefile.target                  |   3 +-
- tests/tcg/arm/Makefile.target                      |   3 +-
- tests/tcg/i386/Makefile.target                     |   2 +-
- tests/tcg/multiarch/Makefile.target                |   8 +
- tests/tcg/plugins/meson.build                      |   2 +
- tests/vm/basevm.py                                 |   2 +-
- tests/vm/generated/freebsd.json                    |   1 +
- 62 files changed, 647 insertions(+), 302 deletions(-)
- create mode 100644 bsd-user/plugin-api.c
- create mode 100644 linux-user/plugin-api.c
- create mode 100644 plugins/api-system.c
- create mode 100644 plugins/api-user.c
- create mode 100644 plugins/system.c
- create mode 100644 plugins/user.c
- rename tests/tcg/multiarch/{ => linux}/test-vma.c (100%)
- create mode 100644 common-user/plugin-api.c.inc
- create mode 100755 .gitlab-ci.d/check-units.py
- create mode 100755 tests/functional/test_aarch64_virt_gpu.py
+DRM contexts are mapping host blobs extensively and these mapping
+operations work slowly in Qemu. We will need to optimize hostmem
+unmapping that currently happens in a deffered RCU work, blocking
+GPU for a substantial time [2].
+
+[2] https://lore.kernel.org/qemu-devel/f58d250d-3831-4ff1-a018-f62f9aeb2527@collabora.com/T/#m17ac72336d28a64c793d4e4e0c87fc7dff9aa847
+
+Changelog:
+
+v11:- Added column for libvirglrenderer host requrements versions and 
+      corrected Asahi kernel link. Suggested by Akihiko Odaki.
+
+v10:- Added links to Asahi and i915 virglrenderer MRs, link to Asahi host
+      kernel. Suggested by Akihiko Odaki.
+
+    - Renamed gfxstream guest requrements table's colum to match the host
+      requirements table. Suggested by Akihiko Odaki.
+
+v9: - Updated doc patch by addresing review comments from Akihiko Odaki.
+      Made kernel requirements section specific to guest kernel and
+      removed reference to host requirements. Removed examples of
+      external projects' build flags.
+
+    - Added guest kernel minimum versions to the guest requirements table.
+
+v8: - Addressed review comments from Akihiko Odaki on the doc patch.
+
+    - Added r-bs from Akihiko Odaki on the doc patches.
+
+    - Extended vrend doc with info about hostmem requirement for GL 4.6
+
+v7: - Added r-b from Alex Bennée to the async fencing patch.
+
+    - Updated virtio-gpu doc patch with addressed review comments
+      from Akihiko Odaki.
+
+v6: - Fixed compilation warning using older version of virglrenderer,
+      which wasn't fixed properly in v5.
+
+    - Added t-bs from Alex Bennée.
+
+    - Added patches to improve virgl/venus doc by adding links
+      to the Mesa doc as was suggested by Akihiko Odaki.
+
+    - Updated patch that documents guest/host requirements. Added
+      links to Asahi nctx and reworked the doc structure by adding
+      requirements to each context-type section instead of having
+      one big blob or requirements, which was objected by Akihiko Odaki.
+
+v5: - Added r-bs from Akihiko Odaki.
+
+    - Added acks from Michael Tsirkin.
+
+    - Fixed compilation warning using older version of virglrenderer that
+      was reported by Alex Bennée. Noticed that I need to keep old
+      virgl_write_fence() code around for the older virglrenderer in
+      "Support  asynchronous fencing" patch, so added it back and verified
+      that old virglrenderer works properly.
+
+    - Added new patch from Alex Bennée that adds more virtio-gpu 
+      documentation with a couple corrections and additions to it from me.
+
+    - Rebased patches on top of latest staging tree.
+
+v4: - Improved SDL2/dmabuf patch by reusing existing Meson X11 config 
+      option, better handling EGL error and extending comment telling
+      that it's safe to enable SDL2 EGL preference hint. As was suggested
+      by Akihiko Odaki.
+
+    - Replaced another QSLIST_FOREACH_SAFE with QSLIST_EMPTY+FIRST in
+      the async-fencing patch for more consistency of the code. As was
+      suggested by Akihiko Odaki.
+
+    - Added missing braces around if-statement that was spotted by
+      Alex Bennée.
+
+    - Renamed 'drm=on' option of virtio-gpu-gl device to 
+      'drm_native_context=on' for more clarity as was suggested by 
+      Alex Bennée. Haven't added added new context-type option that 
+      was also proposed by Alex, might do it with a separate patch.
+      This context-type option will duplicate and depecate existing
+      options, but in a longer run likely will be worthwhile adding
+      it.
+
+    - Dropped Linux headers-update patch as headers has been updated
+      in the staging tree.
+
+v3: - Improved EGL presence-check code on X11 systems for the SDL2
+      hint that prefers EGL over GLX by using better ifdefs and checking
+      Xlib presence at a build time to avoid build failure if lib SDL2
+      and system are configured with a disabled X11 support. Also added
+      clarifying comment telling that X11 hint doesn't affect Wayland
+      systems. Suggested by Akihiko Odaki.
+
+    - Corrected strerror(err) that used negative error where it should
+      be positive and vice versa that was caught by Akihiko Odaki. Added
+      clarifying comment for the case where we get positive error code
+      from virglrenderer that differs from other virglrenderer API functions.
+
+    - Improved QSLIST usage by dropping mutex protecting the async fence
+      list and using atomic variant of QSLIST helpers instead. Switched away
+      from using FOREACH helper to improve readability of the code, showing
+      that we don't precess list in unoptimal way. Like was suggested by
+      Akihiko Odaki.
+
+    - Updated patchset base to Venus v18.
+
+v2: - Updated SDL2-dmabuf patch by making use of error_report() and
+      checking presense of X11+EGL in the system before making SDL2
+      to prefer EGL backend over GLX, suggested by Akihiko Odaki.
+
+    - Improved SDL2's dmabuf-presence check that wasn't done properly
+      in v1, where EGL was set up only after first console was fully
+      inited, and thus, SDL's display .has_dmabuf callback didn't work
+      for the first console. Now dmabuf support status is pre-checked
+      before console is registered.
+
+    - Updated commit description of the patch that fixes SDL2's context
+      switching logic with a more detailed explanation of the problem.
+      Suggested by Akihiko Odaki.
+
+    - Corrected rebase typo in the async-fencing patch and switched
+      async-fencing to use a sigle-linked list instead of the double,
+      as was suggested by Akihiko Odaki.
+
+    - Replaced "=true" with "=on" in the DRM native context documentation
+      example and made virtio_gpu_virgl_init() to fail with a error message
+      if DRM context can't be initialized instead of giving a warning
+      message, as was suggested by Akihiko Odaki.
+
+    - Added patchew's dependecy tag to the cover letter as was suggested by
+      Akihiko Odaki.
+
+Alex Bennée (1):
+  docs/system: virtio-gpu: Document host/guest requirements
+
+Dmitry Osipenko (8):
+  ui/sdl2: Restore original context after new context creation
+  virtio-gpu: Handle virgl fence creation errors
+  virtio-gpu: Support asynchronous fencing
+  virtio-gpu: Support DRM native context
+  ui/sdl2: Don't disable scanout when display is refreshed
+  ui/gtk: Don't disable scanout when display is refreshed
+  docs/system: virtio-gpu: Add link to Mesa VirGL doc
+  docs/system: virtio-gpu: Update Venus link
+
+Pierre-Eric Pelloux-Prayer (1):
+  ui/sdl2: Implement dpy dmabuf functions
+
+ docs/system/devices/virtio-gpu.rst | 117 +++++++++++++++++++-
+ hw/display/virtio-gpu-gl.c         |   5 +
+ hw/display/virtio-gpu-virgl.c      | 164 ++++++++++++++++++++++++++++-
+ hw/display/virtio-gpu.c            |  15 +++
+ include/hw/virtio/virtio-gpu.h     |  16 +++
+ include/ui/sdl2.h                  |   7 ++
+ meson.build                        |   6 +-
+ ui/gtk-egl.c                       |   1 -
+ ui/gtk-gl-area.c                   |   1 -
+ ui/sdl2-gl.c                       |  68 +++++++++++-
+ ui/sdl2.c                          |  42 ++++++++
+ 11 files changed, 429 insertions(+), 13 deletions(-)
 
 -- 
-2.39.5
+2.48.1
 
 
