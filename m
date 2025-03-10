@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56402C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3AFC282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:59:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trhLq-0003ZE-WC; Mon, 10 Mar 2025 13:55:43 -0400
+	id 1trhOh-0004gC-00; Mon, 10 Mar 2025 13:58:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trhLm-0003UC-8A
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:55:38 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trhOe-0004fx-SD
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:58:36 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1trhLj-0007UZ-6Z
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:55:37 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3913d45a148so1560143f8f.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:55:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trhOc-0007oQ-Rs
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:58:36 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22403cbb47fso87084765ad.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741629333; x=1742234133; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1Rl7oKUWzEf0mraJT3KrgwcszxjdCft6AKKs5tCD/r8=;
- b=Q3CM3MkF5e9rbAfG8P7Bl1CKguftr8wigGp2NS0i9ly968DwwI3PLsjbR6gqamrcg+
- mV7EWQSncyA8g8ge7tbGWU95xb4BkHfUYmwt1V8ZArKVhVuI9eu0EdGdkd7Ig318S4u7
- AYb5x8jgb/ISOBsLPNvdbCQPqVsiknq1+NmZT/aK0rOLiJH7VgTxrXbOiKnH5IOX/8em
- wlTTsD5Bjv83a3uDnn3I+DP+Q8mVT2oHhZsMy33lRej0U/qYz82QW6xF1/Y0QTKi7pmG
- HNiEu2KGsuW96yvjEK+HB0zV0S/WwYi4P9eHrJJV7R31nGzuuyqdIHq3TtuQQMhTdWPo
- 2O5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741629333; x=1742234133;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1741629513; x=1742234313; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1Rl7oKUWzEf0mraJT3KrgwcszxjdCft6AKKs5tCD/r8=;
- b=v0yWMsEam4X9+z5vAWN/wJlB3yJtOYlp+Cp7aR55O8gK7tlz0G3QkMvZMXM0zURN8w
- YulqGWJObCiZRhfTYvkzzeoxn82cQ9y3uaY1yhWoMRhmNLLlvdL27J7x6Tl/qhu6Uicz
- gopEIMI6RSzWf5F9IdlcR72T3GrvJLu99kduhpKmeW/1ujfRSylUKgCJvClq2VCNJ8Zq
- x3tHukAkOT3Yn22WaMWB9I5SaPLuWNaCAm2ELAuC9ga+ta+Y7yfPgbrxnSyMUiE89n+f
- 9tgj2hl0mwwzoSkvWacuX5BE/X0CZIwYcN+o25McG3X4YVe+qc/YzWLX1TVC+A+zd6d/
- i5OQ==
-X-Gm-Message-State: AOJu0YyjzLpZsKaxeNwdilp2VI1m17JYRcx8PGEnznD8IivAlgXL+xJy
- p7mKSb/autdlnyLck7xkVNH+aUv1URqt/W5U5yTQo+6vq9lt3QfbUX2/laE0EHg=
-X-Gm-Gg: ASbGncswpQuw8+HI/aokM1Xxxpjy5S5KEa33n37Nkst/ZB3mzLIKJtx41YZ/r+kDDFf
- QwkFKklvA2jeAzNy+KaF6pxbkZHn+n6EffIYyrTBHwRh+bZqJFQ9bYWeZf+7xW7PcEkOr17Frv+
- 9uFJrsqgIOEPRmQdjWgVyH5GRveS41HBCPZj/NpO+14pvKf7ZL75HbRlEmlDKHSMJc5Hdqa+OY5
- dhbsJBnO9AOZfq/056BUBp4VzsgvhpoSjFJJX2sC6YOjL40hlZ9WrJdTmGXv/kvrUHTiWZkWddP
- fBaIf33pDTbkxbPZNujCmXYmfvKN1tOuLDQDFbwcNhOZcL4=
-X-Google-Smtp-Source: AGHT+IGPkoOeC0SuhnkOm6b3cN6drVHXipZIh6M8O6As0oq5GHEHbyeY0rFUoKlFONGFF+UW5Q2iKg==
-X-Received: by 2002:a5d:5982:0:b0:391:476f:d3b7 with SMTP id
- ffacd0b85a97d-391476fd660mr4739736f8f.49.1741629333023; 
- Mon, 10 Mar 2025 10:55:33 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfad7sm15497044f8f.26.2025.03.10.10.55.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Mar 2025 10:55:32 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 90DDA5F748;
- Mon, 10 Mar 2025 17:55:31 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Mads Ynddal <mads@ynddal.dk>,  Stefan Hajnoczi
- <stefanha@redhat.com>,  richard.henderson@linaro.org,
- manos.pitsidianakis@linaro.org,  philmd@linaro.org
-Subject: Re: [PATCH] trace/control-target: cleanup headers and make
- compilation unit common
-In-Reply-To: <20250305050716.3460989-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Tue, 4 Mar 2025 21:07:16 -0800")
-References: <20250305050716.3460989-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 10 Mar 2025 17:55:31 +0000
-Message-ID: <87bju87oto.fsf@draig.linaro.org>
+ bh=M1ppuBJHFnrg+OKN2yUdfCK1aWVUx3q5PnTVwgoEhVI=;
+ b=eCXwWXQtwDa6lrxHCqm3zgOWUz6mVOYnXsdux6tVSA6964XPCYOYeIUiFVwXd/pGPc
+ kBnt9eQ5EEbaqJkWcM19gyXuhOLTOy8UE7yXLWDmhup0iD4IwEizVZQZjyJzMADTkZOb
+ 5xqDaGAEjA2u2ICpjStTwduSQVqBAByWf0BOHXFEv5rCm1PQ3GsUPrSbo/yuhPz4GhDy
+ WiQ3JPtHC8UNUx/9k3n8QJN9EREkY7qw7W9zpyikFijQJhCvmAQCF/IMW/PHZRAU5SEH
+ SDBmxKHFwz4j0C7Mlz1iGs4Gb6KWFBpfHLuoyukHkyku279z4in+wRZlTS6i7etFVlLO
+ /gsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741629513; x=1742234313;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=M1ppuBJHFnrg+OKN2yUdfCK1aWVUx3q5PnTVwgoEhVI=;
+ b=LAD9RUPy+axIyeQNE743YiidWva1AXsZ6pU1rLWDbTxLdDwlqQiO1ihvJtdHbC8/0l
+ EEYAIN7cOUJKmAqcO3A7Gh15IhbmGTqDeNQOTezo6UJN/FyFthWZzATV8YfT9Jh+iLaR
+ sA2UDZA4q/TzNPtk5ddmRjtIDWcbjOpsc8xGTV3fXIMWuBuBTZ47si7VgC68uRAakdUy
+ cppSG3HM6gBtKpvP3rzHMg1Jpa5AePD3nugiT9yKcc4UBTm/ehHn7xYKSfPNMkQIMeqb
+ gN2XJp5rlqXBixNuUMZzNNTnTbU23f07FvBSTf+Q2h8D6UoIYK/XwW4AfZsIoKcvPUEM
+ YTrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcI+CSNio36rXzt7Xj0eFS/pzvNTLk5/pczlrsmUIs27Xbs/VJZed4/SD2LyUjxELdTpwNr7v0Ob+8@nongnu.org
+X-Gm-Message-State: AOJu0Yz4Gcey30hOK5BlVqnqbaBopxpGuvAIDBzhwYAQy5LEwE90Tyj7
+ IHBHCOkJK3bgthuelJotgcgyY+2lKpdTBbRjIxRV6ju1Es1cTOhX/HTIVsGooag4HP1gLLe9Q7j
+ h
+X-Gm-Gg: ASbGncuzAXlZy/llo/AE6ethlhylZJDiaa4chZLTvvW+H2iR7PQtleSKjbt9I+gv1Yx
+ WqtkqTKYXUwvGdeMz8eJeJlt/kxt98bzvz/xbc7IM/ggrSH5BesPtb6fHs/popVpThvYjS1921a
+ X6sPSm1hddqL7QuC9b7Uia4yPd9mAK5xIz+8lZe5TJbd45E0ZwZJH5AbzcReaKu96nW4Paq+cGa
+ XKh4OZfMkrwy99U6pr2a6Taf2B1V3/afQgN1ApKSYidvoas3qdRz1WPijGF2LeZHIwCDxjdv1I/
+ opmiS0qtkzWpIKtbK36j+QFKM7fPcH3PWvTnTTSU+remKVBqZfpqIbMB/i8QrfSbZuR8keyEhUe
+ t0tKtr3SzzxU5kIrAcro=
+X-Google-Smtp-Source: AGHT+IE7zqw7rL1KHosFGdpv9WEM37GGDiOuZRZD4Kk1Hb173PErx/9n1Taz/+70+CnIgv1SJXOVPA==
+X-Received: by 2002:a17:903:2b0f:b0:21f:8453:7484 with SMTP id
+ d9443c01a7336-22428a9d15dmr211025755ad.30.1741629512921; 
+ Mon, 10 Mar 2025 10:58:32 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-224109fefa6sm81387755ad.106.2025.03.10.10.58.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Mar 2025 10:58:32 -0700 (PDT)
+Message-ID: <76269a95-652a-4064-8f2f-6584b0677191@linaro.org>
+Date: Mon, 10 Mar 2025 10:58:30 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/16] system/memory: make compilation unit common
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-16-pierrick.bouvier@linaro.org>
+ <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
+ <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,14 +106,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 3/10/25 10:47, Pierrick Bouvier wrote:
+>> Maybe better as
+>>
+>>       MemOp mop = (target_words_bigendian() ? MO_BE : MO_LE) | size_memop(size);
+>>       adjust_endianness(mr, &mrfd.data, size_memop(size), mop);
+>>
+> 
+> Do you think defining MO_TE as this expression is a good idea?
 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+There are not so many references to MO_TE outside target/ or accel/tcg/.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Indeed, after this change, the only ones left are in hw/arm/armv7m.c,
+which (because it's Arm) can be changed to MO_LE.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+r~
 
