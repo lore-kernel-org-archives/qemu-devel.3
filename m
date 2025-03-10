@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B11C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD92C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 16:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trg9R-0005HP-Sx; Mon, 10 Mar 2025 12:38:53 -0400
+	id 1trgAS-0007Qi-NT; Mon, 10 Mar 2025 12:39:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trg9J-00058f-1N
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:38:43 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trgAQ-0007Lr-PC
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:39:50 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trg9G-0003w7-Lb
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:38:40 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2240b4de12bso75039415ad.2
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 09:38:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trgAO-00043g-Df
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 12:39:50 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-224019ad9edso102552975ad.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 09:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741624715; x=1742229515; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YbpczRVMyRdSpW39rNpW62KskPPHf7oWPxnlmBGEAS8=;
- b=xlV2aH/vtSGhLCxrZpe1kHKLisbxfcaPLkmmeP98JSqhz8AMsc21Av+AVnb7FPOTFC
- CBrJ/njvBC5aia+a8fptUB+vwXJKUBETu4i+LkiWpn8+GvkpPlHGiLbrEWyZreT/f0vp
- GtzXbzU5HPOFC1syIuZUZIkkSmI+/eTfTSpZIXoKZHtMue0Ct/IkZih5HqNv2sCQfyI+
- zG6ns31WcTGaFlEKtE/QUbL2GRzvlYHXcKt+wJQtWOaRSxRubB3IKo9q+4FmAzMsEmwu
- o3Tr4bx6bSj7jlAJgL+muYihVwq14EA6pdgOENCbV8qzLAfGXXvJFOiNVjLCILzYZ0wI
- exWA==
+ d=linaro.org; s=google; t=1741624786; x=1742229586; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UxOfK4U13fTLVC5tzar6EnHE8Ldn/ZrMRRghAx8n6lc=;
+ b=PNESKqcLEebjTJzfkNPs9F4LnXWtW9SaQh6vAneEUEHjx6z00tBMoHz/MEv0wgLpIQ
+ Rt9Tt/LQzre0Qmpp2xWGIDFxMMvSArkNrqck/UuBdoq5swdu32MXbCieiOzz8VB130Q2
+ BaedCuPy9e05pVI36kL/wQ63cA4s5LsBM9ypACgHhwStzHwtH1qWKM1XmSvPLx3xSPIy
+ W/7HnBthgGeE9nLaNQPc/n4sO93174nlqlBva8FOp0u6iRqw8yN3mxTsK1L4c0wIJPnQ
+ w9A67T4MKUibtHXMXGGhTNzrsccf8n3IP0I6kMx/wS8yTpQCff2lCAXYIclZrt+PddyU
+ 1TzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741624715; x=1742229515;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741624786; x=1742229586;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YbpczRVMyRdSpW39rNpW62KskPPHf7oWPxnlmBGEAS8=;
- b=TnQPLDRnp0q+mMWaEl7cRS0aAeSzUZw6s9S3JH25wWe62rq74F8iaL9brTIIrXjFVs
- Kr+A30WwYx52cFZFtiuhzwcBbi+sTV2vB4UGfZGiDMjCeY9B34Xfrx5zdzcBvVJmBFoH
- T/Dsg71Y7xuneFKONg0zYRTxS6+GliHK8r0kWvoK/k5KzAIJBgjUd5m1ipwTWKo1CeyR
- dLPDSkbtervLVstad+iSuo22vi2Yn8GYyPVK4nDzNtpUAAHHVx3fJNVzrJ0hVBhFo2w8
- /fYHN5IDyPXhSeP06z/OCNZ1ZloE9mw6c2wzW0MZm6+zWbH0gddggbkfMueqhBJB7xQR
- k8yQ==
+ bh=UxOfK4U13fTLVC5tzar6EnHE8Ldn/ZrMRRghAx8n6lc=;
+ b=uAf+ZdCd/GoOwO132njly3vvJVHIAlYSQvgHY/WP+O8+FC4gXNfqRqzpWCala5Dx/z
+ cTkhdWRwZyy+jwfOy3Ll0trvyQDH/4idAkfxtAPFwiQ2Hj0RvV75OtF9aOE8BTyaE3ZF
+ CgsGfBPwTwVxOzQ7flgHxyH+i0dxUvwx7x+UDL6hKIV4l7Sq5+YOnAhJ0FWfegN5gHtJ
+ KieaHmomdsjq6vztwBOqOxku0muQfijZMzssclNEt3R2EhsqEpH8H7/mfQ9gCquEX9iC
+ OkpRQot0rf47dKZoKbmi44o0Smo29/xw6eimwpvS0LTexbbtkLcv+1K3N8CpvYWh6X/a
+ vuow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUx1+yF71eWDDE558iGOKGYSs3WB6B+wFHiNgcP7MtppEPCJ0dCTngxTDGqMsLYwM8lt/b/+ZoeUFim@nongnu.org
-X-Gm-Message-State: AOJu0YxTehGSBguhczLBrnowWPr6LsFvdWDU+920g0v5AJmOi77buR/V
- EsL3XY2aCfiN9PZTMHu1eCWt8Bru+ypHoDlCwkxacCMDM/eBlSizWzvMpjRF9VE=
-X-Gm-Gg: ASbGnctiauWNFEp3BVTYY5tTkdIoHCvWkHSRkLU4LvellFIKA/b/VG0JgUt1JxAXctD
- 5dX4k1vOC7/jnpe//Ug2fF+9Ac3jsyVivNMTDPJuqNHkjN8FX6q4lRikqQmYP8CNBhzfNFPgU33
- nCjhDwD3KArmEpQKVSwb9rbiISDwve2iA5qNHYTC3JR6sM5cbjmekOX1P1xENNsbCfTLidMURMC
- 3I6plLhH4T6LisYdB49esMThZpeUyPh52gx/rF48bJ1qv3RbuJKtQasAZFvjhRYpLTi6L9eVLhh
- C3V+w0I4qyx8NoHg5Hxcs8lLE40ggundUPzRwv24xjcfpxMISSpxfiRLFQ==
-X-Google-Smtp-Source: AGHT+IHtjhZMXUdjTWWe4ezFEtIomqITEUB6KbeNNNr5RauBWjXC28ZcpRFGjreYdhiuMExqFx585g==
-X-Received: by 2002:a17:902:fc48:b0:215:7421:262 with SMTP id
- d9443c01a7336-2242888a6a1mr257546995ad.12.1741624715052; 
- Mon, 10 Mar 2025 09:38:35 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ AJvYcCWUIGgDlz6+zpJI+GMJoyJrGAzdID0WVXAgoUr2BWYQtV0vt/Fo7VHmMJlEnmO68wbNC14iDVTp5HEb@nongnu.org
+X-Gm-Message-State: AOJu0YzkGJgZrV7EenZgQis4VTy5MLHeSQNrXKGLXnGppWH81CNLgAPW
+ juunCbB8H2LDdw/g8Yle/+mYng7kY6MintspudKZP4RL61nYq7vNcvOxz9jXwIo=
+X-Gm-Gg: ASbGncuhX8QzCBEuepXm8Elxm2xhHObc498/HfaGjHohCZhtF8SPNnCM5RbeTIuec58
+ lJaFK6dDAC8A9HEaea3lug9o+4i6fg7Dx3fSSdS7Tc7U67ej/wCVnBnj+zNtSTUAVpwaA34zPFz
+ +DG4yfsb9Si3J9TW58pjfWrQ9lZta+rrHZ6z+bdIh2yK5Rx/9DNBxkaiz4/TQjvXv3Gely6DOsw
+ yrWzQt2oK4DeCRSwzr1xE1Odgoj6nesU3N+jCqcmlcHzw5u5MD8va+ZaojAnQh+vOTPZ/zSHppl
+ 5LDUJ91Y0yRz38AywTfD9ISpTNIYctUkR9ZJy5sqX4iZ5q7vp7dH46Zz3Gw1dj/A989dYPqOyW3
+ IAWVDG9Mt
+X-Google-Smtp-Source: AGHT+IGpbMTftGFOpu5yXWZOAJmPR5hnTYpZQr5LkUIVN2cERuP5KUWCdUqf2SZPIZ5nR2sMl1IP8Q==
+X-Received: by 2002:a17:903:283:b0:21f:1bd:efd4 with SMTP id
+ d9443c01a7336-2242888ab0cmr242161995ad.19.1741624785872; 
+ Mon, 10 Mar 2025 09:39:45 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736c0d62199sm4755435b3a.151.2025.03.10.09.38.34
+ 98e67ed59e1d1-2ff693527f9sm9214668a91.11.2025.03.10.09.39.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 09:38:34 -0700 (PDT)
-Message-ID: <becad76f-3116-4959-9cfb-7c0285faf3bf@linaro.org>
-Date: Mon, 10 Mar 2025 09:38:33 -0700
+ Mon, 10 Mar 2025 09:39:45 -0700 (PDT)
+Message-ID: <1ee6764c-5b44-4cd4-8cd9-b0aaaf31f0fb@linaro.org>
+Date: Mon, 10 Mar 2025 09:39:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/16] exec/memory.h: make devend_memop target agnostic
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 06/16] exec/cpu-all.h: we can now remove ld/st macros
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
- <20250310045842.2650784-5-pierrick.bouvier@linaro.org>
- <ad2229d3-cd42-47e0-bd96-4134fca9d950@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <ad2229d3-cd42-47e0-bd96-4134fca9d950@linaro.org>
+ <20250310045842.2650784-7-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250310045842.2650784-7-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,63 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/25 09:30, Richard Henderson wrote:
-> On 3/9/25 21:58, Pierrick Bouvier wrote:
->> Will allow to make system/memory.c common later.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    include/exec/memory.h | 12 +++++-------
->>    1 file changed, 5 insertions(+), 7 deletions(-)
->>
->> diff --git a/include/exec/memory.h b/include/exec/memory.h
->> index 7c20f36a312..698179b26d2 100644
->> --- a/include/exec/memory.h
->> +++ b/include/exec/memory.h
->> @@ -3164,25 +3164,23 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
->>    MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
->>                                  uint8_t c, hwaddr len, MemTxAttrs attrs);
->>    
->> -#ifdef COMPILING_PER_TARGET
->>    /* enum device_endian to MemOp.  */
->>    static inline MemOp devend_memop(enum device_endian end)
->>    {
->>        QEMU_BUILD_BUG_ON(DEVICE_HOST_ENDIAN != DEVICE_LITTLE_ENDIAN &&
->>                          DEVICE_HOST_ENDIAN != DEVICE_BIG_ENDIAN);
->>    
->> -#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
->> -    /* Swap if non-host endianness or native (target) endianness */
->> -    return (end == DEVICE_HOST_ENDIAN) ? 0 : MO_BSWAP;
->> -#else
->> +    if (HOST_BIG_ENDIAN != target_words_bigendian()) {
->> +        /* Swap if non-host endianness or native (target) endianness */
->> +        return (end == DEVICE_HOST_ENDIAN) ? 0 : MO_BSWAP;
->> +    }
->> +
->>        const int non_host_endianness =
->>            DEVICE_LITTLE_ENDIAN ^ DEVICE_BIG_ENDIAN ^ DEVICE_HOST_ENDIAN;
->>    
->>        /* In this case, native (target) endianness needs no swap.  */
->>        return (end == non_host_endianness) ? MO_BSWAP : 0;
->> -#endif
->>    }
->> -#endif /* COMPILING_PER_TARGET */
+On 3/9/25 21:58, Pierrick Bouvier wrote:
+> Functions declared in bswap.h will be used instead.
 > 
-> Someone (me?) was trying to be overly clever here.
-
-Tends to happen through the QEMU codebase :).
-
-> We can simplify this function and conditionally avoid the function call:
+> At this point, we finished to extract memory API from cpu-all.h, and it
+> can be called from any common or target dependent code.
 > 
->       bool big_endian = (end == DEVICE_NATIVE_ENDIAN
->                          ? target_words_bigendian()
->                          : end == DEVICE_BIG_ENDIAN);
->       return big_endian ? MO_BE : MO_LE;
-> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/exec/cpu-all.h | 25 -------------------------
+>   1 file changed, 25 deletions(-)
 
-That's fine for me (still requires a bit of cleverness to read it at first).
+I think this should be squashed with the previous patch.
 
-> 
-> r~
 
+r~
 
