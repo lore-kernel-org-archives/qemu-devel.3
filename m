@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A8EC28B30
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D37C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 08:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trY6c-00065z-UC; Mon, 10 Mar 2025 04:03:22 -0400
+	id 1trYAk-0001y1-Cs; Mon, 10 Mar 2025 04:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1trY6a-00065d-AR
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:03:20 -0400
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trYAi-0001xf-13; Mon, 10 Mar 2025 04:07:36 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1trY6W-0000eZ-Lq
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 04:03:20 -0400
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-224100e9a5cso69981725ad.2
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 01:03:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trYAb-0001MF-0Q; Mon, 10 Mar 2025 04:07:35 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-225477548e1so22463035ad.0; 
+ Mon, 10 Mar 2025 01:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741593794; x=1742198594; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1741594045; x=1742198845; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zYqWeoTf/TKPCfsiXfd/y5tHc55L3g6R544wsr2f890=;
- b=QhTb1j/Uk/W5ksn6VwIqAuZRw9os9G/Pd+M670Uvl4xhHu5q2QYMZbK2ABpD21d3uV
- 0LklSKQmzbu/tmKQckFN709kf0YZCtiEegm3m4rycnnVfY47snTfpQ46AHleBIEsyqdb
- jDvloQqfaoXFWQMrMLlI2ex9/cgzNC3wklAAnGRRAL93YBK19sUqLO2/YfJs8xiOiQCo
- b/d0OJfkAwosFKstyJmDz7FY5Zpj/bs2omBZ8Sa9pluvsBPpT0YuZDeZp7+IIuRAoqSp
- b72LhsbyIHF/ZXw/CUf0rbwiV9VfKPLA5HakhyikAHLAmBslpkHkgOBxt2o0VZjQYqNv
- X0sQ==
+ bh=Hg3p+h3VS23GeS4/YoeM6cYtw5REEjNnhHU6Dci9Hfw=;
+ b=BAEV/gvsCjzad05eQJSlm9w2LLjFn9Ku0qz+71tru+Dlw+I8lBJq1OmohaMdGBLYU1
+ /hy3fbOjuFbr0Gvs2Hg5hg6fNJSNaHL6Yy5ml/mnMdHe8tjashktQyz9845o7RaCQSCJ
+ bwJ3djQF5Jp2kia4lXCpFN66eLlg4Ew/b1ifVvwKfTJcwSEnUYWsFJhPS3ErmFG0G8if
+ KjOIB068/dzyevp4eCJx7ViNTwK1FV9RcE78ijrEdnNJT62BdSExZun0w9vK1dW3ZH8F
+ CHVFwS9O577uRR+o6awpkDkL9pQyWzT6rDtG0EsDq0YDiUNCXb1SJjEmrcWL26k+A0Ms
+ efVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741593794; x=1742198594;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ d=1e100.net; s=20230601; t=1741594045; x=1742198845;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zYqWeoTf/TKPCfsiXfd/y5tHc55L3g6R544wsr2f890=;
- b=cu32fYscJ3SgsOaWfncQfJiKtvEOC4uwHfkmPee+xB28T2bLZ1BRlIGlgSJx1dRaQw
- ye57Er4sIANgOm4tAT/nWFdqinas2UqdU5IsYVa8ctbfCcFTM6wTKDbIMD+liF53ULOY
- jUOfxH23SkWGA8DkVgHGCwQh9zCCzh6uHzchnlMN4+TARF0pY5GKubIdhab0lnyRThvw
- lhsgmmUu45Xnlrr4mw6EqERX35q7drasBUyQmBwA1LzDdLPGJcvPTKpM+CCIPW0S66Vt
- Uj62lq7x/ICuPStIZon8J3nNc19wU2NmVRbxQ1QShH/poI1CnHf6Dj+AfX/rYpMdDiXj
- kryA==
-X-Gm-Message-State: AOJu0YxqeHCFyBTYY5ZqgnTvgrFOLIzHigJNS1/u2GuGDDTVK41mMUrt
- UfCI8bX7NlfHOJAEIIxpJX4H1Ziz8I7N7LucdfqStesjL/tjRmmwtj046FrdSdpF
-X-Gm-Gg: ASbGncusuzpZGpoNNN22a0MGQ4qx7LsD8LS6Y0FPyW/6OqNHeG1zqfta1GJthrmerGz
- +nuUQJ0SwtqHAa1HBs3iSxsisWNkgDXNPxbOghWm6ev4BgFsH4QShaP7M1iu6VEWLxbk9n7BMVd
- K9H7S+97xCR6tWK2ejYB0NmgwK2ECL8RgyRRNcskF3GRFLDzYbDajQMgQLdM/BuuTHFGB/0gPCJ
- s4m4kYfoz0Vqh5d2vt0096Bd6cHy+uwlXwzfoS2RMXDEZnDe8GN7fGn/1yMDC+xa9Oa/GhePRH9
- R1E3YoeTUbU8/dNda4lj2cVb1R34aReYNMiBsU3RUlPLpK3iFuoKxmh/aobDbCoMH/KJMS4=
-X-Google-Smtp-Source: AGHT+IGt6sXFHNYL8sZtK88TVdNlc0on7bwgv7YCXZ+F7rOUoo3NUBaLys8tuaAN448rSOX+FquTNQ==
-X-Received: by 2002:a05:6a00:23cb:b0:736:55ec:ea8b with SMTP id
- d2e1a72fcca58-736e1b3e670mr1969090b3a.24.1741593793542; 
- Mon, 10 Mar 2025 01:03:13 -0700 (PDT)
-Received: from [172.20.10.3] ([58.247.23.80]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73698538ecbsm7842290b3a.176.2025.03.10.01.03.10
+ bh=Hg3p+h3VS23GeS4/YoeM6cYtw5REEjNnhHU6Dci9Hfw=;
+ b=VnzppBhEsOoCmnVN4wXqiXQq+dMFJlol78FifnLVM49xSZx58YWjQDNUlcTDeGzT40
+ NfmT4+iYV1O4XpORrhsAyLyJfF85cbk3CyJhOXYjhUa7UmfZPatjfBNsVtTo0g4Anbz+
+ qtgGT656TnqXApLA61BNsoKd9xLBb07/tPHE/4F1ISnhv7xvFfUlrQA42udYll2ukNH9
+ Z0n8Z1E/3ZNQm2wTOV7WSvRHe96HsPr7cRvNKehjw4YTTr3/Du5D79tMhUaP5V9+ubrQ
+ k8iBEOsVEJGnG4NXPyaMMjrufe6gHYhrPHYGh4KHyjYm1oAzMjJp0Ogm3i7T+34X1QAw
+ /4jg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5oIZ3uQHc7FH0bbvR13743PdF41GkPp/3h1zZhOe4a9NIFwE/2bX/vPXj5QF9IsOh8Rj2vtKnX8dc@nongnu.org
+X-Gm-Message-State: AOJu0Yz3zA7Ro4/+/7NHiLlT1k8V4cT3qoz0mVMc6cRWel+r3Cnsd8TT
+ baYRSkJhRT3VcyVBwzbzQBhy5lukzoUncS3hZ81m2y1wHZfd15hE
+X-Gm-Gg: ASbGnct1hCWwD1dsq18jidC5jJPkXXsmBIBE8cmatj69ukFlDHPjMgf7ZnzOE/mGYrZ
+ lHMn73c+q7N8TVJZjyIbdxfJhanHBWc5p67v1fG5J8oZbX+ctdkHlExmp1XouR0J/17g5ijh02O
+ +EpCPg7/e1VfLUhVrtXyjqI8zcWNiHyv6CmOrCH9wOyBDgteLwUnp3pQP7GIYuVgBCdxJGwni58
+ ObdDIZXuO73c2bRW+B7thYbcTrkQlj5aOwPOn+b9/CZpwPqvdIbZwu1NpmMJ8X2cUFHiV3xVNtF
+ /QeTFRLWxSp7j5+xwk0VaPdQduxjVu/asLKCa3k3
+X-Google-Smtp-Source: AGHT+IERwXP0zj6Tt4aMY5UVsnD7nk7RnQcjNKRvggeFJ1VrXSbSnxXOwWj/3mMdseVWfyQ03wbZ2w==
+X-Received: by 2002:a17:902:e810:b0:223:432b:593d with SMTP id
+ d9443c01a7336-22428c07537mr201585025ad.42.1741594044611; 
+ Mon, 10 Mar 2025 01:07:24 -0700 (PDT)
+Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22410a918e5sm71279595ad.167.2025.03.10.01.07.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 01:03:13 -0700 (PDT)
-Message-ID: <9932832b-ae57-417b-8b26-57ef08d827a3@gmail.com>
-Date: Mon, 10 Mar 2025 16:03:05 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/10] vfio/igd: Decouple common quirks from legacy mode
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
- <corvin.koehne@gmail.com>
-References: <20250306180131.32970-1-tomitamoeko@gmail.com>
- <20250306180131.32970-8-tomitamoeko@gmail.com>
- <20250306154920.0e1936eb.alex.williamson@redhat.com>
- <46b7c8ff-06b3-4e01-a00d-1a388a0bf6a3@gmail.com>
- <f394edb5-f8f0-4b5f-ab5f-e40c1e8c9f78@redhat.com>
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <f394edb5-f8f0-4b5f-ab5f-e40c1e8c9f78@redhat.com>
+ Mon, 10 Mar 2025 01:07:24 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+Date: Mon, 10 Mar 2025 18:07:18 +1000
+Message-Id: <D8CFK7Z5AJF8.ALT8MMH6EYYT@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <milesg@linux.ibm.com>,
+ <danielhb413@gmail.com>, <david@gibson.dropbear.id.au>,
+ <harshpb@linux.ibm.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 12/14] pnv/xive: Support ESB Escalation
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20241210000527.9541-1-kowal@linux.ibm.com>
+ <20241210000527.9541-23-kowal@linux.ibm.com>
+In-Reply-To: <20241210000527.9541-23-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,296 +102,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/3/10 15:13, Cédric Le Goater wrote:
-> Tomita,
-> 
-> On 3/7/25 19:37, Tomita Moeko wrote:
->> On 2025/3/7 6:49, Alex Williamson wrote:
->>> On Fri,  7 Mar 2025 02:01:27 +0800
->>> Tomita Moeko <tomitamoeko@gmail.com> wrote:
->>>
->>>> So far, IGD-specific quirks all require enabling legacy mode, which is
->>>> toggled by assigning IGD to 00:02.0. However, some quirks, like the BDSM
->>>> and GGC register quirks, should be applied to all supported IGD devices.
->>>> A new config option, x-igd-legacy-mode=[on|off|auto], is introduced to
->>>> control the legacy mode only quirks. The default value is "auto", which
->>>> keeps current behavior that enables legacy mode implicitly and continues
->>>> on error when all following conditions are met.
->>>> * Machine type is i440fx
->>>> * IGD device is at guest BDF 00:02.0
->>>>
->>>> If any one of the conditions above is not met, the default behavior is
->>>> equivalent to "off", QEMU will fail immediately if any error occurs.
->>>>
->>>> Users can also use "on" to force enabling legacy mode. It checks if all
->>>> the conditions above are met and set up legacy mode. QEMU will also fail
->>>> immediately on error in this case.
->>>>
->>>> Additionally, the hotplug check in legacy mode is removed as hotplugging
->>>> IGD device is never supported, and it will be checked when enabling the
->>>> OpRegion quirk.
->>>>
->>>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
->>>> ---
->>>>   hw/vfio/igd.c | 127 +++++++++++++++++++++++++++++---------------------
->>>>   hw/vfio/pci.c |   2 +
->>>>   hw/vfio/pci.h |   1 +
->>>>   3 files changed, 77 insertions(+), 53 deletions(-)
->>>>
->>>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
->>>> index f5e19f1241..ac096e2eb5 100644
->>>> --- a/hw/vfio/igd.c
->>>> +++ b/hw/vfio/igd.c
->>>> @@ -15,6 +15,7 @@
->>>>   #include "qemu/error-report.h"
->>>>   #include "qapi/error.h"
->>>>   #include "qapi/qmp/qerror.h"
->>>> +#include "hw/boards.h"
->>>>   #include "hw/hw.h"
->>>>   #include "hw/nvram/fw_cfg.h"
->>>>   #include "pci.h"
->>>> @@ -432,9 +433,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->>>>        * bus address.
->>>>        */
->>>>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
->>>> -        !vfio_is_vga(vdev) || nr != 0 ||
->>>> -        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
->>>> -                                       0, PCI_DEVFN(0x2, 0))) {
->>>> +        !vfio_is_vga(vdev) || nr != 0) {
->>>>           return;
->>>>       }
->>>>   @@ -482,14 +481,13 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->>>>       QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
->>>>   }
->>>>   -bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
->>>> -                                 Error **errp G_GNUC_UNUSED)
->>>> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->>>>   {
->>>> -    g_autofree struct vfio_region_info *rom = NULL;
->>>>       int ret, gen;
->>>>       uint64_t gms_size;
->>>>       uint64_t *bdsm_size;
->>>>       uint32_t gmch;
->>>> +    bool legacy_mode_enabled = false;
->>>>       Error *err = NULL;
->>>>         /*
->>>> @@ -498,9 +496,7 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
->>>>        * PCI bus address.
->>>>        */
->>>>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
->>>> -        !vfio_is_vga(vdev) ||
->>>> -        &vdev->pdev != pci_find_device(pci_device_root_bus(&vdev->pdev),
->>>> -                                       0, PCI_DEVFN(0x2, 0))) {
->>>> +        !vfio_is_vga(vdev)) {
->>>>           return true;
->>>>       }
->>>>   @@ -516,56 +512,67 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
->>>>           return true;
->>>>       }
->>>>   -    /*
->>>> -     * Most of what we're doing here is to enable the ROM to run, so if
->>>> -     * there's no ROM, there's no point in setting up this quirk.
->>>> -     * NB. We only seem to get BIOS ROMs, so a UEFI VM would need CSM support.
->>>> -     */
->>>> -    ret = vfio_get_region_info(&vdev->vbasedev,
->>>> -                               VFIO_PCI_ROM_REGION_INDEX, &rom);
->>>> -    if ((ret || !rom->size) && !vdev->pdev.romfile) {
->>>> -        error_report("IGD device %s has no ROM, legacy mode disabled",
->>>> -                     vdev->vbasedev.name);
->>>> -        return true;
->>>> -    }
->>>> -
->>>> -    /*
->>>> -     * Ignore the hotplug corner case, mark the ROM failed, we can't
->>>> -     * create the devices we need for legacy mode in the hotplug scenario.
->>>> -     */
->>>> -    if (vdev->pdev.qdev.hotplugged) {
->>>> -        error_report("IGD device %s hotplugged, ROM disabled, "
->>>> -                     "legacy mode disabled", vdev->vbasedev.name);
->>>> -        vdev->rom_read_failed = true;
->>>> -        return true;
->>>> -    }
->>>> -
->>>>       gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
->>>>         /*
->>>> -     * If IGD VGA Disable is clear (expected) and VGA is not already enabled,
->>>> -     * try to enable it.  Probably shouldn't be using legacy mode without VGA,
->>>> -     * but also no point in us enabling VGA if disabled in hardware.
->>>> +     * For backward compatibilty, enable legacy mode when
->>>> +     * - Machine type is i440fx (pc_piix)
->>>> +     * - IGD device is at guest BDF 00:02.0
->>>> +     * - Not manually disabled by x-igd-legacy-mode=off
->>>>        */
->>>> -    if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
->>>> -        error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
->>>> -        error_report("IGD device %s failed to enable VGA access, "
->>>> -                     "legacy mode disabled", vdev->vbasedev.name);
->>>> -        return true;
->>>> -    }
->>>> +    if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
->>>> +        !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
->>>> +        (&vdev->pdev == pci_find_device(pci_device_root_bus(&vdev->pdev),
->>>> +        0, PCI_DEVFN(0x2, 0)))) {
->>>> +        /*
->>>> +         * IGD legacy mode requires:
->>>> +         * - VBIOS in ROM BAR or file
->>>> +         * - VGA IO/MMIO ranges are claimed by IGD
->>>> +         * - OpRegion
->>>> +         * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
->>>> +         */
->>>> +        g_autofree struct vfio_region_info *rom = NULL;
->>>> +
->>>> +        legacy_mode_enabled = true;
->>>> +        warn_report("IGD legacy mode enabled, "
->>>> +                    "use x-igd-legacy-mode=off to disable it if unwanted.");
->>>
->>> info_report() maybe?  These aren't great choices for a user, get a
->>> warning for using the intended mode or silence that warning by
->>> requiring experimental options that taint the VM relative to libvirt.
->>
->> Got it. If possible, please help change this to info_report when
->> applying.
-> 
-> done.
-> 
-> 
->>
->>> Also, why do we list all the requirements then only test a few of them
->>> before declaring we're using legacy mode?  It seems like the above
->>> should be moved to the end of this branch.
->>
->> Having i440fx machine type and BDF 00:02.0 are the must-have condition
->> for considering enabling legacy mode, while others are the requirements
->> for legacy mode itself. In this verison, legacy mode is equivalent to
->>      romfile=oprom.bin,x-vga=on,x-igd-opregion=on,x-igd-lpc=on
->>
->> BDF being 00:02.0 is a requirement of VBIOS, and hacking the LPC DID
->> currently only works on i440fx. Though for Q35, we can overwrite the
->> existing ICH9 LPC DID to make IGD driver happy, it won't break ACPI PM
->> in recent guest kernel, and maybe later making it an option for Q35,
->> its still too risky to make it an implicit default. That's why I prefer
->> to check the must-have condtions first, then check other requirements
->> when setting up them.
->>
->> Setting the `legacy_mode_enabled` flag here is for error handling, as
->> we have to keep the old "continue on error" behavior for legacy mode.
-> 
-> A ducomentation update is welcome ! Could you do that before hard-freeze ?
-> 
-> Thanks,
-> 
-> C.
-> 
+On Tue Dec 10, 2024 at 10:05 AM AEST, Michael Kowal wrote:
+> From: Glenn Miles <milesg@linux.vnet.ibm.com>
+>
+> END notification processing has an escalation path.  The escalation is
+> not always an END escalation but can be an ESB escalation.
+>
+> Also added a check for 'resume' processing which log a message stating it
+> needs to be implemented.  This is not needed at the time but is part of
+> the END notification processing.
+>
+> This change was taken from a patch provided by Michael Kowal
+>
+> Suggested-by: Michael Kowal <kowal@us.ibm.com>
+> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+> ---
+>  include/hw/ppc/xive2.h      |  1 +
+>  include/hw/ppc/xive2_regs.h | 13 +++++---
+>  hw/intc/xive2.c             | 61 +++++++++++++++++++++++++++++--------
+>  3 files changed, 58 insertions(+), 17 deletions(-)
+>
+> diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+> index 8cdf819174..2436ddb5e5 100644
+> --- a/include/hw/ppc/xive2.h
+> +++ b/include/hw/ppc/xive2.h
+> @@ -80,6 +80,7 @@ int xive2_router_write_nvgc(Xive2Router *xrtr, bool cro=
+wd,
+>  uint32_t xive2_router_get_config(Xive2Router *xrtr);
+> =20
+>  void xive2_router_notify(XiveNotifier *xn, uint32_t lisn, bool pq_checke=
+d);
+> +void xive2_notify(Xive2Router *xrtr, uint32_t lisn, bool pq_checked);
+> =20
+>  /*
+>   * XIVE2 Presenter (POWER10)
+> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
+> index b11395c563..164d61e605 100644
+> --- a/include/hw/ppc/xive2_regs.h
+> +++ b/include/hw/ppc/xive2_regs.h
+> @@ -39,15 +39,18 @@
+> =20
+>  typedef struct Xive2Eas {
+>          uint64_t       w;
+> -#define EAS2_VALID                 PPC_BIT(0)
+> -#define EAS2_END_BLOCK             PPC_BITMASK(4, 7) /* Destination EQ b=
+lock# */
+> -#define EAS2_END_INDEX             PPC_BITMASK(8, 31) /* Destination EQ =
+index */
+> -#define EAS2_MASKED                PPC_BIT(32) /* Masked                =
+ */
+> -#define EAS2_END_DATA              PPC_BITMASK(33, 63) /* written to the=
+ EQ */
+> +#define EAS2_VALID         PPC_BIT(0)
+> +#define EAS2_QOS           PPC_BIT(1, 2)       /* Quality of Service(uni=
+mp) */
+> +#define EAS2_RESUME        PPC_BIT(3)          /* END Resume(unimp) */
+> +#define EAS2_END_BLOCK     PPC_BITMASK(4, 7)   /* Destination EQ block# =
+*/
+> +#define EAS2_END_INDEX     PPC_BITMASK(8, 31)  /* Destination EQ index *=
+/
+> +#define EAS2_MASKED        PPC_BIT(32)         /* Masked */
+> +#define EAS2_END_DATA      PPC_BITMASK(33, 63) /* written to the EQ */
+>  } Xive2Eas;
+> =20
+>  #define xive2_eas_is_valid(eas)   (be64_to_cpu((eas)->w) & EAS2_VALID)
+>  #define xive2_eas_is_masked(eas)  (be64_to_cpu((eas)->w) & EAS2_MASKED)
+> +#define xive2_eas_is_resume(eas)  (be64_to_cpu((eas)->w) & EAS2_RESUME)
+> =20
+>  void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf=
+);
+> =20
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index c29d8e4831..44b7743b2b 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -1514,18 +1514,39 @@ do_escalation:
+>          }
+>      }
+> =20
+> -    /*
+> -     * The END trigger becomes an Escalation trigger
+> -     */
+> -    xive2_router_end_notify(xrtr,
+> -                           xive_get_field32(END2_W4_END_BLOCK,     end.w=
+4),
+> -                           xive_get_field32(END2_W4_ESC_END_INDEX, end.w=
+4),
+> -                           xive_get_field32(END2_W5_ESC_END_DATA,  end.w=
+5));
+> +    if (xive2_end_is_escalate_end(&end)) {
+> +        /*
+> +         * Perform END Adaptive escalation processing
+> +         * The END trigger becomes an Escalation trigger
+> +         */
+> +        xive2_router_end_notify(xrtr,
+> +                               xive_get_field32(END2_W4_END_BLOCK,     e=
+nd.w4),
+> +                               xive_get_field32(END2_W4_ESC_END_INDEX, e=
+nd.w4),
+> +                               xive_get_field32(END2_W5_ESC_END_DATA,  e=
+nd.w5));
+> +    } /* end END adaptive escalation */
 
-Let me try to make it before Mar 18.
+Probably don't need that comment there, it's quite a small block
+already with a comment.
+
+> +
+> +    else {
+> +        uint32_t lisn;              /* Logical Interrupt Source Number *=
+/
+> +
+> +        /*
+> +         *  Perform ESB escalation processing
+> +         *      E[N] =3D=3D 1 --> N
+> +         *      Req[Block] <- E[ESB_Block]
+> +         *      Req[Index] <- E[ESB_Index]
+> +         *      Req[Offset] <- 0x000
+> +         *      Execute <ESB Store> Req command
+> +         */
+> +        lisn =3D XIVE_EAS(xive_get_field32(END2_W4_END_BLOCK,     end.w4=
+),
+> +                        xive_get_field32(END2_W4_ESC_END_INDEX, end.w4))=
+;
+
+In my XIVE spec, AFAIKS the N=3D0 ESB block/index layout at W4 is
+different than the N1=3D1 END block/index. I won't change it since
+this looks the same in our downstream which is tested, so I might
+be missing something... Could perhaps use a comment if so.
+
+> +
+> +        xive2_notify(xrtr, lisn, true /* pq_checked */);
+
+Is that really right? The escalation should bypass the PQ state
+machine?
+
+
+> +    }
+> +
+> +    return;
+
+No need for this return.
+
+>  }
+> =20
+> -void xive2_router_notify(XiveNotifier *xn, uint32_t lisn, bool pq_checke=
+d)
+> +void xive2_notify(Xive2Router *xrtr , uint32_t lisn, bool pq_checked)
+
+This can be static.
+
+>  {
+> -    Xive2Router *xrtr =3D XIVE2_ROUTER(xn);
+>      uint8_t eas_blk =3D XIVE_EAS_BLOCK(lisn);
+>      uint32_t eas_idx =3D XIVE_EAS_INDEX(lisn);
+>      Xive2Eas eas;
+> @@ -1568,13 +1589,29 @@ void xive2_router_notify(XiveNotifier *xn, uint32=
+_t lisn, bool pq_checked)
+>          return;
+>      }
+> =20
+> +    /* TODO: add support for EAS resume if ever needed */
+
+Comment is probably unnecessary with the UNIMP log.
+
+> +    if (xive2_eas_is_resume(&eas)) {
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "XIVE: EAS resume processing unimplemented - LISN =
+%x\n",
+> +                      lisn);
+> +        return;
+> +    }
+> +
+>      /*
+>       * The event trigger becomes an END trigger
+>       */
+>      xive2_router_end_notify(xrtr,
+> -                             xive_get_field64(EAS2_END_BLOCK, eas.w),
+> -                             xive_get_field64(EAS2_END_INDEX, eas.w),
+> -                             xive_get_field64(EAS2_END_DATA,  eas.w));
+> +                            xive_get_field64(EAS2_END_BLOCK, eas.w),
+> +                            xive_get_field64(EAS2_END_INDEX, eas.w),
+> +                            xive_get_field64(EAS2_END_DATA,  eas.w));
+> +}
+> +
+> +void xive2_router_notify(XiveNotifier *xn, uint32_t lisn, bool pq_checke=
+d)
+> +{
+> +    Xive2Router *xrtr =3D XIVE2_ROUTER(xn);
+> +
+> +    xive2_notify(xrtr, lisn, pq_checked);
+> +    return;
+
+Also return unnecessary.
+
+>  }
+> =20
+>  static Property xive2_router_properties[] =3D {
 
 Thanks,
-Moeko
-
->>> Given the pending release deadline, maybe these aren't blockers, but
->>> let's follow-up with something that assumes the user wants something
->>> other than what they're doing.  Thanks,
->>>
->>> Alex
->>>
->>
->> Sure.
->>
->> Moeko
->>  
->>>> +
->>>> +        /*
->>>> +         * Most of what we're doing here is to enable the ROM to run, so if
->>>> +         * there's no ROM, there's no point in setting up this quirk.
->>>> +         * NB. We only seem to get BIOS ROMs, so UEFI VM would need CSM support.
->>>> +         */
->>>> +        ret = vfio_get_region_info(&vdev->vbasedev,
->>>> +                                   VFIO_PCI_ROM_REGION_INDEX, &rom);
->>>> +        if ((ret || !rom->size) && !vdev->pdev.romfile) {
->>>> +            error_setg(&err, "Device has no ROM");
->>>> +            goto error;
->>>> +        }
->>>>   -    /* Setup OpRegion access */
->>>> -    if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
->>>> -        error_append_hint(&err, "IGD legacy mode disabled\n");
->>>> -        error_report_err(err);
->>>> -        return true;
->>>> -    }
->>>> +        /*
->>>> +         * If IGD VGA Disable is clear (expected) and VGA is not already
->>>> +         * enabled, try to enable it. Probably shouldn't be using legacy mode
->>>> +         * without VGA, but also no point in us enabling VGA if disabled in
->>>> +         * hardware.
->>>> +         */
->>>> +        if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
->>>> +            error_setg(&err, "Unable to enable VGA access");
->>>> +            goto error;
->>>> +        }
->>>>   -    /* Setup LPC bridge / Host bridge PCI IDs */
->>>> -    if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
->>>> -        error_append_hint(&err, "IGD legacy mode disabled\n");
->>>> -        error_report_err(err);
->>>> -        return true;
->>>> +        /* Setup OpRegion access */
->>>> +        if (!vfio_pci_igd_setup_opregion(vdev, &err)) {
->>>> +            goto error;
->>>> +        }
->>>> +
->>>> +        /* Setup LPC bridge / Host bridge PCI IDs */
->>>> +        if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
->>>> +            goto error;
->>>> +        }
->>>> +    } else if (vdev->igd_legacy_mode == ON_OFF_AUTO_ON) {
->>>> +        error_setg(&err,
->>>> +                   "Machine is not i440fx or assigned BDF is not 00:02.0");
->>>> +        goto error;
->>>>       }
->>>>         /*
->>>> @@ -627,4 +634,18 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,
->>>>       trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
->>>>         return true;
->>>> +
->>>> +error:
->>>> +    /*
->>>> +     * When legacy mode is implicity enabled, continue on error,
->>>> +     * to keep compatibility
->>>> +     */
->>>> +    if (legacy_mode_enabled && (vdev->igd_legacy_mode == ON_OFF_AUTO_AUTO)) {
->>>> +        error_report_err(err);
->>>> +        error_report("IGD legacy mode disabled");
->>>> +        return true;
->>>> +    }
->>>> +
->>>> +    error_propagate(errp, err);
->>>> +    return false;
->>>>   }
->>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>>> index a58d555934..d5ff8c1ea8 100644
->>>> --- a/hw/vfio/pci.c
->>>> +++ b/hw/vfio/pci.c
->>>> @@ -3363,6 +3363,8 @@ static const Property vfio_pci_dev_properties[] = {
->>>>                       VFIO_FEATURE_ENABLE_REQ_BIT, true),
->>>>       DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
->>>>                       VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
->>>> +    DEFINE_PROP_ON_OFF_AUTO("x-igd-legacy-mode", VFIOPCIDevice,
->>>> +                            igd_legacy_mode, ON_OFF_AUTO_AUTO),
->>>>       DEFINE_PROP_ON_OFF_AUTO("enable-migration", VFIOPCIDevice,
->>>>                               vbasedev.enable_migration, ON_OFF_AUTO_AUTO),
->>>>       DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
->>>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->>>> index 2e81f9eb19..aa67ceb346 100644
->>>> --- a/hw/vfio/pci.h
->>>> +++ b/hw/vfio/pci.h
->>>> @@ -158,6 +158,7 @@ struct VFIOPCIDevice {
->>>>       uint32_t display_xres;
->>>>       uint32_t display_yres;
->>>>       int32_t bootindex;
->>>> +    OnOffAuto igd_legacy_mode;
->>>>       uint32_t igd_gms;
->>>>       OffAutoPCIBAR msix_relo;
->>>>       uint8_t pm_cap;
->>>
->>
-> 
-
+Nick
 
