@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32830C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19FC3C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trbvT-0002ZH-Vu; Mon, 10 Mar 2025 08:08:09 -0400
+	id 1trbvA-0002DZ-UT; Mon, 10 Mar 2025 08:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trbvJ-0002M6-6B
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:07:59 -0400
+ id 1trbv1-0002AR-7h
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:07:39 -0400
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1trbvG-0002Mr-GI
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:07:56 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1741608458; cv=none; 
+ id 1trbuw-0002Jg-UT
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:07:37 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1741608440; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=Au6sTkDjc5VpwrZgeXh+kFPu7EmRiXxjXrF4333OkZyemz/U71+CSszwyLTO+Y9DmSPRcARfjr7m4K+5hd1YENvSCcUVkmGwOFElrlNTRMWs0vCFQ/R/Upx2MoANyTFSIgR91/jt+Ec5ii19zVrx9feXv1IJZdCSj9HJp8JDYXk=
+ b=Jgq9RvhbcUfShoxXHz6CgZ6qSHv/ShdupPRz00e0yCWGl3TM1q5NknMFaMLZW8pCRipe3xFwD6mG3NczqU7sfSvIcc53bc/jXmH4YGJlpihuqff/sptfWWj2BhE3nXRirIneWKg+cGz3bM0pfRoSCxH/OSfCQDHtrSiZo1DGlkE=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1741608458;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=eJrSLxjqu0HeBH1I3TSIB8+DRFiJIAdZt2l2rGiZd2w=; 
- b=RpKgPFlKICT96G4c7Nt2zG91Y18abXMXMjypvkSoMP9Y4nWvJd613xxkkh1oJL1bznhdDbe3cWgCr6KqsNtKpqovYzG74SJr5SkdtbOq87Y2ojFPIEazCkYr9oyhkcP+Slc1hP3nT5z2RsMHj1mF1vZvDkcpLftVaSXhx8Aa4/o=
+ s=zohoarc; t=1741608440;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=mL6BssqBdFtVZrHDCDUqwTNdYD9EWk/2PtIpTUBDV1Q=; 
+ b=hBBkYOwsDITfQsUKoqpYTq1NLkYYXE4C+IlKq998nMuOwPnC0x36c6v+N0g7+soROL7XU5HD34HrWS3gtlz3+KjSPZ0uwrKzx0U5v7v9NcjGaWuuI1mTJvFa9S15fIIQ9J2FyIzm5oJ+wdEP9AHq8OicmBqDsQX7bzGBz060LXs=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741608458; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741608440; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=eJrSLxjqu0HeBH1I3TSIB8+DRFiJIAdZt2l2rGiZd2w=;
- b=K77w+7LCafb+THU1L1R9JZ0Gv2ORvR95BhDWhTRCbkN1k8cznlZCYKgnCfYT6sCO
- B3gnHvxoLWmVXAL4obmsVS7qaCE9jahc6kRX6ezmMiJVxCVUGiCULTRenK4lyXjlTFW
- nt6+Yg/sejk7O9F/holEfunzzQcehuQ1PZlWSs68=
-Received: by mx.zohomail.com with SMTPS id 1741608456974939.7747574027992;
- Mon, 10 Mar 2025 05:07:36 -0700 (PDT)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=mL6BssqBdFtVZrHDCDUqwTNdYD9EWk/2PtIpTUBDV1Q=;
+ b=jyaqzLoNdtH4yZ/nnxDAx4+VmzVtmNaPhwc+UqrWJZRmvY728vVxD8C3FuGRPrZ6
+ W5SLmA6U1KAQdQy7VDIls8bsC2DnHWYGn6REltdFYi4L5r4bKRPINTPHlAltm+XVik9
+ WXxMDwDWDEbSgI7HwH5aXKnKwf18qzc+qb/ykMdc=
+Received: by mx.zohomail.com with SMTPS id 1741608437928619.8853097591066;
+ Mon, 10 Mar 2025 05:07:17 -0700 (PDT)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -59,13 +59,15 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v11 09/10] docs/system: virtio-gpu: Update Venus link
-Date: Mon, 10 Mar 2025 15:05:54 +0300
-Message-ID: <20250310120555.150077-10-dmitry.osipenko@collabora.com>
+Subject: [PATCH v11 06/10] ui/sdl2: Don't disable scanout when display is
+ refreshed
+Date: Mon, 10 Mar 2025 15:05:51 +0300
+Message-ID: <20250310120555.150077-7-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310120555.150077-1-dmitry.osipenko@collabora.com>
 References: <20250310120555.150077-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -93,30 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change virtio-gpu Venus link, pointing it at the Mesa Venus
-documentation instead of the protocol. The Mesa doc provides more
-information and also has a link to the protocol.
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
-Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- docs/system/devices/virtio-gpu.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ui/sdl2-gl.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-index f8963c1f13cf..ea3eb052df3c 100644
---- a/docs/system/devices/virtio-gpu.rst
-+++ b/docs/system/devices/virtio-gpu.rst
-@@ -81,7 +81,7 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- .. parsed-literal::
-     -device virtio-gpu-gl,hostmem=8G,blob=true,venus=true
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 8d53e340d40d..31f8fbe03286 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -53,7 +53,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
+     int ww, wh;
  
--.. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
-+.. _venus: https://docs.mesa3d.org/drivers/venus.html
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+-    sdl2_set_scanout_mode(scon, false);
  
- DRM native context is supported since release of `virglrenderer`_ v1.0.0
- using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") requires
+     SDL_GetWindowSize(scon->real_window, &ww, &wh);
+     surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
 -- 
 2.48.1
 
