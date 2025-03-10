@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240C7C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 14:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54449C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 14:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1treLy-0007aD-Cd; Mon, 10 Mar 2025 10:43:40 -0400
+	id 1treMa-0000O7-Dw; Mon, 10 Mar 2025 10:44:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1treLv-0007Zs-FE
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 10:43:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1treMY-0000Mv-PM
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 10:44:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1treLt-0002aZ-SR
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 10:43:35 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1treMX-0002eR-1J
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 10:44:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741617812;
+ s=mimecast20190719; t=1741617852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=9xpYdSQihRH0xQKvIi9AG6NxQN2+U004GdmDUlZeqck=;
- b=AAoDDUuseojbV5eBLBHb3rVBIBXVHroCCiGOmpZNRtpXHpjNfqO/+DOr5dgkKC+TNbdDHf
- bpBlOiabZ3MWZq89RqCOFcIEaQ3wH05S9ALKttSObYjFIzUJ3rntHPu8j4dcHuHuuWFXi9
- ZCLq5bqzk7xiQ8BTIT+gWSLkg9Ynyc8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=e79LTItO9Zxn/2a/B6blpLMqcSuTSDDuVE7qNES85Ic=;
+ b=aHvWbQNC0uS00ExYF3K7/R0VV9moCyxRt1Y73m+zcg39SAaWeoLSrzPfdIJbXI2tr+N3O1
+ kV1tKVdBpRAMkStR+MNtUSa1ba6PjNWxrka2bnskEsCiTJjaOuVB37C49DF0VdA7h393q6
+ 1MKp1qqx2FB+Zo0QZv+l7q6JErlGJFw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-W9DqMk0tPla-oVfGJIWrEw-1; Mon,
- 10 Mar 2025 10:43:29 -0400
-X-MC-Unique: W9DqMk0tPla-oVfGJIWrEw-1
-X-Mimecast-MFC-AGG-ID: W9DqMk0tPla-oVfGJIWrEw_1741617808
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-g4KHKMWYMzaq_Ofu-mKJPw-1; Mon,
+ 10 Mar 2025 10:44:05 -0400
+X-MC-Unique: g4KHKMWYMzaq_Ofu-mKJPw-1
+X-Mimecast-MFC-AGG-ID: g4KHKMWYMzaq_Ofu-mKJPw_1741617845
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 671D119560B0; Mon, 10 Mar 2025 14:43:28 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5A8119560BC; Mon, 10 Mar 2025 14:44:04 +0000 (UTC)
 Received: from redhat.com (unknown [10.45.225.222])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D0051828A8C; Mon, 10 Mar 2025 14:43:24 +0000 (UTC)
-Date: Mon, 10 Mar 2025 15:43:21 +0100
+ id 1368418001E9; Mon, 10 Mar 2025 14:43:59 +0000 (UTC)
+Date: Mon, 10 Mar 2025 15:43:57 +0100
 From: Kevin Wolf <kwolf@redhat.com>
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -54,23 +54,22 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
  David Hildenbrand <david@redhat.com>, pkrempa@redhat.com,
  Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 12/12] virtio-scsi: handle ctrl virtqueue in main loop
-Message-ID: <Z876iZY4URLY9Kbu@redhat.com>
+Subject: Re: [PATCH 00/12] virtio-scsi: add iothread-vq-mapping parameter
+Message-ID: <Z876rXYchAvup5_6@redhat.com>
 References: <20250213180043.713434-1-stefanha@redhat.com>
- <20250213180043.713434-13-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250213180043.713434-13-stefanha@redhat.com>
+In-Reply-To: <20250213180043.713434-1-stefanha@redhat.com>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,43 +88,70 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Am 13.02.2025 um 19:00 hat Stefan Hajnoczi geschrieben:
-> Previously the ctrl virtqueue was handled in the AioContext where SCSI
-> requests are processed. When IOThread Virtqueue Mapping was added things
-> become more complicated because SCSI requests could run in other
-> AioContexts.
+> Implement --device virtio-scsi-pci,iothread-vq-mapping= support so that
+> virtqueues can be assigned to different IOThreads. This improves SMP guest
+> scalability where I/O-intensive applications can become bottlenecked on a
+> single IOThread.
 > 
-> Simplify by handling the ctrl virtqueue in the main loop where reset
-> operations can be performed. Note that BHs are still used canceling SCSI
-> requests in their AioContexts but at least the mean loop activity
-> doesn't need BHs anymore.
+> The following benchmark results show the effect of iothread-vq-mapping. fio
+> randread 4k iodepth=64 results from a 4 vCPU guest with an Intel P4800X SSD:
+> iothreads IOPS
+> ------------------------------
+> 1         189576
+> 2         312698
+> 4         346744
 > 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> The virtio-scsi device model and core SCSI emulation currently assume that
+> requests are processed in a single AioContext. This patch series goes about
+> modifying this as follows:
+> 
+> scsi-disk: drop unused SCSIDiskState->bh field
+> dma: use current AioContext for dma_blk_io()
+> 
+> Make dma-helpers.c support the QEMU multi-queue block layer by using
+> qemu_get_current_aio_context().
+> 
+> scsi: track per-SCSIRequest AioContext
+> scsi: introduce requests_lock
+> 
+> Make the core SCSI emulation code support processing requests in multiple
+> AioContexts by protecting the per-SCSIDevice requests list.
+> 
+> virtio-scsi: introduce event and ctrl virtqueue locks
+> virtio-scsi: protect events_dropped field
+> virtio-scsi: perform TMFs in appropriate AioContexts
+> 
+> Make the virtio-scsi emulation code support processing requests in multiple
+> AioContexts. The event and ctrl virtqueues can interact with multiple
+> AioContexts. Especially the SCSI Task Management Functions (TMFs) handled by
+> the ctrl virtqueue need to be made thread-safe.
+> 
+> virtio-blk: extract cleanup_iothread_vq_mapping() function
+> virtio-blk: tidy up iothread_vq_mapping functions
+> virtio: extract iothread-vq-mapping.h API
+> virtio-scsi: add iothread-vq-mapping parameter
+> 
+> Port over the iothread-vq-mapping qdev property from virtio-blk to virtio-scsi.
+> 
+> virtio-scsi: handle ctrl virtqueue in main loop
+> 
+> Simplify TMF handling now that there is no longer a single AioContext where all
+> requests are processed.
+> 
+> Stefan Hajnoczi (12):
+>   scsi-disk: drop unused SCSIDiskState->bh field
+>   dma: use current AioContext for dma_blk_io()
+>   scsi: track per-SCSIRequest AioContext
+>   scsi: introduce requests_lock
+>   virtio-scsi: introduce event and ctrl virtqueue locks
+>   virtio-scsi: protect events_dropped field
+>   virtio-scsi: perform TMFs in appropriate AioContexts
+>   virtio-blk: extract cleanup_iothread_vq_mapping() function
+>   virtio-blk: tidy up iothread_vq_mapping functions
+>   virtio: extract iothread-vq-mapping.h API
+>   virtio-scsi: add iothread-vq-mapping parameter
+>   virtio-scsi: handle ctrl virtqueue in main loop
 
-> diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-> index 6bb368c8a5..2d37fa6712 100644
-> --- a/hw/scsi/virtio-scsi-dataplane.c
-> +++ b/hw/scsi/virtio-scsi-dataplane.c
-> @@ -73,6 +73,12 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
->              s->vq_aio_context[i] = ctx;
->          }
->      }
-> +
-> +    /*
-> +     * Always handle the ctrl virtqueue in the main loop thread where device
-> +     * resets can be performed.
-> +     */
-> +    s->vq_aio_context[0] = qemu_get_aio_context();
->  }
-
-Hmm... So now it's mandatory to provide a mapping for the control queue
-if you're using iothread virtqueue mappings, but it's always ignored?
-
-Looks like another reason why we should change the interface to have
-separate properties for the command queues and the event queue (and no
-property for the control queue if we want it to be fixed).
-
-In fact, maybe just tie the event queue to the main loop, too?
-
-Kevin
+Patches 1-10: Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 
 
