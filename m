@@ -4,201 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB9AC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 04:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A421C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 04:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trUcd-0006sy-My; Mon, 10 Mar 2025 00:20:13 -0400
+	id 1trUd8-00078D-KD; Mon, 10 Mar 2025 00:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1trUUQ-0006IQ-47; Mon, 10 Mar 2025 00:11:42 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1trUUN-0006n9-S4; Mon, 10 Mar 2025 00:11:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741579900; x=1773115900;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=IuzQIuUaBmSY8BriZAKO9zD2W36fdvs4tFfTIb32K6k=;
- b=czYoC2zRhxQvCBWm9PfbaGrV4Cu4aOwODjfsKPuASDYICP8iiWk2ZOEy
- r4CR/Gqu8HQCyMbslHVITMYaWYbuRbHl84rlIqRjldUhlrGkqN/W3KbZT
- KlVAn8b+dgQ+90zUO2z/xlSzEgguIfuR2wDRxN3F02w9DSbhaxdkqgQcp
- tXpeUE74fpf2rpwn0W8cTiBx3OKLQgrmcnnhfKnJ9rfXB6d+KPAKmqLuj
- RkNw5S2VqdQKvW/09SHC24AzdT6dZYxQQlNq3kOR4P9QwVnOAt2zrzm+n
- Dil9aYP1+vB2StgCPHr8OC2e0Dt34Fh1P7sN/99mh1k1CueA0TSgFi5EW w==;
-X-CSE-ConnectionGUID: QI1oX5fKR9uxfaW/FA02qg==
-X-CSE-MsgGUID: l9+Wzge8R12inU9PE2dHHw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11368"; a="42672743"
-X-IronPort-AV: E=Sophos;i="6.14,235,1736841600"; d="scan'208";a="42672743"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2025 21:11:36 -0700
-X-CSE-ConnectionGUID: 9wIKKp9IT+CwX49qnFo/Vg==
-X-CSE-MsgGUID: 3/62N00yTv2rXqZwXdQh9Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="150815505"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 09 Mar 2025 21:11:34 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Sun, 9 Mar 2025 21:11:33 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Sun, 9 Mar 2025 21:11:33 -0700
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.176)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Sun, 9 Mar 2025 21:11:33 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FbJtFFQP4Dk5gIhmbYxQO00eLWs7EWWdZLAzCLf7UtA6+xPl/MnPpRU3sju4/45Cnf0842KKYDy30Jh0aRYltSJhQYpykGKz8jCefKhqNhi+tLa00M1T1bEofACc0R14LEVrOUmMnfIBriGG55ty06u/GMDGWniCxaBBrH7viPoapuionqHaPijysqRZ5Vqt4h02DC70ck+n6ksQvJA+u9V8LObU5eEHeMhc6ikaiN1i7Z82uhsn8GQKEPSakyZQThQJA12SeHkjvJd657MtWzCAuiY/zNe7Y0uk6TpHsYSCNTJWyycR1of7vHDuN66NBsHKzaVhqMOldgx/yvUCkQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ie0nCQZUI2hUoyaUQ/1PGsNfei62p3zVTaG4fSS9gPQ=;
- b=TTA1rJkweU3hBEUpW/D6gdbAnTOmzAvQ4yj3kfKbMSBCUkQckw+1r7f8mW1TzKtZj6lclWz2hVMpz2M+uuJA1GE1hRSvixF0R3S4QVA6JzUQ8iwdIwz8VsoGMnoqpEdD6JyraGhIlfaqMh6iuu8d6ESvSa2h+ypURQXAjtTFxZ8rxtJyAwDP6c1tQN5Z8nxJ15P6UxpCE8vaLrNtoVYoVc775BIXNhJcL/1YmxSHAqPHehVOWc/PuXujVGbg1Z7plurkz59hCoIKM+LkVwHKWkZNg+vl9MD7CQ7+uw42TniCTdJ/M/y1VzJsNQYOtmGO4KSSZoDoaKxFHXDKJmDfuA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by DS7PR11MB6248.namprd11.prod.outlook.com (2603:10b6:8:97::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.26; Mon, 10 Mar
- 2025 04:11:15 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%6]) with mapi id 15.20.8511.025; Mon, 10 Mar 2025
- 04:11:15 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "Liu, Yi L" <yi.l.liu@intel.com>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Alex Williamson <alex.williamson@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Tony Krowiak
- <akrowiak@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, Halil Pasic
- <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Eric Farman <farman@linux.ibm.com>, Eduardo Habkost
- <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>, "kvm@vger.kernel.org"
- <kvm@vger.kernel.org>, "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>, "Eric
- Auger" <eric.auger@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "Harsh
- Prateek Bora" <harshpb@linux.ibm.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, Jason Herne
- <jjherne@linux.ibm.com>, =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?=
- <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
-Subject: RE: [PATCH v2 15/21] hw/vfio/pci: Check CONFIG_IOMMUFD at runtime
- using iommufd_builtin()
-Thread-Topic: [PATCH v2 15/21] hw/vfio/pci: Check CONFIG_IOMMUFD at runtime
- using iommufd_builtin()
-Thread-Index: AQHbkH9n6UTdqDYxnk2KS04mTYbprbNrsnsw
-Date: Mon, 10 Mar 2025 04:11:15 +0000
-Message-ID: <SJ0PR11MB67449BEA0E3B4A04E603633C92D62@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20250308230917.18907-1-philmd@linaro.org>
- <20250308230917.18907-16-philmd@linaro.org>
-In-Reply-To: <20250308230917.18907-16-philmd@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS7PR11MB6248:EE_
-x-ms-office365-filtering-correlation-id: ec1eb3da-0e30-49b6-df1d-08dd5f8999f1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|38070700018; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?7hyw4Ci8hGTPuNpv5Ac7xAzhjMdLKZrIhCRknpP/YwkPB8F8mAgi1capyE?=
- =?iso-8859-1?Q?jT+iWVMW7MFduRXVf4tZjK/GYqnUsef4YbvUVlY/BQN6VBbb8QJ1czQgQu?=
- =?iso-8859-1?Q?9ybwiwgc8UnPvmfPhrDryCRY8weplIJB1jhumcvjItFgjIM2m/0pv4W/0w?=
- =?iso-8859-1?Q?ER0W5q5bPCRGbJmxbHGdyj/Tcw9C3xhBGX9/me6TgzpkSTTegIg4WHPGix?=
- =?iso-8859-1?Q?vUBUvzWqfaYuVXuoQRrOLe+Cky/kFQ9cwAOBL12b62YWlDpYI5cf8zTsxz?=
- =?iso-8859-1?Q?Et6f5lFRzdx1kVQLZ2zZjmu3hJp/f03gP5hjrAn/hMpcftnUkEQyT5wrkr?=
- =?iso-8859-1?Q?p1tX+zTCGerSRtlzsE4M0OpoaM+47vz+ae6QdgjCe9G1jIZmcKGH5QWRRS?=
- =?iso-8859-1?Q?yLW1BQeiuXx5rwM8Iihy33gvx1fo5teygjh6PED0JjOyLOemdp3RuU3lK3?=
- =?iso-8859-1?Q?LM7vCaEWVNojGCydKLOQGvPYViMJqkJHEbmDa6RkGBclWsfv//IFx7CDQR?=
- =?iso-8859-1?Q?J0S6YHGZFXZqt7I1YtGYAKtnUyFj0GJccTGQirJuEL0Lnly335kVVPJ5iX?=
- =?iso-8859-1?Q?y/qL3YFzjhemgSQ1SPfVHUvNx3myqCRgl6afauNAzOHRUYyH49fCavntNz?=
- =?iso-8859-1?Q?Dk5N2UMRKAc4M17E0O2Iacy4rOSRACyFL7nMOGVF70nETQM/9uCwACg9DP?=
- =?iso-8859-1?Q?sMy6Zc8UT1EW5Liqv2+hLS4bFmxLdUfiZDyNlQgngsFtKGueLZxsB8fI2J?=
- =?iso-8859-1?Q?LTnFYxW9OAx0a4ycVr4MGxVuSgxeJAD0IqDpqExZbXpAlaPkv0EAFNsK7e?=
- =?iso-8859-1?Q?ilXXLLgY2XNmn9+749Q8bTLAGbFHgs85PLsmbZLdx8nz4GGz0mez3K2ayb?=
- =?iso-8859-1?Q?ylZSJCPvdLjFScT2VJ4aWE8zUdH/j9zv4XwtIFj79zyC0khayah3MxICq+?=
- =?iso-8859-1?Q?YS3RVyFAto/w8KIg+YpHbG1EC08UaeuauahNbo9eQYtPhjQV/WG05Ayctc?=
- =?iso-8859-1?Q?vSt3oG18cHGRfAjUdNvUYyIFWkT3qeEvkXkWcTLQ59vNzeHigE1tzbl6f5?=
- =?iso-8859-1?Q?al6iEJo0H6jAG9Ln2YK2Txn9JabrWJtAdqbny5SRkqjSG3d14TPkf3DiNb?=
- =?iso-8859-1?Q?hUMNJDPBeSnRPNasbTIJLeVESR4DsZU5deshY+wV+othTRr98ebbT2aRjZ?=
- =?iso-8859-1?Q?52oTlzp5450ngxhHJs9si/LNjnjRQFhDsQN8qJMZSSYW7+6KPXdswWWYr3?=
- =?iso-8859-1?Q?HzvCFv6fya46kscgDMOgnA5iP7H7nl6EMRcrHYrTpfoQjPr4OQ8VjufqUN?=
- =?iso-8859-1?Q?QjKIi2Yvi+zbKQnKXSNwv8j7WH4Nv381PdeaKA2Dx+72Ochut2KQYg43hY?=
- =?iso-8859-1?Q?yzPk/Ib8/yA0YmKV30maxggg0W2dZEjqVBaycY7BPZ/hDSt4aY+cckb/Vs?=
- =?iso-8859-1?Q?kO7akvE257bny/KXEp+hG/iU62P9ekXoyIAZqU98bEJKb5LUDx24VCE++p?=
- =?iso-8859-1?Q?CFi5PqvM6XTUcy5f+Clf+1?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?bLSyES1w4CE5IOLP+5nAgKYO9tTpN3avX1tD1cadI+M+2vYsVevRDRYpWw?=
- =?iso-8859-1?Q?h9O8HaJY6dXstN/t/MW/NbxOageL5XS/4Tex/hOcHEldMFsYxL5pfwiQW9?=
- =?iso-8859-1?Q?f9M9MJ1+H+HmGBRuVS+Mo210opzSk/3HvdTgokOBsI5kcn/8sZLyCMbjI2?=
- =?iso-8859-1?Q?I2+XPTDkdOERDoamsqz3IvlEW7DT6bOcvZx6XTjlWHgrOyCVgy167tqtuh?=
- =?iso-8859-1?Q?1mAxeNp4W5zubmCfY6zsGrQOahYrhUb6NxlXTYsIT99rLLhRHE9XJ6HDwY?=
- =?iso-8859-1?Q?nEGcaL3C6OElDh86jgYMA1UqN5CbMRTFzjb79cwAvQzIk40U2NCaS6s44M?=
- =?iso-8859-1?Q?lj8bdfCibSikVa5drAWzc71KdwEYJoPljZyQBmzKDdszWJZ68khD4pvaYo?=
- =?iso-8859-1?Q?14a6EZbD4VSpw8nRFoTAP7FHo3SyUPP+NpkY03HQt+SZP1FTaevrWPNBkt?=
- =?iso-8859-1?Q?RtiO5e5tytZeHJ+gKirSv/lqSX0l1X41rLMkFPal6b8VjmAlTchJnlv7f+?=
- =?iso-8859-1?Q?SCh5aqUzG+bnfYTfab89lCnwj+sTXOtjzbCu7vBYsoXHdlg1RC5imtcS7W?=
- =?iso-8859-1?Q?38mmKxQZqtOvuJTtE/hZeZd96C0y9DLlmnP3MXNwkMZVVBM/4Nx2/H9lhl?=
- =?iso-8859-1?Q?8SywPoVTYQBBQeks8xlWuiv7lCUuhUujJCzETKCpMPkrnH2xYBG2Wu+elh?=
- =?iso-8859-1?Q?hn8VyMjGMIiIqd0olloiaouMIHenGQ7J92xMYQlz50wN7SSB+1WDHlvr26?=
- =?iso-8859-1?Q?kOVzgF54dxSBKcAu+lGA2Q/Dcysprfdx/85bNuJQtfuIG4gxSIrwPxo+up?=
- =?iso-8859-1?Q?qZATfPOqH3T5oSD83APcXcmoIHv9+N4UpmfpWwbeKYVqv5u80di1bo88dn?=
- =?iso-8859-1?Q?kUhgaBOwHs3H0QZeNAqwA2+dHDjhTFroIaNdsxNgRg3R8Wd67g8f93AI4k?=
- =?iso-8859-1?Q?jc8SXPYIupbLu3gc0wrNf4Bioynk/b9cfaOOxd+bdFE29PClWLRcHXHnfN?=
- =?iso-8859-1?Q?riiLFozNlBaFYGc4HPQPKjgLQwP3dlAjmWe/tG0vsG//pSqvJaUuE6QNKl?=
- =?iso-8859-1?Q?svKhjl78eh//j9C6ogTorVbSSYKWacIeqKN4Ty1kOnDe5n8vz4Z2W60xUz?=
- =?iso-8859-1?Q?mGZPpr+08x/w8oAJKBrcJxOWmlsY3shPBCS1eqVOptnzUZdK2QouYnyrr8?=
- =?iso-8859-1?Q?i2ckSGDes7qi5/RwBX3MIBX3B/RhF+0ZJbT317wroIT+RzjvD5zBCXNeVU?=
- =?iso-8859-1?Q?UjhZD1A82sAbn23fIkhrRRl+i5b4IKSeg4MvZnIJ/9JyqP24kkhGQcu0AG?=
- =?iso-8859-1?Q?kctQ+kunKCblaDFXKz0OLNDR5BNo32omA6p7DUUOPyL7sZh88WnqNQuIU8?=
- =?iso-8859-1?Q?26m8CRP6tD5wq9ribIrg6Kp4OP/ra0HCBCkHkwAukLYfV4VvGmZukqxJMT?=
- =?iso-8859-1?Q?kxgVUTsadFYetFIrPnIK62ZO+j2T4YwPc56NPjk6nJm8dyCW1HXE4LK9nR?=
- =?iso-8859-1?Q?d5OdrNwo9xTOnJV7gQxOuG8C3a1CJs1b+XCg0BWV3w7Dv72uptSD8Xabmx?=
- =?iso-8859-1?Q?JsxLMkV3qmR1AsokLk7MKYMY6xNDxUpVL0TAs/tzdB04UL7B24dZRP9x7/?=
- =?iso-8859-1?Q?GVkRHtmubt3R7X0TcbbW3DbvBIhF1X7l5E?=
-Content-Type: text/plain; charset="iso-8859-1"
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trUQL-0005S3-Cu; Mon, 10 Mar 2025 00:07:29 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trUQJ-00060X-22; Mon, 10 Mar 2025 00:07:29 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22359001f1aso90391675ad.3; 
+ Sun, 09 Mar 2025 21:07:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741579645; x=1742184445; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7RR+bX10naIO7yZ4f5HhWWxEqcmaLfLZLXJ8Dw/gINU=;
+ b=EWG+LJ00IxYb0sI0SMkYBMs6yMb5S98aWkqlKR0jyErM8bpcqzlhPnDqA9fCF1tQrn
+ lwwcJE2oSrEdmh2ect1q1SyYXmsIKyQCqBFxun4gv9+UBGHOVVhVHKhF6980tA+d+HyB
+ Rah6rnb9vSHuIChKs3VW5dX+VqKI96DSIbdTeGSKtFqlv/MMFl7UcsV2qUphh3eAJWTT
+ mmw8OKoEsrXKpzo7Z0qo0M4hjHazFjxEPWZO4pARntDl5e3Cj2BdHdTnzZo2wxz/M33i
+ idYg/xSv5jkVs32Mp8HZpPL0cKMwGTlrq6PzZ8zhJd8dCo4oFsuVvuyvDm2v15gbgr08
+ jQww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741579645; x=1742184445;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=7RR+bX10naIO7yZ4f5HhWWxEqcmaLfLZLXJ8Dw/gINU=;
+ b=RdRfLDtfoZBdfCtfaecGsmEjjLRmezi2uBL6xp8ePCvkbMpD9wbtNnuRJpcjyjfR6B
+ oG/3mVl0p9iNRkc1XI9xKP9alA5XPKJr/pjZTo3CMba3QSRbkjxbL2PBXADfMg6swzQd
+ rIJ/y+3Dhnbr6fMGG+cVzWSwPHp+AhhZ/z2GAYAt1YfM1q1sJ2F3qY0D5d/ynNHiE8tq
+ wRRW+IElmTrq364S3AdvH7mJTtY6SpQfbVheQUyDs+ESiBpMnXsEnNVU7WsMdbmdQny4
+ e7hUrwgucjz9n1xaAH7ZbHV+mH8iP/pe+KC3xKx9GobynTuX1L3YTCpeU+nka5mtN8ur
+ 07DQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVh7GBp8i0UTvnGnGjZM/CZgoBwjU03Sn4wFql9W+gCZfz2ykSNCua891V1RqQGOCXSCOpE5owVl3+0@nongnu.org
+X-Gm-Message-State: AOJu0YwJYrQUjpDCRFlT447Bd+mQM9yB1LPz3RWEnx20fBeAu2ffB4UJ
+ svpiUnLbeGN/QNh4ygVyWGtSbgLywOhgtVWF0TqAWuzAxd8gWE9R
+X-Gm-Gg: ASbGncvqx2iiEvk+62LL03E5YWWSsYXQOljDKw9y2ZH27lfurnpACd4Pz8a8Q9viJY/
+ wa1qheBgcc4rGC21BufCBLl2owlj2GxkjHw4RG9rrWCq1p5DYffJKvZvCu1T/vBzghrCzXVYgNj
+ PQUGFW+U++Op+Tofd3MqNI0sbsQm+Lk1XqgA7IP6zjIBtGPsE5LGOJFpgdwgf2bj0rvpDsIjb1/
+ zLJg4bDlFel/DAIyKexEBaXgY1yijecEuL5Ilr5n1/YmbK9ceEJVChfX+HLN0kWf13OW0AH1tB/
+ bjRB/50WVKNhv3jmXZRy5kwuK0RPhnaJGsUhPtYs
+X-Google-Smtp-Source: AGHT+IEiCBSG4e4G7XgKSzocr8WBmqyjvRYZBoaL4CPzYJuDALr5n3cYLW96Rrgov+OfRmvIcTefog==
+X-Received: by 2002:a05:6a00:4b4a:b0:736:a8db:93b8 with SMTP id
+ d2e1a72fcca58-736aa9b3970mr20889219b3a.3.1741579644717; 
+ Sun, 09 Mar 2025 21:07:24 -0700 (PDT)
+Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-736baa37598sm4200081b3a.90.2025.03.09.21.07.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Mar 2025 21:07:24 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ec1eb3da-0e30-49b6-df1d-08dd5f8999f1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Mar 2025 04:11:15.4080 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: lW/LrUUFLoEk63oOQ+0RbqqFNHOW+IlcirVJEXl+oKtoJOTbhjRDiQq1D1OKuKOZLWI+HbC65b1Dq57CHEHnf0OZTnxjl/m5eCEwsZ7swfA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB6248
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.16;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 10 Mar 2025 14:07:18 +1000
+Message-Id: <D8CAGGO59SN8.F7LMIJ3I6930@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <milesg@linux.ibm.com>,
+ <danielhb413@gmail.com>, <david@gibson.dropbear.id.au>,
+ <harshpb@linux.ibm.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 05/14] ppc/xive2: Add undelivered group interrupt to
+ backlog
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20241210000527.9541-1-kowal@linux.ibm.com>
+ <20241210000527.9541-9-kowal@linux.ibm.com>
+In-Reply-To: <20241210000527.9541-9-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -215,101 +103,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+On Tue Dec 10, 2024 at 10:05 AM AEST, Michael Kowal wrote:
+> From: Frederic Barrat <fbarrat@linux.ibm.com>
+>
+> When a group interrupt cannot be delivered, we need to:
+> - increment the backlog counter for the group in the NVG table
+>   (if the END is configured to keep a backlog).
+> - start a broadcast operation to set the LSMFB field on matching CPUs
+>   which can't take the interrupt now because they're running at too
+>   high a priority.
+>
+> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+> ---
+>  include/hw/ppc/xive.h  |   5 ++
+>  include/hw/ppc/xive2.h |   1 +
+>  hw/intc/pnv_xive2.c    |  42 +++++++++++++++++
+>  hw/intc/xive2.c        | 105 +++++++++++++++++++++++++++++++++++------
+>  hw/ppc/pnv.c           |  22 ++++++++-
+>  5 files changed, 159 insertions(+), 16 deletions(-)
+>
+> diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+> index ce4eb9726b..f443a39cf1 100644
+> --- a/include/hw/ppc/xive.h
+> +++ b/include/hw/ppc/xive.h
+> @@ -442,6 +442,9 @@ struct XivePresenterClass {
+>                       uint32_t logic_serv, XiveTCTXMatch *match);
+>      bool (*in_kernel)(const XivePresenter *xptr);
+>      uint32_t (*get_config)(XivePresenter *xptr);
+> +    int (*broadcast)(XivePresenter *xptr,
+> +                     uint8_t nvt_blk, uint32_t nvt_idx,
+> +                     uint8_t priority);
+>  };
+> =20
+>  int xive_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
+> @@ -472,6 +475,8 @@ struct XiveFabricClass {
+>                       uint8_t nvt_blk, uint32_t nvt_idx,
+>                       bool cam_ignore, uint8_t priority,
+>                       uint32_t logic_serv, XiveTCTXMatch *match);
+> +    int (*broadcast)(XiveFabric *xfb, uint8_t nvt_blk, uint32_t nvt_idx,
+> +                     uint8_t priority);
+>  };
+> =20
+>  /*
+> diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+> index 65154f78d8..ebf301bb5b 100644
+> --- a/include/hw/ppc/xive2.h
+> +++ b/include/hw/ppc/xive2.h
+> @@ -120,6 +120,7 @@ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, Xi=
+veTCTX *tctx,
+>  void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+>                               hwaddr offset, uint64_t value, unsigned siz=
+e);
+>  bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority);
+> +void xive2_tm_set_lsmfb(XiveTCTX *tctx, int ring, uint8_t priority);
+>  void xive2_tm_set_hv_target(XivePresenter *xptr, XiveTCTX *tctx,
+>                              hwaddr offset, uint64_t value, unsigned size=
+);
+>  void xive2_tm_pull_phys_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index 5cdd4fdcc9..41b727d1fb 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -705,6 +705,47 @@ static uint32_t pnv_xive2_presenter_get_config(XiveP=
+resenter *xptr)
+>      return cfg;
+>  }
+> =20
+> +static int pnv_xive2_broadcast(XivePresenter *xptr,
+> +                               uint8_t nvt_blk, uint32_t nvt_idx,
+> +                               uint8_t priority)
+> +{
+> +    PnvXive2 *xive =3D PNV_XIVE2(xptr);
+> +    PnvChip *chip =3D xive->chip;
+> +    int i, j;
+> +    bool gen1_tima_os =3D
+> +        xive->cq_regs[CQ_XIVE_CFG >> 3] & CQ_XIVE_CFG_GEN1_TIMA_OS;
+> +
+> +    for (i =3D 0; i < chip->nr_cores; i++) {
+> +        PnvCore *pc =3D chip->cores[i];
+> +        CPUCore *cc =3D CPU_CORE(pc);
+> +
+> +        for (j =3D 0; j < cc->nr_threads; j++) {
+> +            PowerPCCPU *cpu =3D pc->threads[j];
+> +            XiveTCTX *tctx;
+> +            int ring;
+> +
+> +            if (!pnv_xive2_is_cpu_enabled(xive, cpu)) {
+> +                continue;
+> +            }
+> +
+> +            tctx =3D XIVE_TCTX(pnv_cpu_state(cpu)->intc);
+> +
+> +            if (gen1_tima_os) {
+> +                ring =3D xive_presenter_tctx_match(xptr, tctx, 0, nvt_bl=
+k,
+> +                                                 nvt_idx, true, 0);
+> +            } else {
+> +                ring =3D xive2_presenter_tctx_match(xptr, tctx, 0, nvt_b=
+lk,
+> +                                                  nvt_idx, true, 0);
+> +            }
+> +
+> +            if (ring !=3D -1) {
+> +                xive2_tm_set_lsmfb(tctx, ring, priority);
+> +            }
+> +        }
+> +    }
+> +    return 0;
+> +}
+> +
+>  static uint8_t pnv_xive2_get_block_id(Xive2Router *xrtr)
+>  {
+>      return pnv_xive2_block_id(PNV_XIVE2(xrtr));
+> @@ -2445,6 +2486,7 @@ static void pnv_xive2_class_init(ObjectClass *klass=
+, void *data)
+> =20
+>      xpc->match_nvt  =3D pnv_xive2_match_nvt;
+>      xpc->get_config =3D pnv_xive2_presenter_get_config;
+> +    xpc->broadcast  =3D pnv_xive2_broadcast;
+>  };
+> =20
+>  static const TypeInfo pnv_xive2_info =3D {
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index cffcf3ff05..05cb17518d 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -62,6 +62,30 @@ static uint32_t xive2_nvgc_get_backlog(Xive2Nvgc *nvgc=
+, uint8_t priority)
+>      return val;
+>  }
+> =20
+> +static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
+> +                                   uint32_t val)
+> +{
+> +    uint8_t *ptr, i;
+> +    uint32_t shift;
+> +
+> +    if (priority > 7) {
+> +        return;
+> +    }
+> +
+> +    if (val > 0xFFFFFF) {
+> +        val =3D 0xFFFFFF;
+> +    }
 
->-----Original Message-----
->From: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
->Subject: [PATCH v2 15/21] hw/vfio/pci: Check CONFIG_IOMMUFD at runtime
->using iommufd_builtin()
->
->Convert the compile time check on the CONFIG_IOMMUFD definition
->by a runtime one by calling iommufd_builtin().
->
->Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
->---
-> hw/vfio/pci.c | 38 ++++++++++++++++++--------------------
-> 1 file changed, 18 insertions(+), 20 deletions(-)
->
->diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->index 9872884ff8a..e83252766d1 100644
->--- a/hw/vfio/pci.c
->+++ b/hw/vfio/pci.c
->@@ -19,7 +19,6 @@
->  */
->
-> #include "qemu/osdep.h"
->-#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
-> #include <linux/vfio.h>
-> #include <sys/ioctl.h>
->
->@@ -2973,11 +2972,10 @@ static void vfio_realize(PCIDevice *pdev, Error
->**errp)
->         if (!(~vdev->host.domain || ~vdev->host.bus ||
->               ~vdev->host.slot || ~vdev->host.function)) {
->             error_setg(errp, "No provided host device");
->-            error_append_hint(errp, "Use -device vfio-pci,host=3DDDDD:BB:=
-DD.F "
->-#ifdef CONFIG_IOMMUFD
->-                              "or -device vfio-pci,fd=3DDEVICE_FD "
->-#endif
->-                              "or -device vfio-pci,sysfsdev=3DPATH_TO_DEV=
-ICE\n");
->+            error_append_hint(errp, "Use -device vfio-pci,host=3DDDDD:BB:=
-DD.F %s"
->+                              "or -device vfio-pci,sysfsdev=3DPATH_TO_DEV=
-ICE\n",
->+                              iommufd_builtin()
->+                              ? "or -device vfio-pci,fd=3DDEVICE_FD " : "=
-");
->             return;
->         }
->         vbasedev->sysfsdev =3D
->@@ -3412,19 +3410,18 @@ static const Property vfio_pci_dev_properties[] =
-=3D {
->                                    qdev_prop_nv_gpudirect_clique, uint8_t=
-),
->     DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice,
->msix_relo,
->                                 OFF_AUTO_PCIBAR_OFF),
->-#ifdef CONFIG_IOMMUFD
->-    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
->-                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
->-#endif
->     DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check, tru=
-e),
-> };
->
->-#ifdef CONFIG_IOMMUFD
->+static const Property vfio_pci_dev_iommufd_properties[] =3D {
->+    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
->+                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
->+};
->+
-> static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
-> {
->     vfio_device_set_fd(&VFIO_PCI(obj)->vbasedev, str, errp);
-> }
->-#endif
->
-> static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-> {
->@@ -3433,9 +3430,10 @@ static void vfio_pci_dev_class_init(ObjectClass *kl=
-ass,
->void *data)
->
->     device_class_set_legacy_reset(dc, vfio_pci_reset);
->     device_class_set_props(dc, vfio_pci_dev_properties);
->-#ifdef CONFIG_IOMMUFD
->-    object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
->-#endif
->+    if (iommufd_builtin()) {
->+        device_class_set_props(dc, vfio_pci_dev_iommufd_properties);
+Could these conditions have asserts or warnings? Seems like we
+saturate a counter or silently drop an interrupt if these things
+can happen. Can add something later.
 
-device_class_set_props() is called twice. Won't it break qdev_print_props()=
- and qdev_prop_walk()?
+> +    /*
+> +     * The per-priority backlog counters are 24-bit and the structure
+> +     * is stored in big endian
+> +     */
+> +    ptr =3D (uint8_t *)&nvgc->w2 + priority * 3;
 
-Thanks
-Zhenzhong
+This fits because nvgc is 32 bytes so 24 bytes from w2, and
+8 priorities * 3 bytes each is 24. I just added a bit more comment.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
+> +    for (i =3D 0; i < 3; i++, ptr++) {
+> +        shift =3D 8 * (2 - i);
+> +        *ptr =3D (val >> shift) & 0xFF;
+> +    }
+> +}
+> +
+>  void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf=
+)
+>  {
+>      if (!xive2_eas_is_valid(eas)) {
+> @@ -830,6 +854,19 @@ bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring=
+, uint8_t priority)
+>      return true;
+>  }
+> =20
+> +void xive2_tm_set_lsmfb(XiveTCTX *tctx, int ring, uint8_t priority)
+> +{
+> +    uint8_t *regs =3D &tctx->regs[ring];
+> +
+> +    /*
+> +     * Called by the router during a VP-group notification when the
+> +     * thread matches but can't take the interrupt because it's
+> +     * already running at a more favored priority. It then stores the
+> +     * new interrupt priority in the LSMFB field.
+> +     */
+> +    regs[TM_LSMFB] =3D priority;
+> +}
+> +
+>  static void xive2_router_realize(DeviceState *dev, Error **errp)
+>  {
+>      Xive2Router *xrtr =3D XIVE2_ROUTER(dev);
+> @@ -962,10 +999,9 @@ static void xive2_router_end_notify(Xive2Router *xrt=
+r, uint8_t end_blk,
+>      /*
+>       * If no matching NVP is dispatched on a HW thread :
+>       * - specific VP: update the NVP structure if backlog is activated
+> -     * - logical server : forward request to IVPE (not supported)
+> +     * - VP-group: update the backlog counter for that priority in the N=
+VG
+>       */
+>      if (xive2_end_is_backlog(&end)) {
+> -        uint8_t ipb;
+> =20
+>          if (format =3D=3D 1) {
+>              qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -974,19 +1010,58 @@ static void xive2_router_end_notify(Xive2Router *x=
+rtr, uint8_t end_blk,
+>              return;
+>          }
+> =20
+> -        /*
+> -         * Record the IPB in the associated NVP structure for later
+> -         * use. The presenter will resend the interrupt when the vCPU
+> -         * is dispatched again on a HW thread.
+> -         */
+> -        ipb =3D xive_get_field32(NVP2_W2_IPB, nvp.w2) |
+> -            xive_priority_to_ipb(priority);
+> -        nvp.w2 =3D xive_set_field32(NVP2_W2_IPB, nvp.w2, ipb);
+> -        xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
+> -
+> -        /*
+> -         * On HW, follows a "Broadcast Backlog" to IVPEs
+> -         */
+> +        if (!xive2_end_is_ignore(&end)) {
+> +            uint8_t ipb;
+> +            /*
+> +             * Record the IPB in the associated NVP structure for later
+> +             * use. The presenter will resend the interrupt when the vCP=
+U
+> +             * is dispatched again on a HW thread.
+> +             */
+> +            ipb =3D xive_get_field32(NVP2_W2_IPB, nvp.w2) |
+> +                xive_priority_to_ipb(priority);
+> +            nvp.w2 =3D xive_set_field32(NVP2_W2_IPB, nvp.w2, ipb);
+> +            xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
+> +        } else {
+> +            Xive2Nvgc nvg;
+> +            uint32_t backlog;
+> +
+> +            /* For groups, the per-priority backlog counters are in the =
+NVG */
+> +            if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvp_idx, &nv=
+g)) {
+> +                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: no NVG %x/%x\n",
+> +                              nvp_blk, nvp_idx);
+> +                return;
+> +            }
+> +
+> +            if (!xive2_nvgc_is_valid(&nvg)) {
+> +                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: NVG %x/%x is inval=
+id\n",
+> +                              nvp_blk, nvp_idx);
+> +                return;
+> +            }
+> +
+> +            /*
+> +             * Increment the backlog counter for that priority.
+> +             * For the precluded case, we only call broadcast the
+> +             * first time the counter is incremented. broadcast will
+> +             * set the LSMFB field of the TIMA of relevant threads so
+> +             * that they know an interrupt is pending.
+> +             */
+> +            backlog =3D xive2_nvgc_get_backlog(&nvg, priority) + 1;
+> +            xive2_nvgc_set_backlog(&nvg, priority, backlog);
+> +            xive2_router_write_nvgc(xrtr, false, nvp_blk, nvp_idx, &nvg)=
+;
+> +
+> +            if (precluded && backlog =3D=3D 1) {
+> +                XiveFabricClass *xfc =3D XIVE_FABRIC_GET_CLASS(xrtr->xfb=
+);
+> +                xfc->broadcast(xrtr->xfb, nvp_blk, nvp_idx, priority);
+> +
+> +                if (!xive2_end_is_precluded_escalation(&end)) {
+> +                    /*
+> +                     * The interrupt will be picked up when the
+> +                     * matching thread lowers its priority level
+> +                     */
+> +                    return;
+> +                }
+> +            }
+> +        }
+>      }
+> =20
+>  do_escalation:
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index f0f0d7567d..7c11143749 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1,7 +1,9 @@
+>  /*
+>   * QEMU PowerPC PowerNV machine model
+>   *
+> - * Copyright (c) 2016, IBM Corporation.
+> + * Copyright (c) 2016-2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+>   *
+>   * This library is free software; you can redistribute it and/or
+>   * modify it under the terms of the GNU Lesser General Public
+> @@ -2639,6 +2641,23 @@ static int pnv10_xive_match_nvt(XiveFabric *xfb, u=
+int8_t format,
+>      return total_count;
+>  }
+> =20
+> +static int pnv10_xive_broadcast(XiveFabric *xfb,
+> +                                uint8_t nvt_blk, uint32_t nvt_idx,
+> +                                uint8_t priority)
+> +{
+> +    PnvMachineState *pnv =3D PNV_MACHINE(xfb);
+> +    int i;
+> +
+> +    for (i =3D 0; i < pnv->num_chips; i++) {
+> +        Pnv10Chip *chip10 =3D PNV10_CHIP(pnv->chips[i]);
+> +        XivePresenter *xptr =3D XIVE_PRESENTER(&chip10->xive);
+> +        XivePresenterClass *xpc =3D XIVE_PRESENTER_GET_CLASS(xptr);
+> +
+> +        xpc->broadcast(xptr, nvt_blk, nvt_idx, priority);
+> +    }
+> +    return 0;
+> +}
+> +
+>  static bool pnv_machine_get_big_core(Object *obj, Error **errp)
+>  {
+>      PnvMachineState *pnv =3D PNV_MACHINE(obj);
+> @@ -2772,6 +2791,7 @@ static void pnv_machine_p10_common_class_init(Objec=
+tClass *oc, void *data)
+>      pmc->dt_power_mgt =3D pnv_dt_power_mgt;
+> =20
+>      xfc->match_nvt =3D pnv10_xive_match_nvt;
+> +    xfc->broadcast =3D pnv10_xive_broadcast;
+> =20
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
+>  }
+
 
