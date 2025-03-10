@@ -4,97 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5943C28B30
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3216C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 12:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trcG8-0003kd-Ez; Mon, 10 Mar 2025 08:29:28 -0400
+	id 1trcGM-0003rg-Ah; Mon, 10 Mar 2025 08:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcFz-0003hW-8b
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:20 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1trcGK-0003qr-MF
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:40 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcFt-000684-K7
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:18 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1trcFg-00000000ZO7-2lny; Mon, 10 Mar 2025 13:29:00 +0100
-Message-ID: <02e02924-61ad-4e15-bf41-a1c9d91a7e2d@maciej.szmigiero.name>
-Date: Mon, 10 Mar 2025 13:28:58 +0100
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1trcGI-0006Dp-7m
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 08:29:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1741609759; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=JRMUIZ2P1dbud9nz772QplJXHgeT01b5jEZa7IkHniHKcnNiUuzZuhZk0bFIgZoVBuSeo8pRZn2lZv4ZGUJqKu8OGsZdpfCPigjP4WzojokG0S0X5CaX/QTr6j8yQwQwQTZmxQSUHNkd2yhhJLobnM0qfJAQkZQY6M/a4l3xzf4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1741609759;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=awIvpUzffD0A1Q8aN1RQ39QrgmgweCLMP3iaubfG3CM=; 
+ b=S9T8BVYV19yrHzekjpYNRocPXkQgmFBU8YGk9PB+XTkmmpFpDCD3VTJipJIBsTP/z4IiP9AodQny0ypGKtONctp0CJo8NTVMgtL7uKJLbF+YTtXf3x6U0l81KQ4mXElYyS3IMwIVcNOfNKQBY2N2OFmSBkPho/kQuhrF7TLFAAA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1741609759; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=awIvpUzffD0A1Q8aN1RQ39QrgmgweCLMP3iaubfG3CM=;
+ b=YsSZph3DGGfkNqGAOfdFqc5vxvCfkbHTn8rYkerbRR5zbbDiKg3rwkJuXxvM491+
+ 7Js+BUfPEXRf5cb46DZsWZvJnO5zmwYyy6ktGOEjyzC2vwxbMtEYLet6BnOg0YKhAtj
+ f+tzRgCM5piC8K7l71fn1KlDbRHgoV2bWnaajcO8=
+Received: by mx.zohomail.com with SMTPS id 1741609756471554.8248487674084;
+ Mon, 10 Mar 2025 05:29:16 -0700 (PDT)
+Message-ID: <44613051-05e2-4811-aeb9-ad0affd24d74@collabora.com>
+Date: Mon, 10 Mar 2025 15:29:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/7] hw/hyperv: remove duplication compilation units
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- alex.bennee@linaro.org, qemu-devel@nongnu.org,
- Marcelo Tosatti <mtosatti@redhat.com>, richard.henderson@linaro.org,
- manos.pitsidianakis@linaro.org
-References: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
- <8c511d16-05d6-4852-86fc-a3be993557c7@linaro.org>
- <8d2a19a8-e0a4-4050-8ba5-9baa9b47782f@maciej.szmigiero.name>
- <91ddf98c-3a5d-404b-9e80-ed4580c1c373@linaro.org>
- <440fe370-a0d3-4a32-97e2-e5f219f79933@linaro.org>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <440fe370-a0d3-4a32-97e2-e5f219f79933@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v11 10/10] docs/system: virtio-gpu: Document host/guest
+ requirements
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20250310120555.150077-1-dmitry.osipenko@collabora.com>
+ <20250310120555.150077-11-dmitry.osipenko@collabora.com>
+ <06751210-413b-499f-8ddf-05659179fdb7@daynix.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <06751210-413b-499f-8ddf-05659179fdb7@daynix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,46 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.03.2025 01:14, Philippe Mathieu-Daudé wrote:
-> On 10/3/25 00:33, Pierrick Bouvier wrote:
->> Hi Maciej,
+On 3/10/25 15:25, Akihiko Odaki wrote:
+> On 2025/03/10 21:05, Dmitry Osipenko wrote:
+>> From: Alex Bennée <alex.bennee@linaro.org>
 >>
->> On 3/7/25 14:31, Maciej S. Szmigiero wrote:
->>> Hi Philippe,
->>>
->>> On 7.03.2025 23:25, Philippe Mathieu-Daudé wrote:
->>>> Hi Maciej,
->>>>
->>>> On 7/3/25 22:56, Pierrick Bouvier wrote:
->>>>> Work towards having a single binary, by removing duplicated object files.
->>>>
->>>>> Pierrick Bouvier (7):
->>>>>     hw/hyperv/hv-balloon-stub: common compilation unit
->>>>>     hw/hyperv/hyperv.h: header cleanup
->>>>>     hw/hyperv/vmbus: common compilation unit
->>>>>     hw/hyperv/hyperv-proto: move SYNDBG definition from target/i386
->>>>>     hw/hyperv/syndbg: common compilation unit
->>>>>     hw/hyperv/balloon: common balloon compilation units
->>>>>     hw/hyperv/hyperv_testdev: common compilation unit
->>>>
->>>> If you are happy with this series and provide your Ack-by tag,
->>>> I can take it in my next hw-misc pull request if that helps.
->>>
->>> There's nothing obviously wrong in the patch set,
->>> but if we can defer this to Monday then I could do
->>> a runtime check with a Windows VM too.
->>>
+>> This attempts to tidy up the VirtIO GPU documentation to make the list
+>> of requirements clearer. There are still a lot of moving parts and the
+>> distros have some catching up to do before this is all handled
+>> automatically.
 >>
->> this series needs some fixup after the merge of 58d0053: include/exec: Move TARGET_PAGE_{SIZE,MASK,BITS} to target_page.h.
->>
->> I'll re-spin it later, so don't waste your time trying it.
+>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>> Cc: Sergio Lopez Pascual <slp@redhat.com>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> [dmitry.osipenko@collabora.com: Extended and corrected doc]
 > 
-> 1, 2 & 4 are not affected. Until someone object, I plan to include them
-> in my next hw-misc pull request on Tuesday.
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-These patches seem fine and low-risk, no objections here.
+Thanks a lot for the quick review!
 
-Thanks,
-Maciej
-
+-- 
+Best regards,
+Dmitry
 
