@@ -4,132 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5D9C282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635F6C282DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 10:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tra0S-00009x-BZ; Mon, 10 Mar 2025 06:05:08 -0400
+	id 1tra3X-00013G-7E; Mon, 10 Mar 2025 06:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tra0Q-00008n-Fr
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:05:06 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tra3R-00012k-Kl
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:08:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tra0O-0005au-BI
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:05:06 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tra3P-0006HN-QD
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 06:08:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741601103;
+ s=mimecast20190719; t=1741601290;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DeIWIZK2S1qhkB/CFQuEBp4qiN/DuSqkS7RTlaMsUYQ=;
- b=VsS69Kwr85ZvthcsKCNsogjfuUFb+4mvbqaRCaWiq1h4n+78MW+l2F60xKYu3qWy3DsiRk
- 2IwbcmiVuVotDDLNfMcH2IwTVDrhoRWFzCPDaoeamrNkESNB7NcYGso1WbA7X38amUvLnG
- LTTRnDqJk980f6fXqzP14uv9STGli7A=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-N-gXdl6gMLC_1gDMIqylFw-1; Mon, 10 Mar 2025 06:04:59 -0400
-X-MC-Unique: N-gXdl6gMLC_1gDMIqylFw-1
-X-Mimecast-MFC-AGG-ID: N-gXdl6gMLC_1gDMIqylFw_1741601099
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3913f97d115so565586f8f.0
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 03:04:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741601098; x=1742205898;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DeIWIZK2S1qhkB/CFQuEBp4qiN/DuSqkS7RTlaMsUYQ=;
- b=T4eXL87WNaYRevYpAj01D+5vSjmxt+fH+MvBU3xp7Z7+T4Oe0dStMFDrUCCs0QQuYj
- oOvqCO4eBjhVz9cnMIQLHOROmvvfa2Jyim3gTJ+HOK7M+LN+dW5WfNKQFO0eL7LmfWXK
- /rEsMr58Zu+pddJsxpY/qctLj8JQIxc3ADTNlx1xP9tCRCXJEn59zsZm5jYLwQWLcfCv
- YPHawmJn+FAnlADpbIhWQRwXRxp2MLX8XIAfALvc6Yx009VCA9W6XssF8CPHXepZb6PS
- XO5e81XIqOZoq2fwSE55WExU9m8qTeZeWBKV4HhtdMgVyXAVoNhlyRPITyeFuYT/svDa
- 2fgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjYUMa09zsVg8KKiY3B5oaz1ZvP0PCLlZXOw/JVTu7rjlkg/DsE3S6xC4qha0rbh4ytsHXY6wYEyPA@nongnu.org
-X-Gm-Message-State: AOJu0Yy1KsxIo+DP732pejboX6ul20KDQZU/ma9ytPtMcm3kJxJQAmjw
- Ig8fVlZgEJ2OjC8BSya59vLknzBzeymLjXcnO9bI1u79kJrMRL7G+llL9xi204Vp7gMwaF48Zzm
- klcOQh58bNhndQ/u12G+dNHPKOUgF/eXH8dIad4GtXMSAP2rX86oU
-X-Gm-Gg: ASbGncsUu7Yr248UyULbkNNn5V7nfUFa2xvIjcqwEeVnIMh5DxzJauwqF6/yhS4ByDH
- 4w6CtMB9/rlfZVaWRPckFoUQoBxQNLELR/m/oNgmN5YaqxoXH6113QGVFmFh6NSQBzFCyGT6ITz
- emu+C3qU9Xu1UCA9bkYpaS+P/QKCYiAFW/RIpK43+TXGSC4+SE7pEYk+QNuTV5ch7OmK8VP7nm7
- onXGMNxyPRI9t+yaFJM12sl486kqQDxYZ7JKnhsovb9M2Mdo9F7N1VYAAtuVRzSYQZu0tQ9ZOgH
- fr+gCnyr/7qpxqdwnse5biw0BErS9QBU/fg4Q8dSyQw612Y=
-X-Received: by 2002:a5d:5f82:0:b0:391:3156:6be with SMTP id
- ffacd0b85a97d-3913aeedecdmr5822163f8f.7.1741601098631; 
- Mon, 10 Mar 2025 03:04:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5i4iR5TnZlMlro7CYHgcJqrKzRT/NLw9cj5C6UhITwg/ifb1831MgaFx8b+Iz13fNFLTR7A==
-X-Received: by 2002:a5d:5f82:0:b0:391:3156:6be with SMTP id
- ffacd0b85a97d-3913aeedecdmr5822144f8f.7.1741601098311; 
- Mon, 10 Mar 2025 03:04:58 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-231.web.vodafone.de.
- [109.42.51.231]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e3250sm14470539f8f.61.2025.03.10.03.04.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 03:04:57 -0700 (PDT)
-Message-ID: <57e13dec-20b2-427e-a9c8-4d3a77ceec38@redhat.com>
-Date: Mon, 10 Mar 2025 11:04:56 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=gFs5bMKzOC+WVAMUH3Ub5dHheCYtdBYCnq/p3ne39CY=;
+ b=DhY7wU0+LfSejbP+d3hPLMvKjHbEzmgOx5ylU1A0EhOlYox0C2P4/T89ykBzP75BDwtRdN
+ lpVvVHBPCr86Pz9I2nBCow8Ue8dvQnk+ckdEBveSbOqd1wN0LYpCYkSzE4Fr80El0KNy7S
+ R8g9VaoilgRKxyyIVpxWr4xdoP8TLUY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-qBYCFWY3Mcq5PVUp-SkW0w-1; Mon,
+ 10 Mar 2025 06:08:07 -0400
+X-MC-Unique: qBYCFWY3Mcq5PVUp-SkW0w-1
+X-Mimecast-MFC-AGG-ID: qBYCFWY3Mcq5PVUp-SkW0w_1741601286
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 855CD19560B0; Mon, 10 Mar 2025 10:08:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 12FF418009AE; Mon, 10 Mar 2025 10:08:05 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AEB9221E66C4; Mon, 10 Mar 2025 11:08:02 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Thomas Huth
+ <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 58/62] docs/qapidoc: generate entries for
+ undocumented members
+In-Reply-To: <20250309083550.5155-59-jsnow@redhat.com> (John Snow's message of
+ "Sun, 9 Mar 2025 04:35:45 -0400")
+References: <20250309083550.5155-1-jsnow@redhat.com>
+ <20250309083550.5155-59-jsnow@redhat.com>
+Date: Mon, 10 Mar 2025 11:08:02 +0100
+Message-ID: <87ecz52o71.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Require 'user' netdev for ppc64 e500
- test
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20250308071328.193694-1-clg@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250308071328.193694-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -138,7 +75,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,31 +91,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/03/2025 08.13, Cédric Le Goater wrote:
-> When commit 72cdd672e18c extended the ppc64 e500 test to add network
-> support, it forgot to require the 'user' netdev backend. Fix that.
-> 
-> Fixes: 72cdd672e18c ("tests/functional: Replace the ppc64 e500 advent calendar test")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+John Snow <jsnow@redhat.com> writes:
+
+> Presently, we never have any empty text entries for members. The next
+> patch will explicitly generate such sections, so enable support for it
+> in advance.
+>
+> The parser will generate placeholder sections to indicate undocumented
+> members, but it's the qapidoc generator that's responsible for deciding
+> what to do with that stub section.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   tests/functional/test_ppc64_e500.py | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
-> index 9ce7ae6c4798..f5fcad9f6b66 100755
-> --- a/tests/functional/test_ppc64_e500.py
-> +++ b/tests/functional/test_ppc64_e500.py
-> @@ -20,6 +20,7 @@ class E500Test(LinuxKernelTest):
->   
->       def test_ppc64_e500_buildroot(self):
->           self.set_machine('ppce500')
-> +        self.require_netdev('user')
->           self.cpu = 'e5500'
+>  docs/sphinx/qapidoc.py | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> index 96ac9f8620e..fec48fd01e1 100644
+> --- a/docs/sphinx/qapidoc.py
+> +++ b/docs/sphinx/qapidoc.py
+> @@ -235,11 +235,11 @@ def visit_member(self, section: QAPIDoc.ArgSection) -> None:
+>          # TODO?: features for members (documented at entity-level,
+>          # but sometimes defined per-member. Should we add such
+>          # information to member descriptions when we can?)
+> -        assert section.text and section.member
+> +        assert section.member
+>          self.generate_field(
+>              self.member_field_type,
+>              section.member,
+> -            section.text,
+> +            section.text if section.text else "(Not Documented.)",
 
-Thanks, that should fix the issue that I saw in the 
-"functional-cfi-ppc64-s390x" job in the gitlab CI (which uses 
---disable-slirp indeed)!
+The old generator uses just "Not documented".  I don't mind the period,
+but the parenthesis looks awkward:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+   Members:
+      * limits ("ThrottleLimits", optional) -- limits to apply
+        for this throttle group
+
+      * x-iops-total ("int", optional) -- (Not Documented.)
+
+The old generator has a comment
+
+            # TODO drop fallbacks when undocumented members are outlawed
+
+Let's have it here as well.
+
+>              section.info,
+>          )
 
 
