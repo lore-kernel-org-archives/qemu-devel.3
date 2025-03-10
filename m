@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F337BC282DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3758C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Mar 2025 17:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trhE6-0000Yh-FZ; Mon, 10 Mar 2025 13:47:42 -0400
+	id 1trhK3-00024j-02; Mon, 10 Mar 2025 13:53:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trhDx-0000Xw-LR
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:47:36 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trhJx-000240-0V
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:53:46 -0400
 Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1trhDv-00066a-Hv
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:47:33 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1trhJu-00075Y-IQ
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 13:53:44 -0400
 Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-22548a28d0cso18328095ad.3
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:47:30 -0700 (PDT)
+ d9443c01a7336-22423adf751so65057085ad.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 10:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741628849; x=1742233649; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741629221; x=1742234021; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0vsbUvRy2E8ihEsWBlGsSCiTTWpxpzjkP8pjgwFQvLc=;
- b=PXiiQLMKv6dpyl90GDyqd+otaY0BPS9Q1C0QK46YCeshuXMoxffsh1vhLHceBQqQ+3
- AgQeZl+89Pl3SqZ/XwuvJgrk3T9NNl7pJgDlNEnJT1tcyrfM3AlYQ4fqAm6ylw65S1Rz
- ZCOv/WPej0AZbg3ZUUeV9glff33R0oArGiuX2o+JhNbUzhT7IefXwXQjq+fz+fDi/3YE
- x+Kzh2S+a5OaLhx6/JSRs7gzDUadVaaQ7SfnJBXAKKwtjTo8xb1Gkgm4jnzaIgnIli39
- f9WNvCq4W6+wYxb5cTmWiamIM83ynreMGCJIAwQOEiZPaCdb0sDJkdxUpqBfkwhYtryb
- ov9g==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SNdf7vCKO5Xmhce53+rIBW2Mul00fvnfIPGlQMOUVdU=;
+ b=EJ90iYuUKfZOA9FkJ3caxnwTrFpq8ygWdDNONSdyhNw8hEvG5bQmBwEV99Kl1KAqpB
+ edh0ww/uoAxe12jQgleB9cNzWA+wjnF0PE1lKed9dNdm1grz5XT6pvLgJyvzTZ4VTjkL
+ 7vThgrBe73fKO+a2K2EQGDtcqMEP4TyxR+NtFs3yQQnbeJKnP2wlYTuvfzxYu5kaUsl4
+ keNmCi6imza9QLdlzn3fKWrZ+LfyJlUu7nO5RXkx3o0TIalCzlr8wbULf86K1AiE6Lrj
+ JXQj+wagMMryjvf05KfdeGZqi8lhJ+zHn4hFEmB7r4cCPWr43M3GUaR5XqLAYuGYUbQj
+ moyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741628849; x=1742233649;
+ d=1e100.net; s=20230601; t=1741629221; x=1742234021;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0vsbUvRy2E8ihEsWBlGsSCiTTWpxpzjkP8pjgwFQvLc=;
- b=jr588MR0Ks3jcMtP2jDiuvncoIxv1pAJI4HMA/LmadBIPsFUV0EpFBNe4E75CVpRA2
- 7d70CIpRf4vV9eOqS3JtS/dRxzW09BRDCZULwJEd6MuhvNSWSwUlHGnuC4sdWzsAhBmC
- RIyQJb+/Jxn+NpLHSYZSNpWmCTVR4nP7eJp48BFl9YrerbEikCpUfVTzxv3WIWSWySYc
- 7Re2ZvONbSg+Mye3BETisL24Eijmu/edBFWTEM0YmlKFgPODnfObBwZHTal2CcX39eez
- uqbVWJIqqk7D2WNhBy9LBKGZUCaTdHq2hEckDhOpWSYBi09eNwx/S411wQrIOyiGYytq
- 5LLQ==
+ bh=SNdf7vCKO5Xmhce53+rIBW2Mul00fvnfIPGlQMOUVdU=;
+ b=SIBltd6ajFBhMqQcxUEYKx6uIySymX0bfSU3iZiZIsTHQuze4NNgrJey+YYwbqdNrc
+ rxGh/AnEB0dFvOvFRvEnpetwOzfNlPV15QZcFxSGeSXaMckii4AC6grH/xdwfJBB5Md3
+ Ost/uDyTp3ttAZZevnQvxJXDWkLTjrpKOV1uMtZJKNyCi+WK7E6uMYLCIFfjRdhUE5HW
+ /Z8P/eUK/XouhLAQv8cD6s5lxJ+NsxlmTLZHoqKTAGlNBT7rdlbCaJ4Vri0o8XHy66X0
+ rxpMPzXnkEO1EWwXOQ8TjSMv66dPyPA6l29sbFouRJik832wsGOsA8y2dPWVe8cjumx1
+ aOlg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV6HKWoDbVQ3RnjF9fNvThkwCfchm1diUV0tYNLjyS0nJD7l2G/QzzS//KQ9AtyaVQVj40+f6XekuL4@nongnu.org
-X-Gm-Message-State: AOJu0Yx0W2IWFMYyUBhDH/Hk46AH9uA7MghqnLWiyopSRNG84bm/eXe4
- IkkQ+IrMMe2MRNtPA16sWpHnlCsGSpxLOKoVnpSmLnvpvecBWfTC8KLntXMqgimnXpwngVPz6kk
- qAJc=
-X-Gm-Gg: ASbGncutzN2b4OKsUBE9tv5XFIxco3ndsSgT+DXvJRsZPp0ne2CEuUwqCB65YrcaLLb
- /rSt7Ght7+doQPr2di8tx3xqA7ACLp0Rcv2wjm8Iy2aOs4pQB9nVbeyQ4LsYTGU+aHdvvp7XvKK
- u3l3tTh0U9TS3xru5Ma2VMz0KPRGv1zZ8KguKZbatPjFmP77QZHk0e2EG3fnlaSp48E+2/ZGVO6
- 8ZdXIPKwz22ZjLAsxXLcRwRBN/lGkGHNv/A6MPB0kqwKQlphZRJozng89CHWfI0dGkeiuINxD+Y
- RQcmc2v1K64Evwam8oEgvorGVRn9ltlX2CsEOikGgUJHaEFhJ5vaU1iN/g==
-X-Google-Smtp-Source: AGHT+IFZ5LgNFzuY6Tj46fepG2FZ0kezQ1BO+V4MjwLORuvn50iHhXl1xjHdTPc9CGD5IjNW6pB1sQ==
-X-Received: by 2002:a17:903:1788:b0:220:f87d:9d5b with SMTP id
- d9443c01a7336-22428a8ca41mr245314135ad.24.1741628849113; 
- Mon, 10 Mar 2025 10:47:29 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ AJvYcCXaFaqnA/gs5DJ9rApIEY9qplQnEfH+JTAETbN13kOfIljF3O2GJl8nh0XA55ObIAbxd3PRsiqiqoU5@nongnu.org
+X-Gm-Message-State: AOJu0YxVzEhTmwmPpkcMNpE3PK3iwP4aRO11/zDiywy3vZzGztOfdwwB
+ lYyk67i50y/tK4s55B+ub46T0QtfA1WuKMvQ/ZdpYjrMRuypzK9VStBmbGGtCCE=
+X-Gm-Gg: ASbGncuP/SYguNmhfV/DZJvMH/3pgsm2mCCmHHd0qV/OlYBm+vP3O4CvW38T/kO5cbb
+ YbAbluQSMecbzC0rQzKAuK6JfL5BXTXPuRGC3FMT/BrmoWSzcb1ylab1Evp6R/CzUGTzRG+hO2Z
+ KhuqQu79Zl1SBHc6bXKbsRkq1RRcC0wlu+GW6m/hLshhhl5WbZQJtk+DOLBFf6PsxnMidk4fNC4
+ 6tIRy/AeLdVMd+F7+nYLuLEbPik/x1sgc0Nocj0m45vPchff/pdm+R87u0qJhsR74qMban7Fpea
+ mhs0Sk206xat6JNw2l8xILfWyIwVyPo4XCIGE7eaPW6mY4NF3m9ZVgh3OXIxukclyM0b0hcvH0c
+ 4BQhubJoLe04EfFiy9VE=
+X-Google-Smtp-Source: AGHT+IGCVgP9PziNftFebnihidqJpZEqMNj9oPIAQo/15NgC61c2mw9blKtVcunMOb4YHp6Z1tB/zA==
+X-Received: by 2002:a17:902:ce0b:b0:223:5945:ffd5 with SMTP id
+ d9443c01a7336-22593184cfcmr10225125ad.32.1741629220974; 
+ Mon, 10 Mar 2025 10:53:40 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410aa4cc5sm81277835ad.220.2025.03.10.10.47.28
+ d9443c01a7336-22410a7f722sm81464135ad.152.2025.03.10.10.53.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 10:47:28 -0700 (PDT)
-Message-ID: <2d631838-e8a5-48d9-8235-9a41ffc3381c@linaro.org>
-Date: Mon, 10 Mar 2025 10:47:27 -0700
+ Mon, 10 Mar 2025 10:53:40 -0700 (PDT)
+Message-ID: <4d74d2f7-7ec9-40c3-a1ec-b9c54f88413c@linaro.org>
+Date: Mon, 10 Mar 2025 10:53:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/16] system/memory: make compilation unit common
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
- <20250310045842.2650784-16-pierrick.bouvier@linaro.org>
- <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
+Subject: Re: [PATCH] trace/control-target: cleanup headers and make
+ compilation unit common
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, alex.bennee@linaro.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, manos.pitsidianakis@linaro.org,
+ philmd@linaro.org
+References: <20250305050716.3460989-1-pierrick.bouvier@linaro.org>
+ <0227dd71-5c01-4bde-acf1-8c5c39b46d1e@linaro.org>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <76b4e445-0676-4982-a2c8-d273c49a9170@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <0227dd71-5c01-4bde-acf1-8c5c39b46d1e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,71 +107,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/25 10:43, Richard Henderson wrote:
-> On 3/9/25 21:58, Pierrick Bouvier wrote:
+On 3/10/25 10:17, Pierrick Bouvier wrote:
+> On 3/4/25 21:07, Pierrick Bouvier wrote:
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>    system/memory.c    | 22 +++++++++++++++-------
->>    system/meson.build |  2 +-
->>    2 files changed, 16 insertions(+), 8 deletions(-)
+>>   trace/control-target.c | 2 --
+>>   trace/meson.build      | 4 +---
+>>   2 files changed, 1 insertion(+), 5 deletions(-)
 >>
->> diff --git a/system/memory.c b/system/memory.c
->> index 4c829793a0a..b401be8b5f1 100644
->> --- a/system/memory.c
->> +++ b/system/memory.c
->> @@ -355,11 +355,11 @@ static void flatview_simplify(FlatView *view)
->>    
->>    static bool memory_region_big_endian(MemoryRegion *mr)
->>    {
->> -#if TARGET_BIG_ENDIAN
->> -    return mr->ops->endianness != DEVICE_LITTLE_ENDIAN;
->> -#else
->> -    return mr->ops->endianness == DEVICE_BIG_ENDIAN;
->> -#endif
->> +    if (target_words_bigendian()) {
->> +        return mr->ops->endianness != DEVICE_LITTLE_ENDIAN;
->> +    } else {
->> +        return mr->ops->endianness == DEVICE_BIG_ENDIAN;
->> +    }
->>    }
-> 
-> This should use the same expression as for patch 4:
-> 
->       return (end == DEVICE_NATIVE_ENDIAN
->               ? target_words_bigendian()
->               : end == DEVICE_BIG_ENDIAN);
-> 
-> Which perhaps ought to be split out to it's own inline function?
-> 
+>> diff --git a/trace/control-target.c b/trace/control-target.c
+>> index d58e84f6dd8..57ceac21084 100644
+>> --- a/trace/control-target.c
+>> +++ b/trace/control-target.c
+>> @@ -8,8 +8,6 @@
+>>    */
+>>   #include "qemu/osdep.h"
+>> -#include "qemu/lockable.h"
+>> -#include "cpu.h"
+>>   #include "trace/control.h"
+>> diff --git a/trace/meson.build b/trace/meson.build
+>> index c3412dc0ba5..3df45493555 100644
+>> --- a/trace/meson.build
+>> +++ b/trace/meson.build
+>> @@ -1,6 +1,4 @@
+>> -system_ss.add(files('trace-hmp-cmds.c'))
+>> -
+>> -specific_ss.add(files('control-target.c'))
+>> +system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
+>>   trace_events_files = []
+>>   foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
 
-Good point, I'll add this.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->>    
->>    static void adjust_endianness(MemoryRegion *mr, uint64_t *data, MemOp op)
->> @@ -2584,7 +2584,11 @@ void memory_region_add_eventfd(MemoryRegion *mr,
->>        unsigned i;
->>    
->>        if (size) {
->> -        adjust_endianness(mr, &mrfd.data, size_memop(size) | MO_TE);
->> +        if (target_words_bigendian()) {
->> +            adjust_endianness(mr, &mrfd.data, size_memop(size) | MO_BE);
->> +        } else {
->> +            adjust_endianness(mr, &mrfd.data, size_memop(size) | MO_LE);
->> +        }
-> 
-> Maybe better as
-> 
->       MemOp mop = (target_words_bigendian() ? MO_BE : MO_LE) | size_memop(size);
->       adjust_endianness(mr, &mrfd.data, size_memop(size), mop);
-> 
-
-Do you think defining MO_TE as this expression is a good idea?
-
-I'm afraid it's a bit too much implicit though, but it would save us 
-from the hassle to change a lot of code using MO_BE, MO_LE (and all 
-other variants defined in MemOp enum).
-
-> 
-> r~
-
+r~
 
