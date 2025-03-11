@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF3CC28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3333C28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1ow-0006Pd-RA; Tue, 11 Mar 2025 11:47:08 -0400
+	id 1ts1r1-0007lt-MT; Tue, 11 Mar 2025 11:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1o1-0006Dd-Uw
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:46:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1qt-0007l3-Ik
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:49:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1nw-00038y-Vn
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:46:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1qr-0003TJ-AB
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:49:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741707964;
+ s=mimecast20190719; t=1741708143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xs0ERJe9F2swJdSHC5Oe6CDdXEyucMb2Pg0H3anx9NA=;
- b=XW1imT6Zm6/78QQVLHAIauBTmbh71fw1RFEO7bP15exYYxa0Hpk2K8UU/EY1jbZqr8KsTi
- PZ/D8EYVzS5NQGJVtiu3E1sGzrSnhtIkVhBeEObq9pSkRE499yKpT6H3g8rVT6pelT5h7F
- v4cB0jKp8MvEZ83BlEKu5D4H+QavNuU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Jgu8qPYJ79uKLKuCiFqnnNcREPa5T/sGIJMERlEBIyU=;
+ b=bCSEerr463RX7hJhEs5ihWI/SX0hZCKM+zXeUvsMiHhWWMh0mANgR/JsVCGhgsE4GypQit
+ oqhjhns6c0XtFNXnVmrVreA2F7EPVoiD8vEPPCA/Abq4NNWau6dmLBGzz9CI+Io48Ng4nz
+ /Tj62vb8Q+DOl3NPapdJkbJQ7nniP0E=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-p2RNi9Z6OKq-WrxAc-Joew-1; Tue, 11 Mar 2025 11:46:01 -0400
-X-MC-Unique: p2RNi9Z6OKq-WrxAc-Joew-1
-X-Mimecast-MFC-AGG-ID: p2RNi9Z6OKq-WrxAc-Joew_1741707960
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so12831735e9.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:46:01 -0700 (PDT)
+ us-mta-461-YClUtxfpNsWKlRTmL-Yf-w-1; Tue, 11 Mar 2025 11:49:02 -0400
+X-MC-Unique: YClUtxfpNsWKlRTmL-Yf-w-1
+X-Mimecast-MFC-AGG-ID: YClUtxfpNsWKlRTmL-Yf-w_1741708141
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43ced8c2eb7so21914325e9.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:49:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741707959; x=1742312759;
+ d=1e100.net; s=20230601; t=1741708141; x=1742312941;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xs0ERJe9F2swJdSHC5Oe6CDdXEyucMb2Pg0H3anx9NA=;
- b=esS4B06zY9g0sDg96XQlAmKdvRiK0YRSgj3wSHi54T3OGwaTDm4TzHn+Mu2ImwdvH9
- y4g6djwnefnVXHrJDfrm8P4eT/ge6yfx60/8fDdsnsi/UMLv56sCAPRjMiSHfvsWaLpW
- ZQRH5Rhfk3gbHgzoxjHlY+t88dIoirrViUPxq+oEiJpWMFilwFmVJjzFs0YdfKm6DSKW
- TJypEA5DV3KXLFj4QjUL1NesC+5Y/MkPHqeLZ/VnIp/uU0wCWe47hGnPC+7EpTVx/uAJ
- F52kiVrOjkBfJPgVvTYoPPF1HqbNK7RGI1t5euIrDMm++wxs/7I7c20+lrXE97X6SkBl
- +lVg==
+ bh=Jgu8qPYJ79uKLKuCiFqnnNcREPa5T/sGIJMERlEBIyU=;
+ b=geHox1xqWGSgla/ADZ1hBNc4OFctQiy3six0vYCkhqEHTbEPF4YizLM5Drreejfovb
+ el6CrE5qfjBX7zFMhYUmSqabh8VQfqSKA5YA5mCe1lRuhqUXjIn3qsdR+rePJaldayxU
+ zL1ZfeUng8ll1Nyi1bUredVsFdkfcOCxlo2sU2pE296/7IPoeoXcihmfGqvBtz8PAZfP
+ MduxHeYX1nkA6EytALKr8RIbQJcoieu6pOvCs3nf7uLWrGB2vwLbv8TG6YsnjGBRqyAM
+ coqmF2tKBDhk6/XPL/n719R8qSY3wfVK21gXGKeSYkOvl8eHTCGVyre+PxC8Nieg+/O6
+ tJqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWozmNTdF3xFqN4EQL4MzD1GiM57FyTfC2JpE++uw/Fb4659+hjCdE9h0B/K7EED6wtTA1z+PE+DusA@nongnu.org
-X-Gm-Message-State: AOJu0YyxX0O23iApDA0zw2LmJyqtUF2c/k5U5JXOX4pP7FNDjU5duq88
- O2YcrRrVts+5c54Bcslj/nAZKEBxALoewnuaO/doOdjdkllqwAChm/yIf77DF0QHGAI8Wd9JPPs
- LuZISriMvG1hmk4FMeuHleKONvpK5vDIl70nhfH0RF5J7IkwOQdoeWmRqBvQ6wr4=
-X-Gm-Gg: ASbGncsEVqix22PgexmgrvUdl8+13MWUr5OK32s7pUGtvBf/koBmNajHRkXDy3UnXHd
- qKtIn134a9ZaKMfoNDMiR0+3gYqYey/la9fbVcrAdT7Wapa+FtRg4MovhEEWr9jUiceCqf2fH7J
- bafBn8swLfnhtmFfrR/GUQH51rvbnFugk3QHL3p7xnWhwmX2OOrCIcM8KkMPDERXYivneZ3XpDt
- 2AxWLgYqH+bnP1hdfGENA2O+AwAZlWhERfzRSI/EKxd6GRmvL/Ff3+GmT2f9uSurB32M6M8Jua4
- oOww4sTtipA2ZmHI43Qk5BGGLdkmUITjySawixJCht2xLo7QqslMGg==
-X-Received: by 2002:a05:600c:5493:b0:43c:fa24:873e with SMTP id
- 5b1f17b1804b1-43d01be65ebmr56805995e9.13.1741707959314; 
- Tue, 11 Mar 2025 08:45:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBEkwpy9qi9Gh7JgPXl7TdjVa12F+PVQKB4OwAXwtwgz4iTuEps2mnlWdSkuYV97WU0Dao+A==
-X-Received: by 2002:a05:600c:5493:b0:43c:fa24:873e with SMTP id
- 5b1f17b1804b1-43d01be65ebmr56805825e9.13.1741707958979; 
- Tue, 11 Mar 2025 08:45:58 -0700 (PDT)
+ AJvYcCUIyi2YOvo0uuoZXMyUowR6jdIr9N2nq/0IaAP4LmowInJzycCLOan7K/H4XU2P8Zdl9KULhqmFtlOg@nongnu.org
+X-Gm-Message-State: AOJu0Yy9zgEmPaigugRgka5Po2oSa/bWYe+Di9q5Qdvqa7JG6D3TPdqv
+ AysUJ/vW8brQBqdMl+RjIZJJzUlq7uLwcqM2vI6q8QSFtllUazSZtR6oivpbSWPbQfbEo3608s/
+ AxTPYMB2x8mrk2HTEu5UdL8YyY/x5AMEnm/5xSSFDGyu4Icjen5/d
+X-Gm-Gg: ASbGncsoc3iUfCy+14No61bL0CGBmr7w8mNrzavoct+FK5F+f/58BcC8U3ai4sFRonY
+ bB8WYGmZ+0vqzB5EfwBCyRRS+7gDMxjd7OuruytSTxIMffIx/nvkFy8BlFWW23dQ6f40YPMTWRE
+ p+9dbgJdTac2shUnfO+MThClOSH2vTUd3phGdUIwMCKnHWl2oBuwVLrjYKAiSuaDnj4AYPAZPBH
+ Py9XeMp1U/ig3P7p4oNxPGWhXU5Ie/G3488s6VwA/je9AytgPF1J03nTqngLP7i+J+vbsTC/W34
+ woB2k/Q/GF9f17l+V6GoovyQOFFAFHYtGmWylPqCKnQb6NA9RBf4nA==
+X-Received: by 2002:a05:600c:5618:b0:43b:ce3c:19d0 with SMTP id
+ 5b1f17b1804b1-43cdfb7db88mr129305895e9.29.1741708140823; 
+ Tue, 11 Mar 2025 08:49:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbdp28rvif/Vv+N5rBxqvLe6tQQJ/G2f85yUlYbetMSliTJEkCxTWmY56ZDrmJR3C3yilA1Q==
+X-Received: by 2002:a05:600c:5618:b0:43b:ce3c:19d0 with SMTP id
+ 5b1f17b1804b1-43cdfb7db88mr129305665e9.29.1741708140458; 
+ Tue, 11 Mar 2025 08:49:00 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d03fd715csm13709265e9.1.2025.03.11.08.45.58
+ ffacd0b85a97d-3912c106a1asm18420643f8f.100.2025.03.11.08.48.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 08:45:58 -0700 (PDT)
-Message-ID: <29b9c917-8a3f-4d09-a5cc-2ede94856ebd@redhat.com>
-Date: Tue, 11 Mar 2025 16:45:57 +0100
+ Tue, 11 Mar 2025 08:48:59 -0700 (PDT)
+Message-ID: <f4288963-702a-4625-975a-02498f688ceb@redhat.com>
+Date: Tue, 11 Mar 2025 16:48:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] vfio/pci-quirks: Exclude non-ioport BAR from ATI quirk
-To: Vasilis Liaskovitis <vliaskovitis@suse.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com
-References: <20250310235833.41026-1-vliaskovitis@suse.com>
+Subject: Re: [PATCH-for-10.0 v3 0/8] hw/vfio: Build various objects once
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Peter Xu <peterx@redhat.com>
+References: <20250311085743.21724-1-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -126,19 +138,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250310235833.41026-1-vliaskovitis@suse.com>
+In-Reply-To: <20250311085743.21724-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,43 +166,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/25 00:58, Vasilis Liaskovitis wrote:
-> The ATI BAR4 quirk is targeting an ioport BAR. Older devices may
-> have a BAR4 which is not an ioport, causing a segfault here. Test
-> the BAR type to skip these devices.
+On 3/11/25 09:57, Philippe Mathieu-Daudé wrote:
+> Hi Cédric,
 > 
-> Similar to
-> "8f419c5b: vfio/pci-quirks: Exclude non-ioport BAR from NVIDIA quirk"
-> 
-> Untested, as I don't have the card to test.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2856
-> Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
-> ---
->   hw/vfio/pci-quirks.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index c53591fe2b..15598bbaf4 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -403,7 +403,7 @@ static void vfio_probe_ati_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->   
->       /* This windows doesn't seem to be used except by legacy VGA code */
->       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_ATI, PCI_ANY_ID) ||
-> -        !vdev->vga || nr != 4) {
-> +        !vdev->vga || nr != 4 || !vdev->bars[4].ioport) {
->           return;
->       }
->   
+> Here are the VFIO cleanup patches ready enough for 10.0,
+> with Richard and Eric comments from v2 addressed.
 
+I dropped the previously applied patches from the v2 series and
+applied this v3 in vfio-next instead.
 
+> I'd prefer the rest (of v2) to wait for 10.1.
 
-Applied to vfio-next.
+yes.
+
 
 Thanks,
 
 C.
 
+
+  
+> Thanks,
+> 
+> Phil.
+> 
+> Philippe Mathieu-Daudé (8):
+>    system: Declare qemu_[min/max]rampagesize() in 'system/hostmem.h'
+>    hw/vfio/spapr: Do not include <linux/kvm.h>
+>    hw/vfio/common: Include missing 'system/tcg.h' header
+>    hw/vfio/common: Get target page size using runtime helpers
+>    hw/vfio: Compile some common objects once
+>    hw/vfio: Compile more objects once
+>    hw/vfio: Compile iommufd.c once
+>    hw/vfio: Compile display.c once
+> 
+>   include/exec/ram_addr.h    |  3 ---
+>   include/system/hostmem.h   |  3 +++
+>   hw/ppc/spapr_caps.c        |  1 +
+>   hw/s390x/s390-virtio-ccw.c |  1 +
+>   hw/vfio/common.c           |  9 ++++++---
+>   hw/vfio/iommufd.c          |  1 -
+>   hw/vfio/migration.c        |  1 -
+>   hw/vfio/spapr.c            |  4 +---
+>   hw/vfio/meson.build        | 27 ++++++++++++++++-----------
+>   9 files changed, 28 insertions(+), 22 deletions(-)
+> 
 
 
