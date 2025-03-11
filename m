@@ -4,104 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D38FBC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC11C28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts2VH-0004k9-Mr; Tue, 11 Mar 2025 12:31:00 -0400
+	id 1ts2VY-0005Dg-0Q; Tue, 11 Mar 2025 12:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ts2Um-0004JI-Cr
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1ts2Ur-0004KL-NM
  for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:30:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ts2Uf-0003AW-Bx
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:30:18 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1ts2Uj-0003B7-KN
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:30:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741710611;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1741710614;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gvW/5G6Q0o35IFHWkI1ctZoRXpbF5XVgT4Z39z0aScA=;
- b=TMzkQ/P+UPvUeCgb/xh1RB/d8dRTUG85346SXcf8moqx4YOMS4VruBtlbefPu2U12UOfEM
- 9Ztvku4DXUWowLKbTI9PXQRHiqqVgaE1xieHQoOPm0mvbQIdirTMbnQdf16/WMkXl5fzP2
- k1JOMilT8UjekE0BC+a5uzUmg78D+FE=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-3tTvAJ3OOvW-JPvNEWGmNQ-1; Tue, 11 Mar 2025 12:30:10 -0400
-X-MC-Unique: 3tTvAJ3OOvW-JPvNEWGmNQ-1
-X-Mimecast-MFC-AGG-ID: 3tTvAJ3OOvW-JPvNEWGmNQ_1741710610
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c546efca59so937707685a.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 09:30:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741710609; x=1742315409;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gvW/5G6Q0o35IFHWkI1ctZoRXpbF5XVgT4Z39z0aScA=;
- b=MkJqyedbNI8jWicnbkS/MP7ILgQk70KTBzJitRHPexYivQdT3WoDHveF7Jb0bXTHHn
- Tg4FEoUdvb/iyPIhHCDhU82iBKk6HZpIm4iVspEH351CdgUBp3dyZlwgX43gME+4l4zS
- qWGK3bkGyKtsaMRq7Cs1pANqy/ZgjpWojkR/Yen3sxXXjWfVooLxLFkGVybqZgfXu7vE
- a+e1uymcRBlLIDsBpSlqOnvy2N4RmzSuhpD8NdbaG7jGezPUnQ+Nxu8UrPcDKtRp7o6o
- GjhiivRsD0otMqt4Ca0XmRzFOujbCcNJl0sDn/jYK8L6a7t2/2LVLoo2DMCjoGh24eL7
- nR5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQTGq35e1GbBW4+A9XJmg+HFP+GOS3IDKpx/7Gc1VbfK2+0loIXRm06II5Sd3OxRP5e0FgBBvl10bu@nongnu.org
-X-Gm-Message-State: AOJu0YwQkAVV6xQe1mepsJz6M3vZfLdSAWV5aKhK+D8rpafSPVV5akJB
- OcPAnQG9v4EXBnf+deumBvvjBjcX2Uia7faV+Glr/uLbAIz4feScDKhGiCSTrJpW+oi6lii45bH
- 4lHYl22GCxg1wGkcFUbRn/V9SB3pXQViCJbCNaAN5iLbpwgRWSGRpO7fV+4nW
-X-Gm-Gg: ASbGncsgwrxJpSviFZO5mAmGho3IIUsDKaikmUsZFT7Y3BcrnAz2aUb2m0vIByT9YBF
- /eLZsijqmhkYlKnWoHjZJ5B0W2hzFvzZTQvj0nFmmtoqSUtCZ65ET7ZbDq7cwl7S6UFLcqfJz0O
- Pw8PNTOA9KrKqClsYOhA0P6EyCY5dnBhTJPxOAr61TYgRn2Ef7/gS404Aq7J5Pl4cWs3Zr07d6p
- n4/Zp0UGILgoFIiKU2zs1+cLi0jcfN383Zk0PD7fVrxhj4xM+wgCQwLZwRJCeBShg2DQHha5Huc
- 5HWezJIECL2khnQkCQNlUdMTDjuCPLjHYYPegTIN+jVYCx177SXuhKV4KIlPV1g=
-X-Received: by 2002:a05:620a:660a:b0:7c5:48bc:8c89 with SMTP id
- af79cd13be357-7c548bc8ecfmr1706848985a.27.1741710609382; 
- Tue, 11 Mar 2025 09:30:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2gY/akrsykujmw9iWKT6de/lWT2q9bCkta8KKQrc8cgX8EJd7VAYq0ezW689h0V7wEwlGlw==
-X-Received: by 2002:a05:620a:660a:b0:7c5:48bc:8c89 with SMTP id
- af79cd13be357-7c548bc8ecfmr1706845385a.27.1741710609067; 
- Tue, 11 Mar 2025 09:30:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c5414c8067sm542616585a.59.2025.03.11.09.30.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 09:30:08 -0700 (PDT)
-Message-ID: <baf96cd3-2434-444a-8a16-87abd6e14bcd@redhat.com>
-Date: Tue, 11 Mar 2025 17:30:06 +0100
+ bh=gr7bJ3aLvr6S2vy2PwCUJdILGT2bSyOIWg8T1Oi4Euo=;
+ b=h+nDO+0wB3MC07+HC/Qfp60UILwfDWOruGGaIGiWa8zhXLyyN5YrYhJBETj/WMAi7YkBaG
+ gKIxO9j2T1b5AA+qvETkVwjhg1rsBjxBFEgu3GqfTMbehZjNYO5d6VFgUvaNw4iUwCsx+0
+ JQOBpYE2KnV/9943crWsIt7qger01oM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-656-KrBvTisPNS6amgU6t_wajg-1; Tue,
+ 11 Mar 2025 12:30:11 -0400
+X-MC-Unique: KrBvTisPNS6amgU6t_wajg-1
+X-Mimecast-MFC-AGG-ID: KrBvTisPNS6amgU6t_wajg_1741710609
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0136E1956083; Tue, 11 Mar 2025 16:30:09 +0000 (UTC)
+Received: from gondolin.redhat.com (unknown [10.67.24.185])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BC03C180AF7C; Tue, 11 Mar 2025 16:29:53 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH v3 05/14] arm/cpu: Store aa64pfr0/1 into the idregs array
+Date: Tue, 11 Mar 2025 17:28:15 +0100
+Message-ID: <20250311162824.199721-6-cohuck@redhat.com>
+In-Reply-To: <20250311162824.199721-1-cohuck@redhat.com>
+References: <20250311162824.199721-1-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1] tests/functional: Convert the SMMU test to the
- functional framework
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250311104920.364102-1-thuth@redhat.com>
- <4b7d75f1-12df-44ab-9435-df517beff716@redhat.com>
- <39ad1fef-f5cc-44f6-be4d-84a597b3f9f6@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <39ad1fef-f5cc-44f6-be4d-84a597b3f9f6@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,133 +86,573 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
+From: Eric Auger <eric.auger@redhat.com>
 
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ target/arm/cpu-features.h | 40 ++++++++++++++++-----------------
+ target/arm/cpu.c          | 29 ++++++++----------------
+ target/arm/cpu.h          |  2 --
+ target/arm/cpu64.c        | 14 ++++--------
+ target/arm/helper.c       |  6 ++---
+ target/arm/hvf/hvf.c      |  6 ++---
+ target/arm/kvm.c          | 24 +++++++++-----------
+ target/arm/tcg/cpu64.c    | 47 ++++++++++++++++++---------------------
+ 8 files changed, 71 insertions(+), 97 deletions(-)
 
-On 3/11/25 4:24 PM, Thomas Huth wrote:
-> On 11/03/2025 15.00, Eric Auger wrote:
->> Hi Thomas,
->>
->>
->> On 3/11/25 11:49 AM, Thomas Huth wrote:
->>> This test was using cloudinit and a "dnf install" command in the guest
->>> to exercise the NIC with SMMU enabled. Since we don't have the
->>> cloudinit
->>> stuff in the functional framework and we should not rely on having
->>> access
->>> to external networks (once our ASSETs have been cached), we rather boot
->>> into the initrd first, manually mount the root disk and then use the
->>> check_http_download() function from the functional framework here
->>> instead
->>> for testing whether the network works as expected.
->>>
->>> Unfortunately, there seems to be a small race when using the files
->>> from Fedora 33: To enter the initrd shell, we have to send a "return"
->>> once. But it does not seem to work if we send it too early. Using a
->>> sleep(0.2) makes it work reliably for me, but to make it even more
->>> unlikely to trigger this situation, let's better limit the Fedora 33
->>> tests to only run with KVM.
->>>
->>> Finally, while we're at it, we also add some lines for testing writes
->>> to the hard disk, as we already do it in the test_intel_iommu test.
->>
->> for your info it does not apply anymore on mainline after latest appied
->> functional test additions.
-> ...
->>> +    ASSET_KERNEL_F31 = Asset(
->>> +       
->>> ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
->>> +         'releases/31/Server/aarch64/os/images/pxeboot/vmlinuz'),
->>> +       
->>> '413c7f95e7f40cfa3e73290ffae855c88fae54cccc46123a4b4ed2db7d5c2120')
->> the hash seems wrong for the vmlinuz. I get
->> Exception: Hash of
->> https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/31/Server/aarch64/os/images/pxeboot/vmlinuz
->>
->> does not match
->> 413c7f95e7f40cfa3e73290ffae855c88fae54cccc46123a4b4ed2db7d5c2120
->
-> D'oh, I got tricked by "wget". I used wget to download the asset to
-> manually calculate the sha256sum, then manually copied the asset into
-> my cache to avoid a second download.
-> But wget apparently unzips the kernel:
->
-> $ wget
-> https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/31/Server/aarch64/os/images/pxeboot/vmlinuz
-> $ sha256sum vmlinuz
-> 413c7f95e7f40cfa3e73290ffae855c88fae54cccc46123a4b4ed2db7d5c2120  vmlinuz
-> $ ls -l vmlinuz
-> -rw-r--r--. 1 thuth thuth 25885184 Oct 21  2019 vmlinuz
->
-> While curl gives the correct results:
->
-> $ curl -O
-> https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/31/Server/aarch64/os/images/pxeboot/vmlinuz
-> $ sha256sum vmlinuz
-> 3ae07fcafbfc8e4abeb693035a74fe10698faae15e9ccd48882a9167800c1527  vmlinuz
-> $ ls -l vmlinuz
-> -rw-r--r--. 1 thuth thuth  9027813 Mar 11 16:13 vmlinuz
->
-> This should fix the issue:
->
-> diff --git a/tests/functional/test_aarch64_smmu.py
-> b/tests/functional/test_aarch64_smmu.py
-> index bba8599401c..4f0492ca50d 100755
-> --- a/tests/functional/test_aarch64_smmu.py
-> +++ b/tests/functional/test_aarch64_smmu.py
-> @@ -123,7 +123,7 @@ def run_and_check(self, filename, hashsum):
->      ASSET_KERNEL_F31 = Asset(
->          ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
->           'releases/31/Server/aarch64/os/images/pxeboot/vmlinuz'),
-> -       
-> '413c7f95e7f40cfa3e73290ffae855c88fae54cccc46123a4b4ed2db7d5c2120')
-> +       
-> '3ae07fcafbfc8e4abeb693035a74fe10698faae15e9ccd48882a9167800c1527')
->
->      ASSET_INITRD_F31 = Asset(
->          ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-> @@ -165,7 +165,7 @@ def test_smmu_noril_nostrict(self):
->      ASSET_KERNEL_F33 = Asset(
->          ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
->           'releases/33/Server/aarch64/os/images/pxeboot/vmlinuz'),
-> -       
-> '0ef9e34f80b49fa2ac098899b27075e95c11d5b646f6ca4df2e89237a40f9e4f')
-> +       
-> 'd8b1e6f7241f339d8e7609c456cf0461ffa4583ed07e0b55c7d1d8a0c154aa89')
->
->      ASSET_INITRD_F33 = Asset(
->          ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-
-yep it fixes the issue
-
-python3.9 ../tests/functional/test_aarch64_smmu.py
-TAP version 13
-ok 1 test_aarch64_smmu.SMMU.test_smmu_noril
-ok 2 test_aarch64_smmu.SMMU.test_smmu_noril_nostrict
-ok 3 test_aarch64_smmu.SMMU.test_smmu_noril_passthrough
-ok 4 test_aarch64_smmu.SMMU.test_smmu_ril
-ok 5 test_aarch64_smmu.SMMU.test_smmu_ril_nostrict
-ok 6 test_aarch64_smmu.SMMU.test_smmu_ril_passthrough
-1..6
-
-The conversion looks good to me. thank you for doing it!
-
-With above fix and straightforward rebase on top of mainline, feel free
-to add
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-
->
-> Sorry for the confusion.
->
->  Thomas
->
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 37946d759375..5cc4721e6406 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -606,68 +606,68 @@ static inline bool isar_feature_aa64_rpres(const ARMISARegisters *id)
+ static inline bool isar_feature_aa64_fp_simd(const ARMISARegisters *id)
+ {
+     /* We always set the AdvSIMD and FP fields identically.  */
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, FP) != 0xf;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, FP) != 0xf;
+ }
+ 
+ static inline bool isar_feature_aa64_fp16(const ARMISARegisters *id)
+ {
+     /* We always set the AdvSIMD and FP fields identically wrt FP16.  */
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, FP) == 1;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, FP) == 1;
+ }
+ 
+ static inline bool isar_feature_aa64_aa32(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL0) >= 2;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL0) >= 2;
+ }
+ 
+ static inline bool isar_feature_aa64_aa32_el1(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL1) >= 2;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL1) >= 2;
+ }
+ 
+ static inline bool isar_feature_aa64_aa32_el2(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL2) >= 2;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL2) >= 2;
+ }
+ 
+ static inline bool isar_feature_aa64_ras(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RAS) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_doublefault(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RAS) >= 2;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) >= 2;
+ }
+ 
+ static inline bool isar_feature_aa64_sve(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, SVE) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, SVE) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_sel2(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, SEL2) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, SEL2) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_rme(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RME) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_dit(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, DIT) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, DIT) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_scxtnum(const ARMISARegisters *id)
+ {
+-    int key = FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, CSV2);
++    int key = FIELD_EX64_IDREG(id, ID_AA64PFR0, CSV2);
+     if (key >= 2) {
+         return true;      /* FEAT_CSV2_2 */
+     }
+     if (key == 1) {
+-        key = FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, CSV2_FRAC);
++        key = FIELD_EX64_IDREG(id, ID_AA64PFR1, CSV2_FRAC);
+         return key >= 2;  /* FEAT_CSV2_1p2 */
+     }
+     return false;
+@@ -675,37 +675,37 @@ static inline bool isar_feature_aa64_scxtnum(const ARMISARegisters *id)
+ 
+ static inline bool isar_feature_aa64_ssbs(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SSBS) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR1, SSBS) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_bti(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, BT) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR1, BT) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_mte_insn_reg(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_mte(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) >= 2;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 2;
+ }
+ 
+ static inline bool isar_feature_aa64_mte3(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) >= 3;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 3;
+ }
+ 
+ static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR1, SME) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64PFR1, NMI) != 0;
+ }
+ 
+ static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index d63c59c1ca2a..98f3e2f999a8 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2125,14 +2125,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+     if (!cpu->has_vfp) {
+-        uint64_t t;
+         uint32_t u;
+ 
+         FIELD_DP64_IDREG(isar, ID_AA64ISAR1, JSCVT, 0);
+ 
+-        t = cpu->isar.id_aa64pfr0;
+-        t = FIELD_DP64(t, ID_AA64PFR0, FP, 0xf);
+-        cpu->isar.id_aa64pfr0 = t;
++        FIELD_DP64_IDREG(isar, ID_AA64PFR0, FP, 0xf);
+ 
+         u = cpu->isar.id_isar6;
+         u = FIELD_DP32(u, ID_ISAR6, JSCVT, 0);
+@@ -2187,9 +2184,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+         t = FIELD_DP64(t, ID_AA64ISAR1, I8MM, 0);
+         SET_IDREG(isar, ID_AA64ISAR1, t);
+ 
+-        t = cpu->isar.id_aa64pfr0;
+-        t = FIELD_DP64(t, ID_AA64PFR0, ADVSIMD, 0xf);
+-        cpu->isar.id_aa64pfr0 = t;
++        FIELD_DP64_IDREG(isar, ID_AA64PFR0, ADVSIMD, 0xf);
+ 
+         u = cpu->isar.id_isar5;
+         u = FIELD_DP32(u, ID_ISAR5, AES, 0);
+@@ -2331,12 +2326,10 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+          */
+         cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1, ID_PFR1, SECURITY, 0);
+         cpu->isar.id_dfr0 = FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, COPSDBG, 0);
+-        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
+-                                           ID_AA64PFR0, EL3, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL3, 0);
+ 
+         /* Disable the realm management extension, which requires EL3. */
+-        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
+-                                           ID_AA64PFR0, RME, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64PFR0, RME, 0);
+     }
+ 
+     if (!cpu->has_el2) {
+@@ -2371,8 +2364,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+          * Disable the hypervisor feature bits in the processor feature
+          * registers if we don't have EL2.
+          */
+-        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
+-                                           ID_AA64PFR0, EL2, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL2, 0);
+         cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1,
+                                        ID_PFR1, VIRTUALIZATION, 0);
+     }
+@@ -2393,8 +2385,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+          * This matches Cortex-A710 BROADCASTMTE input being LOW.
+          */
+         if (tcg_enabled() && cpu->tag_memory == NULL) {
+-            cpu->isar.id_aa64pfr1 =
+-                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 1);
++            FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 1);
+         }
+ 
+         /*
+@@ -2402,7 +2393,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+          * enabled on the guest (i.e mte=off), clear guest's MTE bits."
+          */
+         if (kvm_enabled() && !cpu->kvm_mte) {
+-                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 0);
++                FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 0);
+         }
+ #endif
+     }
+@@ -2441,13 +2432,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+         cpu->isar.id_dfr0 =
+             FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, MMAPTRC, 0);
+         /* FEAT_AMU (Activity Monitors Extension) */
+-        cpu->isar.id_aa64pfr0 =
+-            FIELD_DP64(cpu->isar.id_aa64pfr0, ID_AA64PFR0, AMU, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64PFR0, AMU, 0);
+         cpu->isar.id_pfr0 =
+             FIELD_DP32(cpu->isar.id_pfr0, ID_PFR0, AMU, 0);
+         /* FEAT_MPAM (Memory Partitioning and Monitoring Extension) */
+-        cpu->isar.id_aa64pfr0 =
+-            FIELD_DP64(cpu->isar.id_aa64pfr0, ID_AA64PFR0, MPAM, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64PFR0, MPAM, 0);
+     }
+ 
+     /* MPU can be configured out of a PMSA CPU either by setting has-mpu
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e9e31c09a22c..810c5e0963a7 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1097,8 +1097,6 @@ struct ArchCPU {
+         uint32_t dbgdidr;
+         uint32_t dbgdevid;
+         uint32_t dbgdevid1;
+-        uint64_t id_aa64pfr0;
+-        uint64_t id_aa64pfr1;
+         uint64_t id_aa64mmfr0;
+         uint64_t id_aa64mmfr1;
+         uint64_t id_aa64mmfr2;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index b914f2ed58b5..111b2514218e 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -310,16 +310,13 @@ static bool cpu_arm_get_sve(Object *obj, Error **errp)
+ static void cpu_arm_set_sve(Object *obj, bool value, Error **errp)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+-    uint64_t t;
+ 
+     if (value && kvm_enabled() && !kvm_arm_sve_supported()) {
+         error_setg(errp, "'sve' feature not supported by KVM on this host");
+         return;
+     }
+ 
+-    t = cpu->isar.id_aa64pfr0;
+-    t = FIELD_DP64(t, ID_AA64PFR0, SVE, value);
+-    cpu->isar.id_aa64pfr0 = t;
++    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, SVE, value);
+ }
+ 
+ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+@@ -370,11 +367,8 @@ static bool cpu_arm_get_sme(Object *obj, Error **errp)
+ static void cpu_arm_set_sme(Object *obj, bool value, Error **errp)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+-    uint64_t t;
+ 
+-    t = cpu->isar.id_aa64pfr1;
+-    t = FIELD_DP64(t, ID_AA64PFR1, SME, value);
+-    cpu->isar.id_aa64pfr1 = t;
++    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, value);
+ }
+ 
+ static bool cpu_arm_get_sme_fa64(Object *obj, Error **errp)
+@@ -676,7 +670,7 @@ static void aarch64_a57_initfn(Object *obj)
+     cpu->isar.id_isar4 = 0x00011142;
+     cpu->isar.id_isar5 = 0x00011121;
+     cpu->isar.id_isar6 = 0;
+-    cpu->isar.id_aa64pfr0 = 0x00002222;
++    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+     cpu->isar.id_aa64dfr0 = 0x10305106;
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+     cpu->isar.id_aa64mmfr0 = 0x00001124;
+@@ -738,7 +732,7 @@ static void aarch64_a53_initfn(Object *obj)
+     cpu->isar.id_isar4 = 0x00011142;
+     cpu->isar.id_isar5 = 0x00011121;
+     cpu->isar.id_isar6 = 0;
+-    cpu->isar.id_aa64pfr0 = 0x00002222;
++    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+     cpu->isar.id_aa64dfr0 = 0x10305106;
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+     cpu->isar.id_aa64mmfr0 = 0x00001122; /* 40 bit physical addr */
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index b1c4c69d8bb4..9e2cb6e1837e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6719,7 +6719,7 @@ static uint64_t id_pfr1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ static uint64_t id_aa64pfr0_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+-    uint64_t pfr0 = cpu->isar.id_aa64pfr0;
++    uint64_t pfr0 = GET_IDREG(&cpu->isar, ID_AA64PFR0);
+ 
+     if (env->gicv3state) {
+         pfr0 |= 1 << 24;
+@@ -7693,7 +7693,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .access = PL1_R,
+ #ifdef CONFIG_USER_ONLY
+               .type = ARM_CP_CONST,
+-              .resetvalue = cpu->isar.id_aa64pfr0
++              .resetvalue = GET_IDREG(isar, ID_AA64PFR0)
+ #else
+               .type = ARM_CP_NO_RAW,
+               .accessfn = access_aa64_tid3,
+@@ -7705,7 +7705,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 1,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = cpu->isar.id_aa64pfr1},
++              .resetvalue = GET_IDREG(isar, ID_AA64PFR1)},
+             { .name = "ID_AA64PFR2_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 2,
+               .access = PL1_R, .type = ARM_CP_CONST,
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index ca861648fad9..f56ce584612d 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -862,8 +862,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         int reg;
+         uint64_t *val;
+     } regs[] = {
+-        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.id_aa64pfr0 },
+-        { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.id_aa64pfr1 },
++        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
++        { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.idregs[ID_AA64PFR1_EL1_IDX] },
+         { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.id_aa64dfr0 },
+         { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.id_aa64dfr1 },
+         { HV_SYS_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
+@@ -915,7 +915,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     ahcf->reset_sctlr |= 0x00800000;
+ 
+     /* Make sure we don't advertise AArch32 support for EL0/EL1 */
+-    if ((host_isar.id_aa64pfr0 & 0xff) != 0x11) {
++    if ((GET_IDREG(&host_isar, ID_AA64PFR0) & 0xff) != 0x11) {
+         return false;
+     }
+ 
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index e8992348b27f..44a5e219b051 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -331,8 +331,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     ahcf->dtb_compatible = "arm,arm-v8";
+     int fd = fdarray[2];
+ 
+-    err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
+-                         ARM64_SYS_REG(3, 0, 0, 4, 0));
++    err = get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
+     if (unlikely(err < 0)) {
+         /*
+          * Before v4.15, the kernel only exposed a limited number of system
+@@ -350,11 +349,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+          * ??? Either of these sounds like too much effort just
+          *     to work around running a modern host kernel.
+          */
+-        ahcf->isar.id_aa64pfr0 = 0x00000011; /* EL1&0, AArch64 only */
++        SET_IDREG(&ahcf->isar, ID_AA64PFR0, 0x00000011); /* EL1&0, AArch64 only */
+         err = 0;
+     } else {
+-        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr1,
+-                              ARM64_SYS_REG(3, 0, 0, 4, 1));
++        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64smfr0,
+                               ARM64_SYS_REG(3, 0, 0, 4, 5));
+         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr0,
+@@ -380,10 +378,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+          * than skipping the reads and leaving 0, as we must avoid
+          * considering the values in every case.
+          */
+-        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_pfr0,
+-                              ARM64_SYS_REG(3, 0, 0, 1, 0));
+-        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_pfr1,
+-                              ARM64_SYS_REG(3, 0, 0, 1, 1));
++        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
++        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+         err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_dfr0,
+                               ARM64_SYS_REG(3, 0, 0, 1, 2));
+         err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_mmfr0,
+@@ -434,14 +430,14 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+          * arch/arm64/kvm/sys_regs.c:trap_dbgidr() does.
+          * We only do this if the CPU supports AArch32 at EL1.
+          */
+-        if (FIELD_EX32(ahcf->isar.id_aa64pfr0, ID_AA64PFR0, EL1) >= 2) {
+-            int wrps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
+-            int brps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
++        if (FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL1) >= 2) {
++            int wrps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
++            int brps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
+             int ctx_cmps =
+-                FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
++                FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
+             int version = 6; /* ARMv8 debug architecture */
+             bool has_el3 =
+-                !!FIELD_EX32(ahcf->isar.id_aa64pfr0, ID_AA64PFR0, EL3);
++                !!FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL3);
+             uint32_t dbgdidr = 0;
+ 
+             dbgdidr = FIELD_DP32(dbgdidr, DBGDIDR, WRPS, wrps);
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index f62e62595d8b..478ef839bafa 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -63,8 +63,8 @@ static void aarch64_a35_initfn(Object *obj)
+     cpu->isar.id_isar3 = 0x01112131;
+     cpu->isar.id_isar4 = 0x00011142;
+     cpu->isar.id_isar5 = 0x00011121;
+-    cpu->isar.id_aa64pfr0 = 0x00002222;
+-    cpu->isar.id_aa64pfr1 = 0;
++    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
++    SET_IDREG(isar, ID_AA64PFR1, 0);
+     cpu->isar.id_aa64dfr0 = 0x10305106;
+     cpu->isar.id_aa64dfr1 = 0;
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+@@ -158,11 +158,8 @@ static bool cpu_arm_get_rme(Object *obj, Error **errp)
+ static void cpu_arm_set_rme(Object *obj, bool value, Error **errp)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+-    uint64_t t;
+ 
+-    t = cpu->isar.id_aa64pfr0;
+-    t = FIELD_DP64(t, ID_AA64PFR0, RME, value);
+-    cpu->isar.id_aa64pfr0 = t;
++    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, RME, value);
+ }
+ 
+ static void cpu_max_set_l0gptsz(Object *obj, Visitor *v, const char *name,
+@@ -228,8 +225,8 @@ static void aarch64_a55_initfn(Object *obj)
+     cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
+     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
+-    cpu->isar.id_aa64pfr0  = 0x0000000010112222ull;
+-    cpu->isar.id_aa64pfr1  = 0x0000000000000010ull;
++    SET_IDREG(isar, ID_AA64PFR0, 0x0000000010112222ull);
++    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
+     cpu->id_afr0       = 0x00000000;
+     cpu->isar.id_dfr0  = 0x04010088;
+     cpu->isar.id_isar0 = 0x02101110;
+@@ -312,7 +309,7 @@ static void aarch64_a72_initfn(Object *obj)
+     cpu->isar.id_isar3 = 0x01112131;
+     cpu->isar.id_isar4 = 0x00011142;
+     cpu->isar.id_isar5 = 0x00011121;
+-    cpu->isar.id_aa64pfr0 = 0x00002222;
++    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+     cpu->isar.id_aa64dfr0 = 0x10305106;
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+     cpu->isar.id_aa64mmfr0 = 0x00001124;
+@@ -361,8 +358,8 @@ static void aarch64_a76_initfn(Object *obj)
+     cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
+     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
+-    cpu->isar.id_aa64pfr0  = 0x1100000010111112ull; /* GIC filled in later */
+-    cpu->isar.id_aa64pfr1  = 0x0000000000000010ull;
++    SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
++    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
+     cpu->id_afr0       = 0x00000000;
+     cpu->isar.id_dfr0  = 0x04010088;
+     cpu->isar.id_isar0 = 0x02101110;
+@@ -427,8 +424,8 @@ static void aarch64_a64fx_initfn(Object *obj)
+     cpu->revidr = 0x00000000;
+     cpu->ctr = 0x86668006;
+     cpu->reset_sctlr = 0x30000180;
+-    cpu->isar.id_aa64pfr0 =   0x0000000101111111; /* No RAS Extensions */
+-    cpu->isar.id_aa64pfr1 = 0x0000000000000000;
++    SET_IDREG(isar, ID_AA64PFR0, 0x0000000101111111); /* No RAS Extensions */
++    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000000);
+     cpu->isar.id_aa64dfr0 = 0x0000000010305408;
+     cpu->isar.id_aa64dfr1 = 0x0000000000000000;
+     cpu->id_aa64afr0 = 0x0000000000000000;
+@@ -609,8 +606,8 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
+     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
+-    cpu->isar.id_aa64pfr0  = 0x1100000010111112ull; /* GIC filled in later */
+-    cpu->isar.id_aa64pfr1  = 0x0000000000000020ull;
++    SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
++    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
+     cpu->id_afr0       = 0x00000000;
+     cpu->isar.id_dfr0  = 0x04010088;
+     cpu->isar.id_isar0 = 0x02101110;
+@@ -688,8 +685,8 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
+     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+     cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
+-    cpu->isar.id_aa64pfr0  = 0x1101110120111112ull; /* GIC filled in later */
+-    cpu->isar.id_aa64pfr1  = 0x0000000000000020ull;
++    SET_IDREG(isar, ID_AA64PFR0, 0x1101110120111112ull); /* GIC filled in later */
++    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
+     cpu->id_afr0       = 0x00000000;
+     cpu->isar.id_dfr0  = 0x15011099;
+     cpu->isar.id_isar0 = 0x02101110;
+@@ -925,8 +922,8 @@ static void aarch64_a710_initfn(Object *obj)
+     cpu->isar.mvfr1    = 0x13211111;
+     cpu->isar.mvfr2    = 0x00000043;
+     cpu->isar.id_pfr2  = 0x00000011;
+-    cpu->isar.id_aa64pfr0  = 0x1201111120111112ull; /* GIC filled in later */
+-    cpu->isar.id_aa64pfr1  = 0x0000000000000221ull;
++    SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
++    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+     SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+     cpu->isar.id_aa64dfr0  = 0x000011f010305619ull;
+     cpu->isar.id_aa64dfr1  = 0;
+@@ -1027,8 +1024,8 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+     cpu->isar.mvfr1    = 0x13211111;
+     cpu->isar.mvfr2    = 0x00000043;
+     cpu->isar.id_pfr2  = 0x00000011;
+-    cpu->isar.id_aa64pfr0  = 0x1201111120111112ull; /* GIC filled in later */
+-    cpu->isar.id_aa64pfr1  = 0x0000000000000221ull;
++    SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
++    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+     SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+     cpu->isar.id_aa64dfr0  = 0x000011f210305619ull;
+     cpu->isar.id_aa64dfr1  = 0;
+@@ -1183,7 +1180,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
+     SET_IDREG(isar, ID_AA64ISAR2, t);
+ 
+-    t = cpu->isar.id_aa64pfr0;
++    t = GET_IDREG(isar, ID_AA64PFR0);
+     t = FIELD_DP64(t, ID_AA64PFR0, FP, 1);        /* FEAT_FP16 */
+     t = FIELD_DP64(t, ID_AA64PFR0, ADVSIMD, 1);   /* FEAT_FP16 */
+     t = FIELD_DP64(t, ID_AA64PFR0, RAS, 2);       /* FEAT_RASv1p1 + FEAT_DoubleFault */
+@@ -1192,9 +1189,9 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64PFR0, DIT, 1);       /* FEAT_DIT */
+     t = FIELD_DP64(t, ID_AA64PFR0, CSV2, 3);      /* FEAT_CSV2_3 */
+     t = FIELD_DP64(t, ID_AA64PFR0, CSV3, 1);      /* FEAT_CSV3 */
+-    cpu->isar.id_aa64pfr0 = t;
++    SET_IDREG(isar, ID_AA64PFR0, t);
+ 
+-    t = cpu->isar.id_aa64pfr1;
++    t = GET_IDREG(isar, ID_AA64PFR1);
+     t = FIELD_DP64(t, ID_AA64PFR1, BT, 1);        /* FEAT_BTI */
+     t = FIELD_DP64(t, ID_AA64PFR1, SSBS, 2);      /* FEAT_SSBS2 */
+     /*
+@@ -1207,7 +1204,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
+     t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_3 */
+     t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
+-    cpu->isar.id_aa64pfr1 = t;
++    SET_IDREG(isar, ID_AA64PFR1, t);
+ 
+     t = cpu->isar.id_aa64mmfr0;
+     t = FIELD_DP64(t, ID_AA64MMFR0, PARANGE, 6); /* FEAT_LPA: 52 bits */
+-- 
+2.48.1
 
 
