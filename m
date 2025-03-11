@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A35C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 18:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96D57C28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 18:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts4Ts-0004Ls-Gf; Tue, 11 Mar 2025 14:37:32 -0400
+	id 1ts4Y7-0008Ce-1u; Tue, 11 Mar 2025 14:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ts4Tf-0004EK-Fl
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:37:21 -0400
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ id 1ts4XP-00082L-V8
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:41:14 -0400
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ts4TX-0004Z8-HT
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:37:18 -0400
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e3978c00a5aso4716840276.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:37:08 -0700 (PDT)
+ id 1ts4XN-0005VK-TP
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:41:11 -0400
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e4930eca0d4so4664397276.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:41:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741718227; x=1742323027; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wayN4RoaoenIpriSr88NoZR+64V8zFecBLi1Mteb1h4=;
- b=LNenYRVkkdbvbj155e4O6+xUAqUNWDBnpN1DbX8G56g6jmiztbavNIUPXMIxhV/ftl
- EDOVwKojqpsCvYyzScln8GnffAZV802/0rXDEOa1dkALseRqdKmY7CEImdKCP4NEUwxt
- O0ya6VycORdT9OcvAJ8ZCnbToxDY/eyQgi05/F4wQ4yqMigjt2Uhoe93PGXasX5BhgfX
- 7cvFhtd7L9gNZLM9uo9crlFCcvBmaU45yrWgwsOyvO2KnF54AhvM0KeFsdD4DAiqHlel
- pou9ue0wv+arvYOmNwSFi6MO1cuZtGPw2LLSGlVCHh+0ae+vViiHp4TtPnBQ6YnogYbg
- Ax3A==
+ d=linaro.org; s=google; t=1741718464; x=1742323264; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9Ud0FKd3zeRdaYRZH6CT8xOBJbHe3ZdulDPSR2uTzq0=;
+ b=kGvwS/5vCZIsjdM7cAso7iRoGXAmSLovqrux9+PTe6r7ba0mX4jl0D64c+5SpoFILt
+ Ctttj0QeFpzutFagCTkljft2lxtvPnxK0bdDv5O92o0scdXNxCfwknmhGv3QGNMBYvHQ
+ A0smZWyDj3pg+6VZF4/jHmMq0ZDDRj77b+DYjJiYIDG2Juczx0l6983SCola+ROt+vQj
+ aRR1wnledEQrqDodzbO+rUeKD8Tl5NQkN9ZtFcjX4HqEPz4W8FVa6nh+vFvIVfUOBJkI
+ iCu+9Ia9dS7BXINyfLfNn0hNxzIY8SQOt9k834bz8S6DaWfqLA6m53xKqZ7rm/3S9pbP
+ x5Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741718227; x=1742323027;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wayN4RoaoenIpriSr88NoZR+64V8zFecBLi1Mteb1h4=;
- b=bN+xpB1kPdDZTN2MJB839w/O1rtdiEldTZC4lWsqcBtnYzjTBrrKhRyJUbqBTTw3B5
- 0yf8Y0WwFKdd8akjzaCvjezYANYtuZHTsX53dQJlJnfF2X4PsWa5s7dvkVAGtU1CN+mT
- bMaDvqUuFyjV6sCupCA7hu96nw0sjk5ca5daA7J6C5AZGiPlsxcXQkXcJErOGzQrfQLA
- q0UexZ1lzJidJsuXph0+ojX3ZrYDsGylHYJl0wUmYC8NtlL6dhWyaNc/1npEqbw8BFna
- 0HShBJ6o0GBmjlXSQOdkVXTz+RmE4M8GPT1lVBREs7XnKIum1rpauA3qULb95OA3rlIQ
- TivA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV75y9TekYoZoyqn73LzsDQ3fD5aL24CsvEmxpU2sfgDLiU7+tiuiSmHrZzbYwUZkCM7cBFEU1pFNNn@nongnu.org
-X-Gm-Message-State: AOJu0YxWhZe9TZMl8Cb7buhHeXLjrPRJGLpW4DkXWmdBF+EUI1ZTtRH6
- hfHJpXi8EgXDeXLE+YenNxWu3JjlJyyzSE1rqVteKDmQQhZ+dW3bFYJ7AIqRPb+uBLZkujqqfV5
- y17SRpyMCFF6dU6RzOd7JXT1TB3FZAZty+hThew==
-X-Gm-Gg: ASbGncvALk9o7Euz3teCilciZxdbETS98Mn0E5sExEOEDOuJvZlkIRpEP9DUfZAQqBd
- 1+ps5o+OQucU4iv7P5MLI/33iSlp+nCKVaTiUmQznXHqTmEotrXgUBQXrA06hhDF5+5vWCDDu4/
- QuJ7k01mqEI4IYOh35bkxTo6ElsFM=
-X-Google-Smtp-Source: AGHT+IF/5Z50eBBrV2TrE7YsRKS/qUtD0B5qOOn/yDurn2aOxkMF1P3zHWfzVvFPoJcJx0TcR68GTaEtqI8G9XKn8s8=
-X-Received: by 2002:a05:6902:2086:b0:e60:a068:a14b with SMTP id
- 3f1490d57ef6-e635c0f9b05mr22983993276.4.1741718227112; Tue, 11 Mar 2025
- 11:37:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741718464; x=1742323264;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9Ud0FKd3zeRdaYRZH6CT8xOBJbHe3ZdulDPSR2uTzq0=;
+ b=lxnqqPM53T13FxpD7C8Mapk3cB+DHJHgfuAutQcduQiaScOOIy4Ij60hJY8Wse3z8/
+ QnsNOekHbykpLl9BjpXRfmhyxGmYsW8WOZRLAkuoEs7JXN+6E4qDqfCaWmRLGzDlpbZE
+ E2+ASvw2zqlGB//jKcRqc7Puw5D9PRbpCpNgpmw8YZR5Yg6ggi8K488EAL7MPGx/yenI
+ wHlmszjCd0AD93m7AO88PneT/84NFVZ7MaNYcXIWsksXEbDBFbQAKs53Y/Mia+v7SYrj
+ qfXHN44cH1ZOO3RHyma2wbv7F1xnV12Dgzm8xMYouNL6xVC9VwzuSZPN+Jb5yN+20HPc
+ axWg==
+X-Gm-Message-State: AOJu0Yxh/1tDCzoeTzK+Bo4FHsnURDMaqeZEFMcN6P+QKbZz5JCx6ImX
+ NlAW3xT2oP4o0Z5vbtM9owg4bzK+3605nwQtFU6kt2Clbf4+ZPXYmxIpl/Fox0kSUXpubEIwU1D
+ ihlT0No7UDeiXTtvowlMnxwFuYhywrHcGTZ+KdA==
+X-Gm-Gg: ASbGncta2LVu0G+4SZ/9Up3/44rujWb2yJiiRhMesSIZ+p1ak1YbITdjk0U5hDVFF/N
+ tgZjo7EmnZK8ZSxzNUJjTw4NhFGOlyv/O5mVLSXel+/5Wl2xKuo47CbaZCLeTQFUM7GaUovGAVe
+ kcw6PjTBETZQF1NrTsMsNJP32y92A=
+X-Google-Smtp-Source: AGHT+IGuKevcUIvXFEzyP3o1DXyCV+QKcNpVG+elMJi28R5FlAxroa4Y3OmYf0D8Z4dzUVKQTQkCVL5ZhxFg3mv92ic=
+X-Received: by 2002:a05:6902:2784:b0:e38:c0ed:8128 with SMTP id
+ 3f1490d57ef6-e635c0f9194mr25472869276.3.1741718464175; Tue, 11 Mar 2025
+ 11:41:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250310012825.79614-1-philmd@linaro.org>
- <CAFEAcA_fRWgntwbiFiDJqAkthR8vBzrkLOLkp5GeHD9O8xTMCA@mail.gmail.com>
- <CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com>
- <6f4a3582-f3e2-4f0c-8ab6-eeddd1064793@linaro.org>
-In-Reply-To: <6f4a3582-f3e2-4f0c-8ab6-eeddd1064793@linaro.org>
+References: <20250227073049.32655-1-jason.chien@sifive.com>
+In-Reply-To: <20250227073049.32655-1-jason.chien@sifive.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Mar 2025 18:36:55 +0000
-X-Gm-Features: AQ5f1JqytoFakCllyYae0_YaX-PbqFdorB8TUeotHeg0V71ppFWFo44bbBjv82U
-Message-ID: <CAFEAcA8j-JAVC=VK0YHoyB9dBH6Rj7aGpmZtCGPbc5Usdy6yhA@mail.gmail.com>
-Subject: Re: [PATCH v7 0/7] hw/char/pl011: Implement TX (async) FIFO to avoid
- blocking the main loop
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-arm@nongnu.org
+Date: Tue, 11 Mar 2025 18:40:51 +0000
+X-Gm-Features: AQ5f1Jo7nCMLSopVLhXpvlFyjSRhVDC6klkfXYushm7Xc6T7hWrVU6nH8ZDza3c
+Message-ID: <CAFEAcA8LPHEmLxDMUNN7DSHCw8pwvA7kUOAH+Ef1mDvOVH-dYQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc/edu: Rename macros indicating the direction of
+ DMA operations
+To: Jason Chien <jason.chien@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Jiri Slaby <jslaby@suse.cz>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,42 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Mar 2025 at 10:33, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
-> On 10/3/25 18:28, Peter Maydell wrote:
-> > This seems to be because the pl011 code and the chardev
-> > code disagree about how "couldn't write anything" is
-> > reported. pl011 here is looking for "0 means wrote nothing",
-> > but the chardev code reports it as "-1 and errno is EAGAIN".
-> >
-> > I think the chardev code is actually what we need to fix here,
-> > because it makes basically no effort to guarantee that the
-> > errno from the underlying write is still in 'errno' by the
-> > time qemu_chr_fe_write() returns. In particular it may
-> > call qemu_chr_write_log() or replay_char_write_event_save(),
-> > both of which will happily trash errno if something fails
-> > during their execution.
+On Thu, 27 Feb 2025 at 07:32, Jason Chien <jason.chien@sifive.com> wrote:
 >
-> IIUC when retrying qemu_chr_write_buffer(s, buf, len, ofs) could
-> write less than @len (but still writing few bytes, that information
-> is stored in @offset) and return -errno, discarding @offset partial
-> write len.
+> This commit renames the macros to accurately reflect the direction of
+> DMA operations.
+>
+> EDU_DMA_TO_PCI now represents reading memory content into the EDU buffer,
+> while EDU_DMA_FROM_PCI represents writing EDU buffer content to memory.
 
-I thought that too when I first read the code, because it's
-been written in a way that didn't match what I was expecting
-for a "write until you would block, then stop" loop, but on
-second reading I decided it could not, at least in the case
-where write_all is false. If we write any data at all on the
-first cc->chr_write call, we will then break out of the loop
-without trying to send any more, so there's no code path
-that will then set res to a negative number. (If write_all
-is true, then yeah I think we can return an errno rather
-than a partial-write count if chr_write fails on the second
-time through the loop, but all the callers of that version
-of the function ignore errors of any kind anyway, and
-certainly don't have any means to handle "only wrote half
-the data", otherwise they'd be using the non-blocking
-version.)
+The EDU device is a PCI device, so if it is reading
+then it is reading data from the PCI bus, and if it is
+writing then it is writing data to the PCI bus. So I
+think there's an argument that the current names make
+sense.
 
+Plus, presumably this device model is implementing the hardware
+half of a defined specification. The authoritative source for
+what names the 0 and 1 values of the DIR bit should be named
+would be that specification.
+
+Where is that spec, and what does it say? If it says 0 for
+FROM and 1 for TO, that's what we should use. If it's the
+other way around, that's an error in our device implementation
+that we should correct.
+
+thanks
 -- PMM
 
