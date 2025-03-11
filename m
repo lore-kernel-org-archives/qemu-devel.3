@@ -4,75 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B30C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 12:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4969FC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 12:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tryO6-0002pz-0b; Tue, 11 Mar 2025 08:07:13 -0400
+	id 1tryZd-0006zr-Vy; Tue, 11 Mar 2025 08:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tryNa-0002k9-1P
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 08:06:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tryNW-0005MC-V0
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 08:06:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741694785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/TvujmW+owmZUvJlLCw2BXUkVDIaCKPW+t9XyxZaZN8=;
- b=CrqcdZ9VL79wx95njk+V3pkw8mlrXT1sZL7N13Gyi8SX1jCzJp1n8Hgvl2h5NDGkAJSNdC
- B4lkEWYrNPuJVLQRJ8iBMfpqAIVjp/E75U8GzhR0w5eMMEiJDtCJKBYSaiQ7fyzwAbOs9b
- nz6FRlJiS6hanqrTrcxSNoNl6c0lXKM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-5QYdCxNLO4mmX_7CGkKKQQ-1; Tue,
- 11 Mar 2025 08:06:20 -0400
-X-MC-Unique: 5QYdCxNLO4mmX_7CGkKKQQ-1
-X-Mimecast-MFC-AGG-ID: 5QYdCxNLO4mmX_7CGkKKQQ_1741694779
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tryZb-0006zO-6J
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 08:19:04 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tryZS-0008G0-99
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 08:18:58 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9E35180AF52; Tue, 11 Mar 2025 12:06:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.18])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1580518001E9; Tue, 11 Mar 2025 12:06:13 +0000 (UTC)
-Date: Tue, 11 Mar 2025 13:06:11 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, qemu-block@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, pkrempa@redhat.com,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v2 11/13] virtio-scsi: add iothread-vq-mapping parameter
-Message-ID: <Z9AnM4D6KZqHTakM@redhat.com>
-References: <20250311101145.1037388-1-stefanha@redhat.com>
- <20250311101145.1037388-12-stefanha@redhat.com>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CE90B21175;
+ Tue, 11 Mar 2025 12:18:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741695526; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EiZpeww4Mx7Gj7kfyq2EUg7U9JiLWA7WC20++itRYxQ=;
+ b=W30Hb2wgX1/zn+2pgWtwHHQ02fjaaD30CtFqL3HQS1FG1RMPiqXDHSsVa2p92Kjyy5y4rb
+ z/5TECd7DnDPfdEt0iP5C8l2Q/Hn5fcIUrJj9IzG4zBG6VPViI/M5IJoyKoXQ08bcQnJ00
+ Fu9bEk8ohj4SQulVyKgDNI1Y2uWqbJo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741695526;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EiZpeww4Mx7Gj7kfyq2EUg7U9JiLWA7WC20++itRYxQ=;
+ b=EGIclWKoo6DxbPK2qPWty0xOSoEyDW7/kf8W3gB/del/nGsU8sCyJUhFkXqhfPFZyQGqpq
+ YdETIpc5X5z86ADA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741695526; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EiZpeww4Mx7Gj7kfyq2EUg7U9JiLWA7WC20++itRYxQ=;
+ b=W30Hb2wgX1/zn+2pgWtwHHQ02fjaaD30CtFqL3HQS1FG1RMPiqXDHSsVa2p92Kjyy5y4rb
+ z/5TECd7DnDPfdEt0iP5C8l2Q/Hn5fcIUrJj9IzG4zBG6VPViI/M5IJoyKoXQ08bcQnJ00
+ Fu9bEk8ohj4SQulVyKgDNI1Y2uWqbJo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741695526;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EiZpeww4Mx7Gj7kfyq2EUg7U9JiLWA7WC20++itRYxQ=;
+ b=EGIclWKoo6DxbPK2qPWty0xOSoEyDW7/kf8W3gB/del/nGsU8sCyJUhFkXqhfPFZyQGqpq
+ YdETIpc5X5z86ADA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3C10C132CB;
+ Tue, 11 Mar 2025 12:18:45 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nypLOiUq0GeFLgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 11 Mar 2025 12:18:45 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Jean-Christophe Dubois
+ <jcd@tribudubois.net>, qemu-arm@nongnu.org, Peter Maydell
+ <peter.maydell@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Andrey
+ Smirnov <andrew.smirnov@gmail.com>, Bernhard Beschow <shentey@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH v2 18/18] hw/rtc: Add Ricoh RS5C372 RTC emulation
+In-Reply-To: <20250223114708.1780-19-shentey@gmail.com>
+References: <20250223114708.1780-1-shentey@gmail.com>
+ <20250223114708.1780-19-shentey@gmail.com>
+Date: Tue, 11 Mar 2025 09:18:43 -0300
+Message-ID: <878qpbahgc.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250311101145.1037388-12-stefanha@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.04 / 50.00]; BAYES_HAM(-2.24)[96.41%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[13];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,tribudubois.net,nongnu.org,linaro.org,gmail.com,alistair23.me];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TAGGED_RCPT(0.00)[]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,71 +123,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 11.03.2025 um 11:11 hat Stefan Hajnoczi geschrieben:
-> Allow virtio-scsi virtqueues to be assigned to different IOThreads. This
-> makes it possible to take advantage of host multi-queue block layer
-> scalability by assigning virtqueues that have affinity with vCPUs to
-> different IOThreads that have affinity with host CPUs. The same feature
-> was introduced for virtio-blk in the past:
-> https://developers.redhat.com/articles/2024/09/05/scaling-virtio-blk-disk-io-iothread-virtqueue-mapping
-> 
-> Here are fio randread 4k iodepth=64 results from a 4 vCPU guest with an
-> Intel P4800X SSD:
-> iothreads IOPS
-> ------------------------------
-> 1         189576
-> 2         312698
-> 4         346744
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Bernhard Beschow <shentey@gmail.com> writes:
 
-> @@ -1218,14 +1224,16 @@ static void virtio_scsi_hotplug(HotplugHandler *hotplug_dev, DeviceState *dev,
->  {
->      VirtIODevice *vdev = VIRTIO_DEVICE(hotplug_dev);
->      VirtIOSCSI *s = VIRTIO_SCSI(vdev);
-> +    AioContext *ctx = s->vq_aio_context[0];
+> The implementation just allows Linux to determine date and time.
+>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-At the end of the series, this is always qemu_aio_context...
+For qtest:
 
->      SCSIDevice *sd = SCSI_DEVICE(dev);
-> -    int ret;
->  
-> -    if (s->ctx && !s->dataplane_fenced) {
-> -        ret = blk_set_aio_context(sd->conf.blk, s->ctx, errp);
-> -        if (ret < 0) {
-> -            return;
-> -        }
-> +    if (ctx != qemu_get_aio_context() && !s->dataplane_fenced) {
-> +        /*
-> +         * Try to make the BlockBackend's AioContext match ours. Ignore failure
-> +         * because I/O will still work although block jobs and other users
-> +         * might be slower when multiple AioContexts use a BlockBackend.
-> +         */
-> +        blk_set_aio_context(sd->conf.blk, ctx, errp);
->      }
-
-...so this becomes dead code. With multiple AioContexts, it's not clear
-which one should be used. virtio-blk just takes the first one. The
-equivalent thing here would be to use the one of the first command
-queue.
-
->      if (virtio_vdev_has_feature(vdev, VIRTIO_SCSI_F_HOTPLUG)) {
-> @@ -1260,7 +1268,7 @@ static void virtio_scsi_hotunplug(HotplugHandler *hotplug_dev, DeviceState *dev,
->  
->      qdev_simple_device_unplug_cb(hotplug_dev, dev, errp);
->  
-> -    if (s->ctx) {
-> +    if (s->vq_aio_context[0] != qemu_get_aio_context()) {
-
-Same problem here.
-
->          /* If other users keep the BlockBackend in the iothread, that's ok */
->          blk_set_aio_context(sd->conf.blk, qemu_get_aio_context(), NULL);
->      }
-
-As you wanted to avoid squashing patches anyway, I think this can be
-fixed on top of this series.
-
-Kevin
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
