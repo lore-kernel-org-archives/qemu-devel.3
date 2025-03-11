@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53907C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 22:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA8B3C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 22:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts87u-00071d-3w; Tue, 11 Mar 2025 18:31:06 -0400
+	id 1ts8A3-0000RC-US; Tue, 11 Mar 2025 18:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ts87r-00070z-Tj
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 18:31:03 -0400
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ id 1ts89z-0000Qp-BY
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 18:33:15 -0400
+Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ts87l-0006qi-TM
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 18:31:03 -0400
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-6dcd4f1aaccso87424176d6.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 15:30:56 -0700 (PDT)
+ id 1ts89x-00076S-BF
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 18:33:14 -0400
+Received: by mail-qk1-x72f.google.com with SMTP id
+ af79cd13be357-7c2303a56d6so691569485a.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 15:33:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741732255; x=1742337055; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741732391; x=1742337191; darn=nongnu.org;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZUPRe/61C9OzKVIJGC/o/QsV9f6fu7RfKa8NRhw/Nn0=;
- b=Ccfwj63+LlIuAk3JVE3SVPD3/fQfuu7hQTNlsW+2pyw786am9YP5p1Fgof4giVEfcY
- 5rlkWhyvOeFls9WaKd5ujbVwTkHa1EMEDPJzb/SjJNgTap2y6vS2DcWs6sHez3MzH1S2
- TvY/2cMjuDKK2ChuFYTgVeXMDIL5bkGtsi199Pb8GFzn9dk4e+OW6BTCQe+an+2gvy1y
- b+WZmas0n5BSn2/7Fd3r3P6RlpchEaXo+GXTZMCmav1oKeivA9h5oppORH6ksN+LMDLY
- E/LOnx8LOC8FbyyWwgTZQLSj/YVTlFJxZkeB6hEfFOfQynXySEXOJOnYeZ3dmoh8n0sO
- WlEQ==
+ bh=bD6vb85J5LRCwKEON9i/DDvJzuu1z56qekw2XxSUOig=;
+ b=HZRj1w4ZQoQtG3UGkYDVtjBjp4aIFyX0hswafI61uQvmftmY6wY7vlJ9rqpdsaG5il
+ gsi7JJcsFuA33q9ZWm8BDTF5yVGbKwYKJIbcvChvTYuKbNxC3FTLEIvu2Yak6/qliPlK
+ 2vBA4h3Spp/f225sU5oy6j+axPy+4bZdGpPWyYWvAltBU2CXBDqsL9+ZuYhS4pGYglpD
+ PGYEV4eQeiAQzukYKezdZ2PLyQNP9UqdNE0aNFoOHjYB6ScXa4mhVFO4kEe7rZM+dLC7
+ kBmfzVdKxwRyjmRyI7zyOUPazZ+Y3gPXUbu/Mc/qgTpT1jdZ+Tul/o3767vsG9X/Zl+z
+ rBLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741732255; x=1742337055;
+ d=1e100.net; s=20230601; t=1741732391; x=1742337191;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZUPRe/61C9OzKVIJGC/o/QsV9f6fu7RfKa8NRhw/Nn0=;
- b=AXD/s1APsu3cDU/btpVw/VINnF/RxbFSVMCEacgREC3W9QB3KuKXsKKEbIwTouUeK4
- IFObZ2Qh3Xaz2WrRyNYp8bIaNvEZHJu+S97Wf5W8Uwa3lbiIqtKdT1BLlcBxYOp20yMx
- fX+BWYow98yjQifQpYQlRsmCTlrBhOtWjmBPMfxBbBcSzy9gPfj6u8CyM4dXVZuOyRUh
- ScYgYrxOv+0q7/05RCtQIhJWQXoZQaGbBrTUNekLnciH3gYq+7Pglg9tOVwBZzFDgA8y
- 6tJuQ97LSneowx/kkxiTz+nioQzsJiLFAtSBo74xIpL0q1ZwyTRWTOTuLfvPiMSGGX7m
- P5gg==
+ bh=bD6vb85J5LRCwKEON9i/DDvJzuu1z56qekw2XxSUOig=;
+ b=BFIKjmxrO6eWSdkvzA1ka8VeSKi8iSDmhRL2KyiX2hVOGIcsgvBCtcUeQfV13C7aTo
+ pSsgyHhfAhZyYWxMIcAoQ4cbfGdEf8qunKTTu1A3q9bqPyuXQLIXLKT2TNGuBn3wyy21
+ m+BHvE/0DZhaiK6/l0iGX9bGJ3AtXrKg/HYDey6lvy7xndymvcuqQGahRLsyCMiSIkjX
+ Mb6xa8wjqfkEl/2Y5g338EzboPK9+YpMRzTQlnoFfM9mD/xtoWctYx5OihedKywLM96i
+ 8h04m5gkJXezGw55az2Md68FeBq9cC8ktG3X8nXOw8RlaRcUvv8bKMVNDfRsudlCaIT7
+ TQOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4MqmcQABhXF1oV/JjXsOk7h/KR7zzSvYDiL4vZwySZTKbH7HF0VEXyKVRPY29lrVCSRPxsPoZR01u@nongnu.org
-X-Gm-Message-State: AOJu0Ywedja0bDLLHIF3T5vrVeSoleQFaLS98ak5xn14P2hNOYS+Lrwp
- pvaFMspbw4lpqsRb5It5uBTe3v52b01+LjeFYTwwayXZ1ksemTSC
-X-Gm-Gg: ASbGncv2/H70pe2mztYI7whz8oGddVzAANvvnvd6Ui/b4qRrcfy+Jy/07N/ElKuy3OP
- wrnF4iE6lmjMkz4oAs3zfzExWUx7WgzA/E9jPxwAtCe5v7iW5QHvg/MjhwDd9cVPNqjOj9QOtDy
- gO/4D2n58WZoH1GwqmphxK4pkHjKy2HRbTyIxyEMiRSuM2U7kXpjc5sWCvATIxf0RqO/XvA3jJm
- i9cWO+0303DYboKDuOeo3SX3UavXK5C6aqZur394mQGl2rzvMqfGtw6Jby1keH7HELkqzEU7jOR
- U1MLeSQ33P5p1MpDliFpaxs7NGu6Stk7tN2yMNGZTlSCpK2gmpo1zGB/KCuoVTY=
-X-Google-Smtp-Source: AGHT+IELZ2ItYxQpAk6I+xeL8z7Q4gGMIxAwRst49iesZHF+jQ/Tv5B4o9NeTGvNV3QlNF+vJ4/q2A==
-X-Received: by 2002:a05:6214:dcf:b0:6e8:f60b:9396 with SMTP id
- 6a1803df08f44-6e9006aced4mr252413636d6.29.1741732255532; 
- Tue, 11 Mar 2025 15:30:55 -0700 (PDT)
+ AJvYcCXrHeQCQ78bp1rlZ/0yozp4CAZNCUzgyTsJgOXOnOnydGfMkoC8uPStFxaIh2Q675gTDhYcCzwHBiua@nongnu.org
+X-Gm-Message-State: AOJu0YxaG3mX/lCe4e8ed6GuEFf9VtNTzb3WsRl0IIJ7B38C5+BKm2l3
+ XwpVk9q7iykYoOSg4lY9omgVOHtCigqblMucOvlk+xRaUAb+wkRu
+X-Gm-Gg: ASbGncvdZK56fsAnL0uv7veAxHLdsLUUKDDWYBWCqbMm+98q7X7XOqsvY1kLZWA/MUT
+ z0EKLMYKhhSU06XNJ0xWY1LvTkU/LG8V5HSMDmF6+ucxm4ay51sKRlkV+1Ft6EVhhCGyH1Ywofe
+ w7OhO2EYM8bQzU6mfTBrcd420YbpFtLIFXUEoupqMrq6Sw+mLjmu3f+2K5lnQS+ZmEm8AOcz5Gn
+ qJULL8sA47EueX+T9PqDL7v9EQaIab+Cg+VB+KTCxSqhjSMBU91SC85wCcYFLXjYWxLFIG+/tRm
+ NmmNmSSWO5bOeF+Ps8W4IvUYhcAYkYW443zENEE4EBOiul7ufVOl0GJmk9x1sjY=
+X-Google-Smtp-Source: AGHT+IGIY8/yhC8bynqGcaIlEcumje9oWBJ5WQr7hkUgxtAsFc/87ARycupUCY5K971+jmy3tEL9uQ==
+X-Received: by 2002:a05:620a:8011:b0:7c5:4b91:6a3b with SMTP id
+ af79cd13be357-7c54b9171dfmr1470032585a.42.1741732391539; 
+ Tue, 11 Mar 2025 15:33:11 -0700 (PDT)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:a832:3b35:d71f:4119])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f71709aesm76559246d6.116.2025.03.11.15.30.54
+ af79cd13be357-7c55d83959bsm224489185a.8.2025.03.11.15.33.10
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 11 Mar 2025 15:30:54 -0700 (PDT)
+ Tue, 11 Mar 2025 15:33:11 -0700 (PDT)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -74,30 +74,29 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-24-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-24-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 23/38] target/hexagon: Add implicit attributes to sysemu
- macros
-Date: Tue, 11 Mar 2025 17:30:53 -0500
-Message-ID: <009501db92d5$40aa17e0$c1fe47a0$@gmail.com>
+ <20250301052628.1011210-27-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-27-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 26/38] target/hexagon: Add TCG overrides for rte, nmi
+Date: Tue, 11 Mar 2025 17:33:10 -0500
+Message-ID: <009601db92d5$91e3b3f0$b5ab1bd0$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgIXBMNutPIx58A=
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgGAG34RtPbqKzA=
 Content-Language: en-us
 X-Antivirus: Norton (VPS 250311-4, 3/11/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x72f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,44 +123,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 23/38] target/hexagon: Add implicit attributes to sysemu
-> macros
+> Subject: [PATCH 26/38] target/hexagon: Add TCG overrides for rte, nmi
 > 
 > From: Brian Cain <bcain@quicinc.com>
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/hex_common.py | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/target/hexagon/hex_common.py
-> b/target/hexagon/hex_common.py index 1e94e1fef5..7b5bb2cd46 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -128,8 +128,13 @@ def calculate_attribs():
->      add_qemu_macro_attrib("fTRAP", "A_IMPLICIT_READS_PC")
->      add_qemu_macro_attrib("fSET_OVERFLOW",
-> "A_IMPLICIT_WRITES_USR")
->      add_qemu_macro_attrib("fSET_LPCFG", "A_IMPLICIT_WRITES_USR")
-> +    add_qemu_macro_attrib("fLOAD_LOCKED", "A_LLSC")
-> +    add_qemu_macro_attrib("fSTORE_LOCKED", "A_LLSC")
 
-I don't see a use of A_LLSC.
-
-Otherwise
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
-
-> +    add_qemu_macro_attrib("fCLEAR_RTE_EX", "A_IMPLICIT_WRITES_SSR")
->      add_qemu_macro_attrib("fLOAD", "A_SCALAR_LOAD")
->      add_qemu_macro_attrib("fSTORE", "A_SCALAR_STORE")
-> +    add_qemu_macro_attrib("fSET_K0_LOCK", "A_IMPLICIT_READS_PC")
-> +    add_qemu_macro_attrib("fSET_TLB_LOCK", "A_IMPLICIT_READS_PC")
->      add_qemu_macro_attrib('fLSBNEW0', 'A_IMPLICIT_READS_P0')
->      add_qemu_macro_attrib('fLSBNEW0NOT', 'A_IMPLICIT_READS_P0')
->      add_qemu_macro_attrib('fREAD_P0', 'A_IMPLICIT_READS_P0')
-> --
-> 2.34.1
 
 
 
