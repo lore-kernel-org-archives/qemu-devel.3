@@ -4,95 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09959C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 14:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A692C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 14:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts0eU-00036p-11; Tue, 11 Mar 2025 10:32:14 -0400
+	id 1ts0lb-0003ir-6r; Tue, 11 Mar 2025 10:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1ts0eK-000366-4s
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 10:32:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1ts0eH-0002VA-1q
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 10:32:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741703517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ts0lL-0003ZN-9I
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 10:39:20 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ts0lJ-0003cj-1v
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 10:39:18 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 807881F441;
+ Tue, 11 Mar 2025 14:39:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741703945; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uEACzDmQTFUoHFQiqZ7bCeBUFAyQIlaOhM9jfE1yj5w=;
- b=hzMTPplyT+aC0pFXUtFxFa/yuBRjT5+ycEDWIwuDnWjjZjO54BmV5emqyIS6IKDc3TZo/I
- fOoJCs9mYAUcl9FpuW2v1XDWVNaJExxRBJtsmqym+WGbUNHF2yiEFaR6Df+T+sdPXZ2yqk
- v44sevQO7ymB2eom9rlP+CE2KspyC9g=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-DUX-MNh4PYiFvSkaDYLGpg-1; Tue, 11 Mar 2025 10:31:56 -0400
-X-MC-Unique: DUX-MNh4PYiFvSkaDYLGpg-1
-X-Mimecast-MFC-AGG-ID: DUX-MNh4PYiFvSkaDYLGpg_1741703515
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-85b3e93e052so32573039f.3
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 07:31:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741703515; x=1742308315;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uEACzDmQTFUoHFQiqZ7bCeBUFAyQIlaOhM9jfE1yj5w=;
- b=CCUMujzdjMkuHKL7TOhmEgRlKzaDRNGhcWJeXZrVpoHE0FpRDbS55QD0Zr5RKf8vUq
- POvOcBdUoNZMyVgIlqcz83oRizy+Qe//dgKQHCvjdmryoPKvkK+xuFO3OPAvv3YlXTww
- j6QW8Suf7quemAnJjosUJJh1hWs+jlT5kooa+jsOZH3WP0M8Ys2y7k/mwKv/0cgwUVz/
- LiFtUo+Gwy4Gcvb72k3PQQBr4tl9hy90OLkYzJrX9SC/odBPz1zGHrB2Gao4QqBI8iRc
- 9olog3ajICv2lnPYXnGsljrQXflGqfxPw0G4/uignboZEPKOj8YLbHfgPuuVG7lA2DZj
- 1Oug==
-X-Gm-Message-State: AOJu0YzJ3lww91ZEcTo1h4ZTOKbymiu6ZtXMh6GTGJxORaUAV280YXhR
- EBkXCZy+RNlmR8Xf2ShyXK48BPa9DutOUO69d5RSrNtHUYacvO38wpBUeeBF2rn1C+skKXQ8pBn
- Kf5GVGnHmk1Qd91nB1CMyvkg3CxUMsMuhoEl+ijDUY4LuiGY5Vzcf
-X-Gm-Gg: ASbGncvdx06aQ9MvtDS0t9VS3++iK152y2axdHAsw05bEDEDpU7hv01PcSifSGvOa1B
- ARuaq9aHcfsfwmOT+sdFCqvroa2FxvTOf6k2wxS4ADDhV1566+CWgCoA5/hVtVyTCmDATze7CcS
- +F3r7BPiwXR2YfIm0yEQyEyrsw3whoWAsK84ikcrYs2ubeVXPV7QqCAPB72t/MqiwVaSBhOzG4b
- xV/UYElmECgF8Oj40M4o22sXFIJT2mvq3IPiuddHj9rTSqhQQ5PT0ngG+mZOTfja//9EgzrWe7x
- UXNMAv8d6+zDLv+5DQA=
-X-Received: by 2002:a05:6602:1546:b0:85d:9738:54ac with SMTP id
- ca18e2360f4ac-85d973855ebmr97876039f.2.1741703515132; 
- Tue, 11 Mar 2025 07:31:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyaLJk1VicjQ0nlsrdnw38m+mPI9OYM113CTURbCfn1TpAL6W6PgyU3gXAIXRbzXZS2+C4iw==
-X-Received: by 2002:a05:6602:1546:b0:85d:9738:54ac with SMTP id
- ca18e2360f4ac-85d973855ebmr97875139f.2.1741703514782; 
- Tue, 11 Mar 2025 07:31:54 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f21d102ce5sm2111819173.46.2025.03.11.07.31.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 07:31:54 -0700 (PDT)
-Date: Tue, 11 Mar 2025 08:31:52 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Vasilis Liaskovitis <vliaskovitis@suse.com>
-Cc: qemu-devel@nongnu.org, clg@redhat.com
-Subject: Re: [RFC PATCH] vfio/pci-quirks: Exclude non-ioport BAR from ATI quirk
-Message-ID: <20250311083152.6e26d8b2.alex.williamson@redhat.com>
-In-Reply-To: <20250310235833.41026-1-vliaskovitis@suse.com>
-References: <20250310235833.41026-1-vliaskovitis@suse.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=qJ/l2p/AazUQrfq4KyqP++kiSk5mZfaZfVcZHbXryjk=;
+ b=sJtXOiGglt3XfllpsUBdMon64YOqXqL3EUGQAJ3TbdDnsPLIMXCDXb6vUsgbXEHlUdbr+k
+ fKlmimNrWT/u/X8tf56EF9+ACy0kdUQNOtTYlq1nEmxVtyJpTwSZ/bumcbVzUkDGb1TrdJ
+ 8ZJ87kJO+KXIEWwjkVnAijP2RxKDSOc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741703945;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qJ/l2p/AazUQrfq4KyqP++kiSk5mZfaZfVcZHbXryjk=;
+ b=FL3zSGfi4bzJ4Z8zrHysGF0b4r6IR2LsMdOOSmY7amYkOJJmWTFCFrH/anOhrYGjkBqnZx
+ +AJc+K+CsF3D2PAg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=swFiUUi6;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Yb36lDUb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741703944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qJ/l2p/AazUQrfq4KyqP++kiSk5mZfaZfVcZHbXryjk=;
+ b=swFiUUi6A8lrCqhNEfe4KOrrgKjad0/TnUPqhEoT3V+QmCtqSkmBCTpUa8cWwDMf03bLmu
+ 4vYoJ7BwMnlrYxDydgpI7/ecyfAP2O5e7nNGqAMTUeh+U8ndryAsCUErxCoOa8290wCd1A
+ vR7REqRICI0HAl7vhLE4uTb788m2vxI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741703944;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qJ/l2p/AazUQrfq4KyqP++kiSk5mZfaZfVcZHbXryjk=;
+ b=Yb36lDUb3P6Ulwi8RkIxZDZRxhR5x/e6EY/CIuK/bIacqqHpyFRr23dLCku96uM+XIXhyL
+ WJW+G2ct9AXc9FDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EB26C132CB;
+ Tue, 11 Mar 2025 14:39:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id r58LKgdL0Gd0XQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 11 Mar 2025 14:39:03 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daude <philmd@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, Kevin
+ Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Steve Sistare <steven.sistare@oracle.com>
+Subject: Re: [PATCH V1 0/4] skip memory init during CPR
+In-Reply-To: <1741380954-341079-1-git-send-email-steven.sistare@oracle.com>
+References: <1741380954-341079-1-git-send-email-steven.sistare@oracle.com>
+Date: Tue, 11 Mar 2025 11:39:00 -0300
+Message-ID: <8734fjaayj.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 807881F441
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.50 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,oracle.com:email];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,42 +127,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Mar 2025 00:58:33 +0100
-Vasilis Liaskovitis <vliaskovitis@suse.com> wrote:
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-> The ATI BAR4 quirk is targeting an ioport BAR. Older devices may
-> have a BAR4 which is not an ioport, causing a segfault here. Test
-> the BAR type to skip these devices.
-> 
-> Similar to
-> "8f419c5b: vfio/pci-quirks: Exclude non-ioport BAR from NVIDIA quirk"
-> 
-> Untested, as I don't have the card to test.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2856
-> Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
-> ---
->  hw/vfio/pci-quirks.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index c53591fe2b..15598bbaf4 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -403,7 +403,7 @@ static void vfio_probe_ati_bar4_quirk(VFIOPCIDevice *vdev, int nr)
->  
->      /* This windows doesn't seem to be used except by legacy VGA code */
->      if (!vfio_pci_is(vdev, PCI_VENDOR_ID_ATI, PCI_ANY_ID) ||
-> -        !vdev->vga || nr != 4) {
-> +        !vdev->vga || nr != 4 || !vdev->bars[4].ioport) {
->          return;
->      }
->  
+> Fix bugs where the realize method re-initializes some memory regions during
+> CPR.  See the individual commit messages for details.
+>
+> Steve Sistare (4):
+>   migration: cpr_is_incoming
+>   pflash: fix cpr
+>   hw/loader: fix roms during cpr
+>   hw/qxl: fix cpr
+>
+>  hw/block/block.c        |  5 +++++
+>  hw/core/loader.c        |  5 ++++-
+>  hw/display/qxl.c        | 27 ++++++++++++++++++++++++---
+>  include/migration/cpr.h |  1 +
+>  migration/cpr.c         |  5 +++++
+>  5 files changed, 39 insertions(+), 4 deletions(-)
 
-We should probably predicate calls to vfio_bar_quirk_setup() on
-VFIOBAR.size to avoid such segfaults, but agree this likely fixes the
-reported issue as well.
+Series:
 
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
