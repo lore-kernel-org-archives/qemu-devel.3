@@ -4,107 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42178C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7DEC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:21:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1P5-0006gI-Qd; Tue, 11 Mar 2025 11:20:26 -0400
+	id 1ts1Pt-0007Mh-Jw; Tue, 11 Mar 2025 11:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ts1Oz-0006fk-A6
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:20:17 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ts1Ox-0006p0-Hd
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:20:17 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2fa8ada6662so11883503a91.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:20:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741706414; x=1742311214; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lQ1DlCBUIbAraI/JTg1m2qqamEpgEFznt1TObYD6Os0=;
- b=U219LnqTLlP9mJA+oTeaqoNjEPFrRcn1rIvVt8EPbQhdMwM9BJGdWJqzrUPhCZrt8e
- evUxQSR+0KXjTBg9+/BqU46WEGDYQfnFCMC4hRYi29SmWObZK5/L3KxJHEJ6NPYau1x1
- Vip3If/jOayK6mlEkxhNKenBFgrbDPpvhpGcdTi+qMlOR9vw/elhHoJz6PfBpQstolgT
- MbQYZFfLNc+ymxlFGvo/C7YhMgml3EsAFYBIO7tTIDzcjmRodKS5eTyETh/7Faae2cG3
- R3uN5jUeAMOmeoJu11mgS6UpcH/fLCdvA5cVr0Xf2t2/uRiqoD1b8UxnGn4UeRQ+HlVG
- a5ig==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ts1Pj-0007Fa-31
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:21:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ts1Pg-0006zj-Vw
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:21:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741706457;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0SFWcnRpaqXUmaXBblJgSw/v3BPvQtwy3gAeFjoCa1w=;
+ b=CbBJgTcZ8nl5zurGOTqsepdtn0CFf5vYMOuNI7lBT6O5iBp9vLtLTPFVStEGIV42YlSJ26
+ YUbHsjKjGgl66U8oJr+kCAa6P3I5UP8hqqeIXH0dXDugY9UvWUzW72x+Gumr0jjR7nX5Bz
+ H+dAgvNsK3nT9VeD+QuOubRxSkiQNbA=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-625-sYyEdhf7PEOUz8TmzT2ixw-1; Tue, 11 Mar 2025 11:20:55 -0400
+X-MC-Unique: sYyEdhf7PEOUz8TmzT2ixw-1
+X-Mimecast-MFC-AGG-ID: sYyEdhf7PEOUz8TmzT2ixw_1741706455
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6e91d8a7165so36032576d6.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:20:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741706414; x=1742311214;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741706455; x=1742311255;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lQ1DlCBUIbAraI/JTg1m2qqamEpgEFznt1TObYD6Os0=;
- b=iucF46fX9jAPj+lRb9IBIBY9VmP2u85LadPqe9zfdDBojLIw4xt+AN76bszFD06I33
- ewY9iDv89MX34Ascy4rTIwEoI8j5L/ynW2wAihGc7tY/NHUgUvA3vyVB183pMzBRrRon
- E3p+k3ERjOqju/I6siScplmb2/JCb3UkMyoMPuPyWuiFHdsM4iBGr6PDzxUmlTt/K2Ji
- gliBxLo0rxFr4ApqmpME+PyMqSYTpCCyNeu3retdqeFPt6C1do5/mRwoUPeYT6C6fhCu
- CAhOTswzX/54f5/we6FYE3DhptltGsb30q0dVAzWWW2ZaFNMFucEg6CV9o9X2npGRBTR
- 5q/Q==
+ bh=0SFWcnRpaqXUmaXBblJgSw/v3BPvQtwy3gAeFjoCa1w=;
+ b=MMcBDj/FJoxoJ2L+IVN1poI8ejieMbwp9yN3aN9eU1US47ZsXFykCq3lZfbaY0byN5
+ Lnpm9QOAtSgJr4UnruWwl4CKCN6Vvmx8kYhhNOFdq58KKIKowoRrSAiciB91+BwdGPWK
+ 66n46TVEJz2IbJuzn1c5TLQjcDuh89DPys5P7hgn+9R0CB+oK/IAqDk7wKIBz4/UnAWb
+ mEt4XefRY7QL0oF73yEB1eOIFNUrtSbNo4+x0rHgHTcHjZ6nyd1sWgUJz48YKDQke/AW
+ mhxuXykq/HpSMA/wzA0+Fmt0yOtzlYEZIBbpPN6t4NgV6pEBbAVVMOK8YfXJzCK49dQQ
+ eY9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKgm/G6fktpSL8w5v3rsDRAdIBkqjkF7VdaZvQU3mmKjfnkW+sa1b+LUQefMlyViJxTabTd68UHuZr@nongnu.org
-X-Gm-Message-State: AOJu0Yzj2xwWABd7dBaV38AmtKzJAIDFH5jXyXXX1wxWb2ITS+yPl52K
- e+lfsFwyR1e4ll8oYKEQUYMnBMoQUJmrCGtJKlY03Nf7AAc5Mk2CSP2FrLlM/1Y=
-X-Gm-Gg: ASbGncvWdEhY7w0Aah8Y27XBIXbRMPNE61V1Mjayd0q/m9sW9pPa2SIlbum/DmWekJt
- izUzl2el+PhFJ4YmyrL+VVLiW5P3RDGHMgD4ki6doMtWvi3IsBIcHoU0BRcdJ3jKksjDiT+SYH/
- aVZtYW3N6m6WnHOt8KxkpRUx6TwlKchfGO7t2tuLtXSwLEzNgv4HJv88cbHEn4ssWFP+VWzo9Vi
- Xbo5sTBVVBNyahy9TIGg5UGjzDUhiqkzdpr0j/s6Z9q32nwGKwWfe/j/PGqY/XfXzh/P4Btv3jk
- ElNiirGMX48ozaCjbIda8iKbGl6nTewpeQDDJ8vchkRQSScMiW3uFGhlIw==
-X-Google-Smtp-Source: AGHT+IHB6/PW0IHKkK7wGI9UOrKJJD3Du6pkJ5/gnIg+/UfsjtLDQjkMRqgvo/n5/5r2fsfdUad9Yg==
-X-Received: by 2002:a17:90b:2883:b0:2ff:52e1:c4a1 with SMTP id
- 98e67ed59e1d1-2ff7cf128acmr27929118a91.24.1741706413718; 
- Tue, 11 Mar 2025 08:20:13 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff53eda418sm11565063a91.45.2025.03.11.08.20.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 08:20:13 -0700 (PDT)
-Message-ID: <42184de6-5484-4e5a-b502-48db0e6d2cf5@linaro.org>
-Date: Tue, 11 Mar 2025 08:20:12 -0700
+ AJvYcCXXArvT+C1urFwq3Ehwciyjf3AYmghxg9bhFPZWSDhJiDB4GLAPSe5or0eYWDd8pfoFUDYeR6VlQMnF@nongnu.org
+X-Gm-Message-State: AOJu0YzqLqkWR9v8nT0lwQ/AR15NEUCYQIstFBDmPA/zzdJ2eND4kBG6
+ x+Jib2KmCgrTAYuEfnbESBNRP0wK4jzwuE79jfbN6i4VGdKufia8cibDcx3b8g+HxDLxhVsdypm
+ vNezLQEXQedCTiQCNrLmoPpE/ncq0A9vERcsxRxXLfsKxFPThYxtx
+X-Gm-Gg: ASbGncs1F/8ztT+MOaZapAVhhvkJ/UiMLoNIXcYwDJwuLD2VvJhTBMm8Vh4Hl57K/Hj
+ v9zApFpDHRSqLC8k/ezE31RUqJY+MD4vDdrPrxj56uFEgc3tzOLTNJvDYheUH/FJzzJmFGSYCEX
+ xBrpu40S4i501GphGZYOPwSFHX1NVxsbWiqGeZIDMPc08P+rwr+ulpEEi66cNLtOYHir+S7mBiH
+ FsIDHqKzr0rY1pBQKBH+20M8yV1vU1BzUVpvR2/NX/LVO202L7eREV4TW1sP11csC5RRTElAzky
+ WN9HMoc=
+X-Received: by 2002:a05:6214:d43:b0:6e8:8b11:b6cd with SMTP id
+ 6a1803df08f44-6e90066bc5emr237257496d6.35.1741706454875; 
+ Tue, 11 Mar 2025 08:20:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYuaHUImoNco7dI6UqbbAdn6N/QhGF62yZNaYf8/F6WaBRUosjRpdht6SdbaTbtYlRpm8OGQ==
+X-Received: by 2002:a05:6214:d43:b0:6e8:8b11:b6cd with SMTP id
+ 6a1803df08f44-6e90066bc5emr237257156d6.35.1741706454479; 
+ Tue, 11 Mar 2025 08:20:54 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e8f715bab5sm73569746d6.86.2025.03.11.08.20.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 08:20:53 -0700 (PDT)
+Date: Tue, 11 Mar 2025 11:20:50 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Manish Mishra <manish.mishra@nutanix.com>, qemu-devel@nongnu.org,
+ leobras@redhat.com, farosas@suse.de, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v2] QIOChannelSocket: Flush zerocopy socket error queue
+ on ENOBUF failure for sendmsg
+Message-ID: <Z9BU0gd3BLPhBss2@x1.local>
+References: <20250310011500.240782-1-manish.mishra@nutanix.com>
+ <Z885hS6QmGOZYj7N@x1.local> <Z89CALrwKnHdO4hx@redhat.com>
+ <Z89FjreYuRjEeX1f@x1.local> <Z8_wnLIlfhM7bILZ@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/16] include/exec/memory: extract devend_big_endian
- from devend_memop
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paul Durrant <paul@xen.org>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- David Hildenbrand <david@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- xen-devel@lists.xenproject.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, alex.bennee@linaro.org,
- qemu-riscv@nongnu.org, manos.pitsidianakis@linaro.org,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Anthony PERARD <anthony@xenproject.org>
-References: <20250311040838.3937136-1-pierrick.bouvier@linaro.org>
- <20250311040838.3937136-15-pierrick.bouvier@linaro.org>
- <b8073e25-ae8a-462b-b085-84c471a4bf5e@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <b8073e25-ae8a-462b-b085-84c471a4bf5e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z8_wnLIlfhM7bILZ@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,44 +111,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xMS8yNSAwMDozNiwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDExLzMvMjUgMDU6MDgsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiB3ZSdsbCB1c2Ug
-aXQgaW4gc3lzdGVtL21lbW9yeS5jLg0KPiANCj4gSGF2aW5nIHBhcnQgb2YgdGhlIGNvbW1p
-dCBkZXNjcmlwdGlvbiBzZXBhcmF0ZWQgaW4gaXRzIHN1YmplY3QgaXMgYQ0KPiBiaXQgYW5u
-b3lpbmcuIEJ1dCB0aGVuIEknbSBwcm9iYWJseSB1c2luZyAyMC15ZWFycyB0b28gb2xkIHRv
-b2xzIGluDQo+IG15IHBhdGNoIHdvcmtmbG93Lg0KPiANCj4gT25seSB1c2VkIGluIHN5c3Rl
-bS97bWVtb3J5LHBoeXNtZW19LmMsIHdvcnRoIG1vdmUgdG8gYSBsb2NhbA0KPiBzeXN0ZW0v
-bWVtb3J5LWludGVybmFsLmggaGVhZGVyPyBPciBldmVuIHNpbXBsZXIsIG1vdmUNCj4gaW5j
-bHVkZS9leGVjL21lbW9yeS1pbnRlcm5hbC5oIC0+IGV4ZWMvbWVtb3J5LWludGVybmFsLmgg
-Zmlyc3QuDQo+IA0KDQpHb29kIHBvaW50LCBJJ2xsIG1vdmUgdGhlbSB0byB0aGUgZXhpc3Rp
-bmcgZXhlYy9tZW1vcnktaW50ZXJuYWwuaCBpbiBhbiANCmFkZGl0aW9uYWwgY29tbWl0Lg0K
-DQo+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVy
-QGxpbmFyby5vcmc+DQo+PiAtLS0NCj4+ICAgIGluY2x1ZGUvZXhlYy9tZW1vcnkuaCB8IDE4
-ICsrKysrKysrKysrKy0tLS0tLQ0KPj4gICAgMSBmaWxlIGNoYW5nZWQsIDEyIGluc2VydGlv
-bnMoKyksIDYgZGVsZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZXhl
-Yy9tZW1vcnkuaCBiL2luY2x1ZGUvZXhlYy9tZW1vcnkuaA0KPj4gaW5kZXggNjBjMGZiNmNj
-ZDQuLjU3NjYxMjgzNjg0IDEwMDY0NA0KPj4gLS0tIGEvaW5jbHVkZS9leGVjL21lbW9yeS5o
-DQo+PiArKysgYi9pbmNsdWRlL2V4ZWMvbWVtb3J5LmgNCj4+IEBAIC0zMTM4LDE2ICszMTM4
-LDIyIEBAIGFkZHJlc3Nfc3BhY2Vfd3JpdGVfY2FjaGVkKE1lbW9yeVJlZ2lvbkNhY2hlICpj
-YWNoZSwgaHdhZGRyIGFkZHIsDQo+PiAgICBNZW1UeFJlc3VsdCBhZGRyZXNzX3NwYWNlX3Nl
-dChBZGRyZXNzU3BhY2UgKmFzLCBod2FkZHIgYWRkciwNCj4+ICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIHVpbnQ4X3QgYywgaHdhZGRyIGxlbiwgTWVtVHhBdHRycyBhdHRy
-cyk7DQo+PiAgICANCj4+IC0vKiBlbnVtIGRldmljZV9lbmRpYW4gdG8gTWVtT3AuICAqLw0K
-Pj4gLXN0YXRpYyBpbmxpbmUgTWVtT3AgZGV2ZW5kX21lbW9wKGVudW0gZGV2aWNlX2VuZGlh
-biBlbmQpDQo+PiArLyogcmV0dXJucyB0cnVlIGlmIGVuZCBpcyBiaWcgZW5kaWFuLiAqLw0K
-Pj4gK3N0YXRpYyBpbmxpbmUgYm9vbCBkZXZlbmRfYmlnX2VuZGlhbihlbnVtIGRldmljZV9l
-bmRpYW4gZW5kKQ0KPj4gICAgew0KPj4gICAgICAgIFFFTVVfQlVJTERfQlVHX09OKERFVklD
-RV9IT1NUX0VORElBTiAhPSBERVZJQ0VfTElUVExFX0VORElBTiAmJg0KPj4gICAgICAgICAg
-ICAgICAgICAgICAgICAgIERFVklDRV9IT1NUX0VORElBTiAhPSBERVZJQ0VfQklHX0VORElB
-Tik7DQo+PiAgICANCj4+IC0gICAgYm9vbCBiaWdfZW5kaWFuID0gKGVuZCA9PSBERVZJQ0Vf
-TkFUSVZFX0VORElBTg0KPj4gLSAgICAgICAgICAgICAgICAgICAgICAgPyB0YXJnZXRfd29y
-ZHNfYmlnZW5kaWFuKCkNCj4+IC0gICAgICAgICAgICAgICAgICAgICAgIDogZW5kID09IERF
-VklDRV9CSUdfRU5ESUFOKTsNCj4+IC0gICAgcmV0dXJuIGJpZ19lbmRpYW4gPyBNT19CRSA6
-IE1PX0xFOw0KPj4gKyAgICBpZiAoZW5kID09IERFVklDRV9OQVRJVkVfRU5ESUFOKSB7DQo+
-PiArICAgICAgICByZXR1cm4gdGFyZ2V0X3dvcmRzX2JpZ2VuZGlhbigpOw0KPj4gKyAgICB9
-DQo+PiArICAgIHJldHVybiBlbmQgPT0gREVWSUNFX0JJR19FTkRJQU47DQo+PiArfQ0KPj4g
-Kw0KPj4gKy8qIGVudW0gZGV2aWNlX2VuZGlhbiB0byBNZW1PcC4gICovDQo+PiArc3RhdGlj
-IGlubGluZSBNZW1PcCBkZXZlbmRfbWVtb3AoZW51bSBkZXZpY2VfZW5kaWFuIGVuZCkNCj4+
-ICt7DQo+PiArICAgIHJldHVybiBkZXZlbmRfYmlnX2VuZGlhbihlbmQpID8gTU9fQkUgOiBN
-T19MRTsNCj4+ICAgIH0NCj4+ICAgIA0KPj4gICAgLyoNCj4gDQo=
+On Tue, Mar 11, 2025 at 08:13:16AM +0000, Daniel P. Berrangé wrote:
+> On Mon, Mar 10, 2025 at 04:03:26PM -0400, Peter Xu wrote:
+> > On Mon, Mar 10, 2025 at 07:48:16PM +0000, Daniel P. Berrangé wrote:
+> > > Given this is in public API, the data needs to remain reported accurately
+> > > for the whole deprecation period. IOW, the patch to qiochannel needs to
+> > > preserve this data too.
+> > 
+> > :-(
+> > 
+> > We could potentially mark MigrationStats to be experimental as a whole and
+> > declare that in deprecate.rst too, then after two releases, we can randomly
+> > add / remove fields as wish without always need to go through the
+> > deprecation process, am I right?
+> 
+> IMHO that would be an abuse of the process and harmful to applications
+> and users consuming stats.
+
+Ah I just noticed that's the exact same one we included in
+query-migrate.. Then yes, the stable ABI is important here.
+
+So for this specific case, maybe we shouldn't have exposed it in QMP from
+the start.
+
+To me, it's a question on whether we could have something experimental and
+be exposed to QMP, where we don't need to guarantee a strict stable ABI, or
+a very loose ABI (e.g. we can guarantee the command exists, and with
+key-value string-integer pairs, nothing else).
+
+Taking the example of downtime reports: there used to be attempts on the
+list capturing details of downtime measurements for each migration and
+report that via QMP, probably via the stats.  At that time, I was concerned
+that whatever we change alone the lines then we risk breaking the ABI
+(e.g. we move code within blackout path and it can move contribution of X
+from bucket B1 to B2).  At that time the work was not merged.
+
+However, such things (either downtime reports, or some of the stats that
+are pretty much not designed for generic users, like this zerocopy success
+counter) would still be nice if we can collect them in QMP queries.
+
+Maybe what we need is a new MigrationInfoOptional, to be embeded into
+MigrationInfo (or not), marked experimental.  Then in the future whenever
+we want to add some new statistics, we could decide whether it should be
+part of stable ABI or not.
+
+PS: we have Juraj actively looking at selftests to measure downtime
+contributions of live migrations.  Currently we need to leverage
+tracepoints and parse the results.  If that sounds reasonable, we could
+start with having MigrationInfoOptional and export downtime metrics.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
