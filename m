@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC66C28B30
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D52FDC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzJU-0004ZV-Vi; Tue, 11 Mar 2025 09:06:29 -0400
+	id 1trzJ0-0003Rl-2y; Tue, 11 Mar 2025 09:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEg-0005Xy-7J; Tue, 11 Mar 2025 09:01:34 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1trzDi-0004sr-5x; Tue, 11 Mar 2025 09:00:42 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEe-0000HU-Du; Tue, 11 Mar 2025 09:01:29 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2ff6e91cff5so7761463a91.2; 
- Tue, 11 Mar 2025 06:01:27 -0700 (PDT)
+ id 1trzDc-0008Lt-JW; Tue, 11 Mar 2025 09:00:29 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ff6cf448b8so10792609a91.3; 
+ Tue, 11 Mar 2025 06:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741698086; x=1742302886; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741698016; x=1742302816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ejM9HRB5/VzpqAv8bUdwCGywl1lKQVo0Ro8YQEozmw8=;
- b=FvN5cAYD1l7yoSUIdn26m3LNP0cBeVB0jUtQ22kZYN1uE5WSdbbH8+1Y/OMlQO5xU5
- pnAQF0Z+mCEfFrRBzSODJh7OQ0wMJCMmTJ3cehQQPSMru3Wffh2dNL0kuUflXwBwcaf5
- +ZqC/lqPZ/FXBfV/9mJiNrcZ6wnaMpKQPTwnB8uf8b95EyEgbCaIoOB/nbPCS3ZGTg9k
- JFY9dRRqatDV8QW9l2wvKiZuy8Xb5Y5F7YUiPEJ8aUuS94ksTnKadiY2SFT6rYhP/4zg
- B+coMUubNuIb4KKfScIsTPyh5YlN6b/bVml9Yf7PBC4YhizRP1UHaPsCBHD6Jd+aax9l
- jLyg==
+ bh=3NFBpDCgw8d0BEXG761d1mgdF1JZURhwF8ApqY/UDtY=;
+ b=PGc90jcxSmvqXURPRKwYdAgyLdM+WmjwRvILUPHG3UwzCH7dw/z+k+F8aZsnKN7tIA
+ dNKtQV1Hkpm0LLlfjFSievC7lOfzThmq9Rt8elpwjnF0aiGipwSE/FRmwveYz7SN3Qgv
+ hnNKcpU5yzfgbXDWO4DS33ztXkVfjfD9POmAOQ4dmtTTclw2FayfEHA1keWE+7V5Mtcq
+ rt5KzJg3KP5I/4FJb/ygmL8/ZJkVx1KjCNdK0r1oR/ecP20BCCxRFJk4jiCxoztAls04
+ lY14HPsvpPJOSi+JkVm0xnQb/rLP0cMgPF8eM+Y4fIwUBA94zv0F9MaAkHMqXlqe9d75
+ 9AJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741698086; x=1742302886;
+ d=1e100.net; s=20230601; t=1741698016; x=1742302816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ejM9HRB5/VzpqAv8bUdwCGywl1lKQVo0Ro8YQEozmw8=;
- b=rI9yFR/FqpngZSGWDLzShBaExJmGhEXJudADGXgYg9tHHWPIlM/Lbnr428IYjEaFSB
- mAemjm5/rZkwiqKl36wPYwKqb/nIbjh9NW08yw+G1AlSzrZSgEmfVdVH32Zd3+DKwRUI
- aXivfaSVUqgSrmiotfsZP8ZgrRhcWnCjEoUUZYzDMGEYmNsvl7fAz7eKxwCKvugs1zl9
- +LeuqiPXULpY3Ha9vRabOQUcSK+EUnZhtkdqmJhXrQEGW9TBrspoYMgnYah4ghCChq3/
- gOr2QPkvbazTv338DWDAIECvnivbPD5QfDOMLeSvKI2aP9bCGE0ilV+FcD2cYyd5SFMQ
- CCpQ==
+ bh=3NFBpDCgw8d0BEXG761d1mgdF1JZURhwF8ApqY/UDtY=;
+ b=ddPNVrfO4UPp8HltRS7xVFVzHI18FGVOE4jgqsXGo7a+3R4tBtA2OexxJPfiW7f7Rm
+ pWXj9i2sQ8Uscb0kEE/38gOjr81RqmYBHY0qJaIuJUozq48ZVe1iKrSPlkYFBBLcYTb/
+ IfgxH01lzfgGt4ftf1vEpPsnyAtss86Ov2rWnS21u3bQs3CPbb0fh4gaOMyJjJRrXXAX
+ XSiREtFr1m/nc1mqIU70Z3TUj7BMMjFQiFnAIHiqXjVlFUJKYw9VfoL4Hw6KoFVSl810
+ mS0n8qTD/CBDNBfLj1XtGHnwqD+kJfWfC9S2v7V+xdRCu2DqHGGnXrVsrEhWNEKNpaHx
+ SvRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVw+alfklO1WjA/frZiR4rdXn/VrP9PBuuntPGluQ3H9UGTimBXndY509XRVlSImapOVCAtZEcsQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzYVFxgzlRIv/wz4VDgWv7eIYlbP2w8UkuJmNAFin7d2Xm2jNo/
- PZPvxNZdT6I4xX4iIkyMXivUwTivx1euJ/XC4UC9LyH/afJvj9qeJ8VqjQ==
-X-Gm-Gg: ASbGncvX/h4h8JVrriFnz24n38soxLxJbXIE/zRD54syYh2qF1563Zuj206LcIG6gUH
- nUI3HSiOGbG9oX1S2GFXl9nmNtmR9vs/eknVyCrQHNPWti7hXgmgFFT6aP+t65nDoEX2XUOgx9c
- eIM9GBYYQWpqZA43S7hSJTClhyXE6RsZgrIFQTV1PO45YTxXXxWTuC43N+O6feFkzl8l8acSO2E
- mbxlDyEJ9f/3RkwrROg8US5zvFHMBQvMaGX8upp6UtbaRS/XXtynDGym91Ju0k+1G4uIxchTXEq
- V3BAhmVv4eJnJwaWyXoWLMWhQ1AvOsISRTG6jNe7IuAsHYadaRA=
-X-Google-Smtp-Source: AGHT+IHs6oo++CKnNNKejh7ur7cPc0n4ZdhawTJB62wb1wpJAIC4e4u8rAG9ggbqG+vPbdLBj9Y1yw==
-X-Received: by 2002:a17:90b:1d04:b0:2ef:67c2:4030 with SMTP id
- 98e67ed59e1d1-2ff7cf0a667mr25504343a91.27.1741698084126; 
- Tue, 11 Mar 2025 06:01:24 -0700 (PDT)
+ AJvYcCVUfzyHkhQQPSpmfxZ2KDKI2l47DUMI8IdAM5LvWb4TmRjuNSE4ePXPARaQERDsHe9THoup3lBlqg==@nongnu.org
+X-Gm-Message-State: AOJu0YwABmbfYbFUcgho14LnjiQQiMUqroxXl+Ok10gGP32jksE5MxUZ
+ x4cvUhTsSTRRXHQShX8EWD8/js0afcO7XnCOGit3R0EvVEAooXPJDiP/vQ==
+X-Gm-Gg: ASbGncvdsuJX1orqFL0Dm14hz7+Yg2KPGHpcM5sbB+QtXYHeCBDAyWXQxRwMCBP7mcz
+ XQ1WsGMI0PO/WMSWARVn2QYcrQNlMUndhsaHrCRHbv6OZ7VI7Sog1c/4uzZuvKWgNA2trAM7FBM
+ 89jDvaAq4+cPbSUB9h3KYPhup4UmE7HnkZV+4OBI/moRP4lM1e+i/G7c9IbU7eHz3n45cZ+TZY/
+ a5lucpcIzJHprd68oQ1IdDbh4mlAS/WukqlUDRH00puDUKhwfsWR25cGtxFXoPO5H60IupqStEJ
+ PwTBp7Y3nN8p7/oNYP0jSWWSDUJ3jG2qPIGv5jFhIavm/j0mye0=
+X-Google-Smtp-Source: AGHT+IF43HxN2P31K8G+t/cSb3/L+nf1oz6ZZpz33m3yXYQtvJY/YH4lsoJRQnrudacpP+fLG3ehKw==
+X-Received: by 2002:a17:90b:1d0a:b0:2fe:a614:5cf7 with SMTP id
+ 98e67ed59e1d1-2ff7ce7b451mr24523889a91.3.1741698015593; 
+ Tue, 11 Mar 2025 06:00:15 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.21
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 06:01:23 -0700 (PDT)
+ Tue, 11 Mar 2025 06:00:15 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 58/72] hw/ppc/spapr: Convert DIRTY_HPTE() macro as
- hpte_set_dirty() method
-Date: Tue, 11 Mar 2025 22:57:52 +1000
-Message-ID: <20250311125815.903177-59-npiggin@gmail.com>
+ Glenn Miles <milesg@linux.ibm.com>,
+ Glenn Miles <milesg@linux.vnet.ibm.com>,
+ Michael Kowal <kowal@linux.ibm.com>
+Subject: [PULL 35/72] qtest/xive: Change printf to g_test_message
+Date: Tue, 11 Mar 2025 22:57:29 +1000
+Message-ID: <20250311125815.903177-36-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,49 +101,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Glenn Miles <milesg@linux.ibm.com>
 
-Convert DIRTY_HPTE() macro as hpte_set_dirty() method.
+Change all printf() in pnv-xive2-* qtests to g_test_message()
 
-sPAPR data structures including the hash page table are big-endian
-regardless of current CPU endian mode, so use the big-endian LD/ST
-API to access the hash PTEs.
-
+[npiggin: split from pool qtest]
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-ID: <20241220213103.6314-6-philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tests/qtest/pnv-xive2-flush-sync.c |  6 +++---
+ tests/qtest/pnv-xive2-nvpg_bar.c   |  7 +++----
+ tests/qtest/pnv-xive2-test.c       | 22 ++++++++++++----------
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 3568a97045..0acf3c53dc 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1425,7 +1425,11 @@ static void hpte_set_clean(SpaprMachineState *s, unsigned index)
-              ldq_be_p(hpte_get_ptr(s, index)) & ~HPTE64_V_HPTE_DIRTY);
- }
+diff --git a/tests/qtest/pnv-xive2-flush-sync.c b/tests/qtest/pnv-xive2-flush-sync.c
+index 3b32446adb..142826bad0 100644
+--- a/tests/qtest/pnv-xive2-flush-sync.c
++++ b/tests/qtest/pnv-xive2-flush-sync.c
+@@ -178,14 +178,14 @@ void test_flush_sync_inject(QTestState *qts)
+     int test_nr;
+     uint8_t byte;
  
--#define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
-+static void hpte_set_dirty(SpaprMachineState *s, unsigned index)
-+{
-+    stq_be_p(hpte_get_ptr(s, index),
-+             ldq_be_p(hpte_get_ptr(s, index)) | HPTE64_V_HPTE_DIRTY);
-+}
+-    printf("# ============================================================\n");
+-    printf("# Starting cache flush/queue sync injection tests...\n");
++    g_test_message("=========================================================");
++    g_test_message("Starting cache flush/queue sync injection tests...");
  
- /*
-  * Get the fd to access the kernel htab, re-opening it if necessary
-@@ -1636,7 +1640,7 @@ int spapr_reallocate_hpt(SpaprMachineState *spapr, int shift, Error **errp)
-         spapr->htab_shift = shift;
+     for (test_nr = 0; test_nr < sizeof(xive_inject_tests);
+          test_nr++) {
+         int op_type = xive_inject_tests[test_nr];
  
-         for (i = 0; i < size / HASH_PTE_SIZE_64; i++) {
--            DIRTY_HPTE(hpte_get_ptr(spapr, i));
-+            hpte_set_dirty(spapr, i);
-         }
-     }
-     /* We're setting up a hash table, so that means we're not radix */
+-        printf("# Running test %d\n", test_nr);
++        g_test_message("Running test %d", test_nr);
+ 
+         /* start with status byte set to 0 */
+         clr_sync(qts, src_pir, ic_topo_id, op_type);
+diff --git a/tests/qtest/pnv-xive2-nvpg_bar.c b/tests/qtest/pnv-xive2-nvpg_bar.c
+index 028512bddc..6ac8d36c82 100644
+--- a/tests/qtest/pnv-xive2-nvpg_bar.c
++++ b/tests/qtest/pnv-xive2-nvpg_bar.c
+@@ -4,8 +4,7 @@
+  *
+  * Copyright (c) 2024, IBM Corporation.
+  *
+- * This work is licensed under the terms of the GNU GPL, version 2 or
+- * later. See the COPYING file in the top-level directory.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #include "qemu/osdep.h"
+ #include "libqtest.h"
+@@ -78,8 +77,8 @@ void test_nvpg_bar(QTestState *qts)
+     uint32_t count, delta;
+     uint8_t i;
+ 
+-    printf("# ============================================================\n");
+-    printf("# Testing NVPG BAR operations\n");
++    g_test_message("=========================================================");
++    g_test_message("Testing NVPG BAR operations");
+ 
+     set_nvg(qts, group_target, 0);
+     set_nvp(qts, nvp_target, 0x04);
+diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
+index a0e9f19313..7e7b1e79c0 100644
+--- a/tests/qtest/pnv-xive2-test.c
++++ b/tests/qtest/pnv-xive2-test.c
+@@ -4,6 +4,7 @@
+  *  - Test 'Pull Thread Context to Odd Thread Reporting Line'
+  *  - Test irq to hardware group
+  *  - Test irq to hardware group going through backlog
++ *  - Test irq to pool thread
+  *
+  * Copyright (c) 2024, IBM Corporation.
+  *
+@@ -220,8 +221,8 @@ static void test_hw_irq(QTestState *qts)
+     uint16_t reg16;
+     uint8_t pq, nsr, cppr;
+ 
+-    printf("# ============================================================\n");
+-    printf("# Testing irq %d to hardware thread %d\n", irq, target_pir);
++    g_test_message("=========================================================");
++    g_test_message("Testing irq %d to hardware thread %d", irq, target_pir);
+ 
+     /* irq config */
+     set_eas(qts, irq, end_index, irq_data);
+@@ -278,8 +279,9 @@ static void test_pull_thread_ctx_to_odd_thread_cl(QTestState *qts)
+     uint32_t cl_word;
+     uint32_t word2;
+ 
+-    printf("# ============================================================\n");
+-    printf("# Testing 'Pull Thread Context to Odd Thread Reporting Line'\n");
++    g_test_message("=========================================================");
++    g_test_message("Testing 'Pull Thread Context to Odd Thread Reporting " \
++                   "Line'");
+ 
+     /* clear odd cache line prior to pull operation */
+     memset(cl_pair, 0, sizeof(cl_pair));
+@@ -330,8 +332,8 @@ static void test_hw_group_irq(QTestState *qts)
+     uint16_t reg16;
+     uint8_t pq, nsr, cppr;
+ 
+-    printf("# ============================================================\n");
+-    printf("# Testing irq %d to hardware group of size 4\n", irq);
++    g_test_message("=========================================================");
++    g_test_message("Testing irq %d to hardware group of size 4", irq);
+ 
+     /* irq config */
+     set_eas(qts, irq, end_index, irq_data);
+@@ -395,10 +397,10 @@ static void test_hw_group_irq_backlog(QTestState *qts)
+     uint16_t reg16;
+     uint8_t pq, nsr, cppr, lsmfb, i;
+ 
+-    printf("# ============================================================\n");
+-    printf("# Testing irq %d to hardware group of size 4 going through " \
+-           "backlog\n",
+-           irq);
++    g_test_message("=========================================================");
++    g_test_message("Testing irq %d to hardware group of size 4 going " \
++                   "through backlog",
++                   irq);
+ 
+     /*
+      * set current priority of all threads in the group to something
 -- 
 2.47.1
 
