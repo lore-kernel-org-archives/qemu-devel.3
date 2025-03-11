@@ -4,94 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9571AC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 10:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91D4DC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 10:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trwvl-0003yM-Vo; Tue, 11 Mar 2025 06:33:50 -0400
+	id 1trx7f-0004Kw-Fl; Tue, 11 Mar 2025 06:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trwvj-0003x4-Su
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:33:49 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trwvd-0000wP-Kz
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:33:47 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3914bc3e01aso1030943f8f.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 03:33:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741689219; x=1742294019; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2QFtVKFksrTIIW7ncRbooBuWmo0GjKVw9rVLv+Zl9VY=;
- b=o0IRh85wXPwXp42V2eIstzsWMjyc5RKctlX6aXTRNXA32GBr3wrR48v1RofzVGakN/
- Ldw9x/nc7ma0lqyg4CcI5wH6NLt4Gc0QL2utjqwBdUnJJugMj3s5p8RUf3Um01ZYgN/t
- EMDW0aSg4HuvhJvLwCX3+aFMc7zt1cvv9Z74N+iwMET3tSwHan6mx8HRKfHALG7oUB/m
- +XEO3SeNxZvU8m3seWBQh324+N6UZ9hwrbdMIfMMDzuV6VDnQ3pFLCfyyALSV+K8iWtg
- kaZd6BzNv7AzoJLK5k1WT/7AVhCwp2aynda/x9tTT1JyrU/QfWzOjBIYok0oRO2M72IT
- 1NEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741689219; x=1742294019;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2QFtVKFksrTIIW7ncRbooBuWmo0GjKVw9rVLv+Zl9VY=;
- b=QPTrADguT4/5jNj0ZSHN0dbthWJUP9isxQVN9PcTnFG27efQX7yU82jsKV+dnQt6uS
- QnxKdEXFDh8RsfxJcst3aU1Vtm2qahIS8Igpdw8kTsIO7ZzsqMKYfEA8ENUxeeDSPZ60
- nlSz7OzgmeQBpcvY+nksDXeSogNbdlg2d2GwjdHpxDI4YHhloibnGWkXBeebzcx05Zsy
- fsSUb7pgY4GQrq05Iy5LhfXrXkuvHEMyc4snSgbDeT4YAUqjSUGI6aYla9urQNG0Lnn7
- vVhA6T7JxjRrTXgTq55tyAn0+ckVXHSAuYN0zlfSJoTGXhHBLKtNA95on2Gc08Dom6cd
- NN1w==
-X-Gm-Message-State: AOJu0YyoI1t0SQT68gEviRQb9IizOt0MsWGifWKsHqtda7ZDzMNYCd/i
- nap6BSIw54/KT5bJ7zitJ1l9ZzSnyU9byfJEQob8SCba9ugK0E5HwU+QwFYV6P+miA3cYUGs+uR
- iIR0=
-X-Gm-Gg: ASbGncuFzJs9P4Wtb1G4SB45zQV0mRaYvrbA0bf1wDrfmS6CWdjXNmKLnQDLUhJThnt
- 0YUFgFnxOywZgKdDP22Me9z3+XNImmG6QlzhEHNoZYhNM3KRdRu5i7j048m/Fqg0B7l73ZSwpvi
- WgArwjpjwetjSEHoW/FKg40YcOuHKxCN1NtyiNyvhROGi0A9SFQQ72baoW/6sLZn29ZbavYRlFU
- rkz9JoYdNpbbHV7WPLIUDCFRmYzocs8Ls9VLCU4iUnJHZmXg9OnUWTiR3N9GgRtTFURVJ/rYyrQ
- FhCwdtsdctYfXvQ/eYVJt3E/K04rGtttR+syAAYdO5KIL57lRuhuUMMYgFDEnxFpgnzjc6ZAHO2
- fLw+4L4FDTCZO
-X-Google-Smtp-Source: AGHT+IGlJpmdAOdxvpIbYtu9RKe8uiKUc0CzNCRKFtZKVm8z6ag72Sb69Sf/uVgQF1yu3AieIp23KA==
-X-Received: by 2002:a05:6000:1845:b0:391:2dea:c984 with SMTP id
- ffacd0b85a97d-39132d063f2mr12953094f8f.11.1741689218851; 
- Tue, 11 Mar 2025 03:33:38 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1031e3sm17454870f8f.82.2025.03.11.03.33.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 03:33:38 -0700 (PDT)
-Message-ID: <6f4a3582-f3e2-4f0c-8ab6-eeddd1064793@linaro.org>
-Date: Tue, 11 Mar 2025 11:33:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/7] hw/char/pl011: Implement TX (async) FIFO to avoid
- blocking the main loop
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- qemu-arm@nongnu.org
-References: <20250310012825.79614-1-philmd@linaro.org>
- <CAFEAcA_fRWgntwbiFiDJqAkthR8vBzrkLOLkp5GeHD9O8xTMCA@mail.gmail.com>
- <CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+ (Exim 4.90_1)
+ (envelope-from <a3600c8073c6ce2f30f31d5a19af9c05ba4b410e@kylie.crudebyte.com>)
+ id 1trx7b-0004IK-M9
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:46:03 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <a3600c8073c6ce2f30f31d5a19af9c05ba4b410e@kylie.crudebyte.com>)
+ id 1trx7Y-0003QP-7P
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:46:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Message-Id:Cc:To:Subject:Date:From:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=UW9gcyDohic6XV/edRMWoWS8AJtJ0Ll70j1A2qjCYj4=; b=U4Voa
+ X8eSbyuq9SAljCZtFLso4jCkFsvtcWfB4o6w40uQsg4hTQGtoUDymIv/Y22dsjtNqEqrLpeaKXrhT
+ SRs4um0D3CiH7QP5h2fzWwsEhfIbIV+S5yKfokn+yt54HzBOzrA2MtDYSwGgxS435E4rfjuFTncfE
+ lABuam57kj+2AqfXo8dm1/hJV4ubYYe34p30ctlywMZvpxsYU8dQ6xHOHhdHmOiR3JiVIjOddfCx7
+ NTHTr6noq1pFcLev7eOKB+DU937Go3ylC+rjAGEwUlo4oDN/fOPuRNYxXHEbydcmJ21r0c1RtOh8W
+ T/l2elzJ291ypcIIluISNBG468oi55gcx2AMCNeFpIYhRqvlfy/ICAAw4yCv8XtfB+5kONXaOkq2l
+ 5PSmKqq0uhoeJ3HgGq3w+Cu3RstbiMvHpENqeuG0bvcLS/D2lpK/QefVM4dt3/3LCk9dxng+in11J
+ Q7SJuGu+heMMLMKRFlm8VITXK3Us4/BUKVrOlb/5LNCL6cF1vn1BTIb3BKMKiwZ3byS27T4j3oc4d
+ MZ2UMzLFNRx4hRRwlhBkO/3pd9ZDga5nSH5wzqtyZGmyyoEeLrx4JX9O+WP6tV9iFxTZ6NjWzA24f
+ AoHOVYFjqr1H837ApGrE5je0GMuotT3heeWKeFvNDfWj3KbKsZQaujWiWdvZU8=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Tue, 11 Mar 2025 11:42:21 +0100
+Subject: [PATCH] tests/9p: add 'Tsetattr' request to test client
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>
+Message-Id: <E1trx7R-002JEJ-0l@kylie.crudebyte.com>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=a3600c8073c6ce2f30f31d5a19af9c05ba4b410e@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,106 +66,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Add and implement functions to 9pfs test client for sending a 9p2000.L
+'Tsetattr' request and receiving its 'Rsetattr' response counterpart.
 
-On 10/3/25 18:28, Peter Maydell wrote:
-> On Mon, 10 Mar 2025 at 14:42, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Mon, 10 Mar 2025 at 01:28, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>>
->>> Hi,
->>>
->>> This series add support for (async) FIFO on the transmit path
->>> of the PL011 UART.
->>
->> This hasn't made the last pre-softfreeze arm pullreq, but
->> I think we can reasonably call "don't do blocking I/O"
->> enough of a bugfix for it to be ok to go in early in the
->> freeze cycle for rc0.
->>
->> I've applied it to target-arm.next.
-> 
-> ...but it still fails 'make check-functional', though in a
-> less easy-to-reproduce way than it did. The problem turns out
-> to be that when the guest kernel is doing its earlycon
-> output (which is by polling, not interrupt driven) the output
-> can be corrupted, which makes the aarch64/test_arm_virt test
-> fail to find the "Kernel command line:" output it is looking for.
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ tests/qtest/libqos/virtio-9p-client.c | 49 +++++++++++++++++++++++++++
+ tests/qtest/libqos/virtio-9p-client.h | 34 +++++++++++++++++++
+ tests/qtest/virtio-9p-test.c          |  1 +
+ 3 files changed, 84 insertions(+)
 
-Thanks for keeping investigating...
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index 98b77db51d..6ab4501c6e 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -557,6 +557,55 @@ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr)
+     v9fs_req_free(req);
+ }
+ 
++/*
++ * size[4] Tsetattr tag[2] fid[4] valid[4] mode[4] uid[4] gid[4] size[8]
++ *                  atime_sec[8] atime_nsec[8] mtime_sec[8] mtime_nsec[8]
++ */
++TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt)
++{
++    P9Req *req;
++    uint32_t err;
++
++    g_assert(opt.client);
++
++    req = v9fs_req_init(
++        opt.client, 4/*fid*/ + 4/*valid*/ + 4/*mode*/ + 4/*uid*/ + 4/*gid*/ +
++        8/*size*/ + 8/*atime_sec*/ + 8/*atime_nsec*/ + 8/*mtime_sec*/ +
++        8/*mtime_nsec*/, P9_TSETATTR, opt.tag
++    );
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_uint32_write(req, (uint32_t) opt.attr.valid);
++    v9fs_uint32_write(req, opt.attr.mode);
++    v9fs_uint32_write(req, opt.attr.uid);
++    v9fs_uint32_write(req, opt.attr.gid);
++    v9fs_uint64_write(req, opt.attr.size);
++    v9fs_uint64_write(req, opt.attr.atime_sec);
++    v9fs_uint64_write(req, opt.attr.atime_nsec);
++    v9fs_uint64_write(req, opt.attr.mtime_sec);
++    v9fs_uint64_write(req, opt.attr.mtime_nsec);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_rlerror(req, &err);
++            g_assert_cmpint(err, ==, opt.expectErr);
++        } else {
++            v9fs_rsetattr(req);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TSetAttrRes) { .req = req };
++}
++
++/* size[4] Rsetattr tag[2] */
++void v9fs_rsetattr(P9Req *req)
++{
++    v9fs_req_recv(req, P9_RSETATTR);
++    v9fs_req_free(req);
++}
++
+ /* size[4] Treaddir tag[2] fid[4] offset[8] count[4] */
+ TReadDirRes v9fs_treaddir(TReadDirOpt opt)
+ {
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index 78228eb97d..e3221a3104 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -65,6 +65,16 @@ typedef struct v9fs_attr {
+ #define P9_GETATTR_BASIC    0x000007ffULL /* Mask for fields up to BLOCKS */
+ #define P9_GETATTR_ALL      0x00003fffULL /* Mask for ALL fields */
+ 
++#define P9_SETATTR_MODE         0x00000001UL
++#define P9_SETATTR_UID          0x00000002UL
++#define P9_SETATTR_GID          0x00000004UL
++#define P9_SETATTR_SIZE         0x00000008UL
++#define P9_SETATTR_ATIME        0x00000010UL
++#define P9_SETATTR_MTIME        0x00000020UL
++#define P9_SETATTR_CTIME        0x00000040UL
++#define P9_SETATTR_ATIME_SET    0x00000080UL
++#define P9_SETATTR_MTIME_SET    0x00000100UL
++
+ struct V9fsDirent {
+     v9fs_qid qid;
+     uint64_t offset;
+@@ -182,6 +192,28 @@ typedef struct TGetAttrRes {
+     P9Req *req;
+ } TGetAttrRes;
+ 
++/* options for 'Tsetattr' 9p request */
++typedef struct TSetAttrOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID of file/dir whose attributes shall be modified (required) */
++    uint32_t fid;
++    /* new attribute values to be set by 9p server */
++    v9fs_attr attr;
++    /* only send Tsetattr request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an Rlerror response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TSetAttrOpt;
++
++/* result of 'Tsetattr' 9p request */
++typedef struct TSetAttrRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++} TSetAttrRes;
++
+ /* options for 'Treaddir' 9p request */
+ typedef struct TReadDirOpt {
+     /* 9P client being used (mandatory) */
+@@ -470,6 +502,8 @@ TWalkRes v9fs_twalk(TWalkOpt opt);
+ void v9fs_rwalk(P9Req *req, uint16_t *nwqid, v9fs_qid **wqid);
+ TGetAttrRes v9fs_tgetattr(TGetAttrOpt);
+ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr);
++TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt);
++void v9fs_rsetattr(P9Req *req);
+ TReadDirRes v9fs_treaddir(TReadDirOpt);
+ void v9fs_rreaddir(P9Req *req, uint32_t *count, uint32_t *nentries,
+                    struct V9fsDirent **entries);
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index ab3a12c816..f515a9bb15 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -20,6 +20,7 @@
+ #define tversion(...) v9fs_tversion((TVersionOpt) __VA_ARGS__)
+ #define tattach(...) v9fs_tattach((TAttachOpt) __VA_ARGS__)
+ #define tgetattr(...) v9fs_tgetattr((TGetAttrOpt) __VA_ARGS__)
++#define tsetattr(...) v9fs_tsetattr((TSetAttrOpt) __VA_ARGS__)
+ #define treaddir(...) v9fs_treaddir((TReadDirOpt) __VA_ARGS__)
+ #define tlopen(...) v9fs_tlopen((TLOpenOpt) __VA_ARGS__)
+ #define twrite(...) v9fs_twrite((TWriteOpt) __VA_ARGS__)
+-- 
+2.39.5
 
-> This seems to be because the pl011 code and the chardev
-> code disagree about how "couldn't write anything" is
-> reported. pl011 here is looking for "0 means wrote nothing",
-> but the chardev code reports it as "-1 and errno is EAGAIN".
-> 
-> I think the chardev code is actually what we need to fix here,
-> because it makes basically no effort to guarantee that the
-> errno from the underlying write is still in 'errno' by the
-> time qemu_chr_fe_write() returns. In particular it may
-> call qemu_chr_write_log() or replay_char_write_event_save(),
-> both of which will happily trash errno if something fails
-> during their execution.
-
-IIUC when retrying qemu_chr_write_buffer(s, buf, len, ofs) could
-write less than @len (but still writing few bytes, that information
-is stored in @offset) and return -errno, discarding @offset partial
-write len.
-
-> So my long-term preference for fixing this is:
->   * fix up any callsites that can't handle a 0 return for
->     "wrote no bytes"
->   * make (and document) qemu_chr_fe_write()'s return value be
->      - 0 == wrote no bytes
->      - >0 == wrote some bytes
->      - <0 == a negative-errno indicating a definite error
-
-This would be an improvement, but not fixing ignored partial
-writes mentioned, is that right?
-
-> I had planned in the meantime that we could deal with
-> this by squashing in this change to the last patch in
-> this series:
-> 
-> --- a/hw/char/pl011.c
-> +++ b/hw/char/pl011.c
-> @@ -275,6 +275,9 @@ static gboolean pl011_xmit_cb(void *do_not_use,
-> GIOCondition cond, void *opaque)
->       /* Transmit as much data as we can. */
->       bytes_consumed = qemu_chr_fe_write(&s->chr, buf, count);
->       trace_pl011_fifo_tx_xmit_consumed(bytes_consumed);
-> +    if (bytes_consumed < 0 && errno == EAGAIN) {
-> +        bytes_consumed = 0;
-> +    }
->       if (bytes_consumed < 0) {
->           /* Error in back-end: drain the fifo. */
->           printf("oops, bytes_consumed = %d errno = %d\n",
-> bytes_consumed, errno);
-> 
-> 
-> which makes the code handle both "returns 0" and "returns -1
-> with errno=EAGAIN" as "try again later".
-> 
-> But even with that I still see the check-functional
-> test failing on a clang sanitizer build, though without
-> any clear reason why. It's intermittent; running the
-> test like this:
-> 
-> (cd build/arm-clang/ ; PYTHONPATH=../../python:../../tests/functional
-> QEMU_TEST_QEMU_BINARY=./qemu-system-aarch64 ./pyvenv/bin/python3
-> ../../tests/functional/test_arm_virt.py)
-> 
-> I got one pass once but mostly it hangs after printing
-> some of the early console output. A debug build seems
-> more reliable, oddly.
-> 
-> I'll try to continue investigating this this week, but
-> in the meantime I'm going to have to drop this series
-> from target-arm.next again, I'm afraid :-(
-
-No worry, I was prepared for another issue :)
-
-Regards,
-
-Phil.
 
