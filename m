@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87CF9C35FF1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E902C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:01:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzDC-0003x7-NF; Tue, 11 Mar 2025 08:59:58 -0400
+	id 1trzC1-0000wk-7x; Tue, 11 Mar 2025 08:58:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzCg-00021s-SG; Tue, 11 Mar 2025 08:59:28 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1trzBs-0000vG-Ql; Tue, 11 Mar 2025 08:58:38 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzCc-0007x4-U9; Tue, 11 Mar 2025 08:59:25 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2ff64550991so8237887a91.0; 
- Tue, 11 Mar 2025 05:59:22 -0700 (PDT)
+ id 1trzBo-0007oR-DD; Tue, 11 Mar 2025 08:58:35 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2feae794508so8081948a91.0; 
+ Tue, 11 Mar 2025 05:58:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741697961; x=1742302761; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741697910; x=1742302710; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T1uWfwdoT5PuKunpdf5GL7Jo4UcITHEbOpLA5+y74zY=;
- b=S8xLiHhR/AxOxTKHERJwZy0a9kJvrtf+/pptQh5CURjBXXIbK4/u75exJ3hGRfmueg
- G4Pam2AbGMUkdjJ2wFx08v+Q/Tp3QD1w2h3DKdRMs5oNHFAghJOzHvic0mm4C61GypEg
- /bPk5Zijbzo7q5ibkJw0MFHtl3JjX+kQHHM1XNakQDscVXRztbZFdaaK9c82p7oz+L7d
- qr6jHROTwR/i0w9Ax+zkeXWfpE5/mjNuSWt6KxGXUa/0n8NoR1jRAT3kcEQCFR2RW21v
- AukZrFVqxAqZZcXO8RpY1IIzFdGW3FaD8apzKIbor6GEMFkon/nLv4ABPCzNcF+5pv0q
- NceA==
+ bh=u7wjPkG/ntlVqsAo3bR2GeOkCsbyPnLbq91ceDRWcvk=;
+ b=SIii28Y+MGsgzRfdpDvapK2psDdhlbbzpw1IPdEUbpA6Cz8r8pTTrB19guznzUNH23
+ DvNPUM0JaSQ00mNyngm58NCsysj7CIOexRVwSL7oxs2E3GIba2od2R8nd4pqe8Efoq1u
+ wFykPqxSznAl+cVdB2Ar8/hYrtLf5D17Mv3zdl9be7GOF3/Kbjk7/fzc5fW4u5YklP6R
+ +ALVlMgZEBlF+iZMgxUKzQ7w+I6Tr5VSf9nLhqWQRlbFCX8kqKeqm9/z/yFaOgizkDDn
+ 6u5dZRfTJVdwDmlAgrrYgkDFG5QNCrVor3zbnQgEyAq34Tm0qIxMmQvmXFsWAmNPPbOB
+ EmUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741697961; x=1742302761;
+ d=1e100.net; s=20230601; t=1741697910; x=1742302710;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T1uWfwdoT5PuKunpdf5GL7Jo4UcITHEbOpLA5+y74zY=;
- b=bG4z4hB/lyiC5gZzs8hNYnMNHlFbZfa9pkxKRG1VxpvDsjN9NpXChPzB2QCV8bTWcU
- zgk8S6VC1OhU02quN6I7Xhi3eina7CSJ3hImKxrQlAx5dM9H2WxHndX6f2TgJzhj+UhC
- 1oJUeJJwNbCAJD8Sxx7R7rgz6XsSrhasBhi5xTivnfAHMMgkaYRyPc0T73qilCQRU+vl
- HIYGmhFzCfCosWCQ8DfGsaCMVtp/zSyGc/f5+czcrWH1rqjp8JZun0SqGgT//u4CYokA
- rNsCprWCt74W5lL9u7AqRy3TWdkwYwqNDoPjnsG499lsB8E6UZMUlQpB2n3aq9l/DE+u
- K/Hw==
+ bh=u7wjPkG/ntlVqsAo3bR2GeOkCsbyPnLbq91ceDRWcvk=;
+ b=Fi4LQShifCOD3jXogMDZ50JaPPEQGPhI8kxbxLS5Vg5paYhJGlMKClr9qV6nDC3sDz
+ Z03u3nVD171K3sSF6+ewT8MX9eptSQGX1qm4Q1LofoOacIjOIxU5beXJqVS3bUsDCLLe
+ 2eu/2ZJzP+Qt1KaJA0Oi4ml4Ggh7e92gmBqWypwTBBhWG0MIixBWUEF9RChV9AOxwBcp
+ fpyFWT3CVtGCSJfTfDUNZHL/DsSU2bcsD53lH/ip0xbXnDl1hCNai9H9vrDMnyprRyie
+ 1fAnzV5jJ8/gHR1hqytOVPuNFqyyNldFVaoL6nDZisac1ZdnT2Xzv7SfK5L3DKHmgPuP
+ DJAg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlg5UHPVGVLj+KDQ0MtwX5Cb5ZmWbDoceib1Iiyame9mVaHihT+LP0yWWU5ZnaEOIVWbHbhmrq6A==@nongnu.org
-X-Gm-Message-State: AOJu0YwNm2YzJRUfNLo9JSlg9BZOpbOTOhKC5A0+YMiY7D0O3cjdh0U5
- dQfqXCW1k1iBruswKm26CC199DGC5VLvqOMafkdO8A5wtnb8s2FppACRyw==
-X-Gm-Gg: ASbGncuiI6JnxCntQeWIUQsLelU3vyNSxeadKEzB20G8WiLmiODA9KJfSAeCBAKzTgn
- a/mGGAran4iz4mBQd2Fcmvh86oD6xRjKV+A/XJXlFbBNfTM33yVAUIBjCrV0m7fhfdzOiQvFHhK
- qBaLJ7y8pt8sepbLLpg1yykElRJI+OFEKh98E7K6Fbk1jwuMb4Pt/yRJthCwvtIVg/9ZfLtFgsj
- xIC+qVBbF3U1ye12ve2vf3wk1LpIRhMsNtj5xWLA7w+02dCOgyY05/4hkIqosnIRyWWsSQL5hLE
- M+62i8QSnTbBfu0bpWR/qshi+cjCC0exVHKoo8tj6v4JuEHBU/w=
-X-Google-Smtp-Source: AGHT+IHhK3Xq0p0Gsazf9hC06zEq/EpkSQuUyC5j8Ci91L0KHHOssdLEtZOlVMMajo7ZW5PBpz4NGw==
-X-Received: by 2002:a17:90b:3812:b0:2ef:114d:7bf8 with SMTP id
- 98e67ed59e1d1-2ff7ce7277cmr24565728a91.6.1741697960456; 
- Tue, 11 Mar 2025 05:59:20 -0700 (PDT)
+ AJvYcCUYS0NIBBX134ptewyiUy8umBUjCRLpMm8P18Le+mgi0B8m6hTlpYOjTevFNwgZxME6zOdytb568Q==@nongnu.org
+X-Gm-Message-State: AOJu0YzL5GbZtw0ZzuTCs/TpCiG3ol4aLiu/x/hZtEbX1vgIKYbcqchm
+ om2QqAO+/ph+0msj3VTqoJ9MuHjG470MKDAIp5plmYZbq1qz0z961f9Y0w==
+X-Gm-Gg: ASbGncsCJrj7YsReHKPJazPSTfwSj251Om8+OpjIjwVmV3jmnoqQK7fqmdWGNktKIvu
+ 058YGpzOIAuQ964NOMqBTNOxG/PzlGaq3CrSZxYfcniiInZEm4OHK3t/FBbq6F9zw318ESnlmvV
+ g6cxqYETZypCTAJqZuf1CjIuF6g64GeWPkr0Ql+xAFD12j5tw03IXlBUiW4M/dQpYNcA0XCjeqR
+ V1Sj7a0IFZwNWUYxcJ7dtxQtSFPP/GS/EWz7f67nUJ806Bh3YfuoevoQNC+Qh3RsJKVwmUH7Vc7
+ Jvp7N/alQ+udBSqRAqcYU5J04m1YcQ6l2r5BYc9d6LW3NDU5XWI=
+X-Google-Smtp-Source: AGHT+IGIqYa8qeyLfWBVgGoHt+p6wAsY1KCHmJ7RHjz24qW8Etm3dVWkWNWeWdinz2VYptWdxW8HjQ==
+X-Received: by 2002:a17:90b:2d82:b0:2ff:5357:1c7e with SMTP id
+ 98e67ed59e1d1-2ff7ce89db6mr26355537a91.20.1741697908460; 
+ Tue, 11 Mar 2025 05:58:28 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.18
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.58.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 05:59:20 -0700 (PDT)
+ Tue, 11 Mar 2025 05:58:28 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	qemu-ppc@nongnu.org
-Subject: [PULL 16/72] target/ppc: Add Power9/10 power management SPRs
-Date: Tue, 11 Mar 2025 22:57:10 +1000
-Message-ID: <20250311125815.903177-17-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 01/72] ppc/ppc405: Remove tests
+Date: Tue, 11 Mar 2025 22:56:55 +1000
+Message-ID: <20250311125815.903177-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,185 +100,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux power management code accesses these registers for pstate
-management. Wire up a very simple implementation.
+From: Cédric Le Goater <clg@redhat.com>
 
+Since we are about to remove all support for PPC 405, start by
+removing the tests referring to the ref405ep machine.
+
+Link: https://lore.kernel.org/qemu-devel/20250110141800.1587589-2-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Message-ID: <20250204080649.836155-2-clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
-After OCC fixes in QEMU pnv model and skiboot (since they have suffered
-some bitrot), Linux will start performing PM SPR accesses. This is a
-very simple implementation that makes it a bit happier.
+ tests/functional/meson.build     |  1 -
+ tests/functional/test_ppc_405.py | 37 --------------------------------
+ tests/qtest/m48t59-test.c        |  5 -----
+ tests/qtest/meson.build          |  1 -
+ 4 files changed, 44 deletions(-)
+ delete mode 100755 tests/functional/test_ppc_405.py
 
-Thanks,
-Nick
----
- target/ppc/cpu.h         |  2 ++
- target/ppc/cpu_init.c    | 11 +++++++++
- target/ppc/helper.h      |  2 ++
- target/ppc/misc_helper.c | 53 ++++++++++++++++++++++++++++++++++++++++
- target/ppc/spr_common.h  |  2 ++
- target/ppc/translate.c   | 16 ++++++++++++
- 6 files changed, 86 insertions(+)
-
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0b8b4c0517..682583d1d1 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -2091,6 +2091,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_VTB               (0x351)
- #define SPR_LDBAR             (0x352)
- #define SPR_MMCRC             (0x353)
-+#define SPR_PMSR              (0x355)
- #define SPR_PSSCR             (0x357)
- #define SPR_440_INV0          (0x370)
- #define SPR_440_INV1          (0x371)
-@@ -2098,6 +2099,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_440_INV2          (0x372)
- #define SPR_TRIG2             (0x372)
- #define SPR_440_INV3          (0x373)
-+#define SPR_PMCR              (0x374)
- #define SPR_440_ITV0          (0x374)
- #define SPR_440_ITV1          (0x375)
- #define SPR_440_ITV2          (0x376)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 1780cabfc6..54035c7bbb 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6451,6 +6451,17 @@ static void register_power9_common_sprs(CPUPPCState *env)
-                         spr_read_generic, spr_write_generic,
-                         KVM_REG_PPC_PSSCR, 0);
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index e78560a901..74f8414a0c 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -207,7 +207,6 @@ tests_ppc_system_quick = [
+ ]
  
-+    spr_register_hv(env, SPR_PMSR, "PMSR",
-+                    SPR_NOACCESS, SPR_NOACCESS,
-+                    SPR_NOACCESS, SPR_NOACCESS,
-+                    &spr_read_pmsr, SPR_NOACCESS,
-+                    0);
-+    spr_register_hv(env, SPR_PMCR, "PMCR",
-+                    SPR_NOACCESS, SPR_NOACCESS,
-+                    SPR_NOACCESS, SPR_NOACCESS,
-+                    &spr_read_generic, &spr_write_pmcr,
-+                    PPC_BIT(63)); /* Version 1 (POWER9/10) */
-+
- }
- 
- static void init_proc_POWER9(CPUPPCState *env)
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 5a77e761bd..11b914e640 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -733,6 +733,8 @@ DEF_HELPER_2(store_tfmr, void, env, tl)
- DEF_HELPER_FLAGS_2(store_sprc, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_1(load_sprd, TCG_CALL_NO_RWG_SE, tl, env)
- DEF_HELPER_FLAGS_2(store_sprd, TCG_CALL_NO_RWG, void, env, tl)
-+DEF_HELPER_FLAGS_1(load_pmsr, TCG_CALL_NO_RWG_SE, tl, env)
-+DEF_HELPER_FLAGS_2(store_pmcr, TCG_CALL_NO_RWG, void, env, tl)
- #endif
- DEF_HELPER_2(store_sdr1, void, env, tl)
- DEF_HELPER_2(store_pidr, void, env, tl)
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index e379da6010..190e9091fc 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -377,6 +377,59 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
-         break;
+ tests_ppc_system_thorough = [
+-  'ppc_405',
+   'ppc_40p',
+   'ppc_amiga',
+   'ppc_bamboo',
+diff --git a/tests/functional/test_ppc_405.py b/tests/functional/test_ppc_405.py
+deleted file mode 100755
+index 9851c03ee9..0000000000
+--- a/tests/functional/test_ppc_405.py
++++ /dev/null
+@@ -1,37 +0,0 @@
+-#!/usr/bin/env python3
+-#
+-# Test that the U-Boot firmware boots on ppc 405 machines and check the console
+-#
+-# Copyright (c) 2021 Red Hat, Inc.
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-from qemu_test import QemuSystemTest, Asset
+-from qemu_test import wait_for_console_pattern
+-from qemu_test import exec_command_and_wait_for_pattern
+-
+-class Ppc405Machine(QemuSystemTest):
+-
+-    timeout = 90
+-
+-    ASSET_UBOOT = Asset(
+-        ('https://gitlab.com/huth/u-boot/-/raw/taihu-2021-10-09/'
+-         'u-boot-taihu.bin'),
+-        'a076bb6cdeaafa406330e51e074b66d8878d9036d67d4caa0137be03ee4c112c')
+-
+-    def do_test_ppc405(self):
+-        file_path = self.ASSET_UBOOT.fetch()
+-        self.vm.set_console(console_index=1)
+-        self.vm.add_args('-bios', file_path)
+-        self.vm.launch()
+-        wait_for_console_pattern(self, 'AMCC PPC405EP Evaluation Board')
+-        exec_command_and_wait_for_pattern(self, 'reset', 'AMCC PowerPC 405EP')
+-
+-    def test_ppc_ref405ep(self):
+-        self.require_accelerator("tcg")
+-        self.set_machine('ref405ep')
+-        self.do_test_ppc405()
+-
+-if __name__ == '__main__':
+-    QemuSystemTest.main()
+diff --git a/tests/qtest/m48t59-test.c b/tests/qtest/m48t59-test.c
+index 605797ab78..1e39a0e8f0 100644
+--- a/tests/qtest/m48t59-test.c
++++ b/tests/qtest/m48t59-test.c
+@@ -247,11 +247,6 @@ static void base_setup(void)
+         base_year = 1968;
+         base_machine = "SS-5";
+         use_mmio = true;
+-    } else if (g_str_equal(arch, "ppc") || g_str_equal(arch, "ppc64")) {
+-        base = 0xF0000000;
+-        base_year = 1968;
+-        base_machine = "ref405ep";
+-        use_mmio = true;
+     } else {
+         g_assert_not_reached();
      }
- }
-+
-+target_ulong helper_load_pmsr(CPUPPCState *env)
-+{
-+    target_ulong lowerps = extract64(env->spr[SPR_PMCR], PPC_BIT_NR(15), 8);
-+    target_ulong val = 0;
-+
-+    val |= PPC_BIT(63); /* verion 0x1 (POWER9/10) */
-+    /* Pmin = 0 */
-+    /* XXX: POWER9 should be 3 */
-+    val |= 4ULL << PPC_BIT_NR(31); /* Pmax */
-+    val |= lowerps << PPC_BIT_NR(15); /* Local actual Pstate */
-+    val |= lowerps << PPC_BIT_NR(7); /* Global actual Pstate */
-+
-+    return val;
-+}
-+
-+static void ppc_set_pmcr(PowerPCCPU *cpu, target_ulong val)
-+{
-+    cpu->env.spr[SPR_PMCR] = val;
-+}
-+
-+void helper_store_pmcr(CPUPPCState *env, target_ulong val)
-+{
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    CPUState *cs = env_cpu(env);
-+    CPUState *ccs;
-+
-+    /* Leave version field unchanged (0x1) */
-+    val &= ~PPC_BITMASK(60, 63);
-+    val |= PPC_BIT(63);
-+
-+    val &= ~PPC_BITMASK(0, 7); /* UpperPS ignored */
-+    if (val & PPC_BITMASK(16, 59)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "Non-zero PMCR reserved bits "
-+                      TARGET_FMT_lx"\n", val);
-+        val &= ~PPC_BITMASK(16, 59);
-+    }
-+
-+    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-+        ppc_set_pmcr(cpu, val);
-+        return;
-+    }
-+
-+    /* Does iothread need to be locked for walking CPU list? */
-+    bql_lock();
-+    THREAD_SIBLING_FOREACH(cs, ccs) {
-+        PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-+        ppc_set_pmcr(ccpu, val);
-+    }
-+    bql_unlock();
-+}
-+
- #endif /* defined(TARGET_PPC64) */
- 
- void helper_store_pidr(CPUPPCState *env, target_ulong val)
-diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
-index 01aff449bc..8e3117b463 100644
---- a/target/ppc/spr_common.h
-+++ b/target/ppc/spr_common.h
-@@ -204,6 +204,8 @@ void spr_write_hmer(DisasContext *ctx, int sprn, int gprn);
- void spr_read_tfmr(DisasContext *ctx, int gprn, int sprn);
- void spr_write_tfmr(DisasContext *ctx, int sprn, int gprn);
- void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn);
-+void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn);
-+void spr_write_pmcr(DisasContext *ctx, int sprn, int gprn);
- void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn);
- void spr_read_ppr32(DisasContext *ctx, int sprn, int gprn);
- void spr_write_ppr32(DisasContext *ctx, int sprn, int gprn);
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 80638ab535..b0cc8bf283 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -1326,6 +1326,22 @@ void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn)
-     translator_io_start(&ctx->base);
-     gen_helper_store_lpcr(tcg_env, cpu_gpr[gprn]);
- }
-+
-+void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn)
-+{
-+    translator_io_start(&ctx->base);
-+    gen_helper_load_pmsr(cpu_gpr[gprn], tcg_env);
-+}
-+
-+void spr_write_pmcr(DisasContext *ctx, int sprn, int gprn)
-+{
-+    if (!gen_serialize_core_lpar(ctx)) {
-+        return;
-+    }
-+    translator_io_start(&ctx->base);
-+    gen_helper_store_pmcr(tcg_env, cpu_gpr[gprn]);
-+}
-+
- #endif /* !defined(CONFIG_USER_ONLY) */
- 
- void spr_read_tar(DisasContext *ctx, int gprn, int sprn)
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 8a6243382a..b23fe67db7 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -171,7 +171,6 @@ qtests_mips64el = qtests_mips
+ qtests_ppc = \
+   qtests_filter + \
+   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
+-  (config_all_devices.has_key('CONFIG_M48T59') ? ['m48t59-test'] : []) +                     \
+   (config_all_accel.has_key('CONFIG_TCG') ? ['prom-env-test'] : []) +                              \
+   (config_all_accel.has_key('CONFIG_TCG') ? ['boot-serial-test'] : []) +                           \
+   ['boot-order-test']
 -- 
 2.47.1
 
