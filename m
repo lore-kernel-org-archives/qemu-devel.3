@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE6BC35FF1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042DAC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxs4-0005Q1-FR; Tue, 11 Mar 2025 07:34:05 -0400
+	id 1trxrE-0003d5-GK; Tue, 11 Mar 2025 07:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqJ-0003A9-4K
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:15 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqW-0003Cy-7L
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq2-0006Us-Mm
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:14 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq9-0006Wl-GN
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692715;
+ s=mimecast20190719; t=1741692720;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7iAMpLH0S4tkB/CSuTGIm3EY9NZe+vlRa5wgNKTRb08=;
- b=VKW7n7L2VOWv5uW19jm54Y3IPgaxJIw3gr09GgXv8bZVzjV4KCafOivEqKO3gqnqyqZ2OB
- Iuf07LjTkyTkVm3SYHkAV8q+RzXtk18735gDmW075k7CVHo4tNgb8P93CS/yTSeczkEJqG
- Axalj09kv07jK7n6rbWoB5lrZ3AiI4s=
+ bh=VI8Nx/JoaH5T/reNAEPb5jnrg9k/fQdamezD5Ij9+vI=;
+ b=Bmy61a2lNroqDbpm7TZb0bF78DRXgskGvwd4Zj6f4GLc90a5EB0pTnM7GPLggfso5ARAZn
+ HKyD/pDIlZGIrXznMdZYgOwmcN1ZZD01yTMnqGMI1Eh+Cv5NrIsgNjYD46IdkLWndG1n5Y
+ c/GD07x53b0PkjgpTHobuVJJvDP6iFQ=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-428-FqLXHrhANHapMKrqcrgvLw-1; Tue,
- 11 Mar 2025 07:31:54 -0400
-X-MC-Unique: FqLXHrhANHapMKrqcrgvLw-1
-X-Mimecast-MFC-AGG-ID: FqLXHrhANHapMKrqcrgvLw_1741692713
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-BI3LoIHjNiWD-r_lds3fOg-1; Tue,
+ 11 Mar 2025 07:31:59 -0400
+X-MC-Unique: BI3LoIHjNiWD-r_lds3fOg-1
+X-Mimecast-MFC-AGG-ID: BI3LoIHjNiWD-r_lds3fOg_1741692718
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF26919560B8
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ id 37CD819560B0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:58 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B67D30001A2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD9E118001E9
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:57 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 076AB21E6499; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
+ id 6FB3B21E60CD; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 19/61] docs/qapi-domain: add qapi:event directive
-Date: Tue, 11 Mar 2025 12:30:55 +0100
-Message-ID: <20250311113137.1277125-20-armbru@redhat.com>
+Subject: [PULL 46/61] docs/qapidoc: prepare to record entity being
+ transmogrified
+Date: Tue, 11 Mar 2025 12:31:22 +0100
+Message-ID: <20250311113137.1277125-47-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,81 +89,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Adds the .. qapi:event:: directive, object, and :qapi:event:`name`
-cross-referencing role.
+Prepare to keep a record of which entity we're working on documenting
+for the purposes of being able to change certain generative features
+conditionally and create stronger assertions.
 
-Adds the :memb type name: field list syntax for documenting event data
-members. As this syntax and phrasing will be shared with Structs and
-Unions as well, add the field list definition to a shared abstract
-class.
+If you find yourself asking: "Wait, but where does the current entity
+actually get recorded?!", you're right! That part comes with the
+visit_entity() implementation, which gets added later.
 
-As per usual, QAPI cross-referencing for types in the member field list
-will be added in a forthcoming commit.
+This patch is front-loaded for the sake of type checking in the
+forthcoming commits before visit_entity() is ready to be added.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-22-jsnow@redhat.com>
+Message-ID: <20250311034303.75779-50-jsnow@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ docs/sphinx/qapidoc.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 506ed92700..3ffb3eb72d 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -346,6 +346,27 @@ class QAPIAlternate(QAPIObject):
-     )
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 208d7ca144..47c2eeef87 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -78,9 +78,15 @@
  
+ class Transmogrifier:
+     def __init__(self) -> None:
++        self._curr_ent: Optional[QAPISchemaDefinition] = None
+         self._result = StringList()
+         self.indent = 0
  
-+class QAPIObjectWithMembers(QAPIObject):
-+    """Base class for Events/Structs/Unions"""
++    @property
++    def entity(self) -> QAPISchemaDefinition:
++        assert self._curr_ent is not None
++        return self._curr_ent
 +
-+    doc_field_types = QAPIObject.doc_field_types.copy()
-+    doc_field_types.extend(
-+        [
-+            # :member type name: descr
-+            TypedField(
-+                "member",
-+                label=_("Members"),
-+                names=("memb",),
-+                can_collapse=False,
-+            ),
-+        ]
-+    )
-+
-+
-+class QAPIEvent(QAPIObjectWithMembers):
-+    """Description of a QAPI Event."""
-+
-+
- class QAPIModule(QAPIDescription):
-     """
-     Directive to mark description of a new module.
-@@ -472,6 +493,7 @@ class QAPIDomain(Domain):
-     object_types: Dict[str, ObjType] = {
-         "module": ObjType(_("module"), "mod", "any"),
-         "command": ObjType(_("command"), "cmd", "any"),
-+        "event": ObjType(_("event"), "event", "any"),
-         "enum": ObjType(_("enum"), "enum", "type", "any"),
-         "alternate": ObjType(_("alternate"), "alt", "type", "any"),
-     }
-@@ -481,6 +503,7 @@ class QAPIDomain(Domain):
-     directives = {
-         "module": QAPIModule,
-         "command": QAPICommand,
-+        "event": QAPIEvent,
-         "enum": QAPIEnum,
-         "alternate": QAPIAlternate,
-     }
-@@ -491,6 +514,7 @@ class QAPIDomain(Domain):
-     roles = {
-         "mod": QAPIXRefRole(),
-         "cmd": QAPIXRefRole(),
-+        "event": QAPIXRefRole(),
-         "enum": QAPIXRefRole(),
-         "alt": QAPIXRefRole(),
-         # reference any data type (excludes modules, commands, events)
+     # General-purpose rST generation functions
+ 
+     def get_indent(self) -> str:
 -- 
 2.48.1
 
