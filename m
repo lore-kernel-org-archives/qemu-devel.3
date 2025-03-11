@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32DF4C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41A7C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts5ek-0007fs-Iy; Tue, 11 Mar 2025 15:52:51 -0400
+	id 1ts5e5-0006yq-8s; Tue, 11 Mar 2025 15:52:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5eO-0007YC-7d
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:52:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5e3-0006yC-0t
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:52:07 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5eM-0007b5-Eo
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:52:27 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso19735515e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:52:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5e0-0007VI-Fk
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:52:06 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-390f5f48eafso2913775f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:52:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741722744; x=1742327544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741722722; x=1742327522; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6pPHUcmotQ2rkbUdZZNWdsu4jVRIsLE/Gfct1AtODJ4=;
- b=L3DY0cb0218D5TlAvnn41AtNeXkeIQ4Jcwp1XNTq067zEwpj8bu6TGGKRCywE0xelu
- aI+QHUAoN7ASsVJwtHQSR8x4py3kbFONeJmXqcKWMDrqtP61e5WTeRnt7jFB45QYBsXs
- dBJIeyyiRFk/9mMxQBqZO08LW933Pb27SY1/390PHsYtwxKAOMnJptKqTu0beMxAh4qp
- yVriGfmEigKBU4tulNWm8A+O+UpeN6oecTofXJe60yrpIFoRGDdFqURzBe38kGw2hiOA
- kufkGnxDOdqawZZPH7wrPiHz2Gt905rCRmofVgHBn3TPdRhVJJyM6d4G9/pQ5nfKjSMj
- laxA==
+ bh=HrpL1oseyxb240hBD3z5bIdJcGujCcN61+LmTdzxPbg=;
+ b=uI4nO2OQoOU2xPj2jKgsXf6tCVrDX6etPv3AJYg+EiZT0wCVRYxukilM2SU0ZzEBqG
+ O7V3iiRJ6+N5fS+qddsRYLr6wAd4OIhOwNXJstFkYUADPb4BP/4SCbsje+xxf7UtQXj1
+ SqsWsKO1bSr+ALTFk3MfkDSnLUma9IdiQakoKlFAUxUIAz6aoMzI0Epp8Lopl3eQJClG
+ kpIMwwHewkoflnHt7XXpnvc0k+aC49C68KZv0AtxcIxuuAt+PQ0o7BPP7dRj0W3j2HEB
+ d1Y2Ey8tPGT84vfYUY7OCRXCpVqyaJdwhKfLhz5Tbhtophjm8gBafQbCBfYOvc77LY5y
+ B6Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741722744; x=1742327544;
+ d=1e100.net; s=20230601; t=1741722722; x=1742327522;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6pPHUcmotQ2rkbUdZZNWdsu4jVRIsLE/Gfct1AtODJ4=;
- b=tz0etDesKqhbWPl27y/SISsp+z/yCtjW+1sewqam9xlLLFXW/bL8nBIOZUpUuZ41Me
- VPV9ZodrXCVSHHHjqmHSuhl8kbaqm+MILG/4g+OcP4KuB4HvzyMSyUQhBhR76Q9yg2xO
- de5BPcJBOn9Zyvwquq8OGFuju4BWOmeAkP+pajGw0QGlWjYvqE8o3uH9zowYAjbyNSKo
- 4UUQF2x90fk6AjIecosiEZAgBwGtJp5XOj6iLLQ2hdOdw2DHe482UtMnwdHvbZ0uAPAO
- IFBic28xN5QOTfuCSb1SKZrm4rgtH7F37hvJubPHdd2r9Vg6IevBZSFMcKh6SmFVawGS
- jdlA==
-X-Gm-Message-State: AOJu0YxF54t84z4Dmh1Ft5vivvZZaJkw8p1J+u1DMrwTradlFUFKZWN5
- YalP7UlBlsAVyiCSdwOcjshEmIRkk+Y7sqvAMT8Q5O4IV7iYT++ty3gJNOS6Q7XBsnT7FDNjOUm
- WsAc=
-X-Gm-Gg: ASbGncuJs+ZBiEVPubdQm7CDg82NLlwkqEExM4o8fcbtnqZ31Kt9EnIALygWCth1fnC
- U/hMpjrZcdZ4kofmY8lp0sIXyR0a6m401sijBe7nOkGLz0fy2JyFSFweRdp0g54+0IqCY+iPgIW
- YncDe6RRvW6ZRVUsCuplWyLXYH8nczqeI/CLtVwyyVgsy1Lc0naY2r8IY3bRINV8WKJiuKLRBkc
- NVDtfVZcoCXpykCXNehb+bYbSy94o8EtWoA9JwCf/kYcmtiVLjDwtYrBwaVwXTP2yhs90i7e9Y4
- j/NZFj8g3QHfJPSBmqpgom0iZ6+p1fI4BhPEt7ALMnB9Suwg3il69WzghwZ7EShoQTKwjOzDV6M
- 705LurnPqVBOSFUc54HA=
-X-Google-Smtp-Source: AGHT+IFhD7v2RgHUHk8O5vK2kRzYxR9EGbeB4XlBX7XdzarBWH3cONAixUnadWAp2bLhYMAftuhjNQ==
-X-Received: by 2002:a05:600c:3596:b0:43c:f8fc:f697 with SMTP id
- 5b1f17b1804b1-43cf8fcf8e0mr72805645e9.9.1741722744184; 
- Tue, 11 Mar 2025 12:52:24 -0700 (PDT)
+ bh=HrpL1oseyxb240hBD3z5bIdJcGujCcN61+LmTdzxPbg=;
+ b=gvc0wAYLYfDluh5QJY4b/jBv0xXMgIa4cadjDgS5Hn0fW/VjuRwahAqglAc15SB0tX
+ PEex6JKE9ZKH8v9I+XMjq4lJR6STU1w2YUPpHHWFgJouZ8ztR/l08ZpdM0TrVQ0gBo5B
+ KImjMtyC51c4A0Rk3jjqxyGDvVLHuUSSvxsiwkJ9MsIcfcCRyH0h00XngaT3HSncbKRw
+ udwonmDKyH5v6NFWcxfGk1P5E/poRk3lrrcSQuranK/Qlr7GoyMTVI+CPycG8xJu5gBr
+ vwL92bJxJ9bIpUzWdQn+iviFpXF3Z62VZKfeFt7SYI9YiwUXIoEMBt6KARVcCli2X4q4
+ 9Jow==
+X-Gm-Message-State: AOJu0Yzq3Yunjc/N+tzZOYABdqTRsNI3JGEBCCRCxOk4op0JjKAX5yMz
+ aOuWcFybnYBTJTOWVe2hNd/8s0KCpvOq4Z3eKnPZkbqtUp1usbApoPDtwkudm8R7J2bijVWcot3
+ +/FI=
+X-Gm-Gg: ASbGnctgNodpuihxUEY5nn3DTRoLH2UASWdTWNrMJwLDSM56MD1GSHA9yooZJ6XjAdu
+ R/XpdAFNZ+x948N9tEV7uZzLz2FM0uqZ5B6m1bETuBDO32wgdtfLrx4t+a3pqEK1HdtIStrbIHU
+ KzXTKV8e9ftzciootlPWWCPTbtuB7vL2Ntnkre0B//M5GdUIC0bxRrFaQU7G9OzcPm61KNY8n/n
+ XlrnxjN32KiTUulvCkxM1a6ch2c2wdzmdTxdOHKBFQI8shG2TE4GdfoPR6dhNSyzuwkznZ7tG9a
+ DEVv0Kg2eRxBJbqEeItPzBWn83urxNl+0ax3XvgxREdldD7LxUYbzJOeb7q/4ZrkP+5KmC9tHRJ
+ EEG2z5VobKte55nvK42E=
+X-Google-Smtp-Source: AGHT+IEf1zz2JlhDeBgWPLf13iBzEGHx7mr1AgCh/Nwr6uSKIIMvPJwNDATmNe36lLO9adAQ5BcE6w==
+X-Received: by 2002:a5d:6482:0:b0:38f:3e39:20ae with SMTP id
+ ffacd0b85a97d-39132dc580amr18313104f8f.43.1741722721857; 
+ Tue, 11 Mar 2025 12:52:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfb7aefsm18716456f8f.20.2025.03.11.12.52.22
+ 5b1f17b1804b1-43cf7c82566sm81786055e9.30.2025.03.11.12.52.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Mar 2025 12:52:23 -0700 (PDT)
+ Tue, 11 Mar 2025 12:52:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 12/14] hw/virtio/virtio-mem: Remove CONFIG_DEVICES include
-Date: Tue, 11 Mar 2025 20:51:21 +0100
-Message-ID: <20250311195123.94212-13-philmd@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 08/14] system: Extract target-specific globals to their own
+ compilation unit
+Date: Tue, 11 Mar 2025 20:51:17 +0100
+Message-ID: <20250311195123.94212-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311195123.94212-1-philmd@linaro.org>
 References: <20250311195123.94212-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,43 +101,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than checking ACPI availability at compile time by
-checking the CONFIG_ACPI definition from CONFIG_DEVICES,
-check at runtime via acpi_builtin().
+We shouldn't use target specific globals for machine properties.
+These ones could be desugarized, as explained in [*]. While
+certainly doable, not trivial nor my priority for now. Just move
+them to a different file to clarify they are *globals*, like the
+generic globals residing in system/globals.c.
+
+Since arch_init.c was introduced using the MIT license (see commit
+ad96090a01d), retain the same license for the new globals-target.c
+file.
+
+[*] https://lore.kernel.org/qemu-devel/e514d6db-781d-4afe-b057-9046c70044dc@redhat.com/
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20250307223949.54040-5-philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250305005225.95051-2-philmd@linaro.org>
 ---
- hw/virtio/virtio-mem.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ system/arch_init.c      | 14 --------------
+ system/globals-target.c | 24 ++++++++++++++++++++++++
+ system/meson.build      |  1 +
+ 3 files changed, 25 insertions(+), 14 deletions(-)
+ create mode 100644 system/globals-target.c
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 7b140add765..5f57eccbb66 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -28,7 +28,7 @@
- #include "migration/misc.h"
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
--#include CONFIG_DEVICES
-+#include "hw/acpi/acpi.h"
- #include "trace.h"
+diff --git a/system/arch_init.c b/system/arch_init.c
+index b1baed18a30..b9147af93cb 100644
+--- a/system/arch_init.c
++++ b/system/arch_init.c
+@@ -24,18 +24,4 @@
+ #include "qemu/osdep.h"
+ #include "system/arch_init.h"
  
- static const VMStateDescription vmstate_virtio_mem_device_early;
-@@ -883,10 +883,8 @@ static uint64_t virtio_mem_get_features(VirtIODevice *vdev, uint64_t features,
-     MachineState *ms = MACHINE(qdev_get_machine());
-     VirtIOMEM *vmem = VIRTIO_MEM(vdev);
- 
--    if (ms->numa_state) {
--#if defined(CONFIG_ACPI)
-+    if (ms->numa_state && acpi_builtin()) {
-         virtio_add_feature(&features, VIRTIO_MEM_F_ACPI_PXM);
+-#ifdef TARGET_SPARC
+-int graphic_width = 1024;
+-int graphic_height = 768;
+-int graphic_depth = 8;
+-#elif defined(TARGET_M68K)
+-int graphic_width = 800;
+-int graphic_height = 600;
+-int graphic_depth = 8;
+-#else
+-int graphic_width = 800;
+-int graphic_height = 600;
+-int graphic_depth = 32;
 -#endif
-     }
-     assert(vmem->unplugged_inaccessible != ON_OFF_AUTO_AUTO);
-     if (vmem->unplugged_inaccessible == ON_OFF_AUTO_ON) {
+-
+ const uint32_t arch_type = QEMU_ARCH;
+diff --git a/system/globals-target.c b/system/globals-target.c
+new file mode 100644
+index 00000000000..989720591e7
+--- /dev/null
++++ b/system/globals-target.c
+@@ -0,0 +1,24 @@
++/*
++ * Global variables that should not exist (target specific)
++ *
++ * Copyright (c) 2003-2008 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: MIT
++ */
++
++#include "qemu/osdep.h"
++#include "system/system.h"
++
++#ifdef TARGET_SPARC
++int graphic_width = 1024;
++int graphic_height = 768;
++int graphic_depth = 8;
++#elif defined(TARGET_M68K)
++int graphic_width = 800;
++int graphic_height = 600;
++int graphic_depth = 8;
++#else
++int graphic_width = 800;
++int graphic_height = 600;
++int graphic_depth = 32;
++#endif
+diff --git a/system/meson.build b/system/meson.build
+index c83d80fa248..eec07a94513 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -1,6 +1,7 @@
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+   'arch_init.c',
+   'ioport.c',
++  'globals-target.c',
+   'memory.c',
+   'physmem.c',
+ )])
 -- 
 2.47.1
 
