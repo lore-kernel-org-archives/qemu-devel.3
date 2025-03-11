@@ -4,92 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB22C28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 23:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A36DC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 23:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts9E4-0008Qu-67; Tue, 11 Mar 2025 19:41:32 -0400
+	id 1ts9EG-0008SS-2N; Tue, 11 Mar 2025 19:41:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ts9Dv-0008Q5-Eb
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:41:26 -0400
-Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ts9EB-0008Rz-7b
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:41:41 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ts9Dp-0008DV-5b
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:41:22 -0400
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-6e8ffa00555so38339826d6.0
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 16:41:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ts9Dz-0008E4-KV
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:41:33 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-22438c356c8so80572785ad.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 16:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741736473; x=1742341273; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=3bNhp+GvS6dVlSNnPa/CjSVNysRqVMdNhOdM5QIIRSs=;
- b=hgFHtNOR6g52hexx0jkLXg0krmpSjtzEe+szoYbtigrEtfrUR491QLz50WOuLgpCx0
- qjJ6XFZVQgPFiZL2iodxxcWOxJCikU0h9Cpaon90AX6Vs6IxigQBzbIsUO5CbY6/3Jd6
- nRCrqgF3QvRiH9nEB2qplRKnyW4pu6KYP7arEcv6FBFt/dCkgkKIJquqjprKyydusjwq
- r8JUZJu1/dnpQNedR1lUojntKNMwFAlhCH2WWl1XwDpQxNo+CcgJEyJJd0SodPZIQ0AJ
- coW8A33dxDGdIYnP/iHb4g7Pr5rSltSl7UBow9W+elUKNleTJpEbxJiBOiLpc94/vCwN
- hB5g==
+ d=gmail.com; s=20230601; t=1741736485; x=1742341285; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zo+UlsP77Wmz4I9AyuAeQf1g301eOymnLAp02aCSBz4=;
+ b=kqXx/NHJ5AZ+05et7Wtnqqei/9m/+qChai3xQzDpLDKbHKe3Rq4PXYCGUE7h0tLnZQ
+ mB9krJBRYv7ZviDgCetlXgsQWSYP5vVD4rniHjRSjZ+8vTxtRBfVvmO+nxzfN/3Dgobf
+ inm2iOiMtH1C3y78MHe/LtWid+nPd4Za/6LuUDvDxC3/ZdqXEtDewPMpz7M1rN7nTHCF
+ F5tdKB4Q8kw+Mhi0PkvP7JVy2HUlYubffY9sV6p7x+N/ZALPsWir+5ib4f47/G8ZX6e1
+ 4M+x7dObIV/YjZgxRe4DyPEjbb5GtJg4Dh6YPbIHkaS2RFYbL24LCYu9lVn/sd0knbcB
+ FRvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741736473; x=1742341273;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3bNhp+GvS6dVlSNnPa/CjSVNysRqVMdNhOdM5QIIRSs=;
- b=d7uD75YB5pLFwP/CTL1yQ98X/fi4FmkGLFANkYuc8vhlBvZBbUGAEHz37Sni6r7CDz
- ZX72AukK5LwfU0Xvfh+feIfsNrZQ1+EQfZtnozEOSnUuHiyno3wJtCYvp17OTWV0Ng4n
- xRRNWqqkCVCLiUE8htgsZB735Vtq82RnCdq/vNr9cLHm5zcrQEWaD4KzJD4WoL/wGYLX
- P7J7ULKAkH9AsS89Ejjpz672rEWdGd3nL91LQmEosq6HPcoZoB28OpVGqEHV7JhLYQCi
- bKEYwdGP2JPGpMJPZzaZMbWC3TbOpAxs7llqThnFFKSO3QSdvNFX3Tr4uiKg1zAKcwTE
- UldQ==
+ d=1e100.net; s=20230601; t=1741736485; x=1742341285;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zo+UlsP77Wmz4I9AyuAeQf1g301eOymnLAp02aCSBz4=;
+ b=oTiiS3n6paBw8D8gUeZ89rHnFZkjNc0R1truJUb9UgpYjINKaKY93tJfXAN0wLO3Uf
+ /ycG++T8ySMgj+M4TVNjlc270INuzjJbGv4dNa/pV1q2iAaUW5zQm4Ua7lkuv8LYOF4N
+ +yAzBDqEFJsgudTct/tDH1wDgeJHSgRk1O6kLaHM33SN+oDrFBcy8YE2+vnE9doA1aHx
+ MVyKibqDX/L2xROJHQw+98/532vjpxSZLFHicyB5vxQR6PdOkDSqhMU1MJ3nBQUoqlsa
+ A/ivWSNooUZWgB6WWzbAkuiY+Al2WuF/rf5gIY3tXGGXOZSHQ5AvHgDIGLdc9EUj+e2J
+ hsTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX6UOEeYmumZiy3xU8MTaIUIYrmkIC7Dg/5LvfoyLdmTdDolC2uX9ypevgvLHKtYTXxr5MTNcb0+7JH@nongnu.org
-X-Gm-Message-State: AOJu0YztLPLh2WrgThvAzs6skTp3JCmqgnxY+JO6gkW3Zf+aeWH2cecL
- dcO/9qECaZ7U2HPj8OSzfqigllCpBT+873NmiXhgZ1apS58Fkoze
-X-Gm-Gg: ASbGncstQ1j0ovM0JIrADzWc/L0MKiBLXdwbDVVHGihQ8w3oO/UAOtUe4ou6KB6+hAm
- mQcM966c5BnfVMVMDl3pAm5mqsc1eiVLxKjatXUfoxKajWC3STlzwauhWVcIbeibtlIjxJn7zuo
- Ql4pvdPwHEI3h6vBtFbRpNKjpIswTUKxtofRmuvcXthg9JIYuZ43HDoK9pPPeixxjWpw9RqEZoB
- e6JfmxFjo1WgM0RiQmIE4Kc8/8P0YM+eoIb3jy6XKw12yhqBgurd376+TDAT///rEhSQ4dBLgLa
- DXmBo5qBGjysSvtP6NjIrq90Th0D4wSqVzxhI0lFszWXYfR+nSg4NwmuFdsk0N8=
-X-Google-Smtp-Source: AGHT+IFk6tr/GrQXOrsrT4hxxIsyTBAT4V+ReK0UVoCe1XxyWCUGz0doELFUJUbI7+j5uKn7Y9M/JQ==
-X-Received: by 2002:ad4:5f0b:0:b0:6e6:5e15:d94f with SMTP id
- 6a1803df08f44-6e900674e0bmr283903166d6.27.1741736473132; 
- Tue, 11 Mar 2025 16:41:13 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:a832:3b35:d71f:4119])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f715b50asm77740626d6.84.2025.03.11.16.41.11
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 11 Mar 2025 16:41:12 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-31-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-31-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 30/38] target/hexagon: Add a TLB count property
-Date: Tue, 11 Mar 2025 18:41:10 -0500
-Message-ID: <00ac01db92df$12a754c0$37f5fe40$@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+ AJvYcCUfwuhb0a7lUW27/seNam0+4f6rETCw+rmZa2QjRbMy1NNSbUzx0JrhshQu8ZBP7JvJDa2eoQhvI2We@nongnu.org
+X-Gm-Message-State: AOJu0Ywwb6U35mPrq7xK9kyXBgkfixVvSzQORZBHuhVBwT9oL2uIntRp
+ Gm6rLOrJEoExCbvc0Sqs+SKygqv0j9cU4nflMWcXXsgd7WPLhAgU
+X-Gm-Gg: ASbGncvABxjPQW8T9tWkse7y4t9dB/YrRRMeDXnNpES47wthowkAAYKqxWyyaHoOq0K
+ Tdyv8sLtHo9s5j27PIBs8tJDkk42sXCiy65C14RjpML3bX9qTpCFr+MVIgIqPgGZK5eXuHrS52a
+ TlH8LvVG2YQFCeIAjU81uXxFMGzxzpgYht9fB9opkwprkuj6DiieE1l0YFtxKb2KEcLy536xi6g
+ 5420eF1BdSQhR4O3yFSKMpbc0FoceeliTQid0uG4vwq8ZzU9MeGiKIxfEvx1o2eyGfwfwzxl83p
+ aM1n/wilFDjHcB/tvo/WPLBOmSpBHmNuA9RBQA5z
+X-Google-Smtp-Source: AGHT+IFGM+HsmMY+fGeU8y35TBp7Oeb+NHXc/syEHBA/8HLUkqBBaBKKLdFFHn4/+/wNvR9Kg2Q6hA==
+X-Received: by 2002:a17:903:192:b0:21f:507b:9ad7 with SMTP id
+ d9443c01a7336-22428a89081mr308990395ad.25.1741736485423; 
+ Tue, 11 Mar 2025 16:41:25 -0700 (PDT)
+Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22410ac0794sm103780465ad.259.2025.03.11.16.41.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Mar 2025 16:41:25 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgKbEtX7tO4kn5A=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250311-4, 3/11/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2c.google.com
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 12 Mar 2025 09:41:20 +1000
+Message-Id: <D8DU1X7UDEPK.2PZVT8SJAWUFI@gmail.com>
+Cc: "Thomas Huth" <thuth@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [RFC PATCH] tests/functional: Don't fail any precaching errors
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+X-Mailer: aerc 0.19.0
+References: <20250311131327.903329-1-npiggin@gmail.com>
+ <Z9A8swNn6zBm57jC@redhat.com>
+In-Reply-To: <Z9A8swNn6zBm57jC@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,35 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue Mar 11, 2025 at 11:37 PM AEST, Daniel P. Berrang=C3=A9 wrote:
+> On Tue, Mar 11, 2025 at 11:13:26PM +1000, Nicholas Piggin wrote:
+>> The NetBSD archive is currently failing part-way through downloads,
+>> which results in no clean HTTP error but a short transfer and checksum
+>> error. This is treated as fatal in the precache download, and it halts
+>> an entire set of tests even if some others could run.
+>>=20
+>> I hacked up this patch to get a bunch of CI tests going again for ppc
+>> merge testing.
+>>=20
+>> Don't treat any precaching failures as errors.
+>> This causes tests to be skipped when they try to fetch their asset.
+>> Some CI results before/after patching:
+>>=20
+>> functional-system-fedora
+>> https://gitlab.com/npiggin/qemu/-/jobs/9370860490 #bad
+>> https://gitlab.com/npiggin/qemu/-/jobs/9373246826 #good
+>>=20
+>> functional-system-debian
+>> https://gitlab.com/npiggin/qemu/-/jobs/9370860479 #bda
+>> https://gitlab.com/npiggin/qemu/-/jobs/9373246822 #good
+>>=20
+>> This is making the tests skip. Is there a way to make the error more
+>> prominent / obvious in the output? Should they fail instead? I think
+>> there should be a more obvious indication of failure due to asset so
+>> it does not go unnoticed.
+>>=20
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>  tests/functional/qemu_test/asset.py | 9 +++------
+>>  1 file changed, 3 insertions(+), 6 deletions(-)
+>>=20
+>> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu=
+_test/asset.py
+>> index f0730695f09..3134ccb10da 100644
+>> --- a/tests/functional/qemu_test/asset.py
+>> +++ b/tests/functional/qemu_test/asset.py
+>> @@ -174,14 +174,11 @@ def precache_test(test):
+>>                  try:
+>>                      asset.fetch()
+>>                  except HTTPError as e:
+>> -                    # Treat 404 as fatal, since it is highly likely to
+>> -                    # indicate a broken test rather than a transient
+>> -                    # server or networking problem
+>> -                    if e.code =3D=3D 404:
+>> -                        raise
+>> -
+>
+> Why are you removing this ? The commit above does not make any reference
+> to the problem being a missing URL (404 code). We want missing URLs to
+> be fatal so that we identify when images we rely on are deleted by their
+> host, as that is not a transient problem.
 
+Yeah it was just a quick hack I guess so I didn't put a
+complete changelog or get it quite to the point I wanted.
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Friday, February 28, 2025 11:26 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 30/38] target/hexagon: Add a TLB count property
->=20
-> From: Brian Cain <bcain@quicinc.com>
->=20
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
+I think *no* precaching errors including 404 should cause
+failure because you would still want other tests to proceed
+(in some cases).
 
+But the failure should be caught when the test case tries to
+fetch the asset, so you can still easily identify the download
+failure.
 
-> diff --git a/target/hexagon/max.h b/target/hexagon/max.h new file mode
-> 100644 index 0000000000..0f595bcb73
-> --- /dev/null
-> +++ b/target/hexagon/max.h
-
-Name this file hex_max.h or hexagon_max.h to avoid conflict/confusion =
-with such a common name.
-
-Otherwise
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
-
+Thanks,
+Nick
 
