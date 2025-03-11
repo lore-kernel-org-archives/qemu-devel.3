@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17126C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06EB3C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxqf-0003K5-3h; Tue, 11 Mar 2025 07:32:37 -0400
+	id 1trxrn-0004Mm-SR; Tue, 11 Mar 2025 07:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqW-0003Cu-6u
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqq-0003NO-Ko
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq3-0006Vd-OP
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqB-0006YO-Uf
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692717;
+ s=mimecast20190719; t=1741692724;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z5JnxTF2fWSokQik72i6XozThJKgzO0cO0R+SFAf/nI=;
- b=e9NJNwTgo2A6odpgwFTK9me9gqwtKHjhNwCIXTI1XCUvKMzZvKUbvUxXpU6zVs7rMux3b8
- ijdv7n3QdiXEtH+R9/fk1/oa7b52DPQCVWxK3DcE80xBL59lR30hNDvVeyrgQoIedkifIF
- wM9xMBCgvOj0XbZLuDqlqmRDz2migg8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=lAjS1Tl9qBsqP2PI4VKsVSX3kswXXTodNKXBjdAlF/I=;
+ b=I6MBbHB082bjx/bThtDnv5U/+LoKpPdghR8PfcKXG62yfRx723Sqk4ZZIAI/CMFwJp9FDZ
+ YpsYjx+LGW0306HKMk0ZE4NVGkirGEBfhM9LN/raA3rvaVEq0hzkIzsKyYyTKKhj9IlSee
+ sS/qPG8INQ+oosKz0BUUDolsG1yy2GM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-2OvqSt-NNteRZqRALzyZ3w-1; Tue,
- 11 Mar 2025 07:31:54 -0400
-X-MC-Unique: 2OvqSt-NNteRZqRALzyZ3w-1
-X-Mimecast-MFC-AGG-ID: 2OvqSt-NNteRZqRALzyZ3w_1741692713
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-6TN92yDZP3ClPdz9aIid5g-1; Tue,
+ 11 Mar 2025 07:32:03 -0400
+X-MC-Unique: 6TN92yDZP3ClPdz9aIid5g-1
+X-Mimecast-MFC-AGG-ID: 6TN92yDZP3ClPdz9aIid5g_1741692722
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A0DB1956059; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C583C18001E3
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 128591801756; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 755CC3001D0E
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 12DAA21E64AC; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
+ id A455321E60E6; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, John Snow <jsnow@redhat.com>,
- Harmonie Snow <harmonie@gmail.com>
-Subject: [PULL 22/61] docs/qapi-domain: add :unstable: directive option
-Date: Tue, 11 Mar 2025 12:30:58 +0100
-Message-ID: <20250311113137.1277125-23-armbru@redhat.com>
+Cc: stefanha@redhat.com,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL 60/61] MAINTAINERS: Add jsnow as maintainer for Sphinx
+ documentation
+Date: Tue, 11 Mar 2025 12:31:36 +0100
+Message-ID: <20250311113137.1277125-61-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -87,74 +89,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Although "unstable" is a feature (and *will* appear in the features
-list), add a special :unstable: option to generate an eye-catch that
-makes this information very hard to miss.
+Since I've just about rewritten the entirety of the QAPI documentation
+system, it's probably fair that I be the contact point for if it goes
+awry.
 
-The forthcoming Transmogrifier in qapidoc.py will add this option
-whenever it detects that the features list attached to a definition
-contains the "unstable" entry.
-
-Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-25-jsnow@redhat.com>
+Message-ID: <20250311034303.75779-64-jsnow@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx-static/theme_overrides.css | 6 +++++-
- docs/sphinx/qapi_domain.py             | 8 ++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
-index 3765cab1b2..5f58f1d524 100644
---- a/docs/sphinx-static/theme_overrides.css
-+++ b/docs/sphinx-static/theme_overrides.css
-@@ -221,7 +221,7 @@ div[class^="highlight"] pre {
-     margin: 0.25em;
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0e5db7a574..55af2f8d17 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4325,6 +4325,7 @@ S: Orphan
+ F: po/*.po
  
--.qapi-deprecated {
-+.qapi-deprecated,.qapi-unstable {
-     background-color: #fffef5;
-     border: solid #fff176 6px;
-     font-weight: bold;
-@@ -230,6 +230,10 @@ div[class^="highlight"] pre {
-     margin: 5px;
- }
- 
-+.qapi-unstable::before {
-+    content: '🚧 ';
-+}
-+
- .qapi-deprecated::before {
-     content: '⚠️ ';
- }
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index b672ae6c50..00fd11ebf7 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -218,6 +218,7 @@ class QAPIObject(QAPIDescription):
-             # These are QAPI originals:
-             "since": directives.unchanged,
-             "deprecated": directives.flag,
-+            "unstable": directives.flag,
-         }
-     )
- 
-@@ -300,6 +301,13 @@ def _add_pip(source: str, content: str, classname: str) -> None:
-                 "qapi-deprecated",
-             )
- 
-+        if "unstable" in self.options:
-+            _add_pip(
-+                ":unstable:",
-+                f"This {self.objtype} is unstable/experimental.",
-+                "qapi-unstable",
-+            )
-+
-         if infopips.children:
-             contentnode.insert(0, infopips)
- 
+ Sphinx documentation configuration and build machinery
++M: John Snow <jsnow@redhat.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
+ S: Maintained
+ F: docs/conf.py
 -- 
 2.48.1
 
