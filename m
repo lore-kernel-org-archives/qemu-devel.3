@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92143C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FACC28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:15:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts52m-0006ru-7I; Tue, 11 Mar 2025 15:13:36 -0400
+	id 1ts54b-0008G3-QV; Tue, 11 Mar 2025 15:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ts52j-0006r3-EO
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:13:34 -0400
+ id 1ts54J-0008ED-AU
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:15:15 -0400
 Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ts52h-0001Yi-9G
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:13:33 -0400
+ id 1ts54G-0001p9-P4
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:15:11 -0400
 Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2254e0b4b79so24961295ad.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:13:30 -0700 (PDT)
+ d9443c01a7336-223594b3c6dso106894345ad.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741720409; x=1742325209; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741720507; x=1742325307; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=u2LwWHyQsCKNhWwzar0qYiqPOk3OJrxoP1WWazrRC2s=;
- b=fWPYd+7d2lCOlPbn5Nsvcsum95caI2ddVgk7J75InxAn76G9cmDViU/a0cmHG0uA5g
- EWiqHchcDYlLgGrRHCVVKpkz+i+eYmvxs0+U1XF3E2xqR5ZZROg6S3+h4g/Ic3fIyy9O
- L5jXcgSDtyx8wffSYHywIkXAugWjnJWMbTOQ2MInoYtX///MULf+A4HCQ5K5fQtmuaZO
- va2bhVLMPGwqdBEUq53P4SGxgj99vp7CXS6vnMJbFP8jT+bg3oOM5Lj0OL4TdatedzkA
- tuTxMbPMKE3jEoI1JJ2KM669INzDWAsI/ZR1rNMPGXUXin3PNhIBmHDyLZULox4GV8Hs
- bZSw==
+ bh=YN/8lG0SEdZ4AtZ6RFFvdgybf2D4yUrtKFWLW/13bds=;
+ b=CXC+ztFK9oYrbpWtWS3skzq9v4QQ1vxdf0EE1xCVPH3sLBrqyO3B5Eid4ug+zuEToX
+ ffEUxnZBmmG9CmKyVk/R/YqyyjhdF6PB/2wPM1o7ejWLmqW00hVzS53URBDE0QpUWJ7D
+ tntlKJ5s5Nlh/lm4rI/bGSm6IVhVlLMDfGurJc+XMVYaB6NEeiMlrtm7mm3j303/h5Ir
+ 3Nxa/oxmhngjL+dY8E92NhY6F5NWsflBDmvhjKIOhm7sVcc0lM1BTIi2FyKIUM3RHyyg
+ RGYS6huCQFTyWAIvfVsXLDmopXm+khZPcj5rhtP9CZ9Nzdncn4ONNZEoGNKltlKjuJbV
+ 0E6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741720409; x=1742325209;
+ d=1e100.net; s=20230601; t=1741720507; x=1742325307;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u2LwWHyQsCKNhWwzar0qYiqPOk3OJrxoP1WWazrRC2s=;
- b=HgQeyn/f9p0xj3UrC6G1JQQAL0Iso/bsReopNV8l0/GbPfjcDu1JgPv8YXmOTCAZ4f
- bY7AbInSwUuxCLqCLdMbN/W76n75DTGM8MvhioIVPYjtO9dNY2n62XKsRpZxZoM+44Iv
- 5F9+W1kJhG8PgIyDYvRw0aIrhP67PfPYHyaIVp4LCrKmBtCafBF4pCqJh4+Ph7c9/89E
- 1D20SNGd+UjB3vL0pJDfStkChm2YFniJi4L2BGikMS/DL7x/M6jyw3xW7lVAGuKQgeYi
- ulFTzE15Sn9uqjhZCii+J7uqwMyD/h2OdZ38nI6ZjWu2/ycO5pAPGl50r1OycXWQWm5J
- LqvA==
+ bh=YN/8lG0SEdZ4AtZ6RFFvdgybf2D4yUrtKFWLW/13bds=;
+ b=mNSlc5exQFv7cONGQxQ4DxzowoQQVUOP6vcIz0Zh1zAnX4RIMF6YwhjhaknUPR1pfG
+ 5Iq5SUe6pRTgY7t0YIlygUjVTfi2tIOrJvvgo5nnuKhxYhO7IhxIpmeY87oyhKMPv5I/
+ yXlcsAETXwIIRHQpjBvVphEG7xbGuXZtsG4sniVRsRvyfduQE16Ldi6JZXVT74ZY/wdi
+ +/0Cr942kpEGqJk7OmNl4++CEWcahCLmTy4fdPKmkTD4cfz/G/CZrXrrau+rLLaV79jU
+ A5VB9S1eQUA3vk2yB6rpk1bOJYFW0D/vca1AYXMEz6fJ9Uv3eJdO7rRC6IHZJZ2cmcId
+ 1ApA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPkHke+BQ1JNE4th4yPeDwn4YBkxFKZlGVO/PK1dbNbdq8NlFHJczGsElSuGTyf+yZXU/NPF9oZATm@nongnu.org
-X-Gm-Message-State: AOJu0YyDzwjENF3unZnPGdMVjvGzDzYj5fUfXbeFZa0+YouEOjHrCY0l
- hmBTAKqJkpPXOJchczcTQAnzZfe4MQU224U3SyoJyAiL6VdtFGolPIOKXWq1+Rs=
-X-Gm-Gg: ASbGncutTLghQPyzQixz5NLy9vdi6uRAI1S6mtTA9GDWCc4vXwkACcuxTiaCWGX95LI
- 7xMVzqgnqtA/wQMBwNZnGqbrqovKthUVs+tmMxtOJObwyIsyTwIMT0o3FoaUyZCQMOfgQdBNnFT
- navq0/g2KcfelbIp3yOXd3m2NMfSEbG9o/b8R2dMTNNqUJJy6WLnpNHsB0OHDwHnLDISkhF3Tw1
- 7AD9yVL4zGCPW23RNVpEjlo84xlkXnDU5sKxJ3gRmWEHGQDPZIGTimEeyUiY86Z5OQj3WRky4XN
- XshLiM/3a7UIwmgqyx9Ex0501VQi8G24drGiZ1GWwmApI8lellQXbepT/T235TbcQ6/rdA6wIsC
- NZ8wArYfK
-X-Google-Smtp-Source: AGHT+IHOEFfMDwUK2KS/q3zrSFayXaPNYjuIKZ6Aru8dnmx8Jlcn1uFum3pYGc81STVHjIMyLpbzDw==
-X-Received: by 2002:a05:6a21:6186:b0:1f5:8655:3287 with SMTP id
- adf61e73a8af0-1f5865535a2mr12430020637.40.1741720408521; 
- Tue, 11 Mar 2025 12:13:28 -0700 (PDT)
+ AJvYcCUOnutdT3cmD6kAA5Wo5NjQyziVp2meI+KBCncezd9WKtumP4SmnASH8DoWxsnGf+W8DJmH62ow/TuT@nongnu.org
+X-Gm-Message-State: AOJu0YxvJ/JUeJ2jcQNFQoafoKUs9jWyhGWeECf39rcFkakat7mnNCIm
+ 9vgh9n4XyGm7L6p5VqxI6+7INJrV/vYxREWF3GvJ1xFcxDOGEaae/ZEIfqhCAZo=
+X-Gm-Gg: ASbGncv8XNq23AVMG8SCrRaVZjBHrCPVo3rxxuklIjuLZk/nCuYxWtorqfEL6v5swSR
+ jmMsCluzBWoBQrOJivX8TzRvqXwWBgiW9c6xz+kSj+0Q+nCSnHqFnINycfqZW4PV6xhrqW6EHTG
+ lWoYNiv3JNuTf03cZBJE2Om39t1jpcnXqDh7XOTYo7CJKprVjsnCm9dxkT/RP2KpJycm6X7RImr
+ +Q02xfxTsUZvSvpeAQNdcfVUYUjI3bpQW0Mfb18P8/4ONpZTtaHbaDzgzgtmLz+KvWVpr8+bKdQ
+ naja9SdvH0wPcdxMT3GqaOXL3L+ZPnIMrIFPl4fSZTD9INPBvvNAbawrr0OgIueyrz+K90iq/ws
+ kvVYu60Pc
+X-Google-Smtp-Source: AGHT+IEtUkpMrd90Yi9cnR0Lt3Y83zYllQs9zT39aV53eCtZm39rNhSTh3k6HgcHiAVYPMp8a35yIg==
+X-Received: by 2002:a05:6a00:4f83:b0:732:5276:4ac9 with SMTP id
+ d2e1a72fcca58-736aa9e6750mr22171990b3a.9.1741720506808; 
+ Tue, 11 Mar 2025 12:15:06 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af281075ecfsm9891467a12.5.2025.03.11.12.13.27
+ d2e1a72fcca58-73698243ef6sm11153995b3a.61.2025.03.11.12.15.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 12:13:28 -0700 (PDT)
-Message-ID: <58f9ab85-430b-4ea2-a380-590d9b24b117@linaro.org>
-Date: Tue, 11 Mar 2025 12:13:26 -0700
+ Tue, 11 Mar 2025 12:15:06 -0700 (PDT)
+Message-ID: <344b0bb6-4beb-461f-af23-58d3a1b628ec@linaro.org>
+Date: Tue, 11 Mar 2025 12:15:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/16] exec/tswap: implement {ld,st}.*_p as functions
- instead of macros
+Subject: Re: [PATCH v2 03/16] exec/memory_ldst: extract memory_ldst
+ declarations from cpu-all.h
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 References: <20250311040838.3937136-1-pierrick.bouvier@linaro.org>
- <20250311040838.3937136-3-pierrick.bouvier@linaro.org>
+ <20250311040838.3937136-4-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250311040838.3937136-3-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250311040838.3937136-4-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
@@ -105,17 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/10/25 21:08, Pierrick Bouvier wrote:
-> Defining functions allows to use them from common code, by not depending
-> on TARGET_BIG_ENDIAN.
-> Remove previous macros from exec/cpu-all.h.
-> By moving them out of cpu-all.h, we'll be able to break dependency on
-> cpu.h for memory related functions coming in next commits.
+> They are now accessible through exec/memory.h instead, and we make sure
+> all variants are available for common or target dependent code.
 > 
 > Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 > ---
->   include/exec/cpu-all.h | 25 ---------------
->   include/exec/tswap.h   | 70 ++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 70 insertions(+), 25 deletions(-)
+>   include/exec/cpu-all.h         | 12 ------------
+>   include/exec/memory_ldst.h.inc |  4 ----
+>   2 files changed, 16 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
