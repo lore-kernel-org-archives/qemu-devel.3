@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 415ABC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34024C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqYn-0007MR-Gt; Mon, 10 Mar 2025 23:45:41 -0400
+	id 1trqZ0-0007rV-GE; Mon, 10 Mar 2025 23:45:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqYN-0006mb-99
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqYg-0007DX-PF
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqYL-0002cv-J5
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:14 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqYe-0002fh-WD
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741664712;
+ s=mimecast20190719; t=1741664731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wa1Xi1ebmSpbrQKxKvSJI+EMuuyJ3SeCmG/4SFx/eQw=;
- b=g0/32yY4PbsJPllNAJ5IxioSbLBy3PIwAbAjcpKd7c6NfzS4h+dtqsyJuC/SuIMOaIb8c6
- BZhviVa2a8wqGGWxX0hctUf1CXY53KLDY2P8FM/n/8wN7WXSYbo8z5DZa50MKr8NM8WqUk
- lcfwS6fV4ULronqpPNsuD9695Ci9VtY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=BQvE/HneCGz1g30jzw3OwriCq5NXZt5xVT54X3KVDic=;
+ b=ZJMVxVCACzcEclrXE3hBhQVsFXkJdtuTGcjirQI/mZ94HZQA/WMwYSGbzC60yHC421om0G
+ y3vyHNE8ulv/EA31Zf7Bm8EwkOLcGUhGldwUQ97pVQlkGXUVFiTGt7Yza+HzLp9G20qDht
+ lRlp8+fm05HcdID07wpUUlkIchYGRLA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-Ssrv0Y9wOYyqfz14UAoINw-1; Mon,
- 10 Mar 2025 23:45:11 -0400
-X-MC-Unique: Ssrv0Y9wOYyqfz14UAoINw-1
-X-Mimecast-MFC-AGG-ID: Ssrv0Y9wOYyqfz14UAoINw_1741664710
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-U7PTEA9wNSawwX2qrnQFkw-1; Mon,
+ 10 Mar 2025 23:45:25 -0400
+X-MC-Unique: U7PTEA9wNSawwX2qrnQFkw-1
+X-Mimecast-MFC-AGG-ID: U7PTEA9wNSawwX2qrnQFkw_1741664724
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C93C195609F; Tue, 11 Mar 2025 03:45:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 441231800258; Tue, 11 Mar 2025 03:45:24 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 62FF31800373; Tue, 11 Mar 2025 03:45:07 +0000 (UTC)
+ id 531181800373; Tue, 11 Mar 2025 03:45:20 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
@@ -54,22 +54,22 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 35/63] docs/qapidoc: add transmogrifier stub
-Date: Mon, 10 Mar 2025 23:42:33 -0400
-Message-ID: <20250311034303.75779-36-jsnow@redhat.com>
+Subject: [PATCH v3 39/63] docs/qapidoc: add transmogrifier class stub
+Date: Mon, 10 Mar 2025 23:42:37 -0400
+Message-ID: <20250311034303.75779-40-jsnow@redhat.com>
 In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
 References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,104 +87,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a stubbed option to the qapi-doc directive that opts-in
-to the new rST generator; the implementation of which will follow in
-subsequent commits.
+Add the beginnings of the Transmogrifier class by adding the rST
+conversion helpers that will be used to build the virtual rST document.
 
-Once all QAPI documents have been converted, this option and the old
-qapidoc implementation can be dropped.
-
-Note that moving code outside of the try...except block has no impact
-because the code moved outside of that block does not ever raise a
-QAPIError.
+This version of the class does not actually "do anything" yet; each
+individual feature is added one-at-a-time in the forthcoming commits.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 41 ++++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 13 deletions(-)
+ docs/sphinx/qapidoc.py | 73 ++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 70 insertions(+), 3 deletions(-)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index d622398f1da..dc72f3fd3f3 100644
+index 5246832b68c..c243bb6faaa 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -452,9 +452,9 @@ def _parse_text_into_node(self, doctext, node):
-         rstlist.append("", self._cur_doc.info.fname, self._cur_doc.info.line)
-         self._sphinx_directive.do_parse(rstlist, node)
+@@ -26,14 +26,17 @@
  
--    def get_document_nodes(self):
--        """Return the list of docutils nodes which make up the document"""
--        return self._top_node.children
-+    def get_document_node(self):
-+        """Return the root docutils node which makes up the document"""
-+        return self._top_node
+ from __future__ import annotations
+ 
++from contextlib import contextmanager
+ import os
+ import sys
+ from typing import TYPE_CHECKING
+ 
+ from docutils import nodes
+ from docutils.parsers.rst import Directive, directives
++from docutils.statemachine import StringList
+ from qapi.error import QAPIError
+ from qapi.schema import QAPISchema, QAPISchemaVisitor
++from qapi.source import QAPISourceInfo
+ 
+ from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
+ from sphinx import addnodes
+@@ -44,9 +47,12 @@
  
  
- # Turn the black formatter on for the rest of the file.
-@@ -503,7 +503,10 @@ class QAPIDocDirective(NestedDirective):
- 
-     required_argument = 1
-     optional_arguments = 1
--    option_spec = {"qapifile": directives.unchanged_required}
-+    option_spec = {
-+        "qapifile": directives.unchanged_required,
-+        "transmogrify": directives.flag,
-+    }
-     has_content = False
- 
-     def new_serialno(self):
-@@ -511,10 +514,24 @@ def new_serialno(self):
-         env = self.state.document.settings.env
-         return "qapidoc-%d" % env.new_serialno("qapidoc")
- 
-+    def transmogrify(self, schema) -> nodes.Element:
-+        raise NotImplementedError
-+
-+    def legacy(self, schema) -> nodes.Element:
-+        vis = QAPISchemaGenRSTVisitor(self)
-+        vis.visit_begin(schema)
-+        for doc in schema.docs:
-+            if doc.symbol:
-+                vis.symbol(doc, schema.lookup_entity(doc.symbol))
-+            else:
-+                vis.freeform(doc)
-+        return vis.get_document_node()
-+
-     def run(self):
-         env = self.state.document.settings.env
-         qapifile = env.config.qapidoc_srctree + "/" + self.arguments[0]
-         qapidir = os.path.dirname(qapifile)
-+        transmogrify = "transmogrify" in self.options
- 
-         try:
-             schema = QAPISchema(qapifile)
-@@ -522,20 +539,18 @@ def run(self):
-             # First tell Sphinx about all the schema files that the
-             # output documentation depends on (including 'qapifile' itself)
-             schema.visit(QAPISchemaGenDepVisitor(env, qapidir))
+ if TYPE_CHECKING:
+-    from typing import Any, List, Sequence
 -
--            vis = QAPISchemaGenRSTVisitor(self)
--            vis.visit_begin(schema)
--            for doc in schema.docs:
--                if doc.symbol:
--                    vis.symbol(doc, schema.lookup_entity(doc.symbol))
--                else:
--                    vis.freeform(doc)
--            return vis.get_document_nodes()
-         except QAPIError as err:
-             # Launder QAPI parse errors into Sphinx extension errors
-             # so they are displayed nicely to the user
-             raise ExtensionError(str(err)) from err
+-    from docutils.statemachine import StringList
++    from typing import (
++        Any,
++        Generator,
++        List,
++        Sequence,
++    )
  
-+        if transmogrify:
-+            contentnode = self.transmogrify(schema)
+     from sphinx.application import Sphinx
+     from sphinx.util.typing import ExtensionMetadata
+@@ -55,6 +61,67 @@
+ __version__ = "1.0"
+ 
+ 
++class Transmogrifier:
++    def __init__(self) -> None:
++        self._result = StringList()
++        self.indent = 0
++
++    # General-purpose rST generation functions
++
++    def get_indent(self) -> str:
++        return "   " * self.indent
++
++    @contextmanager
++    def indented(self) -> Generator[None]:
++        self.indent += 1
++        try:
++            yield
++        finally:
++            self.indent -= 1
++
++    def add_line_raw(self, line: str, source: str, *lineno: int) -> None:
++        """Append one line of generated reST to the output."""
++
++        # NB: Sphinx uses zero-indexed lines; subtract one.
++        lineno = tuple((n - 1 for n in lineno))
++
++        if line.strip():
++            # not a blank line
++            self._result.append(
++                self.get_indent() + line.rstrip("\n"), source, *lineno
++            )
 +        else:
-+            contentnode = self.legacy(schema)
++            self._result.append("", source, *lineno)
 +
-+        return contentnode.children
++    def add_line(self, content: str, info: QAPISourceInfo) -> None:
++        # NB: We *require* an info object; this works out OK because we
++        # don't document built-in objects that don't have
++        # one. Everything else should.
++        self.add_line_raw(content, info.fname, info.line)
 +
++    def add_lines(
++        self,
++        content: str,
++        info: QAPISourceInfo,
++    ) -> None:
++        lines = content.splitlines(True)
++        for i, line in enumerate(lines):
++            self.add_line_raw(line, info.fname, info.line + i)
++
++    def ensure_blank_line(self) -> None:
++        # Empty document -- no blank line required.
++        if not self._result:
++            return
++
++        # Last line isn't blank, add one.
++        if self._result[-1].strip():  # pylint: disable=no-member
++            fname, line = self._result.info(-1)
++            assert isinstance(line, int)
++            # New blank line is credited to one-after the current last line.
++            # +2: correct for zero/one index, then increment by one.
++            self.add_line_raw("", fname, line + 2)
++
++
+ class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
+     """A QAPI schema visitor which adds Sphinx dependencies each module
  
- class QMPExample(CodeBlock, NestedDirective):
-     """
 -- 
 2.48.1
 
