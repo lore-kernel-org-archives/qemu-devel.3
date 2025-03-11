@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889DBC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA5EC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxrA-0003Yl-0M; Tue, 11 Mar 2025 07:33:09 -0400
+	id 1trxrH-0003e7-Ev; Tue, 11 Mar 2025 07:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxql-0003MF-KR
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:49 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqa-0003FR-9n
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqA-0006Ws-Is
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:43 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqA-0006YN-CA
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692720;
+ s=mimecast20190719; t=1741692724;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wdCg+UoySTQdVH0vu4je4tNL8ddS1AXyxvzLsqmoOZw=;
- b=ap4GuyYaxb55OYUR3rAGxXCCpED2m0sg/q7h9MTKuu7ppgnKEuLD1LP+Bgts1H39TYN8zz
- Ve+uTgWYDaiNXSnabi8Owx2BW4vXR48zEWBLmNF6Uu5jdVt6mQra/GJM5gkh7BXw6Yp9oJ
- f1HbN7vh6NwOPLFzYfhqVSLx1odllpY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=QWkuDCPzbZFxRLHuq8fODnWk4KA/4K4c8PccPKnfj6E=;
+ b=Ie56fKIVQIy8F3XK4Nhv3W9dtGiWgcO5ZvX1PW4Y9Hj126+o8iM2CZF99mjkjifP4t8vGz
+ sregKK+GVltuwA3we+OK1OTd1aRPkpzaDHKSZ/IHfAb3nG6mPvJl8aEsfXUAwCLNl+UkrQ
+ trHhHCmWi06GoQEIaCN+02N8UDnJgyw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-65dVc_BdPxSCSb8RGiXZfQ-1; Tue,
- 11 Mar 2025 07:31:58 -0400
-X-MC-Unique: 65dVc_BdPxSCSb8RGiXZfQ-1
-X-Mimecast-MFC-AGG-ID: 65dVc_BdPxSCSb8RGiXZfQ_1741692718
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-vAk-3CYoNlCr78h1TLdRLg-1; Tue,
+ 11 Mar 2025 07:32:03 -0400
+X-MC-Unique: vAk-3CYoNlCr78h1TLdRLg-1
+X-Mimecast-MFC-AGG-ID: vAk-3CYoNlCr78h1TLdRLg_1741692722
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D643B195608B
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:57 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B0751800258
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7158C1828A99
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:57 +0000 (UTC)
+ id 21CA81828A96
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8A28A21E60DE; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
+ id 919A121E60E0; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 53/61] docs/qapidoc: add intermediate output debugger
-Date: Tue, 11 Mar 2025 12:31:29 +0100
-Message-ID: <20250311113137.1277125-54-armbru@redhat.com>
+Subject: [PULL 55/61] docs/qapidoc: generate entries for undocumented members
+Date: Tue, 11 Mar 2025 12:31:31 +0100
+Message-ID: <20250311113137.1277125-56-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -88,95 +88,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Add debugging output for the qapidoc transmogrifier - setting DEBUG=1
-will produce .ir files (one for each qapidoc directive) that write the
-generated rst file to disk to allow for easy debugging and verification
-of the generated document.
+Presently, we never have any empty text entries for members. The next
+patch will explicitly generate such sections, so enable support for it
+in advance.
+
+The parser will generate placeholder sections to indicate undocumented
+members, but it's the qapidoc generator that's responsible for deciding
+what to do with that stub section.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-57-jsnow@redhat.com>
+Message-ID: <20250311034303.75779-59-jsnow@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
+[Tweak the stub section text]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 41 +++++++++++++++++++++++++++++++++++++----
- 1 file changed, 37 insertions(+), 4 deletions(-)
+ docs/sphinx/qapidoc.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index ebdf709594..8ddebf73f2 100644
+index a2d6f648a2..432fef04b0 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -37,7 +37,7 @@
- from typing import TYPE_CHECKING
+@@ -233,11 +233,12 @@ def visit_member(self, section: QAPIDoc.ArgSection) -> None:
+         # TODO: features for members (documented at entity-level,
+         # but sometimes defined per-member. Should we add such
+         # information to member descriptions when we can?)
+-        assert section.text and section.member
++        assert section.member
+         self.generate_field(
+             self.member_field_type,
+             section.member,
+-            section.text,
++            # TODO drop fallbacks when undocumented members are outlawed
++            section.text if section.text else "Not documented",
+             section.info,
+         )
  
- from docutils import nodes
--from docutils.parsers.rst import Directive, directives
-+from docutils.parsers.rst import directives
- from docutils.statemachine import StringList
- from qapi.error import QAPIError
- from qapi.parser import QAPIDoc
-@@ -60,7 +60,7 @@
- from sphinx.directives.code import CodeBlock
- from sphinx.errors import ExtensionError
- from sphinx.util import logging
--from sphinx.util.docutils import switch_source_input
-+from sphinx.util.docutils import SphinxDirective, switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
- 
- 
-@@ -414,7 +414,7 @@ def visit_module(self, name: str) -> None:
-         super().visit_module(name)
- 
- 
--class NestedDirective(Directive):
-+class NestedDirective(SphinxDirective):
-     def run(self) -> Sequence[nodes.Node]:
-         raise NotImplementedError
- 
-@@ -483,10 +483,43 @@ def transmogrify(self, schema: QAPISchema) -> nodes.Element:
-                 node.document = self.state.document
-                 self.state.nested_parse(content, 0, contentnode)
-         logger.info("Transmogrifier's nested parse completed.")
--        sys.stdout.flush()
- 
-+        if self.env.app.verbosity >= 2 or os.environ.get("DEBUG"):
-+            argname = "_".join(Path(self.arguments[0]).parts)
-+            name = Path(argname).stem + ".ir"
-+            self.write_intermediate(content, name)
-+
-+        sys.stdout.flush()
-         return contentnode
- 
-+    def write_intermediate(self, content: StringList, filename: str) -> None:
-+        logger.info(
-+            "writing intermediate rST for '%s' to '%s'",
-+            self.arguments[0],
-+            filename,
-+        )
-+
-+        srctree = Path(self.env.app.config.qapidoc_srctree).resolve()
-+        outlines = []
-+        lcol_width = 0
-+
-+        for i, line in enumerate(content):
-+            src, lineno = content.info(i)
-+            srcpath = Path(src).resolve()
-+            srcpath = srcpath.relative_to(srctree)
-+
-+            lcol = f"{srcpath}:{lineno:04d}"
-+            lcol_width = max(lcol_width, len(lcol))
-+            outlines.append((lcol, line))
-+
-+        with open(filename, "w", encoding="UTF-8") as outfile:
-+            for lcol, rcol in outlines:
-+                outfile.write(lcol.rjust(lcol_width))
-+                outfile.write(" |")
-+                if rcol:
-+                    outfile.write(f" {rcol}")
-+                outfile.write("\n")
-+
-     def legacy(self, schema: QAPISchema) -> nodes.Element:
-         vis = QAPISchemaGenRSTVisitor(self)
-         vis.visit_begin(schema)
 -- 
 2.48.1
 
