@@ -4,102 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C98C5C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 10:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D741C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 10:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxHz-00007f-BT; Tue, 11 Mar 2025 06:56:47 -0400
+	id 1trxJk-0002GI-OT; Tue, 11 Mar 2025 06:58:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trxHx-0008VA-Lg
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:56:45 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trxHr-0005qS-1C
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:56:44 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-39127512371so2959382f8f.0
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 03:56:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741690596; x=1742295396; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YE+ZDF6UAZoVlD98S7SWWUuJGHiCd8738dOU83mR/Cc=;
- b=M6CITMOH4kB5hs0TI+87+hNtEQjaJVAslLQ2qDgKGMNSBH0QW7MPHaznC7Qo2Ds+Yl
- pthpwpStzJ/Ju0iPbWCySs+l4OPvd+jcnK9Ftx97zwGahSHHhVeo33nPhmVUB5reOdp0
- H9O61nScAAGmDKp0XCDdm3E8R/4JDqhbe9OeWfAt/GtBK0WG1I9KEckafAyETk/AKvGL
- wXsOA/RRusl6hJc77Tc4pFhy9W+dESnEG5QyzelXwZEj2GW3xagmHCj33pMlmd3ueFza
- IK6nGKRiDKcjOE//95CIsgBbQ1c9euZP0RAp4EBkTQ/dK9YEdvjEIxtDXYhxGFzLn5ew
- 3vHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741690596; x=1742295396;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YE+ZDF6UAZoVlD98S7SWWUuJGHiCd8738dOU83mR/Cc=;
- b=CoMI/E/rqaccwHuN9i4KeQGPfuxERkexVPjJc5CU8/ny6PVlhFn6A/6EpxaIZORgcL
- WXFLAxpTF9QxM5bTg66WNENz8+GlwSmvJRrsOebOrlLk0YaRhpPRnNFaQ1Z8dREUJggW
- DVnH6sX/dwU8SJxgE2I0YsPhaK439YHFAzzpMdDmSQcocx015Bvtqgh+OjfO+C1PIvcs
- QMY/Pf9kJG6PFISlfEAjrcSseU9e/udXrhNpngJ5XM7/dxa+ro+SDqlgPCjwx6FXNl9P
- wo3IlrC+DSZSjdzuzI/Hf+2JA0t+vXXNV85VvY4Yh/9yyV/axLV1PPXY1XT+JlwxKdKz
- dWgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMeu9fIeeiGbQiboJw++eAizQhun5VzazretLLVELruDJsvZMkqi8Y345pIWAF47Sqw6/oXjHGUr/N@nongnu.org
-X-Gm-Message-State: AOJu0Yw8dFhcWFqFcH76hu+RaJCgWArPRfzA9AT/ma6uV+5+UbDRcgsY
- PzTf7CgFOenuKOm+hBvo67K/7lxDOZoh6MqLHOTQxwjOTZ9t6OD6kb2ALhV+krI=
-X-Gm-Gg: ASbGnct9jajydgLfVbghEjFJhFz3E9V2u4bH7HPhAvJsdcjY3BHhF/kdDM2msEYpJ91
- /FQhXf4bac69N5bxSXMBXQUpcnGPXA7mGU0UrdfrTeYrtiToMkibkI1mxLSJOS480sM+N6m9a27
- 7V25cs4EUoil4QPddrk02I4DBlUXJnPb5nxqhbIIdzSO/+t1d9f5pTaXrSMiSlUOCVNswsI1IkK
- fcMJv2uv6R2M1egxTmkoqjYKoS39sg9Mci4eikFjKEF1hUx9VQCnbfvoTNV0g1loFDEhGgDnV06
- 9gr8t6FH77YiurBJHokLRFeFvq9s5S1gI1bCX0uL4pHm4LYy2PWaNExPIXRGDTrQwBpGP6YJ/ou
- Gzd3PKkymcaRp
-X-Google-Smtp-Source: AGHT+IEfFQo5yqJYnsT3jVMpIM3e8b6Do1ohtdVtCSLPVaZxpMT8QXqqbhyW7LqUP30GRU6N1HSDwA==
-X-Received: by 2002:a05:6000:156a:b0:391:3fd2:610f with SMTP id
- ffacd0b85a97d-392641bcbfcmr4022361f8f.13.1741690595884; 
- Tue, 11 Mar 2025 03:56:35 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c1030cfsm18089026f8f.90.2025.03.11.03.56.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 03:56:35 -0700 (PDT)
-Message-ID: <29acae00-8bf7-4347-b803-d86caee26e76@linaro.org>
-Date: Tue, 11 Mar 2025 11:56:33 +0100
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1trxJi-0002Dc-C4
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:58:34 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1trxJg-00067M-9m
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:58:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=35xgzA2vyZvZXoFcBAnyPSHNqzactHeOfN3+cNnyEzE=; b=XkJVc1o3aKvM1HAPS2FPaElCFO
+ iSZCfvBIdpqAA9HvO4cSWB2U9k+EWmtPKi7I4ZI9I61Jx27DU1ScyAIiov0cC/bGomhPHhrA4NdVZ
+ GkJTE4ZjTip0DXO4WJi+eZVU88fgPhvZ//cVnck7luRIGjM6/ttx8Q6lY66UdXGcAM5xseYb8wbPc
+ DYK5e5vR957IDdjmsZ/oXWt9oT74WmL9LyrY/aUyt6RXGa9aRIb7NhDb53N7VdJ3xoE/T6cKGnq7b
+ /BUQHtiKz3NiFVcnJ9OlTU0XmQeQ0TU2keQ62wPN20UAljaIl5500kEW0nmuTEuGBJNzA+0YjC0yq
+ gW6rIZjwik53MybMMowKoKc7MuWe0sJUDuhWue1gdzPMpddmysjlnqLKK2FuzkkxeCo3yvjqopWSW
+ vGc0JEfhzODUbD2Y4tGyX2yf6/oOzqZxu/BAjcOYKSikVWPGYFjSElqELPI9FLtsIcssad84oC82m
+ X/2IqEG0BUABEpj/L2gb3694eYKQMkUIQZZzr1nhLmJDWynX/aKWZ46tLQQ4D8InooiBeXQ5ESwvu
+ JEnYGdy/2KkdwqlRHL2C3CmLg7OWKy1YetoVov5NkqHpSulIAlYmEpjLTwUguMMaQjRDwrpYw0nSg
+ Ras9YU08gpuHT9/dzYjRZhNZORoLVupyxxOuKMFhA=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>
+Subject: Re: [PATCH 1/4] 9pfs: local : Introduce local_fid_fd() helper
+Date: Tue, 11 Mar 2025 11:58:28 +0100
+Message-ID: <23860256.nhtPhaig3F@silver>
+In-Reply-To: <20250310171101.138380-2-groug@kaod.org>
+References: <20250310171101.138380-1-groug@kaod.org>
+ <20250310171101.138380-2-groug@kaod.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/14] hw/qdev-properties-system: Include missing
- 'qapi/qapi-types-common.h'
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>
-Cc: Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Guenter Roeck <linux@roeck-us.net>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Troy Lee <leetroy@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-block@nongnu.org,
- Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20250310000620.70120-1-philmd@linaro.org>
- <20250310000620.70120-2-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250310000620.70120-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,29 +70,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Markus
-
-On 10/3/25 01:06, Philippe Mathieu-Daudé wrote:
-> DEFINE_PROP_ENDIAN_NODEFAULT() macro uses ENDIAN_MODE_UNSPECIFIED
-> which is defined in "qapi/qapi-types-common.h".
+On Monday, March 10, 2025 6:10:58 PM CET Greg Kurz wrote:
+> Factor out duplicated code to a single helper. More users to come.
 > 
-> Fixes: 4ec96630f93 ("hw/qdev-properties-system: Introduce EndianMode QAPI enum")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Greg Kurz <groug@kaod.org>
 > ---
->   include/hw/qdev-properties-system.h | 1 +
->   1 file changed, 1 insertion(+)
+>  hw/9pfs/9p-local.c | 21 +++++++++++----------
+>  1 file changed, 11 insertions(+), 10 deletions(-)
 > 
-> diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-> index b921392c525..49a3825eb46 100644
-> --- a/include/hw/qdev-properties-system.h
-> +++ b/include/hw/qdev-properties-system.h
-> @@ -1,6 +1,7 @@
->   #ifndef HW_QDEV_PROPERTIES_SYSTEM_H
->   #define HW_QDEV_PROPERTIES_SYSTEM_H
->   
-> +#include "qapi/qapi-types-common.h"
->   #include "hw/qdev-properties.h"
->   
->   bool qdev_prop_sanitize_s390x_loadparm(uint8_t *loadparm, const char *str,
+> diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+> index 928523afcc6c..c4366c867988 100644
+> --- a/hw/9pfs/9p-local.c
+> +++ b/hw/9pfs/9p-local.c
+> @@ -766,10 +766,9 @@ out:
+>      return err;
+>  }
+>  
+> -static int local_fstat(FsContext *fs_ctx, int fid_type,
+> -                       V9fsFidOpenState *fs, struct stat *stbuf)
+> +static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
+>  {
+> -    int err, fd;
+> +    int fd;
+>  
+>      if (fid_type == P9_FID_DIR) {
+>          fd = dirfd(fs->dir.stream);
+> @@ -777,6 +776,14 @@ static int local_fstat(FsContext *fs_ctx, int fid_type,
+>          fd = fs->fd;
+>      }
+>  
+> +    return fd;
+> +}
+
+Maybe simplifying this like:
+
+static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
+{
+    if (fid_type == P9_FID_DIR) {
+        return dirfd(fs->dir.stream);
+    } else {
+        return fs->fd;
+    }
+}
+
+or even just:
+
+static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
+{
+    return (fid_type == P9_FID_DIR) ? dirfd(fs->dir.stream) : return fs->fd;
+}
+
+/Christian
+
+> +
+> +static int local_fstat(FsContext *fs_ctx, int fid_type,
+> +                       V9fsFidOpenState *fs, struct stat *stbuf)
+> +{
+> +    int err, fd = local_fid_fd(fid_type, fs);
+> +
+>      err = fstat(fd, stbuf);
+>      if (err) {
+>          return err;
+> @@ -1167,13 +1174,7 @@ out:
+>  static int local_fsync(FsContext *ctx, int fid_type,
+>                         V9fsFidOpenState *fs, int datasync)
+>  {
+> -    int fd;
+> -
+> -    if (fid_type == P9_FID_DIR) {
+> -        fd = dirfd(fs->dir.stream);
+> -    } else {
+> -        fd = fs->fd;
+> -    }
+> +    int fd = local_fid_fd(fid_type, fs);
+>  
+>      if (datasync) {
+>          return qemu_fdatasync(fd);
+> 
+
 
 
