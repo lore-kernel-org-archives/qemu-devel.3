@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E54F1C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B3B9C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzOb-0000hb-KN; Tue, 11 Mar 2025 09:11:46 -0400
+	id 1trzKi-0000yJ-Le; Tue, 11 Mar 2025 09:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzM8-0004rU-3T
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:09:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzM3-0001jG-UP
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:09:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741698538;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DLBedgRZsFWvjgHM/ekL46tibum9+c7DeNR4LfA+/ng=;
- b=W4qWX936N4YupH2NcrTrVSazLk7s243U0zuUmWTM64OCr0VqSkm0EW8cERyRC0UY47fFgW
- CG6wwKV27xunIffoujxQc48RhcgO2O9+SLPsEk9GUE0GF1pgENNEJ9JT8F01Ztdu0QkaIb
- XT//SSJM1Aur94GYmkW/fbt/W5NSqJw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-BGOJxZnYNFiAWGn5o86w7Q-1; Tue,
- 11 Mar 2025 09:08:55 -0400
-X-MC-Unique: BGOJxZnYNFiAWGn5o86w7Q-1
-X-Mimecast-MFC-AGG-ID: BGOJxZnYNFiAWGn5o86w7Q_1741698533
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C53B1956050; Tue, 11 Mar 2025 13:08:53 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.91])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D9AA91800944; Tue, 11 Mar 2025 13:08:51 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzFC-0006Gp-Cq; Tue, 11 Mar 2025 09:02:08 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzF3-0000Mh-H5; Tue, 11 Mar 2025 09:02:00 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2feae794508so8087751a91.0; 
+ Tue, 11 Mar 2025 06:01:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741698110; x=1742302910; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Kxho44oluW8FOSM2HZbfWLIKk4fba+N89CNPXqjPZug=;
+ b=h0yZUFWMoACsS+KnfRChFOlDIlKuKy4+gwe/LBTZbNal55kHDUUxHe55ZbQMFFsZ+o
+ M0mxFpx0idByjce6KDUV59slq1wql3vO7vHsI4LxLZ63hD6vZw/3k7TB8XJzHrz45Dyu
+ a7nhadZaxuFbPEh/MLQLn4vrrb4X1rZRaknJztMdXa/RIS7W9OBZlxdl5wxW+Q++lb4n
+ 9FM956W5RGih43U1YxVawPWF1RUF15e23CQ1pngMYSDeLFesD52NBF4A+Hw2egvv4EIV
+ H5NNxnRUxwEKuwYH36/dln3jOa0VTxeMuoLbPQAE9fX66EZIxQaJ6KyJ4RPP4rSM9ePf
+ 1AsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741698110; x=1742302910;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Kxho44oluW8FOSM2HZbfWLIKk4fba+N89CNPXqjPZug=;
+ b=wNI13SH382S3menucWOkSwI4TCeEPpHoEyAimz39m1V2tzFScD2NduDCEnKPsrnZg5
+ Y9ASTLu45LKmk1rltH+gca+qo50aMqAsbJV568NUfbn/fqCppmHtox5ynCo5MpLCXVuN
+ 3VUkttWxnLVFyok94BvJMLk7PXmSNoKkLQnVPGupg/fxqwDC/xDd89Dh2/rwlrFx07do
+ nh+iGsr1wQl6EvYmAaRoMGej9RSgSaSQ3I8xZ/vOE3OOjU7GUNmMkaaLST6DGmfLDF6j
+ io+1TZhTXVX3y1BlzYnE7xGiPmJ+OCama8lBlOtSn/Ey13tn6cmq1wIWEP1M1WRmG6XH
+ Cv/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXqjp1nNoMzWiwKpmNhpywi9NxwdSoexCxZt1r+177Mr26lcjySIzRHjo3b2SCpoztdnSOGPlOTYw==@nongnu.org
+X-Gm-Message-State: AOJu0YwsQxy+oLyhTD7HiA1yD8rE0Z3ftHoXuRHit4eDd8Mc8RLXuvzU
+ uLq4maEfKzqLLWDKLLN6G8dZRNw1ZQfZXgPW1Gdc12i35GEuknrAQnJDgA==
+X-Gm-Gg: ASbGncsLRYeDhEKp+99iqG9WsKGxsA7kncxXybErXaCfGC+a152SdR4biJ8MEYSWGO/
+ 8DBsPYFRvjjwwmzrTXrblNpKL5awkXeA0C6gbacQq2ZgRuKFLKLNU/23ERDXecOxe7e0myYKCKP
+ ESZHsCUorXPnTLrnD4tTO3QxYv3xMaVKHPUm0yCR52s36gYr17t1nJdsC7EJfxyfmDacgxx9BCY
+ w5Qt4/Un4Ox0HEAO+hzlCDjBwAHFup5MUv4t4Kgh5gIx6ZCg6y7rF6gzeOsTgrouQG9OCw5zmWH
+ hPiycqbSGSKLz1XCC6nUkfsfhGqKYjQzul4rMkWrAI7nTUUoh/E=
+X-Google-Smtp-Source: AGHT+IEUtO7mbUqOQOnuiCu3c0l7NIXHWY4nXKZgBD+EBY6vpZWxOZ12LNzENerDYxx6zHjK+gg6IQ==
+X-Received: by 2002:a17:90b:3c8d:b0:2ee:d63f:d73 with SMTP id
+ 98e67ed59e1d1-2ff7ce6c9b5mr27223648a91.11.1741698109935; 
+ Tue, 11 Mar 2025 06:01:49 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 06:01:49 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 14/14] virtio-scsi: only expose cmd vqs via
- iothread-vq-mapping
-Date: Tue, 11 Mar 2025 21:07:41 +0800
-Message-ID: <20250311130741.1047903-15-stefanha@redhat.com>
-In-Reply-To: <20250311130741.1047903-1-stefanha@redhat.com>
-References: <20250311130741.1047903-1-stefanha@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 67/72] ppc/amigaone: Simplify replacement dummy_fw
+Date: Tue, 11 Mar 2025 22:58:01 +1000
+Message-ID: <20250311125815.903177-68-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
+References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,98 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Krempa and Kevin Wolf observed that iothread-vq-mapping is
-confusing to use because the control and event virtqueues have a fixed
-location before the command virtqueues but need to be treated
-differently.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Only expose the command virtqueues via iothread-vq-mapping so that the
-command-line parameter is intuitive: it controls where SCSI requests are
-processed.
+There's no need to do shift in a loop, doing it in one instruction
+works just as well, only the result is used.
 
-The control virtqueue needs to be hardcoded to the main loop thread for
-technical reasons anyway. Kevin also pointed out that it's better to
-place the event virtqueue in the main loop thread since its no poll
-behavior would prevent polling if assigned to an IOThread.
-
-This change is its own commit to avoid squashing the previous commit.
-
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Suggested-by: Peter Krempa <pkrempa@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Message-ID: <446bf740cbb99422be2cc5a31e51a1034eddded7.1740673173.git.balaton@eik.bme.hu>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/scsi/virtio-scsi-dataplane.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ hw/ppc/amigaone.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-index 2d37fa6712..95f13fb7c2 100644
---- a/hw/scsi/virtio-scsi-dataplane.c
-+++ b/hw/scsi/virtio-scsi-dataplane.c
-@@ -28,7 +28,6 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
--    uint16_t num_vqs = vs->conf.num_queues + VIRTIO_SCSI_VQ_NUM_FIXED;
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index b02792221c..4290d58613 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -41,10 +41,7 @@
  
-     if (vs->conf.iothread && vs->conf.iothread_vq_mapping_list) {
-         error_setg(errp,
-@@ -50,35 +49,43 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
-         }
-     }
- 
--    s->vq_aio_context = g_new(AioContext *, num_vqs);
-+    s->vq_aio_context = g_new(AioContext *, vs->conf.num_queues +
-+                                            VIRTIO_SCSI_VQ_NUM_FIXED);
-+
-+    /*
-+     * Handle the ctrl virtqueue in the main loop thread where device resets
-+     * can be performed.
-+     */
-+    s->vq_aio_context[0] = qemu_get_aio_context();
-+
-+    /*
-+     * Handle the event virtqueue in the main loop thread where its no_poll
-+     * behavior won't stop IOThread polling.
-+     */
-+    s->vq_aio_context[1] = qemu_get_aio_context();
- 
-     if (vs->conf.iothread_vq_mapping_list) {
-         if (!iothread_vq_mapping_apply(vs->conf.iothread_vq_mapping_list,
--                                       s->vq_aio_context, num_vqs, errp)) {
-+                    &s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED],
-+                    vs->conf.num_queues, errp)) {
-             g_free(s->vq_aio_context);
-             s->vq_aio_context = NULL;
-             return;
-         }
-     } else if (vs->conf.iothread) {
-         AioContext *ctx = iothread_get_aio_context(vs->conf.iothread);
--        for (uint16_t i = 0; i < num_vqs; i++) {
--            s->vq_aio_context[i] = ctx;
-+        for (uint16_t i = 0; i < vs->conf.num_queues; i++) {
-+            s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] = ctx;
-         }
- 
-         /* Released in virtio_scsi_dataplane_cleanup() */
-         object_ref(OBJECT(vs->conf.iothread));
-     } else {
-         AioContext *ctx = qemu_get_aio_context();
--        for (unsigned i = 0; i < num_vqs; i++) {
--            s->vq_aio_context[i] = ctx;
-+        for (unsigned i = 0; i < vs->conf.num_queues; i++) {
-+            s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] = ctx;
-         }
-     }
--
--    /*
--     * Always handle the ctrl virtqueue in the main loop thread where device
--     * resets can be performed.
--     */
--    s->vq_aio_context[0] = qemu_get_aio_context();
- }
- 
- /* Context: BQL held */
+ /* AmigaOS calls this routine from ROM, use this if no firmware loaded */
+ static const char dummy_fw[] = {
+-    0x38, 0x00, 0x00, 0x08, /* li      r0,8 */
+-    0x7c, 0x09, 0x03, 0xa6, /* mtctr   r0 */
+-    0x54, 0x63, 0xf8, 0x7e, /* srwi    r3,r3,1 */
+-    0x42, 0x00, 0xff, 0xfc, /* bdnz    0x8 */
++    0x54, 0x63, 0xc2, 0x3e, /* srwi    r3,r3,8 */
+     0x7c, 0x63, 0x18, 0xf8, /* not     r3,r3 */
+     0x4e, 0x80, 0x00, 0x20, /* blr */
+ };
 -- 
-2.48.1
+2.47.1
 
 
