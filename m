@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F05AC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1470AC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzeB-0002ui-Ay; Tue, 11 Mar 2025 09:27:52 -0400
+	id 1trzeq-00056h-Vc; Tue, 11 Mar 2025 09:28:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzdK-0002Hb-61
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:27:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1trzdt-0002s7-7Y
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:27:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzdA-0005DM-2K
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:26:57 -0400
+ id 1trzdl-0005Ln-Gx
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:27:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741699606;
+ s=mimecast20190719; t=1741699643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rLmh01chR4pJz9pfvW5Ge56La3He1Nnf711wKnicLcw=;
- b=bOkl/pfhliZce9msEa3biopDA3ZUIzuAuVE6Apg5F+4r+fF9nQ7I6Cq/dBNbDBWxfUxJ5s
- HyEIE32IhM433Tdlh0NB2BdyGtxGEeoBUitu0A7pm8U9oBMVnzeYJRfu6rBODHOPS+R1H5
- KW8L2zyut8s0LOQtGKJRsF++xPAMAd0=
+ bh=w9m9I6ZVlZyAekweXONgksNVJiGxrQd+tXwkplLtEsg=;
+ b=BL0SL8hbMpf5lgqm9WmzIULTEMkTlKSx9mIMrE7nWbHWWWvuCj7m1TQTBujON1phe2RhUn
+ nKwXvplhLPJ3HmTU67xAGMQhY4KW1Us25K8UAvRKPlqIeOuBlJe0uF3QVqMi7b0uv6kIZI
+ r2EZdbEf3nLgqfc/Uj4ALyGUP/12UE8=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-MEn9xl2LMqKT58FLIMKEqQ-1; Tue,
- 11 Mar 2025 09:26:42 -0400
-X-MC-Unique: MEn9xl2LMqKT58FLIMKEqQ-1
-X-Mimecast-MFC-AGG-ID: MEn9xl2LMqKT58FLIMKEqQ_1741699600
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-I5tcQ69NP8Wb3T6S2P9YgA-1; Tue,
+ 11 Mar 2025 09:27:20 -0400
+X-MC-Unique: I5tcQ69NP8Wb3T6S2P9YgA-1
+X-Mimecast-MFC-AGG-ID: I5tcQ69NP8Wb3T6S2P9YgA_1741699638
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3F3B1800A36; Tue, 11 Mar 2025 13:26:40 +0000 (UTC)
+ id 3CA58180AF49; Tue, 11 Mar 2025 13:27:18 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.118])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 19C831828A92; Tue, 11 Mar 2025 13:26:38 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5CEC21955BCB; Tue, 11 Mar 2025 13:27:15 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -56,24 +56,24 @@ Cc: John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  pkrempa@redhat.com, Fam Zheng <fam@euphon.net>, <qemu-block@nongnu.org>,
  David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v4 04/13] scsi: introduce requests_lock
-Date: Tue, 11 Mar 2025 21:26:07 +0800
-Message-ID: <20250311132616.1049687-5-stefanha@redhat.com>
+Subject: [PATCH v4 12/13] virtio-scsi: handle ctrl virtqueue in main loop
+Date: Tue, 11 Mar 2025 21:26:15 +0800
+Message-ID: <20250311132616.1049687-13-stefanha@redhat.com>
 In-Reply-To: <20250311132616.1049687-1-stefanha@redhat.com>
 References: <20250311132616.1049687-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,237 +89,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SCSIDevice keeps track of in-flight requests for device reset and Task
-Management Functions (TMFs). The request list requires protection so
-that multi-threaded SCSI emulation can be implemented in commits that
-follow.
+Previously the ctrl virtqueue was handled in the AioContext where SCSI
+requests are processed. When IOThread Virtqueue Mapping was added things
+become more complicated because SCSI requests could run in other
+AioContexts.
+
+Simplify by handling the ctrl virtqueue in the main loop where reset
+operations can be performed. Note that BHs are still used canceling SCSI
+requests in their AioContexts but at least the mean loop activity
+doesn't need BHs anymore.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/hw/scsi/scsi.h |   7 ++-
- hw/scsi/scsi-bus.c     | 120 +++++++++++++++++++++++++++++------------
- 2 files changed, 88 insertions(+), 39 deletions(-)
+ include/hw/virtio/virtio-scsi.h |   8 --
+ hw/scsi/virtio-scsi-dataplane.c |   6 ++
+ hw/scsi/virtio-scsi.c           | 144 ++++++--------------------------
+ 3 files changed, 33 insertions(+), 125 deletions(-)
 
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index ffc48203f9..90ee192b4d 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -49,6 +49,8 @@ struct SCSIRequest {
-     bool              dma_started;
-     BlockAIOCB        *aiocb;
-     QEMUSGList        *sg;
-+
-+    /* Protected by SCSIDevice->requests_lock */
-     QTAILQ_ENTRY(SCSIRequest) next;
- };
+diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
+index 086201efa2..31e852ed6c 100644
+--- a/include/hw/virtio/virtio-scsi.h
++++ b/include/hw/virtio/virtio-scsi.h
+@@ -90,14 +90,6 @@ struct VirtIOSCSI {
  
-@@ -77,10 +79,7 @@ struct SCSIDevice
-     uint8_t sense[SCSI_SENSE_BUF_SIZE];
-     uint32_t sense_len;
+     QemuMutex ctrl_lock; /* protects ctrl_vq */
  
 -    /*
--     * The requests list is only accessed from the AioContext that executes
--     * requests or from the main loop when IOThread processing is stopped.
+-     * TMFs deferred to main loop BH. These fields are protected by
+-     * tmf_bh_lock.
 -     */
-+    QemuMutex requests_lock; /* protects the requests list */
-     QTAILQ_HEAD(, SCSIRequest) requests;
+-    QemuMutex tmf_bh_lock;
+-    QEMUBH *tmf_bh;
+-    QTAILQ_HEAD(, VirtIOSCSIReq) tmf_bh_list;
+-
+     /* Fields for dataplane below */
+     AioContext **vq_aio_context; /* per-virtqueue AioContext pointer */
  
-     uint32_t channel;
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 846bbbf0ec..ece1107ee8 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -100,8 +100,15 @@ static void scsi_device_for_each_req_sync(SCSIDevice *s,
-     assert(!runstate_is_running());
-     assert(qemu_in_main_thread());
- 
--    QTAILQ_FOREACH_SAFE(req, &s->requests, next, next_req) {
--        fn(req, opaque);
-+    /*
-+     * Locking is not necessary because the guest is stopped and no other
-+     * threads can be accessing the requests list, but take the lock for
-+     * consistency.
-+     */
-+    WITH_QEMU_LOCK_GUARD(&s->requests_lock) {
-+        QTAILQ_FOREACH_SAFE(req, &s->requests, next, next_req) {
-+            fn(req, opaque);
-+        }
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index 6bb368c8a5..2d37fa6712 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -73,6 +73,12 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+             s->vq_aio_context[i] = ctx;
+         }
      }
++
++    /*
++     * Always handle the ctrl virtqueue in the main loop thread where device
++     * resets can be performed.
++     */
++    s->vq_aio_context[0] = qemu_get_aio_context();
  }
  
-@@ -115,21 +122,29 @@ static void scsi_device_for_each_req_async_bh(void *opaque)
+ /* Context: BQL held */
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 9f61eb97db..d9c32c3245 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -319,115 +319,6 @@ static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
+     g_free(n);
+ }
+ 
+-static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
+-{
+-    VirtIOSCSI *s = req->dev;
+-    SCSIDevice *d = virtio_scsi_device_get(s, req->req.tmf.lun);
+-    BusChild *kid;
+-    int target;
+-
+-    switch (req->req.tmf.subtype) {
+-    case VIRTIO_SCSI_T_TMF_LOGICAL_UNIT_RESET:
+-        if (!d) {
+-            req->resp.tmf.response = VIRTIO_SCSI_S_BAD_TARGET;
+-            goto out;
+-        }
+-        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
+-            req->resp.tmf.response = VIRTIO_SCSI_S_INCORRECT_LUN;
+-            goto out;
+-        }
+-        qatomic_inc(&s->resetting);
+-        device_cold_reset(&d->qdev);
+-        qatomic_dec(&s->resetting);
+-        break;
+-
+-    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET:
+-        target = req->req.tmf.lun[1];
+-        qatomic_inc(&s->resetting);
+-
+-        rcu_read_lock();
+-        QTAILQ_FOREACH_RCU(kid, &s->bus.qbus.children, sibling) {
+-            SCSIDevice *d1 = SCSI_DEVICE(kid->child);
+-            if (d1->channel == 0 && d1->id == target) {
+-                device_cold_reset(&d1->qdev);
+-            }
+-        }
+-        rcu_read_unlock();
+-
+-        qatomic_dec(&s->resetting);
+-        break;
+-
+-    default:
+-        g_assert_not_reached();
+-    }
+-
+-out:
+-    object_unref(OBJECT(d));
+-    virtio_scsi_complete_req(req, &s->ctrl_lock);
+-}
+-
+-/* Some TMFs must be processed from the main loop thread */
+-static void virtio_scsi_do_tmf_bh(void *opaque)
+-{
+-    VirtIOSCSI *s = opaque;
+-    QTAILQ_HEAD(, VirtIOSCSIReq) reqs = QTAILQ_HEAD_INITIALIZER(reqs);
+-    VirtIOSCSIReq *req;
+-    VirtIOSCSIReq *tmp;
+-
+-    GLOBAL_STATE_CODE();
+-
+-    WITH_QEMU_LOCK_GUARD(&s->tmf_bh_lock) {
+-        QTAILQ_FOREACH_SAFE(req, &s->tmf_bh_list, next, tmp) {
+-            QTAILQ_REMOVE(&s->tmf_bh_list, req, next);
+-            QTAILQ_INSERT_TAIL(&reqs, req, next);
+-        }
+-
+-        qemu_bh_delete(s->tmf_bh);
+-        s->tmf_bh = NULL;
+-    }
+-
+-    QTAILQ_FOREACH_SAFE(req, &reqs, next, tmp) {
+-        QTAILQ_REMOVE(&reqs, req, next);
+-        virtio_scsi_do_one_tmf_bh(req);
+-    }
+-}
+-
+-static void virtio_scsi_reset_tmf_bh(VirtIOSCSI *s)
+-{
+-    VirtIOSCSIReq *req;
+-    VirtIOSCSIReq *tmp;
+-
+-    GLOBAL_STATE_CODE();
+-
+-    /* Called after ioeventfd has been stopped, so tmf_bh_lock is not needed */
+-    if (s->tmf_bh) {
+-        qemu_bh_delete(s->tmf_bh);
+-        s->tmf_bh = NULL;
+-    }
+-
+-    QTAILQ_FOREACH_SAFE(req, &s->tmf_bh_list, next, tmp) {
+-        QTAILQ_REMOVE(&s->tmf_bh_list, req, next);
+-
+-        /* SAM-6 6.3.2 Hard reset */
+-        req->resp.tmf.response = VIRTIO_SCSI_S_TARGET_FAILURE;
+-        virtio_scsi_complete_req(req, &req->dev->ctrl_lock);
+-    }
+-}
+-
+-static void virtio_scsi_defer_tmf_to_main_loop(VirtIOSCSIReq *req)
+-{
+-    VirtIOSCSI *s = req->dev;
+-
+-    WITH_QEMU_LOCK_GUARD(&s->tmf_bh_lock) {
+-        QTAILQ_INSERT_TAIL(&s->tmf_bh_list, req, next);
+-
+-        if (!s->tmf_bh) {
+-            s->tmf_bh = qemu_bh_new(virtio_scsi_do_tmf_bh, s);
+-            qemu_bh_schedule(s->tmf_bh);
+-        }
+-    }
+-}
+-
+ static void virtio_scsi_tmf_cancel_req(VirtIOSCSIReq *tmf, SCSIRequest *r)
  {
-     g_autofree SCSIDeviceForEachReqAsyncData *data = opaque;
-     SCSIDevice *s = data->s;
--    AioContext *ctx;
--    SCSIRequest *req;
--    SCSIRequest *next;
-+    g_autoptr(GList) reqs = NULL;
+     VirtIOSCSICancelNotifier *notifier;
+@@ -627,11 +518,35 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+         break;
  
-     /*
--     * The BB cannot have changed contexts between this BH being scheduled and
--     * now: BBs' AioContexts, when they have a node attached, can only be
--     * changed via bdrv_try_change_aio_context(), in a drained section.  While
--     * we have the in-flight counter incremented, that drain must block.
-+     * Build a list of requests in this AioContext so fn() can be invoked later
-+     * outside requests_lock.
-      */
--    ctx = blk_get_aio_context(s->conf.blk);
--    assert(ctx == qemu_get_current_aio_context());
-+    WITH_QEMU_LOCK_GUARD(&s->requests_lock) {
-+        AioContext *ctx = qemu_get_current_aio_context();
-+        SCSIRequest *req;
-+        SCSIRequest *next;
+     case VIRTIO_SCSI_T_TMF_LOGICAL_UNIT_RESET:
+-    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET:
+-        virtio_scsi_defer_tmf_to_main_loop(req);
+-        ret = -EINPROGRESS;
++        if (!d) {
++            goto fail;
++        }
++        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
++            goto incorrect_lun;
++        }
++        qatomic_inc(&s->resetting);
++        device_cold_reset(&d->qdev);
++        qatomic_dec(&s->resetting);
+         break;
  
--    QTAILQ_FOREACH_SAFE(req, &s->requests, next, next) {
--        data->fn(req, data->fn_opaque);
-+        QTAILQ_FOREACH_SAFE(req, &s->requests, next, next) {
-+            if (req->ctx == ctx) {
-+                scsi_req_ref(req); /* dropped after calling fn() */
-+                reqs = g_list_prepend(reqs, req);
++    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET: {
++        BusChild *kid;
++        int target = req->req.tmf.lun[1];
++        qatomic_inc(&s->resetting);
++
++        rcu_read_lock();
++        QTAILQ_FOREACH_RCU(kid, &s->bus.qbus.children, sibling) {
++            SCSIDevice *d1 = SCSI_DEVICE(kid->child);
++            if (d1->channel == 0 && d1->id == target) {
++                device_cold_reset(&d1->qdev);
 +            }
 +        }
++        rcu_read_unlock();
++
++        qatomic_dec(&s->resetting);
++        break;
 +    }
 +
-+    /* Call fn() on each request */
-+    for (GList *elem = g_list_first(reqs); elem; elem = g_list_next(elem)) {
-+        data->fn(elem->data, data->fn_opaque);
-+        scsi_req_unref(elem->data);
-     }
+     case VIRTIO_SCSI_T_TMF_ABORT_TASK_SET:
+     case VIRTIO_SCSI_T_TMF_CLEAR_TASK_SET: {
+         g_autoptr(GHashTable) aio_contexts = g_hash_table_new(NULL, NULL);
+@@ -1087,7 +1002,6 @@ static void virtio_scsi_reset(VirtIODevice *vdev)
  
-     /* Drop the reference taken by scsi_device_for_each_req_async() */
-@@ -139,9 +154,35 @@ static void scsi_device_for_each_req_async_bh(void *opaque)
-     blk_dec_in_flight(s->conf.blk);
- }
+     assert(!s->dataplane_started);
  
-+static void scsi_device_for_each_req_async_do_ctx(gpointer key, gpointer value,
-+                                                  gpointer user_data)
-+{
-+    AioContext *ctx = key;
-+    SCSIDeviceForEachReqAsyncData *params = user_data;
-+    SCSIDeviceForEachReqAsyncData *data;
-+
-+    data = g_new(SCSIDeviceForEachReqAsyncData, 1);
-+    data->s = params->s;
-+    data->fn = params->fn;
-+    data->fn_opaque = params->fn_opaque;
-+
-+    /*
-+     * Hold a reference to the SCSIDevice until
-+     * scsi_device_for_each_req_async_bh() finishes.
-+     */
-+    object_ref(OBJECT(data->s));
-+
-+    /* Paired with scsi_device_for_each_req_async_bh() */
-+    blk_inc_in_flight(data->s->conf.blk);
-+
-+    aio_bh_schedule_oneshot(ctx, scsi_device_for_each_req_async_bh, data);
-+}
-+
- /*
-  * Schedule @fn() to be invoked for each enqueued request in device @s. @fn()
-- * runs in the AioContext that is executing the request.
-+ * must be thread-safe because it runs concurrently in each AioContext that is
-+ * executing a request.
-+ *
-  * Keeps the BlockBackend's in-flight counter incremented until everything is
-  * done, so draining it will settle all scheduled @fn() calls.
-  */
-@@ -151,24 +192,26 @@ static void scsi_device_for_each_req_async(SCSIDevice *s,
+-    virtio_scsi_reset_tmf_bh(s);
+     virtio_scsi_flush_defer_tmf_to_aio_context(s);
+ 
+     qatomic_inc(&s->resetting);
+@@ -1402,10 +1316,8 @@ static void virtio_scsi_device_realize(DeviceState *dev, Error **errp)
+     VirtIOSCSI *s = VIRTIO_SCSI(dev);
+     Error *err = NULL;
+ 
+-    QTAILQ_INIT(&s->tmf_bh_list);
+     qemu_mutex_init(&s->ctrl_lock);
+     qemu_mutex_init(&s->event_lock);
+-    qemu_mutex_init(&s->tmf_bh_lock);
+ 
+     virtio_scsi_common_realize(dev,
+                                virtio_scsi_handle_ctrl,
+@@ -1445,11 +1357,9 @@ static void virtio_scsi_device_unrealize(DeviceState *dev)
  {
-     assert(qemu_in_main_thread());
+     VirtIOSCSI *s = VIRTIO_SCSI(dev);
  
--    SCSIDeviceForEachReqAsyncData *data =
--        g_new(SCSIDeviceForEachReqAsyncData, 1);
-+    /* The set of AioContexts where the requests are being processed */
-+    g_autoptr(GHashTable) aio_contexts = g_hash_table_new(NULL, NULL);
-+    WITH_QEMU_LOCK_GUARD(&s->requests_lock) {
-+        SCSIRequest *req;
-+        QTAILQ_FOREACH(req, &s->requests, next) {
-+            g_hash_table_add(aio_contexts, req->ctx);
-+        }
-+    }
- 
--    data->s = s;
--    data->fn = fn;
--    data->fn_opaque = opaque;
--
--    /*
--     * Hold a reference to the SCSIDevice until
--     * scsi_device_for_each_req_async_bh() finishes.
--     */
--    object_ref(OBJECT(s));
--
--    /* Paired with blk_dec_in_flight() in scsi_device_for_each_req_async_bh() */
--    blk_inc_in_flight(s->conf.blk);
--    aio_bh_schedule_oneshot(blk_get_aio_context(s->conf.blk),
--                            scsi_device_for_each_req_async_bh,
--                            data);
-+    /* Schedule a BH for each AioContext */
-+    SCSIDeviceForEachReqAsyncData params = {
-+        .s = s,
-+        .fn = fn,
-+        .fn_opaque = opaque,
-+    };
-+    g_hash_table_foreach(
-+            aio_contexts,
-+            scsi_device_for_each_req_async_do_ctx,
-+            &params
-+    );
+-    virtio_scsi_reset_tmf_bh(s);
+     virtio_scsi_dataplane_cleanup(s);
+     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
+     virtio_scsi_common_unrealize(dev);
+-    qemu_mutex_destroy(&s->tmf_bh_lock);
+     qemu_mutex_destroy(&s->event_lock);
+     qemu_mutex_destroy(&s->ctrl_lock);
  }
- 
- static void scsi_device_realize(SCSIDevice *s, Error **errp)
-@@ -349,6 +392,7 @@ static void scsi_qdev_realize(DeviceState *qdev, Error **errp)
-         dev->lun = lun;
-     }
- 
-+    qemu_mutex_init(&dev->requests_lock);
-     QTAILQ_INIT(&dev->requests);
-     scsi_device_realize(dev, &local_err);
-     if (local_err) {
-@@ -369,6 +413,8 @@ static void scsi_qdev_unrealize(DeviceState *qdev)
- 
-     scsi_device_purge_requests(dev, SENSE_CODE(NO_SENSE));
- 
-+    qemu_mutex_destroy(&dev->requests_lock);
-+
-     scsi_device_unrealize(dev);
- 
-     blockdev_mark_auto_del(dev->conf.blk);
-@@ -965,7 +1011,10 @@ static void scsi_req_enqueue_internal(SCSIRequest *req)
-         req->sg = NULL;
-     }
-     req->enqueued = true;
--    QTAILQ_INSERT_TAIL(&req->dev->requests, req, next);
-+
-+    WITH_QEMU_LOCK_GUARD(&req->dev->requests_lock) {
-+        QTAILQ_INSERT_TAIL(&req->dev->requests, req, next);
-+    }
- }
- 
- int32_t scsi_req_enqueue(SCSIRequest *req)
-@@ -985,7 +1034,9 @@ static void scsi_req_dequeue(SCSIRequest *req)
-     trace_scsi_req_dequeue(req->dev->id, req->lun, req->tag);
-     req->retry = false;
-     if (req->enqueued) {
--        QTAILQ_REMOVE(&req->dev->requests, req, next);
-+        WITH_QEMU_LOCK_GUARD(&req->dev->requests_lock) {
-+            QTAILQ_REMOVE(&req->dev->requests, req, next);
-+        }
-         req->enqueued = false;
-         scsi_req_unref(req);
-     }
-@@ -1962,8 +2013,7 @@ static void scsi_device_class_init(ObjectClass *klass, void *data)
- 
- static void scsi_dev_instance_init(Object *obj)
- {
--    DeviceState *dev = DEVICE(obj);
--    SCSIDevice *s = SCSI_DEVICE(dev);
-+    SCSIDevice *s = SCSI_DEVICE(obj);
- 
-     device_add_bootindex_property(obj, &s->conf.bootindex,
-                                   "bootindex", NULL,
 -- 
 2.48.1
 
