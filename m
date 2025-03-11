@@ -4,75 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23CBCC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F4BC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzKw-0002Sa-Vy; Tue, 11 Mar 2025 09:07:59 -0400
+	id 1trzIu-00034F-29; Tue, 11 Mar 2025 09:05:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzKu-0002OO-V8
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:07:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzKs-0001X4-LG
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:07:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741698473;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=S5ah7wwVDmAwIByLuIRvpKyrLCczo4QpepdYveSxAe8=;
- b=DPbSNTy2Mq4a9Ph9aZHAC80K7YM4y6E6drQfojpfJbumY00IhO5iKZFS2/vThx7eGNiMH6
- rl9pZeFgY/+Fr6LFbC+3KGJO4NuzDOJ+ej3s7GJY8IIaxpK7O/6wIipCY7oTD1gD3Tj9a3
- rIzLng2BZEtphklnQEYjTjQnpC0b8oI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-15-WyQUcPdlNJmVWh7aLn9fgw-1; Tue,
- 11 Mar 2025 09:07:49 -0400
-X-MC-Unique: WyQUcPdlNJmVWh7aLn9fgw-1
-X-Mimecast-MFC-AGG-ID: WyQUcPdlNJmVWh7aLn9fgw_1741698468
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4AE0419560BA; Tue, 11 Mar 2025 13:07:47 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.91])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8D9841955BCB; Tue, 11 Mar 2025 13:07:44 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzEe-0005XO-A0; Tue, 11 Mar 2025 09:01:30 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzEa-0000Gv-LY; Tue, 11 Mar 2025 09:01:27 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2f9d3d0f55dso8228505a91.1; 
+ Tue, 11 Mar 2025 06:01:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741698082; x=1742302882; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vyXD5UzpUW0YaKhAXXjbHUshaxnE47RC+WIYwrc3gYk=;
+ b=XNEiM5gAK3OsrCtpEp9VMs0G3iu5Tq/2ANyAqtl3CYwKX6ZgfYok9UUxHbl7chuT92
+ uM0bBm8wkPe9KyIfvZKN/21/iSVmB5rJHRlkFd0vA4Ppyhz4Kw4Nn47BRF6YzTkofqbi
+ NVo0zEYLSC/W0f3YkbKD7b7Tfbw25diI71DVQgWbGzFUjHB4p5njY5Ytnohxvc/8GkUU
+ 2dzOTTRLXw0+X0TEq8XcVhYmc8d3Q5yvnPCogkV7AYdroN+4G+b/B9cXBSHnyuLauSPk
+ Y9n11kYeNkaehkLp86eXaQHxYtjer2zy/wj+vu70RXJVKWEMfVNolPW0iPkq8PqVkXy0
+ YpQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741698082; x=1742302882;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vyXD5UzpUW0YaKhAXXjbHUshaxnE47RC+WIYwrc3gYk=;
+ b=I+fcPISZ4fcYobtykJZY9vkq2qOjluiPbhSvuCbtLohl9DjaeTIkG0ypfy1TnvFMXK
+ 5hv7O+7sflQd92OYEvOX6elIry7d0+5mxeQn9M9oiiMz7kBONf0E/FT+iJY9+onVfAKB
+ Sp/swthvplZYuMSCHJEQXuPZ0i6tjMlUJ5dR3l//51I+FxCJflPzyLngNxtGwB6P5c0p
+ 7frU0mjMdcI+FQEtTjHQZI+oZXYOCen7HBsxLo2CRWDXA9/DTdd/XI/cNUjURXV1wEPl
+ t42UXLGpv7qV/+8kTXanR3ALsGAxvhOywS4OzHCU5ib566SFN5g7M09qDg4R8FznqdHH
+ dIDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVV+7Nee8sdnDcyLt5o6eFppOv1YXdl0xtNq5WnVe0GIQm8d3y9YBByKCFT/d9XOzF0CjLjKRDcw==@nongnu.org
+X-Gm-Message-State: AOJu0YwsMqaK3K1WkK5s75n/z6TZCXp/TOcnUbmr9Ei2C00H+CCXkLne
+ 6/YLwJgIQXsc6+0kYFI2PGfnVpuUFTghG/DBTexiR7aBCP9/AWG6/4q8Vg==
+X-Gm-Gg: ASbGncs4W9QeT58sB1W+K6e0ed7kzeYi+dac0/a2Zwdkd7OAVhle873Z5JkRKkzx9lh
+ qio0oenhN2JETzxytcvy4z8bw5Y0NUVZqets6G49QmOFh1+ox0yejO5C9xLAzahd+ni1LXyaPbW
+ ViW34OzKmQ3U7hVr2yD779EMZw4D27PprW3ThX0gRocraJEFwxsxXYGVQ3MGGI9jJur0JPm/uT1
+ hSu6L3oM8etI7zH1i5xaUz5WT7O7JDJTn2WHg6g8Zq+vMzxG6Y3g/8Czu0AZdza65l+0R4tcdYR
+ tqCMQ1lSzp2/fSTmTXLU911t2uhYpd7ipsK5O3iruCNHCvsLakWF9RESTwSv6A==
+X-Google-Smtp-Source: AGHT+IEMJZBUgVnye9Cur+e6qLx66fIs3LKKWKwiYdXdizHq23zqK1Kp7v7WjIVSvGuGTSNK+VlNvw==
+X-Received: by 2002:a17:90b:38cd:b0:2ee:741c:e9f4 with SMTP id
+ 98e67ed59e1d1-2ff7ce8e5dfmr26796090a91.11.1741698080776; 
+ Tue, 11 Mar 2025 06:01:20 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 06:01:20 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 00/14] virtio-scsi: add iothread-vq-mapping parameter
-Date: Tue, 11 Mar 2025 21:07:27 +0800
-Message-ID: <20250311130741.1047903-1-stefanha@redhat.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 57/72] hw/ppc/spapr: Convert CLEAN_HPTE() macro as
+ hpte_set_clean() method
+Date: Tue, 11 Mar 2025 22:57:51 +1000
+Message-ID: <20250311125815.903177-58-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
+References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,101 +102,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3:
-- Use vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED] as the AioContext for the Block
-  Backend [Kevin]
-v2:
-- Only expose cmd vqs via iothread-vq-mapping [Kevin, Peter]
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Implement --device virtio-scsi-pci,iothread-vq-mapping= support so that
-virtqueues can be assigned to different IOThreads. This improves SMP guest
-scalability where I/O-intensive applications can become bottlenecked on a
-single IOThread.
+Convert CLEAN_HPTE() macro as hpte_set_clean() method.
 
-The following benchmark results show the effect of iothread-vq-mapping. fio
-randread 4k iodepth=64 results from a 4 vCPU guest with an Intel P4800X SSD:
-iothreads IOPS
-------------------------------
-1         189576
-2         312698
-4         346744
+sPAPR data structures including the hash page table are big-endian
+regardless of current CPU endian mode, so use the big-endian LD/ST
+API to access the hash PTEs.
 
-The virtio-scsi device model and core SCSI emulation currently assume that
-requests are processed in a single AioContext. This patch series goes about
-modifying this as follows:
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-ID: <20241220213103.6314-5-philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/spapr.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-scsi-disk: drop unused SCSIDiskState->bh field
-dma: use current AioContext for dma_blk_io()
-
-Make dma-helpers.c support the QEMU multi-queue block layer by using
-qemu_get_current_aio_context().
-
-scsi: track per-SCSIRequest AioContext
-scsi: introduce requests_lock
-
-Make the core SCSI emulation code support processing requests in multiple
-AioContexts by protecting the per-SCSIDevice requests list.
-
-virtio-scsi: introduce event and ctrl virtqueue locks
-virtio-scsi: protect events_dropped field
-virtio-scsi: perform TMFs in appropriate AioContexts
-
-Make the virtio-scsi emulation code support processing requests in multiple
-AioContexts. The event and ctrl virtqueues can interact with multiple
-AioContexts. Especially the SCSI Task Management Functions (TMFs) handled by
-the ctrl virtqueue need to be made thread-safe.
-
-virtio-blk: extract cleanup_iothread_vq_mapping() function
-virtio-blk: tidy up iothread_vq_mapping functions
-virtio: extract iothread-vq-mapping.h API
-virtio-scsi: add iothread-vq-mapping parameter
-
-Port over the iothread-vq-mapping qdev property from virtio-blk to virtio-scsi.
-
-virtio-scsi: handle ctrl virtqueue in main loop
-
-Simplify TMF handling now that there is no longer a single AioContext where all
-requests are processed.
-
-virtio-scsi: only expose cmd vqs via iothread-vq-mapping
-
-Make the user interface more intuitive.
-
-Stefan Hajnoczi (14):
-  scsi-disk: drop unused SCSIDiskState->bh field
-  dma: use current AioContext for dma_blk_io()
-  scsi: track per-SCSIRequest AioContext
-  scsi: introduce requests_lock
-  virtio-scsi: introduce event and ctrl virtqueue locks
-  virtio-scsi: protect events_dropped field
-  virtio-scsi: perform TMFs in appropriate AioContexts
-  virtio-blk: extract cleanup_iothread_vq_mapping() function
-  virtio-blk: tidy up iothread_vq_mapping functions
-  virtio: extract iothread-vq-mapping.h API
-  virtio-scsi: add iothread-vq-mapping parameter
-  fixup! virtio-scsi: add iothread-vq-mapping parameter
-  virtio-scsi: handle ctrl virtqueue in main loop
-  virtio-scsi: only expose cmd vqs via iothread-vq-mapping
-
- include/hw/scsi/scsi.h                  |   8 +-
- include/hw/virtio/iothread-vq-mapping.h |  45 ++
- include/hw/virtio/virtio-scsi.h         |  15 +-
- include/system/dma.h                    |   3 +-
- hw/block/virtio-blk.c                   | 132 +-----
- hw/ide/core.c                           |   3 +-
- hw/ide/macio.c                          |   3 +-
- hw/scsi/scsi-bus.c                      | 121 ++++--
- hw/scsi/scsi-disk.c                     |  24 +-
- hw/scsi/virtio-scsi-dataplane.c         | 103 +++--
- hw/scsi/virtio-scsi.c                   | 542 ++++++++++++++----------
- hw/virtio/iothread-vq-mapping.c         | 131 ++++++
- system/dma-helpers.c                    |   8 +-
- hw/virtio/meson.build                   |   1 +
- 14 files changed, 683 insertions(+), 456 deletions(-)
- create mode 100644 include/hw/virtio/iothread-vq-mapping.h
- create mode 100644 hw/virtio/iothread-vq-mapping.c
-
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index dd81398445..3568a97045 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1419,7 +1419,12 @@ static bool hpte_is_dirty(SpaprMachineState *s, unsigned index)
+     return ldq_be_p(hpte_get_ptr(s, index)) & HPTE64_V_HPTE_DIRTY;
+ }
+ 
+-#define CLEAN_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) &= tswap64(~HPTE64_V_HPTE_DIRTY))
++static void hpte_set_clean(SpaprMachineState *s, unsigned index)
++{
++    stq_be_p(hpte_get_ptr(s, index),
++             ldq_be_p(hpte_get_ptr(s, index)) & ~HPTE64_V_HPTE_DIRTY);
++}
++
+ #define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
+ 
+ /*
+@@ -2215,7 +2220,7 @@ static void htab_save_first_pass(QEMUFile *f, SpaprMachineState *spapr,
+         /* Consume invalid HPTEs */
+         while ((index < htabslots)
+                && !hpte_is_valid(spapr, index)) {
+-            CLEAN_HPTE(hpte_get_ptr(spapr, index));
++            hpte_set_clean(spapr, index);
+             index++;
+         }
+ 
+@@ -2223,7 +2228,7 @@ static void htab_save_first_pass(QEMUFile *f, SpaprMachineState *spapr,
+         chunkstart = index;
+         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
+                && hpte_is_valid(spapr, index)) {
+-            CLEAN_HPTE(hpte_get_ptr(spapr, index));
++            hpte_set_clean(spapr, index);
+             index++;
+         }
+ 
+@@ -2273,7 +2278,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
+                && hpte_is_dirty(spapr, index)
+                && hpte_is_valid(spapr, index)) {
+-            CLEAN_HPTE(hpte_get_ptr(spapr, index));
++            hpte_set_clean(spapr, index);
+             index++;
+             examined++;
+         }
+@@ -2283,7 +2288,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+         while ((index < htabslots) && (index - invalidstart < USHRT_MAX)
+                && hpte_is_dirty(spapr, index)
+                && !hpte_is_valid(spapr, index)) {
+-            CLEAN_HPTE(hpte_get_ptr(spapr, index));
++            hpte_set_clean(spapr, index);
+             index++;
+             examined++;
+         }
 -- 
-2.48.1
+2.47.1
 
 
