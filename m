@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA5EC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D87FDC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxrH-0003e7-Ev; Tue, 11 Mar 2025 07:33:15 -0400
+	id 1trxsA-0005bI-Tr; Tue, 11 Mar 2025 07:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqa-0003FR-9n
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:32 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqL-0003Aw-3F
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqA-0006YN-CA
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:31 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq3-0006V1-OT
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692724;
+ s=mimecast20190719; t=1741692716;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QWkuDCPzbZFxRLHuq8fODnWk4KA/4K4c8PccPKnfj6E=;
- b=Ie56fKIVQIy8F3XK4Nhv3W9dtGiWgcO5ZvX1PW4Y9Hj126+o8iM2CZF99mjkjifP4t8vGz
- sregKK+GVltuwA3we+OK1OTd1aRPkpzaDHKSZ/IHfAb3nG6mPvJl8aEsfXUAwCLNl+UkrQ
- trHhHCmWi06GoQEIaCN+02N8UDnJgyw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PdZ/jotGGHqzTZZfbwXEHi2HslXgTGd6lARWNm/H+78=;
+ b=AtWd4BDvwrL/AuS/6dtjulN0cVJmuRYfxsbjM/Jj0YAKevufZ1ZrOtij67rdc/vreq0PfM
+ T0VlYS9QBk1g6zfJU55F132zi0gzU8RhJZM9Mm9PHV1HDePdrQFk92vDE9EQpxHND0OLi9
+ gCb1k55TwM339wldmItyMG/KEbc7B+I=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-vAk-3CYoNlCr78h1TLdRLg-1; Tue,
- 11 Mar 2025 07:32:03 -0400
-X-MC-Unique: vAk-3CYoNlCr78h1TLdRLg-1
-X-Mimecast-MFC-AGG-ID: vAk-3CYoNlCr78h1TLdRLg_1741692722
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-Yg6WqfBIPKCEOnDIurpaKg-1; Tue,
+ 11 Mar 2025 07:31:54 -0400
+X-MC-Unique: Yg6WqfBIPKCEOnDIurpaKg-1
+X-Mimecast-MFC-AGG-ID: Yg6WqfBIPKCEOnDIurpaKg_1741692714
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7B0751800258
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E7FAF180AF65
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21CA81828A96
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C6461800945
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 919A121E60E0; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
+ id 31D9C21E61A5; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 55/61] docs/qapidoc: generate entries for undocumented members
-Date: Tue, 11 Mar 2025 12:31:31 +0100
-Message-ID: <20250311113137.1277125-56-armbru@redhat.com>
+Subject: [PULL 30/61] qapi/parser: adjust info location for doc body section
+Date: Tue, 11 Mar 2025 12:31:06 +0100
+Message-ID: <20250311113137.1277125-31-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,42 +88,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Presently, we never have any empty text entries for members. The next
-patch will explicitly generate such sections, so enable support for it
-in advance.
+Instead of using the info object for the doc block as a whole (which
+always points to the very first line of the block), update the info
+pointer for each call to ensure_untagged_section when the existing
+section is otherwise empty. This way, Sphinx error information will
+match precisely to where the text actually starts.
 
-The parser will generate placeholder sections to indicate undocumented
-members, but it's the qapidoc generator that's responsible for deciding
-what to do with that stub section.
+For example, this patch will move the info pointer for the "Hello!"
+untagged section ...
+
+> ##       <-- from here ...
+> # Hello! <-- ... to here.
+> ##
+
+This doesn't seem to improve error reporting now. It will with the
+forthcoming QAPI doc transmogrifier.
+
+If I stick bad rST into qapi/block-core.json like this:
+
+>  ##
+>  # @SnapshotInfo:
+>  #
+> +# rST syntax error: *ahh!
+> +#
+>  # @id: unique shapshot id
+>  #
+>  # @name: user chosen name
+
+The existing code's error message will point to the beginning of the doc
+comment, which is less than helpful. The transmogrifier's message will
+point to the erroneous line, but to accomplish this, it needs this
+patch.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-59-jsnow@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-[Tweak the stub section text]
+Message-ID: <20250311034303.75779-33-jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ scripts/qapi/parser.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index a2d6f648a2..432fef04b0 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -233,11 +233,12 @@ def visit_member(self, section: QAPIDoc.ArgSection) -> None:
-         # TODO: features for members (documented at entity-level,
-         # but sometimes defined per-member. Should we add such
-         # information to member descriptions when we can?)
--        assert section.text and section.member
-+        assert section.member
-         self.generate_field(
-             self.member_field_type,
-             section.member,
--            section.text,
-+            # TODO drop fallbacks when undocumented members are outlawed
-+            section.text if section.text else "Not documented",
-             section.info,
-         )
- 
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 64f0bb824a..97def9f0e4 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -686,7 +686,11 @@ def end(self) -> None:
+     def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+         if self.all_sections and not self.all_sections[-1].tag:
+             # extend current section
+-            self.all_sections[-1].text += '\n'
++            section = self.all_sections[-1]
++            if not section.text:
++                # Section is empty so far; update info to start *here*.
++                section.info = info
++            section.text += '\n'
+             return
+         # start new section
+         section = self.Section(info)
 -- 
 2.48.1
 
