@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60363C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 14:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C9BC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 14:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts0LT-0001KY-8E; Tue, 11 Mar 2025 10:12:35 -0400
+	id 1ts0L7-00009Y-69; Tue, 11 Mar 2025 10:12:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ts0LR-0001F9-3r; Tue, 11 Mar 2025 10:12:33 -0400
+ id 1ts0L5-00008y-CU; Tue, 11 Mar 2025 10:12:11 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ts0LP-0006vP-4h; Tue, 11 Mar 2025 10:12:32 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZBwZm2z2nz6F9Br;
- Tue, 11 Mar 2025 22:08:00 +0800 (CST)
+ id 1ts0L3-0006qs-Jk; Tue, 11 Mar 2025 10:12:11 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZBwcb03GGz6D8cc;
+ Tue, 11 Mar 2025 22:09:35 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id EED41140CB9;
- Tue, 11 Mar 2025 22:12:25 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 951F1140D26;
+ Tue, 11 Mar 2025 22:12:07 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.203.177.241) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 11 Mar 2025 15:12:18 +0100
+ 15.1.2507.39; Tue, 11 Mar 2025 15:12:00 +0100
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
  <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
  <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-accel
-Date: Tue, 11 Mar 2025 14:10:29 +0000
-Message-ID: <20250311141045.66620-5-shameerali.kolothum.thodi@huawei.com>
+Subject: [RFC PATCH v2 02/20] backends/iommufd: Introduce iommufd_vdev_alloc
+Date: Tue, 11 Mar 2025 14:10:27 +0000
+Message-ID: <20250311141045.66620-3-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
 References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
@@ -72,79 +72,80 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow cold-plug smmuv3-accel to virt If the machine wide smmuv3
-is not specified.
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-No FDT support is added for now.
+Add a helper to allocate an iommufd device's virtual device (in the user
+space) per a viommu instance.
 
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- hw/arm/virt.c         | 12 ++++++++++++
- hw/core/sysbus-fdt.c  |  1 +
- include/hw/arm/virt.h |  1 +
- 3 files changed, 14 insertions(+)
+ backends/iommufd.c       | 26 ++++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ include/system/iommufd.h |  4 ++++
+ 3 files changed, 31 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 4a5a9666e9..84a323da55 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -73,6 +73,7 @@
- #include "qobject/qlist.h"
- #include "standard-headers/linux/input.h"
- #include "hw/arm/smmuv3.h"
-+#include "hw/arm/smmuv3-accel.h"
- #include "hw/acpi/acpi.h"
- #include "target/arm/cpu-qom.h"
- #include "target/arm/internals.h"
-@@ -2911,6 +2912,16 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-             platform_bus_link_device(PLATFORM_BUS_DEVICE(vms->platform_bus_dev),
-                                      SYS_BUS_DEVICE(dev));
-         }
-+        if (object_dynamic_cast(OBJECT(dev), TYPE_ARM_SMMUV3_ACCEL)) {
-+            if (vms->iommu == VIRT_IOMMU_SMMUV3) {
-+                error_setg(errp,
-+                           "iommu=smmuv3 is already specified. can't create smmuv3-accel dev");
-+                return;
-+            }
-+            if (vms->iommu != VIRT_IOMMU_SMMUV3_ACCEL) {
-+                vms->iommu = VIRT_IOMMU_SMMUV3_ACCEL;
-+            }
-+        }
-     }
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 3fac08c96e..3511dd32ab 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -366,6 +366,32 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+     return true;
+ }
  
-     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
-@@ -3120,6 +3131,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_AMD_XGBE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_PLATFORM);
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3_ACCEL);
- #ifdef CONFIG_TPM
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
- #endif
-diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-index 774c0aed41..c8502ad830 100644
---- a/hw/core/sysbus-fdt.c
-+++ b/hw/core/sysbus-fdt.c
-@@ -489,6 +489,7 @@ static const BindingEntry bindings[] = {
- #ifdef CONFIG_LINUX
-     TYPE_BINDING(TYPE_VFIO_CALXEDA_XGMAC, add_calxeda_midway_xgmac_fdt_node),
-     TYPE_BINDING(TYPE_VFIO_AMD_XGBE, add_amd_xgbe_fdt_node),
-+    TYPE_BINDING("arm-smmuv3-accel", no_fdt_node),
-     VFIO_PLATFORM_BINDING("amd,xgbe-seattle-v1a", add_amd_xgbe_fdt_node),
- #endif
- #ifdef CONFIG_TPM
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index c8e94e6aed..849d1cd5b5 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -92,6 +92,7 @@ enum {
- typedef enum VirtIOMMUType {
-     VIRT_IOMMU_NONE,
-     VIRT_IOMMU_SMMUV3,
-+    VIRT_IOMMU_SMMUV3_ACCEL,
-     VIRT_IOMMU_VIRTIO,
- } VirtIOMMUType;
++bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
++                                uint32_t viommu_id, uint64_t virt_id,
++                                uint32_t *out_vdev_id, Error **errp)
++{
++    int ret, fd = be->fd;
++    struct iommu_vdevice_alloc alloc_vdev = {
++        .size = sizeof(alloc_vdev),
++        .viommu_id = viommu_id,
++        .dev_id = dev_id,
++        .virt_id = virt_id,
++    };
++
++    ret = ioctl(fd, IOMMU_VDEVICE_ALLOC, &alloc_vdev);
++
++    trace_iommufd_backend_alloc_vdev(fd, dev_id, viommu_id, virt_id,
++                                     alloc_vdev.out_vdevice_id, ret);
++
++    if (ret) {
++        error_setg_errno(errp, errno, "IOMMU_VDEVICE_ALLOC failed");
++        return false;
++    }
++
++    *out_vdev_id = alloc_vdev.out_vdevice_id;
++    return true;
++}
++
+ bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+                                            uint32_t hwpt_id, Error **errp)
+ {
+diff --git a/backends/trace-events b/backends/trace-events
+index a835827540..86c8f89e8a 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -20,3 +20,4 @@ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) "
+ iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ iommufd_backend_invalidate_cache(int iommufd, uint32_t hwpt_id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d hwpt_id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+ iommufd_backend_alloc_viommu(int iommufd, uint32_t type, uint32_t dev_id, uint32_t hwpt_id, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u viommu_id=%u (%d)"
++iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 7e5507f2db..53920bae5b 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -59,6 +59,10 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+                                   uint32_t viommu_type, uint32_t hwpt_id,
+                                   uint32_t *out_hwpt, Error **errp);
  
++bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
++                                uint32_t viommu_id, uint64_t virt_id,
++                                uint32_t *out_vdev_id, Error **errp);
++
+ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+                                         bool start, Error **errp);
+ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
 -- 
 2.34.1
 
