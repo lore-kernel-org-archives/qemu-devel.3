@@ -4,148 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9006C28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 21:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D506CC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 21:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts6uC-0005f2-H7; Tue, 11 Mar 2025 17:12:52 -0400
+	id 1ts7Hq-0000EX-6b; Tue, 11 Mar 2025 17:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ts6uB-0005el-DS; Tue, 11 Mar 2025 17:12:51 -0400
-Received: from mail-bn7nam10on2050.outbound.protection.outlook.com
- ([40.107.92.50] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ts7Hn-0000DX-Vs
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 17:37:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ts6u9-0003xc-CA; Tue, 11 Mar 2025 17:12:51 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RIse3AfLpVdS1DOue5iuVVIInbOnjirg05ASh+3XF0eL/PzoUei4TCGaSPVPGj9yf2tiVcOO9V1S9rJgo7VRk7ifgXY794GCGjbl1FQscEf4mlT43SsOHmAcx+KmJqYNa8yXMsjHWeP8UwP5L7DJutn3zWqIJ6LwvBxKaGk5rOop0GS9aYsw395bFOBixBuX6FNNxNGuN/3u1QGkG5GNimMAxa2Ns0g7UT9PMOgYjxS0/p729Qxy6ndRwibjJqonWZdl5ayYLRChXBsMk7AjdoGTqroOM12Tmz4abZMrKNA4voandfiX59iQnEEsMqyn8sbh/Tu8RlMlf5t5kDRh6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=laSnnasma7ieU95DmbBZWO3wzHd8E32IJI1v4/l2P34=;
- b=GR1P/8SZXaz8zGH4uj6uyXz+cEzCtrZQBQCq3IVxEdI/PpgYALHQ9LrJqTp1z7rT6nsZZsUFAn4dfpWPMy8VCRdJMdeb0p65Ojqv6Z+kij/00MyTkhxsAf954AzScPMZ/rHKWMbvY7om14uY3BkdXOPeBSaucE/Kt26lMw/7MYUeOodFZztS7wde4sUKl2KbfstEiZJdooL3z5BJqbYTAtTxrvJmNBDFjg3dM5opgaBspGHjwGJZmigmfhWAYFlA5SOB/A4YlFFfAM0ERLwQKSKApADJybvcIdlH0RBVkQRFlxCSjcbOQXQgSSXpb6xtOiHjS1pH74EK1y6NbJw18g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=laSnnasma7ieU95DmbBZWO3wzHd8E32IJI1v4/l2P34=;
- b=UTeuMweTUOZo8LgftPrH04IeYFNKoGG30GFgy0LaCfzhVPV4mxp6ckReU0daQHNjRsPSA2Ac1vIEGppo3Xj09odxxKMWyD8ClSF3GZ4FC/P6Ks6+anBtw/EaK/go6fMcZEXxIOlEIeXfF5sC7H9j/FbDTWIU8Gm/OReffJR9gvNxp+HwLMSTm3Ybs2AJJvve1QFU7BwCLEcz5mtgZ2PHIN/fjJ0hP1ckQTodzkmTa1YWmiNoxIb0x1sPDtyRaEmeCqx0W6Cfwi+kM0SXPxmjchmXB33zEiHrpRXCNqwh+FZPlkaDJCBLDqAUtjTnJw4kWFJZ8rDmOGfHAI5OyPALXw==
-Received: from CH5P223CA0011.NAMP223.PROD.OUTLOOK.COM (2603:10b6:610:1f3::20)
- by SA1PR12MB7174.namprd12.prod.outlook.com (2603:10b6:806:2b1::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Tue, 11 Mar
- 2025 21:07:43 +0000
-Received: from CH2PEPF0000009A.namprd02.prod.outlook.com
- (2603:10b6:610:1f3:cafe::3e) by CH5P223CA0011.outlook.office365.com
- (2603:10b6:610:1f3::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.21 via Frontend Transport; Tue,
- 11 Mar 2025 21:07:43 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- CH2PEPF0000009A.mail.protection.outlook.com (10.167.244.22) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8534.20 via Frontend Transport; Tue, 11 Mar 2025 21:07:43 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 11 Mar
- 2025 14:07:34 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Tue, 11 Mar 2025 14:07:33 -0700
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 11 Mar 2025 14:07:32 -0700
-Date: Tue, 11 Mar 2025 14:07:31 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
- <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH v2 09/20] hw/arm/smmuv3-accel: Add
- set/unset_iommu_device callback
-Message-ID: <Z9CmE2oc55lxzW+q@Asurada-Nvidia>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-10-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ts7Hm-0007Ml-AH
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 17:37:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741729032;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DEmpEWCk+e4EPCA8b5jZ5KE8WPnE3YojRubR+DYfYxQ=;
+ b=MC+q/c3/kVAwu6EB+vD1nvcONWYABMZEATNOd2V2ZBuHM1A+IccWTMMXeAutUZCmNaIGpm
+ C0KYe4xR94D/iywIlqs+npi8+xvNN/LQfdr551lt19XuRnqHA4SByU4ckhiG4ilIDTsxyL
+ sm8UJqwM8HYB5jvBKSOniPJsLgZKavk=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-552-ERXtyoyeNT2ebBI09Y_Jzg-1; Tue, 11 Mar 2025 17:37:09 -0400
+X-MC-Unique: ERXtyoyeNT2ebBI09Y_Jzg-1
+X-Mimecast-MFC-AGG-ID: ERXtyoyeNT2ebBI09Y_Jzg_1741729029
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7c0b3cd4cbcso667823285a.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 14:37:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741729029; x=1742333829;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DEmpEWCk+e4EPCA8b5jZ5KE8WPnE3YojRubR+DYfYxQ=;
+ b=nIxz98756kfmIE+IwabufmSUSYsu6nRm8ezhbeMJjSDuncnVfDnBqlvmHJoljr6d2J
+ lVgWrBiO2Gc7T31+NoOJbLHpQkH75zbDT29fiWAOVVF4vUcyJY2f4Iiudjt9UjGWAGna
+ jLO4nuAnP7j9ZEEmkizfnJ8NjrbKoJljbRUzSGkm383V1xG08xPz2SjSunrcrklLQTyg
+ 4b6BnSo/jGjXrQjf3TN36I0aX5+4yMoFCzT8p346pFTqcu2cfpNlwdcy/Aua3qbbxJK6
+ hV0vqa275sQwoMMbxUouyIF6VwfVNPNLIGi/xzLMqOauAeu0op86wGhbBsD3ZM4CfVml
+ 7zIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeLlIhOAAV8FucPmFT+mipbOBjHfFN7YgZxlDj4hEEemljPW0YTjhVQ28yizpNha+kSiLgc4860bmZ@nongnu.org
+X-Gm-Message-State: AOJu0YyonSfL0ICwwQgO97UamoLB9yH2nTGIzPmmHJnEMPCGlO13nLT8
+ OKd18JaOmijEoxTP3JMFFMxfl21fcwz7jX2vCzV/bjEJs0Ls7J0P0KDx2Wzx4nilcq9tfDS0Mwc
+ y3gALPJFo4BBsEUBB74nP42sWf/F77Y19FjT457Damx2QMFMRZH8+
+X-Gm-Gg: ASbGnct8pHXvsNqYpOmduCPM9uQH5O5g58Ce7aOm3yMLf948jcPuvmSKXmA/IO/ILcr
+ 7OIcHEw0WLsxEEpH5mJusVVrll3wYV2NelfZNwzjI6C6UFn42BjIasLW++kIyUzdP07leq9T9FF
+ TBXGDPW5MNdAN1Fdk700AqQ8LW/XG13uBYPQldByE6+TuOo+MQf/r8X50ewyNe8ZGX3foRiqQmI
+ pGrFm/uwzZ3cgb02rN19P+vTMU2Bmb8D4L0tDROA2cFmNqo2FmYm6dT4lCLWteoHKC1NdH1hf5R
+ 8xtMuuw=
+X-Received: by 2002:a05:6214:230f:b0:6e8:fad6:7104 with SMTP id
+ 6a1803df08f44-6e9006ea033mr232117706d6.35.1741729029000; 
+ Tue, 11 Mar 2025 14:37:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYLGVNQxvvJhFYTKvx+aT4RPXYdUN6dSuWwEuFwFqnVqMVPvY/zim7QE0PKrXlebJ3ucAiOg==
+X-Received: by 2002:a05:6214:230f:b0:6e8:fad6:7104 with SMTP id
+ 6a1803df08f44-6e9006ea033mr232117346d6.35.1741729028573; 
+ Tue, 11 Mar 2025 14:37:08 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e8f70a4485sm76529406d6.53.2025.03.11.14.37.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 14:37:07 -0700 (PDT)
+Date: Tue, 11 Mar 2025 17:37:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Manish Mishra <manish.mishra@nutanix.com>, qemu-devel@nongnu.org,
+ leobras@redhat.com, farosas@suse.de, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v2] QIOChannelSocket: Flush zerocopy socket error queue
+ on ENOBUF failure for sendmsg
+Message-ID: <Z9CtAAA1HH-c7CHd@x1.local>
+References: <20250310011500.240782-1-manish.mishra@nutanix.com>
+ <Z885hS6QmGOZYj7N@x1.local> <Z89CALrwKnHdO4hx@redhat.com>
+ <Z89FjreYuRjEeX1f@x1.local> <Z8_wnLIlfhM7bILZ@redhat.com>
+ <Z9BU0gd3BLPhBss2@x1.local> <Z9BXw6iZfi_UKx-t@redhat.com>
+ <Z9CVr9jbcq810U2i@x1.local> <Z9CYIqgyD4E6U38x@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250311141045.66620-10-shameerali.kolothum.thodi@huawei.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000009A:EE_|SA1PR12MB7174:EE_
-X-MS-Office365-Filtering-Correlation-Id: 65f77e47-4663-4c54-2a0b-08dd60e0c3f9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|7416014|376014|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?9chRWKVubos5x0KP/UeysWLkm74E0f7psXyZsrvqMjvEvQvCA1KBmv7NFZWE?=
- =?us-ascii?Q?wyhVBQOLDzfN+2eV77Z+z1cErzxPeDGBbdAzAIL36czWx7/ytg0bwHaxrOyQ?=
- =?us-ascii?Q?QobGjh4F8uywT2DEC7txso4Ewy5OW4yHcy/FPYK3g8M6GhhL2HTum2ia0LUq?=
- =?us-ascii?Q?o2g8czRRMpE8AztBFvMt/8pkGJbtNN8i2pix725hJxKxsyNr4MA3bA1Wf6TV?=
- =?us-ascii?Q?dXIzXt07ujtvhydaNKsNykLmsNl08+r1xplyi5ccgd6w2TuwKLtOadWuXnKv?=
- =?us-ascii?Q?FicdopSbmKspXrN0ObUWtSFYKnG3N2Q/Z++nXGBYqzP1QpFWYkLlp3cywWjV?=
- =?us-ascii?Q?MtWYlykubMmEs9Omxhi5E4kr6hpAQ4qNm/O/CGFZYHU/rt9KMK5SjPnFQrY5?=
- =?us-ascii?Q?FRlaKku0pr0UCvG3AQobWU1SIeMTbgA+8WSSSbNpOZPsnbweLLSDFKGh2QYp?=
- =?us-ascii?Q?H3oPCli1y0ss/XnUDpklO3P00PU/7jeMW8wqtc9WsHuRQMRyNLehqvXQXV8N?=
- =?us-ascii?Q?FBDdYMm6Itoo8cjWeXYKzLDjzXZjnXbUvnIEYRh7893eCfSwSPI34tnfrm8Z?=
- =?us-ascii?Q?M9zSasZ1sgyYzCPXLCrPvrQwTx2rnhEED93Ss7yug07eRfWROwG16BfB7LHT?=
- =?us-ascii?Q?Ps+EOjy+ukrqdIbdpWXjfRrGdQ5zVv7nXGDsFNTqH6zuh8nXnasecb3XK3PW?=
- =?us-ascii?Q?tEp8yHsRsdzOdDonlrMer0KkdwTE0NmNBkaCfm/84zKiLNn0YWrQ0dCTxccT?=
- =?us-ascii?Q?PrrzN7igEq8j772EqexZpandbu2Mhw4zg/MRaWqnwbY20ZVVKm5qfrRTB1s5?=
- =?us-ascii?Q?XrddSSwgQA0OPl1pTNJ8VIe8qFEeKEgQe4SyDAxYxNegOcX0jaqh6q53HmhJ?=
- =?us-ascii?Q?fEJtu4EYTYkQT0fTGYFYwae7nOrAhNwJSVhJUsSRAuUs502KzziKboQ2UVHg?=
- =?us-ascii?Q?51RnC7QNeflTSZw0PlR77M83nfNF/fGx1772MbqUa65ukcNwqz5sWvRUmA4p?=
- =?us-ascii?Q?1QlU/+EPk9o1Pw8O94GSvSYHTpk8oEBFhKvRCne7C2FiKXCS8EnioO0QDfRe?=
- =?us-ascii?Q?6jdd7heDA6aS1BUMvtxMlFRfTe1JLhBjQj1uI6SuYPqGojTZMUd8ADVi0pl9?=
- =?us-ascii?Q?4dklKoSnRAoUBRKELuj/5DcpFBeKpt+WeESTQUDTKS3D3rK7s1Os2TRIIVoP?=
- =?us-ascii?Q?R42jtUCKlHkwhV++nzvrFgqo8lznUT/KFK62wX8oS8YyOyhm8Xs2aQA8728Q?=
- =?us-ascii?Q?UQeqONn+hfiD69uHREz32pn4LY4YW5n+vf92FD87JFseS8Ca5H9dZu1PXvuF?=
- =?us-ascii?Q?laU5J7Vw9roXBVffRmeF31MKHDJQizWaE/Utl3c5eMfdgSoIPQ9XxRFYPkkh?=
- =?us-ascii?Q?6YylMVffHSW1fUn4em+rXpHb1KJCagemYSfyHuPWNx6WY4qRa6sZsns+QeIP?=
- =?us-ascii?Q?NGVZOsNbD5vMFzkZTEy2POtf0dljyidQtZPqTxnfbWqvHL044R/MUnocg0Zg?=
- =?us-ascii?Q?3ONdGoFFN6aD7Lw=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(7416014)(376014)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2025 21:07:43.1743 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 65f77e47-4663-4c54-2a0b-08dd60e0c3f9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7174
-Received-SPF: softfail client-ip=40.107.92.50;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z9CYIqgyD4E6U38x@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,100 +113,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 11, 2025 at 02:10:34PM +0000, Shameer Kolothum wrote:
-> @@ -30,6 +32,185 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *s, SMMUPciBus *sbus,
->      return accel_dev;
->  }
->  
-> +static bool
-> +smmuv3_accel_dev_attach_viommu(SMMUv3AccelDevice *accel_dev,
-> +                               HostIOMMUDeviceIOMMUFD *idev, Error **errp)
+On Tue, Mar 11, 2025 at 08:08:02PM +0000, Daniel P. Berrangé wrote:
+> On Tue, Mar 11, 2025 at 03:57:35PM -0400, Peter Xu wrote:
+> > On Tue, Mar 11, 2025 at 03:33:23PM +0000, Daniel P. Berrangé wrote:
+> > > On Tue, Mar 11, 2025 at 11:20:50AM -0400, Peter Xu wrote:
+> > > > On Tue, Mar 11, 2025 at 08:13:16AM +0000, Daniel P. Berrangé wrote:
+> > > > > On Mon, Mar 10, 2025 at 04:03:26PM -0400, Peter Xu wrote:
+> > > > > > On Mon, Mar 10, 2025 at 07:48:16PM +0000, Daniel P. Berrangé wrote:
+> > > > > > > Given this is in public API, the data needs to remain reported accurately
+> > > > > > > for the whole deprecation period. IOW, the patch to qiochannel needs to
+> > > > > > > preserve this data too.
+> > > > > > 
+> > > > > > :-(
+> > > > > > 
+> > > > > > We could potentially mark MigrationStats to be experimental as a whole and
+> > > > > > declare that in deprecate.rst too, then after two releases, we can randomly
+> > > > > > add / remove fields as wish without always need to go through the
+> > > > > > deprecation process, am I right?
+> > > > > 
+> > > > > IMHO that would be an abuse of the process and harmful to applications
+> > > > > and users consuming stats.
+> > > > 
+> > > > Ah I just noticed that's the exact same one we included in
+> > > > query-migrate.. Then yes, the stable ABI is important here.
+> > > > 
+> > > > So for this specific case, maybe we shouldn't have exposed it in QMP from
+> > > > the start.
+> > > > 
+> > > > To me, it's a question on whether we could have something experimental and
+> > > > be exposed to QMP, where we don't need to guarantee a strict stable ABI, or
+> > > > a very loose ABI (e.g. we can guarantee the command exists, and with
+> > > > key-value string-integer pairs, nothing else).
+> > > 
+> > > QMP has the ability to tag commands/fields, etc as experimental.
+> > > 
+> > > libvirt will explicitly avoid consuming or exposing anything with
+> > > an experimental tag on it.
+> > > 
+> > > > Maybe what we need is a new MigrationInfoOptional, to be embeded into
+> > > > MigrationInfo (or not), marked experimental.  Then in the future whenever
+> > > > we want to add some new statistics, we could decide whether it should be
+> > > > part of stable ABI or not.
+> > > 
+> > > That is not required - individual struct fields can be marked
+> > > experimental.
+> > 
+> > Yes that'll work too.  The important bit here is I think we should start to
+> > seriously evaluate which to expose to QAPI as stable API when we add stats
+> > into it.  We used to not pay too much attention.
+> > 
+> > With MigrationInfoOptional, we should suggest any new field to be added
+> > there by default, then whatever needs to be put out of experimental needs
+> > explicit justifications.  Or we can also document any new migration field
+> > at least in the stats to be marked as experimental unless justified.
+> > 
+> > > 
+> > > The key question is what the intended usage of the fields/stats/etc
+> > > is to be. If you want it used by libvirt and mgmt apps it would need
+> > > to be formally supported. If it is just for adhoc QEMU developer
+> > > debugging and doesn't need libvirt / app support, then experimental
+> > > is fine.
+> > 
+> > To my initial thoughts, I want Libvirt to fetch it.  However I don't want
+> > Libvirt to parse it.
+> > 
+> > For example, for things like "whether zerocopy send succeeded or not", or
+> > "how much time we spent on sending non-iterable device states", they're
+> > almost not consumable for users, but great for debuggings.  It would be
+> > great if Libvirt could know their existance, fetch it (e.g. once after
+> > migration completes) then dump it to the logfile to help debugging and
+> > triaging QEMU issues.  In that case parsing is not needed, the whole result
+> > can be attached to the log as a JSON blob.  That releases the burden from
+> > the need to maintain compatibility that we don't really need and nobody
+> > cared (I bet it's the case here for zerocopy stats, but we got restricted
+> > by our promises even if it may ultimately benefit nobody..).
+> 
+> We already log every single QMP command & response and event we deal
+> with, at INFO level, but by default our log files are only set to
+> capture WARN level, so this isn't visible without extra config steps
+> by the ademin
+> 
+> Possibly we could think about dumping all migration stats to
+> /var/log/libvirt/qemu/$GUEST.log at migration completion
 
-With vEVENTQ v9, vDEVICE (vSID) is required to attach a device
-to a proxy NESTED hwpt (applicable to bypass/abort HWPTs too).
-So, host_iommu_device_iommufd_attach_hwpt() would fail in this
-function because vSID isn't ready at this stage. So all those
-calls should be moved out of the function, then this should be
-likely "smmuv3_accel_dev_alloc_viommu"?
+Yes it would be great to have it if it's trivial to get.  It could be a
+last round of 'query-migrate' dumped only on src after migration is
+completed, right before src QEMU shuts down.
 
-That being said, I don't know when QEMU actually prepare a BDF
-number for a vfio-pci device. The only place that I see it is
-ready is at guest-level SMMU installing the Stream Table, i.e.
-in smmuv3_accel_install_nested_ste().
+Thanks,
 
-> +{
-> +    struct iommu_hwpt_arm_smmuv3 bypass_data = {
-> +        .ste = { 0x9ULL, 0x0ULL },
-> +    };
-> +    struct iommu_hwpt_arm_smmuv3 abort_data = {
-> +        .ste = { 0x1ULL, 0x0ULL },
-> +    };
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +    SMMUState *s = sdev->smmu;
-> +    SMMUv3AccelState *s_accel = ARM_SMMUV3_ACCEL(s);
-> +    SMMUS2Hwpt *s2_hwpt;
-> +    SMMUViommu *viommu;
-> +    uint32_t s2_hwpt_id;
-> +    uint32_t viommu_id;
-> +
-> +    if (s_accel->viommu) {
-> +        accel_dev->viommu = s_accel->viommu;
-> +        return host_iommu_device_iommufd_attach_hwpt(
-> +                       idev, s_accel->viommu->s2_hwpt->hwpt_id, errp);
+-- 
+Peter Xu
 
-Yea, here is my bad. We shouldn't attach a device to s2_hwpt,
-since eventually s2_hwpt would be a shared hwpt across SMMUs.
-
-> +    /* Attach to S2 for MSI cookie */
-> +    if (!host_iommu_device_iommufd_attach_hwpt(idev, s2_hwpt_id, errp)) {
-> +        goto free_s2_hwpt;
-> +    }
-
-With the merged sw_msi series, we don't need this anymore.
-
-> +    /*
-> +     * Attach the bypass STE which means S1 bypass and S2 translate.
-> +     * This is to make sure that the vIOMMU object is now associated
-> +     * with the device and has this STE installed in the host SMMUV3.
-> +     */
-> +    if (!host_iommu_device_iommufd_attach_hwpt(
-> +                idev, viommu->bypass_hwpt_id, errp)) {
-> +        error_report("failed to attach the bypass pagetable");
-> +        goto free_bypass_hwpt;
-> +    }
-
-Ditto. We have to postpone this until vdevice is allocated.
-
-> +static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-> +                                            int devfn)
-> +{
-> +    SMMUDevice *sdev;
-> +    SMMUv3AccelDevice *accel_dev;
-> +    SMMUViommu *viommu;
-> +    SMMUState *s = opaque;
-> +    SMMUv3AccelState *s_accel = ARM_SMMUV3_ACCEL(s);
-> +    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
-> +
-> +    if (!sbus) {
-> +        return;
-> +    }
-> +
-> +    sdev = sbus->pbdev[devfn];
-> +    if (!sdev) {
-> +        return;
-> +    }
-> +
-> +    accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
-> +    if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev,
-> +                                               accel_dev->idev->ioas_id,
-> +                                               NULL)) {
-> +        error_report("Unable to attach dev to the default HW pagetable");
-> +    }
-> +
-> +
-
-Could drop the extra line.
-
-Thanks
-Nicolin
 
