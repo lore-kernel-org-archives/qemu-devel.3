@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3024CC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3ABFC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqWa-0003ji-ID; Mon, 10 Mar 2025 23:43:24 -0400
+	id 1trqXj-0004VH-L7; Mon, 10 Mar 2025 23:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWZ-0003jS-Pt
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:23 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqXH-0004CZ-6y
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:44:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWY-00029R-CZ
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:23 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqXF-0002Fp-M9
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:44:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741664601;
+ s=mimecast20190719; t=1741664645;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GP6/2+bUNvU+QJ6cBTCYdVn3eBqhknEaI9TzMpr1KMk=;
- b=Iac4lfmhy8fdRIP8vgWyCSzHSEp/1bsWQuBCy+uoUMVHDHUEleQD7TVvVCgp5zwegWI69I
- NmOmxgcOuNVSy774pyurwmIxqkcw8ziroA8qqT6yygIBw6u9cfAM2JuzopRahh+SqrHkLy
- Kw8uuARMzpQgnqAJZsLH3yK9fl6ilPU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=od3Uh8g1QcIsjpJcup3JNtQgrq6CwkLtnzVXsd/ooUU=;
+ b=dZgl9xAYlgUK342sINei9GkrtQwjMsO+MU253bu3lsw0+WC5lUCGjtSLT1fFJs/bBAGDKL
+ l378nxWDrZF/+9Hm3GCGJMYxGj/WCVf19DRITwXwppiOgrblL+rY2/imHvf6sZLO5W28Ay
+ k9m2wiPlQsei+rtzC4jujrs4cNN131I=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-6fmUKH7tO6yWINGstGYyAA-1; Mon,
- 10 Mar 2025 23:43:18 -0400
-X-MC-Unique: 6fmUKH7tO6yWINGstGYyAA-1
-X-Mimecast-MFC-AGG-ID: 6fmUKH7tO6yWINGstGYyAA_1741664597
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-85-NXTuLN1dPBGgJQw2sF6Mmw-1; Mon,
+ 10 Mar 2025 23:44:00 -0400
+X-MC-Unique: NXTuLN1dPBGgJQw2sF6Mmw-1
+X-Mimecast-MFC-AGG-ID: NXTuLN1dPBGgJQw2sF6Mmw_1741664639
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7293195608B; Tue, 11 Mar 2025 03:43:17 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8DE819560A1; Tue, 11 Mar 2025 03:43:59 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A96A91828A81; Tue, 11 Mar 2025 03:43:15 +0000 (UTC)
+ id 6E4071800366; Tue, 11 Mar 2025 03:43:56 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
@@ -54,9 +54,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 02/63] qapi: shush pylint up
-Date: Mon, 10 Mar 2025 23:42:00 -0400
-Message-ID: <20250311034303.75779-3-jsnow@redhat.com>
+Subject: [PATCH v3 14/63] docs/qapi-domain: add :since: directive option
+Date: Mon, 10 Mar 2025 23:42:12 -0400
+Message-ID: <20250311034303.75779-15-jsnow@redhat.com>
 In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
 References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -87,64 +87,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shhhhh!
-
-This patch can be dropped from the PR and I'll clean it up later. It's
-just here to help me establish a linting baseline. It isn't really
-needed for the series itself.
+Add a little special markup for registering "Since:" information. Adding
+it as an option instead of generic content lets us hoist the information
+into the Signature bar, optionally put it in the index, etc.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/backend.py | 2 ++
- scripts/qapi/main.py    | 8 +++-----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ docs/sphinx/qapi_domain.py | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-index 14e60aa67af..49ae6ecdd33 100644
---- a/scripts/qapi/backend.py
-+++ b/scripts/qapi/backend.py
-@@ -13,6 +13,7 @@
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index 547040f75a7..222b420d2a7 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -214,6 +214,8 @@ class QAPIObject(QAPIDescription):
+         {
+             # Borrowed from the Python domain:
+             "module": directives.unchanged,  # Override contextual module name
++            # These are QAPI originals:
++            "since": directives.unchanged,
+         }
+     )
  
+@@ -227,7 +229,17 @@ def get_signature_prefix(self) -> List[nodes.Node]:
  
- class QAPIBackend(ABC):
-+    # pylint: disable=too-few-public-methods
+     def get_signature_suffix(self) -> List[nodes.Node]:
+         """Return a suffix to put after the object name in the signature."""
+-        return []
++        ret: List[nodes.Node] = []
++
++        if "since" in self.options:
++            ret += [
++                SpaceNode(" "),
++                addnodes.desc_sig_element(
++                    "", f"(Since: {self.options['since']})"
++                ),
++            ]
++
++        return ret
  
-     @abstractmethod
-     def generate(self,
-@@ -36,6 +37,7 @@ def generate(self,
- 
- 
- class QAPICBackend(QAPIBackend):
-+    # pylint: disable=too-few-public-methods
- 
-     def generate(self,
-                  schema: QAPISchema,
-diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-index 5b4679abcf1..01155373bd0 100644
---- a/scripts/qapi/main.py
-+++ b/scripts/qapi/main.py
-@@ -38,8 +38,7 @@ def create_backend(path: str) -> QAPIBackend:
-     try:
-         mod = import_module(module_path)
-     except Exception as ex:
--        print(f"unable to import '{module_path}': {ex}", file=sys.stderr)
--        sys.exit(1)
-+        raise QAPIError(f"unable to import '{module_path}': {ex}") from ex
- 
-     try:
-         klass = getattr(mod, class_name)
-@@ -51,9 +50,8 @@ def create_backend(path: str) -> QAPIBackend:
-     try:
-         backend = klass()
-     except Exception as ex:
--        print(f"backend '{path}' cannot be instantiated: {ex}",
--              file=sys.stderr)
--        sys.exit(1)
-+        raise QAPIError(
-+            f"backend '{path}' cannot be instantiated: {ex}") from ex
- 
-     if not isinstance(backend, QAPIBackend):
-         print(f"backend '{path}' must be an instance of QAPIBackend",
+     def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
+         """
 -- 
 2.48.1
 
