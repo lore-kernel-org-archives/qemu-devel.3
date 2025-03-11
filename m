@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6940C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB1BAC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzJV-0004Zz-Ew; Tue, 11 Mar 2025 09:06:29 -0400
+	id 1trzKY-0008CH-3O; Tue, 11 Mar 2025 09:07:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEE-0005No-U3; Tue, 11 Mar 2025 09:01:06 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1trzFN-0006MY-TJ; Tue, 11 Mar 2025 09:02:15 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEA-0000B8-IC; Tue, 11 Mar 2025 09:01:01 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2fa8ac56891so8062867a91.2; 
- Tue, 11 Mar 2025 06:00:57 -0700 (PDT)
+ id 1trzFE-0000Nx-MI; Tue, 11 Mar 2025 09:02:10 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2255003f4c6so49959605ad.0; 
+ Tue, 11 Mar 2025 06:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741698056; x=1742302856; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741698121; x=1742302921; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6QcWNxidF+8F14IOmySk+2TS0qLc2Hl5I2PiCaOol8E=;
- b=eL5sZd0Jnn1SuZ1B9g0xrkRT4NCcdK08rkgHNLqdvTYCusg3AYFvYdxXknsQhuUtPt
- aF0UR2o/xHHt4rxesnUcBiBev0AiAPFaXkLi3RuSXV8Y8bShvTyZ5lKLAqtj9ugcDEY0
- jsuFgqKfa/5Y+t1k+bDG1LGTff3+68NJo3/Ob2v1EE9I4kt/MDDflWO0weRoQ3iY6J6o
- DlCX+z9nTf4Ub+OCXaLzc9dcx7L0KeXOOHWEcvEqZjHOnwE/Mdt90uarTNWZS788nY5n
- VRmjfnzjWrEWjEPY1nA8EXij5qMsQEUESlZF76w+xx5I5zZqTlsEDNE8EUKoeCWOC3tA
- n4PA==
+ bh=elAFXUjF+R6E0+41mljzNOshBJCWfVTXW/A0lm/eOnM=;
+ b=h0SwqOnbiIrZA3nYF4zqtGvYwIn3rpHrgX2XC9MxhsU45poFy58FFxMwy5fWpy3Hz8
+ qs0fWH26AA5O9AscypFWDLRI1142924qgJC5zHLKqnUzJP07JZpHpcqKnWWrXilSM3eV
+ JmNdhx3ptMxFEaXGEBwAMcx8/fBIzG7V3OfVHgRy9l61dQnr85AsEn3CfQQe1JCIFSpK
+ XCYiS6NSQEd/op0a6XsalPk69YKZz9OqU++rhR2HynxWTVIJmugT4CxwIbLSaN6L9rBJ
+ gbwPx0G+Fn0KiV1nlLufRlJmzX0bxlPVfTEHbQkaqu6vU7p0BGZlQ+U9nkM8SBWwh2A6
+ 4Nww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741698056; x=1742302856;
+ d=1e100.net; s=20230601; t=1741698121; x=1742302921;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6QcWNxidF+8F14IOmySk+2TS0qLc2Hl5I2PiCaOol8E=;
- b=FrUVxUemX+CGE0amQwJBx8Ot5jiWZ9AJOZ2gqPrLWSs/h7546B4hxRwg3yUbBFkqGO
- QZSaCyUXKdef5Jm1sUnWxwPYu6qR3TG0FbekgzvnPatPFzb7GKZswkeLojEfJ19lAODx
- TVqlMQMgW6m1P+s3ix1N76+a2jim1lLFGXabzrvqfhHS6AKq3XbNLMON3by64i1+osxW
- KsTm+2WBqqfjZLOnFwVgXExRcFU5BXbOIRBQG18C1KR2LIKuSu6NKj3RSfJBaoLDPSjI
- UrXqzi/jgbGLyb4/jxZPhaLsOCNCf08MPrBoKuynlsKjDwiwN+5FYm8ie5TXSqC4thi1
- LFDQ==
+ bh=elAFXUjF+R6E0+41mljzNOshBJCWfVTXW/A0lm/eOnM=;
+ b=Geypf3Id3a6lYFvK2P2aligOQYz6GwbfhgM5FFMQJK+wRaHi/ofZw85cxgLTeBpwiS
+ rlDJ7fWra84yDftRkxxVVGEYFkMjyo7mqQ4bG0uHwC+/RlYt8IxrmZ98GMvHhsqY/1KJ
+ COp9j+BQlQQrPTxH8sCeo2hs2glu0HUM2IvfZ6QWzgHf7mV/1GamukUobLH6UWnDucUv
+ wVTCQZX3LCkm8XnKwguuswUb8UFTU6pMdhJsr/utTFPE8XTIzGxWPmSgaDbw2l5uVGI+
+ 4fkDLmPi35ZYy1SYfVemh40miQZFd7Ad/OX1IVIHGV4Tcq6mXC+XylsM7XT9eIoRPDoC
+ l90A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULCnGTy5mGZ+3n8+80znvvFk19n3GDRiXuUJY4iGkNwQC9i2q4XJlUGyec0P3UuV6FlgvgqXpeOw==@nongnu.org
-X-Gm-Message-State: AOJu0Yy+l+qLGvCJTuBJiZ7uniBbcYQdVjGMJ6cfEVLJ4JRGhAs6hdJw
- svo1AqezRV1KKkUBVnUYZffZXg8JotNvhGTBL0f+KzepErb5uSokQ7AlNg==
-X-Gm-Gg: ASbGncvozUsh/PaXmXVEumBNcc/OtCDxcwGWfd8YeWtWTmYc7wuJb8lwtpRUmlJrrkI
- /nN0D1F4mLr6LkpQKloTsxJJn1PfEoGydd2Vl/5wf3+bqQcfGHjermFwLsRupqmSYgudZVxRkIS
- /9m25MgHPm5jVa5I8M6b4DWdvJft9YALXx71hQLLGHNiBvbjOiDZNJLojsTK+Glp5LIiEuc5XNd
- KGAEIcic06MeypcFnrC33yuKWLfvDgO8WahcSwiyQ/Ve+Zu/HTfl4WsNkk8dVZkd+Mv/HdA6P05
- B4ENXa3CABmUxQPVK4YbzXneJAHaJPQhS7uFTjMr03U4By+BKD4=
-X-Google-Smtp-Source: AGHT+IHCy4rvVri/vTa/rnjuzFdLf5mF5P6ijmWnVC0Tsoonsvdoe3C9wE8weJlK9fPlu2zNDGd++Q==
-X-Received: by 2002:a17:90b:278f:b0:2f7:4cce:ae37 with SMTP id
- 98e67ed59e1d1-2ff7ce8958fmr30255905a91.18.1741698056295; 
- Tue, 11 Mar 2025 06:00:56 -0700 (PDT)
+ AJvYcCVaD2tT9Tj9fTdrupHGxgysO6exY1AiQfpEMUkhovngq+2u1tf0GYchYr81Q9SIvCgnV+rf3G6djw==@nongnu.org
+X-Gm-Message-State: AOJu0YylgSZ4PEtlS5B+Hvg2bhbsUb1LHUBxDNpZ8W4V1OHLF7sgdw6W
+ 6l0hNr0HuOsd2Q707WM3WfT5XLJ+xgwIaVBI6SjVrA1giLEWhitQ6g+vOw==
+X-Gm-Gg: ASbGncvXxqvrlUmkVY0aZzZvCfKdCJpPeSqO0ciMue7GUzI661dpOp0MEOUi+NBbtej
+ 4rJEiyqSDbrEzjJFBKm2QJsBKmu72d4qJ/V+C4+Fg/Ov3s0K9IWgOavH3V6K613kqIFYeNfnxTk
+ Te36+0380gNEs3QNiSzQt615U7E64obvjR0eaCeDP6OJK3SF4TVXeJ0zZTahnM0PKWBqW3Ok3S2
+ 3L5mJV3ERkutC5AB39gMChCbHnsqH9+4yfWScvuBlsgvs/RRvIpOM6sfWVG6AdxTlPuxsqu+Cl7
+ vYFPhN7Z7h+ghw5pA7M0rMY2SUF0d1SFsDe3AdUA92h7U6UvQzw=
+X-Google-Smtp-Source: AGHT+IEvfuD1NrKWI+2Dv0OL8sLBjxEo6/deJYw1ULxKFwwvAOvUHJYL0oPwf2abozxnkGOzQeBWUA==
+X-Received: by 2002:a17:90b:528a:b0:2ee:d824:b559 with SMTP id
+ 98e67ed59e1d1-300ff34d5c3mr4672098a91.28.1741698121189; 
+ Tue, 11 Mar 2025 06:02:01 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.54
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 06:00:55 -0700 (PDT)
+ Tue, 11 Mar 2025 06:02:00 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 49/72] target/ppc: Restrict exception helpers to TCG
-Date: Tue, 11 Mar 2025 22:57:43 +1000
-Message-ID: <20250311125815.903177-50-npiggin@gmail.com>
+Subject: [PULL 71/72] ppc/amigaone: Add #defines for memory map constants
+Date: Tue, 11 Mar 2025 22:58:05 +1000
+Message-ID: <20250311125815.903177-72-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,125 +101,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Move exception helpers to tcg-excp_helper.c so they are
-only built when TCG is selected. Preprocessor guards
-are added for some helpers unused when CONFIG_USER_ONLY.
-
-[npiggin: mention USER_ONLY change]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250127102620.39159-10-philmd@linaro.org>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Message-ID: <3b8e54ad9220d57e7b0a33f3570e880f26677ce8.1740673173.git.balaton@eik.bme.hu>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/excp_helper.c     | 34 --------------------------------
- target/ppc/tcg-excp_helper.c | 38 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 34 deletions(-)
+ hw/ppc/amigaone.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 9e1a2ecc36..6a12402b23 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -2504,41 +2504,7 @@ bool ppc_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index 359f5fa125..483512125f 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -32,6 +32,14 @@
+ #define BUS_FREQ_HZ 100000000
  
- #endif /* !CONFIG_USER_ONLY */
+ #define INITRD_MIN_ADDR 0x600000
++#define INIT_RAM_ADDR 0x40000000
++
++#define PCI_HIGH_ADDR 0x80000000
++#define PCI_HIGH_SIZE 0x7d000000
++#define PCI_LOW_ADDR  0xfd000000
++#define PCI_LOW_SIZE  0xe0000
++
++#define ARTICIA_ADDR 0xfe000000
  
--/*****************************************************************************/
--/* Exceptions processing helpers */
--
--void raise_exception_err_ra(CPUPPCState *env, uint32_t exception,
--                            uint32_t error_code, uintptr_t raddr)
--{
--    CPUState *cs = env_cpu(env);
--
--    cs->exception_index = exception;
--    env->error_code = error_code;
--    cpu_loop_exit_restore(cs, raddr);
--}
--
--void raise_exception_err(CPUPPCState *env, uint32_t exception,
--                         uint32_t error_code)
--{
--    raise_exception_err_ra(env, exception, error_code, 0);
--}
--
--void raise_exception(CPUPPCState *env, uint32_t exception)
--{
--    raise_exception_err_ra(env, exception, 0, 0);
--}
--
- #ifdef CONFIG_TCG
--void helper_raise_exception_err(CPUPPCState *env, uint32_t exception,
--                                uint32_t error_code)
--{
--    raise_exception_err_ra(env, exception, error_code, 0);
--}
--
--void helper_raise_exception(CPUPPCState *env, uint32_t exception)
--{
--    raise_exception_err_ra(env, exception, 0, 0);
--}
+ /*
+  * Firmware binary available at
+@@ -287,7 +295,7 @@ static void amigaone_init(MachineState *machine)
+         /* Firmware uses this area for startup */
+         mr = g_new(MemoryRegion, 1);
+         memory_region_init_ram(mr, NULL, "init-cache", 32 * KiB, &error_fatal);
+-        memory_region_add_subregion(get_system_memory(), 0x40000000, mr);
++        memory_region_add_subregion(get_system_memory(), INIT_RAM_ADDR, mr);
+     }
  
- #ifndef CONFIG_USER_ONLY
- void helper_store_msr(CPUPPCState *env, target_ulong val)
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index 93c2d6b5a0..268a161459 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -19,15 +19,53 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "exec/cpu_ldst.h"
-+#include "exec/exec-all.h"
-+#include "exec/helper-proto.h"
- #include "system/runstate.h"
+     /* nvram */
+@@ -322,7 +330,7 @@ static void amigaone_init(MachineState *machine)
+     }
  
-+#include "helper_regs.h"
- #include "hw/ppc/ppc.h"
- #include "internal.h"
- #include "cpu.h"
- #include "trace.h"
+     /* Articia S */
+-    dev = sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL);
++    dev = sysbus_create_simple(TYPE_ARTICIA, ARTICIA_ADDR, NULL);
  
-+/*****************************************************************************/
-+/* Exceptions processing helpers */
-+
-+void raise_exception_err_ra(CPUPPCState *env, uint32_t exception,
-+                            uint32_t error_code, uintptr_t raddr)
-+{
-+    CPUState *cs = env_cpu(env);
-+
-+    cs->exception_index = exception;
-+    env->error_code = error_code;
-+    cpu_loop_exit_restore(cs, raddr);
-+}
-+
-+void helper_raise_exception_err(CPUPPCState *env, uint32_t exception,
-+                                uint32_t error_code)
-+{
-+    raise_exception_err_ra(env, exception, error_code, 0);
-+}
-+
-+void helper_raise_exception(CPUPPCState *env, uint32_t exception)
-+{
-+    raise_exception_err_ra(env, exception, 0, 0);
-+}
-+
- #ifndef CONFIG_USER_ONLY
+     i2c_bus = I2C_BUS(qdev_get_child_bus(dev, "smbus"));
+     if (machine->ram_size > 512 * MiB) {
+@@ -339,12 +347,12 @@ static void amigaone_init(MachineState *machine)
+     pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+     mr = g_new(MemoryRegion, 1);
+     memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", pci_mem,
+-                             0, 0xe0000);
+-    memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
++                             0, PCI_LOW_SIZE);
++    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
+     mr = g_new(MemoryRegion, 1);
+     memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", pci_mem,
+-                             0x80000000, 0x7d000000);
+-    memory_region_add_subregion(get_system_memory(), 0x80000000, mr);
++                             PCI_HIGH_ADDR, PCI_HIGH_SIZE);
++    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
+     pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
  
-+void raise_exception_err(CPUPPCState *env, uint32_t exception,
-+                                           uint32_t error_code)
-+{
-+    raise_exception_err_ra(env, exception, error_code, 0);
-+}
-+
-+void raise_exception(CPUPPCState *env, uint32_t exception)
-+{
-+    raise_exception_err_ra(env, exception, 0, 0);
-+}
-+
- void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
-                                  MMUAccessType access_type,
-                                  int mmu_idx, uintptr_t retaddr)
+     /* VIA VT82c686B South Bridge (multifunction PCI device) */
 -- 
 2.47.1
 
