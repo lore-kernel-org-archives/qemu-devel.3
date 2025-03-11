@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6563C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF3CC28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1nR-0006AF-Cm; Tue, 11 Mar 2025 11:45:33 -0400
+	id 1ts1ow-0006Pd-RA; Tue, 11 Mar 2025 11:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1nK-00069o-KJ
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:45:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1o1-0006Dd-Uw
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:46:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1nH-000333-Hs
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:45:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts1nw-00038y-Vn
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:46:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741707921;
+ s=mimecast20190719; t=1741707964;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=zguqp+0OjjMKpBjiCtgQ8cMxqSSove1BO4gQ/yWdmrI=;
- b=Y+pybEbbbQbBDFgpIIWbfjacZl7XHxBfcAFg8LiMNLh1fCOMOgoKRTuAuvhcCApNLDsQ2h
- 9mLacPKjTvi5DHYXPJc2nA5hzxfrOhYMcVtt3r+EJg8Csp+RdSSLe1Xmy5n0HdD7Pf008C
- Z4XCuueEzxc6uFNpC+sscjMbR0PzbTE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xs0ERJe9F2swJdSHC5Oe6CDdXEyucMb2Pg0H3anx9NA=;
+ b=XW1imT6Zm6/78QQVLHAIauBTmbh71fw1RFEO7bP15exYYxa0Hpk2K8UU/EY1jbZqr8KsTi
+ PZ/D8EYVzS5NQGJVtiu3E1sGzrSnhtIkVhBeEObq9pSkRE499yKpT6H3g8rVT6pelT5h7F
+ v4cB0jKp8MvEZ83BlEKu5D4H+QavNuU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-G5vFebfJOjyHJ-dkfmEEjA-1; Tue, 11 Mar 2025 11:45:16 -0400
-X-MC-Unique: G5vFebfJOjyHJ-dkfmEEjA-1
-X-Mimecast-MFC-AGG-ID: G5vFebfJOjyHJ-dkfmEEjA_1741707915
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912539665cso3063424f8f.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:45:16 -0700 (PDT)
+ us-mta-124-p2RNi9Z6OKq-WrxAc-Joew-1; Tue, 11 Mar 2025 11:46:01 -0400
+X-MC-Unique: p2RNi9Z6OKq-WrxAc-Joew-1
+X-Mimecast-MFC-AGG-ID: p2RNi9Z6OKq-WrxAc-Joew_1741707960
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d007b2c79so12831735e9.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:46:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741707915; x=1742312715;
+ d=1e100.net; s=20230601; t=1741707959; x=1742312759;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zguqp+0OjjMKpBjiCtgQ8cMxqSSove1BO4gQ/yWdmrI=;
- b=CG34Un+vBShq+147MZy9ajr3KE5XkoCu5glJ9lwRmjiUC39rppvZ3aBQyICYGCNlk9
- JoxMmSU4n92iKQMyL5YYd3n9B5732ywK1Umzrg9pCvBr7a9SbdtZrMg/FS1Tg0nejwxh
- F1u5m8OqBq4WTkqYb2apR6/8YPZjzRHX+krvQDTNMy7sEhs1NHTdbWWP6XVFgAQP4hOZ
- PerAy6B5C59OuIx+pHbzpXKGnNLntSzp9XeONlPJ32Zrl2zwoCu88CPICkR2EP1mi2TW
- JeIguYrByQQvOX7IdZzz1kCGd8X5ebeAWojVdgUXAI5KCTH0dl6zX/6sxV72VaFfabNI
- Y06Q==
+ bh=xs0ERJe9F2swJdSHC5Oe6CDdXEyucMb2Pg0H3anx9NA=;
+ b=esS4B06zY9g0sDg96XQlAmKdvRiK0YRSgj3wSHi54T3OGwaTDm4TzHn+Mu2ImwdvH9
+ y4g6djwnefnVXHrJDfrm8P4eT/ge6yfx60/8fDdsnsi/UMLv56sCAPRjMiSHfvsWaLpW
+ ZQRH5Rhfk3gbHgzoxjHlY+t88dIoirrViUPxq+oEiJpWMFilwFmVJjzFs0YdfKm6DSKW
+ TJypEA5DV3KXLFj4QjUL1NesC+5Y/MkPHqeLZ/VnIp/uU0wCWe47hGnPC+7EpTVx/uAJ
+ F52kiVrOjkBfJPgVvTYoPPF1HqbNK7RGI1t5euIrDMm++wxs/7I7c20+lrXE97X6SkBl
+ +lVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVEesUMnnVSk+ACt7G4BLnTgMZQlp8svbZxhVkD7YaDOkC3B6fNGf151Y/lAbRwazPw7BFwJW0KfJf3@nongnu.org
-X-Gm-Message-State: AOJu0YxiKgpeyZl7dDAcx7/5ooNPDZcHvQYg2sWb3WgffqnrdmC6MvIZ
- pP8yysbLywxg9O9waDh3W/6CH/03tmNhWkvu1oyO6cI+WnO2e8ciqAxNNbYJ+Od29pbp8npbEsc
- 0rP2EzKrrGDH4C+nQzy7tP72vgzM1ZIvK0Rh6mf3sQ0IlYxR1ePAC
-X-Gm-Gg: ASbGncuF3tBDvZpQ3PpqnbpeOJOsWwsGBvjQMS8nSpmXY4c9dXQgzztn+kKFVQW+Rq6
- cBu+EklqW4eEhQ1wFLp9BTlnUcLh4qL6qgCS++IiYi3NHvCiQwxZaBijVzh4h7K2lndl8ey1ldC
- uN21oFTvqz1T8nyohf6js0gsXQCBK2UXyj6AydXP6b22v1HzUyRYbv3IhLEBVehiuHXorv1ogdd
- 8C4oYAr5EQAhznzV24y9dfIFc8ObhoBZ5eFQT8SYATJh6EVJnBeoFgHuH5icvJOFDZTG7B4abqb
- /jBGwt1M0RfttS6MYcDS33LNP2zKdHV26rip0vK/AyUwVxwvgCVKug==
-X-Received: by 2002:a05:6000:1789:b0:391:a74:d7e2 with SMTP id
- ffacd0b85a97d-39279e5177emr5254794f8f.26.1741707915065; 
- Tue, 11 Mar 2025 08:45:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCoxhHW29s4tkdSNpwoNukN2qL6OTLMayar/lpBXuKlhsuI7xB3rNmNJqaGz2Vf0m7oj59bQ==
-X-Received: by 2002:a05:6000:1789:b0:391:a74:d7e2 with SMTP id
- ffacd0b85a97d-39279e5177emr5254781f8f.26.1741707914703; 
- Tue, 11 Mar 2025 08:45:14 -0700 (PDT)
+ AJvYcCWozmNTdF3xFqN4EQL4MzD1GiM57FyTfC2JpE++uw/Fb4659+hjCdE9h0B/K7EED6wtTA1z+PE+DusA@nongnu.org
+X-Gm-Message-State: AOJu0YyxX0O23iApDA0zw2LmJyqtUF2c/k5U5JXOX4pP7FNDjU5duq88
+ O2YcrRrVts+5c54Bcslj/nAZKEBxALoewnuaO/doOdjdkllqwAChm/yIf77DF0QHGAI8Wd9JPPs
+ LuZISriMvG1hmk4FMeuHleKONvpK5vDIl70nhfH0RF5J7IkwOQdoeWmRqBvQ6wr4=
+X-Gm-Gg: ASbGncsEVqix22PgexmgrvUdl8+13MWUr5OK32s7pUGtvBf/koBmNajHRkXDy3UnXHd
+ qKtIn134a9ZaKMfoNDMiR0+3gYqYey/la9fbVcrAdT7Wapa+FtRg4MovhEEWr9jUiceCqf2fH7J
+ bafBn8swLfnhtmFfrR/GUQH51rvbnFugk3QHL3p7xnWhwmX2OOrCIcM8KkMPDERXYivneZ3XpDt
+ 2AxWLgYqH+bnP1hdfGENA2O+AwAZlWhERfzRSI/EKxd6GRmvL/Ff3+GmT2f9uSurB32M6M8Jua4
+ oOww4sTtipA2ZmHI43Qk5BGGLdkmUITjySawixJCht2xLo7QqslMGg==
+X-Received: by 2002:a05:600c:5493:b0:43c:fa24:873e with SMTP id
+ 5b1f17b1804b1-43d01be65ebmr56805995e9.13.1741707959314; 
+ Tue, 11 Mar 2025 08:45:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEBEkwpy9qi9Gh7JgPXl7TdjVa12F+PVQKB4OwAXwtwgz4iTuEps2mnlWdSkuYV97WU0Dao+A==
+X-Received: by 2002:a05:600c:5493:b0:43c:fa24:873e with SMTP id
+ 5b1f17b1804b1-43d01be65ebmr56805825e9.13.1741707958979; 
+ Tue, 11 Mar 2025 08:45:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cf7c82566sm76009765e9.30.2025.03.11.08.45.13
+ 5b1f17b1804b1-43d03fd715csm13709265e9.1.2025.03.11.08.45.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 08:45:13 -0700 (PDT)
-Message-ID: <fad3dd28-d91e-4add-8258-5918127e9346@redhat.com>
-Date: Tue, 11 Mar 2025 16:45:12 +0100
+ Tue, 11 Mar 2025 08:45:58 -0700 (PDT)
+Message-ID: <29b9c917-8a3f-4d09-a5cc-2ede94856ebd@redhat.com>
+Date: Tue, 11 Mar 2025 16:45:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio/migration: Add also max in-flight VFIO device
- state buffers size limit
-To: Avihai Horon <avihaih@nvidia.com>,
- "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
- <2b2469939198c2f31dba33b284576d2df22697b7.1741344976.git.maciej.szmigiero@oracle.com>
- <abc049f2-3497-4557-89c8-74bcfaea221c@redhat.com>
- <3826d47f-d79b-4db2-9719-35f48f582bf0@maciej.szmigiero.name>
- <fc547687-b313-404c-a6a6-dd599b0a9dbc@redhat.com>
- <bdd69682-3d0f-4687-a8a5-43a6cb4cecc3@nvidia.com>
+Subject: Re: [RFC PATCH] vfio/pci-quirks: Exclude non-ioport BAR from ATI quirk
+To: Vasilis Liaskovitis <vliaskovitis@suse.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com
+References: <20250310235833.41026-1-vliaskovitis@suse.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -137,9 +126,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <bdd69682-3d0f-4687-a8a5-43a6cb4cecc3@nvidia.com>
+In-Reply-To: <20250310235833.41026-1-vliaskovitis@suse.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -149,7 +138,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,71 +154,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/25 15:57, Avihai Horon wrote:
+On 3/11/25 00:58, Vasilis Liaskovitis wrote:
+> The ATI BAR4 quirk is targeting an ioport BAR. Older devices may
+> have a BAR4 which is not an ioport, causing a segfault here. Test
+> the BAR type to skip these devices.
 > 
-> On 11/03/2025 15:04, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> On 3/7/25 14:45, Maciej S. Szmigiero wrote:
->>> On 7.03.2025 13:03, Cédric Le Goater wrote:
->>>> On 3/7/25 11:57, Maciej S. Szmigiero wrote:
->>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>>
->>>>> There's already a max in-flight VFIO device state buffers *count* limit,
->>>>
->>>> no. there isn't. Do we need both ?
->>>
->>> This is on a top of the remaining patches (x-migration-load-config-after-iter
->>> and x-migration-max-queued-buffers) - I thought we were supposed to work
->>> on these after the main series was merged as they are relatively non-critical.
->>
->> yes. we don't need both count and size limits though, a size limit is enough.
->>
->>> I would also give x-migration-load-config-after-iter priority over
->>> x-migration-max-queued-buffers{,-size} as the former is correctness fix
->>> while the later are just additional functionalities.
->>
->> ok. I have kept both patches in my tree with the doc updates.
->>
->>> Also, if some setup is truly worried about these buffers consuming too much
->>> memory then roughly the same thing could be achieved by (temporarily) putting
->>> the target QEMU process in a memory-limited cgroup.
->>
->> yes.
->>
->> That said,
->>
->> since QEMU exchanges 1MB VFIODeviceStatePackets when using multifd and that
->> the overall device state is in the order of 100MB :
->>
->>   /*
->>    * This is an arbitrary size based on migration of mlx5 devices, where typically
->>    * total device migration size is on the order of 100s of MB. Testing with
->>    * larger values, e.g. 128MB and 1GB, did not show a performance improvement.
->>    */
->>   #define VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE (1 * MiB)
->>
->>
->> Could we define the limit to 1GB ?
->>
->> Avihai, would that make sense  ?
->>
-> There can be many use cases, each one with its own requirements and constraints, so it's hard for me to think of a "good" default value.
+> Similar to
+> "8f419c5b: vfio/pci-quirks: Exclude non-ioport BAR from NVIDIA quirk"
 > 
-> IIUC this limit is mostly relevant for the extreme cases where devices have big state + writing the buffers to the device is slow.
-> So IMHO let's set it to unlimited by default and let the users decide if they want to set such limit and to what value. (Note also that even when unlimited, it is really limited to 2 * device_state_size).
+> Untested, as I don't have the card to test.
 > 
-> Unless you have other reasons why 1GB or other value is preferable?
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2856
+> Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
+> ---
+>   hw/vfio/pci-quirks.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+> index c53591fe2b..15598bbaf4 100644
+> --- a/hw/vfio/pci-quirks.c
+> +++ b/hw/vfio/pci-quirks.c
+> @@ -403,7 +403,7 @@ static void vfio_probe_ati_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+>   
+>       /* This windows doesn't seem to be used except by legacy VGA code */
+>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_ATI, PCI_ANY_ID) ||
+> -        !vdev->vga || nr != 4) {
+> +        !vdev->vga || nr != 4 || !vdev->bars[4].ioport) {
+>           return;
+>       }
+>   
 
-none but UINT_MAX is not good value either. Let's wait before introducing
-a new limiting property.
 
-I will send the last PR for QEMU 10.0 at the end of the day.
 
+Applied to vfio-next.
 
 Thanks,
 
 C.
+
 
 
