@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB5CEC282DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 00:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5359DC282DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 00:05:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trn1V-0001W8-LQ; Mon, 10 Mar 2025 19:59:05 -0400
+	id 1trn76-0004Cq-M7; Mon, 10 Mar 2025 20:04:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1trn1S-0001RF-VB
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 19:59:03 -0400
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trn74-0004CT-2t
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 20:04:50 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1trn1R-0004Av-9c
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 19:59:02 -0400
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso12221865e9.0
- for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 16:58:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1trn71-0004xk-RC
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 20:04:49 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2ff187f027fso8127295a91.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Mar 2025 17:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1741651138; x=1742255938; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uFYgY/6DBovATYZvrnN9pCa9OPwBjHt8YhEOdrXntc0=;
- b=PMVugtwZMwep08C7PXRWgfic8cAX+VY4VQhDFpFV32Rt4Y05lfHWslYx4/LgeXPOyB
- iV7U63UMIl3NXOeSIZ+Ly5Umv8kAGG7RzxnzmQ/IVOwMLEampuPRjtskrf+7JvtBocff
- h9BO5WpoAILaTKNcQUx+wooxPzrFQSuLiZFU4ikrSne+ZJY+8WvAPnYMjeUW7/wZt9qd
- MUPa3qdM1t+5kPS81e4v3v4nly6rbvHdv+XkvX0UtyDXyCSdWDNI8RHzkZTQ4rkxDwjd
- Zu6Oa/TsFlEDQUp0EZZ4f0df1Rv8zrKYyqAyxMyC/zK4KZjklR+HomdJS6fs/N27P3bd
- lndQ==
+ d=linaro.org; s=google; t=1741651486; x=1742256286; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+ZIq7YtD+IASqWucSgp6OoaVMVqQ+LyKMsGMK/5t0EU=;
+ b=b4HVK5611uW3g3RqRc8ux6pWTM8IWm9QxS5PuHUb3EvWe7Y8THcMB0d9BCFDxDVwad
+ 1PtR/8O0A7w8Fb09YbsUIQUs2khbB/NfQp0NJEuC5Z8jn4NgCT+bxk2Nnu2qNiqevu8e
+ KTGmd04sb7mq9ojtrWmy2jM2Rd3CO+NgJk9j9mfYK3EYonigizxp4xs3zW8oukrVhhR7
+ Hqm9NTS1FrzMR9P4Y566Z7b1P60YVEBn/YdpczItnqjayZWqMqyWjwSIyBtRqIGQnXpz
+ 4qaeqnx0Uy/gJzgg4H3euU1JSO8Jv4VOFPDtQ2Mhaoh9R6OshNpEKq/IoiGtrn544k7i
+ V2xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741651138; x=1742255938;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uFYgY/6DBovATYZvrnN9pCa9OPwBjHt8YhEOdrXntc0=;
- b=k8+i5lskbi8jjeClPxpFLsotdwpxzmdKD4Mm6L+iaaDxg3t4LnlGVJV8htfb5yPTYr
- zIoXFZyxlVdNiDbh7cklcMBbGq2RUxWgq3HouHDt91iOH8Y2jceBQ1FrLJ62753vD/CI
- E6owSV6az6DRZDYCAxSctbLQS9he7GGtWWWedG54jMRjBd5zpJojSvccmxe5eW7jP8It
- t2dQ/c4lLfA9HfqhSWkQ4kG5WcZfFYYp2dC/WVn9DTqOJVepEykUgvk+tFIJ3GDi4CZD
- K87yALTV2QQldoi6XwYggO9obP2ZISZnZj1OozeZsxN1NesFgwWGOq+FFwPVD7m/XMpT
- UcqQ==
-X-Gm-Message-State: AOJu0Ywm3MpjBjOUsszBFMh4QxSILZ+FsQvjd9oBDaZzRZECrg/aTJcv
- mpl8u0eczKYK/YCJKQ0d2KNY1+6Up+oIXvpmgW82YV9G05TTmA8Rw9lt7TtPyeL8vEeI7p/+aue
- 21BdBNg==
-X-Gm-Gg: ASbGnctJOcSNV5/P7dBcQ7Iy3V6tK7kBnfLw0bW+5FqAD195WWHWMFYAyuXCtLrBqaU
- 4BknGbjqGKs2/okF+VUw1WYyfaabg56JRvSSnoStKasIvCtWkIEewBSQiJ5hVz0SBxUpjyQeeY+
- DdjmnwaoGxgzs4+IZGAr0Au+/CTMDJuGa10GYJ3yhbRmGMx/CyfpTiWoyhYgD5tCLyknZCOy30X
- p2mnUSFDDK8DUfthFolQk1SrYi4sCgjWC9m2R5FjTiWhdgscTrt6vFhToNt0K6Xa0iqKvG/fL5M
- VvxsbSpvdMeMcuvy2SMso1xkZvV+4h+1hpyCHIiZ2xii+bKcnQmV5BD7IQsoL6wjsWOukZ6yKMP
- IoTjYEeQuCA==
-X-Google-Smtp-Source: AGHT+IGgYFAY+qbMFvHDzBtSeArLQmcF/eYMPN0szSGA/Y0tJ+Gg89EZ7R706WDL3wWPLqB/L7bNXw==
-X-Received: by 2002:a05:6000:2ce:b0:391:39bd:a361 with SMTP id
- ffacd0b85a97d-39139bda97cmr10550317f8f.18.1741651138429; 
- Mon, 10 Mar 2025 16:58:58 -0700 (PDT)
-Received: from localhost (ppp-2-87-115-176.home.otenet.gr. [2.87.115.176])
- by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-3912c1030cfsm16710575f8f.90.2025.03.10.16.58.56
+ d=1e100.net; s=20230601; t=1741651486; x=1742256286;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+ZIq7YtD+IASqWucSgp6OoaVMVqQ+LyKMsGMK/5t0EU=;
+ b=apIC5ybyANU50ycX7cxth0mk7B9pVYRnRI+6HVUwu7mzs8t+/UlcOsR5Yfvp3h+vr1
+ 9LTWo3wwe6q3JlHKIw4aF+baqSUyJMhNXemdWB660KbtpNYam89YUFQl1O6X1ejS9T+A
+ /luePnIEZoIJ3pvpEWhfc7OdsEkUg0lENXcKMVslHDKWONahsXsJVUdc2B7dJrD/s6gU
+ XDAkBBcX/N+yDN1QTN9z2jm2egsvug1mapHPPMfdust/wh3dOdAPwfZFAPgtS5IaNSXn
+ 4+uSZMHdseOb8AB/B37hZr130LOq5yI7SF+pvkQ9AuU86JiwB43BdObrxciLO4oPFZsp
+ B35A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWiyM7+qpW1xcQUFWOMoo8TX4ZX4aF5zvonzwW2qot39gOkjvT6EZr06UFVZCvbla6DRwQ/TomnumQk@nongnu.org
+X-Gm-Message-State: AOJu0YzQBLfO0CKKHWVw6up/iri6ID9LeChgnmWGSOwMKQ6C+2rHbsrV
+ l1K0JoDRowrsZlTFfizy8pdr2b9V6WRItUhBeRYv0tc0KHqK/uEIkii+vnKMW1M=
+X-Gm-Gg: ASbGncsSRVg1O1WYYF1Gx9tvuQZiYAkcWnM+lcIv6wJWNX6SR020kZJjz3hCMWt7Lo5
+ SaybwHQ6Z/DTOWQG7EeuUzvzcU9IGbofrl/MnHWeNFbkMwioKIJM7SVHyRac/2TnLLxNIXLnFJn
+ xy48TbIq5ytUvZUIQfYOrgLlRIu4HGXC5tBNRQWPcJ8ExhQKI8KANCY95UYbp/qtSCdSKb45WxF
+ feoPVxSLQ9ChO1PErO1Y0SdbGODu0nADTrdx/hlm5tbZcfiCPj+6lWmJIJ+Lh9ApdhBKGYAgM9l
+ Ml5i58yvQgPDxBNg8qNZEwMcpK7k6s24dmEdHaCAvo/JoS9wSNLfBin+kA==
+X-Google-Smtp-Source: AGHT+IEY+foWQDlVBtdlKbW7DwI4snuQ2zJEq0MpvJEokYr9aDSftVtTyhW/QPs+SyV0t4PC4Wb3bA==
+X-Received: by 2002:a17:90b:2712:b0:2fa:3b6b:3370 with SMTP id
+ 98e67ed59e1d1-301005c8b8fmr1738040a91.16.1741651485806; 
+ Mon, 10 Mar 2025 17:04:45 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff693e73b9sm8660348a91.38.2025.03.10.17.04.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Mar 2025 16:58:57 -0700 (PDT)
-From: Vasilis Liaskovitis <vliaskovitis@suse.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com,
- Vasilis Liaskovitis <vliaskovitis@suse.com>
-Subject: [RFC PATCH] vfio/pci-quirks: Exclude non-ioport BAR from ATI quirk
-Date: Tue, 11 Mar 2025 00:58:33 +0100
-Message-ID: <20250310235833.41026-1-vliaskovitis@suse.com>
-X-Mailer: git-send-email 2.46.0
+ Mon, 10 Mar 2025 17:04:45 -0700 (PDT)
+Message-ID: <efde9b68-fd8c-4e06-ab5e-6b1d4cf75332@linaro.org>
+Date: Mon, 10 Mar 2025 17:04:44 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=vliaskovitis@suse.com; helo=mail-wm1-x341.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/16] exec/memory_ldst: extract memory_ldst declarations
+ from cpu-all.h
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250310045842.2650784-1-pierrick.bouvier@linaro.org>
+ <20250310045842.2650784-2-pierrick.bouvier@linaro.org>
+ <57612d65-aec0-4785-86c3-0c8d647af38a@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <57612d65-aec0-4785-86c3-0c8d647af38a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,35 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ATI BAR4 quirk is targeting an ioport BAR. Older devices may
-have a BAR4 which is not an ioport, causing a segfault here. Test
-the BAR type to skip these devices.
+On 3/10/25 08:17, Richard Henderson wrote:
+> On 3/9/25 21:58, Pierrick Bouvier wrote:
+>> They are now accessible through exec/memory.h instead, and we make sure
+>> all variants are available for common or target dependent code.
+> ...
+>> diff --git a/include/exec/memory_ldst.h.inc b/include/exec/memory_ldst.h.inc
+>> index 92ad74e9560..74519a88de0 100644
+>> --- a/include/exec/memory_ldst.h.inc
+>> +++ b/include/exec/memory_ldst.h.inc
+>> @@ -19,7 +19,8 @@
+>>     * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+>>     */
+>>    
+>> -#ifdef TARGET_ENDIANNESS
+>> +uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL,
+>> +    hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+>>    uint16_t glue(address_space_lduw, SUFFIX)(ARG1_DECL,
+>>        hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
+> 
+> You shouldn't be exposing
+> 
+>     address_space_lduw
+> 
+> to common code, only
+> 
+>     address_space_lduw_be
+>     address_space_lduw_le
+> 
+> etc.  I'm not sure what you're trying to do here.
+> 
+> 
+> r~
 
-Similar to
-"8f419c5b: vfio/pci-quirks: Exclude non-ioport BAR from NVIDIA quirk"
+Taking another look at this, I don't see how we can avoid to expose 
+those functions to common code.
 
-Untested, as I don't have the card to test.
+The goal of those first two patches is to break the dependency to cpu.h, 
+which can't be included from common code, and thus prevent any common 
+code wanting to do memory op to access it.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2856
-Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
----
- hw/vfio/pci-quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+All the calls to ld*_phys() and address_space_*() are indeed done from 
+code related to a target (some of it in hw/). However, as we now move 
+those compilation units to common, they still need to be accessed. The 
+semantic stays exactly the same.
 
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index c53591fe2b..15598bbaf4 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -403,7 +403,7 @@ static void vfio_probe_ati_bar4_quirk(VFIOPCIDevice *vdev, int nr)
- 
-     /* This windows doesn't seem to be used except by legacy VGA code */
-     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_ATI, PCI_ANY_ID) ||
--        !vdev->vga || nr != 4) {
-+        !vdev->vga || nr != 4 || !vdev->bars[4].ioport) {
-         return;
-     }
- 
--- 
-2.46.0
+ From what I understand, non endian versions are simply passing 
+DEVICE_NATIVE_ENDIAN as a parameter for address_space_ldl_internal, 
+which will thus match the target endianness.
 
+So what is the risk for common code to call this?
 
