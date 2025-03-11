@@ -4,61 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B626C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD526C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts2DF-0000ch-Fw; Tue, 11 Mar 2025 12:12:18 -0400
+	id 1ts2UA-0003GI-NL; Tue, 11 Mar 2025 12:29:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts235-0004Ww-3Y
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:45 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1ts2Th-0003Eq-R7
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:29:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts22i-0005ph-8B
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:24 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1ts2Tc-0002re-DV
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:29:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741708876;
+ s=mimecast20190719; t=1741710547;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=erCvDywXkGyZsgBRt9YjSOfw93ZGtqYpmT63Q89bCRc=;
- b=iJEN3Q3CXp2+zvAdZ3byR+cEb4uT5Sria0xkWr5vMuGbbhcB3Tslz7b3w6Urw9+kOin9YQ
- YamhWUrHRV06mzXQokVkajTzaI5UR5nlKCVzSBPL8MarxAai6a7niq53aIlhwon2jqlc2+
- zENeVFDLqTYQbJuse2/KDtxcnSZ9dSI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=V/g7TarSB28W1Y/52yrlgDX9qyNH+w7AG3qDnHZvj68=;
+ b=Q+mnrB1b+j+Q4wQjToXf32ToJhXxqfxdhR0IT5RKady2v+bDXTvgs587QGBBnHIf9jXWiH
+ C/zLIAUoQYfStIct68njQtvI3SqNQEvWDVRAbs+pW9GJ0A1JHViqsLBlvw03ymFUM3hmXb
+ ydL+DMvSlVQq40ozFXTJlzaWiziHzf4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-_VdgvvdANJmYWTcZjUYE7A-1; Tue,
- 11 Mar 2025 12:01:13 -0400
-X-MC-Unique: _VdgvvdANJmYWTcZjUYE7A-1
-X-Mimecast-MFC-AGG-ID: _VdgvvdANJmYWTcZjUYE7A_1741708872
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-NTBGM7QgO5O-SCpLx0BwnA-1; Tue,
+ 11 Mar 2025 12:29:05 -0400
+X-MC-Unique: NTBGM7QgO5O-SCpLx0BwnA-1
+X-Mimecast-MFC-AGG-ID: NTBGM7QgO5O-SCpLx0BwnA_1741710543
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B7655180899B; Tue, 11 Mar 2025 16:01:12 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.33.18])
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C757C1955BC6; Tue, 11 Mar 2025 16:29:02 +0000 (UTC)
+Received: from gondolin.redhat.com (unknown [10.67.24.185])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2B8F618001E9; Tue, 11 Mar 2025 16:01:10 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 22/22] virtio-scsi: only expose cmd vqs via iothread-vq-mapping
-Date: Tue, 11 Mar 2025 17:00:21 +0100
-Message-ID: <20250311160021.349761-23-kwolf@redhat.com>
-In-Reply-To: <20250311160021.349761-1-kwolf@redhat.com>
-References: <20250311160021.349761-1-kwolf@redhat.com>
+ id 5D471180AF7C; Tue, 11 Mar 2025 16:28:46 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH v3 01/14] arm/cpu: Add sysreg definitions in cpu-sysregs.h
+Date: Tue, 11 Mar 2025 17:28:11 +0100
+Message-ID: <20250311162824.199721-2-cohuck@redhat.com>
+In-Reply-To: <20250311162824.199721-1-cohuck@redhat.com>
+References: <20250311162824.199721-1-cohuck@redhat.com>
 MIME-Version: 1.0
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,101 +89,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-Peter Krempa and Kevin Wolf observed that iothread-vq-mapping is
-confusing to use because the control and event virtqueues have a fixed
-location before the command virtqueues but need to be treated
-differently.
+This new header contains macros that define aarch64 registers.
+In a subsequent patch, this will be replaced by a more exhaustive
+version that will be generated from linux arch/arm64/tools/sysreg
+file. Those macros are sufficient to migrate the storage of those
+ID regs from named fields in isar struct to an array cell.
 
-Only expose the command virtqueues via iothread-vq-mapping so that the
-command-line parameter is intuitive: it controls where SCSI requests are
-processed.
-
-The control virtqueue needs to be hardcoded to the main loop thread for
-technical reasons anyway. Kevin also pointed out that it's better to
-place the event virtqueue in the main loop thread since its no poll
-behavior would prevent polling if assigned to an IOThread.
-
-This change is its own commit to avoid squashing the previous commit.
-
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Suggested-by: Peter Krempa <pkrempa@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20250311132616.1049687-14-stefanha@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+[CH: reworked to use different structures]
+[CH: moved accessors from the patches first using them to here,
+     dropped interaction with writable registers, which will happen
+     later]
+[CH: use DEF magic suggested by rth]
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- hw/scsi/virtio-scsi-dataplane.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ target/arm/cpu-sysregs.h     | 37 +++++++++++++++++++++++++++
+ target/arm/cpu-sysregs.h.inc | 35 ++++++++++++++++++++++++++
+ target/arm/cpu.h             | 49 ++++++++++++++++++++++++++++++++++++
+ target/arm/cpu64.c           | 22 ++++++++++++++++
+ 4 files changed, 143 insertions(+)
+ create mode 100644 target/arm/cpu-sysregs.h
+ create mode 100644 target/arm/cpu-sysregs.h.inc
 
-diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-index 2d37fa6712..95f13fb7c2 100644
---- a/hw/scsi/virtio-scsi-dataplane.c
-+++ b/hw/scsi/virtio-scsi-dataplane.c
-@@ -28,7 +28,6 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
--    uint16_t num_vqs = vs->conf.num_queues + VIRTIO_SCSI_VQ_NUM_FIXED;
- 
-     if (vs->conf.iothread && vs->conf.iothread_vq_mapping_list) {
-         error_setg(errp,
-@@ -50,35 +49,43 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
-         }
-     }
- 
--    s->vq_aio_context = g_new(AioContext *, num_vqs);
-+    s->vq_aio_context = g_new(AioContext *, vs->conf.num_queues +
-+                                            VIRTIO_SCSI_VQ_NUM_FIXED);
+diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+new file mode 100644
+index 000000000000..b95320b5b595
+--- /dev/null
++++ b/target/arm/cpu-sysregs.h
+@@ -0,0 +1,37 @@
++#ifndef ARM_CPU_SYSREGS_H
++#define ARM_CPU_SYSREGS_H
 +
-+    /*
-+     * Handle the ctrl virtqueue in the main loop thread where device resets
-+     * can be performed.
-+     */
-+    s->vq_aio_context[0] = qemu_get_aio_context();
++/*
++ * Following is similar to the coprocessor regs encodings, but with an argument
++ * ordering that matches the ARM ARM. We also reuse the various CP_REG_ defines
++ * that actually are the same as the equivalent KVM_REG_ values.
++ */
++#define ENCODE_ID_REG(op0, op1, crn, crm, op2)          \
++    (((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
++     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
++     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
++     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
++     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
 +
-+    /*
-+     * Handle the event virtqueue in the main loop thread where its no_poll
-+     * behavior won't stop IOThread polling.
-+     */
-+    s->vq_aio_context[1] = qemu_get_aio_context();
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) NAME##_IDX,
++
++typedef enum ARMIDRegisterIdx {
++#include "cpu-sysregs.h.inc"
++    NUM_ID_IDX,
++} ARMIDRegisterIdx;
++
++#undef DEF
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
++    SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
++
++typedef enum ARMSysRegs {
++#include "cpu-sysregs.h.inc"
++} ARMSysRegs;
++
++#undef DEF
++
++extern const uint32_t id_register_sysreg[NUM_ID_IDX];
++
++int get_sysreg_idx(ARMSysRegs sysreg);
++
++#endif /* ARM_CPU_SYSREGS_H */
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+new file mode 100644
+index 000000000000..6c9f9981cc5d
+--- /dev/null
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -0,0 +1,35 @@
++DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
++DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
++DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
++DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
++DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
++DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
++DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
++DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
++DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
++DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
++DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
++DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
++DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
++DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
++DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
++DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
++DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
++DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
++DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
++DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
++DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
++DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
++DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
++DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
++DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
++DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
++DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
++DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
++DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
++DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
++DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
++DEF(CTR_EL0, 3, 3, 0, 0, 1)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 215845c7e256..60335f8893fa 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -30,6 +30,7 @@
+ #include "qapi/qapi-types-common.h"
+ #include "target/arm/multiprocessing.h"
+ #include "target/arm/gtimer.h"
++#include "target/arm/cpu-sysregs.h"
  
-     if (vs->conf.iothread_vq_mapping_list) {
-         if (!iothread_vq_mapping_apply(vs->conf.iothread_vq_mapping_list,
--                                       s->vq_aio_context, num_vqs, errp)) {
-+                    &s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED],
-+                    vs->conf.num_queues, errp)) {
-             g_free(s->vq_aio_context);
-             s->vq_aio_context = NULL;
-             return;
-         }
-     } else if (vs->conf.iothread) {
-         AioContext *ctx = iothread_get_aio_context(vs->conf.iothread);
--        for (uint16_t i = 0; i < num_vqs; i++) {
--            s->vq_aio_context[i] = ctx;
-+        for (uint16_t i = 0; i < vs->conf.num_queues; i++) {
-+            s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] = ctx;
-         }
+ #ifdef TARGET_AARCH64
+ #define KVM_HAVE_MCE_INJECTION 1
+@@ -855,6 +856,53 @@ typedef struct {
+     uint32_t map, init, supported;
+ } ARMVQMap;
  
-         /* Released in virtio_scsi_dataplane_cleanup() */
-         object_ref(OBJECT(vs->conf.iothread));
-     } else {
-         AioContext *ctx = qemu_get_aio_context();
--        for (unsigned i = 0; i < num_vqs; i++) {
--            s->vq_aio_context[i] = ctx;
-+        for (unsigned i = 0; i < vs->conf.num_queues; i++) {
-+            s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] = ctx;
-         }
-     }
--
--    /*
--     * Always handle the ctrl virtqueue in the main loop thread where device
--     * resets can be performed.
--     */
--    s->vq_aio_context[0] = qemu_get_aio_context();
- }
++/* REG is ID_XXX */
++#define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        uint64_t regval = i_->idregs[REG ## _EL1_IDX];                  \
++        regval = FIELD_DP64(regval, REG, FIELD, VALUE);                 \
++        i_->idregs[REG ## _EL1_IDX] = regval;                           \
++    })
++
++#define FIELD_DP32_IDREG(ISAR, REG, FIELD, VALUE)                       \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        uint64_t regval = i_->idregs[REG ## _EL1_IDX];                  \
++        regval = FIELD_DP32(regval, REG, FIELD, VALUE);                 \
++        i_->idregs[REG ## _EL1_IDX] = regval;                           \
++    })
++
++#define FIELD_EX64_IDREG(ISAR, REG, FIELD)                              \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        FIELD_EX64(i_->idregs[REG ## _EL1_IDX], REG, FIELD);            \
++    })
++
++#define FIELD_EX32_IDREG(ISAR, REG, FIELD)                              \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        FIELD_EX32(i_->idregs[REG ## _EL1_IDX], REG, FIELD);            \
++    })
++
++#define FIELD_SEX64_IDREG(ISAR, REG, FIELD)                             \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        FIELD_SEX64(i_->idregs[REG ## _EL1_IDX], REG, FIELD);           \
++    })
++
++#define SET_IDREG(ISAR, REG, VALUE)                                     \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        i_->idregs[REG ## _EL1_IDX] = VALUE;                            \
++    })
++
++#define GET_IDREG(ISAR, REG)                                            \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        i_->idregs[REG ## _EL1_IDX];                                    \
++    })
++
+ /**
+  * ARMCPU:
+  * @env: #CPUARMState
+@@ -1063,6 +1111,7 @@ struct ArchCPU {
+         uint64_t id_aa64zfr0;
+         uint64_t id_aa64smfr0;
+         uint64_t reset_pmcr_el0;
++        uint64_t idregs[NUM_ID_IDX];
+     } isar;
+     uint64_t midr;
+     uint32_t revidr;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 8188ede5cc8a..62eff5375c19 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -36,6 +36,28 @@
+ #include "cpu-features.h"
+ #include "cpregs.h"
  
- /* Context: BQL held */
++/* convert between <register>_IDX and SYS_<register> */
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
++    [NAME##_IDX] = SYS_##NAME,
++
++const uint32_t id_register_sysreg[NUM_ID_IDX] = {
++#include "cpu-sysregs.h.inc"
++};
++
++#undef DEF
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
++    case SYS_##NAME: return NAME##_IDX;
++
++int get_sysreg_idx(ARMSysRegs sysreg)
++{
++    switch (sysreg) {
++#include "cpu-sysregs.h.inc"
++    }
++    g_assert_not_reached();
++}
++
++#undef DEF
++
+ void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
+ {
+     /*
 -- 
 2.48.1
 
