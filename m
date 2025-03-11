@@ -4,59 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B50C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 06:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD7BC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 07:00:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trtVR-0001Uj-Rc; Tue, 11 Mar 2025 02:54:27 -0400
+	id 1trtaZ-0003So-FQ; Tue, 11 Mar 2025 02:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtVC-0001Tk-BU
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 02:54:12 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtaV-0003QK-LM
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 02:59:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtV9-0001j3-DY
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 02:54:10 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtaQ-0002bu-VS
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 02:59:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741676040;
+ s=mimecast20190719; t=1741676371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=J6ZFLa8G13Faxej6D1UmH0qOm4z1sYNDBxjFg4+whdo=;
- b=fZHT0+Q2Gxso2czxrvhy9NpLSM8LDE1f+/C9qo4egH62qVgFUB31IDRNbXBU8muOFC3qMO
- ax4lvCJdpNbCDkNaACN2gV0wJ66+lHTpMB0zGV5Z0ITG7ssiXzb+ZeY4B0ENdao10iGgEX
- 5OnMLziw2TJlj3hhcgroLUrcFbzrJiU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=iJ0VHSHF8dtHF+DStUOmDEmuvu8n8fcjK0pWNi7HbGI=;
+ b=O7COQJjzME4UAEckVXFIVZ6vYzPdP2+lOjtsJPe2r8QLjzBJD9SOiu/+fRrohOYIQ5CSS0
+ ZgXaY0Qbx57l27rqCKcGB6rYVC4fBBFMLYORsGDsk8EmKPOrcq8iIZLOQkfT5lXGkT+9hE
+ Qij70y2EH0UkZgoPp19O8D7SeML5viA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-Crx5LU2wMeaSIP9BwQk37A-1; Tue,
- 11 Mar 2025 02:53:58 -0400
-X-MC-Unique: Crx5LU2wMeaSIP9BwQk37A-1
-X-Mimecast-MFC-AGG-ID: Crx5LU2wMeaSIP9BwQk37A_1741676038
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-0OKM8DXDMGqx3vV4VvkJkQ-1; Tue,
+ 11 Mar 2025 02:59:30 -0400
+X-MC-Unique: 0OKM8DXDMGqx3vV4VvkJkQ-1
+X-Mimecast-MFC-AGG-ID: 0OKM8DXDMGqx3vV4VvkJkQ_1741676369
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8D7C1800262; Tue, 11 Mar 2025 06:53:57 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A4CDB18004A9; Tue, 11 Mar 2025 06:59:28 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94C8219560AB; Tue, 11 Mar 2025 06:53:56 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AA3C1800373; Tue, 11 Mar 2025 06:59:27 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DE59321E66C1; Tue, 11 Mar 2025 07:53:52 +0100 (CET)
+ id 61EC721E675E; Tue, 11 Mar 2025 07:59:23 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: michael.roth@amd.com,
-	berrange@redhat.com,
-	jsnow@redhat.com
-Subject: [PATCH] scripts/qapi/backend: Clean up create_backend()'s failure mode
-Date: Tue, 11 Mar 2025 07:53:52 +0100
-Message-ID: <20250311065352.992307-1-armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Thomas Huth
+ <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v3 02/63] qapi: shush pylint up
+In-Reply-To: <20250311034303.75779-3-jsnow@redhat.com> (John Snow's message of
+ "Mon, 10 Mar 2025 23:42:00 -0400")
+References: <20250311034303.75779-1-jsnow@redhat.com>
+ <20250311034303.75779-3-jsnow@redhat.com>
+Date: Tue, 11 Mar 2025 07:59:23 +0100
+Message-ID: <87o6y8833o.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -82,69 +89,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-create_backend()'s caller catches QAPIError, and returns non-zero exit
-code on catch.  The caller's caller passes the exit code to
-sys.exit().
+John Snow <jsnow@redhat.com> writes:
 
-create_backend() doesn't care: it reports errors to stderr and
-sys.exit()s.
+> Shhhhh!
+>
+> This patch can be dropped from the PR and I'll clean it up later. It's
+> just here to help me establish a linting baseline. It isn't really
+> needed for the series itself.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
-Change it to raise QAPIError instead.
+Okay, I'll drop this patch.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- scripts/qapi/main.py | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+Note that I just posted "[PATCH] scripts/qapi/backend: Clean up
+create_backend()'s failure mode", and ...
 
-diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-index 5b4679abcf..0e2a6ae3f0 100644
---- a/scripts/qapi/main.py
-+++ b/scripts/qapi/main.py
-@@ -31,34 +31,28 @@ def create_backend(path: str) -> QAPIBackend:
- 
-     module_path, dot, class_name = path.rpartition('.')
-     if not dot:
--        print("argument of -B must be of the form MODULE.CLASS",
--              file=sys.stderr)
--        sys.exit(1)
-+        raise QAPIError("argument of -B must be of the form MODULE.CLASS")
- 
-     try:
-         mod = import_module(module_path)
-     except Exception as ex:
--        print(f"unable to import '{module_path}': {ex}", file=sys.stderr)
--        sys.exit(1)
-+        raise QAPIError(f"unable to import '{module_path}': {ex}") from ex
- 
-     try:
-         klass = getattr(mod, class_name)
--    except AttributeError:
--        print(f"module '{module_path}' has no class '{class_name}'",
--              file=sys.stderr)
--        sys.exit(1)
-+    except AttributeError as ex:
-+        raise QAPIError(
-+            f"module '{module_path}' has no class '{class_name}'") from ex
- 
-     try:
-         backend = klass()
-     except Exception as ex:
--        print(f"backend '{path}' cannot be instantiated: {ex}",
--              file=sys.stderr)
--        sys.exit(1)
-+        raise QAPIError(
-+            f"backend '{path}' cannot be instantiated: {ex}") from ex
- 
-     if not isinstance(backend, QAPIBackend):
--        print(f"backend '{path}' must be an instance of QAPIBackend",
--              file=sys.stderr)
--        sys.exit(1)
-+        raise QAPIError(
-+            f"backend '{path}' must be an instance of QAPIBackend")
- 
-     return backend
- 
--- 
-2.48.1
+> ---
+>  scripts/qapi/backend.py | 2 ++
+>  scripts/qapi/main.py    | 8 +++-----
+>  2 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
+> index 14e60aa67af..49ae6ecdd33 100644
+> --- a/scripts/qapi/backend.py
+> +++ b/scripts/qapi/backend.py
+> @@ -13,6 +13,7 @@
+>  
+>  
+>  class QAPIBackend(ABC):
+> +    # pylint: disable=too-few-public-methods
+>  
+>      @abstractmethod
+>      def generate(self,
+> @@ -36,6 +37,7 @@ def generate(self,
+>  
+>  
+>  class QAPICBackend(QAPIBackend):
+> +    # pylint: disable=too-few-public-methods
+>  
+>      def generate(self,
+>                   schema: QAPISchema,
+
+... when you rebase on top of my patch, the hunk above stays, and the
+hunk below goes.
+
+> diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
+> index 5b4679abcf1..01155373bd0 100644
+> --- a/scripts/qapi/main.py
+> +++ b/scripts/qapi/main.py
+> @@ -38,8 +38,7 @@ def create_backend(path: str) -> QAPIBackend:
+>      try:
+>          mod = import_module(module_path)
+>      except Exception as ex:
+> -        print(f"unable to import '{module_path}': {ex}", file=sys.stderr)
+> -        sys.exit(1)
+> +        raise QAPIError(f"unable to import '{module_path}': {ex}") from ex
+>  
+>      try:
+>          klass = getattr(mod, class_name)
+> @@ -51,9 +50,8 @@ def create_backend(path: str) -> QAPIBackend:
+>      try:
+>          backend = klass()
+>      except Exception as ex:
+> -        print(f"backend '{path}' cannot be instantiated: {ex}",
+> -              file=sys.stderr)
+> -        sys.exit(1)
+> +        raise QAPIError(
+> +            f"backend '{path}' cannot be instantiated: {ex}") from ex
+>  
+>      if not isinstance(backend, QAPIBackend):
+>          print(f"backend '{path}' must be an instance of QAPIBackend",
 
 
