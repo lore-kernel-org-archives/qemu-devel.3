@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C88C28B30
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32311C28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1Ts-0001YZ-KM; Tue, 11 Mar 2025 11:25:20 -0400
+	id 1ts1Tt-0001ar-8l; Tue, 11 Mar 2025 11:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1ts1Tf-0001Oo-IM
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:25:10 -0400
+ id 1ts1Ti-0001RM-LE
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:25:12 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1ts1Tc-0007UM-L1
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:25:07 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BDMwkb006214;
+ id 1ts1Td-0007aW-7y
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:25:10 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BDMvXj015001;
  Tue, 11 Mar 2025 15:25:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2023-11-20; bh=CC9Zs
- 7fSAuyWEjMFZXRdSCpqZiGA/rDHX5VJkQcO0qY=; b=nk0Ivjb6ZD1pgPPRY7nKd
- y3JlGDpHtxpc91rbZEwMj2+nrqaEPVPph/fkJ7a+2Ib6jXK623Dc39p+b2oph5hb
- +AKmCKkJ0+GS2xh9gA0prhLdtxej5eRuAmSnGxTSwo7lA2lCyvelDKPMRDI6nXht
- 6USLlhmkZVBhLpoknPY1dSYRUcttOgXWffpZrcts6umEVqSQBBcG4aciTt9owoTU
- qKYl6XF4/F6OR21uviJp+eGWc0Vi9wRSDjZZw9HqpPXVR3GXV7+AEybHTSQF7NF2
- eSQ3C/u3bvcAu9CQdlau2Xa/xhCtXJC1dsjIpaOVTY7kBbhRpnyhqIIWP7591bxP
+ :mime-version:references:subject:to; s=corp-2023-11-20; bh=12BMq
+ D/O3Ej6AFH81/p+Tpm2W8PJI1g9VFqbfmu1C1k=; b=f/NiyuY9IC+stiMRZx6jt
+ BFMOfz08PhdvRaBU5Xd0iilJ6oqWCdV8aCXk7l9+5KPOC0AkZ9MRJLTfowV2aLrV
+ x7pggbSzOmbmbAc3bBAP6od9Vl2WAxFDegV39hoK9nRjqUV8RFmEaEVrQ1AzgvNJ
+ nKIVn9Oc1FWELUpKQl/tq0hWswhgf+3F+QCwSqiDY8Tp6BTiD29PYCIdBv2/DF77
+ m4Jjrps9y/VwTa8bp1sej1YCHdymxRvlJ/aJCQdX6UDB+qA2usRkXMZCQq6MwcUh
+ ABC30mQGUyPz4o25j69D32wUWoTX6eIYUUtrUpd/ksDpn59Z40qzdhGraW6/o51E
  g==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 458ds9n2c0-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 458ctb56mk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Mar 2025 15:24:59 +0000 (GMT)
+ Tue, 11 Mar 2025 15:25:00 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 52BEb7KV021373; Tue, 11 Mar 2025 15:24:58 GMT
+ with ESMTP id 52BEAF7K019961; Tue, 11 Mar 2025 15:24:58 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 458cbfqnqf-1
+ 458cbfqnqu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Tue, 11 Mar 2025 15:24:58 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52BFMCs5035998;
- Tue, 11 Mar 2025 15:24:57 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52BFMCs7035998;
+ Tue, 11 Mar 2025 15:24:58 GMT
 Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
  (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.250.206])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 458cbfqngj-3; Tue, 11 Mar 2025 15:24:57 +0000
+ 458cbfqngj-4; Tue, 11 Mar 2025 15:24:58 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, mst@redhat.com, mjt@tls.msk.ru,
@@ -63,10 +63,10 @@ Cc: pbonzini@redhat.com, mst@redhat.com, mjt@tls.msk.ru,
  suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
  sarunkod@amd.com, Wei.Huang2@amd.com, joao.m.martins@oracle.com,
  boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
-Subject: [PATCH 2/6] amd_iommu: Fix Device ID decoding for
- INVALIDATE_IOTLB_PAGES command
-Date: Tue, 11 Mar 2025 15:24:42 +0000
-Message-ID: <20250311152446.45086-3-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH 3/6] amd_iommu: Update bitmasks representing DTE reserved
+ fields
+Date: Tue, 11 Mar 2025 15:24:43 +0000
+Message-ID: <20250311152446.45086-4-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250311152446.45086-1-alejandro.j.jimenez@oracle.com>
 References: <20250311152446.45086-1-alejandro.j.jimenez@oracle.com>
@@ -80,8 +80,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  mlxscore=0 mlxlogscore=999 malwarescore=0 adultscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
  definitions=main-2503110096
-X-Proofpoint-GUID: Hmgrl84nxOZQLnFSMHm68IsqSG9ttWU-
-X-Proofpoint-ORIG-GUID: Hmgrl84nxOZQLnFSMHm68IsqSG9ttWU-
+X-Proofpoint-GUID: DJvqVsNcsAWKSlwoorSXtHxSPYDyQiCG
+X-Proofpoint-ORIG-GUID: DJvqVsNcsAWKSlwoorSXtHxSPYDyQiCG
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -107,39 +107,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The DeviceID bits are extracted using an incorrect offset in the call to
-amdvi_iotlb_remove_page(). This field is read (correctly) earlier, so use
-the value already retrieved for devid.
+The DTE validation method verifies that all bits in reserved DTE fields are
+unset. Update them according to the latest definition available in AMD I/O
+Virtualization Technology (IOMMU) Specification - Section 2.2.2.1 Device
+Table Entry Format. Remove the magic numbers and use a macro helper to
+generate bitmasks covering the specified ranges for better legibility.
+
+Note that some reserved fields specify that events are generated when they
+contain non-zero bits, or checks are skipped under certain configurations.
+This change only updates the reserved masks, checks for special conditions
+are not yet implemented.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- hw/i386/amd_iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/i386/amd_iommu.c | 7 ++++---
+ hw/i386/amd_iommu.h | 9 ++++++---
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 5b21cf134a..068eeb0cae 100644
+index 068eeb0cae..8b97abe28c 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -508,7 +508,7 @@ static void amdvi_inval_inttable(AMDVIState *s, uint64_t *cmd)
- static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
+@@ -848,9 +848,10 @@ static inline uint64_t amdvi_get_perms(uint64_t entry)
+ static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
+                                uint64_t *dte)
  {
+-    if ((dte[0] & AMDVI_DTE_LOWER_QUAD_RESERVED)
+-        || (dte[1] & AMDVI_DTE_MIDDLE_QUAD_RESERVED)
+-        || (dte[2] & AMDVI_DTE_UPPER_QUAD_RESERVED) || dte[3]) {
++    if ((dte[0] & AMDVI_DTE_QUAD0_RESERVED) ||
++        (dte[1] & AMDVI_DTE_QUAD1_RESERVED) ||
++        (dte[2] & AMDVI_DTE_QUAD2_RESERVED) ||
++        (dte[3] & AMDVI_DTE_QUAD3_RESERVED)) {
+         amdvi_log_illegaldevtab_error(s, devid,
+                                       s->devtab +
+                                       devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 4c708f8d74..8d5d882a06 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -25,6 +25,8 @@
+ #include "hw/i386/x86-iommu.h"
+ #include "qom/object.h"
  
--    uint16_t devid = extract64(cmd[0], 0, 16);
-+    uint16_t devid = cpu_to_le16(extract64(cmd[0], 0, 16));
-     if (extract64(cmd[1], 1, 1) || extract64(cmd[1], 3, 1) ||
-         extract64(cmd[1], 6, 6)) {
-         amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
-@@ -521,7 +521,7 @@ static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
-                                     &devid);
-     } else {
-         amdvi_iotlb_remove_page(s, cpu_to_le64(extract64(cmd[1], 12, 52)) << 12,
--                                cpu_to_le16(extract64(cmd[1], 0, 16)));
-+                                devid);
-     }
-     trace_amdvi_iotlb_inval();
- }
++#define GENMASK64(h, l)  (((~0ULL) >> (63 - (h) + (l))) << (l))
++
+ /* Capability registers */
+ #define AMDVI_CAPAB_BAR_LOW           0x04
+ #define AMDVI_CAPAB_BAR_HIGH          0x08
+@@ -162,9 +164,10 @@
+ #define AMDVI_FEATURE_PC                  (1ULL << 9) /* Perf counters       */
+ 
+ /* reserved DTE bits */
+-#define AMDVI_DTE_LOWER_QUAD_RESERVED  0x80300000000000fc
+-#define AMDVI_DTE_MIDDLE_QUAD_RESERVED 0x0000000000000100
+-#define AMDVI_DTE_UPPER_QUAD_RESERVED  0x08f0000000000000
++#define AMDVI_DTE_QUAD0_RESERVED        (GENMASK64(6, 2) | GENMASK64(63, 63))
++#define AMDVI_DTE_QUAD1_RESERVED        0
++#define AMDVI_DTE_QUAD2_RESERVED        GENMASK64(53, 52)
++#define AMDVI_DTE_QUAD3_RESERVED        (GENMASK64(14, 0) | GENMASK64(53, 48))
+ 
+ /* AMDVI paging mode */
+ #define AMDVI_GATS_MODE                 (2ULL <<  12)
 -- 
 2.43.5
 
