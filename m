@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB30FC28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 07:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E15EC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 07:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trtdo-00068M-AF; Tue, 11 Mar 2025 03:03:04 -0400
+	id 1trteg-0006iq-Rp; Tue, 11 Mar 2025 03:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtdm-00067o-H4
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 03:03:02 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trteP-0006Vj-5f
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 03:03:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtdk-0003LM-PK
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 03:03:02 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trteN-0003QR-F4
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 03:03:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741676578;
+ s=mimecast20190719; t=1741676618;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4xgyG3bW9gy7Zp0t13EpdAlKAQNdJAe7Qtcndxz1Vy0=;
- b=VZwxf8JY/4HXPgh+qO5FuUZQBvfGrDVvZU7BwOQADpIn9rN48tqdlspBB+vngilI7gzMWs
- UFkErUeRTutVr44QexIyONgRZYSsGRYfB5CR79mZVa1aW0oP5+rJXueuFPAW/tdykxQOnn
- kY6bv2MV332ro+IYSMLo3AOFf0y6+ic=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MsAbaACQAFUjtbNkM4Q1I/LJbd3qy665XTBqyJ+ftmc=;
+ b=WmVXovPd82p+rTuBmx3O5cTlQ2BM81QutfQZ+KntSdV5NDnUUQxp8LEFpyDRMzrv75+i+r
+ oCyRZKcIpqWvLXQbotGfGKPpzjJZ5csQIi8oiVnbzz36V7AvPEV2Mv9PnDtxRVZESkMYB2
+ UpQ8m2fDG2IszBQvxZZoWO8rAu+e+kk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-g4hk8g1lNvuJ8I4gt0rl5Q-1; Tue,
- 11 Mar 2025 03:02:54 -0400
-X-MC-Unique: g4hk8g1lNvuJ8I4gt0rl5Q-1
-X-Mimecast-MFC-AGG-ID: g4hk8g1lNvuJ8I4gt0rl5Q_1741676573
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-6FgrdVscOVuJKggIXYqYFg-1; Tue,
+ 11 Mar 2025 03:03:34 -0400
+X-MC-Unique: 6FgrdVscOVuJKggIXYqYFg-1
+X-Mimecast-MFC-AGG-ID: 6FgrdVscOVuJKggIXYqYFg_1741676613
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D17419560A1; Tue, 11 Mar 2025 07:02:53 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7703C19560AB; Tue, 11 Mar 2025 07:03:33 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7973818001F6; Tue, 11 Mar 2025 07:02:52 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F36BB1800268; Tue, 11 Mar 2025 07:03:32 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C1A8D21E66C1; Tue, 11 Mar 2025 08:02:48 +0100 (CET)
+ id 28EF821E675E; Tue, 11 Mar 2025 08:03:29 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
@@ -53,17 +53,17 @@ Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
  <eblake@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Thomas Huth
  <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v3 33/63] qapi: clean up encoding of section kinds
-In-Reply-To: <20250311034303.75779-34-jsnow@redhat.com> (John Snow's message
- of "Mon, 10 Mar 2025 23:42:31 -0400")
+Subject: Re: [PATCH v3 34/63] qapi/schema: add __repr__ to QAPIDoc.Section
+In-Reply-To: <20250311034303.75779-35-jsnow@redhat.com> (John Snow's message
+ of "Mon, 10 Mar 2025 23:42:32 -0400")
 References: <20250311034303.75779-1-jsnow@redhat.com>
- <20250311034303.75779-34-jsnow@redhat.com>
-Date: Tue, 11 Mar 2025 08:02:48 +0100
-Message-ID: <87frjk82xz.fsf@pond.sub.org>
+ <20250311034303.75779-35-jsnow@redhat.com>
+Date: Tue, 11 Mar 2025 08:03:29 +0100
+Message-ID: <87bju882wu.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,41 +91,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> We have several kinds of sections, and to tell them apart, we use
-> Section attribute @tag and also the section object's Python type:
->
->               type        @tag
->     untagged  Section     None
->     @foo:     ArgSection  'foo'
->     Returns:  Section     'Returns'
->     Errors:   Section     'Errors'
->     Since:    Section     'Since'
->     TODO:     Section     'TODO'
->
-> Note:
->
-> * @foo can be a member or a feature description, depending on context.
->
-> * tag == 'Since' can be a Since: section or a member or feature
->   description.  If it's a Section, it's the former, and if it's an
->   ArgSection, it's the latter.
->
-> Clean this up as follows.  Move the member or feature name to new
-> ArgSection attribute @name, and replace @tag by enum @kind like this:
->
->               type         kind     name
->     untagged  Section      PLAIN
->     @foo:     ArgSection   MEMBER   'foo'   if member or argument
->               ArgSection   FEATURE  'foo'   if feature
->     Returns:  Section      RETURNS
->     Errors:   Section      ERRORS
->     Since:    Section      SINCE
->     TODO:     Section      TODO
->
-> The qapi-schema tests are updated to account for the new section names;
-> "TODO" becomes "Todo" and `None` becomes "Plain" there.
+> Makes debugging far more pleasant when you can just print(section) and
+> get something reasonable to display.
 >
 > Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  scripts/qapi/parser.py | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index 94d5322f8af..11c11bb09e5 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -668,6 +668,9 @@ def __init__(
+>              # section text without tag
+>              self.text = ''
+>  
+> +        def __repr__(self) -> str:
+> +            return f"<QAPIDoc.Section kind={self.kind!r} text={self.text!r}>"
+> +
+>          def append_line(self, line: str) -> None:
+>              self.text += line + '\n'
 
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
