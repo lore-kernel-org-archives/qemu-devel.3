@@ -4,59 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50A1C282DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D78C28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqEa-0001Jz-BM; Mon, 10 Mar 2025 23:24:48 -0400
+	id 1trqWj-0003m8-Sm; Mon, 10 Mar 2025 23:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1trqEY-0001JD-9S; Mon, 10 Mar 2025 23:24:46 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWi-0003lh-UE
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1trqEW-0007Zl-0U; Mon, 10 Mar 2025 23:24:46 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.252])
- by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4ZBfJC5R9Qz1cyl6;
- Tue, 11 Mar 2025 11:24:27 +0800 (CST)
-Received: from kwepemk500007.china.huawei.com (unknown [7.202.194.92])
- by mail.maildlp.com (Postfix) with ESMTPS id 7D8C61800C9;
- Tue, 11 Mar 2025 11:24:30 +0800 (CST)
-Received: from huawei.com (10.246.99.19) by kwepemk500007.china.huawei.com
- (7.202.194.92) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 11 Mar
- 2025 11:24:29 +0800
-To: <qemu-devel@nongnu.org>
-CC: <stefanha@redhat.com>, <fam@euphon.net>, <hreitz@redhat.com>,
- <kwolf@redhat.com>, <qemu-block@nongnu.org>, <zhuyangyang14@huawei.com>,
- <qemu-stable@nongnu.org>, <luolongmin@huawei.com>, <suxiaodong1@huawei.com>,
- <wangyan122@huawei.com>, <yebiaoxiang@huawei.com>, <wangjian161@huawei.com>,
- <mujinsheng@huawei.com>, <alex.chen@huawei.com>, <eric.fangyi@huawei.com>,
- <zoudongjie@huawei.com>, <chenjianfei3@huawei.com>, <renxuming@huawei.com>
-Subject: Re: [PATCH 0/2] qapi: Fix qmp_block_set_io_throttle blocked for too
- long
-Date: Tue, 11 Mar 2025 11:24:04 +0800
-Message-ID: <20250311032404.1132164-1-zoudongjie@huawei.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20250308101618.721954-1-zoudongjie@huawei.com>
-References: <20250308101618.721954-1-zoudongjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWh-0002AQ-D5
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741664610;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U5zzCAWIkGKW0tazmeY1djTKO1+sjcFFugAG566ztEw=;
+ b=RBWBqLZ+qH6oPKBIA1A4i0iMsYXzDEuFRqV3pQ3BpIoD7ncHeCGrekvVDWXRavYS2AL9b4
+ jkC6wysphFrz5vTfOnOqm0en0xlQPteNqkIJ8QlYguJAG6RQM+xfUodqkipgA/D0kQyRnz
+ yRnhFfs2m1Wo+r861T8OBa9pPiOfc1U=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-p8cQJGfaNzaXuD2ZHYJTkA-1; Mon,
+ 10 Mar 2025 23:43:25 -0400
+X-MC-Unique: p8cQJGfaNzaXuD2ZHYJTkA-1
+X-Mimecast-MFC-AGG-ID: p8cQJGfaNzaXuD2ZHYJTkA_1741664604
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D08E71956083; Tue, 11 Mar 2025 03:43:23 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DF8AC1828A81; Tue, 11 Mar 2025 03:43:20 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v3 04/63] docs/sphinx: add compat.py module and nested_parse
+ helper
+Date: Mon, 10 Mar 2025 23:42:02 -0400
+Message-ID: <20250311034303.75779-5-jsnow@redhat.com>
+In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
+References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.246.99.19]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- kwepemk500007.china.huawei.com (7.202.194.92)
-Received-SPF: pass client-ip=45.249.212.255;
- envelope-from=zoudongjie@huawei.com; helo=szxga08-in.huawei.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, PYZOR_CHECK=1.392,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,11 +85,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zoudongjie <zoudongjie@huawei.com>
-From:  zoudongjie via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping.
+Create a compat module that handles sphinx cross-version compatibility
+issues. For the inaugural function, add a nested_parse_with_titles()
+helper that handles differences in line number tracking for nested
+directive body parsing.
+
+Spoilers: there are more cross-version hacks to come throughout the
+series.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ docs/sphinx/compat.py | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+ create mode 100644 docs/sphinx/compat.py
+
+diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
+new file mode 100644
+index 00000000000..39b859a25e3
+--- /dev/null
++++ b/docs/sphinx/compat.py
+@@ -0,0 +1,35 @@
++"""
++Sphinx cross-version compatibility goop
++"""
++
++from docutils.nodes import Element
++
++from sphinx.util import nodes
++from sphinx.util.docutils import SphinxDirective, switch_source_input
++
++
++def nested_parse_with_titles(
++    directive: SphinxDirective, content_node: Element
++) -> None:
++    """
++    This helper preserves error parsing context across sphinx versions.
++    """
++
++    # necessary so that the child nodes get the right source/line set
++    content_node.document = directive.state.document
++
++    try:
++        # Modern sphinx (6.2.0+) supports proper offsetting for
++        # nested parse error context management
++        nodes.nested_parse_with_titles(
++            directive.state,
++            directive.content,
++            content_node,
++            content_offset=directive.content_offset,
++        )
++    except TypeError:
++        # No content_offset argument. Fall back to SSI method.
++        with switch_source_input(directive.state, directive.content):
++            nodes.nested_parse_with_titles(
++                directive.state, directive.content, content_node
++            )
+-- 
+2.48.1
 
 
