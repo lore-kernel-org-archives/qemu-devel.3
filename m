@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFA2C28B30
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7429C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzNn-0006Ry-Pn; Tue, 11 Mar 2025 09:10:56 -0400
+	id 1trzTj-00078W-AA; Tue, 11 Mar 2025 09:17:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLb-0004VR-Vc
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLZ-0001ep-S0
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741698515;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X3EZmGUp+mWY/UUw13gvrqgslZdCixQZtPNNeV29Mkk=;
- b=c5zwTuFFF2yHeI+IBJCLFPltlD6i2Q6y0h+t7LeYMh7qZ/MPj3AZI8MpopSuBPBeXZlfOK
- 1XuaFjEQg6oPpFbzkcZducRH1jbEaU3itDKUnYipQGafvrGR2GjPZalIJNIcb/ZBzg+OUS
- KDM/1omXs9U+jJjxk+FBDwckGCF9FPI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-syHHzxc8Ne2GYERENclttw-1; Tue,
- 11 Mar 2025 09:08:32 -0400
-X-MC-Unique: syHHzxc8Ne2GYERENclttw-1
-X-Mimecast-MFC-AGG-ID: syHHzxc8Ne2GYERENclttw_1741698511
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07F1B180AF50; Tue, 11 Mar 2025 13:08:31 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.91])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 59AF030001A2; Tue, 11 Mar 2025 13:08:28 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 09/14] virtio-blk: tidy up iothread_vq_mapping functions
-Date: Tue, 11 Mar 2025 21:07:36 +0800
-Message-ID: <20250311130741.1047903-10-stefanha@redhat.com>
-In-Reply-To: <20250311130741.1047903-1-stefanha@redhat.com>
-References: <20250311130741.1047903-1-stefanha@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzTO-0006xu-TN; Tue, 11 Mar 2025 09:16:47 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzTL-0003Kf-CD; Tue, 11 Mar 2025 09:16:42 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2ff187f027fso9078144a91.1; 
+ Tue, 11 Mar 2025 06:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741698997; x=1742303797; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qHSz3gYU7FuYTpcHCulk2CPBRntGpOCB9sgjSWQ75vI=;
+ b=HkTvi4EMurn215yVWE/o98ImAnied1g1nKzHkjMt3S9lo9ATD9KkwBcCw2PTpkceZh
+ aOa/H3mB+51EchIya9V9VQ2jMG4COcsX1nLmFcCA72RbT/DcdktCBzwl09QaC3DzBvLv
+ 7UbeYasQiDpzEsvc6xKmf7jt8JLC0k4B4asTtNJ74jGgBsGg+3ifEyF8ZV3eofk6daLi
+ XhHvwyyfcf9h6+0UXt/UMyR8GDhBx0TwuD0LXAFLVmg+M9RlCNU/ACXcguzbxr2GIJm1
+ KvdAvS+BmVviZY3WJOsYlZ65kw9NiDR992yj1fH0OJo6XHjtV7/n2QrO0L9btL4CjZnk
+ Y9nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741698997; x=1742303797;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=qHSz3gYU7FuYTpcHCulk2CPBRntGpOCB9sgjSWQ75vI=;
+ b=ZdE9wcmjOa4OLmu0PYRDzFsPzzpUTp1wj0nMQi8ix5QnnpGDvGRdQPuK/oa30wDMVD
+ 3VxKEnehKBXBoAMmFhEHbGqaMUxueKIex4ICAtndRuaBx7XWwHqgwYKECi80Np5Ti/Cc
+ ZV4lO20O9XVhCJdaezYx567NsI26Dd50dzgcuYAn39yOW0awI7atAmkw+VSoaq+VkE5m
+ eMWSWK7Ig9wdEYLIyWCAD+2xqmdXNLlYSauKd3XGFNaXXi0f3T3WsqqHoPk9tau2KzO+
+ eAzseqgVVCyYjnwqgVirL02hGy0DEMGa43JwOhIX+IgNxiEvWf7Q9MWsFZ361pdZhzRe
+ SONw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAV+tg3sJaG8v9AWTikg/CvcTJ2PNsgkZcAYJ3kRWi65n+LoPvDwEQM34RIlOCTg/MZnDsIkvDPD74@nongnu.org
+X-Gm-Message-State: AOJu0YyzWJj3Lysbtbq4HGI8SrgJEwNOKkDS04b+FtUiA2PnUfS36JX2
+ m0LUeexBwlSWYEVYYZhLs7XSEfh6bFJ4wTStw7+yS8sm3RVUKdqz
+X-Gm-Gg: ASbGncv3CR/G6tO92TxPepCjQfPfwpQvcfixtqVvZ033pi8YNOyunuMRtxRpTp7pZTv
+ uC3DfRHPzkiAeoK2pL/qmPwT1+fL4HYIYiYLbZRojJTSpxZk9wJgD65fbf5GCRrb78CwraJq8/h
+ H+PPEDnjB7INdACijLLSYB/QXXFcmnF2pROMrx+cpUJxs91L3ObTDv35DKzY4w1t8oF9Qv6PYwE
+ uYP7i627Akf6w14/7O6u3WiArX17258vz9O48pR2kyjr/w/gHwOtfy4ZBp1BlYeqCxbwyyWCLmZ
+ WPxk2Qxix2xDdt8rpt22UzADewcX/Rov/mykqhlrX2qT353z3ic=
+X-Google-Smtp-Source: AGHT+IFLz+uucpe0DwgCho/MKBWkQSqGGmeSXoVlto+Kg6yl6fuJnCI4qhoowq+/ckROQMqGIrmOKQ==
+X-Received: by 2002:a17:90b:254b:b0:2ff:6e58:89f5 with SMTP id
+ 98e67ed59e1d1-301005260a7mr4589099a91.6.1741698997315; 
+ Tue, 11 Mar 2025 06:16:37 -0700 (PDT)
+Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff72593715sm9264585a91.44.2025.03.11.06.16.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Mar 2025 06:16:36 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 11 Mar 2025 23:16:30 +1000
+Message-Id: <D8DGRIFZE0F3.XV8TOZX11ELS@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <milesg@linux.ibm.com>,
+ <danielhb413@gmail.com>, <david@gibson.dropbear.id.au>,
+ <harshpb@linux.ibm.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 00/14] XIVE2 changes to support Group and Crowd
+ operations
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael Kowal" <kowal@linux.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20241210000527.9541-1-kowal@linux.ibm.com>
+In-Reply-To: <20241210000527.9541-1-kowal@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,120 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use noun_verb() function naming instead of verb_noun() because the
-former is the most common naming style for APIs. The next commit will
-move these functions into a header file so that virtio-scsi can call
-them.
+Thanks, I merged this series with some tweaks, except
+for patch 12 Support ESB Escalation because it has some
+outstanding problems as commented.
 
-Shorten iothread_vq_mapping_apply()'s iothread_vq_mapping_list argument
-to just "list" like in the other functions.
+Thanks,
+Nick
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/block/virtio-blk.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
-
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 21b1b768ed..6bf7b50520 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1424,8 +1424,8 @@ static const BlockDevOps virtio_block_ops = {
- };
- 
- static bool
--validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
--        uint16_t num_queues, Error **errp)
-+iothread_vq_mapping_validate(IOThreadVirtQueueMappingList *list, uint16_t
-+        num_queues, Error **errp)
- {
-     g_autofree unsigned long *vqs = bitmap_new(num_queues);
-     g_autoptr(GHashTable) iothreads =
-@@ -1486,22 +1486,22 @@ validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
- }
- 
- /**
-- * apply_iothread_vq_mapping:
-- * @iothread_vq_mapping_list: The mapping of virtqueues to IOThreads.
-+ * iothread_vq_mapping_apply:
-+ * @list: The mapping of virtqueues to IOThreads.
-  * @vq_aio_context: The array of AioContext pointers to fill in.
-  * @num_queues: The length of @vq_aio_context.
-  * @errp: If an error occurs, a pointer to the area to store the error.
-  *
-  * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
-- * the iothread-vq-mapping parameter in @iothread_vq_mapping_list.
-+ * the iothread-vq-mapping parameter in @list.
-  *
-- * cleanup_iothread_vq_mapping() must be called to free IOThread object
-+ * iothread_vq_mapping_cleanup() must be called to free IOThread object
-  * references after this function returns success.
-  *
-  * Returns: %true on success, %false on failure.
-  **/
--static bool apply_iothread_vq_mapping(
--        IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
-+static bool iothread_vq_mapping_apply(
-+        IOThreadVirtQueueMappingList *list,
-         AioContext **vq_aio_context,
-         uint16_t num_queues,
-         Error **errp)
-@@ -1510,16 +1510,15 @@ static bool apply_iothread_vq_mapping(
-     size_t num_iothreads = 0;
-     size_t cur_iothread = 0;
- 
--    if (!validate_iothread_vq_mapping_list(iothread_vq_mapping_list,
--                                           num_queues, errp)) {
-+    if (!iothread_vq_mapping_validate(list, num_queues, errp)) {
-         return false;
-     }
- 
--    for (node = iothread_vq_mapping_list; node; node = node->next) {
-+    for (node = list; node; node = node->next) {
-         num_iothreads++;
-     }
- 
--    for (node = iothread_vq_mapping_list; node; node = node->next) {
-+    for (node = list; node; node = node->next) {
-         IOThread *iothread = iothread_by_id(node->value->iothread);
-         AioContext *ctx = iothread_get_aio_context(iothread);
- 
-@@ -1549,13 +1548,13 @@ static bool apply_iothread_vq_mapping(
- }
- 
- /**
-- * cleanup_iothread_vq_mapping:
-+ * iothread_vq_mapping_cleanup:
-  * @list: The mapping of virtqueues to IOThreads.
-  *
-  * Release IOThread object references that were acquired by
-- * apply_iothread_vq_mapping().
-+ * iothread_vq_mapping_apply().
-  */
--static void cleanup_iothread_vq_mapping(IOThreadVirtQueueMappingList *list)
-+static void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list)
- {
-     IOThreadVirtQueueMappingList *node;
- 
-@@ -1597,7 +1596,7 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
-     s->vq_aio_context = g_new(AioContext *, conf->num_queues);
- 
-     if (conf->iothread_vq_mapping_list) {
--        if (!apply_iothread_vq_mapping(conf->iothread_vq_mapping_list,
-+        if (!iothread_vq_mapping_apply(conf->iothread_vq_mapping_list,
-                                        s->vq_aio_context,
-                                        conf->num_queues,
-                                        errp)) {
-@@ -1631,7 +1630,7 @@ static void virtio_blk_vq_aio_context_cleanup(VirtIOBlock *s)
-     assert(!s->ioeventfd_started);
- 
-     if (conf->iothread_vq_mapping_list) {
--        cleanup_iothread_vq_mapping(conf->iothread_vq_mapping_list);
-+        iothread_vq_mapping_cleanup(conf->iothread_vq_mapping_list);
-     }
- 
-     if (conf->iothread) {
--- 
-2.48.1
+On Tue Dec 10, 2024 at 10:05 AM AEST, Michael Kowal wrote:
+> XIVE2 has the concepts of a Group of interrupts and a Crowd of interrupts
+> (where a crowd is a group of Groups). These patch sets are associated wit=
+h:
+>  - NVGC tables
+>  - Group/Crowd level notification
+>  - Incrementing backlog countets
+>  - Backlog processing
+>  - NVPG and NVC Bar MMIO operations
+>  - Group/Crowd testing
+>  - ESB Escalation
+>  - Pool interrupt testing
+>
+> version 2:
+>  - Removed printfs from test models and replaced with g_test_message()
+>  - Updated XIVE copyrights to use:=20
+>    SPDX-License-Identifier: GPL-2.0-or-later
+>  - Set entire NSR to 0, not just fields
+>  - Moved rename of xive_ipb_to_pipr() into its own patch set 0002
+>  - Rename xive2_presenter_backlog_check() to=20
+>    xive2_presenter_backlog_scan()
+>  - Squash patch set 11 (crowd size restrictions) into=20
+>    patch set 9 (support crowd-matching)
+>  - Made xive2_notify() a static rou
+>
+> Frederic Barrat (10):
+>   ppc/xive2: Update NVP save/restore for group attributes
+>   ppc/xive2: Add grouping level to notification
+>   ppc/xive2: Support group-matching when looking for target
+>   ppc/xive2: Add undelivered group interrupt to backlog
+>   ppc/xive2: Process group backlog when pushing an OS  context
+>   ppc/xive2: Process group backlog when updating the CPPR
+>   qtest/xive: Add group-interrupt test
+>   ppc/xive2: Add support for MMIO operations on the NVPG/NVC BAR
+>   ppc/xive2: Support crowd-matching when looking for target
+>   ppc/xive2: Check crowd backlog when scanning group backlog
+>
+> Glenn Miles (3):
+>   pnv/xive: Support ESB Escalation
+>   pnv/xive: Fix problem with treating NVGC as a NVP
+>   qtest/xive: Add test of pool interrupts
+>
+> Michael Kowal (1):
+>   ppc/xive: Rename ipb_to_pipr() to xive_ipb_to_pipr()
+>
+>  include/hw/ppc/xive.h              |  41 +-
+>  include/hw/ppc/xive2.h             |  25 +-
+>  include/hw/ppc/xive2_regs.h        |  30 +-
+>  include/hw/ppc/xive_regs.h         |  25 +-
+>  tests/qtest/pnv-xive2-common.h     |   1 +
+>  hw/intc/pnv_xive.c                 |  10 +-
+>  hw/intc/pnv_xive2.c                | 166 +++++--
+>  hw/intc/spapr_xive.c               |   8 +-
+>  hw/intc/xive.c                     | 200 +++++---
+>  hw/intc/xive2.c                    | 750 +++++++++++++++++++++++++----
+>  hw/ppc/pnv.c                       |  35 +-
+>  hw/ppc/spapr.c                     |   7 +-
+>  tests/qtest/pnv-xive2-flush-sync.c |   6 +-
+>  tests/qtest/pnv-xive2-nvpg_bar.c   | 153 ++++++
+>  tests/qtest/pnv-xive2-test.c       | 249 +++++++++-
+>  hw/intc/trace-events               |   6 +-
+>  tests/qtest/meson.build            |   3 +-
+>  17 files changed, 1475 insertions(+), 240 deletions(-)
+>  create mode 100644 tests/qtest/pnv-xive2-nvpg_bar.c
 
 
