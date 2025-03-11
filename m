@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD7BC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 07:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E38C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 07:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trtaZ-0003So-FQ; Tue, 11 Mar 2025 02:59:43 -0400
+	id 1trtcT-0004pP-6n; Tue, 11 Mar 2025 03:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtaV-0003QK-LM
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 02:59:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtcN-0004oS-A1
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 03:01:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtaQ-0002bu-VS
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 02:59:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trtcL-00035j-Au
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 03:01:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741676371;
+ s=mimecast20190719; t=1741676491;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=iJ0VHSHF8dtHF+DStUOmDEmuvu8n8fcjK0pWNi7HbGI=;
- b=O7COQJjzME4UAEckVXFIVZ6vYzPdP2+lOjtsJPe2r8QLjzBJD9SOiu/+fRrohOYIQ5CSS0
- ZgXaY0Qbx57l27rqCKcGB6rYVC4fBBFMLYORsGDsk8EmKPOrcq8iIZLOQkfT5lXGkT+9hE
- Qij70y2EH0UkZgoPp19O8D7SeML5viA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0S/F3sCaH5tqLNLltTX2D2DhfFDol708NpXtozcZ8VU=;
+ b=NcnYa+SKh20wFhVK8spq30s5bEz1vAt1NpGxoyLGB0ZVycBM4YdDmT8OJpPjyI1H5AJ13Z
+ IK+MZ3eBpW/OfC/PzKTlGk3Bx+rjkHwefEEdbPWqnTBESdpxyTdGXIyFk5OTG0xVmaf2Vf
+ g4+5gL61XMDdlbta6s+Ym/qfdznux0Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-0OKM8DXDMGqx3vV4VvkJkQ-1; Tue,
- 11 Mar 2025 02:59:30 -0400
-X-MC-Unique: 0OKM8DXDMGqx3vV4VvkJkQ-1
-X-Mimecast-MFC-AGG-ID: 0OKM8DXDMGqx3vV4VvkJkQ_1741676369
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-yMeaWAjvPjevDtN9Qsnfug-1; Tue,
+ 11 Mar 2025 03:01:27 -0400
+X-MC-Unique: yMeaWAjvPjevDtN9Qsnfug-1
+X-Mimecast-MFC-AGG-ID: yMeaWAjvPjevDtN9Qsnfug_1741676486
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4CDB18004A9; Tue, 11 Mar 2025 06:59:28 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BE1F180049D; Tue, 11 Mar 2025 07:01:26 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AA3C1800373; Tue, 11 Mar 2025 06:59:27 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE1731955BCB; Tue, 11 Mar 2025 07:01:25 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 61EC721E675E; Tue, 11 Mar 2025 07:59:23 +0100 (CET)
+ id 34E2D21E675E; Tue, 11 Mar 2025 08:01:22 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
@@ -53,17 +53,18 @@ Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
  <eblake@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Thomas Huth
  <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v3 02/63] qapi: shush pylint up
-In-Reply-To: <20250311034303.75779-3-jsnow@redhat.com> (John Snow's message of
- "Mon, 10 Mar 2025 23:42:00 -0400")
+Subject: Re: [PATCH v3 32/63] qapi/parser: adjust info location for doc body
+ section
+In-Reply-To: <20250311034303.75779-33-jsnow@redhat.com> (John Snow's message
+ of "Mon, 10 Mar 2025 23:42:30 -0400")
 References: <20250311034303.75779-1-jsnow@redhat.com>
- <20250311034303.75779-3-jsnow@redhat.com>
-Date: Tue, 11 Mar 2025 07:59:23 +0100
-Message-ID: <87o6y8833o.fsf@pond.sub.org>
+ <20250311034303.75779-33-jsnow@redhat.com>
+Date: Tue, 11 Mar 2025 08:01:22 +0100
+Message-ID: <87jz8w830d.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,73 +92,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> Shhhhh!
+> Instead of using the info object for the doc block as a whole (which
+> always points to the very first line of the block), update the info
+> pointer for each call to ensure_untagged_section when the existing
+> section is otherwise empty. This way, Sphinx error information will
+> match precisely to where the text actually starts.
 >
-> This patch can be dropped from the PR and I'll clean it up later. It's
-> just here to help me establish a linting baseline. It isn't really
-> needed for the series itself.
+> For example, this patch will move the info pointer for the "Hello!"
+> untagged section ...
+>
+>> ##       <-- from here ...
+>> # Hello! <-- ... to here.
+>> ##
+>
+> This doesn't seem to improve error reporting now. It will with the
+> forthcoming QAPI doc transmogrifier.
+>
+> If I stick bad rST into qapi/block-core.json like this:
+>
+>>  ##
+>>  # @SnapshotInfo:
+>>  #
+>> +# rST syntax error: *ahh!
+>> +#
+>>  # @id: unique shapshot id
+>>  #
+>>  # @name: user chosen name
+>
+> The existing code's error message will point to the beginning of the doc
+> comment, which is less than helpful. The transmogrifier's message will
+> point to the erroneous line, but to accomplish this, it needs this
+> patch.
 >
 > Signed-off-by: John Snow <jsnow@redhat.com>
-
-Okay, I'll drop this patch.
-
-Note that I just posted "[PATCH] scripts/qapi/backend: Clean up
-create_backend()'s failure mode", and ...
-
 > ---
->  scripts/qapi/backend.py | 2 ++
->  scripts/qapi/main.py    | 8 +++-----
->  2 files changed, 5 insertions(+), 5 deletions(-)
+>  scripts/qapi/parser.py | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
-> diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-> index 14e60aa67af..49ae6ecdd33 100644
-> --- a/scripts/qapi/backend.py
-> +++ b/scripts/qapi/backend.py
-> @@ -13,6 +13,7 @@
->  
->  
->  class QAPIBackend(ABC):
-> +    # pylint: disable=too-few-public-methods
->  
->      @abstractmethod
->      def generate(self,
-> @@ -36,6 +37,7 @@ def generate(self,
->  
->  
->  class QAPICBackend(QAPIBackend):
-> +    # pylint: disable=too-few-public-methods
->  
->      def generate(self,
->                   schema: QAPISchema,
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index 64f0bb824ae..97def9f0e4f 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -686,7 +686,11 @@ def end(self) -> None:
+>      def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+>          if self.all_sections and not self.all_sections[-1].tag:
+>              # extend current section
+> -            self.all_sections[-1].text += '\n'
+> +            section = self.all_sections[-1]
+> +            if not section.text:
+> +                # Section is empty so far; update info to start *here*.
+> +                section.info = info
+> +            section.text += '\n'
+>              return
+>          # start new section
+>          section = self.Section(info)
 
-... when you rebase on top of my patch, the hunk above stays, and the
-hunk below goes.
-
-> diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-> index 5b4679abcf1..01155373bd0 100644
-> --- a/scripts/qapi/main.py
-> +++ b/scripts/qapi/main.py
-> @@ -38,8 +38,7 @@ def create_backend(path: str) -> QAPIBackend:
->      try:
->          mod = import_module(module_path)
->      except Exception as ex:
-> -        print(f"unable to import '{module_path}': {ex}", file=sys.stderr)
-> -        sys.exit(1)
-> +        raise QAPIError(f"unable to import '{module_path}': {ex}") from ex
->  
->      try:
->          klass = getattr(mod, class_name)
-> @@ -51,9 +50,8 @@ def create_backend(path: str) -> QAPIBackend:
->      try:
->          backend = klass()
->      except Exception as ex:
-> -        print(f"backend '{path}' cannot be instantiated: {ex}",
-> -              file=sys.stderr)
-> -        sys.exit(1)
-> +        raise QAPIError(
-> +            f"backend '{path}' cannot be instantiated: {ex}") from ex
->  
->      if not isinstance(backend, QAPIBackend):
->          print(f"backend '{path}' must be an instance of QAPIBackend",
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
