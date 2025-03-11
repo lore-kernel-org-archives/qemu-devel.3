@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6F1C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 17:48:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C44C2BA1B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 17:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts3hQ-00016P-EX; Tue, 11 Mar 2025 13:47:30 -0400
+	id 1ts3j1-0002DQ-IZ; Tue, 11 Mar 2025 13:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ts3h0-00011t-DQ
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:47:02 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ts3gp-0000eE-Oq
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:47:00 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2ff4a4f901fso8726006a91.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 10:46:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741715210; x=1742320010; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xMbQfB6FZjsgaL0CpuJkTh1ZPBBTDvDEkwVBdCkUPFk=;
- b=D9gXZCCL9iauTJAVaYVB5jJ8yomAJ2B+yaTp5mAsIwnemcd0h/Z5HZgfVGjXYTuOzE
- mbsXEUk3F3pd+1jeyRTwBVmmADP/3ihN2r3Q6wVHOphw4zQgdZcEmo+ytXuInN/I8wOe
- wsrEZP9xWIPFgiRjNC+K5yo2vI3Dnxax4g89+woNusqtjQePio92MrY3530YSwUrQlx3
- Di1JLZcScU+voYGrSZJlVidJHcu6TgQKIKSPQokdGfzqixgfFDDaWXjwbOlUnXwbfhh5
- Sbmvar/DfI7xPg+P0P8VjAzlaTPgRz3CyD9EamdK9REX+JtYlkeP5C/ACxaBFXonIZ+E
- sA/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741715210; x=1742320010;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xMbQfB6FZjsgaL0CpuJkTh1ZPBBTDvDEkwVBdCkUPFk=;
- b=o6LdK/BrcdrjWTNV31JQIZeSXWdM05tRulRqBCvNmGED/m/ULWKW/fUWrxfXmf/LH/
- Z+g/Ctr2i0ZiuEZXyNV9AaSX37GelPcdtRE4ZYFF/KpwByacaSh9s/97ogWREYLKuUEu
- UiHkn3Cjo39XRg4kpLu3A6qNI6VSIr3iTa9TsY91cld4yFoMsHoNUKFs3kDfB/M46HCM
- hHpa3mNOMtv/GGfk/GsnBKWIBVdj8JsSXQTKRYBj7klc3Wpd7EoNfQe6ekw244HrYerM
- FZdEL0w9nrJzHRcKW52jns1KPyLQ84MuLno7dArJZ/12u2URqLWM886oGVn+KaHgdAtD
- c9Yw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUv3KHZBn9ayHZd0AEY0qUq6hZdMspqSBE9RKZY17hMlW+FZIoPHjI40nFPpQQHwa1fZ9WrwCTCz9Ot@nongnu.org
-X-Gm-Message-State: AOJu0YxBXrYiVeIp/IulY6pfsHwk9+inp2rk/1SqwUiIRAo6gelmzFAJ
- PhIQ850vEFF0HNzJW/PlZC+m9q4B8i3OIHLrf0vbfeAZxj1n+D7bOYgc7VK0AOY=
-X-Gm-Gg: ASbGnctqBrEdLkD2IszkCw6pA5VWoOGQ3ojDU3Z73K9TsAkBHrO5ZNARZNPftMKpVVT
- OlEgEv21uzo7YYgu+oAuyW1/9pCjh8gYtimdfs88G4Q4nuhDHvfebgNuRo8RM2n0BlUvuxxwi3U
- y4gjkAb2JegT17fDAMPO+QTjdAGdlGOZnLas9KZ/e9UbpJN0+HUkBAuLIiR5yAm3XT6RCsGVEjh
- avg7zQ5VNxpSLlyXaAGrWx+DWeDfpkMlTaXXM2399CLsbOo+sNwhHrcMdOaftvHPP5De3XzBF8Z
- yGOkto7XW726zIcaKWtxosBSYM2L7EfpfPl12DUr61jqatOoLk5qMRjeXaArRgGitrCeYlATocy
- p/ZvMYSyK
-X-Google-Smtp-Source: AGHT+IGfBITfOBMekM7FglGYIYkXQUwam35Q1HRhFYoS8dUppiXAEfrrgYbbEaPwb96+GddI6xCMog==
-X-Received: by 2002:a17:90b:2b88:b0:2fe:8902:9ecd with SMTP id
- 98e67ed59e1d1-300ff0a9f50mr5373583a91.1.1741715209746; 
- Tue, 11 Mar 2025 10:46:49 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff693746b9sm10210115a91.27.2025.03.11.10.46.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 10:46:49 -0700 (PDT)
-Message-ID: <003e9831-2d15-4142-81c5-58bd973289e1@linaro.org>
-Date: Tue, 11 Mar 2025 10:46:47 -0700
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1ts3ia-0001UQ-9u
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:48:41 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1ts3iS-0000qC-Cm
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:48:40 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BGQsbJ030854;
+ Tue, 11 Mar 2025 17:48:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2023-11-20; bh=Az7FZic/mj+KLEz6iSTDbirr9nzRq
+ Vqn6fHV2zAw7DM=; b=UCS4v4+EZpUt3wl6nbohSq8hXg5JxM3iihfq+PRh92kVB
+ L/WOB8zEdYBEceXlZErdPJw+tqkHctEk1B8ggJOd8m0dG0sf2r353zCcZPdvO0hw
+ 7iFjf+Y85h0GsjGjf9Nf6UKv87h0TskW/JMhYD4SBWh1px+dkiJhkhjPHnPX88wW
+ bhNBD9pk99j7FW/QqBlyHKuT8ndGEmOEFelNbwM8fPxE62hXpoMDZN/LQe5j4WS7
+ 3H4jQcRVZK/3ztRYyj2mHZeiRVE/phhraji66BiYKPd3WCGSrBC0zCm4AD72Ylxv
+ lQYWeVpBLpUVIDv8nyKVgyMG4JvgSm6pAS7aViJZw==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 458cg0wh2m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 11 Mar 2025 17:48:24 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 52BGxUWl030679; Tue, 11 Mar 2025 17:48:24 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 458gcnqtwt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 11 Mar 2025 17:48:24 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52BHmNtj001438;
+ Tue, 11 Mar 2025 17:48:23 GMT
+Received: from joaomart-mac.nl.oracle.com (dhcp-10-154-169-91.vpn.oracle.com
+ [10.154.169.91])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 458gcnqtrj-1; Tue, 11 Mar 2025 17:48:23 +0000
+From: Joao Martins <joao.m.martins@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Joao Martins <joao.m.martins@oracle.com>
+Subject: [PATCH] vfio/pci: Drop debug comentary from
+ x-device-dirty-page-tracking
+Date: Tue, 11 Mar 2025 17:48:07 +0000
+Message-Id: <20250311174807.79825-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/14] arm/cpu: Store aa64smfr0 into the idregs array
-To: Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-References: <20250311162824.199721-1-cohuck@redhat.com>
- <20250311162824.199721-9-cohuck@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250311162824.199721-9-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-11_05,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ spamscore=0 phishscore=0
+ adultscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502100000
+ definitions=main-2503110114
+X-Proofpoint-GUID: BnGYoVVcHDca3bhI_2ZdI1QIpk082IUe
+X-Proofpoint-ORIG-GUID: BnGYoVVcHDca3bhI_2ZdI1QIpk082IUe
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,21 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/25 09:28, Cornelia Huck wrote:
-> From: Eric Auger<eric.auger@redhat.com>
-> 
-> Signed-off-by: Eric Auger<eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck<cohuck@redhat.com>
-> ---
->   target/arm/cpu-features.h | 6 +++---
->   target/arm/cpu.h          | 1 -
->   target/arm/cpu64.c        | 7 ++-----
->   target/arm/helper.c       | 2 +-
->   target/arm/kvm.c          | 3 +--
->   target/arm/tcg/cpu64.c    | 4 ++--
->   6 files changed, 9 insertions(+), 14 deletions(-)
+The intent behind the x-device-dirty-page-tracking option is twofold:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+1) development/testing in the presence of VFs with VF dirty page tracking
 
-r~
+2) deliberately choosing platform dirty tracker over the VF one.
+
+Item 2) scenario is useful when VF dirty tracker is not as fast as
+IOMMU, or there's some limitations around it (e.g. number of them is
+limited; aggregated address space under tracking is limited),
+efficiency/scalability (e.g. 1 pagetable in IOMMU dirty tracker to scan
+vs N VFs) or just troubleshooting. Given item 2 it is not restricted to
+debugging, hence drop the debug parenthesis from the option description.
+
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+---
+ hw/vfio/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 64629c13b6fb..3496a0b6b099 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3531,7 +3531,7 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
+     object_class_property_set_description(klass, /* 9.1 */
+                                           "x-device-dirty-page-tracking",
+                                           "Disable device dirty page tracking and use "
+-                                          "container-based dirty page tracking (DEBUG)");
++                                          "container-based dirty page tracking");
+     object_class_property_set_description(klass, /* 9.1 */
+                                           "migration-events",
+                                           "Emit VFIO migration QAPI event when a VFIO device "
+-- 
+2.43.5
+
 
