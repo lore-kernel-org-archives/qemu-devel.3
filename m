@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59CAC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:54:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82147C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:55:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts5dd-0006s0-Td; Tue, 11 Mar 2025 15:51:41 -0400
+	id 1ts5dt-0006vS-49; Tue, 11 Mar 2025 15:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5dV-0006qr-Rc
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:51:33 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5do-0006uV-8i
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:51:54 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5dU-0007Pn-7d
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:51:33 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3914bc3e01aso1408096f8f.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:51:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5dm-0007TY-9K
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:51:51 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43cf58eea0fso17396885e9.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:51:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741722689; x=1742327489; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741722708; x=1742327508; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oGrs420JsV3u/d0B9Ht+EZ0wlrymz2aBc5SkvyjS3Qc=;
- b=MjhkmYnnaHtqHxHE1w2RcUr1K4va6gLeflrSL8oZngmbRD0ev8tbTQrrk8/gZdXVtw
- gd8pW91ooGycl9w+LPWZ6pinSZl3WYwRJATNlr3SO/X4IAEzzI1ifCxXpCKEURF6okbb
- XMuEOQKzsDdv+RGlaINRY7tWrPZu84+7e/SSRfBqT19n7r9vuedmpYQE2i5o8lvR7Vh2
- 37ByXitx3crlx3DBDjFlp7JEvRu2/Y/sQz1BFW50Fffw2isNkpm6tUVH+WrzH/EFBtbQ
- 6OEUZu5vsTmH64wJ7SPQfPJ3TMvux/LCuXxfty39Cw1y1hkat6pDe+kewOxXs+O8lUwm
- xATA==
+ bh=73seHR9MuWhUHelcL1xiHEfBtbLZ+U0WCvX/Qs9nIEI=;
+ b=BGPgJjh/riYijJ6zewpKO14nzHbgjvZcm3OGQxHZ3rALH6EKJAaM9XLK+8WpyLOegA
+ 79mixqbXd1d4UPanfC96UFvLsHLxG8EfctfjicoTx/y3j3sRg+mpiqHEHdoiwpx9LY1/
+ LfW28dWg3tiJfjDgUUwEQ1QmrzAynD7k+INLPWt5VHVGLcpS7VO/l11eGjnAHle8MZrI
+ w4seVQ+wVLELqp26DVXJLUKorlbnb15A0rJPLZ+1seGJbqtb4VsK7VnRGifNOBwURdKo
+ f0qM1IXFAO53QyKW9IIWWP8T0Hc/bEsPJ00jGb7Yc/em/iXUo1LojBbB1Q0MeB40kVBG
+ tjJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741722689; x=1742327489;
+ d=1e100.net; s=20230601; t=1741722708; x=1742327508;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oGrs420JsV3u/d0B9Ht+EZ0wlrymz2aBc5SkvyjS3Qc=;
- b=Ehsox1To0O3KH/pd7EE2id10NC8jzjeapDyAXEjTq7OJqeqtTdSV7YmsemInTrGatI
- Hj0CwFciegjUszK2Jf56I1TbCAhfCIfZ8dUMxOHZIh9e4Wl9vezQcA1t3pHQINGP9Tp8
- QetNYFbQPkD//qM8i/ZCMmEvXybld+EqUuvIMFilq0yoe+1LZb6pPseRWH3zWReiDo8E
- zAeJRQWJJ3CJuLLDZZEbvLND7ixq7jHq8j3nQcJ5DsA/FRKYRrahMRhiXoR7DdJEQnph
- 3DEBkaXRqbGPDr0FcNfJtFli6apsfVN2xmr/3SYgKku7XlCLiDN/cv75oWYjB+GRo0mV
- ucug==
-X-Gm-Message-State: AOJu0YyiZbFuss0M/eSTZ1qVghLUaRPFlBHN4DO8Q+AR0c1z+8f8PZeh
- JZNn8lK7NmZAlL+ZYX/SU9FpIUqNe2jAQJufXrCIHtGCQiGqjRyA5fp29AOKcVHUnEwJc2KgiHn
- U0yM=
-X-Gm-Gg: ASbGncvj9/E7WaCAhJ4av68wXve49cYLxhr/mchBH1Fb8EiAaqFdjkIF0il/cwhxBM6
- DFOe3QRChJ0+ow6WuaAb0XUTzKu0Rlan1+o+nnMubJOK6hR8xChUqsvCgsKLNFg57surHa2T5Iy
- nmcwmqTk1Mai9uo+bK+raLvSTBmcRyVj8yfgOj5vwPH3PN50g5/ae6TxTLwTaJPoLR0Ny0m4fPx
- FLckaYOji2KF33YJu3eOtH2NNczQ+SMYX3SmvlTRSuZfa+jfiM/mxYgGWCh+7oxLeoL/PGgE8qJ
- O6/bWZqbMYAxtTkqY2h5FuCCoosXSKZPlHfg7b5UZ0rcgFjsoQ7g2H8skMK/97PIRi4ucycYuRE
- gNxb5tXSXwWJ+U4wNfvg=
-X-Google-Smtp-Source: AGHT+IGEN20I940F9lhIDfDjuoeZWOG5Jbkm96dy4qMFtMC5/P4BnT5s5o6pXgzXd97uYFsLhyBlpA==
-X-Received: by 2002:a05:6000:144d:b0:391:2e58:f085 with SMTP id
- ffacd0b85a97d-39132dab192mr14785471f8f.54.1741722689500; 
- Tue, 11 Mar 2025 12:51:29 -0700 (PDT)
+ bh=73seHR9MuWhUHelcL1xiHEfBtbLZ+U0WCvX/Qs9nIEI=;
+ b=gemd2l5zUaty/TSZCKjc02oN9ew9YW9krqNz4zhhW6tP7umaMBniguoFlhGNT0Rqpi
+ DnuKhXvA8Gd7DlbaKKTATojVngGRlLJzqur8PHilT/oV5tjN4AsR2j/C+1KK2AENMVpC
+ K27bKoHGK3TBlxyjUqYDMlLef9uXdTsvU6xN3pRiZzTX9ZZKeJQUwtV+X7YGxX+w19Lg
+ vIRw1hmLY+GbFEOu4J4rJ7G64ZL6kCtp4x5ep576cv5RFR8E5iOM/ryrdc5AzfFxa3eq
+ Ou9If8ZgcUJ/N7whvapsGN9Yjd/Xz0gI3so2oveRiwZtVsF2wzRIazdrGHNC0LN90XSm
+ 77Rw==
+X-Gm-Message-State: AOJu0YytL5W9NJGzb+ZDUVIJeYW+1RRfvYktkJMa0AmiNot0O7Qa1Z4v
+ 4mcbItIKYFfwQNfZCDRVrG5OCw0+/FjvhIiTDd6BGWQiGgaVYQk9d4gHN6CuOy3PvX/rnw8Q66d
+ DMJg=
+X-Gm-Gg: ASbGncsgsbQS4dIypkmvXD2o4rLXiSKKpWGIOKwmpajKuXoL5XWeTxSBYgcE38+aJJT
+ x9EbOTUGm10VpG6pIMLVsQ7evKyE4nsw0wmLrtte2XzNL/UCpcyeEPv2tQ5Z7K1XZPAQRVPc/bh
+ Ai0ZObWJKROv74canuo2fE6f+Dn1rwbaDMiTWjZm4mb8O2GxRKd7V0otm++2QqfqgRzzsEorKtm
+ ZOHn/Bv0+ChBo23LZvZJAEfY2aCk87zJY+vY23DUqkO+SIS5iiVsEEN6dW1dizPkl5xVRdxlwpB
+ uy4gwdGhJRcpk0Px5jty0oaPAZFeIHxgGRwHWNmPa+GwLeSEUfGPU3KNmZqUEee96H+SleqFPQG
+ +Jen+PBRQdV9U7hmgPYQ=
+X-Google-Smtp-Source: AGHT+IHLXvbhr8n8/ClmA9jeKcF8xz/pC9ASSp9OjSnVDYxVWwAI8Gbr0GjTgGBflGXfYiJnYoOxeA==
+X-Received: by 2002:a05:600c:4587:b0:439:a155:549d with SMTP id
+ 5b1f17b1804b1-43d01bdbe2amr60319395e9.12.1741722708283; 
+ Tue, 11 Mar 2025 12:51:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103290sm18644297f8f.87.2025.03.11.12.51.28
+ 5b1f17b1804b1-43ce5d2808dsm132200055e9.13.2025.03.11.12.51.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Mar 2025 12:51:29 -0700 (PDT)
+ Tue, 11 Mar 2025 12:51:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/14] hw/sd/sdhci: Set reset value of interrupt registers
-Date: Tue, 11 Mar 2025 20:51:10 +0100
-Message-ID: <20250311195123.94212-2-philmd@linaro.org>
+Subject: [PULL 05/14] hw/net/smc91c111: Use MAX_PACKET_SIZE instead of magic
+ numbers
+Date: Tue, 11 Mar 2025 20:51:14 +0100
+Message-ID: <20250311195123.94212-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311195123.94212-1-philmd@linaro.org>
 References: <20250311195123.94212-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,64 +101,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The interrupt enable registers are not reset to 0 on Freescale eSDHC
-but some bits are enabled on reset. At least some U-Boot versions seem
-to expect this and not initialise these registers before expecting
-interrupts. Use existing vendor property for Freescale eSDHC and set
-the reset value of the interrupt registers to match Freescale
-documentation.
+Now we have a constant for the maximum packet size, we can use it
+to replace various hardcoded 2048 values.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20250210160329.DDA7F4E600E@zero.eik.bme.hu>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250228174802.1945417-4-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/sd/sdhci.h | 1 +
- hw/ppc/e500.c         | 1 +
- hw/sd/sdhci.c         | 4 ++++
- 3 files changed, 6 insertions(+)
+ hw/net/smc91c111.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index 38c08e28598..f722d8eb1cc 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -110,6 +110,7 @@ typedef struct SDHCIState SDHCIState;
- 
- #define SDHCI_VENDOR_NONE       0
- #define SDHCI_VENDOR_IMX        1
-+#define SDHCI_VENDOR_FSL        2
- 
- /*
-  * Controller does not provide transfer-complete interrupt when not
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index fe8b9f79621..69269aa24c4 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -1043,6 +1043,7 @@ void ppce500_init(MachineState *machine)
-         dev = qdev_new(TYPE_SYSBUS_SDHCI);
-         qdev_prop_set_uint8(dev, "sd-spec-version", 2);
-         qdev_prop_set_uint8(dev, "endianness", DEVICE_BIG_ENDIAN);
-+        qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
-         s = SYS_BUS_DEVICE(dev);
-         sysbus_realize_and_unref(s, &error_fatal);
-         sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, MPC85XX_ESDHC_IRQ));
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 1f45a77566c..fe87e18d5d2 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -307,6 +307,10 @@ static void sdhci_reset(SDHCIState *s)
-     s->data_count = 0;
-     s->stopped_state = sdhc_not_stopped;
-     s->pending_insert_state = false;
-+    if (s->vendor == SDHCI_VENDOR_FSL) {
-+        s->norintstsen = 0x013f;
-+        s->errintstsen = 0x117f;
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 72ce5d8f4de..b05970d5e1c 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -58,7 +58,7 @@ struct smc91c111_state {
+     int tx_fifo_done_len;
+     int tx_fifo_done[NUM_PACKETS];
+     /* Packet buffer memory.  */
+-    uint8_t data[NUM_PACKETS][2048];
++    uint8_t data[NUM_PACKETS][MAX_PACKET_SIZE];
+     uint8_t int_level;
+     uint8_t int_mask;
+     MemoryRegion mmio;
+@@ -86,7 +86,8 @@ static const VMStateDescription vmstate_smc91c111 = {
+         VMSTATE_INT32_ARRAY(rx_fifo, smc91c111_state, NUM_PACKETS),
+         VMSTATE_INT32(tx_fifo_done_len, smc91c111_state),
+         VMSTATE_INT32_ARRAY(tx_fifo_done, smc91c111_state, NUM_PACKETS),
+-        VMSTATE_BUFFER_UNSAFE(data, smc91c111_state, 0, NUM_PACKETS * 2048),
++        VMSTATE_BUFFER_UNSAFE(data, smc91c111_state, 0,
++                              NUM_PACKETS * MAX_PACKET_SIZE),
+         VMSTATE_UINT8(int_level, smc91c111_state),
+         VMSTATE_UINT8(int_mask, smc91c111_state),
+         VMSTATE_END_OF_LIST()
+@@ -773,8 +774,9 @@ static ssize_t smc91c111_receive(NetClientState *nc, const uint8_t *buf, size_t
+     if (crc)
+         packetsize += 4;
+     /* TODO: Flag overrun and receive errors.  */
+-    if (packetsize > 2048)
++    if (packetsize > MAX_PACKET_SIZE) {
+         return -1;
 +    }
- }
- 
- static void sdhci_poweron_reset(DeviceState *dev)
+     packetnum = smc91c111_allocate_packet(s);
+     if (packetnum == 0x80)
+         return -1;
 -- 
 2.47.1
 
