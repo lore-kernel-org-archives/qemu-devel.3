@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8308C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A7EC2BA1B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqXy-0005W9-G9; Mon, 10 Mar 2025 23:44:50 -0400
+	id 1trqWp-0003op-LR; Mon, 10 Mar 2025 23:43:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqXX-0004PM-SZ
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:44:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWo-0003nq-C0
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqXW-0002Hn-3B
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:44:23 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWm-0002BY-OM
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741664661;
+ s=mimecast20190719; t=1741664616;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yV2NpoipK8VPsQk7PZ/c5m+WNE8W/snRQ+BCDdf8rUw=;
- b=N/siX8PCSsRVG7wRYh5K6VHNtR640ll7rqdvXSqtiVDP7bJ8oeLGpIZLp+u+S/Jc++FaoW
- bPKarJ4pHm6li4WsYY4vdat3MmC2OHcmykOzjgSLUiOFxEfb9wxknLqUvhS9U1ug0yqG4M
- rGEKaptyPEv7w2l3aDAHhDilYr52qaE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=47kDV8pslVfnI/PhY1qudd7KTC5xlcRsFLPBPKcti7g=;
+ b=PGMXErhv2bTtbJokepQdrKHq3o3GXxqstgQB5Eb+Z+QGq/k51TnHYFqkOx7AQL2w3y6++S
+ 5P5Z4rpW1JaZIP4dRgjnF+MEFkg4Bg/CbuakBSdh9WutEb2oR7nnL9qwWQIPMeTddhMKxV
+ /XXZqVskqZ3ekg2omngefyh/lhd+/aA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-dvdnzRZSNsaCh_oh1XooGg-1; Mon,
- 10 Mar 2025 23:44:17 -0400
-X-MC-Unique: dvdnzRZSNsaCh_oh1XooGg-1
-X-Mimecast-MFC-AGG-ID: dvdnzRZSNsaCh_oh1XooGg_1741664656
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-4BO8PCPDNcSaELq77jUuMA-1; Mon,
+ 10 Mar 2025 23:43:32 -0400
+X-MC-Unique: 4BO8PCPDNcSaELq77jUuMA-1
+X-Mimecast-MFC-AGG-ID: 4BO8PCPDNcSaELq77jUuMA_1741664611
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 390841956048; Tue, 11 Mar 2025 03:44:16 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3624A1955D4B; Tue, 11 Mar 2025 03:43:31 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 928991800366; Tue, 11 Mar 2025 03:44:13 +0000 (UTC)
+ id 3F5C81800366; Tue, 11 Mar 2025 03:43:28 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
@@ -54,9 +54,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 19/63] docs/qapi-domain: add qapi:enum directive
-Date: Mon, 10 Mar 2025 23:42:17 -0400
-Message-ID: <20250311034303.75779-20-jsnow@redhat.com>
+Subject: [PATCH v3 06/63] docs/qapi-domain: add QAPI index
+Date: Mon, 10 Mar 2025 23:42:04 -0400
+Message-ID: <20250311034303.75779-7-jsnow@redhat.com>
 In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
 References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -87,82 +87,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the .. qapi:enum:: directive, object, and :qapi:enum:`name`
-cross-reference role.
+Use the QAPI object registry to generate a special index just for QAPI
+definitions. The index can show entries both by definition type and all
+together, alphabetically.
 
-Add the :value name: field list for documenting Enum values.
-
-Of note, also introduce a new "type" role that is intended to be used by
-other QAPI object directives to cross-reference arbitrary QAPI type
-names, but will exclude commands, events, and modules from
-consideration.
+The index can be linked from anywhere in the QEMU manual by using the
+reference `qapi-index`.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ docs/sphinx/qapi_domain.py | 73 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 70 insertions(+), 3 deletions(-)
 
 diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 45e69689d1e..e399474dc5b 100644
+index f3ece42bc2a..3e7718d32d1 100644
 --- a/docs/sphinx/qapi_domain.py
 +++ b/docs/sphinx/qapi_domain.py
-@@ -312,6 +312,23 @@ class QAPICommand(QAPIObject):
-     )
+@@ -9,12 +9,20 @@
+     AbstractSet,
+     Any,
+     Dict,
++    Iterable,
++    List,
+     NamedTuple,
++    Optional,
+     Tuple,
+ )
+ 
+-from sphinx.domains import Domain, ObjType
+-from sphinx.locale import __
++from sphinx.domains import (
++    Domain,
++    Index,
++    IndexEntry,
++    ObjType,
++)
++from sphinx.locale import _, __
+ from sphinx.util import logging
  
  
-+class QAPIEnum(QAPIObject):
-+    """Description of a QAPI Enum."""
+@@ -31,6 +39,62 @@ class ObjectEntry(NamedTuple):
+     aliased: bool
+ 
+ 
++class QAPIIndex(Index):
++    """
++    Index subclass to provide the QAPI definition index.
++    """
 +
-+    doc_field_types = QAPIObject.doc_field_types.copy()
-+    doc_field_types.extend(
-+        [
-+            # :value name: descr
-+            GroupedField(
-+                "value",
-+                label=_("Values"),
-+                names=("value",),
-+                can_collapse=False,
++    # pylint: disable=too-few-public-methods
++
++    name = "index"
++    localname = _("QAPI Index")
++    shortname = _("QAPI Index")
++
++    def generate(
++        self,
++        docnames: Optional[Iterable[str]] = None,
++    ) -> Tuple[List[Tuple[str, List[IndexEntry]]], bool]:
++        assert isinstance(self.domain, QAPIDomain)
++        content: Dict[str, List[IndexEntry]] = {}
++        collapse = False
++
++        # list of all object (name, ObjectEntry) pairs, sorted by name
++        # (ignoring the module)
++        objects = sorted(
++            self.domain.objects.items(),
++            key=lambda x: x[0].split(".")[-1].lower(),
++        )
++
++        for objname, obj in objects:
++            if docnames and obj.docname not in docnames:
++                continue
++
++            # Strip the module name out:
++            objname = objname.split(".")[-1]
++
++            # Add an alphabetical entry:
++            entries = content.setdefault(objname[0].upper(), [])
++            entries.append(
++                IndexEntry(
++                    objname, 0, obj.docname, obj.node_id, obj.objtype, "", ""
++                )
 +            )
-+        ]
-+    )
++
++            # Add a categorical entry:
++            category = obj.objtype.title() + "s"
++            entries = content.setdefault(category, [])
++            entries.append(
++                IndexEntry(objname, 0, obj.docname, obj.node_id, "", "", "")
++            )
++
++        # alphabetically sort categories; type names first, ABC entries last.
++        sorted_content = sorted(
++            content.items(),
++            key=lambda x: (len(x[0]) == 1, x[0]),
++        )
++        return sorted_content, collapse
 +
 +
- class QAPIModule(QAPIDescription):
-     """
-     Directive to mark description of a new module.
-@@ -431,9 +448,14 @@ class QAPIDomain(Domain):
-     # This table associates cross-reference object types (key) with an
-     # ObjType instance, which defines the valid cross-reference roles
-     # for each object type.
-+    #
-+    # e.g., the :qapi:type: cross-reference role can refer to enum,
-+    # struct, union, or alternate objects; but :qapi:obj: can refer to
-+    # anything. Each object also gets its own targeted cross-reference role.
-     object_types: Dict[str, ObjType] = {
-         "module": ObjType(_("module"), "mod", "any"),
-         "command": ObjType(_("command"), "cmd", "any"),
-+        "enum": ObjType(_("enum"), "enum", "type", "any"),
+ class QAPIDomain(Domain):
+     """QAPI language domain."""
+ 
+@@ -54,7 +118,10 @@ class QAPIDomain(Domain):
+         "objects": {},  # fullname -> ObjectEntry
      }
  
-     # Each of these provides a rST directive,
-@@ -441,6 +463,7 @@ class QAPIDomain(Domain):
-     directives = {
-         "module": QAPIModule,
-         "command": QAPICommand,
-+        "enum": QAPIEnum,
-     }
+-    indices = []
++    # Index pages to generate; each entry is an Index class.
++    indices = [
++        QAPIIndex,
++    ]
  
-     # These are all cross-reference roles; e.g.
-@@ -449,6 +472,9 @@ class QAPIDomain(Domain):
-     roles = {
-         "mod": QAPIXRefRole(),
-         "cmd": QAPIXRefRole(),
-+        "enum": QAPIXRefRole(),
-+        # reference any data type (excludes modules, commands, events)
-+        "type": QAPIXRefRole(),
-         "any": QAPIXRefRole(),  # reference *any* type of QAPI object.
-     }
- 
+     @property
+     def objects(self) -> Dict[str, ObjectEntry]:
 -- 
 2.48.1
 
