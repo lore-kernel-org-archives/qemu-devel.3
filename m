@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E902C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5762FC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzC1-0000wk-7x; Tue, 11 Mar 2025 08:58:45 -0400
+	id 1trzEg-0005UY-5M; Tue, 11 Mar 2025 09:01:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzBs-0000vG-Ql; Tue, 11 Mar 2025 08:58:38 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1trzDQ-0004Lp-1C; Tue, 11 Mar 2025 09:00:15 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzBo-0007oR-DD; Tue, 11 Mar 2025 08:58:35 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2feae794508so8081948a91.0; 
- Tue, 11 Mar 2025 05:58:31 -0700 (PDT)
+ id 1trzDH-00084T-Ld; Tue, 11 Mar 2025 09:00:10 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-300fefb8e06so1881870a91.0; 
+ Tue, 11 Mar 2025 06:00:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741697910; x=1742302710; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741697999; x=1742302799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u7wjPkG/ntlVqsAo3bR2GeOkCsbyPnLbq91ceDRWcvk=;
- b=SIii28Y+MGsgzRfdpDvapK2psDdhlbbzpw1IPdEUbpA6Cz8r8pTTrB19guznzUNH23
- DvNPUM0JaSQ00mNyngm58NCsysj7CIOexRVwSL7oxs2E3GIba2od2R8nd4pqe8Efoq1u
- wFykPqxSznAl+cVdB2Ar8/hYrtLf5D17Mv3zdl9be7GOF3/Kbjk7/fzc5fW4u5YklP6R
- +ALVlMgZEBlF+iZMgxUKzQ7w+I6Tr5VSf9nLhqWQRlbFCX8kqKeqm9/z/yFaOgizkDDn
- 6u5dZRfTJVdwDmlAgrrYgkDFG5QNCrVor3zbnQgEyAq34Tm0qIxMmQvmXFsWAmNPPbOB
- EmUQ==
+ bh=WWZ6jXzWeTg9f0TMcRn568DCYUVFZ/Q8jdAM6fw8ow0=;
+ b=U1bfh1OOCKIZzbHXzVSR4BpSIYP2qUSkVsw3KG0t/WE50B5KkPh0MbOK3BrsVRoT4K
+ 8KtL2XLs9d4QtKzvuHx6h/3kZCKBD9F30A9qo2IhnDBtztOXc0R1gppsrMoPnwUWV7qI
+ 2i0E/Eto/uZr/dPkVwDslT2eMOFKg04VOfCbs0Y7GbmKvlNeVN00UNOiRGlliyR66UXR
+ Adul+2e+oynEd2lrVIIBNeBMldeuow6xfNPE0k061bC0JEU5JV8GNcFDojAJPwBTFsnn
+ Y5D13qSOH+5T8MdvN2AUlz8wbp59WWGVpBr8AtuZqci6nYL2TKfDaLOJeLoERCMo2rQG
+ A1ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741697910; x=1742302710;
+ d=1e100.net; s=20230601; t=1741697999; x=1742302799;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u7wjPkG/ntlVqsAo3bR2GeOkCsbyPnLbq91ceDRWcvk=;
- b=Fi4LQShifCOD3jXogMDZ50JaPPEQGPhI8kxbxLS5Vg5paYhJGlMKClr9qV6nDC3sDz
- Z03u3nVD171K3sSF6+ewT8MX9eptSQGX1qm4Q1LofoOacIjOIxU5beXJqVS3bUsDCLLe
- 2eu/2ZJzP+Qt1KaJA0Oi4ml4Ggh7e92gmBqWypwTBBhWG0MIixBWUEF9RChV9AOxwBcp
- fpyFWT3CVtGCSJfTfDUNZHL/DsSU2bcsD53lH/ip0xbXnDl1hCNai9H9vrDMnyprRyie
- 1fAnzV5jJ8/gHR1hqytOVPuNFqyyNldFVaoL6nDZisac1ZdnT2Xzv7SfK5L3DKHmgPuP
- DJAg==
+ bh=WWZ6jXzWeTg9f0TMcRn568DCYUVFZ/Q8jdAM6fw8ow0=;
+ b=L661rPbGNnbiPXpxNvqMMlfl29XlzUrh/CJvl7G23178qsaJmQ+b1va2GBDlQq9Noz
+ AK5fCBw4muRAf9cy+TDCB96VLV+vFn0K/cDsNoit4ieTlMhDaqIZlhxD++cEwIA/YcmD
+ eNxTCy+T23Np9RUYRipfIzmEtB8grcj+ORENzB/dgoufZSMS8wGAWF8sFFh1hBAiboVg
+ 2K66T8FW4lauE/Uvk1RjwMzlQsr7N88CLM3+hQH4jtpBOabObm8POf7dGe06okCCBQpE
+ ZEaiSJT0VHesg3BMoMXe4MCRv+HnyGQiARtN+vyw+z0V1NOeEFhcVFXY+9oE7TZNIlu1
+ mqHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYS0NIBBX134ptewyiUy8umBUjCRLpMm8P18Le+mgi0B8m6hTlpYOjTevFNwgZxME6zOdytb568Q==@nongnu.org
-X-Gm-Message-State: AOJu0YzL5GbZtw0ZzuTCs/TpCiG3ol4aLiu/x/hZtEbX1vgIKYbcqchm
- om2QqAO+/ph+0msj3VTqoJ9MuHjG470MKDAIp5plmYZbq1qz0z961f9Y0w==
-X-Gm-Gg: ASbGncsCJrj7YsReHKPJazPSTfwSj251Om8+OpjIjwVmV3jmnoqQK7fqmdWGNktKIvu
- 058YGpzOIAuQ964NOMqBTNOxG/PzlGaq3CrSZxYfcniiInZEm4OHK3t/FBbq6F9zw318ESnlmvV
- g6cxqYETZypCTAJqZuf1CjIuF6g64GeWPkr0Ql+xAFD12j5tw03IXlBUiW4M/dQpYNcA0XCjeqR
- V1Sj7a0IFZwNWUYxcJ7dtxQtSFPP/GS/EWz7f67nUJ806Bh3YfuoevoQNC+Qh3RsJKVwmUH7Vc7
- Jvp7N/alQ+udBSqRAqcYU5J04m1YcQ6l2r5BYc9d6LW3NDU5XWI=
-X-Google-Smtp-Source: AGHT+IGIqYa8qeyLfWBVgGoHt+p6wAsY1KCHmJ7RHjz24qW8Etm3dVWkWNWeWdinz2VYptWdxW8HjQ==
-X-Received: by 2002:a17:90b:2d82:b0:2ff:5357:1c7e with SMTP id
- 98e67ed59e1d1-2ff7ce89db6mr26355537a91.20.1741697908460; 
- Tue, 11 Mar 2025 05:58:28 -0700 (PDT)
+ AJvYcCW7eYhW58Rrek6Z+EMOTfCrpcDiQVEXZh3JofbVJZPTXRENNwuH7iP7vMGzvcwTEOTFAWFxamAQKQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yw3fri5JD9Mpf3NUjOGQe395nSxQxFifCbdN4qHX8+ms69XB6C4
+ hLYHFBL+FFBROHPY1sMdndqu3ykwzqKhRW+kpK0RY2QcAgPQobQjvAtXLA==
+X-Gm-Gg: ASbGncsdJsoSS8EJQSSFtJyIuHBc/YC4ctbaTjfOJQc0PC9/CG5mtlu9HVzdLYn2DTI
+ vw0BUPvno7UXTm39m5ehtSeW6RyWdD+eXGoeAZmezAG0iy2m5IPJNCBPU1gukWMuvU29lcJmkzM
+ qJBJ+9vSKV991gf4GgeRNa3kAMmbcMJH5n71txYCzBDBDaAbUOXF3heZEGnJysI3VuHA+YfKtUC
+ SM6S+Y/qjvnsPO4Z97bAUgdz4PoLxIzj8/Isu44AAGUQpSk736Fna1P+JnGOyFKbFdF1/RAyiUi
+ 7imclgU1EG7bbYXz1TE6XrukurrysOeasOdSwCls/xfng1+MWm4=
+X-Google-Smtp-Source: AGHT+IFis6Ard7BrObSIFYYxBdA/Z2a3tRl3ETjHPZW5AOeookzEcW5d3AEBe22dGlAf8OZzt0TyTA==
+X-Received: by 2002:a17:90b:264e:b0:2fe:a336:fe65 with SMTP id
+ 98e67ed59e1d1-300ff0ca8c9mr4849182a91.10.1741697999464; 
+ Tue, 11 Mar 2025 05:59:59 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.58.26
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 05:58:28 -0700 (PDT)
+ Tue, 11 Mar 2025 05:59:59 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 01/72] ppc/ppc405: Remove tests
-Date: Tue, 11 Mar 2025 22:56:55 +1000
-Message-ID: <20250311125815.903177-2-npiggin@gmail.com>
+ Frederic Barrat <fbarrat@linux.ibm.com>,
+ Michael Kowal <kowal@linux.ibm.com>
+Subject: [PULL 30/72] qtest/xive: Add group-interrupt test
+Date: Tue, 11 Mar 2025 22:57:24 +1000
+Message-ID: <20250311125815.903177-31-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,107 +100,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-Since we are about to remove all support for PPC 405, start by
-removing the tests referring to the ref405ep machine.
+Add XIVE2 tests for group interrupts and group interrupts that have
+been backlogged.
 
-Link: https://lore.kernel.org/qemu-devel/20250110141800.1587589-2-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20250204080649.836155-2-clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/functional/meson.build     |  1 -
- tests/functional/test_ppc_405.py | 37 --------------------------------
- tests/qtest/m48t59-test.c        |  5 -----
- tests/qtest/meson.build          |  1 -
- 4 files changed, 44 deletions(-)
- delete mode 100755 tests/functional/test_ppc_405.py
+ tests/qtest/pnv-xive2-test.c | 160 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 160 insertions(+)
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index e78560a901..74f8414a0c 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -207,7 +207,6 @@ tests_ppc_system_quick = [
- ]
+diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
+index dd19e88861..a4d06550ee 100644
+--- a/tests/qtest/pnv-xive2-test.c
++++ b/tests/qtest/pnv-xive2-test.c
+@@ -2,6 +2,8 @@
+  * QTest testcase for PowerNV 10 interrupt controller (xive2)
+  *  - Test irq to hardware thread
+  *  - Test 'Pull Thread Context to Odd Thread Reporting Line'
++ *  - Test irq to hardware group
++ *  - Test irq to hardware group going through backlog
+  *
+  * Copyright (c) 2024, IBM Corporation.
+  *
+@@ -315,6 +317,158 @@ static void test_pull_thread_ctx_to_odd_thread_cl(QTestState *qts)
+     word2 = get_tima32(qts, target_pir, TM_QW3_HV_PHYS + TM_WORD2);
+     g_assert_cmphex(xive_get_field32(TM_QW3W2_VT, word2), ==, 0);
+ }
++
++static void test_hw_group_irq(QTestState *qts)
++{
++    uint32_t irq = 100;
++    uint32_t irq_data = 0xdeadbeef;
++    uint32_t end_index = 23;
++    uint32_t chosen_one;
++    uint32_t target_nvp = 0x81; /* group size = 4 */
++    uint8_t priority = 6;
++    uint32_t reg32;
++    uint16_t reg16;
++    uint8_t pq, nsr, cppr;
++
++    printf("# ============================================================\n");
++    printf("# Testing irq %d to hardware group of size 4\n", irq);
++
++    /* irq config */
++    set_eas(qts, irq, end_index, irq_data);
++    set_end(qts, end_index, target_nvp, priority, true /* group */);
++
++    /* enable and trigger irq */
++    get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
++    set_esb(qts, irq, XIVE_TRIGGER_PAGE, 0, 0);
++
++    /* check irq is raised on cpu */
++    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
++    g_assert_cmpuint(pq, ==, XIVE_ESB_PENDING);
++
++    /* find the targeted vCPU */
++    for (chosen_one = 0; chosen_one < SMT; chosen_one++) {
++        reg32 = get_tima32(qts, chosen_one, TM_QW3_HV_PHYS + TM_WORD0);
++        nsr = reg32 >> 24;
++        if (nsr == 0x82) {
++            break;
++        }
++    }
++    g_assert_cmphex(chosen_one, <, SMT);
++    cppr = (reg32 >> 16) & 0xFF;
++    g_assert_cmphex(nsr, ==, 0x82);
++    g_assert_cmphex(cppr, ==, 0xFF);
++
++    /* ack the irq */
++    reg16 = get_tima16(qts, chosen_one, TM_SPC_ACK_HV_REG);
++    nsr = reg16 >> 8;
++    cppr = reg16 & 0xFF;
++    g_assert_cmphex(nsr, ==, 0x82);
++    g_assert_cmphex(cppr, ==, priority);
++
++    /* check irq data is what was configured */
++    reg32 = qtest_readl(qts, xive_get_queue_addr(end_index));
++    g_assert_cmphex((reg32 & 0x7fffffff), ==, (irq_data & 0x7fffffff));
++
++    /* End Of Interrupt */
++    set_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_STORE_EOI, 0);
++    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
++    g_assert_cmpuint(pq, ==, XIVE_ESB_RESET);
++
++    /* reset CPPR */
++    set_tima8(qts, chosen_one, TM_QW3_HV_PHYS + TM_CPPR, 0xFF);
++    reg32 = get_tima32(qts, chosen_one, TM_QW3_HV_PHYS + TM_WORD0);
++    nsr = reg32 >> 24;
++    cppr = (reg32 >> 16) & 0xFF;
++    g_assert_cmphex(nsr, ==, 0x00);
++    g_assert_cmphex(cppr, ==, 0xFF);
++}
++
++static void test_hw_group_irq_backlog(QTestState *qts)
++{
++    uint32_t irq = 31;
++    uint32_t irq_data = 0x01234567;
++    uint32_t end_index = 129;
++    uint32_t target_nvp = 0x81; /* group size = 4 */
++    uint32_t chosen_one = 3;
++    uint8_t blocking_priority, priority = 3;
++    uint32_t reg32;
++    uint16_t reg16;
++    uint8_t pq, nsr, cppr, lsmfb, i;
++
++    printf("# ============================================================\n");
++    printf("# Testing irq %d to hardware group of size 4 going through " \
++           "backlog\n",
++           irq);
++
++    /*
++     * set current priority of all threads in the group to something
++     * higher than what we're about to trigger
++     */
++    blocking_priority = priority - 1;
++    for (i = 0; i < SMT; i++) {
++        set_tima8(qts, i, TM_QW3_HV_PHYS + TM_CPPR, blocking_priority);
++    }
++
++    /* irq config */
++    set_eas(qts, irq, end_index, irq_data);
++    set_end(qts, end_index, target_nvp, priority, true /* group */);
++
++    /* enable and trigger irq */
++    get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
++    set_esb(qts, irq, XIVE_TRIGGER_PAGE, 0, 0);
++
++    /* check irq is raised on cpu */
++    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
++    g_assert_cmpuint(pq, ==, XIVE_ESB_PENDING);
++
++    /* check no interrupt is pending on the 2 possible targets */
++    for (i = 0; i < SMT; i++) {
++        reg32 = get_tima32(qts, i, TM_QW3_HV_PHYS + TM_WORD0);
++        nsr = reg32 >> 24;
++        cppr = (reg32 >> 16) & 0xFF;
++        lsmfb = reg32 & 0xFF;
++        g_assert_cmphex(nsr, ==, 0x0);
++        g_assert_cmphex(cppr, ==, blocking_priority);
++        g_assert_cmphex(lsmfb, ==, priority);
++    }
++
++    /* lower priority of one thread */
++    set_tima8(qts, chosen_one, TM_QW3_HV_PHYS + TM_CPPR, priority + 1);
++
++    /* check backlogged interrupt is presented */
++    reg32 = get_tima32(qts, chosen_one, TM_QW3_HV_PHYS + TM_WORD0);
++    nsr = reg32 >> 24;
++    cppr = (reg32 >> 16) & 0xFF;
++    g_assert_cmphex(nsr, ==, 0x82);
++    g_assert_cmphex(cppr, ==, priority + 1);
++
++    /* ack the irq */
++    reg16 = get_tima16(qts, chosen_one, TM_SPC_ACK_HV_REG);
++    nsr = reg16 >> 8;
++    cppr = reg16 & 0xFF;
++    g_assert_cmphex(nsr, ==, 0x82);
++    g_assert_cmphex(cppr, ==, priority);
++
++    /* check irq data is what was configured */
++    reg32 = qtest_readl(qts, xive_get_queue_addr(end_index));
++    g_assert_cmphex((reg32 & 0x7fffffff), ==, (irq_data & 0x7fffffff));
++
++    /* End Of Interrupt */
++    set_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_STORE_EOI, 0);
++    pq = get_esb(qts, irq, XIVE_EOI_PAGE, XIVE_ESB_GET);
++    g_assert_cmpuint(pq, ==, XIVE_ESB_RESET);
++
++    /* reset CPPR */
++    set_tima8(qts, chosen_one, TM_QW3_HV_PHYS + TM_CPPR, 0xFF);
++    reg32 = get_tima32(qts, chosen_one, TM_QW3_HV_PHYS + TM_WORD0);
++    nsr = reg32 >> 24;
++    cppr = (reg32 >> 16) & 0xFF;
++    lsmfb = reg32 & 0xFF;
++    g_assert_cmphex(nsr, ==, 0x00);
++    g_assert_cmphex(cppr, ==, 0xFF);
++    g_assert_cmphex(lsmfb, ==, 0xFF);
++}
++
+ static void test_xive(void)
+ {
+     QTestState *qts;
+@@ -330,6 +484,12 @@ static void test_xive(void)
+     /* omit reset_state here and use settings from test_hw_irq */
+     test_pull_thread_ctx_to_odd_thread_cl(qts);
  
- tests_ppc_system_thorough = [
--  'ppc_405',
-   'ppc_40p',
-   'ppc_amiga',
-   'ppc_bamboo',
-diff --git a/tests/functional/test_ppc_405.py b/tests/functional/test_ppc_405.py
-deleted file mode 100755
-index 9851c03ee9..0000000000
---- a/tests/functional/test_ppc_405.py
-+++ /dev/null
-@@ -1,37 +0,0 @@
--#!/usr/bin/env python3
--#
--# Test that the U-Boot firmware boots on ppc 405 machines and check the console
--#
--# Copyright (c) 2021 Red Hat, Inc.
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--from qemu_test import QemuSystemTest, Asset
--from qemu_test import wait_for_console_pattern
--from qemu_test import exec_command_and_wait_for_pattern
--
--class Ppc405Machine(QemuSystemTest):
--
--    timeout = 90
--
--    ASSET_UBOOT = Asset(
--        ('https://gitlab.com/huth/u-boot/-/raw/taihu-2021-10-09/'
--         'u-boot-taihu.bin'),
--        'a076bb6cdeaafa406330e51e074b66d8878d9036d67d4caa0137be03ee4c112c')
--
--    def do_test_ppc405(self):
--        file_path = self.ASSET_UBOOT.fetch()
--        self.vm.set_console(console_index=1)
--        self.vm.add_args('-bios', file_path)
--        self.vm.launch()
--        wait_for_console_pattern(self, 'AMCC PPC405EP Evaluation Board')
--        exec_command_and_wait_for_pattern(self, 'reset', 'AMCC PowerPC 405EP')
--
--    def test_ppc_ref405ep(self):
--        self.require_accelerator("tcg")
--        self.set_machine('ref405ep')
--        self.do_test_ppc405()
--
--if __name__ == '__main__':
--    QemuSystemTest.main()
-diff --git a/tests/qtest/m48t59-test.c b/tests/qtest/m48t59-test.c
-index 605797ab78..1e39a0e8f0 100644
---- a/tests/qtest/m48t59-test.c
-+++ b/tests/qtest/m48t59-test.c
-@@ -247,11 +247,6 @@ static void base_setup(void)
-         base_year = 1968;
-         base_machine = "SS-5";
-         use_mmio = true;
--    } else if (g_str_equal(arch, "ppc") || g_str_equal(arch, "ppc64")) {
--        base = 0xF0000000;
--        base_year = 1968;
--        base_machine = "ref405ep";
--        use_mmio = true;
-     } else {
-         g_assert_not_reached();
-     }
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 8a6243382a..b23fe67db7 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -171,7 +171,6 @@ qtests_mips64el = qtests_mips
- qtests_ppc = \
-   qtests_filter + \
-   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
--  (config_all_devices.has_key('CONFIG_M48T59') ? ['m48t59-test'] : []) +                     \
-   (config_all_accel.has_key('CONFIG_TCG') ? ['prom-env-test'] : []) +                              \
-   (config_all_accel.has_key('CONFIG_TCG') ? ['boot-serial-test'] : []) +                           \
-   ['boot-order-test']
++    reset_state(qts);
++    test_hw_group_irq(qts);
++
++    reset_state(qts);
++    test_hw_group_irq_backlog(qts);
++
+     reset_state(qts);
+     test_flush_sync_inject(qts);
+ 
 -- 
 2.47.1
 
