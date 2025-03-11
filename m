@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FF3C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75252C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1Jg-0000v0-6I; Tue, 11 Mar 2025 11:14:48 -0400
+	id 1ts1LS-00024G-SR; Tue, 11 Mar 2025 11:16:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts1Jc-0000rM-Ry
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:14:44 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts1Ja-0004nL-Ev
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:14:44 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-391342fc148so2738815f8f.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:14:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741706078; x=1742310878; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=nRRe0V6hTnTEa/ywDXDKo4kqBN5ZydvlC5M+vqDkq1c=;
- b=sYvCkXB/yvjkriFQsUeZVqbJPRAmf/bsMuMNo7GsD7lo5S41Hk6Amn0IvLy/x8aQfH
- h0BAC7mPl5rMqmr9LvwhjRDB3upYoiXZ5U6iiG8G10VYviuerEBnYVTc0cdafzHdwxQY
- zIuuKVhBPsVnRz+F4ujKCZW7xwTi03hvB5q56ubSeQqXHu6jbiQ/duEAp2zKaCfO3nd5
- uI/a0paFae3EETAPQiSUU2M97q0XkOGcfJZPsfuIXEIPv6i77nFjJgRfFqDN4xL0806n
- EVfZipqtoH7K4PizYFQ/+kt6HsN1VCjVDhEIYox2IaSv06mACtjxjs2s+9TfsqpNspQG
- Rm0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741706078; x=1742310878;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nRRe0V6hTnTEa/ywDXDKo4kqBN5ZydvlC5M+vqDkq1c=;
- b=FMtliFi5yWbPuBolg6QICVM22mrcaXJi0LZq6WJq99N5IyKIGHRIUv9tZ25y+aofoO
- wlA5O6TAbM9cuiAMA+BEVqHjH6nYzIWz+A50fFd7Z8Kv5A24ZYmy0nUmVvUlgr4MIxHr
- pyFy+/f5anE63x9BMpdNBlGTq2mSmIpMAQ2p4iSHodIchUkVkSt5BaEZfHbZjK+EeIHI
- 6kAOlrAEveMITS071mGDPPp1P1ub6g6QRiWluDXBU+wKXZoYXojzY8H5JQRwr2FDv5EI
- C5tlzDCkcHPBaCKMTYmz/EakJS8J2q2MU5Io8ZPBGrQ59T1tBnFFQO34aO2lBgQ9nQtJ
- 3Phg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6vZGuI6ID+DH/LeV9W00JIrwELdTg6ct0yJP8hxvmN4cUeUNMNH9d8oOCwGIb9AQrSK6LoQFT9VmF@nongnu.org
-X-Gm-Message-State: AOJu0YxMbIW2gM4XHJ7zY8EqgwA823JNW42OICogGng5/lGelDnLl6Tf
- 6aQ+DziOvWxtyf94lF9W5ZPD8jRwYho48FxRYIkhYmMB41ESmJzncFP2u9qz8Oc=
-X-Gm-Gg: ASbGncvpTr5bdfH2/AfOPOi8G1/LzzR/dfhhsGikXO2m87K2MdfgZ0hWcoeqauu5YuR
- zl2F3Mf+j0wluI8o33bL5193Dul8TiKqCrDG2a5LEjRVeqWNs4ob6vlb1KbnpTP1DhVn0wXhvXg
- iHHNOYuPDqK5WIwTkQmZ2mHk3xz49jO9t9QAdZETgY1DfwqMuEZXRQRUxdny2TlFHgq1ROlw1ke
- nt37xJRJ76dfzwxZxM6CkyzfXYk4uC22KBQPO65AxXlRhrTo/g2JIea6GUTzatqUsI8O5eNKGpk
- aVfwxjN7Ns80Ix8OhGZfWvy58N3NeSOgrF/pF/RRJgyhmS0vdN34z6QfNZlaDiTw42rDc53kZIg
- fLyLvbEgPvnxN
-X-Google-Smtp-Source: AGHT+IGMZq9Zv5IrDzGNXyfZard2uq17hlvG5nfa9qRcDr6dl5yVlBL8PHub5h9dwcelWjylk5GmVQ==
-X-Received: by 2002:a05:6000:18a5:b0:391:13ef:1b1b with SMTP id
- ffacd0b85a97d-3926469486emr5385934f8f.30.1741706077939; 
- Tue, 11 Mar 2025 08:14:37 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d032afc2esm15042685e9.2.2025.03.11.08.14.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 08:14:37 -0700 (PDT)
-Message-ID: <b5f9e231-8c29-4992-89a0-5cdea7c08b34@linaro.org>
-Date: Tue, 11 Mar 2025 16:14:36 +0100
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1ts1LH-00021s-SA; Tue, 11 Mar 2025 11:16:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1ts1LF-0005XD-ER; Tue, 11 Mar 2025 11:16:27 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52BE3GOW010051;
+ Tue, 11 Mar 2025 15:16:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=U7MPg4tKAPBPrL+hmt8TRbrrPIQcB1EdiRaXyNIk1
+ wk=; b=dFonQG4rupaxv+vR2irZWkLfVshzrO0xYwm7dBudUINmgWvJJaefgq6ur
+ 3mpBZUozDZgxt4pBatRNws5oD3wmyD8v2GBokT+vhAxPJVJfqhcwIDthQ5MGya6+
+ VX8Omp0mYGc22+6MnNoTYDNl229cBYwTlgoAJCbmm63NPVKcklWD6V14dh+pm3nQ
+ qB69/ki5t6O1BYp9yL6/+PWQv2uU8rbdywCdUfrBxTWucHxVC6bjpLob+20Jso1z
+ LdCGuxB5p1FvnU1iSvuEftyZvcr64YFmsYiwofDJ+1EAnwOrrTu3glZKAHx1IPuB
+ ptXOikpgYuXjSQKL1yNlMsQywZnug==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45apkrgcyt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Mar 2025 15:16:20 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52BBiF7A014019;
+ Tue, 11 Mar 2025 15:16:19 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4592x1vd9c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Mar 2025 15:16:19 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52BFGI2222479388
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 11 Mar 2025 15:16:18 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 866135805D;
+ Tue, 11 Mar 2025 15:16:18 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5127F5805C;
+ Tue, 11 Mar 2025 15:16:17 +0000 (GMT)
+Received: from MacBookPro.ibm.com (unknown [9.61.244.69])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 11 Mar 2025 15:16:17 +0000 (GMT)
+From: Rorie Reyes <rreyes@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com,
+ akrowiak@linux.ibm.com, rreyes@linux.ibm.com
+Subject: [RFC PATCH v4 0/5] Report vfio-ap configuration changes
+Date: Tue, 11 Mar 2025 11:16:11 -0400
+Message-ID: <20250311151616.98244-1-rreyes@linux.ibm.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/7] hw/hyperv/hyperv.h: header cleanup
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- alex.bennee@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- richard.henderson@linaro.org, manos.pitsidianakis@linaro.org
-References: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
- <20250307215623.524987-3-pierrick.bouvier@linaro.org>
- <f957fbdb-c7c3-4a31-a76a-144ff31ea158@linaro.org>
-Content-Language: en-US
-In-Reply-To: <f957fbdb-c7c3-4a31-a76a-144ff31ea158@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xJz_VxT-xG_dQph0c98O-U1sJdJJyIxz
+X-Proofpoint-GUID: xJz_VxT-xG_dQph0c98O-U1sJdJJyIxz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-11_03,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=950
+ lowpriorityscore=0 suspectscore=0 impostorscore=0 malwarescore=0
+ spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502100000 definitions=main-2503110094
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,37 +106,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/25 16:05, Philippe Mathieu-Daudé wrote:
-> On 7/3/25 22:56, Pierrick Bouvier wrote:
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   include/hw/hyperv/hyperv.h | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
->> index d717b4e13d4..63a8b65278f 100644
->> --- a/include/hw/hyperv/hyperv.h
->> +++ b/include/hw/hyperv/hyperv.h
->> @@ -10,7 +10,8 @@
->>   #ifndef HW_HYPERV_HYPERV_H
->>   #define HW_HYPERV_HYPERV_H
->> -#include "cpu-qom.h"
->> +#include "exec/hwaddr.h"
->> +#include "hw/core/cpu.h"
-> 
-> I don't see where "hw/core/cpu.h" is used.
+Changelog:
 
-OK found it:
+v4:
+- allocating cfg_chg_event before inserting into the queue
+- calling nt0_have_event in if loop to check if there are any
+elemenets in the queue, then calling QTAILQ_FIRST when the check
+passes
+- moving memset() after the check
 
-static inline uint32_t hyperv_vp_index(CPUState *cs)
-{
-     return cs->cpu_index;
-}
+v3:
+- changes that were made to patch 3/5 should have been made in
+patch 2/5
 
-First, bringing this huge header for this single use is way overkill,
-then I doubt this method deserves to be inlined, third @cpu_index is
-an accelerator specific field, often incorrectly used. Maybe in this
-case it is OK although, since IIUC we only support HyperV with KVM,
-right?
+v2:
+- removed warnings that weren't needed
+- added unregister function
+- removed whitelines
+- changed variable names for consistency
+- removed rc variable and returning 1 or 0 outright
+- reversed logics for if statements
+- using g_free() instead of free()
+- replaced hardcoded numeric values by defining them with #define
+in the header
+
+--------------------------------------------------------------------------
+This patch series creates and registers a handler that is called when
+userspace is notified by the kernel that a guest's AP configuration has
+changed. The handler in turn notifies the guest that its AP configuration
+has changed. This allows the guest to immediately respond to AP
+configuration changes rather than relying on polling or some other
+inefficient mechanism for detecting config changes.
+
+Rorie Reyes (5):
+  linux-headers: NOTFORMERGE - placeholder uapi updates for AP config
+    change
+  hw/vfio/ap: notification handler for AP config changed event
+  hw/vfio/ap: store object indicating AP config changed in a queue
+  hw/vfio/ap: Storing event information for an AP configuration change
+    event
+  s390: implementing CHSC SEI for AP config change
+
+ hw/vfio/ap.c                 | 82 ++++++++++++++++++++++++++++++++++++
+ include/hw/s390x/ap-bridge.h | 22 ++++++++++
+ linux-headers/linux/vfio.h   |  1 +
+ target/s390x/ioinst.c        | 11 ++++-
+ 4 files changed, 114 insertions(+), 2 deletions(-)
+
+-- 
+2.48.1
+
 
