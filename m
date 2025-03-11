@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A06C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD577C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts2BO-0005Ad-B6; Tue, 11 Mar 2025 12:10:18 -0400
+	id 1ts2Bc-00061E-Nr; Tue, 11 Mar 2025 12:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts22K-0004FR-2K
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts22p-0004Wy-8j
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts22H-0005jw-8E
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:00:55 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts22h-0005pO-LK
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741708850;
+ s=mimecast20190719; t=1741708875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o3M34tbCgzDrec1OhUc9/W+zRbMhY9lNOXZ99ApbkyM=;
- b=Pjq+i47T1lnZ5TCX+E+n6Pp2Ab73uTnVbEx1ZFgzyuP1UdvzmUu80EL/zH+uTYf5JofIFP
- q1oQOxw9nKWd9ka478e7op+fjnSa2b5xjAkVq01XFIBluIX0CTI52Tiuu48beKziv2rI1e
- df/Fqr/16Cs+poC7Z/qs3UtSUrMVYXI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=OeBbLzT2TofkNhRYH5+kh6JTgvIl0D7nG0iqsPQZ9bo=;
+ b=Ecs01LawtLF0oU3XhGziwnKDbhp9wD/kKkLhdpYbpOi3FOZeSCKSoY86IaCPUJX44pCn84
+ PxtagTB3K21bnf6TowgihS+Y2TWME+XioTcdq3pRfXeyTV0QB0Q68O+GWo3EC9wEOGCh/o
+ TIk61ualqIhzH+3tfkumKMWFHe9qiT8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-Uj0B-xfpOSqm19e4tkvLTA-1; Tue,
- 11 Mar 2025 12:00:48 -0400
-X-MC-Unique: Uj0B-xfpOSqm19e4tkvLTA-1
-X-Mimecast-MFC-AGG-ID: Uj0B-xfpOSqm19e4tkvLTA_1741708846
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-rYI0a860NvWRnkicR9DsGw-1; Tue,
+ 11 Mar 2025 12:01:11 -0400
+X-MC-Unique: rYI0a860NvWRnkicR9DsGw-1
+X-Mimecast-MFC-AGG-ID: rYI0a860NvWRnkicR9DsGw_1741708870
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D36751954B33; Tue, 11 Mar 2025 16:00:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0C0B180035E; Tue, 11 Mar 2025 16:01:10 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.33.18])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 34BE21800373; Tue, 11 Mar 2025 16:00:44 +0000 (UTC)
+ id 07DDF1800373; Tue, 11 Mar 2025 16:01:08 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 10/22] scsi-disk: drop unused SCSIDiskState->bh field
-Date: Tue, 11 Mar 2025 17:00:09 +0100
-Message-ID: <20250311160021.349761-11-kwolf@redhat.com>
+Subject: [PULL 21/22] virtio-scsi: handle ctrl virtqueue in main loop
+Date: Tue, 11 Mar 2025 17:00:20 +0100
+Message-ID: <20250311160021.349761-22-kwolf@redhat.com>
 In-Reply-To: <20250311160021.349761-1-kwolf@redhat.com>
 References: <20250311160021.349761-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,30 +85,251 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Commit 71544d30a6f8 ("scsi: push request restart to SCSIDevice") removed
-the only user of SCSIDiskState->bh.
+Previously the ctrl virtqueue was handled in the AioContext where SCSI
+requests are processed. When IOThread Virtqueue Mapping was added things
+become more complicated because SCSI requests could run in other
+AioContexts.
+
+Simplify by handling the ctrl virtqueue in the main loop where reset
+operations can be performed. Note that BHs are still used canceling SCSI
+requests in their AioContexts but at least the mean loop activity
+doesn't need BHs anymore.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250311132616.1049687-2-stefanha@redhat.com>
+Message-ID: <20250311132616.1049687-13-stefanha@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- hw/scsi/scsi-disk.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/hw/virtio/virtio-scsi.h |   8 --
+ hw/scsi/virtio-scsi-dataplane.c |   6 ++
+ hw/scsi/virtio-scsi.c           | 144 ++++++--------------------------
+ 3 files changed, 33 insertions(+), 125 deletions(-)
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index e7f738b484..caf6c1437f 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -106,7 +106,6 @@ struct SCSIDiskState {
-     uint64_t max_unmap_size;
-     uint64_t max_io_size;
-     uint32_t quirks;
--    QEMUBH *bh;
-     char *version;
-     char *serial;
-     char *vendor;
+diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
+index 086201efa2..31e852ed6c 100644
+--- a/include/hw/virtio/virtio-scsi.h
++++ b/include/hw/virtio/virtio-scsi.h
+@@ -90,14 +90,6 @@ struct VirtIOSCSI {
+ 
+     QemuMutex ctrl_lock; /* protects ctrl_vq */
+ 
+-    /*
+-     * TMFs deferred to main loop BH. These fields are protected by
+-     * tmf_bh_lock.
+-     */
+-    QemuMutex tmf_bh_lock;
+-    QEMUBH *tmf_bh;
+-    QTAILQ_HEAD(, VirtIOSCSIReq) tmf_bh_list;
+-
+     /* Fields for dataplane below */
+     AioContext **vq_aio_context; /* per-virtqueue AioContext pointer */
+ 
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index 6bb368c8a5..2d37fa6712 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -73,6 +73,12 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+             s->vq_aio_context[i] = ctx;
+         }
+     }
++
++    /*
++     * Always handle the ctrl virtqueue in the main loop thread where device
++     * resets can be performed.
++     */
++    s->vq_aio_context[0] = qemu_get_aio_context();
+ }
+ 
+ /* Context: BQL held */
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 9f61eb97db..d9c32c3245 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -319,115 +319,6 @@ static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
+     g_free(n);
+ }
+ 
+-static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
+-{
+-    VirtIOSCSI *s = req->dev;
+-    SCSIDevice *d = virtio_scsi_device_get(s, req->req.tmf.lun);
+-    BusChild *kid;
+-    int target;
+-
+-    switch (req->req.tmf.subtype) {
+-    case VIRTIO_SCSI_T_TMF_LOGICAL_UNIT_RESET:
+-        if (!d) {
+-            req->resp.tmf.response = VIRTIO_SCSI_S_BAD_TARGET;
+-            goto out;
+-        }
+-        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
+-            req->resp.tmf.response = VIRTIO_SCSI_S_INCORRECT_LUN;
+-            goto out;
+-        }
+-        qatomic_inc(&s->resetting);
+-        device_cold_reset(&d->qdev);
+-        qatomic_dec(&s->resetting);
+-        break;
+-
+-    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET:
+-        target = req->req.tmf.lun[1];
+-        qatomic_inc(&s->resetting);
+-
+-        rcu_read_lock();
+-        QTAILQ_FOREACH_RCU(kid, &s->bus.qbus.children, sibling) {
+-            SCSIDevice *d1 = SCSI_DEVICE(kid->child);
+-            if (d1->channel == 0 && d1->id == target) {
+-                device_cold_reset(&d1->qdev);
+-            }
+-        }
+-        rcu_read_unlock();
+-
+-        qatomic_dec(&s->resetting);
+-        break;
+-
+-    default:
+-        g_assert_not_reached();
+-    }
+-
+-out:
+-    object_unref(OBJECT(d));
+-    virtio_scsi_complete_req(req, &s->ctrl_lock);
+-}
+-
+-/* Some TMFs must be processed from the main loop thread */
+-static void virtio_scsi_do_tmf_bh(void *opaque)
+-{
+-    VirtIOSCSI *s = opaque;
+-    QTAILQ_HEAD(, VirtIOSCSIReq) reqs = QTAILQ_HEAD_INITIALIZER(reqs);
+-    VirtIOSCSIReq *req;
+-    VirtIOSCSIReq *tmp;
+-
+-    GLOBAL_STATE_CODE();
+-
+-    WITH_QEMU_LOCK_GUARD(&s->tmf_bh_lock) {
+-        QTAILQ_FOREACH_SAFE(req, &s->tmf_bh_list, next, tmp) {
+-            QTAILQ_REMOVE(&s->tmf_bh_list, req, next);
+-            QTAILQ_INSERT_TAIL(&reqs, req, next);
+-        }
+-
+-        qemu_bh_delete(s->tmf_bh);
+-        s->tmf_bh = NULL;
+-    }
+-
+-    QTAILQ_FOREACH_SAFE(req, &reqs, next, tmp) {
+-        QTAILQ_REMOVE(&reqs, req, next);
+-        virtio_scsi_do_one_tmf_bh(req);
+-    }
+-}
+-
+-static void virtio_scsi_reset_tmf_bh(VirtIOSCSI *s)
+-{
+-    VirtIOSCSIReq *req;
+-    VirtIOSCSIReq *tmp;
+-
+-    GLOBAL_STATE_CODE();
+-
+-    /* Called after ioeventfd has been stopped, so tmf_bh_lock is not needed */
+-    if (s->tmf_bh) {
+-        qemu_bh_delete(s->tmf_bh);
+-        s->tmf_bh = NULL;
+-    }
+-
+-    QTAILQ_FOREACH_SAFE(req, &s->tmf_bh_list, next, tmp) {
+-        QTAILQ_REMOVE(&s->tmf_bh_list, req, next);
+-
+-        /* SAM-6 6.3.2 Hard reset */
+-        req->resp.tmf.response = VIRTIO_SCSI_S_TARGET_FAILURE;
+-        virtio_scsi_complete_req(req, &req->dev->ctrl_lock);
+-    }
+-}
+-
+-static void virtio_scsi_defer_tmf_to_main_loop(VirtIOSCSIReq *req)
+-{
+-    VirtIOSCSI *s = req->dev;
+-
+-    WITH_QEMU_LOCK_GUARD(&s->tmf_bh_lock) {
+-        QTAILQ_INSERT_TAIL(&s->tmf_bh_list, req, next);
+-
+-        if (!s->tmf_bh) {
+-            s->tmf_bh = qemu_bh_new(virtio_scsi_do_tmf_bh, s);
+-            qemu_bh_schedule(s->tmf_bh);
+-        }
+-    }
+-}
+-
+ static void virtio_scsi_tmf_cancel_req(VirtIOSCSIReq *tmf, SCSIRequest *r)
+ {
+     VirtIOSCSICancelNotifier *notifier;
+@@ -627,11 +518,35 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+         break;
+ 
+     case VIRTIO_SCSI_T_TMF_LOGICAL_UNIT_RESET:
+-    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET:
+-        virtio_scsi_defer_tmf_to_main_loop(req);
+-        ret = -EINPROGRESS;
++        if (!d) {
++            goto fail;
++        }
++        if (d->lun != virtio_scsi_get_lun(req->req.tmf.lun)) {
++            goto incorrect_lun;
++        }
++        qatomic_inc(&s->resetting);
++        device_cold_reset(&d->qdev);
++        qatomic_dec(&s->resetting);
+         break;
+ 
++    case VIRTIO_SCSI_T_TMF_I_T_NEXUS_RESET: {
++        BusChild *kid;
++        int target = req->req.tmf.lun[1];
++        qatomic_inc(&s->resetting);
++
++        rcu_read_lock();
++        QTAILQ_FOREACH_RCU(kid, &s->bus.qbus.children, sibling) {
++            SCSIDevice *d1 = SCSI_DEVICE(kid->child);
++            if (d1->channel == 0 && d1->id == target) {
++                device_cold_reset(&d1->qdev);
++            }
++        }
++        rcu_read_unlock();
++
++        qatomic_dec(&s->resetting);
++        break;
++    }
++
+     case VIRTIO_SCSI_T_TMF_ABORT_TASK_SET:
+     case VIRTIO_SCSI_T_TMF_CLEAR_TASK_SET: {
+         g_autoptr(GHashTable) aio_contexts = g_hash_table_new(NULL, NULL);
+@@ -1087,7 +1002,6 @@ static void virtio_scsi_reset(VirtIODevice *vdev)
+ 
+     assert(!s->dataplane_started);
+ 
+-    virtio_scsi_reset_tmf_bh(s);
+     virtio_scsi_flush_defer_tmf_to_aio_context(s);
+ 
+     qatomic_inc(&s->resetting);
+@@ -1402,10 +1316,8 @@ static void virtio_scsi_device_realize(DeviceState *dev, Error **errp)
+     VirtIOSCSI *s = VIRTIO_SCSI(dev);
+     Error *err = NULL;
+ 
+-    QTAILQ_INIT(&s->tmf_bh_list);
+     qemu_mutex_init(&s->ctrl_lock);
+     qemu_mutex_init(&s->event_lock);
+-    qemu_mutex_init(&s->tmf_bh_lock);
+ 
+     virtio_scsi_common_realize(dev,
+                                virtio_scsi_handle_ctrl,
+@@ -1445,11 +1357,9 @@ static void virtio_scsi_device_unrealize(DeviceState *dev)
+ {
+     VirtIOSCSI *s = VIRTIO_SCSI(dev);
+ 
+-    virtio_scsi_reset_tmf_bh(s);
+     virtio_scsi_dataplane_cleanup(s);
+     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
+     virtio_scsi_common_unrealize(dev);
+-    qemu_mutex_destroy(&s->tmf_bh_lock);
+     qemu_mutex_destroy(&s->event_lock);
+     qemu_mutex_destroy(&s->ctrl_lock);
+ }
 -- 
 2.48.1
 
