@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F4BC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73E4AC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:13:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzIu-00034F-29; Tue, 11 Mar 2025 09:05:52 -0400
+	id 1trzJN-0004B4-Nv; Tue, 11 Mar 2025 09:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEe-0005XO-A0; Tue, 11 Mar 2025 09:01:30 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1trzEB-0005HS-O1; Tue, 11 Mar 2025 09:01:04 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEa-0000Gv-LY; Tue, 11 Mar 2025 09:01:27 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2f9d3d0f55dso8228505a91.1; 
- Tue, 11 Mar 2025 06:01:23 -0700 (PDT)
+ id 1trzE4-0000AK-NB; Tue, 11 Mar 2025 09:00:58 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-224341bbc1dso67994515ad.3; 
+ Tue, 11 Mar 2025 06:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741698082; x=1742302882; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741698051; x=1742302851; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vyXD5UzpUW0YaKhAXXjbHUshaxnE47RC+WIYwrc3gYk=;
- b=XNEiM5gAK3OsrCtpEp9VMs0G3iu5Tq/2ANyAqtl3CYwKX6ZgfYok9UUxHbl7chuT92
- uM0bBm8wkPe9KyIfvZKN/21/iSVmB5rJHRlkFd0vA4Ppyhz4Kw4Nn47BRF6YzTkofqbi
- NVo0zEYLSC/W0f3YkbKD7b7Tfbw25diI71DVQgWbGzFUjHB4p5njY5Ytnohxvc/8GkUU
- 2dzOTTRLXw0+X0TEq8XcVhYmc8d3Q5yvnPCogkV7AYdroN+4G+b/B9cXBSHnyuLauSPk
- Y9n11kYeNkaehkLp86eXaQHxYtjer2zy/wj+vu70RXJVKWEMfVNolPW0iPkq8PqVkXy0
- YpQw==
+ bh=VyPpxpR1LPgC7kHmIhSLHr8dyizfyqPn+5SkC4Qa1kM=;
+ b=eb69PDmc6vgFL5ZGMpEkb/6i2Vb6ANHUT0/1zgouWOqdAJIZMQmqTrjh1BuBT6V+ua
+ aSwtkdo7d7cm2cise4vFKrUK9eZgrvNYCuTS9SQ34kQHWt+LTAErsw+GdZyDC+1a7AYv
+ jeGDJEgmU7mEaSGEzf89rLqgKLG4QkPJwQQ+ewqYfvQ6gEv6LoNltHtglWnZCnIqZ+Cj
+ /vI3denqz7CA9Zl5wS5k23382xW+uImEslHyMAxfDti/i6lMh8/IItJtbiJoOPm7B6u1
+ BmhySgYv766x1l3XPSjgWwvGxR6ONRBzlWOfpD/XcvIuKUuXNLr7KNLGbzs16jU33FlU
+ Rd6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741698082; x=1742302882;
+ d=1e100.net; s=20230601; t=1741698051; x=1742302851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vyXD5UzpUW0YaKhAXXjbHUshaxnE47RC+WIYwrc3gYk=;
- b=I+fcPISZ4fcYobtykJZY9vkq2qOjluiPbhSvuCbtLohl9DjaeTIkG0ypfy1TnvFMXK
- 5hv7O+7sflQd92OYEvOX6elIry7d0+5mxeQn9M9oiiMz7kBONf0E/FT+iJY9+onVfAKB
- Sp/swthvplZYuMSCHJEQXuPZ0i6tjMlUJ5dR3l//51I+FxCJflPzyLngNxtGwB6P5c0p
- 7frU0mjMdcI+FQEtTjHQZI+oZXYOCen7HBsxLo2CRWDXA9/DTdd/XI/cNUjURXV1wEPl
- t42UXLGpv7qV/+8kTXanR3ALsGAxvhOywS4OzHCU5ib566SFN5g7M09qDg4R8FznqdHH
- dIDg==
+ bh=VyPpxpR1LPgC7kHmIhSLHr8dyizfyqPn+5SkC4Qa1kM=;
+ b=dBLpFqJxPXPy+2Kmi6Ky0ZjVAx/RpSKjVlZWPyQE26NFywZZMZtOscK9sYG9LuuBCp
+ ott9VHRo6xBu7Xbwdx8Bi39i6ziIZE85RHSxs+tzZ3dM9qppTWLF15ic2L8PliNlapSz
+ W9yeUpemkPZXPaLfmx2cRp6GDAdNid7yJLVoJKP+8Va8rXOlsN7rhbmUquh495r216T0
+ DNyH7HouvDwi/s2i3RlHcNSYco1+eqEkvZ8MRg4Pz+AMghXMP4bzdlQ7YsugRDYrmwAA
+ 92nspWVqbaGj7Kmpl3q/bHK5WitawxBK9yR4+3hu3RYyw4Tbk40VrdSX3cRwAoDVi10H
+ 4xwA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVV+7Nee8sdnDcyLt5o6eFppOv1YXdl0xtNq5WnVe0GIQm8d3y9YBByKCFT/d9XOzF0CjLjKRDcw==@nongnu.org
-X-Gm-Message-State: AOJu0YwsMqaK3K1WkK5s75n/z6TZCXp/TOcnUbmr9Ei2C00H+CCXkLne
- 6/YLwJgIQXsc6+0kYFI2PGfnVpuUFTghG/DBTexiR7aBCP9/AWG6/4q8Vg==
-X-Gm-Gg: ASbGncs4W9QeT58sB1W+K6e0ed7kzeYi+dac0/a2Zwdkd7OAVhle873Z5JkRKkzx9lh
- qio0oenhN2JETzxytcvy4z8bw5Y0NUVZqets6G49QmOFh1+ox0yejO5C9xLAzahd+ni1LXyaPbW
- ViW34OzKmQ3U7hVr2yD779EMZw4D27PprW3ThX0gRocraJEFwxsxXYGVQ3MGGI9jJur0JPm/uT1
- hSu6L3oM8etI7zH1i5xaUz5WT7O7JDJTn2WHg6g8Zq+vMzxG6Y3g/8Czu0AZdza65l+0R4tcdYR
- tqCMQ1lSzp2/fSTmTXLU911t2uhYpd7ipsK5O3iruCNHCvsLakWF9RESTwSv6A==
-X-Google-Smtp-Source: AGHT+IEMJZBUgVnye9Cur+e6qLx66fIs3LKKWKwiYdXdizHq23zqK1Kp7v7WjIVSvGuGTSNK+VlNvw==
-X-Received: by 2002:a17:90b:38cd:b0:2ee:741c:e9f4 with SMTP id
- 98e67ed59e1d1-2ff7ce8e5dfmr26796090a91.11.1741698080776; 
- Tue, 11 Mar 2025 06:01:20 -0700 (PDT)
+ AJvYcCXohdBXpmIkIppv/mAraqR+QnWhjykf7WOHbxBDgmK4qJyZf1l/mMoRlqtW6jWGGVH0z7lL2m06gQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yz4k3Y8ih8Uotb6UvBN1Gnp4/iPYxD8CrH9ewlRFxS+GxJ9QHrJ
+ jzYgtTH0dEtZCvW2KF7pUkkwezi1/dXtvNAYwv1F3LbvPr5Y0FvNiPlwrA==
+X-Gm-Gg: ASbGncti2/TSZvvHusWKJGyPkg8dMIZDgt2utdFE/6MIV9NOVTkgc7/4JCXs412q4WL
+ 4WDXBQKscmNi81SVIdPFfeo7PFiY3JvrED7LfbgNcVJ+OwmYYTt2JB67Ougsym2xxYEn+0lQ2jc
+ y+AuakrGvwAenWjxK3LLwC9ogU4OObuyjj2EwYaJhFyripNlRSHLRYpBkQFVScmWO4VdZd1RL9T
+ cug2PUMdZ26nsDyvmVQ69Ueyumm/9zDBZR2qQPyrO4JF1N8OKDPi3qPQER7TgE5jopV+FlDeu92
+ h+kHVQw3jSZvDcvCXHB81940gnhTJ5uVpEHIPhU1QGTlsCjgYXY=
+X-Google-Smtp-Source: AGHT+IG3/dJF0uCdNybHet8gcnCbHhEvUcYDAyybd/VVNwW6hC8T/djteCM/ofz2DtXmA4DQfaZzJQ==
+X-Received: by 2002:a17:902:c94d:b0:220:c066:94eb with SMTP id
+ d9443c01a7336-22592e407damr48788845ad.25.1741698050538; 
+ Tue, 11 Mar 2025 06:00:50 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.18
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 06:01:20 -0700 (PDT)
+ Tue, 11 Mar 2025 06:00:50 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 57/72] hw/ppc/spapr: Convert CLEAN_HPTE() macro as
- hpte_set_clean() method
-Date: Tue, 11 Mar 2025 22:57:51 +1000
-Message-ID: <20250311125815.903177-58-npiggin@gmail.com>
+Subject: [PULL 47/72] target/ppc: Restrict powerpc_checkstop() to TCG
+Date: Tue, 11 Mar 2025 22:57:41 +1000
+Message-ID: <20250311125815.903177-48-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,75 +103,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Convert CLEAN_HPTE() macro as hpte_set_clean() method.
+Expose powerpc_checkstop() prototype, and move it to
+tcg-excp_helper.c, only built when TCG is available.
 
-sPAPR data structures including the hash page table are big-endian
-regardless of current CPU endian mode, so use the big-endian LD/ST
-API to access the hash PTEs.
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-ID: <20241220213103.6314-5-philmd@linaro.org>
+Message-ID: <20250127102620.39159-8-philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ target/ppc/excp_helper.c     | 26 --------------------------
+ target/ppc/internal.h        |  4 +++-
+ target/ppc/tcg-excp_helper.c | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 31 insertions(+), 27 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index dd81398445..3568a97045 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1419,7 +1419,12 @@ static bool hpte_is_dirty(SpaprMachineState *s, unsigned index)
-     return ldq_be_p(hpte_get_ptr(s, index)) & HPTE64_V_HPTE_DIRTY;
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index b08cd53688..236e5078f5 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -400,32 +400,6 @@ static void powerpc_set_excp_state(PowerPCCPU *cpu, target_ulong vector,
  }
  
--#define CLEAN_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) &= tswap64(~HPTE64_V_HPTE_DIRTY))
-+static void hpte_set_clean(SpaprMachineState *s, unsigned index)
+ #ifdef CONFIG_TCG
+-/*
+- * This stops the machine and logs CPU state without killing QEMU (like
+- * cpu_abort()) because it is often a guest error as opposed to a QEMU error,
+- * so the machine can still be debugged.
+- */
+-static G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason)
+-{
+-    CPUState *cs = env_cpu(env);
+-    FILE *f;
+-
+-    f = qemu_log_trylock();
+-    if (f) {
+-        fprintf(f, "Entering checkstop state: %s\n", reason);
+-        cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
+-        qemu_log_unlock(f);
+-    }
+-
+-    /*
+-     * This stops the machine and logs CPU state without killing QEMU
+-     * (like cpu_abort()) so the machine can still be debugged (because
+-     * it is often a guest error).
+-     */
+-    qemu_system_guest_panicked(NULL);
+-    cpu_loop_exit_noexc(cs);
+-}
+-
+ #if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
+ void helper_attn(CPUPPCState *env)
+ {
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 46db6adfcf..62186bc1e6 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -289,7 +289,9 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ void ppc_cpu_debug_excp_handler(CPUState *cs);
+ bool ppc_cpu_debug_check_breakpoint(CPUState *cs);
+ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
+-#endif
++
++G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason);
++#endif /* !CONFIG_USER_ONLY */
+ 
+ FIELD(GER_MSK, XMSK, 0, 4)
+ FIELD(GER_MSK, YMSK, 4, 4)
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index 6950b78774..93c2d6b5a0 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -17,7 +17,9 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+  */
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "exec/cpu_ldst.h"
++#include "system/runstate.h"
+ 
+ #include "hw/ppc/ppc.h"
+ #include "internal.h"
+@@ -199,6 +201,32 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+     return false;
+ }
+ 
++/*
++ * This stops the machine and logs CPU state without killing QEMU (like
++ * cpu_abort()) because it is often a guest error as opposed to a QEMU error,
++ * so the machine can still be debugged.
++ */
++G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason)
 +{
-+    stq_be_p(hpte_get_ptr(s, index),
-+             ldq_be_p(hpte_get_ptr(s, index)) & ~HPTE64_V_HPTE_DIRTY);
++    CPUState *cs = env_cpu(env);
++    FILE *f;
++
++    f = qemu_log_trylock();
++    if (f) {
++        fprintf(f, "Entering checkstop state: %s\n", reason);
++        cpu_dump_state(cs, f, CPU_DUMP_FPU | CPU_DUMP_CCOP);
++        qemu_log_unlock(f);
++    }
++
++    /*
++     * This stops the machine and logs CPU state without killing QEMU
++     * (like cpu_abort()) so the machine can still be debugged (because
++     * it is often a guest error).
++     */
++    qemu_system_guest_panicked(NULL);
++    cpu_loop_exit_noexc(cs);
 +}
 +
- #define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
- 
- /*
-@@ -2215,7 +2220,7 @@ static void htab_save_first_pass(QEMUFile *f, SpaprMachineState *spapr,
-         /* Consume invalid HPTEs */
-         while ((index < htabslots)
-                && !hpte_is_valid(spapr, index)) {
--            CLEAN_HPTE(hpte_get_ptr(spapr, index));
-+            hpte_set_clean(spapr, index);
-             index++;
-         }
- 
-@@ -2223,7 +2228,7 @@ static void htab_save_first_pass(QEMUFile *f, SpaprMachineState *spapr,
-         chunkstart = index;
-         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
-                && hpte_is_valid(spapr, index)) {
--            CLEAN_HPTE(hpte_get_ptr(spapr, index));
-+            hpte_set_clean(spapr, index);
-             index++;
-         }
- 
-@@ -2273,7 +2278,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
-         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
-                && hpte_is_dirty(spapr, index)
-                && hpte_is_valid(spapr, index)) {
--            CLEAN_HPTE(hpte_get_ptr(spapr, index));
-+            hpte_set_clean(spapr, index);
-             index++;
-             examined++;
-         }
-@@ -2283,7 +2288,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
-         while ((index < htabslots) && (index - invalidstart < USHRT_MAX)
-                && hpte_is_dirty(spapr, index)
-                && !hpte_is_valid(spapr, index)) {
--            CLEAN_HPTE(hpte_get_ptr(spapr, index));
-+            hpte_set_clean(spapr, index);
-             index++;
-             examined++;
-         }
+ /* Return true iff byteswap is needed to load instruction */
+ static inline bool insn_need_byteswap(CPUArchState *env)
+ {
 -- 
 2.47.1
 
