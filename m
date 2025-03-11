@@ -4,70 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E958AC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DD4C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts2Cy-000832-84; Tue, 11 Mar 2025 12:11:56 -0400
+	id 1ts287-0001wO-RV; Tue, 11 Mar 2025 12:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts22V-0004PD-Pn
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts22w-0004bf-92
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:38 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts22o-0005qm-DT
  for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ts22P-0005m5-JZ
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:01:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741708860;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s4IZO3vwmSLcmgRxaZNwXSzmWEfgubyuOVHXMZ+T5f0=;
- b=RKi+q9A7QeH+pqJFAMaqBWW+vDOoerMw/7R/A5+F3lyJiU6rx105U7WwK8ArrwH3O1MkRE
- KGkqBbtYVpzaHA2vcMzJGwN9JGylN1KpInQXV6Z9ulPkSihJFfT8LYwRFnEU665PXy2yCi
- 25jXTioHtCkEujmNXZHb3NOzBFgoezg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-LCLZ9DpWPHupbIx4eagXKA-1; Tue,
- 11 Mar 2025 12:00:56 -0400
-X-MC-Unique: LCLZ9DpWPHupbIx4eagXKA-1
-X-Mimecast-MFC-AGG-ID: LCLZ9DpWPHupbIx4eagXKA_1741708855
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CDFA180882E; Tue, 11 Mar 2025 16:00:55 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.33.18])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8A52B1800373; Tue, 11 Mar 2025 16:00:53 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 14/22] virtio-scsi: introduce event and ctrl virtqueue locks
-Date: Tue, 11 Mar 2025 17:00:13 +0100
-Message-ID: <20250311160021.349761-15-kwolf@redhat.com>
-In-Reply-To: <20250311160021.349761-1-kwolf@redhat.com>
-References: <20250311160021.349761-1-kwolf@redhat.com>
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3912c09bea5so4760005f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 09:01:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741708882; x=1742313682; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=P5bTxtXaZ8OvnQwJsXnxYAuIVZke0nDI0BltRhNRW6A=;
+ b=YpRUuA3lbgyHq1oOpFDyIlxOs7n3EXKzP2WrJq2GwA/xl35m/JyXubMpWOlAON1Mw/
+ rmF8NgwOTgJ1NXyzzE37XBgsc1jX6I1AWNhnG29onFudcVVelGlidkYCG+m0sbavNDSh
+ SPJ/VCMXsJrVDUvUW02h4u0EMqOOkEvCgZxDmIf+xSAWVhXy5iGw6db/NQfLKeK9aZ65
+ 5RBavGs8aiLyEqWKPvPKsJQB8XuCJ5ya8gHr0As+yGYBoQZvg0TMn2dLZrvBEsEg0O6z
+ xXiBuliDQmgEhJHmBwkaiekC8YWcqEG2elMZLCT6iC/dFFqWBfHovfaDbd/vL0Da8gUm
+ YT7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741708882; x=1742313682;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=P5bTxtXaZ8OvnQwJsXnxYAuIVZke0nDI0BltRhNRW6A=;
+ b=BveHFiGtY2abQYbJRTFfFnfGWuRxuTjZY+TH0lxsLp8tlCurqhcF6HUKj2/XMoq4bg
+ 0oZf4ITI9APmNiy/fOkHwYUmJTFmYuP+VxrX8fNJ0a9halUJWlxdUlhdP0X126A2miO3
+ MvqPkV+F7ToMjDfgNcDtJosvQrnJLJ5r/ixK/E5nFQgH1oVbdQOqD5cKlM57xbWs5S/z
+ mC3c6sJZpNj3+f3N9WKVIcAurLJm0epeX41/dHhDAkvcETi8X3iF+ZOOjSKfyM8uY3eN
+ kM3EsX2p4M1AiG2vkOu7WyxxDSC8Q7hpK3ZXnta1J+hMELggR3mpKy/SCXnBhQ/ROOm+
+ a/Kw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1RV3rz8s1WfhtPgLWZgNmsXG8IcGlSKFUwPkMQycye/pZzhp9EOrko0LZOP7bBXw2j3Ay5JH6npcb@nongnu.org
+X-Gm-Message-State: AOJu0Ywc/T8nzV6rYHR/GsIB7CL34dKJZW2C/akEGJgXjbrGNSVXaPFG
+ 1YtIyRF7Im5PycvxpBx0aVELmw8cV2PrwLPsvdfD+/roTmam223wwJpVKOnVAsg=
+X-Gm-Gg: ASbGncstEbL7n8XtW33K7Mo1aF8T8RSFZbayaPYsT/3KOBI5CDUk5BevnyaQLzAHOg5
+ BOSkxA3Xr+ctNhNCi8hSYLlkAOpP2HiBBzGFUelo13OfmGSJetxXMck4WgvweaI3YfcD6u3lw1p
+ aofR/T6oTBJCmU1tl5RV3fXaA0LD5np2DxQ2Y19MlQosaVGIs+i8rOPPtFfpTe7O6ntMlLCrDBM
+ lUd0HFjW1PqvlbdzUaRx1OhJhAJW1NveIM6S0TnVkdJNMP7ZMz3z/yIpiX1nqc1/3Xjeo6Wgqzj
+ Iy55/XUgSe2iUU5KqRuLDT9vAqziitQcAd+U/kEC5XuyorMHF2KZgqNifEuBPuLI0KTSwiBeapr
+ ZJ5qNuB0Jt/Ik
+X-Google-Smtp-Source: AGHT+IEjvOpEIldroznvHw7cEdYvmp6lfzGXyGcGDOAEG/Opt2iXecXIbpKV9mwarxy4Kr9JX+WPxw==
+X-Received: by 2002:a5d:64c9:0:b0:391:4835:d89f with SMTP id
+ ffacd0b85a97d-39263ceba32mr4573713f8f.8.1741708881769; 
+ Tue, 11 Mar 2025 09:01:21 -0700 (PDT)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfb79adsm18309357f8f.7.2025.03.11.09.01.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Mar 2025 09:01:21 -0700 (PDT)
+Message-ID: <efa9ef1e-6a3a-44e0-9732-762c1bfb4857@linaro.org>
+Date: Tue, 11 Mar 2025 17:01:19 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 18/18] hw/rtc: Add Ricoh RS5C372 RTC emulation
+To: cminyard@mvista.com
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20250223114708.1780-1-shentey@gmail.com>
+ <20250223114708.1780-19-shentey@gmail.com>
+ <77E3F57E-95D0-4E2F-838E-5E0334651349@gmail.com>
+ <1FBD5091-2221-4815-85CB-D98BE4F6EA72@gmail.com>
+ <F2594DA2-F703-4F82-B07F-2D665329E1CF@gmail.com>
+ <fa40fbaa-df39-40e4-8845-fd516df10b41@linaro.org>
+ <Z9BbfyNSPBkH-gaf@mail.minyard.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Z9BbfyNSPBkH-gaf@mail.minyard.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,296 +115,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+On 11/3/25 16:49, Corey Minyard wrote:
+> On Tue, Mar 11, 2025 at 10:20:03AM +0100, Philippe Mathieu-Daudé wrote:
+>> On 11/3/25 08:34, Bernhard Beschow wrote:
+>>>
+>>>
+>>> Am 7. März 2025 19:18:34 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
+>>>>
+>>>>
+>>>> Am 4. März 2025 18:53:10 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
+>>>>>
+>>>>>
+>>>>> Am 23. Februar 2025 11:47:08 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
+>>>>>> The implementation just allows Linux to determine date and time.
+>>>>>>
+>>>>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>>>>>> ---
+>>>>>> MAINTAINERS                |   2 +
+>>>>>> hw/rtc/rs5c372.c           | 236 +++++++++++++++++++++++++++++++++++++
+>>>>>> tests/qtest/rs5c372-test.c |  43 +++++++
+>>>>>> hw/rtc/Kconfig             |   5 +
+>>>>>> hw/rtc/meson.build         |   1 +
+>>>>>> hw/rtc/trace-events        |   4 +
+>>>>>> tests/qtest/meson.build    |   1 +
+>>>>>> 7 files changed, 292 insertions(+)
+>>>>>> create mode 100644 hw/rtc/rs5c372.c
+>>>>>> create mode 100644 tests/qtest/rs5c372-test.c
+>>>>>
+>>>>> Ping for just this patch. I'd like to have it merged for 10.0.
+>>>>
+>>>> Ping^2 -- just few days left before soft freeze.
+>>>
+>>> Last ping before the freeze
+>>>
+>>> It would really be nice to have this device model in 10.0 since this would allow me to use upstream QEMU.
+>>
+>> Apparently I2C maintainer wasn't Cc'ed (now is):
+>>
+>>    Corey Minyard <cminyard@mvista.com> (maintainer:I2C and SMBus)
+>>
+>> At a glance patch LGTM, so:
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Well, it's fairly hard to read this way :-).  But this looks good.  My
+> only comment is on:
+> 
+>>>>> +#define NVRAM_SIZE 0x10
+>>>>> +
+>>>>> +/* Flags definitions */
+>>>>> +#define SECONDS_CH 0x80
+>>>>> +#define HOURS_PM   0x20
+>>>>> +#define CTRL2_24   0x20
+> 
+> Those are fairly generic names; when I see things like that I worry
+> about conflicting with other generic names that might come into an
+> include later.  Not a huge deal, though.
+> 
+> Acked-by: Corey Minyard <cminyard@mvista.com>
 
-Virtqueues are not thread-safe. Until now this was not a major issue
-since all virtqueue processing happened in the same thread. The ctrl
-queue's Task Management Function (TMF) requests sometimes need the main
-loop, so a BH was used to schedule the virtqueue completion back in the
-thread that has virtqueue access.
+Thank you! Patch queued via my hw-misc tree then.
 
-When IOThread Virtqueue Mapping is introduced in later commits, event
-and ctrl virtqueue accesses from other threads will become necessary.
-Introduce an optional per-virtqueue lock so the event and ctrl
-virtqueues can be protected in the commits that follow.
+Regards,
 
-The addition of the ctrl virtqueue lock makes
-virtio_scsi_complete_req_from_main_loop() and its BH unnecessary.
-Instead, take the ctrl virtqueue lock from the main loop thread.
-
-The cmd virtqueue does not have a lock because the entirety of SCSI
-command processing happens in one thread. Only one thread accesses the
-cmd virtqueue and a lock is unnecessary.
-
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250311132616.1049687-6-stefanha@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- include/hw/virtio/virtio-scsi.h |  3 ++
- hw/scsi/virtio-scsi.c           | 84 ++++++++++++++++++---------------
- 2 files changed, 49 insertions(+), 38 deletions(-)
-
-diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
-index be230cd4bf..4ee98ebf63 100644
---- a/include/hw/virtio/virtio-scsi.h
-+++ b/include/hw/virtio/virtio-scsi.h
-@@ -84,6 +84,9 @@ struct VirtIOSCSI {
-     int resetting; /* written from main loop thread, read from any thread */
-     bool events_dropped;
- 
-+    QemuMutex ctrl_lock; /* protects ctrl_vq */
-+    QemuMutex event_lock; /* protects event_vq */
-+
-     /*
-      * TMFs deferred to main loop BH. These fields are protected by
-      * tmf_bh_lock.
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 7d094e1881..073ccd3d5b 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -102,13 +102,18 @@ static void virtio_scsi_free_req(VirtIOSCSIReq *req)
-     g_free(req);
- }
- 
--static void virtio_scsi_complete_req(VirtIOSCSIReq *req)
-+static void virtio_scsi_complete_req(VirtIOSCSIReq *req, QemuMutex *vq_lock)
- {
-     VirtIOSCSI *s = req->dev;
-     VirtQueue *vq = req->vq;
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
- 
-     qemu_iovec_from_buf(&req->resp_iov, 0, &req->resp, req->resp_size);
-+
-+    if (vq_lock) {
-+        qemu_mutex_lock(vq_lock);
-+    }
-+
-     virtqueue_push(vq, &req->elem, req->qsgl.size + req->resp_iov.size);
-     if (s->dataplane_started && !s->dataplane_fenced) {
-         virtio_notify_irqfd(vdev, vq);
-@@ -116,6 +121,10 @@ static void virtio_scsi_complete_req(VirtIOSCSIReq *req)
-         virtio_notify(vdev, vq);
-     }
- 
-+    if (vq_lock) {
-+        qemu_mutex_unlock(vq_lock);
-+    }
-+
-     if (req->sreq) {
-         req->sreq->hba_private = NULL;
-         scsi_req_unref(req->sreq);
-@@ -123,34 +132,20 @@ static void virtio_scsi_complete_req(VirtIOSCSIReq *req)
-     virtio_scsi_free_req(req);
- }
- 
--static void virtio_scsi_complete_req_bh(void *opaque)
-+static void virtio_scsi_bad_req(VirtIOSCSIReq *req, QemuMutex *vq_lock)
- {
--    VirtIOSCSIReq *req = opaque;
-+    virtio_error(VIRTIO_DEVICE(req->dev), "wrong size for virtio-scsi headers");
- 
--    virtio_scsi_complete_req(req);
--}
-+    if (vq_lock) {
-+        qemu_mutex_lock(vq_lock);
-+    }
- 
--/*
-- * Called from virtio_scsi_do_one_tmf_bh() in main loop thread. The main loop
-- * thread cannot touch the virtqueue since that could race with an IOThread.
-- */
--static void virtio_scsi_complete_req_from_main_loop(VirtIOSCSIReq *req)
--{
--    VirtIOSCSI *s = req->dev;
-+    virtqueue_detach_element(req->vq, &req->elem, 0);
- 
--    if (!s->ctx || s->ctx == qemu_get_aio_context()) {
--        /* No need to schedule a BH when there is no IOThread */
--        virtio_scsi_complete_req(req);
--    } else {
--        /* Run request completion in the IOThread */
--        aio_wait_bh_oneshot(s->ctx, virtio_scsi_complete_req_bh, req);
-+    if (vq_lock) {
-+        qemu_mutex_unlock(vq_lock);
-     }
--}
- 
--static void virtio_scsi_bad_req(VirtIOSCSIReq *req)
--{
--    virtio_error(VIRTIO_DEVICE(req->dev), "wrong size for virtio-scsi headers");
--    virtqueue_detach_element(req->vq, &req->elem, 0);
-     virtio_scsi_free_req(req);
- }
- 
-@@ -235,12 +230,21 @@ static int virtio_scsi_parse_req(VirtIOSCSIReq *req,
-     return 0;
- }
- 
--static VirtIOSCSIReq *virtio_scsi_pop_req(VirtIOSCSI *s, VirtQueue *vq)
-+static VirtIOSCSIReq *virtio_scsi_pop_req(VirtIOSCSI *s, VirtQueue *vq, QemuMutex *vq_lock)
- {
-     VirtIOSCSICommon *vs = (VirtIOSCSICommon *)s;
-     VirtIOSCSIReq *req;
- 
-+    if (vq_lock) {
-+        qemu_mutex_lock(vq_lock);
-+    }
-+
-     req = virtqueue_pop(vq, sizeof(VirtIOSCSIReq) + vs->cdb_size);
-+
-+    if (vq_lock) {
-+        qemu_mutex_unlock(vq_lock);
-+    }
-+
-     if (!req) {
-         return NULL;
-     }
-@@ -305,7 +309,7 @@ static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
- 
-         trace_virtio_scsi_tmf_resp(virtio_scsi_get_lun(req->req.tmf.lun),
-                                    req->req.tmf.tag, req->resp.tmf.response);
--        virtio_scsi_complete_req(req);
-+        virtio_scsi_complete_req(req, &req->dev->ctrl_lock);
-     }
-     g_free(n);
- }
-@@ -361,7 +365,7 @@ static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
- 
- out:
-     object_unref(OBJECT(d));
--    virtio_scsi_complete_req_from_main_loop(req);
-+    virtio_scsi_complete_req(req, &s->ctrl_lock);
- }
- 
- /* Some TMFs must be processed from the main loop thread */
-@@ -408,7 +412,7 @@ static void virtio_scsi_reset_tmf_bh(VirtIOSCSI *s)
- 
-         /* SAM-6 6.3.2 Hard reset */
-         req->resp.tmf.response = VIRTIO_SCSI_S_TARGET_FAILURE;
--        virtio_scsi_complete_req(req);
-+        virtio_scsi_complete_req(req, &req->dev->ctrl_lock);
-     }
- }
- 
-@@ -562,7 +566,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
- 
-     if (iov_to_buf(req->elem.out_sg, req->elem.out_num, 0,
-                 &type, sizeof(type)) < sizeof(type)) {
--        virtio_scsi_bad_req(req);
-+        virtio_scsi_bad_req(req, &s->ctrl_lock);
-         return;
-     }
- 
-@@ -570,7 +574,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
-     if (type == VIRTIO_SCSI_T_TMF) {
-         if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICtrlTMFReq),
-                     sizeof(VirtIOSCSICtrlTMFResp)) < 0) {
--            virtio_scsi_bad_req(req);
-+            virtio_scsi_bad_req(req, &s->ctrl_lock);
-             return;
-         } else {
-             r = virtio_scsi_do_tmf(s, req);
-@@ -580,7 +584,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
-                type == VIRTIO_SCSI_T_AN_SUBSCRIBE) {
-         if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICtrlANReq),
-                     sizeof(VirtIOSCSICtrlANResp)) < 0) {
--            virtio_scsi_bad_req(req);
-+            virtio_scsi_bad_req(req, &s->ctrl_lock);
-             return;
-         } else {
-             req->req.an.event_requested =
-@@ -600,7 +604,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
-                  type == VIRTIO_SCSI_T_AN_SUBSCRIBE)
-             trace_virtio_scsi_an_resp(virtio_scsi_get_lun(req->req.an.lun),
-                                       req->resp.an.response);
--        virtio_scsi_complete_req(req);
-+        virtio_scsi_complete_req(req, &s->ctrl_lock);
-     } else {
-         assert(r == -EINPROGRESS);
-     }
-@@ -610,7 +614,7 @@ static void virtio_scsi_handle_ctrl_vq(VirtIOSCSI *s, VirtQueue *vq)
- {
-     VirtIOSCSIReq *req;
- 
--    while ((req = virtio_scsi_pop_req(s, vq))) {
-+    while ((req = virtio_scsi_pop_req(s, vq, &s->ctrl_lock))) {
-         virtio_scsi_handle_ctrl_req(s, req);
-     }
- }
-@@ -654,7 +658,7 @@ static void virtio_scsi_complete_cmd_req(VirtIOSCSIReq *req)
-      * in virtio_scsi_command_complete.
-      */
-     req->resp_size = sizeof(VirtIOSCSICmdResp);
--    virtio_scsi_complete_req(req);
-+    virtio_scsi_complete_req(req, NULL);
- }
- 
- static void virtio_scsi_command_failed(SCSIRequest *r)
-@@ -788,7 +792,7 @@ static int virtio_scsi_handle_cmd_req_prepare(VirtIOSCSI *s, VirtIOSCSIReq *req)
-             virtio_scsi_fail_cmd_req(req);
-             return -ENOTSUP;
-         } else {
--            virtio_scsi_bad_req(req);
-+            virtio_scsi_bad_req(req, NULL);
-             return -EINVAL;
-         }
-     }
-@@ -843,7 +847,7 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
-             virtio_queue_set_notification(vq, 0);
-         }
- 
--        while ((req = virtio_scsi_pop_req(s, vq))) {
-+        while ((req = virtio_scsi_pop_req(s, vq, NULL))) {
-             ret = virtio_scsi_handle_cmd_req_prepare(s, req);
-             if (!ret) {
-                 QTAILQ_INSERT_TAIL(&reqs, req, next);
-@@ -973,7 +977,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
-         return;
-     }
- 
--    req = virtio_scsi_pop_req(s, vs->event_vq);
-+    req = virtio_scsi_pop_req(s, vs->event_vq, &s->event_lock);
-     if (!req) {
-         s->events_dropped = true;
-         return;
-@@ -985,7 +989,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
-     }
- 
-     if (virtio_scsi_parse_req(req, 0, sizeof(VirtIOSCSIEvent))) {
--        virtio_scsi_bad_req(req);
-+        virtio_scsi_bad_req(req, &s->event_lock);
-         return;
-     }
- 
-@@ -1005,7 +1009,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
-     }
-     trace_virtio_scsi_event(virtio_scsi_get_lun(evt->lun), event, reason);
- 
--    virtio_scsi_complete_req(req);
-+    virtio_scsi_complete_req(req, &s->event_lock);
- }
- 
- static void virtio_scsi_handle_event_vq(VirtIOSCSI *s, VirtQueue *vq)
-@@ -1236,6 +1240,8 @@ static void virtio_scsi_device_realize(DeviceState *dev, Error **errp)
-     Error *err = NULL;
- 
-     QTAILQ_INIT(&s->tmf_bh_list);
-+    qemu_mutex_init(&s->ctrl_lock);
-+    qemu_mutex_init(&s->event_lock);
-     qemu_mutex_init(&s->tmf_bh_lock);
- 
-     virtio_scsi_common_realize(dev,
-@@ -1280,6 +1286,8 @@ static void virtio_scsi_device_unrealize(DeviceState *dev)
-     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
-     virtio_scsi_common_unrealize(dev);
-     qemu_mutex_destroy(&s->tmf_bh_lock);
-+    qemu_mutex_destroy(&s->event_lock);
-+    qemu_mutex_destroy(&s->ctrl_lock);
- }
- 
- static const Property virtio_scsi_properties[] = {
--- 
-2.48.1
-
+Phil.
 
