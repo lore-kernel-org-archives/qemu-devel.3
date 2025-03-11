@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 054A7C282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3EDC28B30
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 14:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts0Mj-0005Yg-72; Tue, 11 Mar 2025 10:13:53 -0400
+	id 1ts0MZ-0004bW-U6; Tue, 11 Mar 2025 10:13:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ts0Mg-0005Ly-PB; Tue, 11 Mar 2025 10:13:50 -0400
+ id 1ts0MV-0004IA-Rw; Tue, 11 Mar 2025 10:13:39 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ts0Me-00077k-Nx; Tue, 11 Mar 2025 10:13:50 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZBwdp1tZcz6D9r2;
- Tue, 11 Mar 2025 22:10:38 +0800 (CST)
+ id 1ts0MT-00076B-Qr; Tue, 11 Mar 2025 10:13:39 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZBwfG61yfz6D8cT;
+ Tue, 11 Mar 2025 22:11:02 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 211F3140CF4;
- Tue, 11 Mar 2025 22:13:45 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 6EC7A140B63;
+ Tue, 11 Mar 2025 22:13:35 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.203.177.241) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 11 Mar 2025 15:13:37 +0100
+ 15.1.2507.39; Tue, 11 Mar 2025 15:13:28 +0100
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
  <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
  <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [RFC PATCH v2 12/20] hw/arm/smmuv3-accel: Return sysmem if stage-1 is
- bypassed
-Date: Tue, 11 Mar 2025 14:10:37 +0000
-Message-ID: <20250311141045.66620-13-shameerali.kolothum.thodi@huawei.com>
+Subject: [RFC PATCH v2 11/20] hw/arm/smmuv3-accel: Allocate a vDEVICE object
+ for device
+Date: Tue, 11 Mar 2025 14:10:36 +0000
+Message-ID: <20250311141045.66620-12-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
 References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
@@ -75,103 +75,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nicolin Chen <nicolinc@nvidia.com>
 
-When nested translation is enabled, there are 2-stage translation
-occuring to two different address spaces: stage-1 in the iommu as,
-while stage-2 in the system as.
-
-If a device attached to the vSMMU doesn't enable stage-1 translation,
-e.g. vSTE sets to Config=Bypass, the system as should be returned,
-so QEMU can set up system memory mappings onto the stage-2 page table.
-This is crucial for an iommufd enabled VFIO device as the VFIO core
-code would register an iommu notifier and replay the address space
-which should be bypassed for this nested translation case.
+Allocate and associate a vDEVICE object for the Guest device
+with the vIOMMU. This will help the kernel to do the
+vSID --> sid translation whenever required (eg: device specific
+invalidations).
 
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- hw/arm/smmuv3-accel.c         | 22 +++++++++++++++++++++-
- include/hw/arm/smmuv3-accel.h |  3 +++
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ hw/arm/smmuv3-accel.c         | 22 ++++++++++++++++++++++
+ include/hw/arm/smmuv3-accel.h |  6 ++++++
+ 2 files changed, 28 insertions(+)
 
 diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 056bd23b2e..76134d106a 100644
+index d3a5cf9551..056bd23b2e 100644
 --- a/hw/arm/smmuv3-accel.c
 +++ b/hw/arm/smmuv3-accel.c
-@@ -18,6 +18,7 @@
- static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *s, SMMUPciBus *sbus,
-                                                 PCIBus *bus, int devfn)
- {
-+    SMMUv3AccelState *s_accel = ARM_SMMUV3_ACCEL(s);
-     SMMUDevice *sdev = sbus->pbdev[devfn];
-     SMMUv3AccelDevice *accel_dev;
- 
-@@ -29,6 +30,8 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *s, SMMUPciBus *sbus,
- 
-         sbus->pbdev[devfn] = sdev;
-         smmu_init_sdev(s, sdev, bus, devfn);
-+        address_space_init(&accel_dev->as_sysmem, &s_accel->root,
-+                           "smmuv3-accel-sysmem");
-     }
- 
-     return accel_dev;
-@@ -351,12 +354,23 @@ static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
-     SMMUPciBus *sbus;
-     SMMUv3AccelDevice *accel_dev;
-     SMMUDevice *sdev;
-+    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
-+    bool has_iommufd = false;
-+
-+    if (pdev) {
-+        has_iommufd = object_property_find(OBJECT(pdev), "iommufd");
-+    }
- 
-     sbus = smmu_get_sbus(s, bus);
-     accel_dev = smmuv3_accel_get_dev(s, sbus, bus, devfn);
-     sdev = &accel_dev->sdev;
- 
--    return &sdev->as;
-+    /* Return the system as if the device uses stage-2 only */
-+    if (has_iommufd && !accel_dev->s1_hwpt) {
-+        return &accel_dev->as_sysmem;
-+    } else {
-+        return &sdev->as;
-+    }
- }
- 
- static int smmuv3_accel_pxb_pcie_bus(Object *obj, void *opaque)
-@@ -390,6 +404,12 @@ static void smmu_accel_realize(DeviceState *d, Error **errp)
-         error_propagate(errp, local_err);
+@@ -109,6 +109,20 @@ void smmuv3_accel_install_nested_ste(SMMUDevice *sdev, int sid)
          return;
      }
+ 
++    if (!accel_dev->vdev && accel_dev->idev) {
++        SMMUVdev *vdev;
++        uint32_t vdev_id;
++        SMMUViommu *viommu = accel_dev->viommu;
 +
-+    memory_region_init(&s_accel->root, OBJECT(s_accel), "root", UINT64_MAX);
-+    memory_region_init_alias(&s_accel->sysmem, OBJECT(s_accel),
-+                             "smmuv3-accel-sysmem", get_system_memory(), 0,
-+                             memory_region_size(get_system_memory()));
-+    memory_region_add_subregion(&s_accel->root, 0, &s_accel->sysmem);
-     bs->get_address_space = smmuv3_accel_find_add_as;
-     bs->set_iommu_device = smmuv3_accel_set_iommu_device;
-     bs->unset_iommu_device = smmuv3_accel_unset_iommu_device;
++        iommufd_backend_alloc_vdev(viommu->core.iommufd, accel_dev->idev->devid,
++                                   viommu->core.viommu_id, sid, &vdev_id,
++                                   &error_abort);
++        vdev = g_new0(SMMUVdev, 1);
++        vdev->vdev_id = vdev_id;
++        vdev->sid = sid;
++        accel_dev->vdev = vdev;
++    }
++
+     ret = smmu_find_ste(sdev->smmu, sid, &ste, &event);
+     if (ret) {
+         /*
+@@ -283,6 +297,7 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+                                             int devfn)
+ {
++    SMMUVdev *vdev;
+     SMMUDevice *sdev;
+     SMMUv3AccelDevice *accel_dev;
+     SMMUViommu *viommu;
+@@ -312,6 +327,13 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+     trace_smmuv3_accel_unset_iommu_device(devfn, smmu_get_sid(sdev));
+ 
+     viommu = s_accel->viommu;
++    vdev = accel_dev->vdev;
++    if (vdev) {
++        iommufd_backend_free_id(viommu->iommufd, vdev->vdev_id);
++        g_free(vdev);
++        accel_dev->vdev = NULL;
++    }
++
+     if (QLIST_EMPTY(&viommu->device_list)) {
+         iommufd_backend_free_id(viommu->iommufd, viommu->bypass_hwpt_id);
+         iommufd_backend_free_id(viommu->iommufd, viommu->abort_hwpt_id);
 diff --git a/include/hw/arm/smmuv3-accel.h b/include/hw/arm/smmuv3-accel.h
-index 54b217ab4f..58e68534c0 100644
+index d6b0b1ca30..54b217ab4f 100644
 --- a/include/hw/arm/smmuv3-accel.h
 +++ b/include/hw/arm/smmuv3-accel.h
-@@ -51,12 +51,15 @@ typedef struct SMMUv3AccelDevice {
+@@ -35,6 +35,11 @@ typedef struct SMMUViommu {
+     QLIST_ENTRY(SMMUViommu) next;
+ } SMMUViommu;
+ 
++typedef struct SMMUVdev {
++    uint32_t vdev_id;
++    uint32_t sid;
++} SMMUVdev;
++
+ typedef struct SMMUS1Hwpt {
+     IOMMUFDBackend *iommufd;
+     uint32_t hwpt_id;
+@@ -45,6 +50,7 @@ typedef struct SMMUv3AccelDevice {
+     HostIOMMUDeviceIOMMUFD *idev;
      SMMUS1Hwpt  *s1_hwpt;
      SMMUViommu *viommu;
-     SMMUVdev   *vdev;
-+    AddressSpace as_sysmem;
++    SMMUVdev   *vdev;
      QLIST_ENTRY(SMMUv3AccelDevice) next;
  } SMMUv3AccelDevice;
  
- struct SMMUv3AccelState {
-     SMMUv3State smmuv3_state;
-     SMMUViommu *viommu;
-+    MemoryRegion root;
-+    MemoryRegion sysmem;
- };
- 
- struct SMMUv3AccelClass {
 -- 
 2.34.1
 
