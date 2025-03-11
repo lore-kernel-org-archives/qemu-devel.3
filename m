@@ -4,58 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F8A8C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 17:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E4CC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 17:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts3P7-000141-GP; Tue, 11 Mar 2025 13:28:33 -0400
+	id 1ts3ak-0002mh-Br; Tue, 11 Mar 2025 13:40:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1ts3P6-00013l-4S
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:28:32 -0400
-Received: from us-smtp-delivery-44.mimecast.com ([207.211.30.44])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1ts3P1-0004uD-7u
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:28:31 -0400
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-Qg9C9pbnMey9EL7fbK8dmQ-1; Tue,
- 11 Mar 2025 13:28:16 -0400
-X-MC-Unique: Qg9C9pbnMey9EL7fbK8dmQ-1
-X-Mimecast-MFC-AGG-ID: Qg9C9pbnMey9EL7fbK8dmQ_1741714095
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02AA01956083; Tue, 11 Mar 2025 17:28:15 +0000 (UTC)
-Received: from bahia.redhat.com (unknown [10.44.32.85])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3CD361944F12; Tue, 11 Mar 2025 17:28:10 +0000 (UTC)
-From: Greg Kurz <groug@kaod.org>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Greg Kurz <groug@kaod.org>
-Subject: [PATCH v2 0/6] 9pfs: Fix ftruncate-after-unlink
-Date: Tue, 11 Mar 2025 18:28:03 +0100
-Message-ID: <20250311172809.250913-1-groug@kaod.org>
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ts3aS-0002ZJ-Kl
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:40:17 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ts3aE-0007Kp-T4
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 13:40:14 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2ff6a98c638so10939926a91.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 10:39:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741714790; x=1742319590; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IulK9oSX1fmlHAF2PB0d2Tk0XU1yXWYTsZ0D9dWgkCk=;
+ b=NjJwho1d6a3BYVkG8uZk+gXwBLnhQdS9gs2p4RgU9rRyUAiUenricYmLSeSa76wSiM
+ YIoN8psOhmQYs4tal2FElm/1k6Q9IwYb4tAcaAUTVeBygOyC7Qgc0ssyH5D7iS0aSsR3
+ EKLUKzPhajKPI9bo4CXVTG7DEb9ysD8FTSnqLWVMp9In+rFECXZVi2ueDP2b251eKv51
+ qD7VAWAw6EOYTjwCvnWoCWvkDzY5CCLwZBCmSKe3N632Jw8sM9Vpw6C4xyqMkfZi2R7Q
+ J/e8ICycDrCwhyjykWh6cXsbSsp6GEozXZyGsJIYif5emr9SyVBdKe2yEZ7Lena6eeac
+ Rw8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741714790; x=1742319590;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IulK9oSX1fmlHAF2PB0d2Tk0XU1yXWYTsZ0D9dWgkCk=;
+ b=a9Ipo5MBXL0yr82nCbRw4taoZMI1UVdTVRhtRmYW8oBBD5FByUiEZlFqqgz5tINfyc
+ gaKN7JYjPOOZoHz5hF0tfnF2dQu+9lXCEI2XpjYWUjHWJinItnWExB0bsJPwqmY0fZWT
+ FH/jaRnAPFI9HRCAGVzpFs3tpypapn0KrtoDj+x6pzKUVipg1LVrwwokZxQ0VtqMX2CD
+ cvorxMhsPA35/1veepjOAQDPuT7n+ppVq5D/ptCtpt2ATadQlMTkfckTtZGE6kAbMuO7
+ V5JGYRXMnb8scc4FUE1iq7mobtsgsBU2ZM55YGnfNEUwAtGg6/z3/lqzkhi+gTg0H6W0
+ hWJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIoiADGUimCEoibnjNtmXz0srpS5jCqxULgfFfIfYXA+DobBaFE/AQD4XyWulk2yQfSAqeSA/riM0i@nongnu.org
+X-Gm-Message-State: AOJu0YzcTTQ2sz2xdWuStFaHAQ1IUSBR/l2/FJ8PN1VzSGbclrDAeImH
+ 1CUL2H3sUAXGYt56ZCt+4rgYuQ1C7BA5Cs2O+4bydeGqPzhiTIF7J973RumCBqw=
+X-Gm-Gg: ASbGncsTjidjXAudp/avuR7X9r3K4/PDGRZpR4UkKb+XjGQsCcSNa4amrpFtrynzjWD
+ zKGDmNuXSQkPGbcKG76JUeOeBZ9hDim2/8XwtAmZRCV5B69vtnWivA5JpPX9Gw2aKPOECf9u12M
+ Z/pEyIdgtSm8p/svi9nzEbkPfVz1kX3VF8fb74BhBBjZ+hBwiX0b6PXKUvQH3T1nLHDIqi+D/HP
+ pQixsjV8lWOhJfm8N9ACSE7WN+SuOaNn9Iy/shkbb67waesV9+2AUR0KYbEu5+mrFh5TKWcPR/o
+ rCFyKIVDXF7L0r4a8G/uIYGXAxmHODeHb5TbMOMx+pxU/HcYO63e4+GitzWFB4A8tQ3SSW9PXv0
+ efWCAPc2x
+X-Google-Smtp-Source: AGHT+IFtUwoTgphZdxHED/xz+kHxBykcRSZJ7Lw2JMN9Wv5Od3oTPmsm1Y42/tjEXRSNVy9vWWKNag==
+X-Received: by 2002:a05:6a21:68a:b0:1f5:8eec:e50a with SMTP id
+ adf61e73a8af0-1f58eecec3amr6186663637.31.1741714790580; 
+ Tue, 11 Mar 2025 10:39:50 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-736dd702c4fsm4166211b3a.18.2025.03.11.10.39.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Mar 2025 10:39:50 -0700 (PDT)
+Message-ID: <3b8c9531-b770-4ab2-8c33-8d3bfce03eb6@linaro.org>
+Date: Tue, 11 Mar 2025 10:39:48 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: softfail client-ip=207.211.30.44; envelope-from=groug@kaod.org;
- helo=us-smtp-delivery-44.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/14] arm/cpu: Add sysreg definitions in cpu-sysregs.h
+To: Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+References: <20250311162824.199721-1-cohuck@redhat.com>
+ <20250311162824.199721-2-cohuck@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250311162824.199721-2-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,66 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU 9.2 already fixed the long standing limitation of failing fstat() on
-unlinked files. This series does something similar for ftruncate().
+On 3/11/25 09:28, Cornelia Huck wrote:
+> From: Eric Auger <eric.auger@redhat.com>
+> 
+> This new header contains macros that define aarch64 registers.
+> In a subsequent patch, this will be replaced by a more exhaustive
+> version that will be generated from linux arch/arm64/tools/sysreg
+> file. Those macros are sufficient to migrate the storage of those
+> ID regs from named fields in isar struct to an array cell.
+> 
+> [CH: reworked to use different structures]
+> [CH: moved accessors from the patches first using them to here,
+>       dropped interaction with writable registers, which will happen
+>       later]
+> [CH: use DEF magic suggested by rth]
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>   target/arm/cpu-sysregs.h     | 37 +++++++++++++++++++++++++++
+>   target/arm/cpu-sysregs.h.inc | 35 ++++++++++++++++++++++++++
+>   target/arm/cpu.h             | 49 ++++++++++++++++++++++++++++++++++++
+>   target/arm/cpu64.c           | 22 ++++++++++++++++
+>   4 files changed, 143 insertions(+)
+>   create mode 100644 target/arm/cpu-sysregs.h
+>   create mode 100644 target/arm/cpu-sysregs.h.inc
+> 
+> diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+> new file mode 100644
+> index 000000000000..b95320b5b595
+> --- /dev/null
+> +++ b/target/arm/cpu-sysregs.h
+> @@ -0,0 +1,37 @@
+> +#ifndef ARM_CPU_SYSREGS_H
 
-The following program can be straced inside the guest with a shared fs in
-passthrough mode over 9p2000.L.
+All new files should have a SPDX-License-Identifier tag.
 
-int main(void)
-{
-	struct stat st;
-	int fd = creat("./foo", 0000);
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-	ftruncate(fd, 100);
-	unlink("./foo");
-	ftruncate(fd, 1000);
-}
-
-Before :
-
-creat("./foo", 000)                     = 3
-ftruncate(3, 100)                       = -1 EACCES (Permission denied)
-unlink("./foo")                         = 0
-ftruncate(3, 1000)                      = -1 ENOENT (No such file or directory)
-
-After :
-
-creat("./foo", 000)                     = 3
-ftruncate(3, 100)                       = 0
-unlink("./foo")                         = 0
-ftruncate(3, 1000)                      = 0
-
-This v2 has a qtest as suggested by Christian Schoenebeck.
-
-Cheers,
-
---
-Greg
-
-Christian Schoenebeck (1):
-  tests/9p: add 'Tsetattr' request to test client
-
-Greg Kurz (5):
-  9pfs: local : Introduce local_fid_fd() helper
-  9pfs: Don't use file descriptors in core code
-  9pfs: Introduce ftruncate file op
-  9pfs: Introduce futimens file op
-  tests/9p: Test `Tsetattr` can truncate unlinked file
-
- fsdev/file-op-9p.h                    |  5 +++
- hw/9pfs/9p-local.c                    | 49 ++++++++++++++++++++-------
- hw/9pfs/9p-synth.c                    | 22 ++++++++++++
- hw/9pfs/9p-util.h                     |  1 +
- hw/9pfs/9p.c                          | 21 +++++++++---
- hw/9pfs/cofs.c                        | 37 ++++++++++++++++++++
- hw/9pfs/coth.h                        |  4 +++
- tests/qtest/libqos/virtio-9p-client.c | 49 +++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h | 34 +++++++++++++++++++
- tests/qtest/virtio-9p-test.c          |  9 +++++
- 10 files changed, 213 insertions(+), 18 deletions(-)
-
--- 
-2.48.1
-
+r~
 
