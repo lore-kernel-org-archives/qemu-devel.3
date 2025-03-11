@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C56C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E06C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzGc-0000DJ-Tj; Tue, 11 Mar 2025 09:03:31 -0400
+	id 1trzCp-0002Hj-3c; Tue, 11 Mar 2025 08:59:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzDM-0004Ff-Mc; Tue, 11 Mar 2025 09:00:13 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1trzCf-0001xO-3N; Tue, 11 Mar 2025 08:59:25 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzDD-00083P-3e; Tue, 11 Mar 2025 09:00:06 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2ff64550991so8238766a91.0; 
- Tue, 11 Mar 2025 05:59:56 -0700 (PDT)
+ id 1trzCb-0007wb-3v; Tue, 11 Mar 2025 08:59:24 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2ff694d2d4dso7752706a91.0; 
+ Tue, 11 Mar 2025 05:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741697993; x=1742302793; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741697958; x=1742302758; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LV73eZk7vJrbkDVPoyzfVDHfZQAl5NgriC87PEyH8zI=;
- b=jWBt3INKVyF7UbU/k3bt+TiuhMUSnDGqf5TVlgL0LdvsZ8iMEWMAmdsinuk5QixYzz
- 2div17Mvs61tdhVtZhgS9KNPEBfV990CgsjGYEuj7JEm7vol0f7cBG6hsB619V3hLNWh
- gQhx5yUfXdNHfZkAx0+kM0NVkor/HpzBSDOtUArEYPVmWVNI2RRpcDS7aS+9ajnfSh6M
- bysV2gOIhOEDTYTw3s1poY7UwMSvyK63sk8FlXXjVroibLhyhLvJD23AzrtVfAU/Ktf4
- wTL3e3qw7lpR72iU1z6Z7mg7GDtbWkGbG+QPQeZbD0uicOVr7ALlIhJJnDYBeTgvkjHK
- pBRQ==
+ bh=UE/0F1oCsxuW6Zn4Oxkfeuhf/dmH1J3omqaeTt273/s=;
+ b=ZOEbIlSBwYIwDAjkGnI+bqaFKpkjzdY4Mpe3ibd4e6N/zll+iFV11FaOXgIzrizC0j
+ MLlSNdUW/yDdciS4XJ4C6gcpDmDWvJvcVqqrVmDUW51qrGvSbLfAPMW8BHbBvswFIqme
+ d1ISZvKHNPmaB9WcfVQRGGhANCr5sv/WcU2P0yyG613xEVAYA6jKHZT0wcaoHA/mp1Zm
+ fEnYgKQ5IaFLNC6cPhXL669Yj9Fe0Oi/W0XQANwYRbeiIb0pPsb5bMUvEV7BJvf7nKL6
+ hV3XZvBHOCkB6KVVhD1e3C7/iEvU8FMrX4K0WTE+BugSWNwpMbp+qqQsKeU2roCgmHKh
+ nOUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741697993; x=1742302793;
+ d=1e100.net; s=20230601; t=1741697958; x=1742302758;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LV73eZk7vJrbkDVPoyzfVDHfZQAl5NgriC87PEyH8zI=;
- b=auihO09VU91kmmy1v9Yq0DXr6eaWuH4S7w4rgt7/qc/LWgRVCkMLHNR5UE58Q5t3HX
- rfN7iISiGrtlwjLXS2Q+lZtmd70wDawu3wULmqO0JPILSpH2QrV+Rh6CQg2/Mrw+TeuX
- TE+NWmb1G72AaGzgFQ+tBHSRGpXF0XL651adtJQ8ijCBYFDzZuIaqQWWuem59YXDSDC1
- c5M8R/NBuET55nHDn6pWcC5yfF86/NkEm3I1kJJLoNeqj52bdNBDQsQfcIevy0w6xGX5
- odEu7FNNsufMsiIVHbj9RU0AWqLw4AEfw42MXqsY3JfGITIDUmPfZxD9vCwIKd1qXOKX
- 9Tsw==
+ bh=UE/0F1oCsxuW6Zn4Oxkfeuhf/dmH1J3omqaeTt273/s=;
+ b=APUy/yphjyajt1U1wxsfe0YJ72m/loaFD6+K+D5LHo8ahVQfmmaDdN8gko+bMzdGa0
+ rJ1Ow6l4ZLhlwRd1VpB0nX+/VOI4Uhg4gVljoAtjOW6Vw+tWBrK1zt4YACXQ2cDRPEC/
+ HpECOCYZrvwLFZpCZKfK+9pKLLm8VKMWiF5GkR5iy+9yvdGVd/AyOmkV7KPtVX3P0wU6
+ M3lPp0Q+J5yw/2y9O2pzCRLYF+6RTKkCFXNBpEEaLmM7/ZBMaGbegBV8UhThZpIhoo24
+ wmS9XVWDQ7u10j4MKuVdNTg6jE7hPTGWFZYsKE/Ne0Yj/mTGqIVXP8Ihr8JOe+bnqNNj
+ GAgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLSOCr4j/vBgZgzL2D+HO7xgGNJq3t+UgWrxYMsh0HNi746naG/tnJt2KYdp+FpOejZOiY1BMCEg==@nongnu.org
-X-Gm-Message-State: AOJu0YzSF0WH2jeWY9bJfxNjgNxTCfXrSWLBx7C6ghbpDqswBYESe8zv
- EdC0nv8Y+Do2hYntT1xDd4PNhCrEW3Dl2Xkto4QOzua6LWvG5xcA48M7WA==
-X-Gm-Gg: ASbGncs0wJhV9xfnocayeo/yxbX1yP/gXqEkPONlVwDknf0miFkIZNNjjuC2pl9af2t
- sGVp1DPw61Rxq7uhz6EWh2FnJ1YgYWw3uzuEhQSrq72kXLq+3X4gBwVe8VK6zCd6TeUIny1uB6h
- lDyD2gT9sIRX7prxMIfLCkarUzDr4i0AH1PX8m9rUz+8/SfeUiNktKJQ7j1fuJ/wDSwQMoQ+jLK
- oMWE+n5SnAbmMI8CFWBx/Tca+qForEchMRe3JsAglz+K0iAAgQugGd+2lXwfajvQIhZ09v7mtuR
- NC20cXp5cXDBiW2xtRpI9Rv+16RaUdBmQDZhzzcYknO701aOdFk=
-X-Google-Smtp-Source: AGHT+IEzdBJbCY0edAKOTyoyZsqDTvJiP3s6ENrxFsqCZXVRPsMQugUOTEY1T9ttRK/0wTha6xJnaA==
-X-Received: by 2002:a17:90b:1a8c:b0:2ee:94d1:7a89 with SMTP id
- 98e67ed59e1d1-2ff7ce6f36emr24072499a91.1.1741697993428; 
- Tue, 11 Mar 2025 05:59:53 -0700 (PDT)
+ AJvYcCUCO/zHWT+7g8jSm/wN9QK+SWAE81womiU5pi7CMUWHQjIjzrIbv8/uB98DM3ARLqdYEmmnwC4xhg==@nongnu.org
+X-Gm-Message-State: AOJu0YzvQ9Qf5XE8NIqc+eyNAmieBWdA78baRbQ1V1r6HN3pBXqw7GiZ
+ kRy6kgdk27xze3zilEDHTZOJyOXudYyzLdTDMRgWRlHq5S90PluQYA42uQ==
+X-Gm-Gg: ASbGncuUlmoRcr1IrkSQ1favtSNMPl5Gebb2jvC2UnJ8mL2cZ1l4ciVeMA+JQsVo6z6
+ /kvnHaitqPjB5StaegMML6yIly0NZCBEUXaydN+/n0dlyGx5+XwSxW4Lj36Fjmctv90dAscZ1tu
+ NWbia+WrfZjbJUlwKoQbLDKeyhEkHj5lm5SypPRt6GppktttbCBemgGRMsEFx4VMcUUfrMMG3d/
+ 6G3eKvHfieZzsF5Pgy0tQW3dtRP/bmnrb6T+kjWfcf9bL7S+bzUY2zkMiFTQM3XowEI4/xIfzP9
+ h/gDiqmN4Wx/luuuzYyFI9ggioL+GuhnS5TBpFgTcypeB0Hw3pU=
+X-Google-Smtp-Source: AGHT+IHiRLIIZjbcAFAK0jHHweWIKArYV/YLTbEn2bwKu3i8Mg4V2J0vjSwg8413tKV8DzxxyzIYNQ==
+X-Received: by 2002:a17:90b:3887:b0:2fe:80cb:ac05 with SMTP id
+ 98e67ed59e1d1-2ff7ce7ac2bmr28535031a91.9.1741697957658; 
+ Tue, 11 Mar 2025 05:59:17 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.50
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 05:59:53 -0700 (PDT)
+ Tue, 11 Mar 2025 05:59:17 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Frederic Barrat <fbarrat@linux.ibm.com>,
- Michael Kowal <kowal@linux.ibm.com>
-Subject: [PULL 28/72] ppc/xive2: Process group backlog when pushing an OS
- context
-Date: Tue, 11 Mar 2025 22:57:22 +1000
-Message-ID: <20250311125815.903177-29-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 15/72] ppc/pnv/occ: Implement a basic dynamic OCC model
+Date: Tue, 11 Mar 2025 22:57:09 +1000
+Message-ID: <20250311125815.903177-16-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,147 +99,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+The OCC is an On Chip Controller that handles various thermal and power
+management. It is a PPC405 microcontroller that runs its own firmware
+which is out of scope of the powernv machine model. Some dynamic
+behaviour and interfaces that are important for host CPU testing can be
+implemented with a much simpler state machine.
 
-When pushing an OS context, we were already checking if there was a
-pending interrupt in the IPB and sending a notification if needed.  We
-also need to check if there is a pending group interrupt stored in the
-NVG table. To avoid useless backlog scans, we only scan if the NVP
-belongs to a group.
+This change adds a 100ms timer that ticks through a simple state machine
+that looks for "OCC command requests" coming from host firmware, and
+responds to them.
 
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+For now the powercap command is implemented because that is used by
+OPAL and exported to Linux and is easy to test.
+
+  $ F=/sys/firmware/opal/powercap/system-powercap/powercap-current
+  $ cat $F
+  100
+  $ echo 50 | sudo tee $F
+  50
+  $ cat $F
+  50
+
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive2.c | 97 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+ hw/ppc/pnv_occ.c         | 146 +++++++++++++++++++++++++++++++++++++++
+ include/hw/ppc/pnv_occ.h |   3 +
+ 2 files changed, 149 insertions(+)
 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 44d891f1f6..2fa7b90669 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -279,6 +279,85 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
-     end->w1 = xive_set_field32(END2_W1_PAGE_OFF, end->w1, qindex);
+diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+index 34decb1700..d9ce35a4d6 100644
+--- a/hw/ppc/pnv_occ.c
++++ b/hw/ppc/pnv_occ.c
+@@ -35,6 +35,7 @@
+ #define OCB_OCI_OCCMISC_AND     0x4021
+ #define OCB_OCI_OCCMISC_OR      0x4022
+ #define   OCCMISC_PSI_IRQ       PPC_BIT(0)
++#define   OCCMISC_IRQ_SHMEM     PPC_BIT(3)
+ 
+ /* OCC sensors */
+ #define OCC_SENSOR_DATA_BLOCK_OFFSET          0x0000
+@@ -67,6 +68,11 @@ static void pnv_occ_set_misc(PnvOCC *occ, uint64_t val)
+     qemu_set_irq(occ->psi_irq, !!(val & OCCMISC_PSI_IRQ));
  }
  
-+/*
-+ * Scan the group chain and return the highest priority and group
-+ * level of pending group interrupts.
-+ */
-+static uint8_t xive2_presenter_backlog_scan(XivePresenter *xptr,
-+                                            uint8_t nvp_blk, uint32_t nvp_idx,
-+                                            uint8_t first_group,
-+                                            uint8_t *out_level)
++static void pnv_occ_raise_msg_irq(PnvOCC *occ)
 +{
-+    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
-+    uint32_t nvgc_idx, mask;
-+    uint32_t current_level, count;
-+    uint8_t prio;
-+    Xive2Nvgc nvgc;
-+
-+    for (prio = 0; prio <= XIVE_PRIORITY_MAX; prio++) {
-+        current_level = first_group & 0xF;
-+
-+        while (current_level) {
-+            mask = (1 << current_level) - 1;
-+            nvgc_idx = nvp_idx & ~mask;
-+            nvgc_idx |= mask >> 1;
-+            qemu_log("fxb %s checking backlog for prio %d group idx %x\n",
-+                     __func__, prio, nvgc_idx);
-+
-+            if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVG %x/%x\n",
-+                              nvp_blk, nvgc_idx);
-+                return 0xFF;
-+            }
-+            if (!xive2_nvgc_is_valid(&nvgc)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n",
-+                              nvp_blk, nvgc_idx);
-+                return 0xFF;
-+            }
-+
-+            count = xive2_nvgc_get_backlog(&nvgc, prio);
-+            if (count) {
-+                *out_level = current_level;
-+                return prio;
-+            }
-+            current_level = xive_get_field32(NVGC2_W0_PGONEXT, nvgc.w0) & 0xF;
-+        }
-+    }
-+    return 0xFF;
++    pnv_occ_set_misc(occ, occ->occmisc | OCCMISC_PSI_IRQ | OCCMISC_IRQ_SHMEM);
 +}
 +
-+static void xive2_presenter_backlog_decr(XivePresenter *xptr,
-+                                         uint8_t nvp_blk, uint32_t nvp_idx,
-+                                         uint8_t group_prio,
-+                                         uint8_t group_level)
-+{
-+    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
-+    uint32_t nvgc_idx, mask, count;
-+    Xive2Nvgc nvgc;
-+
-+    group_level &= 0xF;
-+    mask = (1 << group_level) - 1;
-+    nvgc_idx = nvp_idx & ~mask;
-+    nvgc_idx |= mask >> 1;
-+
-+    if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVG %x/%x\n",
-+                      nvp_blk, nvgc_idx);
-+        return;
-+    }
-+    if (!xive2_nvgc_is_valid(&nvgc)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n",
-+                      nvp_blk, nvgc_idx);
-+        return;
-+    }
-+    count = xive2_nvgc_get_backlog(&nvgc, group_prio);
-+    if (!count) {
-+        return;
-+    }
-+    xive2_nvgc_set_backlog(&nvgc, group_prio, count - 1);
-+    xive2_router_write_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc);
-+}
-+
- /*
-  * XIVE Thread Interrupt Management Area (TIMA) - Gen2 mode
-  *
-@@ -588,9 +667,13 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
-                                    uint8_t nvp_blk, uint32_t nvp_idx,
-                                    bool do_restore)
+ static uint64_t pnv_occ_power8_xscom_read(void *opaque, hwaddr addr,
+                                           unsigned size)
  {
-+    XivePresenter *xptr = XIVE_PRESENTER(xrtr);
-     uint8_t ipb;
-     uint8_t backlog_level;
-+    uint8_t group_level;
-+    uint8_t first_group;
-     uint8_t backlog_prio;
-+    uint8_t group_prio;
-     uint8_t *regs = &tctx->regs[TM_QW1_OS];
-     Xive2Nvp nvp;
+@@ -281,6 +287,20 @@ static const TypeInfo pnv_occ_power10_type_info = {
+ };
  
-@@ -625,6 +708,20 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
-     backlog_prio = xive_ipb_to_pipr(ipb);
-     backlog_level = 0;
+ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp);
++static bool occ_model_tick(PnvOCC *occ);
++
++/* Relatively arbitrary */
++#define OCC_POLL_MS 100
++
++static void occ_state_machine_timer(void *opaque)
++{
++    PnvOCC *occ = opaque;
++    uint64_t next = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + OCC_POLL_MS;
++
++    if (occ_model_tick(occ)) {
++        timer_mod(&occ->state_machine_timer, next);
++    }
++}
  
-+    first_group = xive_get_field32(NVP2_W0_PGOFIRST, nvp.w0);
-+    if (first_group && regs[TM_LSMFB] < backlog_prio) {
-+        group_prio = xive2_presenter_backlog_scan(xptr, nvp_blk, nvp_idx,
-+                                                  first_group, &group_level);
-+        regs[TM_LSMFB] = group_prio;
-+        if (regs[TM_LGS] && group_prio < backlog_prio) {
-+            /* VP can take a group interrupt */
-+            xive2_presenter_backlog_decr(xptr, nvp_blk, nvp_idx,
-+                                         group_prio, group_level);
-+            backlog_prio = group_prio;
-+            backlog_level = group_level;
+ static void pnv_occ_realize(DeviceState *dev, Error **errp)
+ {
+@@ -306,6 +326,10 @@ static void pnv_occ_realize(DeviceState *dev, Error **errp)
+                           PNV_OCC_SENSOR_DATA_BLOCK_SIZE);
+ 
+     qdev_init_gpio_out(dev, &occ->psi_irq, 1);
++
++    timer_init_ms(&occ->state_machine_timer, QEMU_CLOCK_VIRTUAL,
++                  occ_state_machine_timer, occ);
++    timer_mod(&occ->state_machine_timer, OCC_POLL_MS);
+ }
+ 
+ static const Property pnv_occ_properties[] = {
+@@ -647,6 +671,27 @@ static bool occ_write_static_data(PnvOCC *occ,
+     return true;
+ }
+ 
++static bool occ_read_dynamic_data(PnvOCC *occ,
++                                  struct occ_dynamic_data *dynamic_data,
++                                  Error **errp)
++{
++    PnvOCCClass *poc = PNV_OCC_GET_CLASS(occ);
++    PnvHomer *homer = occ->homer;
++    hwaddr static_addr = homer->base + poc->opal_shared_memory_offset;
++    hwaddr dynamic_addr = static_addr + OPAL_DYNAMIC_DATA_OFFSET;
++    MemTxResult ret;
++
++    ret = address_space_read(&address_space_memory, dynamic_addr,
++                             MEMTXATTRS_UNSPECIFIED, dynamic_data,
++                             sizeof(*dynamic_data));
++    if (ret != MEMTX_OK) {
++        error_setg(errp, "OCC: cannot read OCC-OPAL dynamic data");
++        return false;
++    }
++
++    return true;
++}
++
+ static bool occ_write_dynamic_data(PnvOCC *occ,
+                                   struct occ_dynamic_data *dynamic_data,
+                                   Error **errp)
+@@ -668,6 +713,107 @@ static bool occ_write_dynamic_data(PnvOCC *occ,
+     return true;
+ }
+ 
++static bool occ_opal_send_response(PnvOCC *occ,
++                                   struct occ_dynamic_data *dynamic_data,
++                                   enum occ_response_status status,
++                                   uint8_t *data, uint16_t datalen)
++{
++    struct opal_command_buffer *cmd = &dynamic_data->cmd;
++    struct occ_response_buffer *rsp = &dynamic_data->rsp;
++
++    rsp->request_id = cmd->request_id;
++    rsp->cmd = cmd->cmd;
++    rsp->status = status;
++    rsp->data_size = cpu_to_be16(datalen);
++    if (datalen) {
++        memcpy(rsp->data, data, datalen);
++    }
++    if (!occ_write_dynamic_data(occ, dynamic_data, NULL)) {
++        return false;
++    }
++    /* Would be a memory barrier here */
++    rsp->flag = OCC_FLAG_RSP_READY;
++    cmd->flag = 0;
++    if (!occ_write_dynamic_data(occ, dynamic_data, NULL)) {
++        return false;
++    }
++
++    pnv_occ_raise_msg_irq(occ);
++
++    return true;
++}
++
++/* Returns error status */
++static bool occ_opal_process_command(PnvOCC *occ,
++                                     struct occ_dynamic_data *dynamic_data)
++{
++    struct opal_command_buffer *cmd = &dynamic_data->cmd;
++    struct occ_response_buffer *rsp = &dynamic_data->rsp;
++
++    if (rsp->flag == 0) {
++        /* Spend one "tick" in the in-progress state */
++        rsp->flag = OCC_FLAG_CMD_IN_PROGRESS;
++        return occ_write_dynamic_data(occ, dynamic_data, NULL);
++    } else if (rsp->flag != OCC_FLAG_CMD_IN_PROGRESS) {
++        return occ_opal_send_response(occ, dynamic_data,
++                                      OCC_RSP_INTERNAL_ERROR,
++                                      NULL, 0);
++    }
++
++    switch (cmd->cmd) {
++    case 0xD1: { /* SET_POWER_CAP */
++        uint16_t data;
++        if (be16_to_cpu(cmd->data_size) != 2) {
++            return occ_opal_send_response(occ, dynamic_data,
++                                          OCC_RSP_INVALID_CMD_DATA_LENGTH,
++                                          (uint8_t *)&dynamic_data->cur_pwr_cap,
++                                          2);
++        }
++        data = be16_to_cpu(*(uint16_t *)cmd->data);
++        if (data == 0) { /* clear power cap */
++            dynamic_data->pwr_cap_type = 0x00; /* none */
++            data = PCAP_MAX_POWER_W;
++        } else {
++            dynamic_data->pwr_cap_type = 0x02; /* user set in-band */
++            if (data < PCAP_HARD_MIN_POWER_W) {
++                data = PCAP_HARD_MIN_POWER_W;
++            } else if (data > PCAP_MAX_POWER_W) {
++                data = PCAP_MAX_POWER_W;
++            }
++        }
++        dynamic_data->cur_pwr_cap = cpu_to_be16(data);
++        return occ_opal_send_response(occ, dynamic_data,
++                                      OCC_RSP_SUCCESS,
++                                      (uint8_t *)&dynamic_data->cur_pwr_cap, 2);
++    }
++
++    default:
++        return occ_opal_send_response(occ, dynamic_data,
++                                      OCC_RSP_INVALID_COMMAND,
++                                      NULL, 0);
++    }
++    g_assert_not_reached();
++}
++
++static bool occ_model_tick(PnvOCC *occ)
++{
++    struct occ_dynamic_data dynamic_data;
++
++    if (!occ_read_dynamic_data(occ, &dynamic_data, NULL)) {
++        /* Can't move OCC state field to safe because we can't map it! */
++        qemu_log("OCC: failed to read HOMER data, shutting down OCC\n");
++        return false;
++    }
++    if (dynamic_data.cmd.flag == OPAL_FLAG_CMD_READY) {
++        if (!occ_opal_process_command(occ, &dynamic_data)) {
++            qemu_log("OCC: failed to write HOMER data, shutting down OCC\n");
++            return false;
 +        }
 +    }
 +
-     /*
-      * Compute the PIPR based on the restored state.
-      * It will raise the External interrupt signal if needed.
++    return true;
++}
++
+ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
+ {
+     PnvOCCClass *poc = PNV_OCC_GET_CLASS(occ);
+diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
+index f994860980..3ec42de0ff 100644
+--- a/include/hw/ppc/pnv_occ.h
++++ b/include/hw/ppc/pnv_occ.h
+@@ -41,6 +41,9 @@ DECLARE_INSTANCE_CHECKER(PnvOCC, PNV10_OCC, TYPE_PNV10_OCC)
+ struct PnvOCC {
+     DeviceState xd;
+ 
++    /* OCC dynamic model is driven by this timer. */
++    QEMUTimer state_machine_timer;
++
+     /* OCC Misc interrupt */
+     uint64_t occmisc;
+ 
 -- 
 2.47.1
 
