@@ -4,76 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC9CC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C5DC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzdP-0002H7-Dg; Tue, 11 Mar 2025 09:27:04 -0400
+	id 1trzJP-0004Hz-4m; Tue, 11 Mar 2025 09:06:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzd6-0001r0-Pr
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:26:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzd0-0005BU-O3
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:26:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741699597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6u6rIEzeUsAlrV4pzWADYSFrJAIwCpUshbKF+5Fyp10=;
- b=V5RoYN/JW9LGb7azElx2PuotDfvSZ0UsTJ7b5HecvqdyIV4HL9jBKRKbn2kwfACv7I23Jv
- ACDCuruhLQ5uoMaYICeiGCGb7K7lV17qwqVrBW3wNA/jLHP8JWkUgnF3xGN5Hmw0NjIy04
- U2Dne/IkHovxnJsemrHOvJwdqVY4CUo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-J80qW3xaNSevFf1CL-77EA-1; Tue,
- 11 Mar 2025 09:26:33 -0400
-X-MC-Unique: J80qW3xaNSevFf1CL-77EA-1
-X-Mimecast-MFC-AGG-ID: J80qW3xaNSevFf1CL-77EA_1741699592
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43C77180AF6E; Tue, 11 Mar 2025 13:26:32 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.118])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DDB641955F0F; Tue, 11 Mar 2025 13:26:30 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzEZ-0005Vr-Qf; Tue, 11 Mar 2025 09:01:27 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzEV-0000G9-Uv; Tue, 11 Mar 2025 09:01:22 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2feb91a25bdso8350772a91.1; 
+ Tue, 11 Mar 2025 06:01:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741698078; x=1742302878; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wiqaFq1CDDEcKauctJ0QrZkvhAfYnv9s43KRAQPzSbk=;
+ b=jhN5LRDOEOV3/BwiWc7xG9BytRBVTP0ZlL/jGLUaSF+VH+NjQ2IGBj+MNMIYfJ1eKF
+ eMfajtBXpDfTz7oKMFjQDkqw5H1pbDr51u6+A+xkQtGahxcpklq0rokdj4n4MmSFoIRc
+ ch33CWZGwLkun6aT+S0EDiMedGFe6KdJRSI7woGBYFG+307+TXrm4FfU9cMAAERobeKs
+ L9vZYJL0ZfAquAXSK1lng1WgApIOPCKrFoGX82G1vy5FMz2FYDjlbI0bWApQfFfouwSR
+ Y4QEK5Wj8sG1C6zC19u6qhAZNX4eVDD6qtwIQnaDS/FzZm5OvvkxXzX96VtFHHJe60PW
+ lHUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741698078; x=1742302878;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wiqaFq1CDDEcKauctJ0QrZkvhAfYnv9s43KRAQPzSbk=;
+ b=Io7S9OMD1Mvf/Rq3JhlQQRxH9RxwbQM+StJ3GeIn10rfJ8jLR8zmST8CoSKDpV7jNG
+ p8mzjxM3LbFUVteuSf3TbOICxHci46UeaxOS4RESpafzlr0GVzxre4lI/hypT1V1Ku2I
+ y2YGHrkaE72SuS7zI2pZJ1XWSRNOSYBCFPRdln1u5anLyhhMSvF3mGKDuMWZrRpW7g/L
+ pFIAu+vOThTJfQbxgTwMSJuOJ8E9Axtokk7fQPFdHyyH6balnnQ+taPvhqDLEyALfOSF
+ qoJA7qGBaPDdC2J7A4QujqHCSnM/UN9k6dbfb6O7adXpV3rc840CY2LX8vatmHfFQEqS
+ 24Lg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXirWT0qS4NmR21+Ai/yLFBwAIpsQg/SK0rPnihKN3wJrT2xIIm9LrbCkpT/95Mkva9yugfpeJqqg==@nongnu.org
+X-Gm-Message-State: AOJu0YypYlDRJ575Th20UdME2b65WtMVAyE/IVVJCy4OMnl4hyeE//YQ
+ Xlev6bf8IZ7PB1RnZnGAQQr5k+WWUOAx7khgTj88ygkk2x9Lu7ME8Bhe2A==
+X-Gm-Gg: ASbGncvvMQn3bwt6Il2wUdrPKYwYbjG0VVF/uCEG/8nW4yBJXjJGLV+jGWQ1pi1b3hl
+ 94dOsRjr5eOxqBXODsNxn32iCOAlvM2kKoBZstHGLna1twtA+tECJnWj6zGFfz7rZIeYi/U0xOg
+ MAWAt/mPHizPeXUppKbSCln0MSH9mZcg7mWpKy/YdBmhhLDJWMi19H5gmc0D77CLOF3N/Om7O4j
+ 15AAZHH7QNwhYrXlLRaZrNffgbjspUkHE+WN1R7vyl9D6Fg0a60hBvurVS9sTbARenNfMEUb7iH
+ uvP+x8TeNaOP5tGtCAOrzPDd38mF4Fe7QTYXwopnDttMlx131Ck=
+X-Google-Smtp-Source: AGHT+IFZ4rCUZEjZpe1mFQo3aIobhNdwaD5QnMN0PnEvFwTHHvx+66sIohxoNQUv+G35Fntl0zu/OA==
+X-Received: by 2002:a17:90b:2742:b0:2fe:a8b1:7d8 with SMTP id
+ 98e67ed59e1d1-300ff34d643mr4832273a91.25.1741698077824; 
+ Tue, 11 Mar 2025 06:01:17 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 06:01:17 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- pkrempa@redhat.com, Fam Zheng <fam@euphon.net>, <qemu-block@nongnu.org>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v4 02/13] dma: use current AioContext for dma_blk_io()
-Date: Tue, 11 Mar 2025 21:26:05 +0800
-Message-ID: <20250311132616.1049687-3-stefanha@redhat.com>
-In-Reply-To: <20250311132616.1049687-1-stefanha@redhat.com>
-References: <20250311132616.1049687-1-stefanha@redhat.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 56/72] hw/ppc/spapr: Convert HPTE_DIRTY() macro as
+ hpte_is_dirty() method
+Date: Tue, 11 Mar 2025 22:57:50 +1000
+Message-ID: <20250311125815.903177-57-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
+References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,132 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the past a single AioContext was used for block I/O and it was
-fetched using blk_get_aio_context(). Nowadays the block layer supports
-running I/O from any AioContext and multiple AioContexts at the same
-time. Remove the dma_blk_io() AioContext argument and use the current
-AioContext instead.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This makes calling the function easier and enables multiple IOThreads to
-use dma_blk_io() concurrently for the same block device.
+Convert HPTE_DIRTY() macro as hpte_is_dirty() method.
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+sPAPR data structures including the hash page table are big-endian
+regardless of current CPU endian mode, so use the big-endian LD/ST
+API to access the hash PTEs.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-ID: <20241220213103.6314-4-philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/system/dma.h | 3 +--
- hw/ide/core.c        | 3 +--
- hw/ide/macio.c       | 3 +--
- hw/scsi/scsi-disk.c  | 6 ++----
- system/dma-helpers.c | 8 ++++----
- 5 files changed, 9 insertions(+), 14 deletions(-)
+ hw/ppc/spapr.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/dma.h b/include/system/dma.h
-index 5a49a30628..e142f7efa6 100644
---- a/include/system/dma.h
-+++ b/include/system/dma.h
-@@ -290,8 +290,7 @@ typedef BlockAIOCB *DMAIOFunc(int64_t offset, QEMUIOVector *iov,
-                               BlockCompletionFunc *cb, void *cb_opaque,
-                               void *opaque);
- 
--BlockAIOCB *dma_blk_io(AioContext *ctx,
--                       QEMUSGList *sg, uint64_t offset, uint32_t align,
-+BlockAIOCB *dma_blk_io(QEMUSGList *sg, uint64_t offset, uint32_t align,
-                        DMAIOFunc *io_func, void *io_func_opaque,
-                        BlockCompletionFunc *cb, void *opaque, DMADirection dir);
- BlockAIOCB *dma_blk_read(BlockBackend *blk,
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index f9baba59e9..b14983ec54 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -968,8 +968,7 @@ static void ide_dma_cb(void *opaque, int ret)
-                                            BDRV_SECTOR_SIZE, ide_dma_cb, s);
-         break;
-     case IDE_DMA_TRIM:
--        s->bus->dma->aiocb = dma_blk_io(blk_get_aio_context(s->blk),
--                                        &s->sg, offset, BDRV_SECTOR_SIZE,
-+        s->bus->dma->aiocb = dma_blk_io(&s->sg, offset, BDRV_SECTOR_SIZE,
-                                         ide_issue_trim, s, ide_dma_cb, s,
-                                         DMA_DIRECTION_TO_DEVICE);
-         break;
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index 5fe764b49b..c8e8e44cc9 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -187,8 +187,7 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
-                                            pmac_ide_transfer_cb, io);
-         break;
-     case IDE_DMA_TRIM:
--        s->bus->dma->aiocb = dma_blk_io(blk_get_aio_context(s->blk), &s->sg,
--                                        offset, 0x1, ide_issue_trim, s,
-+        s->bus->dma->aiocb = dma_blk_io(&s->sg, offset, 0x1, ide_issue_trim, s,
-                                         pmac_ide_transfer_cb, io,
-                                         DMA_DIRECTION_TO_DEVICE);
-         break;
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index caf6c1437f..f049a20275 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -487,8 +487,7 @@ static void scsi_do_read(SCSIDiskReq *r, int ret)
-     if (r->req.sg) {
-         dma_acct_start(s->qdev.conf.blk, &r->acct, r->req.sg, BLOCK_ACCT_READ);
-         r->req.residual -= r->req.sg->size;
--        r->req.aiocb = dma_blk_io(blk_get_aio_context(s->qdev.conf.blk),
--                                  r->req.sg, r->sector << BDRV_SECTOR_BITS,
-+        r->req.aiocb = dma_blk_io(r->req.sg, r->sector << BDRV_SECTOR_BITS,
-                                   BDRV_SECTOR_SIZE,
-                                   sdc->dma_readv, r, scsi_dma_complete, r,
-                                   DMA_DIRECTION_FROM_DEVICE);
-@@ -650,8 +649,7 @@ static void scsi_write_data(SCSIRequest *req)
-     if (r->req.sg) {
-         dma_acct_start(s->qdev.conf.blk, &r->acct, r->req.sg, BLOCK_ACCT_WRITE);
-         r->req.residual -= r->req.sg->size;
--        r->req.aiocb = dma_blk_io(blk_get_aio_context(s->qdev.conf.blk),
--                                  r->req.sg, r->sector << BDRV_SECTOR_BITS,
-+        r->req.aiocb = dma_blk_io(r->req.sg, r->sector << BDRV_SECTOR_BITS,
-                                   BDRV_SECTOR_SIZE,
-                                   sdc->dma_writev, r, scsi_dma_complete, r,
-                                   DMA_DIRECTION_TO_DEVICE);
-diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-index f6403242f5..6bad75876f 100644
---- a/system/dma-helpers.c
-+++ b/system/dma-helpers.c
-@@ -211,7 +211,7 @@ static const AIOCBInfo dma_aiocb_info = {
-     .cancel_async       = dma_aio_cancel,
- };
- 
--BlockAIOCB *dma_blk_io(AioContext *ctx,
-+BlockAIOCB *dma_blk_io(
-     QEMUSGList *sg, uint64_t offset, uint32_t align,
-     DMAIOFunc *io_func, void *io_func_opaque,
-     BlockCompletionFunc *cb,
-@@ -223,7 +223,7 @@ BlockAIOCB *dma_blk_io(AioContext *ctx,
- 
-     dbs->acb = NULL;
-     dbs->sg = sg;
--    dbs->ctx = ctx;
-+    dbs->ctx = qemu_get_current_aio_context();
-     dbs->offset = offset;
-     dbs->align = align;
-     dbs->sg_cur_index = 0;
-@@ -251,7 +251,7 @@ BlockAIOCB *dma_blk_read(BlockBackend *blk,
-                          QEMUSGList *sg, uint64_t offset, uint32_t align,
-                          void (*cb)(void *opaque, int ret), void *opaque)
- {
--    return dma_blk_io(blk_get_aio_context(blk), sg, offset, align,
-+    return dma_blk_io(sg, offset, align,
-                       dma_blk_read_io_func, blk, cb, opaque,
-                       DMA_DIRECTION_FROM_DEVICE);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index daf997cea1..dd81398445 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1414,7 +1414,11 @@ static bool hpte_is_valid(SpaprMachineState *s, unsigned index)
+     return ldq_be_p(hpte_get_ptr(s, index)) & HPTE64_V_VALID;
  }
-@@ -269,7 +269,7 @@ BlockAIOCB *dma_blk_write(BlockBackend *blk,
-                           QEMUSGList *sg, uint64_t offset, uint32_t align,
-                           void (*cb)(void *opaque, int ret), void *opaque)
- {
--    return dma_blk_io(blk_get_aio_context(blk), sg, offset, align,
-+    return dma_blk_io(sg, offset, align,
-                       dma_blk_write_io_func, blk, cb, opaque,
-                       DMA_DIRECTION_TO_DEVICE);
- }
+ 
+-#define HPTE_DIRTY(_hpte)  (tswap64(*((uint64_t *)(_hpte))) & HPTE64_V_HPTE_DIRTY)
++static bool hpte_is_dirty(SpaprMachineState *s, unsigned index)
++{
++    return ldq_be_p(hpte_get_ptr(s, index)) & HPTE64_V_HPTE_DIRTY;
++}
++
+ #define CLEAN_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) &= tswap64(~HPTE64_V_HPTE_DIRTY))
+ #define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
+ 
+@@ -2259,7 +2263,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+ 
+         /* Consume non-dirty HPTEs */
+         while ((index < htabslots)
+-               && !HPTE_DIRTY(hpte_get_ptr(spapr, index))) {
++               && !hpte_is_dirty(spapr, index)) {
+             index++;
+             examined++;
+         }
+@@ -2267,7 +2271,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+         chunkstart = index;
+         /* Consume valid dirty HPTEs */
+         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
+-               && HPTE_DIRTY(hpte_get_ptr(spapr, index))
++               && hpte_is_dirty(spapr, index)
+                && hpte_is_valid(spapr, index)) {
+             CLEAN_HPTE(hpte_get_ptr(spapr, index));
+             index++;
+@@ -2277,7 +2281,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+         invalidstart = index;
+         /* Consume invalid dirty HPTEs */
+         while ((index < htabslots) && (index - invalidstart < USHRT_MAX)
+-               && HPTE_DIRTY(hpte_get_ptr(spapr, index))
++               && hpte_is_dirty(spapr, index)
+                && !hpte_is_valid(spapr, index)) {
+             CLEAN_HPTE(hpte_get_ptr(spapr, index));
+             index++;
 -- 
-2.48.1
+2.47.1
 
 
