@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC39C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4573EC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxsG-0005rA-8P; Tue, 11 Mar 2025 07:34:16 -0400
+	id 1trxsh-0008Bx-1z; Tue, 11 Mar 2025 07:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqN-0003Bm-OC
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:20 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxsE-0005oG-Ed
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:34:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq4-0006Vf-12
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxs6-0006v8-PS
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:34:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692717;
+ s=mimecast20190719; t=1741692844;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JLZlz2uI650EPNnAM7UdPDCfQjGsEu2vAEr73jJzngE=;
- b=Z+OsSGmQ5QjLsxzVF3uSDzPkkKFrvS7/PiyYRgHaAVhDYRo8UzfGnv4DG1Z9EkOOGIEyxb
- 6tREk67FLd3SRgCBgHs48V9nsCWVXt8oJtd2W/+lbewVlwbUIoCdXJKS2+8tfNIqh4vTfe
- O3kHvJ4+aN5dxYR/TljQuLDY+zmG87Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=4+Z+s4Wlk9e7DaBkaSE8WMgOr8VXb4ioRLRxiSoSozA=;
+ b=HKOKIdcvQN1Jds3cbgXVCEy659/nLxzyAlN/GM8pW8cmF4AAdOBxIZnd/lXHwPEFv27wQj
+ ov3KTL4AkE5ZCA3bHHW6LDdomjYVzfzP+k0W2vIkIzzbp1rppkFc+wcpJ5ulFoEVhIPKRw
+ 4758j/lPQZ/terjyxKFwrwFRqQUtDGo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-pZMCyK4yMRenwaK5X38DGA-1; Tue,
- 11 Mar 2025 07:31:54 -0400
-X-MC-Unique: pZMCyK4yMRenwaK5X38DGA-1
-X-Mimecast-MFC-AGG-ID: pZMCyK4yMRenwaK5X38DGA_1741692713
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-N_IogstGNsaulcYw-5nQlQ-1; Tue,
+ 11 Mar 2025 07:32:03 -0400
+X-MC-Unique: N_IogstGNsaulcYw-5nQlQ-1
+X-Mimecast-MFC-AGG-ID: N_IogstGNsaulcYw-5nQlQ_1741692722
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84F0C1956080; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C32DB18001E2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2BF331801758; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 747CD19560AB
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0F21F21E64AA; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
+ id 9CA0B21E60E4; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, John Snow <jsnow@redhat.com>,
- Harmonie Snow <harmonie@gmail.com>
-Subject: [PULL 21/61] docs/qapi-domain: add :deprecated: directive option
-Date: Tue, 11 Mar 2025 12:30:57 +0100
-Message-ID: <20250311113137.1277125-22-armbru@redhat.com>
+Cc: stefanha@redhat.com,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL 58/61] docs: enable qapidoc transmogrifier for QEMU QMP
+ Reference
+Date: Tue, 11 Mar 2025 12:31:34 +0100
+Message-ID: <20250311113137.1277125-59-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -87,103 +89,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Although "deprecated" is a feature (and *will* appear in the features
-list), add a special :deprecated: option to generate an eye-catch that
-makes this information very hard to miss.
+We are not enabling the transmogrifier for QSD or QGA yet because we
+don't (yet) have a way to create separate indices, and all of the
+definitions will bleed together, which isn't so nice.
 
-The forthcoming Transmogrifier in qapidoc.py will add this option
-whenever it detects that the features list attached to a definition
-contains the "deprecated" entry.
+For now, QMP is better than nothing at all!
 
-P.S., I outsourced the CSS ;)
-
-Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-24-jsnow@redhat.com>
+Message-ID: <20250311034303.75779-62-jsnow@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx-static/theme_overrides.css | 25 +++++++++++++++++++++++++
- docs/sphinx/qapi_domain.py             | 26 ++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ docs/interop/qemu-qmp-ref.rst | 1 +
+ qapi/qapi-schema.json         | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
-index 965ecac54f..3765cab1b2 100644
---- a/docs/sphinx-static/theme_overrides.css
-+++ b/docs/sphinx-static/theme_overrides.css
-@@ -208,3 +208,28 @@ div[class^="highlight"] pre {
-         color: inherit;
-     }
- }
-+
-+/* QAPI domain theming */
-+
-+.qapi-infopips {
-+    margin-bottom: 1em;
-+}
-+
-+.qapi-infopip {
-+    display: inline-block;
-+    padding: 0em 0.5em 0em 0.5em;
-+    margin: 0.25em;
-+}
-+
-+.qapi-deprecated {
-+    background-color: #fffef5;
-+    border: solid #fff176 6px;
-+    font-weight: bold;
-+    padding: 8px;
-+    border-radius: 15px;
-+    margin: 5px;
-+}
-+
-+.qapi-deprecated::before {
-+    content: '⚠️ ';
-+}
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index b11300bc85..b672ae6c50 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -217,6 +217,7 @@ class QAPIObject(QAPIDescription):
-             "module": directives.unchanged,  # Override contextual module name
-             # These are QAPI originals:
-             "since": directives.unchanged,
-+            "deprecated": directives.flag,
-         }
-     )
+diff --git a/docs/interop/qemu-qmp-ref.rst b/docs/interop/qemu-qmp-ref.rst
+index f94614a0b2..e95eeac45e 100644
+--- a/docs/interop/qemu-qmp-ref.rst
++++ b/docs/interop/qemu-qmp-ref.rst
+@@ -7,3 +7,4 @@ QEMU QMP Reference Manual
+    :depth: 3
  
-@@ -280,6 +281,31 @@ def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
- 
-         return sig
- 
-+    def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
-+        # Add various eye-catches and things that go below the signature
-+        # bar, but precede the user-defined content.
-+        infopips = nodes.container()
-+        infopips.attributes["classes"].append("qapi-infopips")
-+
-+        def _add_pip(source: str, content: str, classname: str) -> None:
-+            node = nodes.container(source)
-+            node.append(nodes.Text(content))
-+            node.attributes["classes"].extend(["qapi-infopip", classname])
-+            infopips.append(node)
-+
-+        if "deprecated" in self.options:
-+            _add_pip(
-+                ":deprecated:",
-+                f"This {self.objtype} is deprecated.",
-+                "qapi-deprecated",
-+            )
-+
-+        if infopips.children:
-+            contentnode.insert(0, infopips)
-+
-+    def transform_content(self, content_node: addnodes.desc_content) -> None:
-+        self._add_infopips(content_node)
-+
- 
- class QAPICommand(QAPIObject):
-     """Description of a QAPI Command."""
+ .. qapi-doc:: qapi/qapi-schema.json
++   :transmogrify:
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index 2877aff73d..4475e81cc3 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -5,6 +5,8 @@
+ #
+ # This document describes all commands currently supported by QMP.
+ #
++# For locating a particular item, please see the `qapi-index`.
++#
+ # Most of the time their usage is exactly the same as in the user
+ # Monitor, this means that any other document which also describe
+ # commands (the manpage, QEMU's manual, etc) can and should be
 -- 
 2.48.1
 
