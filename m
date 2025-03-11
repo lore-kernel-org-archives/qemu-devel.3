@@ -4,93 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6737C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 270E5C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:26:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxeT-00077C-R0; Tue, 11 Mar 2025 07:20:02 -0400
+	id 1trxk1-0000aq-8W; Tue, 11 Mar 2025 07:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1trxeR-00076l-AU
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:19:59 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1trxeM-0003do-Ks
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:19:59 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2241053582dso3284485ad.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 04:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1741691987; x=1742296787; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kTDaSn2BJnCTUSUdjCs0GrYLXrKD7PhXl347fUhQTmQ=;
- b=c4F25vauA8Edm95QOWcobdOPRyguXRMknHbWUsh620uHSlLoNaLKiKkVO11ZMwKkJ4
- R/iKxHrlG6AjPLEq3cKYE0pjDHioYd8zJkIS92/NdnLOHsy80D5KrOant5GByW1xuA0I
- cUYSEpn//+ofq/jLQxxDy416jYwVxWscnvyNcoBXMRPWlq+h8x8F63PvoC+cXXAX8xC6
- Pj9MJGpYw4Btb4vAVChOT4IJ7l3EAWGT+9U1cV9pcb8ZjDOmsPcEOVKTXlvZ2c6hcBs+
- xExwnzclsIg/RQrgGQiHx82naZf60R17Prqs/E8GWTODmgQ54CAH4G0RRqXGC1USKs5T
- uyEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741691987; x=1742296787;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kTDaSn2BJnCTUSUdjCs0GrYLXrKD7PhXl347fUhQTmQ=;
- b=GQlctecisAqVJN3TZGjXA+pqMvlO1u3w4hqYpV4rrF4n7adPNM9agEstGnM0OmOA5e
- 8InGMSemwAPoyImkOaZEBe/MdVOaVYodqSM1ahQ/zzKeUzY5Q0JL3oAsotaufYfYivyF
- iddm+hXE6t4tS15g56/fqQVp/LwmloVy5SuJ9uVee8tSS0+ALCVzbE8XZFHs4iRCSpSX
- GauZGmQEfS0bNEM6m6j5W4pohm9pVhfvoAvuAF0aQKLMhARoy7fMlyOoTN0d7JAFBlDO
- z9/GvrGiX6r678dThmfwL43s5qV6KwxMld17RZzJDuZMbbBPSU1Pi9IH5KlUDMxzyAVs
- s8oA==
-X-Gm-Message-State: AOJu0YwU7HbpTFSK7ExzNXIGKEYKWPFqdz1iCuHkmlXBC1IXiZRu5tCH
- G7UL4yBKc78+h/ifKKOhZnmigC8Pt4OBzlMmbiVK10AJOFvFVPXf/IDODrpKPWCkTqqqH/+PwG5
- +
-X-Gm-Gg: ASbGncvPNYLO3ow28GYDF90v5fbJ6cJF77obJjfUngQVSGGTV135hnWg2o8P0ts4Tju
- Nkwp44WNH5fCi92Rus6z6Q3GpxOUtrP3gYUuTnyQel3ikN4e8efHlX9DYx6kDGigkqpm5Yb5EAd
- +F8YKWMGuhqqRHGz2M8JjLvUwktXf5eheIwJSjFN1XDlaBXeM3b8/PHSl5MdBZDF7g4MjJ9hmB1
- W9RPE2TgeRyUi63R6xD2/eljHtDtxp7qO2jNTsg+NDSYxR13zZAkVwDk81BRhvUoi1GOXNM4GRl
- G6ii6j7sYjHBupRyNIix13ljWlq5f6oeE/l4teXhfdFXM8zq9dg=
-X-Google-Smtp-Source: AGHT+IGHyHViJ+r0WI26+ma0eYV1ssUSJO3VM6iiqP2HwWnItfUlEDrwAdvPArY6mRq9MvbHI59Wzw==
-X-Received: by 2002:a17:903:40cb:b0:21f:85ee:f2df with SMTP id
- d9443c01a7336-2242888adfemr265256055ad.15.1741691987492; 
- Tue, 11 Mar 2025 04:19:47 -0700 (PDT)
-Received: from [10.3.43.196] ([61.213.176.10])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410aa5171sm95322485ad.225.2025.03.11.04.19.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 04:19:47 -0700 (PDT)
-Message-ID: <39c8618a-51fe-47d5-b9ab-b98b6ddeca1e@bytedance.com>
-Date: Tue, 11 Mar 2025 19:19:44 +0800
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1trxjy-0000aV-81
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:25:42 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1trxjr-0004ya-LM
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:25:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=+6Hs0jX012LzGMG0nwF2ftziDxnkubticlgkJM7A54k=; b=bY79mDRB7Q+p/uAdMHVzRaFxNG
+ O/oi66E/Eofzm5gAVkG9XpTj6/x4z7MbNMAurSpW7CzP53tpqIMsHI5r8ZllJZFMBgrA/RTUKn1tv
+ cgXifrjiGWyJUy50ya6+DXJA//0OvdTh0v3HznU+CnEW0htlGTXbI7XZb7S+uwGkj/UqYSaYGgYVn
+ 2b0v5/XiVvqJNKKRjqotZLgOZBbj2Ffxc9n6P9PkMkQTqTOLTLX1Hc9+sAXi3pMM/xUY8WW6r2rEc
+ L3/JXJg2vyyUuuay2NPXuQKu7lIIIQMW5BU6owinp/XdPqXdDQf6xhCwoKqu5MMiKRj/cbO0qzuJh
+ dvb615U7oS98JmhKsxRU+fwl9HVCBi4mArlVlYPlrtuIKwGxFC8gBe/dvaJsS69kwXi5AZslVE+Mb
+ nteU9yjBN6qHlVuhkckySKi0+8U1Oa74cXH1ZeQU+QOntnfq6mtIeMfyLhhVdjbDsE6auBngmtjYb
+ yqfCJ9C/p9zFx+94vRcs8N/beKOMSMMrfpBUErZ1hmr+U3L0QaNCYaUP7oXQg8kHxYJGAQzOFs3+l
+ 1/kAsf9GpSM4b135dgKe4g/XK+F/CXOaJMAzGJoDAOZBSZOsmWnuf9+NI2qASvAyTvASlYxNYdsXg
+ B1uxeqsKyHAD7ABfk4uFmDb4SDigAygm6VpYK3GXA=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>
+Subject: Re: [PATCH 4/4] 9pfs: Introduce futimens file op
+Date: Tue, 11 Mar 2025 12:25:32 +0100
+Message-ID: <2866105.kX3A4kTrED@silver>
+In-Reply-To: <20250310171101.138380-5-groug@kaod.org>
+References: <20250310171101.138380-1-groug@kaod.org>
+ <20250310171101.138380-5-groug@kaod.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Re: [RFC] Proposal for a QEMU video subsystem for cameras and
- webcams
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, David Milosevic <david.milosevic@9elements.com>
-Cc: qemu-devel@nongnu.org,
- Marcello Sylvester Bauer <marcello.bauer@9elements.com>
-References: <CAFUY6-d5GZSrDzD0vUEF6P4YnstMjx=G3Q77iFGLt3eBUf5WUA@mail.gmail.com>
- <87senk7rro.fsf@draig.linaro.org>
- <1cd5fa82-50db-418c-bd9e-ce6fda3c6ee4@redhat.com>
-Content-Language: en-US
-From: zhenwei pi <pizhenwei@bytedance.com>
-In-Reply-To: <1cd5fa82-50db-418c-bd9e-ce6fda3c6ee4@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pizhenwei@bytedance.com; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,56 +70,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/11/25 00:57, Thomas Huth wrote:
-> On 10/03/2025 17.51, Alex Bennée wrote:
->> David Milosevic <david.milosevic@9elements.com> writes:
->>
->>> Dear QEMU Developers,
->>>
->>> I would like to propose the development of a video subsystem in QEMU, 
->>> with the initial
->>> implementation focusing on UVC video device emulation and support for 
->>> multiple
->>> backends, including V4L2, GStreamer, and libcamera.
->>>
->>> This work is already in progress at 9elements, and we would like to 
->>> upstream it.
->>>
->>> == Motivation
->>>
->>> Currently, USB pass-through is the only way to make video devices 
->>> available to guests, which
->>>
->>>      - excludes non-USB cameras (e.g., MIPI)
->>>      - performs poorly with high-resolution cameras
->>>      - does not work with USB 3.0 video devices (Issue #1613)
->>>
->>> == Proposal
->>>
->>> We aim to introduce a video subsystem in QEMU that allows for the 
->>> implementation of various
->>> video devices, similar to how QEMU handles audio. The first device 
->>> implementation will be
->>> UVC (USB Video Class) device emulation, with support for multiple 
->>> backends. Future extensions
->>> could include virtio-video or other PCI-based video devices.
->>
->> Are you aware of virtio-media? It was an alternative proposal to
->> virtio-video which effectively becomes an encapsulation of v4l to the
->> guest.
+On Monday, March 10, 2025 6:11:01 PM CET Greg Kurz wrote:
+> Add an futimens operation to the fs driver and use if when a fid has
+> a valid file descriptor. This is required to support more cases where
+> the client wants to do an action on an unlinked file which it still
+> has an open file decriptor for.
 > 
-> ... but USB video would also be nice, wouldn't it? That could enable 
-> guests to use webcams without needing additional virtio drivers for it, 
-> I think?
+> Only 9P2000.L was considered.
 > 
+> Signed-off-by: Greg Kurz <groug@kaod.org>
+> ---
+>  fsdev/file-op-9p.h |  2 ++
+>  hw/9pfs/9p-local.c |  9 +++++++++
+>  hw/9pfs/9p-synth.c |  8 ++++++++
+>  hw/9pfs/9p-util.h  |  1 +
+>  hw/9pfs/9p.c       |  6 +++++-
+>  hw/9pfs/cofs.c     | 19 +++++++++++++++++++
+>  hw/9pfs/coth.h     |  2 ++
+>  7 files changed, 46 insertions(+), 1 deletion(-)
+> 
+> diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+> index 40a40f7d8af8..ee65f4ffad2f 100644
+> --- a/fsdev/file-op-9p.h
+> +++ b/fsdev/file-op-9p.h
+> @@ -167,6 +167,8 @@ struct FileOperations {
+>      bool (*has_valid_handle)(int fid_type, V9fsFidOpenState *fs);
+>      int (*ftruncate)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
+>                       off_t size);
+> +    int (*futimens)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
+> +                    const struct timespec *times);
+>  };
+>  
+>  #endif
+> diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+> index fa763b0662f5..f8b932802c17 100644
+> --- a/hw/9pfs/9p-local.c
+> +++ b/hw/9pfs/9p-local.c
+> @@ -1104,6 +1104,14 @@ out:
+>      return ret;
+>  }
+>  
+> +static int local_futimens(FsContext *s, int fid_type, V9fsFidOpenState *fs,
+> +                          const struct timespec *times)
+> +{
+> +    int fd = local_fid_fd(fid_type, fs);
+> +
+> +    return qemu_futimens(fd, times);
+> +}
+> +
+>  static int local_unlinkat_common(FsContext *ctx, int dirfd, const char *name,
+>                                   int flags)
+>  {
+> @@ -1628,4 +1636,5 @@ FileOperations local_ops = {
+>      .unlinkat = local_unlinkat,
+>      .has_valid_handle = local_has_valid_handle,
+>      .ftruncate = local_ftruncate,
+> +    .futimens = local_futimens,
+>  };
+> diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+> index 7f0e13f0ddd8..3bf4bb17e767 100644
+> --- a/hw/9pfs/9p-synth.c
+> +++ b/hw/9pfs/9p-synth.c
+> @@ -424,6 +424,13 @@ static int synth_utimensat(FsContext *fs_ctx, V9fsPath *path,
+>      return 0;
+>  }
+>  
+> +static int synth_futimens(FsContext *fs_ctx, int fid_type, V9fsFidOpenState *fs,
+> +                          const struct timespec *buf)
+> +{
+> +    errno = ENOSYS;
+> +    return -1;
+> +}
+> +
+>  static int synth_remove(FsContext *ctx, const char *path)
+>  {
+>      errno = EPERM;
+> @@ -664,4 +671,5 @@ FileOperations synth_ops = {
+>      .unlinkat     = synth_unlinkat,
+>      .has_valid_handle = synth_has_valid_handle,
+>      .ftruncate    = synth_ftruncate,
+> +    .futimens     = synth_futimens,
+>  };
+> diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
+> index 7bc4ec8e85cc..a1924fe3f05a 100644
+> --- a/hw/9pfs/9p-util.h
+> +++ b/hw/9pfs/9p-util.h
+> @@ -103,6 +103,7 @@ static inline int errno_to_dotl(int err) {
+>  #define qemu_renameat   renameat
+>  #define qemu_utimensat  utimensat
+>  #define qemu_unlinkat   unlinkat
+> +#define qemu_futimens   futimens
+>  
+>  static inline void close_preserve_errno(int fd)
+>  {
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index 35b2ed900a01..8024cc06a090 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -1708,7 +1708,11 @@ static void coroutine_fn v9fs_setattr(void *opaque)
+>          } else {
+>              times[1].tv_nsec = UTIME_OMIT;
+>          }
+> -        err = v9fs_co_utimensat(pdu, &fidp->path, times);
+> +        if (fid_has_valid_handle(pdu->s, fidp)) {
+> +            err = v9fs_co_futimens(pdu, fidp, times);
+> +        } else {
+> +            err = v9fs_co_utimensat(pdu, &fidp->path, times);
+> +        }
+>          if (err < 0) {
+>              goto out;
+>          }
+> diff --git a/hw/9pfs/cofs.c b/hw/9pfs/cofs.c
+> index 893466fb1a44..12fa8c9fe9cd 100644
+> --- a/hw/9pfs/cofs.c
+> +++ b/hw/9pfs/cofs.c
+> @@ -139,6 +139,25 @@ int coroutine_fn v9fs_co_utimensat(V9fsPDU *pdu, V9fsPath *path,
+>      return err;
+>  }
+>  
+> +int coroutine_fn v9fs_co_futimens(V9fsPDU *pdu, V9fsFidState *fidp,
+> +                                  struct timespec times[2])
+> +{
+> +    int err;
+> +    V9fsState *s = pdu->s;
+> +
+> +    if (v9fs_request_cancelled(pdu)) {
+> +        return -EINTR;
+> +    }
+> +    v9fs_co_run_in_worker(
+> +        {
+> +            err = s->ops->futimens(&s->ctx, fidp->fid_type, &fidp->fs, times);
+> +            if (err < 0) {
+> +                err = -errno;
+> +            }
+> +        });
+> +    return err;
+> +}
+> +
+>  int coroutine_fn v9fs_co_chown(V9fsPDU *pdu, V9fsPath *path, uid_t uid,
+>                                 gid_t gid)
+>  {
+> diff --git a/hw/9pfs/coth.h b/hw/9pfs/coth.h
+> index 0b8ee4c56495..9920f98129e9 100644
+> --- a/hw/9pfs/coth.h
+> +++ b/hw/9pfs/coth.h
+> @@ -111,5 +111,7 @@ int coroutine_fn v9fs_co_st_gen(V9fsPDU *pdu, V9fsPath *path, mode_t,
+>                                  V9fsStatDotl *v9stat);
+>  int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp,
+>                                     off_t size);
+> +int coroutine_fn v9fs_co_futimens(V9fsPDU *pdu, V9fsFidState *fidp,
+> +                                  struct timespec times[2]);
+>  
+>  #endif
 
-Agree. UVC based hardware emulation does not need additional guest 
-driver, and it may help guest kernel driver debug. It's also useful for 
-USB video related education.
+Same nit as with previous patch: I would group v9fs_co_futimens() and
+v9fs_co_utimensat() together in this header file for overview reason.
 
-Virtio based hardware will use the common video/camera framework, this 
-is also another good shape: hardware devices emulation -> generic 
-framework -> multiple backend driver implement.
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+
+/Christian
+
+
 
