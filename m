@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9C6C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E7BC28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqX1-0003s1-90; Mon, 10 Mar 2025 23:43:51 -0400
+	id 1trqaZ-0004Lm-60; Mon, 10 Mar 2025 23:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWz-0003rb-8o
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:49 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqZb-0000U3-SE
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:46:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWx-0002D2-Up
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:49 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqZV-0002oc-LV
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:46:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741664627;
+ s=mimecast20190719; t=1741664784;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t1a5/4wZHQidpPpjyG2c9xx8eYMEhq8brGYPtmbVtwI=;
- b=U+77yKyoMNrOVVw5xizHFctoCUkdgO/+fArCw9M/Fo77Bd++ZTFfVNA5f8IMfa9n1kUnK+
- 1QtupbSUEPysye4VAj3aQsG4GnJmiILmhjSBdjAuZhSXpgLqkOLugVb+56NWzV5cpQ8Bjg
- PUYwKfDyd7fuQ0WIanngkIYvg3SSX8Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=vdmIN+VT9IZHhi/TgTZYeuN0vGYUCp3sPhV4+H40+ks=;
+ b=ar+5jTR+4foavWlLfjbLq+KsV4hgQQGVsJP/tL+m/nlubumTyNyykxd1h2PJvElhvabFzP
+ yJipO6OJj2hZdYhCw14w3hMg0UxIchYugTNd5Vuj2lMgEwOWIxiZLIei2xzQKj4UUTJ5dX
+ YfjqkhWQz/UrhjdA2v2fgkVteyi4m8A=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-ZZ-BU2qYNxmysLJ6BoAdGw-1; Mon,
- 10 Mar 2025 23:43:43 -0400
-X-MC-Unique: ZZ-BU2qYNxmysLJ6BoAdGw-1
-X-Mimecast-MFC-AGG-ID: ZZ-BU2qYNxmysLJ6BoAdGw_1741664622
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-RcH9QxS5PyaKSsZ2qjh3Ww-1; Mon,
+ 10 Mar 2025 23:46:18 -0400
+X-MC-Unique: RcH9QxS5PyaKSsZ2qjh3Ww-1
+X-Mimecast-MFC-AGG-ID: RcH9QxS5PyaKSsZ2qjh3Ww_1741664777
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B167B1801A00; Tue, 11 Mar 2025 03:43:42 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7205C19560AB; Tue, 11 Mar 2025 03:46:17 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DB3B51828A89; Tue, 11 Mar 2025 03:43:39 +0000 (UTC)
+ id E31841800366; Tue, 11 Mar 2025 03:46:14 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
@@ -54,9 +54,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 09/63] docs/qapi-domain: add compatibility node classes
-Date: Mon, 10 Mar 2025 23:42:07 -0400
-Message-ID: <20250311034303.75779-10-jsnow@redhat.com>
+Subject: [PATCH v3 55/63] docs/qapidoc: process @foo into ``foo``
+Date: Mon, 10 Mar 2025 23:42:53 -0400
+Message-ID: <20250311034303.75779-56-jsnow@redhat.com>
 In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
 References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -87,48 +87,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sphinx prior to v4.0 uses different classes for rendering elements of
-documentation objects; add some compatibility classes to use the right
-node classes conditionally.
+Add support for the special QAPI doc syntax to process @references as
+``preformatted text``. At the moment, there are no actual
+cross-references for individual members, so there is nothing to link
+against. For now, process it identically to how we did in the old
+qapidoc system.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/compat.py | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ docs/sphinx/qapidoc.py | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-index 39b859a25e3..6bc698c5ada 100644
---- a/docs/sphinx/compat.py
-+++ b/docs/sphinx/compat.py
-@@ -2,12 +2,27 @@
- Sphinx cross-version compatibility goop
- """
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 32baf66a390..f98f75cb2f8 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -303,6 +303,9 @@ def visit_sections(self, ent: QAPISchemaDefinition) -> None:
  
--from docutils.nodes import Element
-+from typing import Callable
- 
-+from docutils.nodes import Element, Node, Text
+         # Add sections in source order:
+         for section in sections:
++            # @var is translated to ``var``:
++            section.text = re.sub(r"@([\w-]+)", r"``\1``", section.text)
 +
-+import sphinx
-+from sphinx import addnodes
- from sphinx.util import nodes
- from sphinx.util.docutils import SphinxDirective, switch_source_input
- 
- 
-+SpaceNode: Callable[[str], Node]
-+KeywordNode: Callable[[str, str], Node]
-+
-+if sphinx.version_info[:3] >= (4, 0, 0):
-+    SpaceNode = addnodes.desc_sig_space
-+    KeywordNode = addnodes.desc_sig_keyword
-+else:
-+    SpaceNode = Text
-+    KeywordNode = addnodes.desc_annotation
-+
-+
- def nested_parse_with_titles(
-     directive: SphinxDirective, content_node: Element
- ) -> None:
+             if section.kind == QAPIDoc.Kind.PLAIN:
+                 self.visit_paragraph(section)
+             elif section.kind == QAPIDoc.Kind.MEMBER:
 -- 
 2.48.1
 
