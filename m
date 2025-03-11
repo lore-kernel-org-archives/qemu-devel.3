@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278F7C282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC98C28B2E
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxqb-0003Eh-2P; Tue, 11 Mar 2025 07:32:34 -0400
+	id 1trxrU-000488-IJ; Tue, 11 Mar 2025 07:33:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqD-00037e-B2
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:13 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxpx-00030D-EW
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:31:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq2-0006V3-Gm
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxpt-0006QM-68
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:31:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692716;
+ s=mimecast20190719; t=1741692706;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8w8JPzbCqCu7+BNJ2brD8hkE/otEgSOTWftx8sadi7A=;
- b=Ni03+DA4FiaLktdK8Vl/ZtKHKSsQ6yXQcFBjoXPgrsOn/3v4k+O2JIJP2vLA8hjJYHPblf
- BYqZf7CZ5k4hR1ja1aorQ+1ut1H/WDvzIW7idea773d0K58LEjlIGe8kWtrD4CCE8WcRhr
- gtOdFpDOkmBeDvmAbUqj3P4jWdLv4O0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4fzVBga88f/OqmMbr+swR0bwGim42s2bhCCOndnrpmU=;
+ b=HPOXADD0Db3dxIIXuVhkyDEuB+8myg4DyUZu3YY6KrEQEoJI7VwLHopxmjU77qWItA5suZ
+ yGa1Lu1Tkl7MQEPAzCn3R4OlCYk4rTQkFnfdypXkfpGu2SeePh1QvlPLvdta2dEoTwMP6k
+ Z+/siBISQahwMSpAQgtFLWJpXVtMNbw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-n7KxawBkMxC24UgtQUOGqw-1; Tue,
- 11 Mar 2025 07:31:54 -0400
-X-MC-Unique: n7KxawBkMxC24UgtQUOGqw-1
-X-Mimecast-MFC-AGG-ID: n7KxawBkMxC24UgtQUOGqw_1741692714
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-tepSRSfENPSU0Qeosx15QA-1; Tue,
+ 11 Mar 2025 07:31:45 -0400
+X-MC-Unique: tepSRSfENPSU0Qeosx15QA-1
+X-Mimecast-MFC-AGG-ID: tepSRSfENPSU0Qeosx15QA_1741692704
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8CB9180AF66
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3425180034D
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:43 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9CDB71828A92
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7788F1944F12
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:42 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2A5D321E6187; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
+ id C19A221E66A4; Tue, 11 Mar 2025 12:31:37 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 28/61] docs/qapi-domain: warn when QAPI domain xrefs fail to
- resolve
-Date: Tue, 11 Mar 2025 12:31:04 +0100
-Message-ID: <20250311113137.1277125-29-armbru@redhat.com>
+Subject: [PULL 04/61] docs/qapi-domain: add QAPI index
+Date: Tue, 11 Mar 2025 12:30:40 +0100
+Message-ID: <20250311113137.1277125-5-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -89,65 +88,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-This patch adds a warning (which is a build failure under our current
-build settings) whenever a QAPI cross-reference fails to resolve.
+Use the QAPI object registry to generate a special index just for QAPI
+definitions. The index can show entries both by definition type and all
+together, alphabetically.
 
-This applies to any cross-references of the form :qapi:{role}:`foo`,
-which covers all of the automatically generated references by the qapi
-domain, and any such references that are manually written into the
-documentation rst files.
-
-Cross-references of the form `foo` do not use this system, but are
-already configured to issue a warning (Again, a build failure) if the
-cross-reference isn't found anywhere.
-
-Adds warnings that look like the following:
-
-docs/qapi/index.rst:48: WARNING: qapi:type reference target not found: 'footype' [ref.qapi]
-docs/qapi/index.rst:50: WARNING: qapi:mod reference target not found: 'foomod' [ref.qapi]
+The index can be linked from anywhere in the QEMU manual by using the
+reference `qapi-index`.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-31-jsnow@redhat.com>
+Message-ID: <20250311034303.75779-7-jsnow@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ docs/sphinx/qapi_domain.py | 73 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 70 insertions(+), 3 deletions(-)
 
 diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 3b1490e29a..b23db1eba2 100644
+index f3ece42bc2..3e7718d32d 100644
 --- a/docs/sphinx/qapi_domain.py
 +++ b/docs/sphinx/qapi_domain.py
-@@ -830,6 +830,29 @@ def resolve_xref(
-         matches = self.find_obj(modname, target, typ)
+@@ -9,12 +9,20 @@
+     AbstractSet,
+     Any,
+     Dict,
++    Iterable,
++    List,
+     NamedTuple,
++    Optional,
+     Tuple,
+ )
  
-         if not matches:
-+            # Normally, we could pass warn_dangling=True to QAPIXRefRole(),
-+            # but that will trigger on references to these built-in types,
-+            # which we'd like to ignore instead.
+-from sphinx.domains import Domain, ObjType
+-from sphinx.locale import __
++from sphinx.domains import (
++    Domain,
++    Index,
++    IndexEntry,
++    ObjType,
++)
++from sphinx.locale import _, __
+ from sphinx.util import logging
+ 
+ 
+@@ -31,6 +39,62 @@ class ObjectEntry(NamedTuple):
+     aliased: bool
+ 
+ 
++class QAPIIndex(Index):
++    """
++    Index subclass to provide the QAPI definition index.
++    """
 +
-+            # Take care of that warning here instead, so long as the
-+            # reference isn't to one of our built-in core types.
-+            if target not in (
-+                "string",
-+                "number",
-+                "int",
-+                "boolean",
-+                "null",
-+                "value",
-+                "q_empty",
-+            ):
-+                logger.warning(
-+                    __("qapi:%s reference target not found: %r"),
-+                    typ,
-+                    target,
-+                    type="ref",
-+                    subtype="qapi",
-+                    location=node,
++    # pylint: disable=too-few-public-methods
++
++    name = "index"
++    localname = _("QAPI Index")
++    shortname = _("QAPI Index")
++
++    def generate(
++        self,
++        docnames: Optional[Iterable[str]] = None,
++    ) -> Tuple[List[Tuple[str, List[IndexEntry]]], bool]:
++        assert isinstance(self.domain, QAPIDomain)
++        content: Dict[str, List[IndexEntry]] = {}
++        collapse = False
++
++        # list of all object (name, ObjectEntry) pairs, sorted by name
++        # (ignoring the module)
++        objects = sorted(
++            self.domain.objects.items(),
++            key=lambda x: x[0].split(".")[-1].lower(),
++        )
++
++        for objname, obj in objects:
++            if docnames and obj.docname not in docnames:
++                continue
++
++            # Strip the module name out:
++            objname = objname.split(".")[-1]
++
++            # Add an alphabetical entry:
++            entries = content.setdefault(objname[0].upper(), [])
++            entries.append(
++                IndexEntry(
++                    objname, 0, obj.docname, obj.node_id, obj.objtype, "", ""
 +                )
-             return None
++            )
++
++            # Add a categorical entry:
++            category = obj.objtype.title() + "s"
++            entries = content.setdefault(category, [])
++            entries.append(
++                IndexEntry(objname, 0, obj.docname, obj.node_id, "", "", "")
++            )
++
++        # alphabetically sort categories; type names first, ABC entries last.
++        sorted_content = sorted(
++            content.items(),
++            key=lambda x: (len(x[0]) == 1, x[0]),
++        )
++        return sorted_content, collapse
++
++
+ class QAPIDomain(Domain):
+     """QAPI language domain."""
  
-         if len(matches) > 1:
+@@ -54,7 +118,10 @@ class QAPIDomain(Domain):
+         "objects": {},  # fullname -> ObjectEntry
+     }
+ 
+-    indices = []
++    # Index pages to generate; each entry is an Index class.
++    indices = [
++        QAPIIndex,
++    ]
+ 
+     @property
+     def objects(self) -> Dict[str, ObjectEntry]:
 -- 
 2.48.1
 
