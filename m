@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D78C28B2F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4EDC28B2E
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqWj-0003m8-Sm; Mon, 10 Mar 2025 23:43:33 -0400
+	id 1trqWx-0003rH-KB; Mon, 10 Mar 2025 23:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWi-0003lh-UE
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWw-0003qf-05
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWh-0002AQ-D5
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:32 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqWu-0002CV-9q
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:43:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741664610;
+ s=mimecast20190719; t=1741664623;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U5zzCAWIkGKW0tazmeY1djTKO1+sjcFFugAG566ztEw=;
- b=RBWBqLZ+qH6oPKBIA1A4i0iMsYXzDEuFRqV3pQ3BpIoD7ncHeCGrekvVDWXRavYS2AL9b4
- jkC6wysphFrz5vTfOnOqm0en0xlQPteNqkIJ8QlYguJAG6RQM+xfUodqkipgA/D0kQyRnz
- yRnhFfs2m1Wo+r861T8OBa9pPiOfc1U=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=gIUOXGuVroKAWzBUNK/ACNSOm3+tyWilHmOWF1oQefU=;
+ b=Xz1oCEIYeR47wcFLeMN6gOkBl1L/sjUhgatjk5tq4+hJ7BJ2YWnH4k2+MRjWupLlIOVY04
+ qCShH40lF0WZe37AVUuPxaZy3WqGfO6nDczIcTBzICWONiq++s6FK26Kfz1YUNIMiQF2A5
+ qC67E3blnGkPxSqpzRXEjhZCkUN6hOI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-p8cQJGfaNzaXuD2ZHYJTkA-1; Mon,
- 10 Mar 2025 23:43:25 -0400
-X-MC-Unique: p8cQJGfaNzaXuD2ZHYJTkA-1
-X-Mimecast-MFC-AGG-ID: p8cQJGfaNzaXuD2ZHYJTkA_1741664604
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-8EkTK_pGNQ2i5FooQkw7zw-1; Mon,
+ 10 Mar 2025 23:43:40 -0400
+X-MC-Unique: 8EkTK_pGNQ2i5FooQkw7zw-1
+X-Mimecast-MFC-AGG-ID: 8EkTK_pGNQ2i5FooQkw7zw_1741664619
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D08E71956083; Tue, 11 Mar 2025 03:43:23 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62FDE180049D; Tue, 11 Mar 2025 03:43:39 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DF8AC1828A81; Tue, 11 Mar 2025 03:43:20 +0000 (UTC)
+ id D934B1828A86; Tue, 11 Mar 2025 03:43:36 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
@@ -54,23 +54,22 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 04/63] docs/sphinx: add compat.py module and nested_parse
- helper
-Date: Mon, 10 Mar 2025 23:42:02 -0400
-Message-ID: <20250311034303.75779-5-jsnow@redhat.com>
+Subject: [PATCH v3 08/63] docs/qapi-domain: add QAPI xref roles
+Date: Mon, 10 Mar 2025 23:42:06 -0400
+Message-ID: <20250311034303.75779-9-jsnow@redhat.com>
 In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
 References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,61 +87,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a compat module that handles sphinx cross-version compatibility
-issues. For the inaugural function, add a nested_parse_with_titles()
-helper that handles differences in line number tracking for nested
-directive body parsing.
+Add domain-specific cross-reference syntax. As of this commit, that
+means new :qapi:any:`block-core` referencing syntax.
 
-Spoilers: there are more cross-version hacks to come throughout the
-series.
+The :any: role will find anything registered to the QAPI domain,
+including modules, commands, events, etc.
+
+Creating the cross-references is powered by the QAPIXRefRole class;
+resolving them is handled by QAPIDomain.resolve_xref().
+
+QAPIXrefRole is based heavily on Sphinx's own PyXrefRole, with
+modifications necessary for QAPI features.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/compat.py | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
- create mode 100644 docs/sphinx/compat.py
+ docs/sphinx/qapi_domain.py | 88 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 87 insertions(+), 1 deletion(-)
 
-diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-new file mode 100644
-index 00000000000..39b859a25e3
---- /dev/null
-+++ b/docs/sphinx/compat.py
-@@ -0,0 +1,35 @@
-+"""
-+Sphinx cross-version compatibility goop
-+"""
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index f05c2cadf06..49d42c0921c 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -26,6 +26,7 @@
+     ObjType,
+ )
+ from sphinx.locale import _, __
++from sphinx.roles import XRefRole
+ from sphinx.util import logging
+ from sphinx.util.nodes import make_refnode
+ 
+@@ -47,6 +48,54 @@ class ObjectEntry(NamedTuple):
+     aliased: bool
+ 
+ 
++class QAPIXRefRole(XRefRole):
 +
-+from docutils.nodes import Element
++    def process_link(
++        self,
++        env: BuildEnvironment,
++        refnode: Element,
++        has_explicit_title: bool,
++        title: str,
++        target: str,
++    ) -> tuple[str, str]:
++        refnode["qapi:module"] = env.ref_context.get("qapi:module")
 +
-+from sphinx.util import nodes
-+from sphinx.util.docutils import SphinxDirective, switch_source_input
++        # Cross-references that begin with a tilde adjust the title to
++        # only show the reference without a leading module, even if one
++        # was provided. This is a Sphinx-standard syntax; give it
++        # priority over QAPI-specific type markup below.
++        hide_module = False
++        if target.startswith("~"):
++            hide_module = True
++            target = target[1:]
++
++        # Type names that end with "?" are considered optional
++        # arguments and should be documented as such, but it's not
++        # part of the xref itself.
++        if target.endswith("?"):
++            refnode["qapi:optional"] = True
++            target = target[:-1]
++
++        # Type names wrapped in brackets denote lists. strip the
++        # brackets and remember to add them back later.
++        if target.startswith("[") and target.endswith("]"):
++            refnode["qapi:array"] = True
++            target = target[1:-1]
++
++        if has_explicit_title:
++            # Don't mess with the title at all if it was explicitly set.
++            # Explicit title syntax for references is e.g.
++            # :qapi:type:`target <explicit title>`
++            # and this explicit title overrides everything else here.
++            return title, target
++
++        title = target
++        if hide_module:
++            title = target.split(".")[-1]
++
++        return title, target
 +
 +
-+def nested_parse_with_titles(
-+    directive: SphinxDirective, content_node: Element
-+) -> None:
-+    """
-+    This helper preserves error parsing context across sphinx versions.
-+    """
+ class QAPIIndex(Index):
+     """
+     Index subclass to provide the QAPI definition index.
+@@ -118,7 +167,13 @@ class QAPIDomain(Domain):
+     object_types: Dict[str, ObjType] = {}
+ 
+     directives = {}
+-    roles = {}
 +
-+    # necessary so that the child nodes get the right source/line set
-+    content_node.document = directive.state.document
++    # These are all cross-reference roles; e.g.
++    # :qapi:cmd:`query-block`. The keys correlate to the names used in
++    # the object_types table values above.
++    roles = {
++        "any": QAPIXRefRole(),  # reference *any* type of QAPI object.
++    }
+ 
+     # Moved into the data property at runtime;
+     # this is the internal index of reference-able objects.
+@@ -252,6 +307,37 @@ def find_obj(
+             matches = [m for m in matches if not m[1].aliased]
+         return matches
+ 
++    def resolve_xref(
++        self,
++        env: BuildEnvironment,
++        fromdocname: str,
++        builder: Builder,
++        typ: str,
++        target: str,
++        node: pending_xref,
++        contnode: Element,
++    ) -> nodes.reference | None:
++        modname = node.get("qapi:module")
++        matches = self.find_obj(modname, target, typ)
 +
-+    try:
-+        # Modern sphinx (6.2.0+) supports proper offsetting for
-+        # nested parse error context management
-+        nodes.nested_parse_with_titles(
-+            directive.state,
-+            directive.content,
-+            content_node,
-+            content_offset=directive.content_offset,
-+        )
-+    except TypeError:
-+        # No content_offset argument. Fall back to SSI method.
-+        with switch_source_input(directive.state, directive.content):
-+            nodes.nested_parse_with_titles(
-+                directive.state, directive.content, content_node
++        if not matches:
++            return None
++
++        if len(matches) > 1:
++            logger.warning(
++                __("more than one target found for cross-reference %r: %s"),
++                target,
++                ", ".join(match[0] for match in matches),
++                type="ref",
++                subtype="qapi",
++                location=node,
 +            )
++
++        name, obj = matches[0]
++        return make_refnode(
++            builder, fromdocname, obj.docname, obj.node_id, contnode, name
++        )
++
+     def resolve_any_xref(
+         self,
+         env: BuildEnvironment,
 -- 
 2.48.1
 
