@@ -4,90 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C09C9C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 09:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991EDC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 10:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trwHN-0000Tr-Jh; Tue, 11 Mar 2025 05:52:05 -0400
+	id 1trwQw-0007mt-Ja; Tue, 11 Mar 2025 06:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trwHM-0000Sa-49
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 05:52:04 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trwHJ-0002Pi-UX
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 05:52:03 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3912c09be7dso2816884f8f.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 02:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741686718; x=1742291518; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GYo7wZUvWtuQ4GeVN/8DmIxOvRCI+jQxMYgNJ5qz12o=;
- b=MMvQUv0BzsQgXVD35boB4yXzYk9hSdhz67u8tsZqCeHMflZMTbFilhgYOBd3dGCP3S
- P6gPSM/BikGFPRKhinYDvTkFufboNNVteDfMTYte9RHZz22vqt/hwx2S3fEinGWIFS/2
- gwk+nuwPlE9LLSStBAdhaBut71MRRryAvO2u3+1HnGR6abzd3M7QSkha5VZpPV6UXvE3
- j4UuHo4ISlmy3Ne7eOhXepEvNnJ+zgXuw+sEeRCe0xSOdsDNlMmkbMyTVnsOwHrkfgxz
- l4zneKVxDvwWNUAhJ+j2Ju9B43twmXp9OrQIj/qPNuhKM/qjdy8zXVQwIBpakWTWZ0pw
- 9Zzg==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1trwQv-0007lW-79
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:01:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1trwQs-00045w-S9
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 06:01:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741687311;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yAGwSDaMJBS9fxU4WJUt5uscLzrST6sqLjPfctabkuM=;
+ b=YGvHw7ZOwHCSXSud15doJKZAbHPxFZ6+s0QizR88wbi80Rlx1HP7Xg1DDMaxqfdA6F1Ac7
+ QBRRtuqhZnRLa+oZ8veBhXpu/cockXyKXAdskCLWGV8/OEt9poPfcQPf4ifxMvQ4cqbZ48
+ bb9TajMkj/QttamBA1Ifo+qjB6ZkGqk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-203-4uPXz2WcMxOJrFfwnygdoA-1; Tue, 11 Mar 2025 06:01:50 -0400
+X-MC-Unique: 4uPXz2WcMxOJrFfwnygdoA-1
+X-Mimecast-MFC-AGG-ID: 4uPXz2WcMxOJrFfwnygdoA_1741687309
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3912fc9861cso2135762f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 03:01:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741686718; x=1742291518;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GYo7wZUvWtuQ4GeVN/8DmIxOvRCI+jQxMYgNJ5qz12o=;
- b=g62ja7j6O86ZqQz5tVnXxduQSqHiFb7Lijq28RSHQCyhXwhwbOGYcKPZRM3YD5OCOR
- rBYL8/NJ/lJWueeL+hOUy5vsiptL3mqvk+7w8OxgIKQXfk3MgfuYBlStc8pMyozIGbT0
- eO119leXANNBz51k1q4Jh+2X/Pfqy5AO3vLek3rDUmk63CMa9qVP6EoZs1iXo+znPJdH
- ZH5U+UrTPourwOfjYByyJnVkwXTjlxWDuygi8Wre+a04vOxc5s/0CXtl3q/OojrQe4ry
- 7hi51MPyn5AKgcKDKLy53CJmQWHU2AzmauXUaFPoBvf+Yvwl1ogXP/lBDONcdq55Uw73
- I+kQ==
-X-Gm-Message-State: AOJu0YyQ7j5ZBgVT9OfaiWzQhbNS5/l3w1aK14oNeNgz549B3BnFv8Gy
- bxV8Lo2eAuwj89N+zDKWBtkdxx0sMwZKh0wrptw3rXlB1qytR7YWvCwuOVqVmtw=
-X-Gm-Gg: ASbGncsbyPxpbYfyNCTs1ZmaO0Lf/P52+5n/ryMT8I9El0xTjDFuxQHlgeEVxkF6cBn
- KZle2H6yaVyqbpA4DBN29KwOv53Vo8MEg/7tjMGQGm1xLeF/llAVzAp63aXt0D13TKNBwrznpR9
- 71N7ob5ctX1ueJ1WY1Rs3pU4uH90hlWO6IJVpUk/ZR+67XPH347yJtq6kSDEZR5hrWLZ3wlSbQR
- yanbFuTfAvurzF14SOvNFZnJwBiZxAEVxkIztCx5atss+WljdAbFpe+z0WdUr5u4L3Wezs7kivC
- TPQPGsiwjGY/8sFp90JrRTvqyXFlC3IX2x8TkzbTVRtbQxL7t8Fh2m2XRzXDX6flFgiLjkmruy3
- ACNp9aBI7BbKW2oWC3nmPO5Y=
-X-Google-Smtp-Source: AGHT+IE4GGtMiu1k3+lQrHotXVBSD0kz471b7vYqMHptf4w403diJ2k7hsWWsmw8Qgp2TKH1QcKtKA==
-X-Received: by 2002:a05:6000:1a86:b0:38d:e48b:1787 with SMTP id
- ffacd0b85a97d-39132d1d1efmr13703852f8f.14.1741686718399; 
- Tue, 11 Mar 2025 02:51:58 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfad7sm17428248f8f.26.2025.03.11.02.51.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 02:51:57 -0700 (PDT)
-Message-ID: <a6a2ddc4-dca5-4234-9254-eacea37efe47@linaro.org>
-Date: Tue, 11 Mar 2025 10:51:57 +0100
+ d=1e100.net; s=20230601; t=1741687308; x=1742292108;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yAGwSDaMJBS9fxU4WJUt5uscLzrST6sqLjPfctabkuM=;
+ b=bJ5OtcgH7oG8p5dQAI9itXffWC/K1jkW6HrzqykMBjpXc6Jx+5CQQkGoYNAyVKjnYh
+ lEZp/2u/8/ItOJNEI9IJ0DvcRZqI7+sUnVdelDsQxtl2ZDH1KUMX/ixa8wmF3dTq+6fS
+ LB+eXAYP1jHwvOPLPzmk3cU6tgeSZUgt01mwMf33eZovFGF6c078F6niguoLg3OrxxZ2
+ MIOhpzFrEXrACZzom9q8Yj5JmJcp14LWye5IUskP9l9Qq2zmv+DRt0NXksuYnLg5KIul
+ 6l6NbzSgIKHqrpfctNM62FQcUila0jv2ed/H/aXbGd5jDNcDArlqGeSXZ+Mvm5km8jjJ
+ 2a5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUneMMGztaEf+px/gU+G4oEvemQiduasKNg44Kv2DaWTg/NK7ROHNRAE5tkWShGxgIFpeKIVhZoCFaO@nongnu.org
+X-Gm-Message-State: AOJu0YzFF2pVLcdUhZjHjhkU5g1cSUe04tHHQ03To2btv8EJLalrkOhU
+ J2l06jXyPJoGsIbmVKs7Qqdo7mzG5LhX5f5f3Q2suKB2sHFNtNBaOXEx+4DMXFdq4+oDEkWttrE
+ w9NEDv5tZxgz3Xyja+RD0zCk/KMFJTDZGevPOJKa2dE9T1TYjV+cXGzw9HG3qIR2d/27xfjwpeZ
+ r4LyvVHapX11Qp5jYQC0gOqap9y5MRDp6PtSjyFA==
+X-Gm-Gg: ASbGncsiY2cCI0PMSaEdyFQdl7GEKhP633R/VHFoADejpfxJvPPg0kr82SaarG3BTQq
+ lbkR0Io/LX0CUPCvnSSJG3XgPcbJ44nIfHHKsmHgiFsnrPUFiq/6W13xqwAAYC96M3+BGyOdulu
+ 4=
+X-Received: by 2002:a05:6000:18a3:b0:391:32b1:9458 with SMTP id
+ ffacd0b85a97d-39132d05bb7mr13821157f8f.3.1741687307956; 
+ Tue, 11 Mar 2025 03:01:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdABgJl0jNHz2MN3iGXc+n0/34I0GIIWUngJlc7GLL47MmOAQS2zgTLgs2eCD79EoCb5XClG0/eaqdjw9dXx8=
+X-Received: by 2002:a05:6000:18a3:b0:391:32b1:9458 with SMTP id
+ ffacd0b85a97d-39132d05bb7mr13821130f8f.3.1741687307660; Tue, 11 Mar 2025
+ 03:01:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/sd/sdhci: Set reset value of interrupt registers
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>
-References: <20250210160329.DDA7F4E600E@zero.eik.bme.hu>
- <918e9ae0-fb22-43c7-a2cf-376aaee0e98b@linaro.org>
- <ad0e4bde-40dd-db32-b8d9-46c27c257aa3@eik.bme.hu>
- <0f3814d3-7c27-fd50-2ad3-b4d5344d9fc1@eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0f3814d3-7c27-fd50-2ad3-b4d5344d9fc1@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+References: <20250228121749.553184-1-ppandit@redhat.com>
+ <20250228121749.553184-6-ppandit@redhat.com>
+ <Z8G9Wj3DWSgdLkNQ@x1.local>
+ <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
+ <Z8XBowkG72G-l3L4@x1.local>
+ <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
+ <Z8cPnxqOvp1hFpx8@x1.local>
+ <CAE8KmOw1CCQUt0wyELVhy5j-CfwVuA2XNsecW=y6rwJv7dempw@mail.gmail.com>
+ <Z8hJeneeuKqD1i8Q@x1.local>
+ <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
+ <Z8t4YoPEnwJO0sFP@x1.local> <87ldtdt0g3.fsf@suse.de>
+ <CAE8KmOwrbJnxS7How7=dhk2hnUUUjKzgEmvT2iTh+BpUa7n1WA@mail.gmail.com>
+ <87bju8ac9v.fsf@suse.de>
+In-Reply-To: <87bju8ac9v.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 11 Mar 2025 15:31:28 +0530
+X-Gm-Features: AQ5f1Joa2Yk7JXJ9jNgwfa7gVt7SsKaigODiAIUltg-to-aCfV6iq1L7L85RKlM
+Message-ID: <CAE8KmOxB-5xOtyz5-5g=3v7nF=z0bzhqVfax3Bd--zshQu8CjQ@mail.gmail.com>
+Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,39 +115,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/25 19:23, BALATON Zoltan wrote:
-> On Mon, 3 Mar 2025, BALATON Zoltan wrote:
->> On Mon, 3 Mar 2025, Philippe Mathieu-Daudé wrote:
->>> Hi Zoltan,
->>>
->>> On 10/2/25 17:03, BALATON Zoltan wrote:
->>>> The interrupt enable registers are not reset to 0 on Freescale eSDHC
->>>> but some bits are enabled on reset. At least some U-Boot versions seem
->>>> to expect this and not initialise these registers before expecting
->>>> interrupts. Use existing vendor property for Freescale eSDHC and set
->>>> the reset value of the interrupt registers to match Freescale
->>>> documentation.
->>>>
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>> v2: Restrict to e500. Adding a reset method in a subclass does not
->>>> work because the common reset function is called directly on register
->>>> write from the guest but there's already provision for vendor specific
->>>> behaviour which can be used to restrict this to Freescale SoCs.
->>>>
->>>>   hw/ppc/e500.c         | 1 +
->>>>   hw/sd/sdhci.c         | 4 ++++
->>>>   include/hw/sd/sdhci.h | 1 +
->>>>   3 files changed, 6 insertions(+)
+Hi,
 
+On Tue, 11 Mar 2025 at 01:28, Fabiano Rosas <farosas@suse.de> wrote:
+> They occur when cleanup code is allowed to run when resources have not
+> yet been allocated or while the resources are still being accessed.
+>
+> Having the shutdown routine at a single point when it's clear everything
+> else is ready for shutdown helps not only to avoid those issues, but
+> also when investigating them. Otherwise you'll have the same code
+> running at (potentially) completely different points in time and one of
+> those times the system might be in an unexpected state.
 
-> This patch wasn't in the pull request but I haven't seen an answer to 
-> this message either so was it missed or do you have furhter comments? 
-> Bernhard has a comment about naming of SDHCI_VENDOR_FSL but I think the 
-> already existing IMX name is what's wrong not the one added in this 
-> patch but I don't think that's really that confusing to worth further 
-> effort. We still have time as this can be considered a fix but I'd like 
-> this to not get forgotten so I bring it up again.
+* I see. It's not clear when this would happen in a production deployment.
+===
+     if (migrate_multifd()) {
+          multifd_send_shutdown();  <= [1]
+     }
 
-Patch queued, thanks.
+     postcopy_start(...)  <= [2]
+===
+
+* There was another scenario regarding multifd shutdown as: the EOF or
+shutdown message sent via [1] on each multifd connection reaches the
+destination _later_ than the Postcopy phase start via [2]. And this
+may result in multifd_recv_threads on the destination overwriting
+memory pages written by postcopy thread, thus corrupting the guest
+state.
+
+* Do we have any bugs/issues where these above things happened? To see
+the real circumstances under which it happened?
+
+* There seems to be some disconnect between the kind of scenarios we
+are considering and the minimal requirements for live migrations: a
+stable network with real good bandwidth. If we test live migration
+with guest dirtying RAM to the tune of 64M/128M/256M/512M bytes, that
+assumes/implies that the network bandwidth is much more than 512Mbps,
+no?
+
+Thank you.
+---
+  - Prasad
+
 
