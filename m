@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0F0C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B889AC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzD1-0003Qw-Cj; Tue, 11 Mar 2025 08:59:47 -0400
+	id 1trzI6-0001f3-31; Tue, 11 Mar 2025 09:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzCa-0001kd-HB; Tue, 11 Mar 2025 08:59:20 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1trzEI-0005QP-Qa; Tue, 11 Mar 2025 09:01:10 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzCV-0007vc-9D; Tue, 11 Mar 2025 08:59:20 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-300fefb8e06so1880761a91.0; 
- Tue, 11 Mar 2025 05:59:14 -0700 (PDT)
+ id 1trzED-0000CT-QB; Tue, 11 Mar 2025 09:01:04 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-22355618fd9so99664825ad.3; 
+ Tue, 11 Mar 2025 06:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741697953; x=1742302753; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741698059; x=1742302859; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GVJ4vU5t7PULY28jxp4RCE9dE62+yidxPTM11DiQEfw=;
- b=OTPFDRfXg/X/QZgjMh/pO46kaWz6LsWcSUXvE2kHkuR/T04xow5lYJ/PmOoiPCXd2P
- KgKQDxeg3scljGV3QiKyv95j5b+AZghJDzqykUd361LE+zNE1R34mjs8Mkx01TNMOHjj
- MS2FwVCMEOhWBq+dkzyUGjlMMMw7TbbGYxgGkaX0I5tj1ZFrm2JtI5idNb5dlV9Rehrp
- 9G0i32hbUJgCtmjnZ6+t2clPwwtoh8ptGkL49sMcaA/oqRe7b0Lp3TDXpkOrKWCACHij
- AlGK2q4HG2gf4Sv/+Ozw9uk6uT5uDfkgkSxmIMW/3jJfLFAnFetumqbymNzU3sMq5HvT
- Hu/w==
+ bh=Biw+0LaKs2HJdMoWQD130jxziht29GfeWu2Z9l8GRBs=;
+ b=jNgGFDfs+JE4sbk8FPEcPOiBf2oLd8vucgPWU6NrziL5kR2Lf/WfdVQqi5fod8WWFi
+ Mt5PtO5KZvRTvV6Dg+xVcq4nypNLe3B4+9tDFrPXlSpaKhHVcmSq8NDqmJcGAjCL55Mw
+ SAN4XqUqNQv/ZlpeRvXwxSH43ZG/5JAoncWx+r8iRQxqWJqhRRtePGG2QONWziotXj9W
+ j+/i6a9Ug0PDEFAmQpY2uq84fLhnSc0X7bFRCZrGpBSiTovnMmxUzCl1T+grDPXsgBDo
+ J+64yMUvrK+49RSH9y4LdovP/OeWkXuyrMzpQmATVOdVrWPK1uDGo0nomiZNSHSA6Eh2
+ 6dBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741697953; x=1742302753;
+ d=1e100.net; s=20230601; t=1741698059; x=1742302859;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GVJ4vU5t7PULY28jxp4RCE9dE62+yidxPTM11DiQEfw=;
- b=O0Kmq55zpkJeMsLdLD8gv8H5zbZ4mwXHCj1Fz0pLC2SLcdk/p/smuPYIwDjIHYxoI1
- 0PmoJZ/8YumLB4r+cGeGGZEkOfKTrfuIOna8R6iFUy/yskKsDZ1BS7eWWsMcaHnsnHET
- aHkF5acZRJFXA0QfPqIu8Ayk0QHemrFgdLma6RM7VAgaHUayTyDa7JNC0XcWHex9pryi
- +cg3IqibbPt+MJa3x1hw65I19kQahdM1I0ZBG84yHmSdtaINXl0dFJbzYuN6WeGJ6V1N
- Ruf18+aK3JMoDSV6AjpA5ZeVaAUCwhEwG1iSkeYYvH7v0BZPmuwAJVraBw8wx0tse62c
- QiQA==
+ bh=Biw+0LaKs2HJdMoWQD130jxziht29GfeWu2Z9l8GRBs=;
+ b=fM4tjZzEa9l28/ytnGyPPHWQuwwOZ1LQYs0e897Cp0aWuEeulq2NIrSBrBlPzmoIjF
+ xqXjAEt6RwrR5JqQd6YWyRMIb/1d8zk4IOqrA2XVysqBzp0nLn45U9fxktVdNmBGEZBf
+ 7cZbpDGJrQ7wk0IqwgNatX2/KKvm/tyTLZclDCwNNIyJqMxSzt/KXbdgMTzOztAGDTB2
+ lwJZRbjUnRGUac4D3Ya91J/ArRHZMBBPq77aM8egtPcKQoJLlmdd/Lc26TmRbpxXo7F7
+ lHY5ePfSpmJNm0BonIb7Y9bXeaHghfXZdeiKVq+WKnj5/5daA7BEMGQDsabHDB/QM69R
+ ZXSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQzWHnLvz+kTPHINTWzbXR/2i5um/ZGZjAwm4Tv7iGkC2yoP+L52Fm9cL794u7XaTKdpdVy75z2g==@nongnu.org
-X-Gm-Message-State: AOJu0Yy8L9qbhBrgW+1HY/dj/ZTVzXOqDf+UnmHZ12fSOQxhX8dGEuat
- GgRT8UQs5Pyd7MVXE4hi8BGZk7+9q5TKSJEvaUFS71jWl8YezoHAcDBJTg==
-X-Gm-Gg: ASbGncs2SnXLw8JmcP0HOM2T7eYAyt/iPozcdDbYl/7NEdtRyjYIZdSUj+HGEsOVRxN
- DU32o52VBSTeFuC6qgO8wfBp064LHC1WDBkSRiKQSyx59xAsjCO2D/j06rMaFTEHCNBueJHZ0S/
- zrk9zZyaE29416a2rAsNdtTITqwVVfCLzZr35j71vBwi2BA+RKkSE6wukG7PFDt5HZyRSIQNrYl
- D08abWkHFKH3aE3i3D4HR/aqoZrunMHvm6C/0K6JUgNfhRH7VC6uJEHnTov2a7fITqrg1SXi8xq
- BKVEY4TYgl+uR+/gV5i6yNfcWgGZSeGnTGvz0NyuX9AchfgIa38=
-X-Google-Smtp-Source: AGHT+IGNLQJINQzXwusTn4U7ICPr6ESQca+Ph66QOCbxdJo5yFgbbe2xy2CYoQT0eo6NkqhkohgwRQ==
-X-Received: by 2002:a17:90b:4c51:b0:2f9:c139:b61f with SMTP id
- 98e67ed59e1d1-300ff0ca64cmr5142714a91.14.1741697952924; 
- Tue, 11 Mar 2025 05:59:12 -0700 (PDT)
+ AJvYcCW9Ys8zXU+SLE73bhNCYMKI2mUqsZGsR5PhXFwTeUthNQ0E5x4dpHU5ByxufiDvft427O2VK/ubLQ==@nongnu.org
+X-Gm-Message-State: AOJu0YwYBiXH+ElDlBfW1UUXeCCdr+9a1cjCFuWnCKMX45tPWjT2wok/
+ gyK+JWp/GGDHYpEMxIkiwDIN90SgIPLhnpUxxMJY5sjSJ0YSxGOZQJC2Bw==
+X-Gm-Gg: ASbGncsU3BQWghfGrrS1mg/8d1DwLZ/HoegM4pYdqqSWr1DgO+JsYoV4HSHKWsVb2zq
+ ju1MdYXot9Qll6b0083DbEbui7gnWZngl+Kk5iTdC9md8BsU3a6uFUrPhP29zbqZHBLiAC21qac
+ iXlndXexSN2K4IrqiF8oAkGJ8EUVD/H5ooZkDkQ1V9eZdOB3UL0COdRv7T/AYTbd/TaZZwxQRqG
+ mPgj9gvygHzIBWrp1zrtSs+Q98k6wkcYADQpQxYYwu2Jap6d/C8z1fkTeNURGMly0Bswmy9Jk7U
+ jdHZqzf63I23qLfwkv2vFJF7rcvzwXMxmNXEBR5cnM5WeZvkRwY=
+X-Google-Smtp-Source: AGHT+IEN2raaLOqVO0ZPFX4PCEgIolIjqfTVMFmar8x3HrSJ/wAhF1QBtB3+lHf9sRyqOCUeLk3sHA==
+X-Received: by 2002:a17:902:d2cd:b0:224:255b:c934 with SMTP id
+ d9443c01a7336-225931af86amr33975445ad.51.1741698059286; 
+ Tue, 11 Mar 2025 06:00:59 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.10
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 05:59:12 -0700 (PDT)
+ Tue, 11 Mar 2025 06:00:58 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	qemu-ppc@nongnu.org
-Subject: [PULL 13/72] ppc/pnv/occ: Update pstate frequency tables
-Date: Tue, 11 Mar 2025 22:57:07 +1000
-Message-ID: <20250311125815.903177-14-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 50/72] target/ppc: Restrict various common helpers to TCG
+Date: Tue, 11 Mar 2025 22:57:44 +1000
+Message-ID: <20250311125815.903177-51-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,48 +101,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OCC pstate frequencies are in kHz, so the OCC data was 3-4MHz. Upgrade
-to GHz. Make each pstate have a different frequency.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Move helpers common to system/user emulation to tcg-excp_helper.c.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-ID: <20250127102620.39159-12-philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_occ.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ target/ppc/excp_helper.c     | 141 ----------------------------------
+ target/ppc/tcg-excp_helper.c | 143 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 143 insertions(+), 141 deletions(-)
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index 22b07a415a..19ccfe1bbf 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -682,11 +682,11 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
-         static_data.v2.pstate_turbo = -1;
-         static_data.v2.pstate_ultra_turbo = 0;
-         static_data.v2.pstates[0].id = 0;
--        static_data.v2.pstates[1].freq_khz = cpu_to_be32(3000);
-+        static_data.v2.pstates[1].freq_khz = cpu_to_be32(4000000);
-         static_data.v2.pstates[1].id = -1;
--        static_data.v2.pstates[1].freq_khz = cpu_to_be32(3000);
-+        static_data.v2.pstates[1].freq_khz = cpu_to_be32(3000000);
-         static_data.v2.pstates[2].id = -2;
--        static_data.v2.pstates[2].freq_khz = cpu_to_be32(3000);
-+        static_data.v2.pstates[2].freq_khz = cpu_to_be32(2000000);
-         for (i = 0; i < chip->nr_cores; i++) {
-             static_data.v2.core_max[i] = 1;
-         }
-@@ -702,11 +702,11 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
-         static_data.v9.pstate_turbo = 1;
-         static_data.v9.pstate_ultra_turbo = 0;
-         static_data.v9.pstates[0].id = 0;
--        static_data.v9.pstates[0].freq_khz = cpu_to_be32(3000);
-+        static_data.v9.pstates[0].freq_khz = cpu_to_be32(4000000);
-         static_data.v9.pstates[1].id = 1;
--        static_data.v9.pstates[1].freq_khz = cpu_to_be32(3000);
-+        static_data.v9.pstates[1].freq_khz = cpu_to_be32(3000000);
-         static_data.v9.pstates[2].id = 2;
--        static_data.v9.pstates[2].freq_khz = cpu_to_be32(3000);
-+        static_data.v9.pstates[2].freq_khz = cpu_to_be32(2000000);
-         for (i = 0; i < chip->nr_cores; i++) {
-             static_data.v9.core_max[i] = 1;
-         }
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 6a12402b23..511e27f726 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -2711,148 +2711,7 @@ void helper_rfmci(CPUPPCState *env)
+     /* FIXME: choose CSRR1 or MCSRR1 based on cpu type */
+     do_rfi(env, env->spr[SPR_BOOKE_MCSRR0], env->spr[SPR_BOOKE_MCSRR1]);
+ }
+-#endif /* !CONFIG_USER_ONLY */
+-
+-void helper_TW(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
+-               uint32_t flags)
+-{
+-    if (!likely(!(((int32_t)arg1 < (int32_t)arg2 && (flags & 0x10)) ||
+-                  ((int32_t)arg1 > (int32_t)arg2 && (flags & 0x08)) ||
+-                  ((int32_t)arg1 == (int32_t)arg2 && (flags & 0x04)) ||
+-                  ((uint32_t)arg1 < (uint32_t)arg2 && (flags & 0x02)) ||
+-                  ((uint32_t)arg1 > (uint32_t)arg2 && (flags & 0x01))))) {
+-        raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
+-                               POWERPC_EXCP_TRAP, GETPC());
+-    }
+-}
+-
+-#ifdef TARGET_PPC64
+-void helper_TD(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
+-               uint32_t flags)
+-{
+-    if (!likely(!(((int64_t)arg1 < (int64_t)arg2 && (flags & 0x10)) ||
+-                  ((int64_t)arg1 > (int64_t)arg2 && (flags & 0x08)) ||
+-                  ((int64_t)arg1 == (int64_t)arg2 && (flags & 0x04)) ||
+-                  ((uint64_t)arg1 < (uint64_t)arg2 && (flags & 0x02)) ||
+-                  ((uint64_t)arg1 > (uint64_t)arg2 && (flags & 0x01))))) {
+-        raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
+-                               POWERPC_EXCP_TRAP, GETPC());
+-    }
+-}
+-#endif /* TARGET_PPC64 */
+-
+-static uint32_t helper_SIMON_LIKE_32_64(uint32_t x, uint64_t key, uint32_t lane)
+-{
+-    const uint16_t c = 0xfffc;
+-    const uint64_t z0 = 0xfa2561cdf44ac398ULL;
+-    uint16_t z = 0, temp;
+-    uint16_t k[32], eff_k[32], xleft[33], xright[33], fxleft[32];
+-
+-    for (int i = 3; i >= 0; i--) {
+-        k[i] = key & 0xffff;
+-        key >>= 16;
+-    }
+-    xleft[0] = x & 0xffff;
+-    xright[0] = (x >> 16) & 0xffff;
+-
+-    for (int i = 0; i < 28; i++) {
+-        z = (z0 >> (63 - i)) & 1;
+-        temp = ror16(k[i + 3], 3) ^ k[i + 1];
+-        k[i + 4] = c ^ z ^ k[i] ^ temp ^ ror16(temp, 1);
+-    }
+-
+-    for (int i = 0; i < 8; i++) {
+-        eff_k[4 * i + 0] = k[4 * i + ((0 + lane) % 4)];
+-        eff_k[4 * i + 1] = k[4 * i + ((1 + lane) % 4)];
+-        eff_k[4 * i + 2] = k[4 * i + ((2 + lane) % 4)];
+-        eff_k[4 * i + 3] = k[4 * i + ((3 + lane) % 4)];
+-    }
+-
+-    for (int i = 0; i < 32; i++) {
+-        fxleft[i] = (rol16(xleft[i], 1) &
+-            rol16(xleft[i], 8)) ^ rol16(xleft[i], 2);
+-        xleft[i + 1] = xright[i] ^ fxleft[i] ^ eff_k[i];
+-        xright[i + 1] = xleft[i];
+-    }
+-
+-    return (((uint32_t)xright[32]) << 16) | xleft[32];
+-}
+ 
+-static uint64_t hash_digest(uint64_t ra, uint64_t rb, uint64_t key)
+-{
+-    uint64_t stage0_h = 0ULL, stage0_l = 0ULL;
+-    uint64_t stage1_h, stage1_l;
+-
+-    for (int i = 0; i < 4; i++) {
+-        stage0_h |= ror64(rb & 0xff, 8 * (2 * i + 1));
+-        stage0_h |= ((ra >> 32) & 0xff) << (8 * 2 * i);
+-        stage0_l |= ror64((rb >> 32) & 0xff, 8 * (2 * i + 1));
+-        stage0_l |= (ra & 0xff) << (8 * 2 * i);
+-        rb >>= 8;
+-        ra >>= 8;
+-    }
+-
+-    stage1_h = (uint64_t)helper_SIMON_LIKE_32_64(stage0_h >> 32, key, 0) << 32;
+-    stage1_h |= helper_SIMON_LIKE_32_64(stage0_h, key, 1);
+-    stage1_l = (uint64_t)helper_SIMON_LIKE_32_64(stage0_l >> 32, key, 2) << 32;
+-    stage1_l |= helper_SIMON_LIKE_32_64(stage0_l, key, 3);
+-
+-    return stage1_h ^ stage1_l;
+-}
+-
+-static void do_hash(CPUPPCState *env, target_ulong ea, target_ulong ra,
+-                    target_ulong rb, uint64_t key, bool store)
+-{
+-    uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
+-
+-    if (store) {
+-        cpu_stq_data_ra(env, ea, calculated_hash, GETPC());
+-    } else {
+-        loaded_hash = cpu_ldq_data_ra(env, ea, GETPC());
+-        if (loaded_hash != calculated_hash) {
+-            raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
+-                POWERPC_EXCP_TRAP, GETPC());
+-        }
+-    }
+-}
+-
+-#include "qemu/guest-random.h"
+-
+-#ifdef TARGET_PPC64
+-#define HELPER_HASH(op, key, store, dexcr_aspect)                             \
+-void helper_##op(CPUPPCState *env, target_ulong ea, target_ulong ra,          \
+-                 target_ulong rb)                                             \
+-{                                                                             \
+-    if (env->msr & R_MSR_PR_MASK) {                                           \
+-        if (!(env->spr[SPR_DEXCR] & R_DEXCR_PRO_##dexcr_aspect##_MASK ||      \
+-            env->spr[SPR_HDEXCR] & R_HDEXCR_ENF_##dexcr_aspect##_MASK))       \
+-            return;                                                           \
+-    } else if (!(env->msr & R_MSR_HV_MASK)) {                                 \
+-        if (!(env->spr[SPR_DEXCR] & R_DEXCR_PNH_##dexcr_aspect##_MASK ||      \
+-            env->spr[SPR_HDEXCR] & R_HDEXCR_ENF_##dexcr_aspect##_MASK))       \
+-            return;                                                           \
+-    } else if (!(env->msr & R_MSR_S_MASK)) {                                  \
+-        if (!(env->spr[SPR_HDEXCR] & R_HDEXCR_HNU_##dexcr_aspect##_MASK))     \
+-            return;                                                           \
+-    }                                                                         \
+-                                                                              \
+-    do_hash(env, ea, ra, rb, key, store);                                     \
+-}
+-#else
+-#define HELPER_HASH(op, key, store, dexcr_aspect)                             \
+-void helper_##op(CPUPPCState *env, target_ulong ea, target_ulong ra,          \
+-                 target_ulong rb)                                             \
+-{                                                                             \
+-    do_hash(env, ea, ra, rb, key, store);                                     \
+-}
+-#endif /* TARGET_PPC64 */
+-
+-HELPER_HASH(HASHST, env->spr[SPR_HASHKEYR], true, NPHIE)
+-HELPER_HASH(HASHCHK, env->spr[SPR_HASHKEYR], false, NPHIE)
+-HELPER_HASH(HASHSTP, env->spr[SPR_HASHPKEYR], true, PHIE)
+-HELPER_HASH(HASHCHKP, env->spr[SPR_HASHPKEYR], false, PHIE)
+-
+-#ifndef CONFIG_USER_ONLY
+ /* Embedded.Processor Control */
+ static int dbell2irq(target_ulong rb)
+ {
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index 268a161459..2459d2d095 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -66,6 +66,149 @@ void raise_exception(CPUPPCState *env, uint32_t exception)
+     raise_exception_err_ra(env, exception, 0, 0);
+ }
+ 
++#endif /* !CONFIG_USER_ONLY */
++
++void helper_TW(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
++               uint32_t flags)
++{
++    if (!likely(!(((int32_t)arg1 < (int32_t)arg2 && (flags & 0x10)) ||
++                  ((int32_t)arg1 > (int32_t)arg2 && (flags & 0x08)) ||
++                  ((int32_t)arg1 == (int32_t)arg2 && (flags & 0x04)) ||
++                  ((uint32_t)arg1 < (uint32_t)arg2 && (flags & 0x02)) ||
++                  ((uint32_t)arg1 > (uint32_t)arg2 && (flags & 0x01))))) {
++        raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
++                               POWERPC_EXCP_TRAP, GETPC());
++    }
++}
++
++#ifdef TARGET_PPC64
++void helper_TD(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
++               uint32_t flags)
++{
++    if (!likely(!(((int64_t)arg1 < (int64_t)arg2 && (flags & 0x10)) ||
++                  ((int64_t)arg1 > (int64_t)arg2 && (flags & 0x08)) ||
++                  ((int64_t)arg1 == (int64_t)arg2 && (flags & 0x04)) ||
++                  ((uint64_t)arg1 < (uint64_t)arg2 && (flags & 0x02)) ||
++                  ((uint64_t)arg1 > (uint64_t)arg2 && (flags & 0x01))))) {
++        raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
++                               POWERPC_EXCP_TRAP, GETPC());
++    }
++}
++#endif /* TARGET_PPC64 */
++
++static uint32_t helper_SIMON_LIKE_32_64(uint32_t x, uint64_t key, uint32_t lane)
++{
++    const uint16_t c = 0xfffc;
++    const uint64_t z0 = 0xfa2561cdf44ac398ULL;
++    uint16_t z = 0, temp;
++    uint16_t k[32], eff_k[32], xleft[33], xright[33], fxleft[32];
++
++    for (int i = 3; i >= 0; i--) {
++        k[i] = key & 0xffff;
++        key >>= 16;
++    }
++    xleft[0] = x & 0xffff;
++    xright[0] = (x >> 16) & 0xffff;
++
++    for (int i = 0; i < 28; i++) {
++        z = (z0 >> (63 - i)) & 1;
++        temp = ror16(k[i + 3], 3) ^ k[i + 1];
++        k[i + 4] = c ^ z ^ k[i] ^ temp ^ ror16(temp, 1);
++    }
++
++    for (int i = 0; i < 8; i++) {
++        eff_k[4 * i + 0] = k[4 * i + ((0 + lane) % 4)];
++        eff_k[4 * i + 1] = k[4 * i + ((1 + lane) % 4)];
++        eff_k[4 * i + 2] = k[4 * i + ((2 + lane) % 4)];
++        eff_k[4 * i + 3] = k[4 * i + ((3 + lane) % 4)];
++    }
++
++    for (int i = 0; i < 32; i++) {
++        fxleft[i] = (rol16(xleft[i], 1) &
++            rol16(xleft[i], 8)) ^ rol16(xleft[i], 2);
++        xleft[i + 1] = xright[i] ^ fxleft[i] ^ eff_k[i];
++        xright[i + 1] = xleft[i];
++    }
++
++    return (((uint32_t)xright[32]) << 16) | xleft[32];
++}
++
++static uint64_t hash_digest(uint64_t ra, uint64_t rb, uint64_t key)
++{
++    uint64_t stage0_h = 0ULL, stage0_l = 0ULL;
++    uint64_t stage1_h, stage1_l;
++
++    for (int i = 0; i < 4; i++) {
++        stage0_h |= ror64(rb & 0xff, 8 * (2 * i + 1));
++        stage0_h |= ((ra >> 32) & 0xff) << (8 * 2 * i);
++        stage0_l |= ror64((rb >> 32) & 0xff, 8 * (2 * i + 1));
++        stage0_l |= (ra & 0xff) << (8 * 2 * i);
++        rb >>= 8;
++        ra >>= 8;
++    }
++
++    stage1_h = (uint64_t)helper_SIMON_LIKE_32_64(stage0_h >> 32, key, 0) << 32;
++    stage1_h |= helper_SIMON_LIKE_32_64(stage0_h, key, 1);
++    stage1_l = (uint64_t)helper_SIMON_LIKE_32_64(stage0_l >> 32, key, 2) << 32;
++    stage1_l |= helper_SIMON_LIKE_32_64(stage0_l, key, 3);
++
++    return stage1_h ^ stage1_l;
++}
++
++static void do_hash(CPUPPCState *env, target_ulong ea, target_ulong ra,
++                    target_ulong rb, uint64_t key, bool store)
++{
++    uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
++
++    if (store) {
++        cpu_stq_data_ra(env, ea, calculated_hash, GETPC());
++    } else {
++        loaded_hash = cpu_ldq_data_ra(env, ea, GETPC());
++        if (loaded_hash != calculated_hash) {
++            raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
++                POWERPC_EXCP_TRAP, GETPC());
++        }
++    }
++}
++
++#include "qemu/guest-random.h"
++
++#ifdef TARGET_PPC64
++#define HELPER_HASH(op, key, store, dexcr_aspect)                             \
++void helper_##op(CPUPPCState *env, target_ulong ea, target_ulong ra,          \
++                 target_ulong rb)                                             \
++{                                                                             \
++    if (env->msr & R_MSR_PR_MASK) {                                           \
++        if (!(env->spr[SPR_DEXCR] & R_DEXCR_PRO_##dexcr_aspect##_MASK ||      \
++            env->spr[SPR_HDEXCR] & R_HDEXCR_ENF_##dexcr_aspect##_MASK))       \
++            return;                                                           \
++    } else if (!(env->msr & R_MSR_HV_MASK)) {                                 \
++        if (!(env->spr[SPR_DEXCR] & R_DEXCR_PNH_##dexcr_aspect##_MASK ||      \
++            env->spr[SPR_HDEXCR] & R_HDEXCR_ENF_##dexcr_aspect##_MASK))       \
++            return;                                                           \
++    } else if (!(env->msr & R_MSR_S_MASK)) {                                  \
++        if (!(env->spr[SPR_HDEXCR] & R_HDEXCR_HNU_##dexcr_aspect##_MASK))     \
++            return;                                                           \
++    }                                                                         \
++                                                                              \
++    do_hash(env, ea, ra, rb, key, store);                                     \
++}
++#else
++#define HELPER_HASH(op, key, store, dexcr_aspect)                             \
++void helper_##op(CPUPPCState *env, target_ulong ea, target_ulong ra,          \
++                 target_ulong rb)                                             \
++{                                                                             \
++    do_hash(env, ea, ra, rb, key, store);                                     \
++}
++#endif /* TARGET_PPC64 */
++
++HELPER_HASH(HASHST, env->spr[SPR_HASHKEYR], true, NPHIE)
++HELPER_HASH(HASHCHK, env->spr[SPR_HASHKEYR], false, NPHIE)
++HELPER_HASH(HASHSTP, env->spr[SPR_HASHPKEYR], true, PHIE)
++HELPER_HASH(HASHCHKP, env->spr[SPR_HASHPKEYR], false, PHIE)
++
++#ifndef CONFIG_USER_ONLY
++
+ void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+                                  MMUAccessType access_type,
+                                  int mmu_idx, uintptr_t retaddr)
 -- 
 2.47.1
 
