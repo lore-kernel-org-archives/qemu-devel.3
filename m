@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D2A1C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23CBCC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzLk-0004eT-UM; Tue, 11 Mar 2025 09:08:54 -0400
+	id 1trzKw-0002Sa-Vy; Tue, 11 Mar 2025 09:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLW-0004T6-HN
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:37 -0400
+ id 1trzKu-0002OO-V8
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:07:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLU-0001dm-Kl
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:34 -0400
+ id 1trzKs-0001X4-LG
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:07:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741698510;
+ s=mimecast20190719; t=1741698473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LEAblqs+/QeL64NIpBD9nW8zWVA/2GdqUlR+17Zc9i4=;
- b=XdrvKYjP6/63uQtscr39k8dFD1lTNiP5jGlgxoCry2itv1f6aqc/rvD8BxsPZ+adBydrA2
- XAyXpSxhq6vHljlPwAkZmuXF+PQDewacDgVQ//TuvGavZSlU4Qt8F2dTWiByuKjXhyUI3M
- aFZUY4H1cNEnBX+p+aEiQGirR0Ar2zc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=S5ah7wwVDmAwIByLuIRvpKyrLCczo4QpepdYveSxAe8=;
+ b=DPbSNTy2Mq4a9Ph9aZHAC80K7YM4y6E6drQfojpfJbumY00IhO5iKZFS2/vThx7eGNiMH6
+ rl9pZeFgY/+Fr6LFbC+3KGJO4NuzDOJ+ej3s7GJY8IIaxpK7O/6wIipCY7oTD1gD3Tj9a3
+ rIzLng2BZEtphklnQEYjTjQnpC0b8oI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-dID0CHKYM9uP4nnfaGvw5w-1; Tue,
- 11 Mar 2025 09:08:27 -0400
-X-MC-Unique: dID0CHKYM9uP4nnfaGvw5w-1
-X-Mimecast-MFC-AGG-ID: dID0CHKYM9uP4nnfaGvw5w_1741698506
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-15-WyQUcPdlNJmVWh7aLn9fgw-1; Tue,
+ 11 Mar 2025 09:07:49 -0400
+X-MC-Unique: WyQUcPdlNJmVWh7aLn9fgw-1
+X-Mimecast-MFC-AGG-ID: WyQUcPdlNJmVWh7aLn9fgw_1741698468
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A5251800257; Tue, 11 Mar 2025 13:08:26 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4AE0419560BA; Tue, 11 Mar 2025 13:07:47 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.91])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A8AD51800944; Tue, 11 Mar 2025 13:08:24 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8D9841955BCB; Tue, 11 Mar 2025 13:07:44 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
@@ -57,15 +56,13 @@ Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
  "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 08/14] virtio-blk: extract cleanup_iothread_vq_mapping()
- function
-Date: Tue, 11 Mar 2025 21:07:35 +0800
-Message-ID: <20250311130741.1047903-9-stefanha@redhat.com>
-In-Reply-To: <20250311130741.1047903-1-stefanha@redhat.com>
-References: <20250311130741.1047903-1-stefanha@redhat.com>
+Subject: [PATCH v3 00/14] virtio-scsi: add iothread-vq-mapping parameter
+Date: Tue, 11 Mar 2025 21:07:27 +0800
+Message-ID: <20250311130741.1047903-1-stefanha@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -75,7 +72,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,68 +88,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the cleanup function that must be called after
-apply_iothread_vq_mapping() succeeds. virtio-scsi will need this
-function too, so extract it.
+v3:
+- Use vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED] as the AioContext for the Block
+  Backend [Kevin]
+v2:
+- Only expose cmd vqs via iothread-vq-mapping [Kevin, Peter]
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/block/virtio-blk.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+Implement --device virtio-scsi-pci,iothread-vq-mapping= support so that
+virtqueues can be assigned to different IOThreads. This improves SMP guest
+scalability where I/O-intensive applications can become bottlenecked on a
+single IOThread.
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 5135b4d8f1..21b1b768ed 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1495,6 +1495,9 @@ validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
-  * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
-  * the iothread-vq-mapping parameter in @iothread_vq_mapping_list.
-  *
-+ * cleanup_iothread_vq_mapping() must be called to free IOThread object
-+ * references after this function returns success.
-+ *
-  * Returns: %true on success, %false on failure.
-  **/
- static bool apply_iothread_vq_mapping(
-@@ -1545,6 +1548,23 @@ static bool apply_iothread_vq_mapping(
-     return true;
- }
- 
-+/**
-+ * cleanup_iothread_vq_mapping:
-+ * @list: The mapping of virtqueues to IOThreads.
-+ *
-+ * Release IOThread object references that were acquired by
-+ * apply_iothread_vq_mapping().
-+ */
-+static void cleanup_iothread_vq_mapping(IOThreadVirtQueueMappingList *list)
-+{
-+    IOThreadVirtQueueMappingList *node;
-+
-+    for (node = list; node; node = node->next) {
-+        IOThread *iothread = iothread_by_id(node->value->iothread);
-+        object_unref(OBJECT(iothread));
-+    }
-+}
-+
- /* Context: BQL held */
- static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
- {
-@@ -1611,12 +1631,7 @@ static void virtio_blk_vq_aio_context_cleanup(VirtIOBlock *s)
-     assert(!s->ioeventfd_started);
- 
-     if (conf->iothread_vq_mapping_list) {
--        IOThreadVirtQueueMappingList *node;
--
--        for (node = conf->iothread_vq_mapping_list; node; node = node->next) {
--            IOThread *iothread = iothread_by_id(node->value->iothread);
--            object_unref(OBJECT(iothread));
--        }
-+        cleanup_iothread_vq_mapping(conf->iothread_vq_mapping_list);
-     }
- 
-     if (conf->iothread) {
+The following benchmark results show the effect of iothread-vq-mapping. fio
+randread 4k iodepth=64 results from a 4 vCPU guest with an Intel P4800X SSD:
+iothreads IOPS
+------------------------------
+1         189576
+2         312698
+4         346744
+
+The virtio-scsi device model and core SCSI emulation currently assume that
+requests are processed in a single AioContext. This patch series goes about
+modifying this as follows:
+
+scsi-disk: drop unused SCSIDiskState->bh field
+dma: use current AioContext for dma_blk_io()
+
+Make dma-helpers.c support the QEMU multi-queue block layer by using
+qemu_get_current_aio_context().
+
+scsi: track per-SCSIRequest AioContext
+scsi: introduce requests_lock
+
+Make the core SCSI emulation code support processing requests in multiple
+AioContexts by protecting the per-SCSIDevice requests list.
+
+virtio-scsi: introduce event and ctrl virtqueue locks
+virtio-scsi: protect events_dropped field
+virtio-scsi: perform TMFs in appropriate AioContexts
+
+Make the virtio-scsi emulation code support processing requests in multiple
+AioContexts. The event and ctrl virtqueues can interact with multiple
+AioContexts. Especially the SCSI Task Management Functions (TMFs) handled by
+the ctrl virtqueue need to be made thread-safe.
+
+virtio-blk: extract cleanup_iothread_vq_mapping() function
+virtio-blk: tidy up iothread_vq_mapping functions
+virtio: extract iothread-vq-mapping.h API
+virtio-scsi: add iothread-vq-mapping parameter
+
+Port over the iothread-vq-mapping qdev property from virtio-blk to virtio-scsi.
+
+virtio-scsi: handle ctrl virtqueue in main loop
+
+Simplify TMF handling now that there is no longer a single AioContext where all
+requests are processed.
+
+virtio-scsi: only expose cmd vqs via iothread-vq-mapping
+
+Make the user interface more intuitive.
+
+Stefan Hajnoczi (14):
+  scsi-disk: drop unused SCSIDiskState->bh field
+  dma: use current AioContext for dma_blk_io()
+  scsi: track per-SCSIRequest AioContext
+  scsi: introduce requests_lock
+  virtio-scsi: introduce event and ctrl virtqueue locks
+  virtio-scsi: protect events_dropped field
+  virtio-scsi: perform TMFs in appropriate AioContexts
+  virtio-blk: extract cleanup_iothread_vq_mapping() function
+  virtio-blk: tidy up iothread_vq_mapping functions
+  virtio: extract iothread-vq-mapping.h API
+  virtio-scsi: add iothread-vq-mapping parameter
+  fixup! virtio-scsi: add iothread-vq-mapping parameter
+  virtio-scsi: handle ctrl virtqueue in main loop
+  virtio-scsi: only expose cmd vqs via iothread-vq-mapping
+
+ include/hw/scsi/scsi.h                  |   8 +-
+ include/hw/virtio/iothread-vq-mapping.h |  45 ++
+ include/hw/virtio/virtio-scsi.h         |  15 +-
+ include/system/dma.h                    |   3 +-
+ hw/block/virtio-blk.c                   | 132 +-----
+ hw/ide/core.c                           |   3 +-
+ hw/ide/macio.c                          |   3 +-
+ hw/scsi/scsi-bus.c                      | 121 ++++--
+ hw/scsi/scsi-disk.c                     |  24 +-
+ hw/scsi/virtio-scsi-dataplane.c         | 103 +++--
+ hw/scsi/virtio-scsi.c                   | 542 ++++++++++++++----------
+ hw/virtio/iothread-vq-mapping.c         | 131 ++++++
+ system/dma-helpers.c                    |   8 +-
+ hw/virtio/meson.build                   |   1 +
+ 14 files changed, 683 insertions(+), 456 deletions(-)
+ create mode 100644 include/hw/virtio/iothread-vq-mapping.h
+ create mode 100644 hw/virtio/iothread-vq-mapping.c
+
 -- 
 2.48.1
 
