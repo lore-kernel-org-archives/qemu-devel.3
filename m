@@ -4,58 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21801C28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B34EFC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 16:02:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts21h-0003T0-2v; Tue, 11 Mar 2025 12:00:18 -0400
+	id 1ts22p-0004GZ-7D; Tue, 11 Mar 2025 12:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ts21E-000325-UT
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:59:49 -0400
+ id 1ts21l-0003de-Dg
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:00:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ts21B-0005J8-Pi
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:59:47 -0400
+ id 1ts21i-0005bp-Rk
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 12:00:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741708782;
+ s=mimecast20190719; t=1741708816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0KzAbPAe7MgmTFNN7FC6r15PAqJskKuiy8zJAo76hM8=;
- b=eQkqGZmH4ZJTJbDQn/Wh5H64Q8UyJ5b40wMx7MOTuXSNlwMktSOoLfvwMkdEUewNGv42sl
- bfiKU2ckbpsxq8I29F2bs7guidfjIcwk1u2Dj1CYLdpRySO/9PpR88QiA2ykI7+AjkcjbD
- VLk0hfGBBqtdPj6YNuVhMezkHtpmKBk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v6uonVcLAUMyD9lvZqKLE1g4T6gzLIaowPGxjxg0WN8=;
+ b=VqUQLkBb2CD0uke0pAWTy6TwZy+Snmwdf2HoEkbfktMMh7F7lY/PZ0Cp08QZpB2XuP7Ahr
+ DVfaz6v2eI8oKOQWg7mX+ZleF/4XQcU9VIsNKjyCPlUJQOyY6o8GC3ZwsNQfihMm+cGgKl
+ 8oQfLCf0IL1rdK5aI2dFFGnupv6eY4M=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-orMjJs9oP-qGnZCXDp2Jcg-1; Tue,
- 11 Mar 2025 11:59:41 -0400
-X-MC-Unique: orMjJs9oP-qGnZCXDp2Jcg-1
-X-Mimecast-MFC-AGG-ID: orMjJs9oP-qGnZCXDp2Jcg_1741708780
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-ANgxlS43PsOFKqL_UFTaBg-1; Tue,
+ 11 Mar 2025 12:00:15 -0400
+X-MC-Unique: ANgxlS43PsOFKqL_UFTaBg-1
+X-Mimecast-MFC-AGG-ID: ANgxlS43PsOFKqL_UFTaBg_1741708814
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63E271955D4B
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 15:59:40 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B67C7195608D
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 16:00:13 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C6CF718001E9; Tue, 11 Mar 2025 15:59:37 +0000 (UTC)
+ id C2F1F1828A95; Tue, 11 Mar 2025 16:00:11 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: kraxel@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH for-10.1 00/10] Support vdagent migration
-Date: Tue, 11 Mar 2025 19:59:22 +0400
-Message-ID: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
+Subject: [PATCH for-10.1 04/10] ui/clipboard: add vmstate_cbinfo
+Date: Tue, 11 Mar 2025 19:59:26 +0400
+Message-ID: <20250311155932.1472092-5-marcandre.lureau@redhat.com>
+In-Reply-To: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
+References: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
@@ -86,41 +89,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Add a VMStateDescriptor for QemuClipboardInfo.
 
-iQJQBAABCAA6FiEEh6m9kz+HxgbSdvYt2ujhCXWWnOUFAmfQXbMcHG1hcmNhbmRy
-ZS5sdXJlYXVAcmVkaGF0LmNvbQAKCRDa6OEJdZac5bmLD/49TJdk8vSnG/G53f3Z
-UdUGdDiv98lAr/1wPZvmLPGfxiVLrVQK9Rarjnq9+dzmjoJC+w8THyPIvlvlKAQO
-aNSe5LV2lcYFLZwJqXQdGHTEWWZX3BmXroSFY06F9znX4lrNSg/cxLaI+Lt+dbEt
-BA9IIMzGYB+zhkgJh86Yji1Ioz29qwMgb4etf4OtP3PqT7/djWxxdlYLmyqN7D13
-seHAkvhaA7sqglLcfUv0MjrNA1Yxg3QQmbmiErpyaHo9kQ2AuV49THZl5/Pe3WR5
-FJAeO83G8hdxdqFuDvnXB0ID2klqWYkZTJsTD75F1hU1yqszkVt8k4mUWubTIDNm
-VEFKGz/S+xR2rO0RGgGzMPzEm0FSPbLq1+U2ETRf3xBns0Jbqe6njHeLGAzmOx9p
-3F8fkM4mzIrs3oOU/e7dlxOl9N6uQhVfJW6G+9QMLPLveIpNR6CGphbgHuMK8PPL
-vZ1WNrGa/xoHvqQi2FvIJJrnKYYBJDXQW1edM+apDgO9jBSmiO5XlKZjeNHwgZ6J
-0sNmJUKCmk2SPGtFHdpdRfjfYfN2eR07eTVnVgstpHCUZi0nRz+4A6yq4k0SQLQH
-ZWsaq6cdZyfNOOdSHaLfI/2/36eiLpVCAuwn+AjK+XvPR6mQc9rwebV8N5nXLEZ8
-OFcig1i00RhHBRJFPrOjWIFIQg==
-=iTg5
------END PGP SIGNATURE-----
+Each clipboard owner will have to save its QemuClipboardInfo and
+reregister its owned clipboard after loading. (the global cbinfo has
+only pointers to owners, so it can't restore the relation with its owner
+if it was to handle migration)
 
-Marc-André Lureau (10):
-  ui/gtk: warn if setting the clipboard failed
-  ui/clipboard: use int for selection field
-  ui/clipboard: split out QemuClipboardContent
-  ui/clipboard: add vmstate_cbinfo
-  ui/clipboard: delay clipboard update when not running
-  ui/vdagent: replace Buffer with GByteArray
-  ui/vdagent: keep "connected" state
-  ui/vdagent: factor out clipboard peer registration
-  ui/vdagent: add migration support
-  ui/vdagent: remove migration blocker
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ include/ui/clipboard.h |  3 +++
+ ui/clipboard.c         | 26 ++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
- include/ui/clipboard.h |  31 +++++--
- ui/clipboard.c         |  66 +++++++++++++-
- ui/gtk-clipboard.c     |  13 ++-
- ui/vdagent.c           | 202 +++++++++++++++++++++++++++++++++++------
- 4 files changed, 268 insertions(+), 44 deletions(-)
-
+diff --git a/include/ui/clipboard.h b/include/ui/clipboard.h
+index 88cfff91ef..62a96ce9ff 100644
+--- a/include/ui/clipboard.h
++++ b/include/ui/clipboard.h
+@@ -2,6 +2,7 @@
+ #define QEMU_CLIPBOARD_H
+ 
+ #include "qemu/notify.h"
++#include "migration/vmstate.h"
+ 
+ /**
+  * DOC: Introduction
+@@ -27,6 +28,8 @@ typedef struct QemuClipboardNotify QemuClipboardNotify;
+ typedef struct QemuClipboardInfo QemuClipboardInfo;
+ typedef struct QemuClipboardContent QemuClipboardContent;
+ 
++extern const VMStateDescription vmstate_cbinfo;
++
+ /**
+  * enum QemuClipboardType
+  *
+diff --git a/ui/clipboard.c b/ui/clipboard.c
+index 132086eb13..f5db60c63d 100644
+--- a/ui/clipboard.c
++++ b/ui/clipboard.c
+@@ -7,6 +7,32 @@ static NotifierList clipboard_notifiers =
+ 
+ static QemuClipboardInfo *cbinfo[QEMU_CLIPBOARD_SELECTION__COUNT];
+ 
++static const VMStateDescription vmstate_cbcontent = {
++    .name = "clipboard/content",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(available, QemuClipboardContent),
++        VMSTATE_BOOL(requested, QemuClipboardContent),
++        VMSTATE_UINT32(size, QemuClipboardContent),
++        VMSTATE_VBUFFER_ALLOC_UINT32(data, QemuClipboardContent, 0, 0, size),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++const VMStateDescription vmstate_cbinfo = {
++    .name = "clipboard",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields = (const VMStateField[]) {
++        VMSTATE_INT32(selection, QemuClipboardInfo),
++        VMSTATE_BOOL(has_serial, QemuClipboardInfo),
++        VMSTATE_UINT32(serial, QemuClipboardInfo),
++        VMSTATE_STRUCT_ARRAY(types, QemuClipboardInfo, QEMU_CLIPBOARD_TYPE__COUNT, 0, vmstate_cbcontent, QemuClipboardContent),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ void qemu_clipboard_peer_register(QemuClipboardPeer *peer)
+ {
+     notifier_list_add(&clipboard_notifiers, &peer->notifier);
 -- 
 2.47.0
 
