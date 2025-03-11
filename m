@@ -4,89 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C5DC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FB6C28B30
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzJP-0004Hz-4m; Tue, 11 Mar 2025 09:06:23 -0400
+	id 1trzee-0003um-TP; Tue, 11 Mar 2025 09:28:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEZ-0005Vr-Qf; Tue, 11 Mar 2025 09:01:27 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzEV-0000G9-Uv; Tue, 11 Mar 2025 09:01:22 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2feb91a25bdso8350772a91.1; 
- Tue, 11 Mar 2025 06:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741698078; x=1742302878; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wiqaFq1CDDEcKauctJ0QrZkvhAfYnv9s43KRAQPzSbk=;
- b=jhN5LRDOEOV3/BwiWc7xG9BytRBVTP0ZlL/jGLUaSF+VH+NjQ2IGBj+MNMIYfJ1eKF
- eMfajtBXpDfTz7oKMFjQDkqw5H1pbDr51u6+A+xkQtGahxcpklq0rokdj4n4MmSFoIRc
- ch33CWZGwLkun6aT+S0EDiMedGFe6KdJRSI7woGBYFG+307+TXrm4FfU9cMAAERobeKs
- L9vZYJL0ZfAquAXSK1lng1WgApIOPCKrFoGX82G1vy5FMz2FYDjlbI0bWApQfFfouwSR
- Y4QEK5Wj8sG1C6zC19u6qhAZNX4eVDD6qtwIQnaDS/FzZm5OvvkxXzX96VtFHHJe60PW
- lHUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741698078; x=1742302878;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wiqaFq1CDDEcKauctJ0QrZkvhAfYnv9s43KRAQPzSbk=;
- b=Io7S9OMD1Mvf/Rq3JhlQQRxH9RxwbQM+StJ3GeIn10rfJ8jLR8zmST8CoSKDpV7jNG
- p8mzjxM3LbFUVteuSf3TbOICxHci46UeaxOS4RESpafzlr0GVzxre4lI/hypT1V1Ku2I
- y2YGHrkaE72SuS7zI2pZJ1XWSRNOSYBCFPRdln1u5anLyhhMSvF3mGKDuMWZrRpW7g/L
- pFIAu+vOThTJfQbxgTwMSJuOJ8E9Axtokk7fQPFdHyyH6balnnQ+taPvhqDLEyALfOSF
- qoJA7qGBaPDdC2J7A4QujqHCSnM/UN9k6dbfb6O7adXpV3rc840CY2LX8vatmHfFQEqS
- 24Lg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXirWT0qS4NmR21+Ai/yLFBwAIpsQg/SK0rPnihKN3wJrT2xIIm9LrbCkpT/95Mkva9yugfpeJqqg==@nongnu.org
-X-Gm-Message-State: AOJu0YypYlDRJ575Th20UdME2b65WtMVAyE/IVVJCy4OMnl4hyeE//YQ
- Xlev6bf8IZ7PB1RnZnGAQQr5k+WWUOAx7khgTj88ygkk2x9Lu7ME8Bhe2A==
-X-Gm-Gg: ASbGncvvMQn3bwt6Il2wUdrPKYwYbjG0VVF/uCEG/8nW4yBJXjJGLV+jGWQ1pi1b3hl
- 94dOsRjr5eOxqBXODsNxn32iCOAlvM2kKoBZstHGLna1twtA+tECJnWj6zGFfz7rZIeYi/U0xOg
- MAWAt/mPHizPeXUppKbSCln0MSH9mZcg7mWpKy/YdBmhhLDJWMi19H5gmc0D77CLOF3N/Om7O4j
- 15AAZHH7QNwhYrXlLRaZrNffgbjspUkHE+WN1R7vyl9D6Fg0a60hBvurVS9sTbARenNfMEUb7iH
- uvP+x8TeNaOP5tGtCAOrzPDd38mF4Fe7QTYXwopnDttMlx131Ck=
-X-Google-Smtp-Source: AGHT+IFZ4rCUZEjZpe1mFQo3aIobhNdwaD5QnMN0PnEvFwTHHvx+66sIohxoNQUv+G35Fntl0zu/OA==
-X-Received: by 2002:a17:90b:2742:b0:2fe:a8b1:7d8 with SMTP id
- 98e67ed59e1d1-300ff34d643mr4832273a91.25.1741698077824; 
- Tue, 11 Mar 2025 06:01:17 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.151.101])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 06:01:17 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1trzde-0002mS-Dr
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:27:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1trzdb-0005JT-R1
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:27:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741699633;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1pCN17umfgpCN1HAoUixnFiYVxtWYNvop2Aer+fkivc=;
+ b=Du+uJIGcFMVr6zB35outplpgaMQXVy9DJJzQHJAaUTGwg4OIDv7hoeh9tv7LHdx/sq5H72
+ 7rG9+4a0uxd7HEkbUQqV9u15drCJP61pN4fkWC0jGRIuNps9paPx85rKUarXuGhxaJ8qKB
+ gTgIAakbpiP/aS2XHZqU4LUd8uU8kzA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-308-7Mk664qdM7S3LJAtKm383A-1; Tue,
+ 11 Mar 2025 09:27:10 -0400
+X-MC-Unique: 7Mk664qdM7S3LJAtKm383A-1
+X-Mimecast-MFC-AGG-ID: 7Mk664qdM7S3LJAtKm383A_1741699629
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BC6D18001E1; Tue, 11 Mar 2025 13:27:09 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.118])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D738D19560AB; Tue, 11 Mar 2025 13:27:07 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+Cc: John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 56/72] hw/ppc/spapr: Convert HPTE_DIRTY() macro as
- hpte_is_dirty() method
-Date: Tue, 11 Mar 2025 22:57:50 +1000
-Message-ID: <20250311125815.903177-57-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
-References: <20250311125815.903177-1-npiggin@gmail.com>
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ pkrempa@redhat.com, Fam Zheng <fam@euphon.net>, <qemu-block@nongnu.org>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH v4 10/13] virtio: extract iothread-vq-mapping.h API
+Date: Tue, 11 Mar 2025 21:26:13 +0800
+Message-ID: <20250311132616.1049687-11-stefanha@redhat.com>
+In-Reply-To: <20250311132616.1049687-1-stefanha@redhat.com>
+References: <20250311132616.1049687-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,68 +89,381 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The code that builds an array of AioContext pointers indexed by the
+virtqueue is not specific to virtio-blk. virtio-scsi will need to do the
+same thing, so extract the functions.
 
-Convert HPTE_DIRTY() macro as hpte_is_dirty() method.
-
-sPAPR data structures including the hash page table are big-endian
-regardless of current CPU endian mode, so use the big-endian LD/ST
-API to access the hash PTEs.
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-ID: <20241220213103.6314-4-philmd@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
- hw/ppc/spapr.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/hw/virtio/iothread-vq-mapping.h |  45 ++++++++
+ hw/block/virtio-blk.c                   | 142 +-----------------------
+ hw/virtio/iothread-vq-mapping.c         | 131 ++++++++++++++++++++++
+ hw/virtio/meson.build                   |   1 +
+ 4 files changed, 178 insertions(+), 141 deletions(-)
+ create mode 100644 include/hw/virtio/iothread-vq-mapping.h
+ create mode 100644 hw/virtio/iothread-vq-mapping.c
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index daf997cea1..dd81398445 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1414,7 +1414,11 @@ static bool hpte_is_valid(SpaprMachineState *s, unsigned index)
-     return ldq_be_p(hpte_get_ptr(s, index)) & HPTE64_V_VALID;
- }
+diff --git a/include/hw/virtio/iothread-vq-mapping.h b/include/hw/virtio/iothread-vq-mapping.h
+new file mode 100644
+index 0000000000..57335c3703
+--- /dev/null
++++ b/include/hw/virtio/iothread-vq-mapping.h
+@@ -0,0 +1,45 @@
++/*
++ * IOThread Virtqueue Mapping
++ *
++ * Copyright Red Hat, Inc
++ *
++ * SPDX-License-Identifier: GPL-2.0-only
++ */
++
++#ifndef HW_VIRTIO_IOTHREAD_VQ_MAPPING_H
++#define HW_VIRTIO_IOTHREAD_VQ_MAPPING_H
++
++#include "qapi/error.h"
++#include "qapi/qapi-types-virtio.h"
++
++/**
++ * iothread_vq_mapping_apply:
++ * @list: The mapping of virtqueues to IOThreads.
++ * @vq_aio_context: The array of AioContext pointers to fill in.
++ * @num_queues: The length of @vq_aio_context.
++ * @errp: If an error occurs, a pointer to the area to store the error.
++ *
++ * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
++ * the iothread-vq-mapping parameter in @list.
++ *
++ * iothread_vq_mapping_cleanup() must be called to free IOThread object
++ * references after this function returns success.
++ *
++ * Returns: %true on success, %false on failure.
++ **/
++bool iothread_vq_mapping_apply(
++        IOThreadVirtQueueMappingList *list,
++        AioContext **vq_aio_context,
++        uint16_t num_queues,
++        Error **errp);
++
++/**
++ * iothread_vq_mapping_cleanup:
++ * @list: The mapping of virtqueues to IOThreads.
++ *
++ * Release IOThread object references that were acquired by
++ * iothread_vq_mapping_apply().
++ */
++void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list);
++
++#endif /* HW_VIRTIO_IOTHREAD_VQ_MAPPING_H */
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 6bf7b50520..5077793e5e 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -33,6 +33,7 @@
+ #endif
+ #include "hw/virtio/virtio-bus.h"
+ #include "migration/qemu-file-types.h"
++#include "hw/virtio/iothread-vq-mapping.h"
+ #include "hw/virtio/virtio-access.h"
+ #include "hw/virtio/virtio-blk-common.h"
+ #include "qemu/coroutine.h"
+@@ -1423,147 +1424,6 @@ static const BlockDevOps virtio_block_ops = {
+     .drained_end   = virtio_blk_drained_end,
+ };
  
--#define HPTE_DIRTY(_hpte)  (tswap64(*((uint64_t *)(_hpte))) & HPTE64_V_HPTE_DIRTY)
-+static bool hpte_is_dirty(SpaprMachineState *s, unsigned index)
+-static bool
+-iothread_vq_mapping_validate(IOThreadVirtQueueMappingList *list, uint16_t
+-        num_queues, Error **errp)
+-{
+-    g_autofree unsigned long *vqs = bitmap_new(num_queues);
+-    g_autoptr(GHashTable) iothreads =
+-        g_hash_table_new(g_str_hash, g_str_equal);
+-
+-    for (IOThreadVirtQueueMappingList *node = list; node; node = node->next) {
+-        const char *name = node->value->iothread;
+-        uint16List *vq;
+-
+-        if (!iothread_by_id(name)) {
+-            error_setg(errp, "IOThread \"%s\" object does not exist", name);
+-            return false;
+-        }
+-
+-        if (!g_hash_table_add(iothreads, (gpointer)name)) {
+-            error_setg(errp,
+-                    "duplicate IOThread name \"%s\" in iothread-vq-mapping",
+-                    name);
+-            return false;
+-        }
+-
+-        if (node != list) {
+-            if (!!node->value->vqs != !!list->value->vqs) {
+-                error_setg(errp, "either all items in iothread-vq-mapping "
+-                                 "must have vqs or none of them must have it");
+-                return false;
+-            }
+-        }
+-
+-        for (vq = node->value->vqs; vq; vq = vq->next) {
+-            if (vq->value >= num_queues) {
+-                error_setg(errp, "vq index %u for IOThread \"%s\" must be "
+-                        "less than num_queues %u in iothread-vq-mapping",
+-                        vq->value, name, num_queues);
+-                return false;
+-            }
+-
+-            if (test_and_set_bit(vq->value, vqs)) {
+-                error_setg(errp, "cannot assign vq %u to IOThread \"%s\" "
+-                        "because it is already assigned", vq->value, name);
+-                return false;
+-            }
+-        }
+-    }
+-
+-    if (list->value->vqs) {
+-        for (uint16_t i = 0; i < num_queues; i++) {
+-            if (!test_bit(i, vqs)) {
+-                error_setg(errp,
+-                        "missing vq %u IOThread assignment in iothread-vq-mapping",
+-                        i);
+-                return false;
+-            }
+-        }
+-    }
+-
+-    return true;
+-}
+-
+-/**
+- * iothread_vq_mapping_apply:
+- * @list: The mapping of virtqueues to IOThreads.
+- * @vq_aio_context: The array of AioContext pointers to fill in.
+- * @num_queues: The length of @vq_aio_context.
+- * @errp: If an error occurs, a pointer to the area to store the error.
+- *
+- * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
+- * the iothread-vq-mapping parameter in @list.
+- *
+- * iothread_vq_mapping_cleanup() must be called to free IOThread object
+- * references after this function returns success.
+- *
+- * Returns: %true on success, %false on failure.
+- **/
+-static bool iothread_vq_mapping_apply(
+-        IOThreadVirtQueueMappingList *list,
+-        AioContext **vq_aio_context,
+-        uint16_t num_queues,
+-        Error **errp)
+-{
+-    IOThreadVirtQueueMappingList *node;
+-    size_t num_iothreads = 0;
+-    size_t cur_iothread = 0;
+-
+-    if (!iothread_vq_mapping_validate(list, num_queues, errp)) {
+-        return false;
+-    }
+-
+-    for (node = list; node; node = node->next) {
+-        num_iothreads++;
+-    }
+-
+-    for (node = list; node; node = node->next) {
+-        IOThread *iothread = iothread_by_id(node->value->iothread);
+-        AioContext *ctx = iothread_get_aio_context(iothread);
+-
+-        /* Released in virtio_blk_vq_aio_context_cleanup() */
+-        object_ref(OBJECT(iothread));
+-
+-        if (node->value->vqs) {
+-            uint16List *vq;
+-
+-            /* Explicit vq:IOThread assignment */
+-            for (vq = node->value->vqs; vq; vq = vq->next) {
+-                assert(vq->value < num_queues);
+-                vq_aio_context[vq->value] = ctx;
+-            }
+-        } else {
+-            /* Round-robin vq:IOThread assignment */
+-            for (unsigned i = cur_iothread; i < num_queues;
+-                 i += num_iothreads) {
+-                vq_aio_context[i] = ctx;
+-            }
+-        }
+-
+-        cur_iothread++;
+-    }
+-
+-    return true;
+-}
+-
+-/**
+- * iothread_vq_mapping_cleanup:
+- * @list: The mapping of virtqueues to IOThreads.
+- *
+- * Release IOThread object references that were acquired by
+- * iothread_vq_mapping_apply().
+- */
+-static void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list)
+-{
+-    IOThreadVirtQueueMappingList *node;
+-
+-    for (node = list; node; node = node->next) {
+-        IOThread *iothread = iothread_by_id(node->value->iothread);
+-        object_unref(OBJECT(iothread));
+-    }
+-}
+-
+ /* Context: BQL held */
+ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+ {
+diff --git a/hw/virtio/iothread-vq-mapping.c b/hw/virtio/iothread-vq-mapping.c
+new file mode 100644
+index 0000000000..15909eb933
+--- /dev/null
++++ b/hw/virtio/iothread-vq-mapping.c
+@@ -0,0 +1,131 @@
++/*
++ * IOThread Virtqueue Mapping
++ *
++ * Copyright Red Hat, Inc
++ *
++ * SPDX-License-Identifier: GPL-2.0-only
++ */
++
++#include "qemu/osdep.h"
++#include "system/iothread.h"
++#include "hw/virtio/iothread-vq-mapping.h"
++
++static bool
++iothread_vq_mapping_validate(IOThreadVirtQueueMappingList *list, uint16_t
++        num_queues, Error **errp)
 +{
-+    return ldq_be_p(hpte_get_ptr(s, index)) & HPTE64_V_HPTE_DIRTY;
++    g_autofree unsigned long *vqs = bitmap_new(num_queues);
++    g_autoptr(GHashTable) iothreads =
++        g_hash_table_new(g_str_hash, g_str_equal);
++
++    for (IOThreadVirtQueueMappingList *node = list; node; node = node->next) {
++        const char *name = node->value->iothread;
++        uint16List *vq;
++
++        if (!iothread_by_id(name)) {
++            error_setg(errp, "IOThread \"%s\" object does not exist", name);
++            return false;
++        }
++
++        if (!g_hash_table_add(iothreads, (gpointer)name)) {
++            error_setg(errp,
++                    "duplicate IOThread name \"%s\" in iothread-vq-mapping",
++                    name);
++            return false;
++        }
++
++        if (node != list) {
++            if (!!node->value->vqs != !!list->value->vqs) {
++                error_setg(errp, "either all items in iothread-vq-mapping "
++                                 "must have vqs or none of them must have it");
++                return false;
++            }
++        }
++
++        for (vq = node->value->vqs; vq; vq = vq->next) {
++            if (vq->value >= num_queues) {
++                error_setg(errp, "vq index %u for IOThread \"%s\" must be "
++                        "less than num_queues %u in iothread-vq-mapping",
++                        vq->value, name, num_queues);
++                return false;
++            }
++
++            if (test_and_set_bit(vq->value, vqs)) {
++                error_setg(errp, "cannot assign vq %u to IOThread \"%s\" "
++                        "because it is already assigned", vq->value, name);
++                return false;
++            }
++        }
++    }
++
++    if (list->value->vqs) {
++        for (uint16_t i = 0; i < num_queues; i++) {
++            if (!test_bit(i, vqs)) {
++                error_setg(errp,
++                        "missing vq %u IOThread assignment in iothread-vq-mapping",
++                        i);
++                return false;
++            }
++        }
++    }
++
++    return true;
 +}
 +
- #define CLEAN_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) &= tswap64(~HPTE64_V_HPTE_DIRTY))
- #define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
- 
-@@ -2259,7 +2263,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
- 
-         /* Consume non-dirty HPTEs */
-         while ((index < htabslots)
--               && !HPTE_DIRTY(hpte_get_ptr(spapr, index))) {
-+               && !hpte_is_dirty(spapr, index)) {
-             index++;
-             examined++;
-         }
-@@ -2267,7 +2271,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
-         chunkstart = index;
-         /* Consume valid dirty HPTEs */
-         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
--               && HPTE_DIRTY(hpte_get_ptr(spapr, index))
-+               && hpte_is_dirty(spapr, index)
-                && hpte_is_valid(spapr, index)) {
-             CLEAN_HPTE(hpte_get_ptr(spapr, index));
-             index++;
-@@ -2277,7 +2281,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
-         invalidstart = index;
-         /* Consume invalid dirty HPTEs */
-         while ((index < htabslots) && (index - invalidstart < USHRT_MAX)
--               && HPTE_DIRTY(hpte_get_ptr(spapr, index))
-+               && hpte_is_dirty(spapr, index)
-                && !hpte_is_valid(spapr, index)) {
-             CLEAN_HPTE(hpte_get_ptr(spapr, index));
-             index++;
++bool iothread_vq_mapping_apply(
++        IOThreadVirtQueueMappingList *list,
++        AioContext **vq_aio_context,
++        uint16_t num_queues,
++        Error **errp)
++{
++    IOThreadVirtQueueMappingList *node;
++    size_t num_iothreads = 0;
++    size_t cur_iothread = 0;
++
++    if (!iothread_vq_mapping_validate(list, num_queues, errp)) {
++        return false;
++    }
++
++    for (node = list; node; node = node->next) {
++        num_iothreads++;
++    }
++
++    for (node = list; node; node = node->next) {
++        IOThread *iothread = iothread_by_id(node->value->iothread);
++        AioContext *ctx = iothread_get_aio_context(iothread);
++
++        /* Released in virtio_blk_vq_aio_context_cleanup() */
++        object_ref(OBJECT(iothread));
++
++        if (node->value->vqs) {
++            uint16List *vq;
++
++            /* Explicit vq:IOThread assignment */
++            for (vq = node->value->vqs; vq; vq = vq->next) {
++                assert(vq->value < num_queues);
++                vq_aio_context[vq->value] = ctx;
++            }
++        } else {
++            /* Round-robin vq:IOThread assignment */
++            for (unsigned i = cur_iothread; i < num_queues;
++                 i += num_iothreads) {
++                vq_aio_context[i] = ctx;
++            }
++        }
++
++        cur_iothread++;
++    }
++
++    return true;
++}
++
++void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list)
++{
++    IOThreadVirtQueueMappingList *node;
++
++    for (node = list; node; node = node->next) {
++        IOThread *iothread = iothread_by_id(node->value->iothread);
++        object_unref(OBJECT(iothread));
++    }
++}
++
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index a5f9f7999d..19b04c4d9c 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -1,5 +1,6 @@
+ system_virtio_ss = ss.source_set()
+ system_virtio_ss.add(files('virtio-bus.c'))
++system_virtio_ss.add(files('iothread-vq-mapping.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_PCI', if_true: files('virtio-pci.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_MMIO', if_true: files('virtio-mmio.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_CRYPTO', if_true: files('virtio-crypto.c'))
 -- 
-2.47.1
+2.48.1
 
 
