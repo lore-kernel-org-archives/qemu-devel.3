@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B64CC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13D1C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxqd-0003IR-8S; Tue, 11 Mar 2025 07:32:35 -0400
+	id 1trxsq-0000IZ-13; Tue, 11 Mar 2025 07:34:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqG-00038Q-QF
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxr3-0003SP-Jv
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:33:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq2-0006VA-Ox
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:12 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqE-0006YL-60
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692716;
+ s=mimecast20190719; t=1741692724;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5fZBYHPU0s8pnspvGGVnSt0xUuMA4YP0JAp3hNrbBEI=;
- b=Mrltsf1saC5q7yzAMKJL2MFFhajMZY32Vvf0/PbT3lv3NyBxPJJTPBh+qnwkvE9/GEWOPa
- MRoRrozAvra78jIavgvL9xRMFq6PPFsmcM59fVe1PmHOKf+Lvyr1TpoZ1hwEevZ+YHaliZ
- XqNReAoPR7P2VVXs5gNMkJB6srzAto0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8eCWReU6bUM5pOJMVwkYiN6cPZRJruZljXLIq66RMAc=;
+ b=IgAyWubopLFul8qt0bAh0bT4WSfTKfofZbc9xBC/4W3eEIkSniJg4oNmtNXtn6Rkd+M7uq
+ +mJkqqszGZXf/5tEFUCfIhXe+qbaPt43pk+L4DQW/QwnUMUpo50TLtr0HExcsTvo7V3w6r
+ q/q+W2jMk5EQNH8gzkzvvwPo578Vjtg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-smId9DynP-SzZnAlpwPY_g-1; Tue,
- 11 Mar 2025 07:31:54 -0400
-X-MC-Unique: smId9DynP-SzZnAlpwPY_g-1
-X-Mimecast-MFC-AGG-ID: smId9DynP-SzZnAlpwPY_g_1741692714
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-ugtc8FH-Nqq8n5zF_jP2RA-1; Tue,
+ 11 Mar 2025 07:32:03 -0400
+X-MC-Unique: ugtc8FH-Nqq8n5zF_jP2RA-1
+X-Mimecast-MFC-AGG-ID: ugtc8FH-Nqq8n5zF_jP2RA_1741692722
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01EA31955BCC
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:54 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C4E6A19560B0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 596CE19560B9
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:53 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 228C21955BCB
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:32:02 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 268DA21E64BD; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
+ id A0A6021E60E5; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 27/61] docs/qapi-domain: add XREF compatibility goop for Sphinx
- < 4.1
-Date: Tue, 11 Mar 2025 12:31:03 +0100
-Message-ID: <20250311113137.1277125-28-armbru@redhat.com>
+Subject: [PULL 59/61] docs: add qapi-domain syntax documentation
+Date: Tue, 11 Mar 2025 12:31:35 +0100
+Message-ID: <20250311113137.1277125-60-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,278 +88,706 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Sphinx < 4.1 handles cross-references ... differently. Factor out and
-isolate the compatibility goop we need to make cross references work
-properly in old versions of Sphinx.
+Who documents the documentation?
 
-Yes, it's ugly. Yes, it works. No, I don't want to talk about
-it.
-
-Understand that this patch exists because of the overflowing love in my
-heart.
+Me, I guess.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-30-jsnow@redhat.com>
+Message-ID: <20250311034303.75779-63-jsnow@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/compat.py      | 136 +++++++++++++++++++++++++++++++++++--
- docs/sphinx/qapi_domain.py |  23 ++++---
- 2 files changed, 144 insertions(+), 15 deletions(-)
+ docs/devel/index-build.rst |   1 +
+ docs/devel/qapi-domain.rst | 670 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 671 insertions(+)
+ create mode 100644 docs/devel/qapi-domain.rst
 
-diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-index 6bc698c5ad..f068d70388 100644
---- a/docs/sphinx/compat.py
-+++ b/docs/sphinx/compat.py
-@@ -2,14 +2,31 @@
- Sphinx cross-version compatibility goop
- """
- 
--from typing import Callable
-+import re
-+from typing import (
-+    Any,
-+    Callable,
-+    Optional,
-+    Type,
-+)
- 
-+from docutils import nodes
- from docutils.nodes import Element, Node, Text
- 
- import sphinx
--from sphinx import addnodes
--from sphinx.util import nodes
--from sphinx.util.docutils import SphinxDirective, switch_source_input
-+from sphinx import addnodes, util
-+from sphinx.environment import BuildEnvironment
-+from sphinx.roles import XRefRole
-+from sphinx.util import docfields
-+from sphinx.util.docutils import (
-+    ReferenceRole,
-+    SphinxDirective,
-+    switch_source_input,
-+)
-+from sphinx.util.typing import TextlikeNode
+diff --git a/docs/devel/index-build.rst b/docs/devel/index-build.rst
+index 0745c81a26..3f3cb21b9b 100644
+--- a/docs/devel/index-build.rst
++++ b/docs/devel/index-build.rst
+@@ -12,4 +12,5 @@ some of the basics if you are adding new files and targets to the build.
+    kconfig
+    docs
+    qapi-code-gen
++   qapi-domain
+    control-flow-integrity
+diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
+new file mode 100644
+index 0000000000..1475870ca6
+--- /dev/null
++++ b/docs/devel/qapi-domain.rst
+@@ -0,0 +1,670 @@
++======================
++The Sphinx QAPI Domain
++======================
++
++An extension to the `rST syntax
++<https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_
++in Sphinx is provided by the QAPI Domain, located in
++``docs/sphinx/qapi_domain.py``. This extension is analogous to the
++`Python Domain
++<https://www.sphinx-doc.org/en/master/usage/domains/python.html>`_
++included with Sphinx, but provides special directives and roles
++speciically for annotating and documenting QAPI definitions
++specifically.
++
++A `Domain
++<https://www.sphinx-doc.org/en/master/usage/domains/index.html>`_
++provides a set of special rST directives and cross-referencing roles to
++Sphinx for understanding rST markup written to document a specific
++language. By itself, this QAPI extension is only sufficient to parse rST
++markup written by hand; the `autodoc
++<https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_
++functionality is provided elsewhere, in ``docs/sphinx/qapidoc.py``, by
++the "Transmogrifier".
++
++It is not expected that any developer nor documentation writer would
++never need to write *nor* read these special rST forms. However, in the
++event that something needs to be debugged, knowing the syntax of the
++domain is quite handy. This reference may also be useful as a guide for
++understanding the QAPI Domain extension code itself. Although most of
++these forms will not be needed for documentation writing purposes,
++understanding the cross-referencing syntax *will* be helpful when
++writing rST documentation elsewhere, or for enriching the body of
++QAPIDoc blocks themselves.
 +
 +
-+MAKE_XREF_WORKAROUND = sphinx.version_info[:3] < (4, 1, 0)
- 
- 
- SpaceNode: Callable[[str], Node]
-@@ -36,7 +53,7 @@ def nested_parse_with_titles(
-     try:
-         # Modern sphinx (6.2.0+) supports proper offsetting for
-         # nested parse error context management
--        nodes.nested_parse_with_titles(
-+        util.nodes.nested_parse_with_titles(
-             directive.state,
-             directive.content,
-             content_node,
-@@ -45,6 +62,113 @@ def nested_parse_with_titles(
-     except TypeError:
-         # No content_offset argument. Fall back to SSI method.
-         with switch_source_input(directive.state, directive.content):
--            nodes.nested_parse_with_titles(
-+            util.nodes.nested_parse_with_titles(
-                 directive.state, directive.content, content_node
-             )
++Concepts
++========
++
++The QAPI Domain itself provides no mechanisms for reading the QAPI
++Schema or generating documentation from code that exists. It is merely
++the rST syntax used to describe things. For instance, the Sphinx Python
++domain adds syntax like ``:py:func:`` for describing Python functions in
++documentation, but it's the autodoc module that is responsible for
++reading python code and generating such syntax. QAPI is analagous here:
++qapidoc.py is responsible for reading the QAPI Schema and generating rST
++syntax, and qapi_domain.py is responsible for translating that special
++syntax and providing APIs for Sphinx internals.
++
++In other words:
++
++qapi_domain.py adds syntax like ``.. qapi:command::`` to Sphinx, and
++qapidoc.py transforms the documentation in ``qapi/*.json`` into rST
++using directives defined by the domain.
++
++Or even shorter:
++
++``:py:`` is to ``:qapi:`` as *autodoc* is to *qapidoc*.
 +
 +
-+# ###########################################
-+# xref compatibility hacks for Sphinx < 4.1 #
-+# ###########################################
++Info Field Lists
++================
 +
-+# When we require >= Sphinx 4.1, the following function and the
-+# subsequent 3 compatibility classes can be removed. Anywhere in
-+# qapi_domain that uses one of these Compat* types can be switched to
-+# using the garden-variety lib-provided classes with no trickery.
++`Field lists
++<https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#field-lists>`_
++are a standard syntax in reStructuredText. Sphinx `extends that syntax
++<https://www.sphinx-doc.org/en/master/usage/domains/python.html#info-field-lists>`_
++to give certain field list entries special meaning and parsing to, for
++example, add cross-references. The QAPI Domain takes advantage of this
++field list extension to document things like Arguments, Members, Values,
++and so on.
 +
++The special parsing and handling of info field lists in Sphinx is provided by
++three main classes; Field, GroupedField, and TypedField. The behavior
++and formatting for each configured field list entry in the domain
++changes depending on which class is used.
 +
-+def _compat_make_xref(  # pylint: disable=unused-argument
-+    self: sphinx.util.docfields.Field,
-+    rolename: str,
-+    domain: str,
-+    target: str,
-+    innernode: Type[TextlikeNode] = addnodes.literal_emphasis,
-+    contnode: Optional[Node] = None,
-+    env: Optional[BuildEnvironment] = None,
-+    inliner: Any = None,
-+    location: Any = None,
-+) -> Node:
-+    """
-+    Compatibility workaround for Sphinx versions prior to 4.1.0.
++Field:
++  * Creates an ungrouped field: i.e., each entry will create its own
++    section and they will not be combined.
++  * May *optionally* support an argument.
++  * May apply cross-reference roles to *either* the argument *or* the
++    content body, both, or neither.
 +
-+    Older sphinx versions do not use the domain's XRefRole for parsing
-+    and formatting cross-references, so we need to perform this magick
-+    ourselves to avoid needing to write the parser/formatter in two
-+    separate places.
++This is used primarily for entries which are not expected to be
++repeated, i.e., items that may only show up at most once. The QAPI
++domain uses this class for "Errors" section.
 +
-+    This workaround isn't brick-for-brick compatible with modern Sphinx
-+    versions, because we do not have access to the parent directive's
-+    state during this parsing like we do in more modern versions.
++GroupedField:
++  * Creates a grouped field: i.e. multiple adjacent entries will be
++    merged into one section, and the content will form a bulleted list.
++  * *Must* take an argument.
++  * May optionally apply a cross-reference role to the argument, but not
++    the body.
++  * Can be configured to remove the bulleted list if there is only a
++    single entry.
++  * All items will be generated with the form: "argument -- body"
 +
-+    It's no worse than what pre-Sphinx 4.1.0 does, so... oh well!
-+    """
++This is used for entries which are expected to be repeated, but aren't
++expected to have two arguments, i.e. types without names, or names
++without types. The QAPI domain uses this class for features, returns,
++and enum values.
 +
-+    # Yes, this function is gross. Pre-4.1 support is a miracle.
-+    # pylint: disable=too-many-locals
++TypedField:
++  * Creates a grouped, typed field. Multiple adjacent entres will be
++    merged into one section, and the content will form a bulleted list.
++  * *Must* take at least one argument, but supports up to two -
++    nominally, a name and a type.
++  * May optionally apply a cross-reference role to the type or the name
++    argument, but not the body.
++  * Can be configured to remove the bulleted list if there is only a
++    single entry.
++  * All items will be generated with the form "name (type) -- body"
 +
-+    assert env
-+    # Note: Sphinx's own code ignores the type warning here, too.
-+    if not rolename:
-+        return contnode or innernode(target, target)  # type: ignore[call-arg]
-+
-+    # Get the role instance, but don't *execute it* - we lack the
-+    # correct state to do so. Instead, we'll just use its public
-+    # methods to do our reference formatting, and emulate the rest.
-+    role = env.get_domain(domain).roles[rolename]
-+    assert isinstance(role, XRefRole)
-+
-+    # XRefRole features not supported by this compatibility shim;
-+    # these were not supported in Sphinx 3.x either, so nothing of
-+    # value is really lost.
-+    assert not target.startswith("!")
-+    assert not re.match(ReferenceRole.explicit_title_re, target)
-+    assert not role.lowercase
-+    assert not role.fix_parens
-+
-+    # Code below based mostly on sphinx.roles.XRefRole; run() and
-+    # create_xref_node()
-+    options = {
-+        "refdoc": env.docname,
-+        "refdomain": domain,
-+        "reftype": rolename,
-+        "refexplicit": False,
-+        "refwarn": role.warn_dangling,
-+    }
-+    refnode = role.nodeclass(target, **options)
-+    title, target = role.process_link(env, refnode, False, target, target)
-+    refnode["reftarget"] = target
-+    classes = ["xref", domain, f"{domain}-{rolename}"]
-+    refnode += role.innernodeclass(target, title, classes=classes)
-+
-+    # This is the very gross part of the hack. Normally,
-+    # result_nodes takes a document object to which we would pass
-+    # self.inliner.document. Prior to Sphinx 4.1, we don't *have* an
-+    # inliner to pass, so we have nothing to pass here. However, the
-+    # actual implementation of role.result_nodes in this case
-+    # doesn't actually use that argument, so this winds up being
-+    # ... fine. Rest easy at night knowing this code only runs under
-+    # old versions of Sphinx, so at least it won't change in the
-+    # future on us and lead to surprising new failures.
-+    # Gross, I know.
-+    result_nodes, _messages = role.result_nodes(
-+        None,  # type: ignore
-+        env,
-+        refnode,
-+        is_ref=True,
-+    )
-+    return nodes.inline(target, "", *result_nodes)
++This is used for entries that are expected to be repeated and will have
++a name, a type, and a description. The QAPI domain uses this class for
++arguments, alternatives, and members. Wherever type names are referenced
++below, They must be a valid, documented type that will be
++cross-referenced in the HTML output; or one of the built-in JSON types
++(string, number, int, boolean, null, value, q_empty).
 +
 +
-+class CompatField(docfields.Field):
-+    if MAKE_XREF_WORKAROUND:
-+        make_xref = _compat_make_xref
++``:feat:``
++----------
++
++Document a feature attached to a QAPI definition.
++
++:availability: This field list is available in the body of Command,
++               Event, Enum, Object and Alternate directives.
++:syntax: ``:feat name: Lorem ipsum, dolor sit amet...``
++:type: `sphinx.util.docfields.GroupedField
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.GroupedField.html?private=1>`_
++
++Example::
++
++   .. qapi:object:: BlockdevOptionsVirtioBlkVhostVdpa
++      :since: 7.2
++      :ifcond: CONFIG_BLKIO
++
++      Driver specific block device options for the virtio-blk-vhost-vdpa
++      backend.
++
++   :memb string path: path to the vhost-vdpa character device.
++   :feat fdset: Member ``path`` supports the special "/dev/fdset/N" path
++       (since 8.1)
 +
 +
-+class CompatGroupedField(docfields.GroupedField):
-+    if MAKE_XREF_WORKAROUND:
-+        make_xref = _compat_make_xref
++``:arg:``
++---------
++
++Document an argument to a QAPI command.
++
++:availability: This field list is only available in the body of the
++               Command directive.
++:syntax: ``:arg type name: description``
++:type: `sphinx.util.docfields.TypedField
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.TypedField.html?private=1>`_
 +
 +
-+class CompatTypedField(docfields.TypedField):
-+    if MAKE_XREF_WORKAROUND:
-+        make_xref = _compat_make_xref
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 06fe78ce0b..3b1490e29a 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -24,7 +24,13 @@
- from docutils import nodes
- from docutils.parsers.rst import directives
- 
--from compat import KeywordNode, SpaceNode
-+from compat import (
-+    CompatField,
-+    CompatGroupedField,
-+    CompatTypedField,
-+    KeywordNode,
-+    SpaceNode,
-+)
- from sphinx import addnodes
- from sphinx.addnodes import desc_signature, pending_xref
- from sphinx.directives import ObjectDescription
-@@ -37,7 +43,6 @@
- from sphinx.locale import _, __
- from sphinx.roles import XRefRole
- from sphinx.util import logging
--from sphinx.util.docfields import Field, GroupedField, TypedField
- from sphinx.util.nodes import make_id, make_refnode
- 
- 
-@@ -264,7 +269,7 @@ class QAPIObject(QAPIDescription):
- 
-     doc_field_types = [
-         # :feat name: descr
--        GroupedField(
-+        CompatGroupedField(
-             "feature",
-             label=_("Features"),
-             names=("feat",),
-@@ -434,7 +439,7 @@ class QAPICommand(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :arg TypeName ArgName: descr
--            TypedField(
-+            CompatTypedField(
-                 "argument",
-                 label=_("Arguments"),
-                 names=("arg",),
-@@ -442,14 +447,14 @@ class QAPICommand(QAPIObject):
-                 can_collapse=False,
-             ),
-             # :error: descr
--            Field(
-+            CompatField(
-                 "error",
-                 label=_("Errors"),
-                 names=("error", "errors"),
-                 has_arg=False,
-             ),
-             # :return TypeName: descr
--            GroupedField(
-+            CompatGroupedField(
-                 "returnvalue",
-                 label=_("Return"),
-                 rolename="type",
-@@ -467,7 +472,7 @@ class QAPIEnum(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :value name: descr
--            GroupedField(
-+            CompatGroupedField(
-                 "value",
-                 label=_("Values"),
-                 names=("value",),
-@@ -484,7 +489,7 @@ class QAPIAlternate(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :alt type name: descr
--            TypedField(
-+            CompatTypedField(
-                 "alternative",
-                 label=_("Alternatives"),
-                 names=("alt",),
-@@ -502,7 +507,7 @@ class QAPIObjectWithMembers(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :member type name: descr
--            TypedField(
-+            CompatTypedField(
-                 "member",
-                 label=_("Members"),
-                 names=("memb",),
++Example::
++
++   .. qapi:command:: job-pause
++      :since: 3.0
++
++      Pause an active job.
++
++      This command returns immediately after marking the active job for
++      pausing.  Pausing an already paused job is an error.
++
++      The job will pause as soon as possible, which means transitioning
++      into the PAUSED state if it was RUNNING, or into STANDBY if it was
++      READY.  The corresponding JOB_STATUS_CHANGE event will be emitted.
++
++      Cancelling a paused job automatically resumes it.
++
++      :arg string id: The job identifier.
++
++
++``:error:``
++-----------
++
++Document the error condition(s) of a QAPI command.
++
++:availability: This field list is only available in the body of the
++               Command directive.
++:syntax: ``:error: Lorem ipsum dolor sit amet ...``
++:type: `sphinx.util.docfields.Field
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.Field.html?private=1>`_
++
++The format of the :errors: field list description is free-form rST. The
++alternative spelling ":errors:" is also permitted, but strictly
++analogous.
++
++Example::
++
++   .. qapi:command:: block-job-set-speed
++      :since: 1.1
++
++      Set maximum speed for a background block operation.
++
++      This command can only be issued when there is an active block job.
++
++      Throttling can be disabled by setting the speed to 0.
++
++      :arg string device: The job identifier.  This used to be a device
++          name (hence the name of the parameter), but since QEMU 2.7 it
++          can have other values.
++      :arg int speed: the maximum speed, in bytes per second, or 0 for
++          unlimited.  Defaults to 0.
++      :error:
++          - If no background operation is active on this device,
++            DeviceNotActive
++
++
++``:return:``
++-------------
++
++Document the return type(s) and value(s) of a QAPI command.
++
++:availability: This field list is only available in the body of the
++               Command directive.
++:syntax: ``:return type: Lorem ipsum dolor sit amet ...``
++:type: `sphinx.util.docfields.GroupedField
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.GroupedField.html?private=1>`_
++
++
++Example::
++
++   .. qapi:command:: query-replay
++      :since: 5.2
++
++      Retrieve the record/replay information.  It includes current
++      instruction count which may be used for ``replay-break`` and
++      ``replay-seek`` commands.
++
++      :return ReplayInfo: record/replay information.
++
++      .. qmp-example::
++
++          -> { "execute": "query-replay" }
++          <- { "return": {
++                 "mode": "play", "filename": "log.rr", "icount": 220414 }
++             }
++
++
++``:value:``
++-----------
++
++Document a possible value for a QAPI enum.
++
++:availability: This field list is only available in the body of the Enum
++               directive.
++:syntax: ``:value name: Lorem ipsum, dolor sit amet ...``
++:type: `sphinx.util.docfields.GroupedField
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.GroupedField.html?private=1>`_
++
++Example::
++
++   .. qapi:enum:: QapiErrorClass
++      :since: 1.2
++
++      QEMU error classes
++
++      :value GenericError: this is used for errors that don't require a specific
++          error class.  This should be the default case for most errors
++      :value CommandNotFound: the requested command has not been found
++      :value DeviceNotActive: a device has failed to be become active
++      :value DeviceNotFound: the requested device has not been found
++      :value KVMMissingCap: the requested operation can't be fulfilled because a
++          required KVM capability is missing
++
++
++``:alt:``
++------------
++
++Document a possible branch for a QAPI alternate.
++
++:availability: This field list is only available in the body of the
++               Alternate directive.
++:syntax: ``:alt type name: Lorem ipsum, dolor sit amet ...``
++:type: `sphinx.util.docfields.TypedField
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.TypedField.html?private=1>`_
++
++As a limitation of Sphinx, we must document the "name" of the branch in
++addition to the type, even though this information is not visible on the
++wire in the QMP protocol format. This limitation *may* be lifted at a
++future date.
++
++Example::
++
++   .. qapi:alternate:: StrOrNull
++      :since: 2.10
++
++      This is a string value or the explicit lack of a string (null
++      pointer in C).  Intended for cases when 'optional absent' already
++      has a different meaning.
++
++       :alt string s: the string value
++       :alt null n: no string value
++
++
++``:memb:``
++----------
++
++Document a member of an Event or Object.
++
++:availability: This field list is available in the body of Event or
++               Object directives.
++:syntax: ``:memb type name: Lorem ipsum, dolor sit amet ...``
++:type: `sphinx.util.docfields.TypedField
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.TypedField.html?private=1>`_
++
++This is fundamentally the same as ``:arg:`` and ``:alt:``, but uses the
++"Members" phrasing for Events and Objects (Structs and Unions).
++
++Example::
++
++   .. qapi:event:: JOB_STATUS_CHANGE
++      :since: 3.0
++
++      Emitted when a job transitions to a different status.
++
++      :memb string id: The job identifier
++      :memb JobStatus status: The new job status
++
++
++Arbitrary field lists
++---------------------
++
++Other field list names, while valid rST syntax, are prohibited inside of
++QAPI directives to help prevent accidental misspellings of info field
++list names. If you want to add a new arbitrary "non-value-added" field
++list to QAPI documentation, you must add the field name to the allow
++list in ``docs/conf.py``
++
++For example::
++
++   qapi_allowed_fields = {
++       "see also",
++   }
++
++Will allow you to add arbitrary field lists in QAPI directives::
++
++   .. qapi:command:: x-fake-command
++
++      :see also: Lorem ipsum, dolor sit amet ...
++
++
++Cross-references
++================
++
++Cross-reference `roles
++<https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html>`_
++in the QAPI domain are modeled closely after the `Python
++cross-referencing syntax
++<https://www.sphinx-doc.org/en/master/usage/domains/python.html#cross-referencing-python-objects>`_.
++
++QAPI definitions can be referenced using the standard `any
++<https://www.sphinx-doc.org/en/master/usage/referencing.html#role-any>`_
++role cross-reference syntax, such as with ```query-blockstats```.  In
++the event that disambiguation is needed, cross-references can also be
++written using a number of explicit cross-reference roles:
++
++* ``:qapi:mod:`block-core``` -- Reference a QAPI module. The link will
++  take you to the beginning of that section in the documentation.
++* ``:qapi:cmd:`query-block``` -- Reference a QAPI command.
++* ``:qapi:event:`JOB_STATUS_CHANGE``` -- Reference a QAPI event.
++* ``:qapi:enum:`QapiErrorClass``` -- Reference a QAPI enum.
++* ``:qapi:obj:`BlockdevOptionsVirtioBlkVhostVdpa`` -- Reference a QAPI
++  object (struct or union)
++* ``:qapi:alt:`StrOrNull``` -- Reference a QAPI alternate.
++* ``:qapi:type:`BlockDirtyInfo``` -- Reference *any* QAPI type; this
++  excludes modules, commands, and events.
++* ``:qapi:any:`block-job-set-speed``` -- Reference absolutely any QAPI entity.
++
++Type arguments in info field lists are converted into references as if
++you had used the ``:qapi:type:`` role. All of the special syntax below
++applies to both info field lists and standalone explicit
++cross-references.
++
++
++Type decorations
++----------------
++
++Type names in references can be surrounded by brackets, like
++``[typename]``, to indicate an array of that type.  The cross-reference
++will apply only to the type name between the brackets. For example;
++``:qapi:type:`[Qcow2BitmapInfoFlags]``` renders to:
++:qapi:type:`[Qcow2BitmapInfoFlags]`
++
++To indicate an optional argument/member in a field list, the type name
++can be suffixed with ``?``. The cross-reference will be transformed to
++"type, Optional" with the link applying only to the type name. For
++example; ``:qapi:type:`BitmapSyncMode?``` renders to:
++:qapi:type:`BitmapSyncMode?`
++
++
++Namespaces
++----------
++
++Mimicking the `Python domain target specification syntax
++<https://www.sphinx-doc.org/en/master/usage/domains/python.html#target-specification>`_,
++QAPI allows you to specify the fully qualified path for a data
++type. QAPI enforces globally unique names, so it's unlikely you'll need
++this specific feature, but it may be extended in the near future to
++allow referencing identically named commands and data types from
++different utilities; i.e. QEMU Storage Daemon vs QMP.
++
++* A module can be explicitly provided;
++  ``:qapi:type:`block-core.BitmapSyncMode``` will render to:
++  :qapi:type:`block-core.BitmapSyncMode`
++* If you don't want to display the "fully qualified" name, it can be
++  prefixed with a tilde; ``:qapi:type:`~block-core.BitmapSyncMode```
++  will render to: :qapi:type:`~block-core.BitmapSyncMode`
++
++
++Custom link text
++----------------
++
++The name of a cross-reference link can be explicitly overridden like
++`most stock Sphinx references
++<https://www.sphinx-doc.org/en/master/usage/referencing.html#syntax>`_
++using the ``custom text <target>`` syntax.
++
++For example, ``:qapi:cmd:`Merge dirty bitmaps
++<block-dirty-bitmap-merge>``` will render as: :qapi:cmd:`Merge dirty
++bitmaps <block-dirty-bitmap-merge>`
++
++
++Directives
++==========
++
++The QAPI domain adds a number of custom directives for documenting
++various QAPI/QMP entities. The syntax is plain rST, and follows this
++general format::
++
++  .. qapi:directive:: argument
++     :option:
++     :another-option: with an argument
++
++     Content body, arbitrary rST is allowed here.
++
++
++Sphinx standard options
++-----------------------
++
++All QAPI directives inherit a number of `standard options
++<https://www.sphinx-doc.org/en/master/usage/domains/index.html#basic-markup>`_
++from Sphinx's ObjectDescription class.
++
++The dashed spellings of the below options were added in Sphinx 7.2, the
++undashed spellings are currently retained as aliases, but will be
++removed in a future version.
++
++* ``:no-index:`` and ``:noindex:`` -- Do not add this item into the
++  Index, and do not make it available for cross-referencing.
++* ``no-index-entry:`` and ``:noindexentry:`` -- Do not add this item
++  into the Index, but allow it to be cross-referenced.
++* ``no-contents-entry`` and ``:nocontentsentry:`` -- Exclude this item
++  from the Table of Contents.
++* ``no-typesetting`` -- Create TOC, Index and cross-referencing
++  entities, but don't actually display the content.
++
++
++QAPI standard options
++---------------------
++
++All QAPI directives -- *except* for module -- support these common options.
++
++* ``:module: modname`` -- Borrowed from the Python domain, this option allows
++  you to override the module association of a given definition.
++* ``:since: x.y`` -- Allows the documenting of "Since" information, which is
++  displayed in the signature bar.
++* ``:ifcond: CONDITION`` -- Allows the documenting of conditional availability
++  information, which is displayed in an eyecatch just below the
++  signature bar.
++* ``:deprecated:`` -- Adds an eyecatch just below the signature bar that
++  advertises that this definition is deprecated and should be avoided.
++* ``:unstable:`` -- Adds an eyecatch just below the signature bar that
++  advertises that this definition is unstable and should not be used in
++  production code.
++
++
++qapi:module
++-----------
++
++The ``qapi:module`` directive marks the start of a QAPI module. It may have
++a content body, but it can be omitted. All subsequent QAPI directives
++are associated with the most recent module; this effects their "fully
++qualified" name, but has no other effect.
++
++Example::
++
++   .. qapi:module:: block-core
++
++      Welcome to the block-core module!
++
++Will be rendered as:
++
++.. qapi:module:: block-core
++   :noindex:
++
++   Welcome to the block-core module!
++
++
++qapi:command
++------------
++
++This directive documents a QMP command. It may use any of the standard
++Sphinx or QAPI options, and the documentation body may contain
++``:arg:``, ``:feat:``, ``:error:``, or ``:return:`` info field list
++entries.
++
++Example::
++
++  .. qapi:command:: x-fake-command
++     :since: 42.0
++     :unstable:
++
++     This command is fake, so it can't hurt you!
++
++     :arg int foo: Your favorite number.
++     :arg string? bar: Your favorite season.
++     :return [string]: A lovely computer-written poem for you.
++
++
++Will be rendered as:
++
++  .. qapi:command:: x-fake-command
++     :noindex:
++     :since: 42.0
++     :unstable:
++
++     This command is fake, so it can't hurt you!
++
++     :arg int foo: Your favorite number.
++     :arg string? bar: Your favorite season.
++     :return [string]: A lovely computer-written poem for you.
++
++
++qapi:event
++----------
++
++This directive documents a QMP event. It may use any of the standard
++Sphinx or QAPI options, and the documentation body may contain
++``:memb:`` or ``:feat:`` info field list entries.
++
++Example::
++
++  .. qapi:event:: COMPUTER_IS_RUINED
++     :since: 0.1
++     :deprecated:
++
++     This event is emitted when your computer is *extremely* ruined.
++
++     :memb string reason: Diagnostics as to what caused your computer to
++        be ruined.
++     :feat sadness: When present, the diagnostic message will also
++        explain how sad the computer is as a result of your wrongdoings.
++
++Will be rendered as:
++
++.. qapi:event:: COMPUTER_IS_RUINED
++   :noindex:
++   :since: 0.1
++   :deprecated:
++
++   This event is emitted when your computer is *extremely* ruined.
++
++   :memb string reason: Diagnostics as to what caused your computer to
++      be ruined.
++   :feat sadness: When present, the diagnostic message will also explain
++      how sad the computer is as a result of your wrongdoings.
++
++
++qapi:enum
++---------
++
++This directive documents a QAPI enum. It may use any of the standard
++Sphinx or QAPI options, and the documentation body may contain
++``:value:`` or ``:feat:`` info field list entries.
++
++Example::
++
++  .. qapi:enum:: Mood
++     :ifcond: LIB_PERSONALITY
++
++     This enum represents your virtual machine's current mood!
++
++     :value Happy: Your VM is content and well-fed.
++     :value Hungry: Your VM needs food.
++     :value Melancholic: Your VM is experiencing existential angst.
++     :value Petulant: Your VM is throwing a temper tantrum.
++
++Will be rendered as:
++
++.. qapi:enum:: Mood
++   :noindex:
++   :ifcond: LIB_PERSONALITY
++
++   This enum represents your virtual machine's current mood!
++
++   :value Happy: Your VM is content and well-fed.
++   :value Hungry: Your VM needs food.
++   :value Melancholic: Your VM is experiencing existential angst.
++   :value Petulant: Your VM is throwing a temper tantrum.
++
++
++qapi:object
++-----------
++
++This directive documents a QAPI structure or union and represents a QMP
++object. It may use any of the standard Sphinx or QAPI options, and the
++documentation body may contain ``:memb:`` or ``:feat:`` info field list
++entries.
++
++Example::
++
++  .. qapi:object:: BigBlobOfStuff
++
++     This object has a bunch of disparate and unrelated things in it.
++
++     :memb int Birthday: Your birthday, represented in seconds since the
++                         UNIX epoch.
++     :memb [string] Fav-Foods: A list of your favorite foods.
++     :memb boolean? Bizarre-Docs: True if the documentation reference
++        should be strange.
++
++Will be rendered as:
++
++.. qapi:object:: BigBlobOfStuff
++   :noindex:
++
++   This object has a bunch of disparate and unrelated things in it.
++
++   :memb int Birthday: Your birthday, represented in seconds since the
++                       UNIX epoch.
++   :memb [string] Fav-Foods: A list of your favorite foods.
++   :memb boolean? Bizarre-Docs: True if the documentation reference
++      should be strange.
++
++
++qapi:alternate
++--------------
++
++This directive documents a QAPI alternate. It may use any of the
++standard Sphinx or QAPI options, and the documentation body may contain
++``:alt:`` or ``:feat:`` info field list entries.
++
++Example::
++
++  .. qapi:alternate:: ErrorCode
++
++     This alternate represents an Error Code from the VM.
++
++     :alt int ec: An error code, like the type you're used to.
++     :alt string em: An expletive-laced error message, if your
++        computer is feeling particularly cranky and tired of your
++        antics.
++
++Will be rendered as:
++
++.. qapi:alternate:: ErrorCode
++   :noindex:
++
++   This alternate represents an Error Code from the VM.
++
++   :alt int ec: An error code, like the type you're used to.
++   :alt string em: An expletive-laced error message, if your
++      computer is feeling particularly cranky and tired of your
++      antics.
 -- 
 2.48.1
 
