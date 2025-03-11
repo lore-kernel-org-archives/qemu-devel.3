@@ -4,61 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A708C28B2E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0989BC282EC
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxqI-00039d-Sc; Tue, 11 Mar 2025 07:32:14 -0400
+	id 1trxrH-0003e1-8P; Tue, 11 Mar 2025 07:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq6-00033H-R9
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq9-00034x-RL
  for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxpx-0006SJ-7R
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:31:59 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxpu-0006Q9-HL
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692710;
+ s=mimecast20190719; t=1741692706;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Is6a5N00uknZIelzF2+id8m4QFd+3awuhN/SWIJn9Y8=;
- b=M3crRN6GD+z/j5roukZhxCOIQ6nElePUqkcd0H3b69w5mF4TuorHZomTuMLs3wZKGMVDtk
- KT2/PfhG87pdPcWE+rv0bprsrnoQQJW2s4uk9+F5ogA0XAmzbzBcffEHmPrXIhzJlgLOzA
- QHABkUxj11gGSmjFI2FjRwApNeNy5t8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=sxO2amssh2/lVjF6QZwbW42lYwmzNOpDcvsWQ/f4MQo=;
+ b=Gu1X+ripAunFvcSTpi3zosG5CM5GswfCM8CEF5PK15z2Gs5z+Nq2WaO4uyyMch34p2+h9s
+ JsJ+VxdzotnQIF6wvGmIclC71zLdbKsK/rC9LCdaTAW/bJbpwOPcsL9oCpGPSvO23Zu1Yi
+ AF2KMNvJ254e1xPHf8G9NTCxQNaDj0Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-CdvwFVmGMNKwrOJnS-xWfQ-1; Tue,
- 11 Mar 2025 07:31:49 -0400
-X-MC-Unique: CdvwFVmGMNKwrOJnS-xWfQ-1
-X-Mimecast-MFC-AGG-ID: CdvwFVmGMNKwrOJnS-xWfQ_1741692708
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-42z4ww7XOwyTuSwKtdyggw-1; Tue,
+ 11 Mar 2025 07:31:43 -0400
+X-MC-Unique: 42z4ww7XOwyTuSwKtdyggw-1
+X-Mimecast-MFC-AGG-ID: 42z4ww7XOwyTuSwKtdyggw_1741692703
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C592818007E1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:48 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2397A180025A
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:43 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0FA291828A92
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:48 +0000 (UTC)
+ id 492611828A9C
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:42 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C953421E65DD; Tue, 11 Mar 2025 12:31:37 +0100 (CET)
+ id B2F0421E66C1; Tue, 11 Mar 2025 12:31:37 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 06/61] docs/qapi-domain: add QAPI xref roles
-Date: Tue, 11 Mar 2025 12:30:42 +0100
-Message-ID: <20250311113137.1277125-7-armbru@redhat.com>
-In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
-References: <20250311113137.1277125-1-armbru@redhat.com>
+Cc: stefanha@redhat.com
+Subject: [PULL 00/61] QAPI patches patches for 2025-03-11
+Date: Tue, 11 Mar 2025 12:30:36 +0100
+Message-ID: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
@@ -70,7 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,148 +83,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+The following changes since commit 825b96dbcee23d134b691fc75618b59c5f53da32:
 
-Add domain-specific cross-reference syntax. As of this commit, that
-means new :qapi:any:`block-core` referencing syntax.
+  Merge tag 'migration-20250310-pull-request' of https://gitlab.com/farosas/qemu into staging (2025-03-11 09:32:07 +0800)
 
-The :any: role will find anything registered to the QAPI domain,
-including modules, commands, events, etc.
+are available in the Git repository at:
 
-Creating the cross-references is powered by the QAPIXRefRole class;
-resolving them is handled by QAPIDomain.resolve_xref().
+  https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2025-03-11
 
-QAPIXrefRole is based heavily on Sphinx's own PyXrefRole, with
-modifications necessary for QAPI features.
+for you to fetch changes up to 93db9c84fc40b82d6bc3a944cb8eb8443980824c:
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-9-jsnow@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/sphinx/qapi_domain.py | 88 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 87 insertions(+), 1 deletion(-)
+  scripts/qapi/backend: Clean up create_backend()'s failure mode (2025-03-11 10:26:52 +0100)
 
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index f05c2cadf0..49d42c0921 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -26,6 +26,7 @@
-     ObjType,
- )
- from sphinx.locale import _, __
-+from sphinx.roles import XRefRole
- from sphinx.util import logging
- from sphinx.util.nodes import make_refnode
- 
-@@ -47,6 +48,54 @@ class ObjectEntry(NamedTuple):
-     aliased: bool
- 
- 
-+class QAPIXRefRole(XRefRole):
-+
-+    def process_link(
-+        self,
-+        env: BuildEnvironment,
-+        refnode: Element,
-+        has_explicit_title: bool,
-+        title: str,
-+        target: str,
-+    ) -> tuple[str, str]:
-+        refnode["qapi:module"] = env.ref_context.get("qapi:module")
-+
-+        # Cross-references that begin with a tilde adjust the title to
-+        # only show the reference without a leading module, even if one
-+        # was provided. This is a Sphinx-standard syntax; give it
-+        # priority over QAPI-specific type markup below.
-+        hide_module = False
-+        if target.startswith("~"):
-+            hide_module = True
-+            target = target[1:]
-+
-+        # Type names that end with "?" are considered optional
-+        # arguments and should be documented as such, but it's not
-+        # part of the xref itself.
-+        if target.endswith("?"):
-+            refnode["qapi:optional"] = True
-+            target = target[:-1]
-+
-+        # Type names wrapped in brackets denote lists. strip the
-+        # brackets and remember to add them back later.
-+        if target.startswith("[") and target.endswith("]"):
-+            refnode["qapi:array"] = True
-+            target = target[1:-1]
-+
-+        if has_explicit_title:
-+            # Don't mess with the title at all if it was explicitly set.
-+            # Explicit title syntax for references is e.g.
-+            # :qapi:type:`target <explicit title>`
-+            # and this explicit title overrides everything else here.
-+            return title, target
-+
-+        title = target
-+        if hide_module:
-+            title = target.split(".")[-1]
-+
-+        return title, target
-+
-+
- class QAPIIndex(Index):
-     """
-     Index subclass to provide the QAPI definition index.
-@@ -118,7 +167,13 @@ class QAPIDomain(Domain):
-     object_types: Dict[str, ObjType] = {}
- 
-     directives = {}
--    roles = {}
-+
-+    # These are all cross-reference roles; e.g.
-+    # :qapi:cmd:`query-block`. The keys correlate to the names used in
-+    # the object_types table values above.
-+    roles = {
-+        "any": QAPIXRefRole(),  # reference *any* type of QAPI object.
-+    }
- 
-     # Moved into the data property at runtime;
-     # this is the internal index of reference-able objects.
-@@ -252,6 +307,37 @@ def find_obj(
-             matches = [m for m in matches if not m[1].aliased]
-         return matches
- 
-+    def resolve_xref(
-+        self,
-+        env: BuildEnvironment,
-+        fromdocname: str,
-+        builder: Builder,
-+        typ: str,
-+        target: str,
-+        node: pending_xref,
-+        contnode: Element,
-+    ) -> nodes.reference | None:
-+        modname = node.get("qapi:module")
-+        matches = self.find_obj(modname, target, typ)
-+
-+        if not matches:
-+            return None
-+
-+        if len(matches) > 1:
-+            logger.warning(
-+                __("more than one target found for cross-reference %r: %s"),
-+                target,
-+                ", ".join(match[0] for match in matches),
-+                type="ref",
-+                subtype="qapi",
-+                location=node,
-+            )
-+
-+        name, obj = matches[0]
-+        return make_refnode(
-+            builder, fromdocname, obj.docname, obj.node_id, contnode, name
-+        )
-+
-     def resolve_any_xref(
-         self,
-         env: BuildEnvironment,
+----------------------------------------------------------------
+QAPI patches patches for 2025-03-11
+
+----------------------------------------------------------------
+John Snow (60):
+      docs/sphinx: create QAPI domain extension stub
+      docs/sphinx: add compat.py module and nested_parse helper
+      docs/qapi-domain: add QAPI domain object registry
+      docs/qapi-domain: add QAPI index
+      docs/qapi-domain: add resolve_any_xref()
+      docs/qapi-domain: add QAPI xref roles
+      docs/qapi-domain: add compatibility node classes
+      docs/qapi-domain: Add QAPIDescription abstract class
+      docs/qapi-domain: add qapi:module directive
+      docs/qapi-domain: add QAPIObject class
+      docs/qapi-domain: add qapi:command directive
+      docs/qapi-domain: add :since: directive option
+      docs/qapi-domain: add "Arguments:" field lists
+      docs/qapi-domain: add "Features:" field lists
+      docs/qapi-domain: add "Errors:" field lists
+      docs/qapi-domain: add "Return:" field lists
+      docs/qapi-domain: add qapi:enum directive
+      docs/qapi-domain: add qapi:alternate directive
+      docs/qapi-domain: add qapi:event directive
+      docs/qapi-domain: add qapi:object directive
+      docs/qapi-domain: add :deprecated: directive option
+      docs/qapi-domain: add :unstable: directive option
+      docs/qapi-domain: add :ifcond: directive option
+      docs/qapi-domain: add warnings for malformed field lists
+      docs/qapi-domain: add type cross-refs to field lists
+      docs/qapi-domain: add CSS styling
+      docs/qapi-domain: add XREF compatibility goop for Sphinx < 4.1
+      docs/qapi-domain: warn when QAPI domain xrefs fail to resolve
+      docs/qapi-domain: Fix error context reporting in Sphinx 5.x and 6.x
+      qapi/parser: adjust info location for doc body section
+      qapi: clean up encoding of section kinds
+      qapi/schema: add __repr__ to QAPIDoc.Section
+      docs/qapidoc: add transmogrifier stub
+      docs/qapidoc: split old implementation into qapidoc_legacy.py
+      docs/qapidoc: Fix static typing on qapidoc.py
+      docs/qapidoc: add transmogrifier class stub
+      docs/qapidoc: add visit_module() method
+      qapi/source: allow multi-line QAPISourceInfo advancing
+      docs/qapidoc: add visit_freeform() method
+      docs/qapidoc: add preamble() method
+      docs/qapidoc: add visit_paragraph() method
+      docs/qapidoc: add visit_errors() method
+      docs/qapidoc: add format_type() method
+      docs/qapidoc: add add_field() and generate_field() helper methods
+      docs/qapidoc: add visit_feature() method
+      docs/qapidoc: prepare to record entity being transmogrified
+      docs/qapidoc: add visit_returns() method
+      docs/qapidoc: add visit_member() method
+      docs/qapidoc: add visit_sections() method
+      docs/qapidoc: add visit_entity()
+      docs/qapidoc: implement transmogrify() method
+      docs/qapidoc: process @foo into ``foo``
+      docs/qapidoc: add intermediate output debugger
+      docs/qapidoc: Add "the members of" pointers
+      docs/qapidoc: generate entries for undocumented members
+      qapi/parser: add undocumented stub members to all_sections
+      docs: disambiguate cross-references
+      docs: enable qapidoc transmogrifier for QEMU QMP Reference
+      docs: add qapi-domain syntax documentation
+      MAINTAINERS: Add jsnow as maintainer for Sphinx documentation
+
+Markus Armbruster (1):
+      scripts/qapi/backend: Clean up create_backend()'s failure mode
+
+ MAINTAINERS                            |   1 +
+ docs/conf.py                           |  18 +-
+ docs/devel/codebase.rst                |   6 +-
+ docs/devel/index-build.rst             |   1 +
+ docs/devel/qapi-domain.rst             | 670 ++++++++++++++++++++++++
+ docs/glossary.rst                      |  10 +-
+ docs/interop/qemu-qmp-ref.rst          |   1 +
+ docs/sphinx-static/theme_overrides.css |  98 +++-
+ docs/sphinx/compat.py                  | 230 ++++++++
+ docs/sphinx/qapi_domain.py             | 931 +++++++++++++++++++++++++++++++++
+ docs/sphinx/qapidoc.py                 | 907 +++++++++++++++++---------------
+ docs/sphinx/qapidoc_legacy.py          | 440 ++++++++++++++++
+ qapi/qapi-schema.json                  |   2 +
+ scripts/qapi/main.py                   |  24 +-
+ scripts/qapi/parser.py                 | 123 ++++-
+ scripts/qapi/source.py                 |   4 +-
+ tests/qapi-schema/doc-good.out         |  10 +-
+ tests/qapi-schema/test-qapi.py         |   2 +-
+ 18 files changed, 3000 insertions(+), 478 deletions(-)
+ create mode 100644 docs/devel/qapi-domain.rst
+ create mode 100644 docs/sphinx/compat.py
+ create mode 100644 docs/sphinx/qapi_domain.py
+ create mode 100644 docs/sphinx/qapidoc_legacy.py
+
 -- 
 2.48.1
 
