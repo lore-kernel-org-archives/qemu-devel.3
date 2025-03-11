@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F773C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5C5C28B30
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzCa-0001hJ-Na; Tue, 11 Mar 2025 08:59:21 -0400
+	id 1trzD0-0003L3-Eu; Tue, 11 Mar 2025 08:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzCR-0001Uk-CJ; Tue, 11 Mar 2025 08:59:12 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1trzCv-0002mS-K6; Tue, 11 Mar 2025 08:59:41 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzCO-0007tn-0F; Tue, 11 Mar 2025 08:59:10 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2fee05829edso10575715a91.3; 
- Tue, 11 Mar 2025 05:59:07 -0700 (PDT)
+ id 1trzCq-000800-OP; Tue, 11 Mar 2025 08:59:41 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2ff187f027fso9043672a91.1; 
+ Tue, 11 Mar 2025 05:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741697946; x=1742302746; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741697973; x=1742302773; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gXU+U1l4Fd7SyqGLYuKX8zb67TDEGdub9abcDAe/vP8=;
- b=QjiRjuqa/W5PvadWA3sC4hvk5+4d9XVbi/eaGhr/2VuH7Zq9eVfl5MUtCg49TVeIcq
- wE1VWcKBAGlt/lIBQzy/K3+qObJJGdCbkrV1YwnIoX9neuiSWLObeN42gikQIy2kYWam
- NRLrJcQmtRiq895kFbDiydnrpWt+bOKQ6DB9WELVHNwP5lG2au6hNvmBlqiZQiOBkznI
- xTpnnjh/p+kh7ODxERFU6vUq3K2fYFwwwrIX9xJJdJ+fTxxUeQek77NDWA4d8rcLJk86
- GQOjLq9wLTG66twik+CtwEBFOPh6Hcw1OulWNBH6YKLBRvgFPfsPTd20g8scPqstq55F
- PNow==
+ bh=G3M6o0HCxEonBIrEgIZJkSZItGG16Roe3OW9YD7vpN8=;
+ b=mcPIO5HWu1+gRkFBq7e0+6pUgR2AHD7TcKKMkT9aHlPdpqRgihTj+Fj9iy5pXxSC6c
+ 02Ioc/nytzelHle1AFRLOmIFX7iMbsTO9fMidqDTgAZlb1n3rQEigKo4bIVPw0GwCml6
+ KCmIaugBGHlKKwMMU8lGpKPfQbhu0V0SfcaS7d3doEl0MljDTDA3zhS2YB97GnrjtzJa
+ HrYisApPxowVb0Dh7kmuAKzJZOSkyG6czPrfLFMry88IQB5ES5kUEZdcxhUvcETPSOr9
+ ot0llz34OyvnABsPnIvpb+jVIsfVXVPaxSPjuz+NTkTDHVwqxGSXkUKptRHEi3Z2a16m
+ XQfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741697946; x=1742302746;
+ d=1e100.net; s=20230601; t=1741697973; x=1742302773;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gXU+U1l4Fd7SyqGLYuKX8zb67TDEGdub9abcDAe/vP8=;
- b=fxcxdxKm4zM5zDTkRF9eE26kp2YFC12GQ0KCLjgYlh81e4KM0vmTaIy2o5/sirTmA0
- g0jMZsvR3jqrIN1+WpASQVTZ44mybKxU6ysd1u3KPRmyfnHfyo/6RZsoOSvYBchoG9QM
- dUaAz3hKyC19XAk/AIHVhLXCLAXsELzeoNmmbH4x3xmtF2rJjmW03SNWonVWmS/WAVBy
- V/Iiq4JcfoemqB9wWudfKU5GNss6apNBdq/UlkAe+yn2B1/AECJaNqKhyzgbOHOI6B8R
- TcZ/KYAVbimoujFZ7LQuXT5DYy2YtA4fewLjnrWmz423IIy+CWamgWKpIws4afK8k+R+
- j5YQ==
+ bh=G3M6o0HCxEonBIrEgIZJkSZItGG16Roe3OW9YD7vpN8=;
+ b=vM5lYU71nG8XynKpfNd6ZGSb5TzuPmb+LO01bc/oDG5sEPmiMmBb1WusEUtKBxAcuL
+ nLrYbcxs286e4E+wqFSSn6t1aQ4Tce7ZDGpoT4aEiBm82hAZgrG9S9PlGfCZjQ3fZa3X
+ GKUDnYqzhk0CpL8r9izPVPamkCwWqsH9DKOCwMRxQ9HPHBXZazpz5Jb6oV3iSgjvGs6R
+ EFNTVvLWZrIkj8m79CBVxyEQkA+Ly1v+XKDNEedX8T/9/ADU22Tn0pxeX42SE/878Ahn
+ QUvAIZLp0LQVxdOquFSWRjNIrUIDPPjfPRe7wWfatgLFSrudduaQl73gysyb32K1SFwd
+ Ob/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBfeHw9/5VCkMdToD2OIRB/XBQp77NIP9rne8P6gIITtdHH09CYSpY1/d76ra863YGlct75f0fxQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxDQ0L+hn6tO1Xo7xyLVsybRm2B4I6lTP8ezzFSi1IQbC9CIUgY
- kDQg/+gTsg5O11ZFjUIB96tp986SGWu5BDtELEvxjM27YV4pietKMmX3Qw==
-X-Gm-Gg: ASbGnctmliHyU6iAyhW1CIMIK4uV0GoTt8QyAgRN/rpgDisYnuh91BH6QXJYh0juZee
- IWuPHXBg+mVG1nvk0tkH4bWp+hEj00GSbkMM+d9Kle1ZB1n/j2z4aRwbn0fOjWDFiEXFT1wbCCS
- wrxNIewb4O2eRQkAYGYetN/w7MieGxN+ol/bZ89yk/0yIhuyu79MAlbCnXDlktzR1lfmspDKPhv
- Lxq3QN/WlBsGLQueoj4jqsvhZKswiC5YLp04fLhUYWpm+/ei0xwPm9Dmb3/ZMnkfIBUCiWAVBcq
- atIoROxYus+1BHtH3ucBMZFgA7xNgks5M+foaitMklb+7NQ5hms=
-X-Google-Smtp-Source: AGHT+IG3+xr/2h+PWYIuYl/EieLYhOiHlZl8JyOV3SJZdQfC/ZcRMjL0XcvzQu4nL2m4ia/sIHtmug==
-X-Received: by 2002:a17:90b:1648:b0:2f9:9ddd:68b9 with SMTP id
- 98e67ed59e1d1-2ff7cefbc6dmr23162307a91.26.1741697945564; 
- Tue, 11 Mar 2025 05:59:05 -0700 (PDT)
+ AJvYcCWGEqRiMMBgpwycSYwDd7aqJ0O50+p408gqjhl9fpZ+e/hmuvE16hCUA2+E+EJr07dEDyk1VMba5A==@nongnu.org
+X-Gm-Message-State: AOJu0YxUEK/4VUm0QS2obXZViKzgHFgzb+SDLytN8ObR68r96gmh/hEG
+ rog5v6u7HLKmQFfAt8h1FFcUdGa9Qo4lDcigdBIHkzJwpf6l1Am5ToG9GQ==
+X-Gm-Gg: ASbGnctq0jjEAXUXCT4Aq1GIQFXOtdfqpnWeFSwxw1wvjf/M6l9fv2emxHfIRTKAa4v
+ zskoet/LE8KxvONmej2N+EO65/nqP9pPM9mn0k5SgZ1XAyFxDDUJdt7IyjGxhcgx5EJ687WM2kS
+ 0ES3qo76nM+3lKYXu+JkCkkZrTRjZNFptZrlXt8AMkpwPTM0DBnzki9b6J41RT3/lPAOkutmbRj
+ Md1PbRC6f/WI70lk5mTQtX58fSRyuzP9FvQkr1+iyADZbXR22omWCG9SnIdkF9wNJ3nu/96unWZ
+ iqUoJXvgQ/v0wG87wMtQ6ywbCS8Ncth5wbW2E7egvTX+0IvrzX8=
+X-Google-Smtp-Source: AGHT+IGpJ3Abqlt0qCxF/qLDb513LeEuMoZaNufLaAoM4DtPXII8Mv+lZIYo9Iq2Puj/vACSovGHVw==
+X-Received: by 2002:a17:90b:5403:b0:2fa:1e56:5d82 with SMTP id
+ 98e67ed59e1d1-301005782bbmr4506063a91.17.1741697973002; 
+ Tue, 11 Mar 2025 05:59:33 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.03
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 05:59:05 -0700 (PDT)
+ Tue, 11 Mar 2025 05:59:32 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
 	qemu-ppc@nongnu.org
-Subject: [PULL 10/72] ppc/pnv/homer: class-based base and size
-Date: Tue, 11 Mar 2025 22:57:04 +1000
-Message-ID: <20250311125815.903177-11-npiggin@gmail.com>
+Subject: [PULL 21/72] ppc/pnv: Add a PNOR address and size sanity checks
+Date: Tue, 11 Mar 2025 22:57:15 +1000
+Message-ID: <20250311125815.903177-22-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,207 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Put HOMER memory region base and size into the class, to allow more
-code-reuse between different machines in later changes.
+The BMC HIOMAP PNOR access protocol has certain limits on PNOR addresses
+and sizes. Add some sanity checks for these so we don't get strange
+behaviour.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_homer.c         | 46 +++++++++++++++++++++++++++-----------
- include/hw/ppc/pnv.h       |  6 ++---
- include/hw/ppc/pnv_homer.h |  7 +++++-
- 3 files changed, 41 insertions(+), 18 deletions(-)
+ hw/ppc/pnv_bmc.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
-index 75b0ee7964..67a1fd77ba 100644
---- a/hw/ppc/pnv_homer.c
-+++ b/hw/ppc/pnv_homer.c
-@@ -138,16 +138,16 @@ static uint64_t pnv_homer_power8_pba_read(void *opaque, hwaddr addr,
-                                           unsigned size)
+diff --git a/hw/ppc/pnv_bmc.c b/hw/ppc/pnv_bmc.c
+index 0c1274df21..811ba3d7a4 100644
+--- a/hw/ppc/pnv_bmc.c
++++ b/hw/ppc/pnv_bmc.c
+@@ -251,10 +251,38 @@ static const IPMINetfn hiomap_netfn = {
+ 
+ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor)
  {
-     PnvHomer *homer = PNV_HOMER(opaque);
--    PnvChip *chip = homer->chip;
-+    PnvHomerClass *hmrc = PNV_HOMER_GET_CLASS(homer);
-     uint32_t reg = addr >> 3;
-     uint64_t val = 0;
- 
-     switch (reg) {
-     case PBA_BAR0:
--        val = PNV_HOMER_BASE(chip);
-+        val = homer->base;
-         break;
-     case PBA_BARMASK0: /* P8 homer region mask */
--        val = (PNV_HOMER_SIZE - 1) & 0x300000;
-+        val = (hmrc->size - 1) & 0x300000;
-         break;
-     case PBA_BAR3: /* P8 occ common area */
-         val = PNV_OCC_COMMON_AREA_BASE;
-@@ -179,13 +179,19 @@ static const MemoryRegionOps pnv_homer_power8_pba_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
-+static hwaddr pnv_homer_power8_get_base(PnvChip *chip)
-+{
-+    return PNV_HOMER_BASE(chip);
-+}
++    uint32_t pnor_size = pnor->size;
++    uint32_t pnor_addr = PNOR_SPI_OFFSET;
 +
- static void pnv_homer_power8_class_init(ObjectClass *klass, void *data)
- {
-     PnvHomerClass *homer = PNV_HOMER_CLASS(klass);
+     if (!pnv_bmc_is_simulator(bmc)) {
+         return;
+     }
  
-+    homer->get_base = pnv_homer_power8_get_base;
-+    homer->size = PNV_HOMER_SIZE;
-     homer->pba_size = PNV_XSCOM_PBA_SIZE;
-     homer->pba_ops = &pnv_homer_power8_pba_ops;
--    homer->homer_size = PNV_HOMER_SIZE;
-     homer->homer_ops = &pnv_power8_homer_ops;
-     homer->core_max_base = PNV8_CORE_MAX_BASE;
- }
-@@ -291,16 +297,16 @@ static uint64_t pnv_homer_power9_pba_read(void *opaque, hwaddr addr,
-                                           unsigned size)
- {
-     PnvHomer *homer = PNV_HOMER(opaque);
--    PnvChip *chip = homer->chip;
-+    PnvHomerClass *hmrc = PNV_HOMER_GET_CLASS(homer);
-     uint32_t reg = addr >> 3;
-     uint64_t val = 0;
- 
-     switch (reg) {
-     case PBA_BAR0:
--        val = PNV9_HOMER_BASE(chip);
-+        val = homer->base;
-         break;
-     case PBA_BARMASK0: /* P9 homer region mask */
--        val = (PNV9_HOMER_SIZE - 1) & 0x300000;
-+        val = (hmrc->size - 1) & 0x300000;
-         break;
-     case PBA_BAR2: /* P9 occ common area */
-         val = PNV9_OCC_COMMON_AREA_BASE;
-@@ -332,13 +338,19 @@ static const MemoryRegionOps pnv_homer_power9_pba_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
-+static hwaddr pnv_homer_power9_get_base(PnvChip *chip)
-+{
-+    return PNV9_HOMER_BASE(chip);
-+}
++    /*
++     * The HIOMAP protocol uses block units and 16-bit addressing.
++     * Prevent overflow or misalign.
++     */
++    if (pnor_addr >= 1U << (BLOCK_SHIFT + 16)) {
++        warn_report("PNOR address is larger than 2^%d, disabling PNOR",
++                    BLOCK_SHIFT + 16);
++        return;
++    }
++    if (pnor_addr & ((1U << BLOCK_SHIFT) - 1)) {
++        warn_report("PNOR address is not aligned to 2^%d, disabling PNOR",
++                    BLOCK_SHIFT);
++        return;
++    }
++    if (pnor_size > 1U << (BLOCK_SHIFT + 16)) {
++        warn_report("PNOR size is larger than 2^%d, disabling PNOR",
++                    BLOCK_SHIFT + 16);
++        return;
++    }
++    if (pnor_size & ((1U << BLOCK_SHIFT) - 1)) {
++        warn_report("PNOR size is not aligned to 2^%d, disabling PNOR",
++                    BLOCK_SHIFT);
++        return;
++    }
 +
- static void pnv_homer_power9_class_init(ObjectClass *klass, void *data)
- {
-     PnvHomerClass *homer = PNV_HOMER_CLASS(klass);
+     object_ref(OBJECT(pnor));
+     object_property_add_const_link(OBJECT(bmc), "pnor", OBJECT(pnor));
  
-+    homer->get_base = pnv_homer_power9_get_base;
-+    homer->size = PNV_HOMER_SIZE;
-     homer->pba_size = PNV9_XSCOM_PBA_SIZE;
-     homer->pba_ops = &pnv_homer_power9_pba_ops;
--    homer->homer_size = PNV9_HOMER_SIZE;
-     homer->homer_ops = &pnv_power9_homer_ops;
-     homer->core_max_base = PNV9_CORE_MAX_BASE;
- }
-@@ -354,16 +366,16 @@ static uint64_t pnv_homer_power10_pba_read(void *opaque, hwaddr addr,
-                                           unsigned size)
- {
-     PnvHomer *homer = PNV_HOMER(opaque);
--    PnvChip *chip = homer->chip;
-+    PnvHomerClass *hmrc = PNV_HOMER_GET_CLASS(homer);
-     uint32_t reg = addr >> 3;
-     uint64_t val = 0;
- 
-     switch (reg) {
-     case PBA_BAR0:
--        val = PNV10_HOMER_BASE(chip);
-+        val = homer->base;
-         break;
-     case PBA_BARMASK0: /* P10 homer region mask */
--        val = (PNV10_HOMER_SIZE - 1) & 0x300000;
-+        val = (hmrc->size - 1) & 0x300000;
-         break;
-     case PBA_BAR2: /* P10 occ common area */
-         val = PNV10_OCC_COMMON_AREA_BASE;
-@@ -395,13 +407,19 @@ static const MemoryRegionOps pnv_homer_power10_pba_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
-+static hwaddr pnv_homer_power10_get_base(PnvChip *chip)
-+{
-+    return PNV10_HOMER_BASE(chip);
-+}
-+
- static void pnv_homer_power10_class_init(ObjectClass *klass, void *data)
- {
-     PnvHomerClass *homer = PNV_HOMER_CLASS(klass);
- 
-+    homer->get_base = pnv_homer_power10_get_base;
-+    homer->size = PNV_HOMER_SIZE;
-     homer->pba_size = PNV10_XSCOM_PBA_SIZE;
-     homer->pba_ops = &pnv_homer_power10_pba_ops;
--    homer->homer_size = PNV10_HOMER_SIZE;
-     homer->homer_ops = &pnv_power9_homer_ops; /* TODO */
-     homer->core_max_base = PNV9_CORE_MAX_BASE;
- }
-@@ -424,9 +442,11 @@ static void pnv_homer_realize(DeviceState *dev, Error **errp)
-                           homer, "xscom-pba", hmrc->pba_size);
- 
-     /* homer region */
-+    homer->base = hmrc->get_base(homer->chip);
-+
-     memory_region_init_io(&homer->regs, OBJECT(dev),
-                           hmrc->homer_ops, homer, "homer-main-memory",
--                          hmrc->homer_size);
-+                          hmrc->size);
- }
- 
- static const Property pnv_homer_properties[] = {
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index fcb6699150..d8fca079f2 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -205,9 +205,8 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
- #define PNV9_OCC_SENSOR_BASE(chip)   (PNV9_OCC_COMMON_AREA_BASE +       \
-     PNV_OCC_SENSOR_DATA_BLOCK_BASE((chip)->chip_id))
- 
--#define PNV9_HOMER_SIZE              0x0000000000400000ull
- #define PNV9_HOMER_BASE(chip)                                           \
--    (0x203ffd800000ull + ((uint64_t)(chip)->chip_id) * PNV9_HOMER_SIZE)
-+    (0x203ffd800000ull + ((uint64_t)(chip)->chip_id) * PNV_HOMER_SIZE)
- 
- /*
-  * POWER10 MMIO base addresses - 16TB stride per chip
-@@ -250,8 +249,7 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
- #define PNV10_OCC_SENSOR_BASE(chip) (PNV10_OCC_COMMON_AREA_BASE +       \
-     PNV_OCC_SENSOR_DATA_BLOCK_BASE((chip)->chip_id))
- 
--#define PNV10_HOMER_SIZE              0x0000000000400000ull
- #define PNV10_HOMER_BASE(chip)                                           \
--    (0x300ffd800000ll + ((uint64_t)(chip)->chip_id) * PNV10_HOMER_SIZE)
-+    (0x300ffd800000ll + ((uint64_t)(chip)->chip_id) * PNV_HOMER_SIZE)
- 
- #endif /* PPC_PNV_H */
-diff --git a/include/hw/ppc/pnv_homer.h b/include/hw/ppc/pnv_homer.h
-index b1c5d498dc..5ffc0c97af 100644
---- a/include/hw/ppc/pnv_homer.h
-+++ b/include/hw/ppc/pnv_homer.h
-@@ -42,15 +42,20 @@ struct PnvHomer {
-     PnvChip *chip;
-     MemoryRegion pba_regs;
-     MemoryRegion regs;
-+    hwaddr base;
- };
- 
- 
- struct PnvHomerClass {
-     DeviceClass parent_class;
- 
-+    /* Get base address of HOMER memory */
-+    hwaddr (*get_base)(PnvChip *chip);
-+    /* Size of HOMER memory */
-+    int size;
-+
-     int pba_size;
-     const MemoryRegionOps *pba_ops;
--    int homer_size;
-     const MemoryRegionOps *homer_ops;
- 
-     hwaddr core_max_base;
 -- 
 2.47.1
 
