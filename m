@@ -4,106 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A96C28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F1C6C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1G2-0006a4-9t; Tue, 11 Mar 2025 11:11:02 -0400
+	id 1ts1Gc-0006pq-R9; Tue, 11 Mar 2025 11:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ts1Ft-0006Wc-LV
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:10:54 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ts1Fq-0003bQ-Pw
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:10:53 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2239aa5da08so91952795ad.3
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:10:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741705849; x=1742310649; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cQwJl5AaMpNuj13k4T9FN6aD7KIBuzBDEK+lwo9Ext8=;
- b=Hs/3FWULmf3nvpK4aO9SN+8bhNvIE3wuBEShLkky5/mtOue2T2CFG1sKWdWRmOD2Dl
- K1aRtL8J9712CBZYpniGiDRL7YMdaPr0came2CUPagQwMOUDUY9YmjzmlIo9IXtQxLjD
- Xk3KHnlwVLkD3fkDa+1OhDm9s1sy8MuaoMgVsaR1AYQgJ3C8VA1EHEm2vUa25PiX/2EH
- X/NcsVERoh9m4NpxCn601AeDxUJ8zW+lEj7zFpsrOeV9y+kN05BY3ILHSjYBzjhCo7Y2
- 6T77jLrJ0me9nt37Z+dbZRxn/pW6bi1MyFdZiZLeLPsy1lnQkRfPubKYq1On9kLKPX3O
- Zc9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741705849; x=1742310649;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cQwJl5AaMpNuj13k4T9FN6aD7KIBuzBDEK+lwo9Ext8=;
- b=hE8GrcykH82Z12HMsC3HXUlzg5vZnaa622kfvmpRNCj4bBLkJSjzn+gA2AntskIeu+
- kBU1slvY4HflFosQzOcVUZCIAxAVryeF6Jz3wp+HQOAGnrS5HAtuFuQ+i97TW6GXbtVl
- iEDBso+XSzdDOmmRId0PLYw5SOvoswstZ9RePwU0IS2Pa1cv2+MhVyE2mdA/IzsqDsFu
- u1dGVaRMS7n7V09CHRTn2lbUuFv8jHqx+5ElmxKYSBm1QhuGzpjai/Np4CTVlogAFxTP
- ISm8ucbfBZK6qijLKJaIIpPiYy4x7ofxWnREKjdKMeItby+Tsj+vJeH6QvsNyLt4etP2
- OYwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV85vHWO+b/lcy4D9NVJzeRM1ceJAwILv665dOA2G0kqSGX4PkRRqxaXVOdZl3IIetvvXP3wz0XRq92@nongnu.org
-X-Gm-Message-State: AOJu0YxlPdGYPfU5eOSF9mQi60z/HEWQNEoKPNUwRQwbJgs9ZobOFjgn
- pFe5Y3K5h49StB7Uops1JUM5aTx8ALjj6iatLF4lejXJZKiOSM1Nm1WnNB7+xdU=
-X-Gm-Gg: ASbGnctIqetuheCcLUCDxRnOECW+6bxKIdbUiYNb8Z6e5+CODwec5a6zaS6WurKAPwN
- 0luO4ZHcXB64eOp07ReFvrLM6r+XBnHIgVUkkyyiRviBNFaCCxHgAOCUy/fa4iLPkufEzeYAR90
- mAMCTYOmTsXwbNR0ZFcQzLcTss6bZdSikkPtgZQPCPeRfGXMbUME0WpqJ+OPUMNAQurFXSDL2Yv
- pK6AgHZIHnn8oo+UMSMk3WBVCiI4mdITdzAL8fERw+pXRvO6VQ5C48npACPEq87bdPHYhlccEOo
- jq0bU3W4LD0TRpGtB40j/5UyNWMHOiRhPYII1sPgStylwYe+E4b8733SXA==
-X-Google-Smtp-Source: AGHT+IEITMrsbR3vHiF3IG5H7RZJtH9+eCZYnI84EngoCoPfv0vimXTB3AzAhTXNWBOwPqkcAjXLsA==
-X-Received: by 2002:a05:6a20:7fa1:b0:1ee:dd60:194f with SMTP id
- adf61e73a8af0-1f544c378b7mr26705105637.26.1741705847979; 
- Tue, 11 Mar 2025 08:10:47 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af28126d69bsm9585406a12.51.2025.03.11.08.10.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 08:10:47 -0700 (PDT)
-Message-ID: <9706a688-b466-40ca-a6b8-0221b11f749c@linaro.org>
-Date: Tue, 11 Mar 2025 08:10:46 -0700
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1ts1Ga-0006os-Ci
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:11:36 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1ts1GX-0003kd-Kp
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:11:36 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1ts1GE-00000000dJQ-1Hsa; Tue, 11 Mar 2025 16:11:14 +0100
+Message-ID: <b5325f88-0f04-4989-8b2c-2a23456ae6b9@maciej.szmigiero.name>
+Date: Tue, 11 Mar 2025 16:11:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/16] exec/exec-all: remove dependency on cpu.h
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paul Durrant <paul@xen.org>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- David Hildenbrand <david@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- xen-devel@lists.xenproject.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, alex.bennee@linaro.org,
- qemu-riscv@nongnu.org, manos.pitsidianakis@linaro.org,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Anthony PERARD <anthony@xenproject.org>
-References: <20250311040838.3937136-1-pierrick.bouvier@linaro.org>
- <20250311040838.3937136-8-pierrick.bouvier@linaro.org>
- <f0c7b0ff-a43a-4203-aba1-2e06a462771e@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <f0c7b0ff-a43a-4203-aba1-2e06a462771e@linaro.org>
+Subject: Re: [PULL 05/10] Add Hyper-V Dynamic Memory Protocol driver
+ (hv-balloon) base
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <cover.1699279190.git.maciej.szmigiero@oracle.com>
+ <0d9e8c0b670b7856d36ed155d43548d2491230e7.1699279190.git.maciej.szmigiero@oracle.com>
+ <a140cfae-261e-4d78-985c-efbad93b7a9d@linaro.org>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <a140cfae-261e-4d78-985c-efbad93b7a9d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,22 +106,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xMS8yNSAwMDoyNiwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDExLzMvMjUgMDU6MDgsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBSZXZpZXdlZC1i
-eTogUmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+DQo+
-PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxp
-bmFyby5vcmc+DQo+IA0KPiBNaXNzaW5nIHRoZSAid2h5IiBqdXN0aWZpY2F0aW9uIHdlIGNv
-dWxkbid0IGRvIHRoYXQgYmVmb3JlLg0KPiANCj4+IC0tLQ0KPj4gICAgaW5jbHVkZS9leGVj
-L2V4ZWMtYWxsLmggfCAxIC0NCj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCAxIGRlbGV0aW9uKC0p
-DQo+Pg0KPj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZXhlYy9leGVjLWFsbC5oIGIvaW5jbHVk
-ZS9leGVjL2V4ZWMtYWxsLmgNCj4+IGluZGV4IGRkNWM0MGYyMjMzLi4xOWIwZWRhNDRhNyAx
-MDA2NDQNCj4+IC0tLSBhL2luY2x1ZGUvZXhlYy9leGVjLWFsbC5oDQo+PiArKysgYi9pbmNs
-dWRlL2V4ZWMvZXhlYy1hbGwuaA0KPj4gQEAgLTIwLDcgKzIwLDYgQEANCj4+ICAgICNpZm5k
-ZWYgRVhFQ19BTExfSA0KPj4gICAgI2RlZmluZSBFWEVDX0FMTF9IDQo+PiAgICANCj4+IC0j
-aW5jbHVkZSAiY3B1LmgiDQo+PiAgICAjaWYgZGVmaW5lZChDT05GSUdfVVNFUl9PTkxZKQ0K
-Pj4gICAgI2luY2x1ZGUgImV4ZWMvY3B1X2xkc3QuaCINCj4+ICAgICNlbmRpZg0KPiANCg0K
-UHJldmlvdXMgY29tbWl0IGlzIG5hbWVkOg0KY29kZWJhc2U6IHByZXBhcmUgdG8gcmVtb3Zl
-IGNwdS5oIGZyb20gZXhlYy9leGVjLWFsbC5oDQpTbyBiZWZvcmUgdGhvc2UgY2hhbmdlcywg
-aXQncyBub3QgcG9zc2libGUuDQoNCkkgY2FuIHJlcGVhdCB0aGF0IGhlcmUsIG9yIHNxdWFz
-aCB0aGUgcGF0Y2hlcyB0b2dldGhlciwgYXMgeW91IHByZWZlci4NCg==
+On 11.03.2025 16:00, Philippe Mathieu-Daudé wrote:
+> Hi Maciej,
+> 
+> On 6/11/23 15:20, Maciej S. Szmigiero wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> This driver is like virtio-balloon on steroids: it allows both changing the
+>> guest memory allocation via ballooning and (in the next patch) inserting
+>> pieces of extra RAM into it on demand from a provided memory backend.
+>>
+>> The actual resizing is done via ballooning interface (for example, via
+>> the "balloon" HMP command).
+>> This includes resizing the guest past its boot size - that is, hot-adding
+>> additional memory in granularity limited only by the guest alignment
+>> requirements, as provided by the next patch.
+>>
+>> In contrast with ACPI DIMM hotplug where one can only request to unplug a
+>> whole DIMM stick this driver allows removing memory from guest in single
+>> page (4k) units via ballooning.
+>>
+>> After a VM reboot the guest is back to its original (boot) size.
+>>
+>> In the future, the guest boot memory size might be changed on reboot
+>> instead, taking into account the effective size that VM had before that
+>> reboot (much like Hyper-V does).
+>>
+>> For performance reasons, the guest-released memory is tracked in a few
+>> range trees, as a series of (start, count) ranges.
+>> Each time a new page range is inserted into such tree its neighbors are
+>> checked as candidates for possible merging with it.
+>>
+>> Besides performance reasons, the Dynamic Memory protocol itself uses page
+>> ranges as the data structure in its messages, so relevant pages need to be
+>> merged into such ranges anyway.
+>>
+>> One has to be careful when tracking the guest-released pages, since the
+>> guest can maliciously report returning pages outside its current address
+>> space, which later clash with the address range of newly added memory.
+>> Similarly, the guest can report freeing the same page twice.
+>>
+>> The above design results in much better ballooning performance than when
+>> using virtio-balloon with the same guest: 230 GB / minute with this driver
+>> versus 70 GB / minute with virtio-balloon.
+>>
+>> During a ballooning operation most of time is spent waiting for the guest
+>> to come up with newly freed page ranges, processing the received ranges on
+>> the host side (in QEMU and KVM) is nearly instantaneous.
+>>
+>> The unballoon operation is also pretty much instantaneous:
+>> thanks to the merging of the ballooned out page ranges 200 GB of memory can
+>> be returned to the guest in about 1 second.
+>> With virtio-balloon this operation takes about 2.5 minutes.
+>>
+>> These tests were done against a Windows Server 2019 guest running on a
+>> Xeon E5-2699, after dirtying the whole memory inside guest before each
+>> balloon operation.
+>>
+>> Using a range tree instead of a bitmap to track the removed memory also
+>> means that the solution scales well with the guest size: even a 1 TB range
+>> takes just a few bytes of such metadata.
+>>
+>> Since the required GTree operations aren't present in every Glib version
+>> a check for them was added to the meson build script, together with new
+>> "--enable-hv-balloon" and "--disable-hv-balloon" configure arguments.
+>> If these GTree operations are missing in the system's Glib version this
+>> driver will be skipped during QEMU build.
+>>
+>> An optional "status-report=on" device parameter requests memory status
+>> events from the guest (typically sent every second), which allow the host
+>> to learn both the guest memory available and the guest memory in use
+>> counts.
+>>
+>> Following commits will add support for their external emission as
+>> "HV_BALLOON_STATUS_REPORT" QMP events.
+>>
+>> The driver is named hv-balloon since the Linux kernel client driver for
+>> the Dynamic Memory Protocol is named as such and to follow the naming
+>> pattern established by the virtio-balloon driver.
+>> The whole protocol runs over Hyper-V VMBus.
+>>
+>> The driver was tested against Windows Server 2012 R2, Windows Server 2016
+>> and Windows Server 2019 guests and obeys the guest alignment requirements
+>> reported to the host via DM_CAPABILITIES_REPORT message.
+>>
+>> Acked-by: David Hildenbrand <david@redhat.com>
+>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>> ---
+>>   Kconfig.host                           |    3 +
+>>   hw/hyperv/Kconfig                      |   10 +
+>>   hw/hyperv/hv-balloon-internal.h        |   33 +
+>>   hw/hyperv/hv-balloon-page_range_tree.c |  228 +++++
+>>   hw/hyperv/hv-balloon-page_range_tree.h |  118 +++
+>>   hw/hyperv/hv-balloon.c                 | 1160 ++++++++++++++++++++++++
+>>   hw/hyperv/meson.build                  |    1 +
+>>   hw/hyperv/trace-events                 |   13 +
+>>   include/hw/hyperv/hv-balloon.h         |   18 +
+>>   meson.build                            |   28 +-
+>>   meson_options.txt                      |    2 +
+>>   scripts/meson-buildoptions.sh          |    3 +
+>>   12 files changed, 1616 insertions(+), 1 deletion(-)
+>>   create mode 100644 hw/hyperv/hv-balloon-internal.h
+>>   create mode 100644 hw/hyperv/hv-balloon-page_range_tree.c
+>>   create mode 100644 hw/hyperv/hv-balloon-page_range_tree.h
+>>   create mode 100644 hw/hyperv/hv-balloon.c
+>>   create mode 100644 include/hw/hyperv/hv-balloon.h
+>>
+>> diff --git a/Kconfig.host b/Kconfig.host
+>> index d763d892693c..2ee71578f38f 100644
+>> --- a/Kconfig.host
+>> +++ b/Kconfig.host
+>> @@ -46,3 +46,6 @@ config FUZZ
+>>   config VFIO_USER_SERVER_ALLOWED
+>>       bool
+>>       imply VFIO_USER_SERVER
+>> +
+>> +config HV_BALLOON_POSSIBLE
+>> +    bool
+>> diff --git a/hw/hyperv/Kconfig b/hw/hyperv/Kconfig
+>> index fcf65903bd05..41dd827c841b 100644
+>> --- a/hw/hyperv/Kconfig
+>> +++ b/hw/hyperv/Kconfig
+>> @@ -16,3 +16,13 @@ config SYNDBG
+>>       bool
+>>       default y
+>>       depends on VMBUS
+>> +
+>> +config HV_BALLOON_SUPPORTED
+>> +    bool
+>> +
+>> +config HV_BALLOON
+>> +    bool
+>> +    default y
+>> +    depends on VMBUS
+>> +    depends on HV_BALLOON_POSSIBLE
+> 
+> Where is HV_BALLOON_POSSIBLE set?
+
+In meson.build:
+> host_kconfig = \
+(..)
+>  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : []) + \
+
+Then meson passes this as a command-line parameter
+to scripts/minikconf.py, together with other similar
+config values in host_kconfig.
+
+See build/meson-logs/meson-log.txt for scripts/minikconf.py
+complete command line.
+
+Thanks,
+Maciej
+
 
