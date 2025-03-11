@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDCF3C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09116C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 11:50:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trxs2-0005M7-TO; Tue, 11 Mar 2025 07:34:03 -0400
+	id 1trxrI-0003fJ-F5; Tue, 11 Mar 2025 07:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxq9-000355-Uy
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqt-0003OK-Bw
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxpy-0006TO-U9
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:03 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trxqC-0006WS-0R
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 07:32:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741692711;
+ s=mimecast20190719; t=1741692719;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w+MPXw/ViYW+BO5JYLzSFNIa+LpybWCpjcuBxciHrxs=;
- b=YigALLPXM5rT583ISey8uHz9whmpuxXGzv4c4TieiMuRxVB+hAfPh7MiKFuX0zV7kMRg7D
- XOrcVavMd/l8n+pgO2HO9dnL2qTAiBhjzNYDqmVOyHI3+Y51QjS4zpObooMZsKS6TKVpp5
- Frt1zM4asjyKcRpI8FWvv0TmzpZu3Pc=
+ bh=tIz5D146hfHkf+gYrn3NUb8y77ROWgAaRiF8ghz04Zc=;
+ b=JowILy14ev/hRoIb3X5LFg2wq03giG2iY9x4cy3rkuJ4zamoE1szB/gSALLHM0t1CY6hnl
+ fd5J0t080VnCvX0rO6p9vNBpJLMo8H9UO0nDc33Vb1dS1t0oBnmiUs0V94ykGKci34f13W
+ zKbB0ij+oTZTze4PW5pwJVGRa2i8dVA=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-rMdTXRXRMhS0NJns1qPf0g-1; Tue,
- 11 Mar 2025 07:31:50 -0400
-X-MC-Unique: rMdTXRXRMhS0NJns1qPf0g-1
-X-Mimecast-MFC-AGG-ID: rMdTXRXRMhS0NJns1qPf0g_1741692709
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-202-KVQxNFDrP3Od3N6a27Pzpg-1; Tue,
+ 11 Mar 2025 07:31:58 -0400
+X-MC-Unique: KVQxNFDrP3Od3N6a27Pzpg-1
+X-Mimecast-MFC-AGG-ID: KVQxNFDrP3Od3N6a27Pzpg_1741692717
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CAA9D1955DDF
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:49 +0000 (UTC)
+ id 76E4619560B4
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:57 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DAD7B19560AB
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:48 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AEF21801752
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:31:57 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D159E21E6560; Tue, 11 Mar 2025 12:31:37 +0100 (CET)
+ id 50A8521E61BB; Tue, 11 Mar 2025 12:31:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 08/61] docs/qapi-domain: Add QAPIDescription abstract class
-Date: Tue, 11 Mar 2025 12:30:44 +0100
-Message-ID: <20250311113137.1277125-9-armbru@redhat.com>
+Subject: [PULL 38/61] qapi/source: allow multi-line QAPISourceInfo advancing
+Date: Tue, 11 Mar 2025 12:31:14 +0100
+Message-ID: <20250311113137.1277125-39-armbru@redhat.com>
 In-Reply-To: <20250311113137.1277125-1-armbru@redhat.com>
 References: <20250311113137.1277125-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,154 +88,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-This class is a generic, top-level directive for documenting some kind
-of QAPI thingamajig that we expect to go into the Index. This class
-doesn't do much by itself, and it isn't yet associated with any
-particular directive.
+This is for the sake of the new rST generator (the "transmogrifier") so
+we can advance multiple lines on occasion while keeping the
+generated<-->source mappings accurate.
 
-handle_signature(), _object_hierarchy_parts() and _toc_entry_name() are
-defined in the base class. get_index_text() and add_target_and_index()
-are new methods defined here; they are based heavily on the layout and
-format of the Python domain's general object class.
+next_line now simply takes an optional n parameter which chooses the
+number of lines to advance.
+
+The next patch will use this when converting section syntax in free-form
+documentation to more traditional rST section header syntax, which does
+not always line up 1:1 for line counts.
+
+For example:
+
+```
+ ##
+ # = Section     <-- Info is pointing here, "L1"
+ #
+ # Lorem Ipsum
+ ##
+```
+
+would be transformed to rST as:
+
+```
+=======        <-- L1
+Section        <-- L1
+=======        <-- L1
+               <-- L2
+Lorem Ipsum    <-- L3
+```
+
+After consuming the single "Section" line from the source, we want to
+advance the source pointer to the next non-empty line which requires
+jumping by more than one line.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250311034303.75779-11-jsnow@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20250311034303.75779-42-jsnow@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapi_domain.py | 101 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 99 insertions(+), 2 deletions(-)
+ scripts/qapi/source.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 49d42c0921..0ee36b4644 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -14,11 +14,13 @@
-     NamedTuple,
-     Optional,
-     Tuple,
-+    cast,
- )
+diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
+index 7b379fdc92..ffdc3f482a 100644
+--- a/scripts/qapi/source.py
++++ b/scripts/qapi/source.py
+@@ -47,9 +47,9 @@ def set_defn(self, meta: str, name: str) -> None:
+         self.defn_meta = meta
+         self.defn_name = name
  
- from docutils import nodes
+-    def next_line(self: T) -> T:
++    def next_line(self: T, n: int = 1) -> T:
+         info = copy.copy(self)
+-        info.line += 1
++        info.line += n
+         return info
  
--from sphinx.addnodes import pending_xref
-+from sphinx.addnodes import desc_signature, pending_xref
-+from sphinx.directives import ObjectDescription
- from sphinx.domains import (
-     Domain,
-     Index,
-@@ -28,7 +30,7 @@
- from sphinx.locale import _, __
- from sphinx.roles import XRefRole
- from sphinx.util import logging
--from sphinx.util.nodes import make_refnode
-+from sphinx.util.nodes import make_id, make_refnode
- 
- 
- if TYPE_CHECKING:
-@@ -96,6 +98,101 @@ def process_link(
-         return title, target
- 
- 
-+Signature = str
-+
-+
-+class QAPIDescription(ObjectDescription[Signature]):
-+    """
-+    Generic QAPI description.
-+
-+    This is meant to be an abstract class, not instantiated
-+    directly. This class handles the abstract details of indexing, the
-+    TOC, and reference targets for QAPI descriptions.
-+    """
-+
-+    def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
-+        # Do nothing. The return value here is the "name" of the entity
-+        # being documented; for QAPI, this is the same as the
-+        # "signature", which is just a name.
-+
-+        # Normally this method must also populate signode with nodes to
-+        # render the signature; here we do nothing instead - the
-+        # subclasses will handle this.
-+        return sig
-+
-+    def get_index_text(self, name: Signature) -> Tuple[str, str]:
-+        """Return the text for the index entry of the object."""
-+
-+        # NB: this is used for the global index, not the QAPI index.
-+        return ("single", f"{name} (QMP {self.objtype})")
-+
-+    def add_target_and_index(
-+        self, name: Signature, sig: str, signode: desc_signature
-+    ) -> None:
-+        # name is the return value of handle_signature.
-+        # sig is the original, raw text argument to handle_signature.
-+        # For QAPI, these are identical, currently.
-+
-+        assert self.objtype
-+
-+        # If we're documenting a module, don't include the module as
-+        # part of the FQN.
-+        modname = ""
-+        if self.objtype != "module":
-+            modname = self.options.get(
-+                "module", self.env.ref_context.get("qapi:module")
-+            )
-+        fullname = (modname + "." if modname else "") + name
-+
-+        node_id = make_id(
-+            self.env, self.state.document, self.objtype, fullname
-+        )
-+        signode["ids"].append(node_id)
-+
-+        self.state.document.note_explicit_target(signode)
-+        domain = cast(QAPIDomain, self.env.get_domain("qapi"))
-+        domain.note_object(fullname, self.objtype, node_id, location=signode)
-+
-+        if "no-index-entry" not in self.options:
-+            arity, indextext = self.get_index_text(name)
-+            assert self.indexnode is not None
-+            if indextext:
-+                self.indexnode["entries"].append(
-+                    (arity, indextext, node_id, "", None)
-+                )
-+
-+    def _object_hierarchy_parts(
-+        self, sig_node: desc_signature
-+    ) -> Tuple[str, ...]:
-+        if "fullname" not in sig_node:
-+            return ()
-+        modname = sig_node.get("module")
-+        fullname = sig_node["fullname"]
-+
-+        if modname:
-+            return (modname, *fullname.split("."))
-+
-+        return tuple(fullname.split("."))
-+
-+    def _toc_entry_name(self, sig_node: desc_signature) -> str:
-+        # This controls the name in the TOC and on the sidebar.
-+
-+        # This is the return type of _object_hierarchy_parts().
-+        toc_parts = cast(Tuple[str, ...], sig_node.get("_toc_parts", ()))
-+        if not toc_parts:
-+            return ""
-+
-+        config = self.env.app.config
-+        *parents, name = toc_parts
-+        if config.toc_object_entries_show_parents == "domain":
-+            return sig_node.get("fullname", name)
-+        if config.toc_object_entries_show_parents == "hide":
-+            return name
-+        if config.toc_object_entries_show_parents == "all":
-+            return ".".join(parents + [name])
-+        return ""
-+
-+
- class QAPIIndex(Index):
-     """
-     Index subclass to provide the QAPI definition index.
+     def loc(self) -> str:
 -- 
 2.48.1
 
