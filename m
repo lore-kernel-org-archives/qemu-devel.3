@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0236AC28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 04:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA11C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 04:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqZ0-0007qG-3O; Mon, 10 Mar 2025 23:45:55 -0400
+	id 1trqax-0005HH-9t; Mon, 10 Mar 2025 23:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqY9-0006UX-BD
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:04 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqZ6-0008Nc-HI
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:46:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqY7-0002Om-GZ
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:01 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqYz-0002j9-Cd
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741664698;
+ s=mimecast20190719; t=1741664752;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4bfzNyLtW3ph70CiEZf+s4qCwlojzWGR8wU9QTIyQR4=;
- b=LcqO/SGQaEPvqmF3IH93+041R05xCcQ8h5XQw76xDVW4vq1ip6yzZiZdGcgOwxVZPXW5lm
- DEbTrNnY++3xoYNspuB27I2nvk4gFn06Bp+r7KXi9BIMru6FoOXOhpFSCLFCLJensSlDhU
- VUkiFP8iyh0XTHstGKl3lK95U0sqO0M=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=yciYLWRt9Lw3nixFl1/U8yAozl9NWb+UUTP2YlwnXbE=;
+ b=h7yDlDKp3A/QMgiwd7UY08NZFXGyiNqc/j3sslnQDcRkO56B8/GlwryOGAzk8dBrbIqTk5
+ ZgtUmLzuqroWD4seLMo3hUIlZW4rcZvCH466ImSgB1r+brTthwOlNU6JzX0/lNthdneXC3
+ Y1HzyPxwDEGTEihArlXVhm5BTG2LchE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-UiBWmG7BP1itqBsCk0DMjA-1; Mon,
- 10 Mar 2025 23:44:57 -0400
-X-MC-Unique: UiBWmG7BP1itqBsCk0DMjA-1
-X-Mimecast-MFC-AGG-ID: UiBWmG7BP1itqBsCk0DMjA_1741664696
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-E-uCZqQrNW-l79C67nmLDw-1; Mon,
+ 10 Mar 2025 23:45:49 -0400
+X-MC-Unique: E-uCZqQrNW-l79C67nmLDw-1
+X-Mimecast-MFC-AGG-ID: E-uCZqQrNW-l79C67nmLDw_1741664748
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E98B1956050; Tue, 11 Mar 2025 03:44:56 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 15F32180025C; Tue, 11 Mar 2025 03:45:48 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1C88E1800373; Tue, 11 Mar 2025 03:44:52 +0000 (UTC)
+ id 4289E1800366; Tue, 11 Mar 2025 03:45:44 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
@@ -54,10 +54,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 31/63] docs/qapi-domain: Fix error context reporting in
- Sphinx 5.x and 6.x
-Date: Mon, 10 Mar 2025 23:42:29 -0400
-Message-ID: <20250311034303.75779-32-jsnow@redhat.com>
+Subject: [PATCH v3 46/63] docs/qapidoc: add format_type() method
+Date: Mon, 10 Mar 2025 23:42:44 -0400
+Message-ID: <20250311034303.75779-47-jsnow@redhat.com>
 In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
 References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -88,162 +87,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sphinx 5.3.0 to Sphinx 6.2.0 has a bug where nested content in an
-ObjectDescription content block has its error position reported
-incorrectly due to an oversight when they added nested section support
-to this directive.
-
-(This bug is present in Sphinx's own Python and C domains; test it
-yourself by creating a py:func directive and creating a syntax error in
-the directive's content block. The reporting will be incorrect.)
-
-To avoid overriding and re-implementing the entirety of the run()
-method, a workaround is employed where we parse the content block
-ourselves in before_content(), then null the content block to make
-Sphinx's own parsing a no-op. Then, in transform_content (which occurs
-after Sphinx's nested parse), we simply swap our own parsed content tree
-back in for Sphinx's.
-
-It appears a little tricky, but it's the nicest solution I can find.
+This method is responsible for generating a type name for a given member
+with the correct annotations for the QAPI domain. Features and enums do
+not *have* types, so they return None. Everything else returns the type
+name with a "?" suffix if that type is optional, and ensconced in
+[brackets] if it's an array type.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/compat.py      | 56 ++++++++++++++++++++++++++++++++++++++
- docs/sphinx/qapi_domain.py | 15 ++++++----
- 2 files changed, 65 insertions(+), 6 deletions(-)
+ docs/sphinx/qapidoc.py | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-index f068d70388d..9cf7fe006e4 100644
---- a/docs/sphinx/compat.py
-+++ b/docs/sphinx/compat.py
-@@ -4,6 +4,7 @@
- 
- import re
- from typing import (
-+    TYPE_CHECKING,
-     Any,
-     Callable,
-     Optional,
-@@ -12,9 +13,11 @@
- 
- from docutils import nodes
- from docutils.nodes import Element, Node, Text
-+from docutils.statemachine import StringList
- 
- import sphinx
- from sphinx import addnodes, util
-+from sphinx.directives import ObjectDescription
- from sphinx.environment import BuildEnvironment
- from sphinx.roles import XRefRole
- from sphinx.util import docfields
-@@ -172,3 +175,56 @@ class CompatGroupedField(docfields.GroupedField):
- class CompatTypedField(docfields.TypedField):
-     if MAKE_XREF_WORKAROUND:
-         make_xref = _compat_make_xref
-+
-+
-+# ################################################################
-+# Nested parsing error location fix for Sphinx 5.3.0 < x < 6.2.0 #
-+# ################################################################
-+
-+# When we require Sphinx 4.x, the TYPE_CHECKING hack where we avoid
-+# subscripting ObjectDescription at runtime can be removed in favor of
-+# just always subscripting the class.
-+
-+# When we require Sphinx > 6.2.0, the rest of this compatibility hack
-+# can be dropped and QAPIObject can just inherit directly from
-+# ObjectDescription[Signature].
-+
-+SOURCE_LOCATION_FIX = (5, 3, 0) <= sphinx.version_info[:3] < (6, 2, 0)
-+
-+Signature = str
-+
-+
-+if TYPE_CHECKING:
-+    _BaseClass = ObjectDescription[Signature]
-+else:
-+    _BaseClass = ObjectDescription
-+
-+
-+class ParserFix(_BaseClass):
-+
-+    _temp_content: StringList
-+    _temp_offset: int
-+    _temp_node: Optional[addnodes.desc_content]
-+
-+    def before_content(self) -> None:
-+        # Work around a sphinx bug and parse the content ourselves.
-+        self._temp_content = self.content
-+        self._temp_offset = self.content_offset
-+        self._temp_node = None
-+
-+        if SOURCE_LOCATION_FIX:
-+            self._temp_node = addnodes.desc_content()
-+            self.state.nested_parse(
-+                self.content, self.content_offset, self._temp_node
-+            )
-+            # Sphinx will try to parse the content block itself,
-+            # Give it nothingness to parse instead.
-+            self.content = StringList()
-+            self.content_offset = 0
-+
-+    def transform_content(self, content_node: addnodes.desc_content) -> None:
-+        # Sphinx workaround: Inject our parsed content and restore state.
-+        if self._temp_node:
-+            content_node += self._temp_node.children
-+            self.content = self._temp_content
-+            self.content_offset = self._temp_offset
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index b23db1eba26..ca3f3a7e2d5 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -29,6 +29,8 @@
-     CompatGroupedField,
-     CompatTypedField,
-     KeywordNode,
-+    ParserFix,
-+    Signature,
-     SpaceNode,
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index c17cb9f9b16..5144bb965af 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -40,7 +40,13 @@
+ from qapi.parser import QAPIDoc
+ from qapi.schema import (
+     QAPISchema,
++    QAPISchemaArrayType,
+     QAPISchemaDefinition,
++    QAPISchemaEnumMember,
++    QAPISchemaFeature,
++    QAPISchemaMember,
++    QAPISchemaObjectTypeMember,
++    QAPISchemaType,
+     QAPISchemaVisitor,
  )
- from sphinx import addnodes
-@@ -147,12 +149,7 @@ def result_nodes(
-         return results, []
+ from qapi.source import QAPISourceInfo
+@@ -58,7 +64,9 @@
+         Any,
+         Generator,
+         List,
++        Optional,
+         Sequence,
++        Union,
+     )
  
+     from sphinx.application import Sphinx
+@@ -128,6 +136,30 @@ def ensure_blank_line(self) -> None:
+             # +2: correct for zero/one index, then increment by one.
+             self.add_line_raw("", fname, line + 2)
  
--# Alias for the return of handle_signature(), which is used in several places.
--# (In the Python domain, this is Tuple[str, str] instead.)
--Signature = str
--
--
--class QAPIDescription(ObjectDescription[Signature]):
-+class QAPIDescription(ParserFix):
-     """
-     Generic QAPI description.
- 
-@@ -422,6 +419,10 @@ def _validate_field(self, field: nodes.field) -> None:
-             logger.warning(msg, location=field)
- 
-     def transform_content(self, content_node: addnodes.desc_content) -> None:
-+        # This hook runs after before_content and the nested parse, but
-+        # before the DocFieldTransformer is executed.
-+        super().transform_content(content_node)
++    def format_type(
++        self, ent: Union[QAPISchemaDefinition | QAPISchemaMember]
++    ) -> Optional[str]:
++        if isinstance(ent, (QAPISchemaEnumMember, QAPISchemaFeature)):
++            return None
 +
-         self._add_infopips(content_node)
++        qapi_type = ent
++        optional = False
++        if isinstance(ent, QAPISchemaObjectTypeMember):
++            qapi_type = ent.type
++            optional = ent.optional
++
++        if isinstance(qapi_type, QAPISchemaArrayType):
++            ret = f"[{qapi_type.element_type.doc_type()}]"
++        else:
++            assert isinstance(qapi_type, QAPISchemaType)
++            tmp = qapi_type.doc_type()
++            assert tmp
++            ret = tmp
++        if optional:
++            ret += "?"
++
++        return ret
++
+     # Transmogrification helpers
  
-         # Validate field lists.
-@@ -519,10 +520,12 @@ class QAPIObjectWithMembers(QAPIObject):
- 
- 
- class QAPIEvent(QAPIObjectWithMembers):
-+    # pylint: disable=too-many-ancestors
-     """Description of a QAPI Event."""
- 
- 
- class QAPIJSONObject(QAPIObjectWithMembers):
-+    # pylint: disable=too-many-ancestors
-     """Description of a QAPI Object: structs and unions."""
- 
- 
+     def visit_paragraph(self, section: QAPIDoc.Section) -> None:
 -- 
 2.48.1
 
