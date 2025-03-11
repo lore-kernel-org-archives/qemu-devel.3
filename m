@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE44C28B2E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05094C35FF1
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzNv-00076G-6S; Tue, 11 Mar 2025 09:11:03 -0400
+	id 1trzhi-0004aX-T3; Tue, 11 Mar 2025 09:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLM-0004NN-Hd
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1trzhV-0004IW-6B
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:31:24 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLK-0001bX-Me
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741698501;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CE1im9Bjq31X9Eaxj30dsdZEIRgev+UbxVXubrTF5n4=;
- b=brz/YfqNEgLUT7WDpYr1S8iqB/K3zaSz4Sv6AYdHQ/lHVRjcKhmJ29hiFRZCi/hv5yhqJv
- UUVWrWENY4hk7GYY/90b9gM0IfBl58OayyrKgp7MYF33gYzF20Vz9F5U+wLxhNgHUaHoUB
- NFITMA2KPgIg3gwT5YZRoTJvCCGZp/I=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-ESw7CSc-P9uLxqfrbqYHvA-1; Tue,
- 11 Mar 2025 09:08:18 -0400
-X-MC-Unique: ESw7CSc-P9uLxqfrbqYHvA-1
-X-Mimecast-MFC-AGG-ID: ESw7CSc-P9uLxqfrbqYHvA_1741698496
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F8961800EC5; Tue, 11 Mar 2025 13:08:16 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.91])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1E2B31956094; Tue, 11 Mar 2025 13:08:14 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 06/14] virtio-scsi: protect events_dropped field
-Date: Tue, 11 Mar 2025 21:07:33 +0800
-Message-ID: <20250311130741.1047903-7-stefanha@redhat.com>
-In-Reply-To: <20250311130741.1047903-1-stefanha@redhat.com>
-References: <20250311130741.1047903-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1trzhQ-0006MA-JJ
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:31:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741699873; x=1773235873;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=1KOmzmrSwiEXReJq2LterO9F8yh62frqUd0TRpdbQtI=;
+ b=WoRts0fB2SlGqV7YwpXk8c9l+udqBIHxl0VqOUIVdQXe/McfxTWUF3tv
+ Qo4eVQeysjC+Uzhsx+vQsueNu+I2gAvNEX8gZS+PuqmKaE6dpLDpuNNmP
+ Mvf0De8KpY0kNw4/3ILjoiZ/tSl4zbFkvX7rKN+v1BJ3LWcryiEPMFZlL
+ 91i/pySMHroz/rDtMjP9jA/Ua+N6bLL9EI4h8RfNsgnSaNMyPvcWM9R0G
+ IpbJ6Gfy4lEduXh1e1yBOcaMdAj/+LPbzv4ETK/T+TrLdUdjqJK2o1V7A
+ CCFUI+vj2RLvAylmNe6h8AJax1CX4MHahKjhajxBDHtXyQnywlm//q3/8 g==;
+X-CSE-ConnectionGUID: GqAN2r+DQ/Wph7PdYQGhXA==
+X-CSE-MsgGUID: kFDHqaHmRtuJaAwm006RsQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11370"; a="42648522"
+X-IronPort-AV: E=Sophos;i="6.14,239,1736841600"; d="scan'208";a="42648522"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Mar 2025 06:31:08 -0700
+X-CSE-ConnectionGUID: Pxk/4SkhTnK69gTC0YQDKw==
+X-CSE-MsgGUID: VME4DSeXRry7yMJ+/JsIZw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,239,1736841600"; d="scan'208";a="120814359"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 11 Mar 2025 06:31:03 -0700
+Date: Tue, 11 Mar 2025 21:51:13 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com,
+ zhenyuw@linux.intel.com, groug@kaod.org, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com
+Subject: Re: [PATCH v2 08/10] target/i386/kvm: reset AMD PMU registers during
+ VM reset
+Message-ID: <Z9A/0RE2Zc7BKDvD@intel.com>
+References: <20250302220112.17653-1-dongli.zhang@oracle.com>
+ <20250302220112.17653-9-dongli.zhang@oracle.com>
+ <Z86Y9BxV6p25A2Wo@intel.com>
+ <a52ad0b9-4760-4347-ad73-1690eb28a464@oracle.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a52ad0b9-4760-4347-ad73-1690eb28a464@oracle.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,92 +92,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The block layer can invoke the resize callback from any AioContext that
-is processing requests. The virtqueue is already protected but the
-events_dropped field also needs to be protected against races. Cover it
-using the event virtqueue lock because it is closely associated with
-accesses to the virtqueue.
+Hi Dongli,
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
----
- include/hw/virtio/virtio-scsi.h |  3 ++-
- hw/scsi/virtio-scsi.c           | 29 ++++++++++++++++++++---------
- 2 files changed, 22 insertions(+), 10 deletions(-)
+> >> +    /*
+> >> +     * If KVM_CAP_PMU_CAPABILITY is not supported, there is no way to
+> >> +     * disable the AMD pmu virtualization.
+> >> +     *
+> >> +     * If KVM_CAP_PMU_CAPABILITY is supported !cpu->enable_pmu
+> >> +     * indicates the KVM has already disabled the PMU virtualization.
+> >> +     */
+> >> +    if (has_pmu_cap && !cpu->enable_pmu) {
+> >> +        return;
+> >> +    }
+> > 
+> > Could we only check "cpu->enable_pmu" at the beginning of this function?
+> > then if pmu is already disabled, we don't need to initialize the pmu info.
+> 
+> I don't think so. There is a case:
+> 
+> - cpu->enable_pmu = false. (That is, "-cpu host,-pmu").
+> - But for KVM prior v5.18 that KVM_CAP_PMU_CAPABILITY doesn't exist.
+> 
+> There is no way to disable vPMU. To determine based on only
+> "!cpu->enable_pmu" doesn't work.
 
-diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
-index 4ee98ebf63..7b7e3ced7a 100644
---- a/include/hw/virtio/virtio-scsi.h
-+++ b/include/hw/virtio/virtio-scsi.h
-@@ -82,10 +82,11 @@ struct VirtIOSCSI {
- 
-     SCSIBus bus;
-     int resetting; /* written from main loop thread, read from any thread */
-+
-+    QemuMutex event_lock; /* protects event_vq and events_dropped */
-     bool events_dropped;
- 
-     QemuMutex ctrl_lock; /* protects ctrl_vq */
--    QemuMutex event_lock; /* protects event_vq */
- 
-     /*
-      * TMFs deferred to main loop BH. These fields are protected by
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 073ccd3d5b..2d796a861b 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -948,7 +948,10 @@ static void virtio_scsi_reset(VirtIODevice *vdev)
- 
-     vs->sense_size = VIRTIO_SCSI_SENSE_DEFAULT_SIZE;
-     vs->cdb_size = VIRTIO_SCSI_CDB_DEFAULT_SIZE;
--    s->events_dropped = false;
-+
-+    WITH_QEMU_LOCK_GUARD(&s->event_lock) {
-+        s->events_dropped = false;
-+    }
- }
- 
- typedef struct {
-@@ -978,14 +981,16 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
-     }
- 
-     req = virtio_scsi_pop_req(s, vs->event_vq, &s->event_lock);
--    if (!req) {
--        s->events_dropped = true;
--        return;
--    }
-+    WITH_QEMU_LOCK_GUARD(&s->event_lock) {
-+        if (!req) {
-+            s->events_dropped = true;
-+            return;
-+        }
- 
--    if (s->events_dropped) {
--        event |= VIRTIO_SCSI_T_EVENTS_MISSED;
--        s->events_dropped = false;
-+        if (s->events_dropped) {
-+            event |= VIRTIO_SCSI_T_EVENTS_MISSED;
-+            s->events_dropped = false;
-+        }
-     }
- 
-     if (virtio_scsi_parse_req(req, 0, sizeof(VirtIOSCSIEvent))) {
-@@ -1014,7 +1019,13 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
- 
- static void virtio_scsi_handle_event_vq(VirtIOSCSI *s, VirtQueue *vq)
- {
--    if (s->events_dropped) {
-+    bool events_dropped;
-+
-+    WITH_QEMU_LOCK_GUARD(&s->event_lock) {
-+        events_dropped = s->events_dropped;
-+    }
-+
-+    if (events_dropped) {
-         VirtIOSCSIEventInfo info = {
-             .event = VIRTIO_SCSI_T_NO_EVENT,
-         };
--- 
-2.48.1
+Ah, I didn't get your point here. When QEMU user has already disabled
+PMU, why we still need to continue initialize PMU info and save/load PMU
+MSRs? In this case, user won't expect vPMU could work.
+
+> It works only when "!cpu->enable_pmu" and KVM_CAP_PMU_CAPABILITY exists.
+> 
+> 
+> We may still need a static global variable here to indicate where
+> "kvm.enable_pmu=N" (as discussed in PATCH 07).
+>
+> > 
+> >> +    if (IS_INTEL_CPU(env)) {
+> > 
+> > Zhaoxin also supports architectural PerfMon in 0xa.
+> > 
+> > I'm not sure if this check should also involve Zhaoxin CPU, so cc
+> > zhaoxin guys for double check.
+> 
+> Sure for both here and below 'ditto'. Thank you very much!
+
+Per the Linux commit 3a4ac121c2cac, Zhaoxin mostly follows Intel
+Architectural PerfMon-v2. Afterall, before this patch, these PMU things
+didn't check any vendor, so I suppose vPMU may could work for Zhaoxin as
+well. Therefore, its' better to consider Zhaoxin when you check Intel
+CPU, which can help avoid introducing some regressions.
+
+Thanks,
+Zhao
 
 
