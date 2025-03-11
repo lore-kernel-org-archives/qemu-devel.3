@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD707C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC58C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzCA-0001AZ-00; Tue, 11 Mar 2025 08:58:54 -0400
+	id 1trzD4-0003c9-BZ; Tue, 11 Mar 2025 08:59:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzC2-0000xa-Ch; Tue, 11 Mar 2025 08:58:46 -0400
+ id 1trzCd-0001rU-Fr; Tue, 11 Mar 2025 08:59:23 -0400
 Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzBs-0007pE-Ur; Tue, 11 Mar 2025 08:58:46 -0400
+ id 1trzCa-0007w2-CJ; Tue, 11 Mar 2025 08:59:23 -0400
 Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2ff80290debso7719591a91.3; 
- Tue, 11 Mar 2025 05:58:35 -0700 (PDT)
+ 98e67ed59e1d1-2ff80290e44so8655680a91.0; 
+ Tue, 11 Mar 2025 05:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741697914; x=1742302714; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741697955; x=1742302755; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sBgrSU/V9kiJHYlPQWXMJ6s9y81s7RCCnVq7DtgjGLI=;
- b=RvCu2h6SQ4K1A5XZ/zwwX8z0ORn0Y8ZU02QGHhOCD8bPzynVdovCZ8BwP3Ae6HHHvd
- qnk6cmePQsD7kBDKcgOKhiP+KHSvYy7f0iH6fp++Zprqa9icIiWeYPaFOXM4Wg1FrLJT
- kGHW3DYmmHrs/ED064+3apWU3LhhIBv4S73FJZxsqJGbpba24kV+xdogVCTB7UjIqPNE
- tP2KfM/8vWlIjFFQlJkEMpdsPZMnZf1jMX9cIEAbgNu1czRHT3/Tq25AFjsGk5WRVqCw
- ZbCfazQA0DKhzjIMskIImMbBjJ51jDMDDx5E6cSi7jOOYOyVpiLddcK3eNAfkcYgf0Qj
- CNww==
+ bh=VqfCGsNGemWHWOkA7UQFNXiZp9CJgWEykoLLRmbbzrQ=;
+ b=Ib5L4qjHqCxonO6i/DOK9BRUS9kf4WALF4m5DGlcXyT2n726aAyVLr1VXqJp+wHmYq
+ /ls3ma9/n8dGKaAx1fPsmYwJpGdqkB5oaECWCs1f1GIzgZus5CXd7FS4KhMrUvlqlhFn
+ wpRJ9P9KfJrrBW7kb6QSRp/ywGRCSEcgUxdW0s/Dyocmvw7AsBzgMgoH3BGG6C9pUP26
+ fUhSOsMguxpvzSNoF2IIOtTj4BnM8c/tVewubj0lxQmtfAUMg3auczTILVIW5hvWitG4
+ K+lJG9wLCwF2rJoJ0IWQFqhWxzO4X7FPP/0jkthw4FG5bU2S4H4JtR9KbL5acyS+X/L7
+ 3mlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741697914; x=1742302714;
+ d=1e100.net; s=20230601; t=1741697955; x=1742302755;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sBgrSU/V9kiJHYlPQWXMJ6s9y81s7RCCnVq7DtgjGLI=;
- b=LREkTCp9j+nfWkTHTZ4RHJVs4fT1MIUT5qssqO+U5K+Ne5FgyVdQLXwRb9LB1pQG9u
- wnjYvwWGNsMj8FDivi2ZqeMifRZDbTese91quJcPTIul2rS43Nl5RskOuMal2lI2FxVa
- hKQSzdKBf/fjQKygmQpvAG54zeCOo7FnAa7g1lyVoCus6RoH8/iIa7UkGRVRZtfPaMjE
- QAUSMzXbBZpUS7Ckt7GlrrJlMpq19PkNlwVoCLDgSGMgyAtEV9O/Xh3RkGeqxge3unxy
- y9saf9Yxw97+BdD67LXwFJJAkJ0fFzL+2e38NDOyp41pwmn5NnFXw38p9QK0KOIZpAoK
- +qOw==
+ bh=VqfCGsNGemWHWOkA7UQFNXiZp9CJgWEykoLLRmbbzrQ=;
+ b=aC2TI/GBjXQ6++3BIOJG3R3pQLvsECPlYJtzfopCP4QIISubpICRH1VuX9j/7ziap5
+ VpHgzj5LOVMTqQBUAAKdMzhM90ZVJCsVLMuj2JzBYn72OGQo7OjMsZ+5O/ROO+Ge+WgO
+ UR0Wg8LFcmL+/fEiqtxqv7SO38Ozx6QI2DjleBGIzIM/h62KBT2AZejALa7BeAJOPGcY
+ qfEczqfEoB+tNbutuopz3oviIVr5RLuGAaDisnJa5csd4AHRZ9nujsH39B+cBhy2mrET
+ W/mNqPi/9QvbCPi0v3T9kSXQiUdX6PRgwEtIdMSHisbUOa4UtuG90Gu9ZScuAYpq+L7l
+ hYnw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWmpsbMbZPS99fT2RdigvurkQU5rwUIuk+ybYDP2rHhUrjHCs7Rio7bwZn/6+VZtgzbji06MxstQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yxf6LbiaDyghklLQfMMIgfmkh5mQuEwQ2FHsDiKq4c3eQNbOV5c
- Gdr64HAWL+sMwe7Fc8CzSYF6G5wlqi/CcP5zQ5CkSdvK0TaVJ3V7L497TA==
-X-Gm-Gg: ASbGncv/lo6//BXXZ7Vk4KS/LZRJmUD7hI03SLJH76v9J4pwo0oYnEx0jvUguPkqzQf
- gz7l0hXWAuMBvDNxxfRPoqjDysZvnZMpuNz9MFwb2hQQ+7E6PMA8wzTOoXtrF5VYSQ0xIIo56cA
- QCWY5td5Qf6kIrzzL2pmb7Bxh82kPKfyDBuhkkvk/w+LHcCAs8F1wbL/stuwhXwK5gSNCHl7Qpq
- qQ9JYYd4kCGiA21wGscQkCZzW+aQLocZIHeS0PSMZfnCdBIrjsnv6nNFMf+YIcFvPKzsp+Ke3V1
- piUv7caxjwrG4sV7awfSitXFLg8vgI3mPmPc9LEKU27HOuJS11Pa0ROr2X8eMQ==
-X-Google-Smtp-Source: AGHT+IFjxpTwGyFJIK61Ujhn4nfL8tUwiE4L9lGL6UtH8mIRIcJfvV2tskX7D61uLejfWBGjJbpMTQ==
-X-Received: by 2002:a17:90b:2d82:b0:2ff:6aa6:47a3 with SMTP id
- 98e67ed59e1d1-2ff7ced8c45mr27732195a91.25.1741697914329; 
- Tue, 11 Mar 2025 05:58:34 -0700 (PDT)
+ AJvYcCWlKr+82Wi4HjCg/wn07nXog8xW897eQdQev15PHeq5rCm3YuYDujGhBPpeo8GLmHa9oqBPTsG2/w==@nongnu.org
+X-Gm-Message-State: AOJu0Yxo50kY+mWoL1t2C2dJXHPy2B4mT3lL5b0iZc8VQjxM8hTyf0FZ
+ MmJi1Ta5LDqQ5dn1ZuC6aUSQtYueOPtLObWrjNCTA4sXXxT1ZRPMJrgdZw==
+X-Gm-Gg: ASbGncv4m/x/SOkbsj2FvQ6we3QJOkaFKD7tAeHt2gNW73SYe1MMw3K9a3zyB90qY5c
+ /SK2nOt9x0phfNsar2xfvrWgqD3DKEdnyr6RAqWRB0d4+SYqRtH/OsE14xuKJew5PreLDpP4UB4
+ WvQwp0ehRl/ElDHen7Zpdhfs5Vob02TWIRRD5EIfJBZTVRMiMcYKMm1rkqwKOZW9TMRRNgG+LXh
+ +UxD2xlOf26VUhPTQ65J5/OCnE5Fzn0H1qyb0DVdl4il5/Y1i7Vqryjkl7xpPJnZnBdmWC/5J0V
+ dupk/W/inY0W/JEiLRBIaBVxyECVwZaX++mPGPhzUFbc9oaHe14=
+X-Google-Smtp-Source: AGHT+IHrvtF1tUwWVcOgMKICqjT5Ligq+yRnaV19JNLa4UiyGXeozI95dqmEq4ApzVgdnX9pbcmOmw==
+X-Received: by 2002:a17:90b:1b0b:b0:2fc:c262:ef4b with SMTP id
+ 98e67ed59e1d1-2ff7cea9a99mr30654512a91.18.1741697955298; 
+ Tue, 11 Mar 2025 05:59:15 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.58.32
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 05:58:33 -0700 (PDT)
+ Tue, 11 Mar 2025 05:59:14 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 03/72] hw/ppc: Deprecate 405 CPUs
-Date: Tue, 11 Mar 2025 22:56:57 +1000
-Message-ID: <20250311125815.903177-4-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 14/72] ppc/pnv/occ: Add POWER10 OCC-OPAL data format
+Date: Tue, 11 Mar 2025 22:57:08 +1000
+Message-ID: <20250311125815.903177-15-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
  envelope-from=npiggin@gmail.com; helo=mail-pj1-x102c.google.com
@@ -100,41 +99,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+Add POWER10 OCC-OPAL data format. POWER10 changes major version and
+adds a few fields.
 
-The ref405ep machine is scheduled for removal in QEMU 10.0. Keep the
-405 CPU implementation for a while because it is theoretically
-possible to model the power management (OCC) co-processor found on the
-IBM POWER [8-11] processors.
-
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20250204080649.836155-4-clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- docs/about/deprecated.rst | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/ppc/pnv_occ.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 3d39d2a9da..e2b4f077d4 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -266,6 +266,15 @@ in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
- but for consistency these will get removed in a future release, too.
- Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
+diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+index 19ccfe1bbf..34decb1700 100644
+--- a/hw/ppc/pnv_occ.c
++++ b/hw/ppc/pnv_occ.c
+@@ -263,14 +263,20 @@ static const TypeInfo pnv_occ_power9_type_info = {
  
-+PPC 405 CPUs (since 10.0)
-+'''''''''''''''''''''''''
-+
-+The PPC 405 CPU has no known users and the ``ref405ep`` machine was
-+removed in QEMU 10.0. Since the IBM POWER [8-11] processors uses an
-+embedded 405 for power management (OCC) and other internal tasks, it
-+is theoretically possible to use QEMU to model them. Let's keep the
-+CPU implementation for a while before removing all support.
-+
- System emulator machines
- ------------------------
+ static void pnv_occ_power10_class_init(ObjectClass *klass, void *data)
+ {
++    PnvOCCClass *poc = PNV_OCC_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
  
+     dc->desc = "PowerNV OCC Controller (POWER10)";
++    poc->opal_shared_memory_offset = P9_HOMER_OPAL_DATA_OFFSET;
++    poc->opal_shared_memory_version = 0xA0;
++    poc->xscom_size = PNV9_XSCOM_OCC_SIZE;
++    poc->xscom_ops = &pnv_occ_power9_xscom_ops;
++    assert(!dc->user_creatable);
+ }
+ 
+ static const TypeInfo pnv_occ_power10_type_info = {
+     .name          = TYPE_PNV10_OCC,
+-    .parent        = TYPE_PNV9_OCC,
++    .parent        = TYPE_PNV_OCC,
+     .class_init    = pnv_occ_power10_class_init,
+ };
+ 
+@@ -711,6 +717,37 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
+             static_data.v9.core_max[i] = 1;
+         }
+         break;
++    case 0xA0:
++        if (chip->chip_id == 0) {
++            static_data.v10.occ_role = OCC_ROLE_MASTER;
++        } else {
++            static_data.v10.occ_role = OCC_ROLE_SLAVE;
++        }
++        static_data.v10.pstate_min = 4;
++        static_data.v10.pstate_fixed_freq = 3;
++        static_data.v10.pstate_base = 2;
++        static_data.v10.pstate_ultra_turbo = 0;
++        static_data.v10.pstate_fmax = 1;
++        static_data.v10.minor = 0x01;
++        static_data.v10.pstates[0].valid = 1;
++        static_data.v10.pstates[0].id = 0;
++        static_data.v10.pstates[0].freq_khz = cpu_to_be32(4200000);
++        static_data.v10.pstates[1].valid = 1;
++        static_data.v10.pstates[1].id = 1;
++        static_data.v10.pstates[1].freq_khz = cpu_to_be32(4000000);
++        static_data.v10.pstates[2].valid = 1;
++        static_data.v10.pstates[2].id = 2;
++        static_data.v10.pstates[2].freq_khz = cpu_to_be32(3800000);
++        static_data.v10.pstates[3].valid = 1;
++        static_data.v10.pstates[3].id = 3;
++        static_data.v10.pstates[3].freq_khz = cpu_to_be32(3000000);
++        static_data.v10.pstates[4].valid = 1;
++        static_data.v10.pstates[4].id = 4;
++        static_data.v10.pstates[4].freq_khz = cpu_to_be32(2000000);
++        for (i = 0; i < chip->nr_cores; i++) {
++            static_data.v10.core_max[i] = 1;
++        }
++        break;
+     default:
+         g_assert_not_reached();
+     }
+@@ -726,6 +763,10 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
+     dynamic_data.cur_pwr_cap = cpu_to_be16(PCAP_MAX_POWER_W);
+     dynamic_data.soft_min_pwr_cap = cpu_to_be16(PCAP_SOFT_MIN_POWER_W);
+     switch (poc->opal_shared_memory_version) {
++    case 0xA0:
++        dynamic_data.minor_version = 0x1;
++        dynamic_data.v10.wof_enabled = 0x1;
++        break;
+     case 0x90:
+         dynamic_data.minor_version = 0x1;
+         break;
 -- 
 2.47.1
 
