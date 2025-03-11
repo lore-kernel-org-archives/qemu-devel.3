@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8515C282DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 02:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F31F3C282DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 02:43:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trpCH-0004oO-Ld; Mon, 10 Mar 2025 22:18:21 -0400
+	id 1trpZy-0007wX-QY; Mon, 10 Mar 2025 22:42:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trpCG-0004ny-5p
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 22:18:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1trpZw-0007wI-Oq
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 22:42:48 -0400
+Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trpCB-00061F-9g
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 22:18:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741659493;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gHLIoOQm+QSB3Ye/VAzJHXxWu+NQy+2lmBGC2GDRK38=;
- b=SCHtq3MdGP/WpJORf55iqECoHy8UmBERhHYGH2t4+1cIgz8+h9gh+pjG9bibSyW9COe8if
- ZbhyzCiUBg3tdhlWCE7aOMzjUkuPiAYPrZr2xjFMJ6pAMNNNtbVR9fFXcYlRLw9txcXCtH
- MItVbtiCmrcE+yN7XamEqP6OE8nrZvU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-DqTTIc7ONliFXAP4LpOfxA-1; Mon,
- 10 Mar 2025 22:18:11 -0400
-X-MC-Unique: DqTTIc7ONliFXAP4LpOfxA-1
-X-Mimecast-MFC-AGG-ID: DqTTIc7ONliFXAP4LpOfxA_1741659491
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 069EB1809CA5; Tue, 11 Mar 2025 02:18:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.75])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E75381800268; Tue, 11 Mar 2025 02:18:08 +0000 (UTC)
-Date: Tue, 11 Mar 2025 10:18:05 +0800
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, pbonzini@redhat.com, afaria@redhat.com,
- hreitz@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 5/5] aio-posix: Separate AioPolledEvent per AioHandler
-Message-ID: <20250311021805.GC487512@fedora>
-References: <20250307221634.71951-1-kwolf@redhat.com>
- <20250307221634.71951-6-kwolf@redhat.com>
- <20250310105501.GC359802@fedora> <Z87I8AVI8X-ARWrM@redhat.com>
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1trpZt-0000lR-Si
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 22:42:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1741660966; x=1773196966;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=RYskoaqq7a1XVbEi6np6bACwLqW5CYbN2q22akBTq58=;
+ b=g9ErDfXM+Wwrxko2GgLfrJqHw/wqE4zdwFk85q2GcqoDQgsRkjTSq2+r
+ YwFLrvn9HcAELID++XMU2V8L5MVWWaKMLKFYb46YfPUuSno7GPBY9BFcv
+ h5EC6d+ll/2RDn8lLAdi37LaY/ZOEY2q7kEMGmWaRTtaWPO7CbdewP/oK
+ jZ9PIaM9vRlx6EvQaiLBCULZfDm/SYtPVuo+TjM3LNaNheHSlBvkRAdD2
+ LFitYwJ4vXBccnQ7wytvrOlPSVkuA/Dct9tWHl6oFNd/1QiGTnnI297Q9
+ xSt0g391rmMn8FExuZPOJmrzLZoPweqXj9KQR/vj3VTXOGOAbkiPDyEPI Q==;
+X-CSE-ConnectionGUID: +KonMk+cTBatNbSmvo6bAg==
+X-CSE-MsgGUID: h7qfeHYUSquCU6AIpIiR9Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11369"; a="192607688"
+X-IronPort-AV: E=Sophos;i="6.14,237,1736780400"; d="scan'208";a="192607688"
+Received: from unknown (HELO oym-r2.gw.nic.fujitsu.com) ([210.162.30.90])
+ by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Mar 2025 11:42:41 +0900
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 50986D4C31
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:42:38 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 1499AD8B00
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:42:38 +0900 (JST)
+Received: from FNSTPC.g08.fujitsu.local (unknown [10.167.135.44])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id B8B211A0078;
+ Tue, 11 Mar 2025 10:42:36 +0800 (CST)
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Li Zhijian <lizhijian@fujitsu.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Subject: [PATCH v6] migration: Add qtest for migration over RDMA
+Date: Tue, 11 Mar 2025 10:42:21 +0800
+Message-ID: <20250311024221.363421-1-lizhijian@fujitsu.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="InBOtQS0+G2YKmG1"
-Content-Disposition: inline
-In-Reply-To: <Z87I8AVI8X-ARWrM@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=207.54.90.49; envelope-from=lizhijian@fujitsu.com;
+ helo=esa3.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,176 +84,223 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
+From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This qtest requires there is a RDMA(RoCE) link in the host.
+In order to make the test work smoothly, introduce a
+scripts/rdma-migration-helper.sh to detect existing RoCE link before
+running the test.
 
---InBOtQS0+G2YKmG1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Test will be skipped if there is no available RoCE link.
+ # Start of rdma tests
+ # Running /x86_64/migration/precopy/rdma/plain
+ ok 1 /x86_64/migration/precopy/rdma/plain # SKIP No rdma link available
+ # To enable the test:
+ # Run 'scripts/rdma-migration-helper.sh setup' with root to setup a new rdma/rxe link and rerun the test
+ # Optional: run 'scripts/rdma-migration-helper.sh clean' to revert the 'setup'
 
-On Mon, Mar 10, 2025 at 12:11:44PM +0100, Kevin Wolf wrote:
-> Am 10.03.2025 um 11:55 hat Stefan Hajnoczi geschrieben:
-> > On Fri, Mar 07, 2025 at 11:16:34PM +0100, Kevin Wolf wrote:
-> > > Adaptive polling has a big problem: It doesn't consider that an event
-> > > loop can wait for many different events that may have very different
-> > > typical latencies.
-> > >=20
-> > > For example, think of a guest that tends to send a new I/O request so=
-on
-> > > after the previous I/O request completes, but the storage on the host=
- is
-> > > rather slow. In this case, getting the new request from guest quickly
-> > > means that polling is enabled, but the next thing is performing the I=
-/O
-> > > request on the backend, which is slow and disables polling again for =
-the
-> > > next guest request. This means that in such a scenario, polling could
-> > > help for every other event, but is only ever enabled when it can't
-> > > succeed.
-> > >=20
-> > > In order to fix this, keep a separate AioPolledEvent for each
-> > > AioHandler. We will then know that the backend file descriptor always
-> > > has a high latency and isn't worth polling for, but we also know that
-> > > the guest is always fast and we should poll for it. This solves at le=
-ast
-> > > half of the problem, we can now keep polling for those cases where it
-> > > makes sense and get the improved performance from it.
-> > >=20
-> > > Since the event loop doesn't know which event will be next, we still =
-do
-> > > some unnecessary polling while we're waiting for the slow disk. I made
-> > > some attempts to be more clever than just randomly growing and shrink=
-ing
-> > > the polling time, and even to let callers be explicit about when they
-> > > expect a new event, but so far this hasn't resulted in improved
-> > > performance or even caused performance regressions. For now, let's ju=
-st
-> > > fix the part that is easy enough to fix, we can revisit the rest late=
-r.
-> > >=20
-> > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > > ---
-> > >  include/block/aio.h |  1 -
-> > >  util/aio-posix.h    |  1 +
-> > >  util/aio-posix.c    | 24 +++++++++++++++++++++---
-> > >  util/async.c        |  2 --
-> > >  4 files changed, 22 insertions(+), 6 deletions(-)
-> > >=20
-> > > diff --git a/include/block/aio.h b/include/block/aio.h
-> > > index 49f46e01cb..0ef7ce48e3 100644
-> > > --- a/include/block/aio.h
-> > > +++ b/include/block/aio.h
-> > > @@ -233,7 +233,6 @@ struct AioContext {
-> > >      int poll_disable_cnt;
-> > > =20
-> > >      /* Polling mode parameters */
-> > > -    AioPolledEvent poll;
-> > >      int64_t poll_max_ns;    /* maximum polling time in nanoseconds */
-> > >      int64_t poll_grow;      /* polling time growth factor */
-> > >      int64_t poll_shrink;    /* polling time shrink factor */
-> > > diff --git a/util/aio-posix.h b/util/aio-posix.h
-> > > index 4264c518be..82a0201ea4 100644
-> > > --- a/util/aio-posix.h
-> > > +++ b/util/aio-posix.h
-> > > @@ -38,6 +38,7 @@ struct AioHandler {
-> > >  #endif
-> > >      int64_t poll_idle_timeout; /* when to stop userspace polling */
-> > >      bool poll_ready; /* has polling detected an event? */
-> > > +    AioPolledEvent poll;
-> > >  };
-> > > =20
-> > >  /* Add a handler to a ready list */
-> > > diff --git a/util/aio-posix.c b/util/aio-posix.c
-> > > index 259827c7ad..2251871c61 100644
-> > > --- a/util/aio-posix.c
-> > > +++ b/util/aio-posix.c
-> > > @@ -579,13 +579,19 @@ static bool run_poll_handlers(AioContext *ctx, =
-AioHandlerList *ready_list,
-> > >  static bool try_poll_mode(AioContext *ctx, AioHandlerList *ready_lis=
-t,
-> > >                            int64_t *timeout)
-> > >  {
-> > > +    AioHandler *node;
-> > >      int64_t max_ns;
-> > > =20
-> > >      if (QLIST_EMPTY_RCU(&ctx->poll_aio_handlers)) {
-> > >          return false;
-> > >      }
-> > > =20
-> > > -    max_ns =3D qemu_soonest_timeout(*timeout, ctx->poll.ns);
-> > > +    max_ns =3D 0;
-> > > +    QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
-> > > +        max_ns =3D MAX(max_ns, node->poll.ns);
-> > > +    }
-> > > +    max_ns =3D qemu_soonest_timeout(*timeout, max_ns);
-> > > +
-> > >      if (max_ns && !ctx->fdmon_ops->need_wait(ctx)) {
-> > >          /*
-> > >           * Enable poll mode. It pairs with the poll_set_started() in
-> > > @@ -721,8 +727,14 @@ bool aio_poll(AioContext *ctx, bool blocking)
-> > > =20
-> > >      /* Adjust polling time */
-> > >      if (ctx->poll_max_ns) {
-> > > +        AioHandler *node;
-> > >          int64_t block_ns =3D qemu_clock_get_ns(QEMU_CLOCK_REALTIME) =
-- start;
-> > > -        adjust_polling_time(ctx, &ctx->poll, block_ns);
-> > > +
-> > > +        QLIST_FOREACH(node, &ctx->poll_aio_handlers, node_poll) {
-> > > +            if (QLIST_IS_INSERTED(node, node_ready)) {
-> > > +                adjust_polling_time(ctx, &node->poll, block_ns);
-> > > +            }
-> > > +        }
-> > >      }
-> > > =20
-> > >      progress |=3D aio_bh_poll(ctx);
-> > > @@ -772,10 +784,16 @@ void aio_context_use_g_source(AioContext *ctx)
-> > >  void aio_context_set_poll_params(AioContext *ctx, int64_t max_ns,
-> > >                                   int64_t grow, int64_t shrink, Error=
- **errp)
-> > >  {
-> > > +    AioHandler *node;
-> > > +
-> > >      /* No thread synchronization here, it doesn't matter if an incor=
-rect value
-> > >       * is used once.
-> > >       */
-> >=20
-> > If you respin this series:
-> >=20
-> > This comment is confusing now that qemu_lockcnt_inc() is being used.
-> > Lockcnt tells other threads in aio_set_fd_handler() not to remove nodes
-> > from the aio_handlers list (because we're traversing the list).
-> >=20
-> > The comment is about the poll state though, not about the aio_handlers
-> > list. Moving it down to where poll_max_ns, etc are assigned would make
-> > it clearer.
->=20
-> Yes, I can do that while applying the series.
->=20
-> Should I add your R-b after making the change?
+ # End of rdma tests
 
-Yes, please.
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+---
 
-Stefan
+Hi Fabiano,
 
---InBOtQS0+G2YKmG1
-Content-Type: application/pgp-signature; name=signature.asc
+Please replace this patch in your new PR.
+---
+V6:
+  - make scripts/rdma-migration-helper.sh rubost, including
+    1) only setup rdma/rxe on a valid ipv4 interface # resolve gitlab-ci aarch64 runner
+    2) split setup and detect operation
+    3) check root for setup/clean operation
+  - rdma migration test only detect rdma link, local users should 'setup' rdma explicitly # don't dirty the system quietly
+  - print skip message in TAP format, starting with #
+---
+ MAINTAINERS                           |  1 +
+ scripts/rdma-migration-helper.sh      | 70 +++++++++++++++++++++++++++
+ tests/qtest/migration/precopy-tests.c | 66 +++++++++++++++++++++++++
+ 3 files changed, 137 insertions(+)
+ create mode 100755 scripts/rdma-migration-helper.sh
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfPnV0ACgkQnKSrs4Gr
-c8ilcgf/aPI5LK5OGX/rbwCCIIrHNe9hvFFt4HtR9cgu7ZsoBUxY+QluZ0x2I+CN
-jGJacRmeUN8qYr9JXrDIYbtuNPEskI/9jd7Hd4vZX074ivGFUzvmq2eqw3tg73dO
-W3LRpdr17POBG9PN4xL/0jS2wUU7Mt7blLs5qC9mtwraqTCrJctpANES1USD+Of1
-LeVS4kQO+dhabTb0JnzT8gI6fmVpoqiRFiD0J8Ql4/r079gb7uD+ogffIbktYFj5
-MLdBX6YalrDVNyWROkp/iOHwNnNItYup3++M3Vek8XL1nz5ig0Wz90JnrUKXSWQe
-uspAPf5jkMoKj7ir/qDi2iKUlCNkYQ==
-=ZPOR
------END PGP SIGNATURE-----
-
---InBOtQS0+G2YKmG1--
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3848d37a38..15360fcdc4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3480,6 +3480,7 @@ R: Li Zhijian <lizhijian@fujitsu.com>
+ R: Peter Xu <peterx@redhat.com>
+ S: Odd Fixes
+ F: migration/rdma*
++F: scripts/rdma-migration-helper.sh
+ 
+ Migration dirty limit and dirty page rate
+ M: Hyman Huang <yong.huang@smartx.com>
+diff --git a/scripts/rdma-migration-helper.sh b/scripts/rdma-migration-helper.sh
+new file mode 100755
+index 0000000000..c4382134cd
+--- /dev/null
++++ b/scripts/rdma-migration-helper.sh
+@@ -0,0 +1,70 @@
++#!/bin/bash
++
++# Copied from blktests
++get_ipv4_addr()
++{
++    ip -4 -o addr show dev "$1" |
++        sed -n 's/.*[[:blank:]]inet[[:blank:]]*\([^[:blank:]/]*\).*/\1/p' |
++        tr -d '\n'
++}
++
++# existing rdma interfaces
++rdma_interfaces()
++{
++    rdma link show | sed -nE 's/^link .* netdev ([^ ]+).*$/\1 /p'
++}
++
++# existing valid ipv4 interfaces
++ipv4_interfaces()
++{
++    ip -o addr show | awk '/inet / {print $2}' | grep -v -w lo
++}
++
++rdma_rxe_detect()
++{
++    for r in $(rdma_interfaces)
++    do
++        ipv4_interfaces | grep -qw $r && get_ipv4_addr $r && return
++    done
++
++    return 1
++}
++
++rdma_rxe_setup()
++{
++    for i in $(ipv4_interfaces)
++    do
++        rdma_interfaces | grep -qw $i && continue
++        rdma link add "${i}_rxe" type rxe netdev "$i" && {
++            echo "Setup new rdma/rxe ${i}_rxe for $i with $(get_ipv4_addr $i)"
++            return
++        }
++    done
++
++    echo "Failed to setup any new rdma/rxe link" >&2
++    return 1
++}
++
++rdma_rxe_clean()
++{
++    modprobe -r rdma_rxe
++}
++
++operation=${1:-detect}
++
++command -v rdma >/dev/null || {
++    echo "Command 'rdma' is not available, please install it first." >&2
++    exit 1
++}
++
++if [ "$operation" == "setup" ] || [ "$operation" == "clean" ]; then
++    [ "$UID" == 0 ] || {
++        echo "Root privilege is required to setup/clean a rdma/rxe link" >&2
++        exit 1
++    }
++    rdma_rxe_"$operation"
++elif [ "$operation" == "detect" ]; then
++    rdma_rxe_detect
++else
++    echo "Usage: $0 [setup | detect | clean]"
++fi
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index ba273d10b9..557b7f3aa7 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -99,6 +99,68 @@ static void test_precopy_unix_dirty_ring(void)
+     test_precopy_common(&args);
+ }
+ 
++#ifdef CONFIG_RDMA
++
++#define RDMA_MIGRATION_HELPER "scripts/rdma-migration-helper.sh"
++static int new_rdma_link(char *buffer)
++{
++    char cmd[256];
++    bool verbose = g_getenv("QTEST_LOG");
++
++    snprintf(cmd, sizeof(cmd), "%s detect %s", RDMA_MIGRATION_HELPER,
++             verbose ? "" : "2>/dev/null");
++
++    FILE *pipe = popen(cmd, "r");
++    if (pipe == NULL) {
++        perror("Failed to run script");
++        return -1;
++    }
++
++    int idx = 0;
++    while (fgets(buffer + idx, 128 - idx, pipe) != NULL) {
++        idx += strlen(buffer);
++    }
++
++    int status = pclose(pipe);
++    if (status == -1) {
++        perror("Error reported by pclose()");
++        return -1;
++    } else if (WIFEXITED(status)) {
++        return WEXITSTATUS(status);
++    }
++
++    return -1;
++}
++
++static void test_precopy_rdma_plain(void)
++{
++    char buffer[128] = {};
++
++    if (new_rdma_link(buffer)) {
++        g_test_skip("No rdma link available\n"
++                    "# To enable the test:\n"
++                    "# Run \'" RDMA_MIGRATION_HELPER " setup\' with root to setup"
++                    " a new rdma/rxe link and rerun the test\n"
++                    "# Optional: run 'scripts/rdma-migration-helper.sh clean' to"
++                    " revert the 'setup'\n");
++        return;
++    }
++
++    /*
++     * TODO: query a free port instead of hard code.
++     * 29200=('R'+'D'+'M'+'A')*100
++     **/
++    g_autofree char *uri = g_strdup_printf("rdma:%s:29200", buffer);
++
++    MigrateCommon args = {
++        .listen_uri = uri,
++        .connect_uri = uri,
++    };
++
++    test_precopy_common(&args);
++}
++#endif
++
+ static void test_precopy_tcp_plain(void)
+ {
+     MigrateCommon args = {
+@@ -1124,6 +1186,10 @@ static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
+                        test_multifd_tcp_uri_none);
+     migration_test_add("/migration/multifd/tcp/plain/cancel",
+                        test_multifd_tcp_cancel);
++#ifdef CONFIG_RDMA
++    migration_test_add("/migration/precopy/rdma/plain",
++                       test_precopy_rdma_plain);
++#endif
+ }
+ 
+ void migration_test_add_precopy(MigrationTestEnv *env)
+-- 
+2.41.0
 
 
