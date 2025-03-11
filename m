@@ -4,72 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C7CC28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 18:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A35C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 18:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts4Bc-0003Ah-Dc; Tue, 11 Mar 2025 14:18:40 -0400
+	id 1ts4Ts-0004Ls-Gf; Tue, 11 Mar 2025 14:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts47p-0007Mc-Ok
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:14:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts47e-0006rG-6P
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:14:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741716873;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EzlEdU21EJAvCxVTyFEnBfIdZ2C2KuXusinspW+ZuUk=;
- b=Ih0OfE4aBgaqWvUep2ZGj8vr65MK6rczzRAml4he1mAsN0VWeUDeno4N8aR3P23hZMHdBN
- VoYwRQt9xBdCOtJ98hS2qzu4hKqiPtpbfz7gkbncwHzWCrqhS/79JctC1AoddGxoBmvaAf
- WEOGoOeLQb+DBEXwjFw9FmA8eVxmzXk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-UUztEnJ5O9uulG69lhFtAQ-1; Tue,
- 11 Mar 2025 14:14:29 -0400
-X-MC-Unique: UUztEnJ5O9uulG69lhFtAQ-1
-X-Mimecast-MFC-AGG-ID: UUztEnJ5O9uulG69lhFtAQ_1741716869
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D281519560B2; Tue, 11 Mar 2025 18:14:28 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3D009180AF7B; Tue, 11 Mar 2025 18:14:26 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 21/21] vfio/pci: Drop debug commentary from
- x-device-dirty-page-tracking
-Date: Tue, 11 Mar 2025 19:13:28 +0100
-Message-ID: <20250311181328.1200431-22-clg@redhat.com>
-In-Reply-To: <20250311181328.1200431-1-clg@redhat.com>
-References: <20250311181328.1200431-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ts4Tf-0004EK-Fl
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:37:21 -0400
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ts4TX-0004Z8-HT
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:37:18 -0400
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e3978c00a5aso4716840276.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 11:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741718227; x=1742323027; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wayN4RoaoenIpriSr88NoZR+64V8zFecBLi1Mteb1h4=;
+ b=LNenYRVkkdbvbj155e4O6+xUAqUNWDBnpN1DbX8G56g6jmiztbavNIUPXMIxhV/ftl
+ EDOVwKojqpsCvYyzScln8GnffAZV802/0rXDEOa1dkALseRqdKmY7CEImdKCP4NEUwxt
+ O0ya6VycORdT9OcvAJ8ZCnbToxDY/eyQgi05/F4wQ4yqMigjt2Uhoe93PGXasX5BhgfX
+ 7cvFhtd7L9gNZLM9uo9crlFCcvBmaU45yrWgwsOyvO2KnF54AhvM0KeFsdD4DAiqHlel
+ pou9ue0wv+arvYOmNwSFi6MO1cuZtGPw2LLSGlVCHh+0ae+vViiHp4TtPnBQ6YnogYbg
+ Ax3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741718227; x=1742323027;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wayN4RoaoenIpriSr88NoZR+64V8zFecBLi1Mteb1h4=;
+ b=bN+xpB1kPdDZTN2MJB839w/O1rtdiEldTZC4lWsqcBtnYzjTBrrKhRyJUbqBTTw3B5
+ 0yf8Y0WwFKdd8akjzaCvjezYANYtuZHTsX53dQJlJnfF2X4PsWa5s7dvkVAGtU1CN+mT
+ bMaDvqUuFyjV6sCupCA7hu96nw0sjk5ca5daA7J6C5AZGiPlsxcXQkXcJErOGzQrfQLA
+ q0UexZ1lzJidJsuXph0+ojX3ZrYDsGylHYJl0wUmYC8NtlL6dhWyaNc/1npEqbw8BFna
+ 0HShBJ6o0GBmjlXSQOdkVXTz+RmE4M8GPT1lVBREs7XnKIum1rpauA3qULb95OA3rlIQ
+ TivA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV75y9TekYoZoyqn73LzsDQ3fD5aL24CsvEmxpU2sfgDLiU7+tiuiSmHrZzbYwUZkCM7cBFEU1pFNNn@nongnu.org
+X-Gm-Message-State: AOJu0YxWhZe9TZMl8Cb7buhHeXLjrPRJGLpW4DkXWmdBF+EUI1ZTtRH6
+ hfHJpXi8EgXDeXLE+YenNxWu3JjlJyyzSE1rqVteKDmQQhZ+dW3bFYJ7AIqRPb+uBLZkujqqfV5
+ y17SRpyMCFF6dU6RzOd7JXT1TB3FZAZty+hThew==
+X-Gm-Gg: ASbGncvALk9o7Euz3teCilciZxdbETS98Mn0E5sExEOEDOuJvZlkIRpEP9DUfZAQqBd
+ 1+ps5o+OQucU4iv7P5MLI/33iSlp+nCKVaTiUmQznXHqTmEotrXgUBQXrA06hhDF5+5vWCDDu4/
+ QuJ7k01mqEI4IYOh35bkxTo6ElsFM=
+X-Google-Smtp-Source: AGHT+IF/5Z50eBBrV2TrE7YsRKS/qUtD0B5qOOn/yDurn2aOxkMF1P3zHWfzVvFPoJcJx0TcR68GTaEtqI8G9XKn8s8=
+X-Received: by 2002:a05:6902:2086:b0:e60:a068:a14b with SMTP id
+ 3f1490d57ef6-e635c0f9b05mr22983993276.4.1741718227112; Tue, 11 Mar 2025
+ 11:37:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250310012825.79614-1-philmd@linaro.org>
+ <CAFEAcA_fRWgntwbiFiDJqAkthR8vBzrkLOLkp5GeHD9O8xTMCA@mail.gmail.com>
+ <CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com>
+ <6f4a3582-f3e2-4f0c-8ab6-eeddd1064793@linaro.org>
+In-Reply-To: <6f4a3582-f3e2-4f0c-8ab6-eeddd1064793@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 11 Mar 2025 18:36:55 +0000
+X-Gm-Features: AQ5f1JqytoFakCllyYae0_YaX-PbqFdorB8TUeotHeg0V71ppFWFo44bbBjv82U
+Message-ID: <CAFEAcA8j-JAVC=VK0YHoyB9dBH6Rj7aGpmZtCGPbc5Usdy6yhA@mail.gmail.com>
+Subject: Re: [PATCH v7 0/7] hw/char/pl011: Implement TX (async) FIFO to avoid
+ blocking the main loop
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,44 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joao Martins <joao.m.martins@oracle.com>
+On Tue, 11 Mar 2025 at 10:33, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+> On 10/3/25 18:28, Peter Maydell wrote:
+> > This seems to be because the pl011 code and the chardev
+> > code disagree about how "couldn't write anything" is
+> > reported. pl011 here is looking for "0 means wrote nothing",
+> > but the chardev code reports it as "-1 and errno is EAGAIN".
+> >
+> > I think the chardev code is actually what we need to fix here,
+> > because it makes basically no effort to guarantee that the
+> > errno from the underlying write is still in 'errno' by the
+> > time qemu_chr_fe_write() returns. In particular it may
+> > call qemu_chr_write_log() or replay_char_write_event_save(),
+> > both of which will happily trash errno if something fails
+> > during their execution.
+>
+> IIUC when retrying qemu_chr_write_buffer(s, buf, len, ofs) could
+> write less than @len (but still writing few bytes, that information
+> is stored in @offset) and return -errno, discarding @offset partial
+> write len.
 
-The intent behind the x-device-dirty-page-tracking option is twofold:
+I thought that too when I first read the code, because it's
+been written in a way that didn't match what I was expecting
+for a "write until you would block, then stop" loop, but on
+second reading I decided it could not, at least in the case
+where write_all is false. If we write any data at all on the
+first cc->chr_write call, we will then break out of the loop
+without trying to send any more, so there's no code path
+that will then set res to a negative number. (If write_all
+is true, then yeah I think we can return an errno rather
+than a partial-write count if chr_write fails on the second
+time through the loop, but all the callers of that version
+of the function ignore errors of any kind anyway, and
+certainly don't have any means to handle "only wrote half
+the data", otherwise they'd be using the non-blocking
+version.)
 
-1) development/testing in the presence of VFs with VF dirty page tracking
-
-2) deliberately choosing platform dirty tracker over the VF one.
-
-Item 2) scenario is useful when VF dirty tracker is not as fast as
-IOMMU, or there's some limitations around it (e.g. number of them is
-limited; aggregated address space under tracking is limited),
-efficiency/scalability (e.g. 1 pagetable in IOMMU dirty tracker to scan
-vs N VFs) or just troubleshooting. Given item 2 it is not restricted to
-debugging, hence drop the debug parenthesis from the option description.
-
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250311174807.79825-1-joao.m.martins@oracle.com
-[ clg: Fixed subject spelling ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 3cb7806f2f219174ffb7d28595e9430b41ee40ae..7f1532fbed9aed2eae2c98f6fd79a9056ff1e84f 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3532,7 +3532,7 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, void *data)
-     object_class_property_set_description(klass, /* 9.1 */
-                                           "x-device-dirty-page-tracking",
-                                           "Disable device dirty page tracking and use "
--                                          "container-based dirty page tracking (DEBUG)");
-+                                          "container-based dirty page tracking");
-     object_class_property_set_description(klass, /* 9.1 */
-                                           "migration-events",
-                                           "Emit VFIO migration QAPI event when a VFIO device "
--- 
-2.48.1
-
+-- PMM
 
