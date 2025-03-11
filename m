@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 607F0C2BA1B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D2AC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1c1-0001DL-Mr; Tue, 11 Mar 2025 11:33:45 -0400
+	id 1ts1fe-0002ns-Ih; Tue, 11 Mar 2025 11:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ts1bv-00017m-QH
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:33:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ts1fa-0002n3-Sv
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:37:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ts1bt-0000uV-6j
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:33:39 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ts1fZ-0001Ud-8d
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:37:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741707214;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ECnhSlHGX+w+7ebbKOwA5lrSYRWd/pSMffA4IIRyikY=;
- b=WSrJAoUhGttYnkOjHvutem7UJDcYZl/udKwpCVqU0kX6BJdQm3i58sQAW69K++7ahzX0Ve
- le5uvBZ46k1lwTLXo+EWkAn2sH/8CcFwAXYTW6mJCpfoRU1dUe/scknRSrBPhLqyMvxOr0
- XsFCmfL0ckP2PXWXxG8iaKBJMcq+CvA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-FWp9H_q6MZm3D7csnXYrcA-1; Tue,
- 11 Mar 2025 11:33:29 -0400
-X-MC-Unique: FWp9H_q6MZm3D7csnXYrcA-1
-X-Mimecast-MFC-AGG-ID: FWp9H_q6MZm3D7csnXYrcA_1741707208
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 563BA1955DDF; Tue, 11 Mar 2025 15:33:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.44])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47D9E18001F6; Tue, 11 Mar 2025 15:33:25 +0000 (UTC)
-Date: Tue, 11 Mar 2025 15:33:23 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Manish Mishra <manish.mishra@nutanix.com>, qemu-devel@nongnu.org,
- leobras@redhat.com, farosas@suse.de, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2] QIOChannelSocket: Flush zerocopy socket error queue
- on ENOBUF failure for sendmsg
-Message-ID: <Z9BXw6iZfi_UKx-t@redhat.com>
-References: <20250310011500.240782-1-manish.mishra@nutanix.com>
- <Z885hS6QmGOZYj7N@x1.local> <Z89CALrwKnHdO4hx@redhat.com>
- <Z89FjreYuRjEeX1f@x1.local> <Z8_wnLIlfhM7bILZ@redhat.com>
- <Z9BU0gd3BLPhBss2@x1.local>
+ s=mimecast20190719; t=1741707443;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=x+m1tB0IRmFUt0z/ZSeEkRtMNkQL+NVakxjQzeIsgc8=;
+ b=QDzHzGo+xAaFG//n3+4w3pdLzBJ3nnrHXYY3/C78gCE72z5BsV/PjHPDcdGe7FZiNdsXxp
+ T+cNZ/Jl3eRARppLr/4J7WbZMtCeCJx3dCTuyPDEqY42X0wL+4loNj6MvTfIZ2ydDPUr5H
+ sCEO6+k68UtwQ2lh7E3B3UXY/+ysnMg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-217-bEJh3oqgPSiIIlTCCV0LOg-1; Tue, 11 Mar 2025 11:37:20 -0400
+X-MC-Unique: bEJh3oqgPSiIIlTCCV0LOg-1
+X-Mimecast-MFC-AGG-ID: bEJh3oqgPSiIIlTCCV0LOg_1741707440
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912a0439afso2201606f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:37:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741707439; x=1742312239;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x+m1tB0IRmFUt0z/ZSeEkRtMNkQL+NVakxjQzeIsgc8=;
+ b=rsJTQZV/8T/fs/mJj+6YE1/Z88BEkeFc4560KoP2TQh3cL4ocFZl9BbxLlhC6MFFPT
+ XlGvg0LpOXJBxY2R09r8vbmKBOG8U56jLa0ttUUU0EQCJ/CtrqCoBjp8oUDzBoWUA6aV
+ hye5hz+fT7jpPz53xOB/fhmBZc3zdFjtcjEgQSAFjwt5Lwds4KBZN5BRxuXdeX6QQjHI
+ dz/T+nY0EBqHmvzQbdjOMu+UJza27VisE0dQV2rC7fmf0kK6M5yN00eVoj84aGOGE/fS
+ T+Hu00dlPH+gcV9yy4wRz35za8s8K+AAovCdHVnqmFEPXTu08cFY5+cBgSNwohCpxOaJ
+ Q0BA==
+X-Gm-Message-State: AOJu0Yx9ae8VpGfy1njKLRLxg1qZT96uKFyGWJahfT2VxlBTVMQOKyzj
+ Aajk7+VGQMGJyyXbNoxCfPo1VQIQXQRJFKUZMJY5qtNMNLZwOS6XttXFE12bUT3SiXdWlQs2etG
+ iYsHIJQzIFwOLdS5ExYFyIhjQbyAfxipG0732Kot4lL6bcxlWnNwc93gX6w8ekDq0gZuTySdSZ7
+ AOQkm47+TPj+tzpEYTMJ04kwYxfs8JORJsAWl7
+X-Gm-Gg: ASbGnctu02FIfbkccC2ZWiwbVtNhGWBFPs7qS00lgir1wR6c+7AwXjIE0MTkPtL9IdC
+ 8VhNIA9kuEsNeG9i2hl09OLLnRNQEhk1wEka72YVVcSTjQ8rnKKXO8qQ38ENYLarfanKHGSyoDf
+ O6fO5z3xnYBTc1k2anSHXJaVgcJJkhj+8Tfi/2yIaBGBp3WYeZgUNVmRr9wh+De84bt97iHfpEN
+ xcAsPZN2+ZKmrjaTk/c/Zkh59mkPlKWCVBNqntGETNij3Iv6DTEXdUdgu3c/tAaYovpnpX37kc1
+ u0jDU+m1uPv7oTIWJwN0qg==
+X-Received: by 2002:a05:6000:1842:b0:391:2e97:577a with SMTP id
+ ffacd0b85a97d-39132de2e83mr12413115f8f.55.1741707438990; 
+ Tue, 11 Mar 2025 08:37:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEt/ohi4G6ThivEGm36gMYoLwNjQklh22TPvYIWtK9UZE04lUJqqzYM5XJzJQddF8afQQxkGQ==
+X-Received: by 2002:a05:6000:1842:b0:391:2e97:577a with SMTP id
+ ffacd0b85a97d-39132de2e83mr12413091f8f.55.1741707438497; 
+ Tue, 11 Mar 2025 08:37:18 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.122.167])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c0e308dsm18873420f8f.67.2025.03.11.08.37.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 08:37:17 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] Revert "hw/char/pl011: Warn when using disabled receiver"
+Date: Tue, 11 Mar 2025 16:37:17 +0100
+Message-ID: <20250311153717.206129-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z9BU0gd3BLPhBss2@x1.local>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,63 +104,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 11, 2025 at 11:20:50AM -0400, Peter Xu wrote:
-> On Tue, Mar 11, 2025 at 08:13:16AM +0000, Daniel P. Berrangé wrote:
-> > On Mon, Mar 10, 2025 at 04:03:26PM -0400, Peter Xu wrote:
-> > > On Mon, Mar 10, 2025 at 07:48:16PM +0000, Daniel P. Berrangé wrote:
-> > > > Given this is in public API, the data needs to remain reported accurately
-> > > > for the whole deprecation period. IOW, the patch to qiochannel needs to
-> > > > preserve this data too.
-> > > 
-> > > :-(
-> > > 
-> > > We could potentially mark MigrationStats to be experimental as a whole and
-> > > declare that in deprecate.rst too, then after two releases, we can randomly
-> > > add / remove fields as wish without always need to go through the
-> > > deprecation process, am I right?
-> > 
-> > IMHO that would be an abuse of the process and harmful to applications
-> > and users consuming stats.
-> 
-> Ah I just noticed that's the exact same one we included in
-> query-migrate.. Then yes, the stable ABI is important here.
-> 
-> So for this specific case, maybe we shouldn't have exposed it in QMP from
-> the start.
-> 
-> To me, it's a question on whether we could have something experimental and
-> be exposed to QMP, where we don't need to guarantee a strict stable ABI, or
-> a very loose ABI (e.g. we can guarantee the command exists, and with
-> key-value string-integer pairs, nothing else).
+The guest does not control whether characters are sent on the UART.
+Sending them before the guest happens to boot will now result in a
+"guest error" log entry that is only because of timing, even if the
+guest _would_ later setup the receiver correctly.
 
-QMP has the ability to tag commands/fields, etc as experimental.
+This reverts commit abf2b6a028670bd2890bb3aee7e103fe53e4b0df, apart
+from adding the comment.
 
-libvirt will explicitly avoid consuming or exposing anything with
-an experimental tag on it.
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/char/pl011.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-> Maybe what we need is a new MigrationInfoOptional, to be embeded into
-> MigrationInfo (or not), marked experimental.  Then in the future whenever
-> we want to add some new statistics, we could decide whether it should be
-> part of stable ABI or not.
-
-That is not required - individual struct fields can be marked
-experimental.
-
-The key question is what the intended usage of the fields/stats/etc
-is to be. If you want it used by libvirt and mgmt apps it would need
-to be formally supported. If it is just for adhoc QEMU developer
-debugging and doesn't need libvirt / app support, then experimental
-is fine.
-
-With regards,
-Daniel
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 23a9db8c57c..efca8baecd7 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -85,7 +85,6 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
+ #define CR_OUT1     (1 << 12)
+ #define CR_RTS      (1 << 11)
+ #define CR_DTR      (1 << 10)
+-#define CR_RXE      (1 << 9)
+ #define CR_TXE      (1 << 8)
+ #define CR_LBE      (1 << 7)
+ #define CR_UARTEN   (1 << 0)
+@@ -490,16 +489,9 @@ static int pl011_can_receive(void *opaque)
+     unsigned fifo_depth = pl011_get_fifo_depth(s);
+     unsigned fifo_available = fifo_depth - s->read_count;
+ 
+-    if (!(s->cr & CR_UARTEN)) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "PL011 receiving data on disabled UART\n");
+-    }
+-    if (!(s->cr & CR_RXE)) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "PL011 receiving data on disabled RX UART\n");
+-    }
++    /* Should check enable and return 0? */
++
+     trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available);
+-
+     return fifo_available;
+ }
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.48.1
 
 
