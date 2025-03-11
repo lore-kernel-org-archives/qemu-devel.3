@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B3B9C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6940C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzKi-0000yJ-Le; Tue, 11 Mar 2025 09:07:44 -0400
+	id 1trzJV-0004Zz-Ew; Tue, 11 Mar 2025 09:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzFC-0006Gp-Cq; Tue, 11 Mar 2025 09:02:08 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1trzEE-0005No-U3; Tue, 11 Mar 2025 09:01:06 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzF3-0000Mh-H5; Tue, 11 Mar 2025 09:02:00 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2feae794508so8087751a91.0; 
- Tue, 11 Mar 2025 06:01:52 -0700 (PDT)
+ id 1trzEA-0000B8-IC; Tue, 11 Mar 2025 09:01:01 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2fa8ac56891so8062867a91.2; 
+ Tue, 11 Mar 2025 06:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741698110; x=1742302910; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741698056; x=1742302856; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Kxho44oluW8FOSM2HZbfWLIKk4fba+N89CNPXqjPZug=;
- b=h0yZUFWMoACsS+KnfRChFOlDIlKuKy4+gwe/LBTZbNal55kHDUUxHe55ZbQMFFsZ+o
- M0mxFpx0idByjce6KDUV59slq1wql3vO7vHsI4LxLZ63hD6vZw/3k7TB8XJzHrz45Dyu
- a7nhadZaxuFbPEh/MLQLn4vrrb4X1rZRaknJztMdXa/RIS7W9OBZlxdl5wxW+Q++lb4n
- 9FM956W5RGih43U1YxVawPWF1RUF15e23CQ1pngMYSDeLFesD52NBF4A+Hw2egvv4EIV
- H5NNxnRUxwEKuwYH36/dln3jOa0VTxeMuoLbPQAE9fX66EZIxQaJ6KyJ4RPP4rSM9ePf
- 1AsA==
+ bh=6QcWNxidF+8F14IOmySk+2TS0qLc2Hl5I2PiCaOol8E=;
+ b=eL5sZd0Jnn1SuZ1B9g0xrkRT4NCcdK08rkgHNLqdvTYCusg3AYFvYdxXknsQhuUtPt
+ aF0UR2o/xHHt4rxesnUcBiBev0AiAPFaXkLi3RuSXV8Y8bShvTyZ5lKLAqtj9ugcDEY0
+ jsuFgqKfa/5Y+t1k+bDG1LGTff3+68NJo3/Ob2v1EE9I4kt/MDDflWO0weRoQ3iY6J6o
+ DlCX+z9nTf4Ub+OCXaLzc9dcx7L0KeXOOHWEcvEqZjHOnwE/Mdt90uarTNWZS788nY5n
+ VRmjfnzjWrEWjEPY1nA8EXij5qMsQEUESlZF76w+xx5I5zZqTlsEDNE8EUKoeCWOC3tA
+ n4PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741698110; x=1742302910;
+ d=1e100.net; s=20230601; t=1741698056; x=1742302856;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Kxho44oluW8FOSM2HZbfWLIKk4fba+N89CNPXqjPZug=;
- b=wNI13SH382S3menucWOkSwI4TCeEPpHoEyAimz39m1V2tzFScD2NduDCEnKPsrnZg5
- Y9ASTLu45LKmk1rltH+gca+qo50aMqAsbJV568NUfbn/fqCppmHtox5ynCo5MpLCXVuN
- 3VUkttWxnLVFyok94BvJMLk7PXmSNoKkLQnVPGupg/fxqwDC/xDd89Dh2/rwlrFx07do
- nh+iGsr1wQl6EvYmAaRoMGej9RSgSaSQ3I8xZ/vOE3OOjU7GUNmMkaaLST6DGmfLDF6j
- io+1TZhTXVX3y1BlzYnE7xGiPmJ+OCama8lBlOtSn/Ey13tn6cmq1wIWEP1M1WRmG6XH
- Cv/A==
+ bh=6QcWNxidF+8F14IOmySk+2TS0qLc2Hl5I2PiCaOol8E=;
+ b=FrUVxUemX+CGE0amQwJBx8Ot5jiWZ9AJOZ2gqPrLWSs/h7546B4hxRwg3yUbBFkqGO
+ QZSaCyUXKdef5Jm1sUnWxwPYu6qR3TG0FbekgzvnPatPFzb7GKZswkeLojEfJ19lAODx
+ TVqlMQMgW6m1P+s3ix1N76+a2jim1lLFGXabzrvqfhHS6AKq3XbNLMON3by64i1+osxW
+ KsTm+2WBqqfjZLOnFwVgXExRcFU5BXbOIRBQG18C1KR2LIKuSu6NKj3RSfJBaoLDPSjI
+ UrXqzi/jgbGLyb4/jxZPhaLsOCNCf08MPrBoKuynlsKjDwiwN+5FYm8ie5TXSqC4thi1
+ LFDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqjp1nNoMzWiwKpmNhpywi9NxwdSoexCxZt1r+177Mr26lcjySIzRHjo3b2SCpoztdnSOGPlOTYw==@nongnu.org
-X-Gm-Message-State: AOJu0YwsQxy+oLyhTD7HiA1yD8rE0Z3ftHoXuRHit4eDd8Mc8RLXuvzU
- uLq4maEfKzqLLWDKLLN6G8dZRNw1ZQfZXgPW1Gdc12i35GEuknrAQnJDgA==
-X-Gm-Gg: ASbGncsLRYeDhEKp+99iqG9WsKGxsA7kncxXybErXaCfGC+a152SdR4biJ8MEYSWGO/
- 8DBsPYFRvjjwwmzrTXrblNpKL5awkXeA0C6gbacQq2ZgRuKFLKLNU/23ERDXecOxe7e0myYKCKP
- ESZHsCUorXPnTLrnD4tTO3QxYv3xMaVKHPUm0yCR52s36gYr17t1nJdsC7EJfxyfmDacgxx9BCY
- w5Qt4/Un4Ox0HEAO+hzlCDjBwAHFup5MUv4t4Kgh5gIx6ZCg6y7rF6gzeOsTgrouQG9OCw5zmWH
- hPiycqbSGSKLz1XCC6nUkfsfhGqKYjQzul4rMkWrAI7nTUUoh/E=
-X-Google-Smtp-Source: AGHT+IEUtO7mbUqOQOnuiCu3c0l7NIXHWY4nXKZgBD+EBY6vpZWxOZ12LNzENerDYxx6zHjK+gg6IQ==
-X-Received: by 2002:a17:90b:3c8d:b0:2ee:d63f:d73 with SMTP id
- 98e67ed59e1d1-2ff7ce6c9b5mr27223648a91.11.1741698109935; 
- Tue, 11 Mar 2025 06:01:49 -0700 (PDT)
+ AJvYcCULCnGTy5mGZ+3n8+80znvvFk19n3GDRiXuUJY4iGkNwQC9i2q4XJlUGyec0P3UuV6FlgvgqXpeOw==@nongnu.org
+X-Gm-Message-State: AOJu0Yy+l+qLGvCJTuBJiZ7uniBbcYQdVjGMJ6cfEVLJ4JRGhAs6hdJw
+ svo1AqezRV1KKkUBVnUYZffZXg8JotNvhGTBL0f+KzepErb5uSokQ7AlNg==
+X-Gm-Gg: ASbGncvozUsh/PaXmXVEumBNcc/OtCDxcwGWfd8YeWtWTmYc7wuJb8lwtpRUmlJrrkI
+ /nN0D1F4mLr6LkpQKloTsxJJn1PfEoGydd2Vl/5wf3+bqQcfGHjermFwLsRupqmSYgudZVxRkIS
+ /9m25MgHPm5jVa5I8M6b4DWdvJft9YALXx71hQLLGHNiBvbjOiDZNJLojsTK+Glp5LIiEuc5XNd
+ KGAEIcic06MeypcFnrC33yuKWLfvDgO8WahcSwiyQ/Ve+Zu/HTfl4WsNkk8dVZkd+Mv/HdA6P05
+ B4ENXa3CABmUxQPVK4YbzXneJAHaJPQhS7uFTjMr03U4By+BKD4=
+X-Google-Smtp-Source: AGHT+IHCy4rvVri/vTa/rnjuzFdLf5mF5P6ijmWnVC0Tsoonsvdoe3C9wE8weJlK9fPlu2zNDGd++Q==
+X-Received: by 2002:a17:90b:278f:b0:2f7:4cce:ae37 with SMTP id
+ 98e67ed59e1d1-2ff7ce8958fmr30255905a91.18.1741698056295; 
+ Tue, 11 Mar 2025 06:00:56 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.47
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 06:01:49 -0700 (PDT)
+ Tue, 11 Mar 2025 06:00:55 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 67/72] ppc/amigaone: Simplify replacement dummy_fw
-Date: Tue, 11 Mar 2025 22:58:01 +1000
-Message-ID: <20250311125815.903177-68-npiggin@gmail.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 49/72] target/ppc: Restrict exception helpers to TCG
+Date: Tue, 11 Mar 2025 22:57:43 +1000
+Message-ID: <20250311125815.903177-50-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,35 +100,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-There's no need to do shift in a loop, doing it in one instruction
-works just as well, only the result is used.
+Move exception helpers to tcg-excp_helper.c so they are
+only built when TCG is selected. Preprocessor guards
+are added for some helpers unused when CONFIG_USER_ONLY.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <446bf740cbb99422be2cc5a31e51a1034eddded7.1740673173.git.balaton@eik.bme.hu>
+[npiggin: mention USER_ONLY change]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250127102620.39159-10-philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/amigaone.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ target/ppc/excp_helper.c     | 34 --------------------------------
+ target/ppc/tcg-excp_helper.c | 38 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 34 deletions(-)
 
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index b02792221c..4290d58613 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -41,10 +41,7 @@
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 9e1a2ecc36..6a12402b23 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -2504,41 +2504,7 @@ bool ppc_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  
- /* AmigaOS calls this routine from ROM, use this if no firmware loaded */
- static const char dummy_fw[] = {
--    0x38, 0x00, 0x00, 0x08, /* li      r0,8 */
--    0x7c, 0x09, 0x03, 0xa6, /* mtctr   r0 */
--    0x54, 0x63, 0xf8, 0x7e, /* srwi    r3,r3,1 */
--    0x42, 0x00, 0xff, 0xfc, /* bdnz    0x8 */
-+    0x54, 0x63, 0xc2, 0x3e, /* srwi    r3,r3,8 */
-     0x7c, 0x63, 0x18, 0xf8, /* not     r3,r3 */
-     0x4e, 0x80, 0x00, 0x20, /* blr */
- };
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-/*****************************************************************************/
+-/* Exceptions processing helpers */
+-
+-void raise_exception_err_ra(CPUPPCState *env, uint32_t exception,
+-                            uint32_t error_code, uintptr_t raddr)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = exception;
+-    env->error_code = error_code;
+-    cpu_loop_exit_restore(cs, raddr);
+-}
+-
+-void raise_exception_err(CPUPPCState *env, uint32_t exception,
+-                         uint32_t error_code)
+-{
+-    raise_exception_err_ra(env, exception, error_code, 0);
+-}
+-
+-void raise_exception(CPUPPCState *env, uint32_t exception)
+-{
+-    raise_exception_err_ra(env, exception, 0, 0);
+-}
+-
+ #ifdef CONFIG_TCG
+-void helper_raise_exception_err(CPUPPCState *env, uint32_t exception,
+-                                uint32_t error_code)
+-{
+-    raise_exception_err_ra(env, exception, error_code, 0);
+-}
+-
+-void helper_raise_exception(CPUPPCState *env, uint32_t exception)
+-{
+-    raise_exception_err_ra(env, exception, 0, 0);
+-}
+ 
+ #ifndef CONFIG_USER_ONLY
+ void helper_store_msr(CPUPPCState *env, target_ulong val)
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index 93c2d6b5a0..268a161459 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -19,15 +19,53 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "exec/cpu_ldst.h"
++#include "exec/exec-all.h"
++#include "exec/helper-proto.h"
+ #include "system/runstate.h"
+ 
++#include "helper_regs.h"
+ #include "hw/ppc/ppc.h"
+ #include "internal.h"
+ #include "cpu.h"
+ #include "trace.h"
+ 
++/*****************************************************************************/
++/* Exceptions processing helpers */
++
++void raise_exception_err_ra(CPUPPCState *env, uint32_t exception,
++                            uint32_t error_code, uintptr_t raddr)
++{
++    CPUState *cs = env_cpu(env);
++
++    cs->exception_index = exception;
++    env->error_code = error_code;
++    cpu_loop_exit_restore(cs, raddr);
++}
++
++void helper_raise_exception_err(CPUPPCState *env, uint32_t exception,
++                                uint32_t error_code)
++{
++    raise_exception_err_ra(env, exception, error_code, 0);
++}
++
++void helper_raise_exception(CPUPPCState *env, uint32_t exception)
++{
++    raise_exception_err_ra(env, exception, 0, 0);
++}
++
+ #ifndef CONFIG_USER_ONLY
+ 
++void raise_exception_err(CPUPPCState *env, uint32_t exception,
++                                           uint32_t error_code)
++{
++    raise_exception_err_ra(env, exception, error_code, 0);
++}
++
++void raise_exception(CPUPPCState *env, uint32_t exception)
++{
++    raise_exception_err_ra(env, exception, 0, 0);
++}
++
+ void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+                                  MMUAccessType access_type,
+                                  int mmu_idx, uintptr_t retaddr)
 -- 
 2.47.1
 
