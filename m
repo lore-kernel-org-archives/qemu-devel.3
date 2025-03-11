@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CEEC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0B0C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzJK-00045t-Qf; Tue, 11 Mar 2025 09:06:19 -0400
+	id 1trzNt-0006vo-Op; Tue, 11 Mar 2025 09:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzDw-0004zk-O4; Tue, 11 Mar 2025 09:00:49 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzDt-00007a-Hp; Tue, 11 Mar 2025 09:00:44 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2ff6e91cff5so7759815a91.2; 
- Tue, 11 Mar 2025 06:00:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741698039; x=1742302839; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ef5JtUmQjY3eZoVQLsqqxOztpN+e+XJ12V25TE9Pgi8=;
- b=R5K31FYExGIIdHSgoQ1uFjhDjRnvBSsRdZWjyWL3RtyBIraPc8a8igtKfRyLo6vxkE
- R7KURS+/OjPnkYOkfowOuYUJ36gaXbBs0P2R0MDDXFhF807gv/Echi0vm3+dXWa8DXhL
- CWZ4L1K9OE5SAQ8fA4dHRVIRD2zu6sNWntWIqjWhyeXIA1BxwXGs7HQojM4alYN0sEj7
- b2+rI/OskHBZ5xIhTz8EOyE1sjju5WWci78Vxm/S2RuSuRQzn3Zv2bY9ui/rB8Snifr3
- hE5le4TIT/rXpVeROnIN7Zh286GRzuIrWiQv9/p5XyE0dVwkiD/zzNI6PBALjRqpV8nY
- dliQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741698039; x=1742302839;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ef5JtUmQjY3eZoVQLsqqxOztpN+e+XJ12V25TE9Pgi8=;
- b=snMy09y3gGb36B8cwi4YctyiZTs47mh24e8m/6MGFEsgG+oVmSrah8h0ueT8dBr2Jw
- TM8DvWo3UuB5uwSNFwBanj1f/D993ONmDoiYXbQL+t4hfLWsqvgOnsxw1lvz6lX2T419
- boebcCi7OGHkAJme45NqVOzRjcC5QemCKkuLUYflafubD6VK/npdrtBYjqWuW+zwjtH2
- 9XwkBuHZ5ej+Eocsp2fSnbEEU7nRLYa+ft+1VlKUcS86Xl1sOh03tRmRDMNOfxJA/u/Q
- y9TXmeHiJaem2l884PQ9tJ1P7nItDqHVJwHqAJ9WlKfV9vBWeFgQjHj/6YmKxiMBb3hE
- Mi5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURu+umiYqh3qsAl5OugzxgVmvoXRZOS73X55rvPTZadXKCvWwSfs2qDPPam43J79F5dPuQ4sJp9A==@nongnu.org
-X-Gm-Message-State: AOJu0Yw3MCPysFSy7i4CuGvWjkitcGO9XXXfbXZslOe4R+OAO2CALAr1
- Zh257XgEVy9LrzK5Lu6XpHFSbfCGYp5SI2wpFdjPykVyW90Yzz1DzLRntQ==
-X-Gm-Gg: ASbGncu+TLF7Z1Kw7YJw1p6eNmyeCTe2rr9qDlXpDDM2uHG9n3MBH8bzrym3jZEVK8i
- OEbPHSv4Hc8qouDd6pUsP12OxCtl4mJJEaq9ywDT4312wWkpNy1KZ7JJV+/X4i51OEs0K1SxSC2
- +a6DDIr/KjfzyTXjpSeGF+8TZoK0ITSfBreDEzERM2qFFtfKNU/mSK13efEGaQ8X+ajg1BruWru
- H9RCH0TILPPn8xseXhbenb+bBb5z1QY/xUgGBbbK+0fejUWOUBC+QnHG60ijxTy4S5PZIf5ZBxi
- RuibenwzPcwanB/DM2w3U3Vfl/BAitxdePuXxWcwk/lB6oe4wZQ=
-X-Google-Smtp-Source: AGHT+IH45hJAsbcuERTowHkzKWunADMl6tTLtwrJOii8wJU6Mh69BxSiogcqltCklb7uCL7iO4fkxw==
-X-Received: by 2002:a17:90a:ec87:b0:2fe:dd2c:f8e7 with SMTP id
- 98e67ed59e1d1-2ff7ce8fa48mr26297537a91.10.1741698038779; 
- Tue, 11 Mar 2025 06:00:38 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.151.101])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 06:00:38 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1trzLr-0004m8-KL
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1trzLh-0001gJ-KP
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741698524;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=D+g07XE8dcoRAJJHwVVfM3Fz8b5QkW9MmJyEj5y/WcQ=;
+ b=b5ufrlNrRYeMy6RM5kJPhckJQyBaMKgn+eCGkx6op8jzacKfXgQDqH47KkAorxb2OvIZ/K
+ VETSpv7cNGMruG5CcNmcYfWRTyclYivyRug5xkWF1Elo981CBQw3zN1QbuYbqeYPNOcymY
+ l3Z7KmetJnaNyQS2T8AeMwj6jImOHeo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-LVZGL11WP8S3OzlH6qozUw-1; Tue,
+ 11 Mar 2025 09:08:41 -0400
+X-MC-Unique: LVZGL11WP8S3OzlH6qozUw-1
+X-Mimecast-MFC-AGG-ID: LVZGL11WP8S3OzlH6qozUw_1741698519
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41064195608B; Tue, 11 Mar 2025 13:08:39 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.91])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 33E6E1800268; Tue, 11 Mar 2025 13:08:37 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 43/72] target/ppc: Make ppc_ldl_code() declaration public
-Date: Tue, 11 Mar 2025 22:57:37 +1000
-Message-ID: <20250311125815.903177-44-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
-References: <20250311125815.903177-1-npiggin@gmail.com>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH v3 11/14] virtio-scsi: add iothread-vq-mapping parameter
+Date: Tue, 11 Mar 2025 21:07:38 +0800
+Message-ID: <20250311130741.1047903-12-stefanha@redhat.com>
+In-Reply-To: <20250311130741.1047903-1-stefanha@redhat.com>
+References: <20250311130741.1047903-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,49 +90,396 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Allow virtio-scsi virtqueues to be assigned to different IOThreads. This
+makes it possible to take advantage of host multi-queue block layer
+scalability by assigning virtqueues that have affinity with vCPUs to
+different IOThreads that have affinity with host CPUs. The same feature
+was introduced for virtio-blk in the past:
+https://developers.redhat.com/articles/2024/09/05/scaling-virtio-blk-disk-io-iothread-virtqueue-mapping
 
-We are going to move code calling ppc_ldl_code() out of
-excp_helper.c where it is defined. Expose its declaration
-for few commits, until eventually making it static again
-once everything is moved.
+Here are fio randread 4k iodepth=64 results from a 4 vCPU guest with an
+Intel P4800X SSD:
+iothreads IOPS
+------------------------------
+1         189576
+2         312698
+4         346744
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-ID: <20250127102620.39159-4-philmd@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- target/ppc/excp_helper.c | 2 +-
- target/ppc/internal.h    | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ include/hw/virtio/virtio-scsi.h |  5 +-
+ hw/scsi/virtio-scsi-dataplane.c | 90 ++++++++++++++++++++++++---------
+ hw/scsi/virtio-scsi.c           | 63 ++++++++++++++---------
+ 3 files changed, 107 insertions(+), 51 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index fde9912230..7ed4bbec03 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -144,7 +144,7 @@ static inline bool insn_need_byteswap(CPUArchState *env)
-     return !!(env->msr & ((target_ulong)1 << MSR_LE));
+diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
+index 7b7e3ced7a..086201efa2 100644
+--- a/include/hw/virtio/virtio-scsi.h
++++ b/include/hw/virtio/virtio-scsi.h
+@@ -22,6 +22,7 @@
+ #include "hw/virtio/virtio.h"
+ #include "hw/scsi/scsi.h"
+ #include "chardev/char-fe.h"
++#include "qapi/qapi-types-virtio.h"
+ #include "system/iothread.h"
+ 
+ #define TYPE_VIRTIO_SCSI_COMMON "virtio-scsi-common"
+@@ -60,6 +61,7 @@ struct VirtIOSCSIConf {
+     CharBackend chardev;
+     uint32_t boot_tpgt;
+     IOThread *iothread;
++    IOThreadVirtQueueMappingList *iothread_vq_mapping_list;
+ };
+ 
+ struct VirtIOSCSI;
+@@ -97,7 +99,7 @@ struct VirtIOSCSI {
+     QTAILQ_HEAD(, VirtIOSCSIReq) tmf_bh_list;
+ 
+     /* Fields for dataplane below */
+-    AioContext *ctx; /* one iothread per virtio-scsi-pci for now */
++    AioContext **vq_aio_context; /* per-virtqueue AioContext pointer */
+ 
+     bool dataplane_started;
+     bool dataplane_starting;
+@@ -115,6 +117,7 @@ void virtio_scsi_common_realize(DeviceState *dev,
+ void virtio_scsi_common_unrealize(DeviceState *dev);
+ 
+ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp);
++void virtio_scsi_dataplane_cleanup(VirtIOSCSI *s);
+ int virtio_scsi_dataplane_start(VirtIODevice *s);
+ void virtio_scsi_dataplane_stop(VirtIODevice *s);
+ 
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index f49ab98ecc..6bb368c8a5 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -18,6 +18,7 @@
+ #include "system/block-backend.h"
+ #include "hw/scsi/scsi.h"
+ #include "scsi/constants.h"
++#include "hw/virtio/iothread-vq-mapping.h"
+ #include "hw/virtio/virtio-bus.h"
+ 
+ /* Context: BQL held */
+@@ -27,8 +28,16 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+     VirtIODevice *vdev = VIRTIO_DEVICE(s);
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
++    uint16_t num_vqs = vs->conf.num_queues + VIRTIO_SCSI_VQ_NUM_FIXED;
+ 
+-    if (vs->conf.iothread) {
++    if (vs->conf.iothread && vs->conf.iothread_vq_mapping_list) {
++        error_setg(errp,
++                   "iothread and iothread-vq-mapping properties cannot be set "
++                   "at the same time");
++        return;
++    }
++
++    if (vs->conf.iothread || vs->conf.iothread_vq_mapping_list) {
+         if (!k->set_guest_notifiers || !k->ioeventfd_assign) {
+             error_setg(errp,
+                        "device is incompatible with iothread "
+@@ -39,15 +48,50 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+             error_setg(errp, "ioeventfd is required for iothread");
+             return;
+         }
+-        s->ctx = iothread_get_aio_context(vs->conf.iothread);
+-    } else {
+-        if (!virtio_device_ioeventfd_enabled(vdev)) {
++    }
++
++    s->vq_aio_context = g_new(AioContext *, num_vqs);
++
++    if (vs->conf.iothread_vq_mapping_list) {
++        if (!iothread_vq_mapping_apply(vs->conf.iothread_vq_mapping_list,
++                                       s->vq_aio_context, num_vqs, errp)) {
++            g_free(s->vq_aio_context);
++            s->vq_aio_context = NULL;
+             return;
+         }
+-        s->ctx = qemu_get_aio_context();
++    } else if (vs->conf.iothread) {
++        AioContext *ctx = iothread_get_aio_context(vs->conf.iothread);
++        for (uint16_t i = 0; i < num_vqs; i++) {
++            s->vq_aio_context[i] = ctx;
++        }
++
++        /* Released in virtio_scsi_dataplane_cleanup() */
++        object_ref(OBJECT(vs->conf.iothread));
++    } else {
++        AioContext *ctx = qemu_get_aio_context();
++        for (unsigned i = 0; i < num_vqs; i++) {
++            s->vq_aio_context[i] = ctx;
++        }
+     }
  }
  
--static uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
-+uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
- {
-     uint32_t insn = cpu_ldl_code(env, addr);
- 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 20fb2ec593..46db6adfcf 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -268,6 +268,8 @@ static inline void pte_invalidate(target_ulong *pte0)
- #define PTE_PTEM_MASK 0x7FFFFFBF
- #define PTE_CHECK_MASK (TARGET_PAGE_MASK | 0x7B)
- 
-+uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr);
++/* Context: BQL held */
++void virtio_scsi_dataplane_cleanup(VirtIOSCSI *s)
++{
++    VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
 +
- #ifdef CONFIG_USER_ONLY
- void ppc_cpu_record_sigsegv(CPUState *cs, vaddr addr,
-                             MMUAccessType access_type,
++    if (vs->conf.iothread_vq_mapping_list) {
++        iothread_vq_mapping_cleanup(vs->conf.iothread_vq_mapping_list);
++    }
++
++    if (vs->conf.iothread) {
++        object_unref(OBJECT(vs->conf.iothread));
++    }
++
++    g_free(s->vq_aio_context);
++    s->vq_aio_context = NULL;
++}
++
+ static int virtio_scsi_set_host_notifier(VirtIOSCSI *s, VirtQueue *vq, int n)
+ {
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(s)));
+@@ -66,31 +110,20 @@ static int virtio_scsi_set_host_notifier(VirtIOSCSI *s, VirtQueue *vq, int n)
+ }
+ 
+ /* Context: BH in IOThread */
+-static void virtio_scsi_dataplane_stop_bh(void *opaque)
++static void virtio_scsi_dataplane_stop_vq_bh(void *opaque)
+ {
+-    VirtIOSCSI *s = opaque;
+-    VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
++    AioContext *ctx = qemu_get_current_aio_context();
++    VirtQueue *vq = opaque;
+     EventNotifier *host_notifier;
+-    int i;
+ 
+-    virtio_queue_aio_detach_host_notifier(vs->ctrl_vq, s->ctx);
+-    host_notifier = virtio_queue_get_host_notifier(vs->ctrl_vq);
++    virtio_queue_aio_detach_host_notifier(vq, ctx);
++    host_notifier = virtio_queue_get_host_notifier(vq);
+ 
+     /*
+      * Test and clear notifier after disabling event, in case poll callback
+      * didn't have time to run.
+      */
+     virtio_queue_host_notifier_read(host_notifier);
+-
+-    virtio_queue_aio_detach_host_notifier(vs->event_vq, s->ctx);
+-    host_notifier = virtio_queue_get_host_notifier(vs->event_vq);
+-    virtio_queue_host_notifier_read(host_notifier);
+-
+-    for (i = 0; i < vs->conf.num_queues; i++) {
+-        virtio_queue_aio_detach_host_notifier(vs->cmd_vqs[i], s->ctx);
+-        host_notifier = virtio_queue_get_host_notifier(vs->cmd_vqs[i]);
+-        virtio_queue_host_notifier_read(host_notifier);
+-    }
+ }
+ 
+ /* Context: BQL held */
+@@ -154,11 +187,14 @@ int virtio_scsi_dataplane_start(VirtIODevice *vdev)
+     smp_wmb(); /* paired with aio_notify_accept() */
+ 
+     if (s->bus.drain_count == 0) {
+-        virtio_queue_aio_attach_host_notifier(vs->ctrl_vq, s->ctx);
+-        virtio_queue_aio_attach_host_notifier_no_poll(vs->event_vq, s->ctx);
++        virtio_queue_aio_attach_host_notifier(vs->ctrl_vq,
++                                              s->vq_aio_context[0]);
++        virtio_queue_aio_attach_host_notifier_no_poll(vs->event_vq,
++                                                      s->vq_aio_context[1]);
+ 
+         for (i = 0; i < vs->conf.num_queues; i++) {
+-            virtio_queue_aio_attach_host_notifier(vs->cmd_vqs[i], s->ctx);
++            AioContext *ctx = s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i];
++            virtio_queue_aio_attach_host_notifier(vs->cmd_vqs[i], ctx);
+         }
+     }
+     return 0;
+@@ -207,7 +243,11 @@ void virtio_scsi_dataplane_stop(VirtIODevice *vdev)
+     s->dataplane_stopping = true;
+ 
+     if (s->bus.drain_count == 0) {
+-        aio_wait_bh_oneshot(s->ctx, virtio_scsi_dataplane_stop_bh, s);
++        for (i = 0; i < vs->conf.num_queues + VIRTIO_SCSI_VQ_NUM_FIXED; i++) {
++            VirtQueue *vq = virtio_get_queue(&vs->parent_obj, i);
++            AioContext *ctx = s->vq_aio_context[i];
++            aio_wait_bh_oneshot(ctx, virtio_scsi_dataplane_stop_vq_bh, vq);
++        }
+     }
+ 
+     blk_drain_all(); /* ensure there are no in-flight requests */
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 2045d27289..6274fb044c 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -27,6 +27,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/scsi/scsi.h"
+ #include "scsi/constants.h"
++#include "hw/virtio/iothread-vq-mapping.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/virtio-access.h"
+ #include "trace.h"
+@@ -318,13 +319,6 @@ static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
+     g_free(n);
+ }
+ 
+-static inline void virtio_scsi_ctx_check(VirtIOSCSI *s, SCSIDevice *d)
+-{
+-    if (s->dataplane_started && d && blk_is_available(d->conf.blk)) {
+-        assert(blk_get_aio_context(d->conf.blk) == s->ctx);
+-    }
+-}
+-
+ static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
+ {
+     VirtIOSCSI *s = req->dev;
+@@ -517,9 +511,11 @@ static void virtio_scsi_flush_defer_tmf_to_aio_context(VirtIOSCSI *s)
+ 
+     assert(!s->dataplane_started);
+ 
+-    if (s->ctx) {
++    for (uint32_t i = 0; i < s->parent_obj.conf.num_queues; i++) {
++        AioContext *ctx = s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i];
++
+         /* Our BH only runs after previously scheduled BHs */
+-        aio_wait_bh_oneshot(s->ctx, dummy_bh, NULL);
++        aio_wait_bh_oneshot(ctx, dummy_bh, NULL);
+     }
+ }
+ 
+@@ -575,7 +571,6 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+     AioContext *ctx;
+     int ret = 0;
+ 
+-    virtio_scsi_ctx_check(s, d);
+     /* Here VIRTIO_SCSI_S_OK means "FUNCTION COMPLETE".  */
+     req->resp.tmf.response = VIRTIO_SCSI_S_OK;
+ 
+@@ -639,6 +634,8 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+ 
+     case VIRTIO_SCSI_T_TMF_ABORT_TASK_SET:
+     case VIRTIO_SCSI_T_TMF_CLEAR_TASK_SET: {
++        g_autoptr(GHashTable) aio_contexts = g_hash_table_new(NULL, NULL);
++
+         if (!d) {
+             goto fail;
+         }
+@@ -648,8 +645,15 @@ static int virtio_scsi_do_tmf(VirtIOSCSI *s, VirtIOSCSIReq *req)
+ 
+         qatomic_inc(&req->remaining);
+ 
+-        ctx = s->ctx ?: qemu_get_aio_context();
+-        virtio_scsi_defer_tmf_to_aio_context(req, ctx);
++        for (uint32_t i = 0; i < s->parent_obj.conf.num_queues; i++) {
++            ctx = s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i];
++
++            if (!g_hash_table_add(aio_contexts, ctx)) {
++                continue; /* skip previously added AioContext */
++            }
++
++            virtio_scsi_defer_tmf_to_aio_context(req, ctx);
++        }
+ 
+         virtio_scsi_tmf_dec_remaining(req);
+         ret = -EINPROGRESS;
+@@ -770,9 +774,12 @@ static void virtio_scsi_handle_ctrl_vq(VirtIOSCSI *s, VirtQueue *vq)
+  */
+ static bool virtio_scsi_defer_to_dataplane(VirtIOSCSI *s)
+ {
+-    if (!s->ctx || s->dataplane_started) {
++    if (s->dataplane_started) {
+         return false;
+     }
++    if (s->vq_aio_context[0] == qemu_get_aio_context()) {
++        return false; /* not using IOThreads */
++    }
+ 
+     virtio_device_start_ioeventfd(&s->parent_obj.parent_obj);
+     return !s->dataplane_fenced;
+@@ -946,7 +953,6 @@ static int virtio_scsi_handle_cmd_req_prepare(VirtIOSCSI *s, VirtIOSCSIReq *req)
+         virtio_scsi_complete_cmd_req(req);
+         return -ENOENT;
+     }
+-    virtio_scsi_ctx_check(s, d);
+     req->sreq = scsi_req_new(d, req->req.cmd.tag,
+                              virtio_scsi_get_lun(req->req.cmd.lun),
+                              req->req.cmd.cdb, vs->cdb_size, req);
+@@ -1218,14 +1224,16 @@ static void virtio_scsi_hotplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(hotplug_dev);
+     VirtIOSCSI *s = VIRTIO_SCSI(vdev);
++    AioContext *ctx = s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED];
+     SCSIDevice *sd = SCSI_DEVICE(dev);
+-    int ret;
+ 
+-    if (s->ctx && !s->dataplane_fenced) {
+-        ret = blk_set_aio_context(sd->conf.blk, s->ctx, errp);
+-        if (ret < 0) {
+-            return;
+-        }
++    if (ctx != qemu_get_aio_context() && !s->dataplane_fenced) {
++        /*
++         * Try to make the BlockBackend's AioContext match ours. Ignore failure
++         * because I/O will still work although block jobs and other users
++         * might be slower when multiple AioContexts use a BlockBackend.
++         */
++        blk_set_aio_context(sd->conf.blk, ctx, errp);
+     }
+ 
+     if (virtio_vdev_has_feature(vdev, VIRTIO_SCSI_F_HOTPLUG)) {
+@@ -1260,7 +1268,7 @@ static void virtio_scsi_hotunplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ 
+     qdev_simple_device_unplug_cb(hotplug_dev, dev, errp);
+ 
+-    if (s->ctx) {
++    if (s->vq_aio_context[0] != qemu_get_aio_context()) {
+         /* If other users keep the BlockBackend in the iothread, that's ok */
+         blk_set_aio_context(sd->conf.blk, qemu_get_aio_context(), NULL);
+     }
+@@ -1294,7 +1302,7 @@ static void virtio_scsi_drained_begin(SCSIBus *bus)
+ 
+     for (uint32_t i = 0; i < total_queues; i++) {
+         VirtQueue *vq = virtio_get_queue(vdev, i);
+-        virtio_queue_aio_detach_host_notifier(vq, s->ctx);
++        virtio_queue_aio_detach_host_notifier(vq, s->vq_aio_context[i]);
+     }
+ }
+ 
+@@ -1320,10 +1328,12 @@ static void virtio_scsi_drained_end(SCSIBus *bus)
+ 
+     for (uint32_t i = 0; i < total_queues; i++) {
+         VirtQueue *vq = virtio_get_queue(vdev, i);
++        AioContext *ctx = s->vq_aio_context[i];
++
+         if (vq == vs->event_vq) {
+-            virtio_queue_aio_attach_host_notifier_no_poll(vq, s->ctx);
++            virtio_queue_aio_attach_host_notifier_no_poll(vq, ctx);
+         } else {
+-            virtio_queue_aio_attach_host_notifier(vq, s->ctx);
++            virtio_queue_aio_attach_host_notifier(vq, ctx);
+         }
+     }
+ }
+@@ -1430,12 +1440,13 @@ void virtio_scsi_common_unrealize(DeviceState *dev)
+     virtio_cleanup(vdev);
+ }
+ 
++/* main loop */
+ static void virtio_scsi_device_unrealize(DeviceState *dev)
+ {
+     VirtIOSCSI *s = VIRTIO_SCSI(dev);
+ 
+     virtio_scsi_reset_tmf_bh(s);
+-
++    virtio_scsi_dataplane_cleanup(s);
+     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
+     virtio_scsi_common_unrealize(dev);
+     qemu_mutex_destroy(&s->tmf_bh_lock);
+@@ -1460,6 +1471,8 @@ static const Property virtio_scsi_properties[] = {
+                                                 VIRTIO_SCSI_F_CHANGE, true),
+     DEFINE_PROP_LINK("iothread", VirtIOSCSI, parent_obj.conf.iothread,
+                      TYPE_IOTHREAD, IOThread *),
++    DEFINE_PROP_IOTHREAD_VQ_MAPPING_LIST("iothread-vq-mapping", VirtIOSCSI,
++            parent_obj.conf.iothread_vq_mapping_list),
+ };
+ 
+ static const VMStateDescription vmstate_virtio_scsi = {
 -- 
-2.47.1
+2.48.1
 
 
