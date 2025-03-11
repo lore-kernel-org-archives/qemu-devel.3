@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D506CC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 21:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53907C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 22:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts7Hq-0000EX-6b; Tue, 11 Mar 2025 17:37:18 -0400
+	id 1ts87u-00071d-3w; Tue, 11 Mar 2025 18:31:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ts7Hn-0000DX-Vs
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 17:37:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ts7Hm-0007Ml-AH
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 17:37:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741729032;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DEmpEWCk+e4EPCA8b5jZ5KE8WPnE3YojRubR+DYfYxQ=;
- b=MC+q/c3/kVAwu6EB+vD1nvcONWYABMZEATNOd2V2ZBuHM1A+IccWTMMXeAutUZCmNaIGpm
- C0KYe4xR94D/iywIlqs+npi8+xvNN/LQfdr551lt19XuRnqHA4SByU4ckhiG4ilIDTsxyL
- sm8UJqwM8HYB5jvBKSOniPJsLgZKavk=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-ERXtyoyeNT2ebBI09Y_Jzg-1; Tue, 11 Mar 2025 17:37:09 -0400
-X-MC-Unique: ERXtyoyeNT2ebBI09Y_Jzg-1
-X-Mimecast-MFC-AGG-ID: ERXtyoyeNT2ebBI09Y_Jzg_1741729029
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c0b3cd4cbcso667823285a.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 14:37:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1ts87r-00070z-Tj
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 18:31:03 -0400
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1ts87l-0006qi-TM
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 18:31:03 -0400
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-6dcd4f1aaccso87424176d6.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 15:30:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741732255; x=1742337055; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZUPRe/61C9OzKVIJGC/o/QsV9f6fu7RfKa8NRhw/Nn0=;
+ b=Ccfwj63+LlIuAk3JVE3SVPD3/fQfuu7hQTNlsW+2pyw786am9YP5p1Fgof4giVEfcY
+ 5rlkWhyvOeFls9WaKd5ujbVwTkHa1EMEDPJzb/SjJNgTap2y6vS2DcWs6sHez3MzH1S2
+ TvY/2cMjuDKK2ChuFYTgVeXMDIL5bkGtsi199Pb8GFzn9dk4e+OW6BTCQe+an+2gvy1y
+ b+WZmas0n5BSn2/7Fd3r3P6RlpchEaXo+GXTZMCmav1oKeivA9h5oppORH6ksN+LMDLY
+ E/LOnx8LOC8FbyyWwgTZQLSj/YVTlFJxZkeB6hEfFOfQynXySEXOJOnYeZ3dmoh8n0sO
+ WlEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741729029; x=1742333829;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DEmpEWCk+e4EPCA8b5jZ5KE8WPnE3YojRubR+DYfYxQ=;
- b=nIxz98756kfmIE+IwabufmSUSYsu6nRm8ezhbeMJjSDuncnVfDnBqlvmHJoljr6d2J
- lVgWrBiO2Gc7T31+NoOJbLHpQkH75zbDT29fiWAOVVF4vUcyJY2f4Iiudjt9UjGWAGna
- jLO4nuAnP7j9ZEEmkizfnJ8NjrbKoJljbRUzSGkm383V1xG08xPz2SjSunrcrklLQTyg
- 4b6BnSo/jGjXrQjf3TN36I0aX5+4yMoFCzT8p346pFTqcu2cfpNlwdcy/Aua3qbbxJK6
- hV0vqa275sQwoMMbxUouyIF6VwfVNPNLIGi/xzLMqOauAeu0op86wGhbBsD3ZM4CfVml
- 7zIw==
+ d=1e100.net; s=20230601; t=1741732255; x=1742337055;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZUPRe/61C9OzKVIJGC/o/QsV9f6fu7RfKa8NRhw/Nn0=;
+ b=AXD/s1APsu3cDU/btpVw/VINnF/RxbFSVMCEacgREC3W9QB3KuKXsKKEbIwTouUeK4
+ IFObZ2Qh3Xaz2WrRyNYp8bIaNvEZHJu+S97Wf5W8Uwa3lbiIqtKdT1BLlcBxYOp20yMx
+ fX+BWYow98yjQifQpYQlRsmCTlrBhOtWjmBPMfxBbBcSzy9gPfj6u8CyM4dXVZuOyRUh
+ ScYgYrxOv+0q7/05RCtQIhJWQXoZQaGbBrTUNekLnciH3gYq+7Pglg9tOVwBZzFDgA8y
+ 6tJuQ97LSneowx/kkxiTz+nioQzsJiLFAtSBo74xIpL0q1ZwyTRWTOTuLfvPiMSGGX7m
+ P5gg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeLlIhOAAV8FucPmFT+mipbOBjHfFN7YgZxlDj4hEEemljPW0YTjhVQ28yizpNha+kSiLgc4860bmZ@nongnu.org
-X-Gm-Message-State: AOJu0YyonSfL0ICwwQgO97UamoLB9yH2nTGIzPmmHJnEMPCGlO13nLT8
- OKd18JaOmijEoxTP3JMFFMxfl21fcwz7jX2vCzV/bjEJs0Ls7J0P0KDx2Wzx4nilcq9tfDS0Mwc
- y3gALPJFo4BBsEUBB74nP42sWf/F77Y19FjT457Damx2QMFMRZH8+
-X-Gm-Gg: ASbGnct8pHXvsNqYpOmduCPM9uQH5O5g58Ce7aOm3yMLf948jcPuvmSKXmA/IO/ILcr
- 7OIcHEw0WLsxEEpH5mJusVVrll3wYV2NelfZNwzjI6C6UFn42BjIasLW++kIyUzdP07leq9T9FF
- TBXGDPW5MNdAN1Fdk700AqQ8LW/XG13uBYPQldByE6+TuOo+MQf/r8X50ewyNe8ZGX3foRiqQmI
- pGrFm/uwzZ3cgb02rN19P+vTMU2Bmb8D4L0tDROA2cFmNqo2FmYm6dT4lCLWteoHKC1NdH1hf5R
- 8xtMuuw=
-X-Received: by 2002:a05:6214:230f:b0:6e8:fad6:7104 with SMTP id
- 6a1803df08f44-6e9006ea033mr232117706d6.35.1741729029000; 
- Tue, 11 Mar 2025 14:37:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYLGVNQxvvJhFYTKvx+aT4RPXYdUN6dSuWwEuFwFqnVqMVPvY/zim7QE0PKrXlebJ3ucAiOg==
-X-Received: by 2002:a05:6214:230f:b0:6e8:fad6:7104 with SMTP id
- 6a1803df08f44-6e9006ea033mr232117346d6.35.1741729028573; 
- Tue, 11 Mar 2025 14:37:08 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f70a4485sm76529406d6.53.2025.03.11.14.37.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 14:37:07 -0700 (PDT)
-Date: Tue, 11 Mar 2025 17:37:04 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Manish Mishra <manish.mishra@nutanix.com>, qemu-devel@nongnu.org,
- leobras@redhat.com, farosas@suse.de, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2] QIOChannelSocket: Flush zerocopy socket error queue
- on ENOBUF failure for sendmsg
-Message-ID: <Z9CtAAA1HH-c7CHd@x1.local>
-References: <20250310011500.240782-1-manish.mishra@nutanix.com>
- <Z885hS6QmGOZYj7N@x1.local> <Z89CALrwKnHdO4hx@redhat.com>
- <Z89FjreYuRjEeX1f@x1.local> <Z8_wnLIlfhM7bILZ@redhat.com>
- <Z9BU0gd3BLPhBss2@x1.local> <Z9BXw6iZfi_UKx-t@redhat.com>
- <Z9CVr9jbcq810U2i@x1.local> <Z9CYIqgyD4E6U38x@redhat.com>
+ AJvYcCW4MqmcQABhXF1oV/JjXsOk7h/KR7zzSvYDiL4vZwySZTKbH7HF0VEXyKVRPY29lrVCSRPxsPoZR01u@nongnu.org
+X-Gm-Message-State: AOJu0Ywedja0bDLLHIF3T5vrVeSoleQFaLS98ak5xn14P2hNOYS+Lrwp
+ pvaFMspbw4lpqsRb5It5uBTe3v52b01+LjeFYTwwayXZ1ksemTSC
+X-Gm-Gg: ASbGncv2/H70pe2mztYI7whz8oGddVzAANvvnvd6Ui/b4qRrcfy+Jy/07N/ElKuy3OP
+ wrnF4iE6lmjMkz4oAs3zfzExWUx7WgzA/E9jPxwAtCe5v7iW5QHvg/MjhwDd9cVPNqjOj9QOtDy
+ gO/4D2n58WZoH1GwqmphxK4pkHjKy2HRbTyIxyEMiRSuM2U7kXpjc5sWCvATIxf0RqO/XvA3jJm
+ i9cWO+0303DYboKDuOeo3SX3UavXK5C6aqZur394mQGl2rzvMqfGtw6Jby1keH7HELkqzEU7jOR
+ U1MLeSQ33P5p1MpDliFpaxs7NGu6Stk7tN2yMNGZTlSCpK2gmpo1zGB/KCuoVTY=
+X-Google-Smtp-Source: AGHT+IELZ2ItYxQpAk6I+xeL8z7Q4gGMIxAwRst49iesZHF+jQ/Tv5B4o9NeTGvNV3QlNF+vJ4/q2A==
+X-Received: by 2002:a05:6214:dcf:b0:6e8:f60b:9396 with SMTP id
+ 6a1803df08f44-6e9006aced4mr252413636d6.29.1741732255532; 
+ Tue, 11 Mar 2025 15:30:55 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:a832:3b35:d71f:4119])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6e8f71709aesm76559246d6.116.2025.03.11.15.30.54
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 11 Mar 2025 15:30:54 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
+ <20250301052628.1011210-24-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-24-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 23/38] target/hexagon: Add implicit attributes to sysemu
+ macros
+Date: Tue, 11 Mar 2025 17:30:53 -0500
+Message-ID: <009501db92d5$40aa17e0$c1fe47a0$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z9CYIqgyD4E6U38x@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgIXBMNutPIx58A=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250311-4, 3/11/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,96 +113,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 11, 2025 at 08:08:02PM +0000, Daniel P. Berrangé wrote:
-> On Tue, Mar 11, 2025 at 03:57:35PM -0400, Peter Xu wrote:
-> > On Tue, Mar 11, 2025 at 03:33:23PM +0000, Daniel P. Berrangé wrote:
-> > > On Tue, Mar 11, 2025 at 11:20:50AM -0400, Peter Xu wrote:
-> > > > On Tue, Mar 11, 2025 at 08:13:16AM +0000, Daniel P. Berrangé wrote:
-> > > > > On Mon, Mar 10, 2025 at 04:03:26PM -0400, Peter Xu wrote:
-> > > > > > On Mon, Mar 10, 2025 at 07:48:16PM +0000, Daniel P. Berrangé wrote:
-> > > > > > > Given this is in public API, the data needs to remain reported accurately
-> > > > > > > for the whole deprecation period. IOW, the patch to qiochannel needs to
-> > > > > > > preserve this data too.
-> > > > > > 
-> > > > > > :-(
-> > > > > > 
-> > > > > > We could potentially mark MigrationStats to be experimental as a whole and
-> > > > > > declare that in deprecate.rst too, then after two releases, we can randomly
-> > > > > > add / remove fields as wish without always need to go through the
-> > > > > > deprecation process, am I right?
-> > > > > 
-> > > > > IMHO that would be an abuse of the process and harmful to applications
-> > > > > and users consuming stats.
-> > > > 
-> > > > Ah I just noticed that's the exact same one we included in
-> > > > query-migrate.. Then yes, the stable ABI is important here.
-> > > > 
-> > > > So for this specific case, maybe we shouldn't have exposed it in QMP from
-> > > > the start.
-> > > > 
-> > > > To me, it's a question on whether we could have something experimental and
-> > > > be exposed to QMP, where we don't need to guarantee a strict stable ABI, or
-> > > > a very loose ABI (e.g. we can guarantee the command exists, and with
-> > > > key-value string-integer pairs, nothing else).
-> > > 
-> > > QMP has the ability to tag commands/fields, etc as experimental.
-> > > 
-> > > libvirt will explicitly avoid consuming or exposing anything with
-> > > an experimental tag on it.
-> > > 
-> > > > Maybe what we need is a new MigrationInfoOptional, to be embeded into
-> > > > MigrationInfo (or not), marked experimental.  Then in the future whenever
-> > > > we want to add some new statistics, we could decide whether it should be
-> > > > part of stable ABI or not.
-> > > 
-> > > That is not required - individual struct fields can be marked
-> > > experimental.
-> > 
-> > Yes that'll work too.  The important bit here is I think we should start to
-> > seriously evaluate which to expose to QAPI as stable API when we add stats
-> > into it.  We used to not pay too much attention.
-> > 
-> > With MigrationInfoOptional, we should suggest any new field to be added
-> > there by default, then whatever needs to be put out of experimental needs
-> > explicit justifications.  Or we can also document any new migration field
-> > at least in the stats to be marked as experimental unless justified.
-> > 
-> > > 
-> > > The key question is what the intended usage of the fields/stats/etc
-> > > is to be. If you want it used by libvirt and mgmt apps it would need
-> > > to be formally supported. If it is just for adhoc QEMU developer
-> > > debugging and doesn't need libvirt / app support, then experimental
-> > > is fine.
-> > 
-> > To my initial thoughts, I want Libvirt to fetch it.  However I don't want
-> > Libvirt to parse it.
-> > 
-> > For example, for things like "whether zerocopy send succeeded or not", or
-> > "how much time we spent on sending non-iterable device states", they're
-> > almost not consumable for users, but great for debuggings.  It would be
-> > great if Libvirt could know their existance, fetch it (e.g. once after
-> > migration completes) then dump it to the logfile to help debugging and
-> > triaging QEMU issues.  In that case parsing is not needed, the whole result
-> > can be attached to the log as a JSON blob.  That releases the burden from
-> > the need to maintain compatibility that we don't really need and nobody
-> > cared (I bet it's the case here for zerocopy stats, but we got restricted
-> > by our promises even if it may ultimately benefit nobody..).
+
+
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Friday, February 28, 2025 11:26 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
+> Subject: [PATCH 23/38] target/hexagon: Add implicit attributes to sysemu
+> macros
 > 
-> We already log every single QMP command & response and event we deal
-> with, at INFO level, but by default our log files are only set to
-> capture WARN level, so this isn't visible without extra config steps
-> by the ademin
+> From: Brian Cain <bcain@quicinc.com>
 > 
-> Possibly we could think about dumping all migration stats to
-> /var/log/libvirt/qemu/$GUEST.log at migration completion
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/hex_common.py | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/target/hexagon/hex_common.py
+> b/target/hexagon/hex_common.py index 1e94e1fef5..7b5bb2cd46 100755
+> --- a/target/hexagon/hex_common.py
+> +++ b/target/hexagon/hex_common.py
+> @@ -128,8 +128,13 @@ def calculate_attribs():
+>      add_qemu_macro_attrib("fTRAP", "A_IMPLICIT_READS_PC")
+>      add_qemu_macro_attrib("fSET_OVERFLOW",
+> "A_IMPLICIT_WRITES_USR")
+>      add_qemu_macro_attrib("fSET_LPCFG", "A_IMPLICIT_WRITES_USR")
+> +    add_qemu_macro_attrib("fLOAD_LOCKED", "A_LLSC")
+> +    add_qemu_macro_attrib("fSTORE_LOCKED", "A_LLSC")
 
-Yes it would be great to have it if it's trivial to get.  It could be a
-last round of 'query-migrate' dumped only on src after migration is
-completed, right before src QEMU shuts down.
+I don't see a use of A_LLSC.
 
-Thanks,
+Otherwise
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
--- 
-Peter Xu
+
+> +    add_qemu_macro_attrib("fCLEAR_RTE_EX", "A_IMPLICIT_WRITES_SSR")
+>      add_qemu_macro_attrib("fLOAD", "A_SCALAR_LOAD")
+>      add_qemu_macro_attrib("fSTORE", "A_SCALAR_STORE")
+> +    add_qemu_macro_attrib("fSET_K0_LOCK", "A_IMPLICIT_READS_PC")
+> +    add_qemu_macro_attrib("fSET_TLB_LOCK", "A_IMPLICIT_READS_PC")
+>      add_qemu_macro_attrib('fLSBNEW0', 'A_IMPLICIT_READS_P0')
+>      add_qemu_macro_attrib('fLSBNEW0NOT', 'A_IMPLICIT_READS_P0')
+>      add_qemu_macro_attrib('fREAD_P0', 'A_IMPLICIT_READS_P0')
+> --
+> 2.34.1
+
 
 
