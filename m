@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03EAC2BA1B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB201C282EC
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 18:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts487-0007ra-7q; Tue, 11 Mar 2025 14:15:05 -0400
+	id 1ts487-0007rb-6q; Tue, 11 Mar 2025 14:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts47e-0007DL-Ex
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:14:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts47M-000749-5a
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:14:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts47V-0006nU-Sx
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:14:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ts472-0006gk-MC
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 14:14:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741716862;
+ s=mimecast20190719; t=1741716833;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZdrnVK7xqs18IWPl9FP35jT2NV1miv/V1kboEpvaOog=;
- b=SWRa//BmhTnnM4/hosLS+i9+ePTD2O0Sgu1DxdYcMtemyoIU6BLNV4dvMjUgnJ+4db5Kpl
- pfqZprki1SloX87qnRmzVSBiFHRRMpKMiugXCnjRJuHU0MUHvi5xuzfbnI0ydvROrlnNx9
- b5wg7r0sgQ6TZphZVtrGGWjancoNSrk=
+ bh=hmxe4zEHf+6DdKmQyCBAmbo4wTWL3oyJnFN/u0a7nyo=;
+ b=Du2bXRryXvne5EyHey4SP+JSJWUPtc0vKKA+8NOnQTmYKHNHnuEDiTSSDDTsigeO4Mte9C
+ fV+b7QjyATfr+gQtREebm88O0QaIJwF9zfgNmrZ1YHqOUVk6DQRaJkMvKQOcbyyrD+5jKP
+ 7jOsKqXWT/EsZHe3Jzk3wFTAZOEkauo=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-bXd5zKdJMNyF0J6Y_vJdZQ-1; Tue,
- 11 Mar 2025 14:14:17 -0400
-X-MC-Unique: bXd5zKdJMNyF0J6Y_vJdZQ-1
-X-Mimecast-MFC-AGG-ID: bXd5zKdJMNyF0J6Y_vJdZQ_1741716855
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-AZNU2OzhPd-ES8N87KZyRw-1; Tue,
+ 11 Mar 2025 14:13:50 -0400
+X-MC-Unique: AZNU2OzhPd-ES8N87KZyRw-1
+X-Mimecast-MFC-AGG-ID: AZNU2OzhPd-ES8N87KZyRw_1741716829
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 984591800263; Tue, 11 Mar 2025 18:14:15 +0000 (UTC)
+ id 4C74F1800259; Tue, 11 Mar 2025 18:13:44 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3706B18001EF; Tue, 11 Mar 2025 18:14:12 +0000 (UTC)
+ id 4B07018001EF; Tue, 11 Mar 2025 18:13:42 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 16/21] hw/vfio: Compile some common objects once
-Date: Tue, 11 Mar 2025 19:13:23 +0100
-Message-ID: <20250311181328.1200431-17-clg@redhat.com>
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 04/21] vfio/igd: Move LPC bridge initialization to a separate
+ function
+Date: Tue, 11 Mar 2025 19:13:11 +0100
+Message-ID: <20250311181328.1200431-5-clg@redhat.com>
 In-Reply-To: <20250311181328.1200431-1-clg@redhat.com>
 References: <20250311181328.1200431-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,71 +86,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Tomita Moeko <tomitamoeko@gmail.com>
 
-Some files don't rely on any target-specific knowledge
-and can be compiled once:
+A new option will soon be introduced to decouple the LPC bridge/Host
+bridge ID quirk from legacy mode. To prepare for this, move the LPC
+bridge initialization into a separate function.
 
- - helpers.c
- - container-base.c
- - migration.c (removing unnecessary "exec/ram_addr.h")
- - migration-multifd.c
- - cpr.c
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Message-Id: <20250308230917.18907-4-philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20250311085743.21724-6-philmd@linaro.org
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
+Link: https://lore.kernel.org/qemu-devel/20250306180131.32970-5-tomitamoeko@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/migration.c |  1 -
- hw/vfio/meson.build | 13 ++++++++-----
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ hw/vfio/igd.c | 122 +++++++++++++++++++++++++++++---------------------
+ 1 file changed, 70 insertions(+), 52 deletions(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 416643ddd69ab64c252eadd07702a9d5dad0db47..fbff46cfc35e0ee69e9599c9f8efc7437bbe3370 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -27,7 +27,6 @@
- #include "qapi/error.h"
- #include "qapi/qapi-events-vfio.h"
- #include "exec/ramlist.h"
--#include "exec/ram_addr.h"
- #include "pci.h"
- #include "trace.h"
- #include "hw/hw.h"
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index 260d65febd6bcd1935cfa9f59cc08aae21fc97fd..8e376cfcbf89a822961a1a76c3030eb670dd0513 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -1,12 +1,7 @@
- vfio_ss = ss.source_set()
- vfio_ss.add(files(
--  'helpers.c',
-   'common.c',
--  'container-base.c',
-   'container.c',
--  'migration.c',
--  'migration-multifd.c',
--  'cpr.c',
- ))
- vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
- vfio_ss.add(when: 'CONFIG_IOMMUFD', if_true: files(
-@@ -25,3 +20,11 @@ vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
- vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 113ad56ad4206e29198717d944ffe944e1c2e27c..7feed7dfa920725d1d550b9225c7075453bf7b88 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -351,6 +351,72 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+     return ret;
+ }
  
- specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
++static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
++{
++    g_autofree struct vfio_region_info *host = NULL;
++    g_autofree struct vfio_region_info *lpc = NULL;
++    PCIDevice *lpc_bridge;
++    int ret;
 +
-+system_ss.add(when: 'CONFIG_VFIO', if_true: files(
-+  'helpers.c',
-+  'container-base.c',
-+  'migration.c',
-+  'migration-multifd.c',
-+  'cpr.c',
-+))
++    /*
++     * Copying IDs or creating new devices are not supported on hotplug
++     */
++    if (vdev->pdev.qdev.hotplugged) {
++        error_setg(errp, "IGD LPC is not supported on hotplugged device");
++        return false;
++    }
++
++    /*
++     * We need to create an LPC/ISA bridge at PCI bus address 00:1f.0 that we
++     * can stuff host values into, so if there's already one there and it's not
++     * one we can hack on, this quirk is no-go.  Sorry Q35.
++     */
++    lpc_bridge = pci_find_device(pci_device_root_bus(&vdev->pdev),
++                                 0, PCI_DEVFN(0x1f, 0));
++    if (lpc_bridge && !object_dynamic_cast(OBJECT(lpc_bridge),
++                                           "vfio-pci-igd-lpc-bridge")) {
++        error_setg(errp,
++                   "Cannot create LPC bridge due to existing device at 1f.0");
++        return false;
++    }
++
++    /*
++     * Check whether we have all the vfio device specific regions to
++     * support LPC quirk (added in Linux v4.6).
++     */
++    ret = vfio_get_dev_region_info(&vdev->vbasedev,
++                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
++                        VFIO_REGION_SUBTYPE_INTEL_IGD_LPC_CFG, &lpc);
++    if (ret) {
++        error_setg(errp, "IGD LPC bridge access is not supported by kernel");
++        return false;
++    }
++
++    ret = vfio_get_dev_region_info(&vdev->vbasedev,
++                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
++                        VFIO_REGION_SUBTYPE_INTEL_IGD_HOST_CFG, &host);
++    if (ret) {
++        error_setg(errp, "IGD host bridge access is not supported by kernel");
++        return false;
++    }
++
++    /* Create/modify LPC bridge */
++    ret = vfio_pci_igd_lpc_init(vdev, lpc);
++    if (ret) {
++        error_setg(errp, "Failed to create/modify LPC bridge for IGD");
++        return false;
++    }
++
++    /* Stuff some host values into the VM PCI host bridge */
++    ret = vfio_pci_igd_host_init(vdev, host);
++    if (ret) {
++        error_setg(errp, "Failed to modify host bridge for IGD");
++        return false;
++    }
++
++    return true;
++}
++
+ #define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
+ 
+@@ -419,9 +485,6 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+ {
+     g_autofree struct vfio_region_info *rom = NULL;
+-    g_autofree struct vfio_region_info *host = NULL;
+-    g_autofree struct vfio_region_info *lpc = NULL;
+-    PCIDevice *lpc_bridge;
+     int ret, gen;
+     uint64_t gms_size;
+     uint64_t *bdsm_size;
+@@ -440,20 +503,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
+     }
+ 
+-    /*
+-     * We need to create an LPC/ISA bridge at PCI bus address 00:1f.0 that we
+-     * can stuff host values into, so if there's already one there and it's not
+-     * one we can hack on, legacy mode is no-go.  Sorry Q35.
+-     */
+-    lpc_bridge = pci_find_device(pci_device_root_bus(&vdev->pdev),
+-                                 0, PCI_DEVFN(0x1f, 0));
+-    if (lpc_bridge && !object_dynamic_cast(OBJECT(lpc_bridge),
+-                                           "vfio-pci-igd-lpc-bridge")) {
+-        error_report("IGD device %s cannot support legacy mode due to existing "
+-                     "devices at address 1f.0", vdev->vbasedev.name);
+-        return;
+-    }
+-
+     /*
+      * IGD is not a standard, they like to change their specs often.  We
+      * only attempt to support back to SandBridge and we hope that newer
+@@ -490,28 +539,6 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
+     }
+ 
+-    /*
+-     * Check whether we have all the vfio device specific regions to
+-     * support legacy mode (added in Linux v4.6).  If not, bail.
+-     */
+-    ret = vfio_get_dev_region_info(&vdev->vbasedev,
+-                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+-                        VFIO_REGION_SUBTYPE_INTEL_IGD_HOST_CFG, &host);
+-    if (ret) {
+-        error_report("IGD device %s does not support host bridge access,"
+-                     "legacy mode disabled", vdev->vbasedev.name);
+-        return;
+-    }
+-
+-    ret = vfio_get_dev_region_info(&vdev->vbasedev,
+-                        VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
+-                        VFIO_REGION_SUBTYPE_INTEL_IGD_LPC_CFG, &lpc);
+-    if (ret) {
+-        error_report("IGD device %s does not support LPC bridge access,"
+-                     "legacy mode disabled", vdev->vbasedev.name);
+-        return;
+-    }
+-
+     gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
+ 
+     /*
+@@ -533,19 +560,10 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
+     }
+ 
+-    /* Create our LPC/ISA bridge */
+-    ret = vfio_pci_igd_lpc_init(vdev, lpc);
+-    if (ret) {
+-        error_report("IGD device %s failed to create LPC bridge, "
+-                     "legacy mode disabled", vdev->vbasedev.name);
+-        return;
+-    }
+-
+-    /* Stuff some host values into the VM PCI host bridge */
+-    ret = vfio_pci_igd_host_init(vdev, host);
+-    if (ret) {
+-        error_report("IGD device %s failed to modify host bridge, "
+-                     "legacy mode disabled", vdev->vbasedev.name);
++    /* Setup LPC bridge / Host bridge PCI IDs */
++    if (!vfio_pci_igd_setup_lpc_bridge(vdev, &err)) {
++        error_append_hint(&err, "IGD legacy mode disabled\n");
++        error_report_err(err);
+         return;
+     }
+ 
 -- 
 2.48.1
 
