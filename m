@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A36DC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 23:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE7BC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 23:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts9EG-0008SS-2N; Tue, 11 Mar 2025 19:41:44 -0400
+	id 1ts9G4-0001Uy-Vz; Tue, 11 Mar 2025 19:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ts9EB-0008Rz-7b
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:41:41 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1ts9G3-0001UW-AP
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:43:35 -0400
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1ts9Dz-0008E4-KV
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:41:33 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-22438c356c8so80572785ad.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 16:41:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1ts9Fu-0008Mr-Vu
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:43:34 -0400
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-7c0155af484so828469685a.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 16:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741736485; x=1742341285; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zo+UlsP77Wmz4I9AyuAeQf1g301eOymnLAp02aCSBz4=;
- b=kqXx/NHJ5AZ+05et7Wtnqqei/9m/+qChai3xQzDpLDKbHKe3Rq4PXYCGUE7h0tLnZQ
- mB9krJBRYv7ZviDgCetlXgsQWSYP5vVD4rniHjRSjZ+8vTxtRBfVvmO+nxzfN/3Dgobf
- inm2iOiMtH1C3y78MHe/LtWid+nPd4Za/6LuUDvDxC3/ZdqXEtDewPMpz7M1rN7nTHCF
- F5tdKB4Q8kw+Mhi0PkvP7JVy2HUlYubffY9sV6p7x+N/ZALPsWir+5ib4f47/G8ZX6e1
- 4M+x7dObIV/YjZgxRe4DyPEjbb5GtJg4Dh6YPbIHkaS2RFYbL24LCYu9lVn/sd0knbcB
- FRvw==
+ d=gmail.com; s=20230601; t=1741736585; x=1742341385; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=esNtTW+lZx2U9qNFnPzRyJ7WwTDg6VVeB867IcbnwVo=;
+ b=f2JS06s+UqfbIgJq9WF0UWDgFvbnOItdDneXAu98QoDSckgmzLaVFcf7CLmTWIZZNq
+ QVY2vEED5Tcz19D7SJtuppnftr4EfUuOT26UQqwFck6ptY4UBNsR0oNQZ+FUAYa1nGe0
+ 7zPmcG0889QRe/Vbxu4Br4FSpU0DvWC95QqHO1wY8Zpq3QmcoGKjL7E/kOjXqxlz7EWy
+ YH3nybD+MQJ4ETz9Nv6RcPJbpisIGfAxMeFbIPsTzt85GXPou4kBb6FkEmXKoT/f9oRq
+ JFs8MxJpR1jveA1Ol5grXsCPVJqSCqrVL7mobHO1JOOqjp0tKx/NPXBgg2BDlgp8H/gk
+ VH2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741736485; x=1742341285;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=zo+UlsP77Wmz4I9AyuAeQf1g301eOymnLAp02aCSBz4=;
- b=oTiiS3n6paBw8D8gUeZ89rHnFZkjNc0R1truJUb9UgpYjINKaKY93tJfXAN0wLO3Uf
- /ycG++T8ySMgj+M4TVNjlc270INuzjJbGv4dNa/pV1q2iAaUW5zQm4Ua7lkuv8LYOF4N
- +yAzBDqEFJsgudTct/tDH1wDgeJHSgRk1O6kLaHM33SN+oDrFBcy8YE2+vnE9doA1aHx
- MVyKibqDX/L2xROJHQw+98/532vjpxSZLFHicyB5vxQR6PdOkDSqhMU1MJ3nBQUoqlsa
- A/ivWSNooUZWgB6WWzbAkuiY+Al2WuF/rf5gIY3tXGGXOZSHQ5AvHgDIGLdc9EUj+e2J
- hsTQ==
+ d=1e100.net; s=20230601; t=1741736585; x=1742341385;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=esNtTW+lZx2U9qNFnPzRyJ7WwTDg6VVeB867IcbnwVo=;
+ b=dSuWCR3jDh314OjjR9A8Gvz26UilB2PfYA8+nq+ySOF4lS9vjGnlfq5y1zjVh/ImKQ
+ 5spyDpVdWkAh0eFO4jLtX0Ar8aDnTV00tXz/HmxJX2944z8TbFwQ/YeS+VSBEEvE0NAY
+ OM6gkyBuoRiQSdjpthQOUGCzNvp3qzJdEbRut21PR0/cPq02y8urdVj842J9/4/lUWTT
+ V9VUYOY2hFKi8S3ZD2P1+es5BOyALczMuxLbSSUYnzNKC8MPuXQuu2oI6tSDGIX1wGLI
+ MnONu1R17AYc/CHtnvAldJAKI3GWnZjfsoqF+daaxoOKAtVbnayylUib9qmw+YTLmDC8
+ fiPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfwuhb0a7lUW27/seNam0+4f6rETCw+rmZa2QjRbMy1NNSbUzx0JrhshQu8ZBP7JvJDa2eoQhvI2We@nongnu.org
-X-Gm-Message-State: AOJu0Ywwb6U35mPrq7xK9kyXBgkfixVvSzQORZBHuhVBwT9oL2uIntRp
- Gm6rLOrJEoExCbvc0Sqs+SKygqv0j9cU4nflMWcXXsgd7WPLhAgU
-X-Gm-Gg: ASbGncvABxjPQW8T9tWkse7y4t9dB/YrRRMeDXnNpES47wthowkAAYKqxWyyaHoOq0K
- Tdyv8sLtHo9s5j27PIBs8tJDkk42sXCiy65C14RjpML3bX9qTpCFr+MVIgIqPgGZK5eXuHrS52a
- TlH8LvVG2YQFCeIAjU81uXxFMGzxzpgYht9fB9opkwprkuj6DiieE1l0YFtxKb2KEcLy536xi6g
- 5420eF1BdSQhR4O3yFSKMpbc0FoceeliTQid0uG4vwq8ZzU9MeGiKIxfEvx1o2eyGfwfwzxl83p
- aM1n/wilFDjHcB/tvo/WPLBOmSpBHmNuA9RBQA5z
-X-Google-Smtp-Source: AGHT+IFGM+HsmMY+fGeU8y35TBp7Oeb+NHXc/syEHBA/8HLUkqBBaBKKLdFFHn4/+/wNvR9Kg2Q6hA==
-X-Received: by 2002:a17:903:192:b0:21f:507b:9ad7 with SMTP id
- d9443c01a7336-22428a89081mr308990395ad.25.1741736485423; 
- Tue, 11 Mar 2025 16:41:25 -0700 (PDT)
-Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410ac0794sm103780465ad.259.2025.03.11.16.41.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 16:41:25 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 12 Mar 2025 09:41:20 +1000
-Message-Id: <D8DU1X7UDEPK.2PZVT8SJAWUFI@gmail.com>
-Cc: "Thomas Huth" <thuth@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH] tests/functional: Don't fail any precaching errors
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-X-Mailer: aerc 0.19.0
-References: <20250311131327.903329-1-npiggin@gmail.com>
- <Z9A8swNn6zBm57jC@redhat.com>
-In-Reply-To: <Z9A8swNn6zBm57jC@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ AJvYcCWpnWZvzh3W+yB4D+6dsBIzoWVjUR86/kewtSwZ7n/8ZnfQsRYslc/0na/lIj2/0TO9xlUkz1DpVp7n@nongnu.org
+X-Gm-Message-State: AOJu0YzBa5XESDBf6uVEp/Kc61G+a8QNnDFmjdHFEMS0Fw8dqsiJ9P77
+ W0wGRh/jFRT8lZx7vh/pCcLXC2Z2O3ucgk2vcEJvjMNh1SvF0YtA1kvuXMZ05iw=
+X-Gm-Gg: ASbGncuSwjp6C9Tp/oHwtEbXPMezLdTvsYGIEQhhhBLHCwKd0Egk0ZppBkCZF49bpAn
+ uGKSUthsp/wxVaxvCUaIF68KmDJr9Y4JQ1vhsSwJ1ja/GdwycpVHOXanqHSz4RdwLVqqB+Ue/JG
+ PC4nSE9RXyymoYCbHlp8pSmcAaubzv3zsmkO39KSf91K1jyqtgh7pUSKF8dcMz6Y95JPvQtAiJx
+ Ve9dDgEMuJWAcv1JBHA9KmahJ5ys/9x8YTg4E4XSoAm1kuQZrDyzR//iyhHUnKrvXxpxHMRDuWb
+ Jv9+z3XRMTWejoqa1VjieRF2BJEV++K0FyE8O/D86lQs69ktmT0/xCAdrgYnj84=
+X-Google-Smtp-Source: AGHT+IHP7c4VJ43uKzrNZnXmgjSShuyibE7GYoJAw+bOwCGWvXkvIXj8H0Lw2ju/iRHKTSnHQbgMGg==
+X-Received: by 2002:a05:620a:6885:b0:7c5:674c:eecc with SMTP id
+ af79cd13be357-7c5674cf064mr422488385a.32.1741736584647; 
+ Tue, 11 Mar 2025 16:43:04 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:a832:3b35:d71f:4119])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c56a596e5bsm14272985a.1.2025.03.11.16.43.02
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 11 Mar 2025 16:43:03 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
+ <20250301052628.1011210-33-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-33-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 32/38] target/hexagon: Add stubs for
+ modify_ssr/get_exe_mode
+Date: Tue, 11 Mar 2025 18:43:02 -0500
+Message-ID: <00ad01db92df$54cc0260$fe640720$@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgLJQJfTtOy0jkA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250311-4, 3/11/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x736.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,70 +112,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Mar 11, 2025 at 11:37 PM AEST, Daniel P. Berrang=C3=A9 wrote:
-> On Tue, Mar 11, 2025 at 11:13:26PM +1000, Nicholas Piggin wrote:
->> The NetBSD archive is currently failing part-way through downloads,
->> which results in no clean HTTP error but a short transfer and checksum
->> error. This is treated as fatal in the precache download, and it halts
->> an entire set of tests even if some others could run.
->>=20
->> I hacked up this patch to get a bunch of CI tests going again for ppc
->> merge testing.
->>=20
->> Don't treat any precaching failures as errors.
->> This causes tests to be skipped when they try to fetch their asset.
->> Some CI results before/after patching:
->>=20
->> functional-system-fedora
->> https://gitlab.com/npiggin/qemu/-/jobs/9370860490 #bad
->> https://gitlab.com/npiggin/qemu/-/jobs/9373246826 #good
->>=20
->> functional-system-debian
->> https://gitlab.com/npiggin/qemu/-/jobs/9370860479 #bda
->> https://gitlab.com/npiggin/qemu/-/jobs/9373246822 #good
->>=20
->> This is making the tests skip. Is there a way to make the error more
->> prominent / obvious in the output? Should they fail instead? I think
->> there should be a more obvious indication of failure due to asset so
->> it does not go unnoticed.
->>=20
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>  tests/functional/qemu_test/asset.py | 9 +++------
->>  1 file changed, 3 insertions(+), 6 deletions(-)
->>=20
->> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu=
-_test/asset.py
->> index f0730695f09..3134ccb10da 100644
->> --- a/tests/functional/qemu_test/asset.py
->> +++ b/tests/functional/qemu_test/asset.py
->> @@ -174,14 +174,11 @@ def precache_test(test):
->>                  try:
->>                      asset.fetch()
->>                  except HTTPError as e:
->> -                    # Treat 404 as fatal, since it is highly likely to
->> -                    # indicate a broken test rather than a transient
->> -                    # server or networking problem
->> -                    if e.code =3D=3D 404:
->> -                        raise
->> -
->
-> Why are you removing this ? The commit above does not make any reference
-> to the problem being a missing URL (404 code). We want missing URLs to
-> be fatal so that we identify when images we rely on are deleted by their
-> host, as that is not a transient problem.
 
-Yeah it was just a quick hack I guess so I didn't put a
-complete changelog or get it quite to the point I wanted.
 
-I think *no* precaching errors including 404 should cause
-failure because you would still want other tests to proceed
-(in some cases).
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Friday, February 28, 2025 11:26 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
+> Subject: [PATCH 32/38] target/hexagon: Add stubs for
+> modify_ssr/get_exe_mode
+> 
+> From: Brian Cain <bcain@quicinc.com>
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
-But the failure should be caught when the test case tries to
-fetch the asset, so you can still easily identify the download
-failure.
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-Thanks,
-Nick
+
 
