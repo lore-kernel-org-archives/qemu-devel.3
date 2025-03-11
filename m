@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AAFEC2BA1B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59CAC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 19:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts5ez-0008IR-KN; Tue, 11 Mar 2025 15:53:05 -0400
+	id 1ts5dd-0006s0-Td; Tue, 11 Mar 2025 15:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5eZ-0007ft-Fx
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:52:45 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5dV-0006qr-Rc
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:51:33 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5eW-0007fH-GR
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:52:38 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso27868695e9.3
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:52:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts5dU-0007Pn-7d
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 15:51:33 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3914bc3e01aso1408096f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 12:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741722755; x=1742327555; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741722689; x=1742327489; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kwsN7Sji2LRfEhBwDQKA18+pD8AQLk8f7ip/gMXP/tM=;
- b=vhEAMecQzVK/puRtCMHwWbV/qLAH+RNQsdNb7YP4UPJ1B625wepUcKj8F3lnNgLaTJ
- FzU2cr0NhGhyCj7n91kzVtFquIErpKm6VMu9XO4+rZ5kiPMfdZCKzdWSFaBrIhQeK8+4
- T5dDP+S2Axwy3HmO7YcZpnxlKuT35p+CtImiC3pWUfhNbZUi0+qSiYtIut+DcFGeuYpD
- pY51w3ePSqjmyLxKzAz2FnEq5Qp3/TAXFMJgaYo5u3V+I7b6vp8vZ+8tuXnRHw5pgBLO
- +lse8wKUnGtCwejlPwwjDuELPy748iY3nxwsbN5t9FHpUoCy+vSJcBKpe42oRseRziMY
- hbpA==
+ bh=oGrs420JsV3u/d0B9Ht+EZ0wlrymz2aBc5SkvyjS3Qc=;
+ b=MjhkmYnnaHtqHxHE1w2RcUr1K4va6gLeflrSL8oZngmbRD0ev8tbTQrrk8/gZdXVtw
+ gd8pW91ooGycl9w+LPWZ6pinSZl3WYwRJATNlr3SO/X4IAEzzI1ifCxXpCKEURF6okbb
+ XMuEOQKzsDdv+RGlaINRY7tWrPZu84+7e/SSRfBqT19n7r9vuedmpYQE2i5o8lvR7Vh2
+ 37ByXitx3crlx3DBDjFlp7JEvRu2/Y/sQz1BFW50Fffw2isNkpm6tUVH+WrzH/EFBtbQ
+ 6OEUZu5vsTmH64wJ7SPQfPJ3TMvux/LCuXxfty39Cw1y1hkat6pDe+kewOxXs+O8lUwm
+ xATA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741722755; x=1742327555;
+ d=1e100.net; s=20230601; t=1741722689; x=1742327489;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kwsN7Sji2LRfEhBwDQKA18+pD8AQLk8f7ip/gMXP/tM=;
- b=WB1ZmJ9Q+Iy//JgrCy1raa0x9nQNcTc8ASj9YU4JGFwJsY0QivoyrIw2HDpOkHzI1f
- 9jhJjPkunDcfnwN9yVasDEJAy/UaThl/47crnPdRIu/chey6A6mjY3g6vh+WFtOwN4H5
- 8Ky3PD5QXVEJc1qgi0n7PAUKQ9bzmCFaeTFYzyTr0zAhaSh+nLJ22hh3f2JPSuGd1zAu
- 8tYHNuyUFdKtUDXVrpKkY4Zen8OSJ0y/InzgQ+cUNKqHTQnXPSUtlja1y0diHlldoE7O
- wdzILF3j36W/JaAJOM83NwmfLGIWl8AkfnFp6L5ijU7OFl60mzhBXfqEfNSFdxAHDjOy
- L32Q==
-X-Gm-Message-State: AOJu0Yw76lTxTYRBt0cJyADqApKW9gAyMJcK/3eVvFP9Kal7/umw7Jlz
- B1Io/6f7Jt2jXbbH8x9yVlrwjLGb319loZWtjTnQxPd9FBaHh1jjU9tvdPfiARHOm7fvLT+V+6R
- Budk=
-X-Gm-Gg: ASbGncubv5GqD1kFXIoxBMPPCSvao1n4/QDYNhmXle3oay/fR8+MFJknb5CLgZfzSbt
- AQZJT6j4JMkBYYGUt+Dj2AIz5bic2w4VkWiURw4MhkbraMiu5Ghn3X/eGcJv6Dc7BhXRDqew1eE
- r9SYlPR88sLmXn9VU8QcqUG7y5Ul7NqCdGx5XUTRLSiiLP4jqeoQlgzkJiC7f3a1uzJwcJZw8O2
- OnRb9im3QJCPSAfizWcXv3H0ZCsOMh83O94D1P5clURaQBd3zn6sDeDuJv5BaV+l/r9pNtWuq5I
- irgkgGmiSq360izus8YbXztDmND+uKb2F2OFFu20K0aStzKe6uEKngrbuHq9s7FRcvzoc0BHOVw
- IOYIaLY7bH46C8kSSb1PwEYOvTLLkGA==
-X-Google-Smtp-Source: AGHT+IFS/9OdBLdpWdhCU3iipASY/Z0xgSH+859lC6ak0eDn5qlrFANEtacj9ncqRS4WwV/Udiwmhg==
-X-Received: by 2002:a05:600c:19c8:b0:43d:82c:2b23 with SMTP id
- 5b1f17b1804b1-43d082c2db3mr21292695e9.23.1741722754721; 
- Tue, 11 Mar 2025 12:52:34 -0700 (PDT)
+ bh=oGrs420JsV3u/d0B9Ht+EZ0wlrymz2aBc5SkvyjS3Qc=;
+ b=Ehsox1To0O3KH/pd7EE2id10NC8jzjeapDyAXEjTq7OJqeqtTdSV7YmsemInTrGatI
+ Hj0CwFciegjUszK2Jf56I1TbCAhfCIfZ8dUMxOHZIh9e4Wl9vezQcA1t3pHQINGP9Tp8
+ QetNYFbQPkD//qM8i/ZCMmEvXybld+EqUuvIMFilq0yoe+1LZb6pPseRWH3zWReiDo8E
+ zAeJRQWJJ3CJuLLDZZEbvLND7ixq7jHq8j3nQcJ5DsA/FRKYRrahMRhiXoR7DdJEQnph
+ 3DEBkaXRqbGPDr0FcNfJtFli6apsfVN2xmr/3SYgKku7XlCLiDN/cv75oWYjB+GRo0mV
+ ucug==
+X-Gm-Message-State: AOJu0YyiZbFuss0M/eSTZ1qVghLUaRPFlBHN4DO8Q+AR0c1z+8f8PZeh
+ JZNn8lK7NmZAlL+ZYX/SU9FpIUqNe2jAQJufXrCIHtGCQiGqjRyA5fp29AOKcVHUnEwJc2KgiHn
+ U0yM=
+X-Gm-Gg: ASbGncvj9/E7WaCAhJ4av68wXve49cYLxhr/mchBH1Fb8EiAaqFdjkIF0il/cwhxBM6
+ DFOe3QRChJ0+ow6WuaAb0XUTzKu0Rlan1+o+nnMubJOK6hR8xChUqsvCgsKLNFg57surHa2T5Iy
+ nmcwmqTk1Mai9uo+bK+raLvSTBmcRyVj8yfgOj5vwPH3PN50g5/ae6TxTLwTaJPoLR0Ny0m4fPx
+ FLckaYOji2KF33YJu3eOtH2NNczQ+SMYX3SmvlTRSuZfa+jfiM/mxYgGWCh+7oxLeoL/PGgE8qJ
+ O6/bWZqbMYAxtTkqY2h5FuCCoosXSKZPlHfg7b5UZ0rcgFjsoQ7g2H8skMK/97PIRi4ucycYuRE
+ gNxb5tXSXwWJ+U4wNfvg=
+X-Google-Smtp-Source: AGHT+IGEN20I940F9lhIDfDjuoeZWOG5Jbkm96dy4qMFtMC5/P4BnT5s5o6pXgzXd97uYFsLhyBlpA==
+X-Received: by 2002:a05:6000:144d:b0:391:2e58:f085 with SMTP id
+ ffacd0b85a97d-39132dab192mr14785471f8f.54.1741722689500; 
+ Tue, 11 Mar 2025 12:51:29 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c102e01sm19501603f8f.93.2025.03.11.12.52.33
+ ffacd0b85a97d-3912c103290sm18644297f8f.87.2025.03.11.12.51.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Mar 2025 12:52:33 -0700 (PDT)
+ Tue, 11 Mar 2025 12:51:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PULL 14/14] hw/sd/sdhci: Remove need for SDHCI_VENDOR_FSL definition
-Date: Tue, 11 Mar 2025 20:51:23 +0100
-Message-ID: <20250311195123.94212-15-philmd@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 01/14] hw/sd/sdhci: Set reset value of interrupt registers
+Date: Tue, 11 Mar 2025 20:51:10 +0100
+Message-ID: <20250311195123.94212-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311195123.94212-1-philmd@linaro.org>
 References: <20250311195123.94212-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,125 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All instances of TYPE_IMX_USDHC set vendor=SDHCI_VENDOR_IMX.
-No need to special-case it.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
+The interrupt enable registers are not reset to 0 on Freescale eSDHC
+but some bits are enabled on reset. At least some U-Boot versions seem
+to expect this and not initialise these registers before expecting
+interrupts. Use existing vendor property for Freescale eSDHC and set
+the reset value of the interrupt registers to match Freescale
+documentation.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-ID: <20250210160329.DDA7F4E600E@zero.eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Message-Id: <20250308213640.13138-3-philmd@linaro.org>
 ---
- include/hw/sd/sdhci.h |  1 -
- hw/arm/fsl-imx25.c    |  2 --
- hw/arm/fsl-imx6.c     |  2 --
- hw/arm/fsl-imx6ul.c   |  2 --
- hw/arm/fsl-imx7.c     |  2 --
- hw/arm/fsl-imx8mp.c   |  2 --
- hw/sd/sdhci.c         | 14 ++++----------
- 7 files changed, 4 insertions(+), 21 deletions(-)
+ include/hw/sd/sdhci.h | 1 +
+ hw/ppc/e500.c         | 1 +
+ hw/sd/sdhci.c         | 4 ++++
+ 3 files changed, 6 insertions(+)
 
 diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index f722d8eb1cc..51fb30ea528 100644
+index 38c08e28598..f722d8eb1cc 100644
 --- a/include/hw/sd/sdhci.h
 +++ b/include/hw/sd/sdhci.h
-@@ -109,7 +109,6 @@ struct SDHCIState {
- typedef struct SDHCIState SDHCIState;
+@@ -110,6 +110,7 @@ typedef struct SDHCIState SDHCIState;
  
  #define SDHCI_VENDOR_NONE       0
--#define SDHCI_VENDOR_IMX        1
- #define SDHCI_VENDOR_FSL        2
+ #define SDHCI_VENDOR_IMX        1
++#define SDHCI_VENDOR_FSL        2
  
  /*
-diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
-index 5359a6d8d3b..02214ca1a1c 100644
---- a/hw/arm/fsl-imx25.c
-+++ b/hw/arm/fsl-imx25.c
-@@ -243,8 +243,6 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
-                                  &error_abort);
-         object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
-                                  IMX25_ESDHC_CAPABILITIES, &error_abort);
--        object_property_set_uint(OBJECT(&s->esdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
-             return;
-         }
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index dc86338b3a5..a114dc0d63d 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -327,8 +327,6 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-                                  &error_abort);
-         object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
-                                  IMX6_ESDHC_CAPABILITIES, &error_abort);
--        object_property_set_uint(OBJECT(&s->esdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
-             return;
-         }
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index 34c4aa15cd0..ce8d3ef535f 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -531,8 +531,6 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-             FSL_IMX6UL_USDHC2_IRQ,
-         };
- 
--        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), &error_abort);
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index 3374018cde0..ed1f10bca26 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -471,8 +471,6 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-             FSL_IMX7_USDHC3_IRQ,
-         };
- 
--        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), &error_abort);
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 1ea98e14635..c3f6da63220 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -524,8 +524,6 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-             { fsl_imx8mp_memmap[FSL_IMX8MP_USDHC3].addr, FSL_IMX8MP_USDHC3_IRQ },
-         };
- 
--        object_property_set_uint(OBJECT(&s->usdhc[i]), "vendor",
--                                 SDHCI_VENDOR_IMX, &error_abort);
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), errp)) {
-             return;
-         }
+  * Controller does not provide transfer-complete interrupt when not
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index fe8b9f79621..69269aa24c4 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -1043,6 +1043,7 @@ void ppce500_init(MachineState *machine)
+         dev = qdev_new(TYPE_SYSBUS_SDHCI);
+         qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+         qdev_prop_set_uint8(dev, "endianness", DEVICE_BIG_ENDIAN);
++        qdev_prop_set_uint8(dev, "vendor", SDHCI_VENDOR_FSL);
+         s = SYS_BUS_DEVICE(dev);
+         sysbus_realize_and_unref(s, &error_fatal);
+         sysbus_connect_irq(s, 0, qdev_get_gpio_in(mpicdev, MPC85XX_ESDHC_IRQ));
 diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index fe87e18d5d2..69baf73ae9b 100644
+index 1f45a77566c..fe87e18d5d2 100644
 --- a/hw/sd/sdhci.c
 +++ b/hw/sd/sdhci.c
-@@ -1735,16 +1735,10 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+@@ -307,6 +307,10 @@ static void sdhci_reset(SDHCIState *s)
+     s->data_count = 0;
+     s->stopped_state = sdhc_not_stopped;
+     s->pending_insert_state = false;
++    if (s->vendor == SDHCI_VENDOR_FSL) {
++        s->norintstsen = 0x013f;
++        s->errintstsen = 0x117f;
++    }
+ }
  
-     case USDHC_VENDOR_SPEC:
-         s->vendor_spec = value;
--        switch (s->vendor) {
--        case SDHCI_VENDOR_IMX:
--            if (value & USDHC_IMX_FRC_SDCLK_ON) {
--                s->prnsts &= ~SDHC_IMX_CLOCK_GATE_OFF;
--            } else {
--                s->prnsts |= SDHC_IMX_CLOCK_GATE_OFF;
--            }
--            break;
--        default:
--            break;
-+        if (value & USDHC_IMX_FRC_SDCLK_ON) {
-+            s->prnsts &= ~SDHC_IMX_CLOCK_GATE_OFF;
-+        } else {
-+            s->prnsts |= SDHC_IMX_CLOCK_GATE_OFF;
-         }
-         break;
- 
+ static void sdhci_poweron_reset(DeviceState *dev)
 -- 
 2.47.1
 
