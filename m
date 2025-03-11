@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 806CFC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA33FC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzDF-00044h-Le; Tue, 11 Mar 2025 09:00:01 -0400
+	id 1trzCd-0001sZ-TF; Tue, 11 Mar 2025 08:59:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzDD-0003xP-Fm; Tue, 11 Mar 2025 08:59:59 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1trzCO-0001Qi-Rq; Tue, 11 Mar 2025 08:59:09 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzD7-00082N-Aw; Tue, 11 Mar 2025 08:59:58 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ff80290e44so8656755a91.0; 
- Tue, 11 Mar 2025 05:59:49 -0700 (PDT)
+ id 1trzCH-0007s7-Iz; Tue, 11 Mar 2025 08:59:06 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2fa8ada6662so11364432a91.1; 
+ Tue, 11 Mar 2025 05:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741697987; x=1742302787; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741697938; x=1742302738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hMN1cLhziqhpOJDuVkl12QW9EXehxz96DoalbVVJvq0=;
- b=TEweNpT20gR9p+/0ewUN5vDZyR8vjxanxo2JdoR1hUhanCYPZjVmbfGwfeNcLokVBy
- OgjUFCLlxoASSyKPnTuOX517/cIUqac7LtubddI7XpyV6bNwC4Qr1h34hPwvDUlWJjWn
- O7m0PVky9AO6NDbqlkwqJX9kr8KOhpsWT7jxOMWcjOD8dIU1l6EEcL8T6Z07rfyuGAc0
- 66JjBmltIK1I6daLWGXlS3b1gXdq3Nn2HgW8bANdDAVN9SQUtfcEzwzS1e8XC3V2DQ9u
- vp+vBLQIwiAy9w2XSEMsgFcpalheQOk71m/GxeY0hW/C9/zBkk8osA0Ihu/6HGxerekl
- 3aOw==
+ bh=kcsPJBP6bO4++1h7GJpYSXw0Uff46Q4C7W6SLg5uEts=;
+ b=cPfl47h3QH/D3Lr5jxmwwecgMvdnWqXuI0hfV2dBtjft6yLaSCS3PwJL+9Hn168/tw
+ JzuUaEGt10cBNecVZpQllBcdcDVYL4/YO+st4q2+SQZ66mhcQJgoOLg4T5TMvu8hAyJC
+ 0ro3eHlxTeuqdVqZam7PvsWRg1O2Xkz+taFfdK5uYn6Vf/EMfsxuUPmKZhY3kO9OEc3q
+ KVx605FjTGjHSG1XjJme7lL1H2S+8R5Rcm2syTthefF4qRpNbXgljRKf1zGOHkXCWj0D
+ 7gtzH0Ea+loX6AcjuvV0GfFeK0bN4e3xk6mDPKTC5u5KyXuKTYsUkBO4NGnNEsq6kQcn
+ HuOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741697987; x=1742302787;
+ d=1e100.net; s=20230601; t=1741697938; x=1742302738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hMN1cLhziqhpOJDuVkl12QW9EXehxz96DoalbVVJvq0=;
- b=K2q2Pyf/t1PbTeF5A4cmgta3tgMr5ApFBVeq7n03zQt4i33WYgzvoIGsLU0P2zLnjy
- oNM8XC6jBUcFJ9jm9ZslKY2d/XI6hvIGgVvgfy5YA9afZ4CxHwrIV6gavV+FfQr2z+7R
- v+wLTF2dWSILTRGDwNg7zEzNlPj/2EOCJZ3ArOFMALNZUpCMlvsch4OgIZK99cHOdlcD
- TephpMFPFM1R2v3c5lRo/tSFEqpuslrALbcJYMr3dgwvCEaa8ZteNB5Ang0nAnlb5QJh
- yKCBLTs8Zb4jNy9C6ehdcvFye22whx54+lN2K9rrN+Q1lrWz6KfTebOOu+OfucKKSJwM
- 30hg==
+ bh=kcsPJBP6bO4++1h7GJpYSXw0Uff46Q4C7W6SLg5uEts=;
+ b=wc47OaogXN0H1REW8NeeWOqb768MHaNGXLh3ZBCALHlFDKBYbTt38LKwsrEn8TaNYv
+ U/hP5l3pf5pTGp/e8Yf4JjyNa2A9kqXJtoJwlQiuqbSRnPzhPU1OjHcq90PKW2nDsdQZ
+ UzFRdIjAbQOka/e/0yLIS3PQWdYDMekYBoXbZ5SDOk1zIjJ5y/8dT/LoGK/Nu+zEBy0v
+ mXadyf/W2efgS5Oba0IyE4lASsxLToVz/kfzl0mJLJwGTGjyMcXR8Y6Y1HUVI7J7OERe
+ YPMuc3bhQ/pC/6e56vw8uAwqz1cvMKylIylp+gE7nayctQ5xTkp44d0ve1bMVW14muEc
+ x80Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVizmK9PcwIMF+FkYpMoZ2MdKPqVW0yFbbgHbod0A7fJBkx0o/h1bj4aPqKCMeAdBibddO2NtuiOA==@nongnu.org
-X-Gm-Message-State: AOJu0Yy7DQjUnZXhTUwSgZrMUDSGYEU7rzKfA0KlET8YzvuLoqlIpawC
- kfqPNdy0E9ZqZPgDIiWEtbb8nahRnlwjUX1l9dl9GE9iPos0zz3SRVe21w==
-X-Gm-Gg: ASbGncvFVpJ0c+RevmfYEVVMWRRvPhiNz1b85xVYIomAJNGyx22VbCf61iplQ6fXmBQ
- kdNZ+5XNLsj53L8xzU4qkFhBedPHw+dvhmcf5dbgekMwM3g48sburn7dynNokxWigs4Ns+W9uGf
- P2BKJUrddd7LcPNcC0ZfXg7xEsyz4JPx9Y8h3uAuH1gzveWD7FgGh3qm2TidzNc4jief1D56ZND
- Og/g9Gy3H0aAIZCJec61a1NBNIEuLM3/rFalaXoUNqvkbFA7EU1DVJ10y5HOqz49z7+KaXNcDkQ
- Axqt1x+8C76mFhFctwyvMDYoBpTW3DLP/xPFyzuxCwnXRLirb6uikDEqHkgAlg==
-X-Google-Smtp-Source: AGHT+IE0ysSSHJbAK4sBVeloxEobHbZKuSuDoh1mll617LgWQJDxBczKLi3jFEtIs9BwkuUyBGK+Qw==
-X-Received: by 2002:a17:90b:4b11:b0:2ff:6ac2:c5a5 with SMTP id
- 98e67ed59e1d1-2ff7cf13a5emr23091757a91.26.1741697987463; 
- Tue, 11 Mar 2025 05:59:47 -0700 (PDT)
+ AJvYcCXe3wtdbookycgWIHSsKnC2djbLA4dNhRZv+h58SyJ9Ol/T3z1GPk3TMzS1vhr45ZNfx0SptopuHw==@nongnu.org
+X-Gm-Message-State: AOJu0YxCDd/V2eNS/DbMcXdX2z3MjF3ljeC05AQfQbbOYc3xfxy+4I1h
+ IT0cPiCiiY8EjEdZePoU3NlAwLWGMa7GKT+C4I/zpzMQIx+3mGiKl8lMvw==
+X-Gm-Gg: ASbGncvkhgQ51l4UlzZoA+EYB9FukBeLrA3381BW6ljpU0tzLJ0a9FFtPunrgNB8HvK
+ 0K0VcjuLggxHLZn7wY/zHZ69LtvmZr7pzEcFViFIyvgOLXU/fAWLideNVC6cYbDmxd8eX5zKQs6
+ Xbaco3aCGsYBEnhkYal/CupuQ4C8Vio3sUL4fkCa3w5nqi+4Yqcy6RZkDjBvmOZvNNEJ4ksaP2x
+ x0KI3dfpgEqU+/gsOQ3lKTvxQk0jA9xWf/OpUMKQvzRz7nBRKiZNbOuxc+2Ru997MgZef2+0Y59
+ lk0nVY4syxlYLPKdks9VZhzNbCJW1U1o7CWhmZo6lwpsB40mwF0=
+X-Google-Smtp-Source: AGHT+IEGGlDAaDwQ0oZiGUGFomsh5DUynMHiKF2q1dA/1Lk9XGFtScknb0Pv6FUuvwx8p4UG4MPh9Q==
+X-Received: by 2002:a17:90b:3849:b0:2f9:c56b:6ec8 with SMTP id
+ 98e67ed59e1d1-2ff7ce9114dmr26936375a91.10.1741697938308; 
+ Tue, 11 Mar 2025 05:58:58 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.59.44
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.05.58.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 05:59:47 -0700 (PDT)
+ Tue, 11 Mar 2025 05:58:57 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Frederic Barrat <fbarrat@linux.ibm.com>,
- Michael Kowal <kowal@linux.ibm.com>
-Subject: [PULL 26/72] ppc/xive2: Support group-matching when looking for target
-Date: Tue, 11 Mar 2025 22:57:20 +1000
-Message-ID: <20250311125815.903177-27-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 07/72] ppc/pnv/homer: Fix OCC registers
+Date: Tue, 11 Mar 2025 22:57:01 +1000
+Message-ID: <20250311125815.903177-8-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,368 +99,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+The HOMER OCC registers seem to have bitrotted and fail for various
+reasons on powernv8, 9, and 10.
 
-If an END has the 'i' bit set (ignore), then it targets a group of
-VPs. The size of the group depends on the VP index of the target
-(first 0 found when looking at the least significant bits of the
-index) so a mask is applied on the VP index of a running thread to
-know if we have a match.
+The major problems are that POWER8 has the wrong version value and its
+pstate ordering is incorrect. POWER9/10 have not set the OCC state to
+active. Non-zero chips are also set to OCC slaves for POWER9/10.
 
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Unfortunately skiboot has also bitrotted and requires fixes that are
+not yet in the bios files to run. With a patched skiboot, before this
+change, powernv9/10 report:
+
+[    0.262050394,3] OCC: Chip: 0: OCC not active
+[    0.262128603,3] OCC: Initialization on all chips did not complete(timed out)
+
+powernv8 reports:
+
+[    0.173572100,3] OCC: Unknown OCC-OPAL interface version.
+[    0.173812059,3] OCC: Initialization on all chips did not complete(timed out)
+
+After this patch, all report:
+
+[    0.176815668,5] OCC: All Chip Rdy after 0 ms
+
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/pnv_xive2.c    | 38 +++++++++++++++---------
- hw/intc/xive.c         | 56 +++++++++++++++++++++++++-----------
- hw/intc/xive2.c        | 65 ++++++++++++++++++++++++++++++------------
- include/hw/ppc/xive.h  |  5 +++-
- include/hw/ppc/xive2.h |  7 ++---
- 5 files changed, 118 insertions(+), 53 deletions(-)
+ hw/ppc/pnv_homer.c | 41 +++++++++++++++++++++++++++++------------
+ 1 file changed, 29 insertions(+), 12 deletions(-)
 
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 9ed759417e..8429ccbd51 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -1,10 +1,9 @@
- /*
-  * QEMU PowerPC XIVE2 interrupt controller model  (POWER10)
-  *
-- * Copyright (c) 2019-2022, IBM Corporation.
-+ * Copyright (c) 2019-2024, IBM Corporation.
-  *
-- * This code is licensed under the GPL version 2 or later. See the
-- * COPYING file in the top-level directory.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
+index a1d83c8149..acd2f7b3a6 100644
+--- a/hw/ppc/pnv_homer.c
++++ b/hw/ppc/pnv_homer.c
+@@ -70,21 +70,24 @@ static uint64_t pnv_power8_homer_read(void *opaque, hwaddr addr,
+     PnvHomer *homer = PNV_HOMER(opaque);
  
- #include "qemu/osdep.h"
-@@ -660,21 +659,34 @@ static int pnv_xive2_match_nvt(XivePresenter *xptr, uint8_t format,
-                                                    logic_serv);
-             }
- 
--            /*
--             * Save the context and follow on to catch duplicates,
--             * that we don't support yet.
--             */
-             if (ring != -1) {
--                if (match->tctx) {
-+                /*
-+                 * For VP-specific match, finding more than one is a
-+                 * problem. For group notification, it's possible.
-+                 */
-+                if (!cam_ignore && match->tctx) {
-                     qemu_log_mask(LOG_GUEST_ERROR, "XIVE: already found a "
-                                   "thread context NVT %x/%x\n",
-                                   nvt_blk, nvt_idx);
--                    return false;
-+                    /* Should set a FIR if we ever model it */
-+                    return -1;
-+                }
-+                /*
-+                 * For a group notification, we need to know if the
-+                 * match is precluded first by checking the current
-+                 * thread priority. If the interrupt can be delivered,
-+                 * we always notify the first match (for now).
-+                 */
-+                if (cam_ignore &&
-+                    xive2_tm_irq_precluded(tctx, ring, priority)) {
-+                        match->precluded = true;
-+                } else {
-+                    if (!match->tctx) {
-+                        match->ring = ring;
-+                        match->tctx = tctx;
-+                    }
-+                    count++;
-                 }
--
--                match->ring = ring;
--                match->tctx = tctx;
--                count++;
-             }
-         }
+     switch (addr) {
+-    case PNV8_OCC_PSTATE_VERSION:
+-    case PNV8_OCC_PSTATE_MIN:
+-    case PNV8_OCC_PSTATE_ID_ZERO:
+-        return 0;
+     case PNV8_OCC_PSTATE_VALID:
++        return 1;
+     case PNV8_OCC_PSTATE_THROTTLE:
++        return 0;
++    case PNV8_OCC_PSTATE_VERSION:
++        return 0x02;
++    case PNV8_OCC_PSTATE_MIN:
++        return -2;
+     case PNV8_OCC_PSTATE_NOM:
+     case PNV8_OCC_PSTATE_TURBO:
+-    case PNV8_OCC_PSTATE_ID_ONE:
++        return -1;
++    case PNV8_OCC_PSTATE_ULTRA_TURBO:
++        return 0;
++    case PNV8_OCC_PSTATE_ID_ZERO:
++        return 0;
+     case PNV8_OCC_VDD_VOLTAGE_IDENTIFIER:
+     case PNV8_OCC_VCS_VOLTAGE_IDENTIFIER:
+         return 1;
+-    case PNV8_OCC_PSTATE_ULTRA_TURBO:
+-    case PNV8_OCC_PSTATE_ID_TWO:
+-        return 2;
+     case PNV8_OCC_PSTATE_DATA:
+         return 0x1000000000000000;
+     /* P8 frequency for 0, 1, and 2 pstates */
+@@ -92,6 +95,10 @@ static uint64_t pnv_power8_homer_read(void *opaque, hwaddr addr,
+     case PNV8_OCC_PSTATE_ONE_FREQUENCY:
+     case PNV8_OCC_PSTATE_TWO_FREQUENCY:
+         return 3000;
++    case PNV8_OCC_PSTATE_ID_ONE:
++        return -1;
++    case PNV8_OCC_PSTATE_ID_TWO:
++        return -2;
      }
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 1e362f987a..3e4c932f19 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -1655,6 +1655,16 @@ static uint32_t xive_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
-     return xive_nvt_cam_line(blk, 1 << 7 | (pir & 0x7f));
- }
+     /* pstate table core max array */
+     if (core_max_array(homer, addr)) {
+@@ -192,11 +199,12 @@ static const TypeInfo pnv_homer_power8_type_info = {
  
-+uint32_t xive_get_vpgroup_size(uint32_t nvp_index)
-+{
-+    /*
-+     * Group size is a power of 2. The position of the first 0
-+     * (starting with the least significant bits) in the NVP index
-+     * gives the size of the group.
-+     */
-+    return 1 << (ctz32(~nvp_index) + 1);
-+}
-+
- static uint8_t xive_get_group_level(uint32_t nvp_index)
- {
-     /* FIXME add crowd encoding */
-@@ -1727,30 +1737,39 @@ int xive_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
- /*
-  * This is our simple Xive Presenter Engine model. It is merged in the
-  * Router as it does not require an extra object.
-- *
-- * It receives notification requests sent by the IVRE to find one
-- * matching NVT (or more) dispatched on the processor threads. In case
-- * of a single NVT notification, the process is abbreviated and the
-- * thread is signaled if a match is found. In case of a logical server
-- * notification (bits ignored at the end of the NVT identifier), the
-- * IVPE and IVRE select a winning thread using different filters. This
-- * involves 2 or 3 exchanges on the PowerBus that the model does not
-- * support.
-- *
-- * The parameters represent what is sent on the PowerBus
-  */
- bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
-                            uint8_t nvt_blk, uint32_t nvt_idx,
-                            bool cam_ignore, uint8_t priority,
--                           uint32_t logic_serv)
-+                           uint32_t logic_serv, bool *precluded)
- {
-     XiveFabricClass *xfc = XIVE_FABRIC_GET_CLASS(xfb);
--    XiveTCTXMatch match = { .tctx = NULL, .ring = 0 };
-+    XiveTCTXMatch match = { .tctx = NULL, .ring = 0, .precluded = false };
-     uint8_t group_level;
-     int count;
+ /* P9 Pstate table */
  
-     /*
--     * Ask the machine to scan the interrupt controllers for a match
-+     * Ask the machine to scan the interrupt controllers for a match.
-+     *
-+     * For VP-specific notification, we expect at most one match and
-+     * one call to the presenters is all we need (abbreviated notify
-+     * sequence documented by the architecture).
-+     *
-+     * For VP-group notification, match_nvt() is the equivalent of the
-+     * "histogram" and "poll" commands sent to the power bus to the
-+     * presenters. 'count' could be more than one, but we always
-+     * select the first match for now. 'precluded' tells if (at least)
-+     * one thread matches but can't take the interrupt now because
-+     * it's running at a more favored priority. We return the
-+     * information to the router so that it can take appropriate
-+     * actions (backlog, escalation, broadcast, etc...)
-+     *
-+     * If we were to implement a better way of dispatching the
-+     * interrupt in case of multiple matches (instead of the first
-+     * match), we would need a heuristic to elect a thread (for
-+     * example, the hardware keeps track of an 'age' in the TIMA) and
-+     * a new command to the presenters (the equivalent of the "assign"
-+     * power bus command in the documented full notify sequence.
-      */
-     count = xfc->match_nvt(xfb, format, nvt_blk, nvt_idx, cam_ignore,
-                            priority, logic_serv, &match);
-@@ -1763,6 +1782,8 @@ bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
-         group_level = cam_ignore ? xive_get_group_level(nvt_idx) : 0;
-         trace_xive_presenter_notify(nvt_blk, nvt_idx, match.ring, group_level);
-         xive_tctx_pipr_update(match.tctx, match.ring, priority, group_level);
-+    } else {
-+        *precluded = match.precluded;
-     }
- 
-     return !!count;
-@@ -1802,7 +1823,7 @@ void xive_router_end_notify(XiveRouter *xrtr, XiveEAS *eas)
-     uint8_t nvt_blk;
-     uint32_t nvt_idx;
-     XiveNVT nvt;
--    bool found;
-+    bool found, precluded;
- 
-     uint8_t end_blk = xive_get_field64(EAS_END_BLOCK, eas->w);
-     uint32_t end_idx = xive_get_field64(EAS_END_INDEX, eas->w);
-@@ -1885,8 +1906,9 @@ void xive_router_end_notify(XiveRouter *xrtr, XiveEAS *eas)
-     found = xive_presenter_notify(xrtr->xfb, format, nvt_blk, nvt_idx,
-                           xive_get_field32(END_W7_F0_IGNORE, end.w7),
-                           priority,
--                          xive_get_field32(END_W7_F1_LOG_SERVER_ID, end.w7));
++#define PNV9_OCC_PSTATE_VALID            0xe2000
+ #define PNV9_OCC_PSTATE_ID_ZERO          0xe2018
+ #define PNV9_OCC_PSTATE_ID_ONE           0xe2020
+ #define PNV9_OCC_PSTATE_ID_TWO           0xe2028
+ #define PNV9_OCC_PSTATE_DATA             0xe2000
+-#define PNV9_OCC_PSTATE_DATA_AREA        0xe2008
++#define PNV9_OCC_PSTATE_MINOR_VERSION    0xe2008
+ #define PNV9_OCC_PSTATE_MIN              0xe2003
+ #define PNV9_OCC_PSTATE_NOM              0xe2004
+ #define PNV9_OCC_PSTATE_TURBO            0xe2005
+@@ -211,7 +219,7 @@ static const TypeInfo pnv_homer_power8_type_info = {
+ #define PNV9_OCC_PSTATE_TWO_FREQUENCY    0xe202c
+ #define PNV9_OCC_ROLE_MASTER_OR_SLAVE    0xe2002
+ #define PNV9_CORE_MAX_BASE               0xe2819
 -
-+                          xive_get_field32(END_W7_F1_LOG_SERVER_ID, end.w7),
-+                          &precluded);
-+    /* we don't support VP-group notification on P9, so precluded is not used */
-     /* TODO: Auto EOI. */
++#define PNV9_DYNAMIC_DATA_STATE          0xe2b80
  
-     if (found) {
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 62c3f05af9..41dbbdbb68 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -739,6 +739,12 @@ int xive2_router_write_nvgc(Xive2Router *xrtr, bool crowd,
-    return xrc->write_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, nvgc);
- }
+ static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
+                                       unsigned size)
+@@ -219,11 +227,17 @@ static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
+     PnvHomer *homer = PNV_HOMER(opaque);
  
-+static bool xive2_vp_match_mask(uint32_t cam1, uint32_t cam2,
-+                                uint32_t vp_mask)
-+{
-+    return (cam1 & vp_mask) == (cam2 & vp_mask);
-+}
-+
- /*
-  * The thread context register words are in big-endian format.
-  */
-@@ -753,44 +759,50 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-     uint32_t qw1w2 = xive_tctx_word2(&tctx->regs[TM_QW1_OS]);
-     uint32_t qw0w2 = xive_tctx_word2(&tctx->regs[TM_QW0_USER]);
- 
--    /*
--     * TODO (PowerNV): ignore mode. The low order bits of the NVT
--     * identifier are ignored in the "CAM" match.
--     */
-+    uint32_t vp_mask = 0xFFFFFFFF;
- 
-     if (format == 0) {
--        if (cam_ignore == true) {
--            /*
--             * F=0 & i=1: Logical server notification (bits ignored at
--             * the end of the NVT identifier)
--             */
--            qemu_log_mask(LOG_UNIMP, "XIVE: no support for LS NVT %x/%x\n",
--                          nvt_blk, nvt_idx);
--            return -1;
-+        /*
-+         * i=0: Specific NVT notification
-+         * i=1: VP-group notification (bits ignored at the end of the
-+         *      NVT identifier)
-+         */
-+        if (cam_ignore) {
-+            vp_mask = ~(xive_get_vpgroup_size(nvt_idx) - 1);
-         }
- 
--        /* F=0 & i=0: Specific NVT notification */
-+        /* For VP-group notifications, threads with LGS=0 are excluded */
- 
-         /* PHYS ring */
-         if ((be32_to_cpu(qw3w2) & TM2_QW3W2_VT) &&
--            cam == xive2_tctx_hw_cam_line(xptr, tctx)) {
-+            !(cam_ignore && tctx->regs[TM_QW3_HV_PHYS + TM_LGS] == 0) &&
-+            xive2_vp_match_mask(cam,
-+                                xive2_tctx_hw_cam_line(xptr, tctx),
-+                                vp_mask)) {
-             return TM_QW3_HV_PHYS;
-         }
- 
-         /* HV POOL ring */
-         if ((be32_to_cpu(qw2w2) & TM2_QW2W2_VP) &&
--            cam == xive_get_field32(TM2_QW2W2_POOL_CAM, qw2w2)) {
-+            !(cam_ignore && tctx->regs[TM_QW2_HV_POOL + TM_LGS] == 0) &&
-+            xive2_vp_match_mask(cam,
-+                                xive_get_field32(TM2_QW2W2_POOL_CAM, qw2w2),
-+                                vp_mask)) {
-             return TM_QW2_HV_POOL;
-         }
- 
-         /* OS ring */
-         if ((be32_to_cpu(qw1w2) & TM2_QW1W2_VO) &&
--            cam == xive_get_field32(TM2_QW1W2_OS_CAM, qw1w2)) {
-+            !(cam_ignore && tctx->regs[TM_QW1_OS + TM_LGS] == 0) &&
-+            xive2_vp_match_mask(cam,
-+                                xive_get_field32(TM2_QW1W2_OS_CAM, qw1w2),
-+                                vp_mask)) {
-             return TM_QW1_OS;
-         }
-     } else {
-         /* F=1 : User level Event-Based Branch (EBB) notification */
- 
-+        /* FIXME: what if cam_ignore and LGS = 0 ? */
-         /* USER ring */
-         if  ((be32_to_cpu(qw1w2) & TM2_QW1W2_VO) &&
-              (cam == xive_get_field32(TM2_QW1W2_OS_CAM, qw1w2)) &&
-@@ -802,6 +814,22 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-     return -1;
- }
- 
-+bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority)
-+{
-+    uint8_t *regs = &tctx->regs[ring];
-+
-+    /*
-+     * The xive2_presenter_tctx_match() above tells if there's a match
-+     * but for VP-group notification, we still need to look at the
-+     * priority to know if the thread can take the interrupt now or if
-+     * it is precluded.
-+     */
-+    if (priority < regs[TM_CPPR]) {
-+        return false;
-+    }
-+    return true;
-+}
-+
- static void xive2_router_realize(DeviceState *dev, Error **errp)
- {
-     Xive2Router *xrtr = XIVE2_ROUTER(dev);
-@@ -841,7 +869,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-     Xive2End end;
-     uint8_t priority;
-     uint8_t format;
--    bool found;
-+    bool found, precluded;
-     Xive2Nvp nvp;
-     uint8_t nvp_blk;
-     uint32_t nvp_idx;
-@@ -922,7 +950,8 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-     found = xive_presenter_notify(xrtr->xfb, format, nvp_blk, nvp_idx,
-                           xive2_end_is_ignore(&end),
-                           priority,
--                          xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7));
-+                          xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7),
-+                          &precluded);
- 
-     /* TODO: Auto EOI. */
- 
-diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
-index 805b1d7b80..e78adaffa5 100644
---- a/include/hw/ppc/xive.h
-+++ b/include/hw/ppc/xive.h
-@@ -422,6 +422,7 @@ void xive_router_end_notify(XiveRouter *xrtr, XiveEAS *eas);
- typedef struct XiveTCTXMatch {
-     XiveTCTX *tctx;
-     uint8_t ring;
-+    bool precluded;
- } XiveTCTXMatch;
- 
- #define TYPE_XIVE_PRESENTER "xive-presenter"
-@@ -450,7 +451,9 @@ int xive_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
- bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
-                            uint8_t nvt_blk, uint32_t nvt_idx,
-                            bool cam_ignore, uint8_t priority,
--                           uint32_t logic_serv);
-+                           uint32_t logic_serv, bool *precluded);
-+
-+uint32_t xive_get_vpgroup_size(uint32_t nvp_index);
- 
- /*
-  * XIVE Fabric (Interface between Interrupt Controller and Machine)
-diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
-index 5bccf41159..65154f78d8 100644
---- a/include/hw/ppc/xive2.h
-+++ b/include/hw/ppc/xive2.h
-@@ -1,11 +1,9 @@
- /*
-  * QEMU PowerPC XIVE2 interrupt controller model  (POWER10)
-  *
-- * Copyright (c) 2019-2022, IBM Corporation.
-- *
-- * This code is licensed under the GPL version 2 or later. See the
-- * COPYING file in the top-level directory.
-+ * Copyright (c) 2019-2024, IBM Corporation.
-  *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #ifndef PPC_XIVE2_H
-@@ -121,6 +119,7 @@ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-                                hwaddr offset, unsigned size);
- void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
-                              hwaddr offset, uint64_t value, unsigned size);
-+bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority);
- void xive2_tm_set_hv_target(XivePresenter *xptr, XiveTCTX *tctx,
-                             hwaddr offset, uint64_t value, unsigned size);
- void xive2_tm_pull_phys_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
+     switch (addr) {
++    case PNV9_OCC_PSTATE_VALID:
++        return 1;
+     case PNV9_OCC_MAX_PSTATE_ULTRA_TURBO:
+     case PNV9_OCC_PSTATE_ID_ZERO:
+         return 0;
+-    case PNV9_OCC_PSTATE_DATA:
+     case PNV9_OCC_ROLE_MASTER_OR_SLAVE:
++        if (homer->chip->chip_id == 0) {
++            return 0x1; /* master */
++        } else {
++            return 0x0; /* slave */
++        }
+     case PNV9_OCC_PSTATE_NOM:
+     case PNV9_OCC_PSTATE_TURBO:
+     case PNV9_OCC_PSTATE_ID_ONE:
+@@ -241,10 +255,13 @@ static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
+         return 3000;
+     case PNV9_OCC_PSTATE_MAJOR_VERSION:
+         return 0x90;
++    case PNV9_OCC_PSTATE_MINOR_VERSION:
++        return 0x01;
+     case PNV9_CHIP_HOMER_BASE:
+-    case PNV9_OCC_PSTATE_DATA_AREA:
+     case PNV9_CHIP_HOMER_IMAGE_POINTER:
+         return 0x1000000000000000;
++    case PNV9_DYNAMIC_DATA_STATE:
++        return 0x03; /* active */
+     }
+     /* pstate table core max array */
+     if (core_max_array(homer, addr)) {
 -- 
 2.47.1
 
