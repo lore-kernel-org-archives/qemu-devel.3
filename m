@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A309C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8229EC28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:11:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzNC-0005rK-SX; Tue, 11 Mar 2025 09:10:28 -0400
+	id 1trzK8-0006nm-UK; Tue, 11 Mar 2025 09:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLN-0004QQ-OY
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trzLL-0001ay-LT
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:08:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741698496;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/+CBBHVFHYNuPG5khaRJmuyKUdSakM0KMD2Bj8O8nm4=;
- b=TYfPxG1opVx+xnu0NN9pvO4nZqgUQKULJ34wQZg+EcqSL6ZFbUaiG2XLzot3Y4etkIn641
- 0K6b3fo93pXwv46CIY4XTKCTgFbhF/2luqrCEt88qjI4Y0UvFbfbW1gP8+21FyKsYupBUc
- AxbgASJRSOt2IpFEKyXmGLCj9F9vKFg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-89bTIAxTPSiex00K8yNLrg-1; Tue,
- 11 Mar 2025 09:08:12 -0400
-X-MC-Unique: 89bTIAxTPSiex00K8yNLrg-1
-X-Mimecast-MFC-AGG-ID: 89bTIAxTPSiex00K8yNLrg_1741698492
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D93AE18001F8; Tue, 11 Mar 2025 13:08:11 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.91])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4D91030001A2; Tue, 11 Mar 2025 13:08:09 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzFD-0006Gy-NP; Tue, 11 Mar 2025 09:02:08 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzF8-0000N4-4n; Tue, 11 Mar 2025 09:02:03 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2ff80290e44so8662566a91.0; 
+ Tue, 11 Mar 2025 06:01:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741698113; x=1742302913; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ag/IQcoVCKBwm3hoxb2LywEaHZGgEXDr7bl00iOZl08=;
+ b=eOdkHY4BYQI4L1Defs19wLjxkEydc/X49RZsYiUSeUp8AoWN6gXiy+8YUwUIwCdR2w
+ bYlflupRIDriAcerPBLzWmVBtHcpMnT+PSd9cDKiuWXuMJhamluUNG4AHr4BKrSP68WX
+ iBppjdkmoHiI8RIgslXapl5/Y1Stpvo1hDpWfiCT5kdDzLCxPI2nGQcit4J/WjUwKQUQ
+ Gbhrhx41EgGYMHxWYKvkFyUY4LQrxbthj6CILcuv1pH6bOZMwi8sqIk8JE5UIHjmQgEm
+ INZsFOX1JymnN3CAkni7H4wpWzm/kiBvfMxF/jQ20Vj61ZJavnJoTxOE8cV69lzr7t8H
+ /JTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741698113; x=1742302913;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ag/IQcoVCKBwm3hoxb2LywEaHZGgEXDr7bl00iOZl08=;
+ b=V4YSvJRvXVaev+yK9zIkcX0pZ+B8JTeQnbUYsPy5ZvAG7kqFMFHJm1Ezv/MibAEWxz
+ cxjq+pU55LytlaLCmHoH0d41OROdE+a6+YX99dIGkUxQjE67Tv9gpCEWt3y+qoftJgOT
+ 3lX5nUITlYvC2abVZw4cor513iEd641ppFFwidrPysiVq+hfbAy117o6vbCp8N7XfNZ+
+ Sn2lKdH52o9Pf0Ehzszy3agNuVJZasdWArEJh/xIHqQV9NMO4JdfBkLOaQp3CSsLHB31
+ 6EADahqIuR0vToY6qR8Rc6mEsGfIo+usAvf7PAspdYvG6LpYCh1JZpb3YfQBPZpVuCsw
+ iN0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWa4eU1T2hJs+nM8BzGyQs93UgoxRsFW36ZXQN9tPYe6GNRos6sz/w1bhdG8o6y3GW0kxdvLYIgfg==@nongnu.org
+X-Gm-Message-State: AOJu0Yzr2wovBbKy5bupC2/NvodXWeWKIfQQLlIB5M2FouZilRd+81ev
+ jAG5YV4/VEANvLAfdBwZhl5CxbVRXQwf126ypwU0YNzGdODyZ3c2Ds+SZQ==
+X-Gm-Gg: ASbGncswSE0s//1IQFzL3/C7oPCOq9Wv2PWEOiew8Kn2TIPaUdqfmdGm068mFG75B3q
+ soiOzJ5jS2ECLg1CkCHlP3+EBKp59K+iqb8Tm3uvAs+CN/95lJqBT05ZkS0Mk7iCP8QB8QJDgLL
+ TVONdk6GTzOE+gy5fwwzXe1jc0lv/GSOSMCMiE7+CL/9ggD5Q177BffwVnRUg4ES1YuCwzyfcpt
+ uoIG2zWvUhh81nxy50WYySpMvHzVTKwZ42rMFSnuKoFIpBAOJlnlt//bO225TsxWpB8CnVbXAXq
+ 7+dbuTuFNiaVM/MApXcLl+Dz4H1LAQnQE1ck51c9l1eju1o0+ns=
+X-Google-Smtp-Source: AGHT+IHGHi0YCKuzUX2ZW2gAJ1JVM7T7aSD2GJjt+xBz2msrBMmquFvOwCCHIZJ3MejaLnEfiScxNQ==
+X-Received: by 2002:a17:90b:1b0b:b0:2fc:c262:ef4b with SMTP id
+ 98e67ed59e1d1-2ff7cea9a99mr30670044a91.18.1741698112616; 
+ Tue, 11 Mar 2025 06:01:52 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 06:01:52 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, pkrempa@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fam Zheng <fam@euphon.net>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 05/14] virtio-scsi: introduce event and ctrl virtqueue locks
-Date: Tue, 11 Mar 2025 21:07:32 +0800
-Message-ID: <20250311130741.1047903-6-stefanha@redhat.com>
-In-Reply-To: <20250311130741.1047903-1-stefanha@redhat.com>
-References: <20250311130741.1047903-1-stefanha@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 68/72] ppc/amigaone: Implement NVRAM emulation
+Date: Tue, 11 Mar 2025 22:58:02 +1000
+Message-ID: <20250311125815.903177-69-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
+References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,295 +99,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Virtqueues are not thread-safe. Until now this was not a major issue
-since all virtqueue processing happened in the same thread. The ctrl
-queue's Task Management Function (TMF) requests sometimes need the main
-loop, so a BH was used to schedule the virtqueue completion back in the
-thread that has virtqueue access.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-When IOThread Virtqueue Mapping is introduced in later commits, event
-and ctrl virtqueue accesses from other threads will become necessary.
-Introduce an optional per-virtqueue lock so the event and ctrl
-virtqueues can be protected in the commits that follow.
+The board has a battery backed NVRAM where U-Boot environment is
+stored which is also accessed by AmigaOS and e.g. C:NVGetVar command
+crashes without it having at least a valid checksum.
 
-The addition of the ctrl virtqueue lock makes
-virtio_scsi_complete_req_from_main_loop() and its BH unnecessary.
-Instead, take the ctrl virtqueue lock from the main loop thread.
-
-The cmd virtqueue does not have a lock because the entirety of SCSI
-command processing happens in one thread. Only one thread accesses the
-cmd virtqueue and a lock is unnecessary.
-
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+[npiggin: 32-bit compile fix]
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Message-ID: <7e4c0107ef6bdc2b20fb1e780a188275c7dc1e49.1740673173.git.balaton@eik.bme.hu>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/virtio/virtio-scsi.h |  3 ++
- hw/scsi/virtio-scsi.c           | 90 ++++++++++++++++++---------------
- 2 files changed, 52 insertions(+), 41 deletions(-)
+ hw/ppc/amigaone.c | 113 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 110 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
-index be230cd4bf..4ee98ebf63 100644
---- a/include/hw/virtio/virtio-scsi.h
-+++ b/include/hw/virtio/virtio-scsi.h
-@@ -84,6 +84,9 @@ struct VirtIOSCSI {
-     int resetting; /* written from main loop thread, read from any thread */
-     bool events_dropped;
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index 4290d58613..feb2cf452c 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -21,10 +21,13 @@
+ #include "hw/ide/pci.h"
+ #include "hw/i2c/smbus_eeprom.h"
+ #include "hw/ppc/ppc.h"
++#include "system/block-backend.h"
+ #include "system/qtest.h"
+ #include "system/reset.h"
+ #include "kvm_ppc.h"
  
-+    QemuMutex ctrl_lock; /* protects ctrl_vq */
-+    QemuMutex event_lock; /* protects event_vq */
++#include <zlib.h> /* for crc32 */
 +
-     /*
-      * TMFs deferred to main loop BH. These fields are protected by
-      * tmf_bh_lock.
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 7d094e1881..073ccd3d5b 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -102,13 +102,18 @@ static void virtio_scsi_free_req(VirtIOSCSIReq *req)
-     g_free(req);
- }
+ #define BUS_FREQ_HZ 100000000
  
--static void virtio_scsi_complete_req(VirtIOSCSIReq *req)
-+static void virtio_scsi_complete_req(VirtIOSCSIReq *req, QemuMutex *vq_lock)
+ /*
+@@ -46,6 +49,100 @@ static const char dummy_fw[] = {
+     0x4e, 0x80, 0x00, 0x20, /* blr */
+ };
+ 
++#define NVRAM_ADDR 0xfd0e0000
++#define NVRAM_SIZE (4 * KiB)
++
++#define TYPE_A1_NVRAM "a1-nvram"
++OBJECT_DECLARE_SIMPLE_TYPE(A1NVRAMState, A1_NVRAM)
++
++struct A1NVRAMState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mr;
++    BlockBackend *blk;
++};
++
++static uint64_t nvram_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    /* read callback not used because of romd mode */
++    g_assert_not_reached();
++}
++
++static void nvram_write(void *opaque, hwaddr addr, uint64_t val,
++                        unsigned int size)
++{
++    A1NVRAMState *s = opaque;
++    uint8_t *p = memory_region_get_ram_ptr(&s->mr);
++
++    p[addr] = val;
++    if (s->blk) {
++        blk_pwrite(s->blk, addr, 1, &val, 0);
++    }
++}
++
++static const MemoryRegionOps nvram_ops = {
++    .read = nvram_read,
++    .write = nvram_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 1,
++    },
++};
++
++static void nvram_realize(DeviceState *dev, Error **errp)
++{
++    A1NVRAMState *s = A1_NVRAM(dev);
++    void *p;
++    uint32_t *c;
++
++    memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
++                                  NVRAM_SIZE, &error_fatal);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
++    c = p = memory_region_get_ram_ptr(&s->mr);
++    if (s->blk) {
++        if (blk_getlength(s->blk) != NVRAM_SIZE) {
++            error_setg(errp, "NVRAM backing file size must be %" PRId64 "bytes",
++                       NVRAM_SIZE);
++            return;
++        }
++        blk_set_perm(s->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
++                     BLK_PERM_ALL, &error_fatal);
++        if (blk_pread(s->blk, 0, NVRAM_SIZE, p, 0) < 0) {
++            error_setg(errp, "Cannot read NVRAM contents from backing file");
++            return;
++        }
++    }
++    if (*c == 0) {
++        *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
++        if (s->blk) {
++            blk_pwrite(s->blk, 0, 4, p, 0);
++        }
++    }
++}
++
++static const Property nvram_properties[] = {
++    DEFINE_PROP_DRIVE("drive", A1NVRAMState, blk),
++};
++
++static void nvram_class_init(ObjectClass *oc, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    dc->realize = nvram_realize;
++    device_class_set_props(dc, nvram_properties);
++}
++
++static const TypeInfo nvram_types[] = {
++    {
++        .name = TYPE_A1_NVRAM,
++        .parent = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(A1NVRAMState),
++        .class_init = nvram_class_init,
++    },
++};
++DEFINE_TYPES(nvram_types)
++
+ static void amigaone_cpu_reset(void *opaque)
  {
-     VirtIOSCSI *s = req->dev;
-     VirtQueue *vq = req->vq;
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
+     PowerPCCPU *cpu = opaque;
+@@ -72,7 +169,7 @@ static void amigaone_init(MachineState *machine)
+     DeviceState *dev;
+     I2CBus *i2c_bus;
+     uint8_t *spd_data;
+-    int i;
++    DriveInfo *di;
  
-     qemu_iovec_from_buf(&req->resp_iov, 0, &req->resp, req->resp_size);
-+
-+    if (vq_lock) {
-+        qemu_mutex_lock(vq_lock);
+     /* init CPU */
+     cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
+@@ -97,6 +194,16 @@ static void amigaone_init(MachineState *machine)
+         memory_region_add_subregion(get_system_memory(), 0x40000000, mr);
+     }
+ 
++    /* nvram */
++    dev = qdev_new(TYPE_A1_NVRAM);
++    di = drive_get(IF_MTD, 0, 0);
++    if (di) {
++        qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(di));
 +    }
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    memory_region_add_subregion(get_system_memory(), NVRAM_ADDR,
++                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
 +
-     virtqueue_push(vq, &req->elem, req->qsgl.size + req->resp_iov.size);
-     if (s->dataplane_started && !s->dataplane_fenced) {
-         virtio_notify_irqfd(vdev, vq);
-@@ -116,6 +121,10 @@ static void virtio_scsi_complete_req(VirtIOSCSIReq *req)
-         virtio_notify(vdev, vq);
+     /* allocate and load firmware */
+     rom = g_new(MemoryRegion, 1);
+     memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
+@@ -136,7 +243,7 @@ static void amigaone_init(MachineState *machine)
+     pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+     mr = g_new(MemoryRegion, 1);
+     memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", pci_mem,
+-                             0, 0x1000000);
++                             0, 0xe0000);
+     memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
+     mr = g_new(MemoryRegion, 1);
+     memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", pci_mem,
+@@ -153,7 +260,7 @@ static void amigaone_init(MachineState *machine)
+     qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
+                                 qdev_get_gpio_in(DEVICE(cpu),
+                                 PPC6xx_INPUT_INT));
+-    for (i = 0; i < PCI_NUM_PINS; i++) {
++    for (int i = 0; i < PCI_NUM_PINS; i++) {
+         qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via),
+                                                              "pirq", i));
      }
- 
-+    if (vq_lock) {
-+        qemu_mutex_unlock(vq_lock);
-+    }
-+
-     if (req->sreq) {
-         req->sreq->hba_private = NULL;
-         scsi_req_unref(req->sreq);
-@@ -123,34 +132,20 @@ static void virtio_scsi_complete_req(VirtIOSCSIReq *req)
-     virtio_scsi_free_req(req);
- }
- 
--static void virtio_scsi_complete_req_bh(void *opaque)
--{
--    VirtIOSCSIReq *req = opaque;
--
--    virtio_scsi_complete_req(req);
--}
--
--/*
-- * Called from virtio_scsi_do_one_tmf_bh() in main loop thread. The main loop
-- * thread cannot touch the virtqueue since that could race with an IOThread.
-- */
--static void virtio_scsi_complete_req_from_main_loop(VirtIOSCSIReq *req)
--{
--    VirtIOSCSI *s = req->dev;
--
--    if (!s->ctx || s->ctx == qemu_get_aio_context()) {
--        /* No need to schedule a BH when there is no IOThread */
--        virtio_scsi_complete_req(req);
--    } else {
--        /* Run request completion in the IOThread */
--        aio_wait_bh_oneshot(s->ctx, virtio_scsi_complete_req_bh, req);
--    }
--}
--
--static void virtio_scsi_bad_req(VirtIOSCSIReq *req)
-+static void virtio_scsi_bad_req(VirtIOSCSIReq *req, QemuMutex *vq_lock)
- {
-     virtio_error(VIRTIO_DEVICE(req->dev), "wrong size for virtio-scsi headers");
-+
-+    if (vq_lock) {
-+        qemu_mutex_lock(vq_lock);
-+    }
-+
-     virtqueue_detach_element(req->vq, &req->elem, 0);
-+
-+    if (vq_lock) {
-+        qemu_mutex_unlock(vq_lock);
-+    }
-+
-     virtio_scsi_free_req(req);
- }
- 
-@@ -235,12 +230,21 @@ static int virtio_scsi_parse_req(VirtIOSCSIReq *req,
-     return 0;
- }
- 
--static VirtIOSCSIReq *virtio_scsi_pop_req(VirtIOSCSI *s, VirtQueue *vq)
-+static VirtIOSCSIReq *virtio_scsi_pop_req(VirtIOSCSI *s, VirtQueue *vq, QemuMutex *vq_lock)
- {
-     VirtIOSCSICommon *vs = (VirtIOSCSICommon *)s;
-     VirtIOSCSIReq *req;
- 
-+    if (vq_lock) {
-+        qemu_mutex_lock(vq_lock);
-+    }
-+
-     req = virtqueue_pop(vq, sizeof(VirtIOSCSIReq) + vs->cdb_size);
-+
-+    if (vq_lock) {
-+        qemu_mutex_unlock(vq_lock);
-+    }
-+
-     if (!req) {
-         return NULL;
-     }
-@@ -305,7 +309,7 @@ static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
- 
-         trace_virtio_scsi_tmf_resp(virtio_scsi_get_lun(req->req.tmf.lun),
-                                    req->req.tmf.tag, req->resp.tmf.response);
--        virtio_scsi_complete_req(req);
-+        virtio_scsi_complete_req(req, &req->dev->ctrl_lock);
-     }
-     g_free(n);
- }
-@@ -361,7 +365,7 @@ static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
- 
- out:
-     object_unref(OBJECT(d));
--    virtio_scsi_complete_req_from_main_loop(req);
-+    virtio_scsi_complete_req(req, &s->ctrl_lock);
- }
- 
- /* Some TMFs must be processed from the main loop thread */
-@@ -408,7 +412,7 @@ static void virtio_scsi_reset_tmf_bh(VirtIOSCSI *s)
- 
-         /* SAM-6 6.3.2 Hard reset */
-         req->resp.tmf.response = VIRTIO_SCSI_S_TARGET_FAILURE;
--        virtio_scsi_complete_req(req);
-+        virtio_scsi_complete_req(req, &req->dev->ctrl_lock);
-     }
- }
- 
-@@ -562,7 +566,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
- 
-     if (iov_to_buf(req->elem.out_sg, req->elem.out_num, 0,
-                 &type, sizeof(type)) < sizeof(type)) {
--        virtio_scsi_bad_req(req);
-+        virtio_scsi_bad_req(req, &s->ctrl_lock);
-         return;
-     }
- 
-@@ -570,7 +574,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
-     if (type == VIRTIO_SCSI_T_TMF) {
-         if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICtrlTMFReq),
-                     sizeof(VirtIOSCSICtrlTMFResp)) < 0) {
--            virtio_scsi_bad_req(req);
-+            virtio_scsi_bad_req(req, &s->ctrl_lock);
-             return;
-         } else {
-             r = virtio_scsi_do_tmf(s, req);
-@@ -580,7 +584,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
-                type == VIRTIO_SCSI_T_AN_SUBSCRIBE) {
-         if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICtrlANReq),
-                     sizeof(VirtIOSCSICtrlANResp)) < 0) {
--            virtio_scsi_bad_req(req);
-+            virtio_scsi_bad_req(req, &s->ctrl_lock);
-             return;
-         } else {
-             req->req.an.event_requested =
-@@ -600,7 +604,7 @@ static void virtio_scsi_handle_ctrl_req(VirtIOSCSI *s, VirtIOSCSIReq *req)
-                  type == VIRTIO_SCSI_T_AN_SUBSCRIBE)
-             trace_virtio_scsi_an_resp(virtio_scsi_get_lun(req->req.an.lun),
-                                       req->resp.an.response);
--        virtio_scsi_complete_req(req);
-+        virtio_scsi_complete_req(req, &s->ctrl_lock);
-     } else {
-         assert(r == -EINPROGRESS);
-     }
-@@ -610,7 +614,7 @@ static void virtio_scsi_handle_ctrl_vq(VirtIOSCSI *s, VirtQueue *vq)
- {
-     VirtIOSCSIReq *req;
- 
--    while ((req = virtio_scsi_pop_req(s, vq))) {
-+    while ((req = virtio_scsi_pop_req(s, vq, &s->ctrl_lock))) {
-         virtio_scsi_handle_ctrl_req(s, req);
-     }
- }
-@@ -654,7 +658,7 @@ static void virtio_scsi_complete_cmd_req(VirtIOSCSIReq *req)
-      * in virtio_scsi_command_complete.
-      */
-     req->resp_size = sizeof(VirtIOSCSICmdResp);
--    virtio_scsi_complete_req(req);
-+    virtio_scsi_complete_req(req, NULL);
- }
- 
- static void virtio_scsi_command_failed(SCSIRequest *r)
-@@ -788,7 +792,7 @@ static int virtio_scsi_handle_cmd_req_prepare(VirtIOSCSI *s, VirtIOSCSIReq *req)
-             virtio_scsi_fail_cmd_req(req);
-             return -ENOTSUP;
-         } else {
--            virtio_scsi_bad_req(req);
-+            virtio_scsi_bad_req(req, NULL);
-             return -EINVAL;
-         }
-     }
-@@ -843,7 +847,7 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
-             virtio_queue_set_notification(vq, 0);
-         }
- 
--        while ((req = virtio_scsi_pop_req(s, vq))) {
-+        while ((req = virtio_scsi_pop_req(s, vq, NULL))) {
-             ret = virtio_scsi_handle_cmd_req_prepare(s, req);
-             if (!ret) {
-                 QTAILQ_INSERT_TAIL(&reqs, req, next);
-@@ -973,7 +977,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
-         return;
-     }
- 
--    req = virtio_scsi_pop_req(s, vs->event_vq);
-+    req = virtio_scsi_pop_req(s, vs->event_vq, &s->event_lock);
-     if (!req) {
-         s->events_dropped = true;
-         return;
-@@ -985,7 +989,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
-     }
- 
-     if (virtio_scsi_parse_req(req, 0, sizeof(VirtIOSCSIEvent))) {
--        virtio_scsi_bad_req(req);
-+        virtio_scsi_bad_req(req, &s->event_lock);
-         return;
-     }
- 
-@@ -1005,7 +1009,7 @@ static void virtio_scsi_push_event(VirtIOSCSI *s,
-     }
-     trace_virtio_scsi_event(virtio_scsi_get_lun(evt->lun), event, reason);
- 
--    virtio_scsi_complete_req(req);
-+    virtio_scsi_complete_req(req, &s->event_lock);
- }
- 
- static void virtio_scsi_handle_event_vq(VirtIOSCSI *s, VirtQueue *vq)
-@@ -1236,6 +1240,8 @@ static void virtio_scsi_device_realize(DeviceState *dev, Error **errp)
-     Error *err = NULL;
- 
-     QTAILQ_INIT(&s->tmf_bh_list);
-+    qemu_mutex_init(&s->ctrl_lock);
-+    qemu_mutex_init(&s->event_lock);
-     qemu_mutex_init(&s->tmf_bh_lock);
- 
-     virtio_scsi_common_realize(dev,
-@@ -1280,6 +1286,8 @@ static void virtio_scsi_device_unrealize(DeviceState *dev)
-     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
-     virtio_scsi_common_unrealize(dev);
-     qemu_mutex_destroy(&s->tmf_bh_lock);
-+    qemu_mutex_destroy(&s->event_lock);
-+    qemu_mutex_destroy(&s->ctrl_lock);
- }
- 
- static const Property virtio_scsi_properties[] = {
 -- 
-2.48.1
+2.47.1
 
 
