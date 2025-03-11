@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E6EC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FF3C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 15:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts1Iw-0000Pa-0U; Tue, 11 Mar 2025 11:14:02 -0400
+	id 1ts1Jg-0000v0-6I; Tue, 11 Mar 2025 11:14:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ts1Iq-0000Oq-Ih
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:13:57 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts1Jc-0000rM-Ry
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:14:44 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ts1Ij-0004Xl-Qo
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:13:52 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22337bc9ac3so107204585ad.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:13:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ts1Ja-0004nL-Ev
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 11:14:44 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-391342fc148so2738815f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 08:14:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741706028; x=1742310828; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=86STdfu7sbDSkiwCii3eDdimSERy6/v6Vuyj4krzCSs=;
- b=w6HzDLYyzacHZifO4YDSqj//vC6Q7NdmQERYLp7uKhbqbEcWXGuZ1R0cXzxwtqcEAA
- bvcXO+CG9d+Vp+GDxW8TEvzm4UaXiZ9nBu1v8UXUugBua+K7ZzmqKXWQHd8Go3ZOI/Gs
- AUE0I6SVlsSNrmWfKFb5LSMV1UBXxltHbnV3yBcP4fzWzuQfMJ2sTfmJv2AUAIbo+I9j
- pJF0jCbT3pITkf8OHZDPKs2Suyrtj9M8Bke7SnGWM2ZHZQa36BvYW96iSK6NXkktryGS
- jmR3IxP8f04o0N7Ol2IAqPwh82cuWAqt5WMxO427RP3PXRPBQT3XklJomxfip+y4+Nhj
- aKVQ==
+ d=linaro.org; s=google; t=1741706078; x=1742310878; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nRRe0V6hTnTEa/ywDXDKo4kqBN5ZydvlC5M+vqDkq1c=;
+ b=sYvCkXB/yvjkriFQsUeZVqbJPRAmf/bsMuMNo7GsD7lo5S41Hk6Amn0IvLy/x8aQfH
+ h0BAC7mPl5rMqmr9LvwhjRDB3upYoiXZ5U6iiG8G10VYviuerEBnYVTc0cdafzHdwxQY
+ zIuuKVhBPsVnRz+F4ujKCZW7xwTi03hvB5q56ubSeQqXHu6jbiQ/duEAp2zKaCfO3nd5
+ uI/a0paFae3EETAPQiSUU2M97q0XkOGcfJZPsfuIXEIPv6i77nFjJgRfFqDN4xL0806n
+ EVfZipqtoH7K4PizYFQ/+kt6HsN1VCjVDhEIYox2IaSv06mACtjxjs2s+9TfsqpNspQG
+ Rm0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741706028; x=1742310828;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741706078; x=1742310878;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=86STdfu7sbDSkiwCii3eDdimSERy6/v6Vuyj4krzCSs=;
- b=Lr44fT8A3Khks67PKbOvDAwkqdiSSjHtZ9yLiaKjV8u/CzpODkGalJaoCb1c97YUkR
- KOsOcGcT7yWkc1XMkhiCQZ3wftkbe4Lq4nKN6/waoFhlaQhYDVSxw62cXMNTuRfPTtlB
- wxRrfs5RxZqZU3XBZVR7tEd/noW2Y/jebC1Ii1cNflH35CdT4jJUn6tIR6alCoh6K4eq
- v+ivXEJdpxbdOS906Io1Lue+xo75tZLGsllTSSGk2EiHgWwmVPE1rTR5Y5UraWn/Fnca
- OMOyo+6vJBaIEMN4u22M+izqDTwijgJ8PyqnjtdyrLU7yY+zrf3IyQeVH9Hm5babUtrn
- uhqw==
+ bh=nRRe0V6hTnTEa/ywDXDKo4kqBN5ZydvlC5M+vqDkq1c=;
+ b=FMtliFi5yWbPuBolg6QICVM22mrcaXJi0LZq6WJq99N5IyKIGHRIUv9tZ25y+aofoO
+ wlA5O6TAbM9cuiAMA+BEVqHjH6nYzIWz+A50fFd7Z8Kv5A24ZYmy0nUmVvUlgr4MIxHr
+ pyFy+/f5anE63x9BMpdNBlGTq2mSmIpMAQ2p4iSHodIchUkVkSt5BaEZfHbZjK+EeIHI
+ 6kAOlrAEveMITS071mGDPPp1P1ub6g6QRiWluDXBU+wKXZoYXojzY8H5JQRwr2FDv5EI
+ C5tlzDCkcHPBaCKMTYmz/EakJS8J2q2MU5Io8ZPBGrQ59T1tBnFFQO34aO2lBgQ9nQtJ
+ 3Phg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsZDt/0h36wKW7qdiOTqCXqLYjeR+lvsoWCx5bUxOS/StaPPY42+4QmquzoBvLMhTmHdGqzVnEiu5j@nongnu.org
-X-Gm-Message-State: AOJu0YyQke1rhm+IMXF8Zk4KCOd0AQmdJ1pbzaDGokivtebQULeS0fjp
- bnHapMJhVM6sHVJQWzXpUdHf1hSQ2g3K5PAuENDPunDw/M99hebqIZYm5ZAqNTj54fqkAvTxtbD
- Igqc=
-X-Gm-Gg: ASbGncvQ8+rdDcTyEGD5PzAKbGgD9H1SnYmKugW//DDKzdzqt/OHaz9j+Evmv3K6CkC
- GE1i8Xnzp7C9LsSozltnx1cw6krk38lXup3v3IGpKVgTXOETluC59oH8muEe9HnHsJ61s168hlW
- 0wSmV5/42NuJzgoJyLLn5hTpjzuUXRTPZGtE1dc8wy3pGljgqueOS4wvEfoNuJHW1LAUVdYuFc6
- EgFP9eL08mzFvcZPiW0EHsQtU7E4LVvorACRG/CQ/SIHKM2do4T2ojvD2NAVMTyUVj+37h8kfb/
- Fk9Ornwf300OpuF7VwtQaplwMpSQ1aTkMlk+NTJzNNoK/opdbL/JymOghg==
-X-Google-Smtp-Source: AGHT+IEZ5MBTaCdyWT08MqOAa8+LxkV8QowtXuqs/UZhCfCdiX14jnvavHT21U00/SV+pE0VLr2heQ==
-X-Received: by 2002:a05:6a00:10d5:b0:736:47a5:e268 with SMTP id
- d2e1a72fcca58-736eb7b363bmr5355533b3a.1.1741706027670; 
- Tue, 11 Mar 2025 08:13:47 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736cb466a6csm5505816b3a.165.2025.03.11.08.13.46
+ AJvYcCX6vZGuI6ID+DH/LeV9W00JIrwELdTg6ct0yJP8hxvmN4cUeUNMNH9d8oOCwGIb9AQrSK6LoQFT9VmF@nongnu.org
+X-Gm-Message-State: AOJu0YxMbIW2gM4XHJ7zY8EqgwA823JNW42OICogGng5/lGelDnLl6Tf
+ 6aQ+DziOvWxtyf94lF9W5ZPD8jRwYho48FxRYIkhYmMB41ESmJzncFP2u9qz8Oc=
+X-Gm-Gg: ASbGncvpTr5bdfH2/AfOPOi8G1/LzzR/dfhhsGikXO2m87K2MdfgZ0hWcoeqauu5YuR
+ zl2F3Mf+j0wluI8o33bL5193Dul8TiKqCrDG2a5LEjRVeqWNs4ob6vlb1KbnpTP1DhVn0wXhvXg
+ iHHNOYuPDqK5WIwTkQmZ2mHk3xz49jO9t9QAdZETgY1DfwqMuEZXRQRUxdny2TlFHgq1ROlw1ke
+ nt37xJRJ76dfzwxZxM6CkyzfXYk4uC22KBQPO65AxXlRhrTo/g2JIea6GUTzatqUsI8O5eNKGpk
+ aVfwxjN7Ns80Ix8OhGZfWvy58N3NeSOgrF/pF/RRJgyhmS0vdN34z6QfNZlaDiTw42rDc53kZIg
+ fLyLvbEgPvnxN
+X-Google-Smtp-Source: AGHT+IGMZq9Zv5IrDzGNXyfZard2uq17hlvG5nfa9qRcDr6dl5yVlBL8PHub5h9dwcelWjylk5GmVQ==
+X-Received: by 2002:a05:6000:18a5:b0:391:13ef:1b1b with SMTP id
+ ffacd0b85a97d-3926469486emr5385934f8f.30.1741706077939; 
+ Tue, 11 Mar 2025 08:14:37 -0700 (PDT)
+Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d032afc2esm15042685e9.2.2025.03.11.08.14.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 08:13:47 -0700 (PDT)
-Message-ID: <72e938d4-fb4e-4be4-9a34-7b0321ee2554@linaro.org>
-Date: Tue, 11 Mar 2025 08:13:46 -0700
+ Tue, 11 Mar 2025 08:14:37 -0700 (PDT)
+Message-ID: <b5f9e231-8c29-4992-89a0-5cdea7c08b34@linaro.org>
+Date: Tue, 11 Mar 2025 16:14:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/16] exec/memory-internal: remove dependency on cpu.h
+Subject: Re: [PATCH v4 2/7] hw/hyperv/hyperv.h: header cleanup
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ alex.bennee@linaro.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ richard.henderson@linaro.org, manos.pitsidianakis@linaro.org
+References: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
+ <20250307215623.524987-3-pierrick.bouvier@linaro.org>
+ <f957fbdb-c7c3-4a31-a76a-144ff31ea158@linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paul Durrant <paul@xen.org>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- David Hildenbrand <david@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- xen-devel@lists.xenproject.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, alex.bennee@linaro.org,
- qemu-riscv@nongnu.org, manos.pitsidianakis@linaro.org,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Anthony PERARD <anthony@xenproject.org>
-References: <20250311040838.3937136-1-pierrick.bouvier@linaro.org>
- <20250311040838.3937136-9-pierrick.bouvier@linaro.org>
- <9f92a783-3826-4a06-9944-0e0ec5faccc9@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <9f92a783-3826-4a06-9944-0e0ec5faccc9@linaro.org>
+In-Reply-To: <f957fbdb-c7c3-4a31-a76a-144ff31ea158@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,24 +106,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xMS8yNSAwMDoyNiwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDExLzMvMjUgMDU6MDgsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBSZXZpZXdlZC1i
-eTogUmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+DQo+
-PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxp
-bmFyby5vcmc+DQo+IA0KPiBNaXNzaW5nIHRoZSAid2h5IiBqdXN0aWZpY2F0aW9uIHdlIGNv
-dWxkbid0IGRvIHRoYXQgYmVmb3JlLg0KPiANCj4+IC0tLQ0KPj4gICAgaW5jbHVkZS9leGVj
-L21lbW9yeS1pbnRlcm5hbC5oIHwgMiAtLQ0KPj4gICAgMSBmaWxlIGNoYW5nZWQsIDIgZGVs
-ZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZXhlYy9tZW1vcnktaW50
-ZXJuYWwuaCBiL2luY2x1ZGUvZXhlYy9tZW1vcnktaW50ZXJuYWwuaA0KPj4gaW5kZXggMTAw
-YzEyMzdhYzIuLmI3MjlmM2IyNWFkIDEwMDY0NA0KPj4gLS0tIGEvaW5jbHVkZS9leGVjL21l
-bW9yeS1pbnRlcm5hbC5oDQo+PiArKysgYi9pbmNsdWRlL2V4ZWMvbWVtb3J5LWludGVybmFs
-LmgNCj4+IEBAIC0yMCw4ICsyMCw2IEBADQo+PiAgICAjaWZuZGVmIE1FTU9SWV9JTlRFUk5B
-TF9IDQo+PiAgICAjZGVmaW5lIE1FTU9SWV9JTlRFUk5BTF9IDQo+PiAgICANCj4+IC0jaW5j
-bHVkZSAiY3B1LmgiDQo+PiAtDQo+PiAgICAjaWZuZGVmIENPTkZJR19VU0VSX09OTFkNCj4+
-ICAgIHN0YXRpYyBpbmxpbmUgQWRkcmVzc1NwYWNlRGlzcGF0Y2ggKmZsYXR2aWV3X3RvX2Rp
-c3BhdGNoKEZsYXRWaWV3ICpmdikNCj4+ICAgIHsNCj4gDQoNCk5vIGRpcmVjdCBkZXBlbmRl
-bmN5LCBidXQgd2hlbiBhIGNvbW1vbiBjb2RlIHdpbGwgaW5jbHVkZSB0aGF0IChsaWtlIA0K
-c3lzdGVtL21lbW9yeS5jKSwgd2UgY2FuJ3QgaGF2ZSBhIGRlcGVuZGVuY3kgb24gY3B1Lmgg
-YW55bW9yZS4NCkkgY2FuIHJlb3JkZXIgb3Igc3F1YXNoIGNvbW1pdHMgaWYgeW91IHByZWZl
-ci4NCg==
+On 11/3/25 16:05, Philippe Mathieu-Daudé wrote:
+> On 7/3/25 22:56, Pierrick Bouvier wrote:
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   include/hw/hyperv/hyperv.h | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
+>> index d717b4e13d4..63a8b65278f 100644
+>> --- a/include/hw/hyperv/hyperv.h
+>> +++ b/include/hw/hyperv/hyperv.h
+>> @@ -10,7 +10,8 @@
+>>   #ifndef HW_HYPERV_HYPERV_H
+>>   #define HW_HYPERV_HYPERV_H
+>> -#include "cpu-qom.h"
+>> +#include "exec/hwaddr.h"
+>> +#include "hw/core/cpu.h"
+> 
+> I don't see where "hw/core/cpu.h" is used.
+
+OK found it:
+
+static inline uint32_t hyperv_vp_index(CPUState *cs)
+{
+     return cs->cpu_index;
+}
+
+First, bringing this huge header for this single use is way overkill,
+then I doubt this method deserves to be inlined, third @cpu_index is
+an accelerator specific field, often incorrectly used. Maybe in this
+case it is OK although, since IIUC we only support HyperV with KVM,
+right?
 
