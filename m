@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34024C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA42C28B2E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 03:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trqZ0-0007rV-GE; Mon, 10 Mar 2025 23:45:58 -0400
+	id 1trqb1-0005kF-I5; Mon, 10 Mar 2025 23:47:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqYg-0007DX-PF
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqZH-0000Bc-Ma
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:46:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqYe-0002fh-WD
- for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:45:34 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1trqZF-0002mF-W7
+ for qemu-devel@nongnu.org; Mon, 10 Mar 2025 23:46:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741664731;
+ s=mimecast20190719; t=1741664769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BQvE/HneCGz1g30jzw3OwriCq5NXZt5xVT54X3KVDic=;
- b=ZJMVxVCACzcEclrXE3hBhQVsFXkJdtuTGcjirQI/mZ94HZQA/WMwYSGbzC60yHC421om0G
- y3vyHNE8ulv/EA31Zf7Bm8EwkOLcGUhGldwUQ97pVQlkGXUVFiTGt7Yza+HzLp9G20qDht
- lRlp8+fm05HcdID07wpUUlkIchYGRLA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Pw8el+GA7iT/3eFU4A+nMVvwNmUzlB4ajxhRYwlv5Yw=;
+ b=cOXdw2V2UQEM6E8tDQVptCMT2EFsF5cMdkfqT1NHy0qHbeqUKUFtDbRBzt6s+DCEzPAfix
+ CEZa7Exsmtb/+SDTo0ZzqxAjULe6SfZyGZyPg8jQNFfc9Z5U/qAnxZnbjGrum6WGrDBmpC
+ MihXV4FwtKqC4l7VQwLOCHgJgxcaMBc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-U7PTEA9wNSawwX2qrnQFkw-1; Mon,
- 10 Mar 2025 23:45:25 -0400
-X-MC-Unique: U7PTEA9wNSawwX2qrnQFkw-1
-X-Mimecast-MFC-AGG-ID: U7PTEA9wNSawwX2qrnQFkw_1741664724
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-dxkJSnaoPoetcV_vqjOpLA-1; Mon,
+ 10 Mar 2025 23:46:06 -0400
+X-MC-Unique: dxkJSnaoPoetcV_vqjOpLA-1
+X-Mimecast-MFC-AGG-ID: dxkJSnaoPoetcV_vqjOpLA_1741664765
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 441231800258; Tue, 11 Mar 2025 03:45:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 007E6180AB16; Tue, 11 Mar 2025 03:46:05 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 531181800373; Tue, 11 Mar 2025 03:45:20 +0000 (UTC)
+ id 547871800373; Tue, 11 Mar 2025 03:46:02 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
@@ -54,22 +54,22 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 39/63] docs/qapidoc: add transmogrifier class stub
-Date: Mon, 10 Mar 2025 23:42:37 -0400
-Message-ID: <20250311034303.75779-40-jsnow@redhat.com>
+Subject: [PATCH v3 51/63] docs/qapidoc: add visit_member() method
+Date: Mon, 10 Mar 2025 23:42:49 -0400
+Message-ID: <20250311034303.75779-52-jsnow@redhat.com>
 In-Reply-To: <20250311034303.75779-1-jsnow@redhat.com>
 References: <20250311034303.75779-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,123 +87,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the beginnings of the Transmogrifier class by adding the rST
-conversion helpers that will be used to build the virtual rST document.
+This method is used for generating the "members" of a wide variety of
+things, including structs, unions, enums, alternates, etc. The field
+name it uses to do so is dependent on the type of entity the "member"
+belongs to.
 
-This version of the class does not actually "do anything" yet; each
-individual feature is added one-at-a-time in the forthcoming commits.
+Currently, IF conditionals for individual members are not handled or
+rendered, a small regression from the prior documentation
+generator. This will be fixed in a future patch.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 73 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 70 insertions(+), 3 deletions(-)
+ docs/sphinx/qapidoc.py | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 5246832b68c..c243bb6faaa 100644
+index eb8841099c7..a8e19487d0a 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -26,14 +26,17 @@
- 
- from __future__ import annotations
- 
-+from contextlib import contextmanager
- import os
- import sys
- from typing import TYPE_CHECKING
- 
- from docutils import nodes
- from docutils.parsers.rst import Directive, directives
-+from docutils.statemachine import StringList
- from qapi.error import QAPIError
- from qapi.schema import QAPISchema, QAPISchemaVisitor
-+from qapi.source import QAPISourceInfo
- 
- from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
- from sphinx import addnodes
-@@ -44,9 +47,12 @@
+@@ -78,6 +78,16 @@
  
  
- if TYPE_CHECKING:
--    from typing import Any, List, Sequence
--
--    from docutils.statemachine import StringList
-+    from typing import (
-+        Any,
-+        Generator,
-+        List,
-+        Sequence,
-+    )
+ class Transmogrifier:
++    # Field names used for different entity types:
++    field_types = {
++        "enum": "value",
++        "struct": "memb",
++        "union": "memb",
++        "event": "memb",
++        "command": "arg",
++        "alternate": "alt",
++    }
++
+     def __init__(self) -> None:
+         self._curr_ent: Optional[QAPISchemaDefinition] = None
+         self._result = StringList()
+@@ -88,6 +98,10 @@ def entity(self) -> QAPISchemaDefinition:
+         assert self._curr_ent is not None
+         return self._curr_ent
  
-     from sphinx.application import Sphinx
-     from sphinx.util.typing import ExtensionMetadata
-@@ -55,6 +61,67 @@
- __version__ = "1.0"
++    @property
++    def member_field_type(self) -> str:
++        return self.field_types[self.entity.meta]
++
+     # General-purpose rST generation functions
  
+     def get_indent(self) -> str:
+@@ -202,6 +216,19 @@ def visit_paragraph(self, section: QAPIDoc.Section) -> None:
+         self.add_lines(section.text, section.info)
+         self.ensure_blank_line()
  
-+class Transmogrifier:
-+    def __init__(self) -> None:
-+        self._result = StringList()
-+        self.indent = 0
++    def visit_member(self, section: QAPIDoc.ArgSection) -> None:
++        # FIXME: ifcond for members
++        # TODO: features for members (documented at entity-level,
++        # but sometimes defined per-member. Should we add such
++        # information to member descriptions when we can?)
++        assert section.text and section.member
++        self.generate_field(
++            self.member_field_type,
++            section.member,
++            section.text,
++            section.info,
++        )
 +
-+    # General-purpose rST generation functions
-+
-+    def get_indent(self) -> str:
-+        return "   " * self.indent
-+
-+    @contextmanager
-+    def indented(self) -> Generator[None]:
-+        self.indent += 1
-+        try:
-+            yield
-+        finally:
-+            self.indent -= 1
-+
-+    def add_line_raw(self, line: str, source: str, *lineno: int) -> None:
-+        """Append one line of generated reST to the output."""
-+
-+        # NB: Sphinx uses zero-indexed lines; subtract one.
-+        lineno = tuple((n - 1 for n in lineno))
-+
-+        if line.strip():
-+            # not a blank line
-+            self._result.append(
-+                self.get_indent() + line.rstrip("\n"), source, *lineno
-+            )
-+        else:
-+            self._result.append("", source, *lineno)
-+
-+    def add_line(self, content: str, info: QAPISourceInfo) -> None:
-+        # NB: We *require* an info object; this works out OK because we
-+        # don't document built-in objects that don't have
-+        # one. Everything else should.
-+        self.add_line_raw(content, info.fname, info.line)
-+
-+    def add_lines(
-+        self,
-+        content: str,
-+        info: QAPISourceInfo,
-+    ) -> None:
-+        lines = content.splitlines(True)
-+        for i, line in enumerate(lines):
-+            self.add_line_raw(line, info.fname, info.line + i)
-+
-+    def ensure_blank_line(self) -> None:
-+        # Empty document -- no blank line required.
-+        if not self._result:
-+            return
-+
-+        # Last line isn't blank, add one.
-+        if self._result[-1].strip():  # pylint: disable=no-member
-+            fname, line = self._result.info(-1)
-+            assert isinstance(line, int)
-+            # New blank line is credited to one-after the current last line.
-+            # +2: correct for zero/one index, then increment by one.
-+            self.add_line_raw("", fname, line + 2)
-+
-+
- class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
-     """A QAPI schema visitor which adds Sphinx dependencies each module
- 
+     def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
+         # FIXME - ifcond for features is not handled at all yet!
+         # Proposal: decorate the right-hand column with some graphical
 -- 
 2.48.1
 
