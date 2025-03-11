@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A44CBC28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0A8C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzIw-0003FU-8s; Tue, 11 Mar 2025 09:05:54 -0400
+	id 1trzKG-000741-Dm; Tue, 11 Mar 2025 09:07:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzDl-0004tJ-OT; Tue, 11 Mar 2025 09:00:42 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1trzDW-0004aS-H6; Tue, 11 Mar 2025 09:00:23 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1trzDf-0008SW-Oh; Tue, 11 Mar 2025 09:00:33 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2ff04f36fd2so9014252a91.1; 
- Tue, 11 Mar 2025 06:00:26 -0700 (PDT)
+ id 1trzDS-0008IS-9b; Tue, 11 Mar 2025 09:00:18 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-224341bbc1dso67975095ad.3; 
+ Tue, 11 Mar 2025 06:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741698025; x=1742302825; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741698009; x=1742302809; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ltiIpntD1e/ZvbcOYuUkJzWPVpcS1p6NcC9JSvLJgJs=;
- b=gh37F6v75VHtGQ30qUt8BY5QNVQSu+jF5GU2C4YlYgsDN/UyHTOTorKh8AaicBhq4V
- hwzJrfyqH2vT/Rxf+NYCh5p33RsvCXzkl18j+zI7u6kF/O/wp7TIr5I8sZlr+7Ahb5IZ
- DoMGWjCJDxAm36mR6LtzKQuzNs5yZFVolPwjBzduBa7caE6egW08O7wqqZxG60bvmN0R
- tR80hi2TxUFIQiNFxaVYHa1CyUVgIQ2du+T/FKDpqzFrfGS+jN9VhRL0+M3k7ykdvlDd
- eUGFJ0lnG0wcPpkOIaUQgF2kZkYj2p/7nlxkIOwmQJYZKEEYuEFDWQIZ4DBjdGlOicpO
- QwzA==
+ bh=s/XBvKPmghhbKFfzwm85aRAZZaLgzLWVK0EV9GNbOE4=;
+ b=A4yTrPFCvwtbO/SEY6UeeeKqTYgJRD0oP3aNJIMWaXyhxJ94/5Rc2V/TA8LFzfpI9L
+ gEeOgS+OnpbmaQ8LI76paYJs1aH7ogMvGjpKWWkKmjBVbEukuIGpjenjANAC5ixDc5CM
+ xsdPFwyHDJWM0B97kyUPWDRsm1itnFZOLMLZJIbcEPfF/qGHm36ky3Wk/RIzX790TKuf
+ auYvfwy4GAjoIIkj/oofI4MAnp4ntOnSbcaPKvYsK+BnwcX8kZaF/Y14u6TDCcsBpvKQ
+ 41/nor1Wd4VhZjJ79kSuN1alEN6UZitydDgNUAPbCxcxRw+2NTh9SoYQx4hkMr9Z/edt
+ 4PUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741698025; x=1742302825;
+ d=1e100.net; s=20230601; t=1741698009; x=1742302809;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ltiIpntD1e/ZvbcOYuUkJzWPVpcS1p6NcC9JSvLJgJs=;
- b=QCnwBwRm58r4O089lCOCkn1SpNFIqUFWvAtvfLszY6VjilkNgH1UjC9F60wy9T7e+s
- Ag/9GZdDMxUcn3flIja0bKa6JnMTmVV/J4PtDmmTWZrghqMPkVsT/fSEddohbgLBmH6u
- RuLKiuAfA5FRrSQyUPQEefpgbL1hUBhQnlyw2lgy5xyVWWfXRR4bIIxPgoaHjj07ChQO
- vMOJrGCKZZJTkeBE11SFuDXHhwkp9pPu4LwAcId6AUNvblMgh6GkZFLplfdzPRRFtIrE
- 4bIZw/BPrzIPfwuM62djg/IZ3qnmGa90Iiy5fc7pqg/Ug+MkyuVuaNcF9rRjDMsWD3R1
- kw2Q==
+ bh=s/XBvKPmghhbKFfzwm85aRAZZaLgzLWVK0EV9GNbOE4=;
+ b=HAkr3Xz9/Hg+FmNW+P5vRQ+8F1nyhZpM5xDkIPYvxLzvBkPffAzHsNH7To/HGu5aBX
+ 08aXzcebvO460OrPeEVFpfEvrn60/oHw387S9xILb42N3emcWDUNQOxfxUe10Lx6PiCV
+ VqKKXZucjWxaIFlRlod8krqfNTHQxeCa/wpU861v93OyMU6cdOLHv/MvEO3q7KUeUcw4
+ xGaqIoj1LrPkiSfeSMkuM0c5KJybgkRpAKEk3QLfU48rHQvo0PKhFMQPGhPxHz2ns3Gg
+ Ov0biT+hsvZZ3n62vdj+TORhiEhLwcJbsARW65nqMxEObrvON/FpZxWm5mWBFpFfKiuH
+ 8isg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMnqXcYEGufZYxmhqdN62corU3omZmSYgbokCAyHZ9+0aDpTosFYn5esq6XZEaW2HfzZWTZSUE2A==@nongnu.org
-X-Gm-Message-State: AOJu0Yxg2De6tSHI0TTL7xTV3GEMwbZHkbmzUVyOh516PYhIl7W+XymF
- ccefWAyR4LlqIe3YDpvNHf6NfY39VBShYbEPMjy9DeZ8bjwJkWNsScSAQw==
-X-Gm-Gg: ASbGncspVS4NBIffocKZ/bOTB8/nK9vvSu1LhFZc1jZ+9zHWn7FlbA7a6XMJRaS7+mB
- 5dPktMEt9k75ELmlKKhs3OQWJzhtuhfnaHx888s4KljZv0gWtSsaMrKlcaS4kqZRpkJk1+3DTT/
- xL3jPFt9NhrLvpdpaZYuciMDAPn/epLMm5REIgJmQnPzicFzi3eha9KF8YIn502tdkXk8kj7q2H
- OYa3VY9ZrhNNLmpxtzEgNaM5aZNFmraG+aaYndpeyFGUe/o6Ph55OX8VROIMyffL/Gd/cR6pYlR
- lodYwfTyUbCSfHcWEljK0DH626ikDUwpynsWmpOqnEGEQz1Wfh0=
-X-Google-Smtp-Source: AGHT+IEUX7EQKfo4DCOgQUmp+PAEpVwTq+rX9BWmWCAia6eMLOHO9RLW5iwyQW9TghvOet5wGrhpFg==
-X-Received: by 2002:a17:90b:2e51:b0:2ff:7331:18bc with SMTP id
- 98e67ed59e1d1-2ff7ceee7ebmr22740098a91.26.1741698024574; 
- Tue, 11 Mar 2025 06:00:24 -0700 (PDT)
+ AJvYcCWhRU4PHEWFynbcTilie8T/+BK95hYccZNR9Mc8YgilhLt/L8phirT6sgnSX82xbgz4jqVMoOJ9HA==@nongnu.org
+X-Gm-Message-State: AOJu0YzekYfY+WwnbhfAZWVY2wch9D1ZGMhMll3k5TJe8U0md2CP4RE9
+ bQj4PWVIL045vLDXVBI/EBbxnPd8tfTDl+u5gxabVOpAqOMdsxGVwkqa9g==
+X-Gm-Gg: ASbGncubJFjaHH3BDfu/pdgtM25sB7VhwpaeU4kIVNxLRaM69uo3li5Kcc0kVwdayes
+ nnPSWDoV9Aa7WrAQc81hvpmhhvmYJnzSYFEpWR4yoWFTH0wLZiKxvrIFiXW4R9VDahl8TcMd6ZM
+ aO85yS8GDoUqAjJvM01HeXzHDagT5LFJ16pqAx5K9Jq9a07GAGQVNHFM/JTM2XVySM5fxdxR0Pw
+ RfftX3PiptKYDc0M6yuSRRJMhSs1kuxso89CwtT5l4eDBRdFUctwRaMdQHFy11yNBTpWB8dG25m
+ SiX9neP6IQ4ANYMD377rmOLyZIZj7ODXI2z0Sy3o2po9jIVDXXM=
+X-Google-Smtp-Source: AGHT+IF1qSFvQdY4aQMYNsKVRb3BvJiV+sYcoOGgGY4PNlhMGzMIka3DoYXRPPzXncEghUctBhYk2A==
+X-Received: by 2002:a17:902:c949:b0:224:78e:4ebe with SMTP id
+ d9443c01a7336-22593183ec4mr45122475ad.33.1741698009287; 
+ Tue, 11 Mar 2025 06:00:09 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.22
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.00.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 06:00:24 -0700 (PDT)
+ Tue, 11 Mar 2025 06:00:08 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Chalapathi V <chalapathi.v@linux.ibm.com>
-Subject: [PULL 38/72] hw/ssi/pnv_spi: Use local var seq_index instead of
- get_seq_index().
-Date: Tue, 11 Mar 2025 22:57:32 +1000
-Message-ID: <20250311125815.903177-39-npiggin@gmail.com>
+ Glenn Miles <milesg@linux.ibm.com>, Glenn Miles <milesg@linux.vnet.ibm.com>
+Subject: [PULL 33/72] pnv/xive2: Rename nvp_ to nvx_ if they can refer to NVP
+ or NVGC
+Date: Tue, 11 Mar 2025 22:57:27 +1000
+Message-ID: <20250311125815.903177-34-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
 References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,289 +100,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
+From: Glenn Miles <milesg@linux.ibm.com>
 
-Use a local variable seq_index instead of repeatedly calling
-get_seq_index() method and open-code next_sequencer_fsm().
+The blk/index in some paths may refer to an NVP or an NVGC. When it
+is not known ahead of time, use the nvx_ prefix to prevent confusion.
 
-Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+[npiggin: split out of larger fix patch and reworded]
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20250303141328.23991-3-chalapathi.v@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ssi/pnv_spi.c | 97 ++++++++++++++++++++++++++----------------------
- 1 file changed, 52 insertions(+), 45 deletions(-)
+ hw/intc/xive2.c | 56 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 388b425157..de33542c35 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -227,18 +227,6 @@ static void transfer(PnvSpi *s)
-     fifo8_reset(&s->rx_fifo);
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 5fa8e1b3fb..e925307d0f 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -226,8 +226,8 @@ void xive2_end_pic_print_info(Xive2End *end, uint32_t end_idx, GString *buf)
+     uint32_t qsize = xive_get_field32(END2_W3_QSIZE, end->w3);
+     uint32_t qentries = 1 << (qsize + 10);
+ 
+-    uint32_t nvp_blk = xive_get_field32(END2_W6_VP_BLOCK, end->w6);
+-    uint32_t nvp_idx = xive_get_field32(END2_W6_VP_OFFSET, end->w6);
++    uint32_t nvx_blk = xive_get_field32(END2_W6_VP_BLOCK, end->w6);
++    uint32_t nvx_idx = xive_get_field32(END2_W6_VP_OFFSET, end->w6);
+     uint8_t priority = xive_get_field32(END2_W7_F0_PRIORITY, end->w7);
+     uint8_t pq;
+ 
+@@ -256,7 +256,7 @@ void xive2_end_pic_print_info(Xive2End *end, uint32_t end_idx, GString *buf)
+                            xive2_end_is_firmware2(end)   ? 'F' : '-',
+                            xive2_end_is_ignore(end) ? 'i' : '-',
+                            xive2_end_is_crowd(end)  ? 'c' : '-',
+-                           priority, nvp_blk, nvp_idx);
++                           priority, nvx_blk, nvx_idx);
+ 
+     if (qaddr_base) {
+         g_string_append_printf(buf, " eq:@%08"PRIx64"% 6d/%5d ^%d",
+@@ -372,7 +372,7 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
+  * level of pending group interrupts.
+  */
+ static uint8_t xive2_presenter_backlog_scan(XivePresenter *xptr,
+-                                            uint8_t nvp_blk, uint32_t nvp_idx,
++                                            uint8_t nvx_blk, uint32_t nvx_idx,
+                                             uint8_t first_group,
+                                             uint8_t *out_level)
+ {
+@@ -387,19 +387,19 @@ static uint8_t xive2_presenter_backlog_scan(XivePresenter *xptr,
+ 
+         while (current_level) {
+             mask = (1 << current_level) - 1;
+-            nvgc_idx = nvp_idx & ~mask;
++            nvgc_idx = nvx_idx & ~mask;
+             nvgc_idx |= mask >> 1;
+             qemu_log("fxb %s checking backlog for prio %d group idx %x\n",
+                      __func__, prio, nvgc_idx);
+ 
+-            if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc)) {
++            if (xive2_router_get_nvgc(xrtr, false, nvx_blk, nvgc_idx, &nvgc)) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVG %x/%x\n",
+-                              nvp_blk, nvgc_idx);
++                              nvx_blk, nvgc_idx);
+                 return 0xFF;
+             }
+             if (!xive2_nvgc_is_valid(&nvgc)) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n",
+-                              nvp_blk, nvgc_idx);
++                              nvx_blk, nvgc_idx);
+                 return 0xFF;
+             }
+ 
+@@ -415,7 +415,7 @@ static uint8_t xive2_presenter_backlog_scan(XivePresenter *xptr,
  }
  
--static inline uint8_t get_seq_index(PnvSpi *s)
--{
--    return GETFIELD(SPI_STS_SEQ_INDEX, s->status);
--}
--
--static inline void next_sequencer_fsm(PnvSpi *s)
--{
--    uint8_t seq_index = get_seq_index(s);
--    s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status, (seq_index + 1));
--    s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_INDEX_INCREMENT);
--}
--
- /*
-  * Calculate the N1 counters based on passed in opcode and
-  * internal register values.
-@@ -664,6 +652,7 @@ static void operation_sequencer(PnvSpi *s)
-     bool stop = false; /* Flag to stop the sequencer */
-     uint8_t opcode = 0;
-     uint8_t masked_opcode = 0;
-+    uint8_t seq_index;
+ static void xive2_presenter_backlog_decr(XivePresenter *xptr,
+-                                         uint8_t nvp_blk, uint32_t nvp_idx,
++                                         uint8_t nvx_blk, uint32_t nvx_idx,
+                                          uint8_t group_prio,
+                                          uint8_t group_level)
+ {
+@@ -425,17 +425,17 @@ static void xive2_presenter_backlog_decr(XivePresenter *xptr,
  
-     /*
-      * Clear the sequencer FSM error bit - general_SPI_status[3]
-@@ -677,12 +666,17 @@ static void operation_sequencer(PnvSpi *s)
-     if (GETFIELD(SPI_STS_SEQ_FSM, s->status) == SEQ_STATE_IDLE) {
-         s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status, 0);
+     group_level &= 0xF;
+     mask = (1 << group_level) - 1;
+-    nvgc_idx = nvp_idx & ~mask;
++    nvgc_idx = nvx_idx & ~mask;
+     nvgc_idx |= mask >> 1;
+ 
+-    if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc)) {
++    if (xive2_router_get_nvgc(xrtr, false, nvx_blk, nvgc_idx, &nvgc)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVG %x/%x\n",
+-                      nvp_blk, nvgc_idx);
++                      nvx_blk, nvgc_idx);
+         return;
      }
-+    /*
-+     * SPI_STS_SEQ_INDEX of status register is kept in seq_index variable and
-+     * updated back to status register at the end of operation_sequencer().
-+     */
-+    seq_index = GETFIELD(SPI_STS_SEQ_INDEX, s->status);
+     if (!xive2_nvgc_is_valid(&nvgc)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n",
+-                      nvp_blk, nvgc_idx);
++                      nvx_blk, nvgc_idx);
+         return;
+     }
+     count = xive2_nvgc_get_backlog(&nvgc, group_prio);
+@@ -443,7 +443,7 @@ static void xive2_presenter_backlog_decr(XivePresenter *xptr,
+         return;
+     }
+     xive2_nvgc_set_backlog(&nvgc, group_prio, count - 1);
+-    xive2_router_write_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc);
++    xive2_router_write_nvgc(xrtr, false, nvx_blk, nvgc_idx, &nvgc);
+ }
+ 
+ /*
+@@ -1289,8 +1289,8 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+     uint8_t priority;
+     uint8_t format;
+     bool found, precluded;
+-    uint8_t nvp_blk;
+-    uint32_t nvp_idx;
++    uint8_t nvx_blk;
++    uint32_t nvx_idx;
+ 
+     /* END cache lookup */
+     if (xive2_router_get_end(xrtr, end_blk, end_idx, &end)) {
+@@ -1355,10 +1355,10 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
      /*
-      * There are only 8 possible operation IDs to iterate through though
-      * some operations may cause more than one frame to be sequenced.
+      * Follows IVPE notification
       */
--    while (get_seq_index(s) < NUM_SEQ_OPS) {
--        opcode = s->seq_op[get_seq_index(s)];
-+    while (seq_index < NUM_SEQ_OPS) {
-+        opcode = s->seq_op[seq_index];
-         /* Set sequencer state to decode */
-         s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_DECODE);
-         /*
-@@ -699,7 +693,7 @@ static void operation_sequencer(PnvSpi *s)
-         case SEQ_OP_STOP:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
-             /* A stop operation in any position stops the sequencer */
--            trace_pnv_spi_sequencer_op("STOP", get_seq_index(s));
-+            trace_pnv_spi_sequencer_op("STOP", seq_index);
+-    nvp_blk = xive_get_field32(END2_W6_VP_BLOCK, end.w6);
+-    nvp_idx = xive_get_field32(END2_W6_VP_OFFSET, end.w6);
++    nvx_blk = xive_get_field32(END2_W6_VP_BLOCK, end.w6);
++    nvx_idx = xive_get_field32(END2_W6_VP_OFFSET, end.w6);
  
-             stop = true;
-             s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_IDLE);
-@@ -710,7 +704,7 @@ static void operation_sequencer(PnvSpi *s)
+-    found = xive_presenter_notify(xrtr->xfb, format, nvp_blk, nvp_idx,
++    found = xive_presenter_notify(xrtr->xfb, format, nvx_blk, nvx_idx,
+                           xive2_end_is_crowd(&end), xive2_end_is_ignore(&end),
+                           priority,
+                           xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7),
+@@ -1389,15 +1389,15 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+             Xive2Nvp nvp;
  
-         case SEQ_OP_SELECT_SLAVE:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
--            trace_pnv_spi_sequencer_op("SELECT_SLAVE", get_seq_index(s));
-+            trace_pnv_spi_sequencer_op("SELECT_SLAVE", seq_index);
-             /*
-              * This device currently only supports a single responder
-              * connection at position 0.  De-selecting a responder is fine
-@@ -721,8 +715,7 @@ static void operation_sequencer(PnvSpi *s)
-             if (s->responder_select == 0) {
-                 trace_pnv_spi_shifter_done();
-                 qemu_set_irq(s->cs_line[0], 1);
--                s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status,
--                                (get_seq_index(s) + 1));
-+                seq_index++;
-                 s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_DONE);
-             } else if (s->responder_select != 1) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "Slave selection other than 1 "
-@@ -747,13 +740,15 @@ static void operation_sequencer(PnvSpi *s)
-                  * applies once a valid responder select has occurred.
-                  */
-                 s->shift_n1_done = false;
--                next_sequencer_fsm(s);
-+                seq_index++;
-+                s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status,
-+                                SEQ_STATE_INDEX_INCREMENT);
+             /* NVP cache lookup */
+-            if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
++            if (xive2_router_get_nvp(xrtr, nvx_blk, nvx_idx, &nvp)) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "XIVE: no NVP %x/%x\n",
+-                              nvp_blk, nvp_idx);
++                              nvx_blk, nvx_idx);
+                 return;
              }
-             break;
  
-         case SEQ_OP_SHIFT_N1:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
--            trace_pnv_spi_sequencer_op("SHIFT_N1", get_seq_index(s));
-+            trace_pnv_spi_sequencer_op("SHIFT_N1", seq_index);
-             /*
-              * Only allow a shift_n1 when the state is not IDLE or DONE.
-              * In either of those two cases the sequencer is not in a proper
-@@ -785,8 +780,9 @@ static void operation_sequencer(PnvSpi *s)
-                  * transmission to the responder without requiring a refill of
-                  * the TDR between the two operations.
-                  */
--                if (PNV_SPI_MASKED_OPCODE(s->seq_op[get_seq_index(s) + 1])
--                                == SEQ_OP_SHIFT_N2) {
-+                if ((seq_index != 7) &&
-+                    PNV_SPI_MASKED_OPCODE(s->seq_op[(seq_index + 1)]) ==
-+                    SEQ_OP_SHIFT_N2) {
-                     send_n1_alone = false;
-                 }
-                 s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_SHIFT_N1);
-@@ -806,9 +802,8 @@ static void operation_sequencer(PnvSpi *s)
-                     if (GETFIELD(SPI_STS_TDR_UNDERRUN, s->status)) {
-                         s->shift_n1_done = true;
-                         s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status,
--                                        FSM_SHIFT_N2);
--                        s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status,
--                                        (get_seq_index(s) + 1));
-+                                                  FSM_SHIFT_N2);
-+                        seq_index++;
-                     } else {
-                         /*
-                          * This is case (1) or (2) so the sequencer needs to
-@@ -819,14 +814,16 @@ static void operation_sequencer(PnvSpi *s)
-                 } else {
-                     /* Ok to move on to the next index */
-                     s->shift_n1_done = true;
--                    next_sequencer_fsm(s);
-+                    seq_index++;
-+                    s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status,
-+                                    SEQ_STATE_INDEX_INCREMENT);
-                 }
+             if (!xive2_nvp_is_valid(&nvp)) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "XIVE: NVP %x/%x is invalid\n",
+-                              nvp_blk, nvp_idx);
++                              nvx_blk, nvx_idx);
+                 return;
              }
-             break;
  
-         case SEQ_OP_SHIFT_N2:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
--            trace_pnv_spi_sequencer_op("SHIFT_N2", get_seq_index(s));
-+            trace_pnv_spi_sequencer_op("SHIFT_N2", seq_index);
-             if (!s->shift_n1_done) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "Shift_N2 is not allowed if a "
-                               "Shift_N1 is not done, shifter state = 0x%llx",
-@@ -851,14 +848,16 @@ static void operation_sequencer(PnvSpi *s)
-                     s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_WAIT);
-                 } else {
-                     /* Ok to move on to the next index */
--                    next_sequencer_fsm(s);
-+                    seq_index++;
-+                    s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status,
-+                                    SEQ_STATE_INDEX_INCREMENT);
-                 }
+@@ -1409,7 +1409,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+             ipb = xive_get_field32(NVP2_W2_IPB, nvp.w2) |
+                 xive_priority_to_ipb(priority);
+             nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, ipb);
+-            xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
++            xive2_router_write_nvp(xrtr, nvx_blk, nvx_idx, &nvp, 2);
+         } else {
+             Xive2Nvgc nvgc;
+             uint32_t backlog;
+@@ -1422,15 +1422,15 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+              * counters are stored in the NVG/NVC structures
+              */
+             if (xive2_router_get_nvgc(xrtr, crowd,
+-                                      nvp_blk, nvp_idx, &nvgc)) {
++                                      nvx_blk, nvx_idx, &nvgc)) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "XIVE: no %s %x/%x\n",
+-                              crowd ? "NVC" : "NVG", nvp_blk, nvp_idx);
++                              crowd ? "NVC" : "NVG", nvx_blk, nvx_idx);
+                 return;
              }
-             break;
  
-         case SEQ_OP_BRANCH_IFNEQ_RDR:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
--            trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_RDR", get_seq_index(s));
-+            trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_RDR", seq_index);
-             /*
-              * The memory mapping register RDR match value is compared against
-              * the 16 rightmost bytes of the RDR (potentially with masking).
-@@ -874,15 +873,16 @@ static void operation_sequencer(PnvSpi *s)
-                 if (rdr_matched) {
-                     trace_pnv_spi_RDR_match("success");
-                     /* A match occurred, increment the sequencer index. */
--                    next_sequencer_fsm(s);
-+                    seq_index++;
-+                    s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status,
-+                                    SEQ_STATE_INDEX_INCREMENT);
-                 } else {
-                     trace_pnv_spi_RDR_match("failed");
-                     /*
-                      * Branch the sequencer to the index coded into the op
-                      * code.
-                      */
--                    s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status,
--                                    PNV_SPI_OPCODE_LO_NIBBLE(opcode));
-+                    seq_index = PNV_SPI_OPCODE_LO_NIBBLE(opcode);
-                 }
-                 /*
-                  * Regardless of where the branch ended up we want the
-@@ -901,12 +901,13 @@ static void operation_sequencer(PnvSpi *s)
-         case SEQ_OP_TRANSFER_TDR:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
-             qemu_log_mask(LOG_GUEST_ERROR, "Transfer TDR is not supported\n");
--            next_sequencer_fsm(s);
-+            seq_index++;
-+            s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_INDEX_INCREMENT);
-             break;
- 
-         case SEQ_OP_BRANCH_IFNEQ_INC_1:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
--            trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_INC_1", get_seq_index(s));
-+            trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_INC_1", seq_index);
-             /*
-              * The spec says the loop should execute count compare + 1 times.
-              * However we learned from engineering that we really only loop
-@@ -920,19 +921,21 @@ static void operation_sequencer(PnvSpi *s)
-                  * mask off all but the first three bits so we don't try to
-                  * access beyond the sequencer_operation_reg boundary.
-                  */
--                s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status,
--                                PNV_SPI_OPCODE_LO_NIBBLE(opcode));
-+                seq_index = PNV_SPI_OPCODE_LO_NIBBLE(opcode);
-                 s->loop_counter_1++;
-             } else {
-                 /* Continue to next index if loop counter is reached */
--                next_sequencer_fsm(s);
-+                seq_index++;
-+                s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status,
-+                                SEQ_STATE_INDEX_INCREMENT);
+             if (!xive2_nvgc_is_valid(&nvgc)) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "XIVE: NVG %x/%x is invalid\n",
+-                              nvp_blk, nvp_idx);
++                              nvx_blk, nvx_idx);
+                 return;
              }
-             break;
  
-         case SEQ_OP_BRANCH_IFNEQ_INC_2:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
--            trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_INC_2", get_seq_index(s));
--            uint8_t condition2 = GETFIELD(SPI_CTR_CFG_CMP2, s->regs[SPI_CTR_CFG_REG]);
-+            trace_pnv_spi_sequencer_op("BRANCH_IFNEQ_INC_2", seq_index);
-+            uint8_t condition2 = GETFIELD(SPI_CTR_CFG_CMP2,
-+                              s->regs[SPI_CTR_CFG_REG]);
-             /*
-              * The spec says the loop should execute count compare + 1 times.
-              * However we learned from engineering that we really only loop
-@@ -945,19 +948,21 @@ static void operation_sequencer(PnvSpi *s)
-                  * mask off all but the first three bits so we don't try to
-                  * access beyond the sequencer_operation_reg boundary.
-                  */
--                s->status = SETFIELD(SPI_STS_SEQ_INDEX,
--                                s->status, PNV_SPI_OPCODE_LO_NIBBLE(opcode));
-+                seq_index = PNV_SPI_OPCODE_LO_NIBBLE(opcode);
-                 s->loop_counter_2++;
-             } else {
-                 /* Continue to next index if loop counter is reached */
--                next_sequencer_fsm(s);
-+                seq_index++;
-+                s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status,
-+                                SEQ_STATE_INDEX_INCREMENT);
-             }
-             break;
+@@ -1442,11 +1442,11 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+              */
+             backlog = xive2_nvgc_get_backlog(&nvgc, priority) + 1;
+             xive2_nvgc_set_backlog(&nvgc, priority, backlog);
+-            xive2_router_write_nvgc(xrtr, crowd, nvp_blk, nvp_idx, &nvgc);
++            xive2_router_write_nvgc(xrtr, crowd, nvx_blk, nvx_idx, &nvgc);
  
-         default:
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_EXECUTE);
-             /* Ignore unsupported operations. */
--            next_sequencer_fsm(s);
-+            seq_index++;
-+            s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_INDEX_INCREMENT);
-             break;
-         } /* end of switch */
-         /*
-@@ -965,10 +970,10 @@ static void operation_sequencer(PnvSpi *s)
-          * we need to go ahead and end things as if there was a STOP at the
-          * end.
-          */
--        if (get_seq_index(s) == NUM_SEQ_OPS) {
-+        if (seq_index == NUM_SEQ_OPS) {
-             /* All 8 opcodes completed, sequencer idling */
-             s->status = SETFIELD(SPI_STS_SHIFTER_FSM, s->status, FSM_IDLE);
--            s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status, 0);
-+            seq_index = 0;
-             s->loop_counter_1 = 0;
-             s->loop_counter_2 = 0;
-             s->status = SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STATE_IDLE);
-@@ -979,6 +984,8 @@ static void operation_sequencer(PnvSpi *s)
-             break;
-         }
-     } /* end of while */
-+    /* Update sequencer index field in status.*/
-+    s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status, seq_index);
-     return;
- } /* end of operation_sequencer() */
- 
+             if (backlog == 1) {
+                 XiveFabricClass *xfc = XIVE_FABRIC_GET_CLASS(xrtr->xfb);
+-                xfc->broadcast(xrtr->xfb, nvp_blk, nvp_idx,
++                xfc->broadcast(xrtr->xfb, nvx_blk, nvx_idx,
+                                xive2_end_is_crowd(&end),
+                                xive2_end_is_ignore(&end),
+                                priority);
 -- 
 2.47.1
 
