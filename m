@@ -4,69 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59BD1C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5E7C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 13:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trzUI-0007t3-W0; Tue, 11 Mar 2025 09:17:39 -0400
+	id 1trzJm-0005nP-8S; Tue, 11 Mar 2025 09:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trzUD-0007oO-Q9
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:17:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1trzUB-0003Ti-Q1
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 09:17:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741699049;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=2kiww0yvo5e1hJ6zykfCHYUfWvttW0QdbQwBaLaOwII=;
- b=N3HUfdS3ozvNJFDn6ze7WPG3NUP+zERbx/wAIH8Zc27a6te2DG7AM5Z68igdNRZI8b2+r1
- igICvu/ZIGZKsC7d4VM71Oko7b8SLlj1nKf+zx7Dhrc1EOxkuD2H0IGvG8QjLe97zNPOkf
- czmEKeQabSw7euJqQKEf1Q9zow20p40=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-52-4HLArxLqMs2ZiLcBV3fbRA-1; Tue,
- 11 Mar 2025 09:17:22 -0400
-X-MC-Unique: 4HLArxLqMs2ZiLcBV3fbRA-1
-X-Mimecast-MFC-AGG-ID: 4HLArxLqMs2ZiLcBV3fbRA_1741699041
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A24951800265; Tue, 11 Mar 2025 13:17:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E893F1800268; Tue, 11 Mar 2025 13:17:18 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1C3BF21E66C1; Tue, 11 Mar 2025 14:17:15 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzEv-0005tv-4P; Tue, 11 Mar 2025 09:01:46 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1trzEs-0000KV-H5; Tue, 11 Mar 2025 09:01:44 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2f42992f608so9032932a91.0; 
+ Tue, 11 Mar 2025 06:01:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741698099; x=1742302899; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JY67tjfgQ34CRjW0ZGaljhvuHtNs5IgoqrFyn/RHWZc=;
+ b=AWL+hf0yRuk1bQE/e1HZgJuK21sORynea7DAsLFvOxMum93xxWSccoFQcorcxSHAUy
+ 92Rm2BFG+3UBnLIsHWa9S09HPS/4mU1YQE1DqcV9+BhWk25UQOu3rAl5Kkrmldvwx3bL
+ p+rRZmrhCXN/yGiggW2yZKsoyiQzse3Cvytx6a/nFJp9TWNatWTPOxbfV/WvKuucwTcf
+ //oquu5VKTVRDt4yQkhuln5EInEruxefGaAog8wQeIrQG0pACXI6gBdEwGRmgmHLyLlw
+ rA8MwWJI5ToXus6y9sb+dfz3n/y3yt8TrTpnFKb+qwrtXwF4CHpcIjBQDoUhqRrHoyUl
+ MBzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741698099; x=1742302899;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JY67tjfgQ34CRjW0ZGaljhvuHtNs5IgoqrFyn/RHWZc=;
+ b=Hqx273MCUVVNLkd0cVw8Ec088Md4Lh+Xy1ecXAu+IMzI+C1XbyLTjHr1pAFHHSxxDm
+ IY13Gou7ByLdNJ4Q0JnZTOQ3N52WCV0elYtucc10lresX/r7Fm35zNEn/hrj0pTALkko
+ pkj/Je0XhpRZDdUPl/zom5ftWTyrGr7e/IZ5S+UAAwUQ+4qwFF3bJTsFy8bgW2pL+LbX
+ DR6uzU9pHEGi2zCmVNZyLKTxv/KJqQW8Ytc2Gco1swLFPKGZUMVEFEu/zidrUOwYtwsE
+ kQmbh4uT0I8K5qwjgrnm0/v33XvAjQpIjME0676nzGi5PWv5eYIZBa+YmjQGw6vnJqlN
+ Z+JQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyizlIIbA07NwE9lRmQxGdTtbCKe4fdDkiuuEGZJlPlKKHa+9OjqF9kwhp9KZYtoDkjxytK0oIpA==@nongnu.org
+X-Gm-Message-State: AOJu0Yyv7Zmic4VTYM8rnn2T7JAaa+SkMPd71UHKLERT3MnuU29ikjtQ
+ 6oJ8jDN/DB2ICO8e19p9Y4ybHMCsiripcUqmBp36uOiGVmNm7n3giOeuHw==
+X-Gm-Gg: ASbGncskEJYZwShg+Huym507yXEWfzug9AiEyW2kurBJkD1UFDpXQzUJfqg0i9JexbE
+ nMV99DuT9keTelgHBrriDHybhPfZ0Ab7Ww1DaR1iYDcbcFMthvwyLJ/447WnoMhUttML0VK+3An
+ BeAeyuC9mPbxirYTPekM90+TEROGPHWM4Z5EHDmCGWBEg6DA9hu9D9YkqW7x6qDJluWMrVJ1yZw
+ +QzR+FygQW40IaH4tUBWjxy2izWUGTxRKTWurRUKAdT2ljipnqg/rFEKPydN4t93Eear0NGzd5K
+ HWsg3I1MXAiAFn15AU+iWyvQPFOl792ny/waocEsqYykOWSJwyX6Qh7JvmnPyQ==
+X-Google-Smtp-Source: AGHT+IHfbWkjiyhk8kgV3NYQHOuEDsaSJvC+Ced3BjtR/V255+jwgWGx78b0P9eE9vFtHLdputyg9g==
+X-Received: by 2002:a17:90b:1a86:b0:2ee:9b09:7d3d with SMTP id
+ 98e67ed59e1d1-2ff7ce8b60amr24976057a91.19.1741698099460; 
+ Tue, 11 Mar 2025 06:01:39 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.151.101])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ff4e773dddsm11822318a91.12.2025.03.11.06.01.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 06:01:39 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: wencongyang2@huawei.com, zhanghailiang@xfusion.com,
- arei.gonglei@huawei.com, xiechanglong.d@gmail.com, hreitz@redhat.com,
- berto@igalia.com, kwolf@redhat.com
-Subject: [PATCH] qapi/block-core: Improve x-blockdev-change documentation
-Date: Tue, 11 Mar 2025 14:17:15 +0100
-Message-ID: <20250311131715.1296101-1-armbru@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 63/72] target/ppc: fix timebase register reset state
+Date: Tue, 11 Mar 2025 22:57:57 +1000
+Message-ID: <20250311125815.903177-64-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250311125815.903177-1-npiggin@gmail.com>
+References: <20250311125815.903177-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,74 +99,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The description of feature @unstable is three paragraphs.  The second
-and third became part of the description by accident in commit
-9fb49daabfb (qapi: Mark unstable QMP parts with feature 'unstable').
+(H)DEC and PURR get reset before icount does, which causes them to be
+skewed and not match the init state. This can cause replay to not
+match the recorded trace exactly. For DEC and HDEC this is usually not
+noticable since they tend to get programmed before affecting the
+target machine. PURR has been observed to cause replay bugs when
+running Linux.
 
-The second paragraph describes a defect in terms of the
-implementation.  Fine, but doesn't belong into user-facing
-documentation.  Turn it into a TODO section.
+Fix this by resetting using a time of 0.
 
-Rewrite everything else for clarity and completeness.
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20241219034035.1826173-2-npiggin@gmail.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- qapi/block-core.json | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ hw/ppc/ppc.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index ee6eccc68c..b1937780e1 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -5913,35 +5913,31 @@
- ##
- # @x-blockdev-change:
- #
--# Dynamically reconfigure the block driver state graph.  It can be
--# used to add, remove, insert or replace a graph node.  Currently only
--# the Quorum driver implements this feature to add or remove its
--# child.  This is useful to fix a broken quorum child.
-+# Dynamically reconfigure the block driver state graph.
- #
--# If @node is specified, it will be inserted under @parent.  @child
--# may not be specified in this case.  If both @parent and @child are
--# specified but @node is not, @child will be detached from @parent.
-+# Currently only supports adding and deleting quorum children.  A
-+# child will be added at the end of the list of children.  Its
-+# contents *must* be consistent with the other childrens' contents.
-+# Deleting a child that is not last in the list of children is
-+# problematic, because it "renumbers" the children following it.
- #
- # @parent: the id or name of the parent node.
- #
--# @child: the name of a child under the given parent node.
-+# @child: the name of a child to be deleted.  Mutually exclusive with
-+#     @node.
- #
--# @node: the name of the node that will be added.
-+# @node: the name of the node to be added.  Mutually exclusive with
-+#     @child.
- #
- # Features:
- #
--# @unstable: This command is experimental, and its API is not stable.
--#     It does not support all kinds of operations, all kinds of
--#     children, nor all block drivers.
-+# @unstable: This command is experimental.
- #
--#     FIXME Removing children from a quorum node means introducing
-+# TODO: Removing children from a quorum node means introducing
- #     gaps in the child indices.  This cannot be represented in the
- #     'children' list of BlockdevOptionsQuorum, as returned by
- #     .bdrv_refresh_filename().
- #
--#     Warning: The data in a new quorum child MUST be consistent with
--#     that of the rest of the array.
--#
- # Since: 2.7
- #
- # .. qmp-example::
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index 90e3db5cfe..3a80931538 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -1123,16 +1123,21 @@ void cpu_ppc_tb_reset(CPUPPCState *env)
+         timer_del(tb_env->hdecr_timer);
+         ppc_set_irq(cpu, PPC_INTERRUPT_HDECR, 0);
+         tb_env->hdecr_next = 0;
++        _cpu_ppc_store_hdecr(cpu, 0, 0, 0, 64);
+     }
+ 
+     /*
+      * There is a bug in Linux 2.4 kernels:
+      * if a decrementer exception is pending when it enables msr_ee at startup,
+      * it's not ready to handle it...
++     *
++     * On machine reset, this is called before icount is reset, so for
++     * icount-mode, setting TB registers using now == qemu_clock_get_ns()
++     * results in them being garbage after icount is reset. Use an
++     * explicit now == 0 to get a consistent reset state.
+      */
+-    cpu_ppc_store_decr(env, -1);
+-    cpu_ppc_store_hdecr(env, -1);
+-    cpu_ppc_store_purr(env, 0x0000000000000000ULL);
++    _cpu_ppc_store_decr(cpu, 0, 0, -1, 64);
++    _cpu_ppc_store_purr(env, 0, 0);
+ }
+ 
+ void cpu_ppc_tb_free(CPUPPCState *env)
 -- 
-2.48.1
+2.47.1
 
 
