@@ -4,71 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41069C28B2E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 05:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED314C28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 05:12:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trrmv-00012N-Ma; Tue, 11 Mar 2025 01:04:21 -0400
+	id 1trruA-0005bJ-Tl; Tue, 11 Mar 2025 01:11:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trrmt-00011h-Pn
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 01:04:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1trru4-0005Xb-HL; Tue, 11 Mar 2025 01:11:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1trrms-0006V3-C5
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 01:04:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741669457;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v6S2yWdk92FCjpnBi/j9+Y5EEqiVXLsO+6X2BA1YAUk=;
- b=ZpRIDVsGb53kX1quFfJruEKU7Bpr99+5GKPUJMiCTF2DCBJDox81Bkh+tYbhVjEgD49Kfu
- F9tHS8Qq1Q7Zf1I/a3zjGt2Rsn34r/BN8/3NrX0tgNR0oKlYSwC77rT+r6BZNlq/0TaUTZ
- p41xyUurJr/sJmz3ouk64FhBuHCUfaE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-HYTPZJ9xMz-qbWRQJOnDNQ-1; Tue,
- 11 Mar 2025 01:04:15 -0400
-X-MC-Unique: HYTPZJ9xMz-qbWRQJOnDNQ-1
-X-Mimecast-MFC-AGG-ID: HYTPZJ9xMz-qbWRQJOnDNQ_1741669455
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 065A719560B2; Tue, 11 Mar 2025 05:04:15 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.75])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F3F1D19560AB; Tue, 11 Mar 2025 05:04:13 +0000 (UTC)
-Date: Tue, 11 Mar 2025 13:04:11 +0800
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-Subject: Re: [PULL v2 0/3] Migration patches for 2025-03-10
-Message-ID: <20250311050411.GA602871@fedora>
-References: <20250310223440.31328-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1trru1-0008Bm-JN; Tue, 11 Mar 2025 01:11:43 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52B3kcSu002589;
+ Tue, 11 Mar 2025 05:11:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BrX9Ou
+ wgyWfxFXOJOR7HXzfTSnXXnwrUGqXMT8iGtcg=; b=p/C32Cj0IREeSba1sHKQvb
+ fJmaPdTzUTpMlKhULBoMh5RVFgIgJAMinRSbdcyXd6ql/iBpigSPjaS7jLzVu2ey
+ BZ3DHltj4tClhctOqFk+kHXCPemI7q1fUKqTVPrBXPaFP1NorTnjqW/xj9U8BXP0
+ LZkZXhhYqiXOzmw3mZCmMuDcVIvjdEhFmiQSmINgdd9eTiAG8Axt2caGNxiINYd4
+ 4XwXg6r0bmH2QM2bDDTnLNtPu8GW24ByncwcVff1DQACztJeWKwprO7oNn4dP9iQ
+ Jcsj1ODmt5Xjyhv/F8+IAhH87W/f8fDURwWZwUiUdNQSwqUHG0gxPNQLdukdSEXA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45adjb08cf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Mar 2025 05:11:39 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52B5ADOI003435;
+ Tue, 11 Mar 2025 05:11:38 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45adjb08cb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Mar 2025 05:11:38 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52B3F69X014921;
+ Tue, 11 Mar 2025 05:11:37 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4592eka23c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Mar 2025 05:11:37 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52B5Bavd29622858
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 11 Mar 2025 05:11:36 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6C00058059;
+ Tue, 11 Mar 2025 05:11:36 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C90EC5804B;
+ Tue, 11 Mar 2025 05:11:33 +0000 (GMT)
+Received: from [9.109.242.165] (unknown [9.109.242.165])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 11 Mar 2025 05:11:33 +0000 (GMT)
+Message-ID: <4c87e14e-460e-4a59-b8e2-85ead830ee59@linux.ibm.com>
+Date: Tue, 11 Mar 2025 10:41:32 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="XVXieqry+E0uKKdx"
-Content-Disposition: inline
-In-Reply-To: <20250310223440.31328-1-farosas@suse.de>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] hw/ppc: Add MDST/MDDT/MDRT table structures and
+ offsets
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250217071934.86131-1-adityag@linux.ibm.com>
+ <20250217071934.86131-5-adityag@linux.ibm.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250217071934.86131-5-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: y6Kk0ZHNrNzxY1YYuXqpMHZYMmykY9ar
+X-Proofpoint-GUID: vETl48RUstCpb8qF9ERCkfPmkJzONXxc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-11_01,2025-03-07_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 mlxlogscore=999
+ spamscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 suspectscore=0
+ adultscore=0 phishscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2503110031
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,29 +122,156 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---XVXieqry+E0uKKdx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Applied, thanks.
+On 2/17/25 12:49, Aditya Gupta wrote:
+> Add the MDST, MDDT, MDRT tables offsets and structures as per current
+> skiboot upstream:
+> 
+>      commit bc7b85db1e7e ("opal-ci: Remove centos7")
+> 
+> These structures will be later populated when preserving memory regions
+> for MPIPL
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/pnv_sbe.c | 113 +++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 113 insertions(+)
+> 
+> diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+> index 79818177fc36..361a3854307d 100644
+> --- a/hw/ppc/pnv_sbe.c
+> +++ b/hw/ppc/pnv_sbe.c
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
+These should have been added in include/hw/ppc/pnv_sbe.h
 
---XVXieqry+E0uKKdx
-Content-Type: application/pgp-signature; name=signature.asc
+> @@ -84,6 +84,119 @@
+>   
+>   static uint64_t mpipl_skiboot_base = 0x30000000 /*default SKIBOOT_BASE*/;
+>   
+> +/* Following offsets are copied from Skiboot source code */
+> +/* Use 768 bytes for SPIRAH */
+> +#define SPIRAH_OFF      0x00010000
+> +#define SPIRAH_SIZE     0x300
+> +
+> +/* Use 256 bytes for processor dump area */
+> +#define PROC_DUMP_AREA_OFF  (SPIRAH_OFF + SPIRAH_SIZE)
+> +#define PROC_DUMP_AREA_SIZE 0x100
+> +
+> +#define PROCIN_OFF      (PROC_DUMP_AREA_OFF + PROC_DUMP_AREA_SIZE)
+> +#define PROCIN_SIZE     0x800
+> +
+> +/* Offsets of MDST and MDDT tables from skiboot base */
+> +#define MDST_TABLE_OFF      (PROCIN_OFF + PROCIN_SIZE)
+> +#define MDST_TABLE_SIZE     0x400
+> +
+> +#define MDDT_TABLE_OFF      (MDST_TABLE_OFF + MDST_TABLE_SIZE)
+> +#define MDDT_TABLE_SIZE     0x400
+> +
+> +#define CPU_CTL_OFF         (MDDT_TABLE_OFF + MDDT_TABLE_SIZE)
+> +#define CPU_CTL_SIZE        0x2000
+> +
+> +/* MPIPL reserved regions (offset by skiboot_base to access) */
+> +#define MDST_TABLE_BASE     (mpipl_skiboot_base + MDST_TABLE_OFF)
+> +#define MDDT_TABLE_BASE     (mpipl_skiboot_base + MDDT_TABLE_OFF)
+> +#define PROC_DUMP_AREA_BASE (mpipl_skiboot_base + PROC_DUMP_AREA_OFF)
+> +
+> +#define __packed             __attribute__((packed))
+> +
+> +/* Metadata to capture before triggering MPIPL */
+> +struct mpipl_metadata {
 
------BEGIN PGP SIGNATURE-----
+CamelCase for structs? Applies for other structs below.
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfPxEsACgkQnKSrs4Gr
-c8jJSAf+NcECHFs7Kr9ApcngArlBvQy4IP3eXAPha0fqSorJzb+WSx4dDK8kZ6+n
-W36cReXts4JhAa805gra4QwLQliXcjqNm0wIaSSyssOUr4tZ4WxAzJuEJA2roEze
-QYl19xMTmqXKDwc2DqCZ17OZerQgnCwiyxvcDTE0VoAbsptkH1S5hoeMlW0gKVNw
-qABSzPIRWdqR2vzxdB7XEN/sovhC6/ufCBo7hz5P2WPlQRUkHXAHLWFjftmpjEVj
-RFtIW8Q5DQ/5scyaR8tJDLj3jPur08qvzwGPR50JcMdBZ81AV8x5ANZ1SKmsKRIT
-bmxjAzEnxejENSSs8xcWEiZQRMTI6g==
-=pgIv
------END PGP SIGNATURE-----
+> +    /* Crashing PIR is required to create OPAL dump */
+> +    uint32_t    crashing_pir;
+> +    /* Kernel expects OPAL to presrve tag and pass it back via OPAL API */
+> +    uint64_t    kernel_tag;
+> +    /* Post MPIPL kernel boot memory size */
+> +    uint64_t    boot_mem_size;
+> +} __packed;
+> +
+> +/* Structure version */
+> +#define OPAL_MPIPL_VERSION  0x01
+> +
+> +/* Preserved memory details */
+> +struct opal_mpipl_region {
+> +    __be64  src;
+> +    __be64  dest;
+> +    __be64  size;
+> +};
+> +
+> +struct opal_mpipl_fadump {
+> +    uint8_t version;
+> +    uint8_t reserved[7];
+> +    __be32  crashing_pir;    /* OPAL crashing CPU PIR */
+> +    __be32  cpu_data_version;
+> +    __be32  cpu_data_size;
+> +    __be32  region_cnt;
+> +    struct  opal_mpipl_region *region;
+> +};
+> +
+> +/*
+> + * This is our dump result table after MPIPL. Hostboot will write to this
+> + * memory after moving memory content from source to destination memory.
+> + */
+> +#define MDRT_TABLE_BASE        (mpipl_skiboot_base + 0x01c00000)
+> +#define MDRT_TABLE_SIZE        0x00008000
+> +
+> +/*
+> + * This is our dump metadata area. We will use this memory to save metadata
+> + * (like crashing CPU details, payload tags) before triggering MPIPL.
+> + */
+> +#define DUMP_METADATA_AREA_BASE    (mpipl_skiboot_base + 0x01c08000)
+> +#define DUMP_METADATA_AREA_SIZE    0x8000
+> +
+> +/*
+> + *  Memory Dump Source Table
+> + *
+> + * Format of this table is same as Memory Dump Source Table (MDST)
+> + * defined in HDAT spec.
+> + */
+> +struct mdst_table {
+> +    __be64  addr;
+> +    uint8_t data_region;    /* DUMP_REGION_* */
+> +    uint8_t dump_type;    /* DUMP_TYPE_* */
+> +    __be16  reserved;
+> +    __be32  size;
+> +} __packed;
+> +
+> +/* Memory dump destination table (MDDT) */
+> +struct mddt_table {
+> +    __be64  addr;
+> +    uint8_t data_region;
+> +    uint8_t dump_type;
+> +    __be16  reserved;
+> +    __be32  size;
+> +} __packed;
 
---XVXieqry+E0uKKdx--
+If both mdst_table and mddt_table are supposed to be same, we could have
+just one mdxt_table and variable instances could be named mdst/mddt.
 
+Thanks
+Harsh
+
+> +
+> +/*
+> + * Memory dump result table (MDRT)
+> + *
+> + * List of the memory ranges that have been included in the dump. This table is
+> + * filled by hostboot and passed to OPAL on second boot. OPAL/payload will use
+> + * this table to extract the dump.
+> + */
+> +struct mdrt_table {
+> +    __be64  src_addr;
+> +    __be64  dest_addr;
+> +    uint8_t data_region;
+> +    uint8_t dump_type;  /* unused */
+> +    __be16  reserved;   /* unused */
+> +    __be32  size;
+> +    __be64  padding;    /* unused */
+> +} __packed;
+> +
+>   static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
+>   {
+>       val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
 
