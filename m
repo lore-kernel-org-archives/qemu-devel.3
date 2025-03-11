@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673C5C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 09:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A62C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 09:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1trvUk-00040X-Lz; Tue, 11 Mar 2025 05:01:51 -0400
+	id 1trvbC-0000A3-CV; Tue, 11 Mar 2025 05:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trvUL-0003EZ-Of
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 05:01:27 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1trvUE-000252-Is
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 05:01:25 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43cef0f03cfso14865045e9.3
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 02:01:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741683675; x=1742288475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PTnMl+LwpyUuxwQWpr4yTuH+ktyfBqsl7s/0FLPGbnw=;
- b=rLl+7VJr7RrH+saJpxiTaDOKwbAFFkN+HNOkFfUF9FbcbBR8jsrKMR/rq6Omh76qJ6
- sKz0b82wExmqyA1r7EyieqJMzUKQ3I1977gvIfO+6CZW1do8H7FxXr/etQXmYb/MVgW+
- +2gVUzh6B44EYtpiby97nNEqJYxYpHPb7emE2XXa1bnRitLUjDSxGroeXNURTlOcVFT5
- Ob1VuJ7DwTvWg238jqfXaHOMnEQNtGXNpC44LgnQZE+MA1USc3eSAV+mo48M9u9gCF2/
- ZgLEYLHMw8D7hS+obUxRCBHf75oO/A2tc8a3XmXjMWrwlTzy1uUFt7ubikmh1XPx1au5
- Ey4w==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1trvbA-00009P-Tl
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 05:08:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1trvb4-0003Gp-EV
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 05:08:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741684098;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CJxI/ZRVueyO0n8sjn5AWKSzXjyVt2i10kz6Me5oZbg=;
+ b=LP5AAkcCMxyLJq3YiqikZgQsTk1uyLSJFOoCJvoICSz+Qf5R0RJWaYejFAjK+HPMJBiNKF
+ 4FDkEDN5vQIW5meuKWEzI3XpJn/PxQN7n0/xpehae9Svh1jDlznjnu80TbWVCXc/KwFdvW
+ zNWOstA5PN/IpQPjGzwLS8YRoWyPaqs=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-604-Zi_Hv9SpPrWLFFF0hYbKXw-1; Tue, 11 Mar 2025 05:08:17 -0400
+X-MC-Unique: Zi_Hv9SpPrWLFFF0hYbKXw-1
+X-Mimecast-MFC-AGG-ID: Zi_Hv9SpPrWLFFF0hYbKXw_1741684096
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2240a96112fso162907685ad.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 02:08:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741683675; x=1742288475;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PTnMl+LwpyUuxwQWpr4yTuH+ktyfBqsl7s/0FLPGbnw=;
- b=lt1RWIlq1LqePEbcP4P3nVpW9c+VkRnnYDMrRkyk62/moMKj2IEjggITa+Kc6XlzFo
- n41Pd94nWbWs1e7bnrl3a29XOOYoZAkwmOAPBK6cTFwq5XnYMvpWZaWJpSH7SMCG21bP
- LlSpiJ4QzMtlmlmdoBJajpxqcBdOzIDM+APqOC1hjl8sDOH/sNcykRq4T4WEaH44/zTp
- galu+7re5mHM0XmiQt2WLbNYO7wN+itepiBx3u1F0NYSD+/81+O5gDOa2hMfdvQcb3nE
- OMHBCl8OicUAs1QOtcH3sEix2Wa6JVn4odExRugY4/KeCZJ6exFifvg1yEWXD7RNrkth
- MeFg==
+ d=1e100.net; s=20230601; t=1741684096; x=1742288896;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CJxI/ZRVueyO0n8sjn5AWKSzXjyVt2i10kz6Me5oZbg=;
+ b=laMG1NrDFnWEndj/kNQ0RDO1lZxrylowA2c0sPVZxegE8CTFhLklhcnWEwrKki8/4R
+ fEKMtk9+ppsKQ8xeQ4gEfJHbyk9fnOjeji5majtWcFhRpLqnJJQeDEX/0QdRsvOBb4yT
+ C2Z7toUcwdk0HFBI6PgDbK6PtmCenx0LSqKOESMIjwjrIuNEzuw5R+kIT3glnwVV+7b+
+ M1JICElszsDv+SRKON3tV7gOh/6DaAmdKUqMA8tLgvAiexyBfNksnz4+S64B5Hcq/fFk
+ uJE6GwGTZqI+89Sm7+AAFnDlel1pQ6rHnrQ3uWWKfLrOs5XWPFhopH4hQhqzUlMuRgYn
+ XXlA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+yhL2KoTwENV54y884NGbQHCxhd2UASPXqBXcVg/9z8HtVeqRnEovZJoevwOfq0Z20+Sy5sys1p4O@nongnu.org
-X-Gm-Message-State: AOJu0YwGeUnMEzo0GxzYHwr6bfJr/kFHtWAAtFCH0QdhCWrV2OBMRPZY
- VHR0kjR8co3dE9SsyggS79BToyFCGs5N6rMBmFspv0fMPb4CrZ24SuwfnoU8tNM=
-X-Gm-Gg: ASbGncsobmz+3eT0t0sCh4WiAH0ktsCHMYsZ4x1dPsKw6BmnwkNu+pN8CJcB4l9972R
- gf6J4f1ADTlGVcZKI739QiMp0mHnXBVhUnEZd5ZMpZ/1vSEWvB00IQ0Nf2ZdcbMvXyxhc5Htvlu
- waZSb3MNcTbvmLngupdm34xBfuqcAZMQJS2LK2ZDwXTlv7yeO2jvJdSCZjMuLBO74+FZLefbDjW
- 86as9v/74UO1uRauOY2cEYAlaR+JQWoI4Sb0f8jEltYfimyIkpIIo7DjN74Vv+U7tg8+D9trXue
- sPbZZLMZsT6pSEc/XsLZKSTk0yrtEmAVgMgxZ8qiABCCKRVHypHZ9PSE4lU6x0TrYkzdnlPOInf
- 4SjTrdYS45ID1
-X-Google-Smtp-Source: AGHT+IFN37Pf9IKgcGgzQlu3uQos5TTB9q1aXuFqznGpbKjXeavUg0ZE6IkYwUccgsbeXXThSQTw3Q==
-X-Received: by 2002:a05:6000:156f:b0:391:ba6:c066 with SMTP id
- ffacd0b85a97d-39132d9870emr17337399f8f.35.1741683675564; 
- Tue, 11 Mar 2025 02:01:15 -0700 (PDT)
-Received: from [192.168.69.199] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43cf595a771sm71103315e9.36.2025.03.11.02.01.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 02:01:14 -0700 (PDT)
-Message-ID: <f325c69e-6a30-4d16-bce1-8f7b4de72de1@linaro.org>
-Date: Tue, 11 Mar 2025 10:01:13 +0100
+ AJvYcCWkiqH+pgDmCdueyezNQW+HpiMF2oxPKCKyb9TC+Hke68AN0mC0BP/Qls1DYTKHddybvUprCjuqaFQX@nongnu.org
+X-Gm-Message-State: AOJu0Yy9o9dusrF+9188O8Eb0xVTkTzpMipP2bdxs7SY+hiWNt5udBEy
+ jI2TaQBtPQ3J4Sn++6lpIYaXBrpSrwEHGo9+zLOIe9yXMGb43LA1giR5IvFwUAHb9KND4+aF4tX
+ Skr1BpL7X4UaeWQQajgI+svkJIykvSqIeaLcKoWuVm9jdjmWsRYWS573lvMXOmlboN058rAPk4a
+ J9+MBqvFvFUtvmcO6mqxT6bL2TUPQ=
+X-Gm-Gg: ASbGncv54CCuVLERKbKG/Pwnsf268oiK8jtelOJ4rv0/9Fm37DydEs69dUvR7OoXtnC
+ MXOOEm6ESxErdYklqA5zrefS9POskM/BhoJSqeHepKud1JPJTOhTHpIH1zVDuqoaoFF9JOg==
+X-Received: by 2002:a05:6a00:987:b0:736:46b4:bef2 with SMTP id
+ d2e1a72fcca58-736aa9dbf8emr24954732b3a.6.1741684096327; 
+ Tue, 11 Mar 2025 02:08:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVwvJzC9V4lx5zVdwFDi4KxdLdN5XiiaE9GW00W9IebWuRD4GBdzc93lVTOWC0jmUPA8JioGqCsHwaZFXQXrU=
+X-Received: by 2002:a05:6a00:987:b0:736:46b4:bef2 with SMTP id
+ d2e1a72fcca58-736aa9dbf8emr24954708b3a.6.1741684095953; Tue, 11 Mar 2025
+ 02:08:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/smc91c111: Don't allow data register access to
- overrun buffer
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20250228191652.1957208-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250228191652.1957208-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20250228174802.1945417-1-peter.maydell@linaro.org>
+ <4f0367df-d873-414e-96fc-1a874ee1f501@linaro.org>
+In-Reply-To: <4f0367df-d873-414e-96fc-1a874ee1f501@linaro.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 11 Mar 2025 17:08:03 +0800
+X-Gm-Features: AQ5f1Jou4RX-6MRy8XHQm6pIwfeJzWq_Mtge16jAw4TSc5nRdLnRIzcgFBpwNZw
+Message-ID: <CACGkMEu6wngc6oiyVGP7O5BUUPGS4sfWEi66cMDmteihR9nuHw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] hw/net/smc91c111: Fix potential array overflows
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,41 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/2/25 20:16, Peter Maydell wrote:
-> For accesses to the 91c111 data register, the address within the
-> packet's data frame is determined by a combination of the pointer
-> register and the offset used to access the data register, so that you
-> can access data at effectively wider than byte width.  The pointer
-> register's pointer field is 11 bits wide, which is exactly the size
-> to index a 2048-byte data frame.
-> 
-> We weren't quite getting the logic right for ensuring that we end up
-> with a pointer value to use in the s->data[][] array that isn't out
-> of bounds:
-> 
->   * we correctly mask when getting the initial pointer value
->   * for the "autoincrement the pointer register" case, we
->     correctly mask after adding 1 so that the pointer register
->     wraps back around at the 2048 byte mark
->   * but for the non-autoincrement case where we have to add the
->     low 2 bits of the data register offset, we don't account
->     for the possibility that the pointer register is 0x7ff
->     and the addition should wrap
-> 
-> Fix this bug by factoring out the "get the p value to use as an array
-> index" into a function, making it use FIELD macro names rather than
-> hard-coded constants, and having a utility function that does "add a
-> value and wrap it" that we can use both for the "autoincrement" and
-> "add the offset bits" codepaths.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2758
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+On Tue, Mar 11, 2025 at 5:00=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Peter, Jason,
+>
+> On 28/2/25 18:47, Peter Maydell wrote:
+> > This patchset fixes some potential array overflows in the
+> > smc91c111 ethernet device model, including the one found in
+> > https://gitlab.com/qemu-project/qemu/-/issues/2742
+> >
+> > There are two classes of bugs:
+> >   * we accept packet numbers from the guest, but we were not
+> >     validating that they were in range before using them as an
+> >     index into the data[][] array
+> >   * we didn't sanitize the length field read from the data
+> >     frame on tx before using it as an index to find the
+> >     control byte at the end of the frame, so we could read off
+> >     the end of the buffer
+> >
+> > This patchset fixes both of these. The datasheet is sadly
+> > silent on the h/w behaviour for these errors, so I opted to
+> > LOG_GUEST_ERROR and silently ignore the invalid operations.
+> >
+> > Patch 3 tidies up the existing code to use a constant defined
+> > in patch 2; I put it last so we can cc the first two patches
+> > to stable without having to also backport that patch.
+> >
+> > thanks
+> > -- PMM
+> >
+> > Peter Maydell (3):
+> >    hw/net/smc91c111: Sanitize packet numbers
+> >    hw/net/smc91c111: Sanitize packet length on tx
+> >    hw/net/smc91c111: Use MAX_PACKET_SIZE instead of magic numbers
+>
+> Since Jason just sent his network pull request, I'll take these
+> patches via my hw-misc tree (with patch #2 fixed up), except if
+> one of you object.
+>
+> Thanks,
+>
+> Phil.
+>
 
+Fine with me.
 
-> ---
->   hw/net/smc91c111.c | 65 +++++++++++++++++++++++++++++++++++++---------
->   1 file changed, 53 insertions(+), 12 deletions(-)
+Thanks
 
-Patch queued via hw-misc (except if another tree is preferred), thanks!
 
