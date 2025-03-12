@@ -4,74 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B95FDC28B30
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F0DCC28B28
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMuf-00069u-S0; Wed, 12 Mar 2025 10:18:25 -0400
+	id 1tsMuJ-00068F-7t; Wed, 12 Mar 2025 10:18:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsMub-00069b-8E
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:18:21 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMuD-00066K-4B
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:17:57 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsMuZ-00027m-A3
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:18:20 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e63504bedd0so4873768276.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:18:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMuA-00025S-Vu
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:17:56 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3913fdd0120so2353354f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741789097; x=1742393897; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QyAuhZ+YcdTcX2MQjCN5PxL2AFyvDSU6MZv5l4MR3K0=;
- b=fNqMNYXoerju08i0Un24ELdHhW5PG2KVuZ85W7OdSoK8VNL+bmDNNh3QiYjcwaAvs4
- wjGK1z7oWMc+MOndW80WmmO378f85Ow7sWiYBuk3d4JJ2r0ZnWwYyQa0QJGgpud17YMe
- Uf692W/zAyy16/6QJmRE3gACxZ6IIXGY0+5SBBQB1pvuR9/dQGoykwr+0LYr3TAROVFw
- 03+UckMfTxDVEatEk7e/uDrIVFVBwUyaDBjrLePn8HK86WwDmzZt0PtgCOtk/FLu1vIv
- ioZQk81Xb8oi/4OE9bYOywbKMC+N9E2vlVhbIjx5a4mUmxKMHBQqP7ldzWYA4eIeAmQM
- rRWw==
+ d=linaro.org; s=google; t=1741789073; x=1742393873; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gYJ3ECqWjuXnPyqp7AVfnFFrkkGeAXD7mOJOi6p3muo=;
+ b=eTbjZ/MBrgHFRAkswBoBJ+VqgrHE+/jW2XsyIwDw741Lv1i2SLPe/8RdqfNQxrfRxT
+ csmAZk2qPEl1bPvUeaXsTKFWYw3Ls8g7fxoanlfLan1Gv67KjurvvktMJjci2bHUOgCl
+ plQhThER5Y65pxRxB8ijMCwRapabDz9BRcDVC67gTwk3SSHjgM3SCNLDwZYr7bWe8lDc
+ b062F7tB9uRIbwRfhRisSJjpjPGO9gGfwFOrNcw6RFMj878w7+oIO6YmqIGI84caF+2m
+ tEHLuW4GKrYbnnkdLN1QTQ3Qy3IDAKbbq7Mei/vukJjkMicF6eXTTubaRJWbZLFVwdLd
+ 22pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741789097; x=1742393897;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QyAuhZ+YcdTcX2MQjCN5PxL2AFyvDSU6MZv5l4MR3K0=;
- b=KhECyBfKJipiH6PhzQH8y71u9ykc1lKqvBJYdHKki4TYU2Bof6wi4E2qAKten+QM/b
- jC+yWi9a4m90B0ghri1lyv0lifKSyALJN/95HhTvqwGEaFQKxPnn/Gyinp8Bsi6oRlb7
- l25b4x/GH4JtXDro4HUl73c9UnypZS2vhGFS38p843x05O6mjAhuWJW1V+e/u0P9cJ4i
- 3tBQUF9AVuJ9WrUaUnph4EG8zM5wNj73244VnmL+T4AaMQzqDqtLDM8Noe9tGCB+NKx6
- pQe+uxAYl1PE+zmRoYskssbQv+Fvxbo/MPAfMCqJerH26Ju1PLiGNYTvO4hKKe2nKePg
- IFsg==
-X-Gm-Message-State: AOJu0YzkEXsZXzf4wlJOb1V2UgxXnQE/Y0Sd37Z79IpDn1ggdK+zqnVM
- O97CFh0TRz3aOuCDCeV8v+e4Bd5lVYdccVcUdgNH8ffO8VmkDAHK5SEZwvJoJ+6uJ7Ly5caKaQW
- VNoKxi312StpEjvhWt247RYMbrpswwm37yR6OzA==
-X-Gm-Gg: ASbGncsHVuNRrT76YPpktuksS3+V1WztmoE47pz2ORtyRvYqo/ypQVYgaN2U95WYlAt
- iOiHWMEgP/Stv3ELef6H00qJuRmCzLrhiZanlLhVfIVJ8roNQfFy3hAKBG9f59kTwr74wdbh289
- L5SPAdsqZRLnJwR52gSpilB5NNkeE=
-X-Google-Smtp-Source: AGHT+IHnPtYP94s9dcpOQAeaQ1lqNHqAy/IX7qppJz9ft/P5cJhN2Fuzr4aGkNM0+v7S/jnXrdl+PFNAUX99I26aTtw=
-X-Received: by 2002:a05:6902:1b12:b0:e63:6e52:2140 with SMTP id
- 3f1490d57ef6-e63b5180997mr8936687276.16.1741789097710; Wed, 12 Mar 2025
- 07:18:17 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741789073; x=1742393873;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gYJ3ECqWjuXnPyqp7AVfnFFrkkGeAXD7mOJOi6p3muo=;
+ b=fs9CkX8uTf2CdTPkKchtSygLQE3yYVoOs6GrrHYj1YEdgi4czd2Zt2x1B+9crccLvl
+ 4LKag4grjgP5g3NkIX0mcs2dsicKWxF5/1hDyfo5iOcovdJcpQf1HLWovodk0F+qjsdc
+ AiiyZjRd95Z8JJNfVjnudpXCgN/cNCUB2MZnmClM4VaWY+/M/eBQYuQjxtmTlw4HT4Hs
+ oGP1UX1/RJNLDfAmLqIBs2KnqYD/bpVXSNGNaLYz1p0dfln9ip8GVVdI4i+PAOG39DAw
+ EKWyUHB/igiuo5xBNpZAIxWDkA6rsrHPMvBvOFWA0VKfW3tMZ8crdcbemh2ZshxfaEe7
+ IRBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUm0yz/q1s0xQhxmixtvmeqaI5Ys3ixRfV4gJ+iOM9uAlMb+EvXCOUuslA/LEEP9M/BHPT9XQ37HppI@nongnu.org
+X-Gm-Message-State: AOJu0Yy4nrNMbdH9eC1zHHnLTyu5KeryfVBbBHHcLlEVHECNCWX0vA/Q
+ oS4tl10GhPv+24JfkHGH2KNY9wYVkotxJRNHWPIf1sj+Pr/jI9i1tqyJuiZU1FU=
+X-Gm-Gg: ASbGncv8XMvc//9alwoYNwuuf07yugIeUlVtlGcn33ytIRVcuv700itsy9tfaTnRiKc
+ /RaSg247RPOyuYfqjd9i6cMtWohMwSdoh8mqXoQwN22W5XUNNeLkrZhQmoFINZy8wQet8CWyFf/
+ NMCLy8jwIQ3RjJmlK/T5v4U7PJzMC6RekfKCVnzhclCMuuzPojm9vjRkuqnqfOUtS4Kw6qAo6rW
+ smrDnaxfO8xWATlXSw1yQVdQ8XCrzulL6pEx/LOGpry4WgU1RT2dsNpeY0egL8eqdDMeFsWoDZt
+ P8i8VWP+5JY7Y9Q4ffmsfmEH+UcyLk7+ki+uw+V5vezTHCdcEG2hcN1tteN8XuHPJ0P+2UPVkrC
+ DB1B+bhr6
+X-Google-Smtp-Source: AGHT+IEzVPO7mTyf+a7fbMlxyxCSfnn+HG2imntXGgKZ7u0/M621sr79OlQk8nIrbYMPz+XL2f+psw==
+X-Received: by 2002:a5d:6d04:0:b0:390:f0ff:2bf8 with SMTP id
+ ffacd0b85a97d-39132d05f78mr17489567f8f.10.1741789072553; 
+ Wed, 12 Mar 2025 07:17:52 -0700 (PDT)
+Received: from [10.223.46.213] (216.165.185.81.rev.sfr.net. [81.185.165.216])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d0a75aae2sm22652365e9.20.2025.03.12.07.17.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Mar 2025 07:17:51 -0700 (PDT)
+Message-ID: <9f2e1dbd-a9c7-4516-8944-753906f5e7b3@linaro.org>
+Date: Wed, 12 Mar 2025 15:17:48 +0100
 MIME-Version: 1.0
-References: <20250310203622.1827940-1-komlodi@google.com>
- <20250310203622.1827940-2-komlodi@google.com>
-In-Reply-To: <20250310203622.1827940-2-komlodi@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Mar 2025 14:18:05 +0000
-X-Gm-Features: AQ5f1JoCViMQ22iJltuKjGz_K1SH4fOLu33rsNwKD7wOk6h4n6dOBEGwNQ-kJdQ
-Message-ID: <CAFEAcA8VO4QNU5+9Xk=AiBObXFCRoPF3NUN9m2r1752oi1cShA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] util/cacheflush: Make first DSB unconditional on
- aarch64
-To: Joe Komlodi <komlodi@google.com>
-Cc: qemu-devel@nongnu.org, slongfield@google.com, richard.henderson@linaro.org,
- pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] chardev/char-pty: Avoid losing bytes when the other side
+ just (re-)connected
+To: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Marc Hartmayer <mhartmay@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20230816210743.1319018-1-thuth@redhat.com>
+ <b9550966-3c60-48dd-b0f3-a6833bd59cd9@linaro.org>
+ <741d932c-95c0-4a6a-b91e-6d07e7767675@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <741d932c-95c0-4a6a-b91e-6d07e7767675@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,64 +109,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 10 Mar 2025 at 20:36, Joe Komlodi <komlodi@google.com> wrote:
->
-> On ARM hosts with CTR_EL0.DIC and CTR_EL0.IDC set, this would only cause
-> an ISB to be executed during cache maintenance, which could lead to QEMU
-> executing TBs containing garbage instructions.
->
-> This seems to be because the ISB finishes executing instructions and
-> flushes the pipeline, but the ISB doesn't guarantee that writes from the
-> executed instructions are committed. If a small enough TB is created, it's
-> possible that the writes setting up the TB aren't committed by the time the
-> TB is executed.
+On 12/3/25 13:29, Thomas Huth wrote:
+> On 12/03/2025 13.18, Philippe Mathieu-Daudé wrote:
+>> Hi Thomas,
+>>
+>> (patch merged as commit 4f7689f0817)
+>>
+>> On 16/8/23 23:07, Thomas Huth wrote:
+>>> When starting a guest via libvirt with "virsh start --console ...",
+>>> the first second of the console output is missing. This is especially
+>>> annoying on s390x that only has a text console by default and no 
+>>> graphical
+>>> output - if the bios fails to boot here, the information about what went
+>>> wrong is completely lost.
+>>>
+>>> One part of the problem (there is also some things to be done on the
+>>> libvirt side) is that QEMU only checks with a 1 second timer whether
+>>> the other side of the pty is already connected, so the first second of
+>>> the console output is always lost.
+>>>
+>>> This likely used to work better in the past, since the code once checked
+>>> for a re-connection during write, but this has been removed in commit
+>>> f8278c7d74 ("char-pty: remove the check for connection on write") to 
+>>> avoid
+>>> some locking.
+>>>
+>>> To ease the situation here at least a little bit, let's check with 
+>>> g_poll()
+>>> whether we could send out the data anyway, even if the connection has 
+>>> not
+>>> been marked as "connected" yet. The file descriptor is marked as non- 
+>>> blocking
+>>> anyway since commit fac6688a18 ("Do not hang on full PTY"), so this 
+>>> should
+>>> not cause any trouble if the other side is not ready for receiving yet.
+>>>
+>>> With this patch applied, I can now successfully see the bios output of
+>>> a s390x guest when running it with "virsh start --console" (with a 
+>>> patched
+>>> version of virsh that fixes the remaining issues there, too).
+>>>
+>>> Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   chardev/char-pty.c | 22 +++++++++++++++++++---
+>>>   1 file changed, 19 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+>>> index 4e5deac18a..fad12dfef3 100644
+>>> --- a/chardev/char-pty.c
+>>> +++ b/chardev/char-pty.c
+>>> @@ -106,11 +106,27 @@ static void pty_chr_update_read_handler(Chardev 
+>>> *chr)
+>>>   static int char_pty_chr_write(Chardev *chr, const uint8_t *buf, int 
+>>> len)
+>>>   {
+>>>       PtyChardev *s = PTY_CHARDEV(chr);
+>>> +    GPollFD pfd;
+>>> +    int rc;
+>>> -    if (!s->connected) {
+>>> -        return len;
+> 
+> Old code discarded the bytes here if it was not able to send them ...
+> 
+>>> +    if (s->connected) {
+>>> +        return io_channel_send(s->ioc, buf, len);
+>>>       }
+>>> -    return io_channel_send(s->ioc, buf, len);
+>>> +
+>>> +    /*
+>>> +     * The other side might already be re-connected, but the timer 
+>>> might
+>>> +     * not have fired yet. So let's check here whether we can write 
+>>> again:
+>>> +     */
+>>> +    pfd.fd = QIO_CHANNEL_FILE(s->ioc)->fd;
+>>> +    pfd.events = G_IO_OUT;
+>>> +    pfd.revents = 0;
+>>> +    rc = RETRY_ON_EINTR(g_poll(&pfd, 1, 0));
+>>> +    g_assert(rc >= 0);
+>>> +    if (!(pfd.revents & G_IO_HUP) && (pfd.revents & G_IO_OUT)) {
+>>> +        io_channel_send(s->ioc, buf, len);
+>>
+>> Could io_channel_send() return -1 in this case, and if so is it OK to 
+>> ignore it?
+> 
+> ... so now you get the same behavior here in case they could still not 
+> be sent.
+> 
+> Why do you ask, did you run into any problems with this new code here?
 
-Yes; we need the DSB to ensure that the stores have completed
-and are visible to subsequent icache fills; and then we need
-the ISB to ensure that any instructions that we execute after
-this are done with an instruction fetch that happens after the
-ISB (i.e. the CPU hasn't already speculatively fetched the insn
-before we forced the store to complete).
+Peter found in chardev while testing a recent pl011 device patchset:
+https://lore.kernel.org/qemu-devel/CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
 
-> This function is intended to be a port of the gcc implementation
-> (https://github.com/gcc-mirror/gcc/blob/85b46d0795ac76bc192cb8f88b646a647acf98c1/libgcc/config/aarch64/sync-cache.c#L67)
-> which makes the first DSB unconditional, so we can fix the synchronization
-> issue by doing that as well.
->
-> Signed-off-by: Joe Komlodi <komlodi@google.com>
+For now I'm auditing our uses to understand better this subsystem,
+and am looking at the returned values, and noticed this case.
 
-We should add:
+Thanks,
 
-Cc: qemu-stable@nongnu.org
-Fixes: 664a79735e4deb1 ("util: Specialize flush_idcache_range for aarch64")
-
-> ---
->  util/cacheflush.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/util/cacheflush.c b/util/cacheflush.c
-> index a08906155a..1d12899a39 100644
-> --- a/util/cacheflush.c
-> +++ b/util/cacheflush.c
-> @@ -279,9 +279,11 @@ void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
->          for (p = rw & -dcache_lsize; p < rw + len; p += dcache_lsize) {
->              asm volatile("dc\tcvau, %0" : : "r" (p) : "memory");
->          }
-> -        asm volatile("dsb\tish" : : : "memory");
->      }
->
-> +    /* DSB unconditionally to ensure any outstanding writes are committed. */
-> +    asm volatile("dsb\tish" : : : "memory");
-> +
->      /*
->       * If CTR_EL0.DIC is enabled, Instruction cache cleaning to the Point
->       * of Unification is not required for instruction to data coherence.
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-Richard, are you doing a TCG pullreq for rc0? If not, I can
-put this into target-arm.next.
-
-thanks
--- PMM
+Phil.
 
