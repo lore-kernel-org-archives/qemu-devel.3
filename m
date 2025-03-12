@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B30C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D6DC28B2F
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMyC-0007zB-8X; Wed, 12 Mar 2025 10:22:07 -0400
+	id 1tsMz2-0001a9-4k; Wed, 12 Mar 2025 10:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMxu-0007nP-Nv
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:48 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsMz0-0001Vj-Na
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:22:54 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMxt-0002cp-1K
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:46 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ac2af2f15d1so412946666b.1
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:21:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsMyy-0002kD-RR
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:22:54 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e4419a47887so5316731276.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:22:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741789303; x=1742394103; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NYzTjC7R17kJDAJ8n8JeL+/IDeVGC3Hb9zPxDhRy2Mg=;
- b=naDYfx6m+zyxU1Vt+tPT3190LZVcua4Yp2bHtlr3o8oDAdtXO9ezWxbkWTXoEbPnAC
- xrGNcE5DiZYdG4UcMMEMqDBk0X4Q61SZRYMnQQ7pvfX6JgFQo6XyPLEEeR4i/Q9qYp3P
- jbT+pfrV+lSx/plZJYenMBgUX3c0YNciDtlVeZ4DVRrwi6FIH+kK+Lk8AKxvHvJoV1L6
- twckeVBo4wMRew863cXy8d5jVxmGU3AtUk2pwVLYORzRA998pRvbWGWm3m/BRgzis1OV
- B8yE6QRc9GE66I91mo3sO0fgabz9WPZD5lbXS5Me0DGTlFwyaGCTCVC6SiJNPMP0jTs6
- DhjA==
+ d=linaro.org; s=google; t=1741789371; x=1742394171; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=upYZflBtbp3LTMXlSsDXzvwbnhvBR9tGhMHw/rAPqao=;
+ b=aqEw0UxwmYmPnCzPbpvWe+WUbIrLIW4P7fDf7Du4VJnyX6KS4AScioLwAHOUMwDfKf
+ +lx4p7taxuR/L8CyFFfhj1cZuWGQvHkD7SdNzJdpu1mCJjaHgDF0TRVpwkv+vi9bXh0w
+ 06LE17jjTVuODFb4XeWL8Fv3WWNzkDwSjKYCZDVEpdVcnoXwecJhzipm26QAtSWzIZRz
+ F1NwBjwhXe0X/pO3MpxdsAHabFzrQjZ4s7t8g1oWV62V0CBapkSDGic11SKvbzKtO8Pt
+ a7xiHSSSOOkgT6pn+G6BUmlhinxs9Iom2spupF00AHRdtT0IdUF7tmDWgJyuvMercvZ4
+ b7RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741789303; x=1742394103;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NYzTjC7R17kJDAJ8n8JeL+/IDeVGC3Hb9zPxDhRy2Mg=;
- b=vfJHp2DCu9aUtOLIF37dpAhDJM2JD5qxtfeIXj51urQyi4xo2OIz6bEO0lzV/ETmb7
- TXBXP4orfvVr0YGwX0CWT7zmR59qX8N9fGMwfCuiVbRTGGTAiOHs9sOib7L+snqCMgWl
- I2dezAEqWEyC42VDH3G5nbSryX74BwT+DQslOfz5BvmhEbwrfLsxbWLK8/3Fwx/Lv9sF
- xNPti8EqEYbiaAdwWlxc75EkLi0iahUi53v0I8UQGi/i1cE5oBCnevBkQaUZkst5s9nM
- hDHzIdcJ+t5b8f4eJuEqU0/mliPuP0bBDhHJ5PozSynV9+gqRHxZS6UlUeaTJhSncaZJ
- BQ5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLluSzHd29eRpqzbOYIuWpGbTYd4k04gYYRjW2VBILf2Idg+547spotEwaRPAm4AvJkNEOtkRXWpAl@nongnu.org
-X-Gm-Message-State: AOJu0Yya1PJ3/rgZZS+WxTiSNgQPTXClj/AcrdEWPLEGNmXSSTZUlQQL
- BqT7jCMDSvcdTVPUZM5j6PVkxvoSQGHEA9LqmyQ1QV7Rd75sPF6gamttc2+pNh2H3YLRT0pJmNX
- uOG0=
-X-Gm-Gg: ASbGncvUJDD6yDU4quIWLMyeNX1dfgkgS6c92socObhEz9lsJatw12FRXYPz6W4M8q/
- Tj8RIOMDmzzpyz7raFXgc8Ik8eOe/2vuWzS29PArQdCL3Wlu6BaTvAWtCeINTtSgGjKfq2+1T0c
- OLlowhGNVCPdkFMSFFOxbgxMCZiw8TKRtc217YryQQOFdXgq8gp6wyvKjAtR0M4Sl/tB3SXrW07
- 6sWWcVEpdPa76FYsoPVnifgqvtL8iMuKQW+Nai1OCL6jh2RDu6kra8vn+Oy+U2ZbgbFTN7sjFz3
- nrfDcqHbgxa26IbgubC5QF8yyDjUOrcbybH+Q1OAqx/Wm8uRnZXR1gL6K3aRHQQ6hVKVwBh7w8u
- ok5GOUqMQ
-X-Google-Smtp-Source: AGHT+IHzdc14fpIOW2Akf52kWsLT+MIFNg73Mt47RoMI4a6JyFiL6gncPaufswdVui5KwikKxL6LXA==
-X-Received: by 2002:a05:600c:5493:b0:43c:fa24:873e with SMTP id
- 5b1f17b1804b1-43d01be65ebmr85541175e9.13.1741788813661; 
- Wed, 12 Mar 2025 07:13:33 -0700 (PDT)
-Received: from [10.223.46.213] (216.165.185.81.rev.sfr.net. [81.185.165.216])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfe61sm21499603f8f.38.2025.03.12.07.13.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 07:13:33 -0700 (PDT)
-Message-ID: <6856a17d-7028-4fb1-adb8-ddefa234fb63@linaro.org>
-Date: Wed, 12 Mar 2025 15:13:31 +0100
+ d=1e100.net; s=20230601; t=1741789371; x=1742394171;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=upYZflBtbp3LTMXlSsDXzvwbnhvBR9tGhMHw/rAPqao=;
+ b=c6EGaUNsb3j5HGoqEPy9PP/OPzoe+Cb/exFmzLZY5TEUXWqSMkyiYrL6VtibmBcDxQ
+ ovFHfRwL8ZsknEL1jaAXNGpDgGewjNKUYvUzG/pF1il4aI1sO3EZzQSJI+vC6y7A3s7n
+ LV0fK8xJE2ULVThxMpeS/QfaoG9qBygz2zlf7vJXuQpzGL2VXyEESDUPkVmqTh9W34OJ
+ LJPlQ/x2ZOliwzJ+4uvJfRHypaB4t6cBvBZo47vBFDxor5vOn7VZDKc7bRxdNPOvYBMG
+ DiWyN5VfKfiq4EJzYs53gpQJfwsEkEosrrB4uf84opPherq/c2eeWaJbHkKnse2LLFH3
+ UHiQ==
+X-Gm-Message-State: AOJu0YyffDNioAXP26UW6jmtPjDqmNSgfWuY+Qo9/rLyRce+aZxubeuK
+ /+EQobpF1eUrkwMDAMS7zVEi50/4qdrljS5P3kFkiQ5c2sp4lR7q6U5Q7Srep1Ab98pJqGyWHOy
+ Vt+vZNuLLtPSSWj+MqDmypZQ9Ob9zc04X65WP0A==
+X-Gm-Gg: ASbGncudgKOAW+2qsQUbZLrDAQimKV2AC6jFBYF5bHL4Ao21DICTaweZ/Hu+opxSDBm
+ zhyGunaERV/Jlg3IJOVX8+jTue1RZEU9GN5v8djfHP0Yu+/g7yK1JCmpKd8fl+3EtDwMa90bnhB
+ JQXtmYm1HzzrLXv4gc6+SOj4dqIPM=
+X-Google-Smtp-Source: AGHT+IH9FcO0JXQvOwy2kVJxMYZlbkxaXhuGgi7ouxV/+qoSjLiSNKHMsQMbhbtEULHWuwY9/ZI+8XlUf5G2xaA3quM=
+X-Received: by 2002:a05:6902:983:b0:e5e:700:92f5 with SMTP id
+ 3f1490d57ef6-e635c1008c7mr32070121276.2.1741789370921; Wed, 12 Mar 2025
+ 07:22:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1] target/i386: Replace MO_TE -> MO_LE
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20250312103818.370-1-philmd@linaro.org>
- <f2a9e4e3-79b9-478c-91a0-e8273d056296@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f2a9e4e3-79b9-478c-91a0-e8273d056296@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+References: <20250311153717.206129-1-pbonzini@redhat.com>
+ <CAFEAcA-TVaickhbxJ6d4Sc_Wi8HUuzKCaJTGHrNY6X3FcGvrfg@mail.gmail.com>
+In-Reply-To: <CAFEAcA-TVaickhbxJ6d4Sc_Wi8HUuzKCaJTGHrNY6X3FcGvrfg@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 12 Mar 2025 14:22:37 +0000
+X-Gm-Features: AQ5f1Jo0ih_I4s9hBZOC3oKtkSGRthAMEw4vb6qqqYkfDgkz0_NZI0P-gaGpWDI
+Message-ID: <CAFEAcA_9XAH4bQJKAp2+NLinUXXiFb_ae3AtQ9wEEK4CrDK7Aw@mail.gmail.com>
+Subject: Re: [PATCH] Revert "hw/char/pl011: Warn when using disabled receiver"
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,27 +95,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/25 13:52, Richard Henderson wrote:
-> On 3/12/25 03:38, Philippe Mathieu-Daudé wrote:
->> The x86 architecture is only implemented as little-endian.
->> The MO_TE definition always expands to MO_LE.
->>
->> Replace:
->>   - MO_TEUQ -> MO_LE | MO_UQ
->>   - MO_TE   -> MO_LE
->>
->> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
->> ---
->>   target/i386/tcg/emit.c.inc | 7 ++++---
->>   1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> Is there a reason not to use MO_LEUQ?
+On Wed, 12 Mar 2025 at 13:36, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Tue, 11 Mar 2025 at 15:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >
+> > The guest does not control whether characters are sent on the UART.
+> > Sending them before the guest happens to boot will now result in a
+> > "guest error" log entry that is only because of timing, even if the
+> > guest _would_ later setup the receiver correctly.
+> >
+> > This reverts commit abf2b6a028670bd2890bb3aee7e103fe53e4b0df, apart
+> > from adding the comment.
+> >
+> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > Cc: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >  hw/char/pl011.c | 12 ++----------
+> >  1 file changed, 2 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> > index 23a9db8c57c..efca8baecd7 100644
+> > --- a/hw/char/pl011.c
+> > +++ b/hw/char/pl011.c
+> > @@ -85,7 +85,6 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, =
+Chardev *chr)
+> >  #define CR_OUT1     (1 << 12)
+> >  #define CR_RTS      (1 << 11)
+> >  #define CR_DTR      (1 << 10)
+> > -#define CR_RXE      (1 << 9)
+> >  #define CR_TXE      (1 << 8)
+> >  #define CR_LBE      (1 << 7)
+> >  #define CR_UARTEN   (1 << 0)
+> > @@ -490,16 +489,9 @@ static int pl011_can_receive(void *opaque)
+> >      unsigned fifo_depth =3D pl011_get_fifo_depth(s);
+> >      unsigned fifo_available =3D fifo_depth - s->read_count;
+> >
+> > -    if (!(s->cr & CR_UARTEN)) {
+> > -        qemu_log_mask(LOG_GUEST_ERROR,
+> > -                      "PL011 receiving data on disabled UART\n");
+> > -    }
+> > -    if (!(s->cr & CR_RXE)) {
+> > -        qemu_log_mask(LOG_GUEST_ERROR,
+> > -                      "PL011 receiving data on disabled RX UART\n");
+> > -    }
+> > +    /* Should check enable and return 0? */
+>
+> We decided deliberately not to check the enable and return 0
+> here, as described in the commit message of abf2b6a028670bd:
+> we think there's too likely to be existing works-on-QEMU code
+> out there that doesn't ever set the enable bits.
+>
+> Otherwise, yes, agreed with the revert.
 
-No, I'll respin using it.
+I've applied this to target-arm.next with the comment expanded
+(and I left the define of CR_RXE in too):
 
->  Anyway,
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
++    /*
++     * In theory we should check the UART and RX enable bits here and
++     * return 0 if they are not set (so the guest can't receive data
++     * until you have enabled the UART). In practice we suspect there
++     * is at least some guest code out there which has been tested only
++     * on QEMU and which never bothers to enable the UART because we
++     * historically never enforced that. So we effectively keep the
++     * UART continuously enabled regardless of the enable bits.
++     */
 
-Thanks!
+thanks
+-- PMM
 
