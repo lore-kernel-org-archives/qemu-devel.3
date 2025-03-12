@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62130C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 19:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E450C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 19:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsS1m-0001jk-8k; Wed, 12 Mar 2025 15:46:08 -0400
+	id 1tsS20-0001mp-9a; Wed, 12 Mar 2025 15:46:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tsS1E-0001h5-Ct
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tsS1E-0001h7-EI
  for qemu-devel@nongnu.org; Wed, 12 Mar 2025 15:45:33 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tsS19-0006My-K6
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 15:45:31 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tsS19-0006N4-KI
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 15:45:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Vf5A7KBZlzsyqIWWXH3VfGxXpwBCB6/c4drzHp9C6y4=; b=wmk5y5NCd9fWFmu
- mZMFb1Y7pCV9Tui9Ong+6kkPPEVyfptl1WhgplEWJ5CKZxX0yX73JNz3ygBz6QCKfKGaaWyTBonSr
- pDLrKAy2JSkCqng0NNf2ToR/Lqaq+z638MopYufSpBkUHmXgbZI5SnRj/Al4BGJV5v9VtbqaP16B1
- +E=;
+ List-Help; bh=lAJ7z9+A1MxQwCRsU5x2nT+Gzbox9DbplSabX+doYYY=; b=nHH1/J8JHpWBCzT
+ HMR4eXE8vqK7/yIlg2dIypvT+CHLXfW067Tr9Zn4KH+mTtNVYyilDQLlwDrxbjrj5zZex7pluxHo3
+ G+pt9PFfeFOmRODNlRR41G7VD/TgleVQ/13eYiOXWvzaEz42eD15uoHkAM6MzM2m/B+k7mj2l9INB
+ QA=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, brian.cain@oss.qualcomm.com,
  philmd@linaro.org
-Subject: [PATCH 1/2] target/hexagon: Replace `prepare` script with meson target
-Date: Wed, 12 Mar 2025 20:45:46 +0100
-Message-ID: <20250312194547.7364-2-anjo@rev.ng>
+Subject: [PATCH 2/2] target/hexagon: Drop `ident` postprocess step
+Date: Wed, 12 Mar 2025 20:45:47 +0100
+Message-ID: <20250312194547.7364-3-anjo@rev.ng>
 In-Reply-To: <20250312194547.7364-1-anjo@rev.ng>
 References: <20250312194547.7364-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,68 +64,52 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The purpose of the prepare script is to invoke `cpp` to preprocess input
-to idef-parser by expanding a few select macros.  On mac osx `cpp`
-expands into `clang ... -traditional-cpp` which breaks macro
-concatenation.  Replace `cpp` with `${compiler} -E`
-and replace the script with a meson custom_target.
+The indent command is not available on a default mac osx setup with
+xcode cli tools installed.  While it does make idef-parser generated
+code nicer to debug, it's not crucial and can be dropped.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hexagon/idef-parser/prepare | 24 ------------------------
- target/hexagon/meson.build         |  3 ++-
- 2 files changed, 2 insertions(+), 25 deletions(-)
- delete mode 100755 target/hexagon/idef-parser/prepare
+ target/hexagon/meson.build | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/target/hexagon/idef-parser/prepare b/target/hexagon/idef-parser/prepare
-deleted file mode 100755
-index cb3622d4f8..0000000000
---- a/target/hexagon/idef-parser/prepare
-+++ /dev/null
-@@ -1,24 +0,0 @@
--#!/usr/bin/env bash
--
--#
--#  Copyright(c) 2019-2021 rev.ng Labs Srl. All Rights Reserved.
--#
--#  This program is free software; you can redistribute it and/or modify
--#  it under the terms of the GNU General Public License as published by
--#  the Free Software Foundation; either version 2 of the License, or
--#  (at your option) any later version.
--#
--#  This program is distributed in the hope that it will be useful,
--#  but WITHOUT ANY WARRANTY; without even the implied warranty of
--#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--#  GNU General Public License for more details.
--#
--#  You should have received a copy of the GNU General Public License
--#  along with this program; if not, see <http://www.gnu.org/licenses/>.
--#
--
--set -e
--set -o pipefail
--
--# Run the preprocessor and drop comments
--cpp "$@"
 diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index bb4ebaae81..abcf00ca1f 100644
+index abcf00ca1f..246dc7b241 100644
 --- a/target/hexagon/meson.build
 +++ b/target/hexagon/meson.build
-@@ -280,12 +280,13 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
-         command: [python, files('gen_idef_parser_funcs.py'), semantics_generated, '@OUTPUT@'],
+@@ -323,30 +323,13 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+         command: [idef_parser, '@INPUT@', '@OUTPUT0@', '@OUTPUT1@', '@OUTPUT2@']
      )
  
-+    compiler = meson.get_compiler('c').get_id()
-     preprocessed_idef_parser_input_generated = custom_target(
-         'idef_parser_input.preprocessed.h.inc',
-         output: 'idef_parser_input.preprocessed.h.inc',
-         input: idef_parser_input_generated,
-         depend_files: [idef_parser_dir / 'macros.h.inc'],
--        command: [idef_parser_dir / 'prepare', '@INPUT@', '-I' + idef_parser_dir, '-o', '@OUTPUT@'],
-+        command: [compiler, '-x', 'c', '-E', '-I', idef_parser_dir, '-o', '@OUTPUT@', '@INPUT@'],
-     )
+-    indent = find_program('indent', required: false)
+-    if indent.found()
+-        idef_generated_tcg_c = custom_target(
+-            'indent',
+-            input: idef_generated_tcg[0],
+-            output: 'idef-generated-emitter.indented.c',
+-            command: [indent, '-linux', '@INPUT@', '-o', '@OUTPUT@']
+-        )
+-    else
+-        idef_generated_tcg_c = custom_target(
+-            'copy',
+-            input: idef_generated_tcg[0],
+-            output: 'idef-generated-emitter.indented.c',
+-            command: ['cp', '@INPUT@', '@OUTPUT@']
+-        )
+-    endif
+-
+     idef_generated_list = idef_generated_tcg[2].full_path()
  
-     flex = generator(
+-    hexagon_ss.add(idef_generated_tcg_c)
++    hexagon_ss.add(idef_generated_tcg[0])
+ 
+     # Setup input and dependencies for the next step, this depends on whether or
+     # not idef-parser is enabled
+-    helper_dep = [semantics_generated, idef_generated_tcg_c, idef_generated_tcg]
++    helper_dep = [semantics_generated, idef_generated_tcg]
+     helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, '--idef-parser', idef_generated_list]
+ else
+     # Setup input and dependencies for the next step, this depends on whether or
 -- 
 2.47.1
 
