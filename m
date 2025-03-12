@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24245C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A38C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:29:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsN1e-0003wY-3z; Wed, 12 Mar 2025 10:25:38 -0400
+	id 1tsN4P-0005E0-ER; Wed, 12 Mar 2025 10:28:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsN1c-0003w2-AE
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:25:36 -0400
-Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsN1W-00033E-2C
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:25:32 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.139.40])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4ZCXwP5fyTz1R8j;
- Wed, 12 Mar 2025 14:25:25 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Wed, 12 Mar
- 2025 15:25:23 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G0065e82f02d-aa6b-44ab-9cfb-2e160e9c6507,
- 504EDC0C94310F6A3F54FBF2D573176B3056D9B9) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Wed, 12 Mar 2025 15:25:20 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
- <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v2 6/6] tests/9p: Test `Tsetattr` can truncate unlinked
- file
-Message-ID: <20250312152520.25f3dd79@bahia>
-In-Reply-To: <4178394.pcGFbxMBL1@silver>
-References: <20250311172809.250913-1-groug@kaod.org>
- <20250311172809.250913-7-groug@kaod.org>
- <4178394.pcGFbxMBL1@silver>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsN4N-0005Dc-45
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:28:27 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsN4L-0003NJ-0z
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:28:26 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-38f403edb4eso3704740f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:28:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741789702; x=1742394502; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XGpycwrRAC/F46TLl7I48eG5kuRnckVPlcyYT3nYZvQ=;
+ b=DRMLQ4WG+RLgSIR//J787Mhb6cndZBxo3rYA25y2MHcb73W2fNM6BOHu4wG7TU6Q0n
+ fOQG2yDD/A0iShFwvRx0wAoKINlIFYl7gfecKUsROn3KOsIr9+RnC0oMkxgowcBLgYok
+ DsnRPRswVaXMcKVXuO1eXeILXj/FT916Dfk93vHT2IckyCRUAK/UumqwnGcoL6LPFwDZ
+ pmK9NFh8z4t8KdYlqJOy620kd0/b4eZawccWAT0D2IGLnUmH8crOet0LcqsIA7uDn4d8
+ ILXZRcfdQ6V+OXKnxRVxqhUNizCylQOSRxlSU4Jdb5Ncg64mIoWSGDtaodPKjKpyHngA
+ Golg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741789702; x=1742394502;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XGpycwrRAC/F46TLl7I48eG5kuRnckVPlcyYT3nYZvQ=;
+ b=BrZH7GmW53uSWyUNNYqz/QfdrKPK9J9Wo39cBwkjCwgx6BeqygdvzxrTpP19njIv1o
+ xhQt5JGIED5+aUXSW0NB9+VvSa500Lj4ZaQTWGUbj/2RopiyoOUR9r5F+VPmt0IxBIQm
+ 0oqFCzUxKmUw2mrBoUeNXW0srDSktPqvy7Vgw9bP3r4ogo1uahJGFv9SFZFr0+Mpu5vQ
+ XXXG7IwtgRusIwYg2oxEkYp8fwBQmdGNPr4l1TKOLg8sdz60Sb83EpgmdyzCAkjuwt1z
+ gHEDV8TYGq3P+J8q8YK6/AseLjt4f5IAokPJ0dnjldvoLQFU8JKCX3isC2r+T3FYMDZ0
+ ARrQ==
+X-Gm-Message-State: AOJu0YzSXnxkFEV8pyeSdVypBNTMwim8PV02/es+zzDdBUrCNjIF6EZ4
+ 7YH3exfl85M+AyrprBP9i7n7YMCDtVJ2mUpO8G2F8vNTuQvd5Fs+6KxyFYpr/gw=
+X-Gm-Gg: ASbGncuiGJCALm6FQ9bOD8OlyvDKTYkbusDvF0snYEO/H57Bktx0EUSuMjZc25ejLKM
+ HfW+lvrty8bomWE4mzzuc+pl9piqcfxwP8MHJ4cz147HBIyGkH43oy4MCtbm0ET1j9fXyqGht/D
+ G3o7c6zw/mC05LUdE8mHugGw6nXLIW+RGoMKoQj6MLvBqKIC/cCrRMtl3ZPnftmJ9uNk5bNaMv+
+ YuRRY+Tn2z3RZOMsqxtN/TdAaYlUE7AEMMY31I9tIP05Ar5FaBpLUS1Or1+DNuYi/UF0VLJqkBd
+ LWuOJIpIDMzSZjtFASYCx7DQ4UN1WYXIk4Wiv2yhi8rFvyYdJznt4bA0M9y7Hm976bC5gSv1iIK
+ WKwB6KbrS
+X-Google-Smtp-Source: AGHT+IFfM6R+tPDrr5xOj1XDq7WeyrPsdIsMgSPWrZh4P1nBtojMzTju/R/xiItDo7G/kNCoPiY2cw==
+X-Received: by 2002:a5d:6d8a:0:b0:390:e655:f998 with SMTP id
+ ffacd0b85a97d-39132d6f17bmr17511103f8f.26.1741789700882; 
+ Wed, 12 Mar 2025 07:28:20 -0700 (PDT)
+Received: from [10.223.46.213] (116.164.185.81.rev.sfr.net. [81.185.164.116])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfdfad7sm21029040f8f.26.2025.03.12.07.28.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Mar 2025 07:28:20 -0700 (PDT)
+Message-ID: <4aa4c71d-fe82-423b-80a5-886a7446025d@linaro.org>
+Date: Wed, 12 Mar 2025 15:28:19 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 6a3d98c5-c400-498b-9578-541217bb76a6
-X-Ovh-Tracer-Id: 11048737262515100067
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehfedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdehpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeehpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrghrohhsrghssehsuhhsvgdruggvpdhrtghpthhtohepphgsohhniihinhhisehrvgguhhgrthdrtghomhdprhgtphhtthhopehlvhhivhhivghrsehrvgguhhgrthdrtghomhdpoffvtefjohhsthepmhhoheehvdgmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=isSXi/pCXsQEL0DsbV8tfaQgqqI8Pv/Stj6DIg9i7SA=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1741789526; v=1;
- b=FZhSAkDLVrdT+Q7TcbiTDtXxXRYRXpAuVQe5Bv+zEMrYr0Z09VkvwAnUHJRj4024VQ+V5RAb
- kNcGOYS73cx+wIuvf2XjkWlXmEKmHKnMgZOPnJTlQmbhaSHAqTPx5iMGihY6nQuQf0CCFeR8Q2E
- sckh7jR9T3ZkuR4LKM3llx3A5cLAJL2eApSBaeZtMIILvhulA5PB8za6KmQrO5Cbz2Y1s/aSNQ0
- Hs8HSFxsG7xpFmLZwdNPrrCvXNtNDI/KYPbzm8bEfMq2bWHjrkprIqAGyCsGWDXWoWEVCQb4aQe
- j2HPMbuOhz1C0dOLpJGmDM8r+Agn8PRbSYrKemNvL6qrg==
-Received-SPF: pass client-ip=178.33.105.233; envelope-from=groug@kaod.org;
- helo=2.mo552.mail-out.ovh.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "hw/char/pl011: Warn when using disabled receiver"
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250311153717.206129-1-pbonzini@redhat.com>
+ <CAFEAcA-TVaickhbxJ6d4Sc_Wi8HUuzKCaJTGHrNY6X3FcGvrfg@mail.gmail.com>
+ <CAFEAcA_+v5ntUx5ByXQP0hRo5AHiEbDUxkdUW2+FGNURZFsqNg@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_+v5ntUx5ByXQP0hRo5AHiEbDUxkdUW2+FGNURZFsqNg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,57 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025 15:11:41 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-
-> On Tuesday, March 11, 2025 6:28:09 PM CET Greg Kurz wrote:
-> > Enhance the `use-after-unlink` test with a new check for the
-> > case where the client wants to alter the size of an unlinked
-> > file for which it still has an active fid.
-> > 
-> > Suggested-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > Signed-off-by: Greg Kurz <groug@kaod.org>
-> > ---
-> >  tests/qtest/virtio-9p-test.c | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> > 
-> > diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-> > index f515a9bb157b..20c0d744fa56 100644
-> > --- a/tests/qtest/virtio-9p-test.c
-> > +++ b/tests/qtest/virtio-9p-test.c
-> > @@ -736,6 +736,14 @@ static void fs_use_after_unlink(void *obj, void *data,
-> >          .data = buf
-> >      }).count;
-> >      g_assert_cmpint(count, ==, write_count);
-> > +
-> > +    /* truncate file to (arbitrarily chosen) size 2001 */
-> > +    tsetattr({
-> > +        .client = v9p, .fid = fid_file, .attr = (v9fs_attr) {
-> > +            .valid = P9_SETATTR_SIZE,
-> > +            .size = 2001
-> > +        }
-> > +     });
-> >  }
-> >  
-> >  static void cleanup_9p_local_driver(void *data)
-> > 
+On 12/3/25 14:43, Peter Maydell wrote:
+> On Wed, 12 Mar 2025 at 13:36, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> On Tue, 11 Mar 2025 at 15:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>>
+>>> The guest does not control whether characters are sent on the UART.
+>>> Sending them before the guest happens to boot will now result in a
+>>> "guest error" log entry that is only because of timing, even if the
+>>> guest _would_ later setup the receiver correctly.
+>>>
+>>> This reverts commit abf2b6a028670bd2890bb3aee7e103fe53e4b0df, apart
+>>> from adding the comment.
+>>>
+>>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Cc: Peter Maydell <peter.maydell@linaro.org>
+>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>> ---
+>>>   hw/char/pl011.c | 12 ++----------
+>>>   1 file changed, 2 insertions(+), 10 deletions(-)
+>>>
+>>> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+>>> index 23a9db8c57c..efca8baecd7 100644
+>>> --- a/hw/char/pl011.c
+>>> +++ b/hw/char/pl011.c
+>>> @@ -85,7 +85,6 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
+>>>   #define CR_OUT1     (1 << 12)
+>>>   #define CR_RTS      (1 << 11)
+>>>   #define CR_DTR      (1 << 10)
+>>> -#define CR_RXE      (1 << 9)
+>>>   #define CR_TXE      (1 << 8)
+>>>   #define CR_LBE      (1 << 7)
+>>>   #define CR_UARTEN   (1 << 0)
+>>> @@ -490,16 +489,9 @@ static int pl011_can_receive(void *opaque)
+>>>       unsigned fifo_depth = pl011_get_fifo_depth(s);
+>>>       unsigned fifo_available = fifo_depth - s->read_count;
+>>>
+>>> -    if (!(s->cr & CR_UARTEN)) {
+>>> -        qemu_log_mask(LOG_GUEST_ERROR,
+>>> -                      "PL011 receiving data on disabled UART\n");
+>>> -    }
+>>> -    if (!(s->cr & CR_RXE)) {
+>>> -        qemu_log_mask(LOG_GUEST_ERROR,
+>>> -                      "PL011 receiving data on disabled RX UART\n");
+>>> -    }
+>>> +    /* Should check enable and return 0? */
+>>
+>> We decided deliberately not to check the enable and return 0
+>> here, as described in the commit message of abf2b6a028670bd:
+>> we think there's too likely to be existing works-on-QEMU code
+>> out there that doesn't ever set the enable bits.
+>>
+>> Otherwise, yes, agreed with the revert.
 > 
-> Ah, I just meant the code snippet as a starting point, like I would have also
-> checked with a stat() call whether 9p server really did what it promised.
-> 
-> But OK, better some test coverage than nothing. :)
-> 
+> Oh, and I just realized that the right place to diagnose
+> "guest didn't enable the UART" would be when it reads/writes
+> the data register while the enable bits are clear.
 
-FWIW the server returns ENOENT if it doesn't have the fix which causes
-the check to fail. I was assuming this would be enough but I'm fine with
-adding an extra check if you want.
+Doh, sorry. I wonder how I ended putting this code here... Since I
+rebased this a lot, maybe something went wrong. Anyway, I'll post
+a fix.
 
-> /Christian
-> 
-> 
+Regards,
 
-
-
--- 
-Greg
+Phil.
 
