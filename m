@@ -4,85 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D28C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0522C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsJTr-0004BV-J1; Wed, 12 Mar 2025 06:38:32 -0400
+	id 1tsJZn-00059s-1H; Wed, 12 Mar 2025 06:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsJTn-0004B2-Cp
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:38:27 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsJTl-0002e5-L1
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:38:27 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4394a823036so55737005e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 03:38:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741775902; x=1742380702; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mTVwHnDcjEge4BlyahuAnj0E3stfkonQeNnK0yWfebw=;
- b=BO/Cn1olTXEf5TetPKGzTKSo+EDerl/+2As9xC02p6eyD0kjqAvShuk2NBQA/z6Nvb
- a6AO8c4hmID/JSVigxBs3PQLKM3Tox6RMXquLM3Mle14d7fsHXVQ3MHiSdPEM9qrF631
- QqmZaEkMkZS3Bcm/337dkykLmwADnaii1UOl2Hpj0e20o2MsPPufNPWxstv1HfAWuzBG
- Xs1kVVQFVDwV1wQJ73i0AGPoaNrj18Cjw6aV9SqPrXHKtbX3b0IitkJzujFTHMLTnDz8
- 3xVSWRi4B5isRVMkrKB5I0wuxfcRFV+ZGTRV7ATO7PoQ8kG6j/H7/wquXIxqu927++0K
- 7tsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741775902; x=1742380702;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mTVwHnDcjEge4BlyahuAnj0E3stfkonQeNnK0yWfebw=;
- b=obM9pMOFc7/Xvt9F9J3O9r0NmGz3jmbZmvbqaa/qoFB4YmxzP4rwV7uRsnSaqce7mw
- zqQuXcAip8uvBg385T3zCZ6mtXvVRb2jzwvpUyqA1Crl9b1zg7kBTb/GvcUXB/hThYFg
- wMGP5PHM0ZHSSDBKJi1wO9SCPb2tVOpQdE5TrgR/9NGdEoobnkqJueitQJ1EVzj0U6tP
- LjatiWHimsfmKgqfEq85HDeDiN6u66SJ4cvlph1C5YXCiS392exzudUf5Tgf3y3HJX/s
- PfRubc4N+9lSoEomvJFUjFQaJxz7DFsn1HVY0TCxsGu9ZkzX5i5D9JXQpQy4UeCikQl4
- yxTw==
-X-Gm-Message-State: AOJu0YysnbggXkFWCnSiVoMxnMkDkf6UOGOa0m/SwQjvORWEGSIF6tC6
- FUKRlafD99kU/X5DvfwfV2RJqdv5jQ4aWD8nAkEUiZJ6rkvHn6LpeXli9WxordPEiY8upwpkScb
- F
-X-Gm-Gg: ASbGncspm51vh1K+xCoi9930myaVvd+KUCTGhAZtBLAYNynPZ6aQlzGwl/lb3/uuFF3
- p7UtSMRnmPOxyndtCnZKYI6idmpZlOqTq+7a8wHNM/D8fxOX8ZxTIWEzptB3tIAXwXAFZoX6vNJ
- lvnV2MvCWjjZQ9l+OsYJctR5PRwakjRw4QPn9grnji5Obd6wWeaaVpnlAY0WbLMfPTMoMMPfe2L
- RTcjybWzQKvTK+KiX+88BzVWKL+gn8/aQuorWikCIcOr7cfoivmcxeq1pL49Lc/wH9ocfSCy97/
- 7rrnYsoMc/rI6kwEpIQ03S2uefeHFylYTW1pewm2btjrQaVvpgLmX0r97YbLjsWQzV441LtrR/f
- OgkNGzUhTmdHlNg==
-X-Google-Smtp-Source: AGHT+IHiFb+R0Dmz3H7QwOm1OWZLEUsabEXGxlch6pU/SGOHSMA99Zbq+sOnnrSdbSu4fHJCp8S4Vw==
-X-Received: by 2002:a05:600c:1c9a:b0:43c:e305:6d50 with SMTP id
- 5b1f17b1804b1-43d01c11ee4mr62852585e9.24.1741775902540; 
- Wed, 12 Mar 2025 03:38:22 -0700 (PDT)
-Received: from localhost.localdomain (99.167.185.81.rev.sfr.net.
- [81.185.167.99]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d0a7582absm16857445e9.17.2025.03.12.03.38.19
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Mar 2025 03:38:21 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1] target/i386: Replace MO_TE -> MO_LE
-Date: Wed, 12 Mar 2025 11:38:18 +0100
-Message-ID: <20250312103818.370-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <SRS0=rF9B=V7=kaod.org=clg@ozlabs.org>)
+ id 1tsJZf-00059U-2A
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:44:31 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=rF9B=V7=kaod.org=clg@ozlabs.org>)
+ id 1tsJZa-0003O1-VB
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:44:29 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZCS1K41GZz4x0t;
+ Wed, 12 Mar 2025 21:44:21 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZCS1H21f8z4wcb;
+ Wed, 12 Mar 2025 21:44:18 +1100 (AEDT)
+Message-ID: <0261bcf8-d01d-4f63-9edf-f572519dd8af@kaod.org>
+Date: Wed, 12 Mar 2025 11:44:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 31/43] hw/arm: Add i.MX 8M Plus EVK board
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+References: <20250225180510.1318207-1-peter.maydell@linaro.org>
+ <20250225180510.1318207-32-peter.maydell@linaro.org>
+ <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
+ <CAFEAcA-JgjX2U3wQ47X5JQ2SU1yMpx=0rWkctbj40w0Xjufpmg@mail.gmail.com>
+ <e7640bea-5bb7-4f4b-8614-ed8d521dd7a5@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <e7640bea-5bb7-4f4b-8614-ed8d521dd7a5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=rF9B=V7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,46 +113,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86 architecture is only implemented as little-endian.
-The MO_TE definition always expands to MO_LE.
+On 3/12/25 11:27, Philippe Mathieu-Daudé wrote:
+> + Cédric for Aspeed
+> 
+> On 12/3/25 11:20, Peter Maydell wrote:
+>> On Wed, 12 Mar 2025 at 09:40, Thomas Huth <thuth@redhat.com> wrote:
+>>>
+>>> On 25/02/2025 19.04, Peter Maydell wrote:
+>>>> From: Bernhard Beschow <shentey@gmail.com>
+>>>>
+>>>> As a first step, implement the bare minimum: CPUs, RAM, interrupt controller,
+>>>> serial. All other devices of the A53 memory map are represented as
+>>>> TYPE_UNIMPLEMENTED_DEVICE, i.e. the whole memory map is provided. This allows
+>>>> for running Linux without it crashing due to invalid memory accesses.
+>>>>
+>>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>>>> Message-id: 20250223114708.1780-5-shentey@gmail.com
+>>>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>>>> [PMM: drop 'static const' from serial_table[] definition to avoid
+>>>>    compile failure on GCC 7.5]
+>>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>>> ---
+>>> ...
+>>>> +static const TypeInfo fsl_imx8mp_types[] = {
+>>>> +    {
+>>>> +        .name = TYPE_FSL_IMX8MP,
+>>>> +        .parent = TYPE_DEVICE,
+>>>> +        .instance_size = sizeof(FslImx8mpState),
+>>>> +        .instance_init = fsl_imx8mp_init,
+>>>> +        .class_init = fsl_imx8mp_class_init,
+>>>> +    },
+>>>> +};
+>>>> +
+>>>> +DEFINE_TYPES(fsl_imx8mp_types)
+>>>
+>>>    Hi Bernhard, hi Peter,
+>>>
+>>> this device can be used to crash QEMU quite easily:
+>>>
+>>> $ ./qemu-system-aarch64  -M virt -device fsl-imx8mp
+>>> **
+>>> ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: assertion failed:
+>>> (n < tcg_max_ctxs)
+>>> Bail out! ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread:
+>>> assertion failed: (n < tcg_max_ctxs)
+>>> Aborted (core dumped)
+>>>
+>>> Should it maybe be marked with "user_creatable = false" to avoid this?
+>>
+>> The bug is that this is directly inheriting from TYPE_DEVICE,
+>> not from TYPE_SYSBUS_DEVICE. Doing the former is almost always
+>> wrong, because it means the device is never reset.
+>>
+>> (It looks like we do this wrong for other fsl SoCs too,
+>> but they're marked user_creatable = false.)
+> 
+> IIRC it is deliberately that way for the Aspeed SoCs, because
+> otherwise there were issue when building the multi-SoC fby35 machines
 
-Replace:
- - MO_TEUQ -> MO_LE | MO_UQ
- - MO_TE   -> MO_LE
+AspeedSoCState was introduced long ago (2016) and the fby35 is "recent",
+from 2022. I am not sure that's the reason.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/i386/tcg/emit.c.inc | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Regarding the reset, the SoC functions are sysbus devices and all have
+a reset. The SoC doesn't have any. Maybe that's why we are not seeing
+issues.
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 0fa1664a24f..c7a40a2f9e4 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1796,7 +1796,7 @@ static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
- static void gen_CMPXCHG16B(DisasContext *s, X86DecodedInsn *decode)
- {
- #ifdef TARGET_X86_64
--    MemOp mop = MO_TE | MO_128 | MO_ALIGN;
-+    MemOp mop = MO_LE | MO_128 | MO_ALIGN;
-     TCGv_i64 t0, t1;
-     TCGv_i128 cmp, val;
- 
-@@ -1853,10 +1853,11 @@ static void gen_CMPXCHG8B(DisasContext *s, X86DecodedInsn *decode)
- 
-     /* Only require atomic with LOCK; non-parallel handled in generator. */
-     if (s->prefix & PREFIX_LOCK) {
--        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
-+        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val,
-+                                   s->mem_index, MO_LE | MO_UQ);
-     } else {
-         tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
--                                      s->mem_index, MO_TEUQ);
-+                                      s->mem_index, MO_LE | MO_UQ);
-     }
- 
-     /* Set tmp0 to match the required value of Z. */
--- 
-2.47.1
+C.
+
+
+> due to peripherals ending mapped in the same (sys)bus, so developers
+> took a lot of care to not base anything on sysbus. But maybe I'm
+> mis-remembering correctly, the peripherals parent could be sysbus
+> as long as we don't use any sysbus API to map memory regions.
 
 
