@@ -4,96 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A73C2BA1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 17:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BF2C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 17:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsPxo-0002Ub-KW; Wed, 12 Mar 2025 13:33:53 -0400
+	id 1tsPyp-0002qV-H5; Wed, 12 Mar 2025 13:34:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tsPxm-0002U9-1w
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 13:33:50 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tsPxf-0004qp-UO
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 13:33:47 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5e5491eb379so15154a12.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 10:33:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741800816; x=1742405616; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w/uorSczeLTSXhGU4Khn7ChTxs8hFr3Y2FB0G8PCHEY=;
- b=eEAT/1p+x8on53MnWphyds9v8uhMPHlJ+OaYm7oKpYLRg6CDDugF2KjXDUSQ9F+Rhw
- +4S3kOgh9/Efco2s/d2lNpETrKq15Zoclva7UQGJ1p5JpVboW93DVRcSNrJZaIpP20ub
- XtBCy/83pOr2G27HBDwsiM2UeJc7J/5OfIE73/xWXsXeBwTNa37owo9OXHd5J6PLO9O5
- 7d0SOUm4HitE4+3Zg1IWCLTNP9BRtOXyqMxtEr8nRTP5nE2I0wLSHim+nifqg1Relb/S
- Shdv8fgiq3Zh+UmjBtZsobZOk/RWAzk7lNQ1Zlj72DaWquEG6TY2rnkhdd/nhg4k6h5L
- nZrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741800816; x=1742405616;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=w/uorSczeLTSXhGU4Khn7ChTxs8hFr3Y2FB0G8PCHEY=;
- b=tWeLV4DVohkRX9NR529AWfXhLnEDxGvZ5w/6CpIs4bBzWaa9c/jkf/b65XrpdwsXQ8
- OJIPpmdoRvsWxRwZHG8CKYNiUWOzOtiQFR17RBHw4G37iusfUKdXbq1zlxe+4MJVapkM
- wz+PQsjzVHTRACXWQt9f3yUr6fWVaUSNhglO97p3ABrdwiH4Ji8AM4XurRRYm3c/2cxQ
- F8mI0Y0DPLoHsGPeIem3o+1Onn9Ih+Tv0fdRqSlEENOdXrzm3R0g8+lrt1F6de7wSWqE
- hZ9eCJbEVb5r7EPTi/dUUiYGyIfs9QUbj5cNWOrhrx1pGUA9jnznYJWx6F21CcGE+8CJ
- HB2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXc3wbvxrPJF5db91njpMjOtQd79jZD8WkjFEBVY3ZXfz1inwc7kBbkz3O2iTSIElqPG+gZPCVhRDie@nongnu.org
-X-Gm-Message-State: AOJu0YyKcbP/r7F2m1bqcsMMsjUyc+ZMNtYNhDrJWBjNBIWyYI5zvATE
- 55N52M4kDlufcqsqDx80rHpGJa8X8BC7B3b25m9LrcsKaaj5BdtoAcEKNw==
-X-Gm-Gg: ASbGncsE9glx4GIBUetyJk2YNE8EF38A9xDhwKiQjlWwRJBgbNqKvrrYyNO9dPisko6
- i4kKs4T9UrYOP0YMZhJOiF8N2NegsZ+bQPx6YuA3MLrJwOXY8Bedu66b+zaO1yHSXB9Zi/Sy4jR
- 4y1P3nm3wHHIsiWddSTYg/y99UaH5oTM2E6JmZEXQ21Cz/SkfdsmavbuNFOsW297dN6qrAWaK3U
- WjacBIlHsyFMg28IpLBO9Uf/XckA2nt9qCQ2H+pd5n9F5l9jVwIn/K6kY/Ou63H2Bjyew3U6CT2
- 6oYTY9+Y0B/bD1+IU/k0QeayzsXeD0gJ9lBbHJT6pkGhJW+MKhghCUJCdwZiprN6VvXvf8zLSsb
- ZQjdH7qSNZyH295hDku613c3covKWfBCz9YHcFkfUmh9w2Vb2gDKP
-X-Google-Smtp-Source: AGHT+IGLttfrMVN2uVwKyU/laENHaAebUCv9H3G4vUaJFILwHXrW2KjIq5sxyrw39NG0ba4EJ/0SWw==
-X-Received: by 2002:a05:6402:2681:b0:5e7:c42d:d8ca with SMTP id
- 4fb4d7f45d1cf-5e7c42dd91cmr3698544a12.14.1741800815708; 
- Wed, 12 Mar 2025 10:33:35 -0700 (PDT)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-2c4e-b100-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
- [2a02:3100:2c4e:b100:69d2:56f6:a5af:50a8])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e5c768f213sm9821838a12.74.2025.03.12.10.33.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 10:33:35 -0700 (PDT)
-Date: Wed, 12 Mar 2025 16:33:32 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>
-CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PULL 31/43] hw/arm: Add i.MX 8M Plus EVK board
-In-Reply-To: <CAFEAcA9YvYCmbzJmzV60McWTBNWt-mgkpnOpBY1_VE6_S+9W=g@mail.gmail.com>
-References: <20250225180510.1318207-1-peter.maydell@linaro.org>
- <20250225180510.1318207-32-peter.maydell@linaro.org>
- <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
- <CAFEAcA-JgjX2U3wQ47X5JQ2SU1yMpx=0rWkctbj40w0Xjufpmg@mail.gmail.com>
- <e7640bea-5bb7-4f4b-8614-ed8d521dd7a5@linaro.org>
- <0261bcf8-d01d-4f63-9edf-f572519dd8af@kaod.org>
- <CAFEAcA9YvYCmbzJmzV60McWTBNWt-mgkpnOpBY1_VE6_S+9W=g@mail.gmail.com>
-Message-ID: <0673B63B-AF76-4B18-95BB-EF71DF12C1E4@gmail.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tsPyI-0002aC-Tg; Wed, 12 Mar 2025 13:34:30 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tsPyG-0004vX-Pp; Wed, 12 Mar 2025 13:34:22 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZCd1916z3z6J6mj;
+ Thu, 13 Mar 2025 01:29:49 +0800 (CST)
+Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5651B140D26;
+ Thu, 13 Mar 2025 01:34:18 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 12 Mar 2025 18:34:18 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 12 Mar 2025 18:34:18 +0100
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
+ <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
+ Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>
+Subject: RE: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-accel
+Thread-Topic: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-accel
+Thread-Index: AQHbko9X7BBFIVL5UECoP8opJSgSfrNvkyYAgAAR74D///hiAIAAEm+A///xm4CAACG5AA==
+Date: Wed, 12 Mar 2025 17:34:17 +0000
+Message-ID: <8490942b9428411e858a62a80ea12530@huawei.com>
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-5-shameerali.kolothum.thodi@huawei.com>
+ <547f961e-380c-4ffe-8b8b-3e9d543aa702@redhat.com>
+ <58c9c37876c64584b0c7961ec61696a3@huawei.com>
+ <5b29ea01-1b86-4b48-a769-14986751a0f1@redhat.com>
+ <5d894a546d3f4081ac2cfe98bd2ea612@huawei.com>
+ <fb28c228-0c78-4412-ba91-a62cb4351793@redhat.com>
+In-Reply-To: <fb28c228-0c78-4412-ba91-a62cb4351793@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.156.214]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,67 +85,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Am 12=2E M=C3=A4rz 2025 11:13:01 UTC schrieb Peter Maydell <peter=2Emaydel=
-l@linaro=2Eorg>:
->On Wed, 12 Mar 2025 at 10:44, C=C3=A9dric Le Goater <clg@kaod=2Eorg> wrot=
-e:
->>
->> On 3/12/25 11:27, Philippe Mathieu-Daud=C3=A9 wrote:
->> > + C=C3=A9dric for Aspeed
->> >
->> > On 12/3/25 11:20, Peter Maydell wrote:
->> >> The bug is that this is directly inheriting from TYPE_DEVICE,
->> >> not from TYPE_SYSBUS_DEVICE=2E Doing the former is almost always
->> >> wrong, because it means the device is never reset=2E
->> >>
->> >> (It looks like we do this wrong for other fsl SoCs too,
->> >> but they're marked user_creatable =3D false=2E)
->> >
->> > IIRC it is deliberately that way for the Aspeed SoCs, because
->> > otherwise there were issue when building the multi-SoC fby35 machines
->
->Multi-SoC shouldn't have a problem with sysbus devices existing=2E
->They just mean that you can't use the convenient sysbus_mmio_map()
->function but have to be more careful with managing MemoryRegions
->in the different SoCs and using sysbus_mmio_get_region() to get
->a sysbus device's MMIO regions so you can manually map them to
->the right places=2E
->
->> AspeedSoCState was introduced long ago (2016) and the fby35 is "recent"=
-,
->> from 2022=2E I am not sure that's the reason=2E
->>
->> Regarding the reset, the SoC functions are sysbus devices and all have
->> a reset=2E The SoC doesn't have any=2E Maybe that's why we are not seei=
-ng
->> issues=2E
->
->Yeah, it works out in this case=2E But I think it is in general
->a bad idea to add new direct-inheritors from TYPE_DEVICE=2E
->If anybody needs to add a reset method to the SoC container
->object in future then they'll be confused about why it doesn't
->work, for instance=2E
->
->I think that in general people expect that TYPE_DEVICE is
->"devices are like this" and TYPE_SYSBUS_DEVICE is "if you
->also need the sysbus-specifics, most notably providing MMIO
->regions for registers"=2E That's a totally reasonable expectation
->but unfortunately it's wrong, because a few key parts of
->"this is an internal device that we don't need users to create"
->are only in TYPE_SYSBUS_DEVICE=2E
-
-I'll send a patch fixing inheritance from TYPE_SYSBUS_DEVICE and setting u=
-ser_creatable =3D false=2E
-
-Best regards,
-Bernhard
-
->
->thanks
->-- PMM
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
+Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiBXZWRuZXNkYXksIE1hcmNoIDEyLCAyMDI1IDQ6
+MjggUE0NCj4gVG86IFNoYW1lZXJhbGkgS29sb3RodW0gVGhvZGkNCj4gPHNoYW1lZXJhbGkua29s
+b3RodW0udGhvZGlAaHVhd2VpLmNvbT47IHFlbXUtYXJtQG5vbmdudS5vcmc7DQo+IHFlbXUtZGV2
+ZWxAbm9uZ251Lm9yZw0KPiBDYzogcGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnOyBqZ2dAbnZpZGlh
+LmNvbTsgbmljb2xpbmNAbnZpZGlhLmNvbTsNCj4gZGR1dGlsZUByZWRoYXQuY29tOyBiZXJyYW5n
+ZUByZWRoYXQuY29tOyBuYXRoYW5jQG52aWRpYS5jb207DQo+IG1vY2hzQG52aWRpYS5jb207IHNt
+b3N0YWZhQGdvb2dsZS5jb207IExpbnV4YXJtDQo+IDxsaW51eGFybUBodWF3ZWkuY29tPjsgV2Fu
+Z3pob3UgKEIpIDx3YW5nemhvdTFAaGlzaWxpY29uLmNvbT47DQo+IGppYW5na3Vua3VuIDxqaWFu
+Z2t1bmt1bkBodWF3ZWkuY29tPjsgSm9uYXRoYW4gQ2FtZXJvbg0KPiA8am9uYXRoYW4uY2FtZXJv
+bkBodWF3ZWkuY29tPjsgemhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4gU3ViamVjdDogUmU6IFtS
+RkMgUEFUQ0ggdjIgMDQvMjBdIGh3L2FybS92aXJ0OiBBZGQgc3VwcG9ydCBmb3Igc21tdXYzLQ0K
+PiBhY2NlbA0KDQo+ID4+IEhpIFNoYW1lZXIsDQo+ID4+Pj4gSSBrbm93IHRoZXJlIHdlcmUgcXVp
+dGUgYSBsb3Qgb2YgZGljdXNzaW9ucyBvbiB0aGUgMXN0IG11bHRpDQo+ID4+Pj4gaW5zdGFudGlh
+dGlvbiBzZXJpZXMgcmVsYXRlZCB0byB0aGUgd2F5IHdlIGluc3RhbmF0aWF0ZSB0aGF0IGRldmlj
+ZQ0KPiA+Pj4+IGFuZCBtYXliZSBJIG1pc3NlZCBzb21lIGJsb2NrZXJzIGJ1dCB3aHkgd291bGRu
+J3Qgd2UgYWxsb3cgdGhlDQo+ID4+Pj4gaW5zdGFudGlhdGlvbiBvZiB0aGUgbGVnYWN5IHNtbXUg
+ZGV2aWNlIHdpdGggLWRldmljZSB0b28uIEkgdGhpbmsNCj4gPj4+PiB0aGlzIHdvdWxkIGJlIHNp
+bXBsZXIgZm9yIGxpYnZpcnQgYW5kIHdlIHdvdWxkIHNvbWVob3cgZGVwcmVjYXRlDQo+ID4+Pj4g
+dGhlIG1hY2hpbmUgb3B0aW9uIG1ldGhvZD8gd291bGQgdGhhdCBtYWtlIGEgcHJvYmxlbSBpZiB5
+b3Ugd2VyZQ0KPiB0bw0KPiA+Pj4+IHVzZSAtZGV2aWNlIHNtbXUsYWNjZWwgb3Igc29tZXRoaW5n
+IGFsaWtlPw0KPiA+Pj4gVGhhbmtzIGZvciB0YWtpbmcgYSBsb29rLiBJIGFtIGp1c3QganVtcGlu
+ZyBvbiB0aGlzIG9uZSBmb3Igbm93Lg0KPiA+Pj4gWWVzLCB0aGVyZSB3ZXJlIGRpc2N1c3Npb25z
+IGFyb3VuZCB0aGF0LiBCdXQgSSB3YXMgbm90IHN1cmUgd2UNCj4gPj4+IGNvbmNsdWRlZCBvbiBk
+ZXByZWNhdGluZyB0aGUgbWFjaGluZSBvcHRpb24uIFNvIGlmIEkgZ2V0IHlvdQ0KPiA+Pj4gY29y
+cmVjdGx5IHRoZSBpZGVhIGlzLA0KPiA+Pj4NCj4gPj4+IGlmIHdlIGhhdmUsDQo+ID4+PiAtZGV2
+aWNlIHNtbXV2MyBpdCB3aWxsIGluc3RhbnRpYXRlIHRoZSBjdXJyZW50IG1hY2hpbmUgd2lkZSBz
+bW11djMNCj4gPj4+IGFuZCBmb3IgLWRldmljZSBzbW11djMsYWNjZWwgdGhpcyBkZXZpY2U/DQo+
+ID4+IHllcyB0aGF0IHdvdWxkIGJlIG15IHByZWZlcmVuY2UuDQo+ID4gT2suIEkgd2lsbCBsb29r
+IGludG8gdGhhdCBpbiBteSBuZXh0IHJlc3Bpbi4gQSBxdWljayBxdWVzdGlvbi4gRG9lcw0KPiA+
+IHFlbXUgREVWSUNFIG1vZGVsIHN1cHBvcnQgdGhlIGRpZmZlcmVudGlhdGlvbiBsaWtlIGFib3Zl
+IGVhc2lseT8gT3Igd2UNCj4gPiBoYXZlIHRvIG1hbmFnZSBpdCB3aXRoIHByb3BlcnRpZXM/DQo+
+IE5vdCBzdXJlIGlmIEkgdW5kZXJzdGFuZCB5b3UgcXVlc3Rpb24uIEkgbWVhbnQgaXQgY2FuIGJl
+IGEgYm9vbGVhbiBkZXZpY2UNCj4gcHJvcGVydHkgKERFRklORV9QUk9QX0JPT0wpIHNtbXV2Myxh
+Y2NlbD1vbg0KPiANCj4gTm8/DQoNClJpZ2h0LiBNeSBxdWVyeSB3YXMgbW9yZSBhYm91dCBhbnkg
+aGlkZGVuIFFlbXUgbWFnaWMgdG8gaGF2ZSBkZXZpY2UgaW5zdGFudGlhdGlvbg0Kc2ltaWxhciB0
+byB3aGF0IHdlIGhhdmUgYXQgdGhlIG1vbWVudCBldmVuIHRob3VnaCB3ZSBuYW1lIGJvdGggZGV2
+aWNlcyAic21tdXYzIi4NCiANClRoYXQgd2F5IEkgY2FuIGtlZXAgbXVjaCBvZiB0aGUgY29kZSBy
+YXRoZXIgdGhhbiBjaGVja2luZyAiYWNjZWwiIHByb3BlcnR5DQppbiBTTU1VdjMgY29kZSBhbmQg
+cmVkaXJlY3RpbmcgY2FsbHMuIEJ1dCBsb29rcyBsaWtlIG5vdC4gDQoNClRoYW5rcywNClNoYW1l
+ZXINCg0KDQoNCg0K
 
