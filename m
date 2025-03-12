@@ -4,140 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECA6C2BA1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 06:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7054C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 07:03:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsG1S-0001ov-5X; Wed, 12 Mar 2025 02:56:58 -0400
+	id 1tsG6m-0004lb-T5; Wed, 12 Mar 2025 03:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsG1M-0001ji-5d
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:56:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsG1K-0001VL-Ho
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:56:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741762609;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aOpkSjkdXnSS16Y8kAP9uC5dq6Ij7gAcLwbYDHdtqMI=;
- b=dOrMRd/EmVUtyUKkUYo2bs7BEsU/Nz6sRNp/IqBJPli9/mhdM0aQ6dfMpCaYMt2T5Nrocy
- IOoGWb1UVP4+O+Y1n8fJCOCPSHiIfvvc1T3kVRk9xVTw1/w5W/J92huMP+Wf5dpuRq61jR
- bAtVb/G8KQQEHBlIj3w+Bhg7SaEEYLw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-F-XNmaClN0u0J0fXNZsY2w-1; Wed, 12 Mar 2025 02:56:45 -0400
-X-MC-Unique: F-XNmaClN0u0J0fXNZsY2w-1
-X-Mimecast-MFC-AGG-ID: F-XNmaClN0u0J0fXNZsY2w_1741762604
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43947a0919aso52464745e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 23:56:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741762604; x=1742367404;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aOpkSjkdXnSS16Y8kAP9uC5dq6Ij7gAcLwbYDHdtqMI=;
- b=TLmm+U68JkLHZDUccVURVQkgIxtX+3nj928U6fNRp5x3F5a3Fzfplt0ta4wACbzagb
- pbGJeTWIeXbI/3KozTcriMzuYrUslHwmY58xaPMj2Y5Tm509hlLkvAlmYDk97k3TJ6za
- oT2eqCYsgIxxODkB4Ospl3RgpYSIDyO0aPROr6UUcxDyn3Fes/86r+74I4ESTVeIk6+t
- tJhJ/u9jj+UPEMD/cddKrQ12uho5tTPnqmS9OnqKS6WU5hs42s73PswDKdafNo82Q6Si
- FLSY5huOY0IvTdNd5WxtWN2ebJ7gC44cuDylFHgFswnIBThVJgksG8YYiIRVtn2M79Bk
- UUGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiYrzuJw906BlXgo/U7MBMkGCMy/xS3ryq/quRuSZSycgDEDRocG3vPsBFqF0lbiD+dDrPX0LGDhAB@nongnu.org
-X-Gm-Message-State: AOJu0YzEhA6/JKdQga0nO8T3q5FWhXubQ2FNIU4c820Ldic+cKqzxPZ1
- O7kVonKS/ywjC/yYniPzsVzIVspspW3TzTqJQp8Fk/5mx5xBgJ8ILFWWtCW3VkMVdmk1CgKSYPY
- HwvF6BjYKhW2WcDe689ezHOq2wGCsTwzvTfqcv7p4ZhcUQATMskZU
-X-Gm-Gg: ASbGncv9u2pxjC29G43saIUPNsAs4UEAhW+9vKzkKx7XboQDM0utu/PaVd3Jm6j4R2A
- yr7dud3HiA2wz+o/pyOq9vsRdja+QAHPqXv0jlKxFLLvojX2g23r9z2oP+Hviqv+6vhTfaOxW/I
- 3uo8RJ2Kkq9kopbFw4YxL1jYN11c+gkh8/b5o2K9NnW/GIVI+bo5eigvgLjZjFd5ZeKNDZfoNw4
- Q6BAA+YIPFp4aXHu0C7a5lab8Lpgsqzx464h73tlIPs6gHbgaJJV4+zsA4Qqu1wvhFhumGoKcRp
- 3+jxjoJbi4yp1iImZOE1bxbA9dMOC/s0zbVcZe6XJqbt/+U=
-X-Received: by 2002:a05:600c:510f:b0:43d:b85:1831 with SMTP id
- 5b1f17b1804b1-43d1187484amr1320785e9.0.1741762603876; 
- Tue, 11 Mar 2025 23:56:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEboTBeLYbSXsV0NolEjgPOiSP6lM+gXi6UxiGftCI6/pG4PwijM6ARAJZLnWpY9gupYqPzQg==
-X-Received: by 2002:a05:600c:510f:b0:43d:b85:1831 with SMTP id
- 5b1f17b1804b1-43d1187484amr1320615e9.0.1741762603499; 
- Tue, 11 Mar 2025 23:56:43 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-149.web.vodafone.de.
- [109.42.51.149]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d0a8c5cf7sm11622055e9.29.2025.03.11.23.56.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 23:56:43 -0700 (PDT)
-Message-ID: <10656ca0-1822-4505-a164-4e45db84884d@redhat.com>
-Date: Wed, 12 Mar 2025 07:56:41 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tsG6h-0004jP-H5
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 03:02:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tsG6d-0002DD-OB
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 03:02:23 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxbKxvMdFnbgmTAA--.54192S3;
+ Wed, 12 Mar 2025 15:02:08 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCx7MRkMdFn+GxFAA--.59957S3;
+ Wed, 12 Mar 2025 15:02:06 +0800 (CST)
+Subject: Re: [PATCH v2] tests/qtest/cpu-plug-test: Add cpu hotplug support for
+ LoongArch
+To: Thomas Huth <thuth@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+References: <20250312034445.3350705-1-maobibo@loongson.cn>
+ <2c9e0443-538a-442e-a03b-58e5117e4a2f@redhat.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <56959c91-2b83-2b21-4769-0c4bf0b2f86b@loongson.cn>
+Date: Wed, 12 Mar 2025 15:01:18 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] tests/functional/asset: Add AssetError exception class
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-References: <20250312051739.938441-1-npiggin@gmail.com>
- <20250312051739.938441-4-npiggin@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+In-Reply-To: <2c9e0443-538a-442e-a03b-58e5117e4a2f@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250312051739.938441-4-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCx7MRkMdFn+GxFAA--.59957S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxur4fJFyktFWkKw18Zr1fAFc_yoWrXF1Dpr
+ ykArWFkrW8Arn3Jw1xGF1UWFyrJr17G3Z8Jr4xXF1UCr4DAr1jgr4jga1qgFnrAw48Xr18
+ Aw1DXrnxuFnrJFcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqWUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.105,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,30 +83,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/03/2025 06.17, Nicholas Piggin wrote:
-> Assets are uniquely identified by human-readable-ish url, so make an
-> AssetError exception class that prints url with error message.
-> 
-> A property 'transient' is used to capture whether the client may retry
-> or try again later, or if it is a serious and likely permanent error.
-> This is used to retain the existing behaviour of treating HTTP errors
-> other than 404 as 'transient' and not causing precache step to fail.
-> Additionally, partial-downloads and stale asset caches that fail to
-> resolve after the retry limit are now treated as transient and do not
-> cause precache step to fail.
-> 
-> For background: The NetBSD archive is, at the time of writing, failing
-> with short transfer. Retrying the fetch at that position (as wget does)
-> results in a "503 backend unavailable" error. We would like to get that
-> error code directly, but I have not found a way to do that with urllib,
-> so treating the short-copy as a transient failure covers that case (and
-> seems like a reasonable way to handle it in general).
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   tests/functional/qemu_test/asset.py | 41 ++++++++++++++++++-----------
->   1 file changed, 26 insertions(+), 15 deletions(-)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+On 2025/3/12 下午2:29, Thomas Huth wrote:
+> On 12/03/2025 04.44, Bibo Mao wrote:
+>> Add cpu hotplug testcase support for LoongArch system, it passes to
+>> run with command "make check-qtest-loongarch64" as following:
+>>    qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 
+>> 0.38s 1 subtests passed
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>> v1 ... v2:
+>>    1. Call test function add_loongarch_test_case() directly rather than
+>>       qtest_cb_for_every_machine() since compatible machine is not
+>>       supported on LoongArch system.
+>>    2. Add architecture specified test case in separate line.
+>> ---
+>>   tests/qtest/cpu-plug-test.c | 28 ++++++++++++++++++++++++++++
+>>   tests/qtest/meson.build     |  3 ++-
+>>   2 files changed, 30 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+>> index 6633abfc10..6af81330c0 100644
+>> --- a/tests/qtest/cpu-plug-test.c
+>> +++ b/tests/qtest/cpu-plug-test.c
+>> @@ -156,6 +156,32 @@ static void add_s390x_test_case(const char *mname)
+>>       g_free(path);
+>>   }
+>> +static void add_loongarch_test_case(const char *mname)
+>> +{
+>> +    char *path;
+>> +    PlugTestData *data;
+>> +
+>> +    if (!g_str_has_prefix(mname, "virt")) {
+>> +        return;
+>> +    }
+> 
+> Should be ok to drop that check now ?
+Both are ok for me -:)
+
+By now there are three machine types supported, only type virt passes to 
+run cpu hotplug test case, machine type none/x-remote fails to run.
+
+# ./qemu-system-loongarch64 --machine help
+Supported machines are:
+none                 empty machine
+virt                 QEMU LoongArch Virtual Machine (default)
+x-remote             Experimental remote machine
+
+Regards
+Bibo Mao
+> 
+>> +    data = g_new(PlugTestData, 1);
+>> +    data->machine = g_strdup(mname);
+>> +    data->cpu_model = "la464";
+>> +    data->device_model = g_strdup("la464-loongarch-cpu");
+>> +    data->sockets = 1;
+>> +    data->cores = 3;
+>> +    data->threads = 1;
+>> +    data->maxcpus = data->sockets * data->cores * data->threads;
+>> +
+>> +    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
+>> +                           mname, data->sockets, data->cores,
+>> +                           data->threads, data->maxcpus);
+>> +    qtest_add_data_func_full(path, data, test_plug_with_device_add,
+>> +                             test_data_free);
+>> +    g_free(path);
+>> +}
+>> +
+>>   int main(int argc, char **argv)
+>>   {
+>>       const char *arch = qtest_get_arch();
+>> @@ -168,6 +194,8 @@ int main(int argc, char **argv)
+>>           qtest_cb_for_every_machine(add_pseries_test_case, 
+>> g_test_quick());
+>>       } else if (g_str_equal(arch, "s390x")) {
+>>           qtest_cb_for_every_machine(add_s390x_test_case, 
+>> g_test_quick());
+>> +    } else if (g_str_equal(arch, "loongarch64")) {
+>> +        add_loongarch_test_case("virt");
+>>       }
+>>       return g_test_run();
+>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>> index 8a6243382a..7e62204dcc 100644
+>> --- a/tests/qtest/meson.build
+>> +++ b/tests/qtest/meson.build
+>> @@ -149,7 +149,8 @@ qtests_hppa = \
+>>   qtests_loongarch64 = qtests_filter + \
+>>     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? 
+>> ['numa-test'] : []) + \
+>> -  ['boot-serial-test']
+>> +  ['boot-serial-test',
+>> +   'cpu-plug-test']
+>>   qtests_m68k = ['boot-serial-test'] + \
+>>     qtests_filter
+> 
+> With preferably the redundant check removed:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
 
 
