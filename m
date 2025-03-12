@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E2D3C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B30C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMxp-0007mm-WD; Wed, 12 Mar 2025 10:21:42 -0400
+	id 1tsMyC-0007zB-8X; Wed, 12 Mar 2025 10:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsMxl-0007m5-1k
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:37 -0400
-Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsMxh-0002bH-Rz
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:36 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.140.99])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4ZCXqk0r29z10ds;
- Wed, 12 Mar 2025 14:21:22 +0000 (UTC)
-Received: from kaod.org (37.59.142.109) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Wed, 12 Mar
- 2025 15:21:21 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-109S0033cae644e-50fc-43c3-85cf-76321d372641,
- 504EDC0C94310F6A3F54FBF2D573176B3056D9B9) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Wed, 12 Mar 2025 15:21:12 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
- <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v2 3/6] 9pfs: Introduce ftruncate file op
-Message-ID: <20250312152112.5ff5df6b@bahia>
-In-Reply-To: <2348866.qVP5gfYQ7p@silver>
-References: <20250311172809.250913-1-groug@kaod.org>
- <20250311172809.250913-4-groug@kaod.org>
- <2348866.qVP5gfYQ7p@silver>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMxu-0007nP-Nv
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:48 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMxt-0002cp-1K
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:46 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ac2af2f15d1so412946666b.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:21:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741789303; x=1742394103; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NYzTjC7R17kJDAJ8n8JeL+/IDeVGC3Hb9zPxDhRy2Mg=;
+ b=naDYfx6m+zyxU1Vt+tPT3190LZVcua4Yp2bHtlr3o8oDAdtXO9ezWxbkWTXoEbPnAC
+ xrGNcE5DiZYdG4UcMMEMqDBk0X4Q61SZRYMnQQ7pvfX6JgFQo6XyPLEEeR4i/Q9qYp3P
+ jbT+pfrV+lSx/plZJYenMBgUX3c0YNciDtlVeZ4DVRrwi6FIH+kK+Lk8AKxvHvJoV1L6
+ twckeVBo4wMRew863cXy8d5jVxmGU3AtUk2pwVLYORzRA998pRvbWGWm3m/BRgzis1OV
+ B8yE6QRc9GE66I91mo3sO0fgabz9WPZD5lbXS5Me0DGTlFwyaGCTCVC6SiJNPMP0jTs6
+ DhjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741789303; x=1742394103;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NYzTjC7R17kJDAJ8n8JeL+/IDeVGC3Hb9zPxDhRy2Mg=;
+ b=vfJHp2DCu9aUtOLIF37dpAhDJM2JD5qxtfeIXj51urQyi4xo2OIz6bEO0lzV/ETmb7
+ TXBXP4orfvVr0YGwX0CWT7zmR59qX8N9fGMwfCuiVbRTGGTAiOHs9sOib7L+snqCMgWl
+ I2dezAEqWEyC42VDH3G5nbSryX74BwT+DQslOfz5BvmhEbwrfLsxbWLK8/3Fwx/Lv9sF
+ xNPti8EqEYbiaAdwWlxc75EkLi0iahUi53v0I8UQGi/i1cE5oBCnevBkQaUZkst5s9nM
+ hDHzIdcJ+t5b8f4eJuEqU0/mliPuP0bBDhHJ5PozSynV9+gqRHxZS6UlUeaTJhSncaZJ
+ BQ5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLluSzHd29eRpqzbOYIuWpGbTYd4k04gYYRjW2VBILf2Idg+547spotEwaRPAm4AvJkNEOtkRXWpAl@nongnu.org
+X-Gm-Message-State: AOJu0Yya1PJ3/rgZZS+WxTiSNgQPTXClj/AcrdEWPLEGNmXSSTZUlQQL
+ BqT7jCMDSvcdTVPUZM5j6PVkxvoSQGHEA9LqmyQ1QV7Rd75sPF6gamttc2+pNh2H3YLRT0pJmNX
+ uOG0=
+X-Gm-Gg: ASbGncvUJDD6yDU4quIWLMyeNX1dfgkgS6c92socObhEz9lsJatw12FRXYPz6W4M8q/
+ Tj8RIOMDmzzpyz7raFXgc8Ik8eOe/2vuWzS29PArQdCL3Wlu6BaTvAWtCeINTtSgGjKfq2+1T0c
+ OLlowhGNVCPdkFMSFFOxbgxMCZiw8TKRtc217YryQQOFdXgq8gp6wyvKjAtR0M4Sl/tB3SXrW07
+ 6sWWcVEpdPa76FYsoPVnifgqvtL8iMuKQW+Nai1OCL6jh2RDu6kra8vn+Oy+U2ZbgbFTN7sjFz3
+ nrfDcqHbgxa26IbgubC5QF8yyDjUOrcbybH+Q1OAqx/Wm8uRnZXR1gL6K3aRHQQ6hVKVwBh7w8u
+ ok5GOUqMQ
+X-Google-Smtp-Source: AGHT+IHzdc14fpIOW2Akf52kWsLT+MIFNg73Mt47RoMI4a6JyFiL6gncPaufswdVui5KwikKxL6LXA==
+X-Received: by 2002:a05:600c:5493:b0:43c:fa24:873e with SMTP id
+ 5b1f17b1804b1-43d01be65ebmr85541175e9.13.1741788813661; 
+ Wed, 12 Mar 2025 07:13:33 -0700 (PDT)
+Received: from [10.223.46.213] (216.165.185.81.rev.sfr.net. [81.185.165.216])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912bfdfe61sm21499603f8f.38.2025.03.12.07.13.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Mar 2025 07:13:33 -0700 (PDT)
+Message-ID: <6856a17d-7028-4fb1-adb8-ddefa234fb63@linaro.org>
+Date: Wed, 12 Mar 2025 15:13:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.109]
-X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 0c5784d8-1e4c-4706-b807-df18d58c4ff1
-X-Ovh-Tracer-Id: 10980338845603240355
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehvdelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdelpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeehpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrghrohhsrghssehsuhhsvgdruggvpdhrtghpthhtohepphgsohhniihinhhisehrvgguhhgrthdrtghomhdprhgtphhtthhopehlvhhivhhivghrsehrvgguhhgrthdrtghomhdpoffvtefjohhsthepmhhoheegkegmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=3uTuXH3lGOzFsYSDn6iSTkK7+bt7ZdkWD+ZV+s1m5oA=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1741789282; v=1;
- b=n30Jz+O06PWdlgMWSMJzrM2Ze1DN7rIqEib4PzknDLK/XgBgXGgXuMvdM5phQ/MMhPTaCxSx
- hrpdQ9Eaf7Xn0Do/8zXkAykeSdm8+VNbIVepBQbqFMr1vka00K9kxflmA9rZsqdKCa5Lr7uSVc0
- B8myRFIWDs3u3sRKcNVVl1IQ5HubR5mnrZyP0Xq8xXGI+WUK3XILWZODE5K+u44MqNj0MuHb7q1
- EE8DWP/aD49/0U9gBtc28+lTHgNJbZJ1HVpze4tsBlwDBRGikxRAQA3mg/ABxEOZE5ifHZ09Jos
- VApLSqi7h7ieZ0wqZYDtX67eQXyuHHvdC6f3RXZh/onnw==
-Received-SPF: pass client-ip=188.165.32.156; envelope-from=groug@kaod.org;
- helo=3.mo548.mail-out.ovh.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1] target/i386: Replace MO_TE -> MO_LE
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20250312103818.370-1-philmd@linaro.org>
+ <f2a9e4e3-79b9-478c-91a0-e8273d056296@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <f2a9e4e3-79b9-478c-91a0-e8273d056296@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,167 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025 15:07:20 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-
-> On Tuesday, March 11, 2025 6:28:06 PM CET Greg Kurz wrote:
-> > Add an ftruncate operation to the fs driver and use if when a fid has
-> > a valid file descriptor. This is required to support more cases where
-> > the client wants to do an action on an unlinked file which it still
-> > has an open file decriptor for.
-> > 
-> > Only 9P2000.L was considered.
-> > 
-> > Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > Signed-off-by: Greg Kurz <groug@kaod.org>
-> > 
-> > v2: - moved v9fs_co_ftruncate() near v9fs_co_truncate() in coth.h
-> >     - similar change in file-op-9p.h
-> > ---
-> >  fsdev/file-op-9p.h |  2 ++
-> >  hw/9pfs/9p-local.c |  9 +++++++++
-> >  hw/9pfs/9p-synth.c |  8 ++++++++
-> >  hw/9pfs/9p.c       |  6 +++++-
-> >  hw/9pfs/cofs.c     | 18 ++++++++++++++++++
-> >  hw/9pfs/coth.h     |  2 ++
-> >  6 files changed, 44 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-> > index b815cea44e85..26ba1438c0ed 100644
-> > --- a/fsdev/file-op-9p.h
-> > +++ b/fsdev/file-op-9p.h
-> > @@ -152,6 +152,8 @@ struct FileOperations {
-> >      int (*fstat)(FsContext *, int, V9fsFidOpenState *, struct stat *);
-> >      int (*rename)(FsContext *, const char *, const char *);
-> >      int (*truncate)(FsContext *, V9fsPath *, off_t);
-> > +    int (*ftruncate)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-> > +                     off_t size);
-> >      int (*fsync)(FsContext *, int, V9fsFidOpenState *, int);
-> >      int (*statfs)(FsContext *s, V9fsPath *path, struct statfs *stbuf);
-> >      ssize_t (*lgetxattr)(FsContext *, V9fsPath *,
-> > diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-> > index b16132299f2c..0b33da8d2a46 100644
-> > --- a/hw/9pfs/9p-local.c
-> > +++ b/hw/9pfs/9p-local.c
-> > @@ -1042,6 +1042,14 @@ static int local_truncate(FsContext *ctx, V9fsPath *fs_path, off_t size)
-> >      return ret;
-> >  }
-> >  
-> > +static int local_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-> > +                           off_t size)
-> > +{
-> > +    int fd = local_fid_fd(fid_type, fs);
-> > +
-> > +    return ftruncate(fd, size);
-> > +}
-> > +
-> >  static int local_chown(FsContext *fs_ctx, V9fsPath *fs_path, FsCred *credp)
-> >  {
-> >      char *dirpath = g_path_get_dirname(fs_path->data);
-> > @@ -1617,4 +1625,5 @@ FileOperations local_ops = {
-> >      .renameat  = local_renameat,
-> >      .unlinkat = local_unlinkat,
-> >      .has_valid_file_handle = local_has_valid_file_handle,
-> > +    .ftruncate = local_ftruncate,
-> >  };
-> > diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-> > index be0492b400e1..3d28afc4d03d 100644
-> > --- a/hw/9pfs/9p-synth.c
-> > +++ b/hw/9pfs/9p-synth.c
-> > @@ -356,6 +356,13 @@ static int synth_truncate(FsContext *ctx, V9fsPath *path, off_t offset)
-> >      return -1;
-> >  }
-> >  
-> > +static int synth_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-> > +                           off_t size)
-> > +{
-> > +    errno = ENOSYS;
-> > +    return -1;
-> > +}
-> > +
-> >  static int synth_chmod(FsContext *fs_ctx, V9fsPath *path, FsCred *credp)
-> >  {
-> >      errno = EPERM;
-> > @@ -656,4 +663,5 @@ FileOperations synth_ops = {
-> >      .renameat     = synth_renameat,
-> >      .unlinkat     = synth_unlinkat,
-> >      .has_valid_file_handle = synth_has_valid_file_handle,
-> > +    .ftruncate    = synth_ftruncate,
-> >  };
-> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> > index 10363f1a1df8..4616bd763012 100644
-> > --- a/hw/9pfs/9p.c
-> > +++ b/hw/9pfs/9p.c
-> > @@ -1733,7 +1733,11 @@ static void coroutine_fn v9fs_setattr(void *opaque)
-> >          }
-> >      }
-> >      if (v9iattr.valid & (P9_ATTR_SIZE)) {
-> > -        err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
-> > +        if (fid_has_valid_handle(pdu->s, fidp)) {
-> > +            err = v9fs_co_ftruncate(pdu, fidp, v9iattr.size);
-> > +        } else {
-> > +            err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
-> > +        }
+On 12/3/25 13:52, Richard Henderson wrote:
+> On 3/12/25 03:38, Philippe Mathieu-Daudé wrote:
+>> The x86 architecture is only implemented as little-endian.
+>> The MO_TE definition always expands to MO_LE.
+>>
+>> Replace:
+>>   - MO_TEUQ -> MO_LE | MO_UQ
+>>   - MO_TE   -> MO_LE
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+>> ---
+>>   target/i386/tcg/emit.c.inc | 7 ++++---
+>>   1 file changed, 4 insertions(+), 3 deletions(-)
 > 
-> Like with previous patch, s/fid_has_valid_handle/fid_has_valid_file_handle/,
-> the rest is fine.
+> Is there a reason not to use MO_LEUQ?
+
+No, I'll respin using it.
+
+>  Anyway,
 > 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Oops... my bad. I'll fix that !
-
-> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> 
-> >          if (err < 0) {
-> >              goto out;
-> >          }
-> > diff --git a/hw/9pfs/cofs.c b/hw/9pfs/cofs.c
-> > index 67e3ae5c5ccd..893466fb1a44 100644
-> > --- a/hw/9pfs/cofs.c
-> > +++ b/hw/9pfs/cofs.c
-> > @@ -184,6 +184,24 @@ int coroutine_fn v9fs_co_truncate(V9fsPDU *pdu, V9fsPath *path, off_t size)
-> >      return err;
-> >  }
-> >  
-> > +int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp, off_t size)
-> > +{
-> > +    int err;
-> > +    V9fsState *s = pdu->s;
-> > +
-> > +    if (v9fs_request_cancelled(pdu)) {
-> > +        return -EINTR;
-> > +    }
-> > +    v9fs_co_run_in_worker(
-> > +        {
-> > +            err = s->ops->ftruncate(&s->ctx, fidp->fid_type, &fidp->fs, size);
-> > +            if (err < 0) {
-> > +                err = -errno;
-> > +            }
-> > +        });
-> > +    return err;
-> > +}
-> > +
-> >  int coroutine_fn v9fs_co_mknod(V9fsPDU *pdu, V9fsFidState *fidp,
-> >                                 V9fsString *name, uid_t uid, gid_t gid,
-> >                                 dev_t dev, mode_t mode, struct stat *stbuf)
-> > diff --git a/hw/9pfs/coth.h b/hw/9pfs/coth.h
-> > index 2c54249b3577..62e922dc12e3 100644
-> > --- a/hw/9pfs/coth.h
-> > +++ b/hw/9pfs/coth.h
-> > @@ -73,6 +73,8 @@ int coroutine_fn v9fs_co_chmod(V9fsPDU *, V9fsPath *, mode_t);
-> >  int coroutine_fn v9fs_co_utimensat(V9fsPDU *, V9fsPath *, struct timespec [2]);
-> >  int coroutine_fn v9fs_co_chown(V9fsPDU *, V9fsPath *, uid_t, gid_t);
-> >  int coroutine_fn v9fs_co_truncate(V9fsPDU *, V9fsPath *, off_t);
-> > +int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp,
-> > +                                   off_t size);
-> >  int coroutine_fn v9fs_co_llistxattr(V9fsPDU *, V9fsPath *, void *, size_t);
-> >  int coroutine_fn v9fs_co_lgetxattr(V9fsPDU *, V9fsPath *,
-> >                                     V9fsString *, void *, size_t);
-> > 
-> 
-> 
-
-
-
--- 
-Greg
+Thanks!
 
