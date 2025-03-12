@@ -4,59 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E4BC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C312C28B2F
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:05:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMfy-0005GZ-EU; Wed, 12 Mar 2025 10:03:14 -0400
+	id 1tsMiG-0008GI-4s; Wed, 12 Mar 2025 10:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tsMfk-00057u-3U
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:03:04 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsMiD-0008EG-Tz
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:05:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tsMfi-0008S5-A5
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:02:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=lxY5MQuil5N8r2rfgw3I/U6CjdHmTEbvtlbHT3+U43s=; b=vf1i2DSI6AaUSDd0nru3kaCJ0L
- vh9j/kxHkygrQYL1Fh1MxNqVf64h31UYlyDpMaGHG6TRZWw8Z6WcQU1kDZBk6UXfB2u2xEFVq8c+T
- H5NuAZsqEitYm2s6GJ9UiHdQYhaVBpMvXQ4KQxZiUM8lcR66WetQ/Zt+MtdOMX/tvaz/55Au0AFub
- AIe/yiJ/G+Ry/GlZmT9rLkgMKBydkU2Rrru7JTl/QBmzZhEM/HPTLGhMfmmvOFzmckIRkSfcsg+zW
- 8l7V/AeJ6fjcKYOqhcWJ9q+5XowlNU9rzHIYjGa/fAZy04nTrC6yLUqSNZsqtuLUNopdsQFE7/Vem
- vQddBYb4UAr6Np+5VIinmELAC3/8Aew7kwKj1egY9ORz8koMD0+E4esJpE3TEja2r2Iee9oHMKn17
- 6ks+n9Eh+8r3n7vB+DoFKFHR155/spyb3q26MjnMJfyYI1tSwdn5t7cEhKpJC+Q5QPHeD4c5Jud+p
- tV5ZjEKHh7WPNjfUkHf4SBAqaJkH2bFBmQwszb0ElEcvAsBVWYQfYAFmX8pRP9zHZToxMAJkbVVfJ
- x7icAkSALWZokeD/A33YCAJUhce7mgfNb9Kqt4LbB5vDF9+mxjkyHEn+CvL/PajDtFbnEpxcCB+Y0
- Cn3AtZBvn9UgIU03wbLmIAVGoeHoxpU+F6+q4VDmE=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Greg Kurz <groug@kaod.org>
-Subject: Re: [PATCH v2 2/6] 9pfs: Don't use file descriptors in core code
-Date: Wed, 12 Mar 2025 15:02:51 +0100
-Message-ID: <2371222.HHjt5ElpTA@silver>
-In-Reply-To: <20250311172809.250913-3-groug@kaod.org>
-References: <20250311172809.250913-1-groug@kaod.org>
- <20250311172809.250913-3-groug@kaod.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsMiB-0000fL-TM
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:05:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741788329;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=3FX5BY/+DCTjQdppN3sUVyFvzTrpzB82DD1EXDCfvWo=;
+ b=B8gTDq3OHwgUUHfq8ZTVgkaeExBd8UUFkX2gEJ/1Xs5oij+aroMgUzl7WmEiFsGgUuIkSN
+ LKA6SySxJQKmoBg8QngxffmXlm+XkD54M9iY+BOsbb9EfiGEdvLsL3OU4w8PD3qct8xthd
+ 3lAYmIRBalmtPzmLtH8iRI+WZChh3y8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-SkILicczNmiayLqv1QSOVQ-1; Wed,
+ 12 Mar 2025 10:05:23 -0400
+X-MC-Unique: SkILicczNmiayLqv1QSOVQ-1
+X-Mimecast-MFC-AGG-ID: SkILicczNmiayLqv1QSOVQ_1741788322
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BB3219560B7; Wed, 12 Mar 2025 14:05:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.57])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8E9718001F6; Wed, 12 Mar 2025 14:05:16 +0000 (UTC)
+Date: Wed, 12 Mar 2025 14:05:09 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Konstantin Kostiuk <kkostiuk@redhat.com>
+Cc: QEMU <qemu-devel@nongnu.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
+Subject: Re: Cross-compilation artifact is broken
+Message-ID: <Z9GUldol1IQT1uiY@redhat.com>
+References: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PDS_OTHER_BAD_TLD=0.687, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,120 +83,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, March 11, 2025 6:28:05 PM CET Greg Kurz wrote:
-> v9fs_getattr() currently peeks into V9fsFidOpenState to know if a fid
-> has a valid file descriptor or directory stream. Even though the fields
-> are accessible, this is an implementation detail of the local backend
-> that should not be manipulated directly by the server code.
+On Wed, Mar 12, 2025 at 03:52:45PM +0200, Konstantin Kostiuk wrote:
+> Hi All,
 > 
-> Abstract that with a new has_valid_file_handle() backend operation.
+> I cross-compiled qemu-ga from current master branch
+> (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavior.
 > 
-> Signed-off-by: Greg Kurz <groug@kaod.org>
+> Configure CLI:
+> ./configure --disable-docs --disable-system --disable-user
+> --cross-prefix=x86_64-w64-mingw32- --enable-guest-agent
+> --disable-guest-agent-msi --disable-qga-vss
+> Build CLI:
+> make -j8 qemu-ga
 > 
-> v2: - rename to has_valid_file_handle()
->     - don't reuse local_fid_fd()
-> ---
->  fsdev/file-op-9p.h | 1 +
->  hw/9pfs/9p-local.c | 8 ++++++++
->  hw/9pfs/9p-synth.c | 6 ++++++
->  hw/9pfs/9p.c       | 9 ++++++---
->  4 files changed, 21 insertions(+), 3 deletions(-)
+> Linker wrote the following information but exited with 0 code:
 > 
-> diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-> index 4997677460e8..b815cea44e85 100644
-> --- a/fsdev/file-op-9p.h
-> +++ b/fsdev/file-op-9p.h
-> @@ -164,6 +164,7 @@ struct FileOperations {
->      int (*renameat)(FsContext *ctx, V9fsPath *olddir, const char *old_name,
->                      V9fsPath *newdir, const char *new_name);
->      int (*unlinkat)(FsContext *ctx, V9fsPath *dir, const char *name, int flags);
-> +    bool (*has_valid_file_handle)(int fid_type, V9fsFidOpenState *fs);
->  };
->  
->  #endif
-> diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-> index 99b9560a528b..b16132299f2c 100644
-> --- a/hw/9pfs/9p-local.c
-> +++ b/hw/9pfs/9p-local.c
-> @@ -1572,6 +1572,13 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
->      return 0;
->  }
->  
-> +static bool local_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
-> +{
-> +    return
-> +        (fid_type == P9_FID_FILE && fs->fd != -1) ||
-> +        (fid_type == P9_FID_DIR && fs->dir.stream != NULL);
-> +}
-> +
->  FileOperations local_ops = {
->      .parse_opts = local_parse_opts,
->      .init  = local_init,
-> @@ -1609,4 +1616,5 @@ FileOperations local_ops = {
->      .name_to_path = local_name_to_path,
->      .renameat  = local_renameat,
->      .unlinkat = local_unlinkat,
-> +    .has_valid_file_handle = local_has_valid_file_handle,
->  };
-> diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-> index 2abaf3a2918a..be0492b400e1 100644
-> --- a/hw/9pfs/9p-synth.c
-> +++ b/hw/9pfs/9p-synth.c
-> @@ -615,6 +615,11 @@ static int synth_init(FsContext *ctx, Error **errp)
->      return 0;
->  }
->  
-> +static bool synth_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
-> +{
-> +    return false;
-> +}
-> +
->  FileOperations synth_ops = {
->      .init         = synth_init,
->      .lstat        = synth_lstat,
-> @@ -650,4 +655,5 @@ FileOperations synth_ops = {
->      .name_to_path = synth_name_to_path,
->      .renameat     = synth_renameat,
->      .unlinkat     = synth_unlinkat,
-> +    .has_valid_file_handle = synth_has_valid_file_handle,
->  };
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index 7cad2bce6209..10363f1a1df8 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -1574,6 +1574,11 @@ out_nofid:
->      pdu_complete(pdu, err);
->  }
->  
-> +static bool fid_has_valid_handle(V9fsState *s, V9fsFidState *fidp)
-> +{
-> +    return s->ops->has_valid_file_handle(fidp->fid_type, &fidp->fs);
-> +}
-> +
+> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
+> qga/qemu-ga.exe:/4: section below image base
+> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
+> qga/qemu-ga.exe:/24: section below image base
+> 
+> As a result, this binary failed to start on Windows without any details,
+> just a message that the application is not compatible. I also tried to run
+> it with wine and got the error:
+> 
+> wine: failed to start
+> L"Z:\\home\\user\\Documents\\repos\\qemu\\build\\qga\\qemu-ga.exe"
+> Application could not be started, or no application associated with the
+> specified file.
+> ShellExecuteEx failed: Bad EXE format for
+> Z:\home\user\Documents\repos\qemu\build\qga\qemu-ga.exe.
+> 
+> I bisected the tree and found the commit that caused the problem:
+> https://gitlab.com/qemu-project/qemu/-/commit/563b1a35ed1f1151505d4fe5f723827d1b3fd4bc
+> 
+> Adding --disable-split-debug to the configure CLI fixes the issue.
+> 
+> $ x86_64-w64-mingw32-gcc --version
+> x86_64-w64-mingw32-gcc (GCC) 14.2.0
+> 
+> My question is, is this expected behavior or is this a bug?
 
-I would also rename that to fid_has_valid_file_handle(), but I can also do
-this on my end.
+Your configure args don't include "--enable-debug", so I would
+not have expected -gsplit-dwarf to have been enabled, so I'm
+surprised that commit casued a problem.
 
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
->  static void coroutine_fn v9fs_getattr(void *opaque)
->  {
->      int32_t fid;
-> @@ -1596,9 +1601,7 @@ static void coroutine_fn v9fs_getattr(void *opaque)
->          retval = -ENOENT;
->          goto out_nofid;
->      }
-> -    if ((fidp->fid_type == P9_FID_FILE && fidp->fs.fd != -1) ||
-> -        (fidp->fid_type == P9_FID_DIR && fidp->fs.dir.stream))
-> -    {
-> +    if (fid_has_valid_handle(pdu->s, fidp)) {
->          retval = v9fs_co_fstat(pdu, fidp, &stbuf);
->      } else {
->          retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
-> 
-
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
