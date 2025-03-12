@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D6DC28B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8552C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMz2-0001a9-4k; Wed, 12 Mar 2025 10:22:56 -0400
+	id 1tsMzu-0002ai-O5; Wed, 12 Mar 2025 10:23:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsMz0-0001Vj-Na
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:22:54 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsMyy-0002kD-RR
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:22:54 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e4419a47887so5316731276.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:22:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741789371; x=1742394171; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=upYZflBtbp3LTMXlSsDXzvwbnhvBR9tGhMHw/rAPqao=;
- b=aqEw0UxwmYmPnCzPbpvWe+WUbIrLIW4P7fDf7Du4VJnyX6KS4AScioLwAHOUMwDfKf
- +lx4p7taxuR/L8CyFFfhj1cZuWGQvHkD7SdNzJdpu1mCJjaHgDF0TRVpwkv+vi9bXh0w
- 06LE17jjTVuODFb4XeWL8Fv3WWNzkDwSjKYCZDVEpdVcnoXwecJhzipm26QAtSWzIZRz
- F1NwBjwhXe0X/pO3MpxdsAHabFzrQjZ4s7t8g1oWV62V0CBapkSDGic11SKvbzKtO8Pt
- a7xiHSSSOOkgT6pn+G6BUmlhinxs9Iom2spupF00AHRdtT0IdUF7tmDWgJyuvMercvZ4
- b7RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741789371; x=1742394171;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=upYZflBtbp3LTMXlSsDXzvwbnhvBR9tGhMHw/rAPqao=;
- b=c6EGaUNsb3j5HGoqEPy9PP/OPzoe+Cb/exFmzLZY5TEUXWqSMkyiYrL6VtibmBcDxQ
- ovFHfRwL8ZsknEL1jaAXNGpDgGewjNKUYvUzG/pF1il4aI1sO3EZzQSJI+vC6y7A3s7n
- LV0fK8xJE2ULVThxMpeS/QfaoG9qBygz2zlf7vJXuQpzGL2VXyEESDUPkVmqTh9W34OJ
- LJPlQ/x2ZOliwzJ+4uvJfRHypaB4t6cBvBZo47vBFDxor5vOn7VZDKc7bRxdNPOvYBMG
- DiWyN5VfKfiq4EJzYs53gpQJfwsEkEosrrB4uf84opPherq/c2eeWaJbHkKnse2LLFH3
- UHiQ==
-X-Gm-Message-State: AOJu0YyffDNioAXP26UW6jmtPjDqmNSgfWuY+Qo9/rLyRce+aZxubeuK
- /+EQobpF1eUrkwMDAMS7zVEi50/4qdrljS5P3kFkiQ5c2sp4lR7q6U5Q7Srep1Ab98pJqGyWHOy
- Vt+vZNuLLtPSSWj+MqDmypZQ9Ob9zc04X65WP0A==
-X-Gm-Gg: ASbGncudgKOAW+2qsQUbZLrDAQimKV2AC6jFBYF5bHL4Ao21DICTaweZ/Hu+opxSDBm
- zhyGunaERV/Jlg3IJOVX8+jTue1RZEU9GN5v8djfHP0Yu+/g7yK1JCmpKd8fl+3EtDwMa90bnhB
- JQXtmYm1HzzrLXv4gc6+SOj4dqIPM=
-X-Google-Smtp-Source: AGHT+IH9FcO0JXQvOwy2kVJxMYZlbkxaXhuGgi7ouxV/+qoSjLiSNKHMsQMbhbtEULHWuwY9/ZI+8XlUf5G2xaA3quM=
-X-Received: by 2002:a05:6902:983:b0:e5e:700:92f5 with SMTP id
- 3f1490d57ef6-e635c1008c7mr32070121276.2.1741789370921; Wed, 12 Mar 2025
- 07:22:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsMzt-0002aR-Fz
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:23:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsMzr-0002mZ-NP
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:23:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741789425;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fbSo8yzblZXLH29tQ+kwyJb0SyzI7r+Kmpd8tJEbaYc=;
+ b=gkE+JNkgqrlWGyTd4btXDQfWiJNM3B4TonOyHWtIET+8Zreyrfs1T/6GS6/SQ1gmQH9+4W
+ COjlTfCN40OH8SqWZjXsYWmGwNwrBrv1FNjBKqjMsG0SGAZbydKueLh74M4/88c58y56pK
+ JmvM1O5P60hAoVzPPlRmu3cGyVoqNt0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-FG8v1urUO7mhcaUf6KZmhw-1; Wed,
+ 12 Mar 2025 10:23:37 -0400
+X-MC-Unique: FG8v1urUO7mhcaUf6KZmhw-1
+X-Mimecast-MFC-AGG-ID: FG8v1urUO7mhcaUf6KZmhw_1741789416
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69A0E19560B8; Wed, 12 Mar 2025 14:23:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.57])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D55518001E9; Wed, 12 Mar 2025 14:23:31 +0000 (UTC)
+Date: Wed, 12 Mar 2025 14:23:26 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Konstantin Kostiuk <kkostiuk@redhat.com>, QEMU <qemu-devel@nongnu.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
+Subject: Re: Cross-compilation artifact is broken
+Message-ID: <Z9GY3l2pTkbpMV8L@redhat.com>
+References: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
+ <Z9GUldol1IQT1uiY@redhat.com>
 MIME-Version: 1.0
-References: <20250311153717.206129-1-pbonzini@redhat.com>
- <CAFEAcA-TVaickhbxJ6d4Sc_Wi8HUuzKCaJTGHrNY6X3FcGvrfg@mail.gmail.com>
-In-Reply-To: <CAFEAcA-TVaickhbxJ6d4Sc_Wi8HUuzKCaJTGHrNY6X3FcGvrfg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Mar 2025 14:22:37 +0000
-X-Gm-Features: AQ5f1Jo0ih_I4s9hBZOC3oKtkSGRthAMEw4vb6qqqYkfDgkz0_NZI0P-gaGpWDI
-Message-ID: <CAFEAcA_9XAH4bQJKAp2+NLinUXXiFb_ae3AtQ9wEEK4CrDK7Aw@mail.gmail.com>
-Subject: Re: [PATCH] Revert "hw/char/pl011: Warn when using disabled receiver"
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z9GUldol1IQT1uiY@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,76 +86,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025 at 13:36, Peter Maydell <peter.maydell@linaro.org> wrot=
-e:
->
-> On Tue, 11 Mar 2025 at 15:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > The guest does not control whether characters are sent on the UART.
-> > Sending them before the guest happens to boot will now result in a
-> > "guest error" log entry that is only because of timing, even if the
-> > guest _would_ later setup the receiver correctly.
-> >
-> > This reverts commit abf2b6a028670bd2890bb3aee7e103fe53e4b0df, apart
-> > from adding the comment.
-> >
-> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Cc: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  hw/char/pl011.c | 12 ++----------
-> >  1 file changed, 2 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> > index 23a9db8c57c..efca8baecd7 100644
-> > --- a/hw/char/pl011.c
-> > +++ b/hw/char/pl011.c
-> > @@ -85,7 +85,6 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, =
-Chardev *chr)
-> >  #define CR_OUT1     (1 << 12)
-> >  #define CR_RTS      (1 << 11)
-> >  #define CR_DTR      (1 << 10)
-> > -#define CR_RXE      (1 << 9)
-> >  #define CR_TXE      (1 << 8)
-> >  #define CR_LBE      (1 << 7)
-> >  #define CR_UARTEN   (1 << 0)
-> > @@ -490,16 +489,9 @@ static int pl011_can_receive(void *opaque)
-> >      unsigned fifo_depth =3D pl011_get_fifo_depth(s);
-> >      unsigned fifo_available =3D fifo_depth - s->read_count;
-> >
-> > -    if (!(s->cr & CR_UARTEN)) {
-> > -        qemu_log_mask(LOG_GUEST_ERROR,
-> > -                      "PL011 receiving data on disabled UART\n");
-> > -    }
-> > -    if (!(s->cr & CR_RXE)) {
-> > -        qemu_log_mask(LOG_GUEST_ERROR,
-> > -                      "PL011 receiving data on disabled RX UART\n");
-> > -    }
-> > +    /* Should check enable and return 0? */
->
-> We decided deliberately not to check the enable and return 0
-> here, as described in the commit message of abf2b6a028670bd:
-> we think there's too likely to be existing works-on-QEMU code
-> out there that doesn't ever set the enable bits.
->
-> Otherwise, yes, agreed with the revert.
+On Wed, Mar 12, 2025 at 02:05:09PM +0000, Daniel P. Berrangé wrote:
+> On Wed, Mar 12, 2025 at 03:52:45PM +0200, Konstantin Kostiuk wrote:
+> > Hi All,
+> > 
+> > I cross-compiled qemu-ga from current master branch
+> > (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavior.
+> > 
+> > Configure CLI:
+> > ./configure --disable-docs --disable-system --disable-user
+> > --cross-prefix=x86_64-w64-mingw32- --enable-guest-agent
+> > --disable-guest-agent-msi --disable-qga-vss
+> > Build CLI:
+> > make -j8 qemu-ga
+> > 
+> > Linker wrote the following information but exited with 0 code:
+> > 
+> > /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
+> > qga/qemu-ga.exe:/4: section below image base
+> > /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
+> > qga/qemu-ga.exe:/24: section below image base
+> > 
+> > As a result, this binary failed to start on Windows without any details,
+> > just a message that the application is not compatible. I also tried to run
+> > it with wine and got the error:
+> > 
+> > wine: failed to start
+> > L"Z:\\home\\user\\Documents\\repos\\qemu\\build\\qga\\qemu-ga.exe"
+> > Application could not be started, or no application associated with the
+> > specified file.
+> > ShellExecuteEx failed: Bad EXE format for
+> > Z:\home\user\Documents\repos\qemu\build\qga\qemu-ga.exe.
+> > 
+> > I bisected the tree and found the commit that caused the problem:
+> > https://gitlab.com/qemu-project/qemu/-/commit/563b1a35ed1f1151505d4fe5f723827d1b3fd4bc
+> > 
+> > Adding --disable-split-debug to the configure CLI fixes the issue.
+> > 
+> > $ x86_64-w64-mingw32-gcc --version
+> > x86_64-w64-mingw32-gcc (GCC) 14.2.0
+> > 
+> > My question is, is this expected behavior or is this a bug?
+> 
+> Your configure args don't include "--enable-debug", so I would
+> not have expected -gsplit-dwarf to have been enabled, so I'm
+> surprised that commit casued a problem.
 
-I've applied this to target-arm.next with the comment expanded
-(and I left the define of CR_RXE in too):
+Hmm it appears that the meson  "get_option('debug')" is entirely
+unconnected to QEMU's --enable-debug configure flag, which I did
+not realize.
 
-+    /*
-+     * In theory we should check the UART and RX enable bits here and
-+     * return 0 if they are not set (so the guest can't receive data
-+     * until you have enabled the UART). In practice we suspect there
-+     * is at least some guest code out there which has been tested only
-+     * on QEMU and which never bothers to enable the UART because we
-+     * historically never enforced that. So we effectively keep the
-+     * UART continuously enabled regardless of the enable bits.
-+     */
+IOW, we've got -gsplit-dwarf enabled by default for everyone
+building QEMU, which feels dubious. IMHO only an explicit
+--enable-debug configure arg should have triggered it.
 
-thanks
--- PMM
+In addition since its breaking Windows builds, it appears we
+need to block its usage on Windows.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
