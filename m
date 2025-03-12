@@ -4,73 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F031EC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 09:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329D8C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsIha-00052H-GE; Wed, 12 Mar 2025 05:48:38 -0400
+	id 1tsIvu-0001Yp-Hg; Wed, 12 Mar 2025 06:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsIhT-00051H-4w
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:48:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsIhR-0002XH-Fp
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:48:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741772908;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=apHlQ7dClCd25oYjR0rLPGLODbnTTMTp1/vCe7ZQJO8=;
- b=C+wnc4ehIEg5KzZmyxhmlMChCbxddkf1B7UgtwYwZAnLFhc+/lt0GBeYb5GTOFUsY0Nnsu
- u6mZ44E860T3HSii83zdNZSy+f7CtrdPW+j1nKzTYLGHHNHGprAa9SgKQxsTJ+CXJFP+Z5
- RrS/5v5Eel3pKdSEfzXToQdwuao8HNs=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-hvLbxiJtOd-TKKFbR-RZLg-1; Wed,
- 12 Mar 2025 05:48:25 -0400
-X-MC-Unique: hvLbxiJtOd-TKKFbR-RZLg-1
-X-Mimecast-MFC-AGG-ID: hvLbxiJtOd-TKKFbR-RZLg_1741772904
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F1EE19560B0; Wed, 12 Mar 2025 09:48:24 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C22B11956094; Wed, 12 Mar 2025 09:48:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C8E1021E675F; Wed, 12 Mar 2025 10:48:18 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: zhenwei pi <pizhenwei@bytedance.com>
-Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  "Gonglei
- (Arei)" <arei.gonglei@huawei.com>
-Subject: Re: Bad error handling in cryptodev_lkcf_execute_task(), need advice
-In-Reply-To: <85ed8afb-09d7-47a6-8c67-f9298b11c092@bytedance.com> (zhenwei
- pi's message of "Wed, 12 Mar 2025 17:01:32 +0800")
-References: <87cyemoeiw.fsf@pond.sub.org>
- <85ed8afb-09d7-47a6-8c67-f9298b11c092@bytedance.com>
-Date: Wed, 12 Mar 2025 10:48:18 +0100
-Message-ID: <87wmculgv1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIvg-0001XC-Pb
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:03:13 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIvd-0004uV-Pi
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:03:11 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43d07ca6a80so8578965e9.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 03:03:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741773787; x=1742378587; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zb2IlpQC1aPCPt9c1rMelh0CumzxoDpBmP6xUGm83DM=;
+ b=M8DRJj2qPC8rhxLTo6oNo3mHO3+cEXP/hoOkmsttHGDmzt2oOVrZQ6UCUMMgYpKa6D
+ Ek94sYA61WbX9X5ooRQiIg3BlgC3CIMsd12Qn4Vh3WcDrpvKUlkaQB+WhyiyuiQU349W
+ yuttXaGrkzF0sfBU6LaWFLdtnUOJWO/l79TEmDZhsgiZoNtUfwcCHijdrb5U6QOTxGHM
+ 5RJjWJxel+E7Tv9FDV50C014q0UUDeI39Yv/u/1t+T9GUxAv+gnc9k/Wbni5tJSaz/Gd
+ Dlw/CNKGZQuWlqqMIJsAC9Qhid28eT+J+r3hRQOnnNiOiNHRzUywBKELrAuonZbnUg4A
+ 2bjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741773787; x=1742378587;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zb2IlpQC1aPCPt9c1rMelh0CumzxoDpBmP6xUGm83DM=;
+ b=NimgY0M0YoHqHlduHodDAG9uFfKDjhf43ebvJ5I35Cxmbm7wsLsaCwzyI9hC6pK+KQ
+ u40hIh9ko/qBS7En6doaghtlobv6OfQfQ3Cc8lpfcGlc2hohgQrJpkMA6YzUSS4aak5F
+ mXxkBQmC7iPjyF455qewXE4KGVv8beFeHz5iYLQtIMUJLFrZokQknRZHylD33bYDXF3s
+ sotcC0KOhRcgwJshHiaQXyvaN+k3voww8ceAhR8DKtK1D03XQWav4Mc0LPa6fSD+L76C
+ Wdw+ypPtVYAYTWahcPLaB4cU8haMOWkZiZHD1Q6pdbfE1hdtSSZvDBDQMXQx05qAvvEv
+ Zfwg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgbZk4LEakXsBib+a9j4QbzVEpaVmrmhX/xcK3C0QWgGVrg0/kO3L/FUvDiVE93ItxnliIL85yjdwC@nongnu.org
+X-Gm-Message-State: AOJu0YyyRMvCuKnfOyqsEQo8TNuKnDaHqMnMQNmkhscqGbmbzm2Pli9r
+ epJviplXs/QibgWy8UzmIKp7kGIPFI/XzVV6SiEDfu/c2kjdV7iZVgRIaXAiGVg=
+X-Gm-Gg: ASbGncuw4Fof/KhUVFM1H4pY8L0Pa34wnZ3rM6rxT1DoJM10ls7hY+gkHE4+X07y/AE
+ vIaz02/YtlaVlwGJC1pXDlUG3idS71Ls2ZyH9QRNH9c/DX07rHYVQYAIaCZFEm8IQ+o2qpJIP7y
+ wudZA7y3q5bYDzZH50s9YmEb61E8bCV2BIET9aKnInkFVniEVyh6MP03wBSvRHRIWPbVXoj5RNJ
+ 0EOxo30YlXhHDxlaNKOzTIZFOrjqLePiXJM4bsl2B3nfoi8vGRvxaSnlFDirKxbskdvafNhr0J0
+ 5F+4wiai9qxhMivzVTkDprGEMfr1eZpkNB/wufVHUomL+jaryAZMvKdhsd5r8ZZRpXol6P8LZzs
+ tFdXN/Q==
+X-Google-Smtp-Source: AGHT+IHPcu8AsRzRXcc20GvN+UZDrefN/pfBIUk3rHmTaW7lXBAJ9RsbImjySiWse0w9czeRHCCB4g==
+X-Received: by 2002:a05:600c:4fce:b0:43b:cd0d:9466 with SMTP id
+ 5b1f17b1804b1-43d07fd485emr32713735e9.9.1741773787247; 
+ Wed, 12 Mar 2025 03:03:07 -0700 (PDT)
+Received: from [10.223.46.213] (99.167.185.81.rev.sfr.net. [81.185.167.99])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d0a7310e1sm16204915e9.6.2025.03.12.03.03.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Mar 2025 03:03:06 -0700 (PDT)
+Message-ID: <9329310c-bfad-44aa-a53a-87c1f39668a2@linaro.org>
+Date: Wed, 12 Mar 2025 11:03:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Giving your own patches your Reviewed-by
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Bibo Mao <maobibo@loongson.cn>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, Yi Liu
+ <yi.l.liu@intel.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+References: <878qpamvk6.fsf@pond.sub.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <878qpamvk6.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,82 +106,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-zhenwei pi <pizhenwei@bytedance.com> writes:
+Hi Markus,
 
-> On 3/12/25 16:10, Markus Armbruster wrote:
->> scripts/coccinelle/error-use-after-free.cocci led me to this function:
->>
->>     static void cryptodev_lkcf_execute_task(CryptoDevLKCFTask *task)
->>     {
->>         CryptoDevBackendLKCFSession *session = task->sess;
->>         CryptoDevBackendAsymOpInfo *asym_op_info;
->>         bool kick = false;
->>         int ret, status, op_code = task->op_info->op_code;
->>         size_t p8info_len;
->>         g_autofree uint8_t *p8info = NULL;
->>         Error *local_error = NULL;
->>         key_serial_t key_id = INVALID_KEY_ID;
->>         char op_desc[64];
->>         g_autoptr(QCryptoAkCipher) akcipher = NULL;
->>         /**
->>          * We only offload private key session:
->>          * 1. currently, the Linux kernel can only accept public key wrapped
->>          * with X.509 certificates, but unfortunately the cost of making a
->>          * ceritificate with public key is too expensive.
->>          * 2. generally, public key related compution is fast, just compute it with
->>          * thread-pool.
->>          */
->>         if (session->keytype == QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {
->>             if (qcrypto_akcipher_export_p8info(&session->akcipher_opts,
->>                                                session->key, session->keylen,
->>                                                &p8info, &p8info_len,
->>                                                &local_error) != 0 ||
->>                 cryptodev_lkcf_set_op_desc(&session->akcipher_opts, op_desc,
->>                                            sizeof(op_desc), &local_error) != 0) {
->>                 error_report_err(local_error);
->>
->> Reporting an error, but continue anyway.  This is suspicious.
->>
->> Note for later: @local_error is now non-null.
->>
->>             } else {
->>                 key_id = add_key(KCTL_KEY_TYPE_PKEY, "lkcf-backend-priv-key",
->>                                  p8info, p8info_len, KCTL_KEY_RING);
->>             }
->>         }
->>         if (key_id < 0) {
->>             if (!qcrypto_akcipher_supports(&session->akcipher_opts)) {
->>                 status = -VIRTIO_CRYPTO_NOTSUPP;
->>                 goto out;
->>             }
->>             akcipher = qcrypto_akcipher_new(&session->akcipher_opts,
->>                                             session->keytype,
->>                                             session->key, session->keylen,
->>                                             &local_error);
->>
->> Passing non-null @local_error to qcrypto_akcipher_new().  This is wrong.
->> When qcrypto_akcipher_new() fails and passes &local_error to
->> error_setg(), error_setv()'s assertion will fail.
->>
->> Two possible fixes:
->>
->> 1. If continuing after cryptodev_lkcf_set_op_desc() is correct, we need
->> to clear @local_error there.  Since it's not actually an error then, we
->> should almost certainly not use error_report_err() there.  *Maybe*
->> warn_report_err().
->>
->> 2. If continuing is wrong, we probably need set @status (to what?) and
->> goto out.
->>
->> What is the correct fix?
->> 
->
-> Hi,
->
-> It's fatal error of a crypto task, so it should not continue. setting status as VIRTIO_CRYPTO_ERR should be fine.
+(Cc'ing Yi, Clément and Zhenzhong for commit eda4c9b5b3c)
 
-I'll post the obvious patch.  Thanks for your help!
+On 12/3/25 10:45, Markus Armbruster wrote:
+> I stumbled over commits that carry the author's Reviewed-by.
+> 
+> There may be cases where the recorded author isn't the lone author, and
+> the recorded author did some meaningful review of the patch's parts that
+> are not theirs.  Mind that we do need all authors to provide their
+> Signed-off-by.
+> 
+> When the only Signed-off-by is from the recorded author, and there's
+> also their Reviewed-by, the Reviewed-by is almost certainly bogus.
+> 
+> Now, accidents happen, no big deal, etc., etc.  I post this to hopefully
+> help reduce the accident rate :)
+> 
+> Here's my quick & sloppy search for potentially problematic uses of
+> Reviewed-by:
+> 
+> $ git-log --since 'two years ago' | awk -F: '/^commit / { commit=$0 } /^Author: / { guy=$2 } /^    Reviewed-by: / { if ($2 == guy) { print commit; print guy } }'
 
-[...]
 
+Explaining some commits where I'm mentioned:
+
+commit 1e0d4eb4ee7c909323bffc39bc348eb3174b426b
+Author: Philippe Mathieu-Daudé <philmd@linaro.org>
+Date:   Fri Apr 12 00:33:30 2024 -0700
+
+     backends/tpm: Use qemu_hexdump_line() to avoid sprintf()
+
+     sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1.
+     Using qemu_hexdump_line() both fixes the deprecation warning and
+     simplifies the code base.
+
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+     Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+     [rth: Keep the linebreaks every 16 bytes]
+     Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+     Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+     Message-ID: <20240412073346.458116-12-richard.henderson@linaro.org>
+     [PMD: Rebased]
+
+
+I posted a patch with my S-o-b; Richard took it, improved and reposted
+it with his S-o-b; I reviewed Richard's changes (and eventually merged).
+
+commit 0fe4cac5dda1028c22ec3a6997e1b9155a768004
+Author: Peter Maydell <peter.maydell@linaro.org>
+Date:   Mon Jul 17 18:29:40 2023 +0200
+
+     target/mips: Avoid shift by negative number in page_table_walk_refill()
+
+     Coverity points out that in page_table_walk_refill() we can
+     shift by a negative number, which is undefined behaviour
+     (CID 1452918, 1452920, 1452922).  We already catch the
+     negative directory_shift and leaf_shift as being a "bail
+     out early" case, but not until we've already used them to
+     calculated some offset values.
+
+     The shifts can be negative only if ptew > 1, so make the
+     bail-out-early check look directly at that, and only
+     calculate the shift amounts and the offsets based on them
+     after we have done that check. This allows
+     us to simplify the expressions used to calculate the
+     shift amounts, use an unsigned type, and avoids the
+     undefined behaviour.
+
+     Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+     [PMD: Check for ptew > 1, use unsigned type]
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+     Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+     Message-Id: <20230717213504.24777-3-philmd@linaro.org>
+
+Peter posted the first patch, I reworked it and reposted,
+Peter reviewed my changes.
+
+commit c4380f7bcdcb68fdfca876db366782a807fab8f7
+Author: Richard Henderson <richard.henderson@linaro.org>
+Date:   Thu Jan 18 21:06:30 2024 +0100
+
+     target/arm: Create arm_cpu_mp_affinity
+
+     Wrapper to return the mp affinity bits from the cpu.
+
+     Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+     Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+     Message-id: 20240118200643.29037-10-philmd@linaro.org
+     Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+
+Is this workflow making sense and accepted? Otherwise what should
+we change? Maybe clarify along with the tags; or including all
+Message-Id could make this easier to track?
+
+Regards,
+
+Phil.
 
