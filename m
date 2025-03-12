@@ -4,71 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D82C28B2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 09:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 370D9C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 09:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsIHq-00033W-FW; Wed, 12 Mar 2025 05:22:02 -0400
+	id 1tsILE-0005w6-PF; Wed, 12 Mar 2025 05:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tsIGz-0002op-ML
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:21:14 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tsIGt-0005qb-DD
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:21:08 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxaWpPUNFnrDSTAA--.55119S3;
- Wed, 12 Mar 2025 17:13:52 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxb8dNUNFnc69FAA--.62463S3;
- Wed, 12 Mar 2025 17:13:51 +0800 (CST)
-Subject: Re: Bad error handling in loongarch's kvm_arch_init_vcpu(), need
- advice
-To: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-References: <87wmcumylv.fsf@pond.sub.org>
- <4999e31e-c502-40f2-bf80-3c857aa50da7@redhat.com>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <0a1fb6ff-6944-d6fb-bda9-3f166fe8b999@loongson.cn>
-Date: Wed, 12 Mar 2025 17:13:11 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <SRS0=rF9B=V7=kaod.org=clg@ozlabs.org>)
+ id 1tsIKz-0005tA-1k; Wed, 12 Mar 2025 05:25:17 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=rF9B=V7=kaod.org=clg@ozlabs.org>)
+ id 1tsIKw-0006mu-EH; Wed, 12 Mar 2025 05:25:16 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZCQFr01RPz4xG4;
+ Wed, 12 Mar 2025 20:25:04 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZCQFm2r46z4wy9;
+ Wed, 12 Mar 2025 20:24:59 +1100 (AEDT)
+Message-ID: <675766c2-4015-43e8-b070-d58f2cdd23e7@kaod.org>
+Date: Wed, 12 Mar 2025 10:24:55 +0100
 MIME-Version: 1.0
-In-Reply-To: <4999e31e-c502-40f2-bf80-3c857aa50da7@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8dNUNFnc69FAA--.62463S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7AFW3Cr13uF4DtrWrCFWxAFc_yoW8Gw47pr
- WxGa4DAryDC3WkJwnFvrnrX34jyryDJa4DXw1DJa43GwsIkrnF9rWjqrnFg345urWrtw4r
- Ja1DX3s8uayUAabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
- Ja73UjIFyTuYvjxUzsqWUUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.105,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/4] Support HACE to AST2700 (resend)
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250225075622.305515-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250225075622.305515-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=rF9B=V7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,49 +111,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Jamin,
 
+On 2/25/25 08:56, Jamin Lin wrote:
+> This patch series is from https://patchwork.kernel.org/project/qemu-devel/cover/20250213033531.3367697-1-jamin_lin@aspeedtech.com/.
+> To expedite the review process, I have separated the HACE patches portion from
+> the https://patchwork.kernel.org/project/qemu-devel/cover/20250213033531.3367697-1-jamin_lin@aspeedtech.com/ patch series into this new patch series.
+> 
+> v4: Support HACE to AST2700
+> 
+> Jamin Lin (4):
+>    hw/misc/aspeed_hace: Fix coding style
+>    hw/misc/aspeed_hace: Add AST2700 support
+>    hw/arm/aspeed_ast27x0: Add HACE support for AST2700
+>    hw/misc/aspeed_hace: Fix boot issue in the Crypto Manager Self Test
+> 
+>   include/hw/misc/aspeed_hace.h |  2 ++
+>   hw/arm/aspeed_ast27x0.c       | 15 ++++++++++
+>   hw/misc/aspeed_hace.c         | 55 ++++++++++++++++++++++++++++++++---
+>   3 files changed, 68 insertions(+), 4 deletions(-)
+> 
 
-On 2025/3/12 下午4:59, Paolo Bonzini wrote:
-> On 3/12/25 09:39, Markus Armbruster wrote:
->> scripts/coccinelle/error-use-after-free.cocci led me to
->> target/loongarch/kvm/kvm.c:
->>
->>          ret = kvm_cpu_check_lsx(cs, &local_err);
->>          if (ret < 0) {
->>              error_report_err(local_err);
->>
->> Reporting an error, but continue anyway.  This is suspicious.
->>
->>          }
->>
->>          ret = kvm_cpu_check_lasx(cs, &local_err);
->>
->> Passing non-null @local_error to kvm_cpu_check_lasx().  This is wrong.
->> When kvm_cpu_check_lasx() fails and passes &local_error to error_setg(),
->> error_setv()'s assertion will fail.
->>
->> Two possible fixes:
->>
->> 1. If continuing after kvm_cpu_check_lasx() failure is correct, we need
->> to clear @local_error there.  Since it's not actually an error then, we
->> should almost certainly not use error_report_err() there.  *Maybe*
->> warn_report_err().
->>
->> 2. If continuing is wrong, we probably need to return ret.
-> 
-> Indeed the correct fix is to return ret, since the Error is set whenever 
-> an OnOffAuto property is "on" and KVM does not support a feature.
-yes, it should return ret immediately, if user forces to enable the 
-feature however KVM does not support.
+The kernel reports a lot of errors when running the crypto tests on a
+AST2700 A1 Soc. See the functional test logs :
+     
+     $ grep alg: build/tests/functional/aarch64/test_aarch64_aspeed.AST2x00MachineSDK.test_aarch64_ast2700a1_evb_sdk_v09_05/console.log
 
-Will submit a patch to fix it, and thanks for reporting.
+     2025-03-12 10:10:42,705: [    2.206831] alg: skcipher: aspeed-ctr-tdes encryption test failed (wrong result) on test vector 0, cfg="in-place (one sglist)"
+     2025-03-12 10:10:42,706: [    2.207328] alg: self-tests for ctr(des3_ede) using aspeed-ctr-tdes failed (rc=-22)
+     2025-03-12 10:10:42,707: [    2.207894] alg: self-tests for ctr(des3_ede) using aspeed-ctr-tdes failed (rc=-22)
+     2025-03-12 10:10:42,725: [    2.219342] alg: skcipher: aspeed-ctr-des encryption test failed (wrong result) on test vector 0, cfg="in-place (one sglist)"
+     2025-03-12 10:10:42,725: [    2.219511] alg: self-tests for ctr(des) using aspeed-ctr-des failed (rc=-22)
+     2025-03-12 10:10:42,725: [    2.219651] alg: self-tests for ctr(des) using aspeed-ctr-des failed (rc=-22)
+     2025-03-12 10:10:42,733: [    2.224344] alg: skcipher: aspeed-ctr-aes encryption test failed (wrong result) on test vector 0, cfg="in-place (one sglist)"
+     2025-03-12 10:10:42,734: [    2.224775] alg: self-tests for ctr(aes) using aspeed-ctr-aes failed (rc=-22)
+     2025-03-12 10:10:42,734: [    2.225015] alg: self-tests for ctr(aes) using aspeed-ctr-aes failed (rc=-22)
+     ...
 
-Regards
-Bibo Mao
-> 
-> Same for all those below.
-> 
-> Paolo
-> 
+What is something missing in the models ?
+
+Thanks,
+
+C.
+
 
 
