@@ -4,83 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7798DC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 13:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7C1C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 13:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsM2x-0004qX-Ng; Wed, 12 Mar 2025 09:22:55 -0400
+	id 1tsMDr-0000AH-Up; Wed, 12 Mar 2025 09:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsM2r-0004oi-RB
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 09:22:51 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsM2p-0001ct-Bl
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 09:22:49 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e60cab0f287so4648655276.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 06:22:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741785762; x=1742390562; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dwurYr+CoRnMe6GaDPX6Uf5o7D8qKAwzdfDd9VBfJBU=;
- b=bXTCi4XuuMIMNcphslZExfDULbViheeIbLWdHXhblUpxhj/kX3jwhXfUqZB4LtoDnM
- f2uM/cn92CPtf+1jO7DMVSrmDXyzyGT0BrACgjuQ6Llgz22flED1vQgdeZ7YjejZBfl4
- Z1r6X+t7DCI2tu9tzfcKwepibIgwS3fhm0XrpGE9AN3hgxTgPbPCY9hYxeJmUg042bO7
- Tz6aHeiQKPu3vThWEy+V2eL1G4K8bsbb2jXJM8A5xTpvLX6fjXpcNmr4Tmf91RauZCNI
- 3Uuy/9oRV2fDedus5cgDkkvkq9auVlWpVYEXA/CPogGAHitJKDG1xYtK5PqQ2E/Fok15
- rLNw==
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tsMDo-00008g-1k
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 09:34:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1tsMDm-0003j2-0P
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 09:34:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741786442;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3CJd/CSTCPvnYuIC3x6clQuoYz2CXg77OwHNpnx5j1M=;
+ b=O8JQN1KZwLMJpwfUNeNLYwYlwFfHNv6V69ah40oiterCPV4bg5FnwEwitW0W3pj7UUN3mX
+ 5Tc2LYixfGn+lhCyc3FDqwIGpz6M68oQTZAOSGqeHZvBGDGD/omhUk+4+MNxeTPeevQkH0
+ SbvBkkCkyDoj0y2M6/fmG9By8vZT4F0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-dtqmuglcOfm6NkfNAj3W9Q-1; Wed, 12 Mar 2025 09:33:53 -0400
+X-MC-Unique: dtqmuglcOfm6NkfNAj3W9Q-1
+X-Mimecast-MFC-AGG-ID: dtqmuglcOfm6NkfNAj3W9Q_1741786431
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3912e4e2033so3453670f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 06:33:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741785762; x=1742390562;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dwurYr+CoRnMe6GaDPX6Uf5o7D8qKAwzdfDd9VBfJBU=;
- b=EK6KEDiJ+LnpAoB/T3nScpCcWGsf/yWfCqfh1F6cNZlc6T5Wv7QL5CUldlCu5OgXf1
- xmTzJfDEkH/9pnw2wKtmNmps5UlSvMtXksDtiLpurL+4ic8n+0ZjP+WeAStYNRNuzmzp
- Y24fgiwxbmi5WzH2tF+Pa4THMpxz/ylMOkJ7uVUUIy2eUPuvLHBdTNoJOuBOW/YC8g8J
- /8BXBU4TAY2fSQGLZCqGTjDrKecw7dWC9dFYje/NzrVYwvR4U7qnn+2P08LvrXAdbszG
- j1rgkbtfJ4wlm5BESKyp8K2eXg26XmxzL3d370Wq9Gvuci8sNf5SV4Xkgg4zmps33GgZ
- ky7Q==
-X-Gm-Message-State: AOJu0YwjDehX8tL6DPNObmn9LRD0uPrXQWjVv5K9/7cHxuhF0n3H/xkt
- r89NHKqyGyr84i5dyOw+BmDowfP1Zxqr5efQ3TSrk2za9XQZ+E86TmR7+pXiKJGqPap1L7y2ilM
- hpaZV3WozK539GLqgIPSXn4MCV1pb2k9uiYTebq6G+C3VGmTk
-X-Gm-Gg: ASbGncvAnI9Wf0AnZpbuNf90ZgXY3B4e1Dk4sOJ0qJRTpCkxy6+EhhF/J+3cJy45IU1
- AO5ftxHlTHbj/zgpF3pV0KbZ60ggR/40jF5A4c9DoT8XWhL3oGIVUYOVanXrqKOMBSPIKGHqsY1
- OwFLwKg5YWBZkAEeMxFvNp3vtH/QA=
-X-Google-Smtp-Source: AGHT+IEHYYdk3XbVH7lXYzJ5Eh5wiY0ZtbgsvCXxGGedbGjypWYTarF8mZse2/ZLIPMjQNHDB4EFSuYSdWRWD9gpLhI=
-X-Received: by 2002:a05:6902:3488:b0:e5d:cd08:12f0 with SMTP id
- 3f1490d57ef6-e635c1ee39fmr23658488276.44.1741785762215; Wed, 12 Mar 2025
- 06:22:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741786431; x=1742391231;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3CJd/CSTCPvnYuIC3x6clQuoYz2CXg77OwHNpnx5j1M=;
+ b=KjHAZsRTaZ/w2wau4+8H8drGoT2mY/33+GGnZYuEYPid5cfU0B6PnPklO8Ur96x2BN
+ 2Iac+rGt0lTa98khTVaEgBn9xN/AmKLQJtaEp28k7e2UUQ5MppOtrRdDIKJeNUp+9oUK
+ yS+qWUtH/YNnrC2hUr6/gR9Ify75EJL7/9KR5j01/LH/aoWA+rs9XRah4VaPHNhzL/5j
+ wXxbHgEZpC1XCRJNMsSGer2so8O7jVM9sy9CwXIPH6ZmOj+HPmS4HMOVIct0vpfm4SQx
+ wn6PPZSQ9Zg30h1pYENZwAM1RZ2KaXz+xx8xX9SFsRvyXCr4mn5Ap8CoDVGXferKg+UU
+ SzVQ==
+X-Gm-Message-State: AOJu0YxLg0eSGfVzts4zkcSNIUSwol1WoNQo2nz3FRhxB2ss4LsDPw1f
+ moZnnSGaUpVqp/Jce0s7Pf74gQPRXApEXGnZuYHZ4A+bnP6Uqrx3XjrRG8s5dbhTtM6p4/1+bhE
+ JsXUqGf2hFNB0UGdhRceFvQEoH34we/aZGoFB5gZdR85L26FLyiBE
+X-Gm-Gg: ASbGncuJg2qLLfDZY7YRBk6ykPN/k4+hNKSeSUKPwNIomMWeIHKbwD54ysAHQT5KIaU
+ XmtZOfxtVUmKgF/lv4c1EvpRZLkNxAzANZL7fj2y3KcuYE4gLDN199KOF5IOodb17QY9uFJTkG7
+ TWYeMsv+oLCpaJbCp5/7DKA0YPOKwtdPu8K1NM/o4pd2fArmr5O3Bk0gcs1aJwj8vNooxCKFWUw
+ msLL1uR/E5RjgxquYAdgmmUUqyzi5H/yZf9ICmfTHxFVwjOUnhUEfXq9XisM3cJGEo52CD+otTu
+ t/zL9IA+kP1gtvfPv8jILi6RZoJRdsLtAU3tqmzY+rrm
+X-Received: by 2002:a05:6000:18ae:b0:390:f394:6271 with SMTP id
+ ffacd0b85a97d-39132da96b3mr19956416f8f.43.1741786431098; 
+ Wed, 12 Mar 2025 06:33:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiH0yh2DAByu1eso5HoOZBimlzb/mcjmQRHz31QfqeUneh/h08yZW40BbOu7lY426p1BPISA==
+X-Received: by 2002:a05:6000:18ae:b0:390:f394:6271 with SMTP id
+ ffacd0b85a97d-39132da96b3mr19956401f8f.43.1741786430756; 
+ Wed, 12 Mar 2025 06:33:50 -0700 (PDT)
+Received: from maya.myfinge.rs (ifcgrfdd.trafficplex.cloud. [176.103.220.4])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3947a24449bsm1765487f8f.45.2025.03.12.06.33.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Mar 2025 06:33:50 -0700 (PDT)
+Date: Wed, 12 Mar 2025 14:33:46 +0100
+From: Stefano Brivio <sbrivio@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, David Gibson <david@gibson.dropbear.id.au>, Markus
+ Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2] docs: Explain how to use passt
+Message-ID: <20250312143346.799b24a5@elisabeth>
+In-Reply-To: <20250311132714.166189-1-lvivier@redhat.com>
+References: <20250311132714.166189-1-lvivier@redhat.com>
+Organization: Red Hat
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20250213142613.151308-1-peter.maydell@linaro.org>
- <CAFEAcA86t=uc_XZd0s1yOFsop68XN2HK7c5MUJNfn7kcDoMsxQ@mail.gmail.com>
- <CAFEAcA8CWFsxK6u0gg_pwCokGmzHe0=TRyf=9560APLX1DezMA@mail.gmail.com>
-In-Reply-To: <CAFEAcA8CWFsxK6u0gg_pwCokGmzHe0=TRyf=9560APLX1DezMA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Mar 2025 13:22:30 +0000
-X-Gm-Features: AQ5f1JpoYFkqDE9a5WKfsR7Bo13lqFGHxMfle8Cgg6Gs9cLd7-ImbdLSn9sXIB4
-Message-ID: <CAFEAcA8Z7KcMkELkO42SfLQMi=ctdVWhp7C150_RkM9b-LF=bA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] target/i386: Emulate ftz and denormal flag bits
- correctly
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sbrivio@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,56 +111,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping^3 ? Anybody home?
+On Tue, 11 Mar 2025 14:27:14 +0100
+Laurent Vivier <lvivier@redhat.com> wrote:
 
-thanks
--- PMM
+> Add a chapter to explain how to use passt(1) instead of '-net user'.
+> passt(1) can be connected to QEMU using UNIX socket or vhost-user.
+> With vhost-user, migration of the VM is allowed and internal state of
+> passt(1) is transfered from one side to the other
+> 
+> Bug: https://gitlab.com/qemu-project/qemu/-/issues/2827
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 
-On Fri, 7 Mar 2025 at 10:38, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Ping^2 for pickup of reviewed patches.
->
-> thanks
-> -- PMM
->
-> On Mon, 24 Feb 2025 at 14:47, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > Ping? Would an i386 maintainer like to pick these up?
-> >
-> > thanks
-> > -- PMM
-> >
-> > On Thu, 13 Feb 2025 at 14:26, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > >
-> > > This is a set of four patches to target/i386 which use the core
-> > > fpu functionality we just landed for Arm FEAT_AFP to correct
-> > > the emulation of some corner cases of x86 floating point:
-> > >  * when we are flushing denormal outputs to zero, this should
-> > >    be done after rounding, not before
-> > >  * the MXCSR.DE and FPUS.DE bits indicate when a denormal input
-> > >    was not flushed and was used in an fp operation; we previously
-> > >    weren't implementing these semantics
-> > >
-> > > All four patches have been reviewed by RTH. Testing is a bit
-> > > light (make check-tcg and make check-functional), because AFAIK
-> > > there is no freely available comprehensive FP testsuite for x86,
-> > > and risu doesn't support x86 currently so I can't do the same kind
-> > > of random-instruction-testing I could for Arm.
-> > >
-> > > thanks
-> > > -- PMM
-> > >
-> > > Peter Maydell (4):
-> > >   target/i386: Detect flush-to-zero after rounding
-> > >   target/i386: Use correct type for get_float_exception_flags() values
-> > >   target/i386: Wire up MXCSR.DE and FPUS.DE correctly
-> > >   tests/tcg/x86_64/fma: add test for exact-denormal output
-> > >
-> > >  target/i386/ops_sse.h        |  16 +++---
-> > >  target/i386/tcg/fpu_helper.c | 101 +++++++++++++++++------------------
-> > >  tests/tcg/x86_64/fma.c       |  17 ++++--
-> > >  3 files changed, 68 insertions(+), 66 deletions(-)
-> > >
-> > > --
-> > > 2.43.0
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+
+-- 
+Stefano
+
 
