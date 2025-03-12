@@ -4,60 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC7AC2BA1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 08:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E25FEC28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 08:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsHBE-0003we-JY; Wed, 12 Mar 2025 04:11:13 -0400
+	id 1tsHEO-0006Ma-GU; Wed, 12 Mar 2025 04:14:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsHAs-0003sZ-4E
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 04:10:49 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsHE4-0006Gb-Fn
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 04:14:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsHAp-000358-SB
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 04:10:45 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsHE2-0003Vi-Ll
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 04:14:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741767041;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=QYTDfH46++q7wEEKJJsU8D5HdUcvBLSBrV30K1lhG+o=;
- b=ENZTY/yjNX+7oa6T9y5JsFpautDbdj886KbVH+3mfEhtRjvbsaAAy7hu708CfzCW8z3mct
- aREDrKeRo90TFsmxfCrKBLjAevNVrr12Bz8/H0BxBbFxvJSVIFhU+S63yiLKEiA8rvo9DU
- VdrTUkjMPp9t50xXQGoCGBEN46v7Dao=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1741767239;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=6Nari1HuJU+2sPS8UHcK4mg/fk4y9Yl9L19qUWlWm6E=;
+ b=U0ZXRvxxISE8GTfzjQHt6pJWVlKuPFI9OrW/d5GBgjghBKjCnGObiWV/AT7zWdhwxeG6iV
+ Rc/Av2plgv5k7pTFTbuff4ibk6Awc2dOoPLdKqkO4b+Ac9UA9HqSPD7l//+4udWAAIOEe5
+ E5MNOkcmkmmv4neJBtrf+Ot14noRTs4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-1D7IT9JFPoezSkF60wZVNA-1; Wed,
- 12 Mar 2025 04:10:39 -0400
-X-MC-Unique: 1D7IT9JFPoezSkF60wZVNA-1
-X-Mimecast-MFC-AGG-ID: 1D7IT9JFPoezSkF60wZVNA_1741767038
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-kC6yqtRuOkiCkxbWick0yA-1; Wed,
+ 12 Mar 2025 04:13:54 -0400
+X-MC-Unique: kC6yqtRuOkiCkxbWick0yA-1
+X-Mimecast-MFC-AGG-ID: kC6yqtRuOkiCkxbWick0yA_1741767233
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA5521955BD2; Wed, 12 Mar 2025 08:10:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E27FF1801751; Wed, 12 Mar 2025 08:10:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9A17021E675E; Wed, 12 Mar 2025 09:10:31 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Lei He <helei.sig11@bytedance.com>, Michael S. Tsirkin <mst@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, Zhenwei Pi
- <pizhenwei@bytedance.com>
-Subject: Bad error handling in cryptodev_lkcf_execute_task(), need advice
-Date: Wed, 12 Mar 2025 09:10:31 +0100
-Message-ID: <87cyemoeiw.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 74950180025B; Wed, 12 Mar 2025 08:13:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.57])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C84EB18001F6; Wed, 12 Mar 2025 08:13:51 +0000 (UTC)
+Date: Wed, 12 Mar 2025 08:13:48 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/3] tests/functional/asset: Fail assert fetch when
+ retries are exceeded
+Message-ID: <Z9FCPL2iucV3KsyG@redhat.com>
+References: <20250312051739.938441-1-npiggin@gmail.com>
+ <20250312051739.938441-2-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250312051739.938441-2-npiggin@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -79,101 +85,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-scripts/coccinelle/error-use-after-free.cocci led me to this function:
+On Wed, Mar 12, 2025 at 03:17:36PM +1000, Nicholas Piggin wrote:
+> Currently the fetch code does not fail gracefully when retry limit is
+> exceeded, it just falls through the loop with no file, which ends up
+> hitting other errors.
+> 
+> In preparation for adding more cases where a download gets retried,
+> add an explicit check for retry limit exceeded.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  tests/functional/qemu_test/asset.py | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> index f0730695f09..6a1c92ffbef 100644
+> --- a/tests/functional/qemu_test/asset.py
+> +++ b/tests/functional/qemu_test/asset.py
+> @@ -116,7 +116,10 @@ def fetch(self):
+>          self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+>          tmp_cache_file = self.cache_file.with_suffix(".download")
+>  
+> -        for retries in range(3):
+> +        for retries in range(4):
+> +            if retries == 3:
+> +                raise Exception("Retries exceeded downloading %s", self.url)
 
-    static void cryptodev_lkcf_execute_task(CryptoDevLKCFTask *task)
-    {
-        CryptoDevBackendLKCFSession *session = task->sess;
-        CryptoDevBackendAsymOpInfo *asym_op_info;
-        bool kick = false;
-        int ret, status, op_code = task->op_info->op_code;
-        size_t p8info_len;
-        g_autofree uint8_t *p8info = NULL;
-        Error *local_error = NULL;
-        key_serial_t key_id = INVALID_KEY_ID;
-        char op_desc[64];
-        g_autoptr(QCryptoAkCipher) akcipher = NULL;
+While it works, it feels a bit wierd to me. Given the error retry
+scenario will unlink the file, I think it would be better todo
 
-        /**
-         * We only offload private key session:
-         * 1. currently, the Linux kernel can only accept public key wrapped
-         * with X.509 certificates, but unfortunately the cost of making a
-         * ceritificate with public key is too expensive.
-         * 2. generally, public key related compution is fast, just compute it with
-         * thread-pool.
-         */
-        if (session->keytype == QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {
-            if (qcrypto_akcipher_export_p8info(&session->akcipher_opts,
-                                               session->key, session->keylen,
-                                               &p8info, &p8info_len,
-                                               &local_error) != 0 ||
-                cryptodev_lkcf_set_op_desc(&session->akcipher_opts, op_desc,
-                                           sizeof(op_desc), &local_error) != 0) {
-                error_report_err(local_error);
+   if not os.path.exists(tmp_cache_file)
+      raise Exception(...)
 
-Reporting an error, but continue anyway.  This is suspicious.
+immediately after the for() loop
 
-Note for later: @local_error is now non-null.
+> +
+>              try:
+>                  with tmp_cache_file.open("xb") as dst:
+>                      with urllib.request.urlopen(self.url) as resp:
+> -- 
+> 2.47.1
+> 
 
-            } else {
-                key_id = add_key(KCTL_KEY_TYPE_PKEY, "lkcf-backend-priv-key",
-                                 p8info, p8info_len, KCTL_KEY_RING);
-            }
-        }
-
-        if (key_id < 0) {
-            if (!qcrypto_akcipher_supports(&session->akcipher_opts)) {
-                status = -VIRTIO_CRYPTO_NOTSUPP;
-                goto out;
-            }
-            akcipher = qcrypto_akcipher_new(&session->akcipher_opts,
-                                            session->keytype,
-                                            session->key, session->keylen,
-                                            &local_error);
-
-Passing non-null @local_error to qcrypto_akcipher_new().  This is wrong.
-When qcrypto_akcipher_new() fails and passes &local_error to
-error_setg(), error_setv()'s assertion will fail.
-
-Two possible fixes:
-
-1. If continuing after cryptodev_lkcf_set_op_desc() is correct, we need
-to clear @local_error there.  Since it's not actually an error then, we
-should almost certainly not use error_report_err() there.  *Maybe*
-warn_report_err().
-
-2. If continuing is wrong, we probably need set @status (to what?) and
-goto out.
-
-What is the correct fix?
-
-            if (!akcipher) {
-                status = -VIRTIO_CRYPTO_ERR;
-                goto out;
-            }
-        }
-
-    [...]
-
-    out:
-        if (key_id >= 0) {
-            keyctl_unlink(key_id, KCTL_KEY_RING);
-        }
-        task->status = status;
-
-        qemu_mutex_lock(&task->lkcf->rsp_mutex);
-        if (QSIMPLEQ_EMPTY(&task->lkcf->responses)) {
-            kick = true;
-        }
-        QSIMPLEQ_INSERT_TAIL(&task->lkcf->responses, task, queue);
-        qemu_mutex_unlock(&task->lkcf->rsp_mutex);
-
-        if (kick) {
-            eventfd_write(task->lkcf->eventfd, 1);
-        }
-    }
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
