@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6304C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23413C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsIxv-0002nh-Gp; Wed, 12 Mar 2025 06:05:31 -0400
+	id 1tsJ2K-0004Ug-78; Wed, 12 Mar 2025 06:10:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIxt-0002kR-Vz
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:05:30 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsJ2E-0004T5-MQ
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:09:59 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIxr-0005Mw-Nc
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:05:29 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4394a823036so55429685e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 03:05:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsJ2C-00065Y-DZ
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:09:58 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3912baafc58so4872016f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 03:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741773924; x=1742378724; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741774194; x=1742378994; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2C9dFStudi1AMR9evBY4Uacxl6jBaeGLRjAK+2tJq0M=;
- b=hgGw4+m5xuPVkqGbTXgjOd3ahUlrFilyprwYzjXeS4PKnoYGU0mAAI5EDoJ/3kLBMS
- kEqHuqRmlSvGhyk7DmER1rMf+xbrLNo0QYeK4bKGcMgG4KrnV/F4HlmSQtm3/8fXP6ci
- lyPg1ked+F9KCaRZt9pXouu4Tz4gEGjD474zWSO+o4eCVzF6Om+IK5ffbtfJzk8GMDB5
- b4WFRzSZponUBGkxSnycVeoHgx+MgK1uJ1YTqXylxpqcWtO3S3PoOBh2kqTxW/6BXWB5
- gWYpLeSg6rwRYz0MC4maV2H4tXSKovhbxmOcK7Wrw1jhYHbVqVWMj5D6Lc/PNCKAcKi4
- 7+fg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/gYqu0M+CR9SR4Zc2eKOzFtLtrstSCUxdQBwmDow0e4=;
+ b=nD2/xP8csgyvJeLvUCFjiedhkYCr8oHDbVw1pQHBVTCZpx12iEQ97IudBcB+AbBQMU
+ 0+6FtQMHljD9E7pLmXEBW2gW7eJDxue/YOCoEfQgO91TsYpJ+H7W54rRHUMVdAzbVKUQ
+ yJsNGfYuJcQq5sRFQ8wXNMPg3sErspRUHCtOB/b79WXoUC++wVnIKozIjjUOReok2bKt
+ lQLaNIbR1rMlvah/UCLz4ofwEH7EnZUaXrVY/gf+bjR+tJU+NDcEp58W24v7WRPVTrFF
+ 8Acj6Tuvnk97f/BmMrrmcv+LFYidJ4i35HnucAIgj3DdVVcDHNZ6wsyzwOpCxxp+YQLj
+ iHXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741773924; x=1742378724;
+ d=1e100.net; s=20230601; t=1741774194; x=1742378994;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2C9dFStudi1AMR9evBY4Uacxl6jBaeGLRjAK+2tJq0M=;
- b=HUqVXaUG9QmwBayEKyid5dY7sH5Gg1J3NEV1BcE+8U6DA3AkcCje+O/QSKVqDluPtN
- hN16D3aoO5dA3nsAZIiiuwPLmc+Oj6uwGPwdZJG5C/60y/xQF34F8/cwkWi7HXblhFEd
- aw75vpvnPDN9rCiIclKkSB2RltWMP8c/KhoeuNiASRUe6WZFmsTpntjsIgo196zQ/oba
- tH84JfMUZwle389W3yDJk+oq6MbE9v2M/XOl2CdO9l+yICb3151yC2Se2hhWYEx4AlrA
- R3TCvd8kFzbyFFjf0dkpMxrJSOkk8FTlyXnwSpqaYmKWdBRN5FLb9kYfky3hNPcCwihp
- u0yw==
+ bh=/gYqu0M+CR9SR4Zc2eKOzFtLtrstSCUxdQBwmDow0e4=;
+ b=Xwm7ZEYfX84dizfJkG5cEYQv/ninOogBRfMk0Zl7yhAveZHklt/oh+8sifRIK8nfwt
+ 1zK99A6b+Lo72G8YTjsE76v5N4rWu0skTgHSuNlJfiO5KhSyOp364pjBfjJb4dTO2mtY
+ +dT0WTyo+UhYqXTO9M4qNhiJxANRKY+J+/Y7j4lVfVht53HUqoMW39RGlbGmT7CkLaRU
+ E1cKyRfJbpQqsMBdbtwyf+lujRGF6iUwmU/vSNlHVOEX8Ke8kpNmIeBHE8kaPwguEwvM
+ bPd834upZA7zgbTD05ZwmQ5gvb/Kz8onp8fIJeWalDtZ0WYEJvCQ5+s+f8m2YpQHR0oA
+ EKBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVO/rXzxTBMubR2ornLIU0his+w31pQB5Qz0FfZbesjDOaTk7cKBjhFpsibrH+vrOgUNZD92kIQjLdo@nongnu.org
-X-Gm-Message-State: AOJu0YyObMOJXcmG7VY88cViQ5g7B5lcgXtoJ2fOf6DPEvF5WF+OFEZU
- d30GLNWxYgOKnPptB+jjRa/YemULlF5K14H6Gv9H97gljD1e7SGrypBi7KUAWrI=
-X-Gm-Gg: ASbGnct00ATDiU3zezR+rn3se9c8liTQI8KxeqKmq2rLS7ZK1e8KzCA8ng4LKE9eCe4
- UO6RQxv/AeXXn8UXGvdwng9uS6k5tC7XuMg42S+aaVzGHqxyGejcUU7SWY15ITYVGnKTBMaOMe7
- pelz+9bZnxjyWoH58lKoP6ExZLKv1cC44U6P1JK0LQMVfEWQIucb7pspA5L4ZuWjvmtr79mUNth
- K0leya5LhoJdKaeyJnOiez4qoeaO1seIR28IMryT52MNCiC7AEbrSK5fidLI3IhPSJ236f6NF0r
- vtzKkw5zPZ8TvRbJ15SyAQhWS2qavae4EKb2Jw+lJbZ4hgPvI0LrMYOcdh3yDcaB8mFrkcaEYtA
- NfOREHg==
-X-Google-Smtp-Source: AGHT+IESRHyCP8MJ29SKLiEeGtZTeB2WnF4eTOuiJHXtUoMjCBPOZS3D8kFRKB85HAPsCjOcdEiOhQ==
-X-Received: by 2002:a05:600c:45d3:b0:43c:f78d:82eb with SMTP id
- 5b1f17b1804b1-43d01be665amr78800425e9.15.1741773924251; 
- Wed, 12 Mar 2025 03:05:24 -0700 (PDT)
+ AJvYcCVoCzo6ukzlcJZYp1YKn8ZTqjHF545soqKZn0GpE+fXf9xVKDxEFv04crRKXNh4CmQ/2RGZ9mi97XM5@nongnu.org
+X-Gm-Message-State: AOJu0YwhcmInEwFTkpu+mNehZFTL0OmvsR0oVQ8ch9HvL4BICs5sua0q
+ WyMk3vUIAMJpqiKl082+83dXB4vDtq37FrGytzn9DH5DhYhoK1omPXRqQCx68jY=
+X-Gm-Gg: ASbGncvxXTZ4BVzzl4RBNNWrJrurOaWfonvsKJDNtZfx1I1SP2ln3ss+vkFNcsFuBaA
+ kjyhbirlgkBpSqzJB74vU5khYsSouEPbb/IyBOpbxUK0sgim8uAdNDNyVcFIsfQAx9MVqbnp5WA
+ km3hrRA1o1XT6wN4R8hU+u40WtY6l1RplXZdIXQyMnTg76sbd9nAJ1260h8uGDWcoHUxbATh+U7
+ BoQWSfhpC3Ermg/Xnb6rRMmWzf0D4EhxoxxzfCraKaVnpY2dj8GJiDa7hAxB68Wk+oFullHXN6V
+ IEAeNVjeDz9xpkABH3tlSik74Ff1p/GmdcW1IA0NRaPoupLkg0iuBUuTUG62mxi2DPuVNDHrSej
+ Ye1YCLA==
+X-Google-Smtp-Source: AGHT+IGZ438rh1zLwFpq9IZSHi29YR1nhgVwNp4GGwJQfXEHwcfOVm8FkN4w5e3I64/UIJgocvFhvg==
+X-Received: by 2002:a05:6000:402a:b0:390:ed05:aa26 with SMTP id
+ ffacd0b85a97d-39132d30c22mr15449673f8f.5.1741774194337; 
+ Wed, 12 Mar 2025 03:09:54 -0700 (PDT)
 Received: from [10.223.46.213] (99.167.185.81.rev.sfr.net. [81.185.167.99])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfdfdsm21124317f8f.34.2025.03.12.03.05.23
+ ffacd0b85a97d-3912c015c2csm20178494f8f.49.2025.03.12.03.09.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 03:05:23 -0700 (PDT)
-Message-ID: <a0b57214-ff88-4443-b3ec-fbf5ef8d4384@linaro.org>
-Date: Wed, 12 Mar 2025 11:05:22 +0100
+ Wed, 12 Mar 2025 03:09:53 -0700 (PDT)
+Message-ID: <408efa3d-bd73-47bc-8723-08c805df6815@linaro.org>
+Date: Wed, 12 Mar 2025 11:09:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 31/43] hw/arm: Add i.MX 8M Plus EVK board
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
-References: <20250225180510.1318207-1-peter.maydell@linaro.org>
- <20250225180510.1318207-32-peter.maydell@linaro.org>
- <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
+Subject: Re: [PATCH] ppc/spapr: fix default cpu for pre-10.0 machines.
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: npiggin@gmail.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250312055804.2134569-1-harshpb@linux.ibm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
+In-Reply-To: <20250312055804.2134569-1-harshpb@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,53 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/25 10:40, Thomas Huth wrote:
-> On 25/02/2025 19.04, Peter Maydell wrote:
->> From: Bernhard Beschow <shentey@gmail.com>
->>
->> As a first step, implement the bare minimum: CPUs, RAM, interrupt 
->> controller,
->> serial. All other devices of the A53 memory map are represented as
->> TYPE_UNIMPLEMENTED_DEVICE, i.e. the whole memory map is provided. This 
->> allows
->> for running Linux without it crashing due to invalid memory accesses.
->>
->> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->> Message-id: 20250223114708.1780-5-shentey@gmail.com
->> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->> [PMM: drop 'static const' from serial_table[] definition to avoid
->>   compile failure on GCC 7.5]
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
-> ...
->> +static const TypeInfo fsl_imx8mp_types[] = {
->> +    {
->> +        .name = TYPE_FSL_IMX8MP,
->> +        .parent = TYPE_DEVICE,
->> +        .instance_size = sizeof(FslImx8mpState),
->> +        .instance_init = fsl_imx8mp_init,
->> +        .class_init = fsl_imx8mp_class_init,
->> +    },
->> +};
->> +
->> +DEFINE_TYPES(fsl_imx8mp_types)
+On 12/3/25 06:58, Harsh Prateek Bora wrote:
+> When POWER10 CPU was made as default, we missed keeping POWER9 as
+> default for older pseries releases (pre-10.0) at that time.
+> This caused breakge in default cpu evaluation for older pseries
+> machines and hence this fix.
 > 
->   Hi Bernhard, hi Peter,
-> 
-> this device can be used to crash QEMU quite easily:
-> 
-> $ ./qemu-system-aarch64  -M virt -device fsl-imx8mp
-> **
-> ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: assertion 
-> failed: (n < tcg_max_ctxs)
-> Bail out! ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: 
-> assertion failed: (n < tcg_max_ctxs)
-> Aborted (core dumped)
-> 
-> Should it maybe be marked with "user_creatable = false" to avoid this?
 
-Correct, along with a comment to justify:
+Should we also include:
 
-   /* Reason: SoC can only be instantiated from a board */
+   Cc: qemu-stable@nongnu.org
+
+?
+
+> Fixes: 51113013f3 ("ppc/spapr: change pseries machine default to POWER10 CPU")
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> ---
+>   hw/ppc/spapr.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index c15340a58d..b31a91e2e2 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -4748,6 +4748,7 @@ static void spapr_machine_9_2_class_options(MachineClass *mc)
+>   {
+>       spapr_machine_10_0_class_options(mc);
+>       compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
+> +    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
+
+This is confusing because v9.2 has already been released with that...
+
+>   }
+>   
+>   DEFINE_SPAPR_MACHINE(9, 2);
 
 
