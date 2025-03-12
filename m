@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D77C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 16:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF77C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 16:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsOcv-0001Jm-Dw; Wed, 12 Mar 2025 12:08:13 -0400
+	id 1tsOh6-0005Kh-KG; Wed, 12 Mar 2025 12:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tsOcg-0001BS-S8
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:07:59 -0400
+ id 1tsOgp-0005Ic-Kv
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:12:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tsOcf-00086T-7E
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:07:58 -0400
+ id 1tsOgn-0000Pz-Nw
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:12:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741795676;
+ s=mimecast20190719; t=1741795931;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N1SBYqX0kE3/4QZuDXZSGhhQS3YjWMXj8gtvzLqz968=;
- b=jM+sbmOw5GmXCPY4BXlkGSsr5QRI+aO42mSrBPfSwxfhlHHPp4ESgHmXD6pjLMyD/VSwmm
- dV+e9ekFQ5dXPGgyJqLBRGWyLGOpSirKvc1LTJXyWgcLK1E2J+kv4eUUK1C3YlBm2vnest
- bBQ0KvNL9X457LT2taHa6Kukavb79MQ=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iNI+Vf2IaG7FEwoAQmbTMxEbb9D+xyxcHf70UzDQj0A=;
+ b=DOKjZBOW1xmUelCx3DNOS+dltJcbGNvLJx4wuSofN4fZf+1s+OF/Jfn2YpZEooNC289lC+
+ hlc2FRaltooBQFUGsYABg38AYj+houJJoHtMXibhanqEJhR3/bmoqiqQEFC2bdo8i/Qnmm
+ tERa+qCUSVctBFiDxNVUroWJa4trDFU=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-367-tWFq47JqOyWSSxXF3tfr9w-1; Wed, 12 Mar 2025 12:07:51 -0400
-X-MC-Unique: tWFq47JqOyWSSxXF3tfr9w-1
-X-Mimecast-MFC-AGG-ID: tWFq47JqOyWSSxXF3tfr9w_1741795671
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c544d2c34fso769277085a.1
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 09:07:51 -0700 (PDT)
+ us-mta-679-8eW2Nh7wOAm37y5-73-Nfg-1; Wed, 12 Mar 2025 12:12:07 -0400
+X-MC-Unique: 8eW2Nh7wOAm37y5-73-Nfg-1
+X-Mimecast-MFC-AGG-ID: 8eW2Nh7wOAm37y5-73-Nfg_1741795926
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7c3c03b6990so1307597985a.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 09:12:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741795671; x=1742400471;
+ d=1e100.net; s=20230601; t=1741795926; x=1742400726;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=N1SBYqX0kE3/4QZuDXZSGhhQS3YjWMXj8gtvzLqz968=;
- b=v33aifqd9RvvK9hfwzjgyB0EfCtcrgQD0FLULVOItVH2CUnWz42633E20JykVfifGu
- au1MpF1FJB8ecZI+7U+b4JQEHbX5qjvi6QJaf/v2jaPIqHhCLUmlW8oHsDJaQ9lQaW7z
- WmjXbyZ3IZ+pROmqzWsY1D1BdaZ2zTFXNoYOA/qIRpklvp6XYqlhkuop0hJIr+XxT0NV
- Q3eVPjcSI9wLgPoUE/nbU3xuXLFQWZdxVEld7AOVjrx6v5LWtdUrZKYEWAKunWIlnHlW
- lA1dovvQ5+JA49fNT1yuXdysv6XDXLJfXZHFK9tgoL9f70nguZpNo0JyeWMQF0hgJpGF
- hg5g==
+ bh=iNI+Vf2IaG7FEwoAQmbTMxEbb9D+xyxcHf70UzDQj0A=;
+ b=FcZgMRfYTuAPETKM5BEciRxCWg+x9QiXaG2gyCEL/oFEtiQjF7geJSBjr3UbsoKsAW
+ JTinS6bFf2ot5/cWXHekp4YY59oGGlGMm8VboQCgup8l/V5pU1l0Uf9hIxd16MVhfEQc
+ i+KbGM1sPG2W1j5uPGkVlXyog+HSYIkSHoSqNSrw3LinAb/sz3ia7V9Egc0U4xLUkwUA
+ Wf8wcmcNwtdFJDPwP61RmspJH3hp3kYS0X8AfKtQ4mDbL+KgbuTxXPKN39Wx45xPXDP6
+ w1Ic5EfRAf1jEOPljeYfrggq7FVSbx4IJiYbcDZRdKqhx6Iv8cth2iOVB1xPcdAx7HnD
+ WQvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVrLZ29JWgBc5/dEg19F4H+wEYMGRptMTsdMbXzDTOevylxMX6FYWwzeZOFJfbGJI9dStuyXLswvWK@nongnu.org
-X-Gm-Message-State: AOJu0YxekN1XW0VumEAqzkofIEeU4cc8Lhs5JJIRd2ivJ9En6LXIUa7G
- 2PdU3K2YfQzWu3ygWYjllYs52aTAkhnMlz8J7RSx79WAioXbbhozKA+Rjt+sjW5Ez9DYmvm7XwR
- cfpcIZheqsxevLn05nToqG2eZK0OOpc2mKz7quzOsFUKKdxm9n0ra
-X-Gm-Gg: ASbGncsnAAyexViDlMgKiig0sbrmfUopB9OLwae/83r9b6D1s5MJO29DpCpTM3u372a
- RO9J8nfSnX4m82jKOS+UHR3ib7n0e0WeFZriSnRycoglddd2AIK0HH4x3bP3ZV2mDDUF5Bw3pUM
- LctiUP1JzzdixPFBOpnhkjc4R/bqwdZbUJTCOA8vz12SrK3UggNuUiDTlG4nUVFdYmuXXaMosID
- AmH6TXZavUZVmkN87zRZ9CwBS2vej5ZoK6xVuD6h7mzZcvMNtfwfuczhGi25dtzY6pIjKE1L1Zj
- +ZZ/vy4dG09mpGxyKtKe4soGrlSGEBzexrUr75AW2HZ0gUPbbM8hjA+9kD/dF7o=
-X-Received: by 2002:a05:620a:488c:b0:7c5:3b8d:9f29 with SMTP id
- af79cd13be357-7c53b8d9f66mr3110151185a.21.1741795670756; 
- Wed, 12 Mar 2025 09:07:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG736XIFE5+oFEaWfFJkNw2hngbSVBRghw6pT5xpOWYE8vQ9J4mo52h1yFetb7Q8CuKo7x8JA==
-X-Received: by 2002:a05:620a:488c:b0:7c5:3b8d:9f29 with SMTP id
- af79cd13be357-7c53b8d9f66mr3110147085a.21.1741795670455; 
- Wed, 12 Mar 2025 09:07:50 -0700 (PDT)
+ AJvYcCX9r8WAhjdSoA0dhM1n7yLxctSa9S3U+1bvHD5/wdQX2fdl2VAGjjjjTDaV2yhqVn65uG9qJFjYXBLs@nongnu.org
+X-Gm-Message-State: AOJu0Yx2+1NRS2aPTBK/KyG+NuvNP03SP8w5d6pcXPAUzhE92z2I0DH3
+ TqydHTRPK91M0/n6MoKDNC/Cl1PfYUFrk6C/KKffQCvuX6F8EhWGhY20WT7LpnIDVD5brCjdDNd
+ xFHszaaE14uov2n9SjgVlWHPuGopdj3Dq1xbVUDYcTat6RdxUNJYz
+X-Gm-Gg: ASbGnctLru9GFbJUfGr05RuAk6UkEy1/5+eTY6VNX4dw/2us9g8nfRHjijW5NfIK7te
+ V5ymG8pV99Qa4PwzGELj3VbvDq1Dv5Zsf862QqU/vFZIV6R/e0bc5dh6+NjQ/x9A8c4pVyrdN02
+ QVoKSem/vwQdTZyFkAIOpt5Ba/jliJ/PYsXetAuPmGkC6O8aR3obVVJ+7CewnpYjTPPsr8ZMvAI
+ 6tsMrIwxXGUEgfpf+U7daKJyE0JSV5vYyTqbO+2S/RQmeBfdekMQW2cxxx2Y8rhsWS59mXT1g98
+ OxoWcnOad4DO9WG/IeQVxssXqPAPshkLvP4ZxdnBZqQMVfFp5lDqYSESPjK0iLk=
+X-Received: by 2002:a05:620a:260a:b0:7c5:5cc4:ca5a with SMTP id
+ af79cd13be357-7c55cc4cc68mr1528320085a.4.1741795926508; 
+ Wed, 12 Mar 2025 09:12:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXoyIUNnWlqSZVWW+YJXN0n0X6Zi2HM6KDw0rAK6PYilJ5fuoMUkbz1Ke9NcEzM3evT8lfQQ==
+X-Received: by 2002:a05:620a:260a:b0:7c5:5cc4:ca5a with SMTP id
+ af79cd13be357-7c55cc4cc68mr1528316885a.4.1741795926207; 
+ Wed, 12 Mar 2025 09:12:06 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c53df21c89sm706935085a.38.2025.03.12.09.07.46
+ af79cd13be357-7c55f112215sm285720085a.109.2025.03.12.09.12.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 09:07:49 -0700 (PDT)
-Message-ID: <79bcc36c-1a12-4b18-a54c-afe734d6bef0@redhat.com>
-Date: Wed, 12 Mar 2025 17:07:44 +0100
+ Wed, 12 Mar 2025 09:12:05 -0700 (PDT)
+Message-ID: <0ac24089-9a5e-48e8-bcdd-60e63aa3f34f@redhat.com>
+Date: Wed, 12 Mar 2025 17:12:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-pcie bus
+Subject: Re: [RFC PATCH v2 06/20] hw/arm/smmu-common: Factor out common helper
+ functions and export
 Content-Language: en-US
 To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
@@ -90,9 +91,9 @@ Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
  wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
  jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
 References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-6-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-7-shameerali.kolothum.thodi@huawei.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250311141045.66620-6-shameerali.kolothum.thodi@huawei.com>
+In-Reply-To: <20250311141045.66620-7-shameerali.kolothum.thodi@huawei.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124;
@@ -104,7 +105,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,77 +122,109 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+
 
 
 On 3/11/25 3:10 PM, Shameer Kolothum wrote:
-> User must associate a pxb-pcie root bus to smmuv3-accel
-> and that is set as the primary-bus for the smmu dev.
-why do we require a pxb-pcie root bus? why can't pci.0 root bus be used
-for simpler use cases (ie. I just want to passthough a NIC in
-accelerated mode). Or may pci.0 is also called a pax-pcie root bus?
-
-Besides, why do we put the constraint to plug on a root bus. I know that
-at this point we always plug to pci.0 but with the new -device option it
-would be possible to plug it anywhere in the pcie hierarchy. At SOC
-level can't an SMMU be plugged anywhere protecting just a few RIDs?
+> Subsequent patches for smmuv3-accel will make use of this
 >
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->  hw/arm/smmuv3-accel.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index c327661636..1471b65374 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -9,6 +9,21 @@
->  #include "qemu/osdep.h"
->  
->  #include "hw/arm/smmuv3-accel.h"
-> +#include "hw/pci/pci_bridge.h"
-> +
-> +static int smmuv3_accel_pxb_pcie_bus(Object *obj, void *opaque)
-> +{
-> +    DeviceState *d = opaque;
-> +
-> +    if (object_dynamic_cast(obj, "pxb-pcie-bus")) {
-> +        PCIBus *bus = PCI_HOST_BRIDGE(obj->parent)->bus;
-> +        if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus->name)) {
-> +            object_property_set_link(OBJECT(d), "primary-bus", OBJECT(bus),
-> +                                     &error_abort);
-if you want to stop the recursive search I think you need to return
-something != 0 here.
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-I don't really understand why we don't simply set the primary-bus to
-<bus> where -device arm-smmuv3-accel, bus=<bus>? or maybe enforce that
-this bus is an actual root bus if we really need that?
-> +        }
-> +    }
-> +    return 0;
-> +}
->  
->  static void smmu_accel_realize(DeviceState *d, Error **errp)
->  {
-> @@ -17,6 +32,9 @@ static void smmu_accel_realize(DeviceState *d, Error **errp)
->      SysBusDevice *dev = SYS_BUS_DEVICE(d);
->      Error *local_err = NULL;
->  
-> +    object_child_foreach_recursive(object_get_root(),
-> +                                   smmuv3_accel_pxb_pcie_bus, d);
-> +
->      object_property_set_bool(OBJECT(dev), "accel", true, &error_abort);
->      c->parent_realize(d, &local_err);
->      if (local_err) {
-> @@ -33,6 +51,7 @@ static void smmuv3_accel_class_init(ObjectClass *klass, void *data)
->      device_class_set_parent_realize(dc, smmu_accel_realize,
->                                      &c->parent_realize);
->      dc->hotpluggable = false;
-> +    dc->bus_type = TYPE_PCIE_BUS;
-shouldn't it below to 3/20? It is not really related to primary_bus
-setting? Thanks Eric
+Eric
+> ---
+>  hw/arm/smmu-common.c         | 48 ++++++++++++++++++++++--------------
+>  include/hw/arm/smmu-common.h |  6 +++++
+>  2 files changed, 36 insertions(+), 18 deletions(-)
+>
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index f5caf1665c..83c0693f5a 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -826,12 +826,28 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+>      return NULL;
 >  }
 >  
->  static const TypeInfo smmuv3_accel_type_info = {
+> -static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+> +void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev,
+> +                    PCIBus *bus, int devfn)
+>  {
+> -    SMMUState *s = opaque;
+> -    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
+> -    SMMUDevice *sdev;
+>      static unsigned int index;
+> +    char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn, index++);
+> +
+> +    sdev->smmu = s;
+> +    sdev->bus = bus;
+> +    sdev->devfn = devfn;
+> +
+> +    memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+> +                             s->mrtypename,
+> +                             OBJECT(s), name, UINT64_MAX);
+> +    address_space_init(&sdev->as,
+> +                       MEMORY_REGION(&sdev->iommu), name);
+> +    trace_smmu_add_mr(name);
+> +    g_free(name);
+> +}
+> +
+> +SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus)
+> +{
+> +    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
+>  
+>      if (!sbus) {
+>          sbus = g_malloc0(sizeof(SMMUPciBus) +
+> @@ -840,23 +856,19 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+>          g_hash_table_insert(s->smmu_pcibus_by_busptr, bus, sbus);
+>      }
+>  
+> +    return sbus;
+> +}
+> +
+> +static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+> +{
+> +    SMMUDevice *sdev;
+> +    SMMUState *s = opaque;
+> +    SMMUPciBus *sbus = smmu_get_sbus(s, bus);
+> +
+>      sdev = sbus->pbdev[devfn];
+>      if (!sdev) {
+> -        char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn, index++);
+> -
+>          sdev = sbus->pbdev[devfn] = g_new0(SMMUDevice, 1);
+> -
+> -        sdev->smmu = s;
+> -        sdev->bus = bus;
+> -        sdev->devfn = devfn;
+> -
+> -        memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+> -                                 s->mrtypename,
+> -                                 OBJECT(s), name, UINT64_MAX);
+> -        address_space_init(&sdev->as,
+> -                           MEMORY_REGION(&sdev->iommu), name);
+> -        trace_smmu_add_mr(name);
+> -        g_free(name);
+> +        smmu_init_sdev(s, sdev, bus, devfn);
+>      }
+>  
+>      return &sdev->as;
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index b5c63cfd5d..80ff2ef6aa 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -178,6 +178,12 @@ OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
+>  /* Return the SMMUPciBus handle associated to a PCI bus number */
+>  SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
+>  
+> +/* Return the SMMUPciBus handle associated to a PCI bus */
+> +SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus);
+> +
+> +/* Initialize SMMUDevice handle associated to a SMMUPCIBus */
+> +void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn);
+> +
+>  /* Return the stream ID of an SMMU device */
+>  static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
+>  {
 
 
