@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55473C28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Mar 2025 23:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9033C282EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 00:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ts9Gy-00023F-Jj; Tue, 11 Mar 2025 19:44:32 -0400
+	id 1ts9cA-000473-9u; Tue, 11 Mar 2025 20:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ts9Gu-0001yw-I7
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:44:29 -0400
-Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
+ (Exim 4.90_1) (envelope-from <andrew.cooper@cloud.com>)
+ id 1ts9c1-00044E-1F
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 20:06:18 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ts9Go-00007T-Dg
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 19:44:27 -0400
-Received: by mail-qv1-xf30.google.com with SMTP id
- 6a1803df08f44-6e8fd49b85eso73304426d6.0
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 16:44:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew.cooper@cloud.com>)
+ id 1ts9bt-00036X-QP
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 20:06:16 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43cf0d787eeso29257135e9.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 17:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741736660; x=1742341460; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=05As+0Mth3HNDR6zyqKF0J/0w9mSNtpEfvIDxuvwqL8=;
- b=eeQs4DtcFNwG9bxonvmDnc2/NUMz6RWFNPYfGyopmTsVW2sEVlNTitmbQAHRMcLwoQ
- ys0SrMI+hgxfTV0z2PiJjDlEcQeMUvs/dYfzeVxQ7SO9k21DSUHnkLl0DmjGj2+grP34
- 7xlgr+HP8SI0VWjX7MdsbS9SitAwjlyrbcpRYorvFFj3h0CmXgUIQSglZr1SaT7oicUU
- vrIiSrzcagqp6NMB+mh4crC4RcUYpjjwNaYjV9pf40TCtlFa6Jznx3TxQRMTNxW4gKQ8
- LXLXPGk5x6xPF9iyIXqMTuMOzE7T20AkFiEOz9iXdMMIrXzCU+mxSYSQ2DvgSlnli3OP
- mYcg==
+ d=citrix.com; s=google; t=1741737967; x=1742342767; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=JQeiZwQw2YY/VoRXzH8x6XdaYXFQY0XQRR9yg0JXEk0=;
+ b=HR1lBB31K6YPadlsNbOGeUeKHpD3ddaiMT7CO0mdOq/X4Pio1/DpaQ5GN2GzqON5NU
+ OMV7lFDFe64/+Yppqc9tx/C5pUZ0jkZ0mzzMIK9JttsWAeLL9aYTFARNnapcWUpXNVet
+ hwNIlf7IEEAfhVdCWIE+YCaFz6Yt2ttsyRaI0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741736660; x=1742341460;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=05As+0Mth3HNDR6zyqKF0J/0w9mSNtpEfvIDxuvwqL8=;
- b=kXAv0VJPWSza9m06zw3SeSHyxSigQjS0UU7tJnkfbMJn5dwSI52hH/A/81PEJXZHfX
- bRpOd21SoaNXD/ST9tZh/LYXfp3VDl3pZAGknpjB06XgKGGGtpzFdcwBZYOh/nphnQLj
- SGHQHUbo1hxrsStju4szVgD7wTtEk9UmDYU8xZRuvO+t2WMmJ7X3YCI42jHcliO2QYUT
- irQCZn+8I9mRJhPsOvg6Av6D/hZHasb2bknmdAuSLwO9RFPlAFUYRhKf9YLhVT3PJqX8
- BH35qJ+SmfhaQBGrAHY1QYCtbr9cJR+fiDZjca1k0WyyHYFvXeubPPay17Ly3m53BscB
- /ZAw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUkd+z4F0xaXELJksunqRssptMXQZSefplhnEq3TIQSS5J9P5CgTiqkJs38tpE/iVcjcSCF76LAqsj@nongnu.org
-X-Gm-Message-State: AOJu0YySPWBi48bQxnQhICy25cR9aEOCxiFiFtMgTzJS/hHxIQiwWGF2
- NVmrFMB6l6AK46i0gUZ52itZxWs4IVb80j2JRh+9ju3/ZmOgE+v+
-X-Gm-Gg: ASbGncswWrMHFwtwUXxYkB859DBGdrSSIw2ZDYuy6TxZrW5tYgZOJdDm9lzvXz/ekKi
- ye2hIycYJkTxN8k9tvRuUI48jTAFixgI3JdQmpPechsJKOJgGHGZSoOvyMZK1a8F4EM27OT17C/
- d7osMTp645rzS4M6mb21zpCFu1X+Mj5sF2bhk0ThHPz6+ZFYMxbOWOJNSld751QEZBFbIiDPgrI
- YB/XMeWrGBkZpOvTHZVJ8LhA89T+YDXpiCSRUN49H5WV0igljjSg0HjMtSicT3c2BNIfhDOovvN
- oTuJNeIyGuyDX2cy4RnMEJiCAtgZeESswzk0WouW+Q2/Fo/h7WzFFTCrbkq2Kgs=
-X-Google-Smtp-Source: AGHT+IHilSajJPZfEkli5t4H/7fpEI4cmlYPbwILcz/ztAoH/DUXrUbGENLW9xoyiwVWh6LV3KC01g==
-X-Received: by 2002:a05:6214:da9:b0:6d8:9062:6616 with SMTP id
- 6a1803df08f44-6e90060420fmr330275436d6.7.1741736660550; 
- Tue, 11 Mar 2025 16:44:20 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:a832:3b35:d71f:4119])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f715bac0sm77807006d6.70.2025.03.11.16.44.18
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 11 Mar 2025 16:44:19 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-32-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-32-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 31/38] target/hexagon: Add {TLB, k0}lock, cause code,
- wait_next_pc
-Date: Tue, 11 Mar 2025 18:44:17 -0500
-Message-ID: <00ae01db92df$82046510$860d2f30$@gmail.com>
+ d=1e100.net; s=20230601; t=1741737967; x=1742342767;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JQeiZwQw2YY/VoRXzH8x6XdaYXFQY0XQRR9yg0JXEk0=;
+ b=qFrMmE176YyRT9Tq+6QoefmWuFy+xcFRi6HtGqb3EELfPk7X6++04hrBY17+CJ3y6J
+ vHCLHtalXvRJEAdoIya5H9v20N+OnZLzly7bmGLjaO8Zj1b+UuYcyb2cI6YCxFgAiCsg
+ zj34xk+TeGwhgXkBs3ANruz2eqKmtWTfJayuVSkCFgUDUe+K7naiIjAQpEstccoUs+pP
+ VwuBmi7DICqVhK4iClPtv4o4b2825sXUwjIMnDLE2JhUtkaMuxtHlX4NhRztR6KGvFI4
+ xjlk07YbDM+Wpqixgxz0fPRxYQu1oOfV4evJKPz1lrcUNY1wFpngzyGk+fN7SY6bG0OJ
+ ASUg==
+X-Gm-Message-State: AOJu0Yy2bcjlhp8HIY2Z5i5DqQVPR+cWoUD0O26cq0SZqKNBZPKB7gay
+ ZMENKDYCAdNTocMu7OkEOEIi5IGaLc1i7Mra+al2uawk1IX7SfZU1xZDFZ3HxvWLtfT1tuw/p5S
+ +
+X-Gm-Gg: ASbGncsbIEEZ1bi8X/XxzvFRlid75/fXrQje4sD/i3oCj1hnBD9q+oID2cNBI7gXa/0
+ zvPg0sQHi5Nmi1xNK9IoR8NWtq4ZzEL1QpcBzrXzSIRQwN71XZH9j8gO3V3HDh1hFHH1a+HB9b9
+ BLeZh2NmZsApgnxAvzz50zVRev6M3mva8GqZjx2HX6CVgt9ZNjyAo/0DOj5hqd4AAVOned/G6TN
+ aHsJ+oTpIaUpJPsB+WpsbiDeJmDSgrtlOwwj+gcj0ZLywcQiEMDgerWmMZW2+0UfGDefbXE/Rz8
+ GxB2AanqHf4+qn9slZtojBV0oRkrSbA7k/55vwJKlpGurjHcqFkbtvaqp6++KDd7tKylU7UHEix
+ Hn0nETjupqW/jv1CG0Q2C818M0iwpB8CKv44=
+X-Google-Smtp-Source: AGHT+IE5XOhxIAghFYPTOOAc+xF6iFMk5RFloLCpuvURutJFFw8UDW3JFEbg8tqV3ent+V008P8V5Q==
+X-Received: by 2002:a05:600c:19c8:b0:43d:82c:2b23 with SMTP id
+ 5b1f17b1804b1-43d082c2db3mr24410985e9.23.1741737966822; 
+ Tue, 11 Mar 2025 17:06:06 -0700 (PDT)
+Received: from andrewcoop.eng.citrite.net (host-92-26-98-202.as13285.net.
+ [92.26.98.202]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3912c101febsm18947711f8f.81.2025.03.11.17.06.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Mar 2025 17:06:05 -0700 (PDT)
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+To: qemu-devel@nongnu.org
+Cc: Andrew Cooper <andrew.cooper3@citrix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH] target/i386: Fix #GP error code for INT instructions
+Date: Wed, 12 Mar 2025 00:06:03 +0000
+Message-Id: <20250312000603.3666083-1-andrew.cooper3@citrix.com>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgLZ4uZptOwv0aA=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250311-4, 3/11/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=andrew.cooper@cloud.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,33 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+While the (intno << shift) expression is correct for indexing the IDT based on
+whether Long Mode is active, the error code itself was unchanged with AMD64,
+and is still the index with 3 bits of metadata in the bottom.
 
+Found when running a Xen unit test, all under QEMU.  The unit test objected to
+being told there was an error with IDT index 256 when INT $0x80 (128) was the
+problem instruction:
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Friday, February 28, 2025 11:26 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 31/38] target/hexagon: Add {TLB,k0}lock, cause code,
-> wait_next_pc
-> 
-> From: Brian Cain <bcain@quicinc.com>
-> 
-> {TLB,k0}lock counts are used to represent the TLB, k0 locks among hardware
-> threads.
-> 
-> wait_next_pc represents the program counter to set when resuming from a
-> wait-for-interrupts state.
-> 
-> cause_code contains the precise exception cause.This will be used by
-> subsequent commits.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+  ...
+  Error: Unexpected fault 0x800d0802, #GP[IDT[256]]
+  ...
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Fixes: d2fd1af76777 ("x86_64 linux user emulation")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+---
+CC: Paolo Bonzini <pbonzini@redhat.com>
+CC: Richard Henderson <richard.henderson@linaro.org>
+CC: Eduardo Habkost <eduardo@habkost.net>
+---
+ target/i386/tcg/user/seg_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/i386/tcg/user/seg_helper.c b/target/i386/tcg/user/seg_helper.c
+index c45f2ac2ba68..ff328b2a9522 100644
+--- a/target/i386/tcg/user/seg_helper.c
++++ b/target/i386/tcg/user/seg_helper.c
+@@ -64,7 +64,7 @@ static void do_interrupt_user(CPUX86State *env, int intno, int is_int,
+         cpl = env->hflags & HF_CPL_MASK;
+         /* check privilege if software int */
+         if (dpl < cpl) {
+-            raise_exception_err(env, EXCP0D_GPF, (intno << shift) + 2);
++            raise_exception_err(env, EXCP0D_GPF, intno * 8 + 2);
+         }
+     }
+ 
+
+base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+-- 
+2.39.5
 
 
