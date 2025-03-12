@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB2EC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 05:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CBDC28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 05:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsF2j-0004nR-Dn; Wed, 12 Mar 2025 01:54:13 -0400
+	id 1tsF6q-0005ow-BU; Wed, 12 Mar 2025 01:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsF2h-0004n1-Oy
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:54:11 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsF2e-0002Pn-Qg
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:54:11 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2ff187f027fso952705a91.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 22:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741758846; x=1742363646; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Nyses4+dwJXKoHGNcFkWWEIP7CgKXhFWc+BRHrXV89s=;
- b=UmhfiZd2wmiPEjSboz37k10eU9OvGeA4TT+J1/V4Jb4Db3bWYfSuhgNslDF7TRKNFb
- YNG+16wu8z13p4Caje997CsZFG1OtgNLg48R6p6vQT4SVfCqhMFRDYbUGRpCa2d4GJfs
- KbQHWEsqN0UlsXx+t1DFrsqdcNcRJP0bYpfpV6KdSGzQSJdCAKStPq9mvikYpBI0HpZn
- E+5HGgKXUpN7nuVCQARz/LROpccspeU2zf4UCs5fWDPge+5uJfe2HKbHKnq5XYs94cvT
- LOiGflImk0Yq9ePNrPXYkBpdzwcfy5XYs80jlJo876z6yAlgxaq/BE0565Z23y0DhPcU
- MEDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741758846; x=1742363646;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Nyses4+dwJXKoHGNcFkWWEIP7CgKXhFWc+BRHrXV89s=;
- b=Xpm5ah353bM9GRGShTW06RL4c56KP5YPQoPDTNjBChJK0hXpTX/0S+dwCwGeK99cBo
- yzCuQHyuPWnenUs7n3NS5uDI470jiujCxk6NkdoDRyeFLxtE7xpNnDIIZuMihT9OWNaL
- H0lfjc+02x8los+o/nv6ygHycZD7GjgDs053PUmIM8zUutb+r9ovHrds/q1dtZLTueRh
- vGKgDeUMm6wPJh5BVBIoja0yky47wF7ageLuG8MlWrUNfnWICfWtCQ+2gRd28HhxXrGo
- 24LvpEFBu4sROCClLdbzKvHsC789F5En9fsjI929I5W6aZRgV6iqhOtBEw2Gd2WsX7xS
- TjVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJMhgeXSQKppTAe6RklEVlZBwp3Oez4UomKCuR4KxXNvc61VkBi56aj2z7+28nkyiBo3qx0ln342qu@nongnu.org
-X-Gm-Message-State: AOJu0Yz3Fy593V9Q1ImIlFXHSHM5/t1ns07lELb50kZTPXtuMmuYKm8g
- ajA/9K7rC23bhQuOat6+S8BOg3BO65L/FCr9JpcSbblZBF98AcYn
-X-Gm-Gg: ASbGncv5OBYNI6gyPIEFh8EMpzf5Y01IUIIkKCOXVW2Q4Yd+naFDbOgCqGu5GKBrAUM
- QLAkg2fbO7l3j8E+uD8CQ2U3v4R8DOLanFX/jki8hHfmrmJOe+C+JnyhOyovYZTHOYpKRTa8tHM
- teaifvZFY0QEjtnDq6+5liLhb1IJnMBmvenXGlP9CiIYIhMn0Zk7FDmA5K1tv9EG1pJH626Z2C+
- /wZYT3h10ZWyIewMa9Oh+5ARpRZbBbYC0lLX/pZYZUcuduq2tBF3qMDmXI9+zhiT2t3G27JWyv4
- XDQjho5rmUvQucnCZmG0qw9xVEz62oGSKUAOQRJy
-X-Google-Smtp-Source: AGHT+IFsUMjBl3de/9fQOa5gF8BQTJWpur4eiQne4pRX5URmRPzEZYbipKmH3k9R2q3Hq6PVIhdLsQ==
-X-Received: by 2002:a17:90b:5206:b0:2ee:8cbb:de28 with SMTP id
- 98e67ed59e1d1-30100528c7emr9199867a91.8.1741758845492; 
- Tue, 11 Mar 2025 22:54:05 -0700 (PDT)
-Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a8103esm108000305ad.146.2025.03.11.22.54.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 22:54:05 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 12 Mar 2025 15:54:00 +1000
-Message-Id: <D8E1Z9A6YNXM.25RJW09GTA0QD@gmail.com>
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH] tests/functional: Don't fail any precaching errors
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>, "Thomas
- Huth" <thuth@redhat.com>
-X-Mailer: aerc 0.19.0
-References: <20250311131327.903329-1-npiggin@gmail.com>
- <Z9A8swNn6zBm57jC@redhat.com>
- <e019f7fe-8b36-4a50-89d4-409754c91030@redhat.com>
- <Z9BEfc1l_K_g85hc@redhat.com>
-In-Reply-To: <Z9BEfc1l_K_g85hc@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tsF6o-0005oM-1R; Wed, 12 Mar 2025 01:58:26 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tsF6m-0002tp-4y; Wed, 12 Mar 2025 01:58:25 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52C3kZZD003173;
+ Wed, 12 Mar 2025 05:58:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=4mgTnnlqWt90SFA4S0jrXAhn65wg8RwJ47kOvyR/Y
+ Qs=; b=BVcnycU353fab17cQqB9XnYazZsWAgEkUApp7o07jAzzUz32wixtfJvI7
+ BR/yRkJTdSt0M4qgA5gVuzBKvejEC3Fc4f41W0SQNZeyvsIBZt6TpVTKMPs1qSQR
+ HsZdRIFMUFOcu6Kay5xBKj2g7XUHsl7Dbi9g+GKYyf/tUm4uOuQbgz97cEmQYh0X
+ TWd64wQ2fneNgaVRuiFZoVZ3CpnVfzuztB8jCCYHeB6q57VeDvej/+rZszd896zx
+ mMzcrKZI82+s4jllLGKes8KAYxnjzmZnmvOFL+f/gnMVh6mrhyd+OO7gfo7k0k10
+ O+EuP8fQKpUXYTXG/AOuuzWDsJ/Jw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45b2n98f0w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Mar 2025 05:58:19 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52C5tLnp003403;
+ Wed, 12 Mar 2025 05:58:18 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45b2n98f0v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Mar 2025 05:58:18 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52C2TRlR015411;
+ Wed, 12 Mar 2025 05:58:18 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45atspahb9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Mar 2025 05:58:18 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52C5wGM944695982
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 12 Mar 2025 05:58:16 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6662E20040;
+ Wed, 12 Mar 2025 05:58:16 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AB0F520043;
+ Wed, 12 Mar 2025 05:58:14 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
+ [9.39.20.206]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 12 Mar 2025 05:58:14 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: npiggin@gmail.com
+Subject: [PATCH] ppc/spapr: fix default cpu for pre-10.0 machines.
+Date: Wed, 12 Mar 2025 11:28:04 +0530
+Message-ID: <20250312055804.2134569-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Qm3ZNIbPXTBNY48aLrMD8wK4h4S8nAQF
+X-Proofpoint-ORIG-GUID: NDS-e68cxPPNBltEtL3A-eDh9cKxGq8V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-12_02,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0
+ spamscore=0 mlxscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 mlxlogscore=885 phishscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503120039
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,131 +110,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Mar 12, 2025 at 12:11 AM AEST, Daniel P. Berrang=C3=A9 wrote:
-> On Tue, Mar 11, 2025 at 02:55:25PM +0100, Thomas Huth wrote:
->> On 11/03/2025 14.37, Daniel P. Berrang=C3=A9 wrote:
->> > On Tue, Mar 11, 2025 at 11:13:26PM +1000, Nicholas Piggin wrote:
->> > > The NetBSD archive is currently failing part-way through downloads,
->> > > which results in no clean HTTP error but a short transfer and checks=
-um
->> > > error. This is treated as fatal in the precache download, and it hal=
-ts
->> > > an entire set of tests even if some others could run.
->> > >=20
->> > > I hacked up this patch to get a bunch of CI tests going again for pp=
-c
->> > > merge testing.
->> > >=20
->> > > Don't treat any precaching failures as errors.
->> > > This causes tests to be skipped when they try to fetch their asset.
->> > > Some CI results before/after patching:
->> > >=20
->> > > functional-system-fedora
->> > > https://gitlab.com/npiggin/qemu/-/jobs/9370860490 #bad
->> > > https://gitlab.com/npiggin/qemu/-/jobs/9373246826 #good
->> > >=20
->> > > functional-system-debian
->> > > https://gitlab.com/npiggin/qemu/-/jobs/9370860479 #bda
->> > > https://gitlab.com/npiggin/qemu/-/jobs/9373246822 #good
->> > >=20
->> > > This is making the tests skip. Is there a way to make the error more
->> > > prominent / obvious in the output? Should they fail instead? I think
->> > > there should be a more obvious indication of failure due to asset so
->> > > it does not go unnoticed.
->> > >=20
->> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> > > ---
->> > >   tests/functional/qemu_test/asset.py | 9 +++------
->> > >   1 file changed, 3 insertions(+), 6 deletions(-)
->> > >=20
->> > > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/=
-qemu_test/asset.py
->> > > index f0730695f09..3134ccb10da 100644
->> > > --- a/tests/functional/qemu_test/asset.py
->> > > +++ b/tests/functional/qemu_test/asset.py
->> > > @@ -174,14 +174,11 @@ def precache_test(test):
->> > >                   try:
->> > >                       asset.fetch()
->> > >                   except HTTPError as e:
->> > > -                    # Treat 404 as fatal, since it is highly likely=
- to
->> > > -                    # indicate a broken test rather than a transien=
-t
->> > > -                    # server or networking problem
->> > > -                    if e.code =3D=3D 404:
->> > > -                        raise
->> > > -
->> >=20
->> > Why are you removing this ? The commit above does not make any referen=
-ce
->> > to the problem being a missing URL (404 code). We want missing URLs to
->> > be fatal so that we identify when images we rely on are deleted by the=
-ir
->> > host, as that is not a transient problem.
->> >=20
->> > >                       log.debug(f"HTTP error {e.code} from {asset.ur=
-l} " +
->> > >                                 "skipping asset precache")
->> > > +                except:
->> > > +                    log.debug(f"Error from {asset.url} " +
->> > > +                              "skipping asset precache")
->> >=20
->> > So is the bit that actually deals with the exception you show in the
->> > jobs above.
->> >=20
->> > Best practice would be for us to define an 'AssetException' and use th=
-at
->> > in assert.py when raising exceptions, or to wrap other exceptions in c=
-ases
->> > where we propagate exceptions. Then this code can be move tailored to
->> > catch AssetException, instead of Exception.
->>=20
->> At least we should distinguish between "HTTP server bailed out early" (i=
-n
->> which case we should likely skip the test), and "checksum of the asset d=
-oes
->> not match" in which case we should rather fail the test since this is a =
-hard
->> error that needs to be tackled if the file has been changed on the serve=
-r
->> (otherwise this would go unnoticed and the test will never be run).
+When POWER10 CPU was made as default, we missed keeping POWER9 as
+default for older pseries releases (pre-10.0) at that time.
+This caused breakge in default cpu evaluation for older pseries
+machines and hence this fix.
 
-Yes, at least doing that would take care of this particular case. You
-might like to have that case in the retry loop too, if possible.
+Fixes: 51113013f3 ("ppc/spapr: change pseries machine default to POWER10 CPU")
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I don't suppose the API can resume fetching from an offset and it might
-be getting overkill to care so much, but that does allow the client to
-see the error (wget attempts again after short xfer then gets a 503).
-
-> In theory we are already distinguishing those cases. In the logs above,
-> the stack traces come from a part of the code that indicates we have
-> successfully downloaded the asset and now try to validate the result
-> and failed.
->
-> If the connection is terminating early, then our logic at:
->
->                 with tmp_cache_file.open("xb") as dst:
->                     with urllib.request.urlopen(self.url) as resp:
->                         copyfileobj(resp, dst)
->
-> does not appear to be seeing a fatal error, otherwise we would
-> have seen the log from
->
->             except Exception as e:
->                 self.log.error("Unable to download %s: %s", self.url, e)
->                 tmp_cache_file.unlink()
->                 raise
->
-> and would never have got as far as comparing the checksums.
->
-> So I'm wondering if 'copyfileobj' is not reliable in detecting
-> premature termination of the http connection before all data
-> has been sent.=20
-
-It seems not. I posted a new series that tries to handle it. And
-adds a new asset specific exception.
-
-Thanks,
-Nick
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index c15340a58d..b31a91e2e2 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4748,6 +4748,7 @@ static void spapr_machine_9_2_class_options(MachineClass *mc)
+ {
+     spapr_machine_10_0_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
+ }
+ 
+ DEFINE_SPAPR_MACHINE(9, 2);
+-- 
+2.43.5
 
 
