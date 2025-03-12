@@ -4,81 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31900C28B30
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 11:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EE0C28B2F
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 11:25:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsK2E-0002wT-Tb; Wed, 12 Mar 2025 07:14:02 -0400
+	id 1tsKCP-0007Mw-TY; Wed, 12 Mar 2025 07:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsK2D-0002po-0N
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:14:01 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsK29-0007n2-Ty
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:13:59 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e5372a2fbddso5639577276.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 04:13:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741778036; x=1742382836; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VhzZB3cmCvqy+v6KBzdJC1uQTQ0w3MoyiUQS6HJITl8=;
- b=mG7jyZMNLPfOEzZv/JOcSrwPcSMY8rGybIU0LD7Pkmu93K0VXWbhg1S5cU9ZX+ltab
- wEZ5VTUxMjEwxd/3jNITBfR6cVOJfI/WRf0YcRVWpV+/7ztp7T3Qipm/uIBkV71FhtCh
- NvdQWZ5DtJYBPm6kx+Mo+DZGqF9wMW7K2WJJSHNHTAOeOsgG3pMUR/QAfyR7ZzGZZr/m
- c0OWX9g6uk3A6BNyA93C8nLv7QBa5PQ6L28OECfH8JeSfyipOObzppY1xkRvgu+FqwO6
- cWFIpp4Xjxl74uira3bfj2R/VGx7xEb2Sd/cW0J2gbeEJgaGrk5Gx119UUUJBbqQHllu
- +stQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741778036; x=1742382836;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VhzZB3cmCvqy+v6KBzdJC1uQTQ0w3MoyiUQS6HJITl8=;
- b=p3YFoCPZYJEkYxHcHNP6f/Jd8Kdxfu4Rlk/dOvwJ4r6uRKLB/MCkZYsP1QXHZbbsDT
- 1qPXlsuHFmZaPoy3pTzR1LPGQzOJodSv982SKl1N0X6Tnmpv/lr1JV7LY6cDntaHduY7
- x0Qt62IL/NvxN3W2AUVfQ8Z7FV9/HsPw1/Y/DAYapZflgYnVs6z8UtROmkoZCqtDJCR1
- fAwyFLawh5zL+kc8UnHN856S9V8h9n06RrU7eBlvhOaSr3SZoqf/NSCuAkTyPc9akGtK
- pAveuq3g1WNSgCXVX5FvmuEfPuCAEZa7AvxGqa98VvJsBIXiTZOmXklimR+CGlRpn1iL
- Xm0Q==
-X-Gm-Message-State: AOJu0YySAb/n1XAqv9+O5cNgLC4CGE9pMIqVUnzULQVu9uP2Xtmwp17V
- wlW8YtU/Mgm6vrIk2QvQd7fgccybc5BaSnhO29wbbBqzN77V9f7gFUrZkBUjF2jqNMrNNMZsCQW
- azK62l41OFhK9LUtpacQqst8KJ52uNRnfufL4Dg==
-X-Gm-Gg: ASbGncv06H14lOdO+P6G5Q+mOtIHSrhfKlrdoW/T/ElkCso875vzjYl7c+8OZdSSr9R
- PqSi0Wx1VQDVU46ldbTXBwNawjRqpIeGNdBTNPEn5zW7DHzg9AZPsPd0SDgBwvhBEBUZbZmOngP
- Qusi6Dk63pnUzS853ZEjqdq3QaAeQ=
-X-Google-Smtp-Source: AGHT+IE/ZBLwSu76pVIObIiyVtV9SxruaUTP4iIDLHmgLyTbnKmKApSKsklsgHNCAkt0dYW6GcjQiAD3zgSW3qR2jxs=
-X-Received: by 2002:a05:6902:2a8b:b0:e5d:c6e8:2e32 with SMTP id
- 3f1490d57ef6-e635c179f67mr21203049276.24.1741778036002; Wed, 12 Mar 2025
- 04:13:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1tsKCL-0007ML-8q; Wed, 12 Mar 2025 07:24:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1tsKCJ-0001Ex-8E; Wed, 12 Mar 2025 07:24:28 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52C7vGDm027846;
+ Wed, 12 Mar 2025 11:24:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=yAL0+c
+ v+0sX0rXO34ZApYzghThMQDbUDvZPNGDisF9Y=; b=mBmJljJSNP6P4dvXekWK+9
+ 8GOmRee15MLoyaLvFHipsLW6y/wa6o4rbug5N8H4CNBln3O24NPQg0AUq7M00Ncx
+ oYWMYeqwyL5pRh5kKrpTm2XA3pUYr8ig7VK0XnKd6y78UahQPYehHAXL8IZ5OEXj
+ ZqMjN7rg9VNqDfMs2poQ8QjnghBwFAky60Q8pPXfEfSfXVJb2JhTGtEJ0Siph8UO
+ Damks0CAVK6DNJCHH+EACGOW7aqSRByUMuVs8mKTzExTumDPxsu320bYh+A7yHEy
+ x/wwea/Etyi3V48owkMBwWdr+BaJqSSRN+iBX4bB5QZy/5as68G4ve6Bp4eSBS2g
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45avcyuef7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Mar 2025 11:24:22 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52CAHoKt007490;
+ Wed, 12 Mar 2025 11:24:21 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45atsr3s21-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Mar 2025 11:24:21 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52CBOK6e12124802
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 12 Mar 2025 11:24:20 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 384615805D;
+ Wed, 12 Mar 2025 11:24:20 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5AA7B58058;
+ Wed, 12 Mar 2025 11:24:19 +0000 (GMT)
+Received: from [9.61.127.211] (unknown [9.61.127.211])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 12 Mar 2025 11:24:19 +0000 (GMT)
+Message-ID: <b50fe9b3-0dff-4292-843c-7d67f5345213@linux.ibm.com>
+Date: Wed, 12 Mar 2025 07:24:18 -0400
 MIME-Version: 1.0
-References: <20250312104821.1012-1-philmd@linaro.org>
-In-Reply-To: <20250312104821.1012-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Mar 2025 11:13:43 +0000
-X-Gm-Features: AQ5f1JoAta6Q4X12zfwZQgZSgicS89Jl6oI4HLAaekQPl3jhjy2waOywjSSNCPE
-Message-ID: <CAFEAcA_EL1M3ajqmJq8CO-t=q4KmY1z3UYiciCsKAmWWbCBe2A@mail.gmail.com>
-Subject: Re: [PATCH-for-10.1 v2] hw/arm/armv7m: Expose and access System
- Control Space as little endian
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Tony Nguyen <tony.nguyen@bt.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 3/5] hw/vfio/ap: store object indicating AP config
+ changed in a queue
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
+References: <20250311151616.98244-1-rreyes@linux.ibm.com>
+ <20250311151616.98244-4-rreyes@linux.ibm.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20250311151616.98244-4-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ITDPowKjMAQoEK-p7Mi5Ab3y0A9o5Mm4
+X-Proofpoint-ORIG-GUID: ITDPowKjMAQoEK-p7Mi5Ab3y0A9o5Mm4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-12_04,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 mlxlogscore=999
+ malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503120076
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,27 +113,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025 at 10:48, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> We only build ARM system emulators using little
-> endianness, so the MO_TE definition always expands to
-> MO_LE, and DEVICE_TARGET_ENDIAN to DEVICE_LITTLE_ENDIAN.
->
-> Replace the definitions by their expanded value, making
-> it closer to the Armv7-M Architecture Reference Manual
-> (ARM DDI 0403E) description:
->
->   The System Control Space (SCS, address range 0xE000E000 to
->   0xE000EFFF) is a memory-mapped 4KB address space that provides
->   32-bit registers for configuration, status reporting and control.
->   All accesses to the SCS are little endian.
->
-> Fixes: d5d680cacc ("memory: Access MemoryRegion with endianness")
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
--- PMM
+
+On 3/11/25 11:16 AM, Rorie Reyes wrote:
+> Creates an object indicating that an AP configuration change event
+> has been received and stores it in a queue. These objects will later
+> be used to store event information for an AP configuration change
+> when the CHSC instruction is intercepted.
+>
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+
+Reviewed-by: Anthony Krowiak <krowiak@linux.ibm.com>
+
+> ---
+>   hw/vfio/ap.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+>
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 3614657218..3fa986ca45 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -41,6 +41,13 @@ struct VFIOAPDevice {
+>       EventNotifier cfg_notifier;
+>   };
+>   
+> +typedef struct APConfigChgEvent {
+> +    QTAILQ_ENTRY(APConfigChgEvent) next;
+> +} APConfigChgEvent;
+> +
+> +QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+> +    QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+> +
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>   
+>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+> @@ -74,12 +81,17 @@ static void vfio_ap_req_notifier_handler(void *opaque)
+>   
+>   static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>   {
+> +    APConfigChgEvent *cfg_chg_event;
+>       VFIOAPDevice *vapdev = opaque;
+>   
+>       if (!event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
+>           return;
+>       }
+>   
+> +    cfg_chg_event = g_new0(APConfigChgEvent, 1);
+> +
+> +    QTAILQ_INSERT_TAIL(&cfg_chg_events, cfg_chg_event, next);
+> +
+>       css_generate_css_crws(0);
+>   
+>   }
+
 
