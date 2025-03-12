@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8552C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24245C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMzu-0002ai-O5; Wed, 12 Mar 2025 10:23:50 -0400
+	id 1tsN1e-0003wY-3z; Wed, 12 Mar 2025 10:25:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tsMzt-0002aR-Fz
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:23:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsN1c-0003w2-AE
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:25:36 -0400
+Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tsMzr-0002mZ-NP
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:23:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741789425;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fbSo8yzblZXLH29tQ+kwyJb0SyzI7r+Kmpd8tJEbaYc=;
- b=gkE+JNkgqrlWGyTd4btXDQfWiJNM3B4TonOyHWtIET+8Zreyrfs1T/6GS6/SQ1gmQH9+4W
- COjlTfCN40OH8SqWZjXsYWmGwNwrBrv1FNjBKqjMsG0SGAZbydKueLh74M4/88c58y56pK
- JmvM1O5P60hAoVzPPlRmu3cGyVoqNt0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-FG8v1urUO7mhcaUf6KZmhw-1; Wed,
- 12 Mar 2025 10:23:37 -0400
-X-MC-Unique: FG8v1urUO7mhcaUf6KZmhw-1
-X-Mimecast-MFC-AGG-ID: FG8v1urUO7mhcaUf6KZmhw_1741789416
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69A0E19560B8; Wed, 12 Mar 2025 14:23:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.57])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D55518001E9; Wed, 12 Mar 2025 14:23:31 +0000 (UTC)
-Date: Wed, 12 Mar 2025 14:23:26 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Konstantin Kostiuk <kkostiuk@redhat.com>, QEMU <qemu-devel@nongnu.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
-Subject: Re: Cross-compilation artifact is broken
-Message-ID: <Z9GY3l2pTkbpMV8L@redhat.com>
-References: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
- <Z9GUldol1IQT1uiY@redhat.com>
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsN1W-00033E-2C
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:25:32 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.139.40])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4ZCXwP5fyTz1R8j;
+ Wed, 12 Mar 2025 14:25:25 +0000 (UTC)
+Received: from kaod.org (37.59.142.105) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Wed, 12 Mar
+ 2025 15:25:23 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-105G0065e82f02d-aa6b-44ab-9cfb-2e160e9c6507,
+ 504EDC0C94310F6A3F54FBF2D573176B3056D9B9) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Wed, 12 Mar 2025 15:25:20 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
+ <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v2 6/6] tests/9p: Test `Tsetattr` can truncate unlinked
+ file
+Message-ID: <20250312152520.25f3dd79@bahia>
+In-Reply-To: <4178394.pcGFbxMBL1@silver>
+References: <20250311172809.250913-1-groug@kaod.org>
+ <20250311172809.250913-7-groug@kaod.org>
+ <4178394.pcGFbxMBL1@silver>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z9GUldol1IQT1uiY@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.105]
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 6a3d98c5-c400-498b-9578-541217bb76a6
+X-Ovh-Tracer-Id: 11048737262515100067
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehfedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdehpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeehpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrghrohhsrghssehsuhhsvgdruggvpdhrtghpthhtohepphgsohhniihinhhisehrvgguhhgrthdrtghomhdprhgtphhtthhopehlvhhivhhivghrsehrvgguhhgrthdrtghomhdpoffvtefjohhsthepmhhoheehvdgmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=isSXi/pCXsQEL0DsbV8tfaQgqqI8Pv/Stj6DIg9i7SA=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1741789526; v=1;
+ b=FZhSAkDLVrdT+Q7TcbiTDtXxXRYRXpAuVQe5Bv+zEMrYr0Z09VkvwAnUHJRj4024VQ+V5RAb
+ kNcGOYS73cx+wIuvf2XjkWlXmEKmHKnMgZOPnJTlQmbhaSHAqTPx5iMGihY6nQuQf0CCFeR8Q2E
+ sckh7jR9T3ZkuR4LKM3llx3A5cLAJL2eApSBaeZtMIILvhulA5PB8za6KmQrO5Cbz2Y1s/aSNQ0
+ Hs8HSFxsG7xpFmLZwdNPrrCvXNtNDI/KYPbzm8bEfMq2bWHjrkprIqAGyCsGWDXWoWEVCQb4aQe
+ j2HPMbuOhz1C0dOLpJGmDM8r+Agn8PRbSYrKemNvL6qrg==
+Received-SPF: pass client-ip=178.33.105.233; envelope-from=groug@kaod.org;
+ helo=2.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,73 +83,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 12, 2025 at 02:05:09PM +0000, Daniel P. Berrangé wrote:
-> On Wed, Mar 12, 2025 at 03:52:45PM +0200, Konstantin Kostiuk wrote:
-> > Hi All,
+On Wed, 12 Mar 2025 15:11:41 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+
+> On Tuesday, March 11, 2025 6:28:09 PM CET Greg Kurz wrote:
+> > Enhance the `use-after-unlink` test with a new check for the
+> > case where the client wants to alter the size of an unlinked
+> > file for which it still has an active fid.
 > > 
-> > I cross-compiled qemu-ga from current master branch
-> > (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavior.
+> > Suggested-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > Signed-off-by: Greg Kurz <groug@kaod.org>
+> > ---
+> >  tests/qtest/virtio-9p-test.c | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
 > > 
-> > Configure CLI:
-> > ./configure --disable-docs --disable-system --disable-user
-> > --cross-prefix=x86_64-w64-mingw32- --enable-guest-agent
-> > --disable-guest-agent-msi --disable-qga-vss
-> > Build CLI:
-> > make -j8 qemu-ga
+> > diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+> > index f515a9bb157b..20c0d744fa56 100644
+> > --- a/tests/qtest/virtio-9p-test.c
+> > +++ b/tests/qtest/virtio-9p-test.c
+> > @@ -736,6 +736,14 @@ static void fs_use_after_unlink(void *obj, void *data,
+> >          .data = buf
+> >      }).count;
+> >      g_assert_cmpint(count, ==, write_count);
+> > +
+> > +    /* truncate file to (arbitrarily chosen) size 2001 */
+> > +    tsetattr({
+> > +        .client = v9p, .fid = fid_file, .attr = (v9fs_attr) {
+> > +            .valid = P9_SETATTR_SIZE,
+> > +            .size = 2001
+> > +        }
+> > +     });
+> >  }
+> >  
+> >  static void cleanup_9p_local_driver(void *data)
 > > 
-> > Linker wrote the following information but exited with 0 code:
-> > 
-> > /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
-> > qga/qemu-ga.exe:/4: section below image base
-> > /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
-> > qga/qemu-ga.exe:/24: section below image base
-> > 
-> > As a result, this binary failed to start on Windows without any details,
-> > just a message that the application is not compatible. I also tried to run
-> > it with wine and got the error:
-> > 
-> > wine: failed to start
-> > L"Z:\\home\\user\\Documents\\repos\\qemu\\build\\qga\\qemu-ga.exe"
-> > Application could not be started, or no application associated with the
-> > specified file.
-> > ShellExecuteEx failed: Bad EXE format for
-> > Z:\home\user\Documents\repos\qemu\build\qga\qemu-ga.exe.
-> > 
-> > I bisected the tree and found the commit that caused the problem:
-> > https://gitlab.com/qemu-project/qemu/-/commit/563b1a35ed1f1151505d4fe5f723827d1b3fd4bc
-> > 
-> > Adding --disable-split-debug to the configure CLI fixes the issue.
-> > 
-> > $ x86_64-w64-mingw32-gcc --version
-> > x86_64-w64-mingw32-gcc (GCC) 14.2.0
-> > 
-> > My question is, is this expected behavior or is this a bug?
 > 
-> Your configure args don't include "--enable-debug", so I would
-> not have expected -gsplit-dwarf to have been enabled, so I'm
-> surprised that commit casued a problem.
+> Ah, I just meant the code snippet as a starting point, like I would have also
+> checked with a stat() call whether 9p server really did what it promised.
+> 
+> But OK, better some test coverage than nothing. :)
+> 
 
-Hmm it appears that the meson  "get_option('debug')" is entirely
-unconnected to QEMU's --enable-debug configure flag, which I did
-not realize.
+FWIW the server returns ENOENT if it doesn't have the fix which causes
+the check to fail. I was assuming this would be enough but I'm fine with
+adding an extra check if you want.
 
-IOW, we've got -gsplit-dwarf enabled by default for everyone
-building QEMU, which feels dubious. IMHO only an explicit
---enable-debug configure arg should have triggered it.
-
-In addition since its breaking Windows builds, it appears we
-need to block its usage on Windows.
+> /Christian
+> 
+> 
 
 
-With regards,
-Daniel
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Greg
 
