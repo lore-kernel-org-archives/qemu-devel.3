@@ -4,89 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A38C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A59E9C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsN4P-0005E0-ER; Wed, 12 Mar 2025 10:28:29 -0400
+	id 1tsN68-0005sJ-QP; Wed, 12 Mar 2025 10:30:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsN4N-0005Dc-45
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:28:27 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsN4L-0003NJ-0z
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:28:26 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-38f403edb4eso3704740f8f.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:28:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741789702; x=1742394502; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XGpycwrRAC/F46TLl7I48eG5kuRnckVPlcyYT3nYZvQ=;
- b=DRMLQ4WG+RLgSIR//J787Mhb6cndZBxo3rYA25y2MHcb73W2fNM6BOHu4wG7TU6Q0n
- fOQG2yDD/A0iShFwvRx0wAoKINlIFYl7gfecKUsROn3KOsIr9+RnC0oMkxgowcBLgYok
- DsnRPRswVaXMcKVXuO1eXeILXj/FT916Dfk93vHT2IckyCRUAK/UumqwnGcoL6LPFwDZ
- pmK9NFh8z4t8KdYlqJOy620kd0/b4eZawccWAT0D2IGLnUmH8crOet0LcqsIA7uDn4d8
- ILXZRcfdQ6V+OXKnxRVxqhUNizCylQOSRxlSU4Jdb5Ncg64mIoWSGDtaodPKjKpyHngA
- Golg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741789702; x=1742394502;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XGpycwrRAC/F46TLl7I48eG5kuRnckVPlcyYT3nYZvQ=;
- b=BrZH7GmW53uSWyUNNYqz/QfdrKPK9J9Wo39cBwkjCwgx6BeqygdvzxrTpP19njIv1o
- xhQt5JGIED5+aUXSW0NB9+VvSa500Lj4ZaQTWGUbj/2RopiyoOUR9r5F+VPmt0IxBIQm
- 0oqFCzUxKmUw2mrBoUeNXW0srDSktPqvy7Vgw9bP3r4ogo1uahJGFv9SFZFr0+Mpu5vQ
- XXXG7IwtgRusIwYg2oxEkYp8fwBQmdGNPr4l1TKOLg8sdz60Sb83EpgmdyzCAkjuwt1z
- gHEDV8TYGq3P+J8q8YK6/AseLjt4f5IAokPJ0dnjldvoLQFU8JKCX3isC2r+T3FYMDZ0
- ARrQ==
-X-Gm-Message-State: AOJu0YzSXnxkFEV8pyeSdVypBNTMwim8PV02/es+zzDdBUrCNjIF6EZ4
- 7YH3exfl85M+AyrprBP9i7n7YMCDtVJ2mUpO8G2F8vNTuQvd5Fs+6KxyFYpr/gw=
-X-Gm-Gg: ASbGncuiGJCALm6FQ9bOD8OlyvDKTYkbusDvF0snYEO/H57Bktx0EUSuMjZc25ejLKM
- HfW+lvrty8bomWE4mzzuc+pl9piqcfxwP8MHJ4cz147HBIyGkH43oy4MCtbm0ET1j9fXyqGht/D
- G3o7c6zw/mC05LUdE8mHugGw6nXLIW+RGoMKoQj6MLvBqKIC/cCrRMtl3ZPnftmJ9uNk5bNaMv+
- YuRRY+Tn2z3RZOMsqxtN/TdAaYlUE7AEMMY31I9tIP05Ar5FaBpLUS1Or1+DNuYi/UF0VLJqkBd
- LWuOJIpIDMzSZjtFASYCx7DQ4UN1WYXIk4Wiv2yhi8rFvyYdJznt4bA0M9y7Hm976bC5gSv1iIK
- WKwB6KbrS
-X-Google-Smtp-Source: AGHT+IFfM6R+tPDrr5xOj1XDq7WeyrPsdIsMgSPWrZh4P1nBtojMzTju/R/xiItDo7G/kNCoPiY2cw==
-X-Received: by 2002:a5d:6d8a:0:b0:390:e655:f998 with SMTP id
- ffacd0b85a97d-39132d6f17bmr17511103f8f.26.1741789700882; 
- Wed, 12 Mar 2025 07:28:20 -0700 (PDT)
-Received: from [10.223.46.213] (116.164.185.81.rev.sfr.net. [81.185.164.116])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfad7sm21029040f8f.26.2025.03.12.07.28.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 07:28:20 -0700 (PDT)
-Message-ID: <4aa4c71d-fe82-423b-80a5-886a7446025d@linaro.org>
-Date: Wed, 12 Mar 2025 15:28:19 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "hw/char/pl011: Warn when using disabled receiver"
-To: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250311153717.206129-1-pbonzini@redhat.com>
- <CAFEAcA-TVaickhbxJ6d4Sc_Wi8HUuzKCaJTGHrNY6X3FcGvrfg@mail.gmail.com>
- <CAFEAcA_+v5ntUx5ByXQP0hRo5AHiEbDUxkdUW2+FGNURZFsqNg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
+ id 1tsN5n-0005qg-TX
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:29:57 -0400
+Received: from mail-vi1eur03on2070f.outbound.protection.outlook.com
+ ([2a01:111:f403:260c::70f]
+ helo=EUR03-VI1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
+ id 1tsN5h-0003TJ-S2
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:29:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=efU7kbWurdvATqokM3dWvA8OfXQ6grtYg2CRA41fBmLhFyyq/JF0yAs9N4Ig1YnHsGc54WQjP/t6+GWlxldtqnHqq9UpuTCadiO9z8Pd4bn+289IJ923OxiWaEC80Z7JkSAs1meJhnhIJmy4fib+K7NPJgsCJ9XbhM/HSrUcHBZd2+Kwd7SmYoEGetSMo9VIJ/U4yr3p23DKncKDpP3jhRIuuakHeN+bxcV+V65pIhbBcFBMmdqKtrZA/p80QJijbxcNaLUKV6Jwfja1VKmTarNggMkvjr0s3agaz8o1mI+gTDa4z4RlBpWfSW9nb1n4INnLQn6F4ykgaW0+SNhE6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=G2w8LWqlZkDcaH8qH9Uq6KlhEeTtunfzZNVMtuKi0VM=;
+ b=DyFhItvArbRc6pssyVbg5qactDBlBPu5p3Mw7e7Ys0g3ep4UqNrZtJAbjM2KmoSNQ3VnHGSgSl8ocFQSNfps7Yw/XqitjmOaNQkERi8xidzFpAQlds5S89o3yygmSqlSoUqaQMZBRaqixoglJOfwW/5nyvFh3OaaL5rjxdF1gI6yAKS5SB3wg9XE7jwigEkcJThaWTZSImDP6Hz2IPiaqFgZ3p01riFjrnDpY2e7SnKnOQexI0TpBVUJTFX1PeqixW4EiN+6hcrgO7C8ebDOw6b8E7uZceojXJwbr1r6NCpyvpr0xDN27ToBO1+bP11OO+yWKzDc/2clYITNMUwrTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G2w8LWqlZkDcaH8qH9Uq6KlhEeTtunfzZNVMtuKi0VM=;
+ b=Ush+ufLsfTkMxPi3Xrv94+f4WDd2fM2CZw2HJ6SahE2hGqF5FV13fJ2vlU/JhmHxK6KwxHJzT9JuDchdEBhC54WghnuDmwf65XBZ7hNv5EORviAh0/5J9daCLH67M1vMZOHDx3IPs4Rr+MoegoLitJ/pSCh+uxtnwboV2bVinNXVCRVwIxmx4qvb3HVvo5AVNmJkMCHGYG51UaxIK+5Y5R7d3n/zh9H/ycA/oipmIj0CG/PuEuyw27CJJTGp4ebO9FFvoz0X4POTl7DFRk5GnMdIU0YjAFabj1mcOQfZDLdBnh0gdk2HGThjToqvJ+qTPf9aX4eWYZsdWAvf/0VDew==
+Received: from PA4PR09MB4864.eurprd09.prod.outlook.com (2603:10a6:102:ed::17)
+ by GVXPR09MB7253.eurprd09.prod.outlook.com (2603:10a6:150:1bc::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Wed, 12 Mar
+ 2025 14:29:43 +0000
+Received: from PA4PR09MB4864.eurprd09.prod.outlook.com
+ ([fe80::a02b:9d5c:eca5:e024]) by PA4PR09MB4864.eurprd09.prod.outlook.com
+ ([fe80::a02b:9d5c:eca5:e024%4]) with mapi id 15.20.8511.026; Wed, 12 Mar 2025
+ 14:29:43 +0000
+From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+CC: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, "arikalo@gmail.com"
+ <arikalo@gmail.com>, "cfu@mips.com" <cfu@mips.com>,
+ "fshahbazker@wavecomp.com" <fshahbazker@wavecomp.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "philmd@linaro.org"
+ <philmd@linaro.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v5 2/3] Skip NaN mode check for soft-float
+Thread-Topic: [PATCH v5 2/3] Skip NaN mode check for soft-float
+Thread-Index: AQHbiHBN9WWu61L0jUe8EWyWqAJpArNvpUkA
+Date: Wed, 12 Mar 2025 14:29:43 +0000
+Message-ID: <20250312142854.114061-1-aleksandar.rakic@htecgroup.com>
+References: <20250226170246.1971355-4-aleksandar.rakic@htecgroup.com>
+In-Reply-To: <20250226170246.1971355-4-aleksandar.rakic@htecgroup.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_+v5ntUx5ByXQP0hRo5AHiEbDUxkdUW2+FGNURZFsqNg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA4PR09MB4864:EE_|GVXPR09MB7253:EE_
+x-ms-office365-filtering-correlation-id: c00234a3-d2f7-4985-d124-08dd617254e1
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?4FpU0PAyQ0qQK6ISwboL7WqxynSguiQlSpqatizJpFzu1KOnXC2ZNpwFVn?=
+ =?iso-8859-1?Q?KiRkrilbaFzwokhz+qn6ixyYFqzpOEkc13919Byocyr4BbtiueCvKwgQcF?=
+ =?iso-8859-1?Q?GE4GUfMUy4F+Nha5ZFjKEkz1h4F1KwY0npxYY2VlX5eLzyFguwImoA5gbu?=
+ =?iso-8859-1?Q?Xcv9e2TKAUmtJRAt75Rz7OPFwp2C9bywzNVtpTqXft17Zjo6KGCggxZjU/?=
+ =?iso-8859-1?Q?lFlaCYdpdjCpv8qyDz+p9O+8h2dukmouyBuxR0o9QbN6xs1FtSyVHjz1QL?=
+ =?iso-8859-1?Q?rXig0ySAIjtisdzeI9uHJEwoAw20wnvImltvtcWLBpkspAA5CLga8L4IE/?=
+ =?iso-8859-1?Q?dfW9AeeMy8LqklpXKHMfB+Besq/b2h9mY3b/PGD+l21w75ls0atKt3ZfbH?=
+ =?iso-8859-1?Q?5fQ/s5ReUtXsMbR2hBZT7mPhplfKo9HDi4jxbEIXcBIAeLuz8J+gQhaDCq?=
+ =?iso-8859-1?Q?/EWUDpNWuBT2A3jIwXYoJhzzzJhnXjiR8jkSK2qnXaFI2+f9x3xqOTBger?=
+ =?iso-8859-1?Q?v2sNSrshWu6/+e5lQDE+/59Oaj+DytNcdjuoDl2kW8DNEYRn2HRHc5rmva?=
+ =?iso-8859-1?Q?jFJg4uBZOKeg60XUKAHJAoC0nW2UspmulkO5jlWPoAZCk3usxdgl9vhzDl?=
+ =?iso-8859-1?Q?j8qU+H5gxGhD1UylysbqCLebTHfUnr1M/JbBvmB0EYMNprKCnC7QmIMmKU?=
+ =?iso-8859-1?Q?2mZxJGW2TL6kjHmcfXAb39Fk0tei6g15nvBuacgSkuyf+y68z4XH1Xlz8/?=
+ =?iso-8859-1?Q?5P2w8kxy3qhWfkDvGlmQGyCMrITL1kEkcrhHw0JHcLlJrS9j8QoQdUtpXV?=
+ =?iso-8859-1?Q?icgEN9BNx+FnZmJVnKdg5DQTL48OLttBiLDfRoGN5f7N4k/i0kNRqA1XXb?=
+ =?iso-8859-1?Q?Hx+UE/6dbma5RCXcYgSkcICVgfayuha3nGSFeIqfYd1CGgWF0Eb/EPZ+fT?=
+ =?iso-8859-1?Q?uY+q1HXnHAPCN7vtPCVUzxPLMFDFi7QEIzJYvviZevKVgC9aIxVQUu+9G5?=
+ =?iso-8859-1?Q?uGXfHQIXMcagAf4ZmsrIY+a95grhPLafnQqdcQGtpeMnOWY9wv1Hk3jxzH?=
+ =?iso-8859-1?Q?OsnOFz1M5jSozizlp05/ZEE5U5a9ExMwQncVOZbPTDilo7FLOIbYMHaS7d?=
+ =?iso-8859-1?Q?Q3IXrAQ1dDSXRwRkDawLqQ0KUm1uCiYnriAHMzQlFVKgw4U/MwR2XCgRdI?=
+ =?iso-8859-1?Q?5M4zIRDntTuKgPZF2rOS2UA/kz3IQiHEzxlUg9uHTNo0BxWw5E4rGLeVgq?=
+ =?iso-8859-1?Q?WJQDJBDxobEmSfk4YpMmC9ofyrj3GuHCz5+lyZpB9MZbMs8rT3aMyHyoAO?=
+ =?iso-8859-1?Q?UBbA9woyeCD2Bm3U4am9YUa5yg9PuFOVhyC9MsUmu3+rLbKoWgTm5L8BuU?=
+ =?iso-8859-1?Q?sAmipU6Ayg9uyS5A+CJeJQy6QW4Acjsy9bUqZfB3baXd5aWY0u5Ep82S4M?=
+ =?iso-8859-1?Q?h8Q5qwm/fdz5/6NAUECWIFz3jciUPB41l9SNc7cz3Fn9vMbJS7c1ONQYSn?=
+ =?iso-8859-1?Q?e4ls+RGYPBM9QoBqXyiAnU?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PA4PR09MB4864.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?LcNamfHtjpA8CasaEItZBZdkryyLyF4rQ14CLYSwPWOXi/K9eCHFgQdisO?=
+ =?iso-8859-1?Q?93mgPsg0VJISFtlzKnMErD7UACNhc1+IqLU+7cZ5KGUd7kW/DmJE4Gus/e?=
+ =?iso-8859-1?Q?yc5ZPz2P4O8dzNe8kPBCiUY5t6s/yZ2oMPhBotj5fj5taltX30lzR6D/qR?=
+ =?iso-8859-1?Q?d+wQRWnF7/0RFnq7HXp7agMBi9GDddXETa89Hc+Rzsp64bORLI0KfSYqiW?=
+ =?iso-8859-1?Q?pAFd33SFIFTs1LQvhDMnmmJ5/fc6rc9rvM023qwoCiWhOhn2SVOfQRJQxi?=
+ =?iso-8859-1?Q?5cawhKcdcBJ+f/Odi+ympH+MKqn9ToUHgQ1QOPtP3IZbBW2YIDxWXNW0sU?=
+ =?iso-8859-1?Q?jeiwSKkvEIEvllQmiO4C+b08wmpoMf4e0VdCtAUuSL4JnzRyziqbrU37AR?=
+ =?iso-8859-1?Q?PiSzTCJmG7tJXlU5HpxYl44SFO4sKAVC/nrNBj7k7hKaAjY+nR03ypyT7V?=
+ =?iso-8859-1?Q?S6qHtNZ7KwIqaYzjAorSxwuJjSzjuIAedwt4yJMZI7upZQXB8C9bLOsETk?=
+ =?iso-8859-1?Q?rpfLfUzB27uJNrxar3rFW0BxatzdzQ3JFRfelk+IKJ08IVdzqqrL7p8qEA?=
+ =?iso-8859-1?Q?b3qRsTZaOrDuuXnmJ13mVcVLPYnTYlWHhSM8zNZYtoZmcBOU8XO96b+k+D?=
+ =?iso-8859-1?Q?Bb6RxEkLrcjxHrYSHKkttsiu2J9m8nWx03APi1KPlCOUW5gFciVXYZRFiY?=
+ =?iso-8859-1?Q?TXCz6FBZRNUJShRGPLzfSxh9pfWarOljBc/gmo/vMiCjNANN2LD4G6lY2l?=
+ =?iso-8859-1?Q?ZDSXm3a23rwlUGuhcdzUQT/Jhn6tEfPMlj/f/OIGx2K421laouRrf+/Dse?=
+ =?iso-8859-1?Q?9c0tkjC+rq/O5sJ5lRdrXS+J0QbCcwN8YgcOsK9O5c/cL6Ab1X/+SOnplx?=
+ =?iso-8859-1?Q?sW7sP0S8Hpe48k1mNsTxls3BgMz7rTq4gms2OnNncSfNEXn7s1GZARpC9o?=
+ =?iso-8859-1?Q?j8gnpMD2HwGSSkOXNYaGEv4XhhqYVGepUFv49D6/VBjTgzX080U6au/lkd?=
+ =?iso-8859-1?Q?9Vpq9jXJ1XhCUYAWbc0NyrPrpa+604UlANUVtLqBMEWzNEFtJpvXcR2ibj?=
+ =?iso-8859-1?Q?A256GG9fdQQUdJP0V3MZI/An65RWeYw4bX6NSVKjaEVHXBTzlHzTjaxvsu?=
+ =?iso-8859-1?Q?5bgIRfNmzVeQke9avzFA/Ag+7AY3c9Cf688UBhsIbndDvlnIz83ErMQybA?=
+ =?iso-8859-1?Q?hmaQ9D2Jly0mom9sBqV2ujm2tAuJL8UKvdDz6iAd47L5aDQRD902Yf8KPo?=
+ =?iso-8859-1?Q?uKao3mvDbC1QZm4lIeIg9Q2WqiOItCT3WZGh0xNZ+QnOiglbLPWSzx/S1C?=
+ =?iso-8859-1?Q?/rUyzAuM/6rWIQ3MoD1oBKd41ScJt7ad4jBAXyv2pli6PnZR3Pv0iXba42?=
+ =?iso-8859-1?Q?fGVphugCt35/Pbf3mFy35qvG8wta3Xx4BTpJLr6S2V7fSxCk0HpNe6XoY3?=
+ =?iso-8859-1?Q?juICPb5SZfRtr6XQ2hvaqd65ZYqo2quMj3/Z21dbt8IT6rqAWgub37wPMU?=
+ =?iso-8859-1?Q?aKGY5IGJVxamKSOwk+SDYMPfadH2QXOWL+oPhHfRoyH5qKaSCOXaZw+si8?=
+ =?iso-8859-1?Q?5jEUCJDI5TzQwBSt47ev4JOnWlLr+bCe5yfmIORoYuVgQDGDkPueySejpD?=
+ =?iso-8859-1?Q?utiGjLHz6CKfm+Ybrh7AcbBbY4ddkIo4A2xEZuTjlde/W2hecjvPw/Pl+B?=
+ =?iso-8859-1?Q?hYZ5Jxj5ZwpqfMLGVU4=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR09MB4864.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c00234a3-d2f7-4985-d124-08dd617254e1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Mar 2025 14:29:43.4266 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: /2l7vy3qZNLx03sUiaF49fOgA6IMcmGUBov2Dqlj2KY4aScv79hPx8Sh42Lpyp9Ng9lgz3k4obcd/bGsU40Gd4soDli0kMVQc0X3RB9cE/8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR09MB7253
+Received-SPF: pass client-ip=2a01:111:f403:260c::70f;
+ envelope-from=aleksandar.rakic@htecgroup.com;
+ helo=EUR03-VI1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,68 +168,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/25 14:43, Peter Maydell wrote:
-> On Wed, 12 Mar 2025 at 13:36, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Tue, 11 Mar 2025 at 15:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
->>>
->>> The guest does not control whether characters are sent on the UART.
->>> Sending them before the guest happens to boot will now result in a
->>> "guest error" log entry that is only because of timing, even if the
->>> guest _would_ later setup the receiver correctly.
->>>
->>> This reverts commit abf2b6a028670bd2890bb3aee7e103fe53e4b0df, apart
->>> from adding the comment.
->>>
->>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Cc: Peter Maydell <peter.maydell@linaro.org>
->>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>> ---
->>>   hw/char/pl011.c | 12 ++----------
->>>   1 file changed, 2 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
->>> index 23a9db8c57c..efca8baecd7 100644
->>> --- a/hw/char/pl011.c
->>> +++ b/hw/char/pl011.c
->>> @@ -85,7 +85,6 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
->>>   #define CR_OUT1     (1 << 12)
->>>   #define CR_RTS      (1 << 11)
->>>   #define CR_DTR      (1 << 10)
->>> -#define CR_RXE      (1 << 9)
->>>   #define CR_TXE      (1 << 8)
->>>   #define CR_LBE      (1 << 7)
->>>   #define CR_UARTEN   (1 << 0)
->>> @@ -490,16 +489,9 @@ static int pl011_can_receive(void *opaque)
->>>       unsigned fifo_depth = pl011_get_fifo_depth(s);
->>>       unsigned fifo_available = fifo_depth - s->read_count;
->>>
->>> -    if (!(s->cr & CR_UARTEN)) {
->>> -        qemu_log_mask(LOG_GUEST_ERROR,
->>> -                      "PL011 receiving data on disabled UART\n");
->>> -    }
->>> -    if (!(s->cr & CR_RXE)) {
->>> -        qemu_log_mask(LOG_GUEST_ERROR,
->>> -                      "PL011 receiving data on disabled RX UART\n");
->>> -    }
->>> +    /* Should check enable and return 0? */
->>
->> We decided deliberately not to check the enable and return 0
->> here, as described in the commit message of abf2b6a028670bd:
->> we think there's too likely to be existing works-on-QEMU code
->> out there that doesn't ever set the enable bits.
->>
->> Otherwise, yes, agreed with the revert.
-> 
-> Oh, and I just realized that the right place to diagnose
-> "guest didn't enable the UART" would be when it reads/writes
-> the data register while the enable bits are clear.
+Hi,
 
-Doh, sorry. I wonder how I ended putting this code here... Since I
-rebased this a lot, maybe something went wrong. Anyway, I'll post
-a fix.
+Could you please let us know if you have any comments
+on the latest version of this patch?
 
-Regards,
-
-Phil.
+Kind regards,
+Aleksandar Rakic=
 
