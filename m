@@ -4,100 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD5DC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 16:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C979C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 16:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsOvY-0005vh-4Q; Wed, 12 Mar 2025 12:27:28 -0400
+	id 1tsOw7-0006Ku-5v; Wed, 12 Mar 2025 12:28:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tsOvK-0005uc-87
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:27:16 -0400
-Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tsOvI-0003BY-EB
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:27:13 -0400
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-7c3bf231660so718159185a.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 09:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741796830; x=1742401630; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=ih08SUSqfG8YzitLeTARkIF9NlGsr61cZET7DD3SbB0=;
- b=CVEARmtKAMJg7vyHId9UXhK0kZmHivmJT2QpyTFd0zl+CVsXPKpECWwcRqyoh3UlOC
- BCF8oMlB8L/PaYQNVBfVdweR8tIIbS1c3YxGejNu/dq8hLfICvc2HhAPcAzwgEWrb/yR
- W9662MxaIRyR7EIBDa8U9BhCAqSRULmWo8JtS4VS2FypveJLkSvkoaxhP+0R91DmBtZA
- d3AR+qrRGFzA2AZL3+Rv3TJGr59Q1ncfOCJi5nvYqpOxy5BvI/wvZyrUcq7t0a8vG0VX
- otTQ/z0Z7J2QEJokzScf+Un18rWlpsrmP3NwjWtRcIfeVeojj5wmwBCkilRcpDi3mC4+
- kM7Q==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tsOw5-0006HU-9G
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:28:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tsOw3-0003HV-61
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:28:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741796877;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/yVTJvH0OauXFUivf9YJv5P0lB94yuCxQcCdRvEY22o=;
+ b=H7zTDur+aDvWZBZ79Pr/RYPGCl3v61Z+l/hfgAX+Je4wjZqvic+rcSZfMn8vjKgVeIlxi2
+ QH/f5/S9IpKlE6pW9fFziYvlfbMcsUaUrqcIYm/7mpwuRXv6rEmRE4SZmeJCLoNdUahNDj
+ Cnj9x/ea+67hF1SDuM7pVvkOKNa7+Pw=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-382-kFw7cbDmNZSpa4Rg2jVTaw-1; Wed, 12 Mar 2025 12:27:55 -0400
+X-MC-Unique: kFw7cbDmNZSpa4Rg2jVTaw-1
+X-Mimecast-MFC-AGG-ID: kFw7cbDmNZSpa4Rg2jVTaw_1741796875
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-476aa099fb3so43537401cf.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 09:27:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741796830; x=1742401630;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ih08SUSqfG8YzitLeTARkIF9NlGsr61cZET7DD3SbB0=;
- b=kgGIuvt8wj8wPVT+GYaKveUgBX+5sli+sRzqOBQGNPjgnMrBq9KLR2b36avKd57LYP
- HYe87KdteEcJQhwggPV1HGE4Yw/X9hmC584YrwiXjjXMGfEEl6g8UMgan48KBvKjgr5y
- kHLFIf7F2UCQeT8h/ZJwlFunXFG4EZ7n2TLYAKSFOVmGOwWdazUWNXGxcZd6ZaOiJFFi
- TFn0v+U0NaY8QpNzE32eV9fmY8PmmTmiLMYlHv5v79fNqTyrPIrMp4szbDSh5Yl6vxu5
- 23uM76lgRjPGZh9xFaqzaR8JfvyBCoFWNZFVlqtglyh38obIL0GRb08jTjsE5V0QVD0R
- C1Cw==
+ d=1e100.net; s=20230601; t=1741796875; x=1742401675;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/yVTJvH0OauXFUivf9YJv5P0lB94yuCxQcCdRvEY22o=;
+ b=JF20MgAsNWqyX9V2Ww5OwaGnaVWfsdIcyMIrw+6AUib9aY5/UlQ5q/odA2YH3PGhvu
+ 1aZe/8UJTmN6I1w+fyYDFEzSMoQNGD1ENxaTvIn58BBXHUullU0HCJA7jPZ+oY/swjM3
+ Xv+GztLYiBZqHmszFiFPA4Agh4KB8e9hrNw28FiJbK9oCF4/5hKMe2D772vTdmzghK2Y
+ 7RCRejtzoi8jdlj/nXSnN+0ckf/Tv+Ha7lMnv+pyGPIsMkEcx/IETVmW8fKGxGPuME19
+ MPNoy0txy1E36tzcI65/K3o/cudonBwjrRzjEy9yYt1bnTEQ1M6NuFWHnAtF8LGfL1d9
+ 7PVw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlvOst+xgz+dKJp4CT50eLAcGcgKC/fm+3SEyh8iK7RQOFJEttQRFlJfKwfE7CZwvp88V+TWfYw6Jy@nongnu.org
-X-Gm-Message-State: AOJu0Yw+/6tvkz1DMZ9AULwFekysvmb7tPEdPf55GCQfdC3xueY2KyiG
- xMPb98Ghv6JZLUFR3rur7+Uv/geI5icKmZswCz/wNqkzDutAmvtl
-X-Gm-Gg: ASbGncsri+4leoP1tlSaDJirzOwFy9izymw1CDCUv9F/2duVGLkenLZwO/W19K0q5AG
- ELhIMLELElODCIhMy1t7Ar+osT+okxeIcbxT/7GdKbsWRTdxatS4aWjFqDGJwaeOb/jlavBRDU3
- B52CX1ViUXnDK2I+6ky9r4tlKm+/sR8acIb2xKBxunirmafRE1Tlmhz48eNawSqpSdyTAsi3QHl
- 6gxrqWzTNgKxcDr692N2v4c2QNkFKPQL375HprSJyHsB10ciRZ/sXCLSlAaujB2DdzhEGTMjJR6
- JUnKofOpRy99yUck3Z7Zu3k2MH44Ktji7b5u+IUCtrKJyx7/oqKghs2abVMwl7P7XtpjW6Urfg=
- =
-X-Google-Smtp-Source: AGHT+IGv6LcyYIQpMOjV82ATrobnbh0MX94M2PyZJspP3t5MHDz/XuL1W8Enha/WnsDs3vtousMW/g==
-X-Received: by 2002:a05:620a:2694:b0:7c5:56c0:a8 with SMTP id
- af79cd13be357-7c556c002e4mr1778294385a.1.1741796830379; 
- Wed, 12 Mar 2025 09:27:10 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:9cc3:cdb3:7013:e1db])
+ AJvYcCUCWm7y9eADuif9za69+P0Zsqm0oLM1Ow5c1/uo8s3Hhw0gJTPjeFZbUSPVAPsP4zo86/1EbyoiMIFs@nongnu.org
+X-Gm-Message-State: AOJu0Yztv4/YruHgIauBIx+y1xgauUsMGwywRMhA0u1rC/yXa9XHRz5V
+ TGQSF0ZnPgfFuec2IKl08kzV2jwbT3jzijcM2R9YQLGToaQm3Z4MwhZ4teQwrDQVNylpHparMrg
+ 8nXc7XYuEm7G3QQ6SbaHQRcsrD7ray7oGhvGnltGR7jK8zAtPLu9C
+X-Gm-Gg: ASbGncseuN8v1MZkW0L6fz5ENeZU1KUwsXuFJanlFgA0dyQJg24bkuEsOcGc/wmHxPm
+ YWrkeIPgltXe6aOj2kF1VtQC/Ui8cHQlN4FxTMBobpbsGyreYk6Y5UkBAeFAao0k0P7vLNLjTlY
+ EDUbFr2aOCGzgAfa6rtVeZmEkr62A8HtQdOR+s60qQz1rpJcUv49dYe4PMcCFgpFmRMZavGPzi9
+ ZKc3IOcUM6Hv9M/QraCYXLVznHOT0ldLOx7e6MOtHmd7q+yBE7PzAnRzEFcvMF6y/G5kX2b06hY
+ XXLNh2QY38ztmb18ICD9NkyBbzzz6RiibgVFJS1Nc5O2wRGW76MdmcO1NUzWUmk=
+X-Received: by 2002:a05:622a:438b:b0:476:afd2:5b4b with SMTP id
+ d75a77b69052e-476afd29835mr25417461cf.8.1741796875192; 
+ Wed, 12 Mar 2025 09:27:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHOf1bTmb21wkjMEDmUeWzO60iLJsinhHqZqYcXNgbVkIg7B8ONR2bPNZ6na664g2Wt09EDQ==
+X-Received: by 2002:a05:622a:438b:b0:476:afd2:5b4b with SMTP id
+ d75a77b69052e-476afd29835mr25417261cf.8.1741796874855; 
+ Wed, 12 Mar 2025 09:27:54 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c553c14c37sm490134285a.112.2025.03.12.09.27.09
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 12 Mar 2025 09:27:09 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-34-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-34-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 33/38] target/hexagon: Add gdb support for sys regs
-Date: Wed, 12 Mar 2025 11:27:08 -0500
-Message-ID: <010a01db936b$9a862d30$cf928790$@gmail.com>
+ d75a77b69052e-4767e447867sm50703211cf.41.2025.03.12.09.27.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Mar 2025 09:27:54 -0700 (PDT)
+Message-ID: <fb28c228-0c78-4412-ba91-a62cb4351793@redhat.com>
+Date: Wed, 12 Mar 2025 17:27:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgHz2SB/tPRyruA=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250312-2, 3/12/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x736.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-accel
+Content-Language: en-US
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-5-shameerali.kolothum.thodi@huawei.com>
+ <547f961e-380c-4ffe-8b8b-3e9d543aa702@redhat.com>
+ <58c9c37876c64584b0c7961ec61696a3@huawei.com>
+ <5b29ea01-1b86-4b48-a769-14986751a0f1@redhat.com>
+ <5d894a546d3f4081ac2cfe98bd2ea612@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <5d894a546d3f4081ac2cfe98bd2ea612@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,92 +128,141 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Friday, February 28, 2025 11:26 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 33/38] target/hexagon: Add gdb support for sys regs
->=20
-> From: Brian Cain <bcain@quicinc.com>
->=20
-> Co-authored-by: Matheus Tavares Bernardino
-> <quic_mathbern@quicinc.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
+On 3/12/25 5:22 PM, Shameerali Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: qemu-devel-
+>> bounces+shameerali.kolothum.thodi=huawei.com@nongnu.org <qemu-
+>> devel-bounces+shameerali.kolothum.thodi=huawei.com@nongnu.org> On
+>> Behalf Of Eric Auger
+>> Sent: Wednesday, March 12, 2025 4:13 PM
+>> To: Shameerali Kolothum Thodi
+>> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
+>> qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; jgg@nvidia.com; nicolinc@nvidia.com;
+>> ddutile@redhat.com; berrange@redhat.com; nathanc@nvidia.com;
+>> mochs@nvidia.com; smostafa@google.com; Linuxarm
+>> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
+>> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
+>> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+>> Subject: Re: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-
+>> accel
+>>
+>> Hi Shameer,
+>>
+>>
+>> On 3/12/25 4:46 PM, Shameerali Kolothum Thodi wrote:
+>>> Hi Eric,
+>>>
+>>>> -----Original Message-----
+>>>> From: qemu-devel-
+>>>> bounces+shameerali.kolothum.thodi=huawei.com@nongnu.org <qemu-
+>>>> devel-bounces+shameerali.kolothum.thodi=huawei.com@nongnu.org>
+>> On
+>>>> Behalf Of Eric Auger
+>>>> Sent: Wednesday, March 12, 2025 3:36 PM
+>>>> To: Shameerali Kolothum Thodi
+>>>> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
+>>>> qemu-devel@nongnu.org
+>>>> Cc: peter.maydell@linaro.org; jgg@nvidia.com; nicolinc@nvidia.com;
+>>>> ddutile@redhat.com; berrange@redhat.com; nathanc@nvidia.com;
+>>>> mochs@nvidia.com; smostafa@google.com; Linuxarm
+>>>> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
+>>>> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
+>>>> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+>>>> Subject: Re: [RFC PATCH v2 04/20] hw/arm/virt: Add support for
+>>>> smmuv3- accel
+>>>>
+>>>> Hi Shameer,
+>>>>
+>>>>
+>>>> On 3/11/25 3:10 PM, Shameer Kolothum wrote:
+>>>>> Allow cold-plug smmuv3-accel to virt If the machine wide smmuv3 is
+>>>>> not specified.
+>>>>>
+>>>>> No FDT support is added for now.
+>>>>>
+>>>>> Signed-off-by: Shameer Kolothum
+>>>> <shameerali.kolothum.thodi@huawei.com>
+>>>>> ---
+>>>>>  hw/arm/virt.c         | 12 ++++++++++++
+>>>>>  hw/core/sysbus-fdt.c  |  1 +
+>>>>>  include/hw/arm/virt.h |  1 +
+>>>>>  3 files changed, 14 insertions(+)
+>>>>>
+>>>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c index
+>>>>> 4a5a9666e9..84a323da55 100644
+>>>>> --- a/hw/arm/virt.c
+>>>>> +++ b/hw/arm/virt.c
+>>>>> @@ -73,6 +73,7 @@
+>>>>>  #include "qobject/qlist.h"
+>>>>>  #include "standard-headers/linux/input.h"
+>>>>>  #include "hw/arm/smmuv3.h"
+>>>>> +#include "hw/arm/smmuv3-accel.h"
+>>>>>  #include "hw/acpi/acpi.h"
+>>>>>  #include "target/arm/cpu-qom.h"
+>>>>>  #include "target/arm/internals.h"
+>>>>> @@ -2911,6 +2912,16 @@ static void
+>>>> virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>>>>>              platform_bus_link_device(PLATFORM_BUS_DEVICE(vms-
+>>>>> platform_bus_dev),
+>>>>>                                       SYS_BUS_DEVICE(dev));
+>>>>>          }
+>>>>> +        if (object_dynamic_cast(OBJECT(dev),
+>>>>> + TYPE_ARM_SMMUV3_ACCEL))
+>>>> {
+>>>>> +            if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+>>>> maybe just check whether it is != VIRT_IOMMU_NONE?
+>>>>> +                error_setg(errp,
+>>>>> +                           "iommu=smmuv3 is already specified.
+>>>>> + can't create
+>>>> smmuv3-accel dev");
+>>>> I would clearly state "iommu=smmuv3 virt machine option is alreadt set"
+>>>> and use an error hint to say both are not compatible.
+>>>>> +                return;
+>>>>> +            }
+>>>>> +            if (vms->iommu != VIRT_IOMMU_SMMUV3_ACCEL) {
+>>>>> +                vms->iommu = VIRT_IOMMU_SMMUV3_ACCEL;
+>>>> I know there were quite a lot of dicussions on the 1st multi
+>>>> instantiation series related to the way we instanatiate that device
+>>>> and maybe I missed some blockers but why wouldn't we allow the
+>>>> instantiation of the legacy smmu device with -device too. I think
+>>>> this would be simpler for libvirt and we would somehow deprecate the
+>>>> machine option method? would that make a problem if you were to use
+>>>> -device smmu,accel or something alike?
+>>> Thanks for taking a look. I am just jumping on this one for now.  Yes,
+>>> there were discussions around that. But I was not sure we concluded on
+>>> deprecating the machine option. So if I get you correctly the idea is,
+>>>
+>>> if we have,
+>>> -device smmuv3 it will instantiate the current machine wide smmuv3 and
+>>> for -device smmuv3,accel this device?
+>> yes that would be my preference.
+> Ok. I will look into that in my next respin. A quick question. Does qemu
+> DEVICE model support the differentiation like above easily? Or we have
+> to manage it with properties?
+Not sure if I understand you question. I meant it can be a boolean
+device property (DEFINE_PROP_BOOL) smmuv3,accel=on
 
-> +int hexagon_sys_gdb_write_register(CPUState *cs, uint8_t *mem_buf, =
-int
-> +n) {
-> +    CPUHexagonState *env =3D cpu_env(cs);
-> +
-> +    if (n < NUM_SREGS) {
-> +        hexagon_gdb_sreg_write(env, n, ldtul_p(mem_buf));
-> +        return sizeof(target_ulong);
-> +    }
-> +    n -=3D NUM_SREGS;
-> +
-> +    if (n < NUM_GREGS) {
-> +        return env->greg[n] =3D ldtul_p(mem_buf);
+No?
 
-Are all of these writable directly without any checks?
-
-> +    }
-> +    n -=3D NUM_GREGS;
-> +
-> +    g_assert_not_reached();
-> +}
-> +#endif
->  static int gdb_get_vreg(CPUHexagonState *env, GByteArray *mem_buf, =
-int
-> n)  {
->      int total =3D 0;
-> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-> index 76b2475d88..fd9caafefc 100644
-> --- a/target/hexagon/op_helper.c
-> +++ b/target/hexagon/op_helper.c
-> @@ -1465,6 +1465,17 @@ void HELPER(sreg_write)(CPUHexagonState *env,
-> uint32_t reg, uint32_t val)
->      sreg_write(env, reg, val);
->  }
->=20
-> +void hexagon_gdb_sreg_write(CPUHexagonState *env, uint32_t reg,
-> +uint32_t val) {
-> +    BQL_LOCK_GUARD();
-> +    sreg_write(env, reg, val);
-> +    /*
-> +     * The above is needed to run special logic for regs like syscfg, =
-but it
-> +     * won't set read-only bits. This will:
-> +     */
-> +    arch_set_system_reg(env, reg, val); }
-
-Does the hardware allow the debugger to do this?
-
-> +
->  void HELPER(sreg_write_pair)(CPUHexagonState *env, uint32_t reg,
-> uint64_t val)  {
->      BQL_LOCK_GUARD();
-> @@ -1508,6 +1519,11 @@ uint32_t HELPER(sreg_read)(CPUHexagonState
-> *env, uint32_t reg)
->      return sreg_read(env, reg);
->  }
->=20
-> +uint32_t hexagon_sreg_read(CPUHexagonState *env, uint32_t reg) {
-> +    return sreg_read(env, reg);
-> +}
-> +
-
-Why not just use sreg_read?
-
+Eric
+>
+> Any example device implementation like above already there?
+> Please let me know.
+>
+> Thanks,
+> Shameer
+>
+>
+>  
+>
 
 
