@@ -4,58 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C809C28B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12773C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMk8-0001Vd-6k; Wed, 12 Mar 2025 10:07:32 -0400
+	id 1tsMnj-0003T4-Um; Wed, 12 Mar 2025 10:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tsMk5-0001Pv-U4
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:07:30 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tsMne-0003SL-UB
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:11:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tsMk2-0000wO-IX
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:07:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=JFaUfIH8B6I1EUYp4I4ePatGGx1T5CUez+vC0TaFP9U=; b=SvoXA71FeNnQTVD5s2HjjRiPYO
- S98LYyY70/f2y5Yv/93BrDOCE0qqWqpnxOSqqz0bHJcLLc3EJw0Omypivy5v/SqG4s8x24qwZy23p
- HVXam3pY6Ieg1dHDONos1Lr41bS5Y3poNM4K4J0KqsrOSS+UgovaDJbnAlpRazEc0onLncBYn3qUE
- u3D8B6jl0exz117d3nt2egzMWWeVCxxMTNauHQ5n4RZ4jcLDqAOR4Q6puHcldGHu2Cil+l3jjd4H/
- C0yLsWER2jZ8IpU8F0cOb4AyUhGHbYw5gYLeyAg1Q3CLkC3Q6EEo07b//UIavAmzxiTMqUVdY5pA7
- tR/Zzw62TXvU+PECmkWY4LbaFpVSsFvl4vsmbejL+Lq38AlBhAUWD2O13/2NH6zH9D06N1Ty2X62o
- XCDrB6LKiay+jOJnqCV4LVGM9v8cT3lKKr5A0Swx2+fyv4Tc964BUBFq/qbrNLX3nR8aeNreY4vsV
- zcc0Z8WHa7CnnFeJBAwEbcsmmNfbaKhbCxa9AFDUXYmtavxSLCM5+WhImwXfOEJoyX+urziPeu2ka
- lIiYqdxYfkc1wYk3m4ucu2tKWJFBfr4p/6TsstMVPvZ8TqBxWVw6AOvMXZ04B7jGTR/11u3wDmn+M
- bOAUtYsq8d0qvmWHoBTmMs85DRG6skN+FBdkJ8Xl4=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Greg Kurz <groug@kaod.org>
-Subject: Re: [PATCH v2 3/6] 9pfs: Introduce ftruncate file op
-Date: Wed, 12 Mar 2025 15:07:20 +0100
-Message-ID: <2348866.qVP5gfYQ7p@silver>
-In-Reply-To: <20250311172809.250913-4-groug@kaod.org>
-References: <20250311172809.250913-1-groug@kaod.org>
- <20250311172809.250913-4-groug@kaod.org>
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tsMna-0001dM-5c
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:11:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741788663;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZfDJkr80rE0A5Ty+yK7hcwpEySqLg6UrBMpDUcvhRzg=;
+ b=WFxktZxU5KybrI9724hTJtszerWRZbZInhDAeg0TchajX3dMPTmLsh8tjr2kpsSd2/Mg4V
+ MOJ3hNsEJpg66uWDnfzizxQKDvbpAVA44/3MU1O0T49UZkBOkeGvu5xadL7hARUl7IgpM6
+ VfTyi/yKgFbFqHpX1wD5sR8fAeNtlCo=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-644-tR_kpM8kMjiVHNxujSfhFA-1; Wed, 12 Mar 2025 10:11:00 -0400
+X-MC-Unique: tR_kpM8kMjiVHNxujSfhFA-1
+X-Mimecast-MFC-AGG-ID: tR_kpM8kMjiVHNxujSfhFA_1741788660
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6ead629f6c6so7468946d6.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:11:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741788660; x=1742393460;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZfDJkr80rE0A5Ty+yK7hcwpEySqLg6UrBMpDUcvhRzg=;
+ b=SWw1Ovy1/869WPteNlIez7+v8vpdyyaE/vC+aJ9tpG4XXVNoCeOsllaJW38l09yiis
+ U/ArnpmWzjvLfPNT0aZv4lB2t0hWCD1wRGeldZQv4ue4xtrNJMSPwqszA2QfTA03RIZz
+ rVDrgU9CfNka0wg9oSTCznY5nI+nz0aEV2OAaAt2IH/Pjrk61hOItsfFjy6+i5DJPwdx
+ 3tkXxFruevT/D0yoJxwBdZJy+Gbpiamh2fLp4DIb8k3PZLjUsB7TpILRtejgaLw7NBzw
+ zqnGSAXWtNNh/poGO7oyb5qV31uuzcEjTFffkC4oBJ7jnwNpYJb/PbAXN4DlDYX1oHvH
+ gPTQ==
+X-Gm-Message-State: AOJu0YzFpe/nB1rkIyjKZajUtbTf9xRVcqP+c7SdZzaG3VmIjZhLXsgU
+ x6eTmetaqsljUJg4Oi/PAjQhgr590VH0JK0we6+0IP1M+VN3Pg5ECmgnp+5bXyJIubADkWDoM+B
+ 5hkaU8CmYE/Bh4aZc8pBFPbuNJ6WgaPmvzRT0C7b9xG1iJzaerBoGjb4fAs5yE5n+vgqrchK9r0
+ d/mBqvLeZzTKRUinRpcUG0Y2CXETVpMMP2TQeZhQ==
+X-Gm-Gg: ASbGnct2lUBUscGLvIY4BwXl1LnIAX8a+xzCSTobreLrChMBuVoFm08WTPWYCqDl07B
+ Z7lOCH/J6+o3gZcMylET2/FgNlZ0Pu9SC9ucTBvGA2cf3My1Y4czM6m1uvkbjGzIPJ2Agghh1lN
+ M=
+X-Received: by 2002:a05:6214:1c4c:b0:6d8:a7e1:e270 with SMTP id
+ 6a1803df08f44-6e90068cbb0mr266867776d6.40.1741788659770; 
+ Wed, 12 Mar 2025 07:10:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/80qTD0DEr47NoDKYyPXvaZ4ykxN8WoH+wXDbYmDUKR31wmYceqlY0/5ESyI2Fc2c1RNZFK6vtD/MIF1CX4Y=
+X-Received: by 2002:a05:6214:1c4c:b0:6d8:a7e1:e270 with SMTP id
+ 6a1803df08f44-6e90068cbb0mr266867326d6.40.1741788659454; Wed, 12 Mar 2025
+ 07:10:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+References: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
+ <Z9GUldol1IQT1uiY@redhat.com>
+In-Reply-To: <Z9GUldol1IQT1uiY@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Wed, 12 Mar 2025 16:10:47 +0200
+X-Gm-Features: AQ5f1JomS32LUe3hp2CTb7JarXzBOCDBQ5XqzOiJti7IBGPNQrBDgwKLmv9W17I
+Message-ID: <CAPMcbCpwY_VmMjNnSzvHxhQO9FxRPfa1TwDkV7nNQLxJTqxSOQ@mail.gmail.com>
+Subject: Re: Cross-compilation artifact is broken
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: QEMU <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000005223f3063025c611"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,156 +103,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, March 11, 2025 6:28:06 PM CET Greg Kurz wrote:
-> Add an ftruncate operation to the fs driver and use if when a fid has
-> a valid file descriptor. This is required to support more cases where
-> the client wants to do an action on an unlinked file which it still
-> has an open file decriptor for.
-> 
-> Only 9P2000.L was considered.
-> 
-> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> Signed-off-by: Greg Kurz <groug@kaod.org>
-> 
-> v2: - moved v9fs_co_ftruncate() near v9fs_co_truncate() in coth.h
->     - similar change in file-op-9p.h
-> ---
->  fsdev/file-op-9p.h |  2 ++
->  hw/9pfs/9p-local.c |  9 +++++++++
->  hw/9pfs/9p-synth.c |  8 ++++++++
->  hw/9pfs/9p.c       |  6 +++++-
->  hw/9pfs/cofs.c     | 18 ++++++++++++++++++
->  hw/9pfs/coth.h     |  2 ++
->  6 files changed, 44 insertions(+), 1 deletion(-)
-> 
-> diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-> index b815cea44e85..26ba1438c0ed 100644
-> --- a/fsdev/file-op-9p.h
-> +++ b/fsdev/file-op-9p.h
-> @@ -152,6 +152,8 @@ struct FileOperations {
->      int (*fstat)(FsContext *, int, V9fsFidOpenState *, struct stat *);
->      int (*rename)(FsContext *, const char *, const char *);
->      int (*truncate)(FsContext *, V9fsPath *, off_t);
-> +    int (*ftruncate)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-> +                     off_t size);
->      int (*fsync)(FsContext *, int, V9fsFidOpenState *, int);
->      int (*statfs)(FsContext *s, V9fsPath *path, struct statfs *stbuf);
->      ssize_t (*lgetxattr)(FsContext *, V9fsPath *,
-> diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-> index b16132299f2c..0b33da8d2a46 100644
-> --- a/hw/9pfs/9p-local.c
-> +++ b/hw/9pfs/9p-local.c
-> @@ -1042,6 +1042,14 @@ static int local_truncate(FsContext *ctx, V9fsPath *fs_path, off_t size)
->      return ret;
->  }
->  
-> +static int local_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-> +                           off_t size)
-> +{
-> +    int fd = local_fid_fd(fid_type, fs);
-> +
-> +    return ftruncate(fd, size);
-> +}
-> +
->  static int local_chown(FsContext *fs_ctx, V9fsPath *fs_path, FsCred *credp)
->  {
->      char *dirpath = g_path_get_dirname(fs_path->data);
-> @@ -1617,4 +1625,5 @@ FileOperations local_ops = {
->      .renameat  = local_renameat,
->      .unlinkat = local_unlinkat,
->      .has_valid_file_handle = local_has_valid_file_handle,
-> +    .ftruncate = local_ftruncate,
->  };
-> diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-> index be0492b400e1..3d28afc4d03d 100644
-> --- a/hw/9pfs/9p-synth.c
-> +++ b/hw/9pfs/9p-synth.c
-> @@ -356,6 +356,13 @@ static int synth_truncate(FsContext *ctx, V9fsPath *path, off_t offset)
->      return -1;
->  }
->  
-> +static int synth_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-> +                           off_t size)
-> +{
-> +    errno = ENOSYS;
-> +    return -1;
-> +}
-> +
->  static int synth_chmod(FsContext *fs_ctx, V9fsPath *path, FsCred *credp)
->  {
->      errno = EPERM;
-> @@ -656,4 +663,5 @@ FileOperations synth_ops = {
->      .renameat     = synth_renameat,
->      .unlinkat     = synth_unlinkat,
->      .has_valid_file_handle = synth_has_valid_file_handle,
-> +    .ftruncate    = synth_ftruncate,
->  };
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index 10363f1a1df8..4616bd763012 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -1733,7 +1733,11 @@ static void coroutine_fn v9fs_setattr(void *opaque)
->          }
->      }
->      if (v9iattr.valid & (P9_ATTR_SIZE)) {
-> -        err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
-> +        if (fid_has_valid_handle(pdu->s, fidp)) {
-> +            err = v9fs_co_ftruncate(pdu, fidp, v9iattr.size);
-> +        } else {
-> +            err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
-> +        }
+--0000000000005223f3063025c611
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Like with previous patch, s/fid_has_valid_handle/fid_has_valid_file_handle/,
-the rest is fine.
+I can provide the full log, but I see on GitLab CI the same results
+https://gitlab.com/qemu-project/qemu/-/jobs/9368756844
 
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+[3417/3430] Linking target tests/qtest/fuzz-e1000e-test.exe
+/usr/lib/gcc/x86_64-w64-mingw32/14.1.1/../../../../x86_64-w64-mingw32/bin/l=
+d:
+tests/qtest/fuzz-e1000e-test.exe:/4: section below image base
+/usr/lib/gcc/x86_64-w64-mingw32/14.1.1/../../../../x86_64-w64-mingw32/bin/l=
+d:
+tests/qtest/fuzz-e1000e-test.exe:/24: section below image base
 
->          if (err < 0) {
->              goto out;
->          }
-> diff --git a/hw/9pfs/cofs.c b/hw/9pfs/cofs.c
-> index 67e3ae5c5ccd..893466fb1a44 100644
-> --- a/hw/9pfs/cofs.c
-> +++ b/hw/9pfs/cofs.c
-> @@ -184,6 +184,24 @@ int coroutine_fn v9fs_co_truncate(V9fsPDU *pdu, V9fsPath *path, off_t size)
->      return err;
->  }
->  
-> +int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp, off_t size)
-> +{
-> +    int err;
-> +    V9fsState *s = pdu->s;
-> +
-> +    if (v9fs_request_cancelled(pdu)) {
-> +        return -EINTR;
-> +    }
-> +    v9fs_co_run_in_worker(
-> +        {
-> +            err = s->ops->ftruncate(&s->ctx, fidp->fid_type, &fidp->fs, size);
-> +            if (err < 0) {
-> +                err = -errno;
-> +            }
-> +        });
-> +    return err;
-> +}
-> +
->  int coroutine_fn v9fs_co_mknod(V9fsPDU *pdu, V9fsFidState *fidp,
->                                 V9fsString *name, uid_t uid, gid_t gid,
->                                 dev_t dev, mode_t mode, struct stat *stbuf)
-> diff --git a/hw/9pfs/coth.h b/hw/9pfs/coth.h
-> index 2c54249b3577..62e922dc12e3 100644
-> --- a/hw/9pfs/coth.h
-> +++ b/hw/9pfs/coth.h
-> @@ -73,6 +73,8 @@ int coroutine_fn v9fs_co_chmod(V9fsPDU *, V9fsPath *, mode_t);
->  int coroutine_fn v9fs_co_utimensat(V9fsPDU *, V9fsPath *, struct timespec [2]);
->  int coroutine_fn v9fs_co_chown(V9fsPDU *, V9fsPath *, uid_t, gid_t);
->  int coroutine_fn v9fs_co_truncate(V9fsPDU *, V9fsPath *, off_t);
-> +int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp,
-> +                                   off_t size);
->  int coroutine_fn v9fs_co_llistxattr(V9fsPDU *, V9fsPath *, void *, size_t);
->  int coroutine_fn v9fs_co_lgetxattr(V9fsPDU *, V9fsPath *,
->                                     V9fsString *, void *, size_t);
-> 
+Best Regards,
+Konstantin Kostiuk.
 
+
+On Wed, Mar 12, 2025 at 4:05=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com>
+wrote:
+
+> On Wed, Mar 12, 2025 at 03:52:45PM +0200, Konstantin Kostiuk wrote:
+> > Hi All,
+> >
+> > I cross-compiled qemu-ga from current master branch
+> > (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavior.
+> >
+> > Configure CLI:
+> > ./configure --disable-docs --disable-system --disable-user
+> > --cross-prefix=3Dx86_64-w64-mingw32- --enable-guest-agent
+> > --disable-guest-agent-msi --disable-qga-vss
+> > Build CLI:
+> > make -j8 qemu-ga
+> >
+> > Linker wrote the following information but exited with 0 code:
+> >
+> >
+> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin=
+/ld:
+> > qga/qemu-ga.exe:/4: section below image base
+> >
+> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin=
+/ld:
+> > qga/qemu-ga.exe:/24: section below image base
+> >
+> > As a result, this binary failed to start on Windows without any details=
+,
+> > just a message that the application is not compatible. I also tried to
+> run
+> > it with wine and got the error:
+> >
+> > wine: failed to start
+> > L"Z:\\home\\user\\Documents\\repos\\qemu\\build\\qga\\qemu-ga.exe"
+> > Application could not be started, or no application associated with the
+> > specified file.
+> > ShellExecuteEx failed: Bad EXE format for
+> > Z:\home\user\Documents\repos\qemu\build\qga\qemu-ga.exe.
+> >
+> > I bisected the tree and found the commit that caused the problem:
+> >
+> https://gitlab.com/qemu-project/qemu/-/commit/563b1a35ed1f1151505d4fe5f72=
+3827d1b3fd4bc
+> >
+> > Adding --disable-split-debug to the configure CLI fixes the issue.
+> >
+> > $ x86_64-w64-mingw32-gcc --version
+> > x86_64-w64-mingw32-gcc (GCC) 14.2.0
+> >
+> > My question is, is this expected behavior or is this a bug?
+>
+> Your configure args don't include "--enable-debug", so I would
+> not have expected -gsplit-dwarf to have been enabled, so I'm
+> surprised that commit casued a problem.
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-
+> https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-
+> https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-
+> https://www.instagram.com/dberrange :|
+>
+>
+
+--0000000000005223f3063025c611
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>I can provide the full log, but I see on GitLab CI th=
+e same results <a href=3D"https://gitlab.com/qemu-project/qemu/-/jobs/93687=
+56844">https://gitlab.com/qemu-project/qemu/-/jobs/9368756844</a></div><div=
+><br></div><div><code class=3D"gmail-job-log gmail-gl-block"><div class=3D"=
+gmail-js-log-line gmail-job-log-line"><span class=3D"gmail-job-log-line-con=
+tent"><span class=3D"gmail-">[3417/3430] Linking target tests/qtest/fuzz-e1=
+000e-test.exe</span></span></div><div class=3D"gmail-js-log-line gmail-job-=
+log-line"></div></code><code class=3D"gmail-job-log gmail-gl-block"><div cl=
+ass=3D"gmail-js-log-line gmail-job-log-line"><span class=3D"gmail-job-log-l=
+ine-content"><span class=3D"gmail-">/usr/lib/gcc/x86_64-w64-mingw32/14.1.1/=
+../../../../x86_64-w64-mingw32/bin/ld: tests/qtest/fuzz-e1000e-test.exe:/4:=
+ section below image base</span></span></div><div class=3D"gmail-js-log-lin=
+e gmail-job-log-line"></div></code><code class=3D"gmail-job-log gmail-gl-bl=
+ock"><span class=3D"gmail-job-log-line-content"><span class=3D"gmail-">/usr=
+/lib/gcc/x86_64-w64-mingw32/14.1.1/../../../../x86_64-w64-mingw32/bin/ld: t=
+ests/qtest/fuzz-e1000e-test.exe:/24: section below image base</span></span>=
+</code></div><div><br></div><div><div dir=3D"ltr" class=3D"gmail_signature"=
+ data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regards,</di=
+v><div>Konstantin Kostiuk.</div></div></div></div><br></div><br><div class=
+=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr=
+">On Wed, Mar 12, 2025 at 4:05=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a hr=
+ef=3D"mailto:berrange@redhat.com">berrange@redhat.com</a>&gt; wrote:<br></d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, Mar 12, 2025 a=
+t 03:52:45PM +0200, Konstantin Kostiuk wrote:<br>
+&gt; Hi All,<br>
+&gt; <br>
+&gt; I cross-compiled qemu-ga from current master branch<br>
+&gt; (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavior.=
+<br>
+&gt; <br>
+&gt; Configure CLI:<br>
+&gt; ./configure --disable-docs --disable-system --disable-user<br>
+&gt; --cross-prefix=3Dx86_64-w64-mingw32- --enable-guest-agent<br>
+&gt; --disable-guest-agent-msi --disable-qga-vss<br>
+&gt; Build CLI:<br>
+&gt; make -j8 qemu-ga<br>
+&gt; <br>
+&gt; Linker wrote the following information but exited with 0 code:<br>
+&gt; <br>
+&gt; /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/=
+bin/ld:<br>
+&gt; qga/qemu-ga.exe:/4: section below image base<br>
+&gt; /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/=
+bin/ld:<br>
+&gt; qga/qemu-ga.exe:/24: section below image base<br>
+&gt; <br>
+&gt; As a result, this binary failed to start on Windows without any detail=
+s,<br>
+&gt; just a message that the application is not compatible. I also tried to=
+ run<br>
+&gt; it with wine and got the error:<br>
+&gt; <br>
+&gt; wine: failed to start<br>
+&gt; L&quot;Z:\\home\\user\\Documents\\repos\\qemu\\build\\qga\\qemu-ga.exe=
+&quot;<br>
+&gt; Application could not be started, or no application associated with th=
+e<br>
+&gt; specified file.<br>
+&gt; ShellExecuteEx failed: Bad EXE format for<br>
+&gt; Z:\home\user\Documents\repos\qemu\build\qga\qemu-ga.exe.<br>
+&gt; <br>
+&gt; I bisected the tree and found the commit that caused the problem:<br>
+&gt; <a href=3D"https://gitlab.com/qemu-project/qemu/-/commit/563b1a35ed1f1=
+151505d4fe5f723827d1b3fd4bc" rel=3D"noreferrer" target=3D"_blank">https://g=
+itlab.com/qemu-project/qemu/-/commit/563b1a35ed1f1151505d4fe5f723827d1b3fd4=
+bc</a><br>
+&gt; <br>
+&gt; Adding --disable-split-debug to the configure CLI fixes the issue.<br>
+&gt; <br>
+&gt; $ x86_64-w64-mingw32-gcc --version<br>
+&gt; x86_64-w64-mingw32-gcc (GCC) 14.2.0<br>
+&gt; <br>
+&gt; My question is, is this expected behavior or is this a bug?<br>
+<br>
+Your configure args don&#39;t include &quot;--enable-debug&quot;, so I woul=
+d<br>
+not have expected -gsplit-dwarf to have been enabled, so I&#39;m<br>
+surprised that commit casued a problem.<br>
+<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
+s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
+ttps://www.flickr.com/photos/dberrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
+ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
+oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
+|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
+nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
+"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
+https://www.instagram.com/dberrange</a> :|<br>
+<br>
+</blockquote></div>
+
+--0000000000005223f3063025c611--
 
 
