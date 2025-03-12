@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC227C28B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 12:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 233E3C35FF1
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 12:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsLAC-0001eA-U2; Wed, 12 Mar 2025 08:26:20 -0400
+	id 1tsLA9-0001dZ-Mz; Wed, 12 Mar 2025 08:26:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLAA-0001dd-J3
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:26:19 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLA6-0001dD-If
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:26:14 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLA8-0001dF-1j
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:26:18 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-223f4c06e9fso13585655ad.1
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 05:26:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLA3-0001cQ-FN
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:26:14 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso125763375ad.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 05:26:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741782371; x=1742387171; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zIY17leVJs2z4tAUMiT8cAqFys40kyohmzEKVjGlpNM=;
- b=mVegO8oO4JVjpY1xwcltqBCLz2SC6roN48CYvMq8d7oPZVLAiz47T21tmGa0a2tF+I
- bUzB8ME3u/sztx5mR4Foi5imM37xqhrLhemlNvvdbt8hbbdmi9tzXuskPKlLcwzN0p21
- qj3dJZ+/XbLgZbx9WwRSCBG5Ql4Jq98rI0I2s5FhXO/UUoj25iaIOBYRGhDHhtAhmxQX
- cD/dhzx1zQXSMIFh+I3siG0VdBmFyUMzXPC1XQyA/Kn+oLFsl04czfPbwhzoT0q/lU1F
- 0nDcroq37eWCMP66pRVA5JpOhCDK4pcwtnQGVS+4q+ZQBSywbmbhgEUqnhQe7IBWhf39
- h1XA==
+ d=gmail.com; s=20230601; t=1741782368; x=1742387168; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QzrQ8uhnIfc8O+CnV/ngdUw4/a7C9L4XGZIEZVae+10=;
+ b=ZNqgm5PGBGcaHHwthu3bxrg1u3j3L7RYfeKMKaaYUFUMMg8eAfkaSoA76d+9PXTyFx
+ VtUOpcFd9xzzjWqxMn6HHkwN7XL8zxpbOAuA9YzbcqsfEGGoaeYdJZpIP0KKYapRiY0z
+ E3mdz9cQa3ne29bqNuDRfb6D+eLkFk6ldSr/dXe8OVS96oYgS3PVfelhKw5S+B5/XZqI
+ /fvPppJTPgGoElB6p2h9mSu+XmqV5jFD9HYCTskhNkEazk8yUd8mPyjbRSLCd4+B6K61
+ sox7yqWKcysSaMqJ3sSM+oNa39iYZCoQ4RArzgGfqCxg7wsoP6KZ7mdPJBVXfibP+9oK
+ 21AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741782371; x=1742387171;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zIY17leVJs2z4tAUMiT8cAqFys40kyohmzEKVjGlpNM=;
- b=gZXmjVtSiG/byKYLmhVdgh61rIWotwOmzM932IAdNsVosRcc7cF7JGqQJejmRfJ9ts
- OUg0eOw5OUGm7IFGMZ2+x/xPAVIAOp5pnBHwAqfzodzqe03xNe7UymQ5nhDvJq+DAVo9
- m/01F4vxR6OAzNMfRYR7VC6f9THD1j3XRzCfJTz7kJEnLjSMhYkAUQyvDujJs5D7bndv
- ILxnPlMRQmAU6PlMlTpjLRpQQBWY2AfqZQeYztWxhmwe8j/wUjeDx8HW33cjTtZEnTeC
- PDr9l0EUEwxAxInnCrAlpuY+75GOh/YekXPCzWKvoF9vwEW7R1Mo1UGUKWOwoANvJ6cc
- h+8w==
+ d=1e100.net; s=20230601; t=1741782368; x=1742387168;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QzrQ8uhnIfc8O+CnV/ngdUw4/a7C9L4XGZIEZVae+10=;
+ b=DDAHUnQPKM1Udv23iBGjJISRVqypmFQEJsr+UKQT979qoAvA4rAQJ2IBXUpWfc8qkp
+ nQE+9F57WLqiOxPNkHiNUiILa20h+ChZ8HHOBG/c/F7B97n2sp5OzEkB93RfULF5UPVz
+ Sb0SSz8SL79BDQL/2Y+KUOYIh/yseSES/aWLi9WtJx2BQOY+4I1q8fQQsHdhOPM5Kzzr
+ /2GNkhufhnvtYt1FNt8rknqqYKjbYY3B9i9demSd/GkNs8xwwinPa6vgvLeVNvRY9BN1
+ KfVzdN8Dgj6D2O6jftRmbUyZ54qOXZfvWVMr+WbzYJO7GXSu2xvwOfistDKaIo0Kyipf
+ h4Cw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULHEDTnpfDSIpK3VacWsMOnRfeSubzN2Feq81vzb+ZfraEJ6/FhazMvMXzqS0uRqAbMWRBarPa4mRx@nongnu.org
-X-Gm-Message-State: AOJu0Yy51LaIkXy7D4u2p/RyyIGpl8SG6Zv2fuDBKaNWtbUmyiLnvYPG
- hdMxyeqJq39mQRIi4Lbl8oHzJvWBymLU+xMiIYebnspdLUGiUB0S
-X-Gm-Gg: ASbGncvPciqUI0r9SJY2+Snd9Fm9KbIm4uzEwb8G6FJicMZ7i4L34L64bg/rV/u/31B
- 8v1lB2G3vNLE2yulyxPxopDnsopqmIHDtOTQtQPktSLo4E6qYHhSxgbqdouDH1PZWKNvM3U3oPI
- fjIt81f41ly8k+Xd3BwGa0ZnORyFtiu5HgyTRQVEn/xXJqoDfCTA/w+CZRJcWdxv/s9ZNzjTVMv
- yjrCcMLimQJTr6lPRjYih+K7mbWMgKh0JltjDQ85FP1kwd/J1v6EyzYjWO8kFKQn3+LfELvZGYR
- pu9NAkHhkKHLSLPFKuVxnWgBxIWJxatAF0afUzM1pQKQHzYKPvg=
-X-Google-Smtp-Source: AGHT+IF+TjI7wJD4rF9NQUlubzjMOWpKVKBr5lDqtHsv+SZJkKC+qq11frN8D58CXiH8N9bWZI5W+g==
-X-Received: by 2002:a17:902:f611:b0:21f:53a5:19e0 with SMTP id
- d9443c01a7336-22593d78ca5mr99211985ad.12.1741782371247; 
- Wed, 12 Mar 2025 05:26:11 -0700 (PDT)
+ AJvYcCVeZrWFmXFwkXlURIMy6ACkN+Bh63JC/Zq2vcfyNt58CnStG2Dwg7Lt93drtFCdiDOWaXrdaItAo/Vz@nongnu.org
+X-Gm-Message-State: AOJu0YwFTdwrH0n51nJpJxZc+NYcoNpX+U7ZKydTK0t0fFPIUVgsSwbZ
+ cfbfwxmOcbFraUYUU4efaWCC7G4EL0ulqd+cRDginODN32sSYWgOf0/hQQ==
+X-Gm-Gg: ASbGncvcnfr7Tk1LMfQkErL658LMEFmAVCpnprFbsLxrR3rKXo0H6VRdKZ5DzU5TakV
+ jiAVMwa9nXSx+7V4XPYSBB+Tnql5h47GOu5/VfwCioGjpiFU7zTQAT+rhN/gZIpWbz9fl7ZAkZU
+ vsOko82b4AT+8/h2q4Z8Mq2SmJieVjJ5230LgQoGN6t+HPvMbc1QURL0nLrbwNWWWsxaEtD8clQ
+ R8N1lerRdhGJwYgOEBswlCfG24eC8bggHsiLwYNzLEXE1KYZPyGnNCllEKLqNOCGpgtILd0PBMo
+ awKsTkD9pr/sa4rySFJi4DuMY2rAZZVuIQnZsBC37SpXy4EvQ7JHYpF+S0SA6w==
+X-Google-Smtp-Source: AGHT+IEIAmRN9tOGl0SdPFHFRRP81MXvgdR6p07DdlZDJcTlWE92qsxMcNqIf628nEqTBdy/BRWZtQ==
+X-Received: by 2002:a17:902:ecc2:b0:221:7e36:b13e with SMTP id
+ d9443c01a7336-22428899c47mr346180815ad.12.1741782367854; 
+ Wed, 12 Mar 2025 05:26:07 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736ab33e1d3sm10842408b3a.132.2025.03.12.05.26.08
+ d2e1a72fcca58-736ab33e1d3sm10842408b3a.132.2025.03.12.05.26.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Mar 2025 05:26:10 -0700 (PDT)
+ Wed, 12 Mar 2025 05:26:07 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 1/3] tests/functional/asset: Fail assert fetch when retries
- are exceeded
-Date: Wed, 12 Mar 2025 22:25:56 +1000
-Message-ID: <20250312122559.944533-2-npiggin@gmail.com>
+Subject: [PATCH v2 0/3] tests/functional/asset: improve partial-download
+ handling
+Date: Wed, 12 Mar 2025 22:25:55 +1000
+Message-ID: <20250312122559.944533-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250312122559.944533-1-npiggin@gmail.com>
-References: <20250312122559.944533-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,32 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the fetch code does not fail gracefully when retry limit is
-exceeded, it just falls through the loop with no file, which ends up
-hitting other errors.
+v1 discussion:
 
-Add a check for non-existing file, which indicates the retry limit was
-exceeded.
+https://lore.kernel.org/qemu-devel/20250312051739.938441-1-npiggin@gmail.com/T/#md49b293a64207b578600a8c428bccbce3d471e68
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/functional/qemu_test/asset.py | 3 +++
- 1 file changed, 3 insertions(+)
+Changes since v1:
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index f0730695f09..27dd839e705 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -138,6 +138,9 @@ def fetch(self):
-                 tmp_cache_file.unlink()
-                 raise
- 
-+        if not os.path.exists(tmp_cache_file):
-+            raise Exception("Retries exceeded downloading %s", self.url)
-+
-         try:
-             # Set these just for informational purposes
-             os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+- Change retry exceeded handling to be a check for no file
+- Tidied comments and debug leftover from patch 2
+- If downloaded size does not match, the advertised and received
+  sizes are now printed in the error log.
+
+Thanks Thomas and Daniel for review comments.
+
+Thanks,
+Nick
+
+Nicholas Piggin (3):
+  tests/functional/asset: Fail assert fetch when retries are exceeded
+  tests/functional/asset: Verify downloaded size
+  tests/functional/asset: Add AssetError exception class
+
+ roms/skiboot                        |  2 +-
+ tests/functional/qemu_test/asset.py | 58 ++++++++++++++++++++++-------
+ tests/lcitool/libvirt-ci            |  2 +-
+ 3 files changed, 46 insertions(+), 16 deletions(-)
+
 -- 
 2.47.1
 
