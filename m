@@ -4,84 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23207C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E2D3C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsMxj-0007lp-0B; Wed, 12 Mar 2025 10:21:35 -0400
+	id 1tsMxp-0007mm-WD; Wed, 12 Mar 2025 10:21:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMxf-0007kd-UZ
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:32 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsMxe-0002bh-0Z
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:31 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-390e3b3d3f4so3369772f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:21:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741789288; x=1742394088; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=z/MdsLbZNizpO5MqodWD1nVHf1+tJQovUVOqA9GDZMc=;
- b=U1Cpk9EnXT31kAIvvA2QfWYac2AV5gmcjnZA2QsYaQlsDKvMUJt4nO4rxa9mLgvbRE
- 4oVVRsq2URjpgc7LmmHv/issa4hWKO8aiodHEGto6PzpP8nozmiw5iOSIxXnClf9qjGH
- G9/feEFF72DQ3gLlf/t6LXCll3NiXnwIznvpYQML+WMYAs/un7ZRBz3o5zSw2C1Bs0jO
- ljGV2QWZS3YJo5pwYnFd22IOna45XqXinpw4qbnVA2wG3CuxB201SeWIsr0x/NG5h3fX
- oKvVmTt2sHemTRb2cpXHZMqy53xa0via9/1U38yvrpfbXR6EwlKnKMkI9Sl5oX0U/Jzz
- d5kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741789288; x=1742394088;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z/MdsLbZNizpO5MqodWD1nVHf1+tJQovUVOqA9GDZMc=;
- b=G3t0X1aJ34o1CBYpCQYjVkPsDikDATcjkWPqjIW/dBWdsqI5WhxNWhd8ZZ9GDAO+KW
- Fr1q2cE2L6hGcIntrdfwC+gqzSK1j8nrR+/1Sfclsm8vjkuWM4cJpxrsN/FI+eHg1FXW
- 2laSsWJ424MgGaMMOWra4QtvR8XNiJbP8Tm5Jxl30EqgJxdOzX+rvE9607I0Zp+WFtYo
- VZEtxc4jw8LOOm/njhbPa4WcGSeWm91viQiMYDMX3G1xZKvzYD7jtIhF3+kcJY4kZHdW
- WseTLX7vzsACII1PuaBPJiimJStpx2oPG6D9gHEm3t2yWRZ2MpEC7MY1NaiucYp7VNlC
- zJlQ==
-X-Gm-Message-State: AOJu0YwtuwgW2wwsSANi40egQb8WWdqYCDGAANM15BMEZYIdtM6qDf5F
- nssUrghkFqEanSXGGGmVkjJigvQPYYW+FO+gC+20t85mb3TKNNSGn9NKWGi7SDepa42KFrpkX+n
- 1Mh0=
-X-Gm-Gg: ASbGncsRgFJLcTBYRUwGn9tALa5JmMhWVw8KcddKsu23/U79d1BPv3/ZhRR1ufVVRJl
- bThG8kSqVl3A4UKz5TiQO+JUEMt8/zMiYNa8EJGVUgHYBs0ZuHwj97tO586bHZskyQ218hhYRZk
- xGuoKcdNwy4VREG4Cc+Vwiv8Ns74uBu9mNtZ1IKxp4gPPVUN0Ck/6IJJEwtK1Ei1lGVz+u9R1eM
- 0sPgz2yWR7ykKpBWCXmDwKX58z9GhDlWZfheeV14CBcBBtvOf111ZO2gdP/VL6XNa8vNjwRtHg3
- 7WvFzcqjziSg+FWiUDmtFLSXMthDEWJebRQuebv9fKwZa+naieTJ7n4qRsjer1D/JFFCGoIj4ZC
- LHCecHxgkM6LKq9oE
-X-Google-Smtp-Source: AGHT+IHDfMubsZIyM0SjyWYK5SQ9Ne9EhR/jtUCISWm5cts88AJQVtTO7wxUJmKStYvjnkj+ohCK3A==
-X-Received: by 2002:a05:6000:18a2:b0:391:4684:dbef with SMTP id
- ffacd0b85a97d-3914684de0bmr9932843f8f.17.1741789287976; 
- Wed, 12 Mar 2025 07:21:27 -0700 (PDT)
-Received: from localhost.localdomain (216.165.185.81.rev.sfr.net.
- [81.185.165.216]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e308dsm21639105f8f.67.2025.03.12.07.21.26
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Mar 2025 07:21:27 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 v2] target/i386: Replace MO_TE* -> MO_LE*
-Date: Wed, 12 Mar 2025 15:21:24 +0100
-Message-ID: <20250312142124.15138-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsMxl-0007m5-1k
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:37 -0400
+Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tsMxh-0002bH-Rz
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:21:36 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.140.99])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4ZCXqk0r29z10ds;
+ Wed, 12 Mar 2025 14:21:22 +0000 (UTC)
+Received: from kaod.org (37.59.142.109) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Wed, 12 Mar
+ 2025 15:21:21 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-109S0033cae644e-50fc-43c3-85cf-76321d372641,
+ 504EDC0C94310F6A3F54FBF2D573176B3056D9B9) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Wed, 12 Mar 2025 15:21:12 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
+ <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v2 3/6] 9pfs: Introduce ftruncate file op
+Message-ID: <20250312152112.5ff5df6b@bahia>
+In-Reply-To: <2348866.qVP5gfYQ7p@silver>
+References: <20250311172809.250913-1-groug@kaod.org>
+ <20250311172809.250913-4-groug@kaod.org>
+ <2348866.qVP5gfYQ7p@silver>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.109]
+X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 0c5784d8-1e4c-4706-b807-df18d58c4ff1
+X-Ovh-Tracer-Id: 10980338845603240355
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehvdelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdelpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeehpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrghrohhsrghssehsuhhsvgdruggvpdhrtghpthhtohepphgsohhniihinhhisehrvgguhhgrthdrtghomhdprhgtphhtthhopehlvhhivhhivghrsehrvgguhhgrthdrtghomhdpoffvtefjohhsthepmhhoheegkegmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=3uTuXH3lGOzFsYSDn6iSTkK7+bt7ZdkWD+ZV+s1m5oA=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1741789282; v=1;
+ b=n30Jz+O06PWdlgMWSMJzrM2Ze1DN7rIqEib4PzknDLK/XgBgXGgXuMvdM5phQ/MMhPTaCxSx
+ hrpdQ9Eaf7Xn0Do/8zXkAykeSdm8+VNbIVepBQbqFMr1vka00K9kxflmA9rZsqdKCa5Lr7uSVc0
+ B8myRFIWDs3u3sRKcNVVl1IQ5HubR5mnrZyP0Xq8xXGI+WUK3XILWZODE5K+u44MqNj0MuHb7q1
+ EE8DWP/aD49/0U9gBtc28+lTHgNJbZJ1HVpze4tsBlwDBRGikxRAQA3mg/ABxEOZE5ifHZ09Jos
+ VApLSqi7h7ieZ0wqZYDtX67eQXyuHHvdC6f3RXZh/onnw==
+Received-SPF: pass client-ip=188.165.32.156; envelope-from=groug@kaod.org;
+ helo=3.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,46 +85,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86 architecture is only implemented as little-endian.
-The MO_TE definition always expands to MO_LE.
+On Wed, 12 Mar 2025 15:07:20 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-Replace:
- - MO_TEUQ -> MO_LEUQ
- - MO_TE   -> MO_LE
+> On Tuesday, March 11, 2025 6:28:06 PM CET Greg Kurz wrote:
+> > Add an ftruncate operation to the fs driver and use if when a fid has
+> > a valid file descriptor. This is required to support more cases where
+> > the client wants to do an action on an unlinked file which it still
+> > has an open file decriptor for.
+> > 
+> > Only 9P2000.L was considered.
+> > 
+> > Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > Signed-off-by: Greg Kurz <groug@kaod.org>
+> > 
+> > v2: - moved v9fs_co_ftruncate() near v9fs_co_truncate() in coth.h
+> >     - similar change in file-op-9p.h
+> > ---
+> >  fsdev/file-op-9p.h |  2 ++
+> >  hw/9pfs/9p-local.c |  9 +++++++++
+> >  hw/9pfs/9p-synth.c |  8 ++++++++
+> >  hw/9pfs/9p.c       |  6 +++++-
+> >  hw/9pfs/cofs.c     | 18 ++++++++++++++++++
+> >  hw/9pfs/coth.h     |  2 ++
+> >  6 files changed, 44 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+> > index b815cea44e85..26ba1438c0ed 100644
+> > --- a/fsdev/file-op-9p.h
+> > +++ b/fsdev/file-op-9p.h
+> > @@ -152,6 +152,8 @@ struct FileOperations {
+> >      int (*fstat)(FsContext *, int, V9fsFidOpenState *, struct stat *);
+> >      int (*rename)(FsContext *, const char *, const char *);
+> >      int (*truncate)(FsContext *, V9fsPath *, off_t);
+> > +    int (*ftruncate)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
+> > +                     off_t size);
+> >      int (*fsync)(FsContext *, int, V9fsFidOpenState *, int);
+> >      int (*statfs)(FsContext *s, V9fsPath *path, struct statfs *stbuf);
+> >      ssize_t (*lgetxattr)(FsContext *, V9fsPath *,
+> > diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+> > index b16132299f2c..0b33da8d2a46 100644
+> > --- a/hw/9pfs/9p-local.c
+> > +++ b/hw/9pfs/9p-local.c
+> > @@ -1042,6 +1042,14 @@ static int local_truncate(FsContext *ctx, V9fsPath *fs_path, off_t size)
+> >      return ret;
+> >  }
+> >  
+> > +static int local_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
+> > +                           off_t size)
+> > +{
+> > +    int fd = local_fid_fd(fid_type, fs);
+> > +
+> > +    return ftruncate(fd, size);
+> > +}
+> > +
+> >  static int local_chown(FsContext *fs_ctx, V9fsPath *fs_path, FsCred *credp)
+> >  {
+> >      char *dirpath = g_path_get_dirname(fs_path->data);
+> > @@ -1617,4 +1625,5 @@ FileOperations local_ops = {
+> >      .renameat  = local_renameat,
+> >      .unlinkat = local_unlinkat,
+> >      .has_valid_file_handle = local_has_valid_file_handle,
+> > +    .ftruncate = local_ftruncate,
+> >  };
+> > diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+> > index be0492b400e1..3d28afc4d03d 100644
+> > --- a/hw/9pfs/9p-synth.c
+> > +++ b/hw/9pfs/9p-synth.c
+> > @@ -356,6 +356,13 @@ static int synth_truncate(FsContext *ctx, V9fsPath *path, off_t offset)
+> >      return -1;
+> >  }
+> >  
+> > +static int synth_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
+> > +                           off_t size)
+> > +{
+> > +    errno = ENOSYS;
+> > +    return -1;
+> > +}
+> > +
+> >  static int synth_chmod(FsContext *fs_ctx, V9fsPath *path, FsCred *credp)
+> >  {
+> >      errno = EPERM;
+> > @@ -656,4 +663,5 @@ FileOperations synth_ops = {
+> >      .renameat     = synth_renameat,
+> >      .unlinkat     = synth_unlinkat,
+> >      .has_valid_file_handle = synth_has_valid_file_handle,
+> > +    .ftruncate    = synth_ftruncate,
+> >  };
+> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> > index 10363f1a1df8..4616bd763012 100644
+> > --- a/hw/9pfs/9p.c
+> > +++ b/hw/9pfs/9p.c
+> > @@ -1733,7 +1733,11 @@ static void coroutine_fn v9fs_setattr(void *opaque)
+> >          }
+> >      }
+> >      if (v9iattr.valid & (P9_ATTR_SIZE)) {
+> > -        err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
+> > +        if (fid_has_valid_handle(pdu->s, fidp)) {
+> > +            err = v9fs_co_ftruncate(pdu, fidp, v9iattr.size);
+> > +        } else {
+> > +            err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
+> > +        }
+> 
+> Like with previous patch, s/fid_has_valid_handle/fid_has_valid_file_handle/,
+> the rest is fine.
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/i386/tcg/emit.c.inc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Oops... my bad. I'll fix that !
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 0fa1664a24f..5eeee569d1f 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1796,7 +1796,7 @@ static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
- static void gen_CMPXCHG16B(DisasContext *s, X86DecodedInsn *decode)
- {
- #ifdef TARGET_X86_64
--    MemOp mop = MO_TE | MO_128 | MO_ALIGN;
-+    MemOp mop = MO_LE | MO_128 | MO_ALIGN;
-     TCGv_i64 t0, t1;
-     TCGv_i128 cmp, val;
- 
-@@ -1853,10 +1853,10 @@ static void gen_CMPXCHG8B(DisasContext *s, X86DecodedInsn *decode)
- 
-     /* Only require atomic with LOCK; non-parallel handled in generator. */
-     if (s->prefix & PREFIX_LOCK) {
--        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
-+        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_LEUQ);
-     } else {
-         tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
--                                      s->mem_index, MO_TEUQ);
-+                                      s->mem_index, MO_LEUQ);
-     }
- 
-     /* Set tmp0 to match the required value of Z. */
+> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> 
+> >          if (err < 0) {
+> >              goto out;
+> >          }
+> > diff --git a/hw/9pfs/cofs.c b/hw/9pfs/cofs.c
+> > index 67e3ae5c5ccd..893466fb1a44 100644
+> > --- a/hw/9pfs/cofs.c
+> > +++ b/hw/9pfs/cofs.c
+> > @@ -184,6 +184,24 @@ int coroutine_fn v9fs_co_truncate(V9fsPDU *pdu, V9fsPath *path, off_t size)
+> >      return err;
+> >  }
+> >  
+> > +int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp, off_t size)
+> > +{
+> > +    int err;
+> > +    V9fsState *s = pdu->s;
+> > +
+> > +    if (v9fs_request_cancelled(pdu)) {
+> > +        return -EINTR;
+> > +    }
+> > +    v9fs_co_run_in_worker(
+> > +        {
+> > +            err = s->ops->ftruncate(&s->ctx, fidp->fid_type, &fidp->fs, size);
+> > +            if (err < 0) {
+> > +                err = -errno;
+> > +            }
+> > +        });
+> > +    return err;
+> > +}
+> > +
+> >  int coroutine_fn v9fs_co_mknod(V9fsPDU *pdu, V9fsFidState *fidp,
+> >                                 V9fsString *name, uid_t uid, gid_t gid,
+> >                                 dev_t dev, mode_t mode, struct stat *stbuf)
+> > diff --git a/hw/9pfs/coth.h b/hw/9pfs/coth.h
+> > index 2c54249b3577..62e922dc12e3 100644
+> > --- a/hw/9pfs/coth.h
+> > +++ b/hw/9pfs/coth.h
+> > @@ -73,6 +73,8 @@ int coroutine_fn v9fs_co_chmod(V9fsPDU *, V9fsPath *, mode_t);
+> >  int coroutine_fn v9fs_co_utimensat(V9fsPDU *, V9fsPath *, struct timespec [2]);
+> >  int coroutine_fn v9fs_co_chown(V9fsPDU *, V9fsPath *, uid_t, gid_t);
+> >  int coroutine_fn v9fs_co_truncate(V9fsPDU *, V9fsPath *, off_t);
+> > +int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp,
+> > +                                   off_t size);
+> >  int coroutine_fn v9fs_co_llistxattr(V9fsPDU *, V9fsPath *, void *, size_t);
+> >  int coroutine_fn v9fs_co_lgetxattr(V9fsPDU *, V9fsPath *,
+> >                                     V9fsString *, void *, size_t);
+> > 
+> 
+> 
+
+
+
 -- 
-2.47.1
-
+Greg
 
