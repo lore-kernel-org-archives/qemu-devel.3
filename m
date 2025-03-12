@@ -4,67 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DAD6C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 13:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BEB5C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 13:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsLoB-0006Pr-W9; Wed, 12 Mar 2025 09:07:40 -0400
+	id 1tsLuk-0002mY-L6; Wed, 12 Mar 2025 09:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
- id 1tsFUU-0007wR-Tb; Wed, 12 Mar 2025 02:22:55 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.47])
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1tsLuh-0002lb-A3; Wed, 12 Mar 2025 09:14:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
- id 1tsFU9-0005rP-4E; Wed, 12 Mar 2025 02:22:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1741760534; bh=fer9u3Eyo9RhguUPg0aqgJVKB0n6DkoBDnHgRFwuAkc=;
- h=From:To:Cc:Subject:Date;
- b=rb8Q6ntqQcD4BlvsFS7sP1fqdRRCH5pADQNurmwncm6U6XmCNi43ABs6g+ddboAZE
- MwTf+uuDgFdPW++Ckg4Pjz2q5CTroFiIJuY587Hbu0d2vcXDKE2rdBkA8zX+RDCJgi
- /0wfFUkYlZp9p3GOlJyAMSMUqeRS6XdmaIwHyyOM=
-Received: from localhost.localdomain ([120.46.176.49])
- by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
- id 58C0D488; Wed, 12 Mar 2025 14:22:12 +0800
-X-QQ-mid: xmsmtpt1741760532thju2zv5y
-Message-ID: <tencent_804E383A2E66E5311E555C748FB8E8109A07@qq.com>
-X-QQ-XMAILINFO: M8F5Ju5R+mONNrv6JjyLwYk/x6V1b7rRZM8G0FP+XjIiws9ozm07SRv0Mf4lQR
- FjvPMgl2kQF4hO5r8Xerqf/1nxb1jlyuB0xNoTHGo812L6Kg51PwzfghHxNhVtFbUru0K97bqMV1
- Y7JoOQIDWDrMpuXQRmAljpPaaUykMcBFP8/MCs+L4+NY9GGqWYrBwo0T4xUiSs9C+8F1si2Iq2Xp
- qaaSVdy6KG45+yhC8ipnCNhm5AYL8jsLoyQc4zXYMaLAhiVKITiYP34mYh/+dmcTNiHnbILPMedC
- o8z7TP2QixxOwThMgzfB0rVmat5Xv6fDeMpNabh+V6NG+0PYa7mH59Y6BjRZAwGD69faWXuJnhYB
- E9t60UsxaUR4yLZNxrew6FFOCmGL2RFEx9eCGd6w7HkqbR0Tec/+fecEfxVgwzuMmyh38qleCdhn
- SyM4YoOpasJzpd/5ur5GS6Eh0eL2d16JgmzwpEBjrWWcIFVyFVU8MmJUvj18lWTtLs35qDq+heod
- 0UUaq7QoOYIycVp5aYDZ0J7USX0TcuxP8Bzvk3HSoQ3cf+mbihmA8vADfIEXQWBQa2xCOi3tFjWb
- 2w8Q+qmaZVcfCO+p0A7RcVE5E212r9dOCBEvHyFnSF3eVRxLXImttXXaADEcSLMw2+mcR00tncBp
- 0SH/UwDlAQwQqhkwrFUIMeMbuoDbLRdBDxeHffJLluGgQgoUuQVpawrdljuQsd9OpIPd+PBJkGKn
- Xx32otXK63XfbxKNUlxSmEwwd5jX6b5k7iDweFvsxAhrTFFQOGQKBQr580z8X8rxow8V4ok8iEwd
- lY06DYmbp8pj5ibigjHcioGS0r9IyIBY5/W+nsnN3O8QYR7hYOqr0fGMIprHs8sCL4c9hM6yihS/
- KxAHdWDY9l78i105H1oadPSFADpTWDVQ==
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
-From: saz97 <sa.z@qq.com>
-To: qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, qemu-block@nongnu.org, hreitz@redhat.com,
- stefanha@redhat.com, saz97 <sa.z@qq.com>
-Subject: [PATCH 1/2] Demo for integration coroutin into fuse export
-Date: Wed, 12 Mar 2025 14:22:05 +0800
-X-OQ-MSGID: <20250312062205.335002-1-sa.z@qq.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1tsLuf-0008K6-DD; Wed, 12 Mar 2025 09:14:23 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CCdwTV025553;
+ Wed, 12 Mar 2025 13:14:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=FNSMbM
+ dDjp2UAoPGo9NtXZEvFgS8zJAP8UdXy3zGXhY=; b=fkpVKCp9flHEwDYV+fzXrH
+ ox7Z384CmJnYXcqnDfYD0dyFsQ7aUsgOoqs5FLUBrQZ0WRQ2CSrnG4E5CRM7i9GG
+ D4z/awrc7hxuiAV661p/jVNTmfsi0FeHq56EEruki7QU7H6FLTOcpRoeNpn5VBBV
+ Vz7ilFdOG5JwTnVOZUnmNvrd1hampvpwrkPGZUfj1xYDutKtRBw4mbr2nOT2V9UN
+ iILNTGnqdjtV9KmFXbbNo2JDeQ2ya46D5x81Jlfp16m5/7Qqh2MMNhIuANW/LiP3
+ tfhi4V/ppEfY1nI25N035dWEBxLHsfjSekHMfUBJY92LX8MMhlyzfYHbWeJOBfDg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45baa2r898-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Mar 2025 13:14:18 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52CA93R4012255;
+ Wed, 12 Mar 2025 13:14:16 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45atsrc7rp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Mar 2025 13:14:16 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52CDEE3W18481740
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 12 Mar 2025 13:14:14 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DD22A58058;
+ Wed, 12 Mar 2025 13:14:14 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 135F658057;
+ Wed, 12 Mar 2025 13:14:14 +0000 (GMT)
+Received: from [9.61.127.211] (unknown [9.61.127.211])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 12 Mar 2025 13:14:13 +0000 (GMT)
+Message-ID: <fddb62b2-1563-42d2-8a05-d62c81dc51ea@linux.ibm.com>
+Date: Wed, 12 Mar 2025 09:14:13 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=43.163.128.47; envelope-from=sa.z@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 4/5] hw/vfio/ap: Storing event information for an
+ AP configuration change event
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
+References: <20250311151616.98244-1-rreyes@linux.ibm.com>
+ <20250311151616.98244-5-rreyes@linux.ibm.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20250311151616.98244-5-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 1nbUfl0OqHZV-ULpl-PiRoDKCveb5BFP
+X-Proofpoint-GUID: 1nbUfl0OqHZV-ULpl-PiRoDKCveb5BFP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-12_05,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ adultscore=0 malwarescore=0 mlxlogscore=999 phishscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503120090
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 12 Mar 2025 09:07:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,339 +113,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Changzhi Xie <sa.z@qq.com>
----
- block/export/fuse.c | 167 ++++++++++++++++++++++++++++++--------------
- 1 file changed, 114 insertions(+), 53 deletions(-)
-
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 465cc9891d..f47117a00d 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -64,6 +64,16 @@ typedef struct FuseExport {
-     gid_t st_gid;
- } FuseExport;
- 
-+typedef struct FuseIORequest {
-+    fuse_req_t req;
-+    fuse_ino_t inode;
-+    size_t size;
-+    off_t offset;
-+    struct fuse_file_info *fi;
-+    FuseExport *exp;
-+    char *write_buf;
-+} FuseIORequest;
-+
- static GHashTable *exports;
- static const struct fuse_lowlevel_ops fuse_ops;
- 
-@@ -570,102 +580,153 @@ static void fuse_open(fuse_req_t req, fuse_ino_t inode,
-     fuse_reply_open(req, fi);
- }
- 
--/**
-- * Handle client reads from the exported image.
-- */
--static void fuse_read(fuse_req_t req, fuse_ino_t inode,
--                      size_t size, off_t offset, struct fuse_file_info *fi)
-+static void coroutine_fn fuse_read_coroutine(void *opaque)
- {
--    FuseExport *exp = fuse_req_userdata(req);
-+    FuseIORequest *io_req = opaque;
-+    FuseExport *exp = io_req->exp;
-     int64_t length;
--    void *buf;
-+    void *buffer;
-     int ret;
- 
--    /* Limited by max_read, should not happen */
--    if (size > FUSE_MAX_BOUNCE_BYTES) {
--        fuse_reply_err(req, EINVAL);
--        return;
-+    if (io_req->size > FUSE_MAX_BOUNCE_BYTES) {
-+        fuse_reply_err(io_req->req, EINVAL);
-+        goto cleanup;
-     }
- 
--    /**
--     * Clients will expect short reads at EOF, so we have to limit
--     * offset+size to the image length.
--     */
-     length = blk_getlength(exp->common.blk);
-     if (length < 0) {
--        fuse_reply_err(req, -length);
--        return;
-+        fuse_reply_err(io_req->req, -length);
-+        goto cleanup;
-     }
- 
--    if (offset + size > length) {
--        size = length - offset;
-+    if (io_req->offset + io_req->size > length) {
-+        io_req->size = length - io_req->offset;
-     }
- 
--    buf = qemu_try_blockalign(blk_bs(exp->common.blk), size);
--    if (!buf) {
--        fuse_reply_err(req, ENOMEM);
--        return;
-+    if (io_req->size == 0) {
-+        fuse_reply_buf(io_req->req, NULL, 0);
-+        goto cleanup;
-+    }
-+
-+    buffer = qemu_try_blockalign(blk_bs(exp->common.blk), io_req->size);
-+    if (!buffer) {
-+        fuse_reply_err(io_req->req, ENOMEM);
-+        goto cleanup;
-     }
- 
--    ret = blk_pread(exp->common.blk, offset, size, buf, 0);
-+    ret = blk_co_pread(exp->common.blk, io_req->offset,
-+                       io_req->size, buffer, 0);
-     if (ret >= 0) {
--        fuse_reply_buf(req, buf, size);
-+        fuse_reply_buf(io_req->req, buffer, io_req->size);
-     } else {
--        fuse_reply_err(req, -ret);
-+        fuse_reply_err(io_req->req, -ret);
-     }
- 
--    qemu_vfree(buf);
-+    qemu_vfree(buffer);
-+
-+cleanup:
-+    g_free(io_req);
- }
- 
--/**
-- * Handle client writes to the exported image.
-- */
--static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
--                       size_t size, off_t offset, struct fuse_file_info *fi)
-+static void coroutine_fn fuse_write_coroutine(void *opaque)
- {
--    FuseExport *exp = fuse_req_userdata(req);
-+    FuseIORequest *io_req = opaque;
-+    FuseExport *exp = io_req->exp;
-     int64_t length;
-     int ret;
- 
--    /* Limited by max_write, should not happen */
--    if (size > BDRV_REQUEST_MAX_BYTES) {
--        fuse_reply_err(req, EINVAL);
--        return;
-+    if (io_req->size > BDRV_REQUEST_MAX_BYTES) {
-+        fuse_reply_err(io_req->req, EINVAL);
-+        goto cleanup;
-     }
- 
-     if (!exp->writable) {
--        fuse_reply_err(req, EACCES);
--        return;
-+        fuse_reply_err(io_req->req, EACCES);
-+        goto cleanup;
-     }
- 
--    /**
--     * Clients will expect short writes at EOF, so we have to limit
--     * offset+size to the image length.
--     */
-     length = blk_getlength(exp->common.blk);
-     if (length < 0) {
--        fuse_reply_err(req, -length);
--        return;
-+        fuse_reply_err(io_req->req, -length);
-+        goto cleanup;
-     }
- 
--    if (offset + size > length) {
-+    if (io_req->offset + io_req->size > length) {
-         if (exp->growable) {
--            ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
-+            ret = fuse_do_truncate(exp, io_req->offset + io_req->size,
-+                                   true, PREALLOC_MODE_OFF);
-             if (ret < 0) {
--                fuse_reply_err(req, -ret);
--                return;
-+                fuse_reply_err(io_req->req, -ret);
-+                goto cleanup;
-             }
-         } else {
--            size = length - offset;
-+            io_req->size = MAX(0, length - io_req->offset);
-+            if (io_req->size == 0) {
-+                fuse_reply_write(io_req->req, 0);
-+                goto cleanup;
-+            }
-         }
-     }
- 
--    ret = blk_pwrite(exp->common.blk, offset, size, buf, 0);
-+    ret = blk_co_pwrite(exp->common.blk, io_req->offset, io_req->size,
-+                        io_req->write_buf, 0);
-     if (ret >= 0) {
--        fuse_reply_write(req, size);
-+        fuse_reply_write(io_req->req, io_req->size);
-     } else {
--        fuse_reply_err(req, -ret);
-+        fuse_reply_err(io_req->req, -ret);
-     }
-+
-+cleanup:
-+    g_free(io_req->write_buf);
-+    g_free(io_req);
-+}
-+
-+/**
-+ * Handle client reads from the exported image.
-+ */
-+static void fuse_read(fuse_req_t req, fuse_ino_t inode,
-+                      size_t size, off_t offset, struct fuse_file_info *fi)
-+{
-+    FuseExport *exp = fuse_req_userdata(req);
-+    FuseIORequest *io_req = g_new(FuseIORequest, 1);
-+    io_req->req = req;
-+    io_req->inode = inode;
-+    io_req->size = size;
-+    io_req->offset = offset;
-+    io_req->fi = fi;
-+    io_req->exp = exp;
-+
-+    Coroutine *co = qemu_coroutine_create(fuse_read_coroutine, io_req);
-+    qemu_coroutine_enter(co);
-+}
-+
-+
-+/**
-+ * Handle client writes to the exported image.
-+ */
-+static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-+                       size_t size, off_t offset, struct fuse_file_info *fi)
-+{
-+    FuseExport *exp = fuse_req_userdata(req);
-+    FuseIORequest *io_req = g_new(FuseIORequest, 1);
-+
-+    io_req->write_buf = g_try_malloc(size);
-+    if (!io_req->write_buf) {
-+        fuse_reply_err(req, ENOMEM);
-+        g_free(io_req);
-+        return;
-+    }
-+    memcpy(io_req->write_buf, buf, size);
-+
-+    io_req->req = req;
-+    io_req->inode = inode;
-+    io_req->size = size;
-+    io_req->offset = offset;
-+    io_req->fi = fi;
-+    io_req->exp = exp;
-+
-+    Coroutine *co = qemu_coroutine_create(fuse_write_coroutine, io_req);
-+    qemu_coroutine_enter(co);
- }
- 
- /**
--- 
-2.34.1
 
 
-From 3d2d317a49eb4cbf401294c6e19c72533eeeefad Mon Sep 17 00:00:00 2001
-From: saz97 <sa.z@qq.com>
-Date: Wed, 12 Mar 2025 13:47:01 +0800
-Subject: [PATCH 2/2] allocate independent fuse_buffor each coroutine and store
- fuse_file_info copy instead of pointerin FuseIORequest
 
-Signed-off-by: Changzhi Xie <sa.z@qq.com>
----
- block/export/fuse.c | 45 ++++++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+On 3/11/25 11:16 AM, Rorie Reyes wrote:
+> These functions can be invoked by the function that handles interception
+> of the CHSC SEI instruction for requests indicating the accessibility of
+> one or more adjunct processors has changed.
+>
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index f47117a00d..69ffe4f0ca 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -69,7 +69,7 @@ typedef struct FuseIORequest {
-     fuse_ino_t inode;
-     size_t size;
-     off_t offset;
--    struct fuse_file_info *fi;
-+    struct fuse_file_info fi;
-     FuseExport *exp;
-     char *write_buf;
- } FuseIORequest;
-@@ -298,6 +298,10 @@ fail:
- static void read_from_fuse_export(void *opaque)
- {
-     FuseExport *exp = opaque;
-+    struct fuse_buf buf = {
-+        .mem = g_malloc(FUSE_MAX_BOUNCE_BYTES),
-+        .size = FUSE_MAX_BOUNCE_BYTES,
-+    };
-     int ret;
- 
-     blk_exp_ref(&exp->common);
-@@ -314,6 +318,7 @@ static void read_from_fuse_export(void *opaque)
-     fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
- 
- out:
-+    g_free(buf.mem);
-     if (qatomic_fetch_dec(&exp->in_flight) == 1) {
-         aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
-     }
-@@ -689,12 +694,15 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
- {
-     FuseExport *exp = fuse_req_userdata(req);
-     FuseIORequest *io_req = g_new(FuseIORequest, 1);
--    io_req->req = req;
--    io_req->inode = inode;
--    io_req->size = size;
--    io_req->offset = offset;
--    io_req->fi = fi;
--    io_req->exp = exp;
-+
-+    *io_req = (FuseIORequest) {
-+        .req = req,
-+        .inode = inode,
-+        .size = size,
-+        .offset = offset,
-+        .exp = exp,
-+        .fi = *fi,
-+    };
- 
-     Coroutine *co = qemu_coroutine_create(fuse_read_coroutine, io_req);
-     qemu_coroutine_enter(co);
-@@ -710,20 +718,15 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-     FuseExport *exp = fuse_req_userdata(req);
-     FuseIORequest *io_req = g_new(FuseIORequest, 1);
- 
--    io_req->write_buf = g_try_malloc(size);
--    if (!io_req->write_buf) {
--        fuse_reply_err(req, ENOMEM);
--        g_free(io_req);
--        return;
--    }
--    memcpy(io_req->write_buf, buf, size);
--
--    io_req->req = req;
--    io_req->inode = inode;
--    io_req->size = size;
--    io_req->offset = offset;
--    io_req->fi = fi;
--    io_req->exp = exp;
-+    *io_req = (FuseIORequest) {
-+        .req = req,
-+        .inode = inode,
-+        .size = size,
-+        .offset = offset,
-+        .exp = exp,
-+        .fi = *fi,
-+        .write_buf = g_memdup2_qemu(buf, size),
-+    };
- 
-     Coroutine *co = qemu_coroutine_create(fuse_write_coroutine, io_req);
-     qemu_coroutine_enter(co);
--- 
-2.34.1
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+
+> ---
+>   hw/vfio/ap.c                 | 39 ++++++++++++++++++++++++++++++++++++
+>   include/hw/s390x/ap-bridge.h | 22 ++++++++++++++++++++
+>   2 files changed, 61 insertions(+)
+>
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 3fa986ca45..4da246c538 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -96,6 +96,45 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>   
+>   }
+>   
+> +int ap_chsc_sei_nt0_get_event(void *res)
+> +{
+> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
+> +    APConfigChgEvent *cfg_chg_event;
+> +
+> +    if (!ap_chsc_sei_nt0_have_event()) {
+> +        return 1;
+> +    }
+> +
+> +    cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
+> +    memset(nt0_res, 0, sizeof(*nt0_res));
+> +
+> +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
+> +    g_free(cfg_chg_event);
+> +
+> +    /*
+> +     * If there are any AP configuration change events in the queue,
+> +     * indicate to the caller that there is pending event info in
+> +     * the response block
+> +     */
+> +    if (ap_chsc_sei_nt0_have_event()) {
+> +        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
+> +    }
+> +
+> +    nt0_res->length = sizeof(ChscSeiNt0Res);
+> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
+> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
+> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
+> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
+> +
+> +    return 0;
+> +
+> +}
+> +
+> +int ap_chsc_sei_nt0_have_event(void)
+> +{
+> +    return !QTAILQ_EMPTY(&cfg_chg_events);
+> +}
+> +
+>   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>                                             unsigned int irq, Error **errp)
+>   {
+> diff --git a/include/hw/s390x/ap-bridge.h b/include/hw/s390x/ap-bridge.h
+> index 470e439a98..f4d838bf99 100644
+> --- a/include/hw/s390x/ap-bridge.h
+> +++ b/include/hw/s390x/ap-bridge.h
+> @@ -16,4 +16,26 @@
+>   
+>   void s390_init_ap(void);
+>   
+> +typedef struct ChscSeiNt0Res {
+> +    uint16_t length;
+> +    uint16_t code;
+> +    uint8_t reserved1;
+> +    uint16_t reserved2;
+> +    uint8_t nt;
+> +#define PENDING_EVENT_INFO_BITMASK 0x80;
+> +    uint8_t flags;
+> +    uint8_t reserved3;
+> +    uint8_t rs;
+> +    uint8_t cc;
+> +} QEMU_PACKED ChscSeiNt0Res;
+> +
+> +#define NT0_RES_RESPONSE_CODE 1;
+> +#define NT0_RES_NT_DEFAULT    0;
+> +#define NT0_RES_RS_AP_CHANGE  5;
+> +#define NT0_RES_CC_AP_CHANGE  3;
+> +
+> +int ap_chsc_sei_nt0_get_event(void *res);
+> +
+> +int ap_chsc_sei_nt0_have_event(void);
+> +
+>   #endif
 
 
