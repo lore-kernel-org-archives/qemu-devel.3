@@ -4,58 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08B1C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 03:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9423C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 03:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsCRI-0001wh-VK; Tue, 11 Mar 2025 23:07:25 -0400
+	id 1tsD2A-0007vd-6Z; Tue, 11 Mar 2025 23:45:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1tsCRA-0001wN-Lh
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 23:07:16 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1tsCR5-00008n-Pr
- for qemu-devel@nongnu.org; Tue, 11 Mar 2025 23:07:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202502; t=1741748820;
- bh=BON3SlQl/MBULel0pVEvk8ISu7gTiQENyw2FFLvgvDg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=QzRCMZZBR0GRO2X1FXu6VxPVDihB7b98erZgk+5g8Opl/lgypQWXsX5RZZYVYE4o9
- aB2PwztEkISPuLhmFBQEuD6E6YuQbkWD3zjZ0AgiLFr0Kb2oV8hbdzo8yatZ0ZWYpn
- Sv0LnPzzv6KwmJpx4A95i0ecyP4vOPmky/3MnliDEJ4HXE80NP8qDU9BFscT/9hLL/
- /kQniru2aiGFnSsmR9z9CiMniWJQyv2//okGWcmxniGLrYFhNfv2vlNvY57h2ayvbr
- COHwwYlhofN0jN3IWOCxeG8CS+SNOXgtSezliZqTZn9PAxhCI4AWL1ex/xRFPv17OT
- LeDt1NSztm52A==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4ZCFsc4gsGz4xCW; Wed, 12 Mar 2025 14:07:00 +1100 (AEDT)
-Date: Wed, 12 Mar 2025 12:38:40 +1100
-From: David Gibson <david@gibson.dropbear.id.au>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Stefano Brivio <sbrivio@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2] docs: Explain how to use passt
-Message-ID: <Z9DloC__TeZOZ9OK@zatzit>
-References: <20250311132714.166189-1-lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tsD1g-0007kx-8c
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 23:45:08 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tsD1d-000505-I7
+ for qemu-devel@nongnu.org; Tue, 11 Mar 2025 23:45:00 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8AxHHItA9FnAdSSAA--.53877S3;
+ Wed, 12 Mar 2025 11:44:45 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMAxzMQtA9FntSJFAA--.58869S2;
+ Wed, 12 Mar 2025 11:44:45 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2] tests/qtest/cpu-plug-test: Add cpu hotplug support for
+ LoongArch
+Date: Wed, 12 Mar 2025 11:44:45 +0800
+Message-Id: <20250312034445.3350705-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="1T9eMvjKakp/xd0F"
-Content-Disposition: inline
-In-Reply-To: <20250311132714.166189-1-lvivier@redhat.com>
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- PDS_OTHER_BAD_TLD=0.413, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxzMQtA9FntSJFAA--.58869S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,186 +64,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add cpu hotplug testcase support for LoongArch system, it passes to
+run with command "make check-qtest-loongarch64" as following:
+  qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 0.38s 1 subtests passed
 
---1T9eMvjKakp/xd0F
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+v1 ... v2:
+  1. Call test function add_loongarch_test_case() directly rather than
+     qtest_cb_for_every_machine() since compatible machine is not
+     supported on LoongArch system.
+  2. Add architecture specified test case in separate line. 
+---
+ tests/qtest/cpu-plug-test.c | 28 ++++++++++++++++++++++++++++
+ tests/qtest/meson.build     |  3 ++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-On Tue, Mar 11, 2025 at 02:27:14PM +0100, Laurent Vivier wrote:
-> Add a chapter to explain how to use passt(1) instead of '-net user'.
-> passt(1) can be connected to QEMU using UNIX socket or vhost-user.
-> With vhost-user, migration of the VM is allowed and internal state of
-> passt(1) is transfered from one side to the other
->=20
-> Bug: https://gitlab.com/qemu-project/qemu/-/issues/2827
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+index 6633abfc10..6af81330c0 100644
+--- a/tests/qtest/cpu-plug-test.c
++++ b/tests/qtest/cpu-plug-test.c
+@@ -156,6 +156,32 @@ static void add_s390x_test_case(const char *mname)
+     g_free(path);
+ }
+ 
++static void add_loongarch_test_case(const char *mname)
++{
++    char *path;
++    PlugTestData *data;
++
++    if (!g_str_has_prefix(mname, "virt")) {
++        return;
++    }
++
++    data = g_new(PlugTestData, 1);
++    data->machine = g_strdup(mname);
++    data->cpu_model = "la464";
++    data->device_model = g_strdup("la464-loongarch-cpu");
++    data->sockets = 1;
++    data->cores = 3;
++    data->threads = 1;
++    data->maxcpus = data->sockets * data->cores * data->threads;
++
++    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
++                           mname, data->sockets, data->cores,
++                           data->threads, data->maxcpus);
++    qtest_add_data_func_full(path, data, test_plug_with_device_add,
++                             test_data_free);
++    g_free(path);
++}
++
+ int main(int argc, char **argv)
+ {
+     const char *arch = qtest_get_arch();
+@@ -168,6 +194,8 @@ int main(int argc, char **argv)
+         qtest_cb_for_every_machine(add_pseries_test_case, g_test_quick());
+     } else if (g_str_equal(arch, "s390x")) {
+         qtest_cb_for_every_machine(add_s390x_test_case, g_test_quick());
++    } else if (g_str_equal(arch, "loongarch64")) {
++        add_loongarch_test_case("virt");
+     }
+ 
+     return g_test_run();
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 8a6243382a..7e62204dcc 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -149,7 +149,8 @@ qtests_hppa = \
+ 
+ qtests_loongarch64 = qtests_filter + \
+   (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+-  ['boot-serial-test']
++  ['boot-serial-test',
++   'cpu-plug-test']
+ 
+ qtests_m68k = ['boot-serial-test'] + \
+   qtests_filter
 
-Reviewed-by: David Gibson <david@gibson.dropbear.id.au>
+base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+-- 
+2.39.3
 
-> ---
->  docs/system/devices/net.rst | 100 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 100 insertions(+)
->=20
-> diff --git a/docs/system/devices/net.rst b/docs/system/devices/net.rst
-> index 2ab516d4b097..a3efbdcabd1a 100644
-> --- a/docs/system/devices/net.rst
-> +++ b/docs/system/devices/net.rst
-> @@ -77,6 +77,106 @@ When using the ``'-netdev user,hostfwd=3D...'`` optio=
-n, TCP or UDP
->  connections can be redirected from the host to the guest. It allows for
->  example to redirect X11, telnet or SSH connections.
-> =20
-> +Using passt as the user mode network stack
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +passt_ can be used as a simple replacement for SLIRP (``-net user``).
-> +passt doesn't require any capability or privilege. passt has
-> +better performance than ``-net user``, full IPv6 support and better secu=
-rity
-> +as it's a daemon that is not executed in QEMU context.
-> +
-> +passt can be connected to QEMU either by using a socket
-> +(``-netdev stream``) or using the vhost-user interface (``-netdev vhost-=
-user``).
-> +See `passt(1)`_ for more details on passt.
-> +
-> +.. _passt: https://passt.top/
-> +.. _passt(1): https://passt.top/builds/latest/web/passt.1.html
-> +
-> +To use socket based passt interface:
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +Start passt as a daemon::
-> +
-> +   passt --socket ~/passt.socket
-> +
-> +If ``--socket`` is not provided, passt will print the path of the UNIX d=
-omain socket QEMU can connect to (``/tmp/passt_1.socket``, ``/tmp/passt_2.s=
-ocket``,
-> +...). Then you can connect your QEMU instance to passt:
-> +
-> +.. parsed-literal::
-> +   |qemu_system| [...OPTIONS...] -device virtio-net-pci,netdev=3Dnetdev0=
- -netdev stream,id=3Dnetdev0,server=3Doff,addr.type=3Dunix,addr.path=3D~/pa=
-sst.socket
-> +
-> +Where ``~/passt.socket`` is the UNIX socket created by passt to
-> +communicate with QEMU.
-> +
-> +To use vhost-based interface:
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +Start passt with ``--vhost-user``::
-> +
-> +   passt --vhost-user --socket ~/passt.socket
-> +
-> +Then to connect QEMU:
-> +
-> +.. parsed-literal::
-> +   |qemu_system| [...OPTIONS...] -m $RAMSIZE -chardev socket,id=3Dchr0,p=
-ath=3D~/passt.socket -netdev vhost-user,id=3Dnetdev0,chardev=3Dchr0 -device=
- virtio-net,netdev=3Dnetdev0 -object memory-backend-memfd,id=3Dmemfd0,share=
-=3Don,size=3D$RAMSIZE -numa node,memdev=3Dmemfd0
-> +
-> +Where ``$RAMSIZE`` is the memory size of your VM ``-m`` and ``-object me=
-mory-backend-memfd,size=3D`` must match.
-> +
-> +Migration of passt:
-> +^^^^^^^^^^^^^^^^^^^
-> +
-> +When passt is connected to QEMU using the vhost-user interface it can
-> +be migrated with QEMU and the network connections are not interrupted.
-> +
-> +As passt runs with no privileges, it relies on passt-repair to save and
-> +load the TCP connections state, using the TCP_REPAIR socket option.
-> +The passt-repair helper needs to have the CAP_NET_ADMIN capability, or r=
-un as root. If passt-repair is not available, TCP connections will not be p=
-reserved.
-> +
-> +Example of migration of a guest on the same host
-> +________________________________________________
-> +
-> +Before being able to run passt-repair, the CAP_NET_ADMIN capability must=
- be set
-> +on the file, run as root::
-> +
-> +   setcap cap_net_admin+eip ./passt-repair
-> +
-> +Start passt for the source side::
-> +
-> +   passt --vhost-user --socket ~/passt_src.socket --repair-path ~/passt-=
-repair_src.socket
-> +
-> +Where ``~/passt-repair_src.socket`` is the UNIX socket created by passt =
-to
-> +communicate with passt-repair. The default value is the ``--socket`` path
-> +appended with ``.repair``.
-> +
-> +Start passt-repair::
-> +
-> +   passt-repair ~/passt-repair_src.socket
-> +
-> +Start source side QEMU with a monitor to be able to send the migrate com=
-mand:
-> +
-> +.. parsed-literal::
-> +   |qemu_system| [...OPTIONS...] [...VHOST USER OPTIONS...] -monitor std=
-io
-> +
-> +Start passt for the destination side::
-> +
-> +   passt --vhost-user --socket ~/passt_dst.socket --repair-path ~/passt-=
-repair_dst.socket
-> +
-> +Start passt-repair::
-> +
-> +   passt-repair ~/passt-repair_dst.socket
-> +
-> +Start QEMU with the ``-incoming`` parameter:
-> +
-> +.. parsed-literal::
-> +   |qemu_system| [...OPTIONS...] [...VHOST USER OPTIONS...] -incoming tc=
-p:localhost:4444
-> +
-> +Then in the source guest monitor the migration can be started::
-> +
-> +   (qemu) migrate tcp:localhost:4444
-> +
-> +A separate passt-repair instance must be started for every migration. In=
- the case of a failed migration, passt-repair also needs to be restarted be=
-fore trying
-> +again.
-> +
->  Hubs
->  ~~~~
-> =20
-
---=20
-David Gibson (he or they)	| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you, not the other way
-				| around.
-http://www.ozlabs.org/~dgibson
-
---1T9eMvjKakp/xd0F
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmfQ5Z8ACgkQzQJF27ox
-2GfpGw//UTBJ3sPqC1XrXMyhTUQbXkJPB/Rro8qa5Z1AdcyYBNin3IrdFkd3W1RJ
-XwyCvGI6zHE2Y5dnoHjvMM+OKdWmz1lTcQ08BxWgPnQNruMbNrAFUd1eorW0HCG3
-nnIlS6899zsmUUjEXFivaXrPFhaMdGNBoqw+wKPrbGwt+1rjHZcvkmi1vCr3Yrrb
-wVNJ17T6i38bBA6vaGnL9egfCnLEuK4ueAe4fxwfvwGyDU1nPxL6ldRKcLbB6bot
-LB17dCQmW2txf3gesgb/ZSozVANbaX2LMIufwz+5Uzj2IeOOZaX2FvyWk3E0+9OB
-2IwZYs+NoiNi8kaQD29286kMuu9hMctda45/ln/XdLlYqjsTjXs8jTT0dvtuZthS
-sugaMcFXPOFSMD6+LF5cP0NMzcNT6dwbJQdSC8ShWt2dS4mYtgc3fqEVBqyWLEJ9
-B3HHjMWsEKDQrV3McFIn67i9a/5nPBjVFa4MAA8IPYXaMCn14oRrKxAN4bct0r0j
-2m3VIfSYZJyEnWWYDllBGrkrZKyTBiqva6c73c3Xxqzi4KXsDaTnqvmrgecrLkP2
-6dQN8zhkHIMywNX1I6aoOgmin6lqusRWS++j2cV4ikUqb4Zs7EJ6BkHoSV9tw78O
-9+quq/LsASqSW+KNB7PIXJ0I5BwHtn21mYpkjtBW9O5K0j1o3to=
-=RMpj
------END PGP SIGNATURE-----
-
---1T9eMvjKakp/xd0F--
 
