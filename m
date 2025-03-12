@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39837C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 17:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A73C2BA1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 17:34:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsPwY-0001cz-4R; Wed, 12 Mar 2025 13:32:34 -0400
+	id 1tsPxo-0002Ub-KW; Wed, 12 Mar 2025 13:33:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tsPwT-0001cE-Th
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 13:32:31 -0400
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tsPxm-0002U9-1w
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 13:33:50 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tsPwS-0004jk-At
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 13:32:29 -0400
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-6e8fb83e137so1390896d6.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 10:32:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tsPxf-0004qp-UO
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 13:33:47 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5491eb379so15154a12.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 10:33:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741800746; x=1742405546; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZcEnJOtJMXJymFhT0PNheZz6JgQLgZuJDDzJ9zNbEN4=;
- b=SXuDHXuylvv2fW3I928C4N0dEjeiieGGLqMg1UqlZZ6Xrp1oDHka3mZfTlKwVYDlcP
- PLQhmyO7qoTjgR6b+qxcbTkRRF2L3mO4nyuCSpQGHqWo/brGAAx2zU8QM0OBQjRNemvC
- JrrERuFvLmjkunSqXPl33R67Elfk3JyTLlEhJ0OtaLXRKz+a3x77b+80REojQK2WSHqp
- yc0dFgbweQ3FXo5V6o/KbODeBF+nLyQJPrrQ8Ik5a6ZMuc1rXmzAOakNkmp9QboxCEBI
- Ge6XJXadA4AtvBerw1aEA78QwoJGoEqrERWMzi13jtGprWwzMb1BBzAIgUbePmVz2IP/
- Upmg==
+ d=gmail.com; s=20230601; t=1741800816; x=1742405616; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w/uorSczeLTSXhGU4Khn7ChTxs8hFr3Y2FB0G8PCHEY=;
+ b=eEAT/1p+x8on53MnWphyds9v8uhMPHlJ+OaYm7oKpYLRg6CDDugF2KjXDUSQ9F+Rhw
+ +4S3kOgh9/Efco2s/d2lNpETrKq15Zoclva7UQGJ1p5JpVboW93DVRcSNrJZaIpP20ub
+ XtBCy/83pOr2G27HBDwsiM2UeJc7J/5OfIE73/xWXsXeBwTNa37owo9OXHd5J6PLO9O5
+ 7d0SOUm4HitE4+3Zg1IWCLTNP9BRtOXyqMxtEr8nRTP5nE2I0wLSHim+nifqg1Relb/S
+ Shdv8fgiq3Zh+UmjBtZsobZOk/RWAzk7lNQ1Zlj72DaWquEG6TY2rnkhdd/nhg4k6h5L
+ nZrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741800746; x=1742405546;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZcEnJOtJMXJymFhT0PNheZz6JgQLgZuJDDzJ9zNbEN4=;
- b=hMgG6n4YzaoE4uxTp1ceU3P1jV12Mt0kKLVTzdm49y+SCJFP2fFI+215GBEk1tMQ9M
- QxVSPBjcRfSBagJwayM7N0R0NdN/M2HUWUlmQRixIkidaThcIwrlN+vfoBeWJdvaFAj3
- Ym0yfjaMNe2Z3y1cLe2wzJtZv9JvlzsLh7hQ2ydxcQeN9/gyu7YJkSU76IahU3YQpsrS
- WMIchvoJIldlSyBEd21kVnypq7NQOLW2FxQwr5Bs8iFKZETwOW3I1/ZnyuhX3/pTFZYk
- HSh0Lozd2RI/9zww6E+aLJQXkPgPiuKJKghrO/l0jTOoGdzRNgGwGDgxZ+IUp0g4MYR8
- e+lg==
+ d=1e100.net; s=20230601; t=1741800816; x=1742405616;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=w/uorSczeLTSXhGU4Khn7ChTxs8hFr3Y2FB0G8PCHEY=;
+ b=tWeLV4DVohkRX9NR529AWfXhLnEDxGvZ5w/6CpIs4bBzWaa9c/jkf/b65XrpdwsXQ8
+ OJIPpmdoRvsWxRwZHG8CKYNiUWOzOtiQFR17RBHw4G37iusfUKdXbq1zlxe+4MJVapkM
+ wz+PQsjzVHTRACXWQt9f3yUr6fWVaUSNhglO97p3ABrdwiH4Ji8AM4XurRRYm3c/2cxQ
+ F8mI0Y0DPLoHsGPeIem3o+1Onn9Ih+Tv0fdRqSlEENOdXrzm3R0g8+lrt1F6de7wSWqE
+ hZ9eCJbEVb5r7EPTi/dUUiYGyIfs9QUbj5cNWOrhrx1pGUA9jnznYJWx6F21CcGE+8CJ
+ HB2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuBsGm2wa6zBBy+h+nCtCBVEFG+lswMidQYZopRVdJyS0LXi94BIoQiq4w8Qye/fy6ZCgfDWCnP/8w@nongnu.org
-X-Gm-Message-State: AOJu0YztJYySBIzpTQRyOMDdzQaj8W2M+Fh2HwzaPjdrt3Ufb0VdFD+Y
- nPGUZ6u50wTV/BCeh8nRrtI003uDDD4zOZClbI0aIAYKl59r70Fk
-X-Gm-Gg: ASbGnct7s33Cyh8j0I9SGW2lwOG04juPyEOWD8a5MBjILU8oV3T2HnYdc7bTIXkgq3f
- 6AuXacekS+PIG2T7BbTtw5tjrKmSl9LzLmzWv0tpsuXeEi/v0gSe9H4/ZI1RSWIs+mU8v/eLFru
- 540Mg8xVoKWOJpLJtxJMMTgu+uksBV9YcN2VQCfLhM6Qm7bymJSBkl4hRkLKP7NyhSvoUW+vNf9
- gDpR1defdJFiSZ9SSY5fgWr9WJqCQW8MHNYiJqDd1VT3rxaMktnPMpocPGqQJ5KR+n+PkEs8O/q
- GSkDBZR2wBA7AEb3NXNlZ7O1m4vy9ExjJJxnpciB5W5uXeSrMIqdBxeWcv2S6Q4r8O/ph8BmRw=
- =
-X-Google-Smtp-Source: AGHT+IGCOmgdfM/94awCZ7P2V+NB8cVlsetk12Lyw1jd+r3fh/SpUiJXKwnfVcAXBxwc1kr1Ff7XUw==
-X-Received: by 2002:a05:6214:c48:b0:6e8:ea17:8587 with SMTP id
- 6a1803df08f44-6e900682e29mr321603766d6.42.1741800746555; 
- Wed, 12 Mar 2025 10:32:26 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:9cc3:cdb3:7013:e1db])
+ AJvYcCXc3wbvxrPJF5db91njpMjOtQd79jZD8WkjFEBVY3ZXfz1inwc7kBbkz3O2iTSIElqPG+gZPCVhRDie@nongnu.org
+X-Gm-Message-State: AOJu0YyKcbP/r7F2m1bqcsMMsjUyc+ZMNtYNhDrJWBjNBIWyYI5zvATE
+ 55N52M4kDlufcqsqDx80rHpGJa8X8BC7B3b25m9LrcsKaaj5BdtoAcEKNw==
+X-Gm-Gg: ASbGncsE9glx4GIBUetyJk2YNE8EF38A9xDhwKiQjlWwRJBgbNqKvrrYyNO9dPisko6
+ i4kKs4T9UrYOP0YMZhJOiF8N2NegsZ+bQPx6YuA3MLrJwOXY8Bedu66b+zaO1yHSXB9Zi/Sy4jR
+ 4y1P3nm3wHHIsiWddSTYg/y99UaH5oTM2E6JmZEXQ21Cz/SkfdsmavbuNFOsW297dN6qrAWaK3U
+ WjacBIlHsyFMg28IpLBO9Uf/XckA2nt9qCQ2H+pd5n9F5l9jVwIn/K6kY/Ou63H2Bjyew3U6CT2
+ 6oYTY9+Y0B/bD1+IU/k0QeayzsXeD0gJ9lBbHJT6pkGhJW+MKhghCUJCdwZiprN6VvXvf8zLSsb
+ ZQjdH7qSNZyH295hDku613c3covKWfBCz9YHcFkfUmh9w2Vb2gDKP
+X-Google-Smtp-Source: AGHT+IGLttfrMVN2uVwKyU/laENHaAebUCv9H3G4vUaJFILwHXrW2KjIq5sxyrw39NG0ba4EJ/0SWw==
+X-Received: by 2002:a05:6402:2681:b0:5e7:c42d:d8ca with SMTP id
+ 4fb4d7f45d1cf-5e7c42dd91cmr3698544a12.14.1741800815708; 
+ Wed, 12 Mar 2025 10:33:35 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-2c4e-b100-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
+ [2a02:3100:2c4e:b100:69d2:56f6:a5af:50a8])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6e8f70a446dsm86940276d6.56.2025.03.12.10.32.25
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 12 Mar 2025 10:32:26 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>,
- "'Michael Lambert'" <mlambert@quicinc.com>
-References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-39-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052628.1011210-39-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 38/38] target/hexagon: Add hex_interrupts support
-Date: Wed, 12 Mar 2025 12:32:24 -0500
-Message-ID: <011b01db9374$b8982630$29c87290$@gmail.com>
+ 4fb4d7f45d1cf-5e5c768f213sm9821838a12.74.2025.03.12.10.33.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Mar 2025 10:33:35 -0700 (PDT)
+Date: Wed, 12 Mar 2025 16:33:32 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>
+CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PULL 31/43] hw/arm: Add i.MX 8M Plus EVK board
+In-Reply-To: <CAFEAcA9YvYCmbzJmzV60McWTBNWt-mgkpnOpBY1_VE6_S+9W=g@mail.gmail.com>
+References: <20250225180510.1318207-1-peter.maydell@linaro.org>
+ <20250225180510.1318207-32-peter.maydell@linaro.org>
+ <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
+ <CAFEAcA-JgjX2U3wQ47X5JQ2SU1yMpx=0rWkctbj40w0Xjufpmg@mail.gmail.com>
+ <e7640bea-5bb7-4f4b-8614-ed8d521dd7a5@linaro.org>
+ <0261bcf8-d01d-4f63-9edf-f572519dd8af@kaod.org>
+ <CAFEAcA9YvYCmbzJmzV60McWTBNWt-mgkpnOpBY1_VE6_S+9W=g@mail.gmail.com>
+Message-ID: <0673B63B-AF76-4B18-95BB-EF71DF12C1E4@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
-	charset="utf-8"
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgIuSTFFtPKxSjA=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250312-2, 3/12/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,56 +112,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Friday, February 28, 2025 11:26 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>; Michael Lambert
-> <mlambert@quicinc.com>
-> Subject: [PATCH 38/38] target/hexagon: Add hex_interrupts support
->=20
-> From: Brian Cain <bcain@quicinc.com>
->=20
-> Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> Co-authored-by: Sid Manning <sidneym@quicinc.com>
-> Co-authored-by: Michael Lambert <mlambert@quicinc.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Am 12=2E M=C3=A4rz 2025 11:13:01 UTC schrieb Peter Maydell <peter=2Emaydel=
+l@linaro=2Eorg>:
+>On Wed, 12 Mar 2025 at 10:44, C=C3=A9dric Le Goater <clg@kaod=2Eorg> wrot=
+e:
+>>
+>> On 3/12/25 11:27, Philippe Mathieu-Daud=C3=A9 wrote:
+>> > + C=C3=A9dric for Aspeed
+>> >
+>> > On 12/3/25 11:20, Peter Maydell wrote:
+>> >> The bug is that this is directly inheriting from TYPE_DEVICE,
+>> >> not from TYPE_SYSBUS_DEVICE=2E Doing the former is almost always
+>> >> wrong, because it means the device is never reset=2E
+>> >>
+>> >> (It looks like we do this wrong for other fsl SoCs too,
+>> >> but they're marked user_creatable =3D false=2E)
+>> >
+>> > IIRC it is deliberately that way for the Aspeed SoCs, because
+>> > otherwise there were issue when building the multi-SoC fby35 machines
+>
+>Multi-SoC shouldn't have a problem with sysbus devices existing=2E
+>They just mean that you can't use the convenient sysbus_mmio_map()
+>function but have to be more careful with managing MemoryRegions
+>in the different SoCs and using sysbus_mmio_get_region() to get
+>a sysbus device's MMIO regions so you can manually map them to
+>the right places=2E
+>
+>> AspeedSoCState was introduced long ago (2016) and the fby35 is "recent"=
+,
+>> from 2022=2E I am not sure that's the reason=2E
+>>
+>> Regarding the reset, the SoC functions are sysbus devices and all have
+>> a reset=2E The SoC doesn't have any=2E Maybe that's why we are not seei=
+ng
+>> issues=2E
+>
+>Yeah, it works out in this case=2E But I think it is in general
+>a bad idea to add new direct-inheritors from TYPE_DEVICE=2E
+>If anybody needs to add a reset method to the SoC container
+>object in future then they'll be confused about why it doesn't
+>work, for instance=2E
+>
+>I think that in general people expect that TYPE_DEVICE is
+>"devices are like this" and TYPE_SYSBUS_DEVICE is "if you
+>also need the sysbus-specifics, most notably providing MMIO
+>regions for registers"=2E That's a totally reasonable expectation
+>but unfortunately it's wrong, because a few key parts of
+>"this is an internal device that we don't need users to create"
+>are only in TYPE_SYSBUS_DEVICE=2E
 
+I'll send a patch fixing inheritance from TYPE_SYSBUS_DEVICE and setting u=
+ser_creatable =3D false=2E
 
-> diff --git a/target/hexagon/hex_interrupts.c
-> b/target/hexagon/hex_interrupts.c new file mode 100644 index
-> 0000000000..fd00bcfb9a
+Best regards,
+Bernhard
 
-
-> +bool hex_check_interrupts(CPUHexagonState *env) {
-> +    CPUState *cs =3D env_cpu(env);
-> +    bool int_handled =3D false;
-> +    bool ssr_ex =3D get_ssr_ex(env);
-> +    int max_ints =3D 32;
-> +    bool schedcfgen;
-> +
-> +    /* Early exit if nothing pending */
-> +    if (get_ipend(env) =3D=3D 0) {
-> +        restore_state(env, false);
-> +        return false;
-> +    }
-> +
-> +    BQL_LOCK_GUARD();
-> +    /* Only check priorities when schedcfgen is set */
-> +    schedcfgen =3D get_schedcfgen(env);
-> +    for (int i =3D 0; i < max_ints; i++) {
-> +        if (!get_iad_bit(env, i) && get_ipend_bit(env, i)) {
-> +            qemu_log_mask(CPU_LOG_INT,
-> +                          "%s: thread[%d] pc =3D 0x%x found int =
-%d\n", __func__,
-> +                          env->threadId, env->gpr[HEX_REG_PC], i);
-
-Don't use %d - use PRI* instead.  Several instances ...
-
-
-
+>
+>thanks
+>-- PMM
 
