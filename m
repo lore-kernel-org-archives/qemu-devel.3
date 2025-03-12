@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FD0C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 06:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA0EC28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 06:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsFao-0000tf-KW; Wed, 12 Mar 2025 02:29:26 -0400
+	id 1tsFhy-00032v-GA; Wed, 12 Mar 2025 02:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFaj-0000tJ-Cy
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:29:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFhe-0002xN-Rq
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:36:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFah-0006aU-81
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:29:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFhc-0007XE-Pg
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:36:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741760957;
+ s=mimecast20190719; t=1741761386;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UwJdAKxFgnQGLoQzKvMxChv44r7g+McXVBRTAkgw6uw=;
- b=gxIS+qWqVCFF64BZ0GNaoK2AtwD11SL8WDtclwhUVtBLCq+33GJTpx2GJrW1XQyvS8dgnI
- IQk5i6SV8w/PdJnR9RlCY475HHHGTe29sfPSnCflBBongaSzfkxTe7Mmv7LHktoigBR2ra
- FY/79ijSR5bk8aOw+hbBXG+gnKx4qLM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Vj2lChn4/Q4i6rvmIMfZbwZgPNys4pp68QRB91YsLuw=;
+ b=cSrK6xXKl49mTE2JTDAXICeoKBNOPEY9xHrvB5UcMY8T7LYP7w5f2UhtQkUSIdPLjq3IPs
+ bogUM0dA19w2m8mYYUZiM0JGaekn2lHBSSZYTqEPf1p84+o54xVDl6hzVkI3nWDB0sCgEh
+ Mddvg8VUeOjFqJfsNzdJkZYOCvLU83Y=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-4PJ85mjROwG4SuGlN6wL7w-1; Wed, 12 Mar 2025 02:29:14 -0400
-X-MC-Unique: 4PJ85mjROwG4SuGlN6wL7w-1
-X-Mimecast-MFC-AGG-ID: 4PJ85mjROwG4SuGlN6wL7w_1741760953
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43d025a52c2so9492835e9.0
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 23:29:14 -0700 (PDT)
+ us-mta-37-DfOkhIp4OGqfVRhrMrQteA-1; Wed, 12 Mar 2025 02:36:22 -0400
+X-MC-Unique: DfOkhIp4OGqfVRhrMrQteA-1
+X-Mimecast-MFC-AGG-ID: DfOkhIp4OGqfVRhrMrQteA_1741761381
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3912b54611dso3798543f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 23:36:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741760953; x=1742365753;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UwJdAKxFgnQGLoQzKvMxChv44r7g+McXVBRTAkgw6uw=;
- b=tNesvqj3QklfNVNyO1drlmooDnejlxOMZLy7eetKwJPxuUhsENCov/MaGSyysVWDPi
- DGHXTA/DjdIGJj4bJC7aX1DbWuD60k6RwsenXAO8SdQVGUgTwVtx6IWwlD1CZ48KXz+g
- z4fbkDUS+5TdKk69W5er8JZKPlg3woC5BxQUom5EJ+iOKPCWr++VPXGzUVY1vZ5L25EC
- kfqa0mCPPRy0w/IWDskTn/lNxaExGeSrW4Gqgkc0EPtTypHo+HtaVmb6Vrl8tfIAaVJK
- kreNF/TUGkf7q3/ZALds36bNcZZP6KMTYwaA5zECDeCdnR3CBUrue0S83w5JuHLKvo/k
- e9Uw==
+ d=1e100.net; s=20230601; t=1741761381; x=1742366181;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Vj2lChn4/Q4i6rvmIMfZbwZgPNys4pp68QRB91YsLuw=;
+ b=FrBDwpZs99G9/BqNFkYqrcX7czaVpL+tjrbF6deKiWvkveSzvQU9qM+RlcKcpXR7Am
+ 5yOXjEaRrwz6KauSDDPDTii9EEZ8/+BPuhd3Ipwmv4Ui1VW1c6j+eCPe4ImnMqiPy1p+
+ 2hjya3/ONrtBc2xnDHSCltK84tOrLUOZUrwBgfALHiIa4cBFy5SY+w6+/dd3vgbs0hGR
+ gPILZJAaSXChcLvkBaWX1PW6o/J6VK2td6K4TA5AeGsZ/48/HeERU8zPvUNWHD1h7l62
+ OKEo8s9k+aHhwUIc1GZGKV894U4fKPTMGEffht6uLYIIlAP1u2W21TA4Hj5G00P6bxPh
+ Fl6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7XFrJlD5MYenrhtO0zXqMYe1H52H1xyg5GAdZya9yFrNaltZou0GhLGNuPCSagejyy0LuV6y8ydQT@nongnu.org
-X-Gm-Message-State: AOJu0Yzv2LAOBObHUFCpDdfxDhx+jOwxFpmEg+o3iD8J9MGdTLEJMjxY
- 8ffuMkFrfRdGE8FTSRL7PtzU3ddPOWCxHTTCON3R1AURnruPimed91Ml+piTvIHcUR9ZqkINrH7
- f0RnLf86Z0yWofpz1zvGUDD7qe7cTXYQvZ+YqBZ2AURDhrVnmYVs3
-X-Gm-Gg: ASbGncvSS8BBcFQyIoIYSLfZMU/NgOic9ln6toXO+JcNeot1rkPHp02luMlVy0EmAvy
- 4Dti5lCp9KauYBayzBGdWx23kQboIbHx6+216Zcqh6dZJ8/5L4TiUw3dzMqKiAFMxZwSNVH6Ka1
- woemZQEKylLahmjCi13C/77yQH+HF2u1bEsYf89GD8uvNxTiXSR8hNbhhYL6AAOdQOndcmeNFqL
- /VaJRVD1FUeHssuWY5XABZTJ0tJEvYapr9q+t1A8tucOAAf8Oix/DY2z5Yed+/oi4I1Y+Q4QeKm
- pnOzbY9HjsVC7uve7iHNYWfweXVShWngJR/z/5x7EL7tNls=
-X-Received: by 2002:adf:a397:0:b0:391:3f4f:a169 with SMTP id
- ffacd0b85a97d-3913f4fa2d3mr8777420f8f.32.1741760953221; 
- Tue, 11 Mar 2025 23:29:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE65rqSd4uhjLTENgYtn28M/THAmWmxq4DLlEFpM3nowH7ouXefPnSxv+VDhKxNaYzXkq6POw==
-X-Received: by 2002:adf:a397:0:b0:391:3f4f:a169 with SMTP id
- ffacd0b85a97d-3913f4fa2d3mr8777412f8f.32.1741760952880; 
- Tue, 11 Mar 2025 23:29:12 -0700 (PDT)
+ AJvYcCXq710VEhWnVdDV0VT+swBR3g+I7VohNZrwoxsvgco9X4u0DblKHhpHXMmsvd+rqvwZTNYDKvkI6Xp6@nongnu.org
+X-Gm-Message-State: AOJu0YzVnVl9AoxUcjRA811EO33tynodALN3jDMh03gVVmwlZZp1lffj
+ qHwrSFbuxqhpynL0e/3fYT3hl4pzfwhV1oGeGeKXyEoWgVRwosOBagPqRvZhFeq6E1SdlORfozo
+ dmQSwA+9xfMFiY278tvIIuaHJn/K6+rMjXfyFHu4zDl/U2sdh6Zqv
+X-Gm-Gg: ASbGncvE4c2IUQlOb4aCcJNE6/2P0qY03sl4vYPaTvf9hBkX5fvZav3yochWqT9xW0Z
+ b7wGNZCeyIX10dpSGFT44SqDy8IJ9BFLLl3/3GtSmM9E8H5pi0isL7DrRDcPlNUOLtmC9OIgoPH
+ fbPlbXt286KR7nYwBazionz/lg6HmrXiK3B+QXTWBWAcwqmI9w+IVrfXd3CPUj5+oU7g0pnMHhH
+ lsxabWfv8p6jL7aX2ayUYfP0VyR1wJgsMZzDijW+UhD3QASfIDmT/4swt1rVkIFFbBIt+O1PAhz
+ 6KaPBXWvZw6GTn8Lsz+9+zS5RIrycGGPopK/+92dR8Xdngs=
+X-Received: by 2002:a05:6000:1564:b0:390:e7c1:59c0 with SMTP id
+ ffacd0b85a97d-39132d7b834mr15442392f8f.26.1741761381160; 
+ Tue, 11 Mar 2025 23:36:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYE3+HX5PyELunR7CiTe7+PIYTJPLemE0c/hfCxcn5BJ+guQPwEp0COhNSCCoubqoIKS1vlg==
+X-Received: by 2002:a05:6000:1564:b0:390:e7c1:59c0 with SMTP id
+ ffacd0b85a97d-39132d7b834mr15442382f8f.26.1741761380858; 
+ Tue, 11 Mar 2025 23:36:20 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-149.web.vodafone.de.
  [109.42.51.149]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d0a78f1bbsm10961825e9.31.2025.03.11.23.29.11
+ ffacd0b85a97d-3912bfdfbb4sm20519568f8f.30.2025.03.11.23.36.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 23:29:12 -0700 (PDT)
-Message-ID: <2c9e0443-538a-442e-a03b-58e5117e4a2f@redhat.com>
-Date: Wed, 12 Mar 2025 07:29:10 +0100
+ Tue, 11 Mar 2025 23:36:19 -0700 (PDT)
+Message-ID: <45d36146-3d2c-421e-b58c-0b1ef50ee81a@redhat.com>
+Date: Wed, 12 Mar 2025 07:36:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/qtest/cpu-plug-test: Add cpu hotplug support for
- LoongArch
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-References: <20250312034445.3350705-1-maobibo@loongson.cn>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [RFC PATCH] tests/functional: Don't fail any precaching errors
+To: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250311131327.903329-1-npiggin@gmail.com>
+ <Z9A8swNn6zBm57jC@redhat.com> <D8DU1X7UDEPK.2PZVT8SJAWUFI@gmail.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -125,17 +127,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250312034445.3350705-1-maobibo@loongson.cn>
+In-Reply-To: <D8DU1X7UDEPK.2PZVT8SJAWUFI@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -153,87 +155,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/03/2025 04.44, Bibo Mao wrote:
-> Add cpu hotplug testcase support for LoongArch system, it passes to
-> run with command "make check-qtest-loongarch64" as following:
->    qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 0.38s 1 subtests passed
+On 12/03/2025 00.41, Nicholas Piggin wrote:
+...
+> I think *no* precaching errors including 404 should cause
+> failure because you would still want other tests to proceed
+> (in some cases).
 > 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-> v1 ... v2:
->    1. Call test function add_loongarch_test_case() directly rather than
->       qtest_cb_for_every_machine() since compatible machine is not
->       supported on LoongArch system.
->    2. Add architecture specified test case in separate line.
-> ---
->   tests/qtest/cpu-plug-test.c | 28 ++++++++++++++++++++++++++++
->   tests/qtest/meson.build     |  3 ++-
->   2 files changed, 30 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
-> index 6633abfc10..6af81330c0 100644
-> --- a/tests/qtest/cpu-plug-test.c
-> +++ b/tests/qtest/cpu-plug-test.c
-> @@ -156,6 +156,32 @@ static void add_s390x_test_case(const char *mname)
->       g_free(path);
->   }
->   
-> +static void add_loongarch_test_case(const char *mname)
-> +{
-> +    char *path;
-> +    PlugTestData *data;
-> +
-> +    if (!g_str_has_prefix(mname, "virt")) {
-> +        return;
-> +    }
+> But the failure should be caught when the test case tries to
+> fetch the asset, so you can still easily identify the download
+> failure.
 
-Should be ok to drop that check now ?
+Sorry, I did not get that... if we ignore the 404 during the precaching 
+step, how should the failure be caught when the test runs? The downloads are 
+disabled that case, so the test cannot know whether the asset is not 
+available due to a 404 or any other reason...?
 
-> +    data = g_new(PlugTestData, 1);
-> +    data->machine = g_strdup(mname);
-> +    data->cpu_model = "la464";
-> +    data->device_model = g_strdup("la464-loongarch-cpu");
-> +    data->sockets = 1;
-> +    data->cores = 3;
-> +    data->threads = 1;
-> +    data->maxcpus = data->sockets * data->cores * data->threads;
-> +
-> +    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
-> +                           mname, data->sockets, data->cores,
-> +                           data->threads, data->maxcpus);
-> +    qtest_add_data_func_full(path, data, test_plug_with_device_add,
-> +                             test_data_free);
-> +    g_free(path);
-> +}
-> +
->   int main(int argc, char **argv)
->   {
->       const char *arch = qtest_get_arch();
-> @@ -168,6 +194,8 @@ int main(int argc, char **argv)
->           qtest_cb_for_every_machine(add_pseries_test_case, g_test_quick());
->       } else if (g_str_equal(arch, "s390x")) {
->           qtest_cb_for_every_machine(add_s390x_test_case, g_test_quick());
-> +    } else if (g_str_equal(arch, "loongarch64")) {
-> +        add_loongarch_test_case("virt");
->       }
->   
->       return g_test_run();
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 8a6243382a..7e62204dcc 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -149,7 +149,8 @@ qtests_hppa = \
->   
->   qtests_loongarch64 = qtests_filter + \
->     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
-> -  ['boot-serial-test']
-> +  ['boot-serial-test',
-> +   'cpu-plug-test']
->   
->   qtests_m68k = ['boot-serial-test'] + \
->     qtests_filter
-
-With preferably the redundant check removed:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  Thomas
 
 
