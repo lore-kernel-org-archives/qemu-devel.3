@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 977B5C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 09:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9A1C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 09:46:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsIdz-0002Kf-AF; Wed, 12 Mar 2025 05:44:57 -0400
+	id 1tsIfB-0003BO-6o; Wed, 12 Mar 2025 05:46:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tsIdd-0002EF-BT; Wed, 12 Mar 2025 05:44:33 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsIen-0002wQ-55
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:45:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tsIda-0001mR-Bo; Wed, 12 Mar 2025 05:44:33 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZCQcY55pYz6J7qk;
- Wed, 12 Mar 2025 17:41:17 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id C1CF01400DC;
- Wed, 12 Mar 2025 17:44:25 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 12 Mar 2025 10:44:25 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Wed, 12 Mar 2025 10:44:25 +0100
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-accel
-Thread-Topic: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-accel
-Thread-Index: AQHbko+d7BBFIVL5UECoP8opJSgSfrNuUN8AgADwK9A=
-Date: Wed, 12 Mar 2025 09:44:25 +0000
-Message-ID: <4fb8ece9c1614c249dd5aa0bb8fe147b@huawei.com>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-5-shameerali.kolothum.thodi@huawei.com>
- <Z9Cboq3scDHS/DAS@Asurada-Nvidia>
-In-Reply-To: <Z9Cboq3scDHS/DAS@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.146.174]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsIel-00029E-9g
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:45:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741772738;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=E8AaB6TM272cqWpsF6SNmO1IeRQlbo8gjZlv5u0Y4pE=;
+ b=Z5wsB6MRcYuQp2coWPTAQEAzpr9XnrR1d4rMe7XwJy8/IpkxIGJBT2JjrkUi9Ln1U5/2L8
+ XIDsNu9yPrvbTe2Afg3wahWBErswG3zOe7njWahx5nHm68V0TWZ8QKky87/spWWZ9/oBwv
+ xip62msiBuprqqH0kt8dGylR0fxIk4k=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-u_-vwZ_XM4u--BNDB4eQxQ-1; Wed,
+ 12 Mar 2025 05:45:36 -0400
+X-MC-Unique: u_-vwZ_XM4u--BNDB4eQxQ-1
+X-Mimecast-MFC-AGG-ID: u_-vwZ_XM4u--BNDB4eQxQ_1741772735
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A07F19560A1; Wed, 12 Mar 2025 09:45:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 768011955BCB; Wed, 12 Mar 2025 09:45:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B696321E675F; Wed, 12 Mar 2025 10:45:29 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Bibo Mao <maobibo@loongson.cn>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Giving your own patches your Reviewed-by
+Date: Wed, 12 Mar 2025 10:45:29 +0100
+Message-ID: <878qpamvk6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,79 +80,25 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+I stumbled over commits that carry the author's Reviewed-by.
 
+There may be cases where the recorded author isn't the lone author, and
+the recorded author did some meaningful review of the patch's parts that
+are not theirs.  Mind that we do need all authors to provide their
+Signed-off-by.
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Tuesday, March 11, 2025 8:23 PM
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
-> ddutile@redhat.com; berrange@redhat.com; nathanc@nvidia.com;
-> mochs@nvidia.com; smostafa@google.com; Linuxarm
-> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
-> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
-> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
-> Subject: Re: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-
-> accel
->=20
-> On Tue, Mar 11, 2025 at 02:10:29PM +0000, Shameer Kolothum wrote:
-> > Allow cold-plug smmuv3-accel to virt If the machine wide smmuv3
-> > is not specified.
-> >
-> > No FDT support is added for now.
-> >
-> > Signed-off-by: Shameer Kolothum
-> <shameerali.kolothum.thodi@huawei.com>
-> > ---
-> >  hw/arm/virt.c         | 12 ++++++++++++
-> >  hw/core/sysbus-fdt.c  |  1 +
-> >  include/hw/arm/virt.h |  1 +
-> >  3 files changed, 14 insertions(+)
-> >
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 4a5a9666e9..84a323da55 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -73,6 +73,7 @@
-> >  #include "qobject/qlist.h"
-> >  #include "standard-headers/linux/input.h"
-> >  #include "hw/arm/smmuv3.h"
-> > +#include "hw/arm/smmuv3-accel.h"
->=20
-> smmuv3-accel.h included smmuv3.h in the patch prior.
->=20
-> > @@ -2911,6 +2912,16 @@ static void
-> virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-> >              platform_bus_link_device(PLATFORM_BUS_DEVICE(vms-
-> >platform_bus_dev),
-> >                                       SYS_BUS_DEVICE(dev));
-> >          }
-> > +        if (object_dynamic_cast(OBJECT(dev), TYPE_ARM_SMMUV3_ACCEL))
-> {
-> > +            if (vms->iommu =3D=3D VIRT_IOMMU_SMMUV3) {
-> > +                error_setg(errp,
-> > +                           "iommu=3Dsmmuv3 is already specified. can't=
- create
-> smmuv3-accel dev");
-> > +                return;
-> > +            }
-> > +            if (vms->iommu !=3D VIRT_IOMMU_SMMUV3_ACCEL) {
-> > +                vms->iommu =3D VIRT_IOMMU_SMMUV3_ACCEL;
-> > +            }
->=20
-> Looks like it is to support TYPE_VIRTIO_IOMMU_PCI?
->
-> Just asking: should SMMUV3_ACCEL work with that?
+When the only Signed-off-by is from the recorded author, and there's
+also their Reviewed-by, the Reviewed-by is almost certainly bogus.
 
-Hmm..That's true. It will conflict with virtio-iommu. I will add
-a blocker if both are specified.
+Now, accidents happen, no big deal, etc., etc.  I post this to hopefully
+help reduce the accident rate :)
 
-Thanks,
-Shameer
+Here's my quick & sloppy search for potentially problematic uses of
+Reviewed-by:
+
+$ git-log --since 'two years ago' | awk -F: '/^commit / { commit=$0 } /^Author: / { guy=$2 } /^    Reviewed-by: / { if ($2 == guy) { print commit; print guy } }'
+
 
