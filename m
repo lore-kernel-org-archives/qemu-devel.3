@@ -4,149 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DBAC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 05:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB2EC28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 05:55:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsEiD-0007QE-6C; Wed, 12 Mar 2025 01:33:01 -0400
+	id 1tsF2j-0004nR-Dn; Wed, 12 Mar 2025 01:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1tsEi1-0007PF-Pk
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:32:51 -0400
-Received: from mail-dm6nam12on20628.outbound.protection.outlook.com
- ([2a01:111:f403:2417::628]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1tsEhz-0008NN-71
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:32:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=frTt7wZrITeEAuOtFMM54UFyZMXo52mPXMepZwWHNIIDxJ2msREnVZg0z05MygWaiedcDRJEMtx1/V2ajAw8eQUNlN3Wv/8AZqc2DmhvQcA17UOdo2g3HppVeCv9rVjljE0GS2ku7q3a4UvptDqvzBUZ/rkJvXdkrB/C2jLEQn8gv2lFIsYvnOAhFyGyuud+CMEi9cQAsHRDtG34tQnLAtrbNc6UMprA3XfUEK9fSod2eK5J3U25iqwXkzUoos54zQEq0JLKG8IICJvm5xWBV5HeRglX8+XouaZqEwjzYSp+kPlfdfg2MQD8OcdDlNZaWSctdJ50BY5EeokqipfL6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WWhWpQ+ego3iPQJMzCajpgHnE7T+zd1r2dyZhHBZP7U=;
- b=OVagr5ZtVLgulSIBl9Rvh4rqFMkwIZBEAv+ivnzkLivIi3yLffitpOHp159+8q3yG20cNW/RQrak3lN5sum+XkbmPAmzRPb1mqXyo8Q6Flw6ZoD0UG3AH8MLWCDxoDXj8ec2FF7PsQsdn004vSfaxPfA5tiUaz9jTDa2t+rScDCktrpC8LujNqxfLy2tZK/EgER4vR3Vi2VX71kxVG/oZd9DWKiK2YJZ11tEvsrQbW9CojKolUao6OEjN2Xc56cINg81+H2+IQ6PWIJyshA/EnOYVSmKrV7SMpiPK02UYjzybBkXpAOYTbOo2w3dorwQOG+9XgIl7LsyH8ZFbMFlcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WWhWpQ+ego3iPQJMzCajpgHnE7T+zd1r2dyZhHBZP7U=;
- b=jVoqZv1Zl1bjDIHuNNaI64SAUQ55y7g2L7qLiDjuHhNOPTH5cEc4+qKLyI4FjY/ykYC1JVFRWQ5hy4ON2Pe3O6q8Ks3AE2oNO7n6XCVOGNt/k4KjkmQZHeqeFbho5xzhPZDw1aA2bv2SzpQXUyqPlVHpAsQpZsp7Yc2DmmYbxHU=
-Received: from BL0PR05CA0005.namprd05.prod.outlook.com (2603:10b6:208:91::15)
- by DS2PR12MB9663.namprd12.prod.outlook.com (2603:10b6:8:27a::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Wed, 12 Mar
- 2025 05:32:38 +0000
-Received: from BL6PEPF0001AB4E.namprd04.prod.outlook.com
- (2603:10b6:208:91:cafe::40) by BL0PR05CA0005.outlook.office365.com
- (2603:10b6:208:91::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20 via Frontend Transport; Wed,
- 12 Mar 2025 05:32:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BL6PEPF0001AB4E.mail.protection.outlook.com (10.167.242.72) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8534.20 via Frontend Transport; Wed, 12 Mar 2025 05:32:38 +0000
-Received: from [10.252.206.76] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 12 Mar
- 2025 00:32:34 -0500
-Message-ID: <7dae6c38-ce0d-4c91-84e4-9e6859cc0cf3@amd.com>
-Date: Wed, 12 Mar 2025 11:02:31 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] amd_iommu: Fix masks for Device Table Address Register
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
-CC: <pbonzini@redhat.com>, <mst@redhat.com>, <mjt@tls.msk.ru>,
- <marcel.apfelbaum@gmail.com>, <vasant.hegde@amd.com>,
- <suravee.suthikulpanit@amd.com>, <santosh.shukla@amd.com>,
- <Wei.Huang2@amd.com>, <joao.m.martins@oracle.com>,
- <boris.ostrovsky@oracle.com>, <sarunkod@amd.com>
-References: <20250311152446.45086-1-alejandro.j.jimenez@oracle.com>
- <20250311152446.45086-5-alejandro.j.jimenez@oracle.com>
-Content-Language: en-US
-From: "Arun Kodilkar, Sairaj" <sarunkod@amd.com>
-In-Reply-To: <20250311152446.45086-5-alejandro.j.jimenez@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4E:EE_|DS2PR12MB9663:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2845b1b1-bff6-48f7-0062-08dd61274d4e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|82310400026|376014|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bGRuNXk3MTlDZE9zY21HbkI1UDRQdk1ibStNVFlXUGJaVnFmZ05neE5QSG9Y?=
- =?utf-8?B?R2FGNnpNeE5weW1nTmFjZzN1RnZWRng3MTdURUZVT2ZJc1hSYjduY3lFaXpa?=
- =?utf-8?B?K2FNbmdDVUNLU1RPNnBzcUZRZXlpK1hyRzFBUVNlYXJZNG1uakFZbytQT2sw?=
- =?utf-8?B?YjFQOVBBYUgyRmNLL0pwV0JyaDR5YU8rSGlLWUh3Y01YQVNUanc3cnV2RExx?=
- =?utf-8?B?RFROOWFXclpQdkVqaTRpRWZWN21PYlNKK3BNbXlFb2s2d0F2cFNneTFSdDdY?=
- =?utf-8?B?bkhXM2ZPcVIrSU9XUllkYTF3SVNNT041SkU2c0ordS9vREloakNTdCtGOHZY?=
- =?utf-8?B?T0I5Sk4vR0VnSWpneHZRbSttc1hrczFGVzRuOFlIb1RKRDRvcWUxWVBUTVdJ?=
- =?utf-8?B?cWIwU01CTEhaVU11RFp4ZXhnVTl1Q1E1K1V2OXMvc01GdzEyY0dYdnR5dTg2?=
- =?utf-8?B?WGxnY1EvWDFaa1puTEN2SmV2dnJjQWgxeEVhOG1IQ3ZDNmdkZTUrbW5qN0lW?=
- =?utf-8?B?a2MrSnBydHg0QkxBU1Y1UTRBd1k0b204UTBTTkVTazl6QkVPekxkR25lOCtn?=
- =?utf-8?B?L1lIa002LzhlajhveWVwaTdIZWp3TjVmMGxFWjY4ZmNYR3Q0N0xzcGJlRUh3?=
- =?utf-8?B?UXUvSzBYSjVqaFBDSm1Ld3VoRXVndkJSenFzSHJOMWF2NDYrdEpzcGtmTkxv?=
- =?utf-8?B?MkFZS2drMjA0aDJra216dE92eEhxWFFzVjFDd0lDYi9UM0JZSXU3YTVlelY4?=
- =?utf-8?B?NHR3QkpUY0laZGpNcCtUVXI2MDZTbGtnNExFRDFocEVETzBmUk9pR0tlRVp0?=
- =?utf-8?B?anl0eWNyNzhsMUdWVEdOcFVPR0VZMnVMQ1AzU1NmRlRKTXlreHRHVU9nWG00?=
- =?utf-8?B?NzJDTUhhemxqdG5RQ0p4UmxGYnpxR01jcjhRLzhsVUFWUGRIdEZIWGhkT3Z3?=
- =?utf-8?B?cmVHYlFJTUdUbms1alZOaW5aUDR4eTJZakd3WTVpV29ReHhKcFpJc1dyVkVn?=
- =?utf-8?B?VG0vTnUzR01Gc09xMzYwL0xybXYzOVZqWm9KR1N2SHp0MW9OeFlKaS9DRTRp?=
- =?utf-8?B?bVZWaDQ2WXNOWDRzVXlLR09EaGlMYVIwbDVtYlg4eVhlTlVDSU5WaDE4eWE1?=
- =?utf-8?B?YXNMQzI5WUtiWjJmbk01RlU5ZEdiVlU2YTFIU3JwRkhnaEJKQUVXQ25nSVd2?=
- =?utf-8?B?VFBMTmd1U0ZlVktWb054VlNiLzJFcGRuTnhQMEdsWHRmWWxqRzEzekllRHpm?=
- =?utf-8?B?cmQ4RlE4bk8vd0J2TE5xV1NOTm5NUUVaWDF0Yzl4cG9QcTFBRSthN1JOWS9h?=
- =?utf-8?B?R3BqV1AzSjFJeFY4RFExdVQ2M2hBVHNxVm5XNGlFWThuVjI3bERZZ2U4SWFL?=
- =?utf-8?B?cnNueEVUZyt1cCtCN1daR1RtU3JHdlYzUWNxZmdvd05vY05ObS9lM0Z0THV5?=
- =?utf-8?B?U0g4VytuZzIrRFBCb0taVWQwVVdhd3l1YktJb3Ixd0UzMVoyVThqdkJYNmNy?=
- =?utf-8?B?cVNhV0Q5WTEwZEE4Rk9NOEdkWTJZT2ZmWGYrOVlMUTJSNWgxYTlJT29kcnlB?=
- =?utf-8?B?blQ3TndXZ3VBbGZCWHYrdGZQWFhjQnR5OGMyczJQRmVONGZNdXZrQk5qdzdt?=
- =?utf-8?B?WnM3VzN4SG9yVW4rbnhCNktVU0lDT29zejMzbEZVQTR5b2x3RVJqb3VnSzRl?=
- =?utf-8?B?c1M0TzNZMm9oRzR1aDBwSFJPRTFtTUlPc0NRV0d5ZlM5ZGhIZFpxeUNOc1Ba?=
- =?utf-8?B?N2t5dkVPa2VHNzRCeDFxMzBKd1k1SUlQQjg3Ynl2c3ltcmxnV3VpQ0tmSGlz?=
- =?utf-8?B?K1hudk1zQVByWkV4bHIyT21hMWdaWWtQUjNlK0Z1OEtQVUIxYmxBQTJ3L2xV?=
- =?utf-8?B?T1ZaOThleEJGNDVGTzRvMGVmc3dVUnZhUTgvOVFxdUxFSTAvWFBGNjZMTFk0?=
- =?utf-8?B?aVgyc1dWenpHN3dvbmdSRjN4UmNlN2RSMlExUlYxUXZ0T3Q3T0lQZnBYYkdl?=
- =?utf-8?Q?q2CBAZ8Ak1Frv6ZqS/UXLuGbPSbvSU=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014)(7053199007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Mar 2025 05:32:38.4742 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2845b1b1-bff6-48f7-0062-08dd61274d4e
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4E.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9663
-Received-SPF: permerror client-ip=2a01:111:f403:2417::628;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsF2h-0004n1-Oy
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:54:11 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsF2e-0002Pn-Qg
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:54:11 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2ff187f027fso952705a91.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 22:54:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741758846; x=1742363646; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Nyses4+dwJXKoHGNcFkWWEIP7CgKXhFWc+BRHrXV89s=;
+ b=UmhfiZd2wmiPEjSboz37k10eU9OvGeA4TT+J1/V4Jb4Db3bWYfSuhgNslDF7TRKNFb
+ YNG+16wu8z13p4Caje997CsZFG1OtgNLg48R6p6vQT4SVfCqhMFRDYbUGRpCa2d4GJfs
+ KbQHWEsqN0UlsXx+t1DFrsqdcNcRJP0bYpfpV6KdSGzQSJdCAKStPq9mvikYpBI0HpZn
+ E+5HGgKXUpN7nuVCQARz/LROpccspeU2zf4UCs5fWDPge+5uJfe2HKbHKnq5XYs94cvT
+ LOiGflImk0Yq9ePNrPXYkBpdzwcfy5XYs80jlJo876z6yAlgxaq/BE0565Z23y0DhPcU
+ MEDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741758846; x=1742363646;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Nyses4+dwJXKoHGNcFkWWEIP7CgKXhFWc+BRHrXV89s=;
+ b=Xpm5ah353bM9GRGShTW06RL4c56KP5YPQoPDTNjBChJK0hXpTX/0S+dwCwGeK99cBo
+ yzCuQHyuPWnenUs7n3NS5uDI470jiujCxk6NkdoDRyeFLxtE7xpNnDIIZuMihT9OWNaL
+ H0lfjc+02x8los+o/nv6ygHycZD7GjgDs053PUmIM8zUutb+r9ovHrds/q1dtZLTueRh
+ vGKgDeUMm6wPJh5BVBIoja0yky47wF7ageLuG8MlWrUNfnWICfWtCQ+2gRd28HhxXrGo
+ 24LvpEFBu4sROCClLdbzKvHsC789F5En9fsjI929I5W6aZRgV6iqhOtBEw2Gd2WsX7xS
+ TjVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJMhgeXSQKppTAe6RklEVlZBwp3Oez4UomKCuR4KxXNvc61VkBi56aj2z7+28nkyiBo3qx0ln342qu@nongnu.org
+X-Gm-Message-State: AOJu0Yz3Fy593V9Q1ImIlFXHSHM5/t1ns07lELb50kZTPXtuMmuYKm8g
+ ajA/9K7rC23bhQuOat6+S8BOg3BO65L/FCr9JpcSbblZBF98AcYn
+X-Gm-Gg: ASbGncv5OBYNI6gyPIEFh8EMpzf5Y01IUIIkKCOXVW2Q4Yd+naFDbOgCqGu5GKBrAUM
+ QLAkg2fbO7l3j8E+uD8CQ2U3v4R8DOLanFX/jki8hHfmrmJOe+C+JnyhOyovYZTHOYpKRTa8tHM
+ teaifvZFY0QEjtnDq6+5liLhb1IJnMBmvenXGlP9CiIYIhMn0Zk7FDmA5K1tv9EG1pJH626Z2C+
+ /wZYT3h10ZWyIewMa9Oh+5ARpRZbBbYC0lLX/pZYZUcuduq2tBF3qMDmXI9+zhiT2t3G27JWyv4
+ XDQjho5rmUvQucnCZmG0qw9xVEz62oGSKUAOQRJy
+X-Google-Smtp-Source: AGHT+IFsUMjBl3de/9fQOa5gF8BQTJWpur4eiQne4pRX5URmRPzEZYbipKmH3k9R2q3Hq6PVIhdLsQ==
+X-Received: by 2002:a17:90b:5206:b0:2ee:8cbb:de28 with SMTP id
+ 98e67ed59e1d1-30100528c7emr9199867a91.8.1741758845492; 
+ Tue, 11 Mar 2025 22:54:05 -0700 (PDT)
+Received: from localhost ([118.208.151.101]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22410a8103esm108000305ad.146.2025.03.11.22.54.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Mar 2025 22:54:05 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 12 Mar 2025 15:54:00 +1000
+Message-Id: <D8E1Z9A6YNXM.25RJW09GTA0QD@gmail.com>
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [RFC PATCH] tests/functional: Don't fail any precaching errors
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>, "Thomas
+ Huth" <thuth@redhat.com>
+X-Mailer: aerc 0.19.0
+References: <20250311131327.903329-1-npiggin@gmail.com>
+ <Z9A8swNn6zBm57jC@redhat.com>
+ <e019f7fe-8b36-4a50-89d4-409754c91030@redhat.com>
+ <Z9BEfc1l_K_g85hc@redhat.com>
+In-Reply-To: <Z9BEfc1l_K_g85hc@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,62 +103,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed Mar 12, 2025 at 12:11 AM AEST, Daniel P. Berrang=C3=A9 wrote:
+> On Tue, Mar 11, 2025 at 02:55:25PM +0100, Thomas Huth wrote:
+>> On 11/03/2025 14.37, Daniel P. Berrang=C3=A9 wrote:
+>> > On Tue, Mar 11, 2025 at 11:13:26PM +1000, Nicholas Piggin wrote:
+>> > > The NetBSD archive is currently failing part-way through downloads,
+>> > > which results in no clean HTTP error but a short transfer and checks=
+um
+>> > > error. This is treated as fatal in the precache download, and it hal=
+ts
+>> > > an entire set of tests even if some others could run.
+>> > >=20
+>> > > I hacked up this patch to get a bunch of CI tests going again for pp=
+c
+>> > > merge testing.
+>> > >=20
+>> > > Don't treat any precaching failures as errors.
+>> > > This causes tests to be skipped when they try to fetch their asset.
+>> > > Some CI results before/after patching:
+>> > >=20
+>> > > functional-system-fedora
+>> > > https://gitlab.com/npiggin/qemu/-/jobs/9370860490 #bad
+>> > > https://gitlab.com/npiggin/qemu/-/jobs/9373246826 #good
+>> > >=20
+>> > > functional-system-debian
+>> > > https://gitlab.com/npiggin/qemu/-/jobs/9370860479 #bda
+>> > > https://gitlab.com/npiggin/qemu/-/jobs/9373246822 #good
+>> > >=20
+>> > > This is making the tests skip. Is there a way to make the error more
+>> > > prominent / obvious in the output? Should they fail instead? I think
+>> > > there should be a more obvious indication of failure due to asset so
+>> > > it does not go unnoticed.
+>> > >=20
+>> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> > > ---
+>> > >   tests/functional/qemu_test/asset.py | 9 +++------
+>> > >   1 file changed, 3 insertions(+), 6 deletions(-)
+>> > >=20
+>> > > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/=
+qemu_test/asset.py
+>> > > index f0730695f09..3134ccb10da 100644
+>> > > --- a/tests/functional/qemu_test/asset.py
+>> > > +++ b/tests/functional/qemu_test/asset.py
+>> > > @@ -174,14 +174,11 @@ def precache_test(test):
+>> > >                   try:
+>> > >                       asset.fetch()
+>> > >                   except HTTPError as e:
+>> > > -                    # Treat 404 as fatal, since it is highly likely=
+ to
+>> > > -                    # indicate a broken test rather than a transien=
+t
+>> > > -                    # server or networking problem
+>> > > -                    if e.code =3D=3D 404:
+>> > > -                        raise
+>> > > -
+>> >=20
+>> > Why are you removing this ? The commit above does not make any referen=
+ce
+>> > to the problem being a missing URL (404 code). We want missing URLs to
+>> > be fatal so that we identify when images we rely on are deleted by the=
+ir
+>> > host, as that is not a transient problem.
+>> >=20
+>> > >                       log.debug(f"HTTP error {e.code} from {asset.ur=
+l} " +
+>> > >                                 "skipping asset precache")
+>> > > +                except:
+>> > > +                    log.debug(f"Error from {asset.url} " +
+>> > > +                              "skipping asset precache")
+>> >=20
+>> > So is the bit that actually deals with the exception you show in the
+>> > jobs above.
+>> >=20
+>> > Best practice would be for us to define an 'AssetException' and use th=
+at
+>> > in assert.py when raising exceptions, or to wrap other exceptions in c=
+ases
+>> > where we propagate exceptions. Then this code can be move tailored to
+>> > catch AssetException, instead of Exception.
+>>=20
+>> At least we should distinguish between "HTTP server bailed out early" (i=
+n
+>> which case we should likely skip the test), and "checksum of the asset d=
+oes
+>> not match" in which case we should rather fail the test since this is a =
+hard
+>> error that needs to be tackled if the file has been changed on the serve=
+r
+>> (otherwise this would go unnoticed and the test will never be run).
 
+Yes, at least doing that would take care of this particular case. You
+might like to have that case in the retry loop too, if possible.
 
-On 3/11/2025 8:54 PM, Alejandro Jimenez wrote:
-> The size mask currently encompasses reserved bits [11:9]. Extract only the
-> corrects bits encoding size (i.e. [8:0]).
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> ---
->   hw/i386/amd_iommu.h | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-> index 8d5d882a06..2c5c8c70f1 100644
-> --- a/hw/i386/amd_iommu.h
-> +++ b/hw/i386/amd_iommu.h
-> @@ -68,16 +68,16 @@
->   
->   #define AMDVI_MMIO_SIZE               0x4000
->   
-> -#define AMDVI_MMIO_DEVTAB_SIZE_MASK   ((1ULL << 12) - 1)
-> -#define AMDVI_MMIO_DEVTAB_BASE_MASK   (((1ULL << 52) - 1) & ~ \
-> -                                       AMDVI_MMIO_DEVTAB_SIZE_MASK)
-> +#define AMDVI_MMIO_DEVTAB_SIZE_MASK     GENMASK64(8, 0)
-> +#define AMDVI_MMIO_DEVTAB_BASE_MASK     GENMASK64(51, 12)
-> +
+I don't suppose the API can resume fetching from an offset and it might
+be getting overkill to care so much, but that does allow the client to
+see the error (wget attempts again after short xfer then gets a 503).
 
-Use MAKE_64BIT_MASK here as well.
+> In theory we are already distinguishing those cases. In the logs above,
+> the stack traces come from a part of the code that indicates we have
+> successfully downloaded the asset and now try to validate the result
+> and failed.
+>
+> If the connection is terminating early, then our logic at:
+>
+>                 with tmp_cache_file.open("xb") as dst:
+>                     with urllib.request.urlopen(self.url) as resp:
+>                         copyfileobj(resp, dst)
+>
+> does not appear to be seeing a fatal error, otherwise we would
+> have seen the log from
+>
+>             except Exception as e:
+>                 self.log.error("Unable to download %s: %s", self.url, e)
+>                 tmp_cache_file.unlink()
+>                 raise
+>
+> and would never have got as far as comparing the checksums.
+>
+> So I'm wondering if 'copyfileobj' is not reliable in detecting
+> premature termination of the http connection before all data
+> has been sent.=20
 
->   #define AMDVI_MMIO_DEVTAB_ENTRY_SIZE  32
->   #define AMDVI_MMIO_DEVTAB_SIZE_UNIT   4096
->   
->   /* some of this are similar but just for readability */
->   #define AMDVI_MMIO_CMDBUF_SIZE_BYTE       (AMDVI_MMIO_COMMAND_BASE + 7)
->   #define AMDVI_MMIO_CMDBUF_SIZE_MASK       0x0f
-> -#define AMDVI_MMIO_CMDBUF_BASE_MASK       AMDVI_MMIO_DEVTAB_BASE_MASK
-> +#define AMDVI_MMIO_CMDBUF_BASE_MASK       GENMASK64(51, 12)
->   #define AMDVI_MMIO_CMDBUF_HEAD_MASK       (((1ULL << 19) - 1) & ~0x0f)
+It seems not. I posted a new series that tries to handle it. And
+adds a new asset specific exception.
 
-I think its better to modify remaining mask fields as well (*HEAD_MASK 
-and *TAIL_MASK). That way everything is consistent.
-
->   #define AMDVI_MMIO_CMDBUF_TAIL_MASK       AMDVI_MMIO_EVTLOG_HEAD_MASK
->   
-> @@ -95,7 +95,7 @@
->   
->   #define AMDVI_MMIO_EXCL_ENABLED_MASK      (1ULL << 0)
->   #define AMDVI_MMIO_EXCL_ALLOW_MASK        (1ULL << 1)
-> -#define AMDVI_MMIO_EXCL_LIMIT_MASK        AMDVI_MMIO_DEVTAB_BASE_MASK
-> +#define AMDVI_MMIO_EXCL_LIMIT_MASK        GENMASK64(51, 12)
->   #define AMDVI_MMIO_EXCL_LIMIT_LOW         0xfff
->   
->   /* mmio control register flags */
-
-Regards
-Sairaj Kodilkar
+Thanks,
+Nick
 
 
