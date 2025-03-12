@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F39C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3532C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 15:25:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsNN6-00059d-FE; Wed, 12 Mar 2025 10:47:52 -0400
+	id 1tsNYs-0006rE-59; Wed, 12 Mar 2025 10:59:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsNMr-00053o-3f
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:47:38 -0400
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ id 1tsNYl-0006qc-H0
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:59:54 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsNMp-0005oG-1K
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:47:32 -0400
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e5372a2fbddso5834777276.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:47:29 -0700 (PDT)
+ id 1tsNYa-0006U8-7z
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:59:51 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-476a720e806so13267051cf.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741790848; x=1742395648; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=06FnvgG3rM4FtufdBNIaXT+xc/OxiQgdRXMeHIDggDg=;
- b=jInK8wBsJ1nlLt8e2kjBHAtsco2NU66+hrdt3uuKyHXoTsVJ++lZSaFx8bD435pcAf
- hEgWdqA1EOECBxP9NN3OIl2nEXln8/jihcb4rg/WhjUCxnhZBw46uG+vNdLhSZ9xqon/
- i+N/z8yQAnOSPyCY/GEsXkZLFDur0xytklYZ1vZuMXjHPgyLlBR9F266paqrn2Hi4ecv
- xoxs6JK950FeH9NNVMnDh6F9nAEKlQPU3PJolDQ+legcbgT71S3uAthPkTY+/BXhaRjD
- 2SVahbh7lgtM2dJeB6cUvp86gPNtXjlPJMIyvwf/BEUvN376MAVOpqcqERil99rqTCBG
- OoUg==
+ d=linaro.org; s=google; t=1741791573; x=1742396373; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7AwENeVv0I8y2TSpE5n+n0G9tTTO3yGcDWhy5ls1Sww=;
+ b=K8ulZRA8Br35yRusUAmboTNXp5731ymRa1D7/rTPx9tg2iCOtWtC2mldND0OeObiA0
+ 4QXDDGDeIApOTZrUq2BZ/lhwehGyrQLOfm/e4EuGpO33hfwumbdO17R2QGliIo7zD9sd
+ pCefJ33vyO4TJ3uKYaBaz3pFAiALpcKb4SAniiEwveepOs4kHgz3fpTE++p6qnJBR8b4
+ 3xlaN7yQ/7ycTgi3sBaZnHEw/XtYZ5Rmi3bv+h6Qb86L/anuks3M7UrFQFntf7PyIyYP
+ icGcEKtT+/5hydg+2eii+eKUdK0bPRZE/+E/8xdK2agX1VXCtl1P1/6jl79YXMAsL4HX
+ SZkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741790848; x=1742395648;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=06FnvgG3rM4FtufdBNIaXT+xc/OxiQgdRXMeHIDggDg=;
- b=qZF48aKAP1UsEohXfKQRZD8i/dlUeFzHo9x9r2zsgrHodKYSLvLEr1R1aFQF9zjndK
- WH3i7fmQw0p6Y58BPQV8JwWX4kI3sCXQI5OXLpv4lD3J5o9nbzjF846wtsUjY0RuyKdn
- WSTvxzZnjKYGmJMQN5Hdc0n13DP8+Ku3rPQahEo9PpGV/Kbu+kQJLfem6Lx+egd/Y+HH
- UGm9snveZ+u2LrskH/IOEZpIcHaZG9VMNMVNSdhgwC+1Im1oP9+ijmC3QABr3exRDQqC
- uulDP5VuWSu162qH2YV2fRsqqXchKyo54T5WrMze8HkmSCGzH3UwNjIdZSylMrE2yPHx
- 2dGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXB/zwXOoAzQDj72YrGHFzysO5wqMFYzelSybIcRmSY4u2FaOyK6MOcFakdLcDJj/zLigDnLFuaYkFu@nongnu.org
-X-Gm-Message-State: AOJu0Yy/otXodmYyRf7NEZUClmfaYeL4K49xQcQ/y/eKBA9wDdjkbx4g
- qvrX7aYrHqJ60IK8+M2QaKg+O6NiU13gzTKfiIxSGNN+H/VeD4v1o81fUbDio3wfi//Z5u2y1I/
- b3I4BiUFkmof3uok6EjI7yd+T0KyM2gtpHos1HQ==
-X-Gm-Gg: ASbGncvKrZ5dlHHY42AFfot4A/MJcmzhYmh9bbqf4RzsazRL9NEM8jybDDxFPY2nIDC
- ALAuRi7qsqtQFSrcsqSXAx8e/jhKQiMm1X7neDuGl4wpTeUkL3fplilUiaa8rr7xqKpjMTu7SuF
- rYZflrZ87G1QP/lYqe5nbJ/j2l/hE=
-X-Google-Smtp-Source: AGHT+IEPjNfimaQHLtz9I27sQc7Rq8BkZyMIIwWjAuBqluC9KlFM8GYMdyQ44zl9l+60ahfgxeUeObvw+gGiZguk3JE=
-X-Received: by 2002:a05:6902:228f:b0:e5d:c68c:3547 with SMTP id
- 3f1490d57ef6-e635c10158fmr27663635276.4.1741790848341; Wed, 12 Mar 2025
- 07:47:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741791573; x=1742396373;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7AwENeVv0I8y2TSpE5n+n0G9tTTO3yGcDWhy5ls1Sww=;
+ b=fIPj0arhg6F3/7OR1aUTSR0LQ2m04q2P0lt5vD08I9WedIZtjh7OJQ3SQPFuDG6OuA
+ 299yVmZIzaRwU6krX1FvdB4xs+Gl66BTIAnfxINwCOzek1geQ86lrxt46Ita6GJi0Bgi
+ 4SVWpEo7gXTVpIpJV8hE89yrxAmCDNrMbIjKh2oipjQrBDjy5yQXhRVPn3A6wFqX6je5
+ eVzj8zLDs7AGGP6CXapux/TS8kOOLdPAgWqI5K7t2OS7IwUXpHfflJdJKMQq5Cq8PlPG
+ 6SGf0CWs8xfOvmHYsqiVsKFdXjhrDyYLbnpvea2JGyxBwkXBNR/towqIIMcFGayvqdFV
+ tMwA==
+X-Gm-Message-State: AOJu0Yz9c4Wc1IT+sYdaGA9sCfddXfmvoU73OaFh7KovFCfOUF4xbS0y
+ CISiPrBXK8U2ptLU9ekIT4hvVvyRFsg+k7NhgZUfiaL8VJUQXsSlPVwOGdIN1uFxvdM/GT0Xcp7
+ 8lusLVb7iVduMwmCWV8++gTCo+Zeatz9oZs+h9phsGs4q9EJV
+X-Gm-Gg: ASbGnctsSrxvNc8SePEL6yAnx/02aISXIEvlXtUE0xhjbhlCqZatlwZvrIFuLuIF75z
+ hMQ1T9UEdevEMXH59oxQFmzn1QJQRL4Fxb6q6MnddSONycwLRkAG86ijsGDiSulbNcdTJPW8eDP
+ jklHdkQlwpIFy+RcvPQfIpFUQdkvA=
+X-Google-Smtp-Source: AGHT+IEO9YPpS5s3Bb+hYO1dwFTwGfYHFii0HdVFcPbdrKJyhzHFma/pZU9k3dxq1ZlTZi0YiRsYkR7naFUgj5GuBmU=
+X-Received: by 2002:a05:6902:4886:b0:e58:cbe:75a1 with SMTP id
+ 3f1490d57ef6-e63b5158785mr9634412276.4.1741791052153; Wed, 12 Mar 2025
+ 07:50:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
- <Z9GUldol1IQT1uiY@redhat.com> <Z9GY3l2pTkbpMV8L@redhat.com>
-In-Reply-To: <Z9GY3l2pTkbpMV8L@redhat.com>
+References: <20250312143504.1659061-1-armbru@redhat.com>
+In-Reply-To: <20250312143504.1659061-1-armbru@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Mar 2025 14:47:16 +0000
-X-Gm-Features: AQ5f1JojA9M_Rj6ymmqDosFl7zgc6ByL4pUEMqwZOBNxPHDDOM3DbV7guycCp8Q
-Message-ID: <CAFEAcA9+i8kKtWb3Z=ZWKdgJ1puzLdf_ek=oMYRyJX4WXPU5+g@mail.gmail.com>
-Subject: Re: Cross-compilation artifact is broken
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Konstantin Kostiuk <kkostiuk@redhat.com>, QEMU <qemu-devel@nongnu.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Yan Vugenfirer <yvugenfi@redhat.com>
+Date: Wed, 12 Mar 2025 14:50:41 +0000
+X-Gm-Features: AQ5f1Jr-6gjitrew8PIxelZh0oGgPDcDU9q27urSvGaBkeYxm6ITxFBaNVvriR0
+Message-ID: <CAFEAcA9NLE3+AXkWFhRRyAKXpPiwL+2zK+ATx=K85BNoqEwCRw@mail.gmail.com>
+Subject: Re: [PATCH] error: Strip trailing '\n' from an error string argument
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, gaosong@loongson.cn, 
+ vladislav.yaroshchuk@jetbrains.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-qt1-x82f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,77 +92,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025 at 14:24, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
+On Wed, 12 Mar 2025 at 14:35, Markus Armbruster <armbru@redhat.com> wrote:
 >
-> On Wed, Mar 12, 2025 at 02:05:09PM +0000, Daniel P. Berrang=C3=A9 wrote:
-> > On Wed, Mar 12, 2025 at 03:52:45PM +0200, Konstantin Kostiuk wrote:
-> > > Hi All,
-> > >
-> > > I cross-compiled qemu-ga from current master branch
-> > > (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavior=
-.
-> > >
-> > > Configure CLI:
-> > > ./configure --disable-docs --disable-system --disable-user
-> > > --cross-prefix=3Dx86_64-w64-mingw32- --enable-guest-agent
-> > > --disable-guest-agent-msi --disable-qga-vss
-> > > Build CLI:
-> > > make -j8 qemu-ga
-> > >
-> > > Linker wrote the following information but exited with 0 code:
-> > >
-> > > /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32=
-/bin/ld:
-> > > qga/qemu-ga.exe:/4: section below image base
-> > > /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32=
-/bin/ld:
-> > > qga/qemu-ga.exe:/24: section below image base
-> > >
-> > > As a result, this binary failed to start on Windows without any detai=
-ls,
-> > > just a message that the application is not compatible. I also tried t=
-o run
-> > > it with wine and got the error:
-> > >
-> > > wine: failed to start
-> > > L"Z:\\home\\user\\Documents\\repos\\qemu\\build\\qga\\qemu-ga.exe"
-> > > Application could not be started, or no application associated with t=
-he
-> > > specified file.
-> > > ShellExecuteEx failed: Bad EXE format for
-> > > Z:\home\user\Documents\repos\qemu\build\qga\qemu-ga.exe.
-> > >
-> > > I bisected the tree and found the commit that caused the problem:
-> > > https://gitlab.com/qemu-project/qemu/-/commit/563b1a35ed1f1151505d4fe=
-5f723827d1b3fd4bc
-> > >
-> > > Adding --disable-split-debug to the configure CLI fixes the issue.
-> > >
-> > > $ x86_64-w64-mingw32-gcc --version
-> > > x86_64-w64-mingw32-gcc (GCC) 14.2.0
-> > >
-> > > My question is, is this expected behavior or is this a bug?
-> >
-> > Your configure args don't include "--enable-debug", so I would
-> > not have expected -gsplit-dwarf to have been enabled, so I'm
-> > surprised that commit casued a problem.
+> Tracked down with scripts/coccinelle/err-bad-newline.cocci.
 >
-> Hmm it appears that the meson  "get_option('debug')" is entirely
-> unconnected to QEMU's --enable-debug configure flag, which I did
-> not realize.
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  net/vmnet-common.m | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> IOW, we've got -gsplit-dwarf enabled by default for everyone
-> building QEMU, which feels dubious. IMHO only an explicit
-> --enable-debug configure arg should have triggered it.
+> diff --git a/net/vmnet-common.m b/net/vmnet-common.m
+> index 54d900ba67..ab33ce2b0c 100644
+> --- a/net/vmnet-common.m
+> +++ b/net/vmnet-common.m
+> @@ -94,7 +94,7 @@ ssize_t vmnet_receive_common(NetClientState *nc,
 >
-> In addition since its breaking Windows builds, it appears we
-> need to block its usage on Windows.
+>      if_status = vmnet_write(s->vmnet_if, &packet, &pkt_cnt);
+>      if (if_status != VMNET_SUCCESS) {
+> -        error_report("vmnet: write error: %s\n",
+> +        error_report("vmnet: write error: %s",
+>                       vmnet_status_map_str(if_status));
+>          return -1;
+>      }
+> --
 
-Agreed, but also this seems like a bug in the Windows toolchain
-here: if -gsplit-dwarf is valid for Windows then it shouldn't
-produce bad executables, and if it's not valid then the compiler
-should produce an error if it's provided (or ignore it, maybe).
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
 -- PMM
 
