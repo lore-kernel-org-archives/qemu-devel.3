@@ -4,82 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF9AC28B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 11:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31900C28B30
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 11:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsK1X-0002LU-TF; Wed, 12 Mar 2025 07:13:20 -0400
+	id 1tsK2E-0002wT-Tb; Wed, 12 Mar 2025 07:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsK1W-0002JP-DN
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:13:18 -0400
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ id 1tsK2D-0002po-0N
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:14:01 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsK1U-0007dq-Dl
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:13:18 -0400
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e53ef7462b6so5889279276.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 04:13:15 -0700 (PDT)
+ id 1tsK29-0007n2-Ty
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:13:59 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e5372a2fbddso5639577276.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 04:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741777992; x=1742382792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741778036; x=1742382836; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=216R3qeW4b5D9kzHf0a2eU4eLYUhDR+YtQz4Cr5GQKg=;
- b=aZljJoXJrAlU4gOHcrBmBGWbPdll4Vruah4brHiwgm5RTDeXL9HHQhmO6iPoP4/pwI
- dV71r6sS3v7+LTgxNtlMta8qcZHohp5F/AtP6yzvKdpnv0lcj60PKXQZFGjc+TBmtwG6
- lE4G48T28Hv1VI/KNHEdBWtHI1ImKMGJ5CZLEUoLZvFsdCuxNKHueHBMRQCBvbYOmlhJ
- l+f9y4FwUvLzyn8CdrmZHEBTT0d8JjB6oMAJ4GEfnFOryrA3pb13hIel5dXH+VhXzqB4
- A3S3l5zF8RVTMfjIMt+pAklZSC+f59+zGJ81VTJ55L+Y17cH59JhTEz/aJMVN4Mf+UPI
- AQQQ==
+ bh=VhzZB3cmCvqy+v6KBzdJC1uQTQ0w3MoyiUQS6HJITl8=;
+ b=mG7jyZMNLPfOEzZv/JOcSrwPcSMY8rGybIU0LD7Pkmu93K0VXWbhg1S5cU9ZX+ltab
+ wEZ5VTUxMjEwxd/3jNITBfR6cVOJfI/WRf0YcRVWpV+/7ztp7T3Qipm/uIBkV71FhtCh
+ NvdQWZ5DtJYBPm6kx+Mo+DZGqF9wMW7K2WJJSHNHTAOeOsgG3pMUR/QAfyR7ZzGZZr/m
+ c0OWX9g6uk3A6BNyA93C8nLv7QBa5PQ6L28OECfH8JeSfyipOObzppY1xkRvgu+FqwO6
+ cWFIpp4Xjxl74uira3bfj2R/VGx7xEb2Sd/cW0J2gbeEJgaGrk5Gx119UUUJBbqQHllu
+ +stQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741777992; x=1742382792;
+ d=1e100.net; s=20230601; t=1741778036; x=1742382836;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=216R3qeW4b5D9kzHf0a2eU4eLYUhDR+YtQz4Cr5GQKg=;
- b=utEi9EIzB78zy5aXQ0V8AUjf2fq3cO9qecjvtVRA8tPAsmOiX7k16tpjhGF5XwUfjp
- TlID6oxtp3VliTfLwqO4UsvVbLvKEiwP61iVuLyxYdAzQm416I/YAotlphJEPwi8K91h
- D+x3MS7BUAayLig7OZQdDipWjlJ2K/Kv0IFHPpdJPpKrUDLHMipPcItwfEEzWv1Vwiyw
- kBtDeV8BZe5i6Ld6+FQRZLQtpzgqiX6/qAKExSlWVn0Ps4CtNlmkcerTDih6Gzt7NuTE
- oD6daNueHFT3b1/62hKsPTtwagSIpel5ZmWcqaAS3uzUeaPd+o1beCFpm2l/qKh28NNI
- mQCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZgkOGirbilhfz0gRoxkqDKMUc/RY/fAvohT8vSTVRm19k9eyHYIhAIZaSqTWdRRIz9u6YwmOs7Exx@nongnu.org
-X-Gm-Message-State: AOJu0YxFeEac44dK0C4/dLuBFglUwWiL/oZATFVCsqI36fykaAEYAkgp
- wP/pQ6nNeaVQ3AvEzoZKp6cwcxnfibvyF0C2RwO57WXVpYDwyO4EFTHGnIfYT0j3qGZOoK08bGo
- 62V1zeCJW3QJK+nAJH1GXnhDSCAn3hSdCekchlQ==
-X-Gm-Gg: ASbGncu19LQFPGlXUP7ojfKluSfNAZ/bNRUg5O90pNwQ9Q4ZDD+wnuk5E5q9vYfaA1r
- eDbitYXq2EZWicYcr5dZR5laxiPbOYHkhtI6aNHOo5c858nCD7WrkmN45afxC72fnKhKCaP/R2d
- ywihAsQA7ML0WUerQe3wn6Dbijc1k=
-X-Google-Smtp-Source: AGHT+IHrwuNbom//YqCUKIPRyMu1gpkUWwkNdAKOldTlWp2ciLUpGl4v1RYbHTi73WwFo2oI8/H82SHfgVjA1Lgyt50=
-X-Received: by 2002:a05:6902:1886:b0:e5d:b88a:5536 with SMTP id
- 3f1490d57ef6-e635c1f9fb3mr27291694276.44.1741777992600; Wed, 12 Mar 2025
- 04:13:12 -0700 (PDT)
+ bh=VhzZB3cmCvqy+v6KBzdJC1uQTQ0w3MoyiUQS6HJITl8=;
+ b=p3YFoCPZYJEkYxHcHNP6f/Jd8Kdxfu4Rlk/dOvwJ4r6uRKLB/MCkZYsP1QXHZbbsDT
+ 1qPXlsuHFmZaPoy3pTzR1LPGQzOJodSv982SKl1N0X6Tnmpv/lr1JV7LY6cDntaHduY7
+ x0Qt62IL/NvxN3W2AUVfQ8Z7FV9/HsPw1/Y/DAYapZflgYnVs6z8UtROmkoZCqtDJCR1
+ fAwyFLawh5zL+kc8UnHN856S9V8h9n06RrU7eBlvhOaSr3SZoqf/NSCuAkTyPc9akGtK
+ pAveuq3g1WNSgCXVX5FvmuEfPuCAEZa7AvxGqa98VvJsBIXiTZOmXklimR+CGlRpn1iL
+ Xm0Q==
+X-Gm-Message-State: AOJu0YySAb/n1XAqv9+O5cNgLC4CGE9pMIqVUnzULQVu9uP2Xtmwp17V
+ wlW8YtU/Mgm6vrIk2QvQd7fgccybc5BaSnhO29wbbBqzN77V9f7gFUrZkBUjF2jqNMrNNMZsCQW
+ azK62l41OFhK9LUtpacQqst8KJ52uNRnfufL4Dg==
+X-Gm-Gg: ASbGncv06H14lOdO+P6G5Q+mOtIHSrhfKlrdoW/T/ElkCso875vzjYl7c+8OZdSSr9R
+ PqSi0Wx1VQDVU46ldbTXBwNawjRqpIeGNdBTNPEn5zW7DHzg9AZPsPd0SDgBwvhBEBUZbZmOngP
+ Qusi6Dk63pnUzS853ZEjqdq3QaAeQ=
+X-Google-Smtp-Source: AGHT+IE/ZBLwSu76pVIObIiyVtV9SxruaUTP4iIDLHmgLyTbnKmKApSKsklsgHNCAkt0dYW6GcjQiAD3zgSW3qR2jxs=
+X-Received: by 2002:a05:6902:2a8b:b0:e5d:c6e8:2e32 with SMTP id
+ 3f1490d57ef6-e635c179f67mr21203049276.24.1741778036002; Wed, 12 Mar 2025
+ 04:13:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250225180510.1318207-1-peter.maydell@linaro.org>
- <20250225180510.1318207-32-peter.maydell@linaro.org>
- <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
- <CAFEAcA-JgjX2U3wQ47X5JQ2SU1yMpx=0rWkctbj40w0Xjufpmg@mail.gmail.com>
- <e7640bea-5bb7-4f4b-8614-ed8d521dd7a5@linaro.org>
- <0261bcf8-d01d-4f63-9edf-f572519dd8af@kaod.org>
-In-Reply-To: <0261bcf8-d01d-4f63-9edf-f572519dd8af@kaod.org>
+References: <20250312104821.1012-1-philmd@linaro.org>
+In-Reply-To: <20250312104821.1012-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Mar 2025 11:13:01 +0000
-X-Gm-Features: AQ5f1JoO_rOV7c1xonOdd5c8GntkXdCDb67tSaEWaZ5_LrYa2R_IcvDO9Tne5rA
-Message-ID: <CAFEAcA9YvYCmbzJmzV60McWTBNWt-mgkpnOpBY1_VE6_S+9W=g@mail.gmail.com>
-Subject: Re: [PULL 31/43] hw/arm: Add i.MX 8M Plus EVK board
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- Bernhard Beschow <shentey@gmail.com>
+Date: Wed, 12 Mar 2025 11:13:43 +0000
+X-Gm-Features: AQ5f1JoAta6Q4X12zfwZQgZSgicS89Jl6oI4HLAaekQPl3jhjy2waOywjSSNCPE
+Message-ID: <CAFEAcA_EL1M3ajqmJq8CO-t=q4KmY1z3UYiciCsKAmWWbCBe2A@mail.gmail.com>
+Subject: Re: [PATCH-for-10.1 v2] hw/arm/armv7m: Expose and access System
+ Control Space as little endian
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Tony Nguyen <tony.nguyen@bt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,49 +95,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025 at 10:44, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+On Wed, 12 Mar 2025 at 10:48, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> On 3/12/25 11:27, Philippe Mathieu-Daud=C3=A9 wrote:
-> > + C=C3=A9dric for Aspeed
-> >
-> > On 12/3/25 11:20, Peter Maydell wrote:
-> >> The bug is that this is directly inheriting from TYPE_DEVICE,
-> >> not from TYPE_SYSBUS_DEVICE. Doing the former is almost always
-> >> wrong, because it means the device is never reset.
-> >>
-> >> (It looks like we do this wrong for other fsl SoCs too,
-> >> but they're marked user_creatable =3D false.)
-> >
-> > IIRC it is deliberately that way for the Aspeed SoCs, because
-> > otherwise there were issue when building the multi-SoC fby35 machines
-
-Multi-SoC shouldn't have a problem with sysbus devices existing.
-They just mean that you can't use the convenient sysbus_mmio_map()
-function but have to be more careful with managing MemoryRegions
-in the different SoCs and using sysbus_mmio_get_region() to get
-a sysbus device's MMIO regions so you can manually map them to
-the right places.
-
-> AspeedSoCState was introduced long ago (2016) and the fby35 is "recent",
-> from 2022. I am not sure that's the reason.
+> We only build ARM system emulators using little
+> endianness, so the MO_TE definition always expands to
+> MO_LE, and DEVICE_TARGET_ENDIAN to DEVICE_LITTLE_ENDIAN.
 >
-> Regarding the reset, the SoC functions are sysbus devices and all have
-> a reset. The SoC doesn't have any. Maybe that's why we are not seeing
-> issues.
+> Replace the definitions by their expanded value, making
+> it closer to the Armv7-M Architecture Reference Manual
+> (ARM DDI 0403E) description:
+>
+>   The System Control Space (SCS, address range 0xE000E000 to
+>   0xE000EFFF) is a memory-mapped 4KB address space that provides
+>   32-bit registers for configuration, status reporting and control.
+>   All accesses to the SCS are little endian.
+>
+> Fixes: d5d680cacc ("memory: Access MemoryRegion with endianness")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Yeah, it works out in this case. But I think it is in general
-a bad idea to add new direct-inheritors from TYPE_DEVICE.
-If anybody needs to add a reset method to the SoC container
-object in future then they'll be confused about why it doesn't
-work, for instance.
-
-I think that in general people expect that TYPE_DEVICE is
-"devices are like this" and TYPE_SYSBUS_DEVICE is "if you
-also need the sysbus-specifics, most notably providing MMIO
-regions for registers". That's a totally reasonable expectation
-but unfortunately it's wrong, because a few key parts of
-"this is an internal device that we don't need users to create"
-are only in TYPE_SYSBUS_DEVICE.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
