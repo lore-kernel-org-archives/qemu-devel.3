@@ -4,122 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57922C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 23:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4EEC28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 23:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsVDP-0001UT-Hn; Wed, 12 Mar 2025 19:10:19 -0400
+	id 1tsVZ1-0005ZC-3Q; Wed, 12 Mar 2025 19:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tsVDM-0001UD-T5
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 19:10:17 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tsVDK-0007Ch-BX
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 19:10:16 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CMvLJ5031304
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 23:10:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- r/kLE1wKiEQl67dFs+bsQhHuXeOHb3l8qJDxoPGEZHc=; b=mqowgxd071HzhMKl
- c3zKivZCaPMJiAgdFXMGVPTdrbuP0TEiM4RE+BQBxl7hJxeZ07k2s92SMmrl4XuX
- hpcM8e9YucnOUvA3nQwaTlnnTMnF5jyN6VPcJ0PZv2R8ZvmgANCP/Pi/LSZ6YJm+
- 1eR1Z/Ol7zFjIBCdZcNGUTfy+J6wxGGV6VgIGEPpLj/wb7BTUtmsaSsy8/ziyLTo
- S9yb5euhGDqlVmfksXfU38vNQpKFMPCNWgkb1iLN97jCM9z/cnbsfu6HfT20Htxc
- lJlBxxdgjXBBv1PBG5MhBR2PPeLxFjOmJv4U6/2/BEtopx+GAxWwmuH9RKHdgCJ4
- BrYhQA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45au2qkwga-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 23:10:11 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-47685de2945so6223241cf.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 16:10:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsVYx-0005Yx-CY
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 19:32:35 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsVYv-0001QZ-6S
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 19:32:34 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39141ffa9fcso330394f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 16:32:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741822351; x=1742427151; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=L2336frrEJWJZ2vkJIPhw+qkWjmhleCm5i7KX3YOui8=;
+ b=s2/5+nn6bYnL15MfsRgYtMKIspgGBic2np8pMKb7yYgB6CaM/XTnfEzcEnxGG4LdSd
+ PTPaljrN/JvflCdshOoafaCIAcKwDJ4sTCIvAW6VbjiggxF90Goww3dgmRx7rapB3czw
+ nDQ+M8WIW/KUjhXa6KsXt9HFxpdB7bfFf0zJJecz7+GTsHTULV7puAU69127kb31PNun
+ t/LC/vMDfClvtU2AxQlO9L817vBIjL2jAVMElakBf6GTdHJI4qk1PeSKpOnRqVgrhIDr
+ 5dchOL6gsy8Q7i3IahhNwaCou6t5Ko3ty8rT0HgGqg9zOLio/ZBxhjn3dxFo318Crate
+ MoBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741821010; x=1742425810;
+ d=1e100.net; s=20230601; t=1741822351; x=1742427151;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r/kLE1wKiEQl67dFs+bsQhHuXeOHb3l8qJDxoPGEZHc=;
- b=WEzMcBAJ/YVWyJuA3KzowMt5UuBddtscmn8Jp+ZvwNiq87ofVvoLraVRzCEfcsUUAj
- ugLN+b/BeinUrrCZjOL5/Ohu4Jw/xB7n4yUAuuzXYXQCg9NByRX+W8ZDTUZDmlD9sn8t
- v9Ee2igV0KeC4hwmWMmdQVeghryiv0+CWR0jU1aBLl12ubY0+oz2L4455R5hvIYY66SV
- jAY9bTqnZMmR3FvAspm4igKYtxdHxam8HO0jHyO7n3Gh0RXI07uMUjCtbNhE3SCF6Nl+
- /b6NDauHFpPKl0w97B4FhceYw+fh9qhVsuvFyirFMbtq3FB86EL32wmUk6ULXoWQDSm7
- vYCA==
+ bh=L2336frrEJWJZ2vkJIPhw+qkWjmhleCm5i7KX3YOui8=;
+ b=EfFbVRXIb138l/FwQpwjvZS8wGanlkAYhST9WlCz/BfnbYiQ4qoBd5jnOTOWTkIHEf
+ VdXkHZIFSZeL8TmsVgLACAGsJzv9xtCL1BHyMG1xaHyvSiADsuAST9kmLEQJJS8ufSvE
+ yCjSQ+8WD/j3wwdBLHo/+f4UNVq65EeI0Z8SaxJbQuZ7kvj9lyoIoCwx0OCIySgUHA+s
+ hgdjkX0S/4XEow+DAPog/xZcebd1UvNJlbBnutgENuvICJXoz+vCOIeZmglCsaqiTr/J
+ 7uoSxtBZAUpC168h8wMWG2zXdvqN1hjP+4FOuAb8WlnRP0fCoE4cUkqVd+HfwOx2bWlA
+ cnZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUupexnSDcIDxx9qX7jP5FJntqYR+NdfoZCh2Vb8hDGCShvEwllElFsWafccHNElTLnnX48eDvSIwzV@nongnu.org
-X-Gm-Message-State: AOJu0YyJXYAY9LyPP0rQuV5QXsLDZp6HvpKOvW/oM6DjWKRPD05NS5T/
- uT9dDxkt0N2jQ9XwWev3VIWsb1KtOQPiMpmLLeeVi2b+4b51X63zsJqPcNo5yZV0IMfEHvA9t/Y
- nv7nQKbucU//8JBddwAxnHGS/GQYWfxv+lrkSGvF/mCTSHj56YMsn2A==
-X-Gm-Gg: ASbGncsUt7ZtOkusMHUgTBwBLF/G8juGGxZkeH/mt9E3u6m3Vveb4jk1MiwmS7wihQi
- 16PVb2V0wk5jvJhf6789YXPxx63Q72IxQCp7uQdBE/nGonIKrYpMFNlAWUSpXkl2ZYCrn+x27Ts
- bwhYJAeIHfus0Su4QxL8JJri3Y7UJjMhbzFK5/VbV0XDMuDtmF+qUOgDpRwZBVDjdZ8Ui0o693P
- hD+yfhZc9RsioSFSp/EeXGDghBi7ybDeXe3aGxslMmHqywVdMo5/36P4EEyrI4odCpZyYdZtBz+
- tUX0E8DeFgXPm70sL9/K/ll2AN5JPJ9XXzb8U7du1A==
-X-Received: by 2002:a05:622a:438b:b0:476:b022:457e with SMTP id
- d75a77b69052e-476b0224a6cmr43487731cf.34.1741821010303; 
- Wed, 12 Mar 2025 16:10:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqj4yzLR6sbFvTeHIh/A2FACic37CsURcIcKwf6x+vsi1CObpkr+Ck6a/956SW30cPJj4bOA==
-X-Received: by 2002:a05:622a:438b:b0:476:b022:457e with SMTP id
- d75a77b69052e-476b0224a6cmr43487501cf.34.1741821009915; 
- Wed, 12 Mar 2025 16:10:09 -0700 (PDT)
-Received: from [192.168.1.217] ([216.158.243.21])
+ AJvYcCW5OoeVuVxzoVXjZxtWODyohrRptD/ycZm1uESgWG5qNDXW6MeVHu8o14ttVeLHRarWE3ug7LXyKBMd@nongnu.org
+X-Gm-Message-State: AOJu0YzBkBd1JcJtY5DVt78FO8nAECUY0ANHdBPuYuBsnyXhG1K4TAcf
+ X2CYv3L3lVbL+H8cC3dmg7an8z48cuhHRRlAnuGDzRVEfiBeSmI5NsSXThtiIzM=
+X-Gm-Gg: ASbGncvjP5hE2oOGe8nU4jcBnjayuZzn24mDbE6dLKUlxWGgkouNbNyhmSAtNVXoCnz
+ WMAaIp3yYUugrCvyinVdCxgIiw5ibRRGqAgtFSyVuW30o9Kq9P3TgfIPkLGiicKM0tM6Kmexwex
+ ilCMfqNXA1BqPqax0ojv4nwdTD9c8nPZn5mEB9DPJnzXr9s86ipmuvLXMRC8fdIKktBhYjaTTPC
+ sTB+6eR3PIa93U6ibxLFzUfkrSs8Qv/L9uyvMrcwN6SM/d1ka+kFguUfJr1AUnT88alB56GdBD+
+ QjiYxkN4eyGzFic4CfpY/IbWAGBiMxdfJPjItnB1NVh1UP3owWlOsD+tLnV01a5CzLe+LbM2ZFq
+ Z1imkUYY8eA==
+X-Google-Smtp-Source: AGHT+IGzM2FgS+ISZmaSxPP6c6RxvDwQc28jrVVFjowma4xBjiw7eTDUpJzLuZD5W2SsXJzT1qP/QA==
+X-Received: by 2002:a5d:59a9:0:b0:390:ff25:79c8 with SMTP id
+ ffacd0b85a97d-392641c034amr10317045f8f.20.1741822350702; 
+ Wed, 12 Mar 2025 16:32:30 -0700 (PDT)
+Received: from [192.168.1.20] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-476bb82c73csm921121cf.79.2025.03.12.16.10.08
+ ffacd0b85a97d-395c83b6e87sm195266f8f.32.2025.03.12.16.32.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 16:10:09 -0700 (PDT)
-Message-ID: <b84bcd2d-9974-41f0-b9f5-2d416ed16d0d@oss.qualcomm.com>
-Date: Wed, 12 Mar 2025 18:10:04 -0500
+ Wed, 12 Mar 2025 16:32:29 -0700 (PDT)
+Message-ID: <6352d0c4-b74e-4d7f-bb23-395d000ab01d@linaro.org>
+Date: Thu, 13 Mar 2025 00:32:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 28/38] target/hexagon: Initialize htid, modectl regs
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, quic_mathbern@quicinc.com, ale@rev.ng,
- anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
- alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
- Brian Cain <bcain@quicinc.com>
+Subject: Re: [PATCH 34/38] target/hexagon: Add initial MMU model
+To: Sid Manning <sidneym@quicinc.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "Matheus Bernardino (QUIC)" <quic_mathbern@quicinc.com>,
+ "ale@rev.ng" <ale@rev.ng>, "anjo@rev.ng" <anjo@rev.ng>,
+ "Marco Liebel (QUIC)" <quic_mliebel@quicinc.com>,
+ "ltaylorsimpson@gmail.com" <ltaylorsimpson@gmail.com>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "Mark Burton (QUIC)" <quic_mburton@quicinc.com>,
+ Brian Cain <bcain@quicinc.com>, Michael Lambert <mlambert@quicinc.com>
 References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-29-brian.cain@oss.qualcomm.com>
- <44e23197-a2ec-4477-a4b8-a526f83e47c2@linaro.org>
+ <20250301052628.1011210-35-brian.cain@oss.qualcomm.com>
+ <fa38864b-8dfb-4475-9bb9-44e4a0657f68@linaro.org>
+ <DS0PR02MB948226A894C108BD0411E69EBED02@DS0PR02MB9482.namprd02.prod.outlook.com>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <44e23197-a2ec-4477-a4b8-a526f83e47c2@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <DS0PR02MB948226A894C108BD0411E69EBED02@DS0PR02MB9482.namprd02.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: wGC4-JC2HNE2gHJxhiv48W5gG4v9HGQq
-X-Proofpoint-GUID: wGC4-JC2HNE2gHJxhiv48W5gG4v9HGQq
-X-Authority-Analysis: v=2.4 cv=TIhFS0la c=1 sm=1 tr=0 ts=67d21453 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=jCaHSKOc8xwm4VrxeLAdIg==:17
- a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=xl6c0gYthU-HYvlUbuwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-12_06,2025-03-11_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- adultscore=0 mlxlogscore=999 mlxscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 suspectscore=0 spamscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503120166
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,60 +113,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 3/12/2025 2:19 PM, Philippe Mathieu-Daudé wrote:
-> On 1/3/25 06:26, Brian Cain wrote:
->> From: Brian Cain <bcain@quicinc.com>
+On 12/3/25 22:15, Sid Manning wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Sent: Wednesday, March 12, 2025 2:20 PM
+>> To: Brian Cain <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
+>> Cc: richard.henderson@linaro.org; Matheus Bernardino (QUIC)
+>> <quic_mathbern@quicinc.com>; ale@rev.ng; anjo@rev.ng; Marco Liebel
+>> (QUIC) <quic_mliebel@quicinc.com>; ltaylorsimpson@gmail.com;
+>> alex.bennee@linaro.org; Mark Burton (QUIC)
+>> <quic_mburton@quicinc.com>; Sid Manning <sidneym@quicinc.com>; Brian
+>> Cain <bcain@quicinc.com>; Michael Lambert <mlambert@quicinc.com>
+>> Subject: Re: [PATCH 34/38] target/hexagon: Add initial MMU model
 >>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   target/hexagon/cpu.c | 8 ++++++++
->>   1 file changed, 8 insertions(+)
+>> WARNING: This email originated from outside of Qualcomm. Please be wary
+>> of any links or attachments, and do not enable macros.
 >>
->> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
->> index 36a93cc22f..2b6a707fca 100644
->> --- a/target/hexagon/cpu.c
->> +++ b/target/hexagon/cpu.c
->> @@ -26,6 +26,7 @@
->>   #include "fpu/softfloat-helpers.h"
->>   #include "tcg/tcg.h"
->>   #include "exec/gdbstub.h"
->> +#include "cpu_helper.h"
->>     static void hexagon_v66_cpu_init(Object *obj) { }
->>   static void hexagon_v67_cpu_init(Object *obj) { }
->> @@ -290,11 +291,18 @@ static void hexagon_cpu_reset_hold(Object *obj, 
->> ResetType type)
->>       set_float_default_nan_pattern(0b11111111, &env->fp_status);
->>     #ifndef CONFIG_USER_ONLY
->> +    HexagonCPU *cpu = HEXAGON_CPU(cs);
->> +
->>       if (cs->cpu_index == 0) {
->
-> This doesn't scale to heterogeneous emulation.
->
+>> On 1/3/25 06:26, Brian Cain wrote:
+>>> From: Brian Cain <bcain@quicinc.com>
+>>>
+>>> Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+>>> Co-authored-by: Michael Lambert <mlambert@quicinc.com>
+>>> Co-authored-by: Sid Manning <sidneym@quicinc.com>
+>>> Co-authored-by: Matheus Tavares Bernardino
+>> <quic_mathbern@quicinc.com>
+>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>> ---
+>>>    target/hexagon/cpu-param.h |   4 +
+>>>    target/hexagon/cpu.h       |  13 +
+>>>    target/hexagon/hex_mmu.h   |  30 +++
+>>>    target/hexagon/internal.h  |   3 +
+>>>    target/hexagon/cpu.c       |  27 +-
+>>>    target/hexagon/hex_mmu.c   | 528
+>> +++++++++++++++++++++++++++++++++++++
+>>>    target/hexagon/machine.c   |  30 +++
+>>>    target/hexagon/translate.c |   2 +-
+>>>    target/hexagon/meson.build |   3 +-
+>>>    9 files changed, 637 insertions(+), 3 deletions(-)
+>>>    create mode 100644 target/hexagon/hex_mmu.h
+>>>    create mode 100644 target/hexagon/hex_mmu.c
+>>
+>>
+>>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
+>>> 34c39cecd9..7ff678195d 100644
+>>> --- a/target/hexagon/cpu.c
+>>> +++ b/target/hexagon/cpu.c
+>>> @@ -28,6 +28,7 @@
+>>>    #include "exec/gdbstub.h"
+>>>    #include "cpu_helper.h"
+>>>    #include "max.h"
+>>> +#include "hex_mmu.h"
+>>>
+>>>    #ifndef CONFIG_USER_ONLY
+>>>    #include "sys_macros.h"
+>>> @@ -283,6 +284,18 @@ static void
+>> hexagon_restore_state_to_opc(CPUState *cs,
+>>>        cpu_env(cs)->gpr[HEX_REG_PC] = data[0];
+>>>    }
+>>>
+>>> +
+>>> +#ifndef CONFIG_USER_ONLY
+>>> +static void mmu_reset(CPUHexagonState *env) {
+>>> +    CPUState *cs = env_cpu(env);
+>>> +    if (cs->cpu_index == 0) {
+>>
+>> This doesn't scale to heterogeneous emulation.
+> [Sid Manning]
+> Heterogeneous emulation, you mean a version of QEMU with something like ARM and Hexagon configured to run concurrently?
 
-If we have a target-specific index here (instead of cpu_index) guarding 
-the "g_sreg" allocation shared by these Hexagon vCPUs, does that 
-suffice?  Or is the problem the shared allocation itself?
+Yes.
 
+> I think we can substitute this with env->threadId, threadId is the same htid (hardware thread id)
 
-Could a heterogeneous emulation configuration consist of multiple 
-instances of (same-architecture) vCPU-groups?
+That looks safer (and could be your CPUClass::get_arch_id implementation).
 
-
->>           memset(env->g_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
->>       }
->>       memset(env->t_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
->>       memset(env->greg, 0, sizeof(target_ulong) * NUM_GREGS);
->> +
->> +    if (cs->cpu_index == 0) {
->
-> Ditto.
->
->> +        arch_set_system_reg(env, HEX_SREG_MODECTL, 0x1);
->> +    }
->> +    arch_set_system_reg(env, HEX_SREG_HTID, cs->cpu_index);
->>   #endif
->>   }
->
 
