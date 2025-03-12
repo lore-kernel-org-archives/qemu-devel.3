@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA0EC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 06:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA66C2BA1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 06:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsFhy-00032v-GA; Wed, 12 Mar 2025 02:36:52 -0400
+	id 1tsFlk-0004ib-4k; Wed, 12 Mar 2025 02:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFhe-0002xN-Rq
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:36:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFlb-0004cS-DY
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:40:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFhc-0007XE-Pg
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:36:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFlZ-00087T-Mc
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:40:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741761386;
+ s=mimecast20190719; t=1741761632;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Vj2lChn4/Q4i6rvmIMfZbwZgPNys4pp68QRB91YsLuw=;
- b=cSrK6xXKl49mTE2JTDAXICeoKBNOPEY9xHrvB5UcMY8T7LYP7w5f2UhtQkUSIdPLjq3IPs
- bogUM0dA19w2m8mYYUZiM0JGaekn2lHBSSZYTqEPf1p84+o54xVDl6hzVkI3nWDB0sCgEh
- Mddvg8VUeOjFqJfsNzdJkZYOCvLU83Y=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=T0ChVhAUVbQJ6B4OXCdonqcFdzysGDhjpO5W68Gr4zA=;
+ b=ZeN8DAXaPNAsgRq3iDB53TX35Ah7HNG7HNAtRqrNyNCaGTEUpZQR67xn2shlZD7T1l+Jb0
+ cIBeTQZNG6IjB6n38LHg9gwb66ko2KG7qoHR8ykzQOUEfaQtUjT8nP7bNzgdshHNOg+dUQ
+ lj6NgP7GJr6sqSU4SuRyf3TEhYTTNW4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-37-DfOkhIp4OGqfVRhrMrQteA-1; Wed, 12 Mar 2025 02:36:22 -0400
-X-MC-Unique: DfOkhIp4OGqfVRhrMrQteA-1
-X-Mimecast-MFC-AGG-ID: DfOkhIp4OGqfVRhrMrQteA_1741761381
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3912b54611dso3798543f8f.1
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 23:36:22 -0700 (PDT)
+ us-mta-637-PMsx9XNuPBWTohts81kgfw-1; Wed, 12 Mar 2025 02:40:29 -0400
+X-MC-Unique: PMsx9XNuPBWTohts81kgfw-1
+X-Mimecast-MFC-AGG-ID: PMsx9XNuPBWTohts81kgfw_1741761628
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3913aaf1e32so2694678f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 23:40:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741761381; x=1742366181;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vj2lChn4/Q4i6rvmIMfZbwZgPNys4pp68QRB91YsLuw=;
- b=FrBDwpZs99G9/BqNFkYqrcX7czaVpL+tjrbF6deKiWvkveSzvQU9qM+RlcKcpXR7Am
- 5yOXjEaRrwz6KauSDDPDTii9EEZ8/+BPuhd3Ipwmv4Ui1VW1c6j+eCPe4ImnMqiPy1p+
- 2hjya3/ONrtBc2xnDHSCltK84tOrLUOZUrwBgfALHiIa4cBFy5SY+w6+/dd3vgbs0hGR
- gPILZJAaSXChcLvkBaWX1PW6o/J6VK2td6K4TA5AeGsZ/48/HeERU8zPvUNWHD1h7l62
- OKEo8s9k+aHhwUIc1GZGKV894U4fKPTMGEffht6uLYIIlAP1u2W21TA4Hj5G00P6bxPh
- Fl6Q==
+ d=1e100.net; s=20230601; t=1741761628; x=1742366428;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T0ChVhAUVbQJ6B4OXCdonqcFdzysGDhjpO5W68Gr4zA=;
+ b=i3RAANRbe8xh4byKPvgyviRg1OuG4d5NOw2bRYuhyo6agcZrTsMGP7B81i/UvJI/rs
+ vXiVB3XpwhC1famI5B+1Hg8mp8nT1qjBeOUfsSjhs5O4IY6uPAg8V62WdfvgtZZwZcdu
+ U0mHr0qucU6Lit9+i2Yik8IL2egs+hLu/qRqYKPRqqKqIP6z9AR2wMrnpfoezh7B5U2U
+ FBSDEs5k6nffjWHNgKpuW+bAstqyLnV6Z31gueyNsYAxglD/JiNanuR/rMY/5p28GFde
+ UUADHxivfIbFJPXcz6crT4NlkULbIptcRhCdbS6cJ1Czr/jXmoC1Pb7NEAkFeco6LrHC
+ Sf0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXq710VEhWnVdDV0VT+swBR3g+I7VohNZrwoxsvgco9X4u0DblKHhpHXMmsvd+rqvwZTNYDKvkI6Xp6@nongnu.org
-X-Gm-Message-State: AOJu0YzVnVl9AoxUcjRA811EO33tynodALN3jDMh03gVVmwlZZp1lffj
- qHwrSFbuxqhpynL0e/3fYT3hl4pzfwhV1oGeGeKXyEoWgVRwosOBagPqRvZhFeq6E1SdlORfozo
- dmQSwA+9xfMFiY278tvIIuaHJn/K6+rMjXfyFHu4zDl/U2sdh6Zqv
-X-Gm-Gg: ASbGncvE4c2IUQlOb4aCcJNE6/2P0qY03sl4vYPaTvf9hBkX5fvZav3yochWqT9xW0Z
- b7wGNZCeyIX10dpSGFT44SqDy8IJ9BFLLl3/3GtSmM9E8H5pi0isL7DrRDcPlNUOLtmC9OIgoPH
- fbPlbXt286KR7nYwBazionz/lg6HmrXiK3B+QXTWBWAcwqmI9w+IVrfXd3CPUj5+oU7g0pnMHhH
- lsxabWfv8p6jL7aX2ayUYfP0VyR1wJgsMZzDijW+UhD3QASfIDmT/4swt1rVkIFFbBIt+O1PAhz
- 6KaPBXWvZw6GTn8Lsz+9+zS5RIrycGGPopK/+92dR8Xdngs=
-X-Received: by 2002:a05:6000:1564:b0:390:e7c1:59c0 with SMTP id
- ffacd0b85a97d-39132d7b834mr15442392f8f.26.1741761381160; 
- Tue, 11 Mar 2025 23:36:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYE3+HX5PyELunR7CiTe7+PIYTJPLemE0c/hfCxcn5BJ+guQPwEp0COhNSCCoubqoIKS1vlg==
-X-Received: by 2002:a05:6000:1564:b0:390:e7c1:59c0 with SMTP id
- ffacd0b85a97d-39132d7b834mr15442382f8f.26.1741761380858; 
- Tue, 11 Mar 2025 23:36:20 -0700 (PDT)
+ AJvYcCXgLvSXEeNfbNT6PGesTqPhVwCtviufJQRbmkvS7GpbdaUAgMTHl+a4IdujFJ33h02Se7pzgRY8DKxt@nongnu.org
+X-Gm-Message-State: AOJu0YzpkDb81UiEUslht1D57WGppGiX8AV8jjFIo+fuTaJaDxAFsiMq
+ 3KgGv9mGrPaJZDHtQ0JTgX/b0IpUI+79QnnYZzuZ+KSnjGFcDmYbhpBOCMvCE2UqlxW+rNRFrlj
+ l/wLYp/xnB+lqtFVdpso1DRN/yQ9gMnKClme6VPyV6H2BQtUxOM+i
+X-Gm-Gg: ASbGncv51IcRBGoY5DUkLOkvzFp3ZW5ldvkABOceM2wPy4G04FY6nk8WaCNcbVZCBW4
+ lGV63IAeiTcpdTptW/rIaUIeSvefB8seLtSJXET5+toVetDC47ru7WplStXGm6tGWZru+VWOV6R
+ vbQCAgVKEA7q+kQCs8MclmCGlP3A8pB/WSHSLEHXOPp/mCu9dDpNA8J/l+9xqUtZgWM0901rtvn
+ HXtrdb7l5OTexFzsLWNo42j+WZsJj09vvQV5h4Zs7LR/E43g9I7NhsAUqRkHiGZ0zddVBjQBnas
+ 5l6temmJSDFFlCeAwoJonkRhAx/TLD6f+YFCpbHTJMAQMww=
+X-Received: by 2002:a05:6000:4105:b0:391:41c9:7a8d with SMTP id
+ ffacd0b85a97d-39141c97c1bmr10201147f8f.54.1741761628466; 
+ Tue, 11 Mar 2025 23:40:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMJYeeRpwMtqzzm3PXpcKddyvBR6ZaMaEgKsETAvhlE9ua6DEYyFaZ50MhziwodL91wY+cPw==
+X-Received: by 2002:a05:6000:4105:b0:391:41c9:7a8d with SMTP id
+ ffacd0b85a97d-39141c97c1bmr10201137f8f.54.1741761628168; 
+ Tue, 11 Mar 2025 23:40:28 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-149.web.vodafone.de.
  [109.42.51.149]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912bfdfbb4sm20519568f8f.30.2025.03.11.23.36.17
+ ffacd0b85a97d-3912c103035sm19774224f8f.88.2025.03.11.23.40.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 23:36:19 -0700 (PDT)
-Message-ID: <45d36146-3d2c-421e-b58c-0b1ef50ee81a@redhat.com>
-Date: Wed, 12 Mar 2025 07:36:16 +0100
+ Tue, 11 Mar 2025 23:40:27 -0700 (PDT)
+Message-ID: <395ee50d-3e3f-4ef5-8026-6f06ce4172dc@redhat.com>
+Date: Wed, 12 Mar 2025 07:40:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tests/functional: Don't fail any precaching errors
-To: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 1/3] tests/functional/asset: Fail assert fetch when
+ retries are exceeded
+To: Nicholas Piggin <npiggin@gmail.com>
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-References: <20250311131327.903329-1-npiggin@gmail.com>
- <Z9A8swNn6zBm57jC@redhat.com> <D8DU1X7UDEPK.2PZVT8SJAWUFI@gmail.com>
-Content-Language: en-US
+References: <20250312051739.938441-1-npiggin@gmail.com>
+ <20250312051739.938441-2-npiggin@gmail.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -127,7 +128,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <D8DU1X7UDEPK.2PZVT8SJAWUFI@gmail.com>
+In-Reply-To: <20250312051739.938441-2-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -155,21 +156,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/03/2025 00.41, Nicholas Piggin wrote:
-...
-> I think *no* precaching errors including 404 should cause
-> failure because you would still want other tests to proceed
-> (in some cases).
+On 12/03/2025 06.17, Nicholas Piggin wrote:
+> Currently the fetch code does not fail gracefully when retry limit is
+> exceeded, it just falls through the loop with no file, which ends up
+> hitting other errors.
 > 
-> But the failure should be caught when the test case tries to
-> fetch the asset, so you can still easily identify the download
-> failure.
+> In preparation for adding more cases where a download gets retried,
+> add an explicit check for retry limit exceeded.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   tests/functional/qemu_test/asset.py | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> index f0730695f09..6a1c92ffbef 100644
+> --- a/tests/functional/qemu_test/asset.py
+> +++ b/tests/functional/qemu_test/asset.py
+> @@ -116,7 +116,10 @@ def fetch(self):
+>           self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+>           tmp_cache_file = self.cache_file.with_suffix(".download")
+>   
+> -        for retries in range(3):
+> +        for retries in range(4):
+> +            if retries == 3:
+> +                raise Exception("Retries exceeded downloading %s", self.url)
+> +
+>               try:
+>                   with tmp_cache_file.open("xb") as dst:
+>                       with urllib.request.urlopen(self.url) as resp:
 
-Sorry, I did not get that... if we ignore the 404 during the precaching 
-step, how should the failure be caught when the test runs? The downloads are 
-disabled that case, so the test cannot know whether the asset is not 
-available due to a 404 or any other reason...?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
