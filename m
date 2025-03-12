@@ -4,90 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 229C2C28B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 13:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DAD6C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 13:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsLhN-0002k2-Kt; Wed, 12 Mar 2025 09:00:37 -0400
+	id 1tsLoB-0006Pr-W9; Wed, 12 Mar 2025 09:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLhI-0002ig-Il
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 09:00:32 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLhF-0006Tl-MT
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 09:00:31 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-225b5448519so5668015ad.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 06:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741784428; x=1742389228; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=efKsAuHsEC3n3nWPeW8PU/lQXIw7WCfr+JQ3xOUouNk=;
- b=KAvsn7Gjmj1Cr0bRLBUq4/UCUgHZCpX9EugWZfKXwBw3rTegu6tUwPXzKXhIa/Zuq0
- oiok7Ins1QuOmyT79AL+PK+yuxU1g/6sT3GdoxMD+nOTnhBpFlljoyzdu0uHy0zc7BtU
- TB3hVAf8+Ymel24IsEIvByt43FfrHbohSS3+Q4DE0aIRul7vCj1vyCXefkn7h+YXm+4h
- nuYDDroC5iSVQIJmzZAIR9NA98o1EaGKY3IGM60KwD1hIQWnz5Ne57wi4cF235LuVWJ4
- wqCpnLRKEKDPaZIMofRiFeODgGb8H1GG3pEG2dg695zV0h5uxYw57HZIHMksDBDLGtj3
- MJXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741784428; x=1742389228;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=efKsAuHsEC3n3nWPeW8PU/lQXIw7WCfr+JQ3xOUouNk=;
- b=qwb/YW2eINEPnpPOXPEdAxbqWa6ATzaE3PpStHjobOnDBiSRe5X/jlW9V2N3DPneLy
- qAVUx7e9RD424+6mOAXm6cyYjVrZ0a8XN9/koJQpae8IgkfuJ/XZXfa5HbwpgLCldJxG
- 0X+3kwNuQSwoE/Ohh+olE5vh25wPksax1GZRBS5LBuXIY94R2Aphejy3aavvfMmhPy1X
- EAAIHkF1Xnq02NPCNCbre0WsxPviwiUsadEwL0OZd4ERmOn0NW/w5lKEihpVQV0DlHFH
- IIZXXqGOz5iqOTEFJlVybZPJGZzBHSk0ctPlqWofROOcn7Y9mB/1vMR9BmeNatSnkCJd
- wzHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFKIyFVVqAVg3ApvHDv/qt4k5EM5DMk63Ja2OOOAzRQKDg9ux/UUg8HPULv5NPQ3VRHNtw8VBBJtrm@nongnu.org
-X-Gm-Message-State: AOJu0YzRFqCljk36Nr4T/40DdysxQl3hGFKYDBPmUyRG+r9vorJI4JRz
- 3RnYZEomo2P5fXRAj8TW+DjxgqETrmll89bgCXYeWw1EAR5PYTD5
-X-Gm-Gg: ASbGncvagA1fFmh5Xu3ugjD3CxTOCgO6T9CClHUV28gyUosFYutz95RqZIxYmQwwnjx
- oWyZH6U9GwFEPOKvGyy2ID9xTTxqODzsg3DTNfuKz3V78xaHDL1NbYILub4uNX7gguTZUNGJXAD
- HqUWgC7jkFK1+fR8rv/uLk7HoCiPZpO+gx5XjjRLVPG0JuLqZJgIyKKXvqW1NZQDSYFmlxXj3uH
- ZQUO2OGmoWrOwteLLp2tbDCl0l3ZyCh4G7mzsY9ZUiqZIOxFTI5fSq0JrGvcyqIT049r6naRfXR
- XSzlI4IC/LlCOrQi4AyMyml7vfXI9ttZmXspq5SZUBBSUEfGhZA=
-X-Google-Smtp-Source: AGHT+IHXyOmASSIHQ8tU9bICWHFBVFfRAZZKWnIkOze8wsdxCsLIdq4qml/oFUpZBUCz7+KjUa/P9Q==
-X-Received: by 2002:a05:6a00:218f:b0:736:3c77:31fd with SMTP id
- d2e1a72fcca58-736aab0eeabmr29976864b3a.23.1741784427395; 
- Wed, 12 Mar 2025 06:00:27 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.151.101])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736bee078fasm8868407b3a.139.2025.03.12.06.00.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Mar 2025 06:00:26 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH v3 3/3] tests/functional/asset: Add AssetError exception class
-Date: Wed, 12 Mar 2025 23:00:02 +1000
-Message-ID: <20250312130002.945508-4-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250312130002.945508-1-npiggin@gmail.com>
-References: <20250312130002.945508-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
+ id 1tsFUU-0007wR-Tb; Wed, 12 Mar 2025 02:22:55 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.47])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
+ id 1tsFU9-0005rP-4E; Wed, 12 Mar 2025 02:22:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1741760534; bh=fer9u3Eyo9RhguUPg0aqgJVKB0n6DkoBDnHgRFwuAkc=;
+ h=From:To:Cc:Subject:Date;
+ b=rb8Q6ntqQcD4BlvsFS7sP1fqdRRCH5pADQNurmwncm6U6XmCNi43ABs6g+ddboAZE
+ MwTf+uuDgFdPW++Ckg4Pjz2q5CTroFiIJuY587Hbu0d2vcXDKE2rdBkA8zX+RDCJgi
+ /0wfFUkYlZp9p3GOlJyAMSMUqeRS6XdmaIwHyyOM=
+Received: from localhost.localdomain ([120.46.176.49])
+ by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
+ id 58C0D488; Wed, 12 Mar 2025 14:22:12 +0800
+X-QQ-mid: xmsmtpt1741760532thju2zv5y
+Message-ID: <tencent_804E383A2E66E5311E555C748FB8E8109A07@qq.com>
+X-QQ-XMAILINFO: M8F5Ju5R+mONNrv6JjyLwYk/x6V1b7rRZM8G0FP+XjIiws9ozm07SRv0Mf4lQR
+ FjvPMgl2kQF4hO5r8Xerqf/1nxb1jlyuB0xNoTHGo812L6Kg51PwzfghHxNhVtFbUru0K97bqMV1
+ Y7JoOQIDWDrMpuXQRmAljpPaaUykMcBFP8/MCs+L4+NY9GGqWYrBwo0T4xUiSs9C+8F1si2Iq2Xp
+ qaaSVdy6KG45+yhC8ipnCNhm5AYL8jsLoyQc4zXYMaLAhiVKITiYP34mYh/+dmcTNiHnbILPMedC
+ o8z7TP2QixxOwThMgzfB0rVmat5Xv6fDeMpNabh+V6NG+0PYa7mH59Y6BjRZAwGD69faWXuJnhYB
+ E9t60UsxaUR4yLZNxrew6FFOCmGL2RFEx9eCGd6w7HkqbR0Tec/+fecEfxVgwzuMmyh38qleCdhn
+ SyM4YoOpasJzpd/5ur5GS6Eh0eL2d16JgmzwpEBjrWWcIFVyFVU8MmJUvj18lWTtLs35qDq+heod
+ 0UUaq7QoOYIycVp5aYDZ0J7USX0TcuxP8Bzvk3HSoQ3cf+mbihmA8vADfIEXQWBQa2xCOi3tFjWb
+ 2w8Q+qmaZVcfCO+p0A7RcVE5E212r9dOCBEvHyFnSF3eVRxLXImttXXaADEcSLMw2+mcR00tncBp
+ 0SH/UwDlAQwQqhkwrFUIMeMbuoDbLRdBDxeHffJLluGgQgoUuQVpawrdljuQsd9OpIPd+PBJkGKn
+ Xx32otXK63XfbxKNUlxSmEwwd5jX6b5k7iDweFvsxAhrTFFQOGQKBQr580z8X8rxow8V4ok8iEwd
+ lY06DYmbp8pj5ibigjHcioGS0r9IyIBY5/W+nsnN3O8QYR7hYOqr0fGMIprHs8sCL4c9hM6yihS/
+ KxAHdWDY9l78i105H1oadPSFADpTWDVQ==
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+From: saz97 <sa.z@qq.com>
+To: qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, qemu-block@nongnu.org, hreitz@redhat.com,
+ stefanha@redhat.com, saz97 <sa.z@qq.com>
+Subject: [PATCH 1/2] Demo for integration coroutin into fuse export
+Date: Wed, 12 Mar 2025 14:22:05 +0800
+X-OQ-MSGID: <20250312062205.335002-1-sa.z@qq.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=43.163.128.47; envelope-from=sa.z@qq.com;
+ helo=xmbghk7.mail.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 12 Mar 2025 09:07:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,126 +79,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Assets are uniquely identified by human-readable-ish url, so make an
-AssetError exception class that prints url with error message.
-
-A property 'transient' is used to capture whether the client may retry
-or try again later, or if it is a serious and likely permanent error.
-This is used to retain the existing behaviour of treating HTTP errors
-other than 404 as 'transient' and not causing precache step to fail.
-Additionally, partial-downloads and stale asset caches that fail to
-resolve after the retry limit are now treated as transient and do not
-cause precache step to fail.
-
-For background: The NetBSD archive is, at the time of writing, failing
-with short transfer. Retrying the fetch at that position (as wget does)
-results in a "503 backend unavailable" error. We would like to get that
-error code directly, but I have not found a way to do that with urllib,
-so treating the short-copy as a transient failure covers that case (and
-seems like a reasonable way to handle it in general).
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Changzhi Xie <sa.z@qq.com>
 ---
- tests/functional/qemu_test/asset.py | 43 +++++++++++++++++++----------
- 1 file changed, 28 insertions(+), 15 deletions(-)
+ block/export/fuse.c | 167 ++++++++++++++++++++++++++++++--------------
+ 1 file changed, 114 insertions(+), 53 deletions(-)
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 6bbfb9e1cad..704b84d0ea6 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -17,6 +17,14 @@
- from shutil import copyfileobj
- from urllib.error import HTTPError
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 465cc9891d..f47117a00d 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -64,6 +64,16 @@ typedef struct FuseExport {
+     gid_t st_gid;
+ } FuseExport;
  
-+class AssetError(Exception):
-+    def __init__(self, asset, msg, transient=False):
-+        self.url = asset.url
-+        self.msg = msg
-+        self.transient = transient
++typedef struct FuseIORequest {
++    fuse_req_t req;
++    fuse_ino_t inode;
++    size_t size;
++    off_t offset;
++    struct fuse_file_info *fi;
++    FuseExport *exp;
++    char *write_buf;
++} FuseIORequest;
 +
-+    def __str__(self):
-+        return "%s: %s" % (self.url, self.msg)
+ static GHashTable *exports;
+ static const struct fuse_lowlevel_ops fuse_ops;
  
- # Instances of this class must be declared as class level variables
- # starting with a name "ASSET_". This enables the pre-caching logic
-@@ -51,7 +59,7 @@ def _check(self, cache_file):
-         elif len(self.hash) == 128:
-             hl = hashlib.sha512()
-         else:
--            raise Exception("unknown hash type")
-+            raise AssetError(self, "unknown hash type")
+@@ -570,102 +580,153 @@ static void fuse_open(fuse_req_t req, fuse_ino_t inode,
+     fuse_reply_open(req, fi);
+ }
  
-         # Calculate the hash of the file:
-         with open(cache_file, 'rb') as file:
-@@ -111,7 +119,8 @@ def fetch(self):
-             return str(self.cache_file)
+-/**
+- * Handle client reads from the exported image.
+- */
+-static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+-                      size_t size, off_t offset, struct fuse_file_info *fi)
++static void coroutine_fn fuse_read_coroutine(void *opaque)
+ {
+-    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = opaque;
++    FuseExport *exp = io_req->exp;
+     int64_t length;
+-    void *buf;
++    void *buffer;
+     int ret;
  
-         if not self.fetchable():
--            raise Exception("Asset cache is invalid and downloads disabled")
-+            raise AssetError(self,
-+                             "Asset cache is invalid and downloads disabled")
+-    /* Limited by max_read, should not happen */
+-    if (size > FUSE_MAX_BOUNCE_BYTES) {
+-        fuse_reply_err(req, EINVAL);
+-        return;
++    if (io_req->size > FUSE_MAX_BOUNCE_BYTES) {
++        fuse_reply_err(io_req->req, EINVAL);
++        goto cleanup;
+     }
  
-         self.log.info("Downloading %s to %s...", self.url, self.cache_file)
-         tmp_cache_file = self.cache_file.with_suffix(".download")
-@@ -147,13 +156,23 @@ def fetch(self):
-                                tmp_cache_file)
-                 tmp_cache_file.unlink()
-                 continue
-+            except HTTPError as e:
-+                tmp_cache_file.unlink()
-+                self.log.error("Unable to download %s: HTTP error %d",
-+                               self.url, e.code)
-+                # Treat 404 as fatal, since it is highly likely to
-+                # indicate a broken test rather than a transient
-+                # server or networking problem
-+                if e.code == 404:
-+                    raise AssetError(self, "Unable to download: "
-+                                     "HTTP error %d" % e.code)
-+                continue
-             except Exception as e:
--                self.log.error("Unable to download %s: %s", self.url, e)
-                 tmp_cache_file.unlink()
--                raise
-+                raise AssetError(self, "Unable to download: " % e)
+-    /**
+-     * Clients will expect short reads at EOF, so we have to limit
+-     * offset+size to the image length.
+-     */
+     length = blk_getlength(exp->common.blk);
+     if (length < 0) {
+-        fuse_reply_err(req, -length);
+-        return;
++        fuse_reply_err(io_req->req, -length);
++        goto cleanup;
+     }
  
-         if not os.path.exists(tmp_cache_file):
--            raise Exception("Retries exceeded downloading %s", self.url)
-+            raise AssetError(self, "Download retries exceeded", transient=True)
+-    if (offset + size > length) {
+-        size = length - offset;
++    if (io_req->offset + io_req->size > length) {
++        io_req->size = length - io_req->offset;
+     }
  
-         try:
-             # Set these just for informational purposes
-@@ -167,8 +186,7 @@ def fetch(self):
+-    buf = qemu_try_blockalign(blk_bs(exp->common.blk), size);
+-    if (!buf) {
+-        fuse_reply_err(req, ENOMEM);
+-        return;
++    if (io_req->size == 0) {
++        fuse_reply_buf(io_req->req, NULL, 0);
++        goto cleanup;
++    }
++
++    buffer = qemu_try_blockalign(blk_bs(exp->common.blk), io_req->size);
++    if (!buffer) {
++        fuse_reply_err(io_req->req, ENOMEM);
++        goto cleanup;
+     }
  
-         if not self._check(tmp_cache_file):
-             tmp_cache_file.unlink()
--            raise Exception("Hash of %s does not match %s" %
--                            (self.url, self.hash))
-+            raise AssetError(self, "Hash does not match %s" % self.hash)
-         tmp_cache_file.replace(self.cache_file)
-         # Remove write perms to stop tests accidentally modifying them
-         os.chmod(self.cache_file, stat.S_IRUSR | stat.S_IRGRP)
-@@ -190,15 +208,10 @@ def precache_test(test):
-                 log.info("Attempting to cache '%s'" % asset)
-                 try:
-                     asset.fetch()
--                except HTTPError as e:
--                    # Treat 404 as fatal, since it is highly likely to
--                    # indicate a broken test rather than a transient
--                    # server or networking problem
--                    if e.code == 404:
-+                except AssetError as e:
-+                    if not e.transient:
-                         raise
--
--                    log.debug(f"HTTP error {e.code} from {asset.url} " +
--                              "skipping asset precache")
-+                    log.error("%s: skipping asset precache" % e)
+-    ret = blk_pread(exp->common.blk, offset, size, buf, 0);
++    ret = blk_co_pread(exp->common.blk, io_req->offset,
++                       io_req->size, buffer, 0);
+     if (ret >= 0) {
+-        fuse_reply_buf(req, buf, size);
++        fuse_reply_buf(io_req->req, buffer, io_req->size);
+     } else {
+-        fuse_reply_err(req, -ret);
++        fuse_reply_err(io_req->req, -ret);
+     }
  
-         log.removeHandler(handler)
+-    qemu_vfree(buf);
++    qemu_vfree(buffer);
++
++cleanup:
++    g_free(io_req);
+ }
  
+-/**
+- * Handle client writes to the exported image.
+- */
+-static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+-                       size_t size, off_t offset, struct fuse_file_info *fi)
++static void coroutine_fn fuse_write_coroutine(void *opaque)
+ {
+-    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = opaque;
++    FuseExport *exp = io_req->exp;
+     int64_t length;
+     int ret;
+ 
+-    /* Limited by max_write, should not happen */
+-    if (size > BDRV_REQUEST_MAX_BYTES) {
+-        fuse_reply_err(req, EINVAL);
+-        return;
++    if (io_req->size > BDRV_REQUEST_MAX_BYTES) {
++        fuse_reply_err(io_req->req, EINVAL);
++        goto cleanup;
+     }
+ 
+     if (!exp->writable) {
+-        fuse_reply_err(req, EACCES);
+-        return;
++        fuse_reply_err(io_req->req, EACCES);
++        goto cleanup;
+     }
+ 
+-    /**
+-     * Clients will expect short writes at EOF, so we have to limit
+-     * offset+size to the image length.
+-     */
+     length = blk_getlength(exp->common.blk);
+     if (length < 0) {
+-        fuse_reply_err(req, -length);
+-        return;
++        fuse_reply_err(io_req->req, -length);
++        goto cleanup;
+     }
+ 
+-    if (offset + size > length) {
++    if (io_req->offset + io_req->size > length) {
+         if (exp->growable) {
+-            ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
++            ret = fuse_do_truncate(exp, io_req->offset + io_req->size,
++                                   true, PREALLOC_MODE_OFF);
+             if (ret < 0) {
+-                fuse_reply_err(req, -ret);
+-                return;
++                fuse_reply_err(io_req->req, -ret);
++                goto cleanup;
+             }
+         } else {
+-            size = length - offset;
++            io_req->size = MAX(0, length - io_req->offset);
++            if (io_req->size == 0) {
++                fuse_reply_write(io_req->req, 0);
++                goto cleanup;
++            }
+         }
+     }
+ 
+-    ret = blk_pwrite(exp->common.blk, offset, size, buf, 0);
++    ret = blk_co_pwrite(exp->common.blk, io_req->offset, io_req->size,
++                        io_req->write_buf, 0);
+     if (ret >= 0) {
+-        fuse_reply_write(req, size);
++        fuse_reply_write(io_req->req, io_req->size);
+     } else {
+-        fuse_reply_err(req, -ret);
++        fuse_reply_err(io_req->req, -ret);
+     }
++
++cleanup:
++    g_free(io_req->write_buf);
++    g_free(io_req);
++}
++
++/**
++ * Handle client reads from the exported image.
++ */
++static void fuse_read(fuse_req_t req, fuse_ino_t inode,
++                      size_t size, off_t offset, struct fuse_file_info *fi)
++{
++    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = g_new(FuseIORequest, 1);
++    io_req->req = req;
++    io_req->inode = inode;
++    io_req->size = size;
++    io_req->offset = offset;
++    io_req->fi = fi;
++    io_req->exp = exp;
++
++    Coroutine *co = qemu_coroutine_create(fuse_read_coroutine, io_req);
++    qemu_coroutine_enter(co);
++}
++
++
++/**
++ * Handle client writes to the exported image.
++ */
++static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
++                       size_t size, off_t offset, struct fuse_file_info *fi)
++{
++    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = g_new(FuseIORequest, 1);
++
++    io_req->write_buf = g_try_malloc(size);
++    if (!io_req->write_buf) {
++        fuse_reply_err(req, ENOMEM);
++        g_free(io_req);
++        return;
++    }
++    memcpy(io_req->write_buf, buf, size);
++
++    io_req->req = req;
++    io_req->inode = inode;
++    io_req->size = size;
++    io_req->offset = offset;
++    io_req->fi = fi;
++    io_req->exp = exp;
++
++    Coroutine *co = qemu_coroutine_create(fuse_write_coroutine, io_req);
++    qemu_coroutine_enter(co);
+ }
+ 
+ /**
 -- 
-2.47.1
+2.34.1
+
+
+From 3d2d317a49eb4cbf401294c6e19c72533eeeefad Mon Sep 17 00:00:00 2001
+From: saz97 <sa.z@qq.com>
+Date: Wed, 12 Mar 2025 13:47:01 +0800
+Subject: [PATCH 2/2] allocate independent fuse_buffor each coroutine and store
+ fuse_file_info copy instead of pointerin FuseIORequest
+
+Signed-off-by: Changzhi Xie <sa.z@qq.com>
+---
+ block/export/fuse.c | 45 ++++++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
+
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index f47117a00d..69ffe4f0ca 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -69,7 +69,7 @@ typedef struct FuseIORequest {
+     fuse_ino_t inode;
+     size_t size;
+     off_t offset;
+-    struct fuse_file_info *fi;
++    struct fuse_file_info fi;
+     FuseExport *exp;
+     char *write_buf;
+ } FuseIORequest;
+@@ -298,6 +298,10 @@ fail:
+ static void read_from_fuse_export(void *opaque)
+ {
+     FuseExport *exp = opaque;
++    struct fuse_buf buf = {
++        .mem = g_malloc(FUSE_MAX_BOUNCE_BYTES),
++        .size = FUSE_MAX_BOUNCE_BYTES,
++    };
+     int ret;
+ 
+     blk_exp_ref(&exp->common);
+@@ -314,6 +318,7 @@ static void read_from_fuse_export(void *opaque)
+     fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
+ 
+ out:
++    g_free(buf.mem);
+     if (qatomic_fetch_dec(&exp->in_flight) == 1) {
+         aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
+     }
+@@ -689,12 +694,15 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+ {
+     FuseExport *exp = fuse_req_userdata(req);
+     FuseIORequest *io_req = g_new(FuseIORequest, 1);
+-    io_req->req = req;
+-    io_req->inode = inode;
+-    io_req->size = size;
+-    io_req->offset = offset;
+-    io_req->fi = fi;
+-    io_req->exp = exp;
++
++    *io_req = (FuseIORequest) {
++        .req = req,
++        .inode = inode,
++        .size = size,
++        .offset = offset,
++        .exp = exp,
++        .fi = *fi,
++    };
+ 
+     Coroutine *co = qemu_coroutine_create(fuse_read_coroutine, io_req);
+     qemu_coroutine_enter(co);
+@@ -710,20 +718,15 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+     FuseExport *exp = fuse_req_userdata(req);
+     FuseIORequest *io_req = g_new(FuseIORequest, 1);
+ 
+-    io_req->write_buf = g_try_malloc(size);
+-    if (!io_req->write_buf) {
+-        fuse_reply_err(req, ENOMEM);
+-        g_free(io_req);
+-        return;
+-    }
+-    memcpy(io_req->write_buf, buf, size);
+-
+-    io_req->req = req;
+-    io_req->inode = inode;
+-    io_req->size = size;
+-    io_req->offset = offset;
+-    io_req->fi = fi;
+-    io_req->exp = exp;
++    *io_req = (FuseIORequest) {
++        .req = req,
++        .inode = inode,
++        .size = size,
++        .offset = offset,
++        .exp = exp,
++        .fi = *fi,
++        .write_buf = g_memdup2_qemu(buf, size),
++    };
+ 
+     Coroutine *co = qemu_coroutine_create(fuse_write_coroutine, io_req);
+     qemu_coroutine_enter(co);
+-- 
+2.34.1
 
 
