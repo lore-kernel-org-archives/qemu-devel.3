@@ -4,89 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83E0C28B2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 09:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0268C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 09:22:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsHyS-0007X1-Hi; Wed, 12 Mar 2025 05:02:00 -0400
+	id 1tsIGx-0002o3-4t; Wed, 12 Mar 2025 05:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1tsHy9-0007RV-1c
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:01:42 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tsIGW-0002iE-O6
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:20:44 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1tsHy6-0002lf-GZ
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:01:40 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22113560c57so120079785ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 02:01:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tsIGD-00055b-I4
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 05:20:39 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ac298c8fa50so486716266b.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 02:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1741770096; x=1742374896; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Mwqginh0uCEpZFomsXPwiOlQgrggGcyROt7lzoDFie4=;
- b=b/ilCXZpDMdfWOQbA2WepU9SvBnd31zpwJu4dE8kmvf5lXXfD62x/5/1DMCJDM4v1M
- AB1DBSJ/dtFRW9mKQ7JCjPZD06fRxxN86q22hBqtW4ucT2ZkvkXl3M0OdFhPuYSjnpRa
- JVhfwxWzIWcdRI9tZhdhp4uadW5Kc+bTx+IOPGoCivo08Twtxg9KXGpob4d+91YCEpre
- 9tkfElJGPKYQJvF6knqxKwI1Ff7pt829bHG6mUmGOBbREPIKkvacApSNIf4tT7LBU9d0
- Euv6QEzPa4kUossqup6ZKWZ0B+AGnsknLcGuwfXM67i3M6rZzB1PdDNVoN97skcufdg8
- 5mwA==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1741771174; x=1742375974;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4t6itwPZHn5dbAeY2359zUbJPYtovq785h9XygaE1JI=;
+ b=oKSwrrfqbMoqEM6qTh5gCTc4bRLDnRNaruZcxxL3sDY6GQacbIIJ2fmGhwfKSho0gD
+ QFoCxO/B/S1JP27vCOncSORqOFLUI036D1ExxTX1WM6IAe8bwR85CMKsJ5nj+vQ3JLzj
+ 0FMBmck4vZjXqs4Sutg7uQ5tG2h9sXbOEC8lrYXQJO7jDhBijF4EP1xApeuzJ9gC7h7Q
+ s9KpxkDmaOFqFN4Om+HNxBEJvV3hBNBnu6vQokxudJ/x5IxfKO18GQOxCq2BHsccWvKV
+ F/Bhfy3ReTagdahPX0iMGY+Z6lk6kNUNG0F5I4/8MU34v09y4+cyOMEaCiCyX5eFcP8B
+ DkOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741770096; x=1742374896;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mwqginh0uCEpZFomsXPwiOlQgrggGcyROt7lzoDFie4=;
- b=NiNiMZnIaWHoXJr0r3SxpyqUio1dniDeCoFO0MULiBrcoIitHpsypp4ha/Mf1MVo98
- He0O+ck9Jrlp+G7NuWHz67Gi5iGF3acO/537SePy9vagsGFzEaXdWvsHLo7Ep+GgDnag
- zF2t5e4NcjnKRCBN4F1skeqWX80R0bhJPe/SAk42JOaNf8Ti+RKf+Qx7+fhAOshNBbER
- nF3l0Ye2bVjnlnwjsUINp8SLXzHC/z7jT89W8DhthWyW261lsXVKxsudzFEXLbdfs1na
- 0NW7/UyckQl38mIBQsJkuP+6O0aJBFmbCmrmUpyBz+LHTQxlqxhfqDHsWNIyNkD2rNt8
- snyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmXvlP2nbtgupuwJjnYo+7Nce8HZFc4gorY8ChoOg8bUZKJ8WEgV6aQE9q1VeN54ljSXKL4aN3kcT6@nongnu.org
-X-Gm-Message-State: AOJu0Yw/2zuZQVrS3t3Ju4vhQ5yPYx3jS1cIcNml6hDGS713lrILUUo0
- i08iqjSZas0czEffwNoUPi51lPd6KuuVL22MCbLmH+/aTLdq4wbnCfiB1tAiROI=
-X-Gm-Gg: ASbGncvtwPnB1L27IAarNqFdzmQMR18IbZ0WJ/AzTK4uKNikyF/V3Xc3wRziQoEESDk
- r4Eypru0+VU5oIRqeN2rVCf/LOrjz5SIMhjh1wARZ8Ejg/+0illx5rSLyYGDhs7Bi8YA1/TlIwW
- 0P+8d3CFWkwHcY/hPpipKzTQat63ihzxtw3LOOGIqEpW1pY8gDrY8vTSaPv8ix0+MRKh/A4y0zh
- 5es7i0WZ6tEuJR5qN45ch7KlFOZ27pzgXQChXQR22XQeZlgtNoU3Wz6Gzr8x636dRNjFP60JQM7
- JIVHNyZIyF2nv9vfWoC161rHjRYHwwCj5b1TLAkg+w4gVBySZA==
-X-Google-Smtp-Source: AGHT+IE2WfObrdHGEM7mO6Vdv5uGx9rGxc3TSRZAl6I/m/R20rxGYLUD+eF+qYi9W0T950bSPjRVhw==
-X-Received: by 2002:a05:6a00:3d55:b0:736:52d7:daca with SMTP id
- d2e1a72fcca58-736aaadf019mr32406722b3a.18.1741770095707; 
- Wed, 12 Mar 2025 02:01:35 -0700 (PDT)
-Received: from [10.3.43.196] ([61.213.176.7]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736ded451c1sm5018232b3a.119.2025.03.12.02.01.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 02:01:35 -0700 (PDT)
-Message-ID: <85ed8afb-09d7-47a6-8c67-f9298b11c092@bytedance.com>
-Date: Wed, 12 Mar 2025 17:01:32 +0800
+ d=1e100.net; s=20230601; t=1741771174; x=1742375974;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4t6itwPZHn5dbAeY2359zUbJPYtovq785h9XygaE1JI=;
+ b=VGXyw18GYScfeHBqq7wgbgL+yGWt3xHOT0O7OF6SPYsjbkmU1fgqVNPZezbIqBccBS
+ EuDvjVN0IkRZRFstr7RaOIaql/Omyg+nsZ7HCV8L7//N2Wzb/iMtUETXIBov8mA5YEay
+ rHuArgEkGLA+i2/LXLJFD38TislRu3Ndj+TWPlStduajGLtzvBz5qTea3d5q6ipb7kcj
+ 6ROnivJvWQ71Ks+Ix8CYKmoqLbxLt3y/oS2m98JtiOU+SHypB9+XHkqhlYGwKEE4tB6B
+ vNw0silkroqRNUYnp4s7kk6/EjSxoLuqpmY4K5NJwlwmKRFiIQ3IIkIE2xg0UELHUKR7
+ uKYg==
+X-Gm-Message-State: AOJu0Yyt4ptguZwZybxZjgZYU/xcYixQqbPqejIMkYF0TL2jqkqNkMUF
+ FT1DIAPWVfOMCAvfh9KLnsrafb/gavb4z/BWud0M8m03OuqMZWSWbZkgAazy/uymCx8GXjKtKYm
+ Ht+3LIw26qY7a5IPosQPNFAhmPHeT63rCYKSwX9al7dJeI+4TIBaNTVro
+X-Gm-Gg: ASbGncvxKKo0wFFtxfuG+N+Y0W7o/yCpaT7L30+f841nHLF1oYcgUKBVOdygq5VETee
+ rAc+UiufqHeU2NHPhPsVEj7X5tNvn8oU48PCPQjGV0CSAdq8QyqEbZfVMeEtpZXElbn8m6U5igT
+ 1Z6sLBZsDAbMrlyQfCS9xVZjKm
+X-Google-Smtp-Source: AGHT+IE6J7su8iHUF8HR6SisxFj/l2MRaot9VLg9EByN6T4NcQJIdtJPVooLiDTkhonBOC2rSGNf6y+pXw3aasvuuwE=
+X-Received: by 2002:a17:907:3606:b0:abf:61b7:4603 with SMTP id
+ a640c23a62f3a-ac252718911mr461818466b.33.1741771173795; Wed, 12 Mar 2025
+ 02:19:33 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Bad error handling in cryptodev_lkcf_execute_task(), need advice
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
-References: <87cyemoeiw.fsf@pond.sub.org>
-Content-Language: en-US
-From: zhenwei pi <pizhenwei@bytedance.com>
-In-Reply-To: <87cyemoeiw.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pizhenwei@bytedance.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250225160052.39564-1-loic@rivosinc.com>
+In-Reply-To: <20250225160052.39564-1-loic@rivosinc.com>
+From: =?UTF-8?B?TG/Dr2MgTGVmb3J0?= <loic@rivosinc.com>
+Date: Wed, 12 Mar 2025 10:19:22 +0100
+X-Gm-Features: AQ5f1JoXxNtRDqxjx-X6PX1MG4oXdMLRRrY7cx92ZZ6L1XDFCZcf-IiKlSOciKE
+Message-ID: <CAGKm2N+h2mdUTv9jCXx-S8bi3FZ7PNrQcD8uw4pnc=pa0GjRMg@mail.gmail.com>
+Subject: Re: [PATCH 0/5] target/riscv: Smepmp fixes to match specification
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: multipart/alternative; boundary="0000000000001836fd063021b417"
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=loic@rivosinc.com; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,112 +93,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000001836fd063021b417
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Feb 25, 2025 at 5:00=E2=80=AFPM Lo=C3=AFc Lefort <loic@rivosinc.com=
+> wrote:
 
-On 3/12/25 16:10, Markus Armbruster wrote:
-> scripts/coccinelle/error-use-after-free.cocci led me to this function:
-> 
->      static void cryptodev_lkcf_execute_task(CryptoDevLKCFTask *task)
->      {
->          CryptoDevBackendLKCFSession *session = task->sess;
->          CryptoDevBackendAsymOpInfo *asym_op_info;
->          bool kick = false;
->          int ret, status, op_code = task->op_info->op_code;
->          size_t p8info_len;
->          g_autofree uint8_t *p8info = NULL;
->          Error *local_error = NULL;
->          key_serial_t key_id = INVALID_KEY_ID;
->          char op_desc[64];
->          g_autoptr(QCryptoAkCipher) akcipher = NULL;
-> 
->          /**
->           * We only offload private key session:
->           * 1. currently, the Linux kernel can only accept public key wrapped
->           * with X.509 certificates, but unfortunately the cost of making a
->           * ceritificate with public key is too expensive.
->           * 2. generally, public key related compution is fast, just compute it with
->           * thread-pool.
->           */
->          if (session->keytype == QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {
->              if (qcrypto_akcipher_export_p8info(&session->akcipher_opts,
->                                                 session->key, session->keylen,
->                                                 &p8info, &p8info_len,
->                                                 &local_error) != 0 ||
->                  cryptodev_lkcf_set_op_desc(&session->akcipher_opts, op_desc,
->                                             sizeof(op_desc), &local_error) != 0) {
->                  error_report_err(local_error);
-> 
-> Reporting an error, but continue anyway.  This is suspicious.
-> 
-> Note for later: @local_error is now non-null.
-> 
->              } else {
->                  key_id = add_key(KCTL_KEY_TYPE_PKEY, "lkcf-backend-priv-key",
->                                   p8info, p8info_len, KCTL_KEY_RING);
->              }
->          }
-> 
->          if (key_id < 0) {
->              if (!qcrypto_akcipher_supports(&session->akcipher_opts)) {
->                  status = -VIRTIO_CRYPTO_NOTSUPP;
->                  goto out;
->              }
->              akcipher = qcrypto_akcipher_new(&session->akcipher_opts,
->                                              session->keytype,
->                                              session->key, session->keylen,
->                                              &local_error);
-> 
-> Passing non-null @local_error to qcrypto_akcipher_new().  This is wrong.
-> When qcrypto_akcipher_new() fails and passes &local_error to
-> error_setg(), error_setv()'s assertion will fail.
-> 
-> Two possible fixes:
-> 
-> 1. If continuing after cryptodev_lkcf_set_op_desc() is correct, we need
-> to clear @local_error there.  Since it's not actually an error then, we
-> should almost certainly not use error_report_err() there.  *Maybe*
-> warn_report_err().
-> 
-> 2. If continuing is wrong, we probably need set @status (to what?) and
-> goto out.
-> 
-> What is the correct fix?
-> 
+> Hi,
+>
+> These patches fix Smepmp implementation to make it compliant with the spe=
+c.
+>
+> First patch limits RLB to CSR changes since RLB should not affect privile=
+ge
+> evaluation. Patch 2 extracts some common code into a function (to be used
+> in
+> patch 3). Patch 3 fixes validation of pmpcfg CSR writes in order to match
+> Smepmp
+> specification. Patch 4 is a small optimization and last patch is just
+> removing
+> redundant code.
+>
+> Lo=C3=AFc Lefort (5):
+>   target/riscv: pmp: don't allow RLB to bypass rule privileges
+>   target/riscv: pmp: move Smepmp operation conversion into a function
+>   target/riscv: pmp: fix checks on writes to pmpcfg in Smepmp MML mode
+>   target/riscv: pmp: exit csr writes early if value was not changed
+>   target/riscv: pmp: remove redundant check in pmp_is_locked
+>
+>  target/riscv/pmp.c | 151 +++++++++++++++++++++++++--------------------
+>  1 file changed, 83 insertions(+), 68 deletions(-)
+>
+> --
+> 2.47.2
+>
+> Ping?
 
-Hi,
+--0000000000001836fd063021b417
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It's fatal error of a crypto task, so it should not continue. setting 
-status as VIRTIO_CRYPTO_ERR should be fine.
+<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Tue, Feb 25, 2025 at 5:00=E2=80=AFPM Lo=C3=
+=AFc Lefort &lt;<a href=3D"mailto:loic@rivosinc.com">loic@rivosinc.com</a>&=
+gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi,<b=
+r>
+<br>
+These patches fix Smepmp implementation to make it compliant with the spec.=
+<br>
+<br>
+First patch limits RLB to CSR changes since RLB should not affect privilege=
+<br>
+evaluation. Patch 2 extracts some common code into a function (to be used i=
+n<br>
+patch 3). Patch 3 fixes validation of pmpcfg CSR writes in order to match S=
+mepmp<br>
+specification. Patch 4 is a small optimization and last patch is just remov=
+ing<br>
+redundant code.<br>
+<br>
+Lo=C3=AFc Lefort (5):<br>
+=C2=A0 target/riscv: pmp: don&#39;t allow RLB to bypass rule privileges<br>
+=C2=A0 target/riscv: pmp: move Smepmp operation conversion into a function<=
+br>
+=C2=A0 target/riscv: pmp: fix checks on writes to pmpcfg in Smepmp MML mode=
+<br>
+=C2=A0 target/riscv: pmp: exit csr writes early if value was not changed<br=
+>
+=C2=A0 target/riscv: pmp: remove redundant check in pmp_is_locked<br>
+<br>
+=C2=A0target/riscv/pmp.c | 151 +++++++++++++++++++++++++-------------------=
+-<br>
+=C2=A01 file changed, 83 insertions(+), 68 deletions(-)<br>
+<br>
+-- <br>
+2.47.2<br>
+<br></blockquote><div>Ping? <br></div></div></div>
 
-Thanks!
-
-[remove Lei He from cc list, he has already resigned from bytedance]
-
->              if (!akcipher) {
->                  status = -VIRTIO_CRYPTO_ERR;
->                  goto out;
->              }
->          }
-> 
->      [...]
-> 
->      out:
->          if (key_id >= 0) {
->              keyctl_unlink(key_id, KCTL_KEY_RING);
->          }
->          task->status = status;
-> 
->          qemu_mutex_lock(&task->lkcf->rsp_mutex);
->          if (QSIMPLEQ_EMPTY(&task->lkcf->responses)) {
->              kick = true;
->          }
->          QSIMPLEQ_INSERT_TAIL(&task->lkcf->responses, task, queue);
->          qemu_mutex_unlock(&task->lkcf->rsp_mutex);
-> 
->          if (kick) {
->              eventfd_write(task->lkcf->eventfd, 1);
->          }
->      }
-> 
-
+--0000000000001836fd063021b417--
 
