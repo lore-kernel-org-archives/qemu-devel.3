@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329D8C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6304C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:05:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsIvu-0001Yp-Hg; Wed, 12 Mar 2025 06:03:26 -0400
+	id 1tsIxv-0002nh-Gp; Wed, 12 Mar 2025 06:05:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIvg-0001XC-Pb
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:03:13 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIxt-0002kR-Vz
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:05:30 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIvd-0004uV-Pi
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:03:11 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43d07ca6a80so8578965e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 03:03:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsIxr-0005Mw-Nc
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:05:29 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so55429685e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 03:05:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741773787; x=1742378587; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741773924; x=1742378724; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zb2IlpQC1aPCPt9c1rMelh0CumzxoDpBmP6xUGm83DM=;
- b=M8DRJj2qPC8rhxLTo6oNo3mHO3+cEXP/hoOkmsttHGDmzt2oOVrZQ6UCUMMgYpKa6D
- Ek94sYA61WbX9X5ooRQiIg3BlgC3CIMsd12Qn4Vh3WcDrpvKUlkaQB+WhyiyuiQU349W
- yuttXaGrkzF0sfBU6LaWFLdtnUOJWO/l79TEmDZhsgiZoNtUfwcCHijdrb5U6QOTxGHM
- 5RJjWJxel+E7Tv9FDV50C014q0UUDeI39Yv/u/1t+T9GUxAv+gnc9k/Wbni5tJSaz/Gd
- Dlw/CNKGZQuWlqqMIJsAC9Qhid28eT+J+r3hRQOnnNiOiNHRzUywBKELrAuonZbnUg4A
- 2bjw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2C9dFStudi1AMR9evBY4Uacxl6jBaeGLRjAK+2tJq0M=;
+ b=hgGw4+m5xuPVkqGbTXgjOd3ahUlrFilyprwYzjXeS4PKnoYGU0mAAI5EDoJ/3kLBMS
+ kEqHuqRmlSvGhyk7DmER1rMf+xbrLNo0QYeK4bKGcMgG4KrnV/F4HlmSQtm3/8fXP6ci
+ lyPg1ked+F9KCaRZt9pXouu4Tz4gEGjD474zWSO+o4eCVzF6Om+IK5ffbtfJzk8GMDB5
+ b4WFRzSZponUBGkxSnycVeoHgx+MgK1uJ1YTqXylxpqcWtO3S3PoOBh2kqTxW/6BXWB5
+ gWYpLeSg6rwRYz0MC4maV2H4tXSKovhbxmOcK7Wrw1jhYHbVqVWMj5D6Lc/PNCKAcKi4
+ 7+fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741773787; x=1742378587;
+ d=1e100.net; s=20230601; t=1741773924; x=1742378724;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zb2IlpQC1aPCPt9c1rMelh0CumzxoDpBmP6xUGm83DM=;
- b=NimgY0M0YoHqHlduHodDAG9uFfKDjhf43ebvJ5I35Cxmbm7wsLsaCwzyI9hC6pK+KQ
- u40hIh9ko/qBS7En6doaghtlobv6OfQfQ3Cc8lpfcGlc2hohgQrJpkMA6YzUSS4aak5F
- mXxkBQmC7iPjyF455qewXE4KGVv8beFeHz5iYLQtIMUJLFrZokQknRZHylD33bYDXF3s
- sotcC0KOhRcgwJshHiaQXyvaN+k3voww8ceAhR8DKtK1D03XQWav4Mc0LPa6fSD+L76C
- Wdw+ypPtVYAYTWahcPLaB4cU8haMOWkZiZHD1Q6pdbfE1hdtSSZvDBDQMXQx05qAvvEv
- Zfwg==
+ bh=2C9dFStudi1AMR9evBY4Uacxl6jBaeGLRjAK+2tJq0M=;
+ b=HUqVXaUG9QmwBayEKyid5dY7sH5Gg1J3NEV1BcE+8U6DA3AkcCje+O/QSKVqDluPtN
+ hN16D3aoO5dA3nsAZIiiuwPLmc+Oj6uwGPwdZJG5C/60y/xQF34F8/cwkWi7HXblhFEd
+ aw75vpvnPDN9rCiIclKkSB2RltWMP8c/KhoeuNiASRUe6WZFmsTpntjsIgo196zQ/oba
+ tH84JfMUZwle389W3yDJk+oq6MbE9v2M/XOl2CdO9l+yICb3151yC2Se2hhWYEx4AlrA
+ R3TCvd8kFzbyFFjf0dkpMxrJSOkk8FTlyXnwSpqaYmKWdBRN5FLb9kYfky3hNPcCwihp
+ u0yw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgbZk4LEakXsBib+a9j4QbzVEpaVmrmhX/xcK3C0QWgGVrg0/kO3L/FUvDiVE93ItxnliIL85yjdwC@nongnu.org
-X-Gm-Message-State: AOJu0YyyRMvCuKnfOyqsEQo8TNuKnDaHqMnMQNmkhscqGbmbzm2Pli9r
- epJviplXs/QibgWy8UzmIKp7kGIPFI/XzVV6SiEDfu/c2kjdV7iZVgRIaXAiGVg=
-X-Gm-Gg: ASbGncuw4Fof/KhUVFM1H4pY8L0Pa34wnZ3rM6rxT1DoJM10ls7hY+gkHE4+X07y/AE
- vIaz02/YtlaVlwGJC1pXDlUG3idS71Ls2ZyH9QRNH9c/DX07rHYVQYAIaCZFEm8IQ+o2qpJIP7y
- wudZA7y3q5bYDzZH50s9YmEb61E8bCV2BIET9aKnInkFVniEVyh6MP03wBSvRHRIWPbVXoj5RNJ
- 0EOxo30YlXhHDxlaNKOzTIZFOrjqLePiXJM4bsl2B3nfoi8vGRvxaSnlFDirKxbskdvafNhr0J0
- 5F+4wiai9qxhMivzVTkDprGEMfr1eZpkNB/wufVHUomL+jaryAZMvKdhsd5r8ZZRpXol6P8LZzs
- tFdXN/Q==
-X-Google-Smtp-Source: AGHT+IHPcu8AsRzRXcc20GvN+UZDrefN/pfBIUk3rHmTaW7lXBAJ9RsbImjySiWse0w9czeRHCCB4g==
-X-Received: by 2002:a05:600c:4fce:b0:43b:cd0d:9466 with SMTP id
- 5b1f17b1804b1-43d07fd485emr32713735e9.9.1741773787247; 
- Wed, 12 Mar 2025 03:03:07 -0700 (PDT)
+ AJvYcCVO/rXzxTBMubR2ornLIU0his+w31pQB5Qz0FfZbesjDOaTk7cKBjhFpsibrH+vrOgUNZD92kIQjLdo@nongnu.org
+X-Gm-Message-State: AOJu0YyObMOJXcmG7VY88cViQ5g7B5lcgXtoJ2fOf6DPEvF5WF+OFEZU
+ d30GLNWxYgOKnPptB+jjRa/YemULlF5K14H6Gv9H97gljD1e7SGrypBi7KUAWrI=
+X-Gm-Gg: ASbGnct00ATDiU3zezR+rn3se9c8liTQI8KxeqKmq2rLS7ZK1e8KzCA8ng4LKE9eCe4
+ UO6RQxv/AeXXn8UXGvdwng9uS6k5tC7XuMg42S+aaVzGHqxyGejcUU7SWY15ITYVGnKTBMaOMe7
+ pelz+9bZnxjyWoH58lKoP6ExZLKv1cC44U6P1JK0LQMVfEWQIucb7pspA5L4ZuWjvmtr79mUNth
+ K0leya5LhoJdKaeyJnOiez4qoeaO1seIR28IMryT52MNCiC7AEbrSK5fidLI3IhPSJ236f6NF0r
+ vtzKkw5zPZ8TvRbJ15SyAQhWS2qavae4EKb2Jw+lJbZ4hgPvI0LrMYOcdh3yDcaB8mFrkcaEYtA
+ NfOREHg==
+X-Google-Smtp-Source: AGHT+IESRHyCP8MJ29SKLiEeGtZTeB2WnF4eTOuiJHXtUoMjCBPOZS3D8kFRKB85HAPsCjOcdEiOhQ==
+X-Received: by 2002:a05:600c:45d3:b0:43c:f78d:82eb with SMTP id
+ 5b1f17b1804b1-43d01be665amr78800425e9.15.1741773924251; 
+ Wed, 12 Mar 2025 03:05:24 -0700 (PDT)
 Received: from [10.223.46.213] (99.167.185.81.rev.sfr.net. [81.185.167.99])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d0a7310e1sm16204915e9.6.2025.03.12.03.03.05
+ ffacd0b85a97d-3912bfdfdfdsm21124317f8f.34.2025.03.12.03.05.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 03:03:06 -0700 (PDT)
-Message-ID: <9329310c-bfad-44aa-a53a-87c1f39668a2@linaro.org>
-Date: Wed, 12 Mar 2025 11:03:04 +0100
+ Wed, 12 Mar 2025 03:05:23 -0700 (PDT)
+Message-ID: <a0b57214-ff88-4443-b3ec-fbf5ef8d4384@linaro.org>
+Date: Wed, 12 Mar 2025 11:05:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Giving your own patches your Reviewed-by
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Bibo Mao <maobibo@loongson.cn>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, Yi Liu
- <yi.l.liu@intel.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <878qpamvk6.fsf@pond.sub.org>
+Subject: Re: [PULL 31/43] hw/arm: Add i.MX 8M Plus EVK board
+To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+References: <20250225180510.1318207-1-peter.maydell@linaro.org>
+ <20250225180510.1318207-32-peter.maydell@linaro.org>
+ <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <878qpamvk6.fsf@pond.sub.org>
+In-Reply-To: <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,103 +103,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
-
-(Cc'ing Yi, Clément and Zhenzhong for commit eda4c9b5b3c)
-
-On 12/3/25 10:45, Markus Armbruster wrote:
-> I stumbled over commits that carry the author's Reviewed-by.
+On 12/3/25 10:40, Thomas Huth wrote:
+> On 25/02/2025 19.04, Peter Maydell wrote:
+>> From: Bernhard Beschow <shentey@gmail.com>
+>>
+>> As a first step, implement the bare minimum: CPUs, RAM, interrupt 
+>> controller,
+>> serial. All other devices of the A53 memory map are represented as
+>> TYPE_UNIMPLEMENTED_DEVICE, i.e. the whole memory map is provided. This 
+>> allows
+>> for running Linux without it crashing due to invalid memory accesses.
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>> Message-id: 20250223114708.1780-5-shentey@gmail.com
+>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>> [PMM: drop 'static const' from serial_table[] definition to avoid
+>>   compile failure on GCC 7.5]
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> ---
+> ...
+>> +static const TypeInfo fsl_imx8mp_types[] = {
+>> +    {
+>> +        .name = TYPE_FSL_IMX8MP,
+>> +        .parent = TYPE_DEVICE,
+>> +        .instance_size = sizeof(FslImx8mpState),
+>> +        .instance_init = fsl_imx8mp_init,
+>> +        .class_init = fsl_imx8mp_class_init,
+>> +    },
+>> +};
+>> +
+>> +DEFINE_TYPES(fsl_imx8mp_types)
 > 
-> There may be cases where the recorded author isn't the lone author, and
-> the recorded author did some meaningful review of the patch's parts that
-> are not theirs.  Mind that we do need all authors to provide their
-> Signed-off-by.
+>   Hi Bernhard, hi Peter,
 > 
-> When the only Signed-off-by is from the recorded author, and there's
-> also their Reviewed-by, the Reviewed-by is almost certainly bogus.
+> this device can be used to crash QEMU quite easily:
 > 
-> Now, accidents happen, no big deal, etc., etc.  I post this to hopefully
-> help reduce the accident rate :)
+> $ ./qemu-system-aarch64  -M virt -device fsl-imx8mp
+> **
+> ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: assertion 
+> failed: (n < tcg_max_ctxs)
+> Bail out! ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: 
+> assertion failed: (n < tcg_max_ctxs)
+> Aborted (core dumped)
 > 
-> Here's my quick & sloppy search for potentially problematic uses of
-> Reviewed-by:
-> 
-> $ git-log --since 'two years ago' | awk -F: '/^commit / { commit=$0 } /^Author: / { guy=$2 } /^    Reviewed-by: / { if ($2 == guy) { print commit; print guy } }'
+> Should it maybe be marked with "user_creatable = false" to avoid this?
 
+Correct, along with a comment to justify:
 
-Explaining some commits where I'm mentioned:
+   /* Reason: SoC can only be instantiated from a board */
 
-commit 1e0d4eb4ee7c909323bffc39bc348eb3174b426b
-Author: Philippe Mathieu-Daudé <philmd@linaro.org>
-Date:   Fri Apr 12 00:33:30 2024 -0700
-
-     backends/tpm: Use qemu_hexdump_line() to avoid sprintf()
-
-     sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1.
-     Using qemu_hexdump_line() both fixes the deprecation warning and
-     simplifies the code base.
-
-     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-     Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-     [rth: Keep the linebreaks every 16 bytes]
-     Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-     Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-     Message-ID: <20240412073346.458116-12-richard.henderson@linaro.org>
-     [PMD: Rebased]
-
-
-I posted a patch with my S-o-b; Richard took it, improved and reposted
-it with his S-o-b; I reviewed Richard's changes (and eventually merged).
-
-commit 0fe4cac5dda1028c22ec3a6997e1b9155a768004
-Author: Peter Maydell <peter.maydell@linaro.org>
-Date:   Mon Jul 17 18:29:40 2023 +0200
-
-     target/mips: Avoid shift by negative number in page_table_walk_refill()
-
-     Coverity points out that in page_table_walk_refill() we can
-     shift by a negative number, which is undefined behaviour
-     (CID 1452918, 1452920, 1452922).  We already catch the
-     negative directory_shift and leaf_shift as being a "bail
-     out early" case, but not until we've already used them to
-     calculated some offset values.
-
-     The shifts can be negative only if ptew > 1, so make the
-     bail-out-early check look directly at that, and only
-     calculate the shift amounts and the offsets based on them
-     after we have done that check. This allows
-     us to simplify the expressions used to calculate the
-     shift amounts, use an unsigned type, and avoids the
-     undefined behaviour.
-
-     Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-     [PMD: Check for ptew > 1, use unsigned type]
-     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-     Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-     Message-Id: <20230717213504.24777-3-philmd@linaro.org>
-
-Peter posted the first patch, I reworked it and reposted,
-Peter reviewed my changes.
-
-commit c4380f7bcdcb68fdfca876db366782a807fab8f7
-Author: Richard Henderson <richard.henderson@linaro.org>
-Date:   Thu Jan 18 21:06:30 2024 +0100
-
-     target/arm: Create arm_cpu_mp_affinity
-
-     Wrapper to return the mp affinity bits from the cpu.
-
-     Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-     Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-     Message-id: 20240118200643.29037-10-philmd@linaro.org
-     Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-Is this workflow making sense and accepted? Otherwise what should
-we change? Maybe clarify along with the tags; or including all
-Message-Id could make this easier to track?
-
-Regards,
-
-Phil.
 
