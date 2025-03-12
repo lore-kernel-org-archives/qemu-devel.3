@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC112C28B2E
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 10:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF9AC28B2F
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 11:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsJlf-0001yA-Vx; Wed, 12 Mar 2025 06:56:56 -0400
+	id 1tsK1X-0002LU-TF; Wed, 12 Mar 2025 07:13:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsJle-0001xp-Qx
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:56:54 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsK1W-0002JP-DN
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:13:18 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsJlc-0004zn-19
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 06:56:54 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3914aba1ce4so2442428f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 03:56:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsK1U-0007dq-Dl
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 07:13:18 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e53ef7462b6so5889279276.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 04:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741777010; x=1742381810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tV5ikHa/hqeuUpxvZXbkEG/9vcSHp1KdVgA38NjNalI=;
- b=lnaxca5vmYM5TXnecOBxMnHH1tKuI6bDVSWK30UGMqQmNYVgMsfLLG/TR7YLrnLO2i
- DcLvsxGkq7Eo9SZ9hGZVeNn0ocIhsFhkn0fj0N1M6HmhmzxkCZrvXNUqLhttlksazXlu
- d49cS0vdHkarRg0XCtZ130q7AgQDYA6lFKIU3t67utxa9bsI0NnuufxqIoJBPAdTewql
- AkbAdy+mAQPs5SLFf1g78Q3MsfJx0xp1PvANFxZI1b3KtWl9k9mm1NGgI+YYc4Sde7LM
- ONBKcm3CFLyQEOgWdNjZ0lGUILiAvxsKDLuZ/GCtaZk8vyj4H7Q7/J8lNor90kLH4NR6
- 7qfQ==
+ d=linaro.org; s=google; t=1741777992; x=1742382792; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=216R3qeW4b5D9kzHf0a2eU4eLYUhDR+YtQz4Cr5GQKg=;
+ b=aZljJoXJrAlU4gOHcrBmBGWbPdll4Vruah4brHiwgm5RTDeXL9HHQhmO6iPoP4/pwI
+ dV71r6sS3v7+LTgxNtlMta8qcZHohp5F/AtP6yzvKdpnv0lcj60PKXQZFGjc+TBmtwG6
+ lE4G48T28Hv1VI/KNHEdBWtHI1ImKMGJ5CZLEUoLZvFsdCuxNKHueHBMRQCBvbYOmlhJ
+ l+f9y4FwUvLzyn8CdrmZHEBTT0d8JjB6oMAJ4GEfnFOryrA3pb13hIel5dXH+VhXzqB4
+ A3S3l5zF8RVTMfjIMt+pAklZSC+f59+zGJ81VTJ55L+Y17cH59JhTEz/aJMVN4Mf+UPI
+ AQQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741777010; x=1742381810;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tV5ikHa/hqeuUpxvZXbkEG/9vcSHp1KdVgA38NjNalI=;
- b=cQSlTSbhxAJXiz/9lmkaoBgFqCyP8LvNuflXBqeZciDAOYaFGPced3tqufAzofcQ2/
- NaeIqGTKkdSnlwN2PDHEU2g37k25jaHfihx4bihG4q3UblH9rdTeovCYvvT1cmN89kPC
- czciNbZP/CJDSULupjKzp68zkH68q1vnEaQ16rw9NRB5pvMU5dUw6ZpLdRF9AKUKcf5/
- F30H+op+DB64jydCCD/StDViv3TeRP0PD7tWD69ayaLiOZe/7ft3GE777J1b9MnuV/l6
- 1eZlEdu/ilL1ZKou3klC6Pb2hBLhFsmQPjwzzM9wxqRlD2r1IbuvoQNTyEs2pyt+WAEB
- SxDA==
-X-Gm-Message-State: AOJu0YzJpUFrrru1u2TSX/xeoArYv8O0ZqGd4T/BOmgu/rssjYvWbHPj
- BoPo4rX/KrUU9uD3VbnNMfJX0RcOMeQ74C0FQUjT4SuGAPtxz+J6HY5m5L7Vm0U=
-X-Gm-Gg: ASbGncvYtojZtE/65KV6iRqIz2GNPh5v+arHAjJ45/396f8NctTpZx3dGaNcxtur2Qa
- /7mG7I3EeD63pwg+eLwnX+IFYkUG+GrzKm06qfON10gtzEOEVsrhG9SxG8CUWRG+6nTftFxKuMp
- H4K61Oc6tBEJsqf/Ld+3tkPRKEOKxXuB+p3k5cEC863tdLsJVxoJeOqu+R+1ehvIrvvwDACN4kR
- gXn2ntKxy8zHLe1yjoIPnqjnwJgckYjSy8sWWiRMqr+KqEX+3PMvFkAo5hghLn80sHgxfXRuFz0
- tw5SxENW28MBocmK1kYn7wN1kUvTrgzZJ7kacTLOrXUa1rLYGcszlx6mSZtO319L8uAcYuqB6F/
- n+qGlQrfSusCKMlmW
-X-Google-Smtp-Source: AGHT+IH78lNMOOj9tHNwxWRUQWsBTjT2y+rJEhcQrkW+E1Vuna+SjXsr3v9YRv4Nl2MkUvtRSj1Qzw==
-X-Received: by 2002:a05:6000:1867:b0:390:f987:26a1 with SMTP id
- ffacd0b85a97d-39132d885bcmr13956309f8f.29.1741777009691; 
- Wed, 12 Mar 2025 03:56:49 -0700 (PDT)
-Received: from [10.223.46.213] (99.167.185.81.rev.sfr.net. [81.185.167.99])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d0a74c6a1sm17257355e9.13.2025.03.12.03.56.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 03:56:49 -0700 (PDT)
-Message-ID: <66943d63-7660-4317-9a41-0e45743397ab@linaro.org>
-Date: Wed, 12 Mar 2025 11:56:47 +0100
+ d=1e100.net; s=20230601; t=1741777992; x=1742382792;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=216R3qeW4b5D9kzHf0a2eU4eLYUhDR+YtQz4Cr5GQKg=;
+ b=utEi9EIzB78zy5aXQ0V8AUjf2fq3cO9qecjvtVRA8tPAsmOiX7k16tpjhGF5XwUfjp
+ TlID6oxtp3VliTfLwqO4UsvVbLvKEiwP61iVuLyxYdAzQm416I/YAotlphJEPwi8K91h
+ D+x3MS7BUAayLig7OZQdDipWjlJ2K/Kv0IFHPpdJPpKrUDLHMipPcItwfEEzWv1Vwiyw
+ kBtDeV8BZe5i6Ld6+FQRZLQtpzgqiX6/qAKExSlWVn0Ps4CtNlmkcerTDih6Gzt7NuTE
+ oD6daNueHFT3b1/62hKsPTtwagSIpel5ZmWcqaAS3uzUeaPd+o1beCFpm2l/qKh28NNI
+ mQCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXZgkOGirbilhfz0gRoxkqDKMUc/RY/fAvohT8vSTVRm19k9eyHYIhAIZaSqTWdRRIz9u6YwmOs7Exx@nongnu.org
+X-Gm-Message-State: AOJu0YxFeEac44dK0C4/dLuBFglUwWiL/oZATFVCsqI36fykaAEYAkgp
+ wP/pQ6nNeaVQ3AvEzoZKp6cwcxnfibvyF0C2RwO57WXVpYDwyO4EFTHGnIfYT0j3qGZOoK08bGo
+ 62V1zeCJW3QJK+nAJH1GXnhDSCAn3hSdCekchlQ==
+X-Gm-Gg: ASbGncu19LQFPGlXUP7ojfKluSfNAZ/bNRUg5O90pNwQ9Q4ZDD+wnuk5E5q9vYfaA1r
+ eDbitYXq2EZWicYcr5dZR5laxiPbOYHkhtI6aNHOo5c858nCD7WrkmN45afxC72fnKhKCaP/R2d
+ ywihAsQA7ML0WUerQe3wn6Dbijc1k=
+X-Google-Smtp-Source: AGHT+IHrwuNbom//YqCUKIPRyMu1gpkUWwkNdAKOldTlWp2ciLUpGl4v1RYbHTi73WwFo2oI8/H82SHfgVjA1Lgyt50=
+X-Received: by 2002:a05:6902:1886:b0:e5d:b88a:5536 with SMTP id
+ 3f1490d57ef6-e635c1f9fb3mr27291694276.44.1741777992600; Wed, 12 Mar 2025
+ 04:13:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Giving your own patches your Reviewed-by
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Bibo Mao <maobibo@loongson.cn>, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <878qpamvk6.fsf@pond.sub.org> <Z9FlzR5xkTe1aOuW@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z9FlzR5xkTe1aOuW@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+References: <20250225180510.1318207-1-peter.maydell@linaro.org>
+ <20250225180510.1318207-32-peter.maydell@linaro.org>
+ <1cdb6643-8fcc-4bd8-93fc-fcc93589c9a3@redhat.com>
+ <CAFEAcA-JgjX2U3wQ47X5JQ2SU1yMpx=0rWkctbj40w0Xjufpmg@mail.gmail.com>
+ <e7640bea-5bb7-4f4b-8614-ed8d521dd7a5@linaro.org>
+ <0261bcf8-d01d-4f63-9edf-f572519dd8af@kaod.org>
+In-Reply-To: <0261bcf8-d01d-4f63-9edf-f572519dd8af@kaod.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 12 Mar 2025 11:13:01 +0000
+X-Gm-Features: AQ5f1JoO_rOV7c1xonOdd5c8GntkXdCDb67tSaEWaZ5_LrYa2R_IcvDO9Tne5rA
+Message-ID: <CAFEAcA9YvYCmbzJmzV60McWTBNWt-mgkpnOpBY1_VE6_S+9W=g@mail.gmail.com>
+Subject: Re: [PULL 31/43] hw/arm: Add i.MX 8M Plus EVK board
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
+ Bernhard Beschow <shentey@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,82 +102,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/25 11:45, Daniel P. Berrangé wrote:
-> On Wed, Mar 12, 2025 at 10:45:29AM +0100, Markus Armbruster wrote:
->> I stumbled over commits that carry the author's Reviewed-by.
->>
->> There may be cases where the recorded author isn't the lone author, and
->> the recorded author did some meaningful review of the patch's parts that
->> are not theirs.  Mind that we do need all authors to provide their
->> Signed-off-by.
->>
->> When the only Signed-off-by is from the recorded author, and there's
->> also their Reviewed-by, the Reviewed-by is almost certainly bogus.
->>
->> Now, accidents happen, no big deal, etc., etc.  I post this to hopefully
->> help reduce the accident rate :)
-> 
-> Is a commit with S-o-B and R-b from the matching author semantically any
-> different from a commit with an author S-o-B and NO other 3rd party tag
-> at all ?
-> 
-> The latter seems to be the more common case, with over a thousand examples
-> of commits with no 3rd party NNN-By tags.
-> 
-> $ cat > no-3rd-party.pl <<EOF
-> #!/usr/bin/perl
-> 
-> my @tags;
-> my $commit;
-> my $author;
-> while (<>) {
->      if (/^commit ([a-z0-9]+)$/) {
-> 	if (defined $commit) {
-> 	    my $ok = 0;
-> 	    foreach my $name (@tags) {
-> 		if ($name ne $author) {
-> 		    $ok = 1;
-> 		    last;
-> 		}
-> 	    }
-> 	    if (! $ok) {
-> 		print ("$commit: $author\n");
-> 	    }
-> 	}
-> 	
-> 	$commit = $1;
-> 	@tags = ();
->      } elsif (/^Author:\s+(.*)$/) {
-> 	$author = $1;
->      } elsif (/\s+(Signed-off-by|Acked-by|Reviewed-by):\s+(.*)$/) {
+On Wed, 12 Mar 2025 at 10:44, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+>
+> On 3/12/25 11:27, Philippe Mathieu-Daud=C3=A9 wrote:
+> > + C=C3=A9dric for Aspeed
+> >
+> > On 12/3/25 11:20, Peter Maydell wrote:
+> >> The bug is that this is directly inheriting from TYPE_DEVICE,
+> >> not from TYPE_SYSBUS_DEVICE. Doing the former is almost always
+> >> wrong, because it means the device is never reset.
+> >>
+> >> (It looks like we do this wrong for other fsl SoCs too,
+> >> but they're marked user_creatable =3D false.)
+> >
+> > IIRC it is deliberately that way for the Aspeed SoCs, because
+> > otherwise there were issue when building the multi-SoC fby35 machines
 
-By including Tested-by the list is reduced by 80, not much, still 8%.
+Multi-SoC shouldn't have a problem with sysbus devices existing.
+They just mean that you can't use the convenient sysbus_mmio_map()
+function but have to be more careful with managing MemoryRegions
+in the different SoCs and using sysbus_mmio_get_region() to get
+a sysbus device's MMIO regions so you can manually map them to
+the right places.
 
-> 	push @tags, $2;
->      }
-> }
-> EOF
-> $ git log --no-merges --since 'two years ago'| perl no-rb.pl | wc -l
-> 1296
-> 
-> That is 8% of all commits in 2 years seemingly having no 3rd party
-> review.
-> 
-> Pretty much all of our core maintainers have commits exhibiting this,
-> so I won't include any names.
-> 
-> Some of these will be just a case of forgetting to copy the R-bs
-> from the list.
-> 
-> I suspect most are just a case of a maintainer making a pragmmatic
-> judgement call to merge something having given up waiting for review,
-> and not wanting to badger people into reviewing.
-> 
-> Most appear to be fairly trivial patches which is good. So that 8% of
-> commits is probably at least an order of magnitude less lines of code
-> changed in that timeframe, and the less "risky" code at that.
-> 
-> With regards,
-> Daniel
+> AspeedSoCState was introduced long ago (2016) and the fby35 is "recent",
+> from 2022. I am not sure that's the reason.
+>
+> Regarding the reset, the SoC functions are sysbus devices and all have
+> a reset. The SoC doesn't have any. Maybe that's why we are not seeing
+> issues.
 
+Yeah, it works out in this case. But I think it is in general
+a bad idea to add new direct-inheritors from TYPE_DEVICE.
+If anybody needs to add a reset method to the SoC container
+object in future then they'll be confused about why it doesn't
+work, for instance.
+
+I think that in general people expect that TYPE_DEVICE is
+"devices are like this" and TYPE_SYSBUS_DEVICE is "if you
+also need the sysbus-specifics, most notably providing MMIO
+regions for registers". That's a totally reasonable expectation
+but unfortunately it's wrong, because a few key parts of
+"this is an internal device that we don't need users to create"
+are only in TYPE_SYSBUS_DEVICE.
+
+thanks
+-- PMM
 
