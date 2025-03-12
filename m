@@ -4,91 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65562C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1663C28B2F
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:35:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsN8h-0007zW-ER; Wed, 12 Mar 2025 10:32:55 -0400
+	id 1tsNAp-0000Q4-C9; Wed, 12 Mar 2025 10:35:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsN8e-0007wr-U9
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:32:53 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsN8c-0003sd-3U
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:32:52 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2240b4de12bso41555405ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:32:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741789968; x=1742394768; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=j2oQtL52km6dMRq4E/9KIo0vhaHcbPuw6RP0qr/x/nI=;
- b=gkXaFKZFSBF2Knz3IU3yCj8X7nY6Sfdq/H8mL3lUT2qrTDpKPkrlzGnrC5VZepM3Ur
- t4zRamNvo9UgpXYx1vDvx0QS6faCBmGbrGKt5efiprKGGVjKARhZx9RgyKzw6irlgMQU
- AVtPYO2bJ9nnnhDW6Sz7OG/rnNI7kNSWk7zlzhOFKDsgBFmaMYSYcKVEllDyPWTq5teH
- UGUYYYS+cxf2NZnjPMe+TXG+qSsSghQjTlVC+pwIRA8o6Ch4aVvh5x9gjU8fqZjKCafn
- mZf9nlqtc/h4Kky/uonVeyH9DX2kEm1bKeITjgoLA1ER3EcS7hgHCyTF0gvQaPKrqkuS
- /hjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741789968; x=1742394768;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j2oQtL52km6dMRq4E/9KIo0vhaHcbPuw6RP0qr/x/nI=;
- b=X2+154z8q13T9qNCjDbYm5S25YBjRNsuUCfuSjJW8HqP7O1tIWpm5DWfcXR3SmcYGf
- Da1D+JUreNkBi8fSY3NYLxJ4KhHFZFn8JealGiWajrn2/WL6IXedOyVteESxmWwaJSFS
- vX7NAYPOL9dNyrZQrCOfC8BR+ga5NpJf7W0nCsjQHGcLiwuAlnQs1IajMXmciXnScoUQ
- CfFkS4/XWWf+mavt9oDkVhp3Jf2nWQGDA5FUIWyu9O6Wddj7vIjd3q81ibEPgeiHruiN
- J5ca9WNcwaBnyNOAuSkq0E5dpQMnmNKByvRGAkLd9ZvqvoVJeWemCb2aar939TLJ+aRk
- IllA==
-X-Gm-Message-State: AOJu0YyhlANaln4Ho7XU22UB/3sCuXqpA6i9H4Jb66m2iNNUSbx7TPVn
- FmJstfMeew6TZas1QevdHgD3NRQmrTrCI3Q6oQTJiqhIB0kQPmJ43rVFdq8677E=
-X-Gm-Gg: ASbGnct4dw1EwSBr4rDlMAcdK8e045w2Pule2AGJIT2eGFsdjdeiqhpF+kMAoIzrpLd
- nTSQE4m8i13SRvGOhPtNEI2J9ni2wRM9E142n2ZkdHMbz5F1Mf+lKsEhydsY3wjt46wE5YYlkWK
- 5mgBfrJWww44LerEJUdF2tOA/8DRDisBnrCfF49FlBnrKeF1IbZV0jQ7PVQC98BiOwR8McyuAda
- BPaU2IKuiBQsugq3tRAF5e2lfMStOCikmyGGEgO28k2UslnGIAN94bQ3WK0pXGacGu15a9IuQdp
- EMk2xwgl9jT1/rvmVhhxDTHdrwva3H/x748+wiTfmXRgp/0pBDru+USAhnJTORRqaWrsAgsxJwV
- E8FryzwsR
-X-Google-Smtp-Source: AGHT+IHNKmgZQI9Q9XAy44lrtnij/x863QgSlWavnA3uiuM0FxHjkUjcdIfEcsCendqK14eKV+b7fg==
-X-Received: by 2002:a05:6a00:b4d:b0:730:8a0a:9f09 with SMTP id
- d2e1a72fcca58-736aaaaca0fmr33143789b3a.18.1741789967816; 
- Wed, 12 Mar 2025 07:32:47 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-736c16c72ddsm8785162b3a.177.2025.03.12.07.32.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 07:32:47 -0700 (PDT)
-Message-ID: <01af330a-d5c0-4d0e-bda2-0a3908dacd6e@linaro.org>
-Date: Wed, 12 Mar 2025 07:32:45 -0700
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tsNAZ-0000Oa-0S
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:34:53 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tsNAV-000443-2P
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:34:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=rJqJZoq+bo3efcxT3dgOybWzh4b/Ppl9z1rYLyCDRDk=; b=DBKmWd6GBaA0yZX3XtjYyjYTZy
+ xOlspcyKc1sxyCZNxv8Sqe3GsPE9yKJGxHv6vBfN5b9U4fsEipacFR4YO0+1znp/ZdRi+E7Dttxaz
+ A2sZ6De9LAqY+4VSbu2SfJMgr4G5R+lez1BiOs9lWVdi2Q2DMf+807WDJAsKcMCx5FiuoDGL3FZ/B
+ DmkP9HwxB8/ceCAl3/Bry5PtmqQcM6xsKLNx5sTtwMGbitTXI/EjTfoQZ7BdoZnplcC7UClBhIuP+
+ DvcAfkdJxIAOjb5vEI46zSrfByZbEkrASLKq3nph8sKknadvyqcIhipldK61rCowdGRkr5VIcB27T
+ vvIqS21vNV694XF3ca6NR3oa6KQ9Zmm1O8JFKHX1xBnfROtn8mU4gg7xIufkftiEonPMWyt94cJ1Z
+ i/c0SCT8aqRm6hPM6It3XXGjxir5YQ8Y9y8A1YGNncwBr4JBre8z5UodrQpMy6zY6hDtPVR1VLgTZ
+ oy2ixHQsQyyNU1DnwTud7X/UdIEMkj1OFV/ZywIH1BAKXXOJi16LAD9HBZbOhhKCU8wdWeq9IKvzt
+ AFCF2MkTks50RCod6DC2IR/AkNOuBeF2jhxxR8oQQAMAx88PIFkPRoTXICam3IfrylPfqUoXkwu7x
+ n9LPA658g7O3uacsZwGECu+XfQtrD76LEwoHBG5PA=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Greg Kurz <groug@kaod.org>
+Subject: Re: [PATCH v2 6/6] tests/9p: Test `Tsetattr` can truncate unlinked
+ file
+Date: Wed, 12 Mar 2025 15:34:44 +0100
+Message-ID: <1900886.tBiGGRzFWv@silver>
+In-Reply-To: <20250312152520.25f3dd79@bahia>
+References: <20250311172809.250913-1-groug@kaod.org>
+ <4178394.pcGFbxMBL1@silver> <20250312152520.25f3dd79@bahia>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] util/cacheflush: Make first DSB unconditional on
- aarch64
-To: Peter Maydell <peter.maydell@linaro.org>, Joe Komlodi <komlodi@google.com>
-Cc: qemu-devel@nongnu.org, slongfield@google.com, pbonzini@redhat.com
-References: <20250310203622.1827940-1-komlodi@google.com>
- <20250310203622.1827940-2-komlodi@google.com>
- <CAFEAcA8VO4QNU5+9Xk=AiBObXFCRoPF3NUN9m2r1752oi1cShA@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA8VO4QNU5+9Xk=AiBObXFCRoPF3NUN9m2r1752oi1cShA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,41 +72,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/25 07:18, Peter Maydell wrote:
-> On Mon, 10 Mar 2025 at 20:36, Joe Komlodi <komlodi@google.com> wrote:
->>
->> On ARM hosts with CTR_EL0.DIC and CTR_EL0.IDC set, this would only cause
->> an ISB to be executed during cache maintenance, which could lead to QEMU
->> executing TBs containing garbage instructions.
->>
->> This seems to be because the ISB finishes executing instructions and
->> flushes the pipeline, but the ISB doesn't guarantee that writes from the
->> executed instructions are committed. If a small enough TB is created, it's
->> possible that the writes setting up the TB aren't committed by the time the
->> TB is executed.
+On Wednesday, March 12, 2025 3:25:20 PM CET Greg Kurz wrote:
+> On Wed, 12 Mar 2025 15:11:41 +0100
+> Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 > 
-> Yes; we need the DSB to ensure that the stores have completed
-> and are visible to subsequent icache fills; and then we need
-> the ISB to ensure that any instructions that we execute after
-> this are done with an instruction fetch that happens after the
-> ISB (i.e. the CPU hasn't already speculatively fetched the insn
-> before we forced the store to complete).
+> > On Tuesday, March 11, 2025 6:28:09 PM CET Greg Kurz wrote:
+> > > Enhance the `use-after-unlink` test with a new check for the
+> > > case where the client wants to alter the size of an unlinked
+> > > file for which it still has an active fid.
+> > > 
+> > > Suggested-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > > Signed-off-by: Greg Kurz <groug@kaod.org>
+> > > ---
+> > >  tests/qtest/virtio-9p-test.c | 8 ++++++++
+> > >  1 file changed, 8 insertions(+)
+> > > 
+> > > diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+> > > index f515a9bb157b..20c0d744fa56 100644
+> > > --- a/tests/qtest/virtio-9p-test.c
+> > > +++ b/tests/qtest/virtio-9p-test.c
+> > > @@ -736,6 +736,14 @@ static void fs_use_after_unlink(void *obj, void *data,
+> > >          .data = buf
+> > >      }).count;
+> > >      g_assert_cmpint(count, ==, write_count);
+> > > +
+> > > +    /* truncate file to (arbitrarily chosen) size 2001 */
+> > > +    tsetattr({
+> > > +        .client = v9p, .fid = fid_file, .attr = (v9fs_attr) {
+> > > +            .valid = P9_SETATTR_SIZE,
+> > > +            .size = 2001
+> > > +        }
+> > > +     });
+> > >  }
+> > >  
+> > >  static void cleanup_9p_local_driver(void *data)
+> > > 
+> > 
+> > Ah, I just meant the code snippet as a starting point, like I would have also
+> > checked with a stat() call whether 9p server really did what it promised.
+> > 
+> > But OK, better some test coverage than nothing. :)
+> > 
 > 
->> This function is intended to be a port of the gcc implementation
->> (https://github.com/gcc-mirror/gcc/blob/85b46d0795ac76bc192cb8f88b646a647acf98c1/libgcc/config/aarch64/sync-cache.c#L67)
->> which makes the first DSB unconditional, so we can fix the synchronization
->> issue by doing that as well.
->>
->> Signed-off-by: Joe Komlodi <komlodi@google.com>
+> FWIW the server returns ENOENT if it doesn't have the fix which causes
+> the check to fail. I was assuming this would be enough but I'm fine with
+> adding an extra check if you want.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yeah, that's why I wasn't really anxious about it. If you have some cycles,
+fine, I'll guess you can just copy & paste existing stat() code from another
+test, otherwise deferred into future, NP.
 
+Thanks!
 
-> Richard, are you doing a TCG pullreq for rc0? If not, I can
-> put this into target-arm.next.
-
-So far I have nothing queued for tcg.  Please go ahead.
+/Christian
 
 
-r~
 
