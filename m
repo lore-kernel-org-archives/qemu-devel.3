@@ -4,68 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA27C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFC3C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 14:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsNDw-0001pO-Vq; Wed, 12 Mar 2025 10:38:21 -0400
+	id 1tsNFW-0002cr-Qg; Wed, 12 Mar 2025 10:39:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsNDn-0001of-QH
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:38:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsNDm-0004SQ-4v
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:38:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741790286;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=sJJVastwPy/J+GQoTTP0HwUhC6yw590YuN8XO7mJFmU=;
- b=RJcy76DMIk/FNTbKbRwSZk8z729LhkfIvnLtGXYBlhbjypyjqMiwwtGcYE/6/6g1AfGyAm
- LRnj/Mn5ZxEn8Nw7SyMvWVwgFSWRwkSgMwRST0mfCAsDCzl0h8tLFKRTE1H8UQDba1pBUD
- MB//tBmT2FfRl6rwLstlDF4QZzezbfw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-546-bJIiSibfOeaSCf9PW2o8EQ-1; Wed,
- 12 Mar 2025 10:38:04 -0400
-X-MC-Unique: bJIiSibfOeaSCf9PW2o8EQ-1
-X-Mimecast-MFC-AGG-ID: bJIiSibfOeaSCf9PW2o8EQ_1741790284
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58E5418001F7; Wed, 12 Mar 2025 14:38:03 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 801A21800945; Wed, 12 Mar 2025 14:38:02 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8C9E921E675F; Wed, 12 Mar 2025 15:37:58 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- vsementsov@yandex-team.ru
-Subject: [PATCH] block: Fix bdrv_activate() not to fail without medium
-Date: Wed, 12 Mar 2025 15:37:58 +0100
-Message-ID: <20250312143758.1660177-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsNFL-0002c0-RW
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:39:49 -0400
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsNFJ-0004Yr-Sp
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 10:39:47 -0400
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e5372a2fbddso5827167276.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 07:39:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741790384; x=1742395184; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lKLwDSRu++rXmRzCi9GDp+l5O7Md9kfsrLRYsLZZSZg=;
+ b=O4fHTS/LEQT3sCXAa7EltR3jzlmrscraWHwK3SbnqprlU2NzWtYcx2WXBhaqUVD0n/
+ oj6UujspSyXGd9bugwqE9tmkEE0I5LAq5LiAXZ5QZtu8K2OBK+Msi6A0VuL7TxlWTzCz
+ /SO4kYiAxg6A9tv2nCt8PhbF6oByOD+NQ5xCw2N8JaJbR7ZlHHfa49aEkIiX8PWOtg85
+ ODxNeacWROdisLagT0NWOCHo2gfuPbiK2gqQES9iX7BrwEFDiEPAde7lapyhfa5OY16J
+ vtjxRhSRTxwRLm6EF7k9rzp0IQAXBTB3MtQMjo7TUKMR9zezWtDGsps0JOEF2ZeNdAF1
+ lQGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741790384; x=1742395184;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lKLwDSRu++rXmRzCi9GDp+l5O7Md9kfsrLRYsLZZSZg=;
+ b=A75QnYuMVOaSp8fIlTFLm5TSylEysb2TiXLigXNkKbD0UE5WkePFkQIHyvTzCQ6X2d
+ 9cZlxTtiXnci3Yd1zeul92oz8RPvrmJobGqMsPK6/wUiYhqfITdy9+tBDMjYq2caamH9
+ SaCmyN2oLXIJZmy6J5Ll+uxouqaTc9QK+isdH+SNnwUa+caA3O753nePS1+KL04eo8Qt
+ bdvEqlM46KLXf1XrHa9jZe3m3m0jc4exVeCOffJHrVi3ABQP6Gi4SuYo7l6kzEsWaKvB
+ 1rpxsiFi2+GYfw2K8ZVDGuukabq/9WVw9/JSezl9aZKMSv+zI+kfZL0SQc1qrxQL1qcp
+ 2lLQ==
+X-Gm-Message-State: AOJu0YxEZcgrqi5k35gBEvsjtyEXFtpQnzgpYT1PHTgUJKg9gr1B8EBj
+ ZgOeWEadNGUxbCF5/tfaCunb9DJ80kvVH8bCCNfCm9KX6VGI52yeqGfcYfV4NXDLS8U7uee6Rxj
+ hVfTU9VOKuslX8B4L5AMfEGpo9rZD2dayZ58bvA==
+X-Gm-Gg: ASbGncuKx3rv2OOhTCO1FpPilROlHoMssCarIgjKTTHwu4G3LYjzZ33RJEsWMUDQ55C
+ ybn118b3nAcSbMDfus/hrKV9qYPiCW/08jNUWGvots5B1Mz8gkryc8l2drTp+uS6z9LHD+qKX84
+ wPbMvL8pQkelc6mjaJYOnfzd47HOk=
+X-Google-Smtp-Source: AGHT+IFL1juRaO/mbK4s/530isYLkk48CtdohBLUnI+dbeubsc7FSf6gBSMwvkpexzm45xRSnwecrYtDPDWYy3B8oF0=
+X-Received: by 2002:a05:6902:2101:b0:e5e:1062:bcfa with SMTP id
+ 3f1490d57ef6-e635bf12a3bmr26433005276.0.1741790383959; Wed, 12 Mar 2025
+ 07:39:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250307190415.982049-1-richard.henderson@linaro.org>
+In-Reply-To: <20250307190415.982049-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 12 Mar 2025 14:39:32 +0000
+X-Gm-Features: AQ5f1Jp3S8FDkzyB7srqm6D25baWi6BKSGaG_XGbX0-baRHpvzYdL_yoNrNPxH4
+Message-ID: <CAFEAcA8UeQLKrUSF8CpORFRzWSKsBMqa_vbNwCdsF5Nk6up5GA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/arm: SME vs FP enable fixes
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,32 +91,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bdrv_activate() returns failure without setting an error when
-!bs->drv.  This is suspicious.  Turns out it used to succeed then,
-until commit 5416645fcf82 changed it to return -ENOMEDIUM.
+On Fri, 7 Mar 2025 at 19:05, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> If SME Streaming Mode is enabled, but FP is disabled, we get two
+> assertion failures within the translator.  Beyond the assertions,
+> this combination should succeed because we're executing on the
+> SME co-processor's registers, not the core cpu's AdvSIMD registers.
 
-Return zero instead.
+Patch 2 has a 'bool ret' declaration that needs to move to
+the top of its block. Otherwise
 
-Fixes: 5416645fcf82 (block: return error-code from bdrv_invalidate_cache)
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- block.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/block.c b/block.c
-index 0ece805e41..9855c102de 100644
---- a/block.c
-+++ b/block.c
-@@ -6860,7 +6860,7 @@ int bdrv_activate(BlockDriverState *bs, Error **errp)
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
- 
-     if (!bs->drv)  {
--        return -ENOMEDIUM;
-+        return 0;
-     }
- 
-     QLIST_FOREACH(child, &bs->children, next) {
--- 
-2.48.1
+and applied to target-arm.next with that minor tweak.
 
+thanks
+-- PMM
 
