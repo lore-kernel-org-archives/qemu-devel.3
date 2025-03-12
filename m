@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED5CC35FF1
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 05:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29861C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 05:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsETg-0002n3-83; Wed, 12 Mar 2025 01:18:00 -0400
+	id 1tsETc-0002lu-QS; Wed, 12 Mar 2025 01:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsETd-0002mc-ME
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:17:57 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsETZ-0002lY-Ql
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:17:53 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsETb-00070i-OC
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:17:57 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22423adf751so92748995ad.2
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 22:17:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsETX-00070N-Qn
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 01:17:53 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22423adf751so92748545ad.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 22:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741756673; x=1742361473; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741756670; x=1742361470; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oyrjeqgt+D2Pk5pIxLejPmxWNak0WTTJI8f+RFyfGJk=;
- b=NyZvg7VYgitZyCtbOl/hBNPD608xyhdfaXBKmO0lwW21o2T0DH7Gfa4/yuBL00eiyZ
- ao9Bks5rvhFVk4cSVCTY1c1iVHgbQt/NY0aypAkEViuc2hhbOYYikUYp3VZfiGpd2heB
- GTjGdJ4EfE4rQk2fkiZUfusumoDPv3imRH66dyyxH8jQvTPBQkYb3s3iLlISIbuJrFoZ
- UBiBxTDPPgrAi29+RMN2Y4ZqH43KPFhEmNoGvEwRG9Z97rLsTEe1Esfzpzm9gn44rrrp
- WaZ5eLblN6ZHG3RTeS1d5wUUJ4/ixdG+79ezf/8r30NZi/uNwXuZphhQxvgnafYbBLLe
- 9jlA==
+ bh=22gBc91mwFFQvV5wLMuqbrX+Fd3pyudRp4NuphL9yhY=;
+ b=HRGWXmVettPypDhSX3h3XTKi7BhlM+Sya1jzot8uMlzrj0s3/vfTZfJWtVcOFHMUfs
+ JwRg0SAMyo9b9lXfjdcGI6dZvYY2mI+cKSxXjunSU3Fj3R8/gKTydJGJ06bjcsd66yp+
+ AvVZBTfZ+JhQa+L90rv6ZVyrfP24MdquDN/UYirBNQrKM+pPjuGNFZ6shJpWqCddDFGl
+ gfEoabQVTQvzZ+aFJdjACOzfhBSrNSRvNAm/LCTx5+X801XaVf9ATl2ERigTeC/Sh3gS
+ QKt9gfJKM1/BarbZ7GZ32xQjZjbT4qDyVZhe3nB6Ok2wdsDml/kDjfDMyQh4NJc96YLd
+ 5ufA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741756673; x=1742361473;
+ d=1e100.net; s=20230601; t=1741756670; x=1742361470;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oyrjeqgt+D2Pk5pIxLejPmxWNak0WTTJI8f+RFyfGJk=;
- b=JG+ycohmzakqEM08heRcT4qEeiCA1M1TgGSfN5WNRrvF1B5KlGffRZ9IUzfmDq6YVl
- r5/IU33F7201onfzf6da0I3gTXvSAISzL0nchWsEUxr4uNF/f59kzv8/J6RyV25iUdAG
- TgVuKvn+w8H6JQCUznOgFpBWooe+Yf7ywo5mMkQaHGh3qMW+7m5trziZHj79wIbMTQKp
- MxLjSO3LBVivrrj7w6j9BQ/n1iTn5PMC3P3m1iukxUnNws15x8mvDGqHbnOIIjpfOycT
- Iu7PkvULtI+o8TXwiX1S4GIcZi/XzvgxQyHeIl3/NrQomPbqsq+VnM+D6FyCgCRL18t2
- zaag==
+ bh=22gBc91mwFFQvV5wLMuqbrX+Fd3pyudRp4NuphL9yhY=;
+ b=GPYUyzcTA4Bo6PbiU3Twg7PPrXQuCvBRPEPQyt4ESEyr0SvdSP3Na9rCLDGEIRSXhI
+ 8700j1RmtkrcfPT8XSMAwSKrjGJt0GKenDW0iTJT+CIORxQM/kGededtJ4He12VPtwDG
+ 3pB17CaF2TSHWTTOhse2waZSlP3RFNCZoX1N6HPVogiWDT0Yx5pUid3NjEOk9vGZT3mR
+ l2R08ul8cm4Lj0fXJv8UF17dy0fwFJl/4s65i1eAR3sYXkUBB4X62kYUZXCyqViXTHvM
+ JwY48/Mstgmkg+9ak4D7+M5uk3/Bzc40xdGHTjhxf5OENKqM0fnqSIOR4wHb5lFRr9ip
+ u//w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW16GOhy/qqsMvP/FLE2B/xj18OVAycpLCA7q5R2qtKh0KH+hHe6fWAaYsGjWLZCwutU7SYdvglYyIz@nongnu.org
-X-Gm-Message-State: AOJu0Yx6fEWWCLD4oJ7Kwsm45XSuyZ7D0eCHSt8gY1JDWvt1q7yFei3z
- Zr5GvX3e/NzupAR32wR/oV1tEugOwK69mYQGumX0MKSDPLtqDIxmmpyEhQ==
-X-Gm-Gg: ASbGncv7/7uNIjgrpmEUxn/mlUGqTKCCbaF/yoeWBvl9K2gzqpD8oNoNhYhsOCynluL
- 8R9sjNWVjCEUWNUBuXp8nzN517/jKHTbmezuiFVaM+G09xWTmztx1CDXgPhI2N3+g9A6fTTW6EL
- 7GQWaj3Ie/prLXr+OZ5r63J4UKFoIlWoK17GKgWUTlPtj9bdfoaXDQ4/IplSWlxkiutHoncmqYT
- /5X0ijLG57yxltQ18PbEQYbvBUmETivYVf985eVOcqwTr+lOFugfKapue7mtSWVY+pwMc+JPKBD
- QKLnpRJZwk26CsagR1O68xGljyFED3ccFk3w8kgdSraaC3lJSFlkNc2AFwlYyg==
-X-Google-Smtp-Source: AGHT+IH8Uc8dFo6t0pzPk/eVuxmlY2/O9fXN4Hk5vPqpJFXtC/Io5mn1NCreOUZuH6dU3JYorVYBbw==
-X-Received: by 2002:a17:90b:2e42:b0:2f7:7680:51a6 with SMTP id
- 98e67ed59e1d1-300ff0a4593mr7767104a91.6.1741756673525; 
- Tue, 11 Mar 2025 22:17:53 -0700 (PDT)
+ AJvYcCWWaUZuUXeSE7lEmkHWCMGTnyUZ0noB4WLEhRoSuM1V5jd2GK8rrGArD0NExFT1/+rsPZ4SYfElhzI/@nongnu.org
+X-Gm-Message-State: AOJu0Yzt0S0ZvE02Q2jzHWiObAx0oV8qf2BycHwWNdsa0aWeBc6JoRAr
+ 6c0FMPZQO8y2GRgbmoXpdvEOmJOKv6l5CHWhRMJfWLOEUQBP4QNG
+X-Gm-Gg: ASbGncspxre34RF8u0kdVUxkLfVIeJ4X0iMsPnV8SSQPia4MhymuhoZ+i5LDsSuUWZ2
+ 3ZvM9mY3+Ll4ia3q8crN3cIu63PiHpoq1IQ0xGklUC0mfTWYD4/Kym9ZcpOI4FJv0c6dvCgeeAI
+ pPCMaPK1WigatRQojIEZ2U1seU6Kr+k8XgeGVfLqca9ydNN4WOClCIrtefoTRGwXcjaWQHPzf5d
+ 3lNu8tMQK44li59pOxXL28tIkS1yqtmoaL7BOB9pES/odlHm8/RYmxBTeyFX5sziz0E3bcbJaeW
+ YzhtYtK0/TFNwvdPAorCRulS9gwCu6dnhm7Mw6w/CctOYKsBNqs=
+X-Google-Smtp-Source: AGHT+IH2zK7tUKhxahJAD5yTsMG/ZTpr9Ybk4JbbtanHglIvCrP6ishCa0f8RqkTaoElO0u7VqtWnw==
+X-Received: by 2002:a17:903:2308:b0:223:501c:7576 with SMTP id
+ d9443c01a7336-22592e2d575mr95437295ad.12.1741756670512; 
+ Tue, 11 Mar 2025 22:17:50 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22410a925ddsm107557475ad.203.2025.03.11.22.17.50
+ d9443c01a7336-22410a925ddsm107557475ad.203.2025.03.11.22.17.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Mar 2025 22:17:53 -0700 (PDT)
+ Tue, 11 Mar 2025 22:17:50 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH 2/3] tests/functional/asset: Verify downloaded size
-Date: Wed, 12 Mar 2025 15:17:37 +1000
-Message-ID: <20250312051739.938441-3-npiggin@gmail.com>
+Subject: [PATCH 1/3] tests/functional/asset: Fail assert fetch when retries
+ are exceeded
+Date: Wed, 12 Mar 2025 15:17:36 +1000
+Message-ID: <20250312051739.938441-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250312051739.938441-1-npiggin@gmail.com>
 References: <20250312051739.938441-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,43 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the server provides a Content-Length header, use that to verify the
-size of the downloaded file. This catches cases where the connection
-terminates early, and gives the opportunity to retry. Without this, the
-checksum will likely mismatch and fail without retry.
+Currently the fetch code does not fail gracefully when retry limit is
+exceeded, it just falls through the loop with no file, which ends up
+hitting other errors.
+
+In preparation for adding more cases where a download gets retried,
+add an explicit check for retry limit exceeded.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/functional/qemu_test/asset.py | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ tests/functional/qemu_test/asset.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 6a1c92ffbef..d34e8f5e2ad 100644
+index f0730695f09..6a1c92ffbef 100644
 --- a/tests/functional/qemu_test/asset.py
 +++ b/tests/functional/qemu_test/asset.py
-@@ -124,6 +124,22 @@ def fetch(self):
+@@ -116,7 +116,10 @@ def fetch(self):
+         self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+         tmp_cache_file = self.cache_file.with_suffix(".download")
+ 
+-        for retries in range(3):
++        for retries in range(4):
++            if retries == 3:
++                raise Exception("Retries exceeded downloading %s", self.url)
++
+             try:
                  with tmp_cache_file.open("xb") as dst:
                      with urllib.request.urlopen(self.url) as resp:
-                         copyfileobj(resp, dst)
-+                        length_hdr = resp.getheader("Content-Length")
-+
-+                # Verify downloaded file size against length metadata, if
-+                # available. dst must be out of scope before testing st_size
-+                # because # copyfileobj returns before all buffers are
-+                # flushed to filesystem.
-+                if length_hdr:
-+                    length = int(length_hdr)
-+                    if tmp_cache_file.stat().st_size != length:
-+                        print("st_size %ld", tmp_cache_file.stat().st_size)
-+                        self.log.error("Unable to download %s: "
-+                                       "connection closed before "
-+                                       "transfer complete",
-+                                       self.url)
-+                        tmp_cache_file.unlink()
-+                        continue
-                 break
-             except FileExistsError:
-                 self.log.debug("%s already exists, "
 -- 
 2.47.1
 
