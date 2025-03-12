@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA66C2BA1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 06:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5BDC28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 06:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsFlk-0004ib-4k; Wed, 12 Mar 2025 02:40:44 -0400
+	id 1tsFu4-0000JB-KC; Wed, 12 Mar 2025 02:49:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFlb-0004cS-DY
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:40:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFty-0000I0-1a
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:49:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFlZ-00087T-Mc
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:40:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsFtv-0000Xk-5i
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 02:49:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741761632;
+ s=mimecast20190719; t=1741762149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=T0ChVhAUVbQJ6B4OXCdonqcFdzysGDhjpO5W68Gr4zA=;
- b=ZeN8DAXaPNAsgRq3iDB53TX35Ah7HNG7HNAtRqrNyNCaGTEUpZQR67xn2shlZD7T1l+Jb0
- cIBeTQZNG6IjB6n38LHg9gwb66ko2KG7qoHR8ykzQOUEfaQtUjT8nP7bNzgdshHNOg+dUQ
- lj6NgP7GJr6sqSU4SuRyf3TEhYTTNW4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iftUVt49VrEyx0/JxVEDpN0ZcISAZ9GCLkbVbUiy6G4=;
+ b=NL8wvlmQ13btxIuk1kHdpuKf8WPi9FG/ydTJYl9a3sKsnre/GSn0PH/Ydu/eh6ExQ5BbK0
+ Rv8PughqTioTmL1AqRlsq4N1H+sMzCvsMjLvNMeUcl6wA7jki6x+E/ndY6ga2mVIxeRXQ3
+ 1J917nGYHIFTus+3KWH5O4aKAVt4oLo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-PMsx9XNuPBWTohts81kgfw-1; Wed, 12 Mar 2025 02:40:29 -0400
-X-MC-Unique: PMsx9XNuPBWTohts81kgfw-1
-X-Mimecast-MFC-AGG-ID: PMsx9XNuPBWTohts81kgfw_1741761628
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3913aaf1e32so2694678f8f.0
- for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 23:40:29 -0700 (PDT)
+ us-mta-333-zLeqnMquM5CrSnMFuqeO2w-1; Wed, 12 Mar 2025 02:49:05 -0400
+X-MC-Unique: zLeqnMquM5CrSnMFuqeO2w-1
+X-Mimecast-MFC-AGG-ID: zLeqnMquM5CrSnMFuqeO2w_1741762144
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cfda30a3cso14580925e9.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Mar 2025 23:49:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741761628; x=1742366428;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T0ChVhAUVbQJ6B4OXCdonqcFdzysGDhjpO5W68Gr4zA=;
- b=i3RAANRbe8xh4byKPvgyviRg1OuG4d5NOw2bRYuhyo6agcZrTsMGP7B81i/UvJI/rs
- vXiVB3XpwhC1famI5B+1Hg8mp8nT1qjBeOUfsSjhs5O4IY6uPAg8V62WdfvgtZZwZcdu
- U0mHr0qucU6Lit9+i2Yik8IL2egs+hLu/qRqYKPRqqKqIP6z9AR2wMrnpfoezh7B5U2U
- FBSDEs5k6nffjWHNgKpuW+bAstqyLnV6Z31gueyNsYAxglD/JiNanuR/rMY/5p28GFde
- UUADHxivfIbFJPXcz6crT4NlkULbIptcRhCdbS6cJ1Czr/jXmoC1Pb7NEAkFeco6LrHC
- Sf0w==
+ d=1e100.net; s=20230601; t=1741762144; x=1742366944;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iftUVt49VrEyx0/JxVEDpN0ZcISAZ9GCLkbVbUiy6G4=;
+ b=RYnKFNRL7R/BoNI4BnOSH8EoX8rp6tTXP+ymOp03z2n2XCNMcpy0SIL8hUXDoD+jZ9
+ qksqKMts8ZVOOyTCqgPzkGN416eqva0A5t7RPSXj4R90oGWcQ1TjFXuYOedYV9tUV5W/
+ ffMNNxQa9dlHicCZQ3bxH9a5NVFwidnEqHy6y13e7IFoxXJegXndkEP8kb8FXHkdPK2u
+ m9vjkN659t6V7RnUYxXsP0P3qXS//cN0qIvfbjxnBmrPl2KLjMRLn+56j74/Zfz3bWL3
+ +lCtST6F9eWzWTEKSELPVIxXWmReJPk380XBK59oyqaPPPyXVSO2mxT+Wctam+MT96cr
+ IPoQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgLvSXEeNfbNT6PGesTqPhVwCtviufJQRbmkvS7GpbdaUAgMTHl+a4IdujFJ33h02Se7pzgRY8DKxt@nongnu.org
-X-Gm-Message-State: AOJu0YzpkDb81UiEUslht1D57WGppGiX8AV8jjFIo+fuTaJaDxAFsiMq
- 3KgGv9mGrPaJZDHtQ0JTgX/b0IpUI+79QnnYZzuZ+KSnjGFcDmYbhpBOCMvCE2UqlxW+rNRFrlj
- l/wLYp/xnB+lqtFVdpso1DRN/yQ9gMnKClme6VPyV6H2BQtUxOM+i
-X-Gm-Gg: ASbGncv51IcRBGoY5DUkLOkvzFp3ZW5ldvkABOceM2wPy4G04FY6nk8WaCNcbVZCBW4
- lGV63IAeiTcpdTptW/rIaUIeSvefB8seLtSJXET5+toVetDC47ru7WplStXGm6tGWZru+VWOV6R
- vbQCAgVKEA7q+kQCs8MclmCGlP3A8pB/WSHSLEHXOPp/mCu9dDpNA8J/l+9xqUtZgWM0901rtvn
- HXtrdb7l5OTexFzsLWNo42j+WZsJj09vvQV5h4Zs7LR/E43g9I7NhsAUqRkHiGZ0zddVBjQBnas
- 5l6temmJSDFFlCeAwoJonkRhAx/TLD6f+YFCpbHTJMAQMww=
-X-Received: by 2002:a05:6000:4105:b0:391:41c9:7a8d with SMTP id
- ffacd0b85a97d-39141c97c1bmr10201147f8f.54.1741761628466; 
- Tue, 11 Mar 2025 23:40:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMJYeeRpwMtqzzm3PXpcKddyvBR6ZaMaEgKsETAvhlE9ua6DEYyFaZ50MhziwodL91wY+cPw==
-X-Received: by 2002:a05:6000:4105:b0:391:41c9:7a8d with SMTP id
- ffacd0b85a97d-39141c97c1bmr10201137f8f.54.1741761628168; 
- Tue, 11 Mar 2025 23:40:28 -0700 (PDT)
+ AJvYcCUfbyrM/jX3CJN81coawce7J6myniOdtatH2a6mR/D3/HSJQk7h99K37U/Ism/kCHrjQ1D7n2EgRc48@nongnu.org
+X-Gm-Message-State: AOJu0YyVdIfGz4pxDRiiTFiAbOltnOIJsUCx3/Q0B/2Yk5L8d+7vV/M4
+ 3SQFmL2S3aOivDe6GrcUSz60aegNw6vzL90g5yq6faPdJ0yQOFsYTl6n04sc1ZHZaMN8MbkfD7g
+ KxBMn04gBrEpEIeLv6BfvosDAn4O3cXwIICHWteWF3ttvlHCbD4qZ
+X-Gm-Gg: ASbGncsj5c3LPhowMi3IolDNo+hP/KhWEQ/ybqh4MR4M12FptN2SiZov54adivjcJrh
+ ZfViVOwWQzhPew2L04x//WaWcbKk1ng+GOkLVeIL/LOwVFHRONknA3NPvTOdEVWW5HvQBU91qmu
+ 3gVeCoxldYRFeHj9fBOwklobWXTfpw9FL34N13ozy420kauMW8kc7Mj8WNhICulim5VMUhiDo3P
+ r5IJL+rf8utvPrAxRAVTs4kVb3Y2SxxWaGXZGCc0/pLizQX4dq0QBr0XPvS/TSwS6u2N+D/wVce
+ tmAUTK8WaKhkaGgnjNBTaOdlIorykk0oirrVQbbHQuzzTtM=
+X-Received: by 2002:a05:600c:46c9:b0:43d:4e9:27f3 with SMTP id
+ 5b1f17b1804b1-43d04e929a7mr41155825e9.9.1741762143979; 
+ Tue, 11 Mar 2025 23:49:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF50eKR/JbBeQ2hCJDN6+fAc4p+XpZ/xeP0qGAPV6I52D23iHCoEt0fBUzsNDipGzgEqDqNnQ==
+X-Received: by 2002:a05:600c:46c9:b0:43d:4e9:27f3 with SMTP id
+ 5b1f17b1804b1-43d04e929a7mr41155725e9.9.1741762143571; 
+ Tue, 11 Mar 2025 23:49:03 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-149.web.vodafone.de.
  [109.42.51.149]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c103035sm19774224f8f.88.2025.03.11.23.40.27
+ 5b1f17b1804b1-43d0a757a41sm11550175e9.20.2025.03.11.23.49.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Mar 2025 23:40:27 -0700 (PDT)
-Message-ID: <395ee50d-3e3f-4ef5-8026-6f06ce4172dc@redhat.com>
-Date: Wed, 12 Mar 2025 07:40:26 +0100
+ Tue, 11 Mar 2025 23:49:03 -0700 (PDT)
+Message-ID: <59af86ef-c23e-4bda-9dee-8484ee8c16a4@redhat.com>
+Date: Wed, 12 Mar 2025 07:49:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] tests/functional/asset: Fail assert fetch when
- retries are exceeded
+Subject: Re: [PATCH 2/3] tests/functional/asset: Verify downloaded size
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 References: <20250312051739.938441-1-npiggin@gmail.com>
- <20250312051739.938441-2-npiggin@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20250312051739.938441-3-npiggin@gmail.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -128,7 +127,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250312051739.938441-2-npiggin@gmail.com>
+In-Reply-To: <20250312051739.938441-3-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -157,35 +156,58 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/03/2025 06.17, Nicholas Piggin wrote:
-> Currently the fetch code does not fail gracefully when retry limit is
-> exceeded, it just falls through the loop with no file, which ends up
-> hitting other errors.
-> 
-> In preparation for adding more cases where a download gets retried,
-> add an explicit check for retry limit exceeded.
+> If the server provides a Content-Length header, use that to verify the
+> size of the downloaded file. This catches cases where the connection
+> terminates early, and gives the opportunity to retry. Without this, the
+> checksum will likely mismatch and fail without retry.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   tests/functional/qemu_test/asset.py | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   tests/functional/qemu_test/asset.py | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
 > 
 > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-> index f0730695f09..6a1c92ffbef 100644
+> index 6a1c92ffbef..d34e8f5e2ad 100644
 > --- a/tests/functional/qemu_test/asset.py
 > +++ b/tests/functional/qemu_test/asset.py
-> @@ -116,7 +116,10 @@ def fetch(self):
->           self.log.info("Downloading %s to %s...", self.url, self.cache_file)
->           tmp_cache_file = self.cache_file.with_suffix(".download")
->   
-> -        for retries in range(3):
-> +        for retries in range(4):
-> +            if retries == 3:
-> +                raise Exception("Retries exceeded downloading %s", self.url)
-> +
->               try:
+> @@ -124,6 +124,22 @@ def fetch(self):
 >                   with tmp_cache_file.open("xb") as dst:
 >                       with urllib.request.urlopen(self.url) as resp:
+>                           copyfileobj(resp, dst)
+> +                        length_hdr = resp.getheader("Content-Length")
+> +
+> +                # Verify downloaded file size against length metadata, if
+> +                # available. dst must be out of scope before testing st_size
+> +                # because # copyfileobj returns before all buffers are
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+remove the "#" after "because" ?
+
+> +                # flushed to filesystem.
+
+As far as I understood Python, that's the main reason for using "with" in 
+cases like this here, so I'd maybe even rather scratch the last sentence
+completely.
+
+> +                if length_hdr:
+> +                    length = int(length_hdr)
+> +                    if tmp_cache_file.stat().st_size != length:
+> +                        print("st_size %ld", tmp_cache_file.stat().st_size)
+
+Debug left-over?
+
+> +                        self.log.error("Unable to download %s: "
+> +                                       "connection closed before "
+> +                                       "transfer complete",
+> +                                       self.url)
+
+Maybe it would be good to include st_size and length in the log message instead?
+
+> +                        tmp_cache_file.unlink()
+> +                        continue
+>                   break
+>               except FileExistsError:
+>                   self.log.debug("%s already exists, "
+
+  Thomas
 
 
