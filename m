@@ -4,84 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA24EC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 16:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56863C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 16:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsOlC-0007wp-Tt; Wed, 12 Mar 2025 12:16:48 -0400
+	id 1tsOpg-0001k2-Rs; Wed, 12 Mar 2025 12:21:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <n.ostrenkov@gmail.com>)
- id 1tsOkr-0007tt-UJ
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:16:30 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <n.ostrenkov@gmail.com>)
- id 1tsOkq-00015Q-3Z
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:16:25 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-30c091b54aaso245271fa.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 09:16:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741796180; x=1742400980; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=U+oyGJNiylgxir0FH5ex9xhcivR+uKpSEthU+nRvd6M=;
- b=iwo2WNph//9QakajIc5orzCOmKGpxVVdscKOuYDzu2zukGViW9yuy7VaTTFplSBhjI
- ibeJHDhBeBDXzjo50v2LrP7pH5Dd85akVBijk0ryS5eDClu+N4XcQpXQiCWOpo+cN7H/
- RPMPHXIL28RmhIESoI2bjCqvD5+QbUeK/oRIe5X4LpEcEAskg8LT4aGEMrv0tTqVrhZ8
- I/Z9gr4s2OXpRqtnTF++xl3ih4OU/Y2gqSd+XoX+zisr2V0VeBwjXRll8zaRhQQA/FBJ
- JTUldNQFP6ouugATsANL78iuWzTT4gz5CpM8Nzbuv0/7U71LC4SnJEjN/Qx9i73DNeKl
- ijag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741796180; x=1742400980;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=U+oyGJNiylgxir0FH5ex9xhcivR+uKpSEthU+nRvd6M=;
- b=ZSqTNGDQTwghhuV/djVMqVs6IYQmWSFACdJM0rHzYPlI0zkQa9t1av9mWeQkP3vSm5
- PuCTIx8NChiGHZCvKoBmrLQQv79KnFwgqRQUgk+fiSNbzvXcCTne6bLOyXBcAf3zJdTP
- WQGMSjae+PG/ALOxYdsFQgPCA1UGw8narNuhtkxbJN2Jmf8bBndxJGonWiOthpFQY/VS
- pIBCbrmEDHElzpeY+ZRbumF6mPKUmZupCoDsb3gEcQ8lpgSWo3+wO954ohnga7zqHmEB
- BqJwso17lxeNe95s2tiYiySFGoRaUXDNgQPaZhV+MBOH7KlBKJ8jGxvg4VX3dCQdJpqb
- 1cfQ==
-X-Gm-Message-State: AOJu0Yzk8wmP0FC7GIjOokD0MfJzyUKLGDk/X37zSxeebC57NQ3dBUC8
- nTeiSwZo8lqvUm/C/v4Y42iTuM/YUJpcoB1vaj/F7GgZ8Z6cMtihxXnPLsJd
-X-Gm-Gg: ASbGncswd8spc9xgLRLVo3lzyKKKBTi5UGXILm3SmjyFoTQauL0SCYZQctspa0zsq4W
- mjlTtFOv3HkXZYp8NaTQY0615PxhTLMLj97vxLoIGnXEkhj22qrIQQXCAYZ4tDAE0EkqlAB4rk7
- aH9JtfZ0ueRX2L0At/XKdkdCkwP7Cb/rKfUGSHGOB3JT3uTMYyrRVWrLhdo70zp6GspV8MVXjU6
- jw68gFRAB/9ROXIElXTrGSEK/OzEGWh67ghoY50OORiXmsxtWrdcTaSBIPjmlDBex0bvJbgMn3T
- aU/nyReaMeX1aEqoCCkfsbWNGz6nvNVbhfnj1iBmRcHHrA5Ed+Q+JD6yidOiUnKaybjtNmgbNcM
- =
-X-Google-Smtp-Source: AGHT+IGpqXgN12uJSXc70AFRAKcWKqaOeVvYzvAZCVOlhGbqy50QP/OuUCwoC+cUptc6Sx9PeRkOxg==
-X-Received: by 2002:a05:6512:1242:b0:549:66d8:a1f1 with SMTP id
- 2adb3069b0e04-54990ec56b5mr9147378e87.45.1741796180214; 
- Wed, 12 Mar 2025 09:16:20 -0700 (PDT)
-Received: from localhost.localdomain ([176.120.189.69])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5498ae462fcsm2163350e87.42.2025.03.12.09.16.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Mar 2025 09:16:19 -0700 (PDT)
-From: Nikita Ostrenkov <n.ostrenkov@gmail.com>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tsOpY-0001ih-HJ
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:21:19 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1tsOpW-0001vm-Er
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 12:21:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=h8osdOuF5WESF5uvKUs76EBYPWbvOr4LPpUWJtUhh6o=; b=eJbBIxHqfWWIp3rxFtJr5ve4ks
+ apg9dCpsszwTmSFNWMuD/vTvIZo7NzFbqZEGbYHRliaPwUHQIdMZ9lwusv7r++5g/TppgO5KlETNs
+ sZjY+fSVrkKFK4S6PLP9sQ+tAXW74L9V+hvwWbM0kAh+3Pujjus7YMyhwKzVGz/0NedPOGiyJxwzj
+ PKJL5I13uaEJL9lEcNXMrQMg80igitgdD1YcyzG0vTYfV1vMz0R1q5xf0I3IkrA8TuCDXIbpFvwkO
+ sAwPyOsnVumDZNDDnI7xlxPfWp+tU61wEpX2KTVpq2JgPk6LCf0CDtKxxiE79YRgoaFWCV1l8G9/c
+ i8n6lr4WpEyeaihIupk1v7Wc7Q1nAEioq8z01dwSWwUXwslL8zI9qbpsJPwTjZtETJZTQRjRrJzj9
+ qQP5yuuynv2yDrpqk9Gae9C0ojv603h44orFY0/f9G9vp9SzMzQV3f7sB83odx4/+5Wup+ts5cu8w
+ t8jPkej9ppO6BzryEepaJTJYi3JBCQ9K1n77Rlo+OpRBiUo2zhRsPgmZjwmloEEauzy4pOcN+SOas
+ U8ze2cYkVGILHeM+xkIyMKzB79+SXZYZ97Sohr5WCqftn+2wMA/TNCtKe3Xv7vsKhDAi26SB7JqkD
+ DHM4CQBbVd84yvaH8dMi4jFwsR3PrBRcLJlwX2REw=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>
-Subject: [PATCH] system: fix assertion when cannot get/set rlimit
-Date: Wed, 12 Mar 2025 16:16:03 +0000
-Message-Id: <20250312161603.24820-1-n.ostrenkov@gmail.com>
-X-Mailer: git-send-email 2.34.1
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Greg Kurz <groug@kaod.org>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v3 6/6] tests/9p: Test `Tsetattr` can truncate unlinked
+ file
+Date: Wed, 12 Mar 2025 17:21:08 +0100
+Message-ID: <5885890.69HJ7TUJNn@silver>
+In-Reply-To: <20250312152933.383967-7-groug@kaod.org>
+References: <20250312152933.383967-1-groug@kaod.org>
+ <20250312152933.383967-7-groug@kaod.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=n.ostrenkov@gmail.com; helo=mail-lj1-x234.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,40 +72,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If cannot get/set rlinit warn_print called, which uses monitor_lock mutex. monitor_lock mutex initialized in monitor_init_globals, then monitor_init_globals should be called before os_setup_limits.
+On Wednesday, March 12, 2025 4:29:32 PM CET Greg Kurz wrote:
+> Enhance the `use-after-unlink` test with a new check for the
+> case where the client wants to alter the size of an unlinked
+> file for which it still has an active fid.
+> 
+> Suggested-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> Signed-off-by: Greg Kurz <groug@kaod.org>
+> 
+> v3: - check the size of the truncated file
+> ---
+>  tests/qtest/virtio-9p-test.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+> index f515a9bb157b..ac38ccf59513 100644
+> --- a/tests/qtest/virtio-9p-test.c
+> +++ b/tests/qtest/virtio-9p-test.c
+> @@ -736,6 +736,20 @@ static void fs_use_after_unlink(void *obj, void *data,
+>          .data = buf
+>      }).count;
+>      g_assert_cmpint(count, ==, write_count);
+> +
+> +    /* truncate file to (arbitrarily chosen) size 2001 */
+> +    tsetattr({
+> +        .client = v9p, .fid = fid_file, .attr = (v9fs_attr) {
+> +            .valid = P9_SETATTR_SIZE,
+> +            .size = 2001
+> +        }
+> +     });
+> +    /* truncate apparently succeeded, let's double-check the size */
+> +    tgetattr({
+> +        .client = v9p, .fid = fid_file, .request_mask = P9_GETATTR_BASIC,
+> +        .rgetattr.attr = &attr
+> +    });
+> +    g_assert_cmpint(attr.size, ==, 2001);
+>  }
+>  
+>  static void cleanup_9p_local_driver(void *data)
 
-Signed-off-by: Nikita Ostrenkov <n.ostrenkov@gmail.com>
----
- system/runstate.c | 1 -
- system/vl.c       | 2 ++
- 2 files changed, 2 insertions(+), 1 deletion(-)
+Ah OK, even better than the suggested stat() call!
 
-diff --git a/system/runstate.c b/system/runstate.c
-index 272801d307..de01cb9833 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -874,7 +874,6 @@ void qemu_init_subsystems(void)
-     runstate_init();
-     precopy_infrastructure_init();
-     postcopy_infrastructure_init();
--    monitor_init_globals();
- 
-     if (qcrypto_init(&err) < 0) {
-         error_reportf_err(err, "cannot initialize crypto: ");
-diff --git a/system/vl.c b/system/vl.c
-index 04f78466c4..0742a3b407 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2885,6 +2885,8 @@ void qemu_init(int argc, char **argv)
-     error_init(argv[0]);
-     qemu_init_exec_dir(argv[0]);
- 
-+    monitor_init_globals();
-+
-     os_setup_limits();
- 
- #ifdef CONFIG_MODULES
--- 
-2.34.1
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+
+Thanks!
+
+/Christian
+
 
 
