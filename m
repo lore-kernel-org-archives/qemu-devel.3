@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8F4C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 12:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1512C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 12:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsL3C-00009e-NC; Wed, 12 Mar 2025 08:19:06 -0400
+	id 1tsLAH-0001fG-N2; Wed, 12 Mar 2025 08:26:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsL3A-00008g-AO
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:19:04 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLAD-0001eG-E9
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:26:22 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsL35-0000Wu-Ga
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:19:03 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4393dc02b78so39634705e9.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 05:18:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tsLA8-0001du-S3
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 08:26:21 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-225b5448519so5074665ad.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 05:26:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741781935; x=1742386735; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZfcXYpuTOSiYuEu6THYwSoOb7Gk4ZjOBugo00vh6ZYw=;
- b=PffVcRhN3aIXlOf9PdAEeA+fTnk82lGAlM2aRtqYy2V0SE63zFRvB8yhjTmBqjSP5p
- uOYv0/yVDDJYFP5TqvmRJ71SIdRbs7G+fkGUDi7M31Yx/tPbD4vzS3MFXj3xAgG126E3
- DkMVUkBDi4h/BPI7TeZHKjAz+xwPnacnCBrGkUEPpVP+Wm885PXshyJA87mV6QNoUdw/
- 4of0TdWrpfotfkGzRLWk9jiNvPnLCDGv7K6Es/c5ln7LUo20ThtGw79DXzyaMXC0twuU
- +JD4ZgsZRPCNWQ30KVWKHTetZJpIiZEHaTEz6lrn5raHqOSstHme6p6d+bVz/xQ71dVN
- HZzg==
+ d=gmail.com; s=20230601; t=1741782375; x=1742387175; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1UMfE3tEvJouIbe7xl+kGrgC94NEdkyZs3CPKKHqiWc=;
+ b=OtHC6zMs9uP22FJHaJgEkJAscx3UZ64mB8EJdXKqT1NqdWZze2aRZp3AvPikohDOVg
+ mTSaymeUAolNZtI2DI08YwiESBwZ1NB/cUmHKAjkeQ+IMmd/rCuvvhZDiEyeR72IXKsZ
+ gjbdtcbK2ozuedbBN34wNmNDRAi6P6f23aTOTzbCA/M6Od4+I4Lj3YraltvoLqymm8LT
+ 4Iafuk/ta68f9diH+N83lmPhYSVBaNoi858X+VkqticColcamvk5k+ZIF2vAvgeLJ0wp
+ crhj59scgwSkSsEwQyRUJ0VqXOABeb2DOjocd4ym5xN+cqhL+gBV/FrhXTCUppuo8Bn5
+ +eRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741781935; x=1742386735;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZfcXYpuTOSiYuEu6THYwSoOb7Gk4ZjOBugo00vh6ZYw=;
- b=j5akkHpgBJkGYaEKNvohgaCESMDj62DWkmicvYu15mLtqaRSRmShjnHa0CgNL8QXTy
- x/0LzEQ7mB3VYsO6Jbeb+pjmMrd+VXv5gWaOh7ceZnro5xUXXjTPoa8J/WamnQkLvy0q
- f+pol3nVFZFg1GsY2pyLvVnQmpSJMeR2hs3RvncOS9ZC7GMfM+nLVHKThiMz3KTGAjxx
- ziUaP/RHBmzmnJL742MZk6sVNgoo4E8l7wJoTlITifkQngi/JZ3Dt6Majq+NM4oSNWQS
- PvanW7CXTZ88+HylI2Vrl7VNDrO4ucOxMJIhdpUOragwXUckXdc1OcmzkM+xzy3CDXtv
- BqmQ==
+ d=1e100.net; s=20230601; t=1741782375; x=1742387175;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1UMfE3tEvJouIbe7xl+kGrgC94NEdkyZs3CPKKHqiWc=;
+ b=HOCAmbTQHoXpohDNzjEsUEVYUBqs4BKIAEmMP00zMLCFb0i2KCUovTk/9SQFbTXHCg
+ gJvKcQMkjMqGWi51eyP/3GVJn1acYyrQEF/v5vAM2GVj6rZah35hFjEoNJN3dthjK2ny
+ xFGg5HoIyx9Cd17iC1PU8rlPWImljGsKcuPNV+bYMIB3e3X1pEqg+iQQnSGYXq91KukQ
+ 78Uh0ODbrPSUw32DqjNvuxj9mOjD6TwT47nkErcTPC4CO00fFrHk58n3UNgei015gRLi
+ n8YErKZk1DPCp5oKfeC3WzqVOcAMv0t7aeVuHf6RD/WId7lpaHpbv+wN3dtEzbQTIKYl
+ 8x+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsZ5AJaLj7Ui8WNhX3RC+nle0fYFi53GUPmTqYtyHDMxn5oDUrSsJgwidd96FLA0bjPjo+GmAbCI9V@nongnu.org
-X-Gm-Message-State: AOJu0YyH8KudW/jc7zDwc5g1endVZrxSpdRGIFrH2hczNmZ0K+3RVmR+
- 5UZKeu0vOgABvkkq7VswcdNlh1pZc2Cnrak29P7nQp6Km1m6WRnMmKPUPrZy1m0=
-X-Gm-Gg: ASbGnctpR0Oi4sQSSoEs3uLuCwrGaEQk7odXoJIme6KVD2/7xFM4AHaPsoODk6F9uLX
- IZiNfN7fW+hBlR5JqepSK4ONJym8Dh4cSTh+KXoBLM2UU+FP2OuA6O2bb/8axwsCF8xAD11/xZW
- MMHMOOtFm19sgE7aXHMJ26AWaPEimbDIYyVrEoxW/tasTTVSBePH4NfZfBMbHgj2PJZhsx1Vj2b
- W7UXm9x6lFKxg0BxUD7s04wOd6UgsMAXj4KgxA04/R46j0mW/rbTgDdr1fqiv2hxjn8Ooq290W/
- NoS7hBbwwMUcaqcwze4q7seZYe/PsRZ2KDV5V+GM36R6hJm7IzauZ7CoQimsYZp70dBnAbltS+g
- zhzqWFQ==
-X-Google-Smtp-Source: AGHT+IGYjQIfqlqq21Asd3AwbPEkSXn4UPJ2MqmMehCrzSMrYrBuUVASsP/SltSm3m4bMDOejZb2HQ==
-X-Received: by 2002:a05:600c:1c06:b0:43c:fa0e:4713 with SMTP id
- 5b1f17b1804b1-43d01bd1c94mr75196465e9.2.1741781935570; 
- Wed, 12 Mar 2025 05:18:55 -0700 (PDT)
-Received: from [10.223.46.213] (99.167.185.81.rev.sfr.net. [81.185.167.99])
+ AJvYcCVl+GHyP95H37bLpPvavrpK/Cry1gii0GvyXPynJowuV4gTIDO1C7gEMKDvyq+M1v79tHgJ4HxnTA+K@nongnu.org
+X-Gm-Message-State: AOJu0Yw7c9wWyylHMx0p3hEiZ5VIuS316a997OLKBArsJAG7Iw3LzHRE
+ 1iExh6pEPKfvSAvYFUoj1AmrvtN9wFd3ycBmWk/krQ6v7wCO6JIX
+X-Gm-Gg: ASbGncsg9ghXe254pJW7R4po8MgyuYrxf6KCTfjp29cutQVGxwnDvP2Ufdu9R5pwxkw
+ UrbXWoy6zWFWRocyWGEmXjIIM85x5kiUaoMGcEN04vWz+66czxA4kVmx8V7J+I8VZE827VP4djc
+ jVyrxavJE/O66v3fJw2AJC+ZYozLgFFJJS6DhseZlupqgbGW4l1EBK+AGAGHLv8V4K1rbBL9MVM
+ iRDnCUsovVOIrPRsOpAif9f91tNa0xlpHeJpUvSYc4uAu0WJDdPAYlyDVRcz1/iluBqxx2OaaCG
+ w1afkA3uHWrokzrtW/gLyxcoIRv2FW7Mk8eHU83kCNWs2COvhv4=
+X-Google-Smtp-Source: AGHT+IFRU7fcNB0Y/lnYGCg4K2qrIV0JA1CuPxtQdhX6JKCOfcuWUzMT/z/N+Mjx1nZsgIBtSSh8PQ==
+X-Received: by 2002:a05:6a00:b4e:b0:736:57cb:f2b6 with SMTP id
+ d2e1a72fcca58-736aaa1acf0mr30387882b3a.12.1741782374705; 
+ Wed, 12 Mar 2025 05:26:14 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.151.101])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2f10sm21085934f8f.65.2025.03.12.05.18.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 05:18:54 -0700 (PDT)
-Message-ID: <b9550966-3c60-48dd-b0f3-a6833bd59cd9@linaro.org>
-Date: Wed, 12 Mar 2025 13:18:52 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] chardev/char-pty: Avoid losing bytes when the other side
- just (re-)connected
-To: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ d2e1a72fcca58-736ab33e1d3sm10842408b3a.132.2025.03.12.05.26.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Mar 2025 05:26:14 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Marc Hartmayer <mhartmay@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20230816210743.1319018-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20230816210743.1319018-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Subject: [PATCH v2 2/3] tests/functional/asset: Verify downloaded size
+Date: Wed, 12 Mar 2025 22:25:57 +1000
+Message-ID: <20250312122559.944533-3-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250312122559.944533-1-npiggin@gmail.com>
+References: <20250312122559.944533-1-npiggin@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,81 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
+If the server provides a Content-Length header, use that to verify the
+size of the downloaded file. This catches cases where the connection
+terminates early, and gives the opportunity to retry. Without this, the
+checksum will likely mismatch and fail without retry.
 
-(patch merged as commit 4f7689f0817)
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ tests/functional/qemu_test/asset.py | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-On 16/8/23 23:07, Thomas Huth wrote:
-> When starting a guest via libvirt with "virsh start --console ...",
-> the first second of the console output is missing. This is especially
-> annoying on s390x that only has a text console by default and no graphical
-> output - if the bios fails to boot here, the information about what went
-> wrong is completely lost.
-> 
-> One part of the problem (there is also some things to be done on the
-> libvirt side) is that QEMU only checks with a 1 second timer whether
-> the other side of the pty is already connected, so the first second of
-> the console output is always lost.
-> 
-> This likely used to work better in the past, since the code once checked
-> for a re-connection during write, but this has been removed in commit
-> f8278c7d74 ("char-pty: remove the check for connection on write") to avoid
-> some locking.
-> 
-> To ease the situation here at least a little bit, let's check with g_poll()
-> whether we could send out the data anyway, even if the connection has not
-> been marked as "connected" yet. The file descriptor is marked as non-blocking
-> anyway since commit fac6688a18 ("Do not hang on full PTY"), so this should
-> not cause any trouble if the other side is not ready for receiving yet.
-> 
-> With this patch applied, I can now successfully see the bios output of
-> a s390x guest when running it with "virsh start --console" (with a patched
-> version of virsh that fixes the remaining issues there, too).
-> 
-> Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   chardev/char-pty.c | 22 +++++++++++++++++++---
->   1 file changed, 19 insertions(+), 3 deletions(-)
-> 
-> diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-> index 4e5deac18a..fad12dfef3 100644
-> --- a/chardev/char-pty.c
-> +++ b/chardev/char-pty.c
-> @@ -106,11 +106,27 @@ static void pty_chr_update_read_handler(Chardev *chr)
->   static int char_pty_chr_write(Chardev *chr, const uint8_t *buf, int len)
->   {
->       PtyChardev *s = PTY_CHARDEV(chr);
-> +    GPollFD pfd;
-> +    int rc;
->   
-> -    if (!s->connected) {
-> -        return len;
-> +    if (s->connected) {
-> +        return io_channel_send(s->ioc, buf, len);
->       }
-> -    return io_channel_send(s->ioc, buf, len);
-> +
-> +    /*
-> +     * The other side might already be re-connected, but the timer might
-> +     * not have fired yet. So let's check here whether we can write again:
-> +     */
-> +    pfd.fd = QIO_CHANNEL_FILE(s->ioc)->fd;
-> +    pfd.events = G_IO_OUT;
-> +    pfd.revents = 0;
-> +    rc = RETRY_ON_EINTR(g_poll(&pfd, 1, 0));
-> +    g_assert(rc >= 0);
-> +    if (!(pfd.revents & G_IO_HUP) && (pfd.revents & G_IO_OUT)) {
-> +        io_channel_send(s->ioc, buf, len);
-
-Could io_channel_send() return -1 in this case, and if so is it OK to 
-ignore it?
-
-> +    }
-> +
-> +    return len;
->   }
->   
->   static GSource *pty_chr_add_watch(Chardev *chr, GIOCondition cond)
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 27dd839e705..6bbfb9e1cad 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -121,6 +121,20 @@ def fetch(self):
+                 with tmp_cache_file.open("xb") as dst:
+                     with urllib.request.urlopen(self.url) as resp:
+                         copyfileobj(resp, dst)
++                        length_hdr = resp.getheader("Content-Length")
++
++                # Verify downloaded file size against length metadata, if
++                # available.
++                if length_hdr is not None:
++                    length = int(length_hdr)
++                    fsize = tmp_cache_file.stat().st_size
++                    if fsize != length:
++                        self.log.error("Unable to download %s: "
++                                       "connection closed before "
++                                       "transfer complete (%d/%d)",
++                                       self.url, fsize, length)
++                        tmp_cache_file.unlink()
++                        continue
+                 break
+             except FileExistsError:
+                 self.log.debug("%s already exists, "
+-- 
+2.47.1
 
 
