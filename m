@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9601EC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 19:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B748C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 19:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsRY8-0004nI-9b; Wed, 12 Mar 2025 15:15:28 -0400
+	id 1tsRc4-00065n-KO; Wed, 12 Mar 2025 15:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsRY4-0004iN-0O
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 15:15:26 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsRc1-00064u-Qx
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 15:19:29 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsRY1-0000tP-TB
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 15:15:23 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-391342fc0b5so142209f8f.3
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 12:15:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsRc0-0001eY-2Y
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 15:19:29 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so1421905e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 12:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741806918; x=1742411718; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741807164; x=1742411964; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=93oIOB7cTQHputsHdZrNesGvbdNwlP88xRy5tSy9OH8=;
- b=Bm4YJ5dNGSjxlBm3qtk0qFMA9E0L/gWmqkP/gKKONywi9sKNm9WcTp5XhgogH+xsbT
- U3vzvq4WmzE1UpNCmIajFL1VmJ79DIJN23Up+t1DCkxrsjATFlDJ9kkEGLJXOQ49A6Js
- ORxRXt2iOt5jXgjP3W/n4Pk/81Ux2t9qeDZd58PEiOSmu+d5w8LAoL/GiJ1TlOVs5E4v
- y9G6vJRGOnMzU9Qyu/Ax7rcstgpuDzQMkP7pOzNXozz7zhva3xztutS7CNW7rF6Ud70T
- ZT+ZWZ9F3AYT7l5gehrAMGyAm21Q1WQLIQfNNCr30+YvtxMWQRomGjpOKH4ee3DhQNVv
- lzDg==
+ bh=nOT/cGJwPVoU+wOUKMLRMzvtZXecr78MQOzBVJw9OUw=;
+ b=n41U4iF7IeucR2ogknN/fa/FWfIgozIQUcz0HmwgwylLqT/DzD5bQR/ZjZ8la2GbVb
+ asPzjczLR8n9pigVOclSL5ehPV1S8+MUUL9MQbEXSBCRoIf+g6poaJf9I1sq0Xn3k0ei
+ M0hXqka02iweJ93qggQml5Zd1WEQFNR5u3KCMELVNnkJBkmud9Ny5hCDWE6rk6hq4YO2
+ 1MsmOODV0RwtUhYB4sbii4OVr9BByS1tj6RlO2ve6EZbGCQAjluqhYkaFkA5eU6pLB7q
+ e5x+411f+Y4oe7TZWTwfwQu577S+X3Skd60IYcq5hx+q3FrhO8iw/bQvc+ph6RfnoxEU
+ nCEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741806918; x=1742411718;
+ d=1e100.net; s=20230601; t=1741807164; x=1742411964;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=93oIOB7cTQHputsHdZrNesGvbdNwlP88xRy5tSy9OH8=;
- b=gBcnRyDYVA1Xp5GDbTi/RNJQEW9tokVT2f7G16WfNfiW/PWyGzqob5ib2N+JhAy0bT
- 6LF3rV2xZ+Uafl93NsfMOrw2AhYJBCroFTrdeZPYOItVPQc91zON48x3nQJd0R9AsOUm
- 328zt2h/fEDIPGEO4IGFh6EW2w8pWBx218Y/NeHs1zqQHJWT7NXfeCVyLmxOOcvLkcf+
- d0GomLaJoQy2e4iH+B1B5i6O7bBwkhY2CNMt9BHfeDpg/7Sm9r9AtdNbRTR8FaJyEOSI
- YyDdNguue6xOzhz1McUhG5wh47VYN/qYvW2BkzckeaDhJ4b2dI6TosJgKGeyyIWBpac1
- m2GQ==
+ bh=nOT/cGJwPVoU+wOUKMLRMzvtZXecr78MQOzBVJw9OUw=;
+ b=kGvYsWbeg1lsNpZlQ2Ez9+eGCsljKIH58+hedysebcgqg4rHLaTOLsYpUs5BwPWKXN
+ yRkFiNmSjWXiEN/5VXd+vWy2oLVstevmWB4OV3WxVoi9mgPHQJiYYvJtEMtF0aApl4aI
+ zARkGL9g7UBIkJRX195Qmxx923P0X5goNgn89ACCoJO9lsNaVxQ/z/AMQO6/XvGM3dXO
+ km0qRwTYG3JLmDF0TsJ3WR2iIz+ONeKuke/G6h4DIOT2SnO6fmnoeA99+jV0fDaXcpFD
+ WM8b+x0MRCuTxkg3gcajymGFr/7Bv9SYShSBc/dhikqrK7zGMHwgg3UiitfyHuS60x5o
+ ApnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3mqLrzuDGawFMfBemY/z1gQ3fGcTOHNUdY2Vg2DRtioqM50Dsj0TdLZcpulEjee38VPH09pXjIO6U@nongnu.org
-X-Gm-Message-State: AOJu0YwiiD7/yuyDqBy+amqOYdZJNv6nLwr17nr+SE8bBzh1IO4DiX5e
- 52SNEIc6LGZa/xbBnVVr7ibMtbJwOcN5vtQE7h1WnmauNl9DThC8xeFrVKgdv8U=
-X-Gm-Gg: ASbGnctJRFvxRrMQtEt1tzzj/EarNrDduyVHbo4neUI0SHRyRwsDiasxr4bYcQtRfok
- uU77hGXPnuFhLzpEKTTgo4LyTVwgCm8cBhiLX9N0ueWN9aN4oxMA4EVWYpIT7yeObOG+pmeGerJ
- U/dMUrjBvRmK5KyIMEBZpOz/uDZtP74DpVXKxRWZrG4s+7bgTZFKJiYXFKPFsLqtX7FGNACDCPF
- gAyWwdpooJL2aC2JGHc9R9QngKSLQQDMIjZeKUsSiE+Dgdtao+cPjndtjWp77YinrXPhxtRIuCh
- dyE9IRpS+8nbDa/oQ8BjPyQXpRJggnmKywwpNtmzOysIjj54V0Rhat+00Ty45SyhFZTWgirZze8
- CQzSh6A9HwHWarR0=
-X-Google-Smtp-Source: AGHT+IGDLubc5Jsbg0DMb/kfKa7F/rPy/oKqZGNvUeBRHAnzJr95sUpxYANqjie3DWvWdc27j+zQpg==
-X-Received: by 2002:a5d:648b:0:b0:38d:e33d:d0eb with SMTP id
- ffacd0b85a97d-39132d093edmr21183191f8f.9.1741806918177; 
- Wed, 12 Mar 2025 12:15:18 -0700 (PDT)
+ AJvYcCWpvnfiOfCTWKMjvj50c2qSblMTpKrICEP29u56QLQsxHWcodD6/d0+k6vh4fxo6WjgXX0I7sfjnyRd@nongnu.org
+X-Gm-Message-State: AOJu0YxgZt4Reve/rWx3cFSFYL9svfm4mz/s95rpTW+4s1+HIjv2lL1H
+ D4Fl5O3qbu15KLinEy/DEvYYGQhOtE2V4mqQSpfdEMjdB7Q8VTbFjKR/6A7pzJk=
+X-Gm-Gg: ASbGncv+/761J5oEeOTgHq+/Uj8j/VnLc0ir6dLqsOQnzFlW4q3RixTXBGgAj4TOy23
+ XgFhNfXzueqYLnuxzuxAwrdK8ssCvUNToCysdlSpjb0c3TjKPxafefq3w7QEVTKU3ZhKHJcm+e8
+ h66EZCJ+HFJRuN+6lqUQ5cdpNfleNuOxgiJzzjdLOWr/acBNRLas8Zsg4CflBhXuBnQEUqiVFc6
+ 7z8qCInFH1JALqZUueCHZOMW40qasS8hu99AUw3l6qT1VmMDrHJlBUVVZq+cOPpaTZe90ndNzMT
+ l0c8yZ0BgsjbSUqFRb5clihxyi5rFe6Or/XGB1o8iptRNZzhutu8wf7lCBw1F3P1Hmeb/ViWas3
+ nb6N7RMXcKmngm8w=
+X-Google-Smtp-Source: AGHT+IG4Ysdi413+/PSj3k0/sdsnpk/OONf1t4SZg9Lxcp+fFDAa7FNcKEBuqUp8C6sJbNb6dqy2JQ==
+X-Received: by 2002:a05:600c:35c7:b0:43b:cbe2:ec03 with SMTP id
+ 5b1f17b1804b1-43d01c22600mr82090675e9.27.1741807164615; 
+ Wed, 12 Mar 2025 12:19:24 -0700 (PDT)
 Received: from [192.168.1.20] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3912c0e2eafsm22449117f8f.68.2025.03.12.12.15.17
+ 5b1f17b1804b1-43d0a8c5d04sm31090585e9.27.2025.03.12.12.19.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Mar 2025 12:15:17 -0700 (PDT)
-Message-ID: <802e6fe2-1c76-42c9-88ab-eb8239eef569@linaro.org>
-Date: Wed, 12 Mar 2025 20:15:16 +0100
+ Wed, 12 Mar 2025 12:19:24 -0700 (PDT)
+Message-ID: <44e23197-a2ec-4477-a4b8-a526f83e47c2@linaro.org>
+Date: Wed, 12 Mar 2025 20:19:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/38] target/hexagon: Add guest, system reg number state
+Subject: Re: [PATCH 28/38] target/hexagon: Initialize htid, modectl regs
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, quic_mathbern@quicinc.com, ale@rev.ng,
  anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
  alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
  Brian Cain <bcain@quicinc.com>
 References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-10-brian.cain@oss.qualcomm.com>
+ <20250301052628.1011210-29-brian.cain@oss.qualcomm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250301052628.1011210-10-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052628.1011210-29-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,76 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Brian,
-
-On 1/3/25 06:25, Brian Cain wrote:
+On 1/3/25 06:26, Brian Cain wrote:
 > From: Brian Cain <bcain@quicinc.com>
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   target/hexagon/cpu.h |  8 ++++++++
->   target/hexagon/cpu.c | 17 +++++++++++++++++
->   2 files changed, 25 insertions(+)
+>   target/hexagon/cpu.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 > 
-> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-> index 20ea0adcca..b7789a3c90 100644
-> --- a/target/hexagon/cpu.h
-> +++ b/target/hexagon/cpu.h
-> @@ -82,6 +82,14 @@ typedef struct CPUArchState {
->       target_ulong stack_start;
->   
->       uint8_t slot_cancelled;
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +    /* Some system registers are per thread and some are global. */
-> +    target_ulong t_sreg[NUM_SREGS];
-> +    target_ulong *g_sreg;
-> +
-> +    target_ulong greg[NUM_GREGS];
-> +#endif
->       target_ulong new_value_usr;
->   
->       MemLog mem_log_stores[STORES_MAX];
 > diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index 0b7fc98f6c..355e1eeef3 100644
+> index 36a93cc22f..2b6a707fca 100644
 > --- a/target/hexagon/cpu.c
 > +++ b/target/hexagon/cpu.c
-> @@ -288,6 +288,14 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
->       set_float_detect_tininess(float_tininess_before_rounding, &env->fp_status);
->       /* Default NaN value: sign bit set, all frac bits set */
+> @@ -26,6 +26,7 @@
+>   #include "fpu/softfloat-helpers.h"
+>   #include "tcg/tcg.h"
+>   #include "exec/gdbstub.h"
+> +#include "cpu_helper.h"
+>   
+>   static void hexagon_v66_cpu_init(Object *obj) { }
+>   static void hexagon_v67_cpu_init(Object *obj) { }
+> @@ -290,11 +291,18 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
 >       set_float_default_nan_pattern(0b11111111, &env->fp_status);
+>   
+>   #ifndef CONFIG_USER_ONLY
+> +    HexagonCPU *cpu = HEXAGON_CPU(cs);
 > +
-> +#ifndef CONFIG_USER_ONLY
-> +    if (cs->cpu_index == 0) {
+>       if (cs->cpu_index == 0) {
 
 This doesn't scale to heterogeneous emulation.
 
-> +        memset(env->g_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
-> +    }
-> +    memset(env->t_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
-> +    memset(env->greg, 0, sizeof(target_ulong) * NUM_GREGS);
-> +#endif
->   }
->   
->   static void hexagon_cpu_disas_set_info(CPUState *s, disassemble_info *info)
-> @@ -313,6 +321,15 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
->   
->       qemu_init_vcpu(cs);
->       cpu_reset(cs);
-> +#ifndef CONFIG_USER_ONLY
+>           memset(env->g_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
+>       }
+>       memset(env->t_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
+>       memset(env->greg, 0, sizeof(target_ulong) * NUM_GREGS);
+> +
 > +    if (cs->cpu_index == 0) {
 
 Ditto.
 
-> +        env->g_sreg = g_new0(target_ulong, NUM_SREGS);
-> +    } else {
-> +        CPUState *cpu0 = qemu_get_cpu(0);
-> +        CPUHexagonState *env0 = cpu_env(cpu0);
-> +        env->g_sreg = env0->g_sreg;
+> +        arch_set_system_reg(env, HEX_SREG_MODECTL, 0x1);
 > +    }
-> +#endif
->   
->       mcc->parent_realize(dev, errp);
+> +    arch_set_system_reg(env, HEX_SREG_HTID, cs->cpu_index);
+>   #endif
 >   }
+>   
 
 
