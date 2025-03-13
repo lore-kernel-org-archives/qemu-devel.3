@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B86C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF773C28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfYc-00004u-2r; Thu, 13 Mar 2025 06:12:54 -0400
+	id 1tsfZv-00014j-Ne; Thu, 13 Mar 2025 06:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsfYL-0008Up-B2
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:12:39 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ id 1tsfZt-00013S-8k
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:14:13 -0400
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tsfYH-0001FA-VG
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:12:37 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e6343c68b8fso608800276.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:12:30 -0700 (PDT)
+ id 1tsfZq-0001Kn-Lb
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:14:12 -0400
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-e3c8ae3a3b2so664140276.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:14:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741860749; x=1742465549; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741860849; x=1742465649; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=E8BNtE4D22LZkURYCBj+A5vFJT9ApgOGodu949sObHo=;
- b=bGkhQzpy4+CCFF8ay4bKWJrdXUPNnmJ29KK27c5wY6vTnBas68fnWj3moxSTuLbzF8
- 6aHJxwz3P0DlHmwWicEpU4PMoeE11af5rFIt083e6sKiYcaIUNnJcwoZ2/ghD6p8xhLM
- 1/pY5nXifYeC7Zg4lQf2O6X1aA72/57qHTYV5A5//TQxxF3aOufJTcK2KkXaY6g4BGCB
- 7a2/csGffW6pkLaatxnWlsEY2jEdSSB+LLJaIsrg/+88JSktQDxnLS6k+UvjgzJBw2GB
- aEJ1jE+uD93XY/jnGSYYP6jbkOFM7ye5dp/29DXp2qK6IpjPWrdHa2jD1EmdHFegY3mX
- fmOg==
+ bh=rvcGDSMoadqD9QNs4fnKIwN6H1fgdMN8ghB5j4tu86o=;
+ b=OI/o+06RGBDJGQeOGW9wp+J+rq5KlxvbZJQwUku50tCB3U2YVp7wE8LW+HxuYNiru1
+ hJqlEXnzZHmo4LIfw8LUH9ZhzH+8hXHu+8tSvwpQF1g0crTOCHg3vub+aIVj9jJ98vCV
+ LF1BtTyTpMETMQ4BNNHC1O/WYYiI0KG2ZGVPrxYbfD3ui90Jqop4Ql88UvKSibWrOGW2
+ 1GvoABXql2wMMg+ZFcAqGK/rxTT085MKR5Nl7GQufbUoGbgxmJvp04Xtn3BXFeoh7E/z
+ nDUTNXuGpdze75cMX8ueQJR1XJ+lP8HEAgRNvprU/YvpiYiFsHaZSxC0GrSxUSkIzaMD
+ a+TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741860749; x=1742465549;
+ d=1e100.net; s=20230601; t=1741860849; x=1742465649;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=E8BNtE4D22LZkURYCBj+A5vFJT9ApgOGodu949sObHo=;
- b=FxsrQb2SdrVVnLFEFjg2UGM5l2JV0YHOZN2GgmRRSJVbVBM6B6TX1uAylFGu3e5zIT
- 9FkiJ4i0rij6QHNWA5qW9DwA6nBpyRpljz510y2ktiixijweoYu9IviYV2kdTLw6EagA
- 4SkFO8dLjgaruU4L8Zsy+l+R8Tf8/5mJAsE9I0MfuSmnKOYcaziT2rRGLYqBzrVMTp60
- qFeOOy224cBr47YnBRWl1Vn4RPakDJprFmngo7uJ/VOZ1zkk3Rv7BNhdgjMSOJkcf5A0
- +yYXh7B/c4CBdpt3wSfv8DQ6CxE3jiWPc8PTTG04a4ZIkxBeQsQIlqhO5BFPQ3BKGbyS
- YDGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWth77TPTgc1AlsQcgJarYiV1SMGgRrrVMV/Mzx8jCl2UUldKwlrb/gBNpihyoV6iaXJ8d9Njmrr5V9@nongnu.org
-X-Gm-Message-State: AOJu0YwYemX5JhBgGSb9ccxNqC2l+yxF8ok9gCHUUBJYQ0UIl0fxDkGd
- 5HbkneQZZilVu4PNjJ8el6TZzh0IwZ65nlruCrQFyE2FDkXbzni+Crt34eBJrvSgzWfbhaq1WvK
- QjDwsAt3qUTqFec8gOMXtBbZXgKFx9b56MVjY7w==
-X-Gm-Gg: ASbGncuWQfak8AS3sVqqFLXdZVqAsFSVw/JRe0T8QAoyWcazQEabkgfTWUoIj80RwVV
- IpNOFhdqqdy2Mm3/GcLCyCXL8ta5ynwY4N6+4PCugXFLjwNy8r9y8c7qU05CXGny/zVFhz1TTeX
- M7f44d9hQpQqcd7wt8kSq4Z4V/G9Y=
-X-Google-Smtp-Source: AGHT+IGvedEiL1qJjRiw1BlSHms2do7fJNn9XtaqVvJugtmEUw4BS6qVN7EMJWqMI/z6eSRmMAVSHD8abYwTKGSHHx0=
-X-Received: by 2002:a05:6902:2788:b0:e60:c442:afbf with SMTP id
- 3f1490d57ef6-e635c1f37f4mr32913337276.44.1741860749422; Thu, 13 Mar 2025
- 03:12:29 -0700 (PDT)
+ bh=rvcGDSMoadqD9QNs4fnKIwN6H1fgdMN8ghB5j4tu86o=;
+ b=h/JV06uxMbU1+jDzDTTF2TwlGWbPdDDEihP3knI19Kbvehww7b+stk7tA1nTIXOCEC
+ zFFhZNDmvEdLOzmu34EAlP2NBAb8lF+fbKY8eak5WxRgs9e2tJnNi9dpM+phwBd+xF24
+ eAvyA1JHnLG3CxcrGr98k12BygwecN5G+HzWDafBhKtgL8hy608ta5DViQ4rrvWS2ak0
+ tCw3334InSOdnDB6jXT+RkfQNvGZPEzJCtUd31vdOkCeKx18vJWa0Spjx8CXPcfiDsNo
+ bjMn6dHddhY5ZZZ4SHfu1eswzZbaZ3572FDJH8HayIkpeUEWXPU4ktfHuK/w/N9rXcOO
+ 9aeA==
+X-Gm-Message-State: AOJu0YwH7lLvWxZH4f4vV8EgZcAlW+woZn/D6mj2x5kqxiBHJYlm3xoi
+ apySuUSxuTAkqTnrznGOO89xAoAsat0H0WOeafWRk5kbGGMjT+fumjn/+lNe3BVFwkj/ljqcNLX
+ n5RwMvT3ZYcrvGJN2COel6UV3i940N6ZKHco3RdDlAUKEir0S
+X-Gm-Gg: ASbGncsz1IRr82IWQxsOlvCaJ6FtOueIqXr1woU1xkUPz4c+DA5F6e+agt292dARnBs
+ NOwWKQBosDDd5QA5rcjUTvqxeaeNDVFsY3R2SihbDA15nDhL208owJBgP+SxN/rdnlpDILzk9P0
+ 9FzZZmJxF5h77aEYfdAuBYSUUVxZo=
+X-Google-Smtp-Source: AGHT+IH4naezrBeZ60p39+x4cp3EQYet0brr8u0iypQYnbji9cKP1YcfYff7cFxDLn6GG8J0eD3S5f5BVnuX8AFPzMU=
+X-Received: by 2002:a05:6902:200f:b0:e60:a1fc:1229 with SMTP id
+ 3f1490d57ef6-e635c0f92a8mr35486567276.7.1741860849354; Thu, 13 Mar 2025
+ 03:14:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250312212611.51667-1-shentey@gmail.com>
- <20250312212611.51667-2-shentey@gmail.com>
- <065c6990-d2dc-7b03-cd0c-344ee6b6a619@eik.bme.hu>
-In-Reply-To: <065c6990-d2dc-7b03-cd0c-344ee6b6a619@eik.bme.hu>
+References: <20250313-clr-v1-1-2cc49df40fe9@daynix.com>
+In-Reply-To: <20250313-clr-v1-1-2cc49df40fe9@daynix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 13 Mar 2025 10:12:18 +0000
-X-Gm-Features: AQ5f1JoxIFraBNw8Cg2E6XTijML8zd0g0vjS17-0zc8ULDgPKiudkOd-TfyK2Cw
-Message-ID: <CAFEAcA9ivdbKoe2ip9njx4hFkkCsQCUHnMDrKeH-iQ_5368bJw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/arm/fsl-imx8mp: Make SoC not user-creatable,
- derive from TYPE_SYS_BUS_DEVICE
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>
+Date: Thu, 13 Mar 2025 10:13:58 +0000
+X-Gm-Features: AQ5f1Jr19n6UznsoOVUqiECzQAOheCYZVWtXYBodDIQQi049s0ggLZBWPFVtbM4
+Message-ID: <CAFEAcA9Gvg2S63_pXKG0bJ1A7bndQNd3meUDeQFiJCwehOgMUQ@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Define raw write for PMU CLR registers
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,46 +91,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025 at 23:58, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+On Thu, 13 Mar 2025 at 07:16, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> On Wed, 12 Mar 2025, Bernhard Beschow wrote:
-> > Fixes a crash when creating the SoC object on the command line:
-> >
-> >  $ ./qemu-system-aarch64  -M virt -device fsl-imx8mp
-> >  **
-> >  ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: assertion failed:
-> >  (n < tcg_max_ctxs)
-> >  Bail out! ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread:
-> >  assertion failed: (n < tcg_max_ctxs)
-> >  Aborted (core dumped)
-> >
-> > Furthermore, the SoC object should be derived from TYPE_SYS_BUS_DEVICE such that
-> > it gets properly reset.
-> >
-> > Fixes: a4eefc69b237 "hw/arm: Add i.MX 8M Plus EVK board"
-> > Reported-by: Thomas Huth <thuth@redhat.com>
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-
-> > diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-> > index 1ea98e1463..9133d49383 100644
-> > --- a/hw/arm/fsl-imx8mp.c
-> > +++ b/hw/arm/fsl-imx8mp.c
-> > @@ -698,13 +698,15 @@ static void fsl_imx8mp_class_init(ObjectClass *oc, void *data)
-> >     device_class_set_props(dc, fsl_imx8mp_properties);
-> >     dc->realize = fsl_imx8mp_realize;
-> >
-> > +    /* Reason: SoC can only be instantiated from a board */
-> > +    dc->user_creatable = false;
+> PMCNTENCLR_EL0 and PMINTENCLR_EL1 clears written bits so we need an
+> alternative raw write functions, which will be used to copy KVM kernel
+> coprocessor state into userspace.
 >
-> I think sysbus devices are not user creatable by default (that's why
-> dynamic sysbus device was introduced) so either this or the .parent change
-> below is enough. You can have both just in case but maybe not necessary as
-> other sysbus devices usually don't set user_createble either.
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Yes, that's correct -- we don't need to manually set the
-user_creatable flag here now we've changed the parent class
-to be sysbus.
+Nice catch. Did you find this because it caused a visible
+problem/bug, or was it just code inspection?
 
+thanks
 -- PMM
 
