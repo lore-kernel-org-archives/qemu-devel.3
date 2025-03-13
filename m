@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17800C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D63C28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsmUH-0005Z3-Dn; Thu, 13 Mar 2025 13:36:55 -0400
+	id 1tsmWC-00074E-Oc; Thu, 13 Mar 2025 13:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsmTz-0005Tp-CD
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:36:35 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsmTt-000246-VH
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:36:33 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3011737dda0so2361587a91.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 10:36:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741887388; x=1742492188; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=V/cjy26hj1xk/mvfsJEHv04tv/ZXHKPhfN0Bskh1rkY=;
- b=RDy1bDncg2j6wRtwB1j+HUF5hO2qYndrh6nmJwstXszvlQFKQHkHDujLNu8gL/DPnS
- tNMFeutGM4IOtkRixUv/z8bUgDYjDa2XT3vd5hMMyI+K6FQmcQRZnRF6oD+6ciiXwbET
- 0hdwk6toOGFRANEyS4uZTAoKZKLqmjoBvky2SsSO0KkS+QUrl2E3SfM0AjkjQgGjGaqi
- RU2DIAjs4Nban6bl3R4xMXQrdusELd9HqsFfwNCUjPby9PdklG2WHIJWTMFs8KZZCY+j
- +0k4FCwdd+DQA0rhWS6Gv035KilUqJsT712c+7uUiC6imu1ZTu1fKADh4guzvK+LF+36
- i1Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741887388; x=1742492188;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V/cjy26hj1xk/mvfsJEHv04tv/ZXHKPhfN0Bskh1rkY=;
- b=m4twAdvPrb3fBoPLyy8CjiU1iQlNCKVh9yk7s13ys2/SC984QcheGNqUFqUQZy5Lqr
- Rc4ZFVoftTasvepu8B+fOoeF9tVgRCvm85ptjm/vEpJM2cpQ54qPRJkwAg6NuVnZXDwM
- OXqmSaS9g01jyUda0cRYn2d58JkWgYqN80/HcQX2YYsff10kV7y3qoB7gw2NtcSN+w50
- 8hbGFJLSfSZUEUho45YefaaXYS26UUt4WkqTQoJQM/hH5z3pLpws9TR8uJhh0PAnSFVX
- X+EQaYHCLruRbRHbp1xxbmshLgzAFMZ+uXMBmvDnufYr+mN7rEbyFnH/x3nWBD8MbzV9
- Sm5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoP3cpUF2z3hjlr24LOdNLjFDz9m+ItGMVjHrA8Ha14kA2+NSzZph/QZXWeVr8D4mNIqVd1csB3a+d@nongnu.org
-X-Gm-Message-State: AOJu0YxxT9Uybeai+EDCL7/977GCRaMCixaZWfBnI0QCskoVHIUs9fgk
- n8bhLT6TqPaNgSzdmJr6i/sge0Gb9QxmtfuhFM37lqljRwrwNx96lywt7AJYgto=
-X-Gm-Gg: ASbGncsXGiT3i2JsLjH5G7+k/tkFrQTEsTPkP40kbZvs9NE+ykip/K5Yvr9MvSfSWfW
- IEoYvZwDVZHmd0olm8qBvo43iJjp/jG/o8LoW8VUmJ2ruLvjrXLIggfCuz2hIxd/xmGfei3HDsh
- 4T+DwM4QpiIJr+P3rDrkd3Pqcx+fw1r8IDb+r5QLV1hRL9esqTuOo4LGVoN1BdyXE1oJzeVQguW
- qhN1z6VfzMLtENuckJ0Rq1x3m6peigYhmZBL33NsJM+T8SFDC74jrxOnG6TrEVhRwzD7IoCFoAE
- HOfLZlkOo+79o/gK07dY1DjjYCIhJ+0if/+Dms4yYtvJa0/F4KHV0ly65A==
-X-Google-Smtp-Source: AGHT+IGKmjDp+rnZJE7bWRhCg8lZ283YoGigRjq/35aMnHFNzFMga2oImySvUU/iVvYKauwhk+A5Uw==
-X-Received: by 2002:a17:90a:fc43:b0:2ff:702f:7172 with SMTP id
- 98e67ed59e1d1-3014ea1f10emr531348a91.33.1741887388459; 
- Thu, 13 Mar 2025 10:36:28 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30138b5cbd4sm1636966a91.21.2025.03.13.10.36.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 10:36:28 -0700 (PDT)
-Message-ID: <365d0d47-0dda-46c4-a8dd-097baa8af42c@linaro.org>
-Date: Thu, 13 Mar 2025 10:36:27 -0700
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1tsmWA-0006zJ-Gd
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:38:50 -0400
+Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <joro@8bytes.org>) id 1tsmW7-0002HQ-Um
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:38:49 -0400
+Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.8bytes.org (Postfix) with ESMTPSA id CE89B45A4C;
+ Thu, 13 Mar 2025 18:38:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+ s=default; t=1741887525;
+ bh=YUeM/40fQ1tR6LGx3H65nVXG0WendEqURUQ96QWS/tY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=E9UDFEWyZvZQC+Mf9lVwpOi2VJDChKP6iZ/gpK7az3wv3ZOQNw6gdHOgvQTHbmnxJ
+ MIfJZNTOuGVMrRcUE62bvzDizFuUgma5NEWHT0FAtNjngXjnJP/TTSH5RFfpB2tVqz
+ LQh3pU2rNGY2UmSZT7aCx9lX9PtTW/Pl09v4fZR5IKBmMH4XEU3NuD8W2vhXAI8RGM
+ aCyKZ/WFeDJbXV6fqOpo2hnGQ2geN9UqgAv1p8KjX0vI8CY5BKQaZAjZDtnN6qMt7b
+ 3mJ8sSRbuEcBIOodPMpfE0jQOyWmAzFYhFXYiElydwqy9eAxBs5W+gXteIWyUuFyhX
+ 9tqjNmpPg1zMQ==
+Date: Thu, 13 Mar 2025 18:38:44 +0100
+From: =?iso-8859-1?Q?J=F6rg_R=F6del?= <joro@8bytes.org>
+To: Alexander Graf <graf@amazon.com>
+Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <Z9MYJEG5RtTTXfpa@8bytes.org>
+References: <Z9KfMPKr9Tsz-psi@8bytes.org>
+ <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
+ <Z9Ku-o8zJUWgXoYE@8bytes.org>
+ <CAK3XEhOnhpzSg3F2C+PEvjgPKH7Yc9MqyoL8qJJGcbGXign34A@mail.gmail.com>
+ <Z9K6nrGwnyob9tED@8bytes.org>
+ <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
+ <Z9LBD_FnO2Gi2vMK@8bytes.org>
+ <CAK3XEhMa3Bvy42ErqAhf9vE+oUH1ZkHhv8JZRv1BpyfdejYMYQ@mail.gmail.com>
+ <Z9L8SYW8ObyoDMLy@8bytes.org>
+ <b91881ee-69cb-46dc-82ff-b9781f480096@amazon.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/37] meson: Introduce top-level libuser_ss and
- libsystem_ss
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@linaro.org
-References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-18-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250313034524.3069690-18-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b91881ee-69cb-46dc-82ff-b9781f480096@amazon.com>
+Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
+ envelope-from=joro@8bytes.org; helo=mail.8bytes.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,146 +87,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/25 20:44, Richard Henderson wrote:
-> We already have two subdirectories for which we need
-> to build files twice, for user vs system modes.
-> Move this handling to the top level.
-> 
-> This cannot be combined with user_ss or system_ss,
-> because the formulation has not been extended to support
-> configuration symbols.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   gdbstub/meson.build | 32 ++++++++------------------------
->   meson.build         | 22 ++++++++++++++++++++++
->   tcg/meson.build     | 23 ++---------------------
->   3 files changed, 32 insertions(+), 45 deletions(-)
-> 
-> diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-> index dff741ddd4..0e8099ae9c 100644
-> --- a/gdbstub/meson.build
-> +++ b/gdbstub/meson.build
-> @@ -4,32 +4,16 @@
->   # types such as hwaddr.
->   #
->   
-> -# We need to build the core gdb code via a library to be able to tweak
-> -# cflags so:
-> -
-> -gdb_user_ss = ss.source_set()
-> -gdb_system_ss = ss.source_set()
-> -
->   # We build two versions of gdbstub, one for each mode
-> -gdb_user_ss.add(files('gdbstub.c', 'user.c'))
-> -gdb_system_ss.add(files('gdbstub.c', 'system.c'))
-> +libuser_ss.add(files(
-> +  'gdbstub.c',
-> +  'user.c'
-> +))
->   
-> -gdb_user_ss = gdb_user_ss.apply({})
-> -gdb_system_ss = gdb_system_ss.apply({})
-> -
-> -libgdb_user = static_library('gdb_user',
-> -                             gdb_user_ss.sources() + genh,
-> -                             c_args: '-DCONFIG_USER_ONLY',
-> -                             build_by_default: false)
-> -
-> -libgdb_system = static_library('gdb_system',
-> -                                gdb_system_ss.sources() + genh,
-> -                                build_by_default: false)
-> -
-> -gdb_user = declare_dependency(objects: libgdb_user.extract_all_objects(recursive: false))
-> -user_ss.add(gdb_user)
-> -gdb_system = declare_dependency(objects: libgdb_system.extract_all_objects(recursive: false))
-> -system_ss.add(gdb_system)
-> +libsystem_ss.add(files(
-> +  'gdbstub.c',
-> +  'system.c'
-> +))
->   
->   common_ss.add(files('syscalls.c'))
->   
-> diff --git a/meson.build b/meson.build
-> index 9d9c11731f..3869e5bfbc 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3655,12 +3655,14 @@ io_ss = ss.source_set()
->   qmp_ss = ss.source_set()
->   qom_ss = ss.source_set()
->   system_ss = ss.source_set()
-> +libsystem_ss = ss.source_set()
->   specific_fuzz_ss = ss.source_set()
->   specific_ss = ss.source_set()
->   rust_devices_ss = ss.source_set()
->   stub_ss = ss.source_set()
->   trace_ss = ss.source_set()
->   user_ss = ss.source_set()
-> +libuser_ss = ss.source_set()
->   util_ss = ss.source_set()
->   
->   # accel modules
-> @@ -4038,6 +4040,26 @@ common_ss.add(qom, qemuutil)
->   common_ss.add_all(when: 'CONFIG_SYSTEM_ONLY', if_true: [system_ss])
->   common_ss.add_all(when: 'CONFIG_USER_ONLY', if_true: user_ss)
->   
-> +libuser_ss = libuser_ss.apply({})
-> +libuser = static_library('user',
-> +                         libuser_ss.sources() + genh,
-> +                         c_args: '-DCONFIG_USER_ONLY',
-> +                         dependencies: libuser_ss.dependencies(),
-> +                         build_by_default: false)
-> +libuser = declare_dependency(objects: libuser.extract_all_objects(recursive: false),
-> +                             dependencies: libuser_ss.dependencies())
-> +common_ss.add(when: 'CONFIG_USER_ONLY', if_true: libuser)
-> +
-> +libsystem_ss = libsystem_ss.apply({})
-> +libsystem = static_library('system',
-> +                           libsystem_ss.sources() + genh,
-> +                           c_args: '-DCONFIG_SOFTMMU',
-> +                           dependencies: libsystem_ss.dependencies(),
-> +                           build_by_default: false)
-> +libsystem = declare_dependency(objects: libsystem.extract_all_objects(recursive: false),
-> +                               dependencies: libsystem_ss.dependencies())
-> +common_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: libsystem)
-> +
->   # Note that this library is never used directly (only through extract_objects)
->   # and is not built by default; therefore, source files not used by the build
->   # configuration will be in build.ninja, but are never built by default.
-> diff --git a/tcg/meson.build b/tcg/meson.build
-> index 69ebb4908a..7df378d773 100644
-> --- a/tcg/meson.build
-> +++ b/tcg/meson.build
-> @@ -27,24 +27,5 @@ if host_os == 'linux'
->     tcg_ss.add(files('perf.c'))
->   endif
->   
-> -tcg_ss = tcg_ss.apply({})
-> -
-> -libtcg_user = static_library('tcg_user',
-> -                             tcg_ss.sources() + genh,
-> -                             dependencies: tcg_ss.dependencies(),
-> -                             c_args: '-DCONFIG_USER_ONLY',
-> -                             build_by_default: false)
-> -
-> -tcg_user = declare_dependency(objects: libtcg_user.extract_all_objects(recursive: false),
-> -                              dependencies: tcg_ss.dependencies())
-> -user_ss.add(tcg_user)
-> -
-> -libtcg_system = static_library('tcg_system',
-> -                                tcg_ss.sources() + genh,
-> -                                dependencies: tcg_ss.dependencies(),
-> -                                c_args: '-DCONFIG_SOFTMMU',
-> -                                build_by_default: false)
-> -
-> -tcg_system = declare_dependency(objects: libtcg_system.extract_all_objects(recursive: false),
-> -                                dependencies: tcg_ss.dependencies())
-> -system_ss.add(tcg_system)
-> +libuser_ss.add_all(tcg_ss)
-> +libsystem_ss.add_all(tcg_ss)
+Hey Alex,
 
-Good move,
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On Thu, Mar 13, 2025 at 05:30:30PM +0100, Alexander Graf wrote:
+> I have a few concerns with IGVM:
+> 
+> 1) Parsing is non-trivial. Parsing them in QEMU may open security issues.
 
+There is an IGVM parsing library under MIT license and written in Rust
+with C-bindings. The currently proposed IGVM support patches for
+QEMU also make of it as well as (I believe) the implementations in the
+two other hypervisors I am aware of.
+
+That it's written in Rust is no guarantee that there are no issues, but
+certain classes of common security bugs should already be avoided by
+that.
+
+> 2) Their data structures are tied to the target CPU structures like VMSA
+> which FWIW are not fully owned by QEMU, are they?
+
+Yes, those data structures are aligned with what the hardware consumes.
+That makes it a lot easier to pre-calculate the launch-measurements, as
+the tooling just needs to hash what is in the file without constructing
+the hardware representation first.
+
+Not sure what you mean by "owned by QEMU", all data in the IGVM file is
+at least _consumed_ by QEMU and KVM to build the initial memory image of
+the CVM. Once the CVM is launched all of the data belongs to the guest.
+
+> 3) I don't want to allocate a bounce buffer for an IGVM in the hypervisor.
+> So we would need to ensure that the memory allocated by the loader for the
+> IGVM does not overlap any memory the IGVM wants to consume. If the loader
+> considers the IGVM as opaque, that is difficult to achieve.
+
+Right, I think that is a reasonable constraint that should be built into
+the vmfwupdate protocol. The placement of the file in guest memory must
+not overlap with any memory region that is deployed by the file. That
+saves QEMU from the copying and allocating the space on the host side.
+
+Regards,
+
+	Joerg
 
