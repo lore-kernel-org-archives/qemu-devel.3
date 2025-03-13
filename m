@@ -4,68 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0DB2C28B28
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B86C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfW0-0007mU-HY; Thu, 13 Mar 2025 06:10:12 -0400
+	id 1tsfYc-00004u-2r; Thu, 13 Mar 2025 06:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1tsfVy-0007lF-1Y
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:10:10 -0400
-Received: from mail.8bytes.org ([85.214.250.239])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1tsfVt-00014K-5g
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:10:07 -0400
-Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id 3DCD245709;
- Thu, 13 Mar 2025 11:10:03 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
- s=default; t=1741860603;
- bh=aOwIyDZIRMBqM/ui3eQLqIacYLvR+ojEZS0MMN7Raik=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=g/aqzEhnpjt3F6iRliQqOf0fBqnR9lbTuKgfzFXn3ST9WQhJZyHAqVO9RQO7rAEFO
- 4X4l+1wm+DLI70TvQQkcFqO4X3trQXqzgaGqEUs5N3IAKkBCMIN1CLe6N6Cml0XDTV
- 0CcEqZMWYZ3N/WV8PiBeqqo8BdNJ9qPKHIMLP+jF5zKciiY9EtF58mrHTBoyExYfVH
- KUKkVBuajnyHDC+S7KRuNCdsjxvYZ+v4H2mK49PNfKOKWNROvzssF+cdVXNyNQKBwK
- p4v5R6SV54BAXCjvgGYG4HHs2YvxjkFnUUvsQNkdCLOtFbcgyHvRJ9nYshsojffJY9
- 816qU7sYnWYUg==
-Date: Thu, 13 Mar 2025 11:10:02 +0100
-From: =?iso-8859-1?Q?J=F6rg_R=F6del?= <joro@8bytes.org>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-Message-ID: <Z9Ku-o8zJUWgXoYE@8bytes.org>
-References: <20250214153443.159889-1-anisinha@redhat.com>
- <Z9KfMPKr9Tsz-psi@8bytes.org>
- <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsfYL-0008Up-B2
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:12:39 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tsfYH-0001FA-VG
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:12:37 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e6343c68b8fso608800276.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741860749; x=1742465549; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=E8BNtE4D22LZkURYCBj+A5vFJT9ApgOGodu949sObHo=;
+ b=bGkhQzpy4+CCFF8ay4bKWJrdXUPNnmJ29KK27c5wY6vTnBas68fnWj3moxSTuLbzF8
+ 6aHJxwz3P0DlHmwWicEpU4PMoeE11af5rFIt083e6sKiYcaIUNnJcwoZ2/ghD6p8xhLM
+ 1/pY5nXifYeC7Zg4lQf2O6X1aA72/57qHTYV5A5//TQxxF3aOufJTcK2KkXaY6g4BGCB
+ 7a2/csGffW6pkLaatxnWlsEY2jEdSSB+LLJaIsrg/+88JSktQDxnLS6k+UvjgzJBw2GB
+ aEJ1jE+uD93XY/jnGSYYP6jbkOFM7ye5dp/29DXp2qK6IpjPWrdHa2jD1EmdHFegY3mX
+ fmOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741860749; x=1742465549;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E8BNtE4D22LZkURYCBj+A5vFJT9ApgOGodu949sObHo=;
+ b=FxsrQb2SdrVVnLFEFjg2UGM5l2JV0YHOZN2GgmRRSJVbVBM6B6TX1uAylFGu3e5zIT
+ 9FkiJ4i0rij6QHNWA5qW9DwA6nBpyRpljz510y2ktiixijweoYu9IviYV2kdTLw6EagA
+ 4SkFO8dLjgaruU4L8Zsy+l+R8Tf8/5mJAsE9I0MfuSmnKOYcaziT2rRGLYqBzrVMTp60
+ qFeOOy224cBr47YnBRWl1Vn4RPakDJprFmngo7uJ/VOZ1zkk3Rv7BNhdgjMSOJkcf5A0
+ +yYXh7B/c4CBdpt3wSfv8DQ6CxE3jiWPc8PTTG04a4ZIkxBeQsQIlqhO5BFPQ3BKGbyS
+ YDGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWth77TPTgc1AlsQcgJarYiV1SMGgRrrVMV/Mzx8jCl2UUldKwlrb/gBNpihyoV6iaXJ8d9Njmrr5V9@nongnu.org
+X-Gm-Message-State: AOJu0YwYemX5JhBgGSb9ccxNqC2l+yxF8ok9gCHUUBJYQ0UIl0fxDkGd
+ 5HbkneQZZilVu4PNjJ8el6TZzh0IwZ65nlruCrQFyE2FDkXbzni+Crt34eBJrvSgzWfbhaq1WvK
+ QjDwsAt3qUTqFec8gOMXtBbZXgKFx9b56MVjY7w==
+X-Gm-Gg: ASbGncuWQfak8AS3sVqqFLXdZVqAsFSVw/JRe0T8QAoyWcazQEabkgfTWUoIj80RwVV
+ IpNOFhdqqdy2Mm3/GcLCyCXL8ta5ynwY4N6+4PCugXFLjwNy8r9y8c7qU05CXGny/zVFhz1TTeX
+ M7f44d9hQpQqcd7wt8kSq4Z4V/G9Y=
+X-Google-Smtp-Source: AGHT+IGvedEiL1qJjRiw1BlSHms2do7fJNn9XtaqVvJugtmEUw4BS6qVN7EMJWqMI/z6eSRmMAVSHD8abYwTKGSHHx0=
+X-Received: by 2002:a05:6902:2788:b0:e60:c442:afbf with SMTP id
+ 3f1490d57ef6-e635c1f37f4mr32913337276.44.1741860749422; Thu, 13 Mar 2025
+ 03:12:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
-Received-SPF: pass client-ip=85.214.250.239; envelope-from=joro@8bytes.org;
- helo=mail.8bytes.org
+References: <20250312212611.51667-1-shentey@gmail.com>
+ <20250312212611.51667-2-shentey@gmail.com>
+ <065c6990-d2dc-7b03-cd0c-344ee6b6a619@eik.bme.hu>
+In-Reply-To: <065c6990-d2dc-7b03-cd0c-344ee6b6a619@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 13 Mar 2025 10:12:18 +0000
+X-Gm-Features: AQ5f1JoxIFraBNw8Cg2E6XTijML8zd0g0vjS17-0zc8ULDgPKiudkOd-TfyK2Cw
+Message-ID: <CAFEAcA9ivdbKoe2ip9njx4hFkkCsQCUHnMDrKeH-iQ_5368bJw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/arm/fsl-imx8mp: Make SoC not user-creatable,
+ derive from TYPE_SYS_BUS_DEVICE
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,58 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani,
+On Wed, 12 Mar 2025 at 23:58, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>
+> On Wed, 12 Mar 2025, Bernhard Beschow wrote:
+> > Fixes a crash when creating the SoC object on the command line:
+> >
+> >  $ ./qemu-system-aarch64  -M virt -device fsl-imx8mp
+> >  **
+> >  ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: assertion failed:
+> >  (n < tcg_max_ctxs)
+> >  Bail out! ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread:
+> >  assertion failed: (n < tcg_max_ctxs)
+> >  Aborted (core dumped)
+> >
+> > Furthermore, the SoC object should be derived from TYPE_SYS_BUS_DEVICE such that
+> > it gets properly reset.
+> >
+> > Fixes: a4eefc69b237 "hw/arm: Add i.MX 8M Plus EVK board"
+> > Reported-by: Thomas Huth <thuth@redhat.com>
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-On Thu, Mar 13, 2025 at 03:07:42PM +0530, Ani Sinha wrote:
-> The state before reset is the state that uses stock firmware from the
-> hyperscaler. The state after reset is a fresh new state that uses the
-> "trusted and known firmware" from the end user. So the launch
-> measurements would not match between the state before reset and the
-> state after reset and there is no guarantee that there would be
-> "predictable launch measurements" across the reset.
+> > diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+> > index 1ea98e1463..9133d49383 100644
+> > --- a/hw/arm/fsl-imx8mp.c
+> > +++ b/hw/arm/fsl-imx8mp.c
+> > @@ -698,13 +698,15 @@ static void fsl_imx8mp_class_init(ObjectClass *oc, void *data)
+> >     device_class_set_props(dc, fsl_imx8mp_properties);
+> >     dc->realize = fsl_imx8mp_realize;
+> >
+> > +    /* Reason: SoC can only be instantiated from a board */
+> > +    dc->user_creatable = false;
+>
+> I think sysbus devices are not user creatable by default (that's why
+> dynamic sysbus device was introduced) so either this or the .parent change
+> below is enough. You can have both just in case but maybe not necessary as
+> other sysbus devices usually don't set user_createble either.
 
-Right, I understand that the state before and after reset will have
-different launch measurements, that is expected when booting with a
-different firmware :)
+Yes, that's correct -- we don't need to manually set the
+user_creatable flag here now we've changed the parent class
+to be sysbus.
 
-> What we do guarantee is that after reset, the launch measurements that
-> include the "trusted and known firmware" (whatever that is, not
-> necessarily edk2), is understood and expected. If you were to
-> calculate offline the measurements that include this "trusted and
-> known firmware" using the same order of setup calls as the target
-> system and then derive the launch digest, it should match that of what
-> the hardware would produce in the target.
-
-The devil lies in "same order of setup calls". Without a way to define
-this order through the vmfwupdate interface there is a lot of implicit
-knowledge required about how KVM/QEMU setup the TEE context to calculate
-the expected after-reset launch measurement. Even worse, the exact way
-this setup is done then becomes ABI, because any change in this process
-will lead to a different launch measurement.
-
-Some examples of initial memory layout calls which influence the launch
-measurment:
-
-	1) Launch VMSA(s) (SEV-SNP only, though I believe on TDX the
-	   initial register state can also be changed to some
-	   degree).
-	2) Pre-Validated/Accepted memory regions (TDX and SEV-SNP). This
-	   is especially important, as different FWs have different
-	   requirements on what memory is pre-validated, zeroed, etc.
-	3) Zero-pages, measured and unmeasured (TDX and SEV-SNP).
-	4) Position of the CPUID page, secrets page, and id-blob
-	   (SEV-SNP).
-	5) Pre-populated data (TDX and SEV-SNP).
-
-If I understand the vmfwupdate interface correctly, and please let me
-know if I am wrong here, it only allows to specify a call for part 5) of
-the above list. Some of the other parts can be specified in architecture
-dependent ways in the FW image itself, but not all of them.
-
-So the question is, is the plan to hardcode everything else (including
-the order of calls) and make the behavior ABI?
-
-Regards,
-
-	Joerg
+-- PMM
 
