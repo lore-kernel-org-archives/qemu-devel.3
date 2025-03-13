@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37B6C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FB1C28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfQu-0004QJ-5n; Thu, 13 Mar 2025 06:04:56 -0400
+	id 1tsfTT-0005QZ-NR; Thu, 13 Mar 2025 06:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfQp-0004Pt-3u
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:04:51 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfTR-0005Po-1L
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:07:33 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfQn-0000A2-9W
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:04:50 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cf848528aso6361935e9.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:04:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfTO-0000YT-89
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:07:31 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3912baafc58so624389f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741860287; x=1742465087; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741860448; x=1742465248; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pjzyT0VpJlK8UYZq195aGahlWKbldqNF2Wk1BAE79bU=;
- b=MxjqLsrj7ej/+02Koa14+6yYhfT2GR9I66OnOc3K/N8rcP5NvQ1SDjTdHWxZ8Y0Rmj
- IHkSEz+8OJdHPihScecnXxcrNm7Sq0McZl5lqItPwDeJgYDoWx5btxXG78axzfXgONaV
- QLFXB8NMqA2aZG6HJ10wOoEBMlmKUowCzypdLIRCeM+7JKL9oI9YPj5wlnIjA0XlmAVJ
- 3l5oLt8PHJ//7LmGKuAZ319fRUAMV7VZKMDTIei3dTQiLqrCvQXfXYaH1UEPV2AGsg3J
- eNzQxNqLEFr4P1zW8lLdZr1joLBid1yREBLpdM203+kwj7zlHfLWaACGIQdEckNSP4sG
- TBUg==
+ bh=/ZXWUp0JBXMEpvX8Pe+4wr79wUHge5v+NeLQeVidOFA=;
+ b=r/5jlj3YkbfbrwgjTMPTx93lyf7GDbjft6wVQsZ2Avn/8//pP6P8MaanS/iaK8Ggq6
+ KKkbe/m0qschdDWU/Z9LO3Du025VLDkfaIpdcluZV7uiQvB/XdxTnPWzsYFawq8e2X2H
+ x2bKgsL3HX/uODJ9eju5Cbg+k+tAwMdwODdwAdJIrS8DphRooYEN/5K+gleGo8yG2pdZ
+ 5BqU39HMW72ZZrimj7z33FKKlIyXFLOp88Wn/jiN5fGVRdtyBV5s+cn+TM5SA8vFCLOO
+ qemtp9h8kU2jb36XSmuP3r2/s5jly3mgUcDZ0DPhSLQmFinbDS7xcaHKhbdE6PU0xiYa
+ F8IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741860287; x=1742465087;
+ d=1e100.net; s=20230601; t=1741860448; x=1742465248;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pjzyT0VpJlK8UYZq195aGahlWKbldqNF2Wk1BAE79bU=;
- b=m+MwxZR68EE8wqFO9L1jF/wLzrIzDfCmdE5SJwWn1to+RE2vHldGVwVZSTis+7AwVz
- UeaZIwY9+CpNikjdmTrCaGzph84h6nS44er9+4fBf8ZsP5PEZy+SiDT1+pAcQEvTW2Zg
- weslumCL/EX3Dx4QYdxwbTEMI05B7wtiLsLw9auj6OwpKY0Ug0pDGsfpMwt6kHtlYgyu
- hd0UTyj97E3/l//GNuvXE9x0YcNX9gmCzXh+TjUa9y8E2EHRlouFu3V3PX8j1FXEgsV/
- 5eGGzWqddhTNAWa4E/XSt+AkHkE1JsgUZy6ZLZNnBS9nJ0lDepVpCxpSEeWLhBpAKe/x
- TFlA==
+ bh=/ZXWUp0JBXMEpvX8Pe+4wr79wUHge5v+NeLQeVidOFA=;
+ b=SGh3GghhSHL9VpKeIqsPwP1AqmT5OmsaI0FLpXv2izv89aDqHE6xWbtn/1qBPq0whA
+ UOJwxYG+MlwLL2WDbVGJjFBZ1VnaJ8FjSK00vRgATR2JCrOZOXAnN264/aWn3W2Wcq35
+ opMQNbN7S/xIwKsCEaaIGal0eNGEGOfi01f9wEiiFf6/5OQ3ErRB1XKpY2WZM7pmvywe
+ VU6q39oVCiGn3C4GQHBH5ZYSv0/ZSxC41SxZBDdw8UiZcRic3ra7oV1YyfsQPZqCivmI
+ U38/UkqYPOk6fX+P+ADv0Y5NHrq3r40K8kmlvXI10u2M298W6qoN0h135MO8o9NevQKL
+ E2+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyPLkgpvLGEcAwINef+XaitMah+2R+xsM/tgjM7Fytc2cGLB3UGV03Nz8gJdDeTGw5owNtMWzQavkJ@nongnu.org
-X-Gm-Message-State: AOJu0Yy9SYUcavvGZDkCaTm85MXREal9u1Vse7uaPEcFELHAewk5ZFxs
- ToUO6n9vTdamE+T0VTnsfF7UkA+MmiBEbYynQtbKHLq8eCVBlgJmJFfmMZLarFo=
-X-Gm-Gg: ASbGnctEaOunQcdKvgtb7PaJZDkKXjXRZKbb437S/NzvZGB3o0UGRWo56P/cLlV0d7O
- XgDpTGXkNLkEKM8DtIEwkvjpCJSd2J7PmB5fTglNc+2IPdWBx39dsVzqLcX2ywoQ5gbhV8D7TV/
- iLUUNenwrCEWAuUdPW1DzZCSiKHiQUjEu+oOk3B8twQIVaMtlKAt8fN/hhAqXr/GIrdr+O0cxsh
- xo4h6NphzRJIv1PQd94AshwXCYbKodxiuW0JJHPJALwzEA7pkx0QVxmo4oT9mvCaj3QKeUN4KTy
- sdtxnBAgidM7TXK87V5wv/Aao1p9BFHLMgN4aOupB9A7SHvjevLSGXM7UFloilGpccYan+Y9PiH
- E0U4d1MUNhi4F5Kw=
-X-Google-Smtp-Source: AGHT+IHf7Z73425ZSwPinpcsylnfZKcevFaEAZvRg/9EBrrX0Oh/XU12fbsEkMZFoVv9nPH6MAqi7A==
-X-Received: by 2002:a05:600c:3502:b0:43c:f4b3:b0ad with SMTP id
- 5b1f17b1804b1-43d01c12187mr98038705e9.19.1741860287379; 
- Thu, 13 Mar 2025 03:04:47 -0700 (PDT)
+ AJvYcCX4UMwciLhhjRcn66T23kgTLv64h99Pii0UfeRzPk4OOdf798v/Rz9JHFQUcI1sNRd/GK6D4XebHlAV@nongnu.org
+X-Gm-Message-State: AOJu0YznAAjI14JRxqH/D17wiJ24Su4l1rsckQ5FPffdZzoy5S81reX2
+ FA5taAEloXH1agSjRLZJDYDJUdhgP8j58qaWCG+KcBrxdiG29kBBIDg3xIe1ju8=
+X-Gm-Gg: ASbGncs1f6oa2L4iY0mAiUAd6/O5sqkWEbm2oiSlS42jfNysXJVY0188dNLoZcidyM0
+ JytBvGMY9ZwpObB0SCkGYKgyBp2LcInC2Ek95R+/drQgOU7ydtjnH5kY6x55LNscuwaLPlC7eZq
+ +N5cKtI2oYokML8X8GzfEaCLd3ms8F5ASG+uoy1ZwcXoMgy+s1rKbXF0XxJ+5VinM7rD+teAvZA
+ x3Z4eKi5PW43WDU7FdD8rp9hNtef2aUuKKjDU8O1YUIt1E3hGz/XnmB6EUDqkxknd/kwOux2FqK
+ lS3Jjbn+QWY+wqioCfhJS2clsNQ7xCyZXAd1U192JEZ+G6K5RjHqBN2ELo8b+tTEN79JSDcJfoO
+ Jgv8s6pD5f9GX9Ks=
+X-Google-Smtp-Source: AGHT+IHtIDemP5Zxx4ZY5j38ONWysh4wY0IIxKYF2xpc1jp7IXr0Tnyzv371I1R1i3yPqCn3zsxFrw==
+X-Received: by 2002:a05:6000:1acc:b0:391:4977:5060 with SMTP id
+ ffacd0b85a97d-39149775323mr13591716f8f.53.1741860448448; 
+ Thu, 13 Mar 2025 03:07:28 -0700 (PDT)
 Received: from [192.168.1.20] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d0a74d51esm48127005e9.16.2025.03.13.03.04.45
+ ffacd0b85a97d-395cb7ebe4bsm1600669f8f.98.2025.03.13.03.07.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 03:04:46 -0700 (PDT)
-Message-ID: <1515d5ca-d6c9-4287-b171-4739382f5620@linaro.org>
-Date: Thu, 13 Mar 2025 11:04:45 +0100
+ Thu, 13 Mar 2025 03:07:27 -0700 (PDT)
+Message-ID: <36f7e651-4df6-457d-a7ef-df7a7c4b2570@linaro.org>
+Date: Thu, 13 Mar 2025 11:07:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/37] semihosting: Move user-only implementation
- out-of-line
+Subject: Re: [PATCH 25/37] common-user: Split out watchpoint-stub.c
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-23-richard.henderson@linaro.org>
+ <20250313034524.3069690-26-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250313034524.3069690-23-richard.henderson@linaro.org>
+In-Reply-To: <20250313034524.3069690-26-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,109 +103,91 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/3/25 04:45, Richard Henderson wrote:
-> Avoid testing CONFIG_USER_ONLY in semihost.h.
+> Uninline the user-only stubs from hw/core/cpu.h.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/semihosting/semihost.h | 29 ++---------------------------
->   semihosting/user.c             | 30 ++++++++++++++++++++++++++++++
->   semihosting/meson.build        |  2 ++
->   3 files changed, 34 insertions(+), 27 deletions(-)
->   create mode 100644 semihosting/user.c
+>   include/hw/core/cpu.h         | 23 -----------------------
+>   common-user/watchpoint-stub.c | 28 ++++++++++++++++++++++++++++
+>   common-user/meson.build       |  1 +
+>   3 files changed, 29 insertions(+), 23 deletions(-)
+>   create mode 100644 common-user/watchpoint-stub.c
 > 
-> diff --git a/include/semihosting/semihost.h b/include/semihosting/semihost.h
-> index 97d2a2ba99..b03e637578 100644
-> --- a/include/semihosting/semihost.h
-> +++ b/include/semihosting/semihost.h
-> @@ -26,32 +26,6 @@ typedef enum SemihostingTarget {
->       SEMIHOSTING_TARGET_GDB
->   } SemihostingTarget;
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 5d11d26556..2fdb115b19 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -1109,35 +1109,12 @@ static inline bool cpu_breakpoint_test(CPUState *cpu, vaddr pc, int mask)
+>       return false;
+>   }
 >   
-> -#ifdef CONFIG_USER_ONLY
-> -static inline bool semihosting_enabled(bool is_user)
+> -#if defined(CONFIG_USER_ONLY)
+> -static inline int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+> -                                        int flags, CPUWatchpoint **watchpoint)
 > -{
-> -    return true;
+> -    return -ENOSYS;
 > -}
 > -
-> -static inline SemihostingTarget semihosting_get_target(void)
+> -static inline int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
+> -                                        vaddr len, int flags)
 > -{
-> -    return SEMIHOSTING_TARGET_AUTO;
+> -    return -ENOSYS;
 > -}
 > -
-> -static inline const char *semihosting_get_arg(int i)
+> -static inline void cpu_watchpoint_remove_by_ref(CPUState *cpu,
+> -                                                CPUWatchpoint *wp)
 > -{
-> -    return NULL;
 > -}
 > -
-> -static inline int semihosting_get_argc(void)
+> -static inline void cpu_watchpoint_remove_all(CPUState *cpu, int mask)
 > -{
-> -    return 0;
 > -}
-> -
-> -static inline const char *semihosting_get_cmdline(void)
-> -{
-> -    return NULL;
-> -}
-> -#else /* !CONFIG_USER_ONLY */
+> -#else
+>   int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+>                             int flags, CPUWatchpoint **watchpoint);
+>   int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
+>                             vaddr len, int flags);
+>   void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
+>   void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
+> -#endif
+>   
 >   /**
->    * semihosting_enabled:
->    * @is_user: true if guest code is in usermode (i.e. not privileged)
-> @@ -59,17 +33,18 @@ static inline const char *semihosting_get_cmdline(void)
->    * Return true if guest code is allowed to make semihosting calls.
->    */
->   bool semihosting_enabled(bool is_user);
-> +
->   SemihostingTarget semihosting_get_target(void);
->   const char *semihosting_get_arg(int i);
->   int semihosting_get_argc(void);
->   const char *semihosting_get_cmdline(void);
->   void semihosting_arg_fallback(const char *file, const char *cmd);
-> +
->   /* for vl.c hooks */
->   void qemu_semihosting_enable(void);
->   int qemu_semihosting_config_options(const char *optstr);
->   void qemu_semihosting_chardev_init(void);
->   void qemu_semihosting_console_init(Chardev *);
-> -#endif /* CONFIG_USER_ONLY */
->   void qemu_semihosting_guestfd_init(void);
->   
->   #endif /* SEMIHOST_H */
-> diff --git a/semihosting/user.c b/semihosting/user.c
+>    * cpu_get_address_space:
+> diff --git a/common-user/watchpoint-stub.c b/common-user/watchpoint-stub.c
 > new file mode 100644
-> index 0000000000..f5b500493b
+> index 0000000000..2489fca4f3
 > --- /dev/null
-> +++ b/semihosting/user.c
-> @@ -0,0 +1,30 @@
+> +++ b/common-user/watchpoint-stub.c
+> @@ -0,0 +1,28 @@
 > +/*
-> + * Semihosting for user emulation
+> + * CPU watchpoint stubs
 > + *
-> + * Copyright (c) 2019 Linaro Ltd
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * Copyright (c) 2003 Fabrice Bellard
+> + * SPDX-License-Identifier: LGPL-2.1-or-later
 > + */
 > +
 > +#include "qemu/osdep.h"
-> +#include "semihosting/semihost.h"
+> +#include "hw/core/cpu.h"
 > +
-> +bool semihosting_enabled(bool is_user)
+> +int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+> +                          int flags, CPUWatchpoint **watchpoint)
 > +{
-> +    return true;
+> +    return -ENOSYS;
 > +}
 > +
-> +const char *semihosting_get_arg(int i)
+> +int cpu_watchpoint_remove(CPUState *cpu, vaddr addr, vaddr len, int flags)
 > +{
-> +    return NULL;
+> +    return -ENOSYS;
 > +}
 > +
-> +int semihosting_get_argc(void)
+> +void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *wp)
 > +{
-> +    return 0;
-> +}
-> +
-> +const char *semihosting_get_cmdline(void)
-> +{
-> +    return NULL;
-> +}
 
-Do we really need the symbols, can't they be elided now?
+Again, can this be elide? Otherwise better use g_assert_not_reached().
+
+> +}
+> +
+> +void cpu_watchpoint_remove_all(CPUState *cpu, int mask)
+> +{
+> +}
 
