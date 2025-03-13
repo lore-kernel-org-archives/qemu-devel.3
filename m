@@ -4,91 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F1DEC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F40C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsmGZ-00044l-07; Thu, 13 Mar 2025 13:22:43 -0400
+	id 1tsmIy-0005m5-LO; Thu, 13 Mar 2025 13:25:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tsmGW-000444-SU
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:22:40 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tsmIv-0005kt-An
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:25:09 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tsmGV-0008BY-4r
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:22:40 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cfb6e9031so11898915e9.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 10:22:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741886555; x=1742491355; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EI+KOHZxHsLr/5FkYVDIZUyFsf3PC75VlTlB1d57+yE=;
- b=ebGu0yCOPiytDGwNAPPohzpToAilyEt7kX+x6AYA3ut7goCEqxBUG28F6neYXIfhK2
- +8f20S8V6kgFclNxU9dBEUXcJ3X2xJX2jAQRsMyDyrchX03P77VsvbmjrRBeQzCQInnW
- O+/Y7Tlg5LeBsROXSnD4KMJ+boDFt2xUb2md+bH68ARlZSYY1sgJlE9+e/RhDnzVzwF4
- 4ELeRgJfbi04uq9LPQmFTYWOjJs/AOn1sSs0q3xaaxfy/1HYD9secE2hjWVHMjsFCi71
- x33tcE8vwrWTdL0g+/2NuXCPe8E296E4Jkp1Dp3o+buCyGpb4CBUd/rYOEYgA1QZCuTq
- vD3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741886555; x=1742491355;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=EI+KOHZxHsLr/5FkYVDIZUyFsf3PC75VlTlB1d57+yE=;
- b=v1xiBZHnuGZY1vV1WZUD6ZwBFZP3evbkzTxMb2J+6jTHhsZ/ZDnhVku9dpOgOU90xL
- L5xVm62Z5ZlRcGGMdbrTqTtV/131LXvmlo99MrWoHM6NY6Q1+4Oasu01C2ZxBkN6D2og
- I2ZwXaS2Z2oI+/yy1y8QhHKIzwOrmTJrEfNouXGPE0Re1W8nAHBfXiIo1qxN6lD/w/XK
- pp3r0+Q4JL/T1NldX3S1zkEwSVOxq+EWo3/rTRXFG4tlhIMdO5Kpshh5YF2PHLCEDAnb
- eeY2v+ASEOTz5RqWT8HQ9/AKwZOM9NlhVvfEB4JiktRA+TWtQB9+wB2ExUIHx7zI2R7I
- S+9g==
-X-Gm-Message-State: AOJu0YxbbUKUROcv5eEJrKJn8omTECrm0cNo7TJEwV00YLhLwP6y5v2c
- wtU/StkfjHRgz/+reB5hAQ99sHUQobgs4JSFBiGY0ZTrzl61YxatwKrdp62fwkk=
-X-Gm-Gg: ASbGncv9Z3aUZ4NGrS+0KlJ9TcAqt/zQf0Sg1iuwIuFdhjoHIdxwBvlAwNejdRVlEju
- 1Lv4pl6a/Pxx+mfXLJ06ek6HVqEJDS0/MvUZ8pKMX7OVkJYfh8unijqgZMVZlZjHQQnRWVDP09b
- icIW0bjY9Y+U+cks3zlCX4eEBSgAvPaoFdG+Vp+kb5mO/uV9hdDD2Cxy0re4SJ5MrDSFdOBQ/q2
- n37KIO8b1MF75nZILjCyGx18gRR2UfCrzKHvnmbfeZ+zAFiAfgZRsxZCOBdcU+7sRA4+GQEoCuL
- eP15H6wuA5HB7Gxd9iMY+8OAWaFHlt6GPygYYZ+C5s23M4luwB2pq1vyqQ==
-X-Google-Smtp-Source: AGHT+IFBDsEbj+AlVZoJEN2OthRlw8Hw9vaLfQN1r72gKPiF04HddOlZ1drmD2O3Po+tcQel0pTyPA==
-X-Received: by 2002:a05:600c:3b95:b0:43c:f75a:eb54 with SMTP id
- 5b1f17b1804b1-43d1d8b0efamr5158845e9.13.1741886555593; 
- Thu, 13 Mar 2025 10:22:35 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d188afff0sm26850425e9.6.2025.03.13.10.22.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Mar 2025 10:22:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 395E55F8C7;
- Thu, 13 Mar 2025 17:22:34 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- pbonzini@redhat.com,  philmd@linaro.org
-Subject: Re: [PATCH 23/37] include/system: Move exec/ram_addr.h to
- system/ram_addr.h
-In-Reply-To: <20250313034524.3069690-24-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 12 Mar 2025 20:45:03 -0700")
-References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-24-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 13 Mar 2025 17:22:34 +0000
-Message-ID: <87h63w4zhh.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tsmIq-0008V1-JS
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:25:08 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id C6AA02116E;
+ Thu, 13 Mar 2025 17:25:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741886701; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZJve770nDPFh2HCH1ykBnGeheySshzoPb3XMGNBe72o=;
+ b=mn7svxwQr/SgcfppYqXfFQwDK/RxjBOP3aWQ0Z5tEdVgSrTHV8hmqqdzaAYfJG+W19SmHX
+ deUKnjlDP2ZqkkE9DyQi3jrP4CIHB1nZYgfGSkSsTD+S7iBibwRChTxqWIqCfnx8twbhjQ
+ GavptTY+vfsQe5Gxyu0CEqfpkY4ejIA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741886701;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZJve770nDPFh2HCH1ykBnGeheySshzoPb3XMGNBe72o=;
+ b=k51icg+rYK5pGNwdAk9Cd/Z44KUk5IgNFlt2cNyTTy3F5B8IHpq/dcCs6WPleN1xam2oeD
+ 8cSyErkxvFE52xDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741886701; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZJve770nDPFh2HCH1ykBnGeheySshzoPb3XMGNBe72o=;
+ b=mn7svxwQr/SgcfppYqXfFQwDK/RxjBOP3aWQ0Z5tEdVgSrTHV8hmqqdzaAYfJG+W19SmHX
+ deUKnjlDP2ZqkkE9DyQi3jrP4CIHB1nZYgfGSkSsTD+S7iBibwRChTxqWIqCfnx8twbhjQ
+ GavptTY+vfsQe5Gxyu0CEqfpkY4ejIA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741886701;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZJve770nDPFh2HCH1ykBnGeheySshzoPb3XMGNBe72o=;
+ b=k51icg+rYK5pGNwdAk9Cd/Z44KUk5IgNFlt2cNyTTy3F5B8IHpq/dcCs6WPleN1xam2oeD
+ 8cSyErkxvFE52xDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3D3D9137BA;
+ Thu, 13 Mar 2025 17:25:00 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iR+cOuwU02f1PwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 13 Mar 2025 17:25:00 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daude <philmd@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, Kevin
+ Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Steve Sistare <steven.sistare@oracle.com>
+Subject: Re: [PATCH V1 0/4] skip memory init during CPR
+In-Reply-To: <1741380954-341079-1-git-send-email-steven.sistare@oracle.com>
+References: <1741380954-341079-1-git-send-email-steven.sistare@oracle.com>
+Date: Thu, 13 Mar 2025 14:24:58 -0300
+Message-ID: <87bju4c07p.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.96%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email, imap1.dmz-prg2.suse.org:helo,
+ suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,68 +118,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-> Convert the existing includes with sed.
+> Fix bugs where the realize method re-initializes some memory regions during
+> CPR.  See the individual commit messages for details.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  include/{exec =3D> system}/ram_addr.h | 7 +++----
->  accel/kvm/kvm-all.c                 | 2 +-
->  accel/tcg/cputlb.c                  | 2 +-
->  accel/tcg/translate-all.c           | 2 +-
->  hw/ppc/spapr.c                      | 2 +-
->  hw/ppc/spapr_caps.c                 | 2 +-
->  hw/ppc/spapr_pci.c                  | 2 +-
->  hw/remote/memory.c                  | 2 +-
->  hw/remote/proxy-memory-listener.c   | 2 +-
->  hw/s390x/s390-stattrib-kvm.c        | 2 +-
->  hw/s390x/s390-stattrib.c            | 2 +-
->  hw/s390x/s390-virtio-ccw.c          | 2 +-
->  hw/vfio/common.c                    | 2 +-
->  hw/vfio/container.c                 | 2 +-
->  hw/vfio/iommufd.c                   | 2 +-
->  hw/vfio/migration.c                 | 2 +-
->  hw/vfio/spapr.c                     | 2 +-
->  hw/virtio/virtio-mem.c              | 2 +-
->  migration/ram.c                     | 2 +-
->  system/memory.c                     | 2 +-
->  system/physmem.c                    | 2 +-
->  target/arm/tcg/mte_helper.c         | 2 +-
->  target/ppc/kvm.c                    | 2 +-
->  target/s390x/kvm/kvm.c              | 2 +-
->  MAINTAINERS                         | 2 +-
->  25 files changed, 27 insertions(+), 28 deletions(-)
->  rename include/{exec =3D> system}/ram_addr.h (99%)
+> Steve Sistare (4):
+>   migration: cpr_is_incoming
+>   pflash: fix cpr
+>   hw/loader: fix roms during cpr
+>   hw/qxl: fix cpr
 >
-> diff --git a/include/exec/ram_addr.h b/include/system/ram_addr.h
-> similarity index 99%
-> rename from include/exec/ram_addr.h
-> rename to include/system/ram_addr.h
-> index 3d8df4edf1..65f8f37b2a 100644
+>  hw/block/block.c        |  5 +++++
+>  hw/core/loader.c        |  5 ++++-
+>  hw/display/qxl.c        | 27 ++++++++++++++++++++++++---
+>  include/migration/cpr.h |  1 +
+>  migration/cpr.c         |  5 +++++
+>  5 files changed, 39 insertions(+), 4 deletions(-)
 
-After rebase:
-
-modified   hw/vfio/common.c
-@@ -30,7 +30,6 @@
- #include "system/address-spaces.h"
- #include "system/memory.h"
- #include "system/ram_addr.h"
--#include "exec/ram_addr.h"
- #include "exec/target_page.h"
- #include "hw/hw.h"
- #include "qemu/error-report.h"
-modified   hw/vfio/iommufd.c
-@@ -25,7 +25,6 @@
- #include "qemu/cutils.h"
- #include "qemu/chardev_open.h"
- #include "pci.h"
--#include "system/ram_addr.h"
-=20
- static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr io=
-va,
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I'm queing this for the freeze to ensure people using CPR with qxl can
+get a complete feature in 10.0. If anyone has concerns, please speak up.
 
