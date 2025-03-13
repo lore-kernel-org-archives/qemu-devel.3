@@ -4,88 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B05C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 14:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C2BCC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 14:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsj92-00056L-NK; Thu, 13 Mar 2025 10:02:44 -0400
+	id 1tsjCz-0006MW-B6; Thu, 13 Mar 2025 10:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tsj8z-00055K-OD
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 10:02:42 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tsjCr-0006M7-0n
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 10:06:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tsj8x-00058q-SA
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 10:02:41 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tsjCp-0005gC-Ez
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 10:06:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741874558;
+ s=mimecast20190719; t=1741874798;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mSWLPJfiMyBjburTkW0OEGaQuq/A32kt6/KWjSZ2zb4=;
- b=QcssJtw886ZR9enCB9oNyX27W0+izsKg6dAjSJyxJo238JkCMT2tuQYZAbVNQmTTUQPlHY
- PsztEk6k+o2b9acqk9bEPh4MWtysHeokvaaL/86zPgEdjmrvRzWRZIIJ3ev8a7VTKst3gB
- f9o4RtKdHWbyqrU93IkkMHlqvl8tOhA=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9iA4d1tAkCZAqEX1kydnE36V7Z8aSZWlnXlgShijZw4=;
+ b=TFuArIiZGiVy+nuR2u7GGd0P1gf9Bq8JpplKdx/DYcjfECCROlsnapPIVaeLZKg+WZ0fgE
+ HZwD+xF2vQTXSS3tyi3zUZuq9wirldQ1Fp1Awhbzx6OeubtPqnMiV0qRyA+aTFl939cn6m
+ hzVPVYvuzmDC6Hxd0687odEBZQAR6LQ=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-PObfwsQGN4GLOOY6zOBpgw-1; Thu, 13 Mar 2025 10:02:36 -0400
-X-MC-Unique: PObfwsQGN4GLOOY6zOBpgw-1
-X-Mimecast-MFC-AGG-ID: PObfwsQGN4GLOOY6zOBpgw_1741874556
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2240a960f9cso17623225ad.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 07:02:36 -0700 (PDT)
+ us-mta-130-0xq9iEabNhGP6g6c5CG4cw-1; Thu, 13 Mar 2025 10:06:34 -0400
+X-MC-Unique: 0xq9iEabNhGP6g6c5CG4cw-1
+X-Mimecast-MFC-AGG-ID: 0xq9iEabNhGP6g6c5CG4cw_1741874793
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ac29f1e54baso89287666b.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 07:06:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741874556; x=1742479356;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mSWLPJfiMyBjburTkW0OEGaQuq/A32kt6/KWjSZ2zb4=;
- b=B2Nve3UjoM3fkSSaSsF97O0UnzHPQWinXvyVCd4kQqhTwgoY/kyxqPiUu1Z7LXFJz7
- VY1e+ZXMjaLZOBWo/0DGgp0IwguttLPWrrbc4g120SrKWik7g7dtx75miIRvkUk5UPHy
- 0sR0yGFrLMTfcBboGjMGJ/x24IMiIzQcYaz0xsasvXvUrc4jKuaqG+KT25W/BeUy/s2A
- uKWMqblOeCmAOp9qwbp5nVsB4H8JObDTkexd5tTt17kyr/1BF4Cjd/2+5jvakgOBg8H0
- L9YXP4GB9zBEM8wLUoVjm9J6VbNL/GdP/5Y55OpOYoRqv8eHbUpp0CflTBf+N346rr2U
- 0HDA==
-X-Gm-Message-State: AOJu0YxqBtUOD99UxrO6Pht/BLLArB3mTxpnz3S+Tbyx4LXdpheGUwiA
- CaHD4hQko1oc6V6k/K2+9Gd3G+oTOAJy7hY79iplcXtKDdxdyCbSl6GVPfRg4Ii+giCo7qTzDpd
- KkMrPmc/PQSXcTwyuCkmMsm3bi61w7jTkiEB3qVL1ceBbCyRb21tBKSsIMJjYwsTnEXs9UzFRWc
- /+FEh6/Bv0GP5x6P1rDr6ecJINd5c=
-X-Gm-Gg: ASbGncvmB+reeZFDnqBvdlYuOPpW+T+4YYp0qQWZ+v/ByTjkcnf40/aMgwPcVmyI5yR
- d7g5uUV7DmjTJmluBOYdwjRXXd3NSDyfp+B9BJlS4t+ByMktPh6nnLCiY8b6Fi06OzP11XGGP0l
- /Pc3QyysJ7kRnZbYjUzIfGS/pDAW65
-X-Received: by 2002:a17:902:e88a:b0:21f:6fb9:9299 with SMTP id
- d9443c01a7336-22428aaad15mr395756365ad.27.1741874555718; 
- Thu, 13 Mar 2025 07:02:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG68ACzZphCgA9T99jKJFoV9V4GpVRHan0fUBG5MIM4XFOX6oGA0YLRqTE0HvcB1+2BYu7rQZvE9NH/Oetpb/M=
-X-Received: by 2002:a17:902:e88a:b0:21f:6fb9:9299 with SMTP id
- d9443c01a7336-22428aaad15mr395755725ad.27.1741874555167; Thu, 13 Mar 2025
- 07:02:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741874793; x=1742479593;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9iA4d1tAkCZAqEX1kydnE36V7Z8aSZWlnXlgShijZw4=;
+ b=tT6fxmgtsivS9v6eyJRyySFLaHE3akmLeDvvtYYIGM19+OBJfWbitmpC/AxlwUgO+g
+ aGKfpPPhu5MlFo9MdZxr+fJx01QX7KpUiig8a16dhxwmIjlDAVzHSNv1Mufn/V0ZWe7Z
+ 7BW5M2vl3q93eBdi9P8SaoBQn5UJrDzMs8QfI5OTY8Cbev/HgBXWdUVWFykyR3vp8kHM
+ Gcgpt82Q8ht5srWa6WJmAxq5WrDF4V4YMm0JEUStKqVB/84PG5sAZmzOQL/Fk/hdejQd
+ OFSLZxZ0b+uPpCt/VjAI6kOHI5DVlJnhlWXiCYLPGpo+lvYAdTLTln/bX+cPKfXdDYFh
+ /hQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0Vi+BS4seudHiOdvw6BzQE33aoiAMQLuixEACQq/A0fwzD2zVQcdMmqwWIs/A3rw+ShxHDKxgZj0K@nongnu.org
+X-Gm-Message-State: AOJu0YyWfWfTVc9TTK5ZgkpmpnQBcxoDvmW6PXyBGZilpyey9bVf8pyc
+ dwa9al9joinzAxI1/nMRV2oENSj6tS1gX5HrQDIbwAmo3dspK6pYT+XAw4zPwRBzqK72bm+Nz95
+ MdMJRcyW2ouhzOl6H1q8kItukZQU0qrc0/WDmTjRjc+b7/f7Wbl5wcFbvdE6UCmfWMspNmnFatj
+ hq+3tezjFVt4xtGuzg69Iac/QAcUs=
+X-Gm-Gg: ASbGnct6JCjBjmFBqWVkLGNWtOq9HLr4736vaqWi0fVaqlkA+7JG/d+VnVPpgzoU12I
+ ldWBC3xwfI/yFYybm4D+T/3BjGT2RxmvPK3BG+MkRvxyNqIPQz8rO+zT1z+bvjZmiFU7b1qpcx8
+ A=
+X-Received: by 2002:a17:906:f593:b0:ac1:db49:99a3 with SMTP id
+ a640c23a62f3a-ac252fc6bdemr3235969066b.40.1741874791092; 
+ Thu, 13 Mar 2025 07:06:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQvFiZF27N31RRf3Gb3dYoc6auj5FaQC6mz2AWQFBTfRnFi3HjInO48nqNLSWYJ9I1SbqnYcwQwDP50fYt0VU=
+X-Received: by 2002:a17:906:f593:b0:ac1:db49:99a3 with SMTP id
+ a640c23a62f3a-ac252fc6bdemr3235943266b.40.1741874788925; Thu, 13 Mar 2025
+ 07:06:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250313044312.189276-1-jsnow@redhat.com>
- <20250313044312.189276-12-jsnow@redhat.com>
- <87y0x9cte4.fsf@pond.sub.org>
-In-Reply-To: <87y0x9cte4.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 13 Mar 2025 10:02:21 -0400
-X-Gm-Features: AQ5f1JoAJA2wWMXwXsnfz1bAbSElHR9EYUhZXjAExKieP0i7JbpWZP9OMec2dM8
-Message-ID: <CAFn=p-YBB-Qvmm4Tw2Kq4gNwLrjgY8-_sw7ZJAYnakQ7MDhc-Q@mail.gmail.com>
-Subject: Re: [PATCH 11/11] docs: enable transmogrifier for QSD and QGA
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Konstantin Kostiuk <kkostiuk@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, 
- Michael Roth <michael.roth@amd.com>, Kevin Wolf <kwolf@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000001aca5f063039c6c4"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+In-Reply-To: <Z9LeILiEU5GfEHrl@8bytes.org>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Thu, 13 Mar 2025 19:36:17 +0530
+X-Gm-Features: AQ5f1JoxVP8v7vhcENkE76VTZoWPzgsJg90EUeyew4PUYpvmSbcznNAftzvUuag
+Message-ID: <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+Cc: Gerd Hoffman <kraxel@redhat.com>, Alex Graf <graf@amazon.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,148 +115,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001aca5f063039c6c4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Mar 13, 2025 at 2:54=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
-
-> John Snow <jsnow@redhat.com> writes:
+On Thu, Mar 13, 2025 at 7:01=E2=80=AFPM J=C3=B6rg R=C3=B6del <joro@8bytes.o=
+rg> wrote:
 >
-> > This also creates the `qapi-qsd-index` and `qapi-qga-index` QMP indices=
-.
+> Hi Gerd,
+>
+> On Thu, Mar 13, 2025 at 01:05:13PM +0100, Gerd Hoffman wrote:
+> > // regions_addr points to an array of this structure
+> > struct vmfwupdate_regions {
+> >     uint64_t size;
+> >     uint64_t src_addr;       // source address (before update)
+> >     uint64_t dst_addr;       // destination address (after update)
+> >     uint64_t flags;          // control bits
+> > };
 > >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
-> [...]
->
-> > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> > index 995594aaf43..35ec0e7db31 100644
-> > --- a/qga/qapi-schema.json
-> > +++ b/qga/qapi-schema.json
-> > @@ -3,6 +3,9 @@
+> > // flags
+> > #define VMFWUPDATE_REGION_FLAG_COPY     // data must be copied
+> > #define VMFWUPDATE_REGION_FLAG_ZERO     // dest must be cleared
+> > #define VMFWUPDATE_REGION_FLAG_MEASURE  // data must be measured
 > >
-> >  ##
-> >  # =3D QEMU guest agent protocol commands and structs
-> > +#
-> > +# For a concise listing of all commands, events, and types in the QEMU
-> > +# guest agent, please consult the `qapi-qga-index`.
-> >  ##
+> > (1)   is still not covered.
+> > (2+3) can be handled with FLAG_ZERO regions, with and without
+> >       FLAG_MEASURE.
+> > (4)   Alex already pointed that the cpuid page is special, guess we
+> >       need additional flags for those oages.
+>
+> That looks better, when the host VMM guarantees the order in which it
+> translates these regions into VM setup calls, then it is a step
+> forward. Although there more things to keep in mind, like the guest
+> policy and SEV status parameters.
+>
+> > Open question is what we do about IGVM.
 > >
-> >  { 'pragma': { 'doc-required': true } }
-> > diff --git a/storage-daemon/qapi/qapi-schema.json
-> b/storage-daemon/qapi/qapi-schema.json
-> > index f10c9494906..2a562ee32e5 100644
-> > --- a/storage-daemon/qapi/qapi-schema.json
-> > +++ b/storage-daemon/qapi/qapi-schema.json
-> > @@ -13,6 +13,14 @@
-> >  # the array type in the main schema, even if it is unused outside of t=
-he
-> >  # storage daemon.
+> > One option would be the guest vmfwupdate tool loading and parsing igvm,
+> > preparing the region list, then invoke the update.  Problem is that som=
+e
+> > igvm feaures such as initial register state can not be easily supported
+> > that way.
 > >
-> > +##
-> > +# =3D QEMU storage daemon protocol commands and structs
-> > +#
-> > +# For a concise listing of all commands, events, and types in the QEMU
-> > +# storage daemon, please consult the `qapi-qsd-index`.
-> > +##
-> > +
-> > +
-> >  { 'include': '../../qapi/pragma.json' }
-> >
-> >  # Documentation generated with qapi-gen.py is in source order, with
+> > We could also expect the hypervisor support igvm, so the guest can
+> > simply load the file into memory and pass address and size to the
+> > hypervisor.  Either as option, say via VMFWUPDATE_REGION_FLAG_IGVM, or
+> > mandatory, i.e. scratch the region list and use IGVM exclusively.
 >
-> Compare qapi/qapi-schema.json:
+> This is of course up to the QEMU maintainers to decide, but I want to
+> highlight that IGVM already solves all the problems mentioned above,
+> including setting multiple memory regions of different type, special
+> data pages (cpuid, secrets, id-blob, vmsa) and more. It defines the
+> order of setup calls the VMM has to invoke for the new context and also
+> works for multiple platforms like TDX, SNP, non-coco, and in the future
+> ARM as well.
+
+My take on this is that instead of making the interface more complex,
+let's empower the guest to use IGVM if they think they need more
+guarantees around those things that IGVM solves very well today. QEMU
+already has IGVM backend support. To that end, we can make small
+changes to the hypervisor side so that instructions can be executed by
+IGVM loaded in guest memory. My talk in the KVM Forum was "empowering
+the guest" :-)
+
 >
->    # =3D Introduction
->    #
->    # This document describes all commands currently supported by QMP.
->    #
->    # For locating a particular item, please see the `qapi-qmp-index`.
->    #
+> Regards,
 >
-> Suggest to pick one phrasing and stick to it, unless there's a reason
-> for more than one.
+>         Joerg
 >
-
-Nope, just free-handing it. What's your favorite? ;)
-
---0000000000001aca5f063039c6c4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Mar 13,=
- 2025 at 2:54=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; This also creates the `qapi-qsd-index` and `qapi-qga-index` QMP indice=
-s.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-[...]<br>
-<br>
-&gt; diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
-&gt; index 995594aaf43..35ec0e7db31 100644<br>
-&gt; --- a/qga/qapi-schema.json<br>
-&gt; +++ b/qga/qapi-schema.json<br>
-&gt; @@ -3,6 +3,9 @@<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 ##<br>
-&gt;=C2=A0 # =3D QEMU guest agent protocol commands and structs<br>
-&gt; +#<br>
-&gt; +# For a concise listing of all commands, events, and types in the QEM=
-U<br>
-&gt; +# guest agent, please consult the `qapi-qga-index`.<br>
-&gt;=C2=A0 ##<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 { &#39;pragma&#39;: { &#39;doc-required&#39;: true } }<br>
-&gt; diff --git a/storage-daemon/qapi/qapi-schema.json b/storage-daemon/qap=
-i/qapi-schema.json<br>
-&gt; index f10c9494906..2a562ee32e5 100644<br>
-&gt; --- a/storage-daemon/qapi/qapi-schema.json<br>
-&gt; +++ b/storage-daemon/qapi/qapi-schema.json<br>
-&gt; @@ -13,6 +13,14 @@<br>
-&gt;=C2=A0 # the array type in the main schema, even if it is unused outsid=
-e of the<br>
-&gt;=C2=A0 # storage daemon.<br>
-&gt;=C2=A0 <br>
-&gt; +##<br>
-&gt; +# =3D QEMU storage daemon protocol commands and structs<br>
-&gt; +#<br>
-&gt; +# For a concise listing of all commands, events, and types in the QEM=
-U<br>
-&gt; +# storage daemon, please consult the `qapi-qsd-index`.<br>
-&gt; +##<br>
-&gt; +<br>
-&gt; +<br>
-&gt;=C2=A0 { &#39;include&#39;: &#39;../../qapi/pragma.json&#39; }<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 # Documentation generated with qapi-gen.py is in source order, w=
-ith<br>
-<br>
-Compare qapi/qapi-schema.json:<br>
-<br>
-=C2=A0 =C2=A0# =3D Introduction<br>
-=C2=A0 =C2=A0#<br>
-=C2=A0 =C2=A0# This document describes all commands currently supported by =
-QMP.<br>
-=C2=A0 =C2=A0#<br>
-=C2=A0 =C2=A0# For locating a particular item, please see the `qapi-qmp-ind=
-ex`.<br>
-=C2=A0 =C2=A0#<br>
-<br>
-Suggest to pick one phrasing and stick to it, unless there&#39;s a reason<b=
-r>
-for more than one.<br></blockquote><div><br></div><div>Nope, just free-hand=
-ing it. What&#39;s your favorite? ;)</div></div></div>
-
---0000000000001aca5f063039c6c4--
 
 
