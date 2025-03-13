@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7628DC282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D45C35FF1
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 03:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsZVu-0004Z1-Gz; Wed, 12 Mar 2025 23:45:42 -0400
+	id 1tsZW4-0004eL-F0; Wed, 12 Mar 2025 23:45:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZVp-0004Y8-2z
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:37 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1tsZW1-0004dR-LB
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:49 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZVh-0007a5-97
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:34 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2feb91a2492so967871a91.2
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:28 -0700 (PDT)
+ id 1tsZVt-0007lt-RU
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:49 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2243803b776so14221855ad.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741837528; x=1742442328; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741837535; x=1742442335; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KHsIgh54rCX5/hydGwZuN61eydlk+oWTosomBsdyD50=;
- b=qHXtAHrv/1o9DXbJx3G6CqXyhidymj20nh7B1eu5oxbGO0n6+LUpBhHu6biaPjKy//
- SOs/tumImdeHrr+wPpMK6SDZyYE0Xxf/NuESCNkeed1Ohakcex1zZHqRzjj7+Y1C35hL
- 3FRpOEOOaxIFaX7gNJYPOidgT8Jy/hmQ1Jols0Tor/gPg2O2IndOTzTiBb2i9ZUO3Ybv
- iB00p4fAcd2onz4i5SZZWVKbvKxehz3yDCbbw3OEcf8P258VuTw+X5ky/LpF4kQweEc2
- 1CWhahHukjL4HmB94DeJ+NmDlKsNvmeXAKkhTSopXFUAa9jhPjGSHdiDsJBlmMEVl8Bu
- Co9g==
+ bh=rHOuaDzblm6IWMn28KfbT02hmJPGWcvE7rOoUCYqoEA=;
+ b=E1vEPyQd0aXmrsnp3W/KZPWWiU9acz8dVSmDw1VbpU/deQnx671GN+X3u3107zzJre
+ 5M66RDRUh0XSnX5s65SFqVdYvVIFZn93Ch8AaEzRpp5Rz/oRw3V0kWD7aTFm0QQpt7YP
+ osl0b/LAUhUJeUOkiH0fXaqKdRNKEyzbxIvdTQ+qqrMUi7ILxPlW4fKkjGeJR5jkr5PW
+ F5q1TvE/3/hkFK2Vo4FnU98InPl+8c0nSPRVPakZNiNZnm3ceJ5AMaZ0dT7V3GxKc2W8
+ bZhto3OGFPNkjwYoVWrBte0FUKy421eEcxtqIqJ1KH5DwS6oIt4xKPOpzTEKjpoz/phm
+ 2wIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741837528; x=1742442328;
+ d=1e100.net; s=20230601; t=1741837535; x=1742442335;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KHsIgh54rCX5/hydGwZuN61eydlk+oWTosomBsdyD50=;
- b=Pv+8gV1jC94NExl9VqXx7G4FugKkiIU2o/oAwQCYaIPREHbGCe0EfEtLDNkMJmt3GR
- p0B47le56Axf0TGaMq6eie9pYM8UbjB4WIOl3BSENdHWWcG5v13hKtJiys1GznrSJTpE
- OAAol+3G9PevRuvRe1oXXBl7wcnJk1NqrTZpAwWx6F5PuoO7nqn1+qPWxfb4qRF+GBoy
- xL30+LZP2eEFh2L9VZnC1VZcdb7QBx28sfHwVVwG7qwbimtHccXVSsUXjHVF0ZBL4t4A
- 7xumo3o61MXhL5+MQmIlgldf4Hmg+thQFDIAkrKVohOXZ6DEwQVWVFykMyidDcNUnwwW
- 7+4Q==
-X-Gm-Message-State: AOJu0YwZY+tCWozMdvtBcNB1Os73gfcnXgLSyMWbaod3EARIXVBcwWmY
- XkdbbgAMp7tPNetZuOh99NGlPh2rzQ0KVciObepZirVRIqqYPjSjBVC6viPuFKoyYla2mhmZcFC
+ bh=rHOuaDzblm6IWMn28KfbT02hmJPGWcvE7rOoUCYqoEA=;
+ b=dRydTKyklrbRuHYA6Tlt4v9TRAjfoKJ89MHvmmuaHhegiXGiOEnxNvU/HJWJTWMQrt
+ Be+BU3YfvMtf7DBVyMgSzk5mRMk/UkBU+ohbi8Eeleh8tg0mcbYPkznpz2Zga+5zfwYk
+ phxvRIt2UpVqA923MP8z2JC/Z3pvVqtVFdE6rWSWgG8bylJEbcXkqSwsXRX/LL0657M4
+ iDSsBNBDrHjem46M9BZtk0bXXU1G2+cT+igOQkQcaj6Vrfhjbgn625eNagzBkvH1vRA1
+ 5NR/ln11pj6/9C+LE1CuH/79jGguaCCcJpflLGHdp3/yG9LFZ6BUaqLeiwMrmYYtTu3O
+ LnMA==
+X-Gm-Message-State: AOJu0YyNZ6wXypAxK9+CekMcHYmWYUK0XQOX2WZcojevgddKJcsxHUF9
+ 98uUxPmwJ45yAOCU/Fhf0TEmsewysK5MQm7xWhD1ra5o4EiMUy2NIMpOr5fto7fJ2G6uUOK564J
  n
-X-Gm-Gg: ASbGncsTiJZQO30LLjXMYYJdfFkuCFfj7HRaAXSocwWcYs9QzsTUlRESh8WqxnZ9FAY
- tBtkquWw8KMrTYT62Pc7V5tiM5WJLMrbv32Mh2S82Rk1KMtFn5fKBU1Vy32Cuk5FkQTzSeFOiov
- 7DsI3DNNTAws1iSv2XBBE4EdcGepb5FLaAhsjMgJ+j9DYArMnvWn+LVx+Qn/ak9Ss3wTbF9oIzO
- gJYtw2pV0zi5w8wxVB+rTOcd9ajYFymZWhxND7k5lccxrNJDzsFUaCiW0VFg5dlL/SQhJROwvU+
- Q1F09T5+RcCAPX5KY9C/XXsgKOKGrmJYWAV4wYoKHYSEYgr1QtaNs3PyqnxL2hCIINM9SNOZF3r
- a
-X-Google-Smtp-Source: AGHT+IH7E8axiazUVf+6HTre592lFDR8WCTOzfAYscQzlK40/ChajYaxsoYLuD+inFQ0C4tkYPJbvQ==
-X-Received: by 2002:a05:6a20:6f90:b0:1f1:432:f4a3 with SMTP id
- adf61e73a8af0-1f544b19bd8mr38915686637.23.1741837527740; 
- Wed, 12 Mar 2025 20:45:27 -0700 (PDT)
+X-Gm-Gg: ASbGnctj8glBNwA7mPFW6j1mfwHOYAP4ZLrOr2Xixn5DOVdKDLuPOeHsGXdZ3AxnmqX
+ uHABST7zMPp6aqXj3S4b0VeJXG2y9rHiNR4/wootfJPBVSRTSpfHNzBzM3H1Rr44xMDES/pdc3f
+ 3kBLmMaWubGCAgqZllQFyAklbJOB27Jrqoeya1GVouXcxFk+YPkSTSwVstJz6nwZV4ZcPwGa7YU
+ 10CbbKMttdGPTL0bCrYJuCrf1r5rntEXtDc7pulliB+91gOXMS/LgSrfjTfwsH7pm5TG3BxkW+F
+ vYzmhwBGVz2rf7I8U+rOlwbV3IRGat8JvndftP/13y4yuAUn1vcJqmVHuvj2xzhj0ZlWgmoOZ8j
+ v
+X-Google-Smtp-Source: AGHT+IERKW2jpsurh4jAdKMRxzpi3gWgKKRfrw3DBjWUi4jgDm+zSBzaoNVWur9GZ6YzK9u9rM/+QA==
+X-Received: by 2002:a17:903:19cf:b0:215:94eb:adb6 with SMTP id
+ d9443c01a7336-22428ab75cdmr430133215ad.40.1741837534940; 
+ Wed, 12 Mar 2025 20:45:34 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.27
+ d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Mar 2025 20:45:27 -0700 (PDT)
+ Wed, 12 Mar 2025 20:45:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	pbonzini@redhat.com,
 	philmd@linaro.org
-Subject: [PATCH 02/37] accel/tcg: Build plugin-gen.c once
-Date: Wed, 12 Mar 2025 20:44:42 -0700
-Message-ID: <20250313034524.3069690-3-richard.henderson@linaro.org>
+Subject: [PATCH 11/37] accel/tcg: Implement translator_ld*_end
+Date: Wed, 12 Mar 2025 20:44:51 -0700
+Message-ID: <20250313034524.3069690-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250313034524.3069690-1-richard.henderson@linaro.org>
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,88 +102,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We assert that env immediately follows CPUState in cpu-all.h.
-Change the offsetof expressions to be based on CPUState instead
-of ArchCPU.
+Add a new family of translator load functions which take
+an absolute endianness value in the form of MO_BE/MO_LE.
+Expand the other translator_ld* functions on top of this.
+Remove exec/tswap.h from translator.c.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/plugin-gen.c | 13 +++++--------
- accel/tcg/meson.build  |  7 ++++---
- 2 files changed, 9 insertions(+), 11 deletions(-)
+ include/exec/translator.h | 49 ++++++++++++++++++++++++---------------
+ accel/tcg/translator.c    | 26 +++++++++++++++------
+ 2 files changed, 49 insertions(+), 26 deletions(-)
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 7e5f040bf7..c1da753894 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -22,13 +22,12 @@
- #include "qemu/osdep.h"
- #include "qemu/plugin.h"
- #include "qemu/log.h"
--#include "cpu.h"
- #include "tcg/tcg.h"
- #include "tcg/tcg-temp-internal.h"
--#include "tcg/tcg-op.h"
--#include "exec/exec-all.h"
-+#include "tcg/tcg-op-common.h"
- #include "exec/plugin-gen.h"
- #include "exec/translator.h"
-+#include "exec/translation-block.h"
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index 205dd85bba..3c32655569 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -18,7 +18,7 @@
+  * member in your target-specific DisasContext.
+  */
  
- enum plugin_gen_from {
-     PLUGIN_GEN_FROM_TB,
-@@ -89,15 +88,13 @@ static void gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
-     qemu_plugin_add_dyn_cb_arr(arr);
+-#include "qemu/bswap.h"
++#include "exec/memop.h"
+ #include "exec/vaddr.h"
  
-     tcg_gen_st_ptr(tcg_constant_ptr((intptr_t)arr), tcg_env,
--                   offsetof(CPUState, neg.plugin_mem_cbs) -
--                   offsetof(ArchCPU, env));
-+                   offsetof(CPUState, neg.plugin_mem_cbs) - sizeof(CPUState));
- }
+ /**
+@@ -181,42 +181,53 @@ bool translator_io_start(DisasContextBase *db);
+  */
  
- static void gen_disable_mem_helper(void)
- {
-     tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
--                   offsetof(CPUState, neg.plugin_mem_cbs) -
--                   offsetof(ArchCPU, env));
-+                   offsetof(CPUState, neg.plugin_mem_cbs) - sizeof(CPUState));
- }
- 
- static TCGv_i32 gen_cpu_index(void)
-@@ -113,7 +110,7 @@ static TCGv_i32 gen_cpu_index(void)
-     }
-     TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
-     tcg_gen_ld_i32(cpu_index, tcg_env,
--                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
-+                   offsetof(CPUState, cpu_index) - sizeof(CPUState));
-     return cpu_index;
- }
- 
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 14bf797fda..185830d0f5 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -3,6 +3,10 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'tcg-runtime.c',
-   'tcg-runtime-gvec.c',
- ))
-+if get_option('plugins')
-+  common_ss.add(when: 'CONFIG_TCG', if_true: files('plugin-gen.c'))
-+endif
+ uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc);
+-uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc);
+-uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc);
+-uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc);
++uint16_t translator_lduw_end(CPUArchState *env, DisasContextBase *db,
++                             vaddr pc, MemOp endian);
++uint32_t translator_ldl_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian);
++uint64_t translator_ldq_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian);
 +
- tcg_specific_ss = ss.source_set()
- tcg_specific_ss.add(files(
-   'tcg-all.c',
-@@ -12,9 +16,6 @@ tcg_specific_ss.add(files(
-   'translator.c',
- ))
- tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
--if get_option('plugins')
--  tcg_specific_ss.add(files('plugin-gen.c'))
--endif
- specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
++#ifdef COMPILING_PER_TARGET
++static inline uint16_t
++translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
++{
++    return translator_lduw_end(env, db, pc, MO_TE);
++}
++
++static inline uint32_t
++translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
++{
++    return translator_ldl_end(env, db, pc, MO_TE);
++}
++
++static inline uint64_t
++translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
++{
++    return translator_ldq_end(env, db, pc, MO_TE);
++}
  
- specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
+ static inline uint16_t
+ translator_lduw_swap(CPUArchState *env, DisasContextBase *db,
+                      vaddr pc, bool do_swap)
+ {
+-    uint16_t ret = translator_lduw(env, db, pc);
+-    if (do_swap) {
+-        ret = bswap16(ret);
+-    }
+-    return ret;
++    return translator_lduw_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
+ }
+ 
+ static inline uint32_t
+ translator_ldl_swap(CPUArchState *env, DisasContextBase *db,
+                     vaddr pc, bool do_swap)
+ {
+-    uint32_t ret = translator_ldl(env, db, pc);
+-    if (do_swap) {
+-        ret = bswap32(ret);
+-    }
+-    return ret;
++    return translator_ldl_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
+ }
+ 
+ static inline uint64_t
+ translator_ldq_swap(CPUArchState *env, DisasContextBase *db,
+                     vaddr pc, bool do_swap)
+ {
+-    uint64_t ret = translator_ldq(env, db, pc);
+-    if (do_swap) {
+-        ret = bswap64(ret);
+-    }
+-    return ret;
++    return translator_ldq_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
+ }
++#endif /* COMPILING_PER_TARGET */
+ 
+ /**
+  * translator_fake_ld - fake instruction load
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index 64fa069b51..405e0b44c4 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -8,13 +8,13 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+ #include "exec/exec-all.h"
+ #include "exec/cpu-ldst-common.h"
+ #include "exec/translator.h"
+ #include "exec/plugin-gen.h"
+-#include "exec/tswap.h"
+ #include "tcg/tcg-op-common.h"
+ #include "internal-target.h"
+ #include "disas/disas.h"
+@@ -467,7 +467,8 @@ uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc)
+     return val;
+ }
+ 
+-uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
++uint16_t translator_lduw_end(CPUArchState *env, DisasContextBase *db,
++                             vaddr pc, MemOp endian)
+ {
+     uint16_t val;
+ 
+@@ -476,10 +477,14 @@ uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
+         val = cpu_ldw_code_mmu(env, pc, oi, 0);
+         record_save(db, pc, &val, sizeof(val));
+     }
+-    return tswap16(val);
++    if (endian & MO_BSWAP) {
++        val = bswap16(val);
++    }
++    return val;
+ }
+ 
+-uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
++uint32_t translator_ldl_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian)
+ {
+     uint32_t val;
+ 
+@@ -488,10 +493,14 @@ uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+         val = cpu_ldl_code_mmu(env, pc, oi, 0);
+         record_save(db, pc, &val, sizeof(val));
+     }
+-    return tswap32(val);
++    if (endian & MO_BSWAP) {
++        val = bswap32(val);
++    }
++    return val;
+ }
+ 
+-uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
++uint64_t translator_ldq_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian)
+ {
+     uint64_t val;
+ 
+@@ -500,7 +509,10 @@ uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
+         val = cpu_ldq_code_mmu(env, pc, oi, 0);
+         record_save(db, pc, &val, sizeof(val));
+     }
+-    return tswap64(val);
++    if (endian & MO_BSWAP) {
++        val = bswap64(val);
++    }
++    return val;
+ }
+ 
+ void translator_fake_ld(DisasContextBase *db, const void *data, size_t len)
 -- 
 2.43.0
 
