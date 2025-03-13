@@ -4,73 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D63C28B28
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66AC2C28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsmWC-00074E-Oc; Thu, 13 Mar 2025 13:38:52 -0400
+	id 1tsmeK-0001E1-KL; Thu, 13 Mar 2025 13:47:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1tsmWA-0006zJ-Gd
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:38:50 -0400
-Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1tsmW7-0002HQ-Um
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:38:49 -0400
-Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id CE89B45A4C;
- Thu, 13 Mar 2025 18:38:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
- s=default; t=1741887525;
- bh=YUeM/40fQ1tR6LGx3H65nVXG0WendEqURUQ96QWS/tY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=E9UDFEWyZvZQC+Mf9lVwpOi2VJDChKP6iZ/gpK7az3wv3ZOQNw6gdHOgvQTHbmnxJ
- MIfJZNTOuGVMrRcUE62bvzDizFuUgma5NEWHT0FAtNjngXjnJP/TTSH5RFfpB2tVqz
- LQh3pU2rNGY2UmSZT7aCx9lX9PtTW/Pl09v4fZR5IKBmMH4XEU3NuD8W2vhXAI8RGM
- aCyKZ/WFeDJbXV6fqOpo2hnGQ2geN9UqgAv1p8KjX0vI8CY5BKQaZAjZDtnN6qMt7b
- 3mJ8sSRbuEcBIOodPMpfE0jQOyWmAzFYhFXYiElydwqy9eAxBs5W+gXteIWyUuFyhX
- 9tqjNmpPg1zMQ==
-Date: Thu, 13 Mar 2025 18:38:44 +0100
-From: =?iso-8859-1?Q?J=F6rg_R=F6del?= <joro@8bytes.org>
-To: Alexander Graf <graf@amazon.com>
-Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-Message-ID: <Z9MYJEG5RtTTXfpa@8bytes.org>
-References: <Z9KfMPKr9Tsz-psi@8bytes.org>
- <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
- <Z9Ku-o8zJUWgXoYE@8bytes.org>
- <CAK3XEhOnhpzSg3F2C+PEvjgPKH7Yc9MqyoL8qJJGcbGXign34A@mail.gmail.com>
- <Z9K6nrGwnyob9tED@8bytes.org>
- <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
- <Z9LBD_FnO2Gi2vMK@8bytes.org>
- <CAK3XEhMa3Bvy42ErqAhf9vE+oUH1ZkHhv8JZRv1BpyfdejYMYQ@mail.gmail.com>
- <Z9L8SYW8ObyoDMLy@8bytes.org>
- <b91881ee-69cb-46dc-82ff-b9781f480096@amazon.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tsme3-00019m-6M
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:47:00 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tsme0-0003c9-O1
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:46:58 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-224171d6826so31381525ad.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 10:46:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741888015; x=1742492815; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U6fXWDdIA88opuWNujhSyIznmheyx7fFUYwtFAofg9k=;
+ b=fDCaD0wPuKjuoH+E63YpfhZ35BRDqgMf7/KRtJjSSNU6ct6jnTPS866wxlyo9AvT8m
+ sXDP3Kov19ZYQCXnXsA3Zl6s/jBft5+9fZNYpFfFiZ1eQWsnPCZJne53t1H2E2NgFyB4
+ bA5AiEt2NdA1W/SoUEm/H7d0STRH62u6cO4Dk6C/MjvCk3mJouClgEV4qbLRiwKWh5vU
+ +SSXCRExwKZO38Ti86LzfJHONe+P9zgh5EI8KzkefyINJ0VscN0A8Y4wT93JKvKsTEg3
+ DEsUAcwN/uIdo1sZmwNdkogYNbe90DHytqs8zP85wXI9c8R5odK1ix5aQ5H6i3h8QLOB
+ 69Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741888015; x=1742492815;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U6fXWDdIA88opuWNujhSyIznmheyx7fFUYwtFAofg9k=;
+ b=LknpdsdNt7e/+GBCwydbzKNmHjyhu5aJfzUrhfzAU5lwCpA/nvy3bBEhMelGecNIJn
+ BKLJMVqftg/KCgm507JxbYyFE+9MJ6PGjD/X/iPtsOLcKiQExG438NLweDD4ukOqvDQc
+ m1cY06B56kvt2FgOTdpZe5PO0UxRAxEt1BQBeS4rgErWwCvR41skpMlpIJRkGh62+LMG
+ EuRTLBsG58xhNdB9lV9DF3JeBeOL647lCPAHWyH2l86cosw0DUGWMFTIsRZlJFQrdJ8Y
+ y0cxTObykX9zET4hFmdJnWw2AxTHTY0M6Fu/USKzo+tyTbAk8Y1T5kYWmGhzuJbhF13U
+ w1Gg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzP1GnPULmvefXzfS88zkgqtUXji3aVoAbiHr/1ZwP0/+E4qdYKf9h4jC+1FB/xZYuv0aB6/2JhtD1@nongnu.org
+X-Gm-Message-State: AOJu0YzAxLPA39PgG1y5Yn8LiOoHG2Q6nazn04zNNrgL4enq4fwzRe8z
+ 0CNThsfdPydewBR+yoDv+bdyGLDYgcvtKbcQWDSyCXQyxPLn+hxrwPUI5nqs74M=
+X-Gm-Gg: ASbGncv7/NnTO1mq0u3CGeJCmvvwV2MpYG8Sm+ZjT8yQb7A40stW3l00+NVS6j9Cdpc
+ m9ZMHnAy0JofD4e5GlzKzIg9QZ0rGC2UXkW3YjpAGGOfv5Bzf/pHxpcCsBlpebKwJPAapLuD8xy
+ PakV4K20yJs3olwvd3E675eR//lVwKtKsw+bXhDuZi9CsYTu7MSLfp3pnPUgn92uETCQIvmFzZI
+ IZLj9vLeGAdhkSXEhoLGOQvk6y1w+dRp2aEzqaTIvVXH7K71jLK/AKUUB/RAHKDDm6se1vVyp4U
+ qnrdWo7cP4rvTr5+eN8KvvUNH5p+nPHg11FDDzaIuWPT0JXsjVIetGE05w==
+X-Google-Smtp-Source: AGHT+IE63v0JmZGgrVuOypM1bK8PKJa+ApxXJFS4H+N2WIa5J9HlHWNCCTS/5W8HnLy4kjayra0zyA==
+X-Received: by 2002:a05:6a20:ad0c:b0:1f5:8a69:f41b with SMTP id
+ adf61e73a8af0-1f5bda0409dmr825939637.37.1741888015095; 
+ Thu, 13 Mar 2025 10:46:55 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af56e9ddb52sm1564774a12.19.2025.03.13.10.46.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Mar 2025 10:46:54 -0700 (PDT)
+Message-ID: <ccb46ae9-5e94-4f9c-acad-16844c37f952@linaro.org>
+Date: Thu, 13 Mar 2025 10:46:54 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b91881ee-69cb-46dc-82ff-b9781f480096@amazon.com>
-Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
- envelope-from=joro@8bytes.org; helo=mail.8bytes.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 18/37] gdbstub: Move syscalls.c out of common_ss
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, philmd@linaro.org
+References: <20250313034524.3069690-1-richard.henderson@linaro.org>
+ <20250313034524.3069690-19-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250313034524.3069690-19-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,45 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Alex,
-
-On Thu, Mar 13, 2025 at 05:30:30PM +0100, Alexander Graf wrote:
-> I have a few concerns with IGVM:
+On 3/12/25 20:44, Richard Henderson wrote:
+> Copy to libuser_ss and libsystem_ss.
+> This file uses semihosting/semihost.h, which has separate
+> implementations with and without CONFIG_USER_ONLY.
 > 
-> 1) Parsing is non-trivial. Parsing them in QEMU may open security issues.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   gdbstub/meson.build | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gdbstub/meson.build b/gdbstub/meson.build
+> index 0e8099ae9c..b25db86767 100644
+> --- a/gdbstub/meson.build
+> +++ b/gdbstub/meson.build
+> @@ -7,15 +7,15 @@
+>   # We build two versions of gdbstub, one for each mode
+>   libuser_ss.add(files(
+>     'gdbstub.c',
+> +  'syscalls.c',
+>     'user.c'
+>   ))
+>   
+>   libsystem_ss.add(files(
+>     'gdbstub.c',
+> +  'syscalls.c',
+>     'system.c'
+>   ))
+>   
+> -common_ss.add(files('syscalls.c'))
+> -
+>   # The user-target is specialised by the guest
+>   specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-target.c'))
 
-There is an IGVM parsing library under MIT license and written in Rust
-with C-bindings. The currently proposed IGVM support patches for
-QEMU also make of it as well as (I believe) the implementations in the
-two other hypervisors I am aware of.
+So it fixes an existing issue if I'm correct?
+Maybe there was no consequence, but definitely a hole in our build system.
 
-That it's written in Rust is no guarantee that there are no issues, but
-certain classes of common security bugs should already be avoided by
-that.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-> 2) Their data structures are tied to the target CPU structures like VMSA
-> which FWIW are not fully owned by QEMU, are they?
-
-Yes, those data structures are aligned with what the hardware consumes.
-That makes it a lot easier to pre-calculate the launch-measurements, as
-the tooling just needs to hash what is in the file without constructing
-the hardware representation first.
-
-Not sure what you mean by "owned by QEMU", all data in the IGVM file is
-at least _consumed_ by QEMU and KVM to build the initial memory image of
-the CVM. Once the CVM is launched all of the data belongs to the guest.
-
-> 3) I don't want to allocate a bounce buffer for an IGVM in the hypervisor.
-> So we would need to ensure that the memory allocated by the loader for the
-> IGVM does not overlap any memory the IGVM wants to consume. If the loader
-> considers the IGVM as opaque, that is difficult to achieve.
-
-Right, I think that is a reasonable constraint that should be built into
-the vmfwupdate protocol. The placement of the file in guest memory must
-not overlap with any memory region that is deployed by the file. That
-saves QEMU from the copying and allocating the space on the host side.
-
-Regards,
-
-	Joerg
 
