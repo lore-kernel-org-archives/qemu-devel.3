@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F20EC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 13:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 418CDC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 13:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsj3B-0001QF-Kk; Thu, 13 Mar 2025 09:56:42 -0400
+	id 1tsj5V-0003Bu-Vf; Thu, 13 Mar 2025 09:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tsj39-0001Pn-6n
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:56:39 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tsj37-0004Uj-62
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:56:38 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43cf680d351so13324255e9.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 06:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741874194; x=1742478994; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i+v3De3Kzd+7fXnoUItXws4/mMAs82QduI7pQ8dhHNo=;
- b=lnw06Az9om8AphkYPs2f6XTpVIbekJh4KXfRRMiVpvX2SRxuciwBQR73o/0KuFMKUr
- nXA+Nkv4pfipJSpUD3Iyz3ya7A2UQxGEDdIAkFpwjnBrm5rq+q3fyf7fYAfYdQ/srASP
- 76TPgFHKA0LniUiXDxjwjZI0oIg+f1Kyx0N/lRzeOtmZkETZC/42NBIbPcR7dd/T2vQv
- EklIYYSFyBf0gXUL0LRio2oSMWUYFLfydZUH/cQVtNyYAU/N25OtQ0gODXsK5WAo2NZk
- Zl9aAcQv4dPgW/VPezMsPiMc66w3Y5r9S7mZLZEmI0yv3bR6HpQlfN9a9gCvWFxqLy6T
- iGrA==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tsj5K-0003A6-NA
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:58:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tsj5G-0004dj-V8
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:58:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741874330;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xGrRkdPC0RtCSD30i8DJNkbjn9s5E/pyGTQfKxAT3w0=;
+ b=T3S5hMbzqyWFTWEGg6ims+ol/DNEJX8AomYaABu/bFwLKwVGSVMZJoSS3XMTM7TZ0dgWdZ
+ 2oXlfb37L5RWYVWa7ZQnSWtdOQcuGazjuDU9MmqMdVEtB0aUvVoN22E0fjRxRjJSL0LGtv
+ wVEigSt+a+8a72EHD8PAHKTUEyvJWU0=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-287-c4im1bEAM-GfbQeicbChcg-1; Thu, 13 Mar 2025 09:58:46 -0400
+X-MC-Unique: c4im1bEAM-GfbQeicbChcg-1
+X-Mimecast-MFC-AGG-ID: c4im1bEAM-GfbQeicbChcg_1741874325
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2ff82dd6de0so1808060a91.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 06:58:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741874194; x=1742478994;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=i+v3De3Kzd+7fXnoUItXws4/mMAs82QduI7pQ8dhHNo=;
- b=dqyqa4Rx8jFw43ROiBlxwkchjEJGf67iGL6TpGdYcR0aubiBWykE3ZBhk8LAPat5EA
- DSgudM4cLsBD3apwt1Kat2Rs3dM9DDDZFw+Xum2JLRqGGF834kZ5pdg+taUr9QgZfBhi
- T9HSduTN+2v4Q8zcgjp6i1TpdtDYfVEiCOUjS9DfXFABPe2jh+CilP/MrB806cq00/So
- 5sPxk8nB8ku/nPN5Rfjk8Ky1i11J/kA0WPX3qJAJnDj3QI4GbU4X0mr3l7sE5daW80/O
- ckB8dTmCKYwKkpQ2+PSLep5t0/lIi5c7YyMVE7SUbmVwa33CilPIFkFELsuqiNReu2Fa
- fLAA==
-X-Gm-Message-State: AOJu0YySZYKnNzfAYOqPqB8DuL87XVNUKVseYeYenwsFuG2XfoDh071t
- /w6YNGio4XbsoGTlub9OzBpyto0qjGkG+iAqHMqQ6Wrz2ApUPzuE9EVXV98qby8=
-X-Gm-Gg: ASbGncs20VIOOUljD8wFoUzT7XkIBS7Lz6PvowdMx8ZjhCJ5QyAsBFVHaMmqsQHWv7I
- LNifz6OruqcfMGx75Zc76fihxlVc0cigpe5lsXE1fPRfb//FhnLBrSIdomPHvwCyOzeGKq2WkAQ
- Br6RlA9C6WSMrz0e+6ULjDUbjhxihIHNKXk663e4uoW7Cs1LxCTOew7SMi92ttltDHyx3t6VqSV
- gX5jikQTchA1YQUCy1v4j4ZYcZMNVLHQAWPUlPU72P+tTd1WkQKpq/eoC8IBqNXGKvYhkgQ1KE8
- vwcHUCzfyQKiEYcTrm1ETSsePWrYxB1q4qRmki8IsmuKqD3wb99ys71RWQ==
-X-Google-Smtp-Source: AGHT+IGz/wiTMXNi5KsiQ0xR5ICfeIN2/NtMhWeOhilZwg7uR0k3EgJ82yFqUYNSn0wdwkkBo3O1Dg==
-X-Received: by 2002:a05:600c:44d2:b0:43c:f509:2bbf with SMTP id
- 5b1f17b1804b1-43d180d03dfmr19760055e9.15.1741874194101; 
- Thu, 13 Mar 2025 06:56:34 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d0a8c5cbfsm53770155e9.30.2025.03.13.06.56.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Mar 2025 06:56:33 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 02CD75F8C7;
- Thu, 13 Mar 2025 13:56:32 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- pbonzini@redhat.com,  philmd@linaro.org
-Subject: Re: [PATCH 00/37] accel/tcg, codebase: Build once patches
-In-Reply-To: <20250313034524.3069690-1-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 12 Mar 2025 20:44:40 -0700")
-References: <20250313034524.3069690-1-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 13 Mar 2025 13:56:31 +0000
-Message-ID: <87v7sd3ugg.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1741874325; x=1742479125;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xGrRkdPC0RtCSD30i8DJNkbjn9s5E/pyGTQfKxAT3w0=;
+ b=kWgbq1Q5vaBeZFnSh4FbBUJdTJSAIOLGD8cOY9RKXEY2fLl2FPEDX11ASHYifPXwIz
+ 7WdcD0LW9Wd/yOdOf1w5drpR6GzwW8Hb0QTgZcOsXO2N6V2jy9lJqYmNhgWVRs6MGCZa
+ q1ePVlGiQ215JHJ+cqMn59QKpO7uKTbb+oIiGHY+JAFTDAFh11rV0m2tIx4rtG+gddLB
+ eejo9RJlPj2hn8w1j8nspDDePFjUO77xSAnjbkJzpRna8dCpslhSfWUPU9E3K5lO6v9r
+ r4QSrBv2drFDWklCW5TUARL9gBbhgtm0qkbibOeU9HNdW7HMGbNxmd1+1kuQrKu9Fe1c
+ dkHw==
+X-Gm-Message-State: AOJu0YyYAaj4284RX9fbnHbLA9CFoMUHWWZKz1KQcSxkB2KTI+425XG3
+ JuE/SZimi65V+IRGQyem/swEuh8rSHC2m3veFveQfjKfF+I9e2hwkjjkUW7/aGOV6vIQgcoTLCH
+ qgRhsgJQi2QsJrsuZVYMBknSV+brpNbE2oYK/A9tIN9lgppa8CHzzRQreAA5oOsLOuwzDHONr+h
+ Cr8WFh+5rQVwlqQrrFzb1ezJF7LveOQU3WFBI=
+X-Gm-Gg: ASbGncuQRXO9VOVnQ0hX86asSbJJw0n94WIZL5yejKdUcND3UG7fw+rIlTulhNjPlQ7
+ Tq3jfibWOv/y8CPRLk9Ntk9QOiu2Ihvw+dR7zM0CzjxVP9sWInNN116M7t+zjc3B7r6FB4IV1HJ
+ x3+wG4zBRO/TbhQeSItBuShGGaKaG0
+X-Received: by 2002:a17:90b:380e:b0:2ff:64a0:4a57 with SMTP id
+ 98e67ed59e1d1-2ff7ceef536mr30995411a91.26.1741874324590; 
+ Thu, 13 Mar 2025 06:58:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzUy8DMR3byFtNZAdf9WD+82+zEtAXsxzXGDOibiHby640whZEQRRsLAKsR7wi4EkcuP/hUbevJuowZoFQK2U=
+X-Received: by 2002:a17:90b:380e:b0:2ff:64a0:4a57 with SMTP id
+ 98e67ed59e1d1-2ff7ceef536mr30995385a91.26.1741874324219; Thu, 13 Mar 2025
+ 06:58:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+References: <20250313044312.189276-1-jsnow@redhat.com>
+ <20250313044312.189276-8-jsnow@redhat.com>
+ <8734fhe8ag.fsf@pond.sub.org>
+In-Reply-To: <8734fhe8ag.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 13 Mar 2025 09:58:31 -0400
+X-Gm-Features: AQ5f1Jq6isMZXVkHqvMQtz6yxEnbiif5B94jNZC_VVJifiRM5tVF4K6d_JVbQ6s
+Message-ID: <CAFn=p-b2LUBzn-JE6P41wCxnW-vAB1moHWcw66d9Ta=tt_H1gQ@mail.gmail.com>
+Subject: Re: [PATCH 07/11] docs/qapi_domain: add namespace support to
+ cross-references
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Konstantin Kostiuk <kkostiuk@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org, 
+ Michael Roth <michael.roth@amd.com>, Kevin Wolf <kwolf@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000056c732063039b810"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,104 +105,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+--00000000000056c732063039b810
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> All this is working toward building accel/tcg/translator.c once,
-> but it got late and I decided to stop at a convenient milestone.
+On Thu, Mar 13, 2025 at 2:47=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+
+> John Snow <jsnow@redhat.com> writes:
 >
-<snip>
+> > This patch does three things:
+> >
+> > 1. Record the current namespace context in pending_xrefs so it can be
+> >    used for link resolution later,
+> > 2. Pass that recorded namespace context to find_obj() when resolving a
+> >    reference, and
+> > 3. Wildly and completely rewrite find_obj().
+> >
+> > cross-reference support is expanded to tolerate the presence or absence
+> > of either namespace or module, and to cope with the presence or absence
+> > of contextual information for either.
+> >
+> > References now work like this:
+> >
+> > 1. If the explicit reference target is recorded in the domain's object
+> >    registry, we link to that target and stop looking. We do this lookup
+> >    regardless of how fully qualified the target is, which allows direct
+> >    references to modules (which don't have a module component to their
+> >    names) or direct references to definitions that may or may not belon=
+g
+> >    to a namespace or module.
+> >
+> > 2. If contextual information is available from qapi:namespace or
+> >    qapi:module directives, try using those components to find a direct
+> >    match to the implied target name.
+> >
+> > 3. If both prior lookups fail, generate a series of regular expressions
+> >    looking for wildcard matches in order from most to least
+> >    specific. Any explicitly provided components (namespace, module)
+> >    *must* match exactly, but both contextual and entirely omitted
+> >    components are allowed to differ from the search result. Note that i=
+f
+> >    more than one result is found, Sphinx will emit a warning (a build
+> >    error for QEMU) and list all of the candidate references.
+> >
+> > The practical upshot is that in the large majority of cases, namespace
+> > and module information is not required when creating simple `references=
+`
+> > to definitions from within the same context -- even when identical
+> > definitions exist in other contexts.
 >
-> I know there is overlap with other in-flight patches, but it
-> seemed easiest to just start from master.
+> Can you illustrate this this examples?
+>
 
-I guess that was why the re-base fails with:
+do wha?
 
-  [2210/6843] Compiling C object libcommon.a.p/hw_vfio_migration.c.o
-  FAILED: libcommon.a.p/hw_vfio_migration.c.o=20
-  cc -m64 -Ilibcommon.a.p -I../../common-user/host/x86_64 -I../../linux-use=
-r/include/host/x86_64 -I../../linux-user/include -Isubprojects/libvduse -I.=
-./../subprojects/libvduse -I/usr/include/capstone -I/usr/include/p11-kit-1 =
--I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/spice-server=
- -I/usr/include/spice-1 -I/usr/include/libusb-1.0 -I/usr/include/SDL2 -I/us=
-r/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/incl=
-ude/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0 -I/usr/includ=
-e/slirp -I/usr/include/gtk-3.0 -I/usr/include/pango-1.0 -I/usr/include/harf=
-buzz -I/usr/include/freetype2 -I/usr/include/fribidi -I/usr/include/cairo -=
-I/usr/include/gdk-pixbuf-2.0 -I/usr/include/x86_64-linux-gnu -I/usr/include=
-/atk-1.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/in=
-clude/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/=
-vte-2.91 -I/usr/include/virgl -I/usr/include/cacard -I/usr/include/nss -I/u=
-sr/include/nspr -I/usr/include/PCSC -I/usr/include/pipewire-0.3 -I/usr/incl=
-ude/spa-0.2 -I/usr/include/fuse3 -I/usr/include/uuid -fdiagnostics-color=3D=
-auto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -fstack-protector-strong =
--Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wform=
-at-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wmissin=
-g-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declar=
-ation -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstrict-pr=
-ototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-d=
-irs -Wno-psabi -Wno-shift-negative-value -isystem /home/alex/lsrc/qemu.git/=
-linux-headers -isystem linux-headers -iquote . -iquote /home/alex/lsrc/qemu=
-.git -iquote /home/alex/lsrc/qemu.git/include -iquote /home/alex/lsrc/qemu.=
-git/host/include/x86_64 -iquote /home/alex/lsrc/qemu.git/host/include/gener=
-ic -iquote /home/alex/lsrc/qemu.git/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_=
-SOURCE -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivi=
-al-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -fPIE -D_FILE_OFFS=
-ET_BITS=3D64 -D__USE_FILE_OFFSET64 -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=3D1=
- -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=3D1 -D_REENTRAN=
-T -DSTRUCT_IOVEC_DEFINED -MD -MQ libcommon.a.p/hw_vfio_migration.c.o -MF li=
-bcommon.a.p/hw_vfio_migration.c.o.d -o libcommon.a.p/hw_vfio_migration.c.o =
--c ../../hw/vfio/migration.c
-  In file included from ../../hw/vfio/migration.c:30:
-  /home/alex/lsrc/qemu.git/include/system/ram_addr.h:22:10: fatal error: cp=
-u.h: No such file or directory
-     22 | #include "cpu.h"
-        |          ^~~~~~~
-  compilation terminated.
-  [2211/6843] Compiling C object libcommon.a.p/hw_vfio_iommufd.c.o
-  FAILED: libcommon.a.p/hw_vfio_iommufd.c.o=20
-  cc -m64 -Ilibcommon.a.p -I../../common-user/host/x86_64 -I../../linux-use=
-r/include/host/x86_64 -I../../linux-user/include -Isubprojects/libvduse -I.=
-./../subprojects/libvduse -I/usr/include/capstone -I/usr/include/p11-kit-1 =
--I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/spice-server=
- -I/usr/include/spice-1 -I/usr/include/libusb-1.0 -I/usr/include/SDL2 -I/us=
-r/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/incl=
-ude/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0 -I/usr/includ=
-e/slirp -I/usr/include/gtk-3.0 -I/usr/include/pango-1.0 -I/usr/include/harf=
-buzz -I/usr/include/freetype2 -I/usr/include/fribidi -I/usr/include/cairo -=
-I/usr/include/gdk-pixbuf-2.0 -I/usr/include/x86_64-linux-gnu -I/usr/include=
-/atk-1.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/in=
-clude/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/=
-vte-2.91 -I/usr/include/virgl -I/usr/include/cacard -I/usr/include/nss -I/u=
-sr/include/nspr -I/usr/include/PCSC -I/usr/include/pipewire-0.3 -I/usr/incl=
-ude/spa-0.2 -I/usr/include/fuse3 -I/usr/include/uuid -fdiagnostics-color=3D=
-auto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -fstack-protector-strong =
--Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wform=
-at-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wmissin=
-g-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declar=
-ation -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstrict-pr=
-ototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-d=
-irs -Wno-psabi -Wno-shift-negative-value -isystem /home/alex/lsrc/qemu.git/=
-linux-headers -isystem linux-headers -iquote . -iquote /home/alex/lsrc/qemu=
-.git -iquote /home/alex/lsrc/qemu.git/include -iquote /home/alex/lsrc/qemu.=
-git/host/include/x86_64 -iquote /home/alex/lsrc/qemu.git/host/include/gener=
-ic -iquote /home/alex/lsrc/qemu.git/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_=
-SOURCE -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivi=
-al-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -fPIE -D_FILE_OFFS=
-ET_BITS=3D64 -D__USE_FILE_OFFSET64 -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=3D1=
- -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=3D1 -D_REENTRAN=
-T -DSTRUCT_IOVEC_DEFINED -MD -MQ libcommon.a.p/hw_vfio_iommufd.c.o -MF libc=
-ommon.a.p/hw_vfio_iommufd.c.o.d -o libcommon.a.p/hw_vfio_iommufd.c.o -c ../=
-../hw/vfio/iommufd.c
-  In file included from ../../hw/vfio/iommufd.c:28:
-  /home/alex/lsrc/qemu.git/include/system/ram_addr.h:22:10: fatal error: cp=
-u.h: No such file or directory
-     22 | #include "cpu.h"
-        |          ^~~~~~~
-  compilation terminated.
 
-I'll see if I can bisect...
+>
+> > Even when using simple `references` from elsewhere in the QEMU
+> > documentation manual, explicit namespace info is not required if there
+> > is only one definition by that name.
+>
+> Fails safely: if we add a second definition, doc generation errors out.
+> Correct?
+>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Yes, see the disambiguation patch for qapi-domain.rst for proof. Roll it
+back and see what happens!
+
+
+>
+> > Disambiguation *will* be required from outside of the QAPI documentatio=
+n
+> > when referencing e.g. block-core definitions, which are shared between
+> > QEMU QMP and the QEMU Storage Daemon. In that case, there are two
+> > options:
+> >
+> > A: References can be made partially or fully explicit,
+> >    e.g. `QMP:block-dirty-bitmap-add` will link to the QEMU version of
+> >    the definition, while `QGA:block-dirty-bitmap-add` would link to the
+> >    QGA version.
+>
+> Do you mean "QSD:"?
+>
+
+Haha! Yes, I suppose I did.
+
+
+>
+> > B: If all of the references in a document are intended to go to the sam=
+e
+> >    place, you can insert a "qapi:namespace:: QMP" directive to influenc=
+e
+> >    the fuzzy-searching for later references.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+>
+
+--00000000000056c732063039b810
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Mar 13,=
+ 2025 at 2:47=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
+hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
+ target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; This patch does three things:<br>
+&gt;<br>
+&gt; 1. Record the current namespace context in pending_xrefs so it can be<=
+br>
+&gt;=C2=A0 =C2=A0 used for link resolution later,<br>
+&gt; 2. Pass that recorded namespace context to find_obj() when resolving a=
+<br>
+&gt;=C2=A0 =C2=A0 reference, and<br>
+&gt; 3. Wildly and completely rewrite find_obj().<br>
+&gt;<br>
+&gt; cross-reference support is expanded to tolerate the presence or absenc=
+e<br>
+&gt; of either namespace or module, and to cope with the presence or absenc=
+e<br>
+&gt; of contextual information for either.<br>
+&gt;<br>
+&gt; References now work like this:<br>
+&gt;<br>
+&gt; 1. If the explicit reference target is recorded in the domain&#39;s ob=
+ject<br>
+&gt;=C2=A0 =C2=A0 registry, we link to that target and stop looking. We do =
+this lookup<br>
+&gt;=C2=A0 =C2=A0 regardless of how fully qualified the target is, which al=
+lows direct<br>
+&gt;=C2=A0 =C2=A0 references to modules (which don&#39;t have a module comp=
+onent to their<br>
+&gt;=C2=A0 =C2=A0 names) or direct references to definitions that may or ma=
+y not belong<br>
+&gt;=C2=A0 =C2=A0 to a namespace or module.<br>
+&gt;<br>
+&gt; 2. If contextual information is available from qapi:namespace or<br>
+&gt;=C2=A0 =C2=A0 qapi:module directives, try using those components to fin=
+d a direct<br>
+&gt;=C2=A0 =C2=A0 match to the implied target name.<br>
+&gt;<br>
+&gt; 3. If both prior lookups fail, generate a series of regular expression=
+s<br>
+&gt;=C2=A0 =C2=A0 looking for wildcard matches in order from most to least<=
+br>
+&gt;=C2=A0 =C2=A0 specific. Any explicitly provided components (namespace, =
+module)<br>
+&gt;=C2=A0 =C2=A0 *must* match exactly, but both contextual and entirely om=
+itted<br>
+&gt;=C2=A0 =C2=A0 components are allowed to differ from the search result. =
+Note that if<br>
+&gt;=C2=A0 =C2=A0 more than one result is found, Sphinx will emit a warning=
+ (a build<br>
+&gt;=C2=A0 =C2=A0 error for QEMU) and list all of the candidate references.=
+<br>
+&gt;<br>
+&gt; The practical upshot is that in the large majority of cases, namespace=
+<br>
+&gt; and module information is not required when creating simple `reference=
+s`<br>
+&gt; to definitions from within the same context -- even when identical<br>
+&gt; definitions exist in other contexts.<br>
+<br>
+Can you illustrate this this examples?<br></blockquote><div><br></div><div>=
+do wha?</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
+1ex">
+<br>
+&gt; Even when using simple `references` from elsewhere in the QEMU<br>
+&gt; documentation manual, explicit namespace info is not required if there=
+<br>
+&gt; is only one definition by that name.<br>
+<br>
+Fails safely: if we add a second definition, doc generation errors out.<br>
+Correct?<br></blockquote><div><br></div><div>Yes, see the disambiguation pa=
+tch for qapi-domain.rst for proof. Roll it back and see what happens!</div>=
+<div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; Disambiguation *will* be required from outside of the QAPI documentati=
+on<br>
+&gt; when referencing e.g. block-core definitions, which are shared between=
+<br>
+&gt; QEMU QMP and the QEMU Storage Daemon. In that case, there are two<br>
+&gt; options:<br>
+&gt;<br>
+&gt; A: References can be made partially or fully explicit,<br>
+&gt;=C2=A0 =C2=A0 e.g. `QMP:block-dirty-bitmap-add` will link to the QEMU v=
+ersion of<br>
+&gt;=C2=A0 =C2=A0 the definition, while `QGA:block-dirty-bitmap-add` would =
+link to the<br>
+&gt;=C2=A0 =C2=A0 QGA version.<br>
+<br>
+Do you mean &quot;QSD:&quot;?<br></blockquote><div><br></div><div>Haha! Yes=
+, I suppose I did.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+<br>
+&gt; B: If all of the references in a document are intended to go to the sa=
+me<br>
+&gt;=C2=A0 =C2=A0 place, you can insert a &quot;qapi:namespace:: QMP&quot; =
+directive to influence<br>
+&gt;=C2=A0 =C2=A0 the fuzzy-searching for later references.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+<br>
+</blockquote></div></div>
+
+--00000000000056c732063039b810--
+
 
