@@ -4,71 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 642D1C28B28
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 01:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498E0C28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 02:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsXHX-0003ot-MU; Wed, 12 Mar 2025 21:22:43 -0400
+	id 1tsYDm-0002nK-CK; Wed, 12 Mar 2025 22:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tsXHU-0003oS-4X
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 21:22:40 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tsXHS-0008K1-0W
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 21:22:39 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Ax3eJVM9JnIjiUAA--.16489S3;
- Thu, 13 Mar 2025 09:22:29 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxb8dRM9JnuGFHAA--.3081S3;
- Thu, 13 Mar 2025 09:22:28 +0800 (CST)
-Subject: Re: Giving your own patches your Reviewed-by
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <878qpamvk6.fsf@pond.sub.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <18fb7b1e-90de-deb7-4a32-f5d6d2066627@loongson.cn>
-Date: Thu, 13 Mar 2025 09:21:47 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tsYDi-0002n6-Hj
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 22:22:50 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tsYDg-0001DI-DC
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 22:22:50 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5e677f59438so653450a12.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 19:22:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741832564; x=1742437364; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=gKGNkXyccZ/Qb/O6eecrVtSfppVu0aGqLf92YulUfAs=;
+ b=TANdTPEMaSL5R4rkiPMAgZqa/SVD/dm8q+qc6MEIhXf6irttQSwwuWq+H7AqCWvVjj
+ d4QHovMbtc7cjZJsIaguzzE4KLhXMcpuLn+0+oMeCN6j6HBs1NyCiw+/Lv3Ro6+I95dO
+ llREr92EpZCIHsMEtzOkyCa5CqGJadVi7OAOxUXxjU6ZSUv/5hvNP+Mnny5fvldZn9iF
+ 0eSe3I6twZ8Urqjc273U7P5DQJ7/hOOQoqcrrH39oXDgLur/C9SLTi5DtPRqTwXrB0Ma
+ gKzGbhpcEkv6wDqz9vGuIoUtttd/iXJZgA2KdsN2OBYKTPzYqJ0K6pvmYLTNwwYe4q+J
+ f8zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741832564; x=1742437364;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gKGNkXyccZ/Qb/O6eecrVtSfppVu0aGqLf92YulUfAs=;
+ b=pMqWQU7ZfhxrPkDUFX1zKqiSKvq0Y84x8myg5yQ+TFkUNumG9Y0vswnm0T+lOfEsOE
+ B20S0CflbR1kGY+n9eXlSlcZAZR6BvMpxpcrQCur+xagQqOOfSD8R5JrcZvJdH4tPY6G
+ FTylx2eWJ+jxlj3kemNou1cyzULzCdLjpHHdmd7a35BBLksyzAJlsSZDP15ZZt0lhEi1
+ IXtLmAigBTvtTXh1ThUTxUiLZb77APh5dFdH7X26cgtF71cXxTapvrJnUC/agLX0bT9T
+ msNVyGBa6fFKdJnPBNa1VGjA5QnczV43H4fEhckSP+mPqPASm1Pp1ga/bcKyYpQ8dAAI
+ JRMw==
+X-Gm-Message-State: AOJu0YyqNyg7vOnD6uYgGsBYjxSzVr8kVYrDtpWmNi+x8FeMu/bS0yBc
+ Rxk5s0EyOZ8Nj+Namk+etmwxTmhsP5rOSrgf57kU8e5otb1PdPEA2XnPCpRSj2XEQ2HhKFyOfb8
+ dXa23PnqD67q3GXBPAk4kM3WLCnA=
+X-Gm-Gg: ASbGncvMwD0Fd4VZdrjcGZgcJZCrMvVpHRrqTwu12OnPLT4BtAbzbaT3A1eHKQ4HEIx
+ TQz1LI/6RRKUxPbnMSpueFDRKh88UH0tlbZdYmrQ9X/0QEtN8WDbtKvkO0gAF7DrXbHGYX6oB0Q
+ sikhsnU0D/mrkSrlFSGu0FljrB1G7A8PnGX+2p
+X-Google-Smtp-Source: AGHT+IEis12wkv/8WboSfBWJuD4y9vUPXXTnHaqMsL3mK+3/EXcbDhLKbPLdtlz4ZVGx0NgrsryhThuxb5jGEFQB+Nk=
+X-Received: by 2002:a05:6402:1e93:b0:5e7:b02b:1eb8 with SMTP id
+ 4fb4d7f45d1cf-5e7b02b1f18mr6862755a12.14.1741832564455; Wed, 12 Mar 2025
+ 19:22:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <878qpamvk6.fsf@pond.sub.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8dRM9JnuGFHAA--.3081S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Jw4rWFWkJw4fXw4rtry5Awc_yoW8JrWrpw
- sxW3W7CFWkGw4xCasFg3W2vFWfGrn3Aw1aqF4Fk34kurn8Jr1Yk34xKF40yw1UX3sIga1D
- Jr4qqryrC3Z0yFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9jb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYOVCvzIIY
- 64CSwwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67
- kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY
- 6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
- vEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2Kfnx
- nUUI43ZEXa7IUng18PUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.812,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Thu, 13 Mar 2025 10:22:32 +0800
+X-Gm-Features: AQ5f1JrG8J2h4HfIFOrhPComkcxNXSc8sY5P4OoiW7vzpHY9ZzcbuuYJKjrFGAk
+Message-ID: <CAJSP0QWKnLDsVUbqO_kNB7GiZPU0-YpOU8T4BNCgyNBi54dtDQ@mail.gmail.com>
+Subject: Broken NetBSD Orange Pi image URL in QEMU tests
+To: Niek Linnenbank <nieklinnenbank@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,34 +89,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ah, It is a pity and bad news that I contribute almost 30% of it :(
-LoongArch system actually needs more people participation and I need 
-notice this also. It should happens in future again in LoongArch subsystem.
+Hi,
+CI jobs that run test_arm_orangepi.py are failing:
+https://gitlab.com/qemu-project/qemu/-/jobs/9390048284#L1138
 
-Any reviewing comments is welcome and I will slow down for deeper 
-considerations. And it is my pleasure to work in this open source area 
-and for better goals together.
+Please consider how to resolve this so the CI job passes again. If you
+are in contact with the archive.netbsd.org administrators, maybe
+contacting them will lead to a fix. Otherwise please update the QEMU
+test to use a URL that works or remove the test.
 
-Regards
-Bibo Mao
-On 2025/3/12 下午5:45, Markus Armbruster wrote:
-> I stumbled over commits that carry the author's Reviewed-by.
-> 
-> There may be cases where the recorded author isn't the lone author, and
-> the recorded author did some meaningful review of the patch's parts that
-> are not theirs.  Mind that we do need all authors to provide their
-> Signed-off-by.
-> 
-> When the only Signed-off-by is from the recorded author, and there's
-> also their Reviewed-by, the Reviewed-by is almost certainly bogus.
-> 
-> Now, accidents happen, no big deal, etc., etc.  I post this to hopefully
-> help reduce the accident rate :)
-> 
-> Here's my quick & sloppy search for potentially problematic uses of
-> Reviewed-by:
-> 
-> $ git-log --since 'two years ago' | awk -F: '/^commit / { commit=$0 } /^Author: / { guy=$2 } /^    Reviewed-by: / { if ($2 == guy) { print commit; print guy } }'
-> 
+The NetBSD Orange Pi image fails to download cleanly:
 
+$ curl -O 'https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0  303M    0 2048k    0     0  1098k      0  0:04:42  0:00:01  0:04:41 1098k
+curl: (18) end of response with 315646186 bytes missing
+
+Thanks,
+Stefan
 
