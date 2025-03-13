@@ -4,100 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662DAC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 18:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BA7C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 18:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsnaj-0006AM-9x; Thu, 13 Mar 2025 14:47:37 -0400
+	id 1tsneA-0008AG-Jx; Thu, 13 Mar 2025 14:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tsnah-00063q-1k
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:47:35 -0400
-Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tsnaf-0004Wd-7q
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:47:34 -0400
-Received: by mail-qv1-xf29.google.com with SMTP id
- 6a1803df08f44-6e8fd49b85eso19326806d6.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 11:47:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741891652; x=1742496452; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=UMv5uosJhdU3CPnzti2JESLApJNryQfKSomuXWYOMnQ=;
- b=Y9qqr7BxDLxEmtufoJVbivqQNnKSU5b7/7vB8rOuJvzNlksFkBo3guZmNNT9nCJWWv
- rnfsCSXsXc8TNyi1lNmXuNWy9jbOje0VP3rZX3sz+vsIeRQC4U5zaxn0vAXPvVZRUrEZ
- OQ8NLaC8UyMYNkFeOO+2BrRLSsIY0Al2iSI1Gq4JlnPGFXrjawu3agTgpcuwsFKqImDn
- pjfc+rVLWsOBFH/F0gseytjIW1IFZP3mAXxGG2vHwsqdEDTFM/kVgHVlMPWlBplAOShN
- /apuInYwE1jt9qCX5x9vXLc1fBT2NBfqh0IwqQMEO0Dok51YWfhLQl+z9G8/2pLHWtbO
- pzAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741891652; x=1742496452;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UMv5uosJhdU3CPnzti2JESLApJNryQfKSomuXWYOMnQ=;
- b=tlaClMK4jKpxgMIY5/HS13OSRdvD+rTxP7MFcbg1m9jwlEBblAJVROyr/ZT+k07BPv
- H4thqy9PPnyTtsUDlQFjV6iu/0uEl2ECl5omxbEx26yXG6PN11pveDXiIHyvKCc6Xo0H
- jLYrJ/EoE7IAr7zdHAoofcoUHX3LNQDl8ham3Ca/5UlDaD/PYcSgi/8VUdzXYB+19ia2
- 2bUgncB/NeUjycUYbonOF0vzcoOJ99QQyKmKOg8z7JHCiYbCPjZX0GKM3NFuIIeFAk1N
- 9mo38MDmlY4QFOsXgTQHdny1XFnm42AI9Ek7xJYzz0eAgDU1fA4SFOIBw+28UATG7zcs
- Mvnw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrCwXT8n+fr7plElcXffG3WyMXAPNbv9jrXtr7CNTOaBf9EKaDFBZoIf1qRbG+vt5Jmbt/BhVyxt8J@nongnu.org
-X-Gm-Message-State: AOJu0Yw7NCqBWgoi/iwGx4JUrsCQfRkutYHLY3BM+NYtUd3aXJQ1p5lh
- cLT073rACdEmTKIjJkFRUzUrb5GsHi5uiRl8sWNjVmQkqfHAAwhN
-X-Gm-Gg: ASbGnctTZbZa7vTyJwFfkjpdGNqq/bGq95VOBnCEh4cfpMijzc5UxV2ZVDWvqLXeMEg
- lWkxtAOKchf9tFWWkeyhprgVxWJ7M3kVHYnkY1lPlqOL1PCPMGdK0pZrR5YgWiaMvSOx7Srhbhd
- 8jErfMvtwpLGmHFkWbrvtfohaB40D15OI03DG5l/8YlfNxYyoMtqiFQknBKBdLnCatpOTLFFXRt
- 1t8BhVmK6vvVqpzm/mYiCHqAw+ZgD26ein29pEfEPj3WUnuL3zyXO4Mv/QKE7YgMZvYHmZXEzg6
- mwBOgY7Py+HWb2F3+yTV0KaDsdW5AVbyEgeKiRd0o5CuhvtzRgFnOusk/eqW2zI=
-X-Google-Smtp-Source: AGHT+IHGF8gQ0fBOD5ewl0Cwuj9KnHFghPTkRKjYs3G6g/MBSuEuUcA75968qFkO4bviud4VApI4iQ==
-X-Received: by 2002:a05:6214:da9:b0:6d8:9062:6616 with SMTP id
- 6a1803df08f44-6eae79ac1e8mr14871236d6.7.1741891651626; 
- Thu, 13 Mar 2025 11:47:31 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:70f5:b65d:482b:3678])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6eade234b9dsm12656876d6.39.2025.03.13.11.47.30
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 13 Mar 2025 11:47:31 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: =?UTF-8?Q?'Philippe_Mathieu-Daud=C3=A9'?= <philmd@linaro.org>,
- "'Brian Cain'" <brian.cain@oss.qualcomm.com>, <qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <quic_mathbern@quicinc.com>, <ale@rev.ng>,
- <anjo@rev.ng>, <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
- <20250301052628.1011210-29-brian.cain@oss.qualcomm.com>
- <44e23197-a2ec-4477-a4b8-a526f83e47c2@linaro.org>
- <b84bcd2d-9974-41f0-b9f5-2d416ed16d0d@oss.qualcomm.com>
- <67b33d51-b8c8-421c-8aba-efa9a0b46bf5@linaro.org>
-In-Reply-To: <67b33d51-b8c8-421c-8aba-efa9a0b46bf5@linaro.org>
-Subject: RE: [PATCH 28/38] target/hexagon: Initialize htid, modectl regs
-Date: Thu, 13 Mar 2025 13:47:29 -0500
-Message-ID: <008601db9448$601bc370$20534a50$@gmail.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tsndx-000897-SE; Thu, 13 Mar 2025 14:51:00 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tsndv-0004uY-Sj; Thu, 13 Mar 2025 14:50:57 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DGo6K6003549;
+ Thu, 13 Mar 2025 18:50:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6HCXD/
+ KzOYsqeTvYmanslDQrrpkk9EDWINfbVwLVVmM=; b=a7qmJDoTnns1IS3ejOmiF6
+ TWe1U4pVfLXxl/yeTbpzOrrVEw+iCGRJIF4V1vk1Nl7bKi4ENEq4uTVW6X0k+Khz
+ YoOX+6/JkXYZac2Ai7aGnXpw48a7eSPhgukreYeAIInvar3P7jeDtP5IjsAreZup
+ 7m1JChANd7HeC8zQNWimay9LNsrE7fNQ6wHsqdq8ViAgXPQ5WGR+W7ngbvTq6jTN
+ BTZ+G1Ss6R2tWKECsk/MG92+GL2lYA2s3aH2nevc2EfkMLhr6ZnejY/nlNcbsIQ0
+ 9gL4ocwmlZQysJPsjmJlHlk5RIUYJwUPhBQBXlnG2TbeuhP6MAWgyuNOobpsPy9g
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45bhepnrck-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Mar 2025 18:50:54 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52DIg9G6002495;
+ Thu, 13 Mar 2025 18:50:53 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45bhepnrcc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Mar 2025 18:50:53 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52DFwQsC026099;
+ Thu, 13 Mar 2025 18:50:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45atspkcac-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Mar 2025 18:50:52 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52DIonaX37355894
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 13 Mar 2025 18:50:49 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 74CC020040;
+ Thu, 13 Mar 2025 18:50:49 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F35F820043;
+ Thu, 13 Mar 2025 18:50:45 +0000 (GMT)
+Received: from [9.124.223.53] (unknown [9.124.223.53])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 13 Mar 2025 18:50:45 +0000 (GMT)
+Message-ID: <0237f390-8a73-46df-b361-291f37208d82@linux.ibm.com>
+Date: Fri, 14 Mar 2025 00:20:44 +0530
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgJRPWMEAoJ78HcCD2q79AMHZxbltLZpIgA=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250313-6, 3/13/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] hw/ppc: Add MDST/MDDT/MDRT table structures and
+ offsets
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250217071934.86131-1-adityag@linux.ibm.com>
+ <20250217071934.86131-5-adityag@linux.ibm.com>
+ <4c87e14e-460e-4a59-b8e2-85ead830ee59@linux.ibm.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <4c87e14e-460e-4a59-b8e2-85ead830ee59@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: bJpkOln5tUxR2w-LMMTNXb8i4h-LU-B1
+X-Proofpoint-ORIG-GUID: vcGkSPGARQc9BQ36k1AIXZMhJF57Ih-u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-13_08,2025-03-13_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0 spamscore=0
+ suspectscore=0 mlxscore=0 malwarescore=0 clxscore=1015 mlxlogscore=963
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503130141
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,89 +122,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 11/03/25 10:41, Harsh Prateek Bora wrote:
+
+>
+>
+> On 2/17/25 12:49, Aditya Gupta wrote:
+>> Add the MDST, MDDT, MDRT tables offsets and structures as per current
+>> skiboot upstream:
+>>
+>>      commit bc7b85db1e7e ("opal-ci: Remove centos7")
+>>
+>> These structures will be later populated when preserving memory regions
+>> for MPIPL
+>>
+>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>> ---
+>>   hw/ppc/pnv_sbe.c | 113 +++++++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 113 insertions(+)
+>>
+>> diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+>> index 79818177fc36..361a3854307d 100644
+>> --- a/hw/ppc/pnv_sbe.c
+>> +++ b/hw/ppc/pnv_sbe.c
+>
+> These should have been added in include/hw/ppc/pnv_sbe.h
+>
+Got it, will move the #defines to a header.
 
 
-> -----Original Message-----
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Sent: Wednesday, March 12, 2025 6:40 PM
-> To: Brian Cain <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
-> Cc: richard.henderson@linaro.org; quic_mathbern@quicinc.com;
-> ale@rev.ng; anjo@rev.ng; quic_mliebel@quicinc.com;
-> ltaylorsimpson@gmail.com; alex.bennee@linaro.org;
-> quic_mburton@quicinc.com; sidneym@quicinc.com; Brian Cain
-> <bcain@quicinc.com>
-> Subject: Re: [PATCH 28/38] target/hexagon: Initialize htid, modectl =
-regs
->=20
-> On 13/3/25 00:10, Brian Cain wrote:
-> >
-> > On 3/12/2025 2:19 PM, Philippe Mathieu-Daud=C3=A9 wrote:
-> >> On 1/3/25 06:26, Brian Cain wrote:
-> >>> From: Brian Cain <bcain@quicinc.com>
-> >>>
-> >>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> >>> ---
-> >>>   target/hexagon/cpu.c | 8 ++++++++
-> >>>   1 file changed, 8 insertions(+)
-> >>>
-> >>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
-> >>> 36a93cc22f..2b6a707fca 100644
-> >>> --- a/target/hexagon/cpu.c
-> >>> +++ b/target/hexagon/cpu.c
-> >>> @@ -26,6 +26,7 @@
-> >>>   #include "fpu/softfloat-helpers.h"
-> >>>   #include "tcg/tcg.h"
-> >>>   #include "exec/gdbstub.h"
-> >>> +#include "cpu_helper.h"
-> >>>     static void hexagon_v66_cpu_init(Object *obj) { }
-> >>>   static void hexagon_v67_cpu_init(Object *obj) { } @@ -290,11
-> >>> +291,18 @@ static void hexagon_cpu_reset_hold(Object *obj,
-> ResetType
-> >>> type)
-> >>>       set_float_default_nan_pattern(0b11111111, &env->fp_status);
-> >>>     #ifndef CONFIG_USER_ONLY
-> >>> +    HexagonCPU *cpu =3D HEXAGON_CPU(cs);
-> >>> +
-> >>>       if (cs->cpu_index =3D=3D 0) {
-> >>
-> >> This doesn't scale to heterogeneous emulation.
-> >>
-> >
-> > If we have a target-specific index here (instead of cpu_index)
-> > guarding the "g_sreg" allocation shared by these Hexagon vCPUs, does
-> > that suffice?  Or is the problem the shared allocation itself?
->=20
-> I'm not sure that suffices, but it is still better from my PoV.
->=20
-> Let's assume we instantiate 4 ARM cores, then 2 HEX ones. The first =
-Hexagon
-> core has cpu_index=3D5. Now for the same example machine we =
-instantiate
-> first the Hexagon cores, then the ARM ones. The first Hexagon core has
-> cpu_index=3D0.
->=20
-> > Could a heterogeneous emulation configuration consist of multiple
-> > instances of (same-architecture) vCPU-groups?
->=20
-> Up to you if you want to model multiple hexagon SoCs in the same =
-machine
-> ;) Note in that case you could use a CPUClusterState to group.
+>> @@ -84,6 +84,119 @@
+>>     static uint64_t mpipl_skiboot_base = 0x30000000 /*default 
+>> SKIBOOT_BASE*/;
+>>   +/* Following offsets are copied from Skiboot source code */
+>> +/* Use 768 bytes for SPIRAH */
+>> +#define SPIRAH_OFF      0x00010000
+>> +#define SPIRAH_SIZE     0x300
+>> +
+>> +/* Use 256 bytes for processor dump area */
+>> +#define PROC_DUMP_AREA_OFF  (SPIRAH_OFF + SPIRAH_SIZE)
+>> +#define PROC_DUMP_AREA_SIZE 0x100
+>> +
+>> +#define PROCIN_OFF      (PROC_DUMP_AREA_OFF + PROC_DUMP_AREA_SIZE)
+>> +#define PROCIN_SIZE     0x800
+>> +
+>> +/* Offsets of MDST and MDDT tables from skiboot base */
+>> +#define MDST_TABLE_OFF      (PROCIN_OFF + PROCIN_SIZE)
+>> +#define MDST_TABLE_SIZE     0x400
+>> +
+>> +#define MDDT_TABLE_OFF      (MDST_TABLE_OFF + MDST_TABLE_SIZE)
+>> +#define MDDT_TABLE_SIZE     0x400
+>> +
+>> +#define CPU_CTL_OFF         (MDDT_TABLE_OFF + MDDT_TABLE_SIZE)
+>> +#define CPU_CTL_SIZE        0x2000
+>> +
+>> +/* MPIPL reserved regions (offset by skiboot_base to access) */
+>> +#define MDST_TABLE_BASE     (mpipl_skiboot_base + MDST_TABLE_OFF)
+>> +#define MDDT_TABLE_BASE     (mpipl_skiboot_base + MDDT_TABLE_OFF)
+>> +#define PROC_DUMP_AREA_BASE (mpipl_skiboot_base + PROC_DUMP_AREA_OFF)
+>> +
+>> +#define __packed             __attribute__((packed))
+>> +
+>> +/* Metadata to capture before triggering MPIPL */
+>> +struct mpipl_metadata {
+>
+> CamelCase for structs? Applies for other structs below.
+Sure, will follow CamelCase. Had just copied the structs as it is.
+>
+>> +    /* Crashing PIR is required to create OPAL dump */
+>> +    uint32_t    crashing_pir;
+>> +    /* Kernel expects OPAL to presrve tag and pass it back via OPAL 
+>> API */
+>> +    uint64_t    kernel_tag;
+>> +    /* Post MPIPL kernel boot memory size */
+>> +    uint64_t    boot_mem_size;
+>> +} __packed;
+>> +
+>> +/* Structure version */
+>> +#define OPAL_MPIPL_VERSION  0x01
+>> +
+>> +/* Preserved memory details */
+>> +struct opal_mpipl_region {
+>> +    __be64  src;
+>> +    __be64  dest;
+>> +    __be64  size;
+>> +};
+>> +
+>> +struct opal_mpipl_fadump {
+>> +    uint8_t version;
+>> +    uint8_t reserved[7];
+>> +    __be32  crashing_pir;    /* OPAL crashing CPU PIR */
+>> +    __be32  cpu_data_version;
+>> +    __be32  cpu_data_size;
+>> +    __be32  region_cnt;
+>> +    struct  opal_mpipl_region *region;
+>> +};
+>> +
+>> +/*
+>> + * This is our dump result table after MPIPL. Hostboot will write to 
+>> this
+>> + * memory after moving memory content from source to destination 
+>> memory.
+>> + */
+>> +#define MDRT_TABLE_BASE        (mpipl_skiboot_base + 0x01c00000)
+>> +#define MDRT_TABLE_SIZE        0x00008000
+>> +
+>> +/*
+>> + * This is our dump metadata area. We will use this memory to save 
+>> metadata
+>> + * (like crashing CPU details, payload tags) before triggering MPIPL.
+>> + */
+>> +#define DUMP_METADATA_AREA_BASE    (mpipl_skiboot_base + 0x01c08000)
+>> +#define DUMP_METADATA_AREA_SIZE    0x8000
+>> +
+>> +/*
+>> + *  Memory Dump Source Table
+>> + *
+>> + * Format of this table is same as Memory Dump Source Table (MDST)
+>> + * defined in HDAT spec.
+>> + */
+>> +struct mdst_table {
+>> +    __be64  addr;
+>> +    uint8_t data_region;    /* DUMP_REGION_* */
+>> +    uint8_t dump_type;    /* DUMP_TYPE_* */
+>> +    __be16  reserved;
+>> +    __be32  size;
+>> +} __packed;
+>> +
+>> +/* Memory dump destination table (MDDT) */
+>> +struct mddt_table {
+>> +    __be64  addr;
+>> +    uint8_t data_region;
+>> +    uint8_t dump_type;
+>> +    __be16  reserved;
+>> +    __be32  size;
+>> +} __packed;
+>
+> If both mdst_table and mddt_table are supposed to be same, we could have
+> just one mdxt_table and variable instances could be named mdst/mddt.
 
-What we are trying to model is an instance of a Hexagon that has a =
-number of threads and some resources that are shared.  The shared =
-resources include the TLB and global S registers.  The initial thought =
-was to tie the shared resources to the thread with cpu_index =3D=3D 0.  =
-If we were to model a Qualcomm SoC, there would be multiple ARM cores =
-and multiple Hexagon instances.  Each Hexagon instance would have =
-distinct shared resources.  So, you are correct that using cpu_index is =
-not going to scale.
+Agreed. But mdxt might be confusing, as 'mdrt' has a different structure.
 
-What is the recommended way to model this?  I see a "nr_threads" field =
-in CPUCore but no clear way to find the threads.  PPC has some cores =
-that add a "threads" field.  Should we follow this approach?
-
-HTH,
-Taylor
+Maybe will do a 'typedef MdstTable MddtTable' ?
 
 
+Thanks,
+
+- Aditya G
+
+>
+> Thanks
+> Harsh
+>
 
