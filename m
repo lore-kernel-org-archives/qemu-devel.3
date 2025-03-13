@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4A1C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 12:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA50C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 12:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tshv3-00033B-Mn; Thu, 13 Mar 2025 08:44:14 -0400
+	id 1tshvt-0003gu-LF; Thu, 13 Mar 2025 08:45:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tshun-0002zw-Fp
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:44:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tshuf-0003iE-N1
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:43:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741869824;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YSDRGVvx59w/O9YYetfpLvIOuEgN5r6R34YojX8WGW0=;
- b=B4dyZptMBxbAn4xudDq7Gww+zuBlC3wuAJi7/1UGgZ1L4FfIR1dt7/s/ne+LiilHxjz7Vw
- SorzWcwDMz9wYoYertl2U38UG8h6GuRs9PEbWzcCgNfruXw7jxitx6SqswP5gwmM4XmlZc
- 2lML69wgj0PPIAKP7d6RyulIsA20Pe0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-283-4A0CMc84P0qzNyl073LI-g-1; Thu, 13 Mar 2025 08:43:43 -0400
-X-MC-Unique: 4A0CMc84P0qzNyl073LI-g-1
-X-Mimecast-MFC-AGG-ID: 4A0CMc84P0qzNyl073LI-g_1741869822
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cf446681cso4705805e9.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 05:43:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tshvr-0003ea-81
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:45:03 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tshvk-0003m1-Rw
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:45:02 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-301493f45aeso116204a91.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 05:44:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1741869894; x=1742474694; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D6feM5Xy+zarRq9YhH8FI7IPuKUW/t+Or20kqkXx3d8=;
+ b=jLmZUqykW51Ha6Bnqnpcg0C90p1j8gsZlpnWO+PaNEHG1/HY9iYqduAt24ODYjSh42
+ l2ylgGm6Fz9LAc1sNhqcyA+pYiHAO9hHgZYAosL/eRrrb+jDxLFhR/2JAyAFALp4AsHd
+ QDdVAfa1r1Kb0lAWMyb/o5Tog60l0Cdwwxgp3hsWgQ+XU4Ew17RFQyEfE8Tfm9NxijUW
+ S2I/KhU1CrAEJA87iCxLBbF5viUgU4NGHyNrkPrRGRoWIx8KwmrMJ+uaEXaQyjxQHAQJ
+ 9H9QzeQlDnqKcG4YMu3Z5EOr7rnSgKEoMr5rzf8m9C+uV3GIBXpXYP8bpG/6RWhT1N5D
+ Ne6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741869822; x=1742474622;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YSDRGVvx59w/O9YYetfpLvIOuEgN5r6R34YojX8WGW0=;
- b=A2GPpOXXwqhJ4pdSqy4sW0/i1H31w+a8O0lQ8VRM8J9V3WgDqtQ0IWZIbl28zcWrAN
- +EQm2NbUfl76y0mNHjtPN6oZUQbuRB7O4RaN2yNO/u1vgA4SjbpoHDVrz/FFENS0uetL
- f1QYIHuxJTdaslHYdkQsvf+1/hSJpoD/ykDTTM55iPSIaOhA8sUQ6Y1PhvWL/+1u2gRv
- FLWaE/D/n+fbB7g/SgCbf+A0VmyKn5SnPB/5y78OUGMx+lywzdxGSwQTYIoEprHt8XqD
- NtLVHbYAbQHbx2nIV7QLrk9bBhHY+I5lwD893ZEDsdk332zItDQM8E1CzJd9hP1Ghk+A
- V+GQ==
-X-Gm-Message-State: AOJu0Yzn9CJ1hiDPEI0WcKhbQ15eGWL3FBE5EOvLVHujx6aEyQD/8NGc
- bds4hv3QZwQ3wyxEOj/vplvvFTTkeLTg2Eza+27X0l9Q0Hi4TN1XmCeIQnt75+kvwb7LwGqTRq+
- 6VjfdL29jBAAUlTP4y4Rxsm37kIZCxWtzbe3RCpzL9mcy/hRdiE+mjw2OwR16nvVZC28hVIHuMb
- nUTFPnoo3kS7gBw03SceztWWvOB2c=
-X-Gm-Gg: ASbGncvEIkl6R7KWvtcdE1IzNCdGS9+HjY891/dLsFs3dzuPLGpjdVOQFW5bTDsoQgj
- WQ2fkHcR3taAa/O+zbgeKQz/NGQt0yfKTVFa6JoPvlcm1mENXN0GcWV28CLMFfScQj8CDiW4Xpw
- c=
-X-Received: by 2002:a7b:ca4c:0:b0:43c:eb00:50eb with SMTP id
- 5b1f17b1804b1-43ceb0054a9mr179481865e9.5.1741869821877; 
- Thu, 13 Mar 2025 05:43:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHbeoBJ50XoHjLz6bQzvk1LTxZErM+9ALHYl4AUSNkzo4YbXByCtVJwNB/4RmSPEIlpu6UlQX4gN7CzSOBYg0Q=
-X-Received: by 2002:a7b:ca4c:0:b0:43c:eb00:50eb with SMTP id
- 5b1f17b1804b1-43ceb0054a9mr179481645e9.5.1741869821541; Thu, 13 Mar 2025
- 05:43:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741869894; x=1742474694;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=D6feM5Xy+zarRq9YhH8FI7IPuKUW/t+Or20kqkXx3d8=;
+ b=flJPZpSSiJFboTCG2F/8EAHMyPYZPBY3JtFyhxDNeEgeef/EbOYIbcjGLh51o/q5mN
+ +mlJT39dV0qjpKMThd1G7uTspapTFyjj0ABpq7G05dEfxnYqOqP1FCRIdr6ihFJoaGpk
+ 541ybU585xxFMUJxTS4Pjl4at01MLpGS/ErchP5UYRDLuY+2sOT0o77AfUpOqyyTi4l+
+ fbD1WXgzEBTTsmdA/Ov46SjCIfDaKZUsbCCYrrubFOtMmOSPfGpdtscWl6qrbj3a7Yar
+ z2m9uZprl7Xw7jGPjW6nV6T89T1yiQcWR25C3Z+1gay3vRomCJgEP0K/e4XLBb24q+Zq
+ k62w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXG1D3EVVj8miGPyFkdGHNTieaC8Q/Pzx6A+7HY+SXOppV5erEGTULJf0+QeQdXKe6xgcAdBewkSNOQ@nongnu.org
+X-Gm-Message-State: AOJu0YzBIDHSoq4mKfehfEGgsS9bzv8fKErcIL8NPjjA4smN7pgvyZH0
+ lSEreeDPZoR6TSyQqxZlb8YOZR1eVtYIf9aer7dGRuw+XHEc/KtBBCtpvhdpaso=
+X-Gm-Gg: ASbGnctxZcQ0+q6suHF+19BCd5vnkZp81OjUK2GmhyCwHZanM/JgjQ/gXuHAEAHEafh
+ lWCMqqC04tQJPXL2z03MS02KuNrZl23KhkynRVk/v/DQJIkQyjb7FfPpAO8wdOfdYitzy3ron/x
+ hNe5ELBFggvCy8NWNG3+0mzze3o6pXNEe3GmzWhHa+X8R5F4CMNwReH0VA4s44GElFOYiyno7ea
+ xgU1yVzKFbwX43UWNOOm23FkdwZ54kqk98iTH9yhWDVSzFuO9jUwhzRpPW8NE+E1IApG5RSMf9d
+ EwIuTTn7aVG4GUOD52UMW0Qnp2YbrDBfOf1doj8NzAa9DuConguxQqsLfkg=
+X-Google-Smtp-Source: AGHT+IFw5OLNJZQDskE2fPXy5V18FpjqlRl+dDtg/2iXjhxYt92tumniX2AfQMCJnjosEaoD+X1M9Q==
+X-Received: by 2002:a05:6a21:1519:b0:1f5:7280:1cdb with SMTP id
+ adf61e73a8af0-1f572802b7amr25495560637.16.1741869894263; 
+ Thu, 13 Mar 2025 05:44:54 -0700 (PDT)
+Received: from [192.168.68.110] ([177.170.117.79])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af56ea95651sm1162523a12.73.2025.03.13.05.44.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Mar 2025 05:44:53 -0700 (PDT)
+Message-ID: <f08a8ad9-186a-4983-9c7e-3976668ae8fd@ventanamicro.com>
+Date: Thu, 13 Mar 2025 09:44:49 -0300
 MIME-Version: 1.0
-References: <20250228121749.553184-1-ppandit@redhat.com>
- <20250228121749.553184-6-ppandit@redhat.com>
- <Z8G9Wj3DWSgdLkNQ@x1.local>
- <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
- <Z8XBowkG72G-l3L4@x1.local>
- <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
- <Z8cPnxqOvp1hFpx8@x1.local>
- <CAE8KmOw1CCQUt0wyELVhy5j-CfwVuA2XNsecW=y6rwJv7dempw@mail.gmail.com>
- <Z8hJeneeuKqD1i8Q@x1.local>
- <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
- <Z8t3uKo54T_Xls_O@x1.local>
-In-Reply-To: <Z8t3uKo54T_Xls_O@x1.local>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 13 Mar 2025 18:13:24 +0530
-X-Gm-Features: AQ5f1JoVV3VhiTX2i3B2X_Y3Pbjcr3TGRIbSor8ILKKJQG9fUA6m_V12GyTg8Q4
-Message-ID: <CAE8KmOwdLk4oZg8TAt0z6rd27f0MpbSS54TWNDshZFU7WPxk-Q@mail.gmail.com>
-Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] hw/riscv/riscv-iommu: Connect the IOMMU with PCI
+ hosts that have ATUs
+To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "open list:MCIMX7D SABRE / i..." <qemu-arm@nongnu.org>
+References: <20250307203952.13871-1-jason.chien@sifive.com>
+ <20250307203952.13871-5-jason.chien@sifive.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250307203952.13871-5-jason.chien@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,149 +112,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter,
 
-On Sat, 8 Mar 2025 at 04:18, Peter Xu <peterx@redhat.com> wrote:
-> [1]
-> Please move all of them at the entry of postcopy_start().
-> I still like the name I provided because it's more generic, above [1].
-> Maybe it should be SECTION_PART.   So we provide all iterator a chance to
-> do something right before switching to postcopy but before VM stop.  RAM
-> can register.
-> Maybe we don't want to run the whole iteration but only flush.  I think for
-> simplicity we can make a new hook.
-> We do not need to account
-> Please see above, if that doesn't help you come up with a final version,
-> I'll write it.
 
-===
-diff --git a/migration/migration.c b/migration/migration.c
-index f97bb2777f..9ef8e8ee1d 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2700,6 +2700,10 @@ static int postcopy_start(MigrationState *ms,
-Error **errp)
-     QIOChannelBuffer *bioc;
-     QEMUFile *fb;
+On 3/7/25 5:39 PM, Jason Chien wrote:
+> When the IOMMU detects that bus->iommu_ops has been registered, indicating
+> the presence of an ATU, it sets the bus's downstream memory region to ensure
+> transactions are directed to the IOMMU.
+> 
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> ---
 
-+    if (migrate_multifd()) {
-+        qemu_savevm_state_postcopy_prepare(ms->to_dst_file);
-+    }
-+
-     /*
-      * Now we're 100% sure to switch to postcopy, so JSON writer won't be
-      * useful anymore.  Free the resources early if it is there.  Clearing
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 6fd88cbf2a..13a8c63660 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1143,6 +1143,15 @@ static int save_zero_page(RAMState *rs,
-PageSearchStatus *pss,
-     return len;
- }
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-+int ram_save_zero_page(QEMUFile *f, void *opaque)
-+{
-+    RAMState *rs = *(RAMState **)opaque;
-+    PageSearchStatus *pss = &rs->pss[RAM_CHANNEL_PRECOPY];
-+    ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
-+
-+    return save_zero_page(rs, pss, offset);
-+}
-+
- /*
-  * @pages: the number of pages written by the control path,
-  *        < 0 - error
-diff --git a/migration/ram.h b/migration/ram.h
-index 921c39a2c5..425c9ad9fd 100644
---- a/migration/ram.h
-+++ b/migration/ram.h
-@@ -122,4 +122,5 @@ void ram_write_tracking_prepare(void);
- int ram_write_tracking_start(void);
- void ram_write_tracking_stop(void);
 
-+int ram_save_zero_page(QEMUFile *f, void *opaque);
- #endif
-diff --git a/migration/savevm.c b/migration/savevm.c
-index ce158c3512..9bb0f03942 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1676,6 +1676,36 @@ int qemu_savevm_state_complete_precopy(QEMUFile
-*f, bool iterable_only)
-     return qemu_fflush(f);
- }
-
-+int qemu_savevm_state_postcopy_prepare(QEMUFile *f)
-+{
-+    int ret = 0;
-+    SaveStateEntry *se;
-+
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-+        if (strcmp(se->idstr, "ram")) {
-+            continue;
-+        }
-+
-+        save_section_header(f, se, QEMU_VM_SECTION_PART);
-+
-+        ram_save_zero_page(f, se->opaque);
-+        if ((ret = multifd_ram_flush_and_sync(f)) < 0) {
-+            return ret;
-+        }
-+        qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
-+
-+        trace_savevm_section_end(se->idstr, se->section_id, ret);
-+        save_section_footer(f, se);
-+        if (ret < 0) {
-+            qemu_file_set_error(f, ret);
-+            return -1;
-+        }
-+    }
-+
-+    return ret;
-+}
-+
-+
- /* Give an estimate of the amount left to be transferred,
-  * the result is split into the amount for units that can and
-  * for units that can't do postcopy.
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 138c39a7f9..7d4ff25ca3 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -74,4 +74,5 @@ int
-qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
- bool qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-                                    char *buf, size_t len, Error **errp);
-
-+int qemu_savevm_state_postcopy_prepare(QEMUFile *f);
- #endif
-===
-
-host-1] 63/63 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test
-             OK             139.87s   79 subtests passed
-host-2] 63/63 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test
-             OK             137.52s   79 subtests passed
-
-2025-03-13 12:11:01.653+0000: initiating migration
-2025-03-13T12:11:01.690247Z qemu-system-x86_64: info:
-multifd_ram_flush_and_sync: called: 1, 0
-2025-03-13T12:12:05.342194Z qemu-system-x86_64: info:
-multifd_ram_flush_and_sync: called: 1, 0
-2025-03-13 12:12:54.688+0000: shutting down, reason=migrated
-
-2025-03-13 12:21:10.967+0000: initiating migration
-2025-03-13T12:21:10.994878Z qemu-system-x86_64: info:
-multifd_ram_flush_and_sync: called: 1, 0
-2025-03-13T12:22:15.955266Z qemu-system-x86_64: info:
-multifd_ram_flush_and_sync: called: 1, 0
-2025-03-13 12:23:02.107+0000: shutting down, reason=migrated
-===
-
-* Does this patch look okay?
-
-Thank you.
----
-  - Prasad
+>   hw/riscv/riscv-iommu.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index d46beb2d64..9701fe3831 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -2628,11 +2628,16 @@ static const PCIIOMMUOps riscv_iommu_ops = {
+>   void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
+>           Error **errp)
+>   {
+> -    if (bus->iommu_ops &&
+> -        bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
+> -        /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
+> -        RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
+> -        QLIST_INSERT_AFTER(last, iommu, iommus);
+> +    if (bus->iommu_ops) {
+> +        if (bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
+> +            /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
+> +            RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
+> +            QLIST_INSERT_AFTER(last, iommu, iommus);
+> +        } else {
+> +            /* The bus has an ATU. Set its downsteam memory region. */
+> +            AddressSpace *as = riscv_iommu_space(iommu, 0);
+> +            pci_setup_iommu_downstream_mr(bus, as->root);
+> +        }
+>       } else if (!bus->iommu_ops && !bus->iommu_opaque) {
+>           pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
+>       } else {
 
 
