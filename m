@@ -4,107 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20901C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 18:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662DAC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 18:47:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsnaF-0005Cm-7t; Thu, 13 Mar 2025 14:47:07 -0400
+	id 1tsnaj-0006AM-9x; Thu, 13 Mar 2025 14:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tsna9-00056O-6Z; Thu, 13 Mar 2025 14:47:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tsna5-0004TP-Kn; Thu, 13 Mar 2025 14:46:59 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52DGo4XS024463;
- Thu, 13 Mar 2025 18:46:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=B6PAfV
- WzpoIQo4PM+hpzcQGA2BK6YIKZ3QJi8oD3G84=; b=oGj6Qglt30du4yKocswPJE
- CvHkotdL7RH0nIf4Htbn5KN/7LFvshSZXVw0PiK2eQNZXflGKwH2LNoGmpPReCnW
- QLbWanXq2c6GiFtMtXl5rR/TyTqfnwD42cLin+a+P69htCgn84JRz5YstEK3amh1
- 8hXxycKIiaVjH+YAPWA9iYXDgyjmc2g1bLUph2tVu4uMTnIsnagy7WQvtM0/fNyJ
- Qzarv6aIpyI21qDG6LTYN+ebNbAEio1Wc0YR6s745tS/MSIdWGDVAWquvQuQ4b19
- esAyypOfM1Sjh2ofjzQIvfeZ07bnCLTto/gCZFecTnKoCjyzQTZtAH2nDU8IPtag
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45c0sr9j5q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 13 Mar 2025 18:46:55 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52DIS1pc019654;
- Thu, 13 Mar 2025 18:46:54 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45c0sr9j5m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 13 Mar 2025 18:46:54 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52DFdlg9007428;
- Thu, 13 Mar 2025 18:46:53 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45atsrb9f1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 13 Mar 2025 18:46:53 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52DIknuD13762878
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 13 Mar 2025 18:46:49 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3FD0020043;
- Thu, 13 Mar 2025 18:46:49 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1DF6820040;
- Thu, 13 Mar 2025 18:46:47 +0000 (GMT)
-Received: from [9.124.223.53] (unknown [9.124.223.53])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 13 Mar 2025 18:46:46 +0000 (GMT)
-Message-ID: <427f754c-3f40-47e1-873a-1beb69666506@linux.ibm.com>
-Date: Fri, 14 Mar 2025 00:16:46 +0530
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tsnah-00063q-1k
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:47:35 -0400
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tsnaf-0004Wd-7q
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:47:34 -0400
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-6e8fd49b85eso19326806d6.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 11:47:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741891652; x=1742496452; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UMv5uosJhdU3CPnzti2JESLApJNryQfKSomuXWYOMnQ=;
+ b=Y9qqr7BxDLxEmtufoJVbivqQNnKSU5b7/7vB8rOuJvzNlksFkBo3guZmNNT9nCJWWv
+ rnfsCSXsXc8TNyi1lNmXuNWy9jbOje0VP3rZX3sz+vsIeRQC4U5zaxn0vAXPvVZRUrEZ
+ OQ8NLaC8UyMYNkFeOO+2BrRLSsIY0Al2iSI1Gq4JlnPGFXrjawu3agTgpcuwsFKqImDn
+ pjfc+rVLWsOBFH/F0gseytjIW1IFZP3mAXxGG2vHwsqdEDTFM/kVgHVlMPWlBplAOShN
+ /apuInYwE1jt9qCX5x9vXLc1fBT2NBfqh0IwqQMEO0Dok51YWfhLQl+z9G8/2pLHWtbO
+ pzAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741891652; x=1742496452;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UMv5uosJhdU3CPnzti2JESLApJNryQfKSomuXWYOMnQ=;
+ b=tlaClMK4jKpxgMIY5/HS13OSRdvD+rTxP7MFcbg1m9jwlEBblAJVROyr/ZT+k07BPv
+ H4thqy9PPnyTtsUDlQFjV6iu/0uEl2ECl5omxbEx26yXG6PN11pveDXiIHyvKCc6Xo0H
+ jLYrJ/EoE7IAr7zdHAoofcoUHX3LNQDl8ham3Ca/5UlDaD/PYcSgi/8VUdzXYB+19ia2
+ 2bUgncB/NeUjycUYbonOF0vzcoOJ99QQyKmKOg8z7JHCiYbCPjZX0GKM3NFuIIeFAk1N
+ 9mo38MDmlY4QFOsXgTQHdny1XFnm42AI9Ek7xJYzz0eAgDU1fA4SFOIBw+28UATG7zcs
+ Mvnw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrCwXT8n+fr7plElcXffG3WyMXAPNbv9jrXtr7CNTOaBf9EKaDFBZoIf1qRbG+vt5Jmbt/BhVyxt8J@nongnu.org
+X-Gm-Message-State: AOJu0Yw7NCqBWgoi/iwGx4JUrsCQfRkutYHLY3BM+NYtUd3aXJQ1p5lh
+ cLT073rACdEmTKIjJkFRUzUrb5GsHi5uiRl8sWNjVmQkqfHAAwhN
+X-Gm-Gg: ASbGnctTZbZa7vTyJwFfkjpdGNqq/bGq95VOBnCEh4cfpMijzc5UxV2ZVDWvqLXeMEg
+ lWkxtAOKchf9tFWWkeyhprgVxWJ7M3kVHYnkY1lPlqOL1PCPMGdK0pZrR5YgWiaMvSOx7Srhbhd
+ 8jErfMvtwpLGmHFkWbrvtfohaB40D15OI03DG5l/8YlfNxYyoMtqiFQknBKBdLnCatpOTLFFXRt
+ 1t8BhVmK6vvVqpzm/mYiCHqAw+ZgD26ein29pEfEPj3WUnuL3zyXO4Mv/QKE7YgMZvYHmZXEzg6
+ mwBOgY7Py+HWb2F3+yTV0KaDsdW5AVbyEgeKiRd0o5CuhvtzRgFnOusk/eqW2zI=
+X-Google-Smtp-Source: AGHT+IHGF8gQ0fBOD5ewl0Cwuj9KnHFghPTkRKjYs3G6g/MBSuEuUcA75968qFkO4bviud4VApI4iQ==
+X-Received: by 2002:a05:6214:da9:b0:6d8:9062:6616 with SMTP id
+ 6a1803df08f44-6eae79ac1e8mr14871236d6.7.1741891651626; 
+ Thu, 13 Mar 2025 11:47:31 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:70f5:b65d:482b:3678])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6eade234b9dsm12656876d6.39.2025.03.13.11.47.30
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 13 Mar 2025 11:47:31 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: =?UTF-8?Q?'Philippe_Mathieu-Daud=C3=A9'?= <philmd@linaro.org>,
+ "'Brian Cain'" <brian.cain@oss.qualcomm.com>, <qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <quic_mathbern@quicinc.com>, <ale@rev.ng>,
+ <anjo@rev.ng>, <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
+ <20250301052628.1011210-29-brian.cain@oss.qualcomm.com>
+ <44e23197-a2ec-4477-a4b8-a526f83e47c2@linaro.org>
+ <b84bcd2d-9974-41f0-b9f5-2d416ed16d0d@oss.qualcomm.com>
+ <67b33d51-b8c8-421c-8aba-efa9a0b46bf5@linaro.org>
+In-Reply-To: <67b33d51-b8c8-421c-8aba-efa9a0b46bf5@linaro.org>
+Subject: RE: [PATCH 28/38] target/hexagon: Initialize htid, modectl regs
+Date: Thu, 13 Mar 2025 13:47:29 -0500
+Message-ID: <008601db9448$601bc370$20534a50$@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] hw/ppc: Handle stash command in PowerNV SBE
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250217071934.86131-1-adityag@linux.ibm.com>
- <20250217071934.86131-4-adityag@linux.ibm.com>
- <59df1008-2127-4ae4-b8e7-72334c58f12e@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <59df1008-2127-4ae4-b8e7-72334c58f12e@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: MmqRacv20pSrhrRziowySsde5vVFj976
-X-Proofpoint-GUID: DwTFg2XlxZqYxHJ2OCkOMi8GR6vEnEUZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-13_08,2025-03-13_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 phishscore=0 mlxlogscore=999 mlxscore=0 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503130141
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQERX/uiI+LG127bCFnOJB03IqEGrgJRPWMEAoJ78HcCD2q79AMHZxbltLZpIgA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250313-6, 3/13/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,75 +114,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/03/25 10:20, Harsh Prateek Bora wrote:
-
->
->> <...snip...>
->>
->> --- a/hw/ppc/pnv_sbe.c
->> +++ b/hw/ppc/pnv_sbe.c
->> @@ -82,6 +82,8 @@
->>   #define SBE_CONTROL_REG_S0              PPC_BIT(14)
->>   #define SBE_CONTROL_REG_S1              PPC_BIT(15)
->>   +static uint64_t mpipl_skiboot_base = 0x30000000 /*default 
->> SKIBOOT_BASE*/;
->> +
->>   static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
->>   {
->>       val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW 
->> do? */
->> @@ -281,6 +283,29 @@ static void do_sbe_msg(PnvSBE *sbe)
->>               timer_del(sbe->timer);
->>           }
->>           break;
->> +    case SBE_CMD_STASH_MPIPL_CONFIG:
->> +        /* key = sbe->mbox[1] */
->> +        switch (sbe->mbox[1]) {
->> +        case SBE_STASH_KEY_SKIBOOT_BASE:
->> +            mpipl_skiboot_base = sbe->mbox[2];
->> +            qemu_log_mask(LOG_UNIMP,
->> +                "Stashing skiboot base: 0x%lx\n", mpipl_skiboot_base);
->> +
->> +            /*
->> +             * Set the response register.
->> +             *
->> +             * Currently setting the same sequence number in
->> +             * response as we got in the request.
->> +             */
->> +            sbe->mbox[4] = sbe->mbox[0];    /* sequence number */
->> +            pnv_sbe_set_host_doorbell(sbe,
->> +                    sbe->host_doorbell | SBE_HOST_RESPONSE_WAITING);
->> +
->> +            break;
->> +        default:
->> +            qemu_log_mask(LOG_UNIMP, "SBE Unimplemented command: 
->> 0x%x\n", cmd);
->
-> Unimplemented SBE_CMD_STASH_MPIPL_CONFIG key ?
-
-Got it. Thanks for the reword suggestion, will do it.
 
 
-Thanks,
+> -----Original Message-----
+> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Sent: Wednesday, March 12, 2025 6:40 PM
+> To: Brian Cain <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
+> Cc: richard.henderson@linaro.org; quic_mathbern@quicinc.com;
+> ale@rev.ng; anjo@rev.ng; quic_mliebel@quicinc.com;
+> ltaylorsimpson@gmail.com; alex.bennee@linaro.org;
+> quic_mburton@quicinc.com; sidneym@quicinc.com; Brian Cain
+> <bcain@quicinc.com>
+> Subject: Re: [PATCH 28/38] target/hexagon: Initialize htid, modectl =
+regs
+>=20
+> On 13/3/25 00:10, Brian Cain wrote:
+> >
+> > On 3/12/2025 2:19 PM, Philippe Mathieu-Daud=C3=A9 wrote:
+> >> On 1/3/25 06:26, Brian Cain wrote:
+> >>> From: Brian Cain <bcain@quicinc.com>
+> >>>
+> >>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> >>> ---
+> >>>   target/hexagon/cpu.c | 8 ++++++++
+> >>>   1 file changed, 8 insertions(+)
+> >>>
+> >>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
+> >>> 36a93cc22f..2b6a707fca 100644
+> >>> --- a/target/hexagon/cpu.c
+> >>> +++ b/target/hexagon/cpu.c
+> >>> @@ -26,6 +26,7 @@
+> >>>   #include "fpu/softfloat-helpers.h"
+> >>>   #include "tcg/tcg.h"
+> >>>   #include "exec/gdbstub.h"
+> >>> +#include "cpu_helper.h"
+> >>>     static void hexagon_v66_cpu_init(Object *obj) { }
+> >>>   static void hexagon_v67_cpu_init(Object *obj) { } @@ -290,11
+> >>> +291,18 @@ static void hexagon_cpu_reset_hold(Object *obj,
+> ResetType
+> >>> type)
+> >>>       set_float_default_nan_pattern(0b11111111, &env->fp_status);
+> >>>     #ifndef CONFIG_USER_ONLY
+> >>> +    HexagonCPU *cpu =3D HEXAGON_CPU(cs);
+> >>> +
+> >>>       if (cs->cpu_index =3D=3D 0) {
+> >>
+> >> This doesn't scale to heterogeneous emulation.
+> >>
+> >
+> > If we have a target-specific index here (instead of cpu_index)
+> > guarding the "g_sreg" allocation shared by these Hexagon vCPUs, does
+> > that suffice?  Or is the problem the shared allocation itself?
+>=20
+> I'm not sure that suffices, but it is still better from my PoV.
+>=20
+> Let's assume we instantiate 4 ARM cores, then 2 HEX ones. The first =
+Hexagon
+> core has cpu_index=3D5. Now for the same example machine we =
+instantiate
+> first the Hexagon cores, then the ARM ones. The first Hexagon core has
+> cpu_index=3D0.
+>=20
+> > Could a heterogeneous emulation configuration consist of multiple
+> > instances of (same-architecture) vCPU-groups?
+>=20
+> Up to you if you want to model multiple hexagon SoCs in the same =
+machine
+> ;) Note in that case you could use a CPUClusterState to group.
 
-- Aditya G
+What we are trying to model is an instance of a Hexagon that has a =
+number of threads and some resources that are shared.  The shared =
+resources include the TLB and global S registers.  The initial thought =
+was to tie the shared resources to the thread with cpu_index =3D=3D 0.  =
+If we were to model a Qualcomm SoC, there would be multiple ARM cores =
+and multiple Hexagon instances.  Each Hexagon instance would have =
+distinct shared resources.  So, you are correct that using cpu_index is =
+not going to scale.
 
->
->> +        }
->> +        break;
->>       default:
->>           qemu_log_mask(LOG_UNIMP, "SBE Unimplemented command: 
->> 0x%x\n", cmd);
->>       }
->> diff --git a/include/hw/ppc/pnv_sbe.h b/include/hw/ppc/pnv_sbe.h
->> index b6b378ad14c7..f6cbcf990ed9 100644
->> --- a/include/hw/ppc/pnv_sbe.h
->> +++ b/include/hw/ppc/pnv_sbe.h
->> @@ -53,4 +53,7 @@ struct PnvSBEClass {
->>       const MemoryRegionOps *xscom_mbox_ops;
->>   };
->>   +/* Helper to access stashed SKIBOOT_BASE */
->> +bool pnv_sbe_mpipl_skiboot_base(void);
->> +
->>   #endif /* PPC_PNV_SBE_H */
+What is the recommended way to model this?  I see a "nr_threads" field =
+in CPUCore but no clear way to find the threads.  PPC has some cores =
+that add a "threads" field.  Should we follow this approach?
+
+HTH,
+Taylor
+
+
 
