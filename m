@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F03FC282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F20EC282EC
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 13:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsj2q-0001Ls-Sq; Thu, 13 Mar 2025 09:56:20 -0400
+	id 1tsj3B-0001QF-Kk; Thu, 13 Mar 2025 09:56:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tsj2o-0001LX-Nn
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:56:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tsj2m-0004Sj-UC
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:56:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741874174;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IDXklaR3EASvvRwzt7OYn1rc0kL4KQT1UBhPNARKwEY=;
- b=YyCapz6pQ4QD2xtSQihAWRcCX6QOjjOabdKsKRIrcSt+BHZxv7i5TEJtI1KCLBmcwkVDff
- TyOILCXc3bO0CbW6xWhgkqJs4FRO3eEKF6YJaXYx0p2g0+Tcux1ppTgGMM1vY9Trg9vRja
- XBDqNG7awb3AaYbcE0b1Ybn13qzJ8Q8=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-272-mfNmSSl4NMWGX9wGlh9KNA-1; Thu, 13 Mar 2025 09:56:13 -0400
-X-MC-Unique: mfNmSSl4NMWGX9wGlh9KNA-1
-X-Mimecast-MFC-AGG-ID: mfNmSSl4NMWGX9wGlh9KNA_1741874173
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-225ab228a37so14748795ad.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 06:56:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tsj39-0001Pn-6n
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:56:39 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tsj37-0004Uj-62
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:56:38 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cf680d351so13324255e9.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 06:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1741874194; x=1742478994; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i+v3De3Kzd+7fXnoUItXws4/mMAs82QduI7pQ8dhHNo=;
+ b=lnw06Az9om8AphkYPs2f6XTpVIbekJh4KXfRRMiVpvX2SRxuciwBQR73o/0KuFMKUr
+ nXA+Nkv4pfipJSpUD3Iyz3ya7A2UQxGEDdIAkFpwjnBrm5rq+q3fyf7fYAfYdQ/srASP
+ 76TPgFHKA0LniUiXDxjwjZI0oIg+f1Kyx0N/lRzeOtmZkETZC/42NBIbPcR7dd/T2vQv
+ EklIYYSFyBf0gXUL0LRio2oSMWUYFLfydZUH/cQVtNyYAU/N25OtQ0gODXsK5WAo2NZk
+ Zl9aAcQv4dPgW/VPezMsPiMc66w3Y5r9S7mZLZEmI0yv3bR6HpQlfN9a9gCvWFxqLy6T
+ iGrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741874172; x=1742478972;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IDXklaR3EASvvRwzt7OYn1rc0kL4KQT1UBhPNARKwEY=;
- b=LuPs2HPZ3SRO88njClbfgnh4DlYO0mnvEWQ5FvuYDI7pzOMQX9E8cZ8kwUi8i4jwIV
- ruvb1kxa/CH7iWrWVh54KX1eR69hCHgr5tdkR0oXjOLZEWJE8mxzemp5g0ef9/edYLCo
- Ki1VzfEVePy9CZah0+qeG2ezKOUWQ5OZHy45pxHE22DrML3Dve3Vc21uqnYUROJkJQ6o
- /AkRV/w75qADtUZLTUvOVO4UK2iOa05CSRuQYiBbc+2omCL78KIVhVzGu3RP9HT0Ydii
- dZxbypKmc8t5flrh2ZtDIp3tN/G8dpW6HTjyEgwFNY42Yh+C8EJINkBnh5/nzmIwqE+x
- yh3Q==
-X-Gm-Message-State: AOJu0YwOOe8X2/mAoZ6f5RkF1IjWatIsqdBOpWd26AX8wuEQxDMtvbV9
- 82vPuD7iva8a6eUDowy8VP5s97E7icyBImQFfK7TrQbn4l2xJbq/OEieVrDJMKBdsOP/rTfTLqy
- 3JJy5pwWBxzCsTupUGjY+WC+yLpA8ilqFpuu4w3PGkfNMBR9nJ+gAh9++QZZWiskQHW1sbnrJLa
- ZM60DxHxXdUuS8WYWGR8cGoijoy3gzkHH3dAw=
-X-Gm-Gg: ASbGnctX6aecw9bo36NULGz15FJonY1hQ2D84Fflzybo9ezIlLboLbawU+p5xXvqZL+
- Faxd0mlpRlL8ZHPK05qAGnqHbYVoRnz9alerVr1/uO9n3l/S46AB9WUi1G0G7o2rbHyXaloZzAj
- yt+bpAqA6h001+YrTjbyLvVSBMzPDG
-X-Received: by 2002:a17:903:1c8:b0:224:6a7:a5b0 with SMTP id
- d9443c01a7336-22592e20143mr169599765ad.2.1741874171993; 
- Thu, 13 Mar 2025 06:56:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdCnc6mUM8QV1ERQJtJKiTb/J6bhtPnK2qKAIk6CpivWEZ9Dri0dJoN3WPF/9z8rKIT+pvbJwk6+vQgZ2f/qo=
-X-Received: by 2002:a17:903:1c8:b0:224:6a7:a5b0 with SMTP id
- d9443c01a7336-22592e20143mr169599425ad.2.1741874171598; Thu, 13 Mar 2025
- 06:56:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741874194; x=1742478994;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i+v3De3Kzd+7fXnoUItXws4/mMAs82QduI7pQ8dhHNo=;
+ b=dqyqa4Rx8jFw43ROiBlxwkchjEJGf67iGL6TpGdYcR0aubiBWykE3ZBhk8LAPat5EA
+ DSgudM4cLsBD3apwt1Kat2Rs3dM9DDDZFw+Xum2JLRqGGF834kZ5pdg+taUr9QgZfBhi
+ T9HSduTN+2v4Q8zcgjp6i1TpdtDYfVEiCOUjS9DfXFABPe2jh+CilP/MrB806cq00/So
+ 5sPxk8nB8ku/nPN5Rfjk8Ky1i11J/kA0WPX3qJAJnDj3QI4GbU4X0mr3l7sE5daW80/O
+ ckB8dTmCKYwKkpQ2+PSLep5t0/lIi5c7YyMVE7SUbmVwa33CilPIFkFELsuqiNReu2Fa
+ fLAA==
+X-Gm-Message-State: AOJu0YySZYKnNzfAYOqPqB8DuL87XVNUKVseYeYenwsFuG2XfoDh071t
+ /w6YNGio4XbsoGTlub9OzBpyto0qjGkG+iAqHMqQ6Wrz2ApUPzuE9EVXV98qby8=
+X-Gm-Gg: ASbGncs20VIOOUljD8wFoUzT7XkIBS7Lz6PvowdMx8ZjhCJ5QyAsBFVHaMmqsQHWv7I
+ LNifz6OruqcfMGx75Zc76fihxlVc0cigpe5lsXE1fPRfb//FhnLBrSIdomPHvwCyOzeGKq2WkAQ
+ Br6RlA9C6WSMrz0e+6ULjDUbjhxihIHNKXk663e4uoW7Cs1LxCTOew7SMi92ttltDHyx3t6VqSV
+ gX5jikQTchA1YQUCy1v4j4ZYcZMNVLHQAWPUlPU72P+tTd1WkQKpq/eoC8IBqNXGKvYhkgQ1KE8
+ vwcHUCzfyQKiEYcTrm1ETSsePWrYxB1q4qRmki8IsmuKqD3wb99ys71RWQ==
+X-Google-Smtp-Source: AGHT+IGz/wiTMXNi5KsiQ0xR5ICfeIN2/NtMhWeOhilZwg7uR0k3EgJ82yFqUYNSn0wdwkkBo3O1Dg==
+X-Received: by 2002:a05:600c:44d2:b0:43c:f509:2bbf with SMTP id
+ 5b1f17b1804b1-43d180d03dfmr19760055e9.15.1741874194101; 
+ Thu, 13 Mar 2025 06:56:34 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d0a8c5cbfsm53770155e9.30.2025.03.13.06.56.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Mar 2025 06:56:33 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 02CD75F8C7;
+ Thu, 13 Mar 2025 13:56:32 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
+ pbonzini@redhat.com,  philmd@linaro.org
+Subject: Re: [PATCH 00/37] accel/tcg, codebase: Build once patches
+In-Reply-To: <20250313034524.3069690-1-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Wed, 12 Mar 2025 20:44:40 -0700")
+References: <20250313034524.3069690-1-richard.henderson@linaro.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Thu, 13 Mar 2025 13:56:31 +0000
+Message-ID: <87v7sd3ugg.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250313044312.189276-1-jsnow@redhat.com>
- <20250313044312.189276-5-jsnow@redhat.com>
- <87bju5e8o7.fsf@pond.sub.org>
-In-Reply-To: <87bju5e8o7.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 13 Mar 2025 09:55:59 -0400
-X-Gm-Features: AQ5f1JplqVSCj6ykME4lg3Ssg1IgjPTMHUtJF03PZHe0fOa7YEPT0tgl3G-goVw
-Message-ID: <CAFn=p-YzKa_QwGNFQCSGBfHts4ZnoR0c41pkYkVYfVO7jYcDNQ@mail.gmail.com>
-Subject: Re: [PATCH 04/11] docs/qapi-domain: add :namespace: override option
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Konstantin Kostiuk <kkostiuk@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, 
- Michael Roth <michael.roth@amd.com>, Kevin Wolf <kwolf@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000003e013e063039af2c"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,153 +103,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003e013e063039af2c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-On Thu, Mar 13, 2025 at 2:39=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
-
-> John Snow <jsnow@redhat.com> writes:
+> All this is working toward building accel/tcg/translator.c once,
+> but it got late and I decided to stop at a convenient milestone.
 >
-> > Akin to the :module: override option, the :namespace: options allows yo=
-u
-> > to forcibly override the contextual namespace associatied with a
-> > definition.
-> >
-> > We don't necessarily actually need this, but I felt compelled to stick
-> > close to how the Python domain works that offers context overrides.
-> >
-> > As of this commit, it is possible to add e.g. ":namespace: QMP" to any
-> > QAPI directive to forcibly associate that definition with a given
-> > namespace.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  docs/devel/qapi-domain.rst | 2 ++
-> >  docs/sphinx/qapi_domain.py | 5 +++--
-> >  2 files changed, 5 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
-> > index 1475870ca6c..51b283277e1 100644
-> > --- a/docs/devel/qapi-domain.rst
-> > +++ b/docs/devel/qapi-domain.rst
-> > @@ -466,6 +466,8 @@ QAPI standard options
-> >
-> >  All QAPI directives -- *except* for module -- support these common
-> options.
-> >
-> > +* ``:namespace: name`` -- This option allows you to override the
-> > +  namespace association of a given definition.
-> >  * ``:module: modname`` -- Borrowed from the Python domain, this option
-> allows
-> >    you to override the module association of a given definition.
-> >  * ``:since: x.y`` -- Allows the documenting of "Since" information,
-> which is
-> > diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-> > index 48a082d489a..6485c432063 100644
-> > --- a/docs/sphinx/qapi_domain.py
-> > +++ b/docs/sphinx/qapi_domain.py
-> > @@ -294,8 +294,9 @@ class QAPIObject(QAPIDescription):
-> >      )
-> >      option_spec.update(
-> >          {
-> > -            # Borrowed from the Python domain:
-> > -            "module": directives.unchanged,  # Override contextual
-> module name
-> > +            # Context overrides:
-> > +            "namespace": directives.unchanged,
-> > +            "module": directives.unchanged,
-> >              # These are QAPI originals:
-> >              "since": directives.unchanged,
-> >              "ifcond": directives.unchanged,
+<snip>
 >
-> Did "Borrowed from the Python domain" become wrong(ish) in PATCH 02?
->
+> I know there is overlap with other in-flight patches, but it
+> seemed easiest to just start from master.
 
-:module: is directly borrowed, :namespace: is only spiritually similar.
+I guess that was why the re-base fails with:
 
---0000000000003e013e063039af2c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  [2210/6843] Compiling C object libcommon.a.p/hw_vfio_migration.c.o
+  FAILED: libcommon.a.p/hw_vfio_migration.c.o=20
+  cc -m64 -Ilibcommon.a.p -I../../common-user/host/x86_64 -I../../linux-use=
+r/include/host/x86_64 -I../../linux-user/include -Isubprojects/libvduse -I.=
+./../subprojects/libvduse -I/usr/include/capstone -I/usr/include/p11-kit-1 =
+-I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/spice-server=
+ -I/usr/include/spice-1 -I/usr/include/libusb-1.0 -I/usr/include/SDL2 -I/us=
+r/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/incl=
+ude/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0 -I/usr/includ=
+e/slirp -I/usr/include/gtk-3.0 -I/usr/include/pango-1.0 -I/usr/include/harf=
+buzz -I/usr/include/freetype2 -I/usr/include/fribidi -I/usr/include/cairo -=
+I/usr/include/gdk-pixbuf-2.0 -I/usr/include/x86_64-linux-gnu -I/usr/include=
+/atk-1.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/in=
+clude/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/=
+vte-2.91 -I/usr/include/virgl -I/usr/include/cacard -I/usr/include/nss -I/u=
+sr/include/nspr -I/usr/include/PCSC -I/usr/include/pipewire-0.3 -I/usr/incl=
+ude/spa-0.2 -I/usr/include/fuse3 -I/usr/include/uuid -fdiagnostics-color=3D=
+auto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -fstack-protector-strong =
+-Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wform=
+at-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wmissin=
+g-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declar=
+ation -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstrict-pr=
+ototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-d=
+irs -Wno-psabi -Wno-shift-negative-value -isystem /home/alex/lsrc/qemu.git/=
+linux-headers -isystem linux-headers -iquote . -iquote /home/alex/lsrc/qemu=
+.git -iquote /home/alex/lsrc/qemu.git/include -iquote /home/alex/lsrc/qemu.=
+git/host/include/x86_64 -iquote /home/alex/lsrc/qemu.git/host/include/gener=
+ic -iquote /home/alex/lsrc/qemu.git/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_=
+SOURCE -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivi=
+al-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -fPIE -D_FILE_OFFS=
+ET_BITS=3D64 -D__USE_FILE_OFFSET64 -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=3D1=
+ -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=3D1 -D_REENTRAN=
+T -DSTRUCT_IOVEC_DEFINED -MD -MQ libcommon.a.p/hw_vfio_migration.c.o -MF li=
+bcommon.a.p/hw_vfio_migration.c.o.d -o libcommon.a.p/hw_vfio_migration.c.o =
+-c ../../hw/vfio/migration.c
+  In file included from ../../hw/vfio/migration.c:30:
+  /home/alex/lsrc/qemu.git/include/system/ram_addr.h:22:10: fatal error: cp=
+u.h: No such file or directory
+     22 | #include "cpu.h"
+        |          ^~~~~~~
+  compilation terminated.
+  [2211/6843] Compiling C object libcommon.a.p/hw_vfio_iommufd.c.o
+  FAILED: libcommon.a.p/hw_vfio_iommufd.c.o=20
+  cc -m64 -Ilibcommon.a.p -I../../common-user/host/x86_64 -I../../linux-use=
+r/include/host/x86_64 -I../../linux-user/include -Isubprojects/libvduse -I.=
+./../subprojects/libvduse -I/usr/include/capstone -I/usr/include/p11-kit-1 =
+-I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/spice-server=
+ -I/usr/include/spice-1 -I/usr/include/libusb-1.0 -I/usr/include/SDL2 -I/us=
+r/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/incl=
+ude/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0 -I/usr/includ=
+e/slirp -I/usr/include/gtk-3.0 -I/usr/include/pango-1.0 -I/usr/include/harf=
+buzz -I/usr/include/freetype2 -I/usr/include/fribidi -I/usr/include/cairo -=
+I/usr/include/gdk-pixbuf-2.0 -I/usr/include/x86_64-linux-gnu -I/usr/include=
+/atk-1.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/in=
+clude/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/=
+vte-2.91 -I/usr/include/virgl -I/usr/include/cacard -I/usr/include/nss -I/u=
+sr/include/nspr -I/usr/include/PCSC -I/usr/include/pipewire-0.3 -I/usr/incl=
+ude/spa-0.2 -I/usr/include/fuse3 -I/usr/include/uuid -fdiagnostics-color=3D=
+auto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -fstack-protector-strong =
+-Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wform=
+at-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wmissin=
+g-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declar=
+ation -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstrict-pr=
+ototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-d=
+irs -Wno-psabi -Wno-shift-negative-value -isystem /home/alex/lsrc/qemu.git/=
+linux-headers -isystem linux-headers -iquote . -iquote /home/alex/lsrc/qemu=
+.git -iquote /home/alex/lsrc/qemu.git/include -iquote /home/alex/lsrc/qemu.=
+git/host/include/x86_64 -iquote /home/alex/lsrc/qemu.git/host/include/gener=
+ic -iquote /home/alex/lsrc/qemu.git/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_=
+SOURCE -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivi=
+al-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -fPIE -D_FILE_OFFS=
+ET_BITS=3D64 -D__USE_FILE_OFFSET64 -D__USE_LARGEFILE64 -DUSE_POSIX_ACLS=3D1=
+ -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=3D1 -D_REENTRAN=
+T -DSTRUCT_IOVEC_DEFINED -MD -MQ libcommon.a.p/hw_vfio_iommufd.c.o -MF libc=
+ommon.a.p/hw_vfio_iommufd.c.o.d -o libcommon.a.p/hw_vfio_iommufd.c.o -c ../=
+../hw/vfio/iommufd.c
+  In file included from ../../hw/vfio/iommufd.c:28:
+  /home/alex/lsrc/qemu.git/include/system/ram_addr.h:22:10: fatal error: cp=
+u.h: No such file or directory
+     22 | #include "cpu.h"
+        |          ^~~~~~~
+  compilation terminated.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Mar 13,=
- 2025 at 2:39=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Akin to the :module: override option, the :namespace: options allows y=
-ou<br>
-&gt; to forcibly override the contextual namespace associatied with a<br>
-&gt; definition.<br>
-&gt;<br>
-&gt; We don&#39;t necessarily actually need this, but I felt compelled to s=
-tick<br>
-&gt; close to how the Python domain works that offers context overrides.<br=
->
-&gt;<br>
-&gt; As of this commit, it is possible to add e.g. &quot;:namespace: QMP&qu=
-ot; to any<br>
-&gt; QAPI directive to forcibly associate that definition with a given<br>
-&gt; namespace.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 docs/devel/qapi-domain.rst | 2 ++<br>
-&gt;=C2=A0 docs/sphinx/qapi_domain.py | 5 +++--<br>
-&gt;=C2=A0 2 files changed, 5 insertions(+), 2 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst<b=
-r>
-&gt; index 1475870ca6c..51b283277e1 100644<br>
-&gt; --- a/docs/devel/qapi-domain.rst<br>
-&gt; +++ b/docs/devel/qapi-domain.rst<br>
-&gt; @@ -466,6 +466,8 @@ QAPI standard options<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 All QAPI directives -- *except* for module -- support these comm=
-on options.<br>
-&gt;=C2=A0 <br>
-&gt; +* ``:namespace: name`` -- This option allows you to override the<br>
-&gt; +=C2=A0 namespace association of a given definition.<br>
-&gt;=C2=A0 * ``:module: modname`` -- Borrowed from the Python domain, this =
-option allows<br>
-&gt;=C2=A0 =C2=A0 you to override the module association of a given definit=
-ion.<br>
-&gt;=C2=A0 * ``:since: x.y`` -- Allows the documenting of &quot;Since&quot;=
- information, which is<br>
-&gt; diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py<b=
-r>
-&gt; index 48a082d489a..6485c432063 100644<br>
-&gt; --- a/docs/sphinx/qapi_domain.py<br>
-&gt; +++ b/docs/sphinx/qapi_domain.py<br>
-&gt; @@ -294,8 +294,9 @@ class QAPIObject(QAPIDescription):<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 )<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 option_spec.update(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Borrowed from the Python =
-domain:<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;module&quot;: directi=
-ves.unchanged,=C2=A0 # Override contextual module name<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Context overrides:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;namespace&quot;: dire=
-ctives.unchanged,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;module&quot;: directi=
-ves.unchanged,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # These are QAPI origi=
-nals:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;since&quot;: dir=
-ectives.unchanged,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;ifcond&quot;: di=
-rectives.unchanged,<br>
-<br>
-Did &quot;Borrowed from the Python domain&quot; become wrong(ish) in PATCH =
-02?<br></blockquote><div><br></div><div>:module: is directly borrowed, :nam=
-espace: is only spiritually similar. <br></div></div></div>
+I'll see if I can bisect...
 
---0000000000003e013e063039af2c--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
