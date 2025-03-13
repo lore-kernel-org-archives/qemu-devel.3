@@ -4,50 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFEFAC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 05:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBBF1C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 06:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsbOu-00056a-OY; Thu, 13 Mar 2025 01:46:36 -0400
+	id 1tsbpT-0005z0-1d; Thu, 13 Mar 2025 02:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1tsbOb-0004t0-6g; Thu, 13 Mar 2025 01:46:17 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsbpO-0005xK-Gz
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 02:13:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1tsbOZ-0005Ve-Cb; Thu, 13 Mar 2025 01:46:16 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 13 Mar
- 2025 13:40:24 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 13 Mar 2025 13:40:24 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <yunlin.tang@aspeedtech.com>
-Subject: [PATCH 10/13] hw/arm: Introduce ASPEED AST2700 a1 full core machine
-Date: Thu, 13 Mar 2025 13:40:14 +0800
-Message-ID: <20250313054020.2583556-11-steven_lee@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250313054020.2583556-1-steven_lee@aspeedtech.com>
-References: <20250313054020.2583556-1-steven_lee@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsbpM-0008OY-9J
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 02:13:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741846434;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=HyqbIgG1LZFidzjGtCm4GgFOA6RiM8RZ3pkt6y+EWqs=;
+ b=FXbeBrTgew8p4jVg8FFY3nJ8n+Ymv3QMdJvMc/DplGYX4MHduScx1mcZM0LknQkgBunvLW
+ g5diDRJQ6Tn9uvNkaOpdBF3eqIHYg1/AZwQbxKGsfCUGEjLK8uklBpYaZ/dnxN6ENE8Tlh
+ 4Y8+D4ZXvW21M02/KFKTQVxaSIfFAMU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-ZlLxa9kqMaen3IvgmmXRIA-1; Thu, 13 Mar 2025 02:13:51 -0400
+X-MC-Unique: ZlLxa9kqMaen3IvgmmXRIA-1
+X-Mimecast-MFC-AGG-ID: ZlLxa9kqMaen3IvgmmXRIA_1741846430
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43947a0919aso3731315e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 23:13:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741846430; x=1742451230;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HyqbIgG1LZFidzjGtCm4GgFOA6RiM8RZ3pkt6y+EWqs=;
+ b=u5EXXHH8K9euLEcaDrSkCOZBXhVv2mGJ1M5VEn1op9o7EK+Yq3xHALdkg83Xufv/OF
+ DxWExn91TV1lryBxyMObN2emUkXltKItX7JxfLoTjTHWv7uvyH+zpat1+oNSZXvc2bbM
+ WcbnasEgRtWPL6iUVFVRsfeMhhSuSlDvpg6g9K6Q172VyYRRViZZGxSNtdEzkmecWVfx
+ 8uvt5qGK3Cu2ldhdek7gGQQpJfDmAN4UJvewdCTannbtipSU8lvLbSuMllIz2eb7TYR9
+ kfBwJ5WzM8MDH+m/TpbKTHuDdGyVhe+1n2Gi0OCE8e0xI4MT8UZm+TEe7MZEKXKrHJnc
+ oHjA==
+X-Gm-Message-State: AOJu0Yy7ClGr+88a8I1CObhGwjA8KIify7PPm1I8wavuG+QC5S7rfJnB
+ q2/giJhAQH62WGxoHSUGJuN2VEHuVl/h8HBU+S3VCV6Q+BlPdIMmCBLW9K0OZ8yLimIomY/qmCQ
+ 9tXOtibfoyHFTSnfLbjsCf4suQcvPriXGyNIup+gs+wk3PNaz4/HJ
+X-Gm-Gg: ASbGnctGkHxU9p/d5/XUuI+mgnT7xdJWQRWiKgT79Lsh4lNBLV4C6p+FlFc3Ic3FSzx
+ EiWOVuEIve5OY/py7ZX5IiXwEoN8qM2355cDVeVxcHqGyLMPVx7N8zvNSWXkpeWhclxFVeBeb9/
+ 3eOITsyr1gtQ2tRu+8weSV+AlSW/4WrbSTYsECGz7EJCWe9oA7W6RfGhdW/kfKwicd+FWFqFPgc
+ VG85p3FyWvstOLagXKyIhhsu5oEGOSH+H0FQkgXKpZp/rVhOq7OXB+X4qZp15z+GOC/pjVMdqGv
+ kvk7XdSY9lSSc/fOkIgt9ZRkAYlDKuDg6tDFu5uVHHdUQLQ=
+X-Received: by 2002:a05:600c:3b0e:b0:43c:f575:e305 with SMTP id
+ 5b1f17b1804b1-43cf575eac0mr151878725e9.8.1741846430157; 
+ Wed, 12 Mar 2025 23:13:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGd2S7IYhgXGMY1iEEyzVy0aPwYW4ri/jc6As+mjUGy3EY/jIW3bc7qGBKGkt+kyrQWHHxBwQ==
+X-Received: by 2002:a05:600c:3b0e:b0:43c:f575:e305 with SMTP id
+ 5b1f17b1804b1-43cf575eac0mr151878545e9.8.1741846429802; 
+ Wed, 12 Mar 2025 23:13:49 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
+ [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d14813085sm29214715e9.28.2025.03.12.23.13.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Mar 2025 23:13:49 -0700 (PDT)
+Message-ID: <71d0b4bf-7732-44f2-8796-f19eb2822958@redhat.com>
+Date: Thu, 13 Mar 2025 07:13:47 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/72] ppc-for-10.0-1 queue
+To: Stefan Hajnoczi <stefanha@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250311125815.903177-1-npiggin@gmail.com>
+ <CAJSP0QWLW+YwsLeJ1496Q8uT92E3wUDsOiVyzVFwrOFid3FUWA@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAJSP0QWLW+YwsLeJ1496Q8uT92E3wUDsOiVyzVFwrOFid3FUWA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,272 +148,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
-From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Added new machine type `ast2700fc-a1` with full core support.
-- Defined `Ast2700a1FCState` structure for the new machine type.
-- Implemented initialization functions for CA35, SSP, and TSP components.
-- Updated `ast2700fc_types` to include the new machine type.
-- Set machine class properties for `ast2700fc-a1`.
-- Add alias `ast2700fc` for a1 machine.
+On 13/03/2025 03.34, Stefan Hajnoczi wrote:
+> On Tue, Mar 11, 2025 at 8:59 PM Nicholas Piggin <npiggin@gmail.com> wrote:
+>>
+>> The following changes since commit 825b96dbcee23d134b691fc75618b59c5f53da32:
+>>
+>>    Merge tag 'migration-20250310-pull-request' of https://gitlab.com/farosas/qemu into staging (2025-03-11 09:32:07 +0800)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-10.0-1-20250311
+>>
+>> for you to fetch changes up to 0f17ae24b53eaab4bbe9cfab267c536e2f7fdbd7:
+>>
+>>    docs/system/ppc/amigang.rst: Update for NVRAM emulation (2025-03-11 22:43:32 +1000)
+>>
+>> ----------------------------------------------------------------
+>> * amigaone enhancements, NVRAM and kernel/initrd support
+>> * Next round of XIVE group/crowd changes
+>> * SPI updates for powernv
+>> * Power10 2nd DAWR support for powernv and spapr
+>> * powernv HOMER/OCC fixes and improvements for power management
+>> * powernv PNOR support
+>> * Big cleanup to move TCG code under ifdef or into its own file
+>> * Update SLOF and skiboot ROMs
+>> * Remove 405 boards and deprecate 405 CPU
+>> * Add support for nested KVM "hostwide state" data.
+> 
+> I fixed a CI failure on FreeBSD 14 hosts because of the __packed macro
+> redefinition in hw/ppc/pnv_occ.c:
+> https://gitlab.com/qemu-project/qemu/-/jobs/9388495246#L5857
+> 
+> Here is my fix in the merge commit, if you prefer a different fix,
+> please send a follow-up commit:
+> diff --git i/hw/ppc/pnv_occ.c w/hw/ppc/pnv_occ.c
+> index d9ce35a4d6..bda6b23ad3 100644
+> --- i/hw/ppc/pnv_occ.c
+> +++ w/hw/ppc/pnv_occ.c
+> @@ -394,7 +394,9 @@ type_init(pnv_occ_register_types);
+>   #define s64 int64_t
+>   #define __be16 uint16_t
+>   #define __be32 uint32_t
+> +#ifndef __packed
+>   #define __packed QEMU_PACKED
+> +#endif /* !__packed */
 
-Test Step:
-- Download ast2700-default-obmc.tar.gz from AspeedTech-BMC OpenBmc
-  release page.
-- Run the following QEMU command:
+We should never define such macros in userspace - everything with two 
+underscores at the beginning is reserved for the system and the compiler and 
+must not be created by the userspace code.
+Why doesn't this code use QEMU_PACKED directly instead?
 
-  ```
-  IMGDIR=~/path/to/image
-  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
-
-  ./qemu-system-aarch64 -machine ast2700fc \
-  -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
-  -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-  -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
-  -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/tee-raw.bin \
-  -device loader,cpu-num=0,addr=0x430000000 \
-  -device loader,cpu-num=1,addr=0x430000000 \
-  -device loader,cpu-num=2,addr=0x430000000 \
-  -device loader,cpu-num=3,addr=0x430000000 \
-  -device loader,file=${IMGDIR}/ast2700-ssp.elf,cpu-num=4 \
-  -device loader,file=${IMGDIR}/ast2700-tsp.elf,cpu-num=5 \
-  -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
-  -serial pty -serial pty -serial pty \
-  -snapshot \
-  -S -nographic
-  ```
-
-- After starting QEMU, serial devices will be redirected:
-
-  char device redirected to /dev/pts/51 (label serial0)
-  char device redirected to /dev/pts/52 (label serial1)
-  char device redirected to /dev/pts/53 (label serial2)
-
-- serial0 is the console for the four Cortex-A35 primary processors,
-  serial1 and serial2 are the consoles for the two Cortex-M4 coprocessors.
-
-- Connect to the consoles using a terminal emulator.
-
-Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-Change-Id: I1e7645a4689859fdd41be2a734909975ba04a1f9
----
- hw/arm/aspeed_ast27x0-fc.c | 150 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 150 insertions(+)
-
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index d03a1b5f1e..1c4895e9d1 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -25,6 +25,8 @@
- 
- #define TYPE_AST2700A0FC MACHINE_TYPE_NAME("ast2700fc-a0")
- OBJECT_DECLARE_SIMPLE_TYPE(Ast2700a0FCState, AST2700A0FC);
-+#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc-a1")
-+OBJECT_DECLARE_SIMPLE_TYPE(Ast2700a1FCState, AST2700A1FC);
- 
- static struct arm_boot_info ast2700fc_board_info = {
-     .board_id = -1, /* device-tree-only board */
-@@ -48,6 +50,24 @@ struct Ast2700a0FCState {
-     bool mmio_exec;
- };
- 
-+struct Ast2700a1FCState {
-+    MachineState parent_obj;
-+
-+    MemoryRegion ca35_memory;
-+    MemoryRegion ca35_dram;
-+    MemoryRegion ssp_memory;
-+    MemoryRegion tsp_memory;
-+
-+    Clock *ssp_sysclk;
-+    Clock *tsp_sysclk;
-+
-+    Aspeed27x0SoCState ca35;
-+    Aspeed27x0SSPSoCState ssp;
-+    Aspeed27x0TSPSoCState tsp;
-+
-+    bool mmio_exec;
-+};
-+
- #define AST2700FC_BMC_RAM_SIZE (2 * GiB)
- #define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
- 
-@@ -112,6 +132,63 @@ static void ast2700a0fc_ca35_init(MachineState *machine)
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
- }
- 
-+static void ast2700a1fc_ca35_init(MachineState *machine)
-+{
-+    Ast2700a1FCState *s = AST2700A1FC(machine);
-+    AspeedSoCState *soc;
-+    AspeedSoCClass *sc;
-+
-+    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
-+    soc = ASPEED_SOC(&s->ca35);
-+    sc = ASPEED_SOC_GET_CLASS(soc);
-+
-+    memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
-+                       UINT64_MAX);
-+
-+    if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
-+                                AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_link(OBJECT(&s->ca35), "memory",
-+                                  OBJECT(&s->ca35_memory),
-+                                  &error_abort)) {
-+        return;
-+    };
-+    if (!object_property_set_link(OBJECT(&s->ca35), "dram",
-+                                  OBJECT(&s->ca35_dram), &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_int(OBJECT(&s->ca35), "ram-size",
-+                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
-+                                 AST2700FC_HW_STRAP1, &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
-+                                 AST2700FC_HW_STRAP2, &error_abort)) {
-+        return;
-+    }
-+    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
-+    if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
-+        return;
-+    }
-+
-+    /*
-+     * AST2700 EVB has a LM75 temperature sensor on I2C bus 0 at address 0x4d.
-+     */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "tmp105", 0x4d);
-+
-+    aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
-+    aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
-+
-+    ast2700fc_board_info.ram_size = machine->ram_size;
-+    ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+
-+    arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
-+}
-+
- static void ast2700a0fc_ssp_init(MachineState *machine)
- {
-     AspeedSoCState *soc;
-@@ -136,6 +213,30 @@ static void ast2700a0fc_ssp_init(MachineState *machine)
-     }
- }
- 
-+static void ast2700a1fc_ssp_init(MachineState *machine)
-+{
-+    AspeedSoCState *soc;
-+    Ast2700a1FCState *s = AST2700A1FC(machine);
-+    s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
-+    clock_set_hz(s->ssp_sysclk, 200000000ULL);
-+
-+    object_initialize_child(OBJECT(s), "ssp", &s->ssp, "ast2700ssp-a1");
-+    memory_region_init(&s->ssp_memory, OBJECT(&s->ssp), "ssp-memory",
-+                       UINT64_MAX);
-+
-+    qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
-+    if (!object_property_set_link(OBJECT(&s->ssp), "memory",
-+                                  OBJECT(&s->ssp_memory), &error_abort)) {
-+        return;
-+    }
-+
-+    soc = ASPEED_SOC(&s->ssp);
-+    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
-+    if (!qdev_realize(DEVICE(&s->ssp), NULL, &error_abort)) {
-+        return;
-+    }
-+}
-+
- static void ast2700a0fc_tsp_init(MachineState *machine)
- {
-     AspeedSoCState *soc;
-@@ -160,6 +261,30 @@ static void ast2700a0fc_tsp_init(MachineState *machine)
-     }
- }
- 
-+static void ast2700a1fc_tsp_init(MachineState *machine)
-+{
-+    AspeedSoCState *soc;
-+    Ast2700a1FCState *s = AST2700A1FC(machine);
-+    s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
-+    clock_set_hz(s->tsp_sysclk, 200000000ULL);
-+
-+    object_initialize_child(OBJECT(s), "tsp", &s->tsp, "ast2700tsp-a1");
-+    memory_region_init(&s->tsp_memory, OBJECT(&s->tsp), "tsp-memory",
-+                       UINT64_MAX);
-+
-+    qdev_connect_clock_in(DEVICE(&s->tsp), "sysclk", s->tsp_sysclk);
-+    if (!object_property_set_link(OBJECT(&s->tsp), "memory",
-+                                  OBJECT(&s->tsp_memory), &error_abort)) {
-+        return;
-+    }
-+
-+    soc = ASPEED_SOC(&s->tsp);
-+    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
-+    if (!qdev_realize(DEVICE(&s->tsp), NULL, &error_abort)) {
-+        return;
-+    }
-+}
-+
- static void ast2700a0fc_init(MachineState *machine)
- {
-     ast2700a0fc_ca35_init(machine);
-@@ -167,6 +292,13 @@ static void ast2700a0fc_init(MachineState *machine)
-     ast2700a0fc_tsp_init(machine);
- }
- 
-+static void ast2700a1fc_init(MachineState *machine)
-+{
-+    ast2700a1fc_ca35_init(machine);
-+    ast2700a1fc_ssp_init(machine);
-+    ast2700a1fc_tsp_init(machine);
-+}
-+
- static void ast2700a0fc_class_init(ObjectClass *oc, void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -178,6 +310,18 @@ static void ast2700a0fc_class_init(ObjectClass *oc, void *data)
-     mc->min_cpus = mc->max_cpus = mc->default_cpus = 6;
- }
- 
-+static void ast2700a1fc_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->alias = "ast2700fc";
-+    mc->desc = "ast2700-a1 full core support";
-+    mc->init = ast2700a1fc_init;
-+    mc->no_floppy = 1;
-+    mc->no_cdrom = 1;
-+    mc->min_cpus = mc->max_cpus = mc->default_cpus = 6;
-+}
-+
- static const TypeInfo ast2700fc_types[] = {
-     {
-         .name           = MACHINE_TYPE_NAME("ast2700fc-a0"),
-@@ -185,6 +329,12 @@ static const TypeInfo ast2700fc_types[] = {
-         .class_init     = ast2700a0fc_class_init,
-         .instance_size  = sizeof(Ast2700a0FCState),
-     },
-+    {
-+        .name           = MACHINE_TYPE_NAME("ast2700fc-a1"),
-+        .parent         = TYPE_MACHINE,
-+        .class_init     = ast2700a1fc_class_init,
-+        .instance_size  = sizeof(Ast2700a1FCState),
-+    },
- };
- 
- DEFINE_TYPES(ast2700fc_types)
--- 
-2.34.1
+  Thomas
 
 
