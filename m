@@ -4,105 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3937C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 14:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7181DC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 15:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsk1E-00073e-MI; Thu, 13 Mar 2025 10:58:44 -0400
+	id 1tsk6F-0000Xe-SX; Thu, 13 Mar 2025 11:03:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsk1C-00070o-Ta
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 10:58:42 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tsk6D-0000X9-Bi
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 11:03:53 -0400
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsk19-0005og-QC
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 10:58:42 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22355618fd9so22083725ad.3
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 07:58:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tsk69-0006Y2-28
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 11:03:52 -0400
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-225a28a511eso19980495ad.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 08:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741877917; x=1742482717; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6op02To8GEsPKdM1k96/C+QUGbyKhV2gV/Tvyy0RgFY=;
- b=ZOrYAe0Qfz/PybPw9UWITxmzJDnk27pSviZIozDYolYSV/S5rjQacozJUDk72mw9MI
- fVeuLklyJFHI/FltUdZdZZON5PrCr2i1JSujUy4AevNY+F3O4i2zZud3Ph2QveO6k50G
- hBvm9OX6EmX3mpo+vZKW9H+9RFrrU+nI67tYygOL3tG1fSTL3a1XgB7q3du+xQGR5hMK
- IIkvXRpIbPEXXsnNVvfG7RKVJ2TmS3uia6VHtaIbG7NE81kOlbf4MKD10Z/Eny5NNo/3
- D2GG3B62jNE92L8oeHUgbtA8JOPfl9OhqiRttY2iOcGkCc5tlKg+0NMse0y+strHMSOa
- Ay/Q==
+ d=gmail.com; s=20230601; t=1741878227; x=1742483027; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fTrsDFzNnRXmp7ICDLKJME/Fslz3wv8QcODgRGSJOog=;
+ b=nnV22vHT3Tt/lO7Fq0W+mDgm1xhbGNiZ6vhTBsmK2hKSHjtzP7brZL1WvjVBBQYTKH
+ HqtiiwH76Y8G523XJkkLV8bP9kQEvRX3Nb6o+oJf9Bgy+F5K3SjxcMbUBKJk9au16CJM
+ io4EFD8B4MIDjSqeRsIwDs9ABFSNJTfQq/GJ2B0dDp45tr4R19XBUNQSbo4pnARuD9Mr
+ +eigYViTauhSBRY6UiKb63OJEJ5mzbWu6DSzokb9P1B/2r/0ZAKuIfOhQC3c/nU/Mwkx
+ rXkoY/WbAKBkxd9flYlFLe03/s8kBEklkZ19MSck7IQTlMO9Fl0cA6L9ZGCQuRmdUjVd
+ /dbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741877917; x=1742482717;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6op02To8GEsPKdM1k96/C+QUGbyKhV2gV/Tvyy0RgFY=;
- b=BvtmIX2FygZ8YiHL9n5J4T0M8ZFpv2QdZY8XNjcl7LOjwkpdvhDWdjxDeyIrT+Ger3
- AtOqtWr9VBR8jHihU7INEcNuaDaPiqC3dAobBZ80575KPj9Dkk0HABxRhVE64m4k4vWP
- AqwxPSs9ua85y1afwqti1vRRYTELX0vlyElYn6BXhrtTDRb34wkKxLiGlXEG70iBvg70
- bt5ykeDmPVLaNcaV8G0JNNkK6axhIYim7TnZf7IAraYX09Qe/qRbKYZ3Rate47whHMzz
- N3pwnnS9jBLOZFkIsW2JwP/btjyXTBtjcqYQ8Jz08Kxrh7SQK//Ag3pNn/6b6MrNsOQ2
- P20Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXzCBb8Ubo9Id7VjXdDLpAiQHf4fn1MCOHSgLUcvoNCWlQbSttod2WwSDo68uB3pJDXXGRJ9th0ajOp@nongnu.org
-X-Gm-Message-State: AOJu0YwUIDT9B9kR2GANUdYsBiNr3ZVcxudriVKWqWmtxDiZcRTGAQyg
- AjbUzAaOA8rbl0XRJcTSw05vWAr3EDpI9uCMqC0/toAtmTxsUmFcLDg4ffznoaY=
-X-Gm-Gg: ASbGncvrsi/U3XRzBtV5zF6DAMBNcytd5QNks6YbjVmZqrtwCXd/D83hOro7Ityx6Ij
- H3cdlhX5TPiD20DSTlGVobyRukW8GwUu7FfQCAq9mYjEZy5C0dQvirr8YiUtaVhHf9fQe6g/qCx
- poqSL0/JG2sU3AekOKG20KboYUdnQkGWCT71rKnQCRTM50FzOXk2T/Vg8wjSnWafSk59ddgwM4j
- xY/vYRvk8c7KFueu7fQNKaL4FmbBo/HGwWuvAkZsLq0o5zVUMKckG0cnRTzI14O1P633mefdl1w
- dJkpjjgSgWpmY5w8icN8NNI9V/OK30vOPp9kC7Ly1nHw/S84FeL9aGPojQ==
-X-Google-Smtp-Source: AGHT+IENlQJNbNnR0ZLl/yzJRfEcS1+joFNMMxD6IcdM+/rQzLzkvZii1iZc5ohxSi6txZocYtpHNQ==
-X-Received: by 2002:aa7:88ca:0:b0:736:b101:aed3 with SMTP id
- d2e1a72fcca58-736eb79f7e9mr15251786b3a.1.1741877917034; 
- Thu, 13 Mar 2025 07:58:37 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ d=1e100.net; s=20230601; t=1741878227; x=1742483027;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fTrsDFzNnRXmp7ICDLKJME/Fslz3wv8QcODgRGSJOog=;
+ b=UXc8QZKVXGwdaUkQUuwBJArMsMIszDZjnLa2TukBuYJd+JcNn8kiUtSyS3dX7j7ZUn
+ c7UuN0JHfwoSg8bIJoeqv1IZvjB3Mrj8mncMj0fa/7B4rSyj++CKDFwIhBg6pfq0fKpT
+ P+FZTKXn6uAilUPyPT98FOT8hmmVMTjLnHnaiXgtphhvhjfrQ9cEdx2idPOX2UbZeLel
+ b8pD1dRPGSjAYpMJ7B8Gmhe1ZSfVwhtojJQ2/Xb8+On2DvVVAxw9JWIC44UhYxvh91gD
+ AY/uv1yixj4+tLxE/lm8gePK/pm6G5+RtC6Ni7MZh6m0cC8MrOfZR5za64dHFz0x6712
+ Bp0Q==
+X-Gm-Message-State: AOJu0YxOcpbGleMYA8wwlgOTJGgDqeW6b5ooWF3psFcjNUuxWY0GFYjn
+ u2h/+icT+RNRH3nxR3bSZWkSlaJPj9eETptRGwG709gf4OB1GLE=
+X-Gm-Gg: ASbGncvAoKMd3DTyCeiPaHLSiXzxQshMJ0StKJwwX0lZ6ZR01IhmR6ocAY59KIlPLWo
+ iDV0cyeCTbT4FnW31SUmqxcobUyzzLO1MJi1tYFU8KusJOOsvosFCbhPPEWtv0JO7Jg0URrfkGq
+ OyGWGeDQE0wN+zeatYLwUyrXbMpUAC7aasJOA8PmRCvzj01/yX4Xxu9CkkeENEfHJ4bmrtaI2PD
+ 0DQext5JWjMircK1UgBlukDtgpFv4/DsQ7Qs+OD/IwHETteJs/usOXxkchkaONnLSQTOSbgjJq3
+ iaAdEbY5f+avisz0zGRQe4hXwlVYC4Fx2bUiYdsyR7Cmt3VSvrwcEOXZ1T2I
+X-Google-Smtp-Source: AGHT+IFiR2fLouHY1MlmXjGJNZNwJ+E1A1d3bs7ODY5OaMbErdngqFl1QtFwOt771v9HLvlOwXJX8Q==
+X-Received: by 2002:a17:902:e88a:b0:21f:6fb9:9299 with SMTP id
+ d9443c01a7336-22428aaad15mr399011275ad.27.1741878226979; 
+ Thu, 13 Mar 2025 08:03:46 -0700 (PDT)
+Received: from git-send-email.moeko.lan ([58.38.42.149])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711550fe1sm1461507b3a.53.2025.03.13.07.58.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 07:58:36 -0700 (PDT)
-Message-ID: <594a8d1e-6a86-4aea-97c9-c7f2c1a271ac@linaro.org>
-Date: Thu, 13 Mar 2025 07:58:35 -0700
+ d9443c01a7336-225c6ba6ed6sm14258035ad.151.2025.03.13.08.03.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Mar 2025 08:03:45 -0700 (PDT)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH v2] vfio/igd: Update IGD passthrough documentation
+Date: Thu, 13 Mar 2025 23:03:39 +0800
+Message-ID: <20250313150339.358621-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Building QEMU as a Shared Library
-Content-Language: en-US
-To: Saanjh Sengupta <saanjhsengupta@outlook.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: "amir.gonnen@neuroblade.ai" <amir.gonnen@neuroblade.ai>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "aabhashswain25@gmail.com" <aabhashswain25@gmail.com>,
- "aniantre@gmail.com" <aniantre@gmail.com>
-References: <PS2P216MB1388380FEF72AF5916FD9B59CCC62@PS2P216MB1388.KORP216.PROD.OUTLOOK.COM>
- <befaccff-5885-4e8d-a397-29df6cdaa7d9@linaro.org>
- <30a35e73-2f72-4e1c-b38f-c744b6884706@linaro.org>
- <SE1SPRMB0015BDAF043E9103B24B9973CCC82@SE1SPRMB0015.KORP216.PROD.OUTLOOK.COM>
- <67a10cba-5bb8-4dda-a7c7-c7a3637bb1b3@linaro.org>
- <SL2P216MB138053F139E1B688D2BBA201CCD12@SL2P216MB1380.KORP216.PROD.OUTLOOK.COM>
- <2f1078d7-31bf-4940-aa43-30a45f7a07a0@linaro.org>
- <SL2P216MB1380316B32539524D1CCD831CCD02@SL2P216MB1380.KORP216.PROD.OUTLOOK.COM>
- <ab0a0e8d-9c26-4225-942b-9d6996abfb8f@linaro.org>
- <SL2P216MB13806B5994D2A1F4DC5E5685CCD32@SL2P216MB1380.KORP216.PROD.OUTLOOK.COM>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <SL2P216MB13806B5994D2A1F4DC5E5685CCD32@SL2P216MB1380.KORP216.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,238 +98,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xMy8yNSAwNDozNCwgU2FhbmpoIFNlbmd1cHRhIHdyb3RlOg0KPiBIaSwNCj4gDQo+
-IFdoYXQgd2UgYXJlIHRyeWluZyB0byBhY2hpZXZlIGlzIHRoYXQgdGhlIFFFTVUgc2hvdWxk
-IHJ1biBmb3IgYSANCj4gcGFydGljdWxhciBudW1iZXIgb2YgaW5zdHJ1Y3Rpb25zLCBsZXQn
-cyBzYXkgZm9yIGV4YW1wbGUgMTAwMDAgDQo+IGluc3RydWN0aW9ucyBhbmQgdGhlbiBwYXVz
-ZSBpdCdzIGVtdWxhdGlvbi4gQWZ0ZXIgYSByZXN1bWUgdHJpZ2dlciBpcyANCj4gcmVjZWl2
-ZWQgdG8gdGhlIFFFTVUgaXQgbXVzdCByZXN1bWUgaXQncyBlbXVsYXRpb24gYW5kIHN0YXJ0
-IHRoZSANCj4gaW5zdHJ1Y3Rpb24gY291bnQgZnJvbSAxMDAwMSAod2hpY2ggYmFzaWNhbGx5
-IG1lYW5zIHRoYXQgdGhlIGNvbnRleHQgDQo+IHNob3VsZCBiZSBzYXZlZCkuDQo+IA0KPiBJ
-biB0aGUgcHJldmlvdXMgbWFpbCB3aGVuIHlvdSBtZW50aW9uZWQgZ191c2xlZXAsIEkgYmVs
-aWV2ZSB0aGlzIHNoYWxsIA0KPiBub3Qgd29yayAoYXMgcGVyIG91ciB1c2UtY2FzZSkgc2lu
-Y2UgaXQgd2lsbCByZXNldCB0aGUgaW5zdHJ1Y3Rpb24gY291bnQgDQo+IHRvIDAgKGFzIHBl
-ciB3aGF0IHlvdSBtZW50aW9uZWQpLg0KPiANCg0KQnkgcmVzZXR0aW5nIHRoZSBpbnN0cnVj
-dGlvbiBjb3VudGVyLCBJIGp1c3QgbWVhbnQgdGhlIHJlc2V0IHRoZSANCnZhcmlhYmxlIHVz
-ZWQgdG8gc3RvcCBldmVyeSBOIGluc3RydWN0aW9ucy4gSXQgZG9lcyBub3QgYWZmZWN0IHRo
-ZSBzdGF0ZSANCm9mIFFFTVUgaXRzZWxmLg0KDQpJIGludml0ZSB5b3UgdG8gY2hlY2sgb3Vy
-IHBsdWdpbnMgZG9jdW1lbnRhdGlvbiBbMV0sIHdoaWNoIGV4cGxhaW5zIHRoZSANCnVzYWdl
-IG9mIGNvbmRpdGlvbmFsIGNhbGxiYWNrcywgYW5kIGFzc29jaWF0ZWQgZnVuY3Rpb25zLg0K
-DQpbMV0gaHR0cHM6Ly93d3cucWVtdS5vcmcvZG9jcy9tYXN0ZXIvZGV2ZWwvdGNnLXBsdWdp
-bnMuaHRtbCN3cml0aW5nLXBsdWdpbnMNCg0KUmVnYXJkcywNClBpZXJyaWNrDQoNCj4gVG8g
-YWNoaWV2ZSB0aGUgdXNlLWNhc2UsIGRvIHlvdSBoYXZlIGFueSBsZWFkcy9zdWdnZXN0aW9u
-cyA/DQo+IA0KPiANCj4gUmVnYXJkcw0KPiBTYWFuamggU2VuZ3VwdGENCj4gDQo+IC0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLQ0KPiAqRnJvbToqIFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJv
-dXZpZXJAbGluYXJvLm9yZz4NCj4gKlNlbnQ6KiBXZWRuZXNkYXksIE1hcmNoIDEyLCAyMDI1
-IDExOjUwOjIzIGFtDQo+ICpUbzoqIFNhYW5qaCBTZW5ndXB0YSA8c2Fhbmpoc2VuZ3VwdGFA
-b3V0bG9vay5jb20+OyBQaGlsaXBwZSBNYXRoaWV1LSANCj4gRGF1ZMOpIDxwaGlsbWRAbGlu
-YXJvLm9yZz47IFBhb2xvIEJvbnppbmkgPHBib256aW5pQHJlZGhhdC5jb20+OyBNYXJjLSAN
-Cj4gQW5kcsOpIEx1cmVhdSA8bWFyY2FuZHJlLmx1cmVhdUByZWRoYXQuY29tPg0KPiAqQ2M6
-KiBhbWlyLmdvbm5lbkBuZXVyb2JsYWRlLmFpIDxhbWlyLmdvbm5lbkBuZXVyb2JsYWRlLmFp
-PjsgcWVtdS0gDQo+IGRldmVsQG5vbmdudS5vcmcgPHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz47
-IEFsZXggQmVubsOpZSANCj4gPGFsZXguYmVubmVlQGxpbmFyby5vcmc+DQo+ICpTdWJqZWN0
-OiogUmU6IEJ1aWxkaW5nIFFFTVUgYXMgYSBTaGFyZWQgTGlicmFyeQ0KPiANCj4gT24gMy8x
-MS8yNSAyMTozMSwgU2FhbmpoIFNlbmd1cHRhIHdyb3RlOg0KPj4gDQo+PiANCj4+IEhpLA0K
-Pj4gDQo+PiBUaGFuayB5b3UgZm9yIHRoZSBjbGFyaWZpY2F0aW9uLiBSZWdhcmRpbmcgdGhl
-IGxhc3QgdGltZQ0KPj4gLyJTdG9wdHJpZ2dlciBtaWdodCBiZSBhIGJldHRlciBmaXQgZm9y
-IHdoYXQgeW91IHdhbnQgdG8gZG8sIGFuZCBpbnN0ZWFkIA0KPj4gb2YgZXhpdGluZywgeW91
-IHdhbnQgdG8gcmVzdW1lIGVtdWxhdGlvbiBhZnRlciBOIGluc24uIFRoZSBmdW5jdGlvbiAN
-Cj4+IHFlbXVfY2xvY2tfYWR2YW5jZV92aXJ0dWFsX3RpbWUoKSBjYW4gb25seSBiZSB1c2Vk
-IHRvIG1vdmUgdGhlIHRpbWUgDQo+PiBmb3J3YXJkLCBhbmQgeW91IGNhbiBub3Qgc3RvcCB0
-aGUgInZpcnR1YWwgdGltZSIgYnkgZGVzaWduLiIvDQo+PiAvDQo+PiAvDQo+PiBJIGRpZCBu
-b3QgcXVpdGUgdW5kZXJzdGFuZCB0aGlzLiBFdmVuIGlmIEkgaGF2ZSB0byBtb2RpZnkgdGhl
-IA0KPj4gc3RvcFRyaWdnZXIgcGx1Z2luLCBJIHdvdWxkIHdhbnQgaXQgdG8gcGF1c2UgcmF0
-aGVyIHRoYW4gZXhpdGluZy4NCj4+IEZvciBleGFtcGxlOiBJdCBnZXRzIDEwMDAwIGluc3Ry
-dWN0aW9ucyBleGVjdXRlZCBhZnRlciB0aGF0IGl0IHNob3VsZCANCj4+IHBhdXNlIGFuZCBh
-ZnRlciBzb21lIHRpbWUgaXQgc2hvdWxkIHRoZW4gcmVzdW1lIGFnYWluIGV4ZWN1dGUgdGls
-bCAyMDAwMCANCj4+IGluc3RydWN0aW9ucyAoYmVjYXVzZSBwcmV2aW91c2x5IGl0IGV4ZWN1
-dGVkIHRpbGwgMTAwMDAgYW5kIHRoZW4gaXQgbXVzdCANCj4+IGV4ZWN1dGUgdGlsbCAyMDAw
-MCkuIEhvdyBkbyBJIGRvIHRoaXM/IEhvdyBkbyBJIHN0YXRlIHRoZSBjb2RlIHRvIHBhdXNl
-IA0KPj4gdGhlIHFlbXUncyBlbXVsYXRpb24gYWZ0ZXIgMTAwMDAgaW5zdHJ1Y3Rpb25zPw0K
-Pj4gDQo+IA0KPiBCeSB1c2luZyBnX3VzbGVlcCB0byBwYXVzZSB0aGUgY3VycmVudCBjcHUu
-DQo+IEFzIHdlbGwsIGl0J3MgbmVlZGVkIHRvIHJlc2V0IGluc25fY291bnQgdG8gMCB0byBj
-b3VudCBpbnN0cnVjdGlvbnMgYWdhaW4uDQo+IA0KPiBXaXRoIHRoaXMgY29tbWFuZCBsaW5l
-Og0KPiAuL2J1aWxkL3FlbXUtc3lzdGVtLXg4Nl82NCAtcGx1Z2luDQo+IC4vYnVpbGQvY29u
-dHJpYi9wbHVnaW5zL2xpYnN0b3B0cmlnZ2VyLnNvLGljb3VudD0xMDAwIC1kIHBsdWdpbg0K
-PiANCj4gQW5kIHdpdGggdGhvc2UgY2hhbmdlcyB0byBzdG9wdHJpZ2dlcjoNCj4gDQo+IGRp
-ZmYgLS1naXQgYS9jb250cmliL3BsdWdpbnMvc3RvcHRyaWdnZXIuYyBiL2NvbnRyaWIvcGx1
-Z2lucy9zdG9wdHJpZ2dlci5jDQo+IGluZGV4IGIzYTZlZDY2YTdiLi43N2ZkNDEzY2VmMSAx
-MDA2NDQNCj4gLS0tIGEvY29udHJpYi9wbHVnaW5zL3N0b3B0cmlnZ2VyLmMNCj4gKysrIGIv
-Y29udHJpYi9wbHVnaW5zL3N0b3B0cmlnZ2VyLmMNCj4gQEAgLTQxLDExICs0MSwxMiBAQCB0
-eXBlZGVmIHN0cnVjdCB7DQo+ICDCoMKgwqDCoMKgIGludCBleGl0X2NvZGU7DQo+ICDCoCB9
-IEV4aXRJbmZvOw0KPiANCj4gLXN0YXRpYyB2b2lkIGV4aXRfZW11bGF0aW9uKGludCByZXR1
-cm5fY29kZSwgY2hhciAqbWVzc2FnZSkNCj4gK3N0YXRpYyB2b2lkIHBhdXNlX2VtdWxhdGlv
-bihpbnQgcmV0dXJuX2NvZGUsIGNoYXIgKm1lc3NhZ2UpDQo+ICDCoCB7DQo+ICDCoMKgwqDC
-oMKgIHFlbXVfcGx1Z2luX291dHMobWVzc2FnZSk7DQo+ICDCoMKgwqDCoMKgIGdfZnJlZSht
-ZXNzYWdlKTsNCj4gLcKgwqDCoCBleGl0KHJldHVybl9jb2RlKTsNCj4gK8KgwqDCoCAvKiBl
-eGl0KHJldHVybl9jb2RlKTsgKi8NCj4gK8KgwqDCoCBnX3VzbGVlcCgxICogR19VU0VDX1BF
-Ul9TRUMpOw0KPiAgwqAgfQ0KPiANCj4gIMKgIHN0YXRpYyB2b2lkIGV4aXRfaWNvdW50X3Jl
-YWNoZWQodW5zaWduZWQgaW50IGNwdV9pbmRleCwgdm9pZCAqdWRhdGEpDQo+IEBAIC01Myw3
-ICs1NCw5IEBAIHN0YXRpYyB2b2lkIGV4aXRfaWNvdW50X3JlYWNoZWQodW5zaWduZWQgaW50
-DQo+IGNwdV9pbmRleCwgdm9pZCAqdWRhdGEpDQo+ICDCoMKgwqDCoMKgIHVpbnQ2NF90IGlu
-c25fdmFkZHIgPSBxZW11X3BsdWdpbl91NjRfZ2V0KGN1cnJlbnRfcGMsIGNwdV9pbmRleCk7
-DQo+ICDCoMKgwqDCoMKgIGNoYXIgKm1zZyA9IGdfc3RyZHVwX3ByaW50ZigiaWNvdW50IHJl
-YWNoZWQgYXQgMHglIiBQUkl4NjQgIiwNCj4gZXhpdGluZ1xuIiwNCj4gIMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBpbnNuX3ZhZGRyKTsNCj4gLcKgwqDCoCBleGl0X2VtdWxhdGlvbihpY291bnRfZXhpdF9j
-b2RlLCBtc2cpOw0KPiArwqDCoMKgIHBhdXNlX2VtdWxhdGlvbihpY291bnRfZXhpdF9jb2Rl
-LCBtc2cpOw0KPiArwqDCoMKgIC8qIHJlc2V0IGluc3RydWN0aW9uIGNvdW50ZXIgKi8NCj4g
-K8KgwqDCoCBxZW11X3BsdWdpbl91NjRfc2V0KGluc25fY291bnQsIGNwdV9pbmRleCwgMCk7
-DQo+ICDCoCB9DQo+IA0KPiAgwqAgc3RhdGljIHZvaWQgZXhpdF9hZGRyZXNzX3JlYWNoZWQo
-dW5zaWduZWQgaW50IGNwdV9pbmRleCwgdm9pZCAqdWRhdGEpDQo+IEBAIC02MSw3ICs2NCw3
-IEBAIHN0YXRpYyB2b2lkIGV4aXRfYWRkcmVzc19yZWFjaGVkKHVuc2lnbmVkIGludA0KPiBj
-cHVfaW5kZXgsIHZvaWQgKnVkYXRhKQ0KPiAgwqDCoMKgwqDCoCBFeGl0SW5mbyAqZWkgPSB1
-ZGF0YTsNCj4gIMKgwqDCoMKgwqAgZ19hc3NlcnQoZWkpOw0KPiAgwqDCoMKgwqDCoCBjaGFy
-ICptc2cgPSBnX3N0cmR1cF9wcmludGYoIjB4JSIgUFJJeDY0ICIgcmVhY2hlZCwgZXhpdGlu
-Z1xuIiwNCj4gZWktPmV4aXRfYWRkcik7DQo+IC3CoMKgwqAgZXhpdF9lbXVsYXRpb24oZWkt
-PmV4aXRfY29kZSwgbXNnKTsNCj4gK8KgwqDCoCBwYXVzZV9lbXVsYXRpb24oZWktPmV4aXRf
-Y29kZSwgbXNnKTsNCj4gIMKgIH0NCj4gDQo+IA0KPj4gTW9yZW92ZXIsIEkgdHJpZWQgYW4g
-YWN0aXZpdHkgd2hlcmUgSSB3YXMgdXRpbGlzaW5nIHRoZSBRTVAgcHJvdG9jb2wgdG8gDQo+
-PiBjb250cm9sIHRoZSB2aXJ0dWFsIHRpbWUgKHdpdGggcmVzcGVjdCB0byB0aGUgSVBTIHBs
-dWdpbikuIEluIHRoYXQgDQo+PiBjb250ZXh0IHdoZW4gdGhlIFFNUCBzdG9wIGlzIHRyaWdn
-ZXJlZCwgbXkgdmlydHVhbCB0aW1lIGRvZXMgZ290IGZyZWV6ZWQgDQo+PiB1bnRpbCB0aGUg
-cmVzdW1lIGlzIHRyaWdnZXJlZC4gRG9lcyB0aGlzIG1lYW4gSSBhbSBhYmxlIHRvIG1hbmlw
-dWxhdGUgDQo+PiB0aGUgdmlydHVhbCB0aW1lIG9mIHRoZSBRRU1VPw0KPj4gDQo+IA0KPiBJ
-IGFtIG5vdCBzdXJlIG9mIGhvdyBpdCB3b3JrcywgYnV0IHRoZSBwbHVnaW4gaW50ZXJmYWNl
-IG9ubHkgYWxsb3dzIHRvDQo+IG1vdmUgdGltZSBmb3J3YXJkLg0KPiANCj4+IA0KPj4gDQo+
-PiBSZWdhcmRzDQo+PiBTYWFuamggU2VuZ3VwdGENCj4+IC0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
-Pj4gKkZyb206KiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5v
-cmc+DQo+PiAqU2VudDoqIFdlZG5lc2RheSwgTWFyY2ggMTIsIDIwMjUgMjoxNDo0NyBBTQ0K
-Pj4gKlRvOiogU2FhbmpoIFNlbmd1cHRhIDxzYWFuamhzZW5ndXB0YUBvdXRsb29rLmNvbT47
-IFBoaWxpcHBlIE1hdGhpZXUtIA0KPj4gRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz47IFBh
-b2xvIEJvbnppbmkgPHBib256aW5pQHJlZGhhdC5jb20+OyBNYXJjLSANCj4+IEFuZHLDqSBM
-dXJlYXUgPG1hcmNhbmRyZS5sdXJlYXVAcmVkaGF0LmNvbT4NCj4+ICpDYzoqIGFtaXIuZ29u
-bmVuQG5ldXJvYmxhZGUuYWkgPGFtaXIuZ29ubmVuQG5ldXJvYmxhZGUuYWk+OyBxZW11LSAN
-Cj4+IGRldmVsQG5vbmdudS5vcmcgPHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz47IEFsZXggQmVu
-bsOpZSANCj4+IDxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPg0KPj4gKlN1YmplY3Q6KiBSZTog
-QnVpbGRpbmcgUUVNVSBhcyBhIFNoYXJlZCBMaWJyYXJ5DQo+PiBPbiAzLzExLzI1IDAyOjUw
-LCBTYWFuamggU2VuZ3VwdGEgd3JvdGU6DQo+Pj4gSGksDQo+Pj4gDQo+Pj4gSSBoYXZlIGEg
-Y291cGxlIG9mIHF1ZXN0aW9uczoNCj4+PiANCj4+PsKgIDEuDQo+Pj7CoMKgwqDCoCBXaGVu
-IEkgdXNlIHRoZSBsaWJzdG9wdHJpZ2dlci5zbzogaW4gdGhhdCBjYXNlIHRoZSBRRU1VICdz
-IGVtdWxhdGlvbg0KPj4+wqDCoMKgwqAgc3RvcHMgYWZ0ZXIgZXhlY3V0aW5nIHRoZSBkZWZp
-bmVkIG51bWJlciBvZiBpbnN0cnVjdGlvbnMuIFBvc3QgdGhpcywNCj4+PsKgwqDCoMKgIHRo
-ZSB3aG9sZSBRRU1VIHRlcm1pbmF0ZXMuIEFuZCB3aGlsZSB1c2luZyB0aGUgbGliaXBzLnNv
-IEkgYW0NCj4+PsKgwqDCoMKgIGFzc3VtaW5nIHRoYXQgdGhlIFFFTVUgZG9lc24ndCBleGVj
-dXRlIG5vIG1vcmUgdGhhbiB0aGUgZGVmaW5lZA0KPj4+wqDCoMKgwqAgaW5zdHJ1Y3Rpb25z
-LiBQbGVhc2UgY29ycmVjdCBtZSBpZiBJIGFtIHdyb25nLg0KPj4gDQo+PiBUaGF0J3MgY29y
-cmVjdCBmb3IgYm90aCBwbHVnaW5zLCB3aXRoIHRoZSBhZGRpdGlvbmFsIG5vdGUgdGhhdCBs
-aWJpcHMNCj4+IGRvZXMgdGhpcyBwZXIgc2Vjb25kIG9ubHkuDQo+PiANCj4+PsKgIDIuDQo+
-Pj7CoMKgwqDCoCBJbiBteSBjYXNlLCBJIHdhbnQgdGhlIFFFTVUgdG8gc3RhcnQgZW11bGF0
-aW9uIGZvciBzb21lIHRpbWUgYW5kDQo+Pj7CoMKgwqDCoCBQQVVTRSBpdCdzIGVtdWxhdGlv
-biBmb3Igc29tZSB0aW1lOyBhZnRlciBpdCBpcyBQYXVzZWQgKGl0J3MgdmlydHVhbA0KPj4+
-wqDCoMKgwqAgdGltZSBpcyBhbHNvIHRvIGJlIHBhdXNlZCkgYW5kIHRoZW4gbGV0J3Mgc2F5
-IGZvciBhZnRlciAneCcgdGltZQ0KPj4+wqDCoMKgwqAgcGVyaW9kIGl0IHNob3VsZCByZXN1
-bWUgaXQncyB2aXJ0dWFsIHRpbWUuDQo+Pj4gDQo+PiANCj4+IFRoZSB2aXJ0dWFsIHRpbWUg
-dmFyaWFibGUgaW4gaXBzIHBsdWdpbiBpcyBvbmx5IHJlbGF0ZWQgdG8gdGhpcyBwbHVnaW4s
-DQo+PiBhbmQgYmFzZWQgb24gaG93IG1hbnkgaW5zdHJ1Y3Rpb25zIGhhdmUgYmVlbiBleGVj
-dXRlZCwgd2hpY2ggaXMNCj4+IGRpZmZlcmVudCBmcm9tIHdoYXQgeW91IHdhbnQgdG8gYWNo
-aWV2ZS4NCj4+IA0KPj4gU3RvcHRyaWdnZXIgbWlnaHQgYmUgYSBiZXR0ZXIgZml0IGZvciB3
-aGF0IHlvdSB3YW50IHRvIGRvLCBhbmQgaW5zdGVhZA0KPj4gb2YgZXhpdGluZywgeW91IHdh
-bnQgdG8gcmVzdW1lIGVtdWxhdGlvbiBhZnRlciBOIGluc24uDQo+PiBUaGUgZnVuY3Rpb24g
-cWVtdV9jbG9ja19hZHZhbmNlX3ZpcnR1YWxfdGltZSgpIGNhbiBvbmx5IGJlIHVzZWQgdG8g
-bW92ZQ0KPj4gdGhlIHRpbWUgZm9yd2FyZCwgYW5kIHlvdSBjYW4gbm90IHN0b3AgdGhlICJ2
-aXJ0dWFsIHRpbWUiIGJ5IGRlc2lnbi4NCj4+IA0KPj4+IGltYWdlDQo+Pj4gDQo+Pj4gDQo+
-Pj4gSSBoYXZlIGFkZGVkIHRoaXMgc2VnbWVudCBpbnNpZGUgdGhlIHVwZGF0ZV9zeXN0ZW1f
-dGltZSBmdW5jdGlvbiBpbnNpZGUgDQo+Pj4gdGhlIGlwc1BsdWdpbi5jLiBidXQgb25jZSB0
-aGUgaW5zdHJ1Y3Rpb25zIHJlYWNoIHRvIHRoZSBkZWZpbmVkIGxpbWl0IA0KPj4+IHRoZSB2
-aXJ0dWFsIHRpbWUgZG9lcyBub3Qgc2VlbSB0byBzdG9wLg0KPj4+IERvIHlvdSBoYXZlIGFu
-eSBzdWdnZXN0aW9ucyBvbiB0aGF0IGZyb250Pw0KPj4+IA0KPj4+IA0KPj4+IFJlZ2FyZHMN
-Cj4+PiBTYWFuamggU2VuZ3VwdGENCj4+PiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4+PiAqRnJv
-bToqIFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+
-PiAqU2VudDoqIFdlZG5lc2RheSwgTWFyY2ggNSwgMjAyNSA1OjIwOjM4IEFNDQo+Pj4gKlRv
-OiogU2FhbmpoIFNlbmd1cHRhIDxzYWFuamhzZW5ndXB0YUBvdXRsb29rLmNvbT47IFBoaWxp
-cHBlIE1hdGhpZXUtIA0KPj4+IERhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+OyBQYW9sbyBC
-b256aW5pIDxwYm9uemluaUByZWRoYXQuY29tPjsgTWFyYy0gDQo+Pj4gQW5kcsOpIEx1cmVh
-dSA8bWFyY2FuZHJlLmx1cmVhdUByZWRoYXQuY29tPg0KPj4+ICpDYzoqIGFtaXIuZ29ubmVu
-QG5ldXJvYmxhZGUuYWkgPGFtaXIuZ29ubmVuQG5ldXJvYmxhZGUuYWk+OyBxZW11LSANCj4+
-PiBkZXZlbEBub25nbnUub3JnIDxxZW11LWRldmVsQG5vbmdudS5vcmc+OyBBbGV4IEJlbm7D
-qWUgDQo+Pj4gPGFsZXguYmVubmVlQGxpbmFyby5vcmc+DQo+Pj4gKlN1YmplY3Q6KiBSZTog
-QnVpbGRpbmcgUUVNVSBhcyBhIFNoYXJlZCBMaWJyYXJ5DQo+Pj4gSGkgU2FhbmpoLA0KPj4+
-IA0KPj4+IGRlcGVuZGluZyB3aGF0IHlvdSBhcmUgdHJ5aW5nIHRvIGFjaGlldmUgZXhhY3Rs
-eSwgcGx1Z2lucyBjYW4gcHJvdmlkZSBhDQo+Pj4gc29sdXRpb24uIEl0J3MgY29udmVuaWVu
-dCBhbmQgeW91IGNhbiBzdGF5IG9uIHRvcCBvZiBRRU1VIHVwc3RyZWFtLA0KPj4+IHdpdGhv
-dXQgaGF2aW5nIHRvIGNyZWF0ZSBhIGRvd25zdHJlYW0gZm9yay4NCj4+PiANCj4+PiBXZSBh
-bHJlYWR5IGhhdmUgcGx1Z2lucyBmb3Igc3RvcHBpbmcgYWZ0ZXIgYSBnaXZlbiBudW1iZXIg
-b2YNCj4+PiBpbnN0cnVjdGlvbnMsIG9yIHNsb3cgZG93biBleGVjdXRpb24gb2YgYSBWTToN
-Cj4+PiANCj4+PiAjIHN0b3AgYWZ0ZXIgZXhlY3V0aW5nIDEnMDAwJzAwMCBpbnN0cnVjdGlv
-bnM6DQo+Pj4gJCAuL2J1aWxkL3FlbXUtc3lzdGVtLXg4Nl82NCAtcGx1Z2luDQo+Pj4gLi9i
-dWlsZC9jb250cmliL3BsdWdpbnMvbGlic3RvcHRyaWdnZXIsaWNvdW50PTEwMDAwMDAgLWQg
-cGx1Z2luDQo+Pj4gDQo+Pj4gIyBleGVjdXRlIG5vIG1vcmUgdGhhbiAxJzAwMCcwMDAgaW5z
-dHJ1Y3Rpb25zIHBlciBzZWNvbmQ6DQo+Pj4gJCAuL2J1aWxkL3FlbXUtc3lzdGVtLXg4Nl82
-NCAtcGx1Z2luDQo+Pj4gLi9idWlsZC9jb250cmliL3BsdWdpbnMvbGliaXBzLnNvLGlwcz0x
-MDAwMDAwIC1kIHBsdWdpbg0KPj4+IA0KPj4+IFlvdSBjYW4gc2VlIHNvdXJjZSBjb2RlIGFz
-c29jaWF0ZWQgKC4vY29udHJpYi9wbHVnaW5zL3N0b3B0cmlnZ2VyLmMgYW5kDQo+Pj4gLi9j
-b250cmliL3BsdWdpbnMvaXBzLmMpLCB0byBpbXBsZW1lbnQgc29tZXRoaW5nIHNpbWlsYXIg
-dG8gd2hhdCB5b3UNCj4+PiB3YW50LCBidXQgYmFzZWQgb24gdGltZS4NCj4+PiBXb3VsZCB0
-aGF0IHNhdGlzZnkgeW91ciBuZWVkPw0KPj4+IA0KPj4+IFJlZ2FyZHMsDQo+Pj4gUGllcnJp
-Y2sNCj4+PiANCj4+PiBPbiAzLzMvMjUgMjE6NTMsIFNhYW5qaCBTZW5ndXB0YSB3cm90ZToN
-Cj4+Pj4gDQo+Pj4+IA0KPj4+PiBIaSwNCj4+Pj4gDQo+Pj4+IFRoYW5rIHlvdSBzbyBtdWNo
-IGZvciB5b3VyIGlucHV0cy4gSSB3YXMgYWJsZSB0byBjcmVhdGUgdGhlIC5zbyBmaWxlIG9m
-IA0KPj4+PiBRRU1VLg0KPj4+PiANCj4+Pj4gQWN0dWFsbHksIHdoYXQgd2UgYXJlIHRyeWlu
-ZyBpcyB0byB1bmRlcnN0YW5kIGFuZCBleHBsb3JlIHBvc3NpYmlsaXRpZXMgDQo+Pj4+IG9m
-IFZpcnR1YWwgVGltZSBDb250cm9sIGluIFFFTVUuIEluIHNob3J0LCB3aGF0IEkgbWVhbiB0
-byBzYXkgaXMgYW4gDQo+Pj4+IGFwcHJvYWNoIHZpYSB3aGljaCBJIGNhbiB0ZWxsIFFFTVUg
-dG8gZW11bGF0ZSBmb3IgWFlaIHRpbWUgd2hlbiB0aGUgSSANCj4+Pj4gZ2l2ZSBhIHRyaWdn
-ZXIgYW5kIHRoZW4gcGF1c2UgdGhlIGVtdWxhdGlvbiBieSBpdHNlbGYgYWZ0ZXIgdGhlIFhZ
-WiB0aW1lIA0KPj4+PiBpcyBjb21wbGV0ZWQuDQo+Pj4+IA0KPj4+PiBPbiB0aGF0IGZyb250
-IGl0c2VsZiwgZG8geW91IGhhdmUgYW55IGlucHV0cy9pZGVhcyByZWdhcmRpbmcgdGhlIHNh
-bWU/DQo+Pj4+IA0KPj4+PiANCj4+Pj4gUmVnYXJkcw0KPj4+PiBTYWFuamggU2VuZ3VwdGEN
-Cj4+Pj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+Pj4+ICpGcm9tOiogUGllcnJpY2sgQm91dmll
-ciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4+PiAqU2VudDoqIFR1ZXNkYXks
-IEZlYnJ1YXJ5IDI1LCAyMDI1IDY6Mjk6NDQgQU0NCj4+Pj4gKlRvOiogUGhpbGlwcGUgTWF0
-aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPjsgUGFvbG8gQm9uemluaSANCj4+Pj4g
-PHBib256aW5pQHJlZGhhdC5jb20+OyBNYXJjLUFuZHLDqSBMdXJlYXUgPG1hcmNhbmRyZS5s
-dXJlYXVAcmVkaGF0LmNvbT4NCj4+Pj4gKkNjOiogYW1pci5nb25uZW5AbmV1cm9ibGFkZS5h
-aSA8YW1pci5nb25uZW5AbmV1cm9ibGFkZS5haT47IHFlbXUtIA0KPj4+PiBkZXZlbEBub25n
-bnUub3JnIDxxZW11LWRldmVsQG5vbmdudS5vcmc+OyBTYWFuamggU2VuZ3VwdGEgDQo+Pj4+
-IDxzYWFuamhzZW5ndXB0YUBvdXRsb29rLmNvbT4NCj4+Pj4gKlN1YmplY3Q6KiBSZTogQnVp
-bGRpbmcgUUVNVSBhcyBhIFNoYXJlZCBMaWJyYXJ5DQo+Pj4+IEhpIFNhYW5qaCwNCj4+Pj4g
-DQo+Pj4+IGhlcmUgaXMgYSBtaW5pbWFsIHBhdGNoIHRoYXQgYnVpbGRzIG9uZSBzaGFyZWQg
-bGlicmFyeSBwZXIgdGFyZ2V0IChhcmNoLA0KPj4+PiBtb2RlKSB3aGVyZSBhcmNoIGlzIGNw
-dSBhcmNoLCBhbmQgbW9kZSBpcyBzeXN0ZW0gb3IgdXNlciwgYW5kIGxhdW5jaA0KPj4+PiBz
-eXN0ZW0tYWFyY2g2NCB0aHJvdWdoIGEgc2ltcGxlIGRyaXZlcjoNCj4+Pj4gDQo+Pj4+IGh0
-dHBzOi8vZ2l0aHViLmNvbS9wYm8tbGluYXJvL3FlbXUvY29tbWl0LyA8aHR0cHM6Ly9naXRo
-dWIuY29tL3Biby0gDQo+IGxpbmFyby9xZW11L2NvbW1pdC8+IDxodHRwczovL2dpdGh1Yi5j
-b20vcGJvLQ0KPj4gbGluYXJvL3FlbXUvY29tbWl0Lz4gPGh0dHBzOi8vZ2l0aHViLmNvbS9w
-Ym8tDQo+Pj4gbGluYXJvL3FlbXUvY29tbWl0Lz4NCj4+Pj4gZmJiMzljYzY0Zjc3ZDRiZjFl
-NWU1MDc5NWM3NWI2MjczNWJmNWM1ZiA8aHR0cHM6Ly9naXRodWIuY29tL3Biby1saW5hcm8v
-DQo+Pj4+IHFlbXUvY29tbWl0L2ZiYjM5Y2M2NGY3N2Q0YmYxZTVlNTA3OTVjNzViNjI3MzVi
-ZjVjNWY+DQo+Pj4+IA0KPj4+PiBXaXRoIHRoaXMsIGl0IGNvdWxkIGJlIHBvc3NpYmxlIHRv
-IGNyZWF0ZSBhIGRyaXZlciB0aGF0IGNhbiBleGVjdXRlIGFueQ0KPj4+PiBleGlzdGluZyB0
-YXJnZXQuIEl0J3MgYSBzb3J0IG9mIHNpbmdsZSBiaW5hcnkgZm9yIFFFTVUsIGJ1dCBzaGFy
-ZWQNCj4+Pj4gb2JqZWN0cyBhcmUgbWFuZGF0b3J5LCBhbmQgZHVwbGljYXRlcyBhbGwgdGhl
-IFFFTVUgc3RhdGUuIFNvIHRoZXJlIGlzIG5vDQo+Pj4+IHJlYWwgYmVuZWZpdCBjb21wYXJl
-ZCB0byBoYXZpbmcgZGlmZmVyZW50IHByb2Nlc3Nlcy4NCj4+Pj4gDQo+Pj4+IEluIG1vcmUs
-IHRvIGJlIGFibGUgdG8gZG8gY29uY3VycmVudCBlbXVsYXRpb25zLCB0aGVyZSBhcmUgbXVj
-aCBtb3JlDQo+Pj4+IHByb2JsZW1zIHRvIGJlIHNvbHZlZC4gUUVNVSBzdGF0ZSBpcyBjb3Jy
-ZWN0bHkga2VwdCBwZXIgdGFyZ2V0LCBidXQgYWxsDQo+Pj4+IG90aGVyIGxpYnJhcmllcyBz
-dGF0ZXMgYXJlIHNoYXJlZC4gVGhlcmUgYXJlIHZhcmlvdXMgaXNzdWVzIGlmIHlvdQ0KPj4+
-PiBsYXVuY2ggdHdvIGVtdWxhdGlvbnMgYXQgdGhlIHNhbWUgdGltZSBpbiB0d28gdGhyZWFk
-czoNCj4+Pj4gLSBnbGliIGdsb2JhbCBjb250ZXh0DQo+Pj4+IC0gcWVtdSBjYWxscyBleGl0
-IGluIG1hbnkgcGxhY2VzLCB3aGljaCBzdG9wcyB0aGUgd2hvbGUgcHJvY2Vzcw0KPj4+PiAt
-IHByb2JhYmx5IG90aGVyIHRoaW5ncyBJIGRpZG4ndCBleHBsb3JlDQo+Pj4+IA0KPj4+PiBB
-dCB0aGlzIHBvaW50LCBldmVuIHRob3VnaCBxZW11IHRhcmdldHMgY2FuIGJlIGJ1aWx0IGFz
-IHNoYXJlZCBvYmplY3RzLA0KPj4+PiBJIHdvdWxkIHJlY29tbWVuZCB0byB1c2UgZGlmZmVy
-ZW50IHByb2Nlc3NlcywgYW5kIGltcGxlbWVudCBzb21lIGZvcm0gb24NCj4+Pj4gSVBDIHRv
-IHN5bmNocm9uaXplIGFsbCB0aGlzLg0KPj4+PiBBbm90aGVyIHBvc3NpYmlsaXR5IGlzIHRv
-IHRyeSB0byBidWlsZCBtYWNoaW5lcyB3aXRob3V0IHVzaW5nIHRoZQ0KPj4+PiBleGlzdGlu
-ZyBtYWluLCBidXQgSSdtIG5vdCBzdXJlIGl0J3Mgd29ydGggYWxsIHRoZSBoYXNzbGUuDQo+
-Pj4+IA0KPj4+PiBXaGF0IGFyZSB5b3UgdHJ5aW5nIHRvIGFjaGlldmU/DQo+Pj4+IA0KPj4+
-PiBSZWdhcmRzLA0KPj4+PiBQaWVycmljaw0KPj4+PiANCj4+Pj4gT24gMi8yNC8yNSAwMTox
-MCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+Pj4+PiBDYydpbmcgb3VyIG1l
-c29uIGV4cGVydHMNCj4+Pj4+IA0KPj4+Pj4gT24gMjIvMi8yNSAxNDozNiwgU2FhbmpoIFNl
-bmd1cHRhIHdyb3RlOg0KPj4+Pj4+IEhpLA0KPj4+Pj4+DQo+Pj4+Pj4gSSByZWZlcnJlZCB0
-byB5b3VyIG1haWxpbmcgY2hhaW5zIG9uIHN1Z2dlc3RpbmcgUUVNVSB0byBiZSBidWlsdCBh
-cyBhDQo+Pj4+Pj4gc2hhcmVkIGxpYnJhcnkuDQo+Pj4+Pj4NCj4+Pj4+PiAqQ2hhbmdlIG1l
-c29uLmJ1aWxkIHRvIGJ1aWxkIFFFTVUgYXMgYSBzaGFyZWQgbGlicmFyeSAod2l0aCBQSUMg
-ZW5hYmxlZA0KPj4+Pj4+IGZvciBzdGF0aWMgbGlicmFyaWVzKSoNCj4+Pj4+PiAqDQo+Pj4+
-Pj4gKg0KPj4+Pj4+IENvdWxkIHlvdSBwbGVhc2Ugc3VnZ2VzdCB3aGF0IGV4YWN0bHkgaGFz
-IHRvIGJlIGVuYWJsZWQgaW4gdGhlIG1lc29uLmJ1aWxkPw0KPj4+Pj4+DQo+Pj4+Pj4gSSBh
-bSBjb25mdXNlZCBvbiB0aGF0IGZyb250Lg0KPj4+Pj4+DQo+Pj4+Pj4gUmVnYXJkcw0KPj4+
-Pj4+IFNhYW5qaCBTZW5ndXB0YQ0KPj4+Pj4gDQo+Pj4+IA0KPj4+IA0KPj4gDQo+IA0KPiAN
-Cg0K
+A previous change made the OpRegion and LPC quirks independent of the
+existing legacy mode, update the documentation accordingly. More related
+topics, like creating EFI Option ROM of IGD for OVMF, how to solve the
+VFIO_DMA_MAP Invalid Argument warning, as well as details on IGD memory
+internals, are also added.
+
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+v2:
+* Fixed typos
+Link: https://lore.kernel.org/all/20250312155002.286841-1-tomitamoeko@gmail.com/
+
+ docs/igd-assign.txt | 265 ++++++++++++++++++++++++++++++++------------
+ 1 file changed, 196 insertions(+), 69 deletions(-)
+
+diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
+index e17bb50789..3aed7956d5 100644
+--- a/docs/igd-assign.txt
++++ b/docs/igd-assign.txt
+@@ -1,44 +1,69 @@
+ Intel Graphics Device (IGD) assignment with vfio-pci
+ ====================================================
+ 
+-IGD has two different modes for assignment using vfio-pci:
+-
+-1) Universal Pass-Through (UPT) mode:
+-
+-   In this mode the IGD device is added as a *secondary* (ie. non-primary)
+-   graphics device in combination with an emulated primary graphics device.
+-   This mode *requires* guest driver support to remove the external
+-   dependencies generally associated with IGD (see below).  Those guest
+-   drivers only support this mode for Broadwell and newer IGD, according to
+-   Intel.  Additionally, this mode by default, and as officially supported
+-   by Intel, does not support direct video output.  The intention is to use
+-   this mode either to provide hardware acceleration to the emulated graphics
+-   or to use this mode in combination with guest-based remote access software,
+-   for example VNC (see below for optional output support).  This mode
+-   theoretically has no device specific handling dependencies on vfio-pci or
+-   the VM firmware.
+-
+-2) "Legacy" mode:
+-
+-   In this mode the IGD device is intended to be the primary and exclusive
+-   graphics device in the VM[1], as such QEMU does not facilitate any sort
+-   of remote graphics to the VM in this mode.  A connected physical monitor
+-   is the intended output device for IGD.  This mode includes several
+-   requirements and restrictions:
+-
+-    * IGD must be given address 02.0 on the PCI root bus in the VM
+-    * The host kernel must support vfio extensions for IGD (v4.6)
+-    * vfio VGA support very likely needs to be enabled in the host kernel
+-    * The VM firmware must support specific fw_cfg enablers for IGD
+-    * The VM machine type must support a PCI host bridge at 00.0 (standard)
+-    * The VM machine type must provide or allow to be created a special
+-      ISA/LPC bridge device (vfio-pci-igd-lpc-bridge) on the root bus at
+-      PCI address 1f.0.
+-    * The IGD device must have a VGA ROM, either provided via the romfile
+-      option or loaded automatically through vfio (standard).  rombar=0
+-      will disable legacy mode support.
+-    * Hotplug of the IGD device is not supported.
+-    * The IGD device must be a SandyBridge or newer model device.
++Using vfio-pci, we can passthrough Intel Graphics Device (IGD) to guest, either
++serve as primary and exclusive graphics adapter, or used in combination with an
++emulated primary graphics device, depending on the config and guest driver
++support. However, IGD devices are not "clean" PCI devices, they use extra
++memory regions other than BARs. Special handling is required to make them work
++properly, including:
++
++* OpRegion for accessing Virtual BIOS Table (VBT) that contains display output
++  information.
++* Data Stolen Memory (DSM) region used as VRAM at early stage (BIOS/UEFI)
++
++Certain guest software also depends on following conditions to work:
++(*-Required by)
++
++| Condition                                   | Linux | Windows | VBIOS | EFI GOP |
++|---------------------------------------------|-------|---------|-------|---------|
++| #1 IGD has a valid OpRegion containing VBT  |  * ^1 |    *    |   *   |    *    |
++| #2 VID/DID of LPC bridge at 00:1f.0 matches |       |         |   *   |    *    |
++| #3 IGD is assigned to BDF 00:02.0           |       |         |   *   |    *    |
++| #4 IGD has VGA controller device class      |       |         |   *   |    *    |
++| #5 Host's VGA ranges are mapped to IGD      |       |         |   *   |         |
++| #6 Guest has valid VBIOS or UEFI Option ROM |       |         |   *   |    *    |
++
++^1 Though i915 driver is able to mock a OpRegion, it is still recommended to
++   use the VBT copied from host OpRegion to prevent incorrect configuration.
++
++For #1, the "x-igd-opregion=on" option exposes a copy of host IGD OpRegion to
++guest via fw_cfg, where guest firmware can set up guest OpRegion with it.
++
++For #2, "x-igd-lpc=on" option copies the IDs of host LPC bridge and host bridge
++to guest. Currently this is only supported on i440fx machines as there is
++already an ICH9 LPC bridge present on q35 machines, overwriting its IDs may
++lead to unexpected behavior.
++
++For #3, "addr=2.0" assigns IGD to 00:02.0.
++
++For #4, the primary display must be set to IGD in host BIOS.
++
++For #5, "x-vga=on" enables guest access to standard VGA IO/MMIO ranges.
++
++For #6, ROM either provided via the ROM BAR or romfile= option is needed, this
++Intel document [1] shows how to dump VBIOS to file. For UEFI Option ROM, see
++"Guest firmware" section.
++
++QEMU also provides a "Legacy" mode that implicitly enables full functionality
++on IGD, it is automatically enabled when
++* Machine type is i440fx
++* IGD is assigned to guest BDF 00:02.0
++* ROM BAR or romfile is present
++
++In "Legacy" mode, QEMU will automatically setup OpRegion, LPC bridge IDs and
++VGA range access, which is equivalent to:
++  x-igd-opregion=on,x-igd-lpc=on,x-vga=on
++
++By default, "Legacy" mode won't fail, it continues on error. User can set
++"x-igd-legacy-mode=on" to force enabling legacy mode, this also checks if the
++conditions above for legacy mode is met, and if any error occurs, QEMU will
++fail immediately. Users can also set "x-igd-legacy-mode=off" to disable legacy
++mode.
++
++In legacy mode, as the guest VGA ranges are assigned to IGD device, all other
++graphics devices should be removed, this can be done using "-nographic" or
++"-vga none" or "-nodefaults", along with adding the device using vfio-pci.
+ 
+ For either mode, depending on the host kernel, the i915 driver in the host
+ may generate faults and errors upon re-binding to an IGD device after it
+@@ -73,31 +98,39 @@ DVI, or DisplayPort) may be unsupported in some use cases.  In the author's
+ experience, even DP to VGA adapters can be troublesome while adapters between
+ digital formats work well.
+ 
+-Usage
+-=====
+-The intention is for IGD assignment to be transparent for users and thus for
+-management tools like libvirt.  To make use of legacy mode, simply remove all
+-other graphics options and use "-nographic" and either "-vga none" or
+-"-nodefaults", along with adding the device using vfio-pci:
+ 
+-    -device vfio-pci,host=00:02.0,id=hostdev0,bus=pci.0,addr=0x2
++Options
++=======
++* x-igd-opregion=[on|*off*]
++  Copy host IGD OpRegion and expose it to guest with fw_cfg
++
++* x-igd-lpc=[on|*off*]
++  Creates a dummy LPC bridge at 00:1f:0 with host VID/DID (i440fx only)
++
++* x-igd-legacy-mode=[on|off|*auto*]
++  Enable/Disable legacy mode
++
++* x-igd-gms=[hex, default 0]
++  Overriding DSM region size in GGC register, 0 means uses host value.
++  Use this only when the DSM size cannot be changed through the
++  'DVMT Pre-Allocated' option in host BIOS.
+ 
+-For UPT mode, retain the default emulated graphics and simply add the vfio-pci
+-device making use of any other bus address other than 02.0.  libvirt will
+-default to assigning the device a UPT compatible address while legacy mode
+-users will need to manually edit the XML if using a tool like virt-manager
+-where the VM device address is not expressly specified.
+ 
+-An experimental vfio-pci option also exists to enable OpRegion, and thus
+-external monitor support, for UPT mode.  This can be enabled by adding
+-"x-igd-opregion=on" to the vfio-pci device options for the IGD device.  As
+-with legacy mode, this requires the host to support features introduced in
+-the v4.6 kernel.  If Intel chooses to embrace this support, the option may
+-be made non-experimental in the future, opening it to libvirt support.
++Examples
++========
++* Adding IGD with automatically legacy mode support
++  -device vfio-pci,host=00:02.0,id=hostdev0,addr=2.0
+ 
+-Developer ABI
+-=============
+-Legacy mode IGD support imposes two fw_cfg requirements on the VM firmware:
++* Adding IGD with OpRegion and LPC ID hack, but without VGA ranges
++  (For UEFI guests)
++  -device vfio-pci,host=00:02.0,id=hostdev0,addr=2.0,x-igd-legacy-mode=off,x-igd-opregion=on,x-igd-lpc=on,romfile=efi_oprom.rom
++
++
++Guest firmware
++==============
++Guest firmware is responsible for setting up OpRegion and Base of Data Stolen
++Memory (BDSM) in guest address space. IGD passthrough support imposes two
++fw_cfg requirements on the VM firmware:
+ 
+ 1) "etc/igd-opregion"
+ 
+@@ -117,17 +150,111 @@ Legacy mode IGD support imposes two fw_cfg requirements on the VM firmware:
+    Firmware must allocate a reserved memory below 4GB with required 1MB
+    alignment equal to this size.  Additionally the base address of this
+    reserved region must be written to the dword BDSM register in PCI config
+-   space of the IGD device at offset 0x5C.  As this support is related to
+-   running the IGD ROM, which has other dependencies on the device appearing
+-   at guest address 00:02.0, it's expected that this fw_cfg file is only
+-   relevant to a single PCI class VGA device with Intel vendor ID, appearing
+-   at PCI bus address 00:02.0.
++   space of the IGD device at offset 0x5C (or 0xC0 for Gen 11+ devices using
++   64-bit BDSM).  As this support is related to running the IGD ROM, which
++   has other dependencies on the device appearing at guest address 00:02.0,
++   it's expected that this fw_cfg file is only relevant to a single PCI
++   class VGA device with Intel vendor ID, appearing at PCI bus address 00:02.0.
++
++Upstream Seabios has OpRegion and BDSM (pre-Gen11 device only) support.
++However, the support is not accepted by upstream EDK2/OVMF. A recommended
++solution is to create a virtual OpRom with following DXE drivers:
++
++* IgdAssignmentDxe: Set up OpRegion and BDSM according to fw_cfg (must)
++* IntelGopDriver: Closed-source Intel GOP driver
++* PlatformGopPolicy: Protocol required by IntelGopDriver
++
++IntelGopDriver and PlatformGopPolicy is only required when enabling GOP on IGD.
++
++The original IgdAssignmentDxe can be found at [3]. A Intel maintained version
++with PlatformGopPolicy for industrial computing is at [4]. There is also an
++unofficially maintained version with newer Gen11+ device support at [5].
++You need to build them with EDK2.
++
++For the IntelGopDriver, Intel never released it to public. You may contact
++Intel support to get one as [4] said, if you are an Intel Premier Support
++customer, or you can try extracting it from your host firmware using
++"UEFI BIOS Updater"[6].
++
++Once you got all the required DXE drivers, a Option ROM can be generated with
++EfiRom utility in EDK2, using
++  EfiRom -f 0x8086 -i <Device ID of your IGD> -o output.rom \
++  -e IgdAssignmentDxe.efi PlatformGOPPolicy.efi IntelGopDriver.efi
++
++
++Known issues
++============
++When using OVMF as guest firmware, you may encounter the following warning:
++warning: vfio_container_dma_map(0x55fab36ce610, 0x380010000000, 0x108000, 0x7fd336000000) = -22 (Invalid argument)
++
++Solution:
++Set the host physical address bits to IOMMU address width using
++  -cpu host,host-phys-bits-limit=<IOMMU address width>
++Or in libvirt XML with
++  <cpu>
++    <maxphysaddr mode='passthrough' limit='<IOMMU address width>'/>
++  </cpu>
++The IOMMU address width can be determined with
++  echo $(( ((0x$(cat /sys/devices/virtual/iommu/dmar0/intel-iommu/cap) & 0x3F0000) >> 16) + 1 ))
++Refer https://edk2.groups.io/g/devel/topic/patch_v1/102359124 for more details
++
++
++Memory View
++===========
++IGD has it own address space. To use system RAM as VRAM, a single-level page
++table named Global Graphics Translation Table (GTT) is used for the address
++translation. Each page table entry points a 4KB page. Illustration below shows
++the translation flow on IGD with 64-bit GTT PTEs.
++
++(PTE_SIZE == 8)                +-------------+---+
++                               |   Address   | V |  V: Valid Bit
++                               +-------------+---+
++                               | ...         |   |
++IGD:0x01ae9010           0xd740| 0x70ffc000  | 1 |  Mem:0x42ba3e010^
++-----------------------> 0xd748| 0x42ba3e000 | 1 +------------------>
++(addr >> 12) * PTE_SIZE  0xd750| 0x42ba3f000 | 1 |
++                               | ...         |   |
++                               +-------------+---+
++^ The address may be remapped by IOMMU
++
++The memory region store GTT is called GTT Stolen Memory (GSM) it is located
++right below the Data Stolen Memory (DSM). Accessing this region directly is
++not allowed, any access will immediately freeze the whole system. The only way
++to access it is through the second half of MMIO BAR0.
++
++The Data Stolen Memory is reserved by firmware, and acts as the VRAM in pre-OS
++environments. In QEMU, guest firmware (Seabios/OVMF) is responsible for
++reserving a continuous region and program its base address to BDSM register,
++then let VBIOS/GOP driver initializing this region. Illustration below shows
++how DSM is mapped.
++
++       IGD Addr Space                 Host Addr Space         Guest Addr Space
++       +-------------+                +-------------+         +-------------+
++       |             |                |             |         |             |
++       |             |                |             |         |             |
++       |             |                +-------------+         +-------------+
++       |             |                | Data Stolen |         | Data Stolen |
++       |             |                |   (Guest)   |         |   (Guest)   |
++       |             |  +------------>+-------------+<------->+-------------+<--Guest BDSM
++       |             |  | Passthrough |             | EPT     |             |   Emulated by QEMU
++DSMSIZE+-------------+  | with IOMMU  |             | Mapping |             |   Programmed by guest FW
++       |             |  |             |             |         |             |
++       |             |  |             |             |         |             |
++      0+-------------+--+             |             |         |             |
++                        |             +-------------+         |             |
++                        |             | Data Stolen |         +-------------+
++                        |             |   (Host)    |
++                        +------------>+-------------+<--Host BDSM
++                          Non-        |             |   "real" one in HW
++                          Passthrough |             |   Programmed by host FW
++                                      +-------------+
+ 
+ Footnotes
+ =========
+-[1] Nothing precludes adding additional emulated or assigned graphics devices
+-    as non-primary, other than the combination typically not working.  I only
+-    intend to set user expectations, others are welcome to find working
+-    combinations or fix whatever issues prevent this from working in the common
+-    case.
++[1] https://www.intel.com/content/www/us/en/docs/graphics-for-linux/developer-reference/1-0/dump-video-bios.html
+ [2] # echo "vfio-pci" > /sys/bus/pci/devices/0000:00:02.0/driver_override
++[3] https://web.archive.org/web/20240827012422/https://bugzilla.tianocore.org/show_bug.cgi?id=935
++    Tianocore bugzilla was down since Jan 2025 :(
++[4] https://eci.intel.com/docs/3.3/components/kvm-hypervisor.html, Patch 0001-0004
++[5] https://github.com/tomitamoeko/VfioIgdPkg
++[6] https://winraid.level1techs.com/t/tool-guide-news-uefi-bios-updater-ubu/30357
+-- 
+2.47.2
+
 
