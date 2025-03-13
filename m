@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7413FC28B28
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 09:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C8BC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfL9-0001Dz-D9; Thu, 13 Mar 2025 05:58:59 -0400
+	id 1tsfMy-0001zU-UT; Thu, 13 Mar 2025 06:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfL7-0001Dp-Ak
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:58:57 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfMe-0001xl-G9
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:00:32 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfL5-0007XJ-OF
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:58:57 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so6155075e9.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 02:58:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfMc-00081a-Dq
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:00:32 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43d0618746bso4500305e9.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741859934; x=1742464734; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741860029; x=1742464829; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dV9hsJCpskUOw8Cn1h7Bos4uiEf9kDHJ2k8wIsN/VOs=;
- b=mMlFUgY/l2DyVhGRrTEFVAot+i0Fv+YecLDs1/SzWDuCQrsJeWjcKZxciFsExU2ioB
- yvtH+P1siD0OHVJwwUaUnxdjkCOsi4CYW1YAxQ11Quqm8i6EfL5+jrY+YWLTTEsqds+1
- BRISLkvTsO5cEjc17Rju5GndZhp8QLEJ1O/mIBfx1A5EVwnFoshIInjum3AlvbHC6h6U
- iI5xLtOPymC9vKvXzRgD6FSSgOj0yZ8Khk2upjA3yX75vDOdiMy8jIbnpr4bbhgk8azO
- xCEnPCBAk18rCRcNLCQDccAJsJVOkSvRbuvoDUrmBATd+WPtbOcvtMazcL05BawhMrkq
- tCUQ==
+ bh=yoAlrHUChqgF50xftQwqgV9isB37AtZUJqD9JgAEfBA=;
+ b=tJGLeGbPjqLtn4eHBvoHjSDTJA7SqRrFdiQclFtdXXHx3wlCP5/MCmjEAaX4C71gPE
+ OODFMU3MO1og9fa6W+YIp1T2bVtQ2seGFJvbPxCyrFqWG//7zCcC8vucSAzetUIzWFUJ
+ 6PPzUqOu9s/ZK0Sf72EwjzzvzINxLoi4/gOfpi5Hs0DdveDssVAarYVG3hIlVUNSNaTk
+ a9ZHe2Cm3aJTPg6P+GToz95z46xTE129JwgI6Et3uJ7JFkAzRL5DSvUZcxVJPhnGyxQo
+ jomPPv5brvmWA3GMVbNmaoeV4EvDgsVGvWUcsFedmnQuMznkB0snsnd2i+lQkUL3DulN
+ harQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741859934; x=1742464734;
+ d=1e100.net; s=20230601; t=1741860029; x=1742464829;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dV9hsJCpskUOw8Cn1h7Bos4uiEf9kDHJ2k8wIsN/VOs=;
- b=skrOfcGmQH+XFA6Wy5QYgFjKe6+3WIx2KoncDW4pDAHIdxs+WIVOOnsRVHNnmpXtiG
- 1g88cKoO+/LXXwiC3+1za/PShWClMXGsX4uVdTcavmm8k0f+GbW5+zI1ZlxppsZQqgHx
- UmtN831KY60Y8MEktW5A/EkALnbyG9VE8UplznAnTLtFJ1swXcu5HTHlS1g7mfE2c+KL
- 2aliZVwBliAEv7OWerH5DFiIJy24k3oNFV6tK64sKEk7H6XuPb5zS5oL/6yo+vl62lio
- JdXieL52yKfr7RJwM7q4/9t1nUzEUALclEt+4+CKd52bGOcrUja+EQiCEIgoZTC+Ktsz
- t5jg==
+ bh=yoAlrHUChqgF50xftQwqgV9isB37AtZUJqD9JgAEfBA=;
+ b=kXLDh7HdVKVAQI3Zirzu4yYg79+JcDcuCY6AVdsxK2ZpjJq0yalliTMi5ZJm7bVoEb
+ CLtvtl2hW5eNz211bDxaXeCGyAIgWcQN6FcTQKAjh/KUZUHiq0OoOo6R54I7h/54veBC
+ h/2oMK309grJSGAP+eQaF3MiK8SzQCbfrYkwZnZVarbTfU9dsUzUkkYkebI1VWdv/Mwc
+ K3uLeu/OP68PuPo0g4KLWZB2jho2lyLYch2KWGQ/HEPpkh6anlGFBa+XIk6lFRVGL8CN
+ y5Kf3YU/D2KUOjr+kTF/tWBUXLI/YTQn3g0H1cQSUaB3moRHZoR100Qa4NY2qphYkA1I
+ YNSw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUBwYzLcetE5TSzuEny1GizLGxywu/i3/uQch++tKnAt2an7BQZW0nLKT1S9UUU1roXAoAvQxm34UR@nongnu.org
-X-Gm-Message-State: AOJu0YxteIJRApx9RYSrSo7El4xUC+9a/Db/QMTCUzqeskBa/rTX208x
- UbTa0pvY3OmW1JB2l0tGrX9xhVuLoZMZz2FWmNjYmK0COrHR/TeYsdlk8+tYhccq7VojK5cIiwY
- Zh3Y=
-X-Gm-Gg: ASbGncs/i17AYJBUmWu7saYgmUy+3QPmJvpBG8X4gK7lv9pvlKgp8p9Bo9g1YgUTZVz
- 42ZQiWSjDsuf2lSmgpm9ERqdWayOhAWSDpC54D98NKlEKf42WeQfBFshlhZlYqpmAyHcjJAzdiH
- cnP298I73HuvHVcTdg4hzenEsE5lyFxOrXwK4V7mkQF+xhU2e33O2vL7j7KiiOzaQBL8wLn6wzM
- NrNNJy49M3ZvSXCKufkRPeWeuYFEZiiKuAf502i8PUeTteHL5QqZCNMVWgYKLeZYktmSmxVnGog
- VTI2xdzVOYUvlbiaJML6q+kdg2Goff9ucPSjP98WYoO/1F5c8TQevZHqda1Gx9OIinzRQ4mLha3
- hjnU7WrnEVqSrDFc=
-X-Google-Smtp-Source: AGHT+IEr9zPQy6JGCbZv8N3jQzeJHp/H8mQbqdCXnQ5/cVfI7BO26/L4RNCme6srrGxgR3+fzDErmg==
-X-Received: by 2002:a05:600c:510c:b0:43d:1b95:6d0e with SMTP id
- 5b1f17b1804b1-43d1b957027mr3900925e9.23.1741859933795; 
- Thu, 13 Mar 2025 02:58:53 -0700 (PDT)
+ AJvYcCXk7oD9EQJQHd6YuYigrlsTXwDS+qJgfzxQdbIu7jhCgL6w9RU7vih/h/LeDEF3s7npMvyVBp843C1v@nongnu.org
+X-Gm-Message-State: AOJu0YzNXVrYrVuaq+q93PlD2+VYcGvsUpGvihd5t4Aat2MOLUt2sAVm
+ QTtmhXCogxpj2aN1IP2vWpEmArV5dHCAA5BvJZqa2eY80ht6h1tPyQRwv9ZBpgs=
+X-Gm-Gg: ASbGncsVkx1X0sMEfuL3dVkkMJlPMT9gT5X32SETj8PVOJ3aoKMxK8AhVB2vkXfXBz1
+ sf5ail79XaXN2Ff2e07hbUm4U+WdDtwa9/SpbMrlrVtlSoeKE4ETYCJKOg11gBcq01M6ooWf0FV
+ tGHx5zOmGwquzo/eCSX7kgaGLxMvMYd6K1p6nstMMw1fbQw43lFG4rXOlzDHjCkPjCcFwFd5vNc
+ ovge2c75oVmvJX5qfX24Ifu4Vaa1EWscQMVlEQAEEw514wT14WA3kGuvOr/Egdc4YlRHpGTJrmc
+ AQSTeT+NMPbTFtftUV1YVqkKD5NS5kphhef/ytSR97Fhl51Yi3sjEUlq0pmpQshifvv7IYXaLt9
+ toqrXxewyfhedYt4=
+X-Google-Smtp-Source: AGHT+IE3A/PTtMhgEDwpVWEkTyrWSGNdtSU1H7YjsnmZDmDE8fyGHwpBpX8f+998BJeaWZegAlY1qA==
+X-Received: by 2002:a05:6000:402a:b0:390:e5c6:920 with SMTP id
+ ffacd0b85a97d-39132d22aa7mr18333721f8f.3.1741860028624; 
+ Thu, 13 Mar 2025 03:00:28 -0700 (PDT)
 Received: from [192.168.1.20] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb318a12sm1551702f8f.75.2025.03.13.02.58.53
+ 5b1f17b1804b1-43d031d2c26sm50423415e9.0.2025.03.13.03.00.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 02:58:53 -0700 (PDT)
-Message-ID: <0272cb13-e973-40f3-9659-dbc8c8ccbff5@linaro.org>
-Date: Thu, 13 Mar 2025 10:58:52 +0100
+ Thu, 13 Mar 2025 03:00:28 -0700 (PDT)
+Message-ID: <5b8bf976-1487-462f-a2b4-ff7117da97ba@linaro.org>
+Date: Thu, 13 Mar 2025 11:00:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/37] include/exec: Split out mmap-lock.h
+Subject: Re: [PATCH 14/37] include/system: Move exec/memory.h to
+ system/memory.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-14-richard.henderson@linaro.org>
+ <20250313034524.3069690-15-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250313034524.3069690-14-richard.henderson@linaro.org>
+In-Reply-To: <20250313034524.3069690-15-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +104,170 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/3/25 04:44, Richard Henderson wrote:
-> Split out mmap_lock, et al from page-protection.h
-> to a new header.
+> Convert the existing includes with
+> 
+>    sed -i ,exec/memory.h,system/memory.h,g
+> 
+> Move the include within cpu-all.h into a !CONFIG_USER_ONLY block.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/internal-target.h    |  1 +
->   include/exec/mmap-lock.h       | 33 +++++++++++++++++++++++++++++++++
+>   hw/arm/strongarm.h                        | 2 +-
+>   hw/display/apple-gfx.h                    | 2 +-
+>   hw/display/framebuffer.h                  | 2 +-
+>   hw/display/vga_int.h                      | 2 +-
+>   hw/hyperv/hv-balloon-our_range_memslots.h | 2 +-
+>   hw/intc/ioapic_internal.h                 | 2 +-
+>   hw/net/i82596.h                           | 2 +-
+>   hw/net/pcnet.h                            | 2 +-
+>   hw/tpm/tpm_ppi.h                          | 2 +-
+>   hw/usb/hcd-uhci.h                         | 2 +-
+>   hw/vfio/pci.h                             | 2 +-
+>   hw/virtio/vhost-iova-tree.h               | 2 +-
+>   include/exec/cpu-all.h                    | 3 +--
+>   include/exec/ioport.h                     | 2 +-
+>   include/hw/acpi/acpi.h                    | 2 +-
+>   include/hw/acpi/ich9_tco.h                | 2 +-
+>   include/hw/arm/fsl-imx25.h                | 2 +-
+>   include/hw/arm/fsl-imx31.h                | 2 +-
+>   include/hw/arm/fsl-imx6.h                 | 2 +-
+>   include/hw/arm/fsl-imx6ul.h               | 2 +-
+>   include/hw/arm/omap.h                     | 2 +-
+>   include/hw/arm/stm32l4x5_soc.h            | 2 +-
+>   include/hw/boards.h                       | 2 +-
+>   include/hw/char/parallel.h                | 2 +-
+>   include/hw/char/riscv_htif.h              | 2 +-
+>   include/hw/char/serial-mm.h               | 2 +-
+>   include/hw/char/serial.h                  | 2 +-
+>   include/hw/display/macfb.h                | 2 +-
+>   include/hw/fsi/aspeed_apb2opb.h           | 2 +-
+>   include/hw/fsi/cfam.h                     | 2 +-
+>   include/hw/fsi/fsi-master.h               | 2 +-
+>   include/hw/fsi/fsi.h                      | 2 +-
+>   include/hw/fsi/lbus.h                     | 2 +-
+>   include/hw/gpio/npcm7xx_gpio.h            | 2 +-
+>   include/hw/i2c/npcm7xx_smbus.h            | 2 +-
+>   include/hw/i2c/pm_smbus.h                 | 2 +-
+>   include/hw/i386/apic_internal.h           | 2 +-
+>   include/hw/i386/x86.h                     | 2 +-
+>   include/hw/ide/ahci.h                     | 2 +-
+>   include/hw/ipmi/ipmi.h                    | 2 +-
+>   include/hw/isa/apm.h                      | 2 +-
+>   include/hw/isa/isa.h                      | 2 +-
+>   include/hw/m68k/q800.h                    | 2 +-
+>   include/hw/mem/npcm7xx_mc.h               | 2 +-
+>   include/hw/mem/pc-dimm.h                  | 2 +-
+>   include/hw/mips/mips.h                    | 2 +-
+>   include/hw/misc/auxbus.h                  | 2 +-
+>   include/hw/misc/ivshmem-flat.h            | 2 +-
+>   include/hw/misc/mac_via.h                 | 2 +-
+>   include/hw/misc/npcm7xx_mft.h             | 2 +-
+>   include/hw/misc/npcm_clk.h                | 2 +-
+>   include/hw/misc/npcm_gcr.h                | 2 +-
+>   include/hw/misc/pvpanic.h                 | 2 +-
+>   include/hw/net/dp8393x.h                  | 2 +-
+>   include/hw/net/msf2-emac.h                | 2 +-
+>   include/hw/nvram/mac_nvram.h              | 2 +-
+>   include/hw/nvram/npcm7xx_otp.h            | 2 +-
+>   include/hw/pci-host/fsl_imx8m_phy.h       | 2 +-
+>   include/hw/pci-host/pam.h                 | 2 +-
+>   include/hw/pci-host/remote.h              | 2 +-
+>   include/hw/pci/pci.h                      | 2 +-
+>   include/hw/pci/pcie_host.h                | 2 +-
+>   include/hw/pci/shpc.h                     | 2 +-
+>   include/hw/ppc/mac_dbdma.h                | 2 +-
+>   include/hw/ppc/pnv_lpc.h                  | 2 +-
+>   include/hw/ppc/pnv_occ.h                  | 2 +-
+>   include/hw/ppc/pnv_sbe.h                  | 2 +-
+>   include/hw/ppc/pnv_xscom.h                | 2 +-
+>   include/hw/ppc/ppc4xx.h                   | 2 +-
+>   include/hw/ppc/vof.h                      | 2 +-
+>   include/hw/ppc/xics.h                     | 2 +-
+>   include/hw/register.h                     | 2 +-
+>   include/hw/remote/proxy-memory-listener.h | 2 +-
+>   include/hw/sh4/sh_intc.h                  | 2 +-
+>   include/hw/southbridge/ich9.h             | 2 +-
+>   include/hw/sysbus.h                       | 2 +-
+>   include/hw/timer/npcm7xx_timer.h          | 2 +-
+>   include/hw/tricore/tricore.h              | 2 +-
+>   include/hw/usb.h                          | 2 +-
+>   include/hw/vfio/vfio-common.h             | 2 +-
+>   include/hw/vfio/vfio-container-base.h     | 2 +-
+>   include/hw/virtio/vhost-backend.h         | 2 +-
+>   include/hw/virtio/vhost.h                 | 2 +-
+>   include/hw/virtio/virtio.h                | 2 +-
+>   include/hw/xen/xen-pvh-common.h           | 2 +-
+>   include/hw/xtensa/mx_pic.h                | 2 +-
+>   include/qemu/iova-tree.h                  | 2 +-
+>   include/qemu/reserved-region.h            | 2 +-
+>   include/system/dma.h                      | 2 +-
+>   include/system/hostmem.h                  | 2 +-
+>   include/system/kvm_int.h                  | 2 +-
+>   include/{exec => system}/memory.h         | 8 ++------
+>   include/system/vhost-user-backend.h       | 2 +-
+>   migration/rdma.h                          | 2 +-
+>   rust/wrapper.h                            | 2 +-
+>   target/loongarch/cpu.h                    | 2 +-
+>   target/mips/cpu.h                         | 2 +-
+>   accel/kvm/kvm-all.c                       | 2 +-
+>   accel/tcg/cputlb.c                        | 2 +-
+>   backends/tpm/tpm_util.c                   | 2 +-
+>   block/blkio.c                             | 4 ++--
+>   disas/disas-mon.c                         | 2 +-
+>   hw/acpi/erst.c                            | 2 +-
+>   hw/avr/atmega.c                           | 2 +-
+>   hw/block/fdc-sysbus.c                     | 2 +-
+>   hw/core/cpu-system.c                      | 2 +-
+>   hw/core/loader-fit.c                      | 2 +-
+>   hw/core/loader.c                          | 2 +-
+>   hw/display/edid-region.c                  | 2 +-
+>   hw/hyperv/hyperv.c                        | 2 +-
+>   hw/i386/acpi-common.c                     | 2 +-
+>   hw/i386/acpi-microvm.c                    | 2 +-
+>   hw/i386/pc_piix.c                         | 2 +-
+>   hw/intc/mips_gic.c                        | 2 +-
+>   hw/intc/ompic.c                           | 2 +-
+>   hw/net/ne2000.c                           | 2 +-
+>   hw/pci-bridge/pci_bridge_dev.c            | 2 +-
+>   hw/pci-host/remote.c                      | 2 +-
+>   hw/ppc/pnv_homer.c                        | 2 +-
+>   hw/ppc/sam460ex.c                         | 2 +-
+>   hw/remote/iommu.c                         | 2 +-
+>   hw/remote/machine.c                       | 2 +-
+>   hw/remote/proxy-memory-listener.c         | 2 +-
+>   hw/remote/vfio-user-obj.c                 | 2 +-
+>   hw/s390x/s390-pci-inst.c                  | 2 +-
+>   hw/timer/sh_timer.c                       | 2 +-
+>   hw/vfio/common.c                          | 2 +-
+>   hw/vfio/container.c                       | 2 +-
+>   hw/vfio/platform.c                        | 2 +-
+>   hw/xtensa/sim.c                           | 2 +-
+>   hw/xtensa/virt.c                          | 2 +-
+>   hw/xtensa/xtensa_memory.c                 | 2 +-
+>   hw/xtensa/xtfpga.c                        | 2 +-
+>   migration/dirtyrate.c                     | 2 +-
+>   migration/rdma.c                          | 2 +-
+>   migration/savevm.c                        | 2 +-
+>   monitor/hmp-cmds-target.c                 | 2 +-
+>   stubs/ram-block.c                         | 2 +-
+>   system/dirtylimit.c                       | 2 +-
+>   system/ioport.c                           | 2 +-
+>   system/memory.c                           | 2 +-
+>   system/memory_mapping.c                   | 2 +-
+>   system/physmem.c                          | 2 +-
+>   system/qtest.c                            | 2 +-
+>   target/xtensa/cpu.c                       | 2 +-
+>   tests/qtest/fuzz/generic_fuzz.c           | 2 +-
+>   tests/qtest/fuzz/qos_fuzz.c               | 2 +-
+>   tests/unit/test-resv-mem.c                | 2 +-
+>   ui/console.c                              | 2 +-
+>   util/vfio-helpers.c                       | 2 +-
+>   MAINTAINERS                               | 2 +-
+>   docs/devel/memory.rst                     | 2 +-
+>   scripts/analyze-inclusions                | 2 +-
+>   153 files changed, 155 insertions(+), 160 deletions(-)
+>   rename include/{exec => system}/memory.h (99%)
 
-What about include/accel/tcg/mmap-lock.h?
-
->   include/exec/page-protection.h | 22 ----------------------
->   accel/tcg/cpu-exec.c           |  1 +
->   accel/tcg/tb-maint.c           |  1 +
->   accel/tcg/translate-all.c      |  1 +
->   linux-user/arm/cpu_loop.c      |  1 +
->   linux-user/elfload.c           |  1 +
->   linux-user/flatload.c          |  1 +
->   linux-user/mmap.c              |  1 +
->   linux-user/syscall.c           |  1 +
->   target/arm/helper.c            |  1 +
->   12 files changed, 43 insertions(+), 22 deletions(-)
->   create mode 100644 include/exec/mmap-lock.h
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
