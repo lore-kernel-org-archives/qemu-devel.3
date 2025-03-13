@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72396C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 07:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CB3AC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 07:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tscl4-0001q1-Rj; Thu, 13 Mar 2025 03:13:36 -0400
+	id 1tscny-0003qr-3K; Thu, 13 Mar 2025 03:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsckq-0001lS-23
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 03:13:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tscko-0000jz-Ac
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 03:13:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741849997;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ygfaaLeXorOg3lvUKg9a9NSyVm9G7rtOImLX7sIYTUw=;
- b=Ddq5h1oMu4yrVl+MMyqNvqPb8+aIcrCr5ahHdtGamvNSa8922/YbfPNsJjn9pZxDKkEXtH
- 8YpJnIDsD9UxRfe711/8VlxUxpXdrXvtUVNrgDKZtrdDQjhWpx+zQFrQOdeXTvs3Tyzz9b
- ttB4r84afnNJjM5TDh904yeSrZ4vZw4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-_UdMuDKiOGqhHzOIM4Yusg-1; Thu,
- 13 Mar 2025 03:13:10 -0400
-X-MC-Unique: _UdMuDKiOGqhHzOIM4Yusg-1
-X-Mimecast-MFC-AGG-ID: _UdMuDKiOGqhHzOIM4Yusg_1741849989
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 746251800267; Thu, 13 Mar 2025 07:13:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11C451800268; Thu, 13 Mar 2025 07:13:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3058421E66C1; Thu, 13 Mar 2025 08:13:03 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: Yi Liu <yi.l.liu@intel.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,  Bibo Mao
- <maobibo@loongson.cn>,  Peter Maydell <peter.maydell@linaro.org>,  Richard
- Henderson <richard.henderson@linaro.org>,  Zhenzhong Duan
- <zhenzhong.duan@intel.com>
-Subject: Re: Giving your own patches your Reviewed-by
-In-Reply-To: <542252f1-d4f5-41a7-badd-c17acd94e8bf@eviden.com> (CLEMENT
- MATHIEU--DRIF's message of "Thu, 13 Mar 2025 06:45:52 +0000")
-References: <878qpamvk6.fsf@pond.sub.org>
- <9329310c-bfad-44aa-a53a-87c1f39668a2@linaro.org>
- <ca6ab1ec-4f30-4da7-ac08-3a514d8b4a02@intel.com>
- <542252f1-d4f5-41a7-badd-c17acd94e8bf@eviden.com>
-Date: Thu, 13 Mar 2025 08:13:03 +0100
-Message-ID: <87h63xcsjk.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tscnp-0003oj-SO
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 03:16:25 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tscnn-0001J0-VX
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 03:16:25 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2240b4de12bso15039675ad.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 00:16:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741850182; x=1742454982;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zjV1R+gX9epgHZnV7KEQ3WSuudTlpgPTKZv+aFGcet8=;
+ b=3YXSVvoD2DE7qafrs6P3QMUVeSknztw2PkWEW8h6fJKwq98BqBFPvGweOjHYIenYNX
+ CuB+3nqfnM3laFxC/WpGSXF3k8WNu1zL9trqlvQKxnELTr0Q0ynNuMwRffxTOgaLBI9d
+ YmgIyMerzChUiEiAoWA03cqW68krsoA1LLH4ZgZYuNeC6f9jexPghN8CPTaXXdrxUNn7
+ jR/ysmF+XQimrEhvk+P/cLChmcjex4t9LPeW8lEbnyoY6qaL4bbQcsZtpwz9qu5f/vuN
+ 4lO6XZHmP4GSnCV+jAuZBYqjbwd/cgm3ZnMK/ZCXI9Chb+PCcJ0v0r0FbNHyJwRShxkw
+ 3hFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741850182; x=1742454982;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zjV1R+gX9epgHZnV7KEQ3WSuudTlpgPTKZv+aFGcet8=;
+ b=PdZya2RuPCdB+ptEa/ypONurQYY415HSxnekeiAzvokYbBHSi58odzRxtRzrwRi5wV
+ WcnoSvqEpjLFwjYcXbz6xTp4vPIUJaTduT0GlzVo69sl88PekagcVzUIO+KbKN9ICORi
+ hTWIpm3rra4ejmQz/M+FU0GvcynPf/efHxhX/79UJ9XIQ6B8pxOHv3dQcPyOmnSsXFYx
+ ALXUP9m3WsIeVptKWKOlheVuzB9S+uS5vbUvvi5ft529uYiJamzwJoZSVLKyOSvYa7NJ
+ 2K/P5HcyGkcTameyNHNcZcNNL+8waiUlOtGGfcB3z75LadJJZdrfHurcs8zrDACDXBsr
+ b5kQ==
+X-Gm-Message-State: AOJu0YzKIF1HNMbGfZfMx3Sb2wdRG0OaC4bDCZQVSxsz163Uu41kyo/+
+ 38prYEhwcjwJb2vNFgws2iklhCzU/pNFtwogXK6f0xtf9vX/FZoz9fKNKVE+mMB7mDnKaM38VNJ
+ RHpI=
+X-Gm-Gg: ASbGnctL8JVaUcoJ7hXX53CbDlB+dzpil2wkwlZqNg6+0Vqk2/hBv4kDxGeVNVAY/kR
+ NemLcbv2WsUYYwrFGKVphfCv/wx090/soLOlw8nCKgSDD6q5YIyv+UoJ3LLkw5ZTX8ZfgdO9KY1
+ J+i9wu3ckNHHIuqcpeeqg2cax46gOIKPmr5S99GVf/PLmXnWWgGnkDPZzrhDyZk+f9VTsZBe0yX
+ oXf8jg74qkda2g0lCxYGWap5liSAba1waN95rKsQ+PRuOiJgghv3yJPhkX3F0Us8veokl/++1Py
+ THKVMiOUzXjiyC05geL+Jta5fhSLNJ3JrjmJOiD75gUMs4vA
+X-Google-Smtp-Source: AGHT+IHQHyL2nxA5IgoWuVL7M6RggIHKJLJXXStUGTv2NbL8TUSAAEYqE1qGXAozXfBNvfDGyqkmUQ==
+X-Received: by 2002:a17:902:f686:b0:224:5a8:ba29 with SMTP id
+ d9443c01a7336-22428ad1f1dmr373956525ad.43.1741850182277; 
+ Thu, 13 Mar 2025 00:16:22 -0700 (PDT)
+Received: from localhost ([157.82.205.237])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-225c6bd53aasm6743985ad.247.2025.03.13.00.16.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Mar 2025 00:16:21 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Thu, 13 Mar 2025 16:16:17 +0900
+Subject: [PATCH] target/arm: Define raw write for PMU CLR registers
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250313-clr-v1-1-2cc49df40fe9@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAECG0mcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDY0Nj3eScIl2zRGMTC2NDMyOLJHMloMqCotS0zAqwKdGxtbUAsDkDX1U
+ AAAA=
+X-Change-ID: 20250313-clr-6a34831628b7
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.15-dev-edae6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,30 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com> writes:
+PMCNTENCLR_EL0 and PMINTENCLR_EL1 clears written bits so we need an
+alternative raw write functions, which will be used to copy KVM kernel
+coprocessor state into userspace.
 
-> On 12/03/2025 13:54, Yi Liu wrote:
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ target/arm/helper.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-[...]
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index f0ead22937bf..30883cd3a989 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1907,7 +1907,8 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
+       .fgt = FGT_PMCNTEN,
+       .type = ARM_CP_ALIAS | ARM_CP_IO,
+       .fieldoffset = offsetof(CPUARMState, cp15.c9_pmcnten),
+-      .writefn = pmcntenclr_write },
++      .writefn = pmcntenclr_write,
++      .raw_writefn = raw_write },
+     { .name = "PMOVSR", .cp = 15, .crn = 9, .crm = 12, .opc1 = 0, .opc2 = 3,
+       .access = PL0_RW, .type = ARM_CP_IO,
+       .fieldoffset = offsetoflow32(CPUARMState, cp15.c9_pmovsr),
+@@ -2033,7 +2034,8 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
+       .fgt = FGT_PMINTEN,
+       .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
+       .fieldoffset = offsetof(CPUARMState, cp15.c9_pminten),
+-      .writefn = pmintenclr_write },
++      .writefn = pmintenclr_write,
++      .raw_writefn = raw_write },
+     { .name = "CCSIDR", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 1, .opc2 = 0,
+       .access = PL1_R,
 
->> Commit eda4c9b5b3c is the similar case. Zhenzhong and Cl=C3=A9ment took
->> the patch from me and I was cced when Zhenzhong sent it out. I gave
->> my r-b after reviewing it.
->
-> Some other commits of the same series were in a similar situation:=20
-> initially written by me and slightly changed by Zhenzhong.
-> These are not caught by one-liner above because I deliberately didn't=20
-> give an rb.
->
-> According to Daniel it seems to be ok to review a co-authored patch but
-> is this considered a last resort?
+---
+base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+change-id: 20250313-clr-6a34831628b7
 
-Ideally, patch review is a fresh look at things.  If you can't get such
-"outsider" review, and it's not for lack of trying, you work with the
-maintainer to figure out what to do.  If you *are* the maintainer, you
-make a judgement call.
-
-That said, recording meaningful work can't be wrong.  If you feel you
-did meaningful review work, go ahead and add your R-by.
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
