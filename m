@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53325C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 11:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E70A0C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 11:28:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsgfE-0001kL-1E; Thu, 13 Mar 2025 07:23:48 -0400
+	id 1tsgio-000309-Hi; Thu, 13 Mar 2025 07:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tsgfB-0001k3-JM
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:23:45 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1tsgig-0002wk-3z
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:27:27 -0400
+Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tsgf8-0002fD-Fg
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:23:45 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bxlmk4wNJn3OGUAA--.56645S3;
- Thu, 13 Mar 2025 19:23:37 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCxLcUuwNJnToVIAA--.4021S3;
- Thu, 13 Mar 2025 19:23:35 +0800 (CST)
-Subject: Re: [PATCH 2/3] hw/loongarch/virt: Remove unnecessary NULL pointer
- checking
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250313091350.3770394-1-maobibo@loongson.cn>
- <20250313091350.3770394-3-maobibo@loongson.cn> <875xkdb4q5.fsf@pond.sub.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <d83cb10f-c465-e48f-fa52-9e2925207630@loongson.cn>
-Date: Thu, 13 Mar 2025 19:22:48 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <joro@8bytes.org>) id 1tsgia-00037v-TU
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:27:21 -0400
+Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.8bytes.org (Postfix) with ESMTPSA id 2671F458E7;
+ Thu, 13 Mar 2025 12:27:13 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+ s=default; t=1741865233;
+ bh=IAwbx/SP3vSiC+Qp3huknAR2nLvFlZn3agOaPAUllU0=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=1bZA4tGoVCWh9DLOjmctYhRX6rADMw2dzunbvgRLzuzUmyhZGyTDS3RwjySnBc2cT
+ 3e+ocnOwnJSekYYUQV16EarCepj+ZlXLDCjnmwpMNbWk8KH4wwARaOCUX8qXkq6C+L
+ UUhI5FwpU0gZQ+Tnt2nGS2zh3AgNa5wAVQTo2NNJ91ZINcUqnBoehq5JjXJb21y0RF
+ 2aK9KL6/G+c9/VhXjeSyN7D4iTmYkHrtl3ScPq5wy3Rfq/O56T+4a8Ln2aLtlq2F1S
+ HEDT3GpnhDKmS/3TqowgQFI9szAb/VmMgOaceQesIYiQgwCgPdRt26TuNBW4YT95lU
+ JEMRwX/FIB0eQ==
+Date: Thu, 13 Mar 2025 12:27:11 +0100
+From: =?iso-8859-1?Q?J=F6rg_R=F6del?= <joro@8bytes.org>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <Z9LBD_FnO2Gi2vMK@8bytes.org>
+References: <20250214153443.159889-1-anisinha@redhat.com>
+ <Z9KfMPKr9Tsz-psi@8bytes.org>
+ <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
+ <Z9Ku-o8zJUWgXoYE@8bytes.org>
+ <CAK3XEhOnhpzSg3F2C+PEvjgPKH7Yc9MqyoL8qJJGcbGXign34A@mail.gmail.com>
+ <Z9K6nrGwnyob9tED@8bytes.org>
+ <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <875xkdb4q5.fsf@pond.sub.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxLcUuwNJnToVIAA--.4021S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Jr18Kr1DJFWrury3GF45urX_yoW7XFWfpr
- 4Dt3WqvryDAF1vv3yIvFySgF10vr1xta1xZrZ5tw13ZF1DXrn0yF1akw1Y9FW7Zayvqa1r
- Za13CFs8ZF1SqFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
- KfnxnUUI43ZEXa7IU1LiSJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
+Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
+ envelope-from=joro@8bytes.org; helo=mail.8bytes.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,173 +84,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Mar 13, 2025 at 04:39:15PM +0530, Ani Sinha wrote:
+> Right so what we are proposing is generic enough so that if the VM
+> wants to use an IGVM container as opposed to an actual firmware image
+> in a FUKI, that is totally possible. Then you need to have that IGVM
+> setup the memory in a well defined way like you suggest. Sure, the
+> IGVM is not passed through a command line but it can be loaded by the
+> guest in a well defined memory location and then its instructions can
+> be executed.
 
+That makes sense. In this scenario, how does the VMM detect that it got
+an IGVM image instead of a firmware image? As I understood the current
+documentation the defined behavior is to copy the guest-provided
+FW-image to the BIOS region, no?
 
-On 2025/3/13 下午6:32, Markus Armbruster wrote:
-> Bibo Mao <maobibo@loongson.cn> writes:
-> 
->> There is NULL pointer checking function error_propagate() already,
->> it is not necessary to add checking for function parameter. Here remove
->> NULL pointer checking with function parameter.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   hw/loongarch/virt.c | 12 +++---------
->>   1 file changed, 3 insertions(+), 9 deletions(-)
->>
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index a5840ff968..ab951fc642 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
->> @@ -913,9 +913,7 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->>       cs->cpu_index = cpu_slot - ms->possible_cpus->cpus;
->>       numa_cpu_pre_plug(cpu_slot, dev, &err);
->>   out:
->> -    if (err) {
->> -        error_propagate(errp, err);
->> -    }
->> +    error_propagate(errp, err);
->>   }
->>   
->>   static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
->> @@ -935,9 +933,7 @@ static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
->>       }
->>   
->>       hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
->> -    if (err) {
->> -        error_propagate(errp, err);
->> -    }
->> +    error_propagate(errp, err);
->>   }
-> 
-> This looks correct.  But I believe we can eliminate error propagation
-> here.  Untested patch appended.
-Sure, will eliminate error propagation and return earlier.
-Previously I always consider correctness and neglect these coding style 
-details, that is actually another gap -:)
+> In our proposal, we do not want to dictate how the guest would want to
+> do that. So hopefully you see now that IGVM and our approach is not
+> mutually exclusive but can be complementary to each other.
 
-Regards
-Bibo Mao
+Fine with me. Just note that supporting the current non-IGVM process for
+confidential guests still causes the implicit ABI issue I mentioned
+before. But not being a KVM/QEMU maintainer I can live with that :)
 
-> 
->>   
->>   static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
->> @@ -1001,9 +997,7 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->>   
->>       if (lvms->acpi_ged) {
->>           hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
->> -        if (err) {
->> -            error_propagate(errp, err);
->> -        }
->> +        error_propagate(errp, err);
->>       }
->>   
->>       return;
-> 
-> Here, I'd recommend
-> 
->         if (lvms->acpi_ged) {
->             hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
->             if (err) {
->                 error_propagate(errp, err);
->    +            return;
->             }
-> 
-> because it makes future screwups harder.
-> 
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index a5840ff968..4674bd9163 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -859,30 +859,29 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->       LoongArchCPU *cpu = LOONGARCH_CPU(dev);
->       CPUState *cs = CPU(dev);
->       CPUArchId *cpu_slot;
-> -    Error *err = NULL;
->       LoongArchCPUTopo topo;
->       int arch_id;
->   
->       if (lvms->acpi_ged) {
->           if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                          "Invalid thread-id %u specified, must be in range 1:%u",
->                          cpu->thread_id, ms->smp.threads - 1);
-> -            goto out;
-> +            return;
->           }
->   
->           if ((cpu->core_id < 0) || (cpu->core_id >= ms->smp.cores)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                          "Invalid core-id %u specified, must be in range 1:%u",
->                          cpu->core_id, ms->smp.cores - 1);
-> -            goto out;
-> +            return;
->           }
->   
->           if ((cpu->socket_id < 0) || (cpu->socket_id >= ms->smp.sockets)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                          "Invalid socket-id %u specified, must be in range 1:%u",
->                          cpu->socket_id, ms->smp.sockets - 1);
-> -            goto out;
-> +            return;
->           }
->   
->           topo.socket_id = cpu->socket_id;
-> @@ -891,11 +890,11 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->           arch_id =  virt_get_arch_id_from_topo(ms, &topo);
->           cpu_slot = virt_find_cpu_slot(ms, arch_id);
->           if (CPU(cpu_slot->cpu)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                          "cpu(id%d=%d:%d:%d) with arch-id %" PRIu64 " exists",
->                          cs->cpu_index, cpu->socket_id, cpu->core_id,
->                          cpu->thread_id, cpu_slot->arch_id);
-> -            goto out;
-> +            return;
->           }
->       } else {
->           /* For cold-add cpu, find empty cpu slot */
-> @@ -911,33 +910,24 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->       cpu->env.address_space_iocsr = &lvms->as_iocsr;
->       cpu->phy_id = cpu_slot->arch_id;
->       cs->cpu_index = cpu_slot - ms->possible_cpus->cpus;
-> -    numa_cpu_pre_plug(cpu_slot, dev, &err);
-> -out:
-> -    if (err) {
-> -        error_propagate(errp, err);
-> -    }
-> +    numa_cpu_pre_plug(cpu_slot, dev, errp);
->   }
->   
->   static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
->                                       DeviceState *dev, Error **errp)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
-> -    Error *err = NULL;
->       LoongArchCPU *cpu = LOONGARCH_CPU(dev);
->       CPUState *cs = CPU(dev);
->   
->       if (cs->cpu_index == 0) {
-> -        error_setg(&err, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
-> +        error_setg(errp, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
->                      cs->cpu_index, cpu->socket_id,
->                      cpu->core_id, cpu->thread_id);
-> -        error_propagate(errp, err);
->           return;
->       }
->   
-> -    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
-> -    if (err) {
-> -        error_propagate(errp, err);
-> -    }
-> +    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, errp);
->   }
->   
->   static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
-> 
+Regards,
 
+	Joerg
 
