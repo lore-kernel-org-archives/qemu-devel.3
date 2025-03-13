@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F7B9C35FF1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F800C35FF3
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 20:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tspe4-00028o-0f; Thu, 13 Mar 2025 16:59:14 -0400
+	id 1tspdw-0001xS-5b; Thu, 13 Mar 2025 16:59:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tspde-0001gX-6u
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:58:49 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1tspdn-0001mj-Sg
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:58:59 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tspda-00060E-HD
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:58:44 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-301302a328bso3006937a91.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 13:58:42 -0700 (PDT)
+ id 1tspdm-00060o-7k
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:58:55 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2239c066347so31060085ad.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 13:58:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741899521; x=1742504321; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741899532; x=1742504332; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Jkwl8cB0M5AvsMlumN/jwh7dF1WLuuewWvrHbVg1mIE=;
- b=TKST3wrwtW0m1Jo1wSQeheJt9JS+hJ9g2LQQnDfWXyIf29Icaxzs6FfeAHruuSo62M
- E+7rRsGR4uK0M+lRqny3spAsy9qo8OyYpf3fHO2NlnDl1/j3fiUVP7q4ZdoCjlE7554V
- KzTVTUrZbOCs53N8bdZi6Y5Vjlz0hzqqewwKWNvtD96qM0/t7F4ymF+zXhXjzSEG+a73
- Ah73f4Wk8NOkjZbatz5VK4OlebLQH3ZADNBG5azP5roUypVnKmgE0+YPquSm0P7WmU6j
- j2N5Gj9HI9hBoAMdJzgoeQjpwEHzOnV0nTNz3C+2ca48sNXXBrDlbil4kCLW01wx11Gm
- 8/hA==
+ bh=PUFdalzzhX2NquYirZtj/w6IMkAbB6TmNpRKxSrB1v4=;
+ b=WJdzbPX7USgWXZKM9ii5k7Y4faFN5KmtodqFJgOrJHiZomnOvl1wb3GJghXofGCIME
+ YpxRBRb4Co1iZVXPPGLxza4z0rYR1qCosj+mjGm4kgHd8stbf8ShhLRU2tRggZhDREVd
+ 7Wu6uiB3clBN1QuuO7JihJZTjC4d3B2D/ZzxTCHWRS6dHBC11OroeN8BoPG5fx9+4jbe
+ 86r9EAmGA0rvF00cKHXfBGiGQyosLUJvaFqGNtz/yCBdrG9suteLvdzSD7SbIE71xRLw
+ dlHujsfWuVTY/5dU3Wdn3XvCzau1o/dLD/xxJrEP0h7tD99/b0RHnal2am6hAnhyYuS2
+ FJDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741899521; x=1742504321;
+ d=1e100.net; s=20230601; t=1741899532; x=1742504332;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jkwl8cB0M5AvsMlumN/jwh7dF1WLuuewWvrHbVg1mIE=;
- b=j7KRBt0hkfxO08rzI3JNbKRXBSGwkuOSlwds1q9lz2VyjpuMZon7hm13URSsxz+1pR
- WiUSM0fwfUH7ES8yfdHgl+eXkCnx1FcrfNqFu4SNEP7Qbpkvv8n8abHFnfz2uQimwHee
- TXa914GfQsGAbx38d/7vH9Qoq8Yq0fGOVaVejpTuPJ5XHLiZeXqFG45k9s5CuMtevzCc
- isnontJT5glQwXLMdiSINh0y4iJ4Mo0rn9t6jbrP6BrhnmYpIFNlZj7aSsWB/5svLkcC
- Y5H6oYel0PzsxOciOspnaTISD3uSR8/Vm1iLNbKvHaDFJjxa6sQaU94Yvan4fCM3ZYF0
- qelQ==
+ bh=PUFdalzzhX2NquYirZtj/w6IMkAbB6TmNpRKxSrB1v4=;
+ b=v+49LRe02MBgHWUKDABhJUhqSiP+YOb3IZ+rGV9S9Ij5OWoyNDrwSCMRhvxEQndXot
+ VmUsLDIV2tsge1GiPAjrGCwaNuZf8InW+eMIw96g57oFJZg390sfZ5BRSq5SQFqEud9v
+ t8b0DQ736iuoIAUNOzmYw1n+66/owm/cHbpiv3fPxQ08XeTjgPuns+qqta2kCjXTXR0K
+ dRC/96oBz8m59EjjrkPSYwkGMooGbtCTPCV/gj3qq6BWPZWhd/H5FCNwa5+E/Tdm6lDk
+ lfStBc3yzEj8khJX6xDx4+TTHjs1UGSW0/uHYe7XhPxK6OW4bm6c3e1y8dSjHu5sJTez
+ EECQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWoxeYE3i5O/k8wKZkER/+wJ5AB6yXkvzXjnVtLEPDabvg24MSKv6/ipvcqiNDugkez0Fe2p5TSu2y@nongnu.org
-X-Gm-Message-State: AOJu0YybETZed+xkhCChuDJnzw4wSNqY5gmbJ+2JlwpV7JGMyWIx+jEw
- Momfyy3idPVoQQ9ZY/PcpFCgkesFi4GIUzgMV/HepIXvPukE3FXu4Tg5N7DqEdQ=
-X-Gm-Gg: ASbGncsb8Xh5xrhDrZf5Cy/7rOx1Xx1DEPDwpsH4zvLJrX+e6QVSSLXzq4bGsRFLU2U
- lK62iXGh3RQ2oPXQDhKyT2dmN4Pfc4dN1RsthDNUDaYDYe87Ph4VFmNswc3tU+2SdYU8FmceatB
- P99knuLe1LeaTxBhQmYrQs8+T/korhX8gggfS2qFp4NnCKaRhyh8PmxDAKzi+ZKrhXlo7HgTGeB
- mMZ19shL1u8Cb9mC2vidTjA2KM/A5x+ADhK/ecZGKCIpnMoDStTVqUW8mEiNzCQskBAMA+tbewV
- nK521i1x1se7r9kpVqBhUMufYpJip+LrEsVk40QXvN5DLChcJR8wopXVv/uJuGkjeS/k
-X-Google-Smtp-Source: AGHT+IGK+EOCMIfFxbcEmUyrIoO1qE+O7YBJj7h6cUeE7QFMCL7oDtAtbvV/czZ4Rqvw9wA8rawFQA==
-X-Received: by 2002:a17:90b:5403:b0:2ee:fa0c:cebc with SMTP id
- 98e67ed59e1d1-3014e861c18mr1117930a91.20.1741899521096; 
- Thu, 13 Mar 2025 13:58:41 -0700 (PDT)
+ AJvYcCVmmTk/Y/5rY1hSILNyXVsUZTliCtK1mFW1Ga7aBTy35eA8y0xZbkoeubmNSdZPr7W/+v5xNn/oLBQv@nongnu.org
+X-Gm-Message-State: AOJu0Yx9mq3W05tFzEeKtElNDFAPCDdm5Y8Cdfjt592EkMIeZqMpAYI7
+ pgPCy9Ltt7gEzNHhSCEVbbK+SDoEdxQhQUfRh1WGfWjh9gH8tW0hyjKYfYAI4hM=
+X-Gm-Gg: ASbGncvYlGHEmthL1n0C+PHDrgIder7SL522TNZUAvp00jkjQGvHs5KvmnVcKLRqvp7
+ 5YLfVRsjzT2ByaukBknrAoFNg1zM2RVQqKmjW7gHtYpAiqgXFIdez0IcwRrkuzgKz7cIRt53Efi
+ 9YLNzsnQu3MxFW/Koqc8NkKFD059n4kMhsl0ZkKTGJq8c9ZrfGXBTx4YYazCM8gspGTCR7mcZH0
+ cfA1TU1cgjlOW7CnjqnHLqOk9rV5I8RTEsYm16P8qmZzAFQ/syU1MD5yoqkW0cbVKusxqo6sK/m
+ wAiYrEnoS4+h1ZKF9YyP7TmN2hesDP0M+tVh0xMzNABn1TxssPsnDg2G8g==
+X-Google-Smtp-Source: AGHT+IGx4fqH1sd+yDfuAA+FJQ1k2K0FUSeopO/S8ln7jgCKKXo5GjCRXdeY/P9ScUP/vZVrqDAz+Q==
+X-Received: by 2002:a05:6a00:22d1:b0:72d:3b2e:fef9 with SMTP id
+ d2e1a72fcca58-7371f19f8fcmr1136741b3a.20.1741899532571; 
+ Thu, 13 Mar 2025 13:58:52 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30138b476a1sm1846683a91.17.2025.03.13.13.58.40
+ d2e1a72fcca58-737116b378bsm1798030b3a.180.2025.03.13.13.58.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 13:58:40 -0700 (PDT)
-Message-ID: <4184b67c-d069-471d-be39-b47d17a02a1b@linaro.org>
-Date: Thu, 13 Mar 2025 13:58:40 -0700
+ Thu, 13 Mar 2025 13:58:52 -0700 (PDT)
+Message-ID: <cd637c58-4353-4ac5-aac7-2739a0b30284@linaro.org>
+Date: Thu, 13 Mar 2025 13:58:51 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 30/37] include/exec: Drop ifndef CONFIG_USER_ONLY from
- cpu-common.h
+Subject: Re: [PATCH 31/37] include/hw/core: Drop ifndef CONFIG_USER_ONLY from
+ cpu.h
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@linaro.org
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-31-richard.henderson@linaro.org>
+ <20250313034524.3069690-32-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250313034524.3069690-31-richard.henderson@linaro.org>
+In-Reply-To: <20250313034524.3069690-32-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,41 +110,65 @@ On 3/12/25 20:45, Richard Henderson wrote:
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/cpu-common.h | 6 ------
->   1 file changed, 6 deletions(-)
+>   include/hw/core/cpu.h | 10 ----------
+>   1 file changed, 10 deletions(-)
 > 
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index be032e1a49..9b83fd7ac8 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -9,9 +9,7 @@
->   #define CPU_COMMON_H
->   
->   #include "exec/vaddr.h"
-> -#ifndef CONFIG_USER_ONLY
->   #include "exec/hwaddr.h"
-> -#endif
->   #include "hw/core/cpu.h"
->   #include "tcg/debug-assert.h"
->   #include "exec/page-protection.h"
-> @@ -40,8 +38,6 @@ int cpu_get_free_index(void);
->   void tcg_iommu_init_notifier_list(CPUState *cpu);
->   void tcg_iommu_free_notifier_list(CPUState *cpu);
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 2fdb115b19..59394212fa 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -614,8 +614,6 @@ extern bool mttcg_enabled;
+>    */
+>   bool cpu_paging_enabled(const CPUState *cpu);
 >   
 > -#if !defined(CONFIG_USER_ONLY)
 > -
->   enum device_endian {
->       DEVICE_NATIVE_ENDIAN,
->       DEVICE_BIG_ENDIAN,
-> @@ -176,8 +172,6 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length);
->   int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
->                                           size_t length);
+>   /**
+>    * cpu_get_memory_mapping:
+>    * @cpu: The CPU whose memory mappings are to be obtained.
+> @@ -676,8 +674,6 @@ int cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
+>    */
+>   GuestPanicInformation *cpu_get_crash_info(CPUState *cpu);
 >   
-> -#endif
+> -#endif /* !CONFIG_USER_ONLY */
 > -
->   /* Returns: 0 on success, -1 on error */
->   int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
->                           void *ptr, size_t len, bool is_write);
+>   /**
+>    * CPUDumpFlags:
+>    * @CPU_DUMP_CODE:
+> @@ -701,7 +697,6 @@ enum CPUDumpFlags {
+>    */
+>   void cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+>   
+> -#ifndef CONFIG_USER_ONLY
+>   /**
+>    * cpu_get_phys_page_attrs_debug:
+>    * @cpu: The CPU to obtain the physical page address for.
+> @@ -758,8 +753,6 @@ bool cpu_virtio_is_big_endian(CPUState *cpu);
+>    */
+>   bool cpu_has_work(CPUState *cpu);
+>   
+> -#endif /* CONFIG_USER_ONLY */
+> -
+>   /**
+>    * cpu_list_add:
+>    * @cpu: The CPU to be added to the list of CPUs.
+> @@ -1143,8 +1136,6 @@ const char *target_name(void);
+>   
+>   #ifdef COMPILING_PER_TARGET
+>   
+> -#ifndef CONFIG_USER_ONLY
+> -
+>   extern const VMStateDescription vmstate_cpu_common;
+>   
+>   #define VMSTATE_CPU() {                                                     \
+> @@ -1154,7 +1145,6 @@ extern const VMStateDescription vmstate_cpu_common;
+>       .flags = VMS_STRUCT,                                                    \
+>       .offset = 0,                                                            \
+>   }
+> -#endif /* !CONFIG_USER_ONLY */
+>   
+>   #endif /* COMPILING_PER_TARGET */
+>   
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
