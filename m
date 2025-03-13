@@ -4,105 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76AA6C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 11:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDD9C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 11:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsgRr-0005pL-IQ; Thu, 13 Mar 2025 07:10:01 -0400
+	id 1tsga8-0008Vg-0J; Thu, 13 Mar 2025 07:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tsgRW-0005g1-H6
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:09:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tsgRU-0000Qh-Kh
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:09:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741864172;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kIjqCyyo3DQV+9PkQ+yIPFvQTOrMXmHMjeZUHHufvng=;
- b=coAHIHUioxRaXy63X0XHNolCBrIcEQFboQ4T7sSM9X1h6RGsH5XFFoM1pN7CVQ8tZC57UF
- FGRT08LmMX+QFeO+MSJjzq9txTrXQTasuC1BAuqadNWDkDTrAJT97ysfiUpW9yNoC4v+Cl
- 8H1FMklKbng3lKJuTfE8HNKWCAjs1MM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217--VG7r-KrMbaJnWC7FJfagA-1; Thu, 13 Mar 2025 07:09:28 -0400
-X-MC-Unique: -VG7r-KrMbaJnWC7FJfagA-1
-X-Mimecast-MFC-AGG-ID: -VG7r-KrMbaJnWC7FJfagA_1741864167
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ac2bb3ac7edso89249466b.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 04:09:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741864167; x=1742468967;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kIjqCyyo3DQV+9PkQ+yIPFvQTOrMXmHMjeZUHHufvng=;
- b=hJ6Jy55UZPLcpW9ZOiNrog3y0QWQYnpTBe7owWABfzwsqG38NKYUFwOjnYiQPJ+Ih1
- VImUK4znWO8Nwa1u5LMTtLF9/h682HVWnRxbLYqbuNsWrsvM17E08VkomVql14N6oAXb
- s9zwdXPjPqUWB+tmTIodfHLG93pWd4NgT1MbVVpQUv8t2Nbe38i8/YowshEsMbw9n5o6
- Rt6I3ck0dLO8cRfGfy8Me0mvZzYW5A27bztnU/YJe5Fw5edxZXOj45NO+YKE/iKTPcfg
- 09SZYERxrOpjqNzTcyn1N4Ocbtb/f8cLaZH9w0q1DUOg1w2sEBRyvVLkT8xIVMTlHxNW
- Xbvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHCIHYFsVlZ2d9UqVyZEp+MyjgNc83Dd0F24k48Qb8xfvUfNWwzgdKfjup6owe0mcWra97oLx8bQJc@nongnu.org
-X-Gm-Message-State: AOJu0YzNApkkuttSpUnxhKyKFedJuUgjCygWmN2nAwnIrfw6wB0Xqgut
- yVVSbqGIbeUWj9gOHb2Vq7FTfRC/u9S7MRxI81en/uEia6RaRVVqG6Wq5Bu661d5gREU55rH9Ob
- r4CUpyWNPow2ycyhEEcD4vz8wKq2xKNOfd5mnhwxgJNJTD4yEe2imzcQwCIe0V5CyYKUTVqE/n5
- ScDw3QgV+rvGEPVZj4lJyR7nGS9Z4=
-X-Gm-Gg: ASbGncvhg5KA25OZDdZf66h77Q99iwquUxE94bPtPHw6Jqy3HFba+ppzejw/CAqMOdy
- hyJ4+dYeArOlVUSpFfkfAlmS5+mGs3tZRdIdF0vIyoGAm1XCHB+/ceHTAsfJWOQMcL116kmUeI7
- I=
-X-Received: by 2002:a17:907:9691:b0:aa6:b63a:4521 with SMTP id
- a640c23a62f3a-ac252a886dbmr2850322566b.15.1741864167257; 
- Thu, 13 Mar 2025 04:09:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELUIBo+XMBKjtDjf9ffKjzwhGCnwBaon95kO5nvewWS0NJrqor+OzNwzcKmw+nCXMb1L9f4a49Yrx7CC0iiJ4=
-X-Received: by 2002:a17:907:9691:b0:aa6:b63a:4521 with SMTP id
- a640c23a62f3a-ac252a886dbmr2850318066b.15.1741864166851; Thu, 13 Mar 2025
- 04:09:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tsga3-0008VM-JI
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:18:27 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tsgZq-0001vZ-7p
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:18:27 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxlmntvtJn1eCUAA--.56636S3;
+ Thu, 13 Mar 2025 19:18:06 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxj8XqvtJn9YJIAA--.8483S3;
+ Thu, 13 Mar 2025 19:18:04 +0800 (CST)
+Subject: Re: [PATCH 1/3] target/loongarch: Return directly when detect KVM
+ disabled features
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250313091350.3770394-1-maobibo@loongson.cn>
+ <20250313091350.3770394-2-maobibo@loongson.cn> <87a59pb50c.fsf@pond.sub.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <229f2cf0-7bd0-4b37-5647-bacef1511da3@loongson.cn>
+Date: Thu, 13 Mar 2025 19:17:24 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250214153443.159889-1-anisinha@redhat.com>
- <Z9KfMPKr9Tsz-psi@8bytes.org>
- <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
- <Z9Ku-o8zJUWgXoYE@8bytes.org>
- <CAK3XEhOnhpzSg3F2C+PEvjgPKH7Yc9MqyoL8qJJGcbGXign34A@mail.gmail.com>
- <Z9K6nrGwnyob9tED@8bytes.org>
-In-Reply-To: <Z9K6nrGwnyob9tED@8bytes.org>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Thu, 13 Mar 2025 16:39:15 +0530
-X-Gm-Features: AQ5f1JqB80Ap8u66D15bJYTha1CNE7cZMkmRYpVZE6xkUbQguN_7eMiI8l2Fu1s
-Message-ID: <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
-Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <87a59pb50c.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxj8XqvtJn9YJIAA--.8483S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCF45tF1xJFy5Ar1kXr13trc_yoW5WFy7pr
+ W7ZF4DtrW5tFWkJ3sFqr9rXr4rX34kGFy7Za9Fya4fAwn8Crn7CrW8KwsFgF98u340ga1F
+ qFWrWFn8uF4UA3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+ Ja73UjIFyTuYvjxU7XTmDUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,57 +84,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 13, 2025 at 4:29=E2=80=AFPM J=C3=B6rg R=C3=B6del <joro@8bytes.o=
-rg> wrote:
->
-> Hi Ani,
->
-> Don't get me wrong, I really like the general idea of vmfwupdate as
-> a way to implement BYOFW, and for non-confidential VMs it is great. I
-> just think the interface design is not well suited for confidential VMs
-> yet and want to discuss how to change that.
->
-> On Thu, Mar 13, 2025 at 04:02:11PM +0530, Ani Sinha wrote:
-> > Forgive my ignorance, today none of the hyperscalers use IGVM to
-> > define this. How then the expected launch measurement is derived?
->
-> There is at least one Hyperscaler which uses IGVM, another implemented
-> support for it in their hypervisor (although not for a BYOFW feature,
-> yet). In my view this problem is still widely being worked on today by
-> the CSPs. If you are lucky, and since the firmware is provided by the
-> CSP as well, they publish expected launch measurments for each of their
-> coco platforms.
->
-> > Our vmfwupdate interface does not make any attempt to define this in
-> > any way or make this an ABI. Its intentionally open ended. It's really
-> > up to the guest to set this up any way they wish. This is the same
-> > when the guest provides the igvm file that defines the above.
->
-> Without a way to supply user-defined setup steps of a confidential VM
-> the host-VMM has to hardcode them. And that hardcoded behavior becomes
-> ABI implicitly, because any change to this behavior will also change the
-> actual launch measurements, potentially breaking existing users.
 
-Right so what we are proposing is generic enough so that if the VM
-wants to use an IGVM container as opposed to an actual firmware image
-in a FUKI, that is totally possible. Then you need to have that IGVM
-setup the memory in a well defined way like you suggest. Sure, the
-IGVM is not passed through a command line but it can be loaded by the
-guest in a well defined memory location and then its instructions can
-be executed.
-In our proposal, we do not want to dictate how the guest would want to
-do that. So hopefully you see now that IGVM and our approach is not
-mutually exclusive but can be complementary to each other.
 
->
-> This happened in the past already when KVM decided to hardcode a
-> different set of SEV-Features by enabling Debug-Swap. I strongly believe
-> that with KVM/QEMU we should work in a direction which makes those
-> breakages unlikely in the future.
->
-> Regards,
->
->         Joerg
->
+On 2025/3/13 下午6:26, Markus Armbruster wrote:
+> Suggest something like
+> 
+>    target/loongarch: Fix error handling of KVM feature checks
+> 
+> That way, the nature of the patch (it's an error handling bug fix) is
+> obvious at a glance.
+yeap, will modify title like this.
+
+> 
+> Bibo Mao <maobibo@loongson.cn> writes:
+> 
+>> For some paravirt KVM features, if user forces to enable it however
+>> KVM does not support, qemu should fail to run. Here set error message
+>> and return directly in function kvm_arch_init_vcpu().
+>>
+> 
+> Please add
+> 
+>    Fixes: 6edd2a9bec90 (target/loongarch/kvm: Implement LoongArch PMU extension)
+>    Fixes: 936c3f4d7916 (target/loongarch: Use auto method with LSX feature)
+>    Fixes: 5e360dabedb1 (target/loongarch: Use auto method with LASX feature)
+>    Fixes: 620d9bd0022e (target/loongarch: Add paravirt ipi feature detection)
+OK, will add these fixes tag.
+> 
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   target/loongarch/kvm/kvm.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+>> index 28735c80be..b7f370ba97 100644
+>> --- a/target/loongarch/kvm/kvm.c
+>> +++ b/target/loongarch/kvm/kvm.c
+>     int kvm_arch_init_vcpu(CPUState *cs)
+>     {
+>         uint64_t val;
+>         int ret;
+>         Error *local_err = NULL;
+> 
+>         ret = 0;
+> 
+> Please drop this assignment, it's useless.
+Sure, will do.
+> 
+>         qemu_add_vm_change_state_handler(kvm_loongarch_vm_stage_change, cs);
+> 
+>         if (!kvm_get_one_reg(cs, KVM_REG_LOONGARCH_DEBUG_INST, &val)) {
+>             brk_insn = val;
+>         }
+> 
+>> @@ -1091,21 +1091,25 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>>       ret = kvm_cpu_check_lsx(cs, &local_err);
+>>       if (ret < 0) {
+>>           error_report_err(local_err);
+>> +        return ret;
+>>       }
+>>   
+>>       ret = kvm_cpu_check_lasx(cs, &local_err);
+>>       if (ret < 0) {
+>>           error_report_err(local_err);
+>> +        return ret;
+>>       }
+>>   
+>>       ret = kvm_cpu_check_lbt(cs, &local_err);
+>>       if (ret < 0) {
+>>           error_report_err(local_err);
+>> +        return ret;
+>>       }
+>>   
+>>       ret = kvm_cpu_check_pmu(cs, &local_err);
+>>       if (ret < 0) {
+>>           error_report_err(local_err);
+>> +        return ret;
+>>       }
+>>   
+> 
+> Recommend to
+> 
+>>       ret = kvm_cpu_check_pv_features(cs, &local_err);
+>         if (ret < 0) {
+>             error_report_err(local_err);
+>    +        return ret;
+>         }
+> 
+>    -    return ret;
+>         return 0;
+>     }
+> 
+> Why?  Have a look at commit 6edd2a9bec90:
+I agree. That is simple and easy to understand, will do like this.
+
+Regards
+Bibo Mao
+> 
+> @@ -793,6 +828,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>       if (ret < 0) {
+>           error_report_err(local_err);
+>       }
+> +
+> +    ret = kvm_cpu_check_pmu(cs, &local_err);
+> +    if (ret < 0) {
+> +        error_report_err(local_err);
+> +    }
+> +
+>       return ret;
+>   }
+> 
+> The new call broke the previous call's error handling.  Easy mistake to
+> make.  Less easy with my version.
+> 
+> With that
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> 
+> Thanks!
+> 
 
 
