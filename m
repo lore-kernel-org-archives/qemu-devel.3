@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C2DC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BDFC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfgc-0005r9-Jq; Thu, 13 Mar 2025 06:21:10 -0400
+	id 1tsfiG-0007M9-R5; Thu, 13 Mar 2025 06:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1tsfgZ-0005jI-PU
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:21:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsfiF-0007JV-75
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:22:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1tsfgX-0002Pp-1y
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:21:06 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tsfi9-0002VI-8G
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:22:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741861263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1741861364;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tS5d0O3NsoPh+I/T8KDlewKJRVwL+zofgShLngZjiiM=;
- b=HjXaJuJFFwKZS1y3shAVIXcRqeYxkpqSpHryBAt2QkFW7vRh1GNh4gktJv/tGIqn/eIpgq
- f5uIRGD8Bf+60VI3ySJRE2M/kcHHyAUbjZU7GC2My13M/6xP7ibt5y6gFL4G88Nt09ytFA
- hRXg8jlu/KhhzfvAp5KKPYxodpswBY0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=vdisMyG+MiKCJA1PFA0ba5DPjCXFGX1MWYqwPXb24VI=;
+ b=WqW5psj4X6QpG1w3sTerVeVoTsw2rlfhJiyaOtZbQI2Bl/XRI9RqRCgEYCBzkxUUQCS2Hl
+ ow5rVw8jM8GqZ8WV8XDia7IXy6K+Vuc+uznaRSwrUu8M70nQHjb5KKYB8tHOTmz/C8S5id
+ yHh3rxu1tjBjyhvV/c4hHP8h5YkNwJo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-w6Nl9sn4Pt-uXxCfDrE6Vg-1; Thu,
- 13 Mar 2025 06:19:19 -0400
-X-MC-Unique: w6Nl9sn4Pt-uXxCfDrE6Vg-1
-X-Mimecast-MFC-AGG-ID: w6Nl9sn4Pt-uXxCfDrE6Vg_1741861158
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-546-m1hsaFLLMiCEbTutsQTwwQ-1; Thu,
+ 13 Mar 2025 06:22:41 -0400
+X-MC-Unique: m1hsaFLLMiCEbTutsQTwwQ-1
+X-Mimecast-MFC-AGG-ID: m1hsaFLLMiCEbTutsQTwwQ_1741861360
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B0B38180034D
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 10:19:18 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.22.17])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0B64D300376F; Thu, 13 Mar 2025 10:19:15 +0000 (UTC)
-From: Anthony Harivel <aharivel@redhat.com>
-To: pbonzini@redhat.com,
-	berrange@redhat.com
-Cc: qemu-devel@nongnu.org,
-	Anthony Harivel <aharivel@redhat.com>
-Subject: [PATCH 2/2] target/i386/kvm: Change error_report() to tracepoint in
- vmsr_read_thread_stat()
-Date: Thu, 13 Mar 2025 11:19:02 +0100
-Message-ID: <20250313101902.835556-3-aharivel@redhat.com>
-In-Reply-To: <20250313101902.835556-1-aharivel@redhat.com>
-References: <20250313101902.835556-1-aharivel@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01C06195608D; Thu, 13 Mar 2025 10:22:40 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.159])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1A571828A98; Thu, 13 Mar 2025 10:22:35 +0000 (UTC)
+Date: Thu, 13 Mar 2025 10:22:28 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ philmd@linaro.org
+Subject: Re: [PATCH v2] ppc/spapr: fix default cpu for pre-9.0 machines.
+Message-ID: <Z9Kx5OO6wg2vDyBg@redhat.com>
+References: <20250313094705.2361997-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
+In-Reply-To: <20250313094705.2361997-1-harshpb@linux.ibm.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,52 +85,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Threads in QEMU are frequently created and destroyed, leading to
-non-critical errors. Replace `error_report()` with a tracepoint to
-prevent flooding the serial terminal with non-essential error messages.
+On Thu, Mar 13, 2025 at 03:17:05PM +0530, Harsh Prateek Bora wrote:
+> When POWER10 CPU was made as default, we missed keeping POWER9 as
+> default for older pseries releases (pre-9.0) at that time.
+> This caused breakge in default cpu evaluation for older pseries
+> machines and hence this fix.
+> 
+> Fixes: 51113013f3 ("ppc/spapr: change pseries machine default to POWER10 CPU")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> ---
+> v2: addressed review comments from Philippe, Daniel
+> ---
+>  hw/ppc/spapr.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-Signed-off-by: Anthony Harivel <aharivel@redhat.com>
----
- target/i386/kvm/trace-events  | 3 +++
- target/i386/kvm/vmsr_energy.c | 3 ++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
-index 74a6234ff7f5..527750e3b23d 100644
---- a/target/i386/kvm/trace-events
-+++ b/target/i386/kvm/trace-events
-@@ -13,3 +13,6 @@ kvm_xen_soft_reset(void) ""
- kvm_xen_set_shared_info(uint64_t gfn) "shared info at gfn 0x%" PRIx64
- kvm_xen_set_vcpu_attr(int cpu, int type, uint64_t gpa) "vcpu attr cpu %d type %d gpa 0x%" PRIx64
- kvm_xen_set_vcpu_callback(int cpu, int vector) "callback vcpu %d vector %d"
-+
-+# vmsr_energy.c
-+vmsr_read_thread_stat(const char *path) "Error opening path %s"
-diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
-index f3861d0607bb..f99aa9cfeb94 100644
---- a/target/i386/kvm/vmsr_energy.c
-+++ b/target/i386/kvm/vmsr_energy.c
-@@ -19,6 +19,7 @@
- #include "hw/boards.h"
- #include "cpu.h"
- #include "host-cpu.h"
-+#include "trace.h"
- 
- char *vmsr_compute_default_paths(void)
- {
-@@ -280,7 +281,7 @@ void vmsr_read_thread_stat(pid_t pid,
- 
-     FILE *file = fopen(path, "r");
-     if (file == NULL) {
--        error_report("Error opening %s", path_name);
-+        trace_vmsr_read_thread_stat(path_name);
-         return;
-     }
- 
+
+With regards,
+Daniel
 -- 
-2.48.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
