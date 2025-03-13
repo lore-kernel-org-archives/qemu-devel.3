@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 656EAC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 07:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04E17C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 07:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsd6s-0002Ef-JU; Thu, 13 Mar 2025 03:36:06 -0400
+	id 1tsdA7-0004SS-RN; Thu, 13 Mar 2025 03:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tsd6q-0002CI-Ix; Thu, 13 Mar 2025 03:36:04 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1tsdA2-0004MR-J9
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 03:39:22 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tsd6l-0004LR-Kb; Thu, 13 Mar 2025 03:36:01 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-aaeec07b705so101826766b.2; 
- Thu, 13 Mar 2025 00:35:58 -0700 (PDT)
+ id 1tsdA0-0004aF-Un
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 03:39:22 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5e61d91a087so929627a12.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 00:39:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741851357; x=1742456157; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1741851559; x=1742456359; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SzNWP+qaHl/k7mENdDMy+fTNRefXf1Qi+bumMTbqWpI=;
- b=DTYfdLgyM1md2EbOQ8QtGH5N807KUKBS1wlu/muijlV/Vs4knqbxF1Zt8q3EH458Lf
- q45kzvllCtJn81hFCDJD97lQGM+Q4Iel61eyjSfgiOxaZFt3RA4tCh7RgGyu6AvFSYUp
- c0Xk3Rr74BIapz4hqB23aKaJcc6vylZhrNbs3gGukp+agN5RiMCZXtUYvk6ZVe6R50ON
- 2UdjrleG8bCHdIdoOqfdaNWSAvN++ziz2UC2NjBOQZOLt8/NFKzz1TRmZhTE7bpWxlep
- a3KQvJQcH9TrMGPkyxltkrfm4Q45Wpl/DOWAbqQq1zdwJzUlg5dkaUMddhOgAH9eOLMf
- IDnQ==
+ bh=ybYI4W2/94CcpuKAo8+bvKpYrrGq4SKV64P2ULK0m6k=;
+ b=FzjOV5Jp41LLWqwK5EmdUkF2gzapkNXCBjghCdb3urNI+6ppVemPkH7/SFtgH3V9v4
+ xqPXyJbcmrUWE3kAS93CRp8t7bcXL8zJPcm3yuKunWwV2v4cV4IH7XGiSZ5pJeXV087k
+ h2QAq2H7a8uCcBSWGpSR5T+818XoJZ7bnqEFvOqoscbWNkIYVIY7Whl2F2lAx5yCjETb
+ fZ+H5lXRNGuJ3BrsyRFpILDXiEZEXOsDN7PZlkCHERc2/k7sjCgTATapM4tsXOYjirC+
+ CYbJNwa44E3cJDQhwxajETGGFpMxEF49LH/lLEKl6JAP41abxnHEhEcNP9Zhac8xJCvf
+ CfYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741851357; x=1742456157;
+ d=1e100.net; s=20230601; t=1741851559; x=1742456359;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SzNWP+qaHl/k7mENdDMy+fTNRefXf1Qi+bumMTbqWpI=;
- b=WbGok7QNGheTYljM98rbjZtL5XrBRdJ/5qD1maXOGvlmUu34Wo0i7zz1qGatNQ1ZLL
- 2ABbfCejERJ99NuwPJ4krsdm2wGdEZqgFJjvFa/hQLqDLhD+HoiX4cFwNxvGKkCDw53U
- PswNxTlJYOcImzVhtH0NeU8WQuUwANKB4JuMTOwsIhOQNypkGdkHQl4J6xlioEJw8yX3
- efXWGzuCfbJAAcpWPReQaoOiytJ6GJeQzZIMmB9LqzrEN1i9jiEUAuBz+8dTQuxBGpsX
- B2cSMTBH7lrYcJRf8K1NCCHAjQCXpYP9w0uKTbgnKkcUaydxSy1qWbi5j2hiH+s4MyW+
- SZ6g==
+ bh=ybYI4W2/94CcpuKAo8+bvKpYrrGq4SKV64P2ULK0m6k=;
+ b=sJjHjbIwQr1oIeeBSUk55vpo1zqAaHYsTfFo8sBNR7s0uCo5nSr9JctOWLNa1QAH3L
+ U00bzxz6nDsjBfAID9sA0wnDSnfv2oByE+eEH1R/KqqXO+BX3wdY3AMZRtt2vu8QduyY
+ JPdvPhDDf3NY3KBbLx85InFU5LAoXIr3GZ0Tfi+TKDptEJabOyu6GCia+dhdaorzpQLb
+ x+Mlan/8erOm7BirC0pQjxprJm8DbzBeYnZhYuC+awRJT9zOUj/UHGQ8/FWRoxGh2UlL
+ wnsYXHjFz0fG27LK7A5BtQXMARS+ya2OgcCI9BJQJrouW9cLvUHIKe+HnHynblplu+JN
+ v68A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgwwP/IxExU8S9AzUGlGeEG6xqVbBKdiIRnVvFDBsVxQg7c70zZed/Bbw0s7ZMWR8uCE0oc6DJGoB2@nongnu.org,
- AJvYcCXLi53CSkhJ8TjAM/ya021koT2vLxr1tNflDUsvrsELe6URCIbHNUSca/FHu0N+PEqduDBzHdlLNuY=@nongnu.org
-X-Gm-Message-State: AOJu0Yz4SR4DyKSw/v5bzsEOar+EDjOdg4r+5BNGb5NKw3p9L2qi2iH0
- PnwNSmNeSfqWvpueI/hloYzIvaKjqkGrflaBGwXPiLm7wOJViiKJkSoRhSL2BGvWHlv8woCQnam
- S+cKEXStoHsCnPwXOC2GNVWlSUiw=
-X-Gm-Gg: ASbGnctFWOjLJTnQMPUE+zHacuvcyLx8Vkd3GAX4QcYSjx1+flpYJh2SjKKMgg/xkUk
- LuXTLEjq1Ct9Ky96GcoqtrRRryBxpHVVqXXR/nB8P2fEDuVhfmWUMMzMBtBjrpMczKSeLGW9Hv+
- EIAagrsaFtUOaBZ1tH64P0dWG1vQ==
-X-Google-Smtp-Source: AGHT+IHeGdxXuuMqlUJhwLy/xpX8ysyYV4q1t2CmkKzcX5IsTetKHmsUsa2FvXbUvyeKK/Q1liSs0Pe0veohGDWhjDs=
-X-Received: by 2002:a17:907:7e88:b0:ac2:a5ca:4c5d with SMTP id
- a640c23a62f3a-ac2b9e1c8ffmr1385638066b.26.1741851357223; Thu, 13 Mar 2025
- 00:35:57 -0700 (PDT)
+ AJvYcCX4ETs/ZwkXSUTwunRIzEh4D2pOGLqbAULHw4iZ45YQM4M60E8DcEmDPfxMwfZyF8+s4zxXjVgU7a7c@nongnu.org
+X-Gm-Message-State: AOJu0YxXVO6+KEBeie63S56yIIEpDUEQdwl8KhjH+jL+NooaUcXK7EZc
+ Vu6mf0McRS1BBNADhIL9S/OwEEKg5rLTfo9nRd09tO+m0Wdd+pMREHvsWEreQxwTeHTH6St2ns2
+ Mw//zHdQo7D5os/bgKgj2qoMLJg4=
+X-Gm-Gg: ASbGncuZtA8qQ3FlYEsB55nIbxwfYbjpBM1ldIXfkL7QDFvPpETKt2DTgNZJ/saVfgp
+ 1ZidrasjChsgAOJ9TfN15uOZlLnKkNc9i5jBtp6wOApTrGhdtmIs2NTuazRqpOoMR/Cx0+CO7Un
+ ngCG8XWHQpdz0kc/CYvHqi/MN5zA==
+X-Google-Smtp-Source: AGHT+IEl64K0mpPwVl+fV/DXX76TY+Ra55Qnytex32CYfcyEd2SW9/IgckMvsGPF79buqXQ2iluvC3pRkuwyEJyhYy4=
+X-Received: by 2002:a05:6402:2392:b0:5e6:1842:1346 with SMTP id
+ 4fb4d7f45d1cf-5e618421a3amr32280843a12.30.1741851559064; Thu, 13 Mar 2025
+ 00:39:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250311080142.897437-1-npiggin@gmail.com>
- <20250313070414.GA1086072@fedora>
-In-Reply-To: <20250313070414.GA1086072@fedora>
+References: <CAJSP0QWKnLDsVUbqO_kNB7GiZPU0-YpOU8T4BNCgyNBi54dtDQ@mail.gmail.com>
+ <12d09c42-e6b2-49d1-9b06-e5a26acc2c5b@redhat.com>
+In-Reply-To: <12d09c42-e6b2-49d1-9b06-e5a26acc2c5b@redhat.com>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 13 Mar 2025 15:35:45 +0800
-X-Gm-Features: AQ5f1JrjnkoWofxP_kP5hhT_KK5NF5ZWp4Fe0xZ7nESylPIWULLrnP2HvhCZQDY
-Message-ID: <CAJSP0QURXxBL7Xrpoz=Z31cc=L+W15wevEh6gZhHVG2ETn1uhA@mail.gmail.com>
-Subject: Re: [PULL SUBSYSTEM qemu-pnv] ppc/pnv: Update skiboot firmware image
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
+Date: Thu, 13 Mar 2025 15:39:07 +0800
+X-Gm-Features: AQ5f1Jo9380-lQVVMcmnByQ-54KUAGrv-0BF_x-HA7USRFcVQkHZROX6e6tc3TM
+Message-ID: <CAJSP0QUWkeaSsVmdfrXNAaSqB_uMUxqAD+GR7Xm4FHEgwYArNg@mail.gmail.com>
+Subject: Re: Broken NetBSD Orange Pi image URL in QEMU tests
+To: Thomas Huth <thuth@redhat.com>
+Cc: Niek Linnenbank <nieklinnenbank@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,13 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 13, 2025 at 3:05=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
+On Thu, Mar 13, 2025 at 1:48=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
 >
-> Applied, thanks.
+> On 13/03/2025 03.22, Stefan Hajnoczi wrote:
+> > Hi,
+> > CI jobs that run test_arm_orangepi.py are failing:
+> > https://gitlab.com/qemu-project/qemu/-/jobs/9390048284#L1138
+> >
+> > Please consider how to resolve this so the CI job passes again. If you
+> > are in contact with the archive.netbsd.org administrators, maybe
+> > contacting them will lead to a fix. Otherwise please update the QEMU
+> > test to use a URL that works or remove the test.
+> >
+> > The NetBSD Orange Pi image fails to download cleanly:
+> >
+> > $ curl -O 'https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evb=
+arm-earmv7hf/binary/gzimg/armv7.img.gz'
+> >    % Total    % Received % Xferd  Average Speed   Time    Time     Time=
+  Current
+> >                                   Dload  Upload   Total   Spent    Left=
+  Speed
+> >    0  303M    0 2048k    0     0  1098k      0  0:04:42  0:00:01  0:04:=
+41 1098k
+> > curl: (18) end of response with 315646186 bytes missing
+>
+> FYI, Nicholas already provided a nice patch series to skip the test in ca=
+se
+> of such incomplete downloads:
+>
+>   https://lore.kernel.org/qemu-devel/20250312130002.945508-1-npiggin@gmai=
+l.com/
+>
+> I'll try to assemble a pull request with these patches today.
 
-This email was sent by mistake, please ignore. This pull request is
-for the ppc subsystem and I didn't merge it into qemu.git myself.
+Thank you!
 
 Stefan
 
