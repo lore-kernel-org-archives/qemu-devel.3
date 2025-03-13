@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C8BC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417EAC28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfMy-0001zU-UT; Thu, 13 Mar 2025 06:00:52 -0400
+	id 1tsfNO-0002Lg-AV; Thu, 13 Mar 2025 06:01:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfMe-0001xl-G9
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:00:32 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfNK-0002Hw-Up
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:01:15 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfMc-00081a-Dq
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:00:32 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43d0618746bso4500305e9.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:00:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfNI-000853-2G
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:01:14 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3912baafc58so618703f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741860029; x=1742464829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741860070; x=1742464870; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yoAlrHUChqgF50xftQwqgV9isB37AtZUJqD9JgAEfBA=;
- b=tJGLeGbPjqLtn4eHBvoHjSDTJA7SqRrFdiQclFtdXXHx3wlCP5/MCmjEAaX4C71gPE
- OODFMU3MO1og9fa6W+YIp1T2bVtQ2seGFJvbPxCyrFqWG//7zCcC8vucSAzetUIzWFUJ
- 6PPzUqOu9s/ZK0Sf72EwjzzvzINxLoi4/gOfpi5Hs0DdveDssVAarYVG3hIlVUNSNaTk
- a9ZHe2Cm3aJTPg6P+GToz95z46xTE129JwgI6Et3uJ7JFkAzRL5DSvUZcxVJPhnGyxQo
- jomPPv5brvmWA3GMVbNmaoeV4EvDgsVGvWUcsFedmnQuMznkB0snsnd2i+lQkUL3DulN
- harQ==
+ bh=v4j7ETWGosi5MlQXOvPpT3ZImee6Mk+7xoTJ/HKyf7k=;
+ b=nt6uRICSvTOEez26SHcfWE3CSBpDjkp5g22XRvUYhj6S8SNQrXfkfCnHo9QaYmAkdD
+ mOSZzrGrXjpDr59pYwkKbJLiyqqRNjljD9+ai0V/hJb3w/d1Fp18t3AkqeDkx2yt7vw1
+ PpXHBD84wrYluGdwLDZRRESyGc5VbndK+izswK9dzIxY1jhJPPHNGJrYR2/NOrvtrCgJ
+ fHGiNV0TmVT5cBvsNHFylUI8jpKScNfHagyOD9YniOu+moOr24ZrEB/y/DZp4qTRhWeP
+ FnobAr5+zbDaYwPsWAxifc+YSiaNeT3czUBcjUZYwMEVtxUPE+R0CHZ6gAcMI9xH9EIg
+ czOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741860029; x=1742464829;
+ d=1e100.net; s=20230601; t=1741860070; x=1742464870;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yoAlrHUChqgF50xftQwqgV9isB37AtZUJqD9JgAEfBA=;
- b=kXLDh7HdVKVAQI3Zirzu4yYg79+JcDcuCY6AVdsxK2ZpjJq0yalliTMi5ZJm7bVoEb
- CLtvtl2hW5eNz211bDxaXeCGyAIgWcQN6FcTQKAjh/KUZUHiq0OoOo6R54I7h/54veBC
- h/2oMK309grJSGAP+eQaF3MiK8SzQCbfrYkwZnZVarbTfU9dsUzUkkYkebI1VWdv/Mwc
- K3uLeu/OP68PuPo0g4KLWZB2jho2lyLYch2KWGQ/HEPpkh6anlGFBa+XIk6lFRVGL8CN
- y5Kf3YU/D2KUOjr+kTF/tWBUXLI/YTQn3g0H1cQSUaB3moRHZoR100Qa4NY2qphYkA1I
- YNSw==
+ bh=v4j7ETWGosi5MlQXOvPpT3ZImee6Mk+7xoTJ/HKyf7k=;
+ b=oDbDfDMohmBXRNrvaV8U2NGDCmBy06X8cKcj5fs2QWwygJwVQfceZpDncHQhsCm/gS
+ U/gGrhu7bpGw/hJvnqrFuxHVDbkCDbzAMCeRAKjq2Oe19kij0cOWF/NKA6MzWY1pcsUo
+ /HW5Amh4yRXbFN/ateHPJ317SBQpK0WIVpzEvraZH+RaaNAL2JesRWQdR6/S3Wf2bQST
+ xCGwL3XXaMqBOzxcA5lq3me6LBwRfXBUogA+8DUpBqG5C4roNHeZb1V4X84ud35TEh3o
+ l7f3mHHg1XAf6FNDx8CIuTvynqlQX9LS9Mz8dRP3cFr5Xdj4HELw8WdlNx8jMLmv6AvK
+ DiWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXk7oD9EQJQHd6YuYigrlsTXwDS+qJgfzxQdbIu7jhCgL6w9RU7vih/h/LeDEF3s7npMvyVBp843C1v@nongnu.org
-X-Gm-Message-State: AOJu0YzNXVrYrVuaq+q93PlD2+VYcGvsUpGvihd5t4Aat2MOLUt2sAVm
- QTtmhXCogxpj2aN1IP2vWpEmArV5dHCAA5BvJZqa2eY80ht6h1tPyQRwv9ZBpgs=
-X-Gm-Gg: ASbGncsVkx1X0sMEfuL3dVkkMJlPMT9gT5X32SETj8PVOJ3aoKMxK8AhVB2vkXfXBz1
- sf5ail79XaXN2Ff2e07hbUm4U+WdDtwa9/SpbMrlrVtlSoeKE4ETYCJKOg11gBcq01M6ooWf0FV
- tGHx5zOmGwquzo/eCSX7kgaGLxMvMYd6K1p6nstMMw1fbQw43lFG4rXOlzDHjCkPjCcFwFd5vNc
- ovge2c75oVmvJX5qfX24Ifu4Vaa1EWscQMVlEQAEEw514wT14WA3kGuvOr/Egdc4YlRHpGTJrmc
- AQSTeT+NMPbTFtftUV1YVqkKD5NS5kphhef/ytSR97Fhl51Yi3sjEUlq0pmpQshifvv7IYXaLt9
- toqrXxewyfhedYt4=
-X-Google-Smtp-Source: AGHT+IE3A/PTtMhgEDwpVWEkTyrWSGNdtSU1H7YjsnmZDmDE8fyGHwpBpX8f+998BJeaWZegAlY1qA==
-X-Received: by 2002:a05:6000:402a:b0:390:e5c6:920 with SMTP id
- ffacd0b85a97d-39132d22aa7mr18333721f8f.3.1741860028624; 
- Thu, 13 Mar 2025 03:00:28 -0700 (PDT)
+ AJvYcCV6icrJXeihzmgqrx36p/vk8gTw77ba4LszD6TZL1+BMuS0TeZ8qmUdMkSGH1ynq2oIgdUCdHbLoAoa@nongnu.org
+X-Gm-Message-State: AOJu0Yz/ucGwkCLy+18iOPvPCpD7VkBdoF+WDKxhfyR/TVQ32DjwFCqm
+ dBrYcZ0GQhb8Pv72eP3PSA2clbi0/G4u24E+JVT9nE8fW1a0eRDi35VGTGJ1KWM=
+X-Gm-Gg: ASbGnctdKlG2k09OmIDIuRrdytb2TmMsCFRu428+aOSw+3A3D4OIZsZOHLC/e+nOjPT
+ Y4KCYiYKfPSAPq7LXurJloiEVt6e3ZAQDT1MtzmRB7ITJxpiaQVa054vjWwe5CBC8DoUdhZWRFo
+ NGRekRUJBJatOz4oXict/ve55yY4O69RLt7hHyzLw+QE4Xe+tefgRAIxVPmxje8CtahPXtjgrYa
+ k3FADLb9NqJtiPS+DHnZYXLBOTMRO1C/IM7W+lqgE1LE6Dk8PzGzpC0ddb9XvTSWI7sFEp1I+IX
+ lgzspq5ciANk+shkSwpb39TGfhF8Sw+Y2pG96zM+Gk6GIg8Rys9SGFVQoHNcoYPMV4oRqbO3vPF
+ 0EaIo1Ybf3zhjFUI=
+X-Google-Smtp-Source: AGHT+IErcaSGpDz8tqJyLiGYjUVGa/RunarDF+vzDjOwhKv8VRIMQ15gO1gNb7is9sOiczi3X7I1IA==
+X-Received: by 2002:a05:6000:402a:b0:391:2dea:c9a5 with SMTP id
+ ffacd0b85a97d-39132d6b61cmr19693847f8f.20.1741860070353; 
+ Thu, 13 Mar 2025 03:01:10 -0700 (PDT)
 Received: from [192.168.1.20] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d031d2c26sm50423415e9.0.2025.03.13.03.00.27
+ ffacd0b85a97d-395c7df3537sm1580827f8f.8.2025.03.13.03.01.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 03:00:28 -0700 (PDT)
-Message-ID: <5b8bf976-1487-462f-a2b4-ff7117da97ba@linaro.org>
-Date: Thu, 13 Mar 2025 11:00:27 +0100
+ Thu, 13 Mar 2025 03:01:09 -0700 (PDT)
+Message-ID: <f5ad8905-b070-40cc-80d3-2abb797b7ecb@linaro.org>
+Date: Thu, 13 Mar 2025 11:01:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/37] include/system: Move exec/memory.h to
- system/memory.h
+Subject: Re: [PATCH 15/37] include/system: Move exec/address-spaces.h to
+ system/address-spaces.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-15-richard.henderson@linaro.org>
+ <20250313034524.3069690-16-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250313034524.3069690-15-richard.henderson@linaro.org>
+In-Reply-To: <20250313034524.3069690-16-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,169 +104,135 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/3/25 04:44, Richard Henderson wrote:
-> Convert the existing includes with
-> 
->    sed -i ,exec/memory.h,system/memory.h,g
-> 
-> Move the include within cpu-all.h into a !CONFIG_USER_ONLY block.
+> Convert the existing includes with sed.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/arm/strongarm.h                        | 2 +-
->   hw/display/apple-gfx.h                    | 2 +-
->   hw/display/framebuffer.h                  | 2 +-
->   hw/display/vga_int.h                      | 2 +-
->   hw/hyperv/hv-balloon-our_range_memslots.h | 2 +-
->   hw/intc/ioapic_internal.h                 | 2 +-
 >   hw/net/i82596.h                           | 2 +-
->   hw/net/pcnet.h                            | 2 +-
->   hw/tpm/tpm_ppi.h                          | 2 +-
->   hw/usb/hcd-uhci.h                         | 2 +-
->   hw/vfio/pci.h                             | 2 +-
->   hw/virtio/vhost-iova-tree.h               | 2 +-
->   include/exec/cpu-all.h                    | 3 +--
->   include/exec/ioport.h                     | 2 +-
->   include/hw/acpi/acpi.h                    | 2 +-
->   include/hw/acpi/ich9_tco.h                | 2 +-
->   include/hw/arm/fsl-imx25.h                | 2 +-
->   include/hw/arm/fsl-imx31.h                | 2 +-
->   include/hw/arm/fsl-imx6.h                 | 2 +-
->   include/hw/arm/fsl-imx6ul.h               | 2 +-
->   include/hw/arm/omap.h                     | 2 +-
->   include/hw/arm/stm32l4x5_soc.h            | 2 +-
->   include/hw/boards.h                       | 2 +-
->   include/hw/char/parallel.h                | 2 +-
->   include/hw/char/riscv_htif.h              | 2 +-
->   include/hw/char/serial-mm.h               | 2 +-
->   include/hw/char/serial.h                  | 2 +-
->   include/hw/display/macfb.h                | 2 +-
->   include/hw/fsi/aspeed_apb2opb.h           | 2 +-
->   include/hw/fsi/cfam.h                     | 2 +-
->   include/hw/fsi/fsi-master.h               | 2 +-
->   include/hw/fsi/fsi.h                      | 2 +-
->   include/hw/fsi/lbus.h                     | 2 +-
->   include/hw/gpio/npcm7xx_gpio.h            | 2 +-
->   include/hw/i2c/npcm7xx_smbus.h            | 2 +-
->   include/hw/i2c/pm_smbus.h                 | 2 +-
->   include/hw/i386/apic_internal.h           | 2 +-
->   include/hw/i386/x86.h                     | 2 +-
->   include/hw/ide/ahci.h                     | 2 +-
->   include/hw/ipmi/ipmi.h                    | 2 +-
->   include/hw/isa/apm.h                      | 2 +-
->   include/hw/isa/isa.h                      | 2 +-
->   include/hw/m68k/q800.h                    | 2 +-
->   include/hw/mem/npcm7xx_mc.h               | 2 +-
->   include/hw/mem/pc-dimm.h                  | 2 +-
->   include/hw/mips/mips.h                    | 2 +-
->   include/hw/misc/auxbus.h                  | 2 +-
->   include/hw/misc/ivshmem-flat.h            | 2 +-
->   include/hw/misc/mac_via.h                 | 2 +-
->   include/hw/misc/npcm7xx_mft.h             | 2 +-
->   include/hw/misc/npcm_clk.h                | 2 +-
->   include/hw/misc/npcm_gcr.h                | 2 +-
->   include/hw/misc/pvpanic.h                 | 2 +-
->   include/hw/net/dp8393x.h                  | 2 +-
->   include/hw/net/msf2-emac.h                | 2 +-
->   include/hw/nvram/mac_nvram.h              | 2 +-
->   include/hw/nvram/npcm7xx_otp.h            | 2 +-
->   include/hw/pci-host/fsl_imx8m_phy.h       | 2 +-
->   include/hw/pci-host/pam.h                 | 2 +-
->   include/hw/pci-host/remote.h              | 2 +-
->   include/hw/pci/pci.h                      | 2 +-
->   include/hw/pci/pcie_host.h                | 2 +-
->   include/hw/pci/shpc.h                     | 2 +-
->   include/hw/ppc/mac_dbdma.h                | 2 +-
->   include/hw/ppc/pnv_lpc.h                  | 2 +-
->   include/hw/ppc/pnv_occ.h                  | 2 +-
->   include/hw/ppc/pnv_sbe.h                  | 2 +-
->   include/hw/ppc/pnv_xscom.h                | 2 +-
->   include/hw/ppc/ppc4xx.h                   | 2 +-
+>   hw/s390x/ipl.h                            | 2 +-
+>   include/hw/misc/lasi.h                    | 2 +-
+>   include/hw/nubus/nubus.h                  | 2 +-
 >   include/hw/ppc/vof.h                      | 2 +-
->   include/hw/ppc/xics.h                     | 2 +-
->   include/hw/register.h                     | 2 +-
->   include/hw/remote/proxy-memory-listener.h | 2 +-
->   include/hw/sh4/sh_intc.h                  | 2 +-
->   include/hw/southbridge/ich9.h             | 2 +-
->   include/hw/sysbus.h                       | 2 +-
->   include/hw/timer/npcm7xx_timer.h          | 2 +-
->   include/hw/tricore/tricore.h              | 2 +-
->   include/hw/usb.h                          | 2 +-
->   include/hw/vfio/vfio-common.h             | 2 +-
->   include/hw/vfio/vfio-container-base.h     | 2 +-
->   include/hw/virtio/vhost-backend.h         | 2 +-
->   include/hw/virtio/vhost.h                 | 2 +-
->   include/hw/virtio/virtio.h                | 2 +-
->   include/hw/xen/xen-pvh-common.h           | 2 +-
->   include/hw/xtensa/mx_pic.h                | 2 +-
->   include/qemu/iova-tree.h                  | 2 +-
->   include/qemu/reserved-region.h            | 2 +-
+>   include/hw/tricore/triboard.h             | 2 +-
+>   include/{exec => system}/address-spaces.h | 8 ++------
 >   include/system/dma.h                      | 2 +-
->   include/system/hostmem.h                  | 2 +-
->   include/system/kvm_int.h                  | 2 +-
->   include/{exec => system}/memory.h         | 8 ++------
->   include/system/vhost-user-backend.h       | 2 +-
->   migration/rdma.h                          | 2 +-
 >   rust/wrapper.h                            | 2 +-
->   target/loongarch/cpu.h                    | 2 +-
->   target/mips/cpu.h                         | 2 +-
->   accel/kvm/kvm-all.c                       | 2 +-
->   accel/tcg/cputlb.c                        | 2 +-
->   backends/tpm/tpm_util.c                   | 2 +-
->   block/blkio.c                             | 4 ++--
->   disas/disas-mon.c                         | 2 +-
+>   target/i386/hvf/vmx.h                     | 2 +-
+>   accel/hvf/hvf-accel-ops.c                 | 2 +-
 >   hw/acpi/erst.c                            | 2 +-
+>   hw/arm/aspeed_ast10x0.c                   | 2 +-
+>   hw/arm/bananapi_m2u.c                     | 2 +-
+>   hw/arm/collie.c                           | 2 +-
+>   hw/arm/exynos4_boards.c                   | 2 +-
+>   hw/arm/fsl-imx31.c                        | 2 +-
+>   hw/arm/fsl-imx8mp.c                       | 2 +-
+>   hw/arm/imx8mp-evk.c                       | 2 +-
+>   hw/arm/integratorcp.c                     | 2 +-
+>   hw/arm/kzm.c                              | 2 +-
+>   hw/arm/microbit.c                         | 2 +-
+>   hw/arm/mps2-tz.c                          | 2 +-
+>   hw/arm/mps2.c                             | 2 +-
+>   hw/arm/mps3r.c                            | 2 +-
+>   hw/arm/msf2-soc.c                         | 2 +-
+>   hw/arm/msf2-som.c                         | 2 +-
+>   hw/arm/musca.c                            | 2 +-
+>   hw/arm/omap1.c                            | 2 +-
+>   hw/arm/omap_sx1.c                         | 2 +-
+>   hw/arm/orangepi.c                         | 2 +-
+>   hw/arm/stellaris.c                        | 2 +-
+>   hw/arm/stm32f100_soc.c                    | 2 +-
+>   hw/arm/stm32f205_soc.c                    | 2 +-
+>   hw/arm/stm32f405_soc.c                    | 2 +-
+>   hw/arm/stm32l4x5_soc.c                    | 2 +-
 >   hw/avr/atmega.c                           | 2 +-
->   hw/block/fdc-sysbus.c                     | 2 +-
+>   hw/char/goldfish_tty.c                    | 2 +-
+>   hw/char/omap_uart.c                       | 2 +-
+>   hw/char/riscv_htif.c                      | 2 +-
 >   hw/core/cpu-system.c                      | 2 +-
->   hw/core/loader-fit.c                      | 2 +-
->   hw/core/loader.c                          | 2 +-
->   hw/display/edid-region.c                  | 2 +-
+>   hw/core/null-machine.c                    | 2 +-
+>   hw/core/sysbus.c                          | 2 +-
+>   hw/dma/rc4030.c                           | 2 +-
+>   hw/hyperv/hv-balloon.c                    | 2 +-
 >   hw/hyperv/hyperv.c                        | 2 +-
->   hw/i386/acpi-common.c                     | 2 +-
->   hw/i386/acpi-microvm.c                    | 2 +-
->   hw/i386/pc_piix.c                         | 2 +-
->   hw/intc/mips_gic.c                        | 2 +-
->   hw/intc/ompic.c                           | 2 +-
->   hw/net/ne2000.c                           | 2 +-
->   hw/pci-bridge/pci_bridge_dev.c            | 2 +-
->   hw/pci-host/remote.c                      | 2 +-
->   hw/ppc/pnv_homer.c                        | 2 +-
->   hw/ppc/sam460ex.c                         | 2 +-
+>   hw/i386/kvm/xen_evtchn.c                  | 2 +-
+>   hw/i386/kvm/xen_gnttab.c                  | 2 +-
+>   hw/i386/kvm/xen_overlay.c                 | 2 +-
+>   hw/i386/sgx-epc.c                         | 2 +-
+>   hw/i386/sgx.c                             | 2 +-
+>   hw/i386/vapic.c                           | 2 +-
+>   hw/ide/ahci-sysbus.c                      | 2 +-
+>   hw/input/lasips2.c                        | 2 +-
+>   hw/intc/loongarch_extioi.c                | 2 +-
+>   hw/intc/riscv_aplic.c                     | 2 +-
+>   hw/intc/riscv_imsic.c                     | 2 +-
+>   hw/loongarch/virt.c                       | 2 +-
+>   hw/mem/memory-device.c                    | 2 +-
+>   hw/microblaze/petalogix_ml605_mmu.c       | 2 +-
+>   hw/microblaze/petalogix_s3adsp1800_mmu.c  | 2 +-
+>   hw/microblaze/xlnx-zynqmp-pmu.c           | 2 +-
+>   hw/mips/mipssim.c                         | 2 +-
+>   hw/misc/allwinner-h3-dramc.c              | 2 +-
+>   hw/misc/allwinner-r40-dramc.c             | 2 +-
+>   hw/misc/ivshmem-flat.c                    | 2 +-
+>   hw/misc/mac_via.c                         | 2 +-
+>   hw/net/i82596.c                           | 2 +-
+>   hw/nvram/fw_cfg.c                         | 2 +-
+>   hw/openrisc/openrisc_sim.c                | 2 +-
+>   hw/openrisc/virt.c                        | 2 +-
+>   hw/pci-host/mv64361.c                     | 2 +-
+>   hw/ppc/pegasos2.c                         | 2 +-
+>   hw/ppc/pnv_psi.c                          | 2 +-
+>   hw/ppc/ppc405_uc.c                        | 2 +-
+>   hw/ppc/ppc4xx_sdram.c                     | 2 +-
+>   hw/ppc/prep_systemio.c                    | 2 +-
+>   hw/ppc/rs6000_mc.c                        | 2 +-
+>   hw/ppc/spapr_ovec.c                       | 2 +-
+>   hw/ppc/vof.c                              | 2 +-
 >   hw/remote/iommu.c                         | 2 +-
->   hw/remote/machine.c                       | 2 +-
->   hw/remote/proxy-memory-listener.c         | 2 +-
->   hw/remote/vfio-user-obj.c                 | 2 +-
->   hw/s390x/s390-pci-inst.c                  | 2 +-
->   hw/timer/sh_timer.c                       | 2 +-
+>   hw/riscv/microblaze-v-generic.c           | 2 +-
+>   hw/riscv/opentitan.c                      | 2 +-
+>   hw/riscv/shakti_c.c                       | 2 +-
+>   hw/s390x/css.c                            | 2 +-
+>   hw/s390x/s390-skeys.c                     | 2 +-
+>   hw/s390x/virtio-ccw.c                     | 2 +-
+>   hw/sparc/sun4m_iommu.c                    | 2 +-
+>   hw/sparc64/sun4u_iommu.c                  | 2 +-
+>   hw/timer/hpet.c                           | 2 +-
+>   hw/tpm/tpm_crb.c                          | 2 +-
+>   hw/vfio/ap.c                              | 2 +-
+>   hw/vfio/ccw.c                             | 2 +-
 >   hw/vfio/common.c                          | 2 +-
 >   hw/vfio/container.c                       | 2 +-
 >   hw/vfio/platform.c                        | 2 +-
->   hw/xtensa/sim.c                           | 2 +-
->   hw/xtensa/virt.c                          | 2 +-
->   hw/xtensa/xtensa_memory.c                 | 2 +-
->   hw/xtensa/xtfpga.c                        | 2 +-
->   migration/dirtyrate.c                     | 2 +-
->   migration/rdma.c                          | 2 +-
->   migration/savevm.c                        | 2 +-
+>   hw/vfio/spapr.c                           | 2 +-
+>   hw/virtio/vhost-vdpa.c                    | 2 +-
+>   hw/virtio/virtio-balloon.c                | 2 +-
+>   hw/virtio/virtio-bus.c                    | 2 +-
 >   monitor/hmp-cmds-target.c                 | 2 +-
->   stubs/ram-block.c                         | 2 +-
->   system/dirtylimit.c                       | 2 +-
+>   monitor/hmp-cmds.c                        | 2 +-
 >   system/ioport.c                           | 2 +-
 >   system/memory.c                           | 2 +-
 >   system/memory_mapping.c                   | 2 +-
->   system/physmem.c                          | 2 +-
->   system/qtest.c                            | 2 +-
->   target/xtensa/cpu.c                       | 2 +-
->   tests/qtest/fuzz/generic_fuzz.c           | 2 +-
->   tests/qtest/fuzz/qos_fuzz.c               | 2 +-
->   tests/unit/test-resv-mem.c                | 2 +-
->   ui/console.c                              | 2 +-
->   util/vfio-helpers.c                       | 2 +-
->   MAINTAINERS                               | 2 +-
->   docs/devel/memory.rst                     | 2 +-
->   scripts/analyze-inclusions                | 2 +-
->   153 files changed, 155 insertions(+), 160 deletions(-)
->   rename include/{exec => system}/memory.h (99%)
+>   target/arm/hvf/hvf.c                      | 2 +-
+>   target/arm/kvm.c                          | 2 +-
+>   target/avr/helper.c                       | 2 +-
+>   target/i386/cpu-apic.c                    | 2 +-
+>   target/i386/cpu.c                         | 2 +-
+>   target/i386/kvm/xen-emu.c                 | 2 +-
+>   target/i386/nvmm/nvmm-all.c               | 2 +-
+>   target/i386/sev.c                         | 2 +-
+>   target/i386/tcg/system/misc_helper.c      | 2 +-
+>   target/i386/tcg/system/tcg-cpu.c          | 2 +-
+>   target/i386/whpx/whpx-all.c               | 2 +-
+>   target/loongarch/kvm/kvm.c                | 2 +-
+>   target/riscv/kvm/kvm-cpu.c                | 2 +-
+>   target/s390x/mmu_helper.c                 | 2 +-
+>   target/s390x/sigp.c                       | 2 +-
+>   target/s390x/tcg/excp_helper.c            | 2 +-
+>   target/xtensa/dbg_helper.c                | 2 +-
+>   hw/display/apple-gfx.m                    | 2 +-
+>   123 files changed, 124 insertions(+), 128 deletions(-)
+>   rename include/{exec => system}/address-spaces.h (89%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
