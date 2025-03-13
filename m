@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D373DC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 03:50:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D24C28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 03:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsZWU-0004mA-4S; Wed, 12 Mar 2025 23:46:18 -0400
+	id 1tsZVw-0004Zw-6B; Wed, 12 Mar 2025 23:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZWC-0004gZ-Hw
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:46:00 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tsZVt-0004YL-BV
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:42 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZW0-0007oI-Gr
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:59 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22580c9ee0aso8854215ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:48 -0700 (PDT)
+ id 1tsZVk-0007aR-RJ
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:38 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so9601855ad.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741837546; x=1742442346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741837530; x=1742442330; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PsjMy5lcZ0oWARq4nJr2i4kwj0kpFaIrAOqFSC65xXY=;
- b=aXV9u1NPz96Bp1u5m02f6YZSBQJnkh6fUKT5KdeduY1l9iJX/QdDHXibwHUnBUqdFG
- jPDp1C+ZSHLj/Zf3IVS4h1m1r8K0Sw+X7eNkILIpJW/4P4k88gjEDtswTnYZZaN8s7R1
- xZai5CEfzmp/UvXBZutaXtbXy1HkPLCTHxxlkEwRnLpMDa9XjYinUPTvkefMBNq3jbrP
- 1MVv6YvXk3tnHDSJqLLu3f5stf0x4fGw6i+Eb9TU8Rd2f5h9bB1EVzyQ9Vkq//aQXtFf
- 37SUrvGTqwpZsVS73AcKcn/+InGIvpFh9hz0UnXmQzQLCyudxErJIFqFnKKG78H8pyrQ
- x/Zg==
+ bh=66Nwe/+SFhs9zP1x34rLgBB7tcriDwmEqicbXY8oWM4=;
+ b=rNj2l0NLkqLGi9o7/xOxYhoK0an7RCv25I8ly434KL+iDcEnjl6WKysBHiibp+f0n9
+ zbMTceV7qSc5H+SGmOGU9Frs2AMMquuwNw9J1yGUaQPO66B0m7dAtoO8gsng66cf9py0
+ kpuyuS1VphkT87TB4gtmceHucKqruStMpQX/uAQ9lFycjLnf3VPd1YoGHnKb3NLemZjo
+ VQaJnGSr6P3o31HFdf/YGzo+9r0Vcq8gvgEm8eku9ZR0H8ulWZPE4gLW+cpuRZdZF5qy
+ Dgrd0hmyi+PXifvofWBY/yBoMIsRqwC5g/XdPle1rX23cBrTJvLoV/IehjON3w1IBCIK
+ Glyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741837546; x=1742442346;
+ d=1e100.net; s=20230601; t=1741837530; x=1742442330;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PsjMy5lcZ0oWARq4nJr2i4kwj0kpFaIrAOqFSC65xXY=;
- b=D3nAVUHTvistwb4fJH92nT9FyNVjqOzX3gWRcHP6EnlqSPs6rFFd0Bwh9acyFEFvRv
- k4wP/6h1qm5Kx3eskskYRCpOkIOj6HWwyc/dhEMq9oxtsW2ftDb8VdakyIGBPHBupgsX
- 4LTWF9uGomHI5k0hykMgTxyFvPEKFrq+1+khSBxSNneBuiUJyd3yATXpoFV81x3bAHnb
- KM4aN00lJx/wUYadsIxxiHpWavr8NHMuvYL7JLXYFZg0+lVza6pBfYMR5UKYondyaDtg
- L2O1i9alcLHQbHGz0dG2f7XfbJP3fORmyyp8Aa56/mMi7rPVfjmXKfAxZyG5RxiPT6v/
- 8p0A==
-X-Gm-Message-State: AOJu0Yw/yDKG9bIJgGnfT7hrF59v/eza81YgDfURM5ZqVZEZXpKOlsqq
- 5R5r9QUtZeVdz3KHY4Pi1MnnCgbBUn98hRBBDP9//6YVnjE3aJtbYHTDxuyJpcla1OEqv2afQ+l
- E
-X-Gm-Gg: ASbGncsDtVaKLo6ZTvr0EeiBNUKSkJSk2LlzF1bxEQW0MeNHHpXnN6t/pAjmFpJtrQ6
- hbNN3Yvi5Giz6/oV6x4/8wCmCw+Z5+pSO4hDvT4I38PW27D65fnftGYZyGgagd80Ag5SNn/KxVa
- GR8cFxQiTVJ03ByEUVYpHt1dmpZQiazVxvlnTJd5+A942gVdPhiSSLIk2ULhlGa2yksOYEI/5pO
- myQ36+MCq8ZEm9N92kUwOErgqamci51B4+f9AXVAsVVz4uxm6W9hXIi5o5Za8/nMF0tKus/LkHt
- XzoPgxnyknJ5BIZf1lH5abW0CDoI9Jvin3xBYQ864v1ROtGjiHHuHynW60AC++CKjt98H6MD9AM
- NP8zVb707pKU=
-X-Google-Smtp-Source: AGHT+IGbhDokIuIPdNFMGIYXGH9mKpupRDjFL64QMp9nvEuHD22ZfSWSHbttqASG9BWNgGk3z+lBNg==
-X-Received: by 2002:a05:6a00:4f90:b0:736:4a5b:7f08 with SMTP id
- d2e1a72fcca58-736aaae86d4mr30499210b3a.22.1741837545770; 
- Wed, 12 Mar 2025 20:45:45 -0700 (PDT)
+ bh=66Nwe/+SFhs9zP1x34rLgBB7tcriDwmEqicbXY8oWM4=;
+ b=HfEpsCfu9N9PTlg4knnyEaaqrBuENblaPuRcxRu6qU+IUzfIh9sI+p1UiGgScw/eXe
+ e3w8jtbS1/gLQwXHTyNqRb2M1eibdCEnFGHQNpsQt4ItC+IJyUjhZnZ+UgTKn5V/g1qC
+ yF5/vYlXw6sBEOMQhLyER655yVGauU7ZmBjz+/akSvaaK1n0DeuJpifPzIrGuqcTPG4e
+ IpinqNV5IokD/TxE6ZcTPrUNaeG7DL0iDy8w8xeou7caG/rsB3PTMLk3kZtJZHYUhGGO
+ ff5Eeqm86JCnNBjeR9f8FomGPrM5d/lEUi2yV8Cuamyx/zrYkXC5lpYgWobBChh8w5ad
+ koWw==
+X-Gm-Message-State: AOJu0YxLru3Z6O/1YVSrT+qmNu0rsonf1xPuwjMXouvIOTE3UEaKcbZJ
+ QxE1+2mZisCGMhA3VTIdjNk3Nl+zeCgu9yOS0kukJf1C34z8rOqNuYE54p39r0otPjxWwNV93Qy
+ Q
+X-Gm-Gg: ASbGnctK30lx45n3lTCSk7ZoGMEVIP47PMYr7h2ReqZJ9GVcH6f/OIGD98kaZQ4kPxk
+ lbbTrA/QDW6VjGZ0jAJblQzziQqKXkCOD5ogICHFS413hyrRAsdhh/xkfDz1dj0SOPzZxNa/Q9Z
+ j2DmKW2bj/ZoSs7eZ/LWCMKouFM2MYFMo16oJsWUK0wJyDg7b6IjKe3MhwS20FjHxFGXAhNWplq
+ 56nOf2Z65rpyt7c89qKgfspp9K5klcNIStFw2EuIcz0jFj6om5ajdirmElDTTP1N8/iAAI028FZ
+ 00mqk1Ts/S/02uEPL8xnuUKMH6o3tneSmr9hBnNls/TXyNtmwsw+gepDHwC16UFRewfVjcOICeF
+ r
+X-Google-Smtp-Source: AGHT+IH6/qIgVcUI31cfCSKNIlJdEfL2nGoeiL3FWALA73YZ4YOSHIPe9C7tsOyj733hBGzVdKrpqg==
+X-Received: by 2002:a05:6a21:7002:b0:1f5:7fcb:397d with SMTP id
+ adf61e73a8af0-1f58cb1bea7mr16029737637.16.1741837530231; 
+ Wed, 12 Mar 2025 20:45:30 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.45
+ d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Mar 2025 20:45:45 -0700 (PDT)
+ Wed, 12 Mar 2025 20:45:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	pbonzini@redhat.com,
 	philmd@linaro.org
-Subject: [PATCH 24/37] include/system: Move exec/ramblock.h to
- system/ramblock.h
-Date: Wed, 12 Mar 2025 20:45:04 -0700
-Message-ID: <20250313034524.3069690-25-richard.henderson@linaro.org>
+Subject: [PATCH 05/37] include/exec: Inline *_mmuidx_ra memory operations
+Date: Wed, 12 Mar 2025 20:44:45 -0700
+Message-ID: <20250313034524.3069690-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250313034524.3069690-1-richard.henderson@linaro.org>
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,281 +102,319 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the existing includes with sed.
+These expand inline to the *_mmu api with trivial
+massaging of the arguments.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/system/ram_addr.h           | 2 +-
- include/{exec => system}/ramblock.h | 9 ++++-----
- hw/display/virtio-gpu-udmabuf.c     | 2 +-
- hw/hyperv/hv-balloon.c              | 2 +-
- hw/virtio/vhost-user.c              | 2 +-
- migration/dirtyrate.c               | 2 +-
- migration/file.c                    | 2 +-
- migration/multifd-nocomp.c          | 2 +-
- migration/multifd-qatzip.c          | 2 +-
- migration/multifd-qpl.c             | 2 +-
- migration/multifd-uadk.c            | 2 +-
- migration/multifd-zero-page.c       | 2 +-
- migration/multifd-zlib.c            | 2 +-
- migration/multifd-zstd.c            | 2 +-
- migration/multifd.c                 | 2 +-
- migration/postcopy-ram.c            | 2 +-
- tests/qtest/fuzz/generic_fuzz.c     | 2 +-
- MAINTAINERS                         | 2 +-
- 18 files changed, 21 insertions(+), 22 deletions(-)
- rename include/{exec => system}/ramblock.h (96%)
+ include/exec/cpu_ldst.h     | 163 ++++++++++++++++++++++++++++--------
+ accel/tcg/ldst_common.c.inc | 118 --------------------------
+ 2 files changed, 129 insertions(+), 152 deletions(-)
 
-diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 65f8f37b2a..eceb8fbe4b 100644
---- a/include/system/ram_addr.h
-+++ b/include/system/ram_addr.h
-@@ -24,7 +24,7 @@
- #include "system/tcg.h"
- #include "exec/cputlb.h"
- #include "exec/ramlist.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/exec-all.h"
- #include "qemu/rcu.h"
+diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+index 1fbdbe59ae..b33755169e 100644
+--- a/include/exec/cpu_ldst.h
++++ b/include/exec/cpu_ldst.h
+@@ -118,41 +118,136 @@ void cpu_stl_le_data_ra(CPUArchState *env, abi_ptr ptr,
+ void cpu_stq_le_data_ra(CPUArchState *env, abi_ptr ptr,
+                         uint64_t val, uintptr_t ra);
  
-diff --git a/include/exec/ramblock.h b/include/system/ramblock.h
-similarity index 96%
-rename from include/exec/ramblock.h
-rename to include/system/ramblock.h
-index 64484cd821..d8a116ba99 100644
---- a/include/exec/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -16,11 +16,10 @@
-  * The functions declared here will be removed soon.
-  */
+-uint32_t cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                            int mmu_idx, uintptr_t ra);
+-int cpu_ldsb_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                       int mmu_idx, uintptr_t ra);
+-uint32_t cpu_lduw_be_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                               int mmu_idx, uintptr_t ra);
+-int cpu_ldsw_be_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                          int mmu_idx, uintptr_t ra);
+-uint32_t cpu_ldl_be_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                              int mmu_idx, uintptr_t ra);
+-uint64_t cpu_ldq_be_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                              int mmu_idx, uintptr_t ra);
+-uint32_t cpu_lduw_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                               int mmu_idx, uintptr_t ra);
+-int cpu_ldsw_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                          int mmu_idx, uintptr_t ra);
+-uint32_t cpu_ldl_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                              int mmu_idx, uintptr_t ra);
+-uint64_t cpu_ldq_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr,
+-                              int mmu_idx, uintptr_t ra);
++static inline uint32_t
++cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_UB, mmu_idx);
++    return cpu_ldb_mmu(env, addr, oi, ra);
++}
  
--#ifndef QEMU_EXEC_RAMBLOCK_H
--#define QEMU_EXEC_RAMBLOCK_H
-+#ifndef SYSTEM_RAMBLOCK_H
-+#define SYSTEM_RAMBLOCK_H
- 
--#ifndef CONFIG_USER_ONLY
--#include "cpu-common.h"
-+#include "exec/cpu-common.h"
- #include "qemu/rcu.h"
- #include "exec/ramlist.h"
- 
-@@ -91,5 +90,5 @@ struct RAMBlock {
-      */
-     ram_addr_t postcopy_length;
- };
--#endif
+-void cpu_stb_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint32_t val,
+-                       int mmu_idx, uintptr_t ra);
+-void cpu_stw_be_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra);
+-void cpu_stl_be_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra);
+-void cpu_stq_be_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint64_t val,
+-                          int mmu_idx, uintptr_t ra);
+-void cpu_stw_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra);
+-void cpu_stl_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra);
+-void cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint64_t val,
+-                          int mmu_idx, uintptr_t ra);
++static inline int
++cpu_ldsb_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr_t ra)
++{
++    return (int8_t)cpu_ldub_mmuidx_ra(env, addr, mmu_idx, ra);
++}
 +
- #endif
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index 85ca23cb32..0510577475 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -19,7 +19,7 @@
- #include "hw/virtio/virtio-gpu.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
- #include "trace.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "system/hostmem.h"
- #include <sys/ioctl.h>
- #include <linux/memfd.h>
-diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
-index 0b1da723c8..acabff2c4a 100644
---- a/hw/hyperv/hv-balloon.c
-+++ b/hw/hyperv/hv-balloon.c
-@@ -12,7 +12,7 @@
++static inline uint32_t
++cpu_lduw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                      int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_BEUW | MO_UNALN, mmu_idx);
++    return cpu_ldw_mmu(env, addr, oi, ra);
++}
++
++static inline int
++cpu_ldsw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                      int mmu_idx, uintptr_t ra)
++{
++    return (int16_t)cpu_lduw_be_mmuidx_ra(env, addr, mmu_idx, ra);
++}
++
++static inline uint32_t
++cpu_ldl_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_BEUL | MO_UNALN, mmu_idx);
++    return cpu_ldl_mmu(env, addr, oi, ra);
++}
++
++static inline uint64_t
++cpu_ldq_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_BEUQ | MO_UNALN, mmu_idx);
++    return cpu_ldq_mmu(env, addr, oi, ra);
++}
++
++static inline uint32_t
++cpu_lduw_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                      int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_LEUW | MO_UNALN, mmu_idx);
++    return cpu_ldw_mmu(env, addr, oi, ra);
++}
++
++static inline int
++cpu_ldsw_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                      int mmu_idx, uintptr_t ra)
++{
++    return (int16_t)cpu_lduw_le_mmuidx_ra(env, addr, mmu_idx, ra);
++}
++
++static inline uint32_t
++cpu_ldl_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_LEUL | MO_UNALN, mmu_idx);
++    return cpu_ldl_mmu(env, addr, oi, ra);
++}
++
++static inline uint64_t
++cpu_ldq_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_LEUQ | MO_UNALN, mmu_idx);
++    return cpu_ldq_mmu(env, addr, oi, ra);
++}
++
++static inline void
++cpu_stb_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
++                  int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_UB, mmu_idx);
++    cpu_stb_mmu(env, addr, val, oi, ra);
++}
++
++static inline void
++cpu_stw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_BEUW | MO_UNALN, mmu_idx);
++    cpu_stw_mmu(env, addr, val, oi, ra);
++}
++
++static inline void
++cpu_stl_be_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_BEUL | MO_UNALN, mmu_idx);
++    cpu_stl_mmu(env, addr, val, oi, ra);
++}
++
++static inline void
++cpu_stq_be_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint64_t val,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_BEUQ | MO_UNALN, mmu_idx);
++    cpu_stq_mmu(env, addr, val, oi, ra);
++}
++
++static inline void
++cpu_stw_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_LEUW | MO_UNALN, mmu_idx);
++    cpu_stw_mmu(env, addr, val, oi, ra);
++}
++
++static inline void
++cpu_stl_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_LEUL | MO_UNALN, mmu_idx);
++    cpu_stl_mmu(env, addr, val, oi, ra);
++}
++
++static inline void
++cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint64_t val,
++                     int mmu_idx, uintptr_t ra)
++{
++    MemOpIdx oi = make_memop_idx(MO_LEUQ | MO_UNALN, mmu_idx);
++    cpu_stq_mmu(env, addr, val, oi, ra);
++}
  
- #include "system/address-spaces.h"
- #include "exec/cpu-common.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "hw/boards.h"
- #include "hw/hyperv/dynmem-proto.h"
- #include "hw/hyperv/hv-balloon.h"
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 267b612587..48561d3c74 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -28,7 +28,7 @@
- #include "system/cryptodev.h"
- #include "migration/postcopy-ram.h"
- #include "trace.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- 
- #include <sys/ioctl.h>
- #include <sys/socket.h>
-diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
-index 09caf92f87..986624c79a 100644
---- a/migration/dirtyrate.c
-+++ b/migration/dirtyrate.c
-@@ -14,7 +14,7 @@
- #include "qemu/error-report.h"
- #include "hw/core/cpu.h"
- #include "qapi/error.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "qemu/rcu_queue.h"
- #include "qemu/main-loop.h"
-diff --git a/migration/file.c b/migration/file.c
-index 7f11e26f5c..bb8031e3c7 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -6,7 +6,7 @@
+ #if TARGET_BIG_ENDIAN
+ # define cpu_lduw_data        cpu_lduw_be_data
+diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
+index 0447c0bb92..99a56df3fb 100644
+--- a/accel/tcg/ldst_common.c.inc
++++ b/accel/tcg/ldst_common.c.inc
+@@ -248,124 +248,6 @@ void cpu_st16_mmu(CPUArchState *env, vaddr addr, Int128 val,
+  * Wrappers of the above
   */
  
- #include "qemu/osdep.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index ffe75256c9..94f248e8a2 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -11,7 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "file.h"
- #include "migration-stats.h"
-diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
-index 6a0e989fae..7419e5dc0d 100644
---- a/migration/multifd-qatzip.c
-+++ b/migration/multifd-qatzip.c
-@@ -13,7 +13,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qapi/qapi-types-migration.h"
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 88e2344af2..52902eb00c 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -14,7 +14,7 @@
- #include "qemu/module.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-migration.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "multifd.h"
- #include "qpl/qpl.h"
- 
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index 6895c1f65a..fd7cd9b5e8 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -13,7 +13,7 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "migration.h"
- #include "multifd.h"
- #include "options.h"
-diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-index f1e988a959..dbc1184921 100644
---- a/migration/multifd-zero-page.c
-+++ b/migration/multifd-zero-page.c
-@@ -12,7 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "multifd.h"
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 8cf8a26bb4..8820b2a787 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -13,7 +13,7 @@
- #include "qemu/osdep.h"
- #include <zlib.h>
- #include "qemu/rcu.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "qapi/error.h"
- #include "migration.h"
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index abed140855..3c2dcf76b0 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -13,7 +13,7 @@
- #include "qemu/osdep.h"
- #include <zstd.h>
- #include "qemu/rcu.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "qapi/error.h"
- #include "migration.h"
-diff --git a/migration/multifd.c b/migration/multifd.c
-index dfb5189f0e..86c83e43c0 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -16,7 +16,7 @@
- #include "qemu/rcu.h"
- #include "exec/target_page.h"
- #include "system/system.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "file.h"
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 5d3edfcfec..995614b38c 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -31,7 +31,7 @@
- #include "qemu/error-report.h"
- #include "trace.h"
- #include "hw/boards.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "socket.h"
- #include "yank_functions.h"
- #include "tls.h"
-diff --git a/tests/qtest/fuzz/generic_fuzz.c b/tests/qtest/fuzz/generic_fuzz.c
-index 239be9372d..507de74806 100644
---- a/tests/qtest/fuzz/generic_fuzz.c
-+++ b/tests/qtest/fuzz/generic_fuzz.c
-@@ -21,7 +21,7 @@
- #include "fuzz.h"
- #include "string.h"
- #include "system/memory.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "hw/qdev-core.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_device.h"
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2cc0b54ec4..212435e302 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3111,7 +3111,7 @@ F: include/system/ioport.h
- F: include/exec/memop.h
- F: include/system/memory.h
- F: include/system/ram_addr.h
--F: include/exec/ramblock.h
-+F: include/system/ramblock.h
- F: include/system/memory_mapping.h
- F: system/dma-helpers.c
- F: system/ioport.c
+-uint32_t cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                            int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_UB, mmu_idx);
+-    return cpu_ldb_mmu(env, addr, oi, ra);
+-}
+-
+-int cpu_ldsb_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                       int mmu_idx, uintptr_t ra)
+-{
+-    return (int8_t)cpu_ldub_mmuidx_ra(env, addr, mmu_idx, ra);
+-}
+-
+-uint32_t cpu_lduw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                               int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_BEUW | MO_UNALN, mmu_idx);
+-    return cpu_ldw_mmu(env, addr, oi, ra);
+-}
+-
+-int cpu_ldsw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    return (int16_t)cpu_lduw_be_mmuidx_ra(env, addr, mmu_idx, ra);
+-}
+-
+-uint32_t cpu_ldl_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                              int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_BEUL | MO_UNALN, mmu_idx);
+-    return cpu_ldl_mmu(env, addr, oi, ra);
+-}
+-
+-uint64_t cpu_ldq_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                              int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_BEUQ | MO_UNALN, mmu_idx);
+-    return cpu_ldq_mmu(env, addr, oi, ra);
+-}
+-
+-uint32_t cpu_lduw_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                               int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_LEUW | MO_UNALN, mmu_idx);
+-    return cpu_ldw_mmu(env, addr, oi, ra);
+-}
+-
+-int cpu_ldsw_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    return (int16_t)cpu_lduw_le_mmuidx_ra(env, addr, mmu_idx, ra);
+-}
+-
+-uint32_t cpu_ldl_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                              int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_LEUL | MO_UNALN, mmu_idx);
+-    return cpu_ldl_mmu(env, addr, oi, ra);
+-}
+-
+-uint64_t cpu_ldq_le_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+-                              int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_LEUQ | MO_UNALN, mmu_idx);
+-    return cpu_ldq_mmu(env, addr, oi, ra);
+-}
+-
+-void cpu_stb_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
+-                       int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_UB, mmu_idx);
+-    cpu_stb_mmu(env, addr, val, oi, ra);
+-}
+-
+-void cpu_stw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_BEUW | MO_UNALN, mmu_idx);
+-    cpu_stw_mmu(env, addr, val, oi, ra);
+-}
+-
+-void cpu_stl_be_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_BEUL | MO_UNALN, mmu_idx);
+-    cpu_stl_mmu(env, addr, val, oi, ra);
+-}
+-
+-void cpu_stq_be_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint64_t val,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_BEUQ | MO_UNALN, mmu_idx);
+-    cpu_stq_mmu(env, addr, val, oi, ra);
+-}
+-
+-void cpu_stw_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_LEUW | MO_UNALN, mmu_idx);
+-    cpu_stw_mmu(env, addr, val, oi, ra);
+-}
+-
+-void cpu_stl_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint32_t val,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_LEUL | MO_UNALN, mmu_idx);
+-    cpu_stl_mmu(env, addr, val, oi, ra);
+-}
+-
+-void cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint64_t val,
+-                          int mmu_idx, uintptr_t ra)
+-{
+-    MemOpIdx oi = make_memop_idx(MO_LEUQ | MO_UNALN, mmu_idx);
+-    cpu_stq_mmu(env, addr, val, oi, ra);
+-}
+-
+-/*--------------------------*/
+-
+ uint32_t cpu_ldub_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
+ {
+     int mmu_index = cpu_mmu_index(env_cpu(env), false);
 -- 
 2.43.0
 
