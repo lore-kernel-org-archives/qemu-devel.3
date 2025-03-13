@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E18C28B28
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 03:46:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C62C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 03:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsZW7-0004f0-BF; Wed, 12 Mar 2025 23:45:55 -0400
+	id 1tsZW2-0004dY-5I; Wed, 12 Mar 2025 23:45:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZW4-0004eK-7T
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:52 -0400
+ id 1tsZVz-0004bR-5s
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:47 -0400
 Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZVu-0007mh-3J
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:51 -0400
+ id 1tsZVt-0007ma-Tn
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:46 -0400
 Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-219f8263ae0so9605145ad.0
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:41 -0700 (PDT)
+ d9443c01a7336-2255003f4c6so9403415ad.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741837540; x=1742442340; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741837539; x=1742442339; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HBRn320f0vqZtJU6nV6Y66O0sC8qfPrEa7TKcBvFURw=;
- b=WA4nmHfuo1uhHRE0vBecsJqVGjqRQOccWRQfnZLPwe/fkv/mzgM6xT1EqSFHgMUL2N
- JioKaq7MiHPpEmuN1ic2LLLkS+WcAfsuQ9Iftf1BKNVqvAABkIsxP2kg6Zgkr5zBk28v
- 13h57+F5SKj3r7G8aLWSW4ZE/lVE1zM/laZtG1CuFKdwo9BatcSICYAAfD6Mzoq9LBZv
- BEtbP+FZkW9T052ehxeoSPZlR7S4g51mrMJUfg0zQ1UtYYHuyoHH3OYuE7+qAcWsmrgT
- HPH7EpOGhXdnBnQAaVTkbgbwlvwySDXBQ8IoUNG7j3Sa/orFEJyOF/kRWxpzNzZgD0GP
- iuDg==
+ bh=m9rWucwh9z67Kr9MnN83qBMGuAsfQno38cRmjhXBoaI=;
+ b=oCFy1vs6jn1x8rE3dRQMOiCv8JykVYMaQ6vMPyW0TDELiiwhj9V2gWkRlIF/gtb3QB
+ D+D9qy7KW7Ozx8YLr+8JX8u0Fr9cwqD/REsJJO5qU6c8R3rVFLF6k4fwqqY/JAJTZKRU
+ FmY61Mkn1AwR1F+rW/KwERU+pESmozmnFmctVI0uP/KnMiMgsoHfu/aMBb09ykSFK5/1
+ dRQy2Wm/mfLquH3pp3PcykjVTDJWfa3bvIs2UCFY2dTtv3VfqyoBCFU/wTyuIh9YHJPf
+ FeT+b8cC1Z02gh4gas9+JbYkmXm20TL351G96vt1YqwbvzRGMGFTJ6In9wrcmOmY/LJC
+ TQZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741837540; x=1742442340;
+ d=1e100.net; s=20230601; t=1741837539; x=1742442339;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HBRn320f0vqZtJU6nV6Y66O0sC8qfPrEa7TKcBvFURw=;
- b=OzcgcY4nIK5Bdkebfzp1MYmzjTjFrZR2LkkvLNHsM8k6QGOA/DXPnConzr1+8Bsj7S
- ismTYBYGm0UZggBkgzdO9wqYx9YuGALjmgoM5RK6pITX/V6ZfC5WouUHHXt/i7rFCIMs
- KQt7pOGq47VCqeWwxLHQZ2ssVFsJ7HVjCA/fLF6zk/tbP5WltrHlxYalcNhlOWY6dSdO
- 7SZZnvnvo++L6IH1xAJNWzUEcT2dcFi1y58AZes+k0Tt/azIKLYQSVNCoNSfO7qHwHcn
- S2o6ANM39PkEcxyoYeksgvH51d/PV+qZIvojqQaig5XzIVmY+mLEj70gntTBHLiawEyd
- Jwtg==
-X-Gm-Message-State: AOJu0Yx8izrTe/LQ4SPDgNv5s1lfKZVruIwy0J3X7yjaZC7lyBWL6plX
- 0yQVbkVCBHVRfhGNnIHfJOK7QcqaBu+BjXd/si5SaMKyhBdz0fTjv+w0KCdTlxAScWnmqorI3fB
- m
-X-Gm-Gg: ASbGncu2N/n8fCE0gOCgETV0/UCpPoOAep7S4Oax8FKiHDE4ih/DzigH6daJCjJind5
- Gz8aC+FbhIiQq2Ucodl/7Gzyq/0EFeOFbp+hl+quZJDbdJXNEmrXAAXBq+07LUr3eJssggdTniw
- qIXgWFaVvhH5khK2h4MD7M/ekfVvKi/sy4JlS2hZdy1+A678igIynF4gedF2xAsZhB04D0ZD1p1
- UcqczBfutkR+Fg5DLYIcgqMnZZKVamZy4El8xG4I5WEpFtNKM1yPx6aP4hYyHLV8fFySQvJGQvX
- hBZV3AVicy4MLuWJ3WdFNUFSEFrNrN6rYXbfOs2mfG5S/krCiNl9270i9LuBLczMW1zYAFF+qai
- +
-X-Google-Smtp-Source: AGHT+IGKln9yoGyodt3HmCRhtcaK5NUv/CYAHNrkFi8lHxE7RjRsF+/xZbrYCbc2OijI4MOYee4YqQ==
-X-Received: by 2002:a05:6a00:8d2:b0:736:46b4:beef with SMTP id
- d2e1a72fcca58-736eb7b36d9mr15103299b3a.3.1741837540096; 
- Wed, 12 Mar 2025 20:45:40 -0700 (PDT)
+ bh=m9rWucwh9z67Kr9MnN83qBMGuAsfQno38cRmjhXBoaI=;
+ b=Lmk8Yp+x4JCZpryD9DdHMoRdHIVb4OlmGfpLbENznCLR5xnUPOPgfLlg28x3xB0pe+
+ eotXa0A7voI3YFv9SFOtByE8oJ4ZIIBCsBuWOaZQWTXGoaS+AfEAMP/M5BWdEbeDGp9w
+ b7KmftKR1/nc62yWwZP7lDmzcx+NO6kQsAish4350YvRqlnFOaO6wMd/BoBdRKGqfFcd
+ wEpgzjvBpZM6ZDniDTPzVpD72EohakWPray1C7whJPKECTO9Acly5GbQIoju4GJey4xi
+ DQLi9s6lhYPIbTfg8oznJiCeiyZqlQWCCBGdtt32/Wdmo13MMj2WVdcP93Ns46DTKR/9
+ KUXA==
+X-Gm-Message-State: AOJu0YxyuIXXBl/kXKYFa2kVx90vy/ZwZUAWNcFm4xjDNKRcMMz+ekU+
+ JeutQUEUl/GLJvYgn9x6bUu6s40CtzRZvnhLmeWCTR/5mixsd6aaTEfyoEdLSiVpWP1/1C9MR4X
+ 6
+X-Gm-Gg: ASbGncvIHwk8xCLG8fviJofHaYWzOyZam3yX0692Ep0xwwVd/ie251ybyhVLB3Fx5mg
+ N3mOIpkBkqwtCz/JrRHCupczEvlv6sAGTq8zYTTxV61rqS76uL2NSs9x+tx8EY9V4DXQq+C9S97
+ HZl374X5Tap/fVwbkVsCkg3Nhpos6dkYCm+ZLTnih82+Zy3BPL1T5ZWYRrLv3EsfafLe1vnzZJi
+ WIMVDKCskNBdm2we84FBOeckjsFdF1vO2xIfWFx2hYMNMjMVNJIQpk3nCxIBniEqn7ITrwskC/+
+ zUweBGWmD0QKy33p1qp298rxIz5ZenmDvGGtkh2tmMjok8ZjJ8+ZGyJI4sl/0tPs1Kzt0vbeeZ7
+ K
+X-Google-Smtp-Source: AGHT+IEXgNJ931p8iIitkzZbpeVZELHucz5lfkYsIOzSVp/I1X4f8wp9b+lfcU7PT3WeG2AUrcloaw==
+X-Received: by 2002:a05:6a00:88f:b0:736:7270:4d18 with SMTP id
+ d2e1a72fcca58-736eb7efd4amr12373658b3a.14.1741837539158; 
+ Wed, 12 Mar 2025 20:45:39 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.39
+ d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Mar 2025 20:45:39 -0700 (PDT)
+ Wed, 12 Mar 2025 20:45:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	pbonzini@redhat.com,
 	philmd@linaro.org
-Subject: [PATCH 17/37] meson: Introduce top-level libuser_ss and libsystem_ss
-Date: Wed, 12 Mar 2025 20:44:57 -0700
-Message-ID: <20250313034524.3069690-18-richard.henderson@linaro.org>
+Subject: [PATCH 16/37] include/system: Move exec/ioport.h to system/ioport.h
+Date: Wed, 12 Mar 2025 20:44:56 -0700
+Message-ID: <20250313034524.3069690-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250313034524.3069690-1-richard.henderson@linaro.org>
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
  envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,143 +103,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already have two subdirectories for which we need
-to build files twice, for user vs system modes.
-Move this handling to the top level.
-
-This cannot be combined with user_ss or system_ss,
-because the formulation has not been extended to support
-configuration symbols.
+Convert the existing includes with sed.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- gdbstub/meson.build | 32 ++++++++------------------------
- meson.build         | 22 ++++++++++++++++++++++
- tcg/meson.build     | 23 ++---------------------
- 3 files changed, 32 insertions(+), 45 deletions(-)
+ hw/display/vga_int.h              | 2 +-
+ include/hw/char/parallel-isa.h    | 2 +-
+ include/hw/dma/i8257.h            | 2 +-
+ include/hw/ide/ide-bus.h          | 2 +-
+ include/hw/isa/isa.h              | 2 +-
+ include/{exec => system}/ioport.h | 6 ++----
+ hw/block/fdc-isa.c                | 2 +-
+ monitor/hmp-cmds.c                | 2 +-
+ system/ioport.c                   | 2 +-
+ system/physmem.c                  | 2 +-
+ system/qtest.c                    | 2 +-
+ target/i386/nvmm/nvmm-all.c       | 2 +-
+ target/i386/whpx/whpx-all.c       | 2 +-
+ tests/qtest/fuzz/qtest_wrappers.c | 2 +-
+ MAINTAINERS                       | 2 +-
+ 15 files changed, 16 insertions(+), 18 deletions(-)
+ rename include/{exec => system}/ioport.h (97%)
 
-diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-index dff741ddd4..0e8099ae9c 100644
---- a/gdbstub/meson.build
-+++ b/gdbstub/meson.build
-@@ -4,32 +4,16 @@
- # types such as hwaddr.
- #
+diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
+index 60ad26e03e..747b5cc6cf 100644
+--- a/hw/display/vga_int.h
++++ b/hw/display/vga_int.h
+@@ -26,7 +26,7 @@
+ #define HW_VGA_INT_H
  
--# We need to build the core gdb code via a library to be able to tweak
--# cflags so:
--
--gdb_user_ss = ss.source_set()
--gdb_system_ss = ss.source_set()
--
- # We build two versions of gdbstub, one for each mode
--gdb_user_ss.add(files('gdbstub.c', 'user.c'))
--gdb_system_ss.add(files('gdbstub.c', 'system.c'))
-+libuser_ss.add(files(
-+  'gdbstub.c',
-+  'user.c'
-+))
+ #include "ui/console.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/memory.h"
  
--gdb_user_ss = gdb_user_ss.apply({})
--gdb_system_ss = gdb_system_ss.apply({})
--
--libgdb_user = static_library('gdb_user',
--                             gdb_user_ss.sources() + genh,
--                             c_args: '-DCONFIG_USER_ONLY',
--                             build_by_default: false)
--
--libgdb_system = static_library('gdb_system',
--                                gdb_system_ss.sources() + genh,
--                                build_by_default: false)
--
--gdb_user = declare_dependency(objects: libgdb_user.extract_all_objects(recursive: false))
--user_ss.add(gdb_user)
--gdb_system = declare_dependency(objects: libgdb_system.extract_all_objects(recursive: false))
--system_ss.add(gdb_system)
-+libsystem_ss.add(files(
-+  'gdbstub.c',
-+  'system.c'
-+))
+ #include "hw/display/bochs-vbe.h"
+diff --git a/include/hw/char/parallel-isa.h b/include/hw/char/parallel-isa.h
+index 5284b2ffec..3edaf9dbe4 100644
+--- a/include/hw/char/parallel-isa.h
++++ b/include/hw/char/parallel-isa.h
+@@ -12,7 +12,7 @@
  
- common_ss.add(files('syscalls.c'))
+ #include "parallel.h"
  
-diff --git a/meson.build b/meson.build
-index 9d9c11731f..3869e5bfbc 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3655,12 +3655,14 @@ io_ss = ss.source_set()
- qmp_ss = ss.source_set()
- qom_ss = ss.source_set()
- system_ss = ss.source_set()
-+libsystem_ss = ss.source_set()
- specific_fuzz_ss = ss.source_set()
- specific_ss = ss.source_set()
- rust_devices_ss = ss.source_set()
- stub_ss = ss.source_set()
- trace_ss = ss.source_set()
- user_ss = ss.source_set()
-+libuser_ss = ss.source_set()
- util_ss = ss.source_set()
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "hw/isa/isa.h"
+ #include "qom/object.h"
  
- # accel modules
-@@ -4038,6 +4040,26 @@ common_ss.add(qom, qemuutil)
- common_ss.add_all(when: 'CONFIG_SYSTEM_ONLY', if_true: [system_ss])
- common_ss.add_all(when: 'CONFIG_USER_ONLY', if_true: user_ss)
+diff --git a/include/hw/dma/i8257.h b/include/hw/dma/i8257.h
+index 4342e4a91e..33b6286d5a 100644
+--- a/include/hw/dma/i8257.h
++++ b/include/hw/dma/i8257.h
+@@ -2,7 +2,7 @@
+ #define HW_I8257_H
  
-+libuser_ss = libuser_ss.apply({})
-+libuser = static_library('user',
-+                         libuser_ss.sources() + genh,
-+                         c_args: '-DCONFIG_USER_ONLY',
-+                         dependencies: libuser_ss.dependencies(),
-+                         build_by_default: false)
-+libuser = declare_dependency(objects: libuser.extract_all_objects(recursive: false),
-+                             dependencies: libuser_ss.dependencies())
-+common_ss.add(when: 'CONFIG_USER_ONLY', if_true: libuser)
-+
-+libsystem_ss = libsystem_ss.apply({})
-+libsystem = static_library('system',
-+                           libsystem_ss.sources() + genh,
-+                           c_args: '-DCONFIG_SOFTMMU',
-+                           dependencies: libsystem_ss.dependencies(),
-+                           build_by_default: false)
-+libsystem = declare_dependency(objects: libsystem.extract_all_objects(recursive: false),
-+                               dependencies: libsystem_ss.dependencies())
-+common_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: libsystem)
-+
- # Note that this library is never used directly (only through extract_objects)
- # and is not built by default; therefore, source files not used by the build
- # configuration will be in build.ninja, but are never built by default.
-diff --git a/tcg/meson.build b/tcg/meson.build
-index 69ebb4908a..7df378d773 100644
---- a/tcg/meson.build
-+++ b/tcg/meson.build
-@@ -27,24 +27,5 @@ if host_os == 'linux'
-   tcg_ss.add(files('perf.c'))
- endif
+ #include "hw/isa/isa.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "qom/object.h"
  
--tcg_ss = tcg_ss.apply({})
--
--libtcg_user = static_library('tcg_user',
--                             tcg_ss.sources() + genh,
--                             dependencies: tcg_ss.dependencies(),
--                             c_args: '-DCONFIG_USER_ONLY',
--                             build_by_default: false)
--
--tcg_user = declare_dependency(objects: libtcg_user.extract_all_objects(recursive: false),
--                              dependencies: tcg_ss.dependencies())
--user_ss.add(tcg_user)
--
--libtcg_system = static_library('tcg_system',
--                                tcg_ss.sources() + genh,
--                                dependencies: tcg_ss.dependencies(),
--                                c_args: '-DCONFIG_SOFTMMU',
--                                build_by_default: false)
--
--tcg_system = declare_dependency(objects: libtcg_system.extract_all_objects(recursive: false),
--                                dependencies: tcg_ss.dependencies())
--system_ss.add(tcg_system)
-+libuser_ss.add_all(tcg_ss)
-+libsystem_ss.add_all(tcg_ss)
+ #define TYPE_I8257 "i8257"
+diff --git a/include/hw/ide/ide-bus.h b/include/hw/ide/ide-bus.h
+index 4841a7dcd6..121b455fcd 100644
+--- a/include/hw/ide/ide-bus.h
++++ b/include/hw/ide/ide-bus.h
+@@ -1,7 +1,7 @@
+ #ifndef HW_IDE_BUS_H
+ #define HW_IDE_BUS_H
+ 
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "hw/ide/ide-dev.h"
+ #include "hw/ide/ide-dma.h"
+ 
+diff --git a/include/hw/isa/isa.h b/include/hw/isa/isa.h
+index 1d852011b3..a82c5f1004 100644
+--- a/include/hw/isa/isa.h
++++ b/include/hw/isa/isa.h
+@@ -4,7 +4,7 @@
+ /* ISA bus */
+ 
+ #include "system/memory.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "hw/qdev-core.h"
+ #include "qom/object.h"
+ 
+diff --git a/include/exec/ioport.h b/include/system/ioport.h
+similarity index 97%
+rename from include/exec/ioport.h
+rename to include/system/ioport.h
+index ecea3575bc..780ea5a676 100644
+--- a/include/exec/ioport.h
++++ b/include/system/ioport.h
+@@ -21,8 +21,8 @@
+  * IO ports API
+  */
+ 
+-#ifndef IOPORT_H
+-#define IOPORT_H
++#ifndef SYSTEM_IOPORT_H
++#define SYSTEM_IOPORT_H
+ 
+ #include "system/memory.h"
+ 
+@@ -39,9 +39,7 @@ typedef struct MemoryRegionPortio {
+ 
+ #define PORTIO_END_OF_LIST() { }
+ 
+-#ifndef CONFIG_USER_ONLY
+ extern const MemoryRegionOps unassigned_io_ops;
+-#endif
+ 
+ void cpu_outb(uint32_t addr, uint8_t val);
+ void cpu_outw(uint32_t addr, uint16_t val);
+diff --git a/hw/block/fdc-isa.c b/hw/block/fdc-isa.c
+index a10c24aab1..561cfa47c1 100644
+--- a/hw/block/fdc-isa.c
++++ b/hw/block/fdc-isa.c
+@@ -42,7 +42,7 @@
+ #include "system/block-backend.h"
+ #include "system/blockdev.h"
+ #include "system/system.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 8ddcdd76c1..74a0f56566 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -15,7 +15,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "system/address-spaces.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/enums.h"
+ #include "monitor/hmp.h"
+diff --git a/system/ioport.c b/system/ioport.c
+index 2bc14bdcfa..ec5c586cf8 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -27,7 +27,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/memory.h"
+ #include "system/address-spaces.h"
+ #include "trace.h"
+diff --git a/system/physmem.c b/system/physmem.c
+index be92969a4a..2850e14780 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -51,7 +51,7 @@
+ #include "qemu/memalign.h"
+ #include "qemu/memfd.h"
+ #include "system/memory.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/dma.h"
+ #include "system/hostmem.h"
+ #include "system/hw_accel.h"
+diff --git a/system/qtest.c b/system/qtest.c
+index 5407289154..523a047995 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -16,7 +16,7 @@
+ #include "system/qtest.h"
+ #include "system/runstate.h"
+ #include "chardev/char-fe.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/memory.h"
+ #include "exec/tswap.h"
+ #include "hw/qdev-core.h"
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index 91f0e32366..17394d073d 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -10,7 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "system/address-spaces.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "qemu/accel.h"
+ #include "system/nvmm.h"
+ #include "system/cpus.h"
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index d58cb11cee..b64852e13e 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -11,7 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "system/address-spaces.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "gdbstub/helpers.h"
+ #include "qemu/accel.h"
+ #include "system/whpx.h"
+diff --git a/tests/qtest/fuzz/qtest_wrappers.c b/tests/qtest/fuzz/qtest_wrappers.c
+index 0580f8df86..d7adcbe3fd 100644
+--- a/tests/qtest/fuzz/qtest_wrappers.c
++++ b/tests/qtest/fuzz/qtest_wrappers.c
+@@ -13,7 +13,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/core/cpu.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ 
+ #include "fuzz.h"
+ 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b5f1e81771..751d611613 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3107,7 +3107,7 @@ M: Peter Xu <peterx@redhat.com>
+ M: David Hildenbrand <david@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Supported
+-F: include/exec/ioport.h
++F: include/system/ioport.h
+ F: include/exec/memop.h
+ F: include/system/memory.h
+ F: include/exec/ram_addr.h
 -- 
 2.43.0
 
