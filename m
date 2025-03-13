@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01158C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 16:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F966C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 16:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tslKA-0005A3-RS; Thu, 13 Mar 2025 12:22:22 -0400
+	id 1tslSm-0007X7-K4; Thu, 13 Mar 2025 12:31:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tslK5-00059W-On
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:22:18 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tslK3-00030B-8c
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:22:17 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cf257158fso8163105e9.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 09:22:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=160d0ab05=graf@amazon.de>)
+ id 1tslSJ-0007V0-T0
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:30:55 -0400
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=160d0ab05=graf@amazon.de>)
+ id 1tslSH-0004KT-Hm
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:30:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741882932; x=1742487732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N2oNL4C4uuFAQyDeD7/JbSVLyj+tCUKJYreKFnp05qk=;
- b=ibGCqF3xvTorqdU62Cw222wsYAJda6AyeNJ2kYfOq/L/m3qtcvqICUkTwrv9wuMhXI
- gOkCopsBq5otko7GDUA2S1YBNrKvoDM3Qu0/WQJ7z+I8IwnQMp5OpMbNNfJrm0Vm8L4M
- FeDn7uPBil4CQocdWmZ8+Be4MMIRXVTCVRXakVwmNrDWDuQ78hmbgYQCczZmbxAi3vMd
- Fydh/9JmPlYE933yZlzadLTuTYS048hTa1AyDvq8+pc3K/OspU4tsMcnayndyMm+/xa4
- q6FelFth6ngEZiZRaUAimve7OfYRwCdtXbLB+Kvp06SvCYNpRSozEsSqOGhVVZYEIgSY
- LbgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741882932; x=1742487732;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=N2oNL4C4uuFAQyDeD7/JbSVLyj+tCUKJYreKFnp05qk=;
- b=BIX9p0evJYrhtuzdKHYXsYXXyy+egHO0ZXMd5NKQlNPA13mAur6RY/x5pxAb77bqBq
- B87/xpDtaOy6fokG7FeJoXxTryDNA7H8w9HOPsISfFrpMAaXxVK8L7+1Ji0+ZVrabugh
- WOIqickm2nLn8IPp54HqngeDe80utHGyC7D14Xh8t6RxiHnvdzc3MP7cJqiEXlsBxQbA
- Vw5VZhMQ6fZX2ePoWpNybvbnPeoBUCHhtBIVOCtSmhtiabkPs/uQUyiHNLka86HZOASJ
- G+EigF1m5BkOwQECHpo0C+qSxRI4cZs6Aqmevr5NhXTCknyksUeGnZcoP4YtHz9gi2aY
- UXCA==
-X-Gm-Message-State: AOJu0Ywa41UId3kD7W+x5g14pdP6P5+Fibu3snTfqNdGr3n5iqdBAvQP
- 9Jb0fdb0xm3S+V03GUNUfyJYGcNMjyQQ8AmobuBakCr8B1W09IF+6vCecQC7DPeL9SE2ZMpnQKk
- 8
-X-Gm-Gg: ASbGnctWqnRofy0wm5NgSqgjQaCLl+iPsepf6ez7TLvvNE9vEnVPN5sfX4LZ+KVYAuR
- qzgyIf5TnwxcLQEG3lfJ6HjLzWjc0HKVlbAZNfg1v/0MhzeiZdXookRuHcaucWgeWmkP9V5z2+W
- VrSRY171985sYfsa7UFxkJOcKEFX3tDUd5q0x+6HIbidGg1x2JPaopJFUT8vvRs9uGguMEIYrlT
- gLKnC53wUlY9VlkrSIdV/nCNYJNay7lCCXXmwsP4/AKad5ubj111/c1apv+vqgL+6fr9wCLy1mr
- J/wWLsuKTC0iqICkoprGnMSxfI1iroh77racmOGqUQBi4es=
-X-Google-Smtp-Source: AGHT+IGS0Zh3AQrAD9eN0z9NEX0BKNJuqDljfCbKMbAJZrgb3Tin2vMjTlda8++tZNrtZ952Q83Bfw==
-X-Received: by 2002:a05:600c:1d01:b0:43d:a90:9f1 with SMTP id
- 5b1f17b1804b1-43d1d88f21amr2702895e9.6.1741882931777; 
- Thu, 13 Mar 2025 09:22:11 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb318a8bsm2649416f8f.66.2025.03.13.09.22.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Mar 2025 09:22:11 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 499115F8C7;
- Thu, 13 Mar 2025 16:22:10 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- pbonzini@redhat.com,  philmd@linaro.org
-Subject: Re: [PATCH 06/37] include/exec: Inline *_data_ra memory operations
-In-Reply-To: <20250313034524.3069690-7-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 12 Mar 2025 20:44:46 -0700")
-References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-7-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 13 Mar 2025 16:22:10 +0000
-Message-ID: <87msdo52a5.fsf@draig.linaro.org>
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1741883445; x=1773419445;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=dsWTnJKEZ1UVc7KuZ4D4sxtpgvYPEwFJaPGL4XmB+II=;
+ b=A2wIcrSA5e5rU/YV3cZNa050FOsZQFbybD94ZGK/h5NHWHho81mdNPfd
+ o4Jun3phsnfS3RIu52zunn8xhpPUe7rtOyq2Os+rQw3C7794VNvuMt91y
+ ahyzPz0kq9QY9wPsGNyTHEItiXJR3vNHpRAHRx8gUqp9EY44rUM8BIvhe g=;
+X-IronPort-AV: E=Sophos;i="6.14,245,1736812800"; d="scan'208";a="480168451"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-6002.iad6.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2025 16:30:39 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [10.0.7.35:42654]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.9.151:2525]
+ with esmtp (Farcaster)
+ id f8a8e13c-5e53-417c-ac0c-733b86c96269; Thu, 13 Mar 2025 16:30:38 +0000 (UTC)
+X-Farcaster-Flow-ID: f8a8e13c-5e53-417c-ac0c-733b86c96269
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWA001.ant.amazon.com (10.250.64.204) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Thu, 13 Mar 2025 16:30:37 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Thu, 13 Mar 2025
+ 16:30:33 +0000
+Message-ID: <b91881ee-69cb-46dc-82ff-b9781f480096@amazon.com>
+Date: Thu, 13 Mar 2025 17:30:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, Ani Sinha
+ <anisinha@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Gerd
+ Hoffman" <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>, "Vitaly
+ Kuznetsov" <vkuznets@redhat.com>, <qemu-devel@nongnu.org>
+References: <20250214153443.159889-1-anisinha@redhat.com>
+ <Z9KfMPKr9Tsz-psi@8bytes.org>
+ <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
+ <Z9Ku-o8zJUWgXoYE@8bytes.org>
+ <CAK3XEhOnhpzSg3F2C+PEvjgPKH7Yc9MqyoL8qJJGcbGXign34A@mail.gmail.com>
+ <Z9K6nrGwnyob9tED@8bytes.org>
+ <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
+ <Z9LBD_FnO2Gi2vMK@8bytes.org>
+ <CAK3XEhMa3Bvy42ErqAhf9vE+oUH1ZkHhv8JZRv1BpyfdejYMYQ@mail.gmail.com>
+ <Z9L8SYW8ObyoDMLy@8bytes.org>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <Z9L8SYW8ObyoDMLy@8bytes.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D040UWB001.ant.amazon.com (10.13.138.82) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=52.95.49.90;
+ envelope-from=prvs=160d0ab05=graf@amazon.de; helo=smtp-fw-6002.amazon.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,352 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Hi Jörg,
 
-> These expand inline to the *_mmuidx_ra api with
-> a lookup of the target's cpu_mmu_index().
+On 13.03.25 16:39, Jörg Rödel wrote:
+> On Thu, Mar 13, 2025 at 08:23:44PM +0530, Ani Sinha wrote:
+>> Note that even with this approach where the hypervisor *thinks* it's
+>> dealing with a real firmware, you can imagine a small rust based
+>> firmware image that is loaded by the guest in the firmware region.
+>> This tiny firmware then jumps to a well known address (chosen by the
+>> guest) where IGVM is loaded and then starts executing the IGVM
+>> instructions.
+> Yes, but this way the predictable launch measurement property of IGVM
+> is lost, as the measurement only contains hashes for the actions
+> which happened before the VM was finalized and launched by the VMM. The
+> SEV policy can also not be changed anymore when the guest is running.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
-This is where my re-based bisect broke. Fixed by moving cpu.h
-
-modified   target/ppc/tcg-excp_helper.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "qemu/log.h"
-+#include "cpu.h"
- #include "exec/cpu_ldst.h"
- #include "exec/exec-all.h"
- #include "exec/helper-proto.h"
-@@ -27,7 +28,6 @@
- #include "helper_regs.h"
- #include "hw/ppc/ppc.h"
- #include "internal.h"
--#include "cpu.h"
- #include "trace.h"
-
-
-
-
-> ---
->  include/exec/cpu_ldst.h     | 144 +++++++++++++++++++++++++++++-------
->  accel/tcg/ldst_common.c.inc | 108 ---------------------------
->  2 files changed, 118 insertions(+), 134 deletions(-)
+> Anyway, I think it doesn't matter much whether the IGVM is parsed in
+> guest context or by QEMU, as long as the resulting measurement is the
+> same as if the file was loaded at initial VM launch.
 >
-> diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-> index b33755169e..963c538176 100644
-> --- a/include/exec/cpu_ldst.h
-> +++ b/include/exec/cpu_ldst.h
-> @@ -84,17 +84,6 @@ int cpu_ldsw_le_data(CPUArchState *env, abi_ptr ptr);
->  uint32_t cpu_ldl_le_data(CPUArchState *env, abi_ptr ptr);
->  uint64_t cpu_ldq_le_data(CPUArchState *env, abi_ptr ptr);
->=20=20
-> -uint32_t cpu_ldub_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
-> -int cpu_ldsb_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
-> -uint32_t cpu_lduw_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t r=
-a);
-> -int cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
-> -uint32_t cpu_ldl_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra=
-);
-> -uint64_t cpu_ldq_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra=
-);
-> -uint32_t cpu_lduw_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t r=
-a);
-> -int cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
-> -uint32_t cpu_ldl_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra=
-);
-> -uint64_t cpu_ldq_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra=
-);
-> -
->  void cpu_stb_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->  void cpu_stw_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->  void cpu_stl_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
-> @@ -103,21 +92,6 @@ void cpu_stw_le_data(CPUArchState *env, abi_ptr ptr, =
-uint32_t val);
->  void cpu_stl_le_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->  void cpu_stq_le_data(CPUArchState *env, abi_ptr ptr, uint64_t val);
->=20=20
-> -void cpu_stb_data_ra(CPUArchState *env, abi_ptr ptr,
-> -                     uint32_t val, uintptr_t ra);
-> -void cpu_stw_be_data_ra(CPUArchState *env, abi_ptr ptr,
-> -                        uint32_t val, uintptr_t ra);
-> -void cpu_stl_be_data_ra(CPUArchState *env, abi_ptr ptr,
-> -                        uint32_t val, uintptr_t ra);
-> -void cpu_stq_be_data_ra(CPUArchState *env, abi_ptr ptr,
-> -                        uint64_t val, uintptr_t ra);
-> -void cpu_stw_le_data_ra(CPUArchState *env, abi_ptr ptr,
-> -                        uint32_t val, uintptr_t ra);
-> -void cpu_stl_le_data_ra(CPUArchState *env, abi_ptr ptr,
-> -                        uint32_t val, uintptr_t ra);
-> -void cpu_stq_le_data_ra(CPUArchState *env, abi_ptr ptr,
-> -                        uint64_t val, uintptr_t ra);
-> -
->  static inline uint32_t
->  cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr=
-_t ra)
->  {
-> @@ -249,6 +223,124 @@ cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr add=
-r, uint64_t val,
->      cpu_stq_mmu(env, addr, val, oi, ra);
->  }
->=20=20
-> +/*--------------------------*/
-> +
-> +static inline uint32_t
-> +cpu_ldub_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    return cpu_ldub_mmuidx_ra(env, addr, mmu_index, ra);
-> +}
-> +
-> +static inline int
-> +cpu_ldsb_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    return (int8_t)cpu_ldub_data_ra(env, addr, ra);
-> +}
-> +
-> +static inline uint32_t
-> +cpu_lduw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    return cpu_lduw_be_mmuidx_ra(env, addr, mmu_index, ra);
-> +}
-> +
-> +static inline int
-> +cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    return (int16_t)cpu_lduw_be_data_ra(env, addr, ra);
-> +}
-> +
-> +static inline uint32_t
-> +cpu_ldl_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    return cpu_ldl_be_mmuidx_ra(env, addr, mmu_index, ra);
-> +}
-> +
-> +static inline uint64_t
-> +cpu_ldq_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    return cpu_ldq_be_mmuidx_ra(env, addr, mmu_index, ra);
-> +}
-> +
-> +static inline uint32_t
-> +cpu_lduw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    return cpu_lduw_le_mmuidx_ra(env, addr, mmu_index, ra);
-> +}
-> +
-> +static inline int
-> +cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    return (int16_t)cpu_lduw_le_data_ra(env, addr, ra);
-> +}
-> +
-> +static inline uint32_t
-> +cpu_ldl_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    return cpu_ldl_le_mmuidx_ra(env, addr, mmu_index, ra);
-> +}
-> +
-> +static inline uint64_t
-> +cpu_ldq_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    return cpu_ldq_le_mmuidx_ra(env, addr, mmu_index, ra);
-> +}
-> +
-> +static inline void
-> +cpu_stb_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintptr_t=
- ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    cpu_stb_mmuidx_ra(env, addr, val, mmu_index, ra);
-> +}
-> +
-> +static inline void
-> +cpu_stw_be_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintpt=
-r_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    cpu_stw_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-> +}
-> +
-> +static inline void
-> +cpu_stl_be_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintpt=
-r_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    cpu_stl_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-> +}
-> +
-> +static inline void
-> +cpu_stq_be_data_ra(CPUArchState *env, abi_ptr addr, uint64_t val, uintpt=
-r_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    cpu_stq_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-> +}
-> +
-> +static inline void
-> +cpu_stw_le_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintpt=
-r_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    cpu_stw_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-> +}
-> +
-> +static inline void
-> +cpu_stl_le_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintpt=
-r_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    cpu_stl_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-> +}
-> +
-> +static inline void
-> +cpu_stq_le_data_ra(CPUArchState *env, abi_ptr addr, uint64_t val, uintpt=
-r_t ra)
-> +{
-> +    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> +    cpu_stq_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-> +}
-> +
->  #if TARGET_BIG_ENDIAN
->  # define cpu_lduw_data        cpu_lduw_be_data
->  # define cpu_ldsw_data        cpu_ldsw_be_data
-> diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
-> index 99a56df3fb..2f203290db 100644
-> --- a/accel/tcg/ldst_common.c.inc
-> +++ b/accel/tcg/ldst_common.c.inc
-> @@ -248,114 +248,6 @@ void cpu_st16_mmu(CPUArchState *env, vaddr addr, In=
-t128 val,
->   * Wrappers of the above
->   */
->=20=20
-> -uint32_t cpu_ldub_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    return cpu_ldub_mmuidx_ra(env, addr, mmu_index, ra);
-> -}
-> -
-> -int cpu_ldsb_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> -{
-> -    return (int8_t)cpu_ldub_data_ra(env, addr, ra);
-> -}
-> -
-> -uint32_t cpu_lduw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t =
-ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    return cpu_lduw_be_mmuidx_ra(env, addr, mmu_index, ra);
-> -}
-> -
-> -int cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> -{
-> -    return (int16_t)cpu_lduw_be_data_ra(env, addr, ra);
-> -}
-> -
-> -uint32_t cpu_ldl_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t r=
-a)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    return cpu_ldl_be_mmuidx_ra(env, addr, mmu_index, ra);
-> -}
-> -
-> -uint64_t cpu_ldq_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t r=
-a)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    return cpu_ldq_be_mmuidx_ra(env, addr, mmu_index, ra);
-> -}
-> -
-> -uint32_t cpu_lduw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t =
-ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    return cpu_lduw_le_mmuidx_ra(env, addr, mmu_index, ra);
-> -}
-> -
-> -int cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-> -{
-> -    return (int16_t)cpu_lduw_le_data_ra(env, addr, ra);
-> -}
-> -
-> -uint32_t cpu_ldl_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t r=
-a)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    return cpu_ldl_le_mmuidx_ra(env, addr, mmu_index, ra);
-> -}
-> -
-> -uint64_t cpu_ldq_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t r=
-a)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    return cpu_ldq_le_mmuidx_ra(env, addr, mmu_index, ra);
-> -}
-> -
-> -void cpu_stb_data_ra(CPUArchState *env, abi_ptr addr,
-> -                     uint32_t val, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    cpu_stb_mmuidx_ra(env, addr, val, mmu_index, ra);
-> -}
-> -
-> -void cpu_stw_be_data_ra(CPUArchState *env, abi_ptr addr,
-> -                        uint32_t val, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    cpu_stw_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-> -}
-> -
-> -void cpu_stl_be_data_ra(CPUArchState *env, abi_ptr addr,
-> -                        uint32_t val, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    cpu_stl_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-> -}
-> -
-> -void cpu_stq_be_data_ra(CPUArchState *env, abi_ptr addr,
-> -                        uint64_t val, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    cpu_stq_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-> -}
-> -
-> -void cpu_stw_le_data_ra(CPUArchState *env, abi_ptr addr,
-> -                        uint32_t val, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    cpu_stw_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-> -}
-> -
-> -void cpu_stl_le_data_ra(CPUArchState *env, abi_ptr addr,
-> -                        uint32_t val, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    cpu_stl_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-> -}
-> -
-> -void cpu_stq_le_data_ra(CPUArchState *env, abi_ptr addr,
-> -                        uint64_t val, uintptr_t ra)
-> -{
-> -    int mmu_index =3D cpu_mmu_index(env_cpu(env), false);
-> -    cpu_stq_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-> -}
-> -
-> -/*--------------------------*/
-> -
->  uint32_t cpu_ldub_data(CPUArchState *env, abi_ptr addr)
->  {
->      return cpu_ldub_data_ra(env, addr, 0);
+> Given that QEMU will hopefully get IGVM backend support soon, there is
+> some value and saved effort in just passing the IGVM data to the VMM via
+> the vmfwupdate interface and let QEMU do the rest.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+I have a few concerns with IGVM:
+
+1) Parsing is non-trivial. Parsing them in QEMU may open security issues.
+2) Their data structures are tied to the target CPU structures like VMSA 
+which FWIW are not fully owned by QEMU, are they?
+3) I don't want to allocate a bounce buffer for an IGVM in the 
+hypervisor. So we would need to ensure that the memory allocated by the 
+loader for the IGVM does not overlap any memory the IGVM wants to 
+consume. If the loader considers the IGVM as opaque, that is difficult 
+to achieve.
+
+
+Alex
+
 
