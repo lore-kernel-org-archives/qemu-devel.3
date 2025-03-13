@@ -4,54 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B11B1C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Mar 2025 23:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 642D1C28B28
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 01:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsVxy-00062h-Fs; Wed, 12 Mar 2025 19:58:26 -0400
+	id 1tsXHX-0003ot-MU; Wed, 12 Mar 2025 21:22:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tsVxm-0005sE-Qz; Wed, 12 Mar 2025 19:58:16 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tsVxh-0004EB-8h; Wed, 12 Mar 2025 19:58:14 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A984B4E6033;
- Thu, 13 Mar 2025 00:58:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id rdJsfmTbSWm2; Thu, 13 Mar 2025 00:58:00 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A99B04E6032; Thu, 13 Mar 2025 00:58:00 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A79CD74577D;
- Thu, 13 Mar 2025 00:58:00 +0100 (CET)
-Date: Thu, 13 Mar 2025 00:58:00 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 1/2] hw/arm/fsl-imx8mp: Make SoC not user-creatable,
- derive from TYPE_SYS_BUS_DEVICE
-In-Reply-To: <20250312212611.51667-2-shentey@gmail.com>
-Message-ID: <065c6990-d2dc-7b03-cd0c-344ee6b6a619@eik.bme.hu>
-References: <20250312212611.51667-1-shentey@gmail.com>
- <20250312212611.51667-2-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tsXHU-0003oS-4X
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 21:22:40 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tsXHS-0008K1-0W
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 21:22:39 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Ax3eJVM9JnIjiUAA--.16489S3;
+ Thu, 13 Mar 2025 09:22:29 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxb8dRM9JnuGFHAA--.3081S3;
+ Thu, 13 Mar 2025 09:22:28 +0800 (CST)
+Subject: Re: Giving your own patches your Reviewed-by
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <878qpamvk6.fsf@pond.sub.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <18fb7b1e-90de-deb7-4a32-f5d6d2066627@loongson.cn>
+Date: Thu, 13 Mar 2025 09:21:47 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <878qpamvk6.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxb8dRM9JnuGFHAA--.3081S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Jw4rWFWkJw4fXw4rtry5Awc_yoW8JrWrpw
+ sxW3W7CFWkGw4xCasFg3W2vFWfGrn3Aw1aqF4Fk34kurn8Jr1Yk34xKF40yw1UX3sIga1D
+ Jr4qqryrC3Z0yFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9jb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYOVCvzIIY
+ 64CSwwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67
+ kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY
+ 6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
+ vEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2Kfnx
+ nUUI43ZEXa7IUng18PUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.812,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,93 +84,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Mar 2025, Bernhard Beschow wrote:
-> Fixes a crash when creating the SoC object on the command line:
->
->  $ ./qemu-system-aarch64  -M virt -device fsl-imx8mp
->  **
->  ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread: assertion failed:
->  (n < tcg_max_ctxs)
->  Bail out! ERROR:../../devel/qemu/tcg/tcg.c:1006:tcg_register_thread:
->  assertion failed: (n < tcg_max_ctxs)
->  Aborted (core dumped)
->
-> Furthermore, the SoC object should be derived from TYPE_SYS_BUS_DEVICE such that
-> it gets properly reset.
->
-> Fixes: a4eefc69b237 "hw/arm: Add i.MX 8M Plus EVK board"
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
-> include/hw/arm/fsl-imx8mp.h | 3 ++-
-> hw/arm/fsl-imx8mp.c         | 4 +++-
-> hw/arm/imx8mp-evk.c         | 2 +-
-> 3 files changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-> index bc97fc416e..22fdc0d67c 100644
-> --- a/include/hw/arm/fsl-imx8mp.h
-> +++ b/include/hw/arm/fsl-imx8mp.h
-> @@ -26,6 +26,7 @@
-> #include "hw/timer/imx_gpt.h"
-> #include "hw/usb/hcd-dwc3.h"
-> #include "hw/watchdog/wdt_imx2.h"
-> +#include "hw/sysbus.h"
-> #include "qom/object.h"
-> #include "qemu/units.h"
->
-> @@ -49,7 +50,7 @@ enum FslImx8mpConfiguration {
-> };
->
-> struct FslImx8mpState {
-> -    DeviceState    parent_obj;
-> +    SysBusDevice   parent_obj;
->
->     ARMCPU             cpu[FSL_IMX8MP_NUM_CPUS];
->     GICv3State         gic;
-> diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-> index 1ea98e1463..9133d49383 100644
-> --- a/hw/arm/fsl-imx8mp.c
-> +++ b/hw/arm/fsl-imx8mp.c
-> @@ -698,13 +698,15 @@ static void fsl_imx8mp_class_init(ObjectClass *oc, void *data)
->     device_class_set_props(dc, fsl_imx8mp_properties);
->     dc->realize = fsl_imx8mp_realize;
->
-> +    /* Reason: SoC can only be instantiated from a board */
-> +    dc->user_creatable = false;
+Ah, It is a pity and bad news that I contribute almost 30% of it :(
+LoongArch system actually needs more people participation and I need 
+notice this also. It should happens in future again in LoongArch subsystem.
 
-I think sysbus devices are not user creatable by default (that's why 
-dynamic sysbus device was introduced) so either this or the .parent change 
-below is enough. You can have both just in case but maybe not necessary as 
-other sysbus devices usually don't set user_createble either.
+Any reviewing comments is welcome and I will slow down for deeper 
+considerations. And it is my pleasure to work in this open source area 
+and for better goals together.
 
-Regards,
-BALATON Zoltan
+Regards
+Bibo Mao
+On 2025/3/12 下午5:45, Markus Armbruster wrote:
+> I stumbled over commits that carry the author's Reviewed-by.
+> 
+> There may be cases where the recorded author isn't the lone author, and
+> the recorded author did some meaningful review of the patch's parts that
+> are not theirs.  Mind that we do need all authors to provide their
+> Signed-off-by.
+> 
+> When the only Signed-off-by is from the recorded author, and there's
+> also their Reviewed-by, the Reviewed-by is almost certainly bogus.
+> 
+> Now, accidents happen, no big deal, etc., etc.  I post this to hopefully
+> help reduce the accident rate :)
+> 
+> Here's my quick & sloppy search for potentially problematic uses of
+> Reviewed-by:
+> 
+> $ git-log --since 'two years ago' | awk -F: '/^commit / { commit=$0 } /^Author: / { guy=$2 } /^    Reviewed-by: / { if ($2 == guy) { print commit; print guy } }'
+> 
 
->     dc->desc = "i.MX 8M Plus SoC";
-> }
->
-> static const TypeInfo fsl_imx8mp_types[] = {
->     {
->         .name = TYPE_FSL_IMX8MP,
-> -        .parent = TYPE_DEVICE,
-> +        .parent = TYPE_SYS_BUS_DEVICE,
->         .instance_size = sizeof(FslImx8mpState),
->         .instance_init = fsl_imx8mp_init,
->         .class_init = fsl_imx8mp_class_init,
-> diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-> index e1a7892fd7..f17d5db466 100644
-> --- a/hw/arm/imx8mp-evk.c
-> +++ b/hw/arm/imx8mp-evk.c
-> @@ -37,7 +37,7 @@ static void imx8mp_evk_init(MachineState *machine)
->     s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
->     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
->     object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
-> -    qdev_realize(DEVICE(s), NULL, &error_fatal);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
->
->     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
->                                 machine->ram);
->
 
