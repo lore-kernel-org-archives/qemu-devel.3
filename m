@@ -4,103 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6563C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 09:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F457C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 09:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsf0w-0006jB-A0; Thu, 13 Mar 2025 05:38:06 -0400
+	id 1tsf1x-0007gK-KY; Thu, 13 Mar 2025 05:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tsf0t-0006ie-SF
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:38:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tsf1w-0007dZ-2k; Thu, 13 Mar 2025 05:39:08 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tsf0r-0004ji-RZ
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:38:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741858678;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HJZ7jwQeCTBVB9Mm2A4YyFue5MUOMew/8DAczACINl8=;
- b=T2NDDgZ4MwidM3gwMiJ35/7PKUGADVIOZPNZEnXf+Dl0rBqgKcPbQMOgcKgMpyehU1xGPC
- KNuL6EwjjFuawXcow+/21PsrybNsb5Fq95qGuJjLLCoURvOlLbWmgGYanEqIZU+2srfqnM
- TDRLHBLhsJrNnA2Bib5S7epK0zllaz4=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-85-fl01JTlWNDGiO0K9R5gfPA-1; Thu, 13 Mar 2025 05:37:57 -0400
-X-MC-Unique: fl01JTlWNDGiO0K9R5gfPA-1
-X-Mimecast-MFC-AGG-ID: fl01JTlWNDGiO0K9R5gfPA_1741858676
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ac27d8ac365so65454566b.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 02:37:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741858676; x=1742463476;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HJZ7jwQeCTBVB9Mm2A4YyFue5MUOMew/8DAczACINl8=;
- b=P9xE0kL5YHopIBulWrT3lbTygooRPFnUTOTlLnFy/v+R8Jw5FUWAa2ikZKao7woy7y
- lpZ0gCrSDQkTB0uoac1nxRmxSvo+AGt3YV7uusL2RSO2Lai4XZ8SI0IPcFGYDCUVJ3a9
- uoxyJV3/wiPzexRkVyfvRsXGS7YBee2o1sfp9pty7y2rYGV2cpN3B+pMAJ1S1sSbovdf
- C0BpOtTQx1GcEDlG1X4feFC9XxoyWpE6TQKUd67Xu82srDbO5MS+Nz0iOlV0wfWJ7qH+
- iPpgzkYUSuFUVfZLYodmBLO8pIDyz960Hh9MTFlrm4VAWaqKn+Nj4RctWaJPC7FZ/40g
- PuoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWE13sXmXEavXfHDR674NVoZ1FhbxgTanbd1CRAw3r/XQBz7iL8qzkckBZZggCORAYmj3HHQORZ2dCc@nongnu.org
-X-Gm-Message-State: AOJu0Yw9Osiovbsvj9E2V7Soh6DcAODAiSpqknxXVG/9nmGzus5aU0z/
- HS/yoXut0nY8KA0OzFTeHF7/jcTizFssmeiKS6SH5/tWA5n0YKQyN51JoSnaIm5ZqQ4XYAQXq9Z
- EZ/rTJMOP1WlQHT1+CaItFh9ZWycKsC7XmnFIZOHfCmSmtSHKkCqIvat+y8xi5nHgD5H3UpIRft
- x1lgPGMsCtHlOUzdrwNgfliXKfU3U=
-X-Gm-Gg: ASbGncsPRHIoES0sg0eROKSeOEIOHPa+gwtI0jCF98sVAgp+dlW2LMR0xl7ZqqsIMNG
- d+jX80B4v/FIC52Ze+RHXggwaQ3RYKq5Bs9Mkfcvl1duchWcFwajrOuU7fj6KXr66m1POCBvHtJ
- k=
-X-Received: by 2002:a17:906:b6d0:b0:ac2:cea7:6c6c with SMTP id
- a640c23a62f3a-ac2cea7743fmr934407966b.57.1741858676030; 
- Thu, 13 Mar 2025 02:37:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHba6fULUUMCxGvgPfcFdBHA6ZMZn1PQ+oX3QWkEkQsN16zttduruyEZohlD6gsR0V0pasaIkCXLce20J0HTs=
-X-Received: by 2002:a17:906:b6d0:b0:ac2:cea7:6c6c with SMTP id
- a640c23a62f3a-ac2cea7743fmr934401766b.57.1741858675111; Thu, 13 Mar 2025
- 02:37:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1tsf1q-0004s1-Gx; Thu, 13 Mar 2025 05:39:07 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZD2SF53CQz6K9YG;
+ Thu, 13 Mar 2025 17:36:13 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id 642B6140A70;
+ Thu, 13 Mar 2025 17:38:51 +0800 (CST)
+Received: from localhost (10.47.78.235) by frapeml500003.china.huawei.com
+ (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 13 Mar
+ 2025 10:38:50 +0100
+Date: Thu, 13 Mar 2025 09:38:44 +0000
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>,
+ <zhao1.liu@intel.com>, <dapeng1.mi@linux.intel.com>, <armbru@redhat.com>,
+ <farman@linux.ibm.com>, <peter.maydell@linaro.org>, <anisinha@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>, <mtosatti@redhat.com>,
+ <berrange@redhat.com>, <richard.henderson@linaro.org>,
+ <shameerali.kolothum.thodi@huawei.com>, <jiangkunkun@huawei.com>,
+ <yangyicong@hisilicon.com>, <linuxarm@huawei.com>
+Subject: Re: [PATCH v8 4/6] hw/acpi/aml-build.c: add cache hierarchy to pptt
+ table
+Message-ID: <20250313093844.00006f74.alireza.sanaee@huawei.com>
+In-Reply-To: <20250313092456.000024f1@huawei.com>
+References: <20250310162337.844-1-alireza.sanaee@huawei.com>
+ <20250310162337.844-5-alireza.sanaee@huawei.com>
+ <20250313092456.000024f1@huawei.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250214153443.159889-1-anisinha@redhat.com>
- <Z9KfMPKr9Tsz-psi@8bytes.org>
-In-Reply-To: <Z9KfMPKr9Tsz-psi@8bytes.org>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Thu, 13 Mar 2025 15:07:42 +0530
-X-Gm-Features: AQ5f1JrDxwIiqtWLAG47HA8qvRkwjFojoB-MCL4JblGg5UsEODNAdozTkXjwFwU
-Message-ID: <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
-Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.47.78.235]
+X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,71 +73,187 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 13, 2025 at 2:40=E2=80=AFPM J=C3=B6rg R=C3=B6del <joro@8bytes.o=
-rg> wrote:
->
-> Hi Ani,
->
-> On Fri, Feb 14, 2025 at 09:04:07PM +0530, Ani Sinha wrote:
-> > VM firmware update is a mechanism where the virtual machines can use th=
-eir
-> > preferred and trusted firmware image in their execution environment wit=
-hout
-> > having to depend on a untrusted party to provide the firmware bundle. T=
-his is
-> > particularly useful for confidential virtual machines that are deployed=
- in the
-> > cloud where the tenant and the cloud provider are two different entitie=
-s. In
-> > this scenario, virtual machines can bring their own trusted firmware im=
-age
-> > bundled as a part of their filesystem (using UKIs for example[1]) and t=
-hen use
-> > this hypervisor interface to update to their trusted firmware image. Th=
-is also
-> > allows the guests to have a consistent measurements on the firmware ima=
-ge.
->
-> We discussed the implications of the vmfwupdate mechanism as currently
-> proposed in yesterdays SVSM Development Call[1]. The reason this came to =
-my
-> attention was a request to support a non-IGVM boot protocol in
-> COCONUT-SVSM, so I started to look into the vmfwupdate.
->
-> I do not claim to have a full picture yet, but what I'd like to better
-> understand is how the proposed update mechanism plans to guarantee
-> predictable launch measurements for confidential VMs, especially since
-> the measurements depend on the exact order of setup calls for the TEE
-> and data the vmfwupdate mechanism can currently not pass on to the
-> state-after-reset. Can you please share some details on that?
+On Thu, 13 Mar 2025 09:24:56 +0000
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-The state before reset is the state that uses stock firmware from the
-hyperscaler. The state after reset is a fresh new state that uses the
-"trusted and known firmware" from the end user. So the launch
-measurements would not match between the state before reset and the
-state after reset and there is no guarantee that there would be
-"predictable launch measurements" across the reset.
-What we do guarantee is that after reset, the launch measurements that
-include the "trusted and known firmware" (whatever that is, not
-necessarily edk2), is understood and expected. If you were to
-calculate offline the measurements that include this "trusted and
-known firmware" using the same order of setup calls as the target
-system and then derive the launch digest, it should match that of what
-the hardware would produce in the target.
-I hope I understood your question correctly. Otherwise Alex can
-perhaps explain better.
+> On Mon, 10 Mar 2025 16:23:35 +0000
+> Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+> 
+> > Add cache topology to PPTT table. With this patch, both ACPI PPTT
+> > table and device tree will represent the same cache topology given
+> > users input.
+> > 
+> > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> > Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>  
+> Hi Ali,
+> 
+> A few trivial style things. You'll need to rebase after 10.0 is out
+> anyway, so just tidy these up when you do that.
+> 
+> Jonathan
 
+Hi Jonathan,
 
->
-> Regards,
->
->         Joerg
->
-> [1] https://github.com/joergroedel/svsm-governance/blob/main/Meetings/dev=
-el-call-2025-03-12.md
->
+Sure.
+
+Alireza
+> 
+> > ---
+> >  hw/acpi/aml-build.c            | 205
+> > ++++++++++++++++++++++++++++++++- hw/arm/virt-acpi-build.c       |
+> >  8 +- hw/loongarch/virt-acpi-build.c |   2 +-
+> >  include/hw/acpi/aml-build.h    |   4 +-
+> >  include/hw/cpu/core.h          |   1 +
+> >  5 files changed, 212 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> > index e5401dfdb1a8..e2568522660d 100644
+> > --- a/hw/acpi/aml-build.c
+> > +++ b/hw/acpi/aml-build.c  
+> ...
+> 
+> >  /*
+> >   * ACPI spec, Revision 6.3
+> >   * 5.2.29.1 Processor hierarchy node structure (Type 0)
+> > @@ -2146,15 +2247,24 @@ void build_spcr(GArray *table_data,
+> > BIOSLinker *linker,
+> >   * 5.2.29 Processor Properties Topology Table (PPTT)
+> >   */
+> >  void build_pptt(GArray *table_data, BIOSLinker *linker,
+> > MachineState *ms,
+> > -                const char *oem_id, const char *oem_table_id)
+> > +                const char *oem_id, const char *oem_table_id,  
+> ...
+> 
+> > @@ -2184,11 +2294,35 @@ void build_pptt(GArray *table_data,
+> > BIOSLinker *linker, MachineState *ms, socket_id =
+> > cpus->cpus[n].props.socket_id; cluster_id = -1;
+> >              core_id = -1;
+> > +            bottom_node = top_node;
+> > +            num_priv = 0;
+> > +            if (cache_described_at(ms, CPU_TOPOLOGY_LEVEL_SOCKET)
+> > &&
+> > +                find_the_lowest_level_cache_defined_at_level(
+> > +                    ms,
+> > +                    &bottom_node,
+> > +                    CPU_TOPOLOGY_LEVEL_SOCKET))
+> > +            {  
+> As below.
+> 
+> > +                build_caches(table_data, pptt_start,
+> > +                             num_caches, caches,
+> > +                             n, top_node, bottom_node,
+> > +                             &node_data_offset,
+> > &node_instr_offset); +
+> > +                priv_rsrc[0] = node_instr_offset;
+> > +                priv_rsrc[1] = node_data_offset;
+> > +
+> > +                if (node_instr_offset || node_data_offset) {
+> > +                    num_priv = node_instr_offset ==
+> > node_data_offset ? 1 : 2;
+> > +                }
+> > +
+> > +                top_cluster = bottom_node - 1;
+> > +            }
+> > +
+> >              socket_offset = table_data->len - pptt_start;
+> >              build_processor_hierarchy_node(table_data,
+> >                  (1 << 0) | /* Physical package */
+> >                  (1 << 4), /* Identical Implementation */
+> > -                root_offset, socket_id, NULL, 0);
+> > +                root_offset, socket_id,
+> > +                priv_rsrc, num_priv);
+> >          }
+> >  
+> >          if (mc->smp_props.clusters_supported &&
+> > mc->smp_props.has_clusters) { @@ -2196,21 +2330,81 @@ void
+> > build_pptt(GArray *table_data, BIOSLinker *linker, MachineState
+> > *ms, assert(cpus->cpus[n].props.cluster_id > cluster_id);
+> > cluster_id = cpus->cpus[n].props.cluster_id; core_id = -1;
+> > +                bottom_cluster = top_cluster;
+> > +                num_priv = 0;
+> > +
+> > +                if (cache_described_at(ms,
+> > CPU_TOPOLOGY_LEVEL_CLUSTER) &&
+> > +                    find_the_lowest_level_cache_defined_at_level(
+> > +                        ms,
+> > +                        &bottom_cluster,
+> > +                        CPU_TOPOLOGY_LEVEL_CLUSTER))
+> > +                {  
+> 
+> As below, style not correct.  Please check for other cases.
+> 
+> > +
+> > +                    build_caches(table_data, pptt_start,
+> > +                                 num_caches, caches, n,
+> > top_cluster,
+> > +                                 bottom_cluster,
+> > &cluster_data_offset,
+> > +                                 &cluster_instr_offset);
+> > +
+> > +                    priv_rsrc[0] = cluster_instr_offset;
+> > +                    priv_rsrc[1] = cluster_data_offset;
+> > +
+> > +                    if (cluster_instr_offset ||
+> > cluster_data_offset) {
+> > +                        num_priv =
+> > +                        cluster_instr_offset ==
+> > cluster_data_offset ? 1 : 2;
+> > +                    }
+> > +
+> > +                    top_core = bottom_cluster - 1;
+> > +                } else if (top_cluster == bottom_node - 1) {
+> > +                    /* socket cache but no cluster cache */
+> > +                    top_core = bottom_node - 1;
+> > +                }  
+> 
+> ...
+> 
+> > +        if (cpus->cpus[n].props.core_id != core_id) {
+> > +            bottom_core = top_core;
+> > +            num_priv = 0;
+> > +
+> > +            if (cache_described_at(ms, CPU_TOPOLOGY_LEVEL_CORE) &&
+> > +                find_the_lowest_level_cache_defined_at_level(
+> > +                    ms,
+> > +                    &bottom_core,
+> > +                    CPU_TOPOLOGY_LEVEL_CORE))
+> > +            {  
+> 
+> Trivial but that's not qemu coding style.  Bracket needs to go on end
+> of line above.
+> 
+> > +                build_caches(table_data, pptt_start,
+> > +                             num_caches, caches,
+> > +                             n, top_core, bottom_core,
+> > +                             &core_data_offset,
+> > &core_instr_offset); +
+> > +                priv_rsrc[0] = core_instr_offset;
+> > +                priv_rsrc[1] = core_data_offset;
+> > +
+> > +                num_priv = core_instr_offset == core_data_offset ?
+> > 1 : 2;
+> > +            }
+> > +        }
+> > +
+> > +  
+> 
+> One blank line enough.
+> 
+> >          if (ms->smp.threads == 1) {
+> >              build_processor_hierarchy_node(table_data,
+> >                  (1 << 1) | /* ACPI Processor ID valid */
+> >                  (1 << 3),  /* Node is a Leaf */
+> > -                cluster_offset, n, NULL, 0);
+> > +                cluster_offset, n,
+> > +                priv_rsrc, num_priv);  
+> 
+> 
 
 
