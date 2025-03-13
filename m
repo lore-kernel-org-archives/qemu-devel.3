@@ -4,107 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2704BC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 11:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1634C28B2E
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 12:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tshBN-0004oP-AT; Thu, 13 Mar 2025 07:57:02 -0400
+	id 1tshJm-0008RH-7t; Thu, 13 Mar 2025 08:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tshB2-0004gv-0i
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:56:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tshJe-0008PG-G7
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:05:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tshAz-0006cw-Q2
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:56:39 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tshJX-0007dn-Gh
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:05:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741866994;
+ s=mimecast20190719; t=1741867523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=v9ZH4R6ScKbfPg7rsxi8yC1VpAsREO3YuquH+ZEZz6c=;
- b=T7DNhnFfTKCgV8KiOpwygE9gSCBp/7Xe+remTq10QYVT+0IZHt0L8Fypyo8CzzAf3hKwv4
- Q1u7oA2HTZNapl1smYbF78CkwWIiNV2K+mhYv1uUN77HQ7BJ2vHl3tRiDUA0KTZxYzsfEd
- ETS426yzJWC9/w57sLi2srkTQoM+nP4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-OC2g4IyIMpqvbRNILTs4_w-1; Thu, 13 Mar 2025 07:56:33 -0400
-X-MC-Unique: OC2g4IyIMpqvbRNILTs4_w-1
-X-Mimecast-MFC-AGG-ID: OC2g4IyIMpqvbRNILTs4_w_1741866992
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ab7f6f6cd96so95113366b.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 04:56:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741866992; x=1742471792;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=v9ZH4R6ScKbfPg7rsxi8yC1VpAsREO3YuquH+ZEZz6c=;
- b=e0RjhTcgi2OHeISSTjf3Cnf+MOY02Vvd/7Z1bjzQP/8iVy/YGrpxxG0SlP/JXJwPh6
- ysY6wg3r/4Oh8ZsH/uuj1gc+5y704VuUeH4nIc0m1/At5dfgGYrOYZTPuX6xFus1jl/u
- 3+PcL9+o82ZkG+5PbkYv8Vt3lqEOu9mtgDz8GUQ2x2wupil/K6zu/xXXJsKFxOfO0vMY
- 8uCzafDtC7fOYNjQKCy8YOINNVW21N04Zo3Kf9trIDTb7U3f8UNAhLAoYICnshnBCInc
- 3TX8W7sTcPxCgx6xEONMHaUY3CWDcmvgQ5B7zYtEOKQxSAy2Ae8IO/PjjKOsLBqZzq1C
- mD1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUQeMMS5Qty17pdsznGpRYOkhuYTMdxdhUhx5coomtQABgy1AclnSBXWGecJ094m7CqO6Ztm6ejWQW@nongnu.org
-X-Gm-Message-State: AOJu0YzU/FPP7xJ63ZkCnhEOM270g3MtLGklcKK/bXFNDcMJ7KZZzuyG
- Bdr8XI5M3TUIM8Yv5qpkoDy8vd1maLD9pu6pYtsSkPlQA8qrMx6aDQlxKmbUGj9Ebswmei5dXkQ
- YikjgEbXGDA1mZ1fcvdshl1gDLf1DrcIoZoNdiH4hxrrA2xNkWPJLeAbFLkjUXGNWq4HtEY66w2
- T4DmwPvKWuKWjfMH5V3+wppfqxOlc=
-X-Gm-Gg: ASbGncugci9zg/YC7psO8Heiiy3MZCRf8QWj0aPGSkpiGZCHlwfbpcRvY/IlXiFmqBx
- eZcmWPg9utNO9XxV34zC9TgJyz5X0BGLWIFM2ggOYoP2NM03Npl2PiH5F9N7DGBdZH4V+LqZW1w
- A=
-X-Received: by 2002:a17:907:9694:b0:ac2:7e56:5ca5 with SMTP id
- a640c23a62f3a-ac2b9e22119mr1631472866b.34.1741866991799; 
- Thu, 13 Mar 2025 04:56:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtb9WwhJc8w7lQFYrcvGLwnRGGvD8scNZaARXSPBZYKuYD6p7btaXuQDrAMnbhiHkw1xO/BzGLBC1JqQOGofo=
-X-Received: by 2002:a17:907:9694:b0:ac2:7e56:5ca5 with SMTP id
- a640c23a62f3a-ac2b9e22119mr1631468966b.34.1741866991384; Thu, 13 Mar 2025
- 04:56:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250214153443.159889-1-anisinha@redhat.com>
- <Z9KfMPKr9Tsz-psi@8bytes.org>
- <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
- <Z9Ku-o8zJUWgXoYE@8bytes.org>
- <CAK3XEhOnhpzSg3F2C+PEvjgPKH7Yc9MqyoL8qJJGcbGXign34A@mail.gmail.com>
- <Z9K6nrGwnyob9tED@8bytes.org>
- <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
- <Z9LBD_FnO2Gi2vMK@8bytes.org>
-In-Reply-To: <Z9LBD_FnO2Gi2vMK@8bytes.org>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Thu, 13 Mar 2025 17:26:20 +0530
-X-Gm-Features: AQ5f1JrpLCeJtRg59aSqwJVCQ5M_i2-zbQyKiCmMb1n4Y85e9mJArrdXPRpubKw
-Message-ID: <CAK3XEhMUuKKpWo59uWspJLjW+Vgm7e4JVKXJrAQ4zTtsWtyqKA@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
-Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=DUoeT18UWkXNBuWXjXC0UblShu8wB0YW5cfql0LI7S8=;
+ b=PlCm09uEUfsO/ZHBqr7mq1+NmV3RkUyhm8hNtYq/ltuePSEKqXLuZPmMckqM3BZcPmHTUP
+ 4Z/maloeJLHAd26tjjdUl2SPUUneDuWMmrOsRbg/vUtuXUdCQwXFmqtAARo1JzzM6DC0vP
+ O1e3r7NRAkNLf+hTYFxQZ0NvmI2k29M=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-DTJqATdROSu8uKIIgk7tRQ-1; Thu,
+ 13 Mar 2025 08:05:19 -0400
+X-MC-Unique: DTJqATdROSu8uKIIgk7tRQ-1
+X-Mimecast-MFC-AGG-ID: DTJqATdROSu8uKIIgk7tRQ_1741867518
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68311180AF56; Thu, 13 Mar 2025 12:05:17 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.205])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 674B019560AB; Thu, 13 Mar 2025 12:05:16 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 030B11800094; Thu, 13 Mar 2025 13:05:14 +0100 (CET)
+Date: Thu, 13 Mar 2025 13:05:13 +0100
+From: Gerd Hoffman <kraxel@redhat.com>
+To: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+Cc: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
  Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
  qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,47 +90,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 13, 2025 at 4:57=E2=80=AFPM J=C3=B6rg R=C3=B6del <joro@8bytes.o=
-rg> wrote:
->
-> On Thu, Mar 13, 2025 at 04:39:15PM +0530, Ani Sinha wrote:
-> > Right so what we are proposing is generic enough so that if the VM
-> > wants to use an IGVM container as opposed to an actual firmware image
-> > in a FUKI, that is totally possible. Then you need to have that IGVM
-> > setup the memory in a well defined way like you suggest. Sure, the
-> > IGVM is not passed through a command line but it can be loaded by the
-> > guest in a well defined memory location and then its instructions can
-> > be executed.
->
-> That makes sense. In this scenario, how does the VMM detect that it got
-> an IGVM image instead of a firmware image?
+> The devil lies in "same order of setup calls". Without a way to define
+> this order through the vmfwupdate interface there is a lot of implicit
+> knowledge required about how KVM/QEMU setup the TEE context to calculate
+> the expected after-reset launch measurement. Even worse, the exact way
+> this setup is done then becomes ABI, because any change in this process
+> will lead to a different launch measurement.
+> 
+> Some examples of initial memory layout calls which influence the launch
+> measurment:
+> 
+> 	1) Launch VMSA(s) (SEV-SNP only, though I believe on TDX the
+> 	   initial register state can also be changed to some
+> 	   degree).
+> 	2) Pre-Validated/Accepted memory regions (TDX and SEV-SNP). This
+> 	   is especially important, as different FWs have different
+> 	   requirements on what memory is pre-validated, zeroed, etc.
+> 	3) Zero-pages, measured and unmeasured (TDX and SEV-SNP).
+> 	4) Position of the CPUID page, secrets page, and id-blob
+> 	   (SEV-SNP).
+> 	5) Pre-populated data (TDX and SEV-SNP).
+> 
+> If I understand the vmfwupdate interface correctly, and please let me
+> know if I am wrong here, it only allows to specify a call for part 5) of
+> the above list. Some of the other parts can be specified in architecture
+> dependent ways in the FW image itself, but not all of them.
 
-VMM does not care but UKI which the guest brings in would since a IGVM
-container would be part of not .efifw section but .igvm section.
+v6 patch is outdated, latest approach is to pass a list of regions:
 
-As I understood the current
-> documentation the defined behavior is to copy the guest-provided
-> FW-image to the BIOS region, no?
+// regions_addr points to an array of this structure
+struct vmfwupdate_regions {
+    uint64_t size;
+    uint64_t src_addr;       // source address (before update)
+    uint64_t dst_addr;       // destination address (after update)
+    uint64_t flags;          // control bits
+};
 
-In the latest proposal which Gerd has suggested, VMM does not know or
-care if its bios region or not or what kind of image it is copying.
-The guest provides the target private address at which to copy the
-blob from the shared memory region. So the FUKI which bundles a fw
-image would provide 4G-size for x86 as the target physical address. A
-FUKI that bundles an IGVM can provide something else.
+// flags
+#define VMFWUPDATE_REGION_FLAG_COPY     // data must be copied
+#define VMFWUPDATE_REGION_FLAG_ZERO     // dest must be cleared
+#define VMFWUPDATE_REGION_FLAG_MEASURE  // data must be measured
 
->
-> > In our proposal, we do not want to dictate how the guest would want to
-> > do that. So hopefully you see now that IGVM and our approach is not
-> > mutually exclusive but can be complementary to each other.
->
-> Fine with me. Just note that supporting the current non-IGVM process for
-> confidential guests still causes the implicit ABI issue I mentioned
-> before. But not being a KVM/QEMU maintainer I can live with that :)
->
-> Regards,
->
->         Joerg
->
+(1)   is still not covered.
+(2+3) can be handled with FLAG_ZERO regions, with and without
+      FLAG_MEASURE.
+(4)   Alex already pointed that the cpuid page is special, guess we
+      need additional flags for those oages.
+
+Open question is what we do about IGVM.
+
+One option would be the guest vmfwupdate tool loading and parsing igvm,
+preparing the region list, then invoke the update.  Problem is that some
+igvm feaures such as initial register state can not be easily supported
+that way.
+
+We could also expect the hypervisor support igvm, so the guest can
+simply load the file into memory and pass address and size to the
+hypervisor.  Either as option, say via VMFWUPDATE_REGION_FLAG_IGVM, or
+mandatory, i.e. scratch the region list and use IGVM exclusively.
+
+take care,
+  Gerd
 
 
