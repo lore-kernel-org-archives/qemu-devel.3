@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED50C28B28
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 09:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0177BC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 09:50:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsf9u-0003bV-2A; Thu, 13 Mar 2025 05:47:22 -0400
+	id 1tsfCW-0005En-VX; Thu, 13 Mar 2025 05:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tsf9q-0003b2-In; Thu, 13 Mar 2025 05:47:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1tsfCT-0005DN-EZ; Thu, 13 Mar 2025 05:50:01 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1tsf9o-0006Jh-OX; Thu, 13 Mar 2025 05:47:18 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52CKchn2010391;
- Thu, 13 Mar 2025 09:47:12 GMT
+ id 1tsfCQ-0006RY-PI; Thu, 13 Mar 2025 05:50:00 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52D9X97d025427;
+ Thu, 13 Mar 2025 09:49:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=wvnxtfoNF4pwykTQj+ZkTxMkyE7/YL41RTOt6PuUF
- gw=; b=VP4OFslfPIP/URUM6W4EAShazye/Dax5HCft4FlhI9rmHLC6kEoeHYta2
- LVVQJVXhJB1FJ8W8StjKIFSu6z2Yr9G2omKp2wVHzgPwDloZ4xn7/q/LlnOSSc5m
- AdACx/WMbBuZ7RSJnDBWD/OLa1S7QxWefRtYzs/ydfNfuHKGQsshE3ex2F4svAcp
- PHCXnVPrjDu6+ZBXQFxefKVRBxD8Nkqhhie9x8UwN5/8JaZMhsWpQu/IC7Y+2d/l
- 5sjLDkcn4RBcM9hzPv/rBS+KxJJ5vrQeD2MPheWGW8Cl/2lXDiJltqWA8HrWgoBC
- 10sGa17kQ39EBdSn67wcTcTsiyYig==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=cvCX3K
+ D3A123F6RvCwfX/kmBdACilChV6bhkNJ1FtYM=; b=OO/AhxudZZ9VvTLYRVG+I+
+ 0DhD1nnMcfv04EQ6EFLF39ZAf+ky5+TDdRDV1r2hC/hK5YqMP2MkwdPRNTaVyBAG
+ K89vncOadOyt8M4wqbV5GZhNNUGFN9hKmA9hROORoH2oO8Cr+pzqX3hrLqghWCQf
+ iHmSQZXTuQAIBIz3H62lg8pSP7lNKkmOgmaMBT/MQ1mOchamwMfi5CMa/cgYLqu6
+ yjhW1pc7J2lkjw3rmjjUHM9QVcp5uCigJX09qeHV5i95IvC6NV/9xo8nTuH9G8J1
+ PrG9XZ1Rlj47hrDTd5fP6W7/7ID8tFCYISz4jrOWXem7MaSDz5c68JrktHa9CssQ
+ ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45bhg0avcb-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45baa2wgue-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 13 Mar 2025 09:47:12 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52D9i9Kn011429;
- Thu, 13 Mar 2025 09:47:11 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45bhg0avca-1
+ Thu, 13 Mar 2025 09:49:55 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52D9Zoj9019218;
+ Thu, 13 Mar 2025 09:49:55 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45baa2wgud-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 13 Mar 2025 09:47:11 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52D93IBJ003141;
- Thu, 13 Mar 2025 09:47:11 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45atsts1s4-1
+ Thu, 13 Mar 2025 09:49:55 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52D8ZQ9S012311;
+ Thu, 13 Mar 2025 09:49:54 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45atsrh1vb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 13 Mar 2025 09:47:11 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52D9l9nj38797690
+ Thu, 13 Mar 2025 09:49:54 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52D9nrmV23265976
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 13 Mar 2025 09:47:09 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7940D20043;
- Thu, 13 Mar 2025 09:47:09 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6610720040;
- Thu, 13 Mar 2025 09:47:08 +0000 (GMT)
-Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.in.ibm.com (unknown
- [9.109.242.165])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 13 Mar 2025 09:47:08 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, berrange@redhat.com, philmd@linaro.org
-Subject: [PATCH v2] ppc/spapr: fix default cpu for pre-9.0 machines.
-Date: Thu, 13 Mar 2025 15:17:05 +0530
-Message-ID: <20250313094705.2361997-1-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+ Thu, 13 Mar 2025 09:49:53 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0E3DC5805F;
+ Thu, 13 Mar 2025 09:49:53 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5568B58043;
+ Thu, 13 Mar 2025 09:49:51 +0000 (GMT)
+Received: from [9.109.242.165] (unknown [9.109.242.165])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 13 Mar 2025 09:49:51 +0000 (GMT)
+Message-ID: <b3e88144-4b24-4bbe-92c9-b2cd053a40b9@linux.ibm.com>
+Date: Thu, 13 Mar 2025 15:19:49 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc/spapr: fix default cpu for pre-10.0 machines.
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250312055804.2134569-1-harshpb@linux.ibm.com>
+ <Z9KmFPu-vplBDPcw@redhat.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <Z9KmFPu-vplBDPcw@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: tbeHVENuepEaSZExDY2eUnsgc5zR73Ps
-X-Proofpoint-ORIG-GUID: DlynjU_XlSzbpzJSVBml2e80WMcW-2kH
+X-Proofpoint-ORIG-GUID: JuZzydDKHb_qV3zQdC9PkaoYc710qI4D
+X-Proofpoint-GUID: -LEUMMXIgZxbknMrau5EcYQ2Gt-myXhU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-13_04,2025-03-11_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- mlxlogscore=834 lowpriorityscore=0 spamscore=0 impostorscore=0 bulkscore=0
- clxscore=1015 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503130074
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ priorityscore=1501
+ adultscore=0 malwarescore=0 mlxlogscore=999 phishscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503130074
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -111,33 +117,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When POWER10 CPU was made as default, we missed keeping POWER9 as
-default for older pseries releases (pre-9.0) at that time.
-This caused breakge in default cpu evaluation for older pseries
-machines and hence this fix.
 
-Fixes: 51113013f3 ("ppc/spapr: change pseries machine default to POWER10 CPU")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
-v2: addressed review comments from Philippe, Daniel
----
- hw/ppc/spapr.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index c15340a58d..825afba4f4 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4781,6 +4781,7 @@ static void spapr_machine_8_2_class_options(MachineClass *mc)
- {
-     spapr_machine_9_0_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-+    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
- }
- 
- DEFINE_SPAPR_MACHINE(8, 2);
--- 
-2.43.5
+On 3/13/25 15:02, Daniel P. Berrangé wrote:
+> On Wed, Mar 12, 2025 at 11:28:04AM +0530, Harsh Prateek Bora wrote:
+>> When POWER10 CPU was made as default, we missed keeping POWER9 as
+>> default for older pseries releases (pre-10.0) at that time.
+>> This caused breakge in default cpu evaluation for older pseries
+>> machines and hence this fix.
+>>
+>> Fixes: 51113013f3 ("ppc/spapr: change pseries machine default to POWER10 CPU")
+>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> ---
+>>   hw/ppc/spapr.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+>> index c15340a58d..b31a91e2e2 100644
+>> --- a/hw/ppc/spapr.c
+>> +++ b/hw/ppc/spapr.c
+>> @@ -4748,6 +4748,7 @@ static void spapr_machine_9_2_class_options(MachineClass *mc)
+>>   {
+>>       spapr_machine_10_0_class_options(mc);
+>>       compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
+>> +    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
+>>   }
+> 
+> This doesn't make sense.
+> 
+> AFAICT, the commit 51113013f3 was introduced in the QEMU 9.0.0 release,
+> so it is correct that every machine from pseries-9.0 and newer had the
+> POWER10 CPU model.
+> 
+> What broke were the machines that already existed prior to the
+> 9.0.0 release, whose default CPU got changed.  IOW, the pseries-8.2
+> and earlier machines.
 
+Thanks Daniel for catching this.
+I should have checked using git tags. I have posted v2 here:
+
+https://lore.kernel.org/qemu-devel/20250313094705.2361997-1-harshpb@linux.ibm.com/T/#u
+
+regards,
+Harsh
+
+> 
+> 
+> With regards,
+> Daniel
 
