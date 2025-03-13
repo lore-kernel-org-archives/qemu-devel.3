@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E70A0C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 11:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61032C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 11:29:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsgio-000309-Hi; Thu, 13 Mar 2025 07:27:30 -0400
+	id 1tsgkT-0003aC-Eh; Thu, 13 Mar 2025 07:29:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1tsgig-0002wk-3z
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:27:27 -0400
-Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1tsgkO-0003YW-Nk
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:29:09 -0400
+Received: from mail.8bytes.org ([85.214.250.239])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1tsgia-00037v-TU
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:27:21 -0400
+ (envelope-from <joro@8bytes.org>) id 1tsgkH-0003O6-Na
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 07:29:08 -0400
 Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id 2671F458E7;
- Thu, 13 Mar 2025 12:27:13 +0100 (CET)
+ by mail.8bytes.org (Postfix) with ESMTPSA id 391EF458D2;
+ Thu, 13 Mar 2025 12:28:59 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
- s=default; t=1741865233;
- bh=IAwbx/SP3vSiC+Qp3huknAR2nLvFlZn3agOaPAUllU0=;
+ s=default; t=1741865339;
+ bh=qZCSWQnDPpbMbnY7tIoeApE56R9FBiDgXUZ6ssndan8=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=1bZA4tGoVCWh9DLOjmctYhRX6rADMw2dzunbvgRLzuzUmyhZGyTDS3RwjySnBc2cT
- 3e+ocnOwnJSekYYUQV16EarCepj+ZlXLDCjnmwpMNbWk8KH4wwARaOCUX8qXkq6C+L
- UUhI5FwpU0gZQ+Tnt2nGS2zh3AgNa5wAVQTo2NNJ91ZINcUqnBoehq5JjXJb21y0RF
- 2aK9KL6/G+c9/VhXjeSyN7D4iTmYkHrtl3ScPq5wy3Rfq/O56T+4a8Ln2aLtlq2F1S
- HEDT3GpnhDKmS/3TqowgQFI9szAb/VmMgOaceQesIYiQgwCgPdRt26TuNBW4YT95lU
- JEMRwX/FIB0eQ==
-Date: Thu, 13 Mar 2025 12:27:11 +0100
+ b=T1CVmN53G76aBPcei9kWSlCiwqcXHlBfkJDuEWZp5tx9qti/0Uqsv6G9dhnAnFd/D
+ sQi2l4FxRLouNrwXwXrNBEEyMpRU/jYl0wtlJntevTGedjoyb8dDBvjmMuWtvM2xne
+ XWsdoU09+qiCkub8m5Z7DqytAEUY0D2aksLcM/Cd4JsmYeA3P0RINf+iNl5J3wR8Q3
+ Z2BX4fvAGHnUFFZ+LeyUWaK+2eTZ1f4IAqb3wcZuHRJV0+82vEYKd3Mz3K8K1a9/r4
+ V5NnS8saDE+7VG1vNgOZZ9f1rQq2+QmMsQKwMoTdTZnpCnqwy6qs4OtaacA5D/2k4G
+ 24YMes/Awflhw==
+Date: Thu, 13 Mar 2025 12:28:58 +0100
 From: =?iso-8859-1?Q?J=F6rg_R=F6del?= <joro@8bytes.org>
 To: Ani Sinha <anisinha@redhat.com>
 Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -49,7 +49,7 @@ Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
 Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
  interface support
-Message-ID: <Z9LBD_FnO2Gi2vMK@8bytes.org>
+Message-ID: <Z9LBesd3k8OlC7eN@8bytes.org>
 References: <20250214153443.159889-1-anisinha@redhat.com>
  <Z9KfMPKr9Tsz-psi@8bytes.org>
  <CAK3XEhNHoLvK7zSb1ZYeaz_BCCU2bv+d5qguKaadaWqT55YqKQ@mail.gmail.com>
@@ -57,18 +57,21 @@ References: <20250214153443.159889-1-anisinha@redhat.com>
  <CAK3XEhOnhpzSg3F2C+PEvjgPKH7Yc9MqyoL8qJJGcbGXign34A@mail.gmail.com>
  <Z9K6nrGwnyob9tED@8bytes.org>
  <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
+ <Z9LBD_FnO2Gi2vMK@8bytes.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAK3XEhNDnX1+W9jZ_MZaSYKHBwS-dCUbjhPVav7Q1OxaAzJ73Q@mail.gmail.com>
-Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
- envelope-from=joro@8bytes.org; helo=mail.8bytes.org
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z9LBD_FnO2Gi2vMK@8bytes.org>
+Received-SPF: pass client-ip=85.214.250.239; envelope-from=joro@8bytes.org;
+ helo=mail.8bytes.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,29 +87,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 13, 2025 at 04:39:15PM +0530, Ani Sinha wrote:
-> Right so what we are proposing is generic enough so that if the VM
-> wants to use an IGVM container as opposed to an actual firmware image
-> in a FUKI, that is totally possible. Then you need to have that IGVM
-> setup the memory in a well defined way like you suggest. Sure, the
-> IGVM is not passed through a command line but it can be loaded by the
-> guest in a well defined memory location and then its instructions can
-> be executed.
+On Thu, Mar 13, 2025 at 12:27:13PM +0100, Jörg Rödel wrote:
+> Fine with me. Just note that supporting the current non-IGVM process for
+> confidential guests still causes the implicit ABI issue I mentioned
+> before. But not being a KVM/QEMU maintainer I can live with that :)
 
-That makes sense. In this scenario, how does the VMM detect that it got
-an IGVM image instead of a firmware image? As I understood the current
-documentation the defined behavior is to copy the guest-provided
-FW-image to the BIOS region, no?
-
-> In our proposal, we do not want to dictate how the guest would want to
-> do that. So hopefully you see now that IGVM and our approach is not
-> mutually exclusive but can be complementary to each other.
-
-Fine with me. Just note that supporting the current non-IGVM process for
-confidential guests still causes the implicit ABI issue I mentioned
-before. But not being a KVM/QEMU maintainer I can live with that :)
-
-Regards,
-
-	Joerg
+Small addition: Note that IGVM allows for defining multiple platform
+targets in one image, among them non-confidential VMs. So IGVM can be
+used for those as well.
 
