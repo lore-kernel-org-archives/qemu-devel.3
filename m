@@ -4,95 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD8CBC282EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 16:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3C5C282EC
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 16:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tslbI-000496-J1; Thu, 13 Mar 2025 12:40:06 -0400
+	id 1tsljs-0001hc-6L; Thu, 13 Mar 2025 12:48:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tslaf-0003Nz-Oi
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:39:25 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1tsljE-0001I7-Et
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:48:19 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tslad-0005f3-2I
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:39:25 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-300f92661fcso2110796a91.3
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 09:39:22 -0700 (PDT)
+ id 1tsljB-00007A-RD
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:48:16 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso25902965ad.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 09:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741883962; x=1742488762; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PfpTTedni4gUGfvRcfnvXw4xTvY7JO0pNjOjXTZ7pI8=;
- b=qvkDh1NyR/+BUch47nSEhf84ofXc5JtK3ym6SEQmxx09DUmvsKTrDzxMxh64Njq+YG
- P/i3AWdaD5kVwy8CvnbJGFHXxQth//3mF5Qjy0PCP43vyyg0JgLcxAMOD2a0eZqO80O7
- GiUGR+rW0WTey8F7NitrorvOERTHkKlj6H7HX6uG9BPWVO18mOw+NOsCLuwjhp9XTJqk
- kIfJJ4zqCjxwEW5KZnlrOHsQuthj0T9PhIv/UuPSWQCSwXO336A3k87s22Wti4GcFJUZ
- O5W5nLv73KL+vZ9TCEhHeMJSCtw34SmRg+p211tJLcn9ojefT/0dFAPOUXFsoXk/epeJ
- enfg==
+ d=linaro.org; s=google; t=1741884492; x=1742489292; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ce8xTCMM68EEoKjhtadMfLmQFPL2XPcbW3vz1EJ+ZhE=;
+ b=UTPnUY/tzpMKwZtObAx8t+FPCESmO6YbRqWBjcRqVi9EZjWV50PImq8LHx6V9Mhebp
+ eqeIvVF3AdM1iHPj3dCXYUBbqrMUvmKRtiQ110Z/DJJbfURKlG8GEXbke6wcuzUWEzt3
+ 86hdGpj8mxItN3Hk9hhAw/hY36QGo3OwAkg03fTkRj4fgmHbbhFuLxnS+lusK2WjNtVv
+ aEbY84vfQo+2NSUbo7y5s3swiiHSPhuBwqj88Qkr0jkLeSf5A5CEfsC7eBgeJPQigA6t
+ zgLtaBEznD7MPIa/MuynL4Bqa6KCHD0mB+qj4AbMcSUwPVxkE9HObrjojwyr5vu2fc0J
+ YaZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741883962; x=1742488762;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PfpTTedni4gUGfvRcfnvXw4xTvY7JO0pNjOjXTZ7pI8=;
- b=ZDGk/9lW8pBDG1c/HMwbAK5xulHmyWziJrKRMnIVslKeu1LzQbq+hWP/uvHvOFBeZO
- hCvNoLvbRAZytTIGDR848N13ZjaRUrSYBE85YbKfen7d70kvuVkRMC49cjCy2np9WwhK
- HSfr4+L8vGEduKEuSbM2AhR9oOPkvfZm4JEWTF30IPUF5HaPnozPY46tWL7tGAMX8nj2
- j1MPhhzTiMbj3GuAOznxxomFcu9OL8y/6K1ELrpuMsfvTR5NoyC6hsd1r9fVDmk9TzMm
- o7kcUX30NcD+M/ffUTQVl4hk2kdcsjhzOPzHvifBQ+E8Gi3+B6QvwQHMhXqhBnhzKesf
- HLDQ==
-X-Gm-Message-State: AOJu0YyOLd7+VhM1uV3aRD8GGphnjlwQv15u4gtcwVtPfPLc/1eitoeV
- k5qInUVMJC9yGhAktYP6uwVaCKUwK15bncuI9PjFYE2Ikfevff94mkk9HcdIQsZgqNRJooGNPs6
- lcbU=
-X-Gm-Gg: ASbGncuCdKyZT+aZz3FdENyJYkM7w93Rgb1Bpu5dTyoAFw95pa4onWjhp36ooK/z7Kz
- zXjpLZVI1ktFUmrO87nATU/+pfaNKJmlq5IfCVzyOFBKZpKkSq0fpfGnfVutGqtnkF0MpByhpeR
- 6hjPez6v7TGV8pYmUZIK4U7hqaUQJp61Y3v6JyBBBEh1OE/tRNr6TL3wPWeOi7aDTSr4S0TkjCI
- SZ/61IDyxYtIGlZKDTPfH9rxeBk0W38p8lJLZ7o034rIY6eT1NbAFuar1OD14mUfo2Wd6WLTIEc
- e1uRGwynY/sUabVrQtzffBZDiMUQqjxiTW6/VLCj/7x6
-X-Google-Smtp-Source: AGHT+IGoee0FqI1pRrQ30nb92L6Ez6iWr624Iw9VfJKN6XKShQ8vco+xd3ltWnO1olhH1gK/7mxIvg==
-X-Received: by 2002:a17:90b:3ccf:b0:2fe:a545:4c84 with SMTP id
- 98e67ed59e1d1-3014e8bff05mr210801a91.34.1741883961740; 
- Thu, 13 Mar 2025 09:39:21 -0700 (PDT)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30119265938sm4020084a91.39.2025.03.13.09.39.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Mar 2025 09:39:21 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paul Durrant <paul@xen.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Peter Xu <peterx@redhat.com>,
- alex.bennee@linaro.org, manos.pitsidianakis@linaro.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Anthony PERARD <anthony@xenproject.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 09/17] exec/ram_addr: remove dependency on cpu.h
-Date: Thu, 13 Mar 2025 09:38:55 -0700
-Message-Id: <20250313163903.1738581-10-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250313163903.1738581-1-pierrick.bouvier@linaro.org>
-References: <20250313163903.1738581-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1741884492; x=1742489292;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ce8xTCMM68EEoKjhtadMfLmQFPL2XPcbW3vz1EJ+ZhE=;
+ b=Jor/stqR9FGauRDjB61YD8JAQ5Rj8MjJwJ58m+BQN3Ic3BeDYLKWTHwJexm4x67xwF
+ sv7Gc6BozRwqiqJnScYPPJ+HXWzZ8bbVoFUNAa2Rt/hF+zzyF1wfHX7oNrGZaAPm7BEX
+ jLgy0fWgWIODf4EFogpvOAo7dFg6msbn/Bd82vfjpXrnjRUfyZjSdmRkqPn3T5V3aFIr
+ hQWH2W6FY+CQxN7EX/lIa43X3ga5D+w2yerC2hxr2kVKTZAGWwYfYlY4VHh8JwHLa4sH
+ FN9nut/YpNrQg0TzqEPCpaurg/gV3J1KN3bRgIp4lOB9ICuOYEc6/NCgHFmQ8W31heHh
+ dcaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/+f+uXh2nTICFJ7rb2DyknsHuDX3wnZkwvqiuxj+j8GLZvoPWCi8aW1Kd7HM2n+Lc0Ifsqj0L/kPq@nongnu.org
+X-Gm-Message-State: AOJu0YwIdrWUs7xzqntGAUl2DkMOXk8ZQbS7dzQ/g+ljmclrZWFmJPTr
+ vMDnjqaRORLSY0sC5ssrDurpi/ZwG9PMDjXTSx2l7ciZuqCdftJeeGDQeE8+L+Q=
+X-Gm-Gg: ASbGncu6f2vqSYkQdCdhbIcqUWMKWI0QJAWHBZKfmRqtiKZ6UnwEGKPSn+WmH7eG5S7
+ HP8vYOH5MXUOwYLjGmgRpX+Hynjv7iwjqR0g517mrrZhFCkRT/EzSZhDQdrq/813ZyhwFGuOmZ/
+ 0QtDoNteIU1dzbnpL9wWY02+XpNjOougZmTUBiEVXcJ42mYNq4RkKPAXYQlDdHhG+iNIDiPdNK9
+ /9Aw0yUnyqiDrTBpOZg1Sc3t6j88hp79NoKOOPQf33YQjMWrFxB3sC10yodp6cX+pxEATIRPgB+
+ iUmkJ2lKkt1KGYNQPdI/5E4+qYIgOVaJD0COhEMbQDzS0VBGEN3OQROPfl6T0sT7ixxN
+X-Google-Smtp-Source: AGHT+IFg2k0livcPK6yMH7UN6PRnEvpT/yJHTe0NZ2Hyeqn52Y+IGfNlw1uJhh1kYNpYqkugWa+DFA==
+X-Received: by 2002:a05:6a00:1413:b0:736:4ebd:e5a with SMTP id
+ d2e1a72fcca58-7371f1b4083mr315233b3a.20.1741884492002; 
+ Thu, 13 Mar 2025 09:48:12 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73711529526sm1553354b3a.24.2025.03.13.09.48.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Mar 2025 09:48:11 -0700 (PDT)
+Message-ID: <69893df2-775a-40d8-8cb5-b64425de2fb3@linaro.org>
+Date: Thu, 13 Mar 2025 09:48:11 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/37] include/exec: Use vaddr for *_mmu guest memory
+ access routines
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, philmd@linaro.org
+References: <20250313034524.3069690-1-richard.henderson@linaro.org>
+ <20250313034524.3069690-4-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250313034524.3069690-4-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,35 +104,366 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Needed so compilation units including it can be common.
+On 3/12/25 20:44, Richard Henderson wrote:
+> Use vaddr only for the newest api, because it has the least
+> number of uses and therefore is the easiest to audit.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   accel/tcg/atomic_template.h | 16 ++++++-------
+>   include/exec/cpu_ldst.h     | 48 ++++++++++++++++++-------------------
+>   accel/tcg/cputlb.c          |  8 +++----
+>   accel/tcg/user-exec.c       |  8 +++----
+>   accel/tcg/ldst_common.c.inc | 20 ++++++++--------
+>   5 files changed, 50 insertions(+), 50 deletions(-)
+> 
+> diff --git a/accel/tcg/atomic_template.h b/accel/tcg/atomic_template.h
+> index 89593b2502..08a475c10c 100644
+> --- a/accel/tcg/atomic_template.h
+> +++ b/accel/tcg/atomic_template.h
+> @@ -77,7 +77,7 @@
+>   # define END  _le
+>   #endif
+>   
+> -ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, abi_ptr addr,
+> +ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, vaddr addr,
+>                                 ABI_TYPE cmpv, ABI_TYPE newv,
+>                                 MemOpIdx oi, uintptr_t retaddr)
+>   {
+> @@ -101,7 +101,7 @@ ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, abi_ptr addr,
+>   }
+>   
+>   #if DATA_SIZE < 16
+> -ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, abi_ptr addr, ABI_TYPE val,
+> +ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+>                              MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       DATA_TYPE *haddr = atomic_mmu_lookup(env_cpu(env), addr, oi,
+> @@ -120,7 +120,7 @@ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, abi_ptr addr, ABI_TYPE val,
+>   }
+>   
+>   #define GEN_ATOMIC_HELPER(X)                                        \
+> -ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, abi_ptr addr,            \
+> +ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, vaddr addr,              \
+>                           ABI_TYPE val, MemOpIdx oi, uintptr_t retaddr) \
+>   {                                                                   \
+>       DATA_TYPE *haddr, ret;                                          \
+> @@ -156,7 +156,7 @@ GEN_ATOMIC_HELPER(xor_fetch)
+>    * of CF_PARALLEL's value, we'll trace just a read and a write.
+>    */
+>   #define GEN_ATOMIC_HELPER_FN(X, FN, XDATA_TYPE, RET)                \
+> -ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, abi_ptr addr,            \
+> +ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, vaddr addr,              \
+>                           ABI_TYPE xval, MemOpIdx oi, uintptr_t retaddr) \
+>   {                                                                   \
+>       XDATA_TYPE *haddr, cmp, old, new, val = xval;                   \
+> @@ -202,7 +202,7 @@ GEN_ATOMIC_HELPER_FN(umax_fetch, MAX,  DATA_TYPE, new)
+>   # define END  _be
+>   #endif
+>   
+> -ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, abi_ptr addr,
+> +ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, vaddr addr,
+>                                 ABI_TYPE cmpv, ABI_TYPE newv,
+>                                 MemOpIdx oi, uintptr_t retaddr)
+>   {
+> @@ -226,7 +226,7 @@ ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, abi_ptr addr,
+>   }
+>   
+>   #if DATA_SIZE < 16
+> -ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, abi_ptr addr, ABI_TYPE val,
+> +ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+>                              MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       DATA_TYPE *haddr = atomic_mmu_lookup(env_cpu(env), addr, oi,
+> @@ -245,7 +245,7 @@ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, abi_ptr addr, ABI_TYPE val,
+>   }
+>   
+>   #define GEN_ATOMIC_HELPER(X)                                        \
+> -ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, abi_ptr addr,            \
+> +ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, vaddr addr,              \
+>                           ABI_TYPE val, MemOpIdx oi, uintptr_t retaddr) \
+>   {                                                                   \
+>       DATA_TYPE *haddr, ret;                                          \
+> @@ -278,7 +278,7 @@ GEN_ATOMIC_HELPER(xor_fetch)
+>    * of CF_PARALLEL's value, we'll trace just a read and a write.
+>    */
+>   #define GEN_ATOMIC_HELPER_FN(X, FN, XDATA_TYPE, RET)                \
+> -ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, abi_ptr addr,            \
+> +ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, vaddr addr,              \
+>                           ABI_TYPE xval, MemOpIdx oi, uintptr_t retaddr) \
+>   {                                                                   \
+>       XDATA_TYPE *haddr, ldo, ldn, old, new, val = xval;              \
+> diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+> index 769e9fc440..ddd8e0cf48 100644
+> --- a/include/exec/cpu_ldst.h
+> +++ b/include/exec/cpu_ldst.h
+> @@ -157,48 +157,48 @@ void cpu_stl_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint32_t val,
+>   void cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint64_t val,
+>                             int mmu_idx, uintptr_t ra);
+>   
+> -uint8_t cpu_ldb_mmu(CPUArchState *env, abi_ptr ptr, MemOpIdx oi, uintptr_t ra);
+> -uint16_t cpu_ldw_mmu(CPUArchState *env, abi_ptr ptr, MemOpIdx oi, uintptr_t ra);
+> -uint32_t cpu_ldl_mmu(CPUArchState *env, abi_ptr ptr, MemOpIdx oi, uintptr_t ra);
+> -uint64_t cpu_ldq_mmu(CPUArchState *env, abi_ptr ptr, MemOpIdx oi, uintptr_t ra);
+> -Int128 cpu_ld16_mmu(CPUArchState *env, abi_ptr addr, MemOpIdx oi, uintptr_t ra);
+> +uint8_t cpu_ldb_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+> +uint16_t cpu_ldw_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+> +uint32_t cpu_ldl_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+> +uint64_t cpu_ldq_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+> +Int128 cpu_ld16_mmu(CPUArchState *env, vaddr addr, MemOpIdx oi, uintptr_t ra);
+>   
+> -void cpu_stb_mmu(CPUArchState *env, abi_ptr ptr, uint8_t val,
+> +void cpu_stb_mmu(CPUArchState *env, vaddr ptr, uint8_t val,
+>                    MemOpIdx oi, uintptr_t ra);
+> -void cpu_stw_mmu(CPUArchState *env, abi_ptr ptr, uint16_t val,
+> +void cpu_stw_mmu(CPUArchState *env, vaddr ptr, uint16_t val,
+>                    MemOpIdx oi, uintptr_t ra);
+> -void cpu_stl_mmu(CPUArchState *env, abi_ptr ptr, uint32_t val,
+> +void cpu_stl_mmu(CPUArchState *env, vaddr ptr, uint32_t val,
+>                    MemOpIdx oi, uintptr_t ra);
+> -void cpu_stq_mmu(CPUArchState *env, abi_ptr ptr, uint64_t val,
+> +void cpu_stq_mmu(CPUArchState *env, vaddr ptr, uint64_t val,
+>                    MemOpIdx oi, uintptr_t ra);
+> -void cpu_st16_mmu(CPUArchState *env, abi_ptr addr, Int128 val,
+> +void cpu_st16_mmu(CPUArchState *env, vaddr addr, Int128 val,
+>                     MemOpIdx oi, uintptr_t ra);
+>   
+> -uint32_t cpu_atomic_cmpxchgb_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_atomic_cmpxchgb_mmu(CPUArchState *env, vaddr addr,
+>                                    uint32_t cmpv, uint32_t newv,
+>                                    MemOpIdx oi, uintptr_t retaddr);
+> -uint32_t cpu_atomic_cmpxchgw_le_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_atomic_cmpxchgw_le_mmu(CPUArchState *env, vaddr addr,
+>                                       uint32_t cmpv, uint32_t newv,
+>                                       MemOpIdx oi, uintptr_t retaddr);
+> -uint32_t cpu_atomic_cmpxchgl_le_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_atomic_cmpxchgl_le_mmu(CPUArchState *env, vaddr addr,
+>                                       uint32_t cmpv, uint32_t newv,
+>                                       MemOpIdx oi, uintptr_t retaddr);
+> -uint64_t cpu_atomic_cmpxchgq_le_mmu(CPUArchState *env, abi_ptr addr,
+> +uint64_t cpu_atomic_cmpxchgq_le_mmu(CPUArchState *env, vaddr addr,
+>                                       uint64_t cmpv, uint64_t newv,
+>                                       MemOpIdx oi, uintptr_t retaddr);
+> -uint32_t cpu_atomic_cmpxchgw_be_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_atomic_cmpxchgw_be_mmu(CPUArchState *env, vaddr addr,
+>                                       uint32_t cmpv, uint32_t newv,
+>                                       MemOpIdx oi, uintptr_t retaddr);
+> -uint32_t cpu_atomic_cmpxchgl_be_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_atomic_cmpxchgl_be_mmu(CPUArchState *env, vaddr addr,
+>                                       uint32_t cmpv, uint32_t newv,
+>                                       MemOpIdx oi, uintptr_t retaddr);
+> -uint64_t cpu_atomic_cmpxchgq_be_mmu(CPUArchState *env, abi_ptr addr,
+> +uint64_t cpu_atomic_cmpxchgq_be_mmu(CPUArchState *env, vaddr addr,
+>                                       uint64_t cmpv, uint64_t newv,
+>                                       MemOpIdx oi, uintptr_t retaddr);
+>   
+>   #define GEN_ATOMIC_HELPER(NAME, TYPE, SUFFIX)   \
+>   TYPE cpu_atomic_ ## NAME ## SUFFIX ## _mmu      \
+> -    (CPUArchState *env, abi_ptr addr, TYPE val, \
+> +    (CPUArchState *env, vaddr addr, TYPE val, \
+>        MemOpIdx oi, uintptr_t retaddr);
+>   
+>   #ifdef CONFIG_ATOMIC64
+> @@ -244,10 +244,10 @@ GEN_ATOMIC_HELPER_ALL(xchg)
+>   #undef GEN_ATOMIC_HELPER_ALL
+>   #undef GEN_ATOMIC_HELPER
+>   
+> -Int128 cpu_atomic_cmpxchgo_le_mmu(CPUArchState *env, abi_ptr addr,
+> +Int128 cpu_atomic_cmpxchgo_le_mmu(CPUArchState *env, vaddr addr,
+>                                     Int128 cmpv, Int128 newv,
+>                                     MemOpIdx oi, uintptr_t retaddr);
+> -Int128 cpu_atomic_cmpxchgo_be_mmu(CPUArchState *env, abi_ptr addr,
+> +Int128 cpu_atomic_cmpxchgo_be_mmu(CPUArchState *env, vaddr addr,
+>                                     Int128 cmpv, Int128 newv,
+>                                     MemOpIdx oi, uintptr_t retaddr);
+>   
+> @@ -297,13 +297,13 @@ Int128 cpu_atomic_cmpxchgo_be_mmu(CPUArchState *env, abi_ptr addr,
+>   # define cpu_stq_mmuidx_ra    cpu_stq_le_mmuidx_ra
+>   #endif
+>   
+> -uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
+>                            MemOpIdx oi, uintptr_t ra);
+> -uint16_t cpu_ldw_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint16_t cpu_ldw_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t ra);
+> -uint32_t cpu_ldl_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_ldl_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t ra);
+> -uint64_t cpu_ldq_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint64_t cpu_ldq_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t ra);
+>   
+>   uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr);
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index fb22048876..b03998f926 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -2925,25 +2925,25 @@ uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
+>       return do_ld8_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+>   }
+>   
+> -uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
+>                            MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       return do_ld1_mmu(env_cpu(env), addr, oi, retaddr, MMU_INST_FETCH);
+>   }
+>   
+> -uint16_t cpu_ldw_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint16_t cpu_ldw_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       return do_ld2_mmu(env_cpu(env), addr, oi, retaddr, MMU_INST_FETCH);
+>   }
+>   
+> -uint32_t cpu_ldl_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_ldl_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       return do_ld4_mmu(env_cpu(env), addr, oi, retaddr, MMU_INST_FETCH);
+>   }
+>   
+> -uint64_t cpu_ldq_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint64_t cpu_ldq_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       return do_ld8_mmu(env_cpu(env), addr, oi, retaddr, MMU_INST_FETCH);
+> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+> index 2322181b15..3f63b194bb 100644
+> --- a/accel/tcg/user-exec.c
+> +++ b/accel/tcg/user-exec.c
+> @@ -1254,7 +1254,7 @@ uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr ptr)
+>       return ret;
+>   }
+>   
+> -uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
+>                            MemOpIdx oi, uintptr_t ra)
+>   {
+>       void *haddr;
+> @@ -1266,7 +1266,7 @@ uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
+>       return ret;
+>   }
+>   
+> -uint16_t cpu_ldw_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint16_t cpu_ldw_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t ra)
+>   {
+>       void *haddr;
+> @@ -1281,7 +1281,7 @@ uint16_t cpu_ldw_code_mmu(CPUArchState *env, abi_ptr addr,
+>       return ret;
+>   }
+>   
+> -uint32_t cpu_ldl_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_ldl_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t ra)
+>   {
+>       void *haddr;
+> @@ -1296,7 +1296,7 @@ uint32_t cpu_ldl_code_mmu(CPUArchState *env, abi_ptr addr,
+>       return ret;
+>   }
+>   
+> -uint64_t cpu_ldq_code_mmu(CPUArchState *env, abi_ptr addr,
+> +uint64_t cpu_ldq_code_mmu(CPUArchState *env, vaddr addr,
+>                             MemOpIdx oi, uintptr_t ra)
+>   {
+>       void *haddr;
+> diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
+> index ebbf380d76..0447c0bb92 100644
+> --- a/accel/tcg/ldst_common.c.inc
+> +++ b/accel/tcg/ldst_common.c.inc
+> @@ -135,7 +135,7 @@ static void plugin_load_cb(CPUArchState *env, abi_ptr addr,
+>       }
+>   }
+>   
+> -uint8_t cpu_ldb_mmu(CPUArchState *env, abi_ptr addr, MemOpIdx oi, uintptr_t ra)
+> +uint8_t cpu_ldb_mmu(CPUArchState *env, vaddr addr, MemOpIdx oi, uintptr_t ra)
+>   {
+>       uint8_t ret;
+>   
+> @@ -145,7 +145,7 @@ uint8_t cpu_ldb_mmu(CPUArchState *env, abi_ptr addr, MemOpIdx oi, uintptr_t ra)
+>       return ret;
+>   }
+>   
+> -uint16_t cpu_ldw_mmu(CPUArchState *env, abi_ptr addr,
+> +uint16_t cpu_ldw_mmu(CPUArchState *env, vaddr addr,
+>                        MemOpIdx oi, uintptr_t ra)
+>   {
+>       uint16_t ret;
+> @@ -156,7 +156,7 @@ uint16_t cpu_ldw_mmu(CPUArchState *env, abi_ptr addr,
+>       return ret;
+>   }
+>   
+> -uint32_t cpu_ldl_mmu(CPUArchState *env, abi_ptr addr,
+> +uint32_t cpu_ldl_mmu(CPUArchState *env, vaddr addr,
+>                        MemOpIdx oi, uintptr_t ra)
+>   {
+>       uint32_t ret;
+> @@ -167,7 +167,7 @@ uint32_t cpu_ldl_mmu(CPUArchState *env, abi_ptr addr,
+>       return ret;
+>   }
+>   
+> -uint64_t cpu_ldq_mmu(CPUArchState *env, abi_ptr addr,
+> +uint64_t cpu_ldq_mmu(CPUArchState *env, vaddr addr,
+>                        MemOpIdx oi, uintptr_t ra)
+>   {
+>       uint64_t ret;
+> @@ -178,7 +178,7 @@ uint64_t cpu_ldq_mmu(CPUArchState *env, abi_ptr addr,
+>       return ret;
+>   }
+>   
+> -Int128 cpu_ld16_mmu(CPUArchState *env, abi_ptr addr,
+> +Int128 cpu_ld16_mmu(CPUArchState *env, vaddr addr,
+>                       MemOpIdx oi, uintptr_t ra)
+>   {
+>       Int128 ret;
+> @@ -205,14 +205,14 @@ static void plugin_store_cb(CPUArchState *env, abi_ptr addr,
+>       }
+>   }
+>   
+> -void cpu_stb_mmu(CPUArchState *env, abi_ptr addr, uint8_t val,
+> +void cpu_stb_mmu(CPUArchState *env, vaddr addr, uint8_t val,
+>                    MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       helper_stb_mmu(env, addr, val, oi, retaddr);
+>       plugin_store_cb(env, addr, val, 0, oi);
+>   }
+>   
+> -void cpu_stw_mmu(CPUArchState *env, abi_ptr addr, uint16_t val,
+> +void cpu_stw_mmu(CPUArchState *env, vaddr addr, uint16_t val,
+>                    MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_16);
+> @@ -220,7 +220,7 @@ void cpu_stw_mmu(CPUArchState *env, abi_ptr addr, uint16_t val,
+>       plugin_store_cb(env, addr, val, 0, oi);
+>   }
+>   
+> -void cpu_stl_mmu(CPUArchState *env, abi_ptr addr, uint32_t val,
+> +void cpu_stl_mmu(CPUArchState *env, vaddr addr, uint32_t val,
+>                       MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_32);
+> @@ -228,7 +228,7 @@ void cpu_stl_mmu(CPUArchState *env, abi_ptr addr, uint32_t val,
+>       plugin_store_cb(env, addr, val, 0, oi);
+>   }
+>   
+> -void cpu_stq_mmu(CPUArchState *env, abi_ptr addr, uint64_t val,
+> +void cpu_stq_mmu(CPUArchState *env, vaddr addr, uint64_t val,
+>                    MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_64);
+> @@ -236,7 +236,7 @@ void cpu_stq_mmu(CPUArchState *env, abi_ptr addr, uint64_t val,
+>       plugin_store_cb(env, addr, val, 0, oi);
+>   }
+>   
+> -void cpu_st16_mmu(CPUArchState *env, abi_ptr addr, Int128 val,
+> +void cpu_st16_mmu(CPUArchState *env, vaddr addr, Int128 val,
+>                     MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_128);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/exec/ram_addr.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Restricting 64bit targets on 32bit hosts comes with nice benefits.
 
-diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
-index e4c28fbec9b..f5d574261a3 100644
---- a/include/exec/ram_addr.h
-+++ b/include/exec/ram_addr.h
-@@ -20,13 +20,14 @@
- #define RAM_ADDR_H
- 
- #ifndef CONFIG_USER_ONLY
--#include "cpu.h"
- #include "system/xen.h"
- #include "system/tcg.h"
- #include "exec/cputlb.h"
- #include "exec/ramlist.h"
- #include "exec/ramblock.h"
- #include "exec/exec-all.h"
-+#include "exec/memory.h"
-+#include "exec/target_page.h"
- #include "qemu/rcu.h"
- 
- #include "exec/hwaddr.h"
--- 
-2.39.5
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
