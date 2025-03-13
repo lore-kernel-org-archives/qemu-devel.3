@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62611C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 03:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B004C282EC
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 03:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsZWU-0004mB-46; Wed, 12 Mar 2025 23:46:18 -0400
+	id 1tsZW0-0004bN-7k; Wed, 12 Mar 2025 23:45:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZWC-0004ga-IM
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:46:00 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tsZVt-0004YR-Hw
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:42 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsZVy-0007nx-Mu
- for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:46:00 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-22401f4d35aso9395915ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:46 -0700 (PDT)
+ id 1tsZVn-0007aJ-N2
+ for qemu-devel@nongnu.org; Wed, 12 Mar 2025 23:45:38 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-224171d6826so11331995ad.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Mar 2025 20:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741837544; x=1742442344; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741837529; x=1742442329; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NPMqV5ZrxescUBAWokXjuel9hAvYVjYaAdlujGAXfkU=;
- b=cGijrBXBjRIojYCBfgjhR9sOa2vJto7rFPFgWc60ri7yclx8IrXXRSp8EdSHanVyun
- pQHIs5l1GVvihAuhwc/QiSopeXkPxZJCgoY0dUXQL+CsuPR3TOT4puB1F60PfpT8+WY/
- rn/JTGCJLGLARsAxCZLIMGJJ2CpUTkVuhZUFSyi4F7yrHYNrW48RxS1tArhohzC89IQP
- AahpoJoEV3C2Euf4WkYoA61eYtU/fazXbzJpFxjAxX220YzRem/kOMYUffBDD1g9Gjgc
- y8D/ST2VSj4VcoygD5dbHAlj3NWw1fxkMHY0Ft/td7saLQCptTU/oW1RyMZXLKsZDnwg
- bKoQ==
+ bh=K1YMjkp2ohkieMSd8G7Gtaz9ulM7Flpbby2gUzDmBrk=;
+ b=ZQnGyURQiu+Sjl/hmNY1qsdGeXpbc+Yz4KWBhekf2jRLtlfApiy/hGxABq3sFA4ksW
+ Z1B7D0jOS/+lIkBfIgX0KVN8DlbCvADhtR2ZxOfJasqVXoT67OgDVYatLKIdaAJ9Ar3m
+ rCORNWJtfOOxzb4DrCDI3Q5/iZU+vh4O6CsmrxIrYDxSPj8neQyAwyo8D/jbIt483hiM
+ NNN9My+RzQHDXbEOzGZXR+NocrJHdfBKilCYOzmNhmu8XXkNyttPQcwqmC2B1klUWQx3
+ ig9pm/N4aBV+GxoAMfOHb+iA6KZ97Vi1j13VOnV7gJoexaR0yTRelNkkMrCWkYP3RaZ+
+ Eh/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741837544; x=1742442344;
+ d=1e100.net; s=20230601; t=1741837529; x=1742442329;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NPMqV5ZrxescUBAWokXjuel9hAvYVjYaAdlujGAXfkU=;
- b=lv06R7YYVwDVgfVqVuM6rFeD2T/2QW2mzkKa+mCvMcAO8fyyag3GIWk6anD/beVMpO
- 0SHcohLO0tW/JjyeL7NaTDsq0wstyCn3vAsYqCPmbb+w00yxO/Fxjj+6v88OMO7+cBpv
- Cco9CG/MODQbpX0VwDEjauFdiGN0gEoArnzumTrkas7x5l9c1RgW+0yBqyg4Fv6fFZ9Q
- ZDHHxzxX6DxXlkmJW4xeDYRIXyuNlxseX5bQLNzQQtPR5pJsayza1YfvlCN10ns1FiHW
- ipS/KSPHI2oeyjQkT9VAvhwvus/s4IGT1KOrr5+EoaILii4QOz/jnc4IZtYokUwuJoQo
- dx/g==
-X-Gm-Message-State: AOJu0YzNk5yKHWgsTJJ1qbvTEus/xzP9sNsKEevXcgcuZwxIpOpOwSYH
- QRU6g65mukFcE9Oy4yJMj7YzAA+g7NssAuYUe0qWXthpt9/pkS5tpxuxmKVbId+MHaZmTN+/k4F
- 9
-X-Gm-Gg: ASbGnctrzanRB0yrAIAv3xVCQEjGRyr/NO4KgpcyGUJ4aCM7Ph/51F2krwfj8y+Kia/
- KMPb5QLBZDrkpTPBbF3DTUs7KVb4qtMMM/Rzwfic4ROhQ+lzzL+4V/hQEqNJglS+2MsGCJ0ZgYE
- IBKiQHB+X2/2BAdFU5MkWOfZrB+Hy3YZ0GqqMr1l+XtU930dcwF2KAuu8dxcvnfB03F4bxp3gXt
- PSXEiyqlKXBDvnl/YmWyRwJfhlKF0zyhWDKziJLnuJuQc6ZrzsnlCfFyxbe1Xn/r2Tu+T83kRmA
- NSeuT17Hnsorxvv7kkvptN2n6H4QJtIkEkRzPllEDyi753tw8zdtrNbSM236Ssnf4m5U/qWlwQD
- t4Xl8kVcrles=
-X-Google-Smtp-Source: AGHT+IHqD/JfN0cKDQ7eOQiGKklZGFVD4Ij69WaAwm+ErVaw2EQS1e+iHNPaP+SQ8R+R7CmItgbEXw==
-X-Received: by 2002:a05:6a00:2341:b0:730:7600:aeab with SMTP id
- d2e1a72fcca58-736eb7ff1bamr13265603b3a.13.1741837544199; 
- Wed, 12 Mar 2025 20:45:44 -0700 (PDT)
+ bh=K1YMjkp2ohkieMSd8G7Gtaz9ulM7Flpbby2gUzDmBrk=;
+ b=TDw23QtlZmWNEmTpV+zAmPm2Q0vZUnQ67gsIr+OhN5Ha53AN9DUj+utEPmR8QMMhAV
+ 4C5gR2jntDu5pOh7GVot8dp6voFFdTb/FpTwWFtJhMxkIXUF/9PdCrLxMnGVnGInPNiX
+ CjCJVdUO6w1UfIV0b5bTpwTzrCr2qddqOwtG+dES8GV/dlPe53SH/Sp20x9Wh8uKpLLY
+ OhXgG4Z0/RW8A1H+epbDIM8i+zE0sjU0dYGSE5UcQfMtI+SBOv9VQHshLrz1GfGShLoc
+ mQ80WvhG1oJGJ/TYyJN7G5nTb+XIJS1SX5q7iiG9Gb10fYEd+ObvJ9JCfuRyWTcUpNHK
+ LsmA==
+X-Gm-Message-State: AOJu0YxbdyBoSy4046Feg3YPoqP1oki7sEe5mN8Ib9clpwTkfmyHOP+9
+ xs6Ur7lYkAqHhSXFMrXzIE7junOf8ptwSuBqCwz8FYiZ/OfUkusse9wWki46XIx0bO4GkGQE+Wx
+ i
+X-Gm-Gg: ASbGncvoYpu3QO65YMNQG68Zl2pZjyYkOhOb0ST8vQex3tVBJJuA4HBhaauIacaTms8
+ clkB4gkuwLsrADB28VGoljx3RQBcMVfY74hU+Hf7RsvY7n40QtTeS8gzig4xO1DOSVNKV4TuZAq
+ tsHmuPQfgea/N1tE2365JvjCuf+Cov5bbt51zgyDp8o9lq/QO2xR6V5NwI9LfH8VxFCmjKJ0xvd
+ 1a4WCiieqLqIiJkr1HnYp6InLf4iOqdzE+5zdP3FzZKRQ2hvSFhotawYed3Wm1ycu64uNRWDKp9
+ 0bfYbb9irT3vSkXF8ejl3krPv2dy7mu1qvAceDhbSNSHmaAUuLVJSi+yLuJOIzeCDu2kgchIQlc
+ X
+X-Google-Smtp-Source: AGHT+IGRJxH/B53M6lDZk0ohCvq5eegVltSs4rYePC28UYTyjnVoOTqMFeIRxQZjC3G1vFTSi5f9HQ==
+X-Received: by 2002:a17:902:d48c:b0:220:bd61:a337 with SMTP id
+ d9443c01a7336-2242889f1c7mr352984075ad.23.1741837529409; 
+ Wed, 12 Mar 2025 20:45:29 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.43
+ d2e1a72fcca58-7371167def8sm316781b3a.90.2025.03.12.20.45.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Mar 2025 20:45:43 -0700 (PDT)
+ Wed, 12 Mar 2025 20:45:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	pbonzini@redhat.com,
 	philmd@linaro.org
-Subject: [PATCH 22/37] semihosting: Move user-only implementation out-of-line
-Date: Wed, 12 Mar 2025 20:45:02 -0700
-Message-ID: <20250313034524.3069690-23-richard.henderson@linaro.org>
+Subject: [PATCH 04/37] include/exec: Split out cpu-ldst-common.h
+Date: Wed, 12 Mar 2025 20:44:44 -0700
+Message-ID: <20250313034524.3069690-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250313034524.3069690-1-richard.henderson@linaro.org>
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,121 +102,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid testing CONFIG_USER_ONLY in semihost.h.
+Split out the *_mmu api, which no longer uses
+target specific argument types.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/semihosting/semihost.h | 29 ++---------------------------
- semihosting/user.c             | 30 ++++++++++++++++++++++++++++++
- semihosting/meson.build        |  2 ++
- 3 files changed, 34 insertions(+), 27 deletions(-)
- create mode 100644 semihosting/user.c
+ include/exec/cpu-ldst-common.h | 122 +++++++++++++++++++++++++++++++++
+ include/exec/cpu_ldst.h        | 108 +----------------------------
+ 2 files changed, 123 insertions(+), 107 deletions(-)
+ create mode 100644 include/exec/cpu-ldst-common.h
 
-diff --git a/include/semihosting/semihost.h b/include/semihosting/semihost.h
-index 97d2a2ba99..b03e637578 100644
---- a/include/semihosting/semihost.h
-+++ b/include/semihosting/semihost.h
-@@ -26,32 +26,6 @@ typedef enum SemihostingTarget {
-     SEMIHOSTING_TARGET_GDB
- } SemihostingTarget;
- 
--#ifdef CONFIG_USER_ONLY
--static inline bool semihosting_enabled(bool is_user)
--{
--    return true;
--}
--
--static inline SemihostingTarget semihosting_get_target(void)
--{
--    return SEMIHOSTING_TARGET_AUTO;
--}
--
--static inline const char *semihosting_get_arg(int i)
--{
--    return NULL;
--}
--
--static inline int semihosting_get_argc(void)
--{
--    return 0;
--}
--
--static inline const char *semihosting_get_cmdline(void)
--{
--    return NULL;
--}
--#else /* !CONFIG_USER_ONLY */
- /**
-  * semihosting_enabled:
-  * @is_user: true if guest code is in usermode (i.e. not privileged)
-@@ -59,17 +33,18 @@ static inline const char *semihosting_get_cmdline(void)
-  * Return true if guest code is allowed to make semihosting calls.
-  */
- bool semihosting_enabled(bool is_user);
-+
- SemihostingTarget semihosting_get_target(void);
- const char *semihosting_get_arg(int i);
- int semihosting_get_argc(void);
- const char *semihosting_get_cmdline(void);
- void semihosting_arg_fallback(const char *file, const char *cmd);
-+
- /* for vl.c hooks */
- void qemu_semihosting_enable(void);
- int qemu_semihosting_config_options(const char *optstr);
- void qemu_semihosting_chardev_init(void);
- void qemu_semihosting_console_init(Chardev *);
--#endif /* CONFIG_USER_ONLY */
- void qemu_semihosting_guestfd_init(void);
- 
- #endif /* SEMIHOST_H */
-diff --git a/semihosting/user.c b/semihosting/user.c
+diff --git a/include/exec/cpu-ldst-common.h b/include/exec/cpu-ldst-common.h
 new file mode 100644
-index 0000000000..f5b500493b
+index 0000000000..c46a6ade5d
 --- /dev/null
-+++ b/semihosting/user.c
-@@ -0,0 +1,30 @@
++++ b/include/exec/cpu-ldst-common.h
+@@ -0,0 +1,122 @@
 +/*
-+ * Semihosting for user emulation
++ * Software MMU support
 + *
-+ * Copyright (c) 2019 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * SPDX-License-Identifier: LGPL-2.1-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "semihosting/semihost.h"
++#ifndef CPU_LDST_COMMON_H
++#define CPU_LDST_COMMON_H
 +
-+bool semihosting_enabled(bool is_user)
-+{
-+    return true;
-+}
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
 +
-+const char *semihosting_get_arg(int i)
-+{
-+    return NULL;
-+}
++#include "exec/memopidx.h"
++#include "exec/vaddr.h"
++#include "exec/mmu-access-type.h"
++#include "qemu/int128.h"
 +
-+int semihosting_get_argc(void)
-+{
-+    return 0;
-+}
++uint8_t cpu_ldb_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
++uint16_t cpu_ldw_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
++uint32_t cpu_ldl_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
++uint64_t cpu_ldq_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
++Int128 cpu_ld16_mmu(CPUArchState *env, vaddr addr, MemOpIdx oi, uintptr_t ra);
 +
-+const char *semihosting_get_cmdline(void)
-+{
-+    return NULL;
-+}
-diff --git a/semihosting/meson.build b/semihosting/meson.build
-index 86f5004bed..ab67f87e4f 100644
---- a/semihosting/meson.build
-+++ b/semihosting/meson.build
-@@ -15,5 +15,7 @@ system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
-   'stubs-system.c',
- ))
++void cpu_stb_mmu(CPUArchState *env, vaddr ptr, uint8_t val,
++                 MemOpIdx oi, uintptr_t ra);
++void cpu_stw_mmu(CPUArchState *env, vaddr ptr, uint16_t val,
++                 MemOpIdx oi, uintptr_t ra);
++void cpu_stl_mmu(CPUArchState *env, vaddr ptr, uint32_t val,
++                 MemOpIdx oi, uintptr_t ra);
++void cpu_stq_mmu(CPUArchState *env, vaddr ptr, uint64_t val,
++                 MemOpIdx oi, uintptr_t ra);
++void cpu_st16_mmu(CPUArchState *env, vaddr addr, Int128 val,
++                  MemOpIdx oi, uintptr_t ra);
++
++uint32_t cpu_atomic_cmpxchgb_mmu(CPUArchState *env, vaddr addr,
++                                 uint32_t cmpv, uint32_t newv,
++                                 MemOpIdx oi, uintptr_t retaddr);
++uint32_t cpu_atomic_cmpxchgw_le_mmu(CPUArchState *env, vaddr addr,
++                                    uint32_t cmpv, uint32_t newv,
++                                    MemOpIdx oi, uintptr_t retaddr);
++uint32_t cpu_atomic_cmpxchgl_le_mmu(CPUArchState *env, vaddr addr,
++                                    uint32_t cmpv, uint32_t newv,
++                                    MemOpIdx oi, uintptr_t retaddr);
++uint64_t cpu_atomic_cmpxchgq_le_mmu(CPUArchState *env, vaddr addr,
++                                    uint64_t cmpv, uint64_t newv,
++                                    MemOpIdx oi, uintptr_t retaddr);
++uint32_t cpu_atomic_cmpxchgw_be_mmu(CPUArchState *env, vaddr addr,
++                                    uint32_t cmpv, uint32_t newv,
++                                    MemOpIdx oi, uintptr_t retaddr);
++uint32_t cpu_atomic_cmpxchgl_be_mmu(CPUArchState *env, vaddr addr,
++                                    uint32_t cmpv, uint32_t newv,
++                                    MemOpIdx oi, uintptr_t retaddr);
++uint64_t cpu_atomic_cmpxchgq_be_mmu(CPUArchState *env, vaddr addr,
++                                    uint64_t cmpv, uint64_t newv,
++                                    MemOpIdx oi, uintptr_t retaddr);
++
++#define GEN_ATOMIC_HELPER(NAME, TYPE, SUFFIX)   \
++TYPE cpu_atomic_ ## NAME ## SUFFIX ## _mmu      \
++    (CPUArchState *env, vaddr addr, TYPE val,   \
++     MemOpIdx oi, uintptr_t retaddr);
++
++#ifdef CONFIG_ATOMIC64
++#define GEN_ATOMIC_HELPER_ALL(NAME)          \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, b)     \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, w_le)  \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, w_be)  \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, l_le)  \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, l_be)  \
++    GEN_ATOMIC_HELPER(NAME, uint64_t, q_le)  \
++    GEN_ATOMIC_HELPER(NAME, uint64_t, q_be)
++#else
++#define GEN_ATOMIC_HELPER_ALL(NAME)          \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, b)     \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, w_le)  \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, w_be)  \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, l_le)  \
++    GEN_ATOMIC_HELPER(NAME, uint32_t, l_be)
++#endif
++
++GEN_ATOMIC_HELPER_ALL(fetch_add)
++GEN_ATOMIC_HELPER_ALL(fetch_sub)
++GEN_ATOMIC_HELPER_ALL(fetch_and)
++GEN_ATOMIC_HELPER_ALL(fetch_or)
++GEN_ATOMIC_HELPER_ALL(fetch_xor)
++GEN_ATOMIC_HELPER_ALL(fetch_smin)
++GEN_ATOMIC_HELPER_ALL(fetch_umin)
++GEN_ATOMIC_HELPER_ALL(fetch_smax)
++GEN_ATOMIC_HELPER_ALL(fetch_umax)
++
++GEN_ATOMIC_HELPER_ALL(add_fetch)
++GEN_ATOMIC_HELPER_ALL(sub_fetch)
++GEN_ATOMIC_HELPER_ALL(and_fetch)
++GEN_ATOMIC_HELPER_ALL(or_fetch)
++GEN_ATOMIC_HELPER_ALL(xor_fetch)
++GEN_ATOMIC_HELPER_ALL(smin_fetch)
++GEN_ATOMIC_HELPER_ALL(umin_fetch)
++GEN_ATOMIC_HELPER_ALL(smax_fetch)
++GEN_ATOMIC_HELPER_ALL(umax_fetch)
++
++GEN_ATOMIC_HELPER_ALL(xchg)
++
++#undef GEN_ATOMIC_HELPER_ALL
++#undef GEN_ATOMIC_HELPER
++
++Int128 cpu_atomic_cmpxchgo_le_mmu(CPUArchState *env, vaddr addr,
++                                  Int128 cmpv, Int128 newv,
++                                  MemOpIdx oi, uintptr_t retaddr);
++Int128 cpu_atomic_cmpxchgo_be_mmu(CPUArchState *env, vaddr addr,
++                                  Int128 cmpv, Int128 newv,
++                                  MemOpIdx oi, uintptr_t retaddr);
++
++uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
++                         MemOpIdx oi, uintptr_t ra);
++uint16_t cpu_ldw_code_mmu(CPUArchState *env, vaddr addr,
++                          MemOpIdx oi, uintptr_t ra);
++uint32_t cpu_ldl_code_mmu(CPUArchState *env, vaddr addr,
++                          MemOpIdx oi, uintptr_t ra);
++uint64_t cpu_ldq_code_mmu(CPUArchState *env, vaddr addr,
++                          MemOpIdx oi, uintptr_t ra);
++
++#endif /* CPU_LDST_COMMON_H */
+diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+index ddd8e0cf48..1fbdbe59ae 100644
+--- a/include/exec/cpu_ldst.h
++++ b/include/exec/cpu_ldst.h
+@@ -66,11 +66,8 @@
+ #error Can only include this header with TCG
+ #endif
  
-+user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('user.c'))
-+
- specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
- 		if_true: files('arm-compat-semi.c'))
+-#include "exec/memopidx.h"
+-#include "exec/vaddr.h"
++#include "exec/cpu-ldst-common.h"
+ #include "exec/abi_ptr.h"
+-#include "exec/mmu-access-type.h"
+-#include "qemu/int128.h"
+ 
+ #if defined(CONFIG_USER_ONLY)
+ #include "user/guest-host.h"
+@@ -157,100 +154,6 @@ void cpu_stl_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint32_t val,
+ void cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr ptr, uint64_t val,
+                           int mmu_idx, uintptr_t ra);
+ 
+-uint8_t cpu_ldb_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+-uint16_t cpu_ldw_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+-uint32_t cpu_ldl_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+-uint64_t cpu_ldq_mmu(CPUArchState *env, vaddr ptr, MemOpIdx oi, uintptr_t ra);
+-Int128 cpu_ld16_mmu(CPUArchState *env, vaddr addr, MemOpIdx oi, uintptr_t ra);
+-
+-void cpu_stb_mmu(CPUArchState *env, vaddr ptr, uint8_t val,
+-                 MemOpIdx oi, uintptr_t ra);
+-void cpu_stw_mmu(CPUArchState *env, vaddr ptr, uint16_t val,
+-                 MemOpIdx oi, uintptr_t ra);
+-void cpu_stl_mmu(CPUArchState *env, vaddr ptr, uint32_t val,
+-                 MemOpIdx oi, uintptr_t ra);
+-void cpu_stq_mmu(CPUArchState *env, vaddr ptr, uint64_t val,
+-                 MemOpIdx oi, uintptr_t ra);
+-void cpu_st16_mmu(CPUArchState *env, vaddr addr, Int128 val,
+-                  MemOpIdx oi, uintptr_t ra);
+-
+-uint32_t cpu_atomic_cmpxchgb_mmu(CPUArchState *env, vaddr addr,
+-                                 uint32_t cmpv, uint32_t newv,
+-                                 MemOpIdx oi, uintptr_t retaddr);
+-uint32_t cpu_atomic_cmpxchgw_le_mmu(CPUArchState *env, vaddr addr,
+-                                    uint32_t cmpv, uint32_t newv,
+-                                    MemOpIdx oi, uintptr_t retaddr);
+-uint32_t cpu_atomic_cmpxchgl_le_mmu(CPUArchState *env, vaddr addr,
+-                                    uint32_t cmpv, uint32_t newv,
+-                                    MemOpIdx oi, uintptr_t retaddr);
+-uint64_t cpu_atomic_cmpxchgq_le_mmu(CPUArchState *env, vaddr addr,
+-                                    uint64_t cmpv, uint64_t newv,
+-                                    MemOpIdx oi, uintptr_t retaddr);
+-uint32_t cpu_atomic_cmpxchgw_be_mmu(CPUArchState *env, vaddr addr,
+-                                    uint32_t cmpv, uint32_t newv,
+-                                    MemOpIdx oi, uintptr_t retaddr);
+-uint32_t cpu_atomic_cmpxchgl_be_mmu(CPUArchState *env, vaddr addr,
+-                                    uint32_t cmpv, uint32_t newv,
+-                                    MemOpIdx oi, uintptr_t retaddr);
+-uint64_t cpu_atomic_cmpxchgq_be_mmu(CPUArchState *env, vaddr addr,
+-                                    uint64_t cmpv, uint64_t newv,
+-                                    MemOpIdx oi, uintptr_t retaddr);
+-
+-#define GEN_ATOMIC_HELPER(NAME, TYPE, SUFFIX)   \
+-TYPE cpu_atomic_ ## NAME ## SUFFIX ## _mmu      \
+-    (CPUArchState *env, vaddr addr, TYPE val, \
+-     MemOpIdx oi, uintptr_t retaddr);
+-
+-#ifdef CONFIG_ATOMIC64
+-#define GEN_ATOMIC_HELPER_ALL(NAME)          \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, b)     \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, w_le)  \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, w_be)  \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, l_le)  \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, l_be)  \
+-    GEN_ATOMIC_HELPER(NAME, uint64_t, q_le)  \
+-    GEN_ATOMIC_HELPER(NAME, uint64_t, q_be)
+-#else
+-#define GEN_ATOMIC_HELPER_ALL(NAME)          \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, b)     \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, w_le)  \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, w_be)  \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, l_le)  \
+-    GEN_ATOMIC_HELPER(NAME, uint32_t, l_be)
+-#endif
+-
+-GEN_ATOMIC_HELPER_ALL(fetch_add)
+-GEN_ATOMIC_HELPER_ALL(fetch_sub)
+-GEN_ATOMIC_HELPER_ALL(fetch_and)
+-GEN_ATOMIC_HELPER_ALL(fetch_or)
+-GEN_ATOMIC_HELPER_ALL(fetch_xor)
+-GEN_ATOMIC_HELPER_ALL(fetch_smin)
+-GEN_ATOMIC_HELPER_ALL(fetch_umin)
+-GEN_ATOMIC_HELPER_ALL(fetch_smax)
+-GEN_ATOMIC_HELPER_ALL(fetch_umax)
+-
+-GEN_ATOMIC_HELPER_ALL(add_fetch)
+-GEN_ATOMIC_HELPER_ALL(sub_fetch)
+-GEN_ATOMIC_HELPER_ALL(and_fetch)
+-GEN_ATOMIC_HELPER_ALL(or_fetch)
+-GEN_ATOMIC_HELPER_ALL(xor_fetch)
+-GEN_ATOMIC_HELPER_ALL(smin_fetch)
+-GEN_ATOMIC_HELPER_ALL(umin_fetch)
+-GEN_ATOMIC_HELPER_ALL(smax_fetch)
+-GEN_ATOMIC_HELPER_ALL(umax_fetch)
+-
+-GEN_ATOMIC_HELPER_ALL(xchg)
+-
+-#undef GEN_ATOMIC_HELPER_ALL
+-#undef GEN_ATOMIC_HELPER
+-
+-Int128 cpu_atomic_cmpxchgo_le_mmu(CPUArchState *env, vaddr addr,
+-                                  Int128 cmpv, Int128 newv,
+-                                  MemOpIdx oi, uintptr_t retaddr);
+-Int128 cpu_atomic_cmpxchgo_be_mmu(CPUArchState *env, vaddr addr,
+-                                  Int128 cmpv, Int128 newv,
+-                                  MemOpIdx oi, uintptr_t retaddr);
+-
+ #if TARGET_BIG_ENDIAN
+ # define cpu_lduw_data        cpu_lduw_be_data
+ # define cpu_ldsw_data        cpu_ldsw_be_data
+@@ -297,15 +200,6 @@ Int128 cpu_atomic_cmpxchgo_be_mmu(CPUArchState *env, vaddr addr,
+ # define cpu_stq_mmuidx_ra    cpu_stq_le_mmuidx_ra
+ #endif
+ 
+-uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
+-                         MemOpIdx oi, uintptr_t ra);
+-uint16_t cpu_ldw_code_mmu(CPUArchState *env, vaddr addr,
+-                          MemOpIdx oi, uintptr_t ra);
+-uint32_t cpu_ldl_code_mmu(CPUArchState *env, vaddr addr,
+-                          MemOpIdx oi, uintptr_t ra);
+-uint64_t cpu_ldq_code_mmu(CPUArchState *env, vaddr addr,
+-                          MemOpIdx oi, uintptr_t ra);
+-
+ uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr);
+ uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr);
+ uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr);
 -- 
 2.43.0
 
