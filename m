@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80587C282DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B412C28B2E
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 09:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfJv-0008JE-Q8; Thu, 13 Mar 2025 05:57:44 -0400
+	id 1tsfJr-0008GZ-DZ; Thu, 13 Mar 2025 05:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfJu-0008Is-IE
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:57:42 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfJp-0008DN-4A
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:57:37 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfJp-0007Md-PL
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:57:42 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cf628cb14so11261985e9.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 02:57:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfJg-0007Lk-39
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 05:57:36 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cef035a3bso4532865e9.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 02:57:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741859856; x=1742464656; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=I0O2yoHYoUsiRdmBcz2l0N0PHG+liK4bF3bqhhsvSOE=;
- b=UAXoD+Dc4wF2yXgKWrg/4sR/Br1NdIcKrytudCACW0cIOQxJPznntRcrDUT3AZIOsk
- hLOAJVKI+k14AjlUyhIckPiBgkiIhffbkfIB3jydHmAWGPPR6texvz5pWXTkSA+eTJZP
- NOWFfNYOBwBjfZUMex1l+niNHJn9mxGQJYDwDtk7UB/6hzLJf53kqD6Y9T/CHQRdhlmL
- yupRH8+/qePXXl2afKzi/EBnRpKfUr3ot0hrCTCksR3JyMj+eZ+oq81jTSftbkMjTHAg
- ahgb2lfPpjaYErXFWSgagVhLKbagqXc1NY2AloOzDPcUBHFPB/yXY185H/ESfVs67MlM
- TBjg==
+ d=linaro.org; s=google; t=1741859846; x=1742464646; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=iPWgPIY6I1VKyMeLivzTkC2uSMHMnO4WIIfb+L5CIjM=;
+ b=BMYv82+UhWhGPer6FI3E+SUaB08rX+LDm4LScdspZQvFkHA/R8DunF/1t1WYZ21tCq
+ mg44oAhMmAGkLvt8HwzZ9noA03QzZ/sL955DNO2Eq3bLkK4e3Lc++K59NJAZy+ag6KuA
+ ocgbDxzxDxRkc6kL3MR9kM+f+5lno0oP8HXN4TInJWGwkyTJGRHIaJbthD21YXRtKRBY
+ 1FI9Hvub5oM6FHIZYQBoqA2nLlU74YfuxY6PFrmDQg30sE2D/Qo211Vd5Lzu96oW2VuT
+ 9NI6ymvAI6osyJor11PpNKAU6ZULLuxlyM5ONJshCz+Yelu/ctY6igNvfKs/f6eoNanH
+ jdJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741859856; x=1742464656;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741859846; x=1742464646;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I0O2yoHYoUsiRdmBcz2l0N0PHG+liK4bF3bqhhsvSOE=;
- b=HVJp1SpbyV+hgmu5HI/MLwT6Ik58k6SGoxbhHEY8SP2PzJwdQJ9eNiNoWIrG3FWsct
- RUPbGlK5vEVQCsHi3vHtc+t94JJENDokQche1e7K6hIGRWwlj6ZM0G6E0vyJSOW6/H1D
- SJAP4xV9IjqXF55zv1ccS499yBZoyKl9qEth8CKXToX+p1I1sMDB3vNiRcklTuR/N/wb
- qKEu79LmasEUKdoSBPj5hxVW+voWPGfNCDN8j9v9sTaJWpnfXkqSycygoNrTG1YzjrgM
- sXvmsF3c89Ee438yBEU2eupT7URT5YE8TYdfFT51V4o40EsDdCv2EYdddg6hMNqdL11Y
- FhxA==
+ bh=iPWgPIY6I1VKyMeLivzTkC2uSMHMnO4WIIfb+L5CIjM=;
+ b=hECRV/PPVOlC/K6iyJJOiZ/AikRQlV6/BW6M/T3PCiqXPJd9/77g+ezDORS5GFszt4
+ LErCw1OVVh7Fa6L0W9tfM2QAC9OQrIZY+Wwy0jFA3lFQgDOVr3q38YzqCq9EHrOLBDYB
+ r/uczTIFZprpnIeAHBFaelTzs6gIM4nqGdhvCwfKw9IxguRr8i/FIlByM66pMaydnh8M
+ Lep4dDtjJRrTNboyVWaGF/ZbWL76kPe68jxQ5y4eF26hAmST97MoeiYbcKkWMcSTgpmi
+ jNMX5WYEx0lBoCMpZr+DxzWZ9fFFUpxWxYj657IDuu/NGUHEItS/a1EyEKN6C1EcO/bY
+ LZ9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWOcs5Ia+Sf0nvn49qcsG5zEK0WN5stZdPbXH/sY1rwCtsiILEcdzLdA6j6cXFkRMayN+z1+ciH9ccH@nongnu.org
-X-Gm-Message-State: AOJu0YyGI2hqew8Od3L2lxSegS0P9b6qclSeP/R9/HkktPFUpqDlH4EH
- RHuS//tF/449thQrJ1Z5pao5c069tDfM7GVtXnMMaZDfvFZuK6+yIdiz1PTzbwQ=
-X-Gm-Gg: ASbGncu1tDJremIcmCODYHQJIQaQZghnb6gf4rNLr9g82z9RrKgveYmApTn1p7FHQKe
- cFg+uUcuVKsyT6DpsdClztocFSsDvRFy34h178LyjluAQWFOcp89pWkLJYOg0kVmMgMwzlXbBbL
- bziXvbKzICSm9/o73vsECMLt6PsMg4lTrbwyb5zuR6n6wze31YTpedE5EUerX+MzG860S2+B23q
- nOEQmdCAyRjDVnvtxJgzh0FWZd6qxEXefE0r0sK5mVOVV8ouSMXh9z/ifHhBBclxmXxehVXrXjM
- i+AZ1s4kN6yWCnBdX5Jg9NPj4ZeK82ei+6YuFADmSxhZbHSOak5LYoCXayJD3WE1ByS7oCt1qhs
- 9Q3Zyok8c80wgXlDKm5T7gjP11A==
-X-Google-Smtp-Source: AGHT+IF97Jp86/ZCcQo3FD7Ce11QVbzJFQ6/HTV916uRklnMzfwHBE2WYCraA0AnyF+63uOXiD3S8w==
-X-Received: by 2002:a05:600c:3b87:b0:439:9434:4f3b with SMTP id
- 5b1f17b1804b1-43d1808564bmr13448815e9.8.1741859856149; 
- Thu, 13 Mar 2025 02:57:36 -0700 (PDT)
+ AJvYcCUPATRxmw2ewrlrjc8ss8hCz6XsWCo5qQcd0ipaD2JkCRdDqDthXnhSe0jg4WUf0UGJU+V9Wob2yKxA@nongnu.org
+X-Gm-Message-State: AOJu0YxRiIQ6p2yJEg3MQAQYCw3MG6czRhpqD+fxEPpdUVi24waGrGp+
+ oRrHIWeGULMKzGRQAqW8gub2NjFDQtsyDBJQAEGYSzwguDtWY31husQ4k+uJFPw=
+X-Gm-Gg: ASbGnctcmovUOijZh8gmXcgFe6tvsUaBOeOTLvUp4LgFQJexrBkx50UgSYlU2qmu/GW
+ qV6MooHYinRzL+noAYl45YZEflsKhx4yqB8xABK3raobXs75EkesM+Vuu6omgWBhyEQZdwxIoqT
+ +VASPLsajvbHHnpDtfgb56vqoq++Ii08VlYylnQcXvKg7Y20VF4UXtuG3HFSKaDWCxJCAsd6/Yo
+ x43lh9u2YO60i4/Rd7xI1m17ULhCsBdiMfpPmC/dA0smlePTABRQ7SI2BbdBAHoGDx+waHVC5uV
+ WsdlmFDI4sV7T/prJ0b+pimrlD4nIGuRKWGdPEwaohHIVXyIxm3j9quOrrkN9MZfvzUON070TwF
+ /qH5IkpMZqTzuB05ez9uzHMPTOQ==
+X-Google-Smtp-Source: AGHT+IGBEaIV3m2cE8S7FtNDWK/NxuMMHuLw3peUL6i5EECvj9DpnceQMlTXukLfGTLYBpOMGHJ53g==
+X-Received: by 2002:a05:600d:14:b0:43c:e2dd:98f3 with SMTP id
+ 5b1f17b1804b1-43ce2dda00amr151135165e9.21.1741859846439; 
+ Thu, 13 Mar 2025 02:57:26 -0700 (PDT)
 Received: from [192.168.1.20] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d188b0092sm15018715e9.5.2025.03.13.02.57.35
+ 5b1f17b1804b1-43d18a4c3c6sm14662815e9.35.2025.03.13.02.57.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 02:57:35 -0700 (PDT)
-Message-ID: <10031b78-899d-495f-b9d0-96a06662a86b@linaro.org>
-Date: Thu, 13 Mar 2025 10:57:34 +0100
+ Thu, 13 Mar 2025 02:57:25 -0700 (PDT)
+Message-ID: <67025499-bf51-460f-9876-6a48b72c5c0d@linaro.org>
+Date: Thu, 13 Mar 2025 10:57:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/37] accel/tcg: Remove mmap_lock/unlock from watchpoint.c
+Subject: Re: [PATCH 10/37] accel/tcg: Use cpu_ld*_code_mmu in translator.c
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-13-richard.henderson@linaro.org>
+ <20250313034524.3069690-11-richard.henderson@linaro.org>
+ <d36bc719-555c-486e-a4c4-a0e00702eefc@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250313034524.3069690-13-richard.henderson@linaro.org>
+In-Reply-To: <d36bc719-555c-486e-a4c4-a0e00702eefc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,15 +103,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/3/25 04:44, Richard Henderson wrote:
-> The mmap_lock is user-only, whereas watchpoint.c
-> is only compiled for system mode.
+On 13/3/25 10:54, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/watchpoint.c | 3 ---
->   1 file changed, 3 deletions(-)
+> On 13/3/25 04:44, Richard Henderson wrote:
+>> Cache the mmu index in DisasContextBase.
+>> Perform the read on host endianness, which lets us
+>> share code with the translator_ld fast path.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/exec/translator.h |  1 +
+>>   accel/tcg/translator.c    | 57 ++++++++++++++++++---------------------
+>>   2 files changed, 27 insertions(+), 31 deletions(-)
+>>
+>> diff --git a/include/exec/translator.h b/include/exec/translator.h
+>> index d70942a10f..205dd85bba 100644
+>> --- a/include/exec/translator.h
+>> +++ b/include/exec/translator.h
+>> @@ -73,6 +73,7 @@ struct DisasContextBase {
+>>       int max_insns;
+>>       bool plugin_enabled;
+>>       bool fake_insn;
+>> +    uint8_t code_mmuidx;
+>>       struct TCGOp *insn_start;
+>>       void *host_addr[2];
+>> diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+>> index 0260fb1915..64fa069b51 100644
+>> --- a/accel/tcg/translator.c
+>> +++ b/accel/tcg/translator.c
+>> @@ -11,10 +11,9 @@
+>>   #include "qemu/log.h"
+>>   #include "qemu/error-report.h"
+>>   #include "exec/exec-all.h"
+>> +#include "exec/cpu-ldst-common.h"
+>>   #include "exec/translator.h"
+>> -#include "exec/cpu_ldst.h"
+>>   #include "exec/plugin-gen.h"
+>> -#include "exec/cpu_ldst.h"
+>>   #include "exec/tswap.h"
+>>   #include "tcg/tcg-op-common.h"
+>>   #include "internal-target.h"
+>> @@ -142,6 +141,7 @@ void translator_loop(CPUState *cpu, 
+>> TranslationBlock *tb, int *max_insns,
+>>       db->host_addr[1] = NULL;
+>>       db->record_start = 0;
+>>       db->record_len = 0;
+>> +    db->code_mmuidx = cpu_mmu_index(cpu, true);
+>>       ops->init_disas_context(db, cpu);
+>>       tcg_debug_assert(db->is_jmp == DISAS_NEXT);  /* no early exit */
+>> @@ -457,55 +457,50 @@ bool translator_st(const DisasContextBase *db, 
+>> void *dest,
+>>   uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, 
+>> vaddr pc)
+>>   {
+>> -    uint8_t raw;
+>> +    uint8_t val;
+>> -    if (!translator_ld(env, db, &raw, pc, sizeof(raw))) {
+>> -        raw = cpu_ldub_code(env, pc);
+>> -        record_save(db, pc, &raw, sizeof(raw));
+>> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
+>> +        MemOpIdx oi = make_memop_idx(MO_UB, db->code_mmuidx);
+>> +        val = cpu_ldb_code_mmu(env, pc, oi, 0);
+>> +        record_save(db, pc, &val, sizeof(val));
+>>       }
+>> -    return raw;
+>> +    return val;
+>>   }
+>>   uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, 
+>> vaddr pc)
+>>   {
+>> -    uint16_t raw, tgt;
+>> +    uint16_t val;
+>> -    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
+>> -        tgt = tswap16(raw);
+>> -    } else {
+>> -        tgt = cpu_lduw_code(env, pc);
+>> -        raw = tswap16(tgt);
+>> -        record_save(db, pc, &raw, sizeof(raw));
+>> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
+>> +        MemOpIdx oi = make_memop_idx(MO_UW, db->code_mmuidx);
+> 
+> Could we pass MO_TE rather than calling tswap()?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Answer to that is in the next patch ;)
 
+> 
+>> +        val = cpu_ldw_code_mmu(env, pc, oi, 0);
+>> +        record_save(db, pc, &val, sizeof(val));
+> 
+> So recorded bytes are in host endianness, is it still OK w.r.t.
+> translator_st() use?
+> 
+>>       }
+>> -    return tgt;
+>> +    return tswap16(val);
+>>   }
 
