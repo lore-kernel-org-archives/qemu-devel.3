@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6741C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 21:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B778DC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 21:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsphf-0006Iv-C9; Thu, 13 Mar 2025 17:02:55 -0400
+	id 1tspiC-0006q9-CC; Thu, 13 Mar 2025 17:03:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsphY-0006DE-8n
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 17:02:48 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tsphz-0006jC-Jg
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 17:03:16 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsphW-0006eK-C2
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 17:02:48 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-223fb0f619dso28316105ad.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 14:02:44 -0700 (PDT)
+ id 1tsphx-0006gV-UL
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 17:03:15 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-22349bb8605so32887135ad.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 14:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741899764; x=1742504564; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741899792; x=1742504592; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YnCv1vVdkV17XDZki66o2ESkY2b3Wvg8ybCcz+yRqAc=;
- b=AypbFqCxVaHH9AKMRDNAVsIrDIWMtzy+NSfWuxZ6jpue1S25+CXxZgiuEVsIBBW/T6
- AgHfIB8+E6AHhzazHqFj06qu7Qh+oeAsVo2TyUTAYjcOq9BvLFYNfnoluDzhTIleQ6KP
- EPMSx9ZimeUQnrc4AuhjtZPPjVScW+7a2fnSH0QSO3DHNqpzZcZdj6klSZ1a0ziFCFeN
- xQr9VXy8EtHHJGFaPbfPqa2sMPDzM8a73Nq4st3zeBC3/LZpxbQ/ioqpv/WVb2eH4tHn
- IXNrwIObCoNX0/z7F8jqP/TfFR0qY0eNKeiI1ImlgHMLvZSnvxMTE8GM8h89meEL3xPa
- 5Jxw==
+ bh=S2tvZrQSwacLQFNvYdfNdQpwqsAN8yEE8D+ovFgubh0=;
+ b=HI+Uzb0huOwA/F/NLwfPHrctuz3WAFIpQCec0eaPrspe8L2RtiPA+Wu6cE4MIC/KGk
+ eeOTAtVixxFk8HKufNmFPwD29Ysx1ETJOoamOF9HpWpTxc9y5SewupJwEqC/X0M2DhAL
+ tBQEVM8RfBZbAYDuUsCZeYrQ8bylI5+/9FuCEKa2uVwTWcRwEXzlBrHTMdQGEpn51HY5
+ 24gfS6TngcRaVTShp+aPre+0Y9pEqnwMKJGj4GZAkIlnM/S89v8kZoxdnUYETrUV5mqE
+ B4D6H63Gd6QDjQQPSNfSEI4y0MdsLTP1k/y6yDSw9IY9D7vqOcyCVH7qqf0cyFlKtqI+
+ vmFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741899764; x=1742504564;
+ d=1e100.net; s=20230601; t=1741899792; x=1742504592;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YnCv1vVdkV17XDZki66o2ESkY2b3Wvg8ybCcz+yRqAc=;
- b=aTxjo06fhoM04gJhobn9sGueFZlGUGbCblmS8j2GLw5XE05sxeySH/h/kxGFXtIN+F
- cCLWoDj2rvwf9buqpAboNGqweaf/1f8TquWzFC1h3spqaU4nW8SINy1GcXdVe8mOLc83
- PiZnf3ML8SsTEKdiyC4q2Qk0PcSFqF0IRguR7TGJzQM2tTQ6lfOHHLCQHzbrl5LRJJjQ
- 4CKn7qCmIkMTs1eeMBOyGW3/9Ko1kYcxq2BI3uxoTo+2CNNFH7mcduUaS6b6ebB8AKkC
- VlbIvRzSa83z42oLM3ybHOg6DCbM5bKrAay4E7iibw0oZHZRpw/gKz7Xx7Xka9caSPH8
- 1b9Q==
+ bh=S2tvZrQSwacLQFNvYdfNdQpwqsAN8yEE8D+ovFgubh0=;
+ b=wTpCrglEkSPMZH1NqhfXyy9nnzyDnocTqvttHxGvJc9rJ2tiOIXznZHgM591HONkUs
+ 3EsSvZYpJWsPHEt+izV8syL4b2AX6Z+LQ2Kr3WzC1MDG6bfqVy5dcBXHYDxTtclgr6Fb
+ TLJ7GCP2mRIfFbab5j2WaSpHIzu2zFr5Lu8KkGv/dLJp0XME/ULdv9pBnGLM1nRB4bBj
+ o4osth71383tc0ioFBYn3n5URS9izmMvL21LYYX0br2tGxxqzSRaklb+acwNd4v9w/Pr
+ fqpz6EJro/mQ77cAWxwOWfgEhAF5Lv/Wk3FuFrBD6SGrKEipBPNR6igrDh/nSsau8qXc
+ QIfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWY2nAr7NS+/HyDFgLZj69Pqm0taRsqI0n1NRUXvuoj2m0McpBDDLx1AQgbSsnem1uGu1a3lYSdZtNP@nongnu.org
-X-Gm-Message-State: AOJu0YwwnnZB3bmNwyCnWvUlohcZIqLhaGKFopwHtS7PoD/0lLRM9TXj
- uZxDlIgKPcZUF5N4kHHpujlj6FntEJLN47wbcwgUa+7KkLA/8XYkIh+lTgtuYjw=
-X-Gm-Gg: ASbGnctN24h+EApCTieC3VOsf6i48WTb1BKLjyn1ufx4O6KuZCtBjIh+LDrfS1QKt+D
- CfV2dOeTq0T6QkuqnXSunyGaPnl1garNc3vN7EIxaJXKpF/pMHvSlrEsOl/unDIs3PTak+jkx3n
- jinjB6GYEAoipOgKpi96ds88dPIgMR/EGWzDJ2O8H6gR4FyipCDa2t/AScEGPVuRRWQu56Xb5eV
- 36OhkD+8/DztViptoeyxo7Kda1WFce5w/ySaw6mnQWUsh29qwG6IvXv5/bZ64AUhbGAHPnnfMAy
- 87mYNbZ+NjiuitoC4URAgxTjfc1Gbwr+217iOzU8amd0wZXPrJZroaOOpw==
-X-Google-Smtp-Source: AGHT+IEeCC6hSF8wx1h/bblmMJN/xv98OfApkd5LtJlcW+gxBwvKarAXCZ8Xhv9vu6wAz+w5xTOeQQ==
-X-Received: by 2002:a05:6a00:2314:b0:736:65c9:9187 with SMTP id
- d2e1a72fcca58-737201550demr649765b3a.9.1741899763858; 
- Thu, 13 Mar 2025 14:02:43 -0700 (PDT)
+ AJvYcCX46s77zKg6Rm0BKHyshNY6lBIi8lNUXHpV7XqrguZIhOwpvwDimJL9fAxhP0+iZxt1XOaJc7jKHpgj@nongnu.org
+X-Gm-Message-State: AOJu0YxkQCEVG4mYKuzJmK50cSqIbQWpb8H7uA9+QEwQ4fP/6oGzg7cu
+ SBK/6tNOwNdmaJSz5NiReXBLL/rfT20TCBVsyNv9Ircl+lZxutyrAMz2aG7jZwc=
+X-Gm-Gg: ASbGnctSTCAhCf7qZ5ruh+J96CYyJ1J7N31YXADE1zSHkevp/uEY1KcGvu0S7OTKfkB
+ P7jPGRGJUdF2nyM6gGAIPtzx7uKHaxjWdSxgaqNhlWgTfGsz7cikGWzGznJWZ9Yu8P8NtnN3HZi
+ mInnKUUD1CU8dcsRn8sivmQH7RKvq02JjcSboTfhGA7aNKmwgR6bxwEoqqKheuQ/mDBNmZpq/Zd
+ DjfxZ7bNkd337NbaJIx9rF0gWx+l5rdHTrf4JMN+97aEWb3mb23SFKyFy8m3ixb5W+iRwgb4A27
+ Zh3UISpX4oOufokxSngW6H73vd3mymmNEJy6SPKtM2NDDXMDnEA4VnIXCA==
+X-Google-Smtp-Source: AGHT+IEpduT7JrDYbHKZEM9L7kzPG5yE0RVBmCb0DMjfXWLBXcbnKyJris8UJGM+rkVBOWnGgcNQ2w==
+X-Received: by 2002:a05:6a20:7f8f:b0:1f5:591b:4f7a with SMTP id
+ adf61e73a8af0-1f5c13116e0mr183215637.38.1741899792374; 
+ Thu, 13 Mar 2025 14:03:12 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711695b4bsm1847501b3a.149.2025.03.13.14.02.43
+ 41be03b00d2f7-af56e9ca49fsm1482595a12.10.2025.03.13.14.03.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 14:02:43 -0700 (PDT)
-Message-ID: <c87d3709-a547-4679-8743-cb09a39f41fd@linaro.org>
-Date: Thu, 13 Mar 2025 14:02:42 -0700
+ Thu, 13 Mar 2025 14:03:11 -0700 (PDT)
+Message-ID: <4b308ceb-14c3-4cd8-832b-733a94d4090d@linaro.org>
+Date: Thu, 13 Mar 2025 14:03:11 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 34/37] include/system: Remove ifndef CONFIG_USER_ONLY
+Subject: Re: [PATCH 35/37] include/qemu: Remove ifndef CONFIG_USER_ONLY from
+ accel.h
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@linaro.org
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-35-richard.henderson@linaro.org>
+ <20250313034524.3069690-36-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250313034524.3069690-35-richard.henderson@linaro.org>
+In-Reply-To: <20250313034524.3069690-36-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,49 +105,50 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/12/25 20:45, Richard Henderson wrote:
-> This is include/system, so CONFIG_USER_ONLY will never be true.
+> While setup_post and has_memory will not be used for
+> CONFIG_USER_ONLY, let the struct have constant layout.
 > 
-
-Some build configurations have this symbol missing.
-https://github.com/pbo-linaro/qemu-ci/actions/runs/13826820446
-
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/system/cpu-timers.h | 2 +-
->   include/system/qtest.h      | 2 --
->   2 files changed, 1 insertion(+), 3 deletions(-)
+>   include/qemu/accel.h | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
 > 
-> diff --git a/include/system/cpu-timers.h b/include/system/cpu-timers.h
-> index 64ae54f6d6..f10cb5e7d4 100644
-> --- a/include/system/cpu-timers.h
-> +++ b/include/system/cpu-timers.h
-> @@ -30,7 +30,7 @@ typedef enum {
->       ICOUNT_ADAPTATIVE,
->   } ICountMode;
+> diff --git a/include/qemu/accel.h b/include/qemu/accel.h
+> index 972a849a2b..fbd3d897fe 100644
+> --- a/include/qemu/accel.h
+> +++ b/include/qemu/accel.h
+> @@ -38,13 +38,13 @@ typedef struct AccelClass {
 >   
-> -#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-> +#ifdef CONFIG_TCG
->   extern ICountMode use_icount;
->   #define icount_enabled() (use_icount)
->   #else
-> diff --git a/include/system/qtest.h b/include/system/qtest.h
-> index 6ddddc501b..84b1f8c6ee 100644
-> --- a/include/system/qtest.h
-> +++ b/include/system/qtest.h
-> @@ -23,7 +23,6 @@ static inline bool qtest_enabled(void)
->       return qtest_allowed;
->   }
+>       const char *name;
+>       int (*init_machine)(MachineState *ms);
+> -#ifndef CONFIG_USER_ONLY
+> +    bool (*cpu_common_realize)(CPUState *cpu, Error **errp);
+> +    void (*cpu_common_unrealize)(CPUState *cpu);
+> +
+> +    /* system related hooks */
+>       void (*setup_post)(MachineState *ms, AccelState *accel);
+>       bool (*has_memory)(MachineState *ms, AddressSpace *as,
+>                          hwaddr start_addr, hwaddr size);
+> -#endif
+> -    bool (*cpu_common_realize)(CPUState *cpu, Error **errp);
+> -    void (*cpu_common_unrealize)(CPUState *cpu);
+>   
+>       /* gdbstub related hooks */
+>       int (*gdbstub_supported_sstep_flags)(void);
+> @@ -78,12 +78,10 @@ const char *current_accel_name(void);
+>   
+>   void accel_init_interfaces(AccelClass *ac);
 >   
 > -#ifndef CONFIG_USER_ONLY
->   void G_GNUC_PRINTF(2, 3) qtest_sendf(CharBackend *chr, const char *fmt, ...);
->   void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words));
->   bool qtest_driver(void);
-> @@ -33,6 +32,5 @@ void qtest_server_init(const char *qtest_chrdev, const char *qtest_log, Error **
->   void qtest_server_set_send_handler(void (*send)(void *, const char *),
->                                    void *opaque);
->   void qtest_server_inproc_recv(void *opaque, const char *buf);
-> -#endif
+>   int accel_init_machine(AccelState *accel, MachineState *ms);
 >   
->   #endif
+>   /* Called just before os_setup_post (ie just before drop OS privs) */
+>   void accel_setup_post(MachineState *ms);
+> -#endif /* !CONFIG_USER_ONLY */
+>   
+>   /**
+>    * accel_cpu_instance_init:
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
