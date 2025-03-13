@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66099C28B2E
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 08:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC0DC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 08:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsdW8-0004Cp-CU; Thu, 13 Mar 2025 04:02:12 -0400
+	id 1tsdd0-0001Wo-A8; Thu, 13 Mar 2025 04:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsdW1-00048k-HO
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 04:02:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tsdcw-0001W7-VN; Thu, 13 Mar 2025 04:09:15 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsdVz-0007ir-N2
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 04:02:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741852922;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GK09BF3/euIWU9pkP2gpzT9/ok5OVwK5KYCEivXHKjk=;
- b=b6NwcNORU1cRz9hPN/Fk+09ixeGLPeWUI+ef25GDD6lmOuixIQCxO1Qc9581FMNW5X1JIt
- W3XDFz4konKG6cN7fi4z160VdiLmZfWAUNqNL08USQWl/PwUSSQXyNMH2DATKWhT55pIcv
- Cii0Gv2vkZDiV4MfKtx2xnCFNNy8Dzo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-G5W9hqCJM6SkQwvxZTzr7A-1; Thu,
- 13 Mar 2025 04:01:56 -0400
-X-MC-Unique: G5W9hqCJM6SkQwvxZTzr7A-1
-X-Mimecast-MFC-AGG-ID: G5W9hqCJM6SkQwvxZTzr7A_1741852916
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD35B19560B8; Thu, 13 Mar 2025 08:01:55 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.26])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F2DB61955F2D; Thu, 13 Mar 2025 08:01:53 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 6/8] tests/functional/asset: Verify downloaded size
-Date: Thu, 13 Mar 2025 09:01:30 +0100
-Message-ID: <20250313080132.1467625-7-thuth@redhat.com>
-In-Reply-To: <20250313080132.1467625-1-thuth@redhat.com>
-References: <20250313080132.1467625-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tsdct-0008Sl-JG; Thu, 13 Mar 2025 04:09:14 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZD0QT5qZrz6J6FS;
+ Thu, 13 Mar 2025 16:04:33 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1DA791403A8;
+ Thu, 13 Mar 2025 16:09:05 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 13 Mar 2025 09:09:04 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Thu, 13 Mar 2025 09:09:04 +0100
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
+ <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
+ Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>
+Subject: RE: [RFC PATCH v2 07/20] hw/arm/smmu-common: Introduce callbacks for
+ PCIIOMMUOps
+Thread-Topic: [RFC PATCH v2 07/20] hw/arm/smmu-common: Introduce callbacks for
+ PCIIOMMUOps
+Thread-Index: AQHbkqnXk2A5Q1HeeUCFKLsnwwQVo7NvoCEAgAEVsnA=
+Date: Thu, 13 Mar 2025 08:09:04 +0000
+Message-ID: <2606bc1d06f24495a8f382b3d1af3fc6@huawei.com>
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-8-shameerali.kolothum.thodi@huawei.com>
+ <fe047856-b564-4776-8651-daa65c02133b@redhat.com>
+In-Reply-To: <fe047856-b564-4776-8651-daa65c02133b@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,50 +83,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
-
-If the server provides a Content-Length header, use that to verify the
-size of the downloaded file. This catches cases where the connection
-terminates early, and gives the opportunity to retry. Without this, the
-checksum will likely mismatch and fail without retry.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20250312130002.945508-3-npiggin@gmail.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/qemu_test/asset.py | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 27dd839e705..6bbfb9e1cad 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -121,6 +121,20 @@ def fetch(self):
-                 with tmp_cache_file.open("xb") as dst:
-                     with urllib.request.urlopen(self.url) as resp:
-                         copyfileobj(resp, dst)
-+                        length_hdr = resp.getheader("Content-Length")
-+
-+                # Verify downloaded file size against length metadata, if
-+                # available.
-+                if length_hdr is not None:
-+                    length = int(length_hdr)
-+                    fsize = tmp_cache_file.stat().st_size
-+                    if fsize != length:
-+                        self.log.error("Unable to download %s: "
-+                                       "connection closed before "
-+                                       "transfer complete (%d/%d)",
-+                                       self.url, fsize, length)
-+                        tmp_cache_file.unlink()
-+                        continue
-                 break
-             except FileExistsError:
-                 self.log.debug("%s already exists, "
--- 
-2.48.1
-
+SGkgRXJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBFcmljIEF1
+Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFdlZG5lc2RheSwgTWFyY2ggMTIs
+IDIwMjUgNDoyNCBQTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0KPiA8c2hhbWVl
+cmFsaS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPjsgcWVtdS1hcm1Abm9uZ251Lm9yZzsNCj4g
+cWVtdS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7IGpn
+Z0BudmlkaWEuY29tOyBuaWNvbGluY0BudmlkaWEuY29tOw0KPiBkZHV0aWxlQHJlZGhhdC5jb207
+IGJlcnJhbmdlQHJlZGhhdC5jb207IG5hdGhhbmNAbnZpZGlhLmNvbTsNCj4gbW9jaHNAbnZpZGlh
+LmNvbTsgc21vc3RhZmFAZ29vZ2xlLmNvbTsgTGludXhhcm0NCj4gPGxpbnV4YXJtQGh1YXdlaS5j
+b20+OyBXYW5nemhvdSAoQikgPHdhbmd6aG91MUBoaXNpbGljb24uY29tPjsNCj4gamlhbmdrdW5r
+dW4gPGppYW5na3Vua3VuQGh1YXdlaS5jb20+OyBKb25hdGhhbiBDYW1lcm9uDQo+IDxqb25hdGhh
+bi5jYW1lcm9uQGh1YXdlaS5jb20+OyB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZw0KPiBTdWJqZWN0
+OiBSZTogW1JGQyBQQVRDSCB2MiAwNy8yMF0gaHcvYXJtL3NtbXUtY29tbW9uOiBJbnRyb2R1Y2UN
+Cj4gY2FsbGJhY2tzIGZvciBQQ0lJT01NVU9wcw0KPiANCj4gDQo+IA0KPiANCj4gT24gMy8xMS8y
+NSAzOjEwIFBNLCBTaGFtZWVyIEtvbG90aHVtIHdyb3RlOg0KPiA+IFN1YnNlcXVlbnRseSBzbW11
+djMtYWNjZWwgd2lsbCBwcm92aWRlwqB0aGVzZSBjYWxsYmFja3MNCj4gPg0KPiA+IFNpZ25lZC1v
+ZmYtYnk6IFNoYW1lZXIgS29sb3RodW0NCj4gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVh
+d2VpLmNvbT4NCj4gPiAtLS0NCj4gPiAgaHcvYXJtL3NtbXUtY29tbW9uLmMgICAgICAgICB8IDI3
+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPiA+ICBpbmNsdWRlL2h3L2FybS9zbW11LWNv
+bW1vbi5oIHwgIDUgKysrKysNCj4gPiAgMiBmaWxlcyBjaGFuZ2VkLCAzMiBpbnNlcnRpb25zKCsp
+DQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL3NtbXUtY29tbW9uLmMgYi9ody9hcm0vc21t
+dS1jb21tb24uYyBpbmRleA0KPiA+IDgzYzA2OTNmNWEuLjlmZDQ1NWJhYTAgMTAwNjQ0DQo+ID4g
+LS0tIGEvaHcvYXJtL3NtbXUtY29tbW9uLmMNCj4gPiArKysgYi9ody9hcm0vc21tdS1jb21tb24u
+Yw0KPiA+IEBAIC04NjUsNiArODY1LDEwIEBAIHN0YXRpYyBBZGRyZXNzU3BhY2UgKnNtbXVfZmlu
+ZF9hZGRfYXMoUENJQnVzDQo+ICpidXMsIHZvaWQgKm9wYXF1ZSwgaW50IGRldmZuKQ0KPiA+ICAg
+ICAgU01NVVN0YXRlICpzID0gb3BhcXVlOw0KPiA+ICAgICAgU01NVVBjaUJ1cyAqc2J1cyA9IHNt
+bXVfZ2V0X3NidXMocywgYnVzKTsNCj4gPg0KPiA+ICsgICAgaWYgKHMtPmFjY2VsICYmIHMtPmdl
+dF9hZGRyZXNzX3NwYWNlKSB7DQo+ID4gKyAgICAgICAgcmV0dXJuIHMtPmdldF9hZGRyZXNzX3Nw
+YWNlKGJ1cywgb3BhcXVlLCBkZXZmbik7DQo+ID4gKyAgICB9DQo+ID4gKw0KPiB3aHkgZG8gd2Ug
+cmVxdWlyZSB0aGF0IG5ldyBjYWxsIHNpdGU/IFRoaXMgbmVlZHMgdG8gYmUgZG9jdW1lbnRlZCBp
+biB0aGUNCj4gY29tbWl0IG1zZyBlc3AuIGJlY2F1c2Ugd2UgZG9uJ3Qga25vdyB3aGF0IHRoaXMg
+Y2Igd2lsbCBkby4NCg0KQ3VycmVudGx5LCB0aGlzIGlzIHdoZXJlIHRoZSBmaXJzdCB0aW1lIFNN
+TVVEZXZpY2Ugc2RldiBpcyBhbGxvY2F0ZWQuIEFuZCBmb3Igc21tdXYzLWFjY2VsDQpjYXNlcyB3
+ZSBhcmUgaW50cm9kdWNpbmcgYSBuZXcgU01NVXYzQWNjZWxEZXZpY2UgYWNjZWxfZGV2IGZvciBo
+b2xkaW5nIGFkZGl0aW9uYWwNCmFjY2VsIHNwZWNpZmljIGluZm9ybWF0aW9uLiBJbiBvcmRlciB0
+byBkbyB0aGF0IHRoZSBhYm92ZSBjYiBpcyB1c2VkLiBTYW1lIGZvciBvdGhlciBjYWxsYmFja3MN
+CmFzIHdlbGwuDQoNCkFub3RoZXIgd2F5IG9mIGF2b2lkaW5nIHRoZSBjYWxsYmFja3Mgd291bGQg
+YmUgdG8gIG1vdmUgdGhlIHBjaV9zZXR1cF9pb21tdShidXMsIG9wcykgDQpjYWxsIGZyb20gdGhl
+IHNtbXUtY29tbW9uLmMgdG8gc21tdXYzL3NtbXV2My1hY2NlbCBhbmQgaGFuZGxlIGl0IGRpcmVj
+dGx5IHRoZXJlLg0KDQpPciBpcyB0aGVyZSBhIGJldHRlciBpZGVhPw0KDQo+ID4gICAgICBzZGV2
+ID0gc2J1cy0+cGJkZXZbZGV2Zm5dOw0KPiA+ICAgICAgaWYgKCFzZGV2KSB7DQo+ID4gICAgICAg
+ICAgc2RldiA9IHNidXMtPnBiZGV2W2RldmZuXSA9IGdfbmV3MChTTU1VRGV2aWNlLCAxKTsgQEAg
+LTg3NCw4DQo+ID4gKzg3OCwzMSBAQCBzdGF0aWMgQWRkcmVzc1NwYWNlICpzbW11X2ZpbmRfYWRk
+X2FzKFBDSUJ1cyAqYnVzLCB2b2lkDQo+ICpvcGFxdWUsIGludCBkZXZmbikNCj4gPiAgICAgIHJl
+dHVybiAmc2Rldi0+YXM7DQo+ID4gIH0NCj4gPg0KPiA+ICtzdGF0aWMgYm9vbCBzbW11X2Rldl9z
+ZXRfaW9tbXVfZGV2aWNlKFBDSUJ1cyAqYnVzLCB2b2lkICpvcGFxdWUsDQo+IGludCBkZXZmbiwN
+Cj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBIb3N0SU9NTVVEZXZp
+Y2UgKmhpb2QsIEVycm9yDQo+ID4gKyoqZXJycCkgew0KPiA+ICsgICAgU01NVVN0YXRlICpzID0g
+b3BhcXVlOw0KPiA+ICsNCj4gPiArICAgIGlmIChzLT5hY2NlbCAmJiBzLT5zZXRfaW9tbXVfZGV2
+aWNlKSB7DQo+ID4gKyAgICAgICAgcmV0dXJuIHMtPnNldF9pb21tdV9kZXZpY2UoYnVzLCBvcGFx
+dWUsIGRldmZuLCBoaW9kLCBlcnJwKTsNCj4gPiArICAgIH0NCj4gPiArDQo+ID4gKyAgICByZXR1
+cm4gZmFsc2U7DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIHNtbXVfZGV2X3Vuc2V0
+X2lvbW11X2RldmljZShQQ0lCdXMgKmJ1cywgdm9pZCAqb3BhcXVlLA0KPiA+ICtpbnQgZGV2Zm4p
+IHsNCj4gPiArICAgIFNNTVVTdGF0ZSAqcyA9IG9wYXF1ZTsNCj4gPiArDQo+ID4gKyAgICBpZiAo
+cy0+YWNjZWwgJiYgcy0+dW5zZXRfaW9tbXVfZGV2aWNlKSB7DQo+ID4gKyAgICAgICAgcy0+dW5z
+ZXRfaW9tbXVfZGV2aWNlKGJ1cywgb3BhcXVlLCBkZXZmbik7DQo+ID4gKyAgICB9DQo+ID4gK30N
+Cj4gPiArDQo+ID4gIHN0YXRpYyBjb25zdCBQQ0lJT01NVU9wcyBzbW11X29wcyA9IHsNCj4gPiAg
+ICAgIC5nZXRfYWRkcmVzc19zcGFjZSA9IHNtbXVfZmluZF9hZGRfYXMsDQo+ID4gKyAgICAuc2V0
+X2lvbW11X2RldmljZSA9IHNtbXVfZGV2X3NldF9pb21tdV9kZXZpY2UsDQo+ID4gKyAgICAudW5z
+ZXRfaW9tbXVfZGV2aWNlID0gc21tdV9kZXZfdW5zZXRfaW9tbXVfZGV2aWNlLA0KPiA+ICB9Ow0K
+PiA+DQo+ID4gIFNNTVVEZXZpY2UgKnNtbXVfZmluZF9zZGV2KFNNTVVTdGF0ZSAqcywgdWludDMy
+X3Qgc2lkKSBkaWZmIC0tZ2l0DQo+ID4gYS9pbmNsdWRlL2h3L2FybS9zbW11LWNvbW1vbi5oIGIv
+aW5jbHVkZS9ody9hcm0vc21tdS1jb21tb24uaA0KPiBpbmRleA0KPiA+IDgwZmYyZWY2YWEuLjdi
+MDU2NDAxNjcgMTAwNjQ0DQo+ID4gLS0tIGEvaW5jbHVkZS9ody9hcm0vc21tdS1jb21tb24uaA0K
+PiA+ICsrKyBiL2luY2x1ZGUvaHcvYXJtL3NtbXUtY29tbW9uLmgNCj4gPiBAQCAtMTYwLDYgKzE2
+MCwxMSBAQCBzdHJ1Y3QgU01NVVN0YXRlIHsNCj4gPg0KPiA+ICAgICAgLyogRm9yIHNtbXV2My1h
+Y2NlbCAqLw0KPiA+ICAgICAgYm9vbCBhY2NlbDsNCj4gPiArDQo+ID4gKyAgICBBZGRyZXNzU3Bh
+Y2UgKiAoKmdldF9hZGRyZXNzX3NwYWNlKShQQ0lCdXMgKmJ1cywgdm9pZCAqb3BhcXVlLCBpbnQN
+Cj4gZGV2Zm4pOw0KPiA+ICsgICAgYm9vbCAoKnNldF9pb21tdV9kZXZpY2UpKFBDSUJ1cyAqYnVz
+LCB2b2lkICpvcGFxdWUsIGludCBkZXZmbiwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBIb3N0SU9NTVVEZXZpY2UgKmRldiwgRXJyb3IgKiplcnJwKTsNCj4gPiArICAgIHZvaWQg
+KCp1bnNldF9pb21tdV9kZXZpY2UpKFBDSUJ1cyAqYnVzLCB2b2lkICpvcGFxdWUsIGludCBkZXZm
+bik7DQo+IEkgdGhpbmsgdGhpcyBzaG91bGQgYmUgZXhwb3NlZCBieSBhIGNsYXNzIGFuZCBvbmx5
+IGltcGxlbWVudGVkIGluIHRoZQ0KPiBzbW11djMgYWNjZWwgZGV2aWNlLiBBZGRpbmcgdGhvc2Ug
+Y2JzIGRpcmVjdGx5IGluIHRoZSBTdGF0ZSBsb29rcyBub3QgdGhlDQo+IHN0ZCB3YXkuDQoNCk9r
+LiBZb3UgbWVhbiB3ZSBjYW4gZGlyZWN0bHkgcGxhY2UgIFBDSUlPTU1VT3BzICpvcHMgaGVyZSB0
+aGVuPyANCg0KVGhhbmtzLA0KU2hhbWVlcg0K
 
