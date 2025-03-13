@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB15C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 20:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77EE0C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 20:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tspVy-0003Cz-1d; Thu, 13 Mar 2025 16:50:51 -0400
+	id 1tspX8-0004Vo-U7; Thu, 13 Mar 2025 16:52:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tspVs-0003Ag-2C
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:50:44 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tspX0-0004TU-Jd
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:51:56 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tspVp-0004vN-NA
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:50:43 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-223fb0f619dso28198865ad.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 13:50:40 -0700 (PDT)
+ id 1tspWx-00052K-LS
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 16:51:53 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2241053582dso36406605ad.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 13:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741899039; x=1742503839; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741899110; x=1742503910; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wI/ajVWjgg+sFGV4WNDo+Qyks0mwKmGahrnizs5Z3AU=;
- b=IStFxbVwhoXZW5c1KlOYyRZ7Lohf/5N19yVojtJ4op3UAGWyHuASDdwS/l88WQ36sQ
- qpceGM/iuohQ6bm/x13XzLenX3r5l2XKeV8L0yCpnMiaqx4VDU8lc/1HOsryYgNmeLIG
- lgwLHyRiA6B39qVYDloVU4y+Hr4PrjoTT1nPDsVN0DKNrbrpBcS4AYJ84oCQOxrajRpm
- hN/cqbaaWqED6SjKJXUohNkodxXl1QlSYGw68bgDNBO51jorofxZgHGjfTpm1ijHxxtM
- 6IbCAnonD23snNikHZYCW0RAsET7j5hgjZko8vhEcR3tiSw61qVxyyMoCQRRYdjHr5uP
- j0cg==
+ bh=a5CkXMQGPRbNszlfPUAbD5Rg1fAnhfawNyWHW1qdBjU=;
+ b=s1T9q3uUu9qvjc6KAKQw7H645l4+laoReU/ml8neWcLNjG0DHHVOL1UypKZFiODtC7
+ +gXSEQYcmMot/zSugKI5y0L+KmpLztx5S/pP+E7vm8JC79mMRzlWajZlJJg+rqnsW0fB
+ c72aMJBL1vir6GngLDWvBHNNsPuv4/X1Xumu7o6tB8QqY3xdvN5k3rW2GhyyfFYQIZOg
+ giap8BwpPHD64Sipg7B7ofLo4RisrEQiF6Kb4mrXKhiTjMKXjf5soTlBGxdDCwN3pOfw
+ ZToOjxHixKKU2ZOyhAmQRgC6R9aqQY56qgI3OemM+5g2HtlSmK8dRm6chJwJOMCdVxyl
+ JCjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741899039; x=1742503839;
+ d=1e100.net; s=20230601; t=1741899110; x=1742503910;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wI/ajVWjgg+sFGV4WNDo+Qyks0mwKmGahrnizs5Z3AU=;
- b=h0hDqgO6NktDmx6xeF4/Rjz6qu+6bG7qzg4h7NyOhZVEtZKONKZkrxAzEmWLIzA+2S
- c43r3XGSmpyNISrSrlbsQgSsfZE8qCge2SedaLL8J1Y4tfdkoZsysUDSr7kHObsCoy4s
- A7O4WpEYZcnmkPyeUKQsyjAEScp5+MD+V5ujiRtt2W2d0x6DNsnbgvalwtHil0WfnT9x
- +53u1liH6RNKwFzG/v/C0z3A7C8C4QKqNqVY0Wa6yFYoonDtWKchpFQPJiTicXhaVg/B
- QlrcJUVbRK1SmvUKJXqAYAAEHBPbiDKzaoXXJqMMntW51vumcbRgy5ch1Ccq4Tg1OGZY
- 9gdg==
+ bh=a5CkXMQGPRbNszlfPUAbD5Rg1fAnhfawNyWHW1qdBjU=;
+ b=n4lw4wSLTxhgVa+wbwbOcxtfP29tXcmcgD0BK/ah/iENnqlfAzCKHRoSRTyM7vgq2p
+ 0g+SJB2ZjBngQ2ogiPpZrmEAfxquF4uJxfBqFcFTpIEJ/ilB735jL0RCoU3OotQxfOsa
+ QJANcVsHxGhliOzMv+FNPN0DIe2ftLlyBv+vbYJIAhemHcPSFFAC7QmSW1zWekhioYLO
+ 4pse9J2izUE6I+la959RmxV/bTziymgwuh+Mvoqv4hUdXyPDADI4p+fNwtqa0XsGv6I1
+ G/CJF+y9RHeFskaX3wE+pueXQgStndCGHHDd3poVlC5QkF0cZ2Plzs4hEII+0m6/fKKo
+ 9Gkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU41HXqiBcrQlOFkdiqTkSKvQ/7bn1+gUuWlhkT2oiXwkICLqrYjq6Khjp+NTEf6Pc0pviJH+4Vstka@nongnu.org
-X-Gm-Message-State: AOJu0YwT+oRBcZ5jssW8xA3nIt9MD2r4SRAu6bLK+wmdeokvROGQZR7/
- hD1imusYk1TBegkt1TsUZ295r8Dsu+rDoB6efpy6LFYcqZa+FVMoz0aJEpnJCuo=
-X-Gm-Gg: ASbGncu1aB7nXcyBZ1TD2V6PSQ6hLb1Z/TRjsCkP4jhYQXM9t/L4hPl/4o2w0fY4Qt7
- 7hTiU8nQf72VQhiaMPT5wWqvtte+mEm/UabPK/ZNDc0uZmi2PRiVjBArE6SdbfpyiX2Qs+h7NKU
- b6KUYbpJRvOXuanfAMISnwxTwla7C3FL6A5CD0frogdlyvleDy9Cn0Wqbf821SMG1w4AM8vwio5
- xnj21wL1j9sKNPzZZb6+JPBSQhKIKUABd1wzBZ+QqNUXZGidnLYrfZMwjQu6TygQrqOQUz0q8Og
- WiereZR4eKkURO/CQBHqI9+7x7OQBKvhS6iq4D5tn/9GYlUN+onGwlJGYA==
-X-Google-Smtp-Source: AGHT+IHl9kT5r+SEMAADtmRr/ip53S2ElRSiTb7/7x9CgBkce/GdVmr4MNqYl5yRWyDs5xUqIu62Uw==
-X-Received: by 2002:a05:6a00:853:b0:737:9b:582a with SMTP id
- d2e1a72fcca58-7372026d830mr751649b3a.24.1741899038941; 
- Thu, 13 Mar 2025 13:50:38 -0700 (PDT)
+ AJvYcCXe44FRpsG0KXM9rdKGxaePn1RIwHEn3S6Dm2PPfOW+9DM/CkClROLadWhqr4qITfoUcwoXixveaGfe@nongnu.org
+X-Gm-Message-State: AOJu0YzoX0tPFwtt5vJGZpxSaOQ5cE8XqbEn4VHLCu2DyRQGTqKoKnh8
+ PYaZkKJTwVpDNYaey5h7/YU68phu1xQ6rSMsqTwKYGR/KcbnPaSCHBCeoBoSkCCjah+BmuK9MEe
+ hwOo=
+X-Gm-Gg: ASbGncsshI2WPTJcqlDoDdYetTNcUjAziavc16MQ+XxYM5tpcW+XlaT1MvMEC/3mK2J
+ bkVSnAYR4fQeBEm2CJKHmzthZHayYL2NQ4OWpsafNcIELYKieCwaNg72Xd2GNRpCq66btx6uOwz
+ iKjr4SfVtID2fWbuAjEzI0WM9lTYJwnWSxxxs9HZoir2jsAPE+xE8JYsIUqCIeWMwLzqVs8jAOR
+ Yd3PcZW0SNhjzFZy4WBDJH8MXtqZ/6rJ4/KJ0HEImP+VgnMnaQqKiu5rMZ8WdGbHY9zNAPWCoCF
+ JgQ9c9zxuTIs5mH3HLvWNPtN6nGLQA95O4j0ecZ+zza4bGgkNaKIYkioIw==
+X-Google-Smtp-Source: AGHT+IH8WgNxlD3fIleMtWxbZJQH6A+zPgndDuiJgAHbWgWeHW5kYlH6lQBmpbunrabbrcxWji8ywQ==
+X-Received: by 2002:a05:6a00:a21:b0:737:e73:f64b with SMTP id
+ d2e1a72fcca58-7371f0b2acbmr1126480b3a.1.1741899109933; 
+ Thu, 13 Mar 2025 13:51:49 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711529374sm1801486b3a.20.2025.03.13.13.50.38
+ d2e1a72fcca58-7371167daefsm1786218b3a.113.2025.03.13.13.51.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 13:50:38 -0700 (PDT)
-Message-ID: <f0720036-e795-44c2-89af-443bdc8ba4e6@linaro.org>
-Date: Thu, 13 Mar 2025 13:50:37 -0700
+ Thu, 13 Mar 2025 13:51:49 -0700 (PDT)
+Message-ID: <184ce4dc-22da-43a3-85ce-b8cffe271476@linaro.org>
+Date: Thu, 13 Mar 2025 13:51:48 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 37/37] meson: Only allow CONFIG_USER_ONLY from certain
- source sets
+Subject: Re: [PATCH 20/37] target/mips: Protect semihosting call with
+ CONFIG_SEMIHOSTING
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@linaro.org
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-38-richard.henderson@linaro.org>
+ <20250313034524.3069690-21-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250313034524.3069690-38-richard.henderson@linaro.org>
+In-Reply-To: <20250313034524.3069690-21-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,122 +106,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/12/25 20:45, Richard Henderson wrote:
-> Poison CONFIG_USER_ONLY and CONFIG_SOFTMMU unless
-> the compilation unit is in specific_ss, libuser_ss,
-> or libsystem_ss.  This is intended to prevent files
-> being incorrectly added to common_ss.
-> 
-> Remove #ifndef CONFIG_USER_ONLY / #error / #endif blocks.
-> All they do is trigger the poison error.
+> Semihosting is not enabled for user-only.
+> Avoid the test for that case.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/poison.h                       | 5 +++++
->   include/hw/hw.h                             | 4 ----
->   include/system/confidential-guest-support.h | 4 ----
->   include/system/replay.h                     | 4 ----
->   include/system/xen.h                        | 4 ----
->   meson.build                                 | 6 ++++--
->   6 files changed, 9 insertions(+), 18 deletions(-)
+>   target/mips/cpu.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/exec/poison.h b/include/exec/poison.h
-> index 8ed04b3108..a6ffe4577f 100644
-> --- a/include/exec/poison.h
-> +++ b/include/exec/poison.h
-> @@ -67,4 +67,9 @@
->   #pragma GCC poison CONFIG_WHPX
->   #pragma GCC poison CONFIG_XEN
+> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+> index b207106dd7..1ca182c1a2 100644
+> --- a/target/mips/cpu.c
+> +++ b/target/mips/cpu.c
+> @@ -415,11 +415,12 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
+>       restore_pamask(env);
+>       cs->exception_index = EXCP_NONE;
 >   
-> +#ifndef COMPILING_SYSTEM_VS_USER
-> +#pragma GCC poison CONFIG_USER_ONLY
-> +#pragma GCC poison CONFIG_SOFTMMU
+> +#ifdef CONFIG_SEMIHOSTING
+>       if (semihosting_get_argc()) {
+>           /* UHI interface can be used to obtain argc and argv */
+>           env->active_tc.gpr[4] = -1;
+>       }
+> -
 > +#endif
-> +
->   #endif
-> diff --git a/include/hw/hw.h b/include/hw/hw.h
-> index 045c1c8b09..1b33d12b7f 100644
-> --- a/include/hw/hw.h
-> +++ b/include/hw/hw.h
-> @@ -1,10 +1,6 @@
->   #ifndef QEMU_HW_H
->   #define QEMU_HW_H
->   
-> -#ifdef CONFIG_USER_ONLY
-> -#error Cannot include hw/hw.h from user emulation
-> -#endif
-> -
->   G_NORETURN void hw_error(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
->   
->   #endif
-> diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
-> index b68c4bebbc..ea46b50c56 100644
-> --- a/include/system/confidential-guest-support.h
-> +++ b/include/system/confidential-guest-support.h
-> @@ -18,10 +18,6 @@
->   #ifndef QEMU_CONFIDENTIAL_GUEST_SUPPORT_H
->   #define QEMU_CONFIDENTIAL_GUEST_SUPPORT_H
->   
-> -#ifdef CONFIG_USER_ONLY
-> -#error Cannot include system/confidential-guest-support.h from user emulation
-> -#endif
-> -
->   #include "qom/object.h"
->   
->   #define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-support"
-> diff --git a/include/system/replay.h b/include/system/replay.h
-> index 8926d8cf4b..1c87c97fdd 100644
-> --- a/include/system/replay.h
-> +++ b/include/system/replay.h
-> @@ -11,10 +11,6 @@
->   #ifndef SYSTEM_REPLAY_H
->   #define SYSTEM_REPLAY_H
->   
-> -#ifdef CONFIG_USER_ONLY
-> -#error Cannot include this header from user emulation
-> -#endif
-> -
->   #include "exec/replay-core.h"
->   #include "qapi/qapi-types-misc.h"
->   #include "qapi/qapi-types-run-state.h"
-> diff --git a/include/system/xen.h b/include/system/xen.h
-> index 990c19a8ef..4ca384c409 100644
-> --- a/include/system/xen.h
-> +++ b/include/system/xen.h
-> @@ -10,10 +10,6 @@
->   #ifndef SYSTEM_XEN_H
->   #define SYSTEM_XEN_H
->   
-> -#ifdef CONFIG_USER_ONLY
-> -#error Cannot include system/xen.h from user emulation
-> -#endif
-> -
->   #include "exec/cpu-common.h"
->   
->   #ifdef COMPILING_PER_TARGET
-> diff --git a/meson.build b/meson.build
-> index 3869e5bfbc..c2c71b6f8a 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4043,7 +4043,8 @@ common_ss.add_all(when: 'CONFIG_USER_ONLY', if_true: user_ss)
->   libuser_ss = libuser_ss.apply({})
->   libuser = static_library('user',
->                            libuser_ss.sources() + genh,
-> -                         c_args: '-DCONFIG_USER_ONLY',
-> +                         c_args: ['-DCONFIG_USER_ONLY',
-> +                                  '-DCOMPILING_SYSTEM_VS_USER'],
->                            dependencies: libuser_ss.dependencies(),
->                            build_by_default: false)
->   libuser = declare_dependency(objects: libuser.extract_all_objects(recursive: false),
-> @@ -4053,7 +4054,8 @@ common_ss.add(when: 'CONFIG_USER_ONLY', if_true: libuser)
->   libsystem_ss = libsystem_ss.apply({})
->   libsystem = static_library('system',
->                              libsystem_ss.sources() + genh,
-> -                           c_args: '-DCONFIG_SOFTMMU',
-> +                           c_args: ['-DCONFIG_SOFTMMU',
-> +                                    '-DCOMPILING_SYSTEM_VS_USER'],
->                              dependencies: libsystem_ss.dependencies(),
->                              build_by_default: false)
->   libsystem = declare_dependency(objects: libsystem.extract_all_objects(recursive: false),
+>   #ifndef CONFIG_USER_ONLY
+>       if (kvm_enabled()) {
+>           kvm_mips_reset_vcpu(cpu);
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
