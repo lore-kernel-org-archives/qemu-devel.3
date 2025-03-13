@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F626C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 16:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2C3C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 16:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tslaa-0003In-3H; Thu, 13 Mar 2025 12:39:20 -0400
+	id 1tslac-0003L3-OC; Thu, 13 Mar 2025 12:39:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tslaV-0003HG-PN
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:39:16 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1tslaY-0003IB-OM
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:39:19 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tslaT-0005aQ-AS
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:39:15 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2ff6ae7667dso2578253a91.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 09:39:12 -0700 (PDT)
+ id 1tslaV-0005b9-E7
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 12:39:18 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2ff6ae7667dso2578316a91.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 09:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741883952; x=1742488752; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ffKtZZCij4vskrAA+3NvWrKzzZscOxv69bTHCnUkApM=;
- b=KHOdIaeHePwgbUznE6sWMNKnFfAHqiUL7v4Vqnvzi5Xlx2a2uHJRaAJ+7dMl2CFg6C
- kK44uHQHwmgaFUDgeBqwJuL7EjrFiVXpAvrFpV0hBfH+tjRdB7H00xfcVk8lizvYW4jG
- HQHljyYzS4MZK1oPLv3/Vk33m/iB2bV19OBfkn9IYNLauyqLCImgZquMsle+KXk9qMxu
- CfZ4Z8xKZMEy0ns61+B4BDfAP+FlVwuUnJyGk3o/OaTFpqjp+WTAKwocfPgUCacWD7G0
- KubRjcUukK/lJYLA2Ha30UPTaK3NSYX/ZsWMShhsOwp1paD7njN72WviMYd7+e8Z1aoZ
- mZ/g==
+ d=linaro.org; s=google; t=1741883954; x=1742488754; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fjQjYNlvDIsMbe7+veFF5h4s6vvln32m8yANkT1fS5Y=;
+ b=PQjxJNXFmBDk/BzcdbruwTJp5/JGngy47sFmF/Tvf5bz8Q+FivP7ZEv7uSAr6HDWwU
+ XTOIISeKBN9fyDmpRcRO9tNzgJozsksnqdtVopp2v7RhcNZCsEufLV7oc+tn/yhp9c15
+ 2+5J74dpNe/WatVW9eBUpIqp/rzcA2Tw6tFFC73v5KbMRH1af45+kYdL+C6GzeN+UhSL
+ 69PYDbpnZd3gd0fzvnlv0d2YPzHSanl0Pr6/92flziEb2oRxDy+p6R4U3mswewaRARok
+ sGmKklOLb0PanQBucQSNSxvmHoLDQ+leenR/GqCRFWGFFYz8ikM91nEylkYAKLDCbskh
+ VozQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741883952; x=1742488752;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ffKtZZCij4vskrAA+3NvWrKzzZscOxv69bTHCnUkApM=;
- b=higk+Nwdu9NFvncNPqrReQz4RDWi1PYLzq4dpQb06HE3QmIYUd5zcSd0eldrTV50um
- qy5mOxllnbxAIo2itJvHAB3MIUgI6pXhcatXGksRwqI2aoCqIoNs36yklw85I/zEEkxk
- LoCd67emjET6CGwAaEtMT+eZS8QkDfVInRT2OAudh/op861c8D+F+F9gLQxNrzIIuyVB
- Mlxb0fFMj3nhSy+clzrKm+4hMdqRQYhx0egxBqnnBZHRR2e72266EsVUPWn8Q9H2GQVb
- mYm+c4ZLLevOxPa6qjosMvtLYZ2lKhS1kfc5vOQ90Hqc3puclQDxwhOV4Go5PREFGAeP
- /7iA==
-X-Gm-Message-State: AOJu0YwD+Te7+Ne4sNFMVE7GJgOvp+troJOynK+V5eYc3CNGsY7kD3Cd
- +cxN0maOWRZw0KiL7pfRNPZp3hug9dzaQ+4pyRmQ+mq93dL3TFamSPYKV6kr0mWEJDxXI+eGHU+
- xcD4=
-X-Gm-Gg: ASbGnctrWbAMLar1+9wTYj0H18NMJ9XPBJDhtpwlXcELTs1V6nm0SAsiYDMdjAOcXsR
- Y8Q1A9zgi85CJxlJh4O7HRZ0RQ6wx2K2g2FrzZYKAtZhZWFkqDL4cJQqJDeeuiPA0MCJe2P2RH2
- ALrVG4o84E8TupBWs1KZTy7YEOSqrLHuOcPUn+eB78R0iOvA2cRp7fB3zDC8efGF+IAjSEP8spN
- AcHNa6D9zdQWxpBwJrx1GXlS2rvGHfNp2kPl+zd2/6fk0snJNKsPqgOYDzv1wHBOqccy/hxmRS/
- zCk4f3y6+alKIhJ7BzizfUqHOiq7LXq81vnRCGBs1XX/tKTpW5ejo5M=
-X-Google-Smtp-Source: AGHT+IHILZBC4XG/VXTDGPE0LXvE+Aqy8ch+S3jq5UEPqUMQPlTTQn84Hgx+UBUoAEZm2kMt8qUx5g==
-X-Received: by 2002:a17:90a:e7c1:b0:2fa:137f:5c61 with SMTP id
- 98e67ed59e1d1-3014e843678mr320923a91.12.1741883951572; 
- Thu, 13 Mar 2025 09:39:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741883954; x=1742488754;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fjQjYNlvDIsMbe7+veFF5h4s6vvln32m8yANkT1fS5Y=;
+ b=Ww7mwNADp/mBJVCAhJDGR/nxJqQB1xdR+zoFthBYcJfGZ62peD8Z5a/GVg4LGO0lpC
+ C4YUCiagosLCCMUBXu3Q7xOvRoVIJ5hGobYqvmT8p0NP9601quft7FBhVj9nBb7AoB+j
+ TGzVR/TqCpBIR8UT7hVNPCLP2oD36QInk7OqEwzMJLPg+pXFyCMyd3zryAofRJ/iW1Sh
+ GbVbeQaDCmhvwnGWsjz+ob767C0EY9IOVBVrsWHoQ30xmoQGweHzR79l+yug2UCK8biD
+ eqgpRtVWUqe/JMOZ6AbbA5q0OfAZ781fPS09CAoNY5Byc9+UDcNax25SY/BUhZK3j/jH
+ R8KA==
+X-Gm-Message-State: AOJu0YybYEsqD7mDphmO7+EJlEv5Ofkm04klzYDEzrleOdlDEMFCaT7W
+ QP1iWU76qix8wv+WKm1EZOuNbWBIiqGQDtnbpvNuxRCo/JZgnQE22T77PACJC0SHIBYeVpF2DB7
+ 1rc0=
+X-Gm-Gg: ASbGnctVQ2HMHC1D1kgmVy75om7lUmRP6mqTMWJpOKBGjRHFKl84BBOfKvUjdIC464j
+ hhpk2c7JI0fskVl+VT92FNOJbsoDmuKLvbP4/h0MoMs7bibZE33SLd3KREjJpPjKwvansYlemT0
+ OeLz0YxMpYpPSR/wAoUgfHyC8Mw/Cbl9MMQt1+Y+PWdyWjSsoLbGXKjrTS1LJ5tRDTnhpKxrTHx
+ 9Sdz8Kr+6OyBNo+8CK9chfySs/QD1c3g1UToBQBtMGCqX/H8wF6ERbusnNe5zMSRiO+9llK8iHO
+ IhQ4JH1nYukimRsz4PygEZPyDq5jmTOiScmoOjtbo8hW
+X-Google-Smtp-Source: AGHT+IGAE0wRrFnOgUSptf/ZCGVy3gy2ROtBxgIz+VJH5KWtqtjx8oj2KP2h7DP6p39QjbuO2M6/IQ==
+X-Received: by 2002:a17:90b:264c:b0:2fe:6942:3710 with SMTP id
+ 98e67ed59e1d1-3014e821305mr250112a91.3.1741883953849; 
+ Thu, 13 Mar 2025 09:39:13 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30119265938sm4020084a91.39.2025.03.13.09.39.10
+ 98e67ed59e1d1-30119265938sm4020084a91.39.2025.03.13.09.39.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Mar 2025 09:39:11 -0700 (PDT)
+ Thu, 13 Mar 2025 09:39:13 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paul Durrant <paul@xen.org>,
@@ -82,15 +83,17 @@ Cc: Paul Durrant <paul@xen.org>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 00/17] make system memory API available for common code
-Date: Thu, 13 Mar 2025 09:38:46 -0700
-Message-Id: <20250313163903.1738581-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 02/17] exec/tswap: implement {ld,
+ st}.*_p as functions instead of macros
+Date: Thu, 13 Mar 2025 09:38:48 -0700
+Message-Id: <20250313163903.1738581-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250313163903.1738581-1-pierrick.bouvier@linaro.org>
+References: <20250313163903.1738581-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,90 +116,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The main goal of this series is to be able to call any memory ld/st function
-from code that is *not* target dependent. As a positive side effect, we can
-turn related system compilation units into common code.
+Defining functions allows to use them from common code, by not depending
+on TARGET_BIG_ENDIAN.
+Remove previous macros from exec/cpu-all.h.
+By moving them out of cpu-all.h, we'll be able to break dependency on
+cpu.h for memory related functions coming in next commits.
 
-The first 5 patches remove dependency of memory API to cpu headers and remove
-dependency to target specific code. This could be a series on its own, but it's
-great to be able to turn system memory compilation units into common code to
-make sure it can't regress, and prove it achieves the desired result.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/exec/cpu-all.h | 25 ---------------
+ include/exec/tswap.h   | 70 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+), 25 deletions(-)
 
-The next patches remove more dependencies on cpu headers (exec-all,
-memory-internal, ram_addr).
-Then, we add access to a needed function from kvm, some xen stubs, and we
-finally can turn our compilation units into common code.
-
-Every commit was tested to build correctly for all targets (on windows, linux,
-macos), and the series was fully tested by running all tests we have (linux,
-x86_64 host).
-
-v2:
-- reorder first commits (tswap change first, so memory cached functions can use it)
-- move st/ld*_p functions to tswap instead of bswap
-- add define for target_words_bigendian when COMPILING_PER_TARGET, equals to
-  TARGET_BIG_ENDIAN (avoid overhead in target code)
-- rewrite devend_memop
-- remove useless exec-all.h in concerned patch
-- extract devend_big_endian function to reuse in system/memory.c
-- rewrite changes to system/memory.c
-
-v3:
-- move devend functions to memory_internal.h
-- completed description for commits removing cpu.h dependency
-
-v4:
-- rebase on top of master
-  * missing include in 'codebase: prepare to remove cpu.h from exec/exec-all.h'
-  * meson build conflict
-
-Pierrick Bouvier (17):
-  exec/tswap: target code can use TARGET_BIG_ENDIAN instead of
-    target_words_bigendian()
-  exec/tswap: implement {ld,st}.*_p as functions instead of macros
-  exec/memory_ldst: extract memory_ldst declarations from cpu-all.h
-  exec/memory_ldst_phys: extract memory_ldst_phys declarations from
-    cpu-all.h
-  exec/memory.h: make devend_memop "target defines" agnostic
-  codebase: prepare to remove cpu.h from exec/exec-all.h
-  exec/exec-all: remove dependency on cpu.h
-  exec/memory-internal: remove dependency on cpu.h
-  exec/ram_addr: remove dependency on cpu.h
-  system/kvm: make kvm_flush_coalesced_mmio_buffer() accessible for
-    common code
-  exec/ram_addr: call xen_hvm_modified_memory only if xen is enabled
-  hw/xen: add stubs for various functions
-  system/physmem: compilation unit is now common to all targets
-  include/exec/memory: extract devend_big_endian from devend_memop
-  include/exec/memory: move devend functions to memory-internal.h
-  system/memory: make compilation unit common
-  system/ioport: make compilation unit common
-
- include/exec/cpu-all.h              | 66 -----------------------
- include/exec/exec-all.h             |  1 -
- include/exec/memory-internal.h      | 21 +++++++-
- include/exec/memory.h               | 30 ++++-------
- include/exec/ram_addr.h             | 11 ++--
- include/exec/tswap.h                | 81 +++++++++++++++++++++++++++--
- include/system/kvm.h                |  6 +--
- include/tcg/tcg-op.h                |  1 +
- target/ppc/helper_regs.h            |  2 +
- include/exec/memory_ldst.h.inc      |  4 --
- include/exec/memory_ldst_phys.h.inc |  5 +-
- cpu-target.c                        |  1 +
- hw/ppc/spapr_nested.c               |  1 +
- hw/sh4/sh7750.c                     |  1 +
- hw/xen/xen_stubs.c                  | 56 ++++++++++++++++++++
- page-vary-target.c                  |  2 +-
- system/ioport.c                     |  1 -
- system/memory.c                     | 17 ++----
- target/ppc/tcg-excp_helper.c        |  1 +
- target/riscv/bitmanip_helper.c      |  2 +-
- hw/xen/meson.build                  |  3 ++
- system/meson.build                  |  6 +--
- 22 files changed, 193 insertions(+), 126 deletions(-)
- create mode 100644 hw/xen/xen_stubs.c
-
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 8cd6c00cf89..e56c064d46f 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -38,31 +38,6 @@
+ #define BSWAP_NEEDED
+ #endif
+ 
+-/* Target-endianness CPU memory access functions. These fit into the
+- * {ld,st}{type}{sign}{size}{endian}_p naming scheme described in bswap.h.
+- */
+-#if TARGET_BIG_ENDIAN
+-#define lduw_p(p) lduw_be_p(p)
+-#define ldsw_p(p) ldsw_be_p(p)
+-#define ldl_p(p) ldl_be_p(p)
+-#define ldq_p(p) ldq_be_p(p)
+-#define stw_p(p, v) stw_be_p(p, v)
+-#define stl_p(p, v) stl_be_p(p, v)
+-#define stq_p(p, v) stq_be_p(p, v)
+-#define ldn_p(p, sz) ldn_be_p(p, sz)
+-#define stn_p(p, sz, v) stn_be_p(p, sz, v)
+-#else
+-#define lduw_p(p) lduw_le_p(p)
+-#define ldsw_p(p) ldsw_le_p(p)
+-#define ldl_p(p) ldl_le_p(p)
+-#define ldq_p(p) ldq_le_p(p)
+-#define stw_p(p, v) stw_le_p(p, v)
+-#define stl_p(p, v) stl_le_p(p, v)
+-#define stq_p(p, v) stq_le_p(p, v)
+-#define ldn_p(p, sz) ldn_le_p(p, sz)
+-#define stn_p(p, sz, v) stn_le_p(p, sz, v)
+-#endif
+-
+ /* MMU memory access macros */
+ 
+ #if !defined(CONFIG_USER_ONLY)
+diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+index 2683da0adb7..84060a49994 100644
+--- a/include/exec/tswap.h
++++ b/include/exec/tswap.h
+@@ -80,4 +80,74 @@ static inline void tswap64s(uint64_t *s)
+     }
+ }
+ 
++/* Return ld{word}_{le,be}_p following target endianness. */
++#define LOAD_IMPL(word, args...)                    \
++do {                                                \
++    if (target_words_bigendian()) {                 \
++        return glue(glue(ld, word), _be_p)(args);   \
++    } else {                                        \
++        return glue(glue(ld, word), _le_p)(args);   \
++    }                                               \
++} while (0)
++
++static inline int lduw_p(const void *ptr)
++{
++    LOAD_IMPL(uw, ptr);
++}
++
++static inline int ldsw_p(const void *ptr)
++{
++    LOAD_IMPL(sw, ptr);
++}
++
++static inline int ldl_p(const void *ptr)
++{
++    LOAD_IMPL(l, ptr);
++}
++
++static inline uint64_t ldq_p(const void *ptr)
++{
++    LOAD_IMPL(q, ptr);
++}
++
++static inline uint64_t ldn_p(const void *ptr, int sz)
++{
++    LOAD_IMPL(n, ptr, sz);
++}
++
++#undef LOAD_IMPL
++
++/* Call st{word}_{le,be}_p following target endianness. */
++#define STORE_IMPL(word, args...)           \
++do {                                        \
++    if (target_words_bigendian()) {         \
++        glue(glue(st, word), _be_p)(args);  \
++    } else {                                \
++        glue(glue(st, word), _le_p)(args);  \
++    }                                       \
++} while (0)
++
++
++static inline void stw_p(void *ptr, uint16_t v)
++{
++    STORE_IMPL(w, ptr, v);
++}
++
++static inline void stl_p(void *ptr, uint32_t v)
++{
++    STORE_IMPL(l, ptr, v);
++}
++
++static inline void stq_p(void *ptr, uint64_t v)
++{
++    STORE_IMPL(q, ptr, v);
++}
++
++static inline void stn_p(void *ptr, int sz, uint64_t v)
++{
++    STORE_IMPL(n, ptr, sz, v);
++}
++
++#undef STORE_IMPL
++
+ #endif  /* TSWAP_H */
 -- 
 2.39.5
 
