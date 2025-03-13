@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FBBC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 18:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B27C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 18:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsn7Q-0005xM-L7; Thu, 13 Mar 2025 14:17:21 -0400
+	id 1tsnGU-0001TS-5z; Thu, 13 Mar 2025 14:26:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsn7L-0005wJ-VT
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:17:16 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsnGJ-0001RX-Di
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:26:31 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tsn7K-0008AK-8S
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:17:15 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22409077c06so35264955ad.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 11:17:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsnGG-00010J-As
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 14:26:30 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso9292795e9.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 11:26:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741889831; x=1742494631; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741890385; x=1742495185; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D630YNswjhNm70+PXVcrDg0VlWavMy3mSdJr1GWN4+w=;
- b=CtK2wjOPgzBUfQZQ36oLKfNO4KSVsHMCKfTZHRGWgh3kgdDf8jdr+cRWAp+X9WMQRD
- th6IgrjJjxP6oQZTJudajYlfjfzL0X94L2lau39DuAOrBipuYXA7OGiHAbuAwAkRDbjy
- 9dXqIdktaubBxC67sV41eh1g3lN9+JmwdxixEtSPi/ymZIu7434D5N0nwPFAHVRp96n0
- lh5Kq8g2i5Bk13ZkDvhyfqR6WyXPBDwn/uJSgFOiyYBts4MQFwkKC3MqSlFfV/7R0ROu
- i4/CWX81yH224iQCn3Clsjx+TGkMfKE42Ma6l1rX5AwpJIysvgggTnXmiDzc/pKpRoQF
- Q2aQ==
+ bh=/yJ4bypxoYI2AF7GOB0h9IaaLeRrhK8kcnL/QNoeMV8=;
+ b=nvyz4cYV4De9dRw4uTSQW0Dvp6jEaKQeFhGK4NPSDuit4n2j5kuDxunUc9vda/6+9d
+ fXsy/jIUJNGN5eXGBKbkFg2v+/YweCcel/2YK1Jn9Li0p9TN30W9BWSVIss4UgE3KZCd
+ 4US0JqbMjM1xq0RrwESNEveiDgaQfTB0c8yFfMmBXjTqoCv0ZJlhtkUAw2ZdeN7hQMjB
+ DPLbZvMYgLwv9p1fjfkd2EXwzjvfWjC4SXqzwcnnPFCt8YB6vMwHvMBN1qRlhnSdURW1
+ HegUT4jIQZzYyb1AWUOCm3o1oNuf9yJDvCn6c4Mcnd2/rfY8ey7yi+g7AMD+gc2n1zeF
+ PU1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741889831; x=1742494631;
+ d=1e100.net; s=20230601; t=1741890385; x=1742495185;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D630YNswjhNm70+PXVcrDg0VlWavMy3mSdJr1GWN4+w=;
- b=nbxJhLQis8Mi22rKo1TqaSLuQrDGE4YZNii2Ls09ANC3G65gLuDzCidVkK8aL7QpmL
- m/co5lOXFNL/BeeZSW3AnBMdYDDuieBlo80dyd9xcqi2gJCVbPap46KvNiJ9JHzpgfsN
- Geky9TGuO2nqyhXfr0qoPPE3EMVXB2O5vv7o5SVea9xB8YlGF4qNWLdho+kDO/eEAfuc
- 0AwtBwUnsNeB+er4pZC3g7SZo2VGTEJPzgH9ar6BUjeyEzBhoYcqf/krpfcitdX3tHDb
- kvOBuz9i/tLnjFfx16MGpXXGLbqj3UC/0RcWwj3Ubx/g+n3yeBj/DBV+GPSk1fsHwEuE
- BYWA==
+ bh=/yJ4bypxoYI2AF7GOB0h9IaaLeRrhK8kcnL/QNoeMV8=;
+ b=nVinwY6jUA9tUr+v5bjQxN5Sy0n1Z40tSNfvbB6JzrMNQ7Jfpd912gFf7WWJHhHXQE
+ EgnTIuAB7qPwEBXYs+aIx+wIlDog9BRuzyPVIfuHqkBdEIX4sWxttUfV1SWaaLmoWZrQ
+ UdQ9F8Ny6en9cj1AAtZEIlAMvJjCKcfxkqmxaJn7nxMfJ0dNw6oWZnAEJh1dm1maLX7F
+ FB2c162uHaUU3/ug2wdDHhHwrIcBWLc2rkej+s/CSJksJMSwn6KLvAYDCgieyzYHLux9
+ L7cnKEWr1I3RLnKCZWnsLBYwFaZxdsUj5VRE/75W01LLjG56eFKCpPQrzC5q4Z+jQ+xt
+ kr5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXti6I/LBsV90O4ilhLm/J1pbZhYaq4sWXe01/7To0/Qa4NJp4VkQ8krqwyB24O4woZEJAusqZMk95T@nongnu.org
-X-Gm-Message-State: AOJu0Yzylleks7sfvXSVS9maOG8Xl9d87Wb6gW7qPIEdc/q8lAhGjB5t
- KkOAhIPdhxqeHHjflxysF3hUyvr4QJm3mpwxY2Re5kK5e1jz18JkCPihKABb18TlSnD2zihK8Bn
- G
-X-Gm-Gg: ASbGncurW7pPwgvFQSvNTRK0B1Sfe9Na199qI/0ivfGQmPiFI/yQeQNk8+C/REfGD+S
- lMs3kowLNsdmJfIT0O+CNcGVUP9EU3lnHOv4D9NOdgEcim7D9jmQbZDtmHLVGrs+x0VJTDN5ZEH
- 2+1dcpG3WvAINnacnpExQzkv7SHPW/2aB2x2SKJ14byc/k5cfJUrqzAXi3I/3MTsPp59FWYlmhR
- M35785sIgIjQHrTmchXvKdYnOcgprAPNqifj+sJiO90DKW69rdGyvhOKlgsJRUoKSEDQ+uOtu9N
- esWGV93+zVpukTYR7FSM+M758UONpVy9i9JgSi8uEt6yPLnYaiZI/xhWJMu8MxA4Cwn/6Jv/r9n
- q0gIpxcea
-X-Google-Smtp-Source: AGHT+IEOsXZo9sj6UE1ilRNBpyNM+nHsASZfrZrZjZ/yr9suMT/ardwOXDFgCEEmopXIbCiZJnBZQQ==
-X-Received: by 2002:a05:6a21:394c:b0:1f5:67e2:7790 with SMTP id
- adf61e73a8af0-1f5bd7eaf01mr952126637.17.1741889831421; 
- Thu, 13 Mar 2025 11:17:11 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ AJvYcCVfHRerzv+RDDO0qC/ILLWE9c7b2vWyfW3f/mUU+vyWcYYSTHNiJQVTRQKAs/fza7XEXtDTLJ2YRUPj@nongnu.org
+X-Gm-Message-State: AOJu0YxM8UZ814ewMueyeburcxdxtFnwxLn15MlpbDXX61O8GYAd1E0U
+ M7M9S9CTsrPitiiMqeFx7WacWkG60YqJTCtG3ocQ90hJjBuI3eASXT9vFiLFCEE=
+X-Gm-Gg: ASbGncvfVemlkZNpXdccLjg3yh869G/pEZdJHIjZ4CFHBpHWInLv/r8wd+OrVJlGx7u
+ 9eplpM8Yysd8/T1GSfGRPjnV1RCazViVHXbABKyPungHGLlo4lmmAUWxeMK8bzEV8hZcpM9/wil
+ GTXkqfUGdGNrF0GaTwhY8NhqCPI/HVbBwJzG9DNjdO2k9404sVA/ktCIhINR//o3UQifRVMBTHO
+ AqJ/0W2m5v/w7x/2QPqgIdmzHj45huzIfXkuM37ktGOuSmk98h2KDZTo0COkN+1z4ES6Hu2t4t/
+ HmTLTZTMnF9VvS4q5AR+Lohvws9idjen9L95geXk/kKAElwkeJFFnzmbN5pDmxo8BQGGQBLqDkr
+ Cwsois+v6x3VJOBI=
+X-Google-Smtp-Source: AGHT+IGBJstT3qVP7Dg/vW1JxCG3xO13tSc5v//IyGqSj8FDJxsMqqY3ALUiljgZq5FdVXAqwQTyiQ==
+X-Received: by 2002:a05:600c:3b1a:b0:43c:eea9:f45d with SMTP id
+ 5b1f17b1804b1-43d1d8c6d50mr7026615e9.18.1741890385195; 
+ Thu, 13 Mar 2025 11:26:25 -0700 (PDT)
+Received: from [192.168.1.67] (91-163-26-170.subs.proxad.net. [91.163.26.170])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9e195asm1599150a12.25.2025.03.13.11.17.10
+ 5b1f17b1804b1-43d188bb56csm28344555e9.20.2025.03.13.11.26.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 11:17:11 -0700 (PDT)
-Message-ID: <02f6b778-2ecb-48d7-85ff-237bd587be90@linaro.org>
-Date: Thu, 13 Mar 2025 11:17:09 -0700
+ Thu, 13 Mar 2025 11:26:24 -0700 (PDT)
+Message-ID: <e1941fdb-b7e9-4c58-8776-9ff576e9d07b@linaro.org>
+Date: Thu, 13 Mar 2025 19:26:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/37] accel/tcg: Implement translator_ld*_end
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@linaro.org
+Subject: Re: [PATCH 05/37] include/exec: Inline *_mmuidx_ra memory operations
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-12-richard.henderson@linaro.org>
- <025651b5-3b4c-4326-9aec-87f81df725c6@linaro.org>
+ <20250313034524.3069690-6-richard.henderson@linaro.org>
+ <a6e79bf6-8b93-4b02-8888-6c2a417a34a2@linaro.org>
+ <6d26b188-189c-4714-81a7-6061bb8a6ff6@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <025651b5-3b4c-4326-9aec-87f81df725c6@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <6d26b188-189c-4714-81a7-6061bb8a6ff6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,24 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/25 10:33, Pierrick Bouvier wrote:
-> On 3/12/25 20:44, Richard Henderson wrote:
->> Add a new family of translator load functions which take
->> an absolute endianness value in the form of MO_BE/MO_LE.
->> Expand the other translator_ld* functions on top of this.
->> Remove exec/tswap.h from translator.c.
+On 13/3/25 19:05, Richard Henderson wrote:
+> On 3/13/25 09:59, Pierrick Bouvier wrote:
+>>> +static inline int
+>>> +cpu_ldsw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+>>> +                      int mmu_idx, uintptr_t ra)
+>>> +{
+>>> +    return (int16_t)cpu_lduw_be_mmuidx_ra(env, addr, mmu_idx, ra);
 >>
+>> For my personal culture, is that strictly equivalent to doing the load 
+>> with MO_BESW?
 > 
-> Is there a need further down the road to break the dependency to tswap?
-> I am not sure of the benefit to drop tswap, as the resulting code is more complicated than 
-> simply calling tswap*().
+> If you're asking if it's the same as passing MO_BESW to 
+> tcg_gen_qemu_ld_i32(), yes.  The tcg code generator takes care of making 
+> the value sign-extended.
+> 
+> If you're asking if it's the same as passing MO_BESW to cpu_ldw_mmu(), 
+> no.  The core functions only handle unsigned values.  This older api 
+> contained functions with a signed return value, so we preserve that.
 
-This combines the tswap in the core routine with the bswap in translator_ld_swap().
-
-It enables cleanup in the various translators where we currently choose "swap from 
-TARGET_BIG_ENDIAN" rather than specifying the absolute endianness desired, which is 
-usually already at hand for use by all of the other memory references.
-
-
-r~
+Are these 2 APIs doing the same thing? What are the uses? Can we rename
+the legacy one?
 
