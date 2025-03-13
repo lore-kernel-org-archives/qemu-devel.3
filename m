@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E822C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17800C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 17:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsmT0-00046w-9U; Thu, 13 Mar 2025 13:35:34 -0400
+	id 1tsmUH-0005Z3-Dn; Thu, 13 Mar 2025 13:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsmSx-00040f-Rh
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:35:31 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1tsmTz-0005Tp-CD
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:36:35 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tsmSv-0001oB-I0
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:35:31 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3014cb646ecso419085a91.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 10:35:29 -0700 (PDT)
+ id 1tsmTt-000246-VH
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 13:36:33 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-3011737dda0so2361587a91.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 10:36:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741887328; x=1742492128; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741887388; x=1742492188; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DE5t7AzAaYC028m/Q7Qqrv+5TZWkoL++rlcjZDNpstA=;
- b=pdkkRW07QDqap361sDogaTO18+zShUgsq2/uSbo9WUtfIb3xMikhhT0ppMmcT4Jwr7
- 4LqOKGaJpwY7Le7453LYyUuAvi9NUHISvX4gLofUYhrzHNANRDSuLijEDrb9LLYexRiN
- VVx+zgZIqANUu5raUnoEro4BbjsBWv+mdBVUXGpO2yRQXFlDtQtaCQmCxHnTw3y6iCRx
- Yx+JZzlyZNwm3FeuEhV0P2ExSpr73kGmgHvsDWIu5vhWBxuo+ETGFg8tmDhnMDkulK29
- s2BP9nwUhw8HUAicEABG7VWZWEdMo0BsOrCpsY9zhHh6g2cMEtw3wYYC2HCYEz4Dub1L
- gzLQ==
+ bh=V/cjy26hj1xk/mvfsJEHv04tv/ZXHKPhfN0Bskh1rkY=;
+ b=RDy1bDncg2j6wRtwB1j+HUF5hO2qYndrh6nmJwstXszvlQFKQHkHDujLNu8gL/DPnS
+ tNMFeutGM4IOtkRixUv/z8bUgDYjDa2XT3vd5hMMyI+K6FQmcQRZnRF6oD+6ciiXwbET
+ 0hdwk6toOGFRANEyS4uZTAoKZKLqmjoBvky2SsSO0KkS+QUrl2E3SfM0AjkjQgGjGaqi
+ RU2DIAjs4Nban6bl3R4xMXQrdusELd9HqsFfwNCUjPby9PdklG2WHIJWTMFs8KZZCY+j
+ +0k4FCwdd+DQA0rhWS6Gv035KilUqJsT712c+7uUiC6imu1ZTu1fKADh4guzvK+LF+36
+ i1Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741887328; x=1742492128;
+ d=1e100.net; s=20230601; t=1741887388; x=1742492188;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DE5t7AzAaYC028m/Q7Qqrv+5TZWkoL++rlcjZDNpstA=;
- b=EmyXeQfn3SEJwtOpOBJ+AZ4FwaRxhbS+nrIUTv2c644EvvaJHHC0i3Q/y8WJm9a3Kf
- mPyUQn937GgPvQt67dp75WYWz/oglkuBGEsZ/ijHhvMJn2rWUArXVK3zrG9dhK5E6USV
- zbQLmdy2T5gjDo40emN4YZkUtHP+DVssnLJUnoUvP5bY6ta0cz95+eFz6fYGdToMg600
- e14dK78mUj5LF+4i57mL+e22MQ+xz4iNYA/svyU+rKLjOKvGNZ9Yzhrgbp6EjNaF7HFX
- l/a41adIT/AuzlXyQrmO2bDTi6t1jn1M9YQF8mivuVEnthxSe5/Jmp4ds5Cm6iisCOKP
- MQNA==
+ bh=V/cjy26hj1xk/mvfsJEHv04tv/ZXHKPhfN0Bskh1rkY=;
+ b=m4twAdvPrb3fBoPLyy8CjiU1iQlNCKVh9yk7s13ys2/SC984QcheGNqUFqUQZy5Lqr
+ Rc4ZFVoftTasvepu8B+fOoeF9tVgRCvm85ptjm/vEpJM2cpQ54qPRJkwAg6NuVnZXDwM
+ OXqmSaS9g01jyUda0cRYn2d58JkWgYqN80/HcQX2YYsff10kV7y3qoB7gw2NtcSN+w50
+ 8hbGFJLSfSZUEUho45YefaaXYS26UUt4WkqTQoJQM/hH5z3pLpws9TR8uJhh0PAnSFVX
+ X+EQaYHCLruRbRHbp1xxbmshLgzAFMZ+uXMBmvDnufYr+mN7rEbyFnH/x3nWBD8MbzV9
+ Sm5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIlGuYs+YtjRC3oonwfrKd3kLE92aMcPY0QOdUEK3v1AhN8XTGurMNgw4/CnYt0ZqJBL8z4loeATve@nongnu.org
-X-Gm-Message-State: AOJu0Yx6TSROwDxW7xFxxhO606GTXCx+xUZkcQS4LgTAQR2lYaQdE1Ac
- ghjgGbj0z+q4wU+vK+VXJNlrsfVAvJLSd4LuSOY2An7Vx5v+FCYeqN74dWf1mJA=
-X-Gm-Gg: ASbGncs8X/rKUmPxaNVQp1kn6OrfjFt/pFNKqENy7Ezj9Zw9s+Ghe2+eh4FOABoZcRj
- yuOoldPPzmpEK31hC+TldWcID+MNr5KHnjrGbv9ZtQ55TtknYme3OyZE25crp4XqWjS6DCy2Pn+
- YquU5l5l8hAKj9cwEMm4jrVJRbwuDhxNjHc4E8KCUyny3bl2IyWseIEFwjJxb5Xo+f/dCiTbpM5
- 4BzdGptP9X73lhpDPXPe0UxlrJkiVorwMro8fvuPDLAR/Vx42KDwqZ92zcOpPKnrZ6yK/0kWuUn
- NXoaqzk690y0Kg26vlEzs3j4/t3eiKdYiXk3+7bMjfzWL84AgS1Q0qtXzI+1oO6hGa5s
-X-Google-Smtp-Source: AGHT+IHogfesEwV+7fzrmXP9AyccIqOy1jiFBGr56QjJvIlELsRPKTCid8OWmtdTS+EvHJM1S9D0Ag==
-X-Received: by 2002:a17:90b:2d10:b0:2ee:b6c5:1def with SMTP id
- 98e67ed59e1d1-3014e844b54mr492083a91.8.1741887327985; 
- Thu, 13 Mar 2025 10:35:27 -0700 (PDT)
+ AJvYcCVoP3cpUF2z3hjlr24LOdNLjFDz9m+ItGMVjHrA8Ha14kA2+NSzZph/QZXWeVr8D4mNIqVd1csB3a+d@nongnu.org
+X-Gm-Message-State: AOJu0YxxT9Uybeai+EDCL7/977GCRaMCixaZWfBnI0QCskoVHIUs9fgk
+ n8bhLT6TqPaNgSzdmJr6i/sge0Gb9QxmtfuhFM37lqljRwrwNx96lywt7AJYgto=
+X-Gm-Gg: ASbGncsXGiT3i2JsLjH5G7+k/tkFrQTEsTPkP40kbZvs9NE+ykip/K5Yvr9MvSfSWfW
+ IEoYvZwDVZHmd0olm8qBvo43iJjp/jG/o8LoW8VUmJ2ruLvjrXLIggfCuz2hIxd/xmGfei3HDsh
+ 4T+DwM4QpiIJr+P3rDrkd3Pqcx+fw1r8IDb+r5QLV1hRL9esqTuOo4LGVoN1BdyXE1oJzeVQguW
+ qhN1z6VfzMLtENuckJ0Rq1x3m6peigYhmZBL33NsJM+T8SFDC74jrxOnG6TrEVhRwzD7IoCFoAE
+ HOfLZlkOo+79o/gK07dY1DjjYCIhJ+0if/+Dms4yYtvJa0/F4KHV0ly65A==
+X-Google-Smtp-Source: AGHT+IGKmjDp+rnZJE7bWRhCg8lZ283YoGigRjq/35aMnHFNzFMga2oImySvUU/iVvYKauwhk+A5Uw==
+X-Received: by 2002:a17:90a:fc43:b0:2ff:702f:7172 with SMTP id
+ 98e67ed59e1d1-3014ea1f10emr531348a91.33.1741887388459; 
+ Thu, 13 Mar 2025 10:36:28 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30119265938sm4086113a91.39.2025.03.13.10.35.27
+ 98e67ed59e1d1-30138b5cbd4sm1636966a91.21.2025.03.13.10.36.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 10:35:27 -0700 (PDT)
-Message-ID: <d3e8cd27-cc72-42e3-8e95-be9c3d38a45a@linaro.org>
-Date: Thu, 13 Mar 2025 10:35:26 -0700
+ Thu, 13 Mar 2025 10:36:28 -0700 (PDT)
+Message-ID: <365d0d47-0dda-46c4-a8dd-097baa8af42c@linaro.org>
+Date: Thu, 13 Mar 2025 10:36:27 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/37] include/system: Move exec/ioport.h to
- system/ioport.h
+Subject: Re: [PATCH 17/37] meson: Introduce top-level libuser_ss and
+ libsystem_ss
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@linaro.org
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-17-richard.henderson@linaro.org>
+ <20250313034524.3069690-18-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250313034524.3069690-17-richard.henderson@linaro.org>
+In-Reply-To: <20250313034524.3069690-18-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,142 +104,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xMi8yNSAyMDo0NCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IENvbnZlcnQg
-dGhlIGV4aXN0aW5nIGluY2x1ZGVzIHdpdGggc2VkLg0KPiANCj4gU2lnbmVkLW9mZi1ieTog
-UmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+DQo+IC0t
-LQ0KPiAgIGh3L2Rpc3BsYXkvdmdhX2ludC5oICAgICAgICAgICAgICB8IDIgKy0NCj4gICBp
-bmNsdWRlL2h3L2NoYXIvcGFyYWxsZWwtaXNhLmggICAgfCAyICstDQo+ICAgaW5jbHVkZS9o
-dy9kbWEvaTgyNTcuaCAgICAgICAgICAgIHwgMiArLQ0KPiAgIGluY2x1ZGUvaHcvaWRlL2lk
-ZS1idXMuaCAgICAgICAgICB8IDIgKy0NCj4gICBpbmNsdWRlL2h3L2lzYS9pc2EuaCAgICAg
-ICAgICAgICAgfCAyICstDQo+ICAgaW5jbHVkZS97ZXhlYyA9PiBzeXN0ZW19L2lvcG9ydC5o
-IHwgNiArKy0tLS0NCj4gICBody9ibG9jay9mZGMtaXNhLmMgICAgICAgICAgICAgICAgfCAy
-ICstDQo+ICAgbW9uaXRvci9obXAtY21kcy5jICAgICAgICAgICAgICAgIHwgMiArLQ0KPiAg
-IHN5c3RlbS9pb3BvcnQuYyAgICAgICAgICAgICAgICAgICB8IDIgKy0NCj4gICBzeXN0ZW0v
-cGh5c21lbS5jICAgICAgICAgICAgICAgICAgfCAyICstDQo+ICAgc3lzdGVtL3F0ZXN0LmMg
-ICAgICAgICAgICAgICAgICAgIHwgMiArLQ0KPiAgIHRhcmdldC9pMzg2L252bW0vbnZtbS1h
-bGwuYyAgICAgICB8IDIgKy0NCj4gICB0YXJnZXQvaTM4Ni93aHB4L3docHgtYWxsLmMgICAg
-ICAgfCAyICstDQo+ICAgdGVzdHMvcXRlc3QvZnV6ei9xdGVzdF93cmFwcGVycy5jIHwgMiAr
-LQ0KPiAgIE1BSU5UQUlORVJTICAgICAgICAgICAgICAgICAgICAgICB8IDIgKy0NCj4gICAx
-NSBmaWxlcyBjaGFuZ2VkLCAxNiBpbnNlcnRpb25zKCspLCAxOCBkZWxldGlvbnMoLSkNCj4g
-ICByZW5hbWUgaW5jbHVkZS97ZXhlYyA9PiBzeXN0ZW19L2lvcG9ydC5oICg5NyUpDQo+IA0K
-PiBkaWZmIC0tZ2l0IGEvaHcvZGlzcGxheS92Z2FfaW50LmggYi9ody9kaXNwbGF5L3ZnYV9p
-bnQuaA0KPiBpbmRleCA2MGFkMjZlMDNlLi43NDdiNWNjNmNmIDEwMDY0NA0KPiAtLS0gYS9o
-dy9kaXNwbGF5L3ZnYV9pbnQuaA0KPiArKysgYi9ody9kaXNwbGF5L3ZnYV9pbnQuaA0KPiBA
-QCAtMjYsNyArMjYsNyBAQA0KPiAgICNkZWZpbmUgSFdfVkdBX0lOVF9IDQo+ICAgDQo+ICAg
-I2luY2x1ZGUgInVpL2NvbnNvbGUuaCINCj4gLSNpbmNsdWRlICJleGVjL2lvcG9ydC5oIg0K
-PiArI2luY2x1ZGUgInN5c3RlbS9pb3BvcnQuaCINCj4gICAjaW5jbHVkZSAic3lzdGVtL21l
-bW9yeS5oIg0KPiAgIA0KPiAgICNpbmNsdWRlICJody9kaXNwbGF5L2JvY2hzLXZiZS5oIg0K
-PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9jaGFyL3BhcmFsbGVsLWlzYS5oIGIvaW5jbHVk
-ZS9ody9jaGFyL3BhcmFsbGVsLWlzYS5oDQo+IGluZGV4IDUyODRiMmZmZWMuLjNlZGFmOWRi
-ZTQgMTAwNjQ0DQo+IC0tLSBhL2luY2x1ZGUvaHcvY2hhci9wYXJhbGxlbC1pc2EuaA0KPiAr
-KysgYi9pbmNsdWRlL2h3L2NoYXIvcGFyYWxsZWwtaXNhLmgNCj4gQEAgLTEyLDcgKzEyLDcg
-QEANCj4gICANCj4gICAjaW5jbHVkZSAicGFyYWxsZWwuaCINCj4gICANCj4gLSNpbmNsdWRl
-ICJleGVjL2lvcG9ydC5oIg0KPiArI2luY2x1ZGUgInN5c3RlbS9pb3BvcnQuaCINCj4gICAj
-aW5jbHVkZSAiaHcvaXNhL2lzYS5oIg0KPiAgICNpbmNsdWRlICJxb20vb2JqZWN0LmgiDQo+
-ICAgDQo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L2RtYS9pODI1Ny5oIGIvaW5jbHVkZS9o
-dy9kbWEvaTgyNTcuaA0KPiBpbmRleCA0MzQyZTRhOTFlLi4zM2I2Mjg2ZDVhIDEwMDY0NA0K
-PiAtLS0gYS9pbmNsdWRlL2h3L2RtYS9pODI1Ny5oDQo+ICsrKyBiL2luY2x1ZGUvaHcvZG1h
-L2k4MjU3LmgNCj4gQEAgLTIsNyArMiw3IEBADQo+ICAgI2RlZmluZSBIV19JODI1N19IDQo+
-ICAgDQo+ICAgI2luY2x1ZGUgImh3L2lzYS9pc2EuaCINCj4gLSNpbmNsdWRlICJleGVjL2lv
-cG9ydC5oIg0KPiArI2luY2x1ZGUgInN5c3RlbS9pb3BvcnQuaCINCj4gICAjaW5jbHVkZSAi
-cW9tL29iamVjdC5oIg0KPiAgIA0KPiAgICNkZWZpbmUgVFlQRV9JODI1NyAiaTgyNTciDQo+
-IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L2lkZS9pZGUtYnVzLmggYi9pbmNsdWRlL2h3L2lk
-ZS9pZGUtYnVzLmgNCj4gaW5kZXggNDg0MWE3ZGNkNi4uMTIxYjQ1NWZjZCAxMDA2NDQNCj4g
-LS0tIGEvaW5jbHVkZS9ody9pZGUvaWRlLWJ1cy5oDQo+ICsrKyBiL2luY2x1ZGUvaHcvaWRl
-L2lkZS1idXMuaA0KPiBAQCAtMSw3ICsxLDcgQEANCj4gICAjaWZuZGVmIEhXX0lERV9CVVNf
-SA0KPiAgICNkZWZpbmUgSFdfSURFX0JVU19IDQo+ICAgDQo+IC0jaW5jbHVkZSAiZXhlYy9p
-b3BvcnQuaCINCj4gKyNpbmNsdWRlICJzeXN0ZW0vaW9wb3J0LmgiDQo+ICAgI2luY2x1ZGUg
-Imh3L2lkZS9pZGUtZGV2LmgiDQo+ICAgI2luY2x1ZGUgImh3L2lkZS9pZGUtZG1hLmgiDQo+
-ICAgDQo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L2lzYS9pc2EuaCBiL2luY2x1ZGUvaHcv
-aXNhL2lzYS5oDQo+IGluZGV4IDFkODUyMDExYjMuLmE4MmM1ZjEwMDQgMTAwNjQ0DQo+IC0t
-LSBhL2luY2x1ZGUvaHcvaXNhL2lzYS5oDQo+ICsrKyBiL2luY2x1ZGUvaHcvaXNhL2lzYS5o
-DQo+IEBAIC00LDcgKzQsNyBAQA0KPiAgIC8qIElTQSBidXMgKi8NCj4gICANCj4gICAjaW5j
-bHVkZSAic3lzdGVtL21lbW9yeS5oIg0KPiAtI2luY2x1ZGUgImV4ZWMvaW9wb3J0LmgiDQo+
-ICsjaW5jbHVkZSAic3lzdGVtL2lvcG9ydC5oIg0KPiAgICNpbmNsdWRlICJody9xZGV2LWNv
-cmUuaCINCj4gICAjaW5jbHVkZSAicW9tL29iamVjdC5oIg0KPiAgIA0KPiBkaWZmIC0tZ2l0
-IGEvaW5jbHVkZS9leGVjL2lvcG9ydC5oIGIvaW5jbHVkZS9zeXN0ZW0vaW9wb3J0LmgNCj4g
-c2ltaWxhcml0eSBpbmRleCA5NyUNCj4gcmVuYW1lIGZyb20gaW5jbHVkZS9leGVjL2lvcG9y
-dC5oDQo+IHJlbmFtZSB0byBpbmNsdWRlL3N5c3RlbS9pb3BvcnQuaA0KPiBpbmRleCBlY2Vh
-MzU3NWJjLi43ODBlYTVhNjc2IDEwMDY0NA0KPiAtLS0gYS9pbmNsdWRlL2V4ZWMvaW9wb3J0
-LmgNCj4gKysrIGIvaW5jbHVkZS9zeXN0ZW0vaW9wb3J0LmgNCj4gQEAgLTIxLDggKzIxLDgg
-QEANCj4gICAgKiBJTyBwb3J0cyBBUEkNCj4gICAgKi8NCj4gICANCj4gLSNpZm5kZWYgSU9Q
-T1JUX0gNCj4gLSNkZWZpbmUgSU9QT1JUX0gNCj4gKyNpZm5kZWYgU1lTVEVNX0lPUE9SVF9I
-DQo+ICsjZGVmaW5lIFNZU1RFTV9JT1BPUlRfSA0KPiAgIA0KPiAgICNpbmNsdWRlICJzeXN0
-ZW0vbWVtb3J5LmgiDQo+ICAgDQo+IEBAIC0zOSw5ICszOSw3IEBAIHR5cGVkZWYgc3RydWN0
-IE1lbW9yeVJlZ2lvblBvcnRpbyB7DQo+ICAgDQo+ICAgI2RlZmluZSBQT1JUSU9fRU5EX09G
-X0xJU1QoKSB7IH0NCj4gICANCj4gLSNpZm5kZWYgQ09ORklHX1VTRVJfT05MWQ0KPiAgIGV4
-dGVybiBjb25zdCBNZW1vcnlSZWdpb25PcHMgdW5hc3NpZ25lZF9pb19vcHM7DQo+IC0jZW5k
-aWYNCj4gICANCj4gICB2b2lkIGNwdV9vdXRiKHVpbnQzMl90IGFkZHIsIHVpbnQ4X3QgdmFs
-KTsNCj4gICB2b2lkIGNwdV9vdXR3KHVpbnQzMl90IGFkZHIsIHVpbnQxNl90IHZhbCk7DQo+
-IGRpZmYgLS1naXQgYS9ody9ibG9jay9mZGMtaXNhLmMgYi9ody9ibG9jay9mZGMtaXNhLmMN
-Cj4gaW5kZXggYTEwYzI0YWFiMS4uNTYxY2ZhNDdjMSAxMDA2NDQNCj4gLS0tIGEvaHcvYmxv
-Y2svZmRjLWlzYS5jDQo+ICsrKyBiL2h3L2Jsb2NrL2ZkYy1pc2EuYw0KPiBAQCAtNDIsNyAr
-NDIsNyBAQA0KPiAgICNpbmNsdWRlICJzeXN0ZW0vYmxvY2stYmFja2VuZC5oIg0KPiAgICNp
-bmNsdWRlICJzeXN0ZW0vYmxvY2tkZXYuaCINCj4gICAjaW5jbHVkZSAic3lzdGVtL3N5c3Rl
-bS5oIg0KPiAtI2luY2x1ZGUgImV4ZWMvaW9wb3J0LmgiDQo+ICsjaW5jbHVkZSAic3lzdGVt
-L2lvcG9ydC5oIg0KPiAgICNpbmNsdWRlICJxZW11L2xvZy5oIg0KPiAgICNpbmNsdWRlICJx
-ZW11L21haW4tbG9vcC5oIg0KPiAgICNpbmNsdWRlICJxZW11L21vZHVsZS5oIg0KPiBkaWZm
-IC0tZ2l0IGEvbW9uaXRvci9obXAtY21kcy5jIGIvbW9uaXRvci9obXAtY21kcy5jDQo+IGlu
-ZGV4IDhkZGNkZDc2YzEuLjc0YTBmNTY1NjYgMTAwNjQ0DQo+IC0tLSBhL21vbml0b3IvaG1w
-LWNtZHMuYw0KPiArKysgYi9tb25pdG9yL2htcC1jbWRzLmMNCj4gQEAgLTE1LDcgKzE1LDcg
-QEANCj4gICANCj4gICAjaW5jbHVkZSAicWVtdS9vc2RlcC5oIg0KPiAgICNpbmNsdWRlICJz
-eXN0ZW0vYWRkcmVzcy1zcGFjZXMuaCINCj4gLSNpbmNsdWRlICJleGVjL2lvcG9ydC5oIg0K
-PiArI2luY2x1ZGUgInN5c3RlbS9pb3BvcnQuaCINCj4gICAjaW5jbHVkZSAiZXhlYy9nZGJz
-dHViLmgiDQo+ICAgI2luY2x1ZGUgImdkYnN0dWIvZW51bXMuaCINCj4gICAjaW5jbHVkZSAi
-bW9uaXRvci9obXAuaCINCj4gZGlmZiAtLWdpdCBhL3N5c3RlbS9pb3BvcnQuYyBiL3N5c3Rl
-bS9pb3BvcnQuYw0KPiBpbmRleCAyYmMxNGJkY2ZhLi5lYzVjNTg2Y2Y4IDEwMDY0NA0KPiAt
-LS0gYS9zeXN0ZW0vaW9wb3J0LmMNCj4gKysrIGIvc3lzdGVtL2lvcG9ydC5jDQo+IEBAIC0y
-Nyw3ICsyNyw3IEBADQo+ICAgDQo+ICAgI2luY2x1ZGUgInFlbXUvb3NkZXAuaCINCj4gICAj
-aW5jbHVkZSAiY3B1LmgiDQo+IC0jaW5jbHVkZSAiZXhlYy9pb3BvcnQuaCINCj4gKyNpbmNs
-dWRlICJzeXN0ZW0vaW9wb3J0LmgiDQo+ICAgI2luY2x1ZGUgInN5c3RlbS9tZW1vcnkuaCIN
-Cj4gICAjaW5jbHVkZSAic3lzdGVtL2FkZHJlc3Mtc3BhY2VzLmgiDQo+ICAgI2luY2x1ZGUg
-InRyYWNlLmgiDQo+IGRpZmYgLS1naXQgYS9zeXN0ZW0vcGh5c21lbS5jIGIvc3lzdGVtL3Bo
-eXNtZW0uYw0KPiBpbmRleCBiZTkyOTY5YTRhLi4yODUwZTE0NzgwIDEwMDY0NA0KPiAtLS0g
-YS9zeXN0ZW0vcGh5c21lbS5jDQo+ICsrKyBiL3N5c3RlbS9waHlzbWVtLmMNCj4gQEAgLTUx
-LDcgKzUxLDcgQEANCj4gICAjaW5jbHVkZSAicWVtdS9tZW1hbGlnbi5oIg0KPiAgICNpbmNs
-dWRlICJxZW11L21lbWZkLmgiDQo+ICAgI2luY2x1ZGUgInN5c3RlbS9tZW1vcnkuaCINCj4g
-LSNpbmNsdWRlICJleGVjL2lvcG9ydC5oIg0KPiArI2luY2x1ZGUgInN5c3RlbS9pb3BvcnQu
-aCINCj4gICAjaW5jbHVkZSAic3lzdGVtL2RtYS5oIg0KPiAgICNpbmNsdWRlICJzeXN0ZW0v
-aG9zdG1lbS5oIg0KPiAgICNpbmNsdWRlICJzeXN0ZW0vaHdfYWNjZWwuaCINCj4gZGlmZiAt
-LWdpdCBhL3N5c3RlbS9xdGVzdC5jIGIvc3lzdGVtL3F0ZXN0LmMNCj4gaW5kZXggNTQwNzI4
-OTE1NC4uNTIzYTA0Nzk5NSAxMDA2NDQNCj4gLS0tIGEvc3lzdGVtL3F0ZXN0LmMNCj4gKysr
-IGIvc3lzdGVtL3F0ZXN0LmMNCj4gQEAgLTE2LDcgKzE2LDcgQEANCj4gICAjaW5jbHVkZSAi
-c3lzdGVtL3F0ZXN0LmgiDQo+ICAgI2luY2x1ZGUgInN5c3RlbS9ydW5zdGF0ZS5oIg0KPiAg
-ICNpbmNsdWRlICJjaGFyZGV2L2NoYXItZmUuaCINCj4gLSNpbmNsdWRlICJleGVjL2lvcG9y
-dC5oIg0KPiArI2luY2x1ZGUgInN5c3RlbS9pb3BvcnQuaCINCj4gICAjaW5jbHVkZSAic3lz
-dGVtL21lbW9yeS5oIg0KPiAgICNpbmNsdWRlICJleGVjL3Rzd2FwLmgiDQo+ICAgI2luY2x1
-ZGUgImh3L3FkZXYtY29yZS5oIg0KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L2kzODYvbnZtbS9u
-dm1tLWFsbC5jIGIvdGFyZ2V0L2kzODYvbnZtbS9udm1tLWFsbC5jDQo+IGluZGV4IDkxZjBl
-MzIzNjYuLjE3Mzk0ZDA3M2QgMTAwNjQ0DQo+IC0tLSBhL3RhcmdldC9pMzg2L252bW0vbnZt
-bS1hbGwuYw0KPiArKysgYi90YXJnZXQvaTM4Ni9udm1tL252bW0tYWxsLmMNCj4gQEAgLTEw
-LDcgKzEwLDcgQEANCj4gICAjaW5jbHVkZSAicWVtdS9vc2RlcC5oIg0KPiAgICNpbmNsdWRl
-ICJjcHUuaCINCj4gICAjaW5jbHVkZSAic3lzdGVtL2FkZHJlc3Mtc3BhY2VzLmgiDQo+IC0j
-aW5jbHVkZSAiZXhlYy9pb3BvcnQuaCINCj4gKyNpbmNsdWRlICJzeXN0ZW0vaW9wb3J0Lmgi
-DQo+ICAgI2luY2x1ZGUgInFlbXUvYWNjZWwuaCINCj4gICAjaW5jbHVkZSAic3lzdGVtL252
-bW0uaCINCj4gICAjaW5jbHVkZSAic3lzdGVtL2NwdXMuaCINCj4gZGlmZiAtLWdpdCBhL3Rh
-cmdldC9pMzg2L3docHgvd2hweC1hbGwuYyBiL3RhcmdldC9pMzg2L3docHgvd2hweC1hbGwu
-Yw0KPiBpbmRleCBkNThjYjExY2VlLi5iNjQ4NTJlMTNlIDEwMDY0NA0KPiAtLS0gYS90YXJn
-ZXQvaTM4Ni93aHB4L3docHgtYWxsLmMNCj4gKysrIGIvdGFyZ2V0L2kzODYvd2hweC93aHB4
-LWFsbC5jDQo+IEBAIC0xMSw3ICsxMSw3IEBADQo+ICAgI2luY2x1ZGUgInFlbXUvb3NkZXAu
-aCINCj4gICAjaW5jbHVkZSAiY3B1LmgiDQo+ICAgI2luY2x1ZGUgInN5c3RlbS9hZGRyZXNz
-LXNwYWNlcy5oIg0KPiAtI2luY2x1ZGUgImV4ZWMvaW9wb3J0LmgiDQo+ICsjaW5jbHVkZSAi
-c3lzdGVtL2lvcG9ydC5oIg0KPiAgICNpbmNsdWRlICJnZGJzdHViL2hlbHBlcnMuaCINCj4g
-ICAjaW5jbHVkZSAicWVtdS9hY2NlbC5oIg0KPiAgICNpbmNsdWRlICJzeXN0ZW0vd2hweC5o
-Ig0KPiBkaWZmIC0tZ2l0IGEvdGVzdHMvcXRlc3QvZnV6ei9xdGVzdF93cmFwcGVycy5jIGIv
-dGVzdHMvcXRlc3QvZnV6ei9xdGVzdF93cmFwcGVycy5jDQo+IGluZGV4IDA1ODBmOGRmODYu
-LmQ3YWRjYmUzZmQgMTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL3F0ZXN0L2Z1enovcXRlc3Rfd3Jh
-cHBlcnMuYw0KPiArKysgYi90ZXN0cy9xdGVzdC9mdXp6L3F0ZXN0X3dyYXBwZXJzLmMNCj4g
-QEAgLTEzLDcgKzEzLDcgQEANCj4gICANCj4gICAjaW5jbHVkZSAicWVtdS9vc2RlcC5oIg0K
-PiAgICNpbmNsdWRlICJody9jb3JlL2NwdS5oIg0KPiAtI2luY2x1ZGUgImV4ZWMvaW9wb3J0
-LmgiDQo+ICsjaW5jbHVkZSAic3lzdGVtL2lvcG9ydC5oIg0KPiAgIA0KPiAgICNpbmNsdWRl
-ICJmdXp6LmgiDQo+ICAgDQo+IGRpZmYgLS1naXQgYS9NQUlOVEFJTkVSUyBiL01BSU5UQUlO
-RVJTDQo+IGluZGV4IGI1ZjFlODE3NzEuLjc1MWQ2MTE2MTMgMTAwNjQ0DQo+IC0tLSBhL01B
-SU5UQUlORVJTDQo+ICsrKyBiL01BSU5UQUlORVJTDQo+IEBAIC0zMTA3LDcgKzMxMDcsNyBA
-QCBNOiBQZXRlciBYdSA8cGV0ZXJ4QHJlZGhhdC5jb20+DQo+ICAgTTogRGF2aWQgSGlsZGVu
-YnJhbmQgPGRhdmlkQHJlZGhhdC5jb20+DQo+ICAgUjogUGhpbGlwcGUgTWF0aGlldS1EYXVk
-w6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPiAgIFM6IFN1cHBvcnRlZA0KPiAtRjogaW5jbHVk
-ZS9leGVjL2lvcG9ydC5oDQo+ICtGOiBpbmNsdWRlL3N5c3RlbS9pb3BvcnQuaA0KPiAgIEY6
-IGluY2x1ZGUvZXhlYy9tZW1vcC5oDQo+ICAgRjogaW5jbHVkZS9zeXN0ZW0vbWVtb3J5LmgN
-Cj4gICBGOiBpbmNsdWRlL2V4ZWMvcmFtX2FkZHIuaA0KDQpSZXZpZXdlZC1ieTogUGllcnJp
-Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KDQo=
+On 3/12/25 20:44, Richard Henderson wrote:
+> We already have two subdirectories for which we need
+> to build files twice, for user vs system modes.
+> Move this handling to the top level.
+> 
+> This cannot be combined with user_ss or system_ss,
+> because the formulation has not been extended to support
+> configuration symbols.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   gdbstub/meson.build | 32 ++++++++------------------------
+>   meson.build         | 22 ++++++++++++++++++++++
+>   tcg/meson.build     | 23 ++---------------------
+>   3 files changed, 32 insertions(+), 45 deletions(-)
+> 
+> diff --git a/gdbstub/meson.build b/gdbstub/meson.build
+> index dff741ddd4..0e8099ae9c 100644
+> --- a/gdbstub/meson.build
+> +++ b/gdbstub/meson.build
+> @@ -4,32 +4,16 @@
+>   # types such as hwaddr.
+>   #
+>   
+> -# We need to build the core gdb code via a library to be able to tweak
+> -# cflags so:
+> -
+> -gdb_user_ss = ss.source_set()
+> -gdb_system_ss = ss.source_set()
+> -
+>   # We build two versions of gdbstub, one for each mode
+> -gdb_user_ss.add(files('gdbstub.c', 'user.c'))
+> -gdb_system_ss.add(files('gdbstub.c', 'system.c'))
+> +libuser_ss.add(files(
+> +  'gdbstub.c',
+> +  'user.c'
+> +))
+>   
+> -gdb_user_ss = gdb_user_ss.apply({})
+> -gdb_system_ss = gdb_system_ss.apply({})
+> -
+> -libgdb_user = static_library('gdb_user',
+> -                             gdb_user_ss.sources() + genh,
+> -                             c_args: '-DCONFIG_USER_ONLY',
+> -                             build_by_default: false)
+> -
+> -libgdb_system = static_library('gdb_system',
+> -                                gdb_system_ss.sources() + genh,
+> -                                build_by_default: false)
+> -
+> -gdb_user = declare_dependency(objects: libgdb_user.extract_all_objects(recursive: false))
+> -user_ss.add(gdb_user)
+> -gdb_system = declare_dependency(objects: libgdb_system.extract_all_objects(recursive: false))
+> -system_ss.add(gdb_system)
+> +libsystem_ss.add(files(
+> +  'gdbstub.c',
+> +  'system.c'
+> +))
+>   
+>   common_ss.add(files('syscalls.c'))
+>   
+> diff --git a/meson.build b/meson.build
+> index 9d9c11731f..3869e5bfbc 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3655,12 +3655,14 @@ io_ss = ss.source_set()
+>   qmp_ss = ss.source_set()
+>   qom_ss = ss.source_set()
+>   system_ss = ss.source_set()
+> +libsystem_ss = ss.source_set()
+>   specific_fuzz_ss = ss.source_set()
+>   specific_ss = ss.source_set()
+>   rust_devices_ss = ss.source_set()
+>   stub_ss = ss.source_set()
+>   trace_ss = ss.source_set()
+>   user_ss = ss.source_set()
+> +libuser_ss = ss.source_set()
+>   util_ss = ss.source_set()
+>   
+>   # accel modules
+> @@ -4038,6 +4040,26 @@ common_ss.add(qom, qemuutil)
+>   common_ss.add_all(when: 'CONFIG_SYSTEM_ONLY', if_true: [system_ss])
+>   common_ss.add_all(when: 'CONFIG_USER_ONLY', if_true: user_ss)
+>   
+> +libuser_ss = libuser_ss.apply({})
+> +libuser = static_library('user',
+> +                         libuser_ss.sources() + genh,
+> +                         c_args: '-DCONFIG_USER_ONLY',
+> +                         dependencies: libuser_ss.dependencies(),
+> +                         build_by_default: false)
+> +libuser = declare_dependency(objects: libuser.extract_all_objects(recursive: false),
+> +                             dependencies: libuser_ss.dependencies())
+> +common_ss.add(when: 'CONFIG_USER_ONLY', if_true: libuser)
+> +
+> +libsystem_ss = libsystem_ss.apply({})
+> +libsystem = static_library('system',
+> +                           libsystem_ss.sources() + genh,
+> +                           c_args: '-DCONFIG_SOFTMMU',
+> +                           dependencies: libsystem_ss.dependencies(),
+> +                           build_by_default: false)
+> +libsystem = declare_dependency(objects: libsystem.extract_all_objects(recursive: false),
+> +                               dependencies: libsystem_ss.dependencies())
+> +common_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: libsystem)
+> +
+>   # Note that this library is never used directly (only through extract_objects)
+>   # and is not built by default; therefore, source files not used by the build
+>   # configuration will be in build.ninja, but are never built by default.
+> diff --git a/tcg/meson.build b/tcg/meson.build
+> index 69ebb4908a..7df378d773 100644
+> --- a/tcg/meson.build
+> +++ b/tcg/meson.build
+> @@ -27,24 +27,5 @@ if host_os == 'linux'
+>     tcg_ss.add(files('perf.c'))
+>   endif
+>   
+> -tcg_ss = tcg_ss.apply({})
+> -
+> -libtcg_user = static_library('tcg_user',
+> -                             tcg_ss.sources() + genh,
+> -                             dependencies: tcg_ss.dependencies(),
+> -                             c_args: '-DCONFIG_USER_ONLY',
+> -                             build_by_default: false)
+> -
+> -tcg_user = declare_dependency(objects: libtcg_user.extract_all_objects(recursive: false),
+> -                              dependencies: tcg_ss.dependencies())
+> -user_ss.add(tcg_user)
+> -
+> -libtcg_system = static_library('tcg_system',
+> -                                tcg_ss.sources() + genh,
+> -                                dependencies: tcg_ss.dependencies(),
+> -                                c_args: '-DCONFIG_SOFTMMU',
+> -                                build_by_default: false)
+> -
+> -tcg_system = declare_dependency(objects: libtcg_system.extract_all_objects(recursive: false),
+> -                                dependencies: tcg_ss.dependencies())
+> -system_ss.add(tcg_system)
+> +libuser_ss.add_all(tcg_ss)
+> +libsystem_ss.add_all(tcg_ss)
+
+Good move,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
