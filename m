@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A5FC282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BEBC282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 10:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsfy8-0000v3-T2; Thu, 13 Mar 2025 06:39:17 -0400
+	id 1tsg0F-000242-Ee; Thu, 13 Mar 2025 06:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfy3-0000ub-8p
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:39:12 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsg0D-00021X-Mi
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:41:25 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsfxz-0004c4-RS
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:39:10 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cef035a3bso4865295e9.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:39:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tsg0C-0004wu-4Y
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 06:41:25 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3914a5def6bso398464f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 03:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741862344; x=1742467144; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=lLxamGpd24MadxdIk+Ef5JMLaAjiPzweWcOMLUk79lE=;
- b=jaD3nZecHkXYFHlntFYnyCZ+a3WWVWGHNx4U2OU8WvawUZclG8ktV+5cA/LwQmGUZi
- zNjvtUNkTqYkGG9nHeYuTFgcJK4RFfyQgxamnRmqqhCne/iAz2CshQG4RDmvNgzoHE9B
- IHFeYVGftGJHIQiuErZlnJZXjPvS5VUAGZ7PkR+PmNKz/4aEErFZfuNY2RUKjopS9p01
- UhRT/h9yzn9lgeRMZ4+tOZTqCoI+TAGa4jyUA9vslXpkwoHajZIHQD8jOrYNAcaLv+Aa
- Y6ZH1g/FS30G5J9GPLfM1rogyAD+udLbNhiDxRAxxabpITgi4dBAphHMz/JHT+/c3zhp
- ULNg==
+ d=linaro.org; s=google; t=1741862482; x=1742467282; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uogxgqw8kXQTkWUXoAqDvaDTKLeiJRymlZ31aZ7qCLI=;
+ b=qlLoEC6dpa42ALd1swQKGWMC1F/HHbUM13mX24L8yDO8HQ/bvtsbwbwRpKlWZ//gOQ
+ WxfDGDxQz3SW7pBH31NeNagYRW+7qZDBAw+XRo6aK+8+etkXG27RZQ0HgYTB9R/4ZnMC
+ Dkt00ehPKEADQv+hJNrxssAiRMFauBpQAOCPhTzC3YXkajWF/Qg+3+ZBeuyz5Tb8l9hn
+ CZSnjPk67OEk/M7aTnE2rter8B8l+ROQiaTBSJxgS5cyFsHnPaXa5gviCKdoGULyAsMw
+ 4oUKlsa6dGy8hjJfDmXZIbogXm2y+ltPWAhf0D5NVTbG5Fk8TjWEA0HaRblv2/lvJ1Tu
+ WIDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741862344; x=1742467144;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1741862482; x=1742467282;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lLxamGpd24MadxdIk+Ef5JMLaAjiPzweWcOMLUk79lE=;
- b=YC3s5UVnZWC2oOycoYnNjWz27NB3CZkzW+zR8A+tlmJH1xJcQ7mvs0fA/utZSbh1NB
- IT2WqfH9Qfor78iQYLzXVNws04r3/SkkthbPv/6AOW7atla7KDocsmeRHin6qdDEwk4J
- actiQ9JfscXTj36IRkG4mPAezHWZvrsPQKlf7XCtCiHxwKY8Mbnbs8yKd7oWzMnynFzP
- WqG+QM7uSfdX8HRQ+Dh/Sp1ExSwoQLdD2zbXqp0+aP/wt8s4PyrWQ23Qh6BhGYFimsao
- rIpluJo4heAcqvBBklZ7i4qVQ85QjIFCPBq8kPAWXy6WZnY5WmJWOCGSYQVYydPXBmMV
- vupQ==
+ bh=uogxgqw8kXQTkWUXoAqDvaDTKLeiJRymlZ31aZ7qCLI=;
+ b=Z+t6ZC+xKSGhGtzO4nbHbpCXj7l9GycuksgGmvV0o9zZ9akjklOE7FWJNx44oICS9H
+ WLJj3eE37jZOnuu3Lj2wq/JlLaD7SJFRFvZ2szmEvi5ERdyybq1rndyiYJ49009PbwKp
+ OqrcM3hBLtzfQuiQdm+ttfIjL6d6D8XkSUf87LvDt8IO4G4UlCW1guGeE+deH8n8Ei7g
+ agTTVfO7qyqIjmcygKgFpnLuLEZqNewEnkpZDWZMwoW2dy0FXMPR0KV14r+u0mg0hvMR
+ MHD+DwU61p0uawp73/vehCWEfM9nhFDEShiInFuTb8GyodQcalvcOOBBt2/UIawXDlq1
+ EQ0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUP35y9oPzMT7dox2sG8E+zEAbm7KYmeuT/6rjXV3WiiIwfKqCxTymEpmnn9ots8tauvbDTNZEvkeKu@nongnu.org
-X-Gm-Message-State: AOJu0Ywnp9Ea43YRtgjtrwXhmOH4/RFHDoE56A0QmkUCyeTepgk6HH5u
- PuTt1lIiP0IP8qNzHZDANdvpsVG/G99I08nYCGLjk6f7x5c5v/zycGJZ6F/kRUU=
-X-Gm-Gg: ASbGncto9j+FT2/DopWPaM56zryLEbjJuRn4dF4sAz12pZ73GNRrX4JSJFndVWUwauW
- pIf/CKzFZF68oSn663Nc0sX2uXbcj7VdUbueXSJVktwyNYy1OeIBDGPin3/24HFNqiWV6rBBvP9
- oZCL//xwtywUFwOC9mlNxYgeI6wrz+Tz5TSH8pFx4f4ZMcEycAVQjBhrLYBhkC9PumNXh19w9ZD
- nlR78yftIYWwNm4leVejFCzrivZ9quoi5nYxbJJm4x2Z+lPNct/Mcr3DbeJ3AiRjRMJJa4uQWaL
- uoc3HNn+52EpPRHGQwoZpr8aY7/sQj7O3I0UcsuOf1LBtJvLN6i6WkTLaeTBP/IBSKlAH2LGTN/
- JVm3CWcBUedRsj9c=
-X-Google-Smtp-Source: AGHT+IHhINrqr89bw31zHXrKyowRi/UyA4bW6E65dzTeVZyjcL9PMQTonDLGLFK2ZzFDM9GDozLJTg==
-X-Received: by 2002:a05:600c:4751:b0:43c:fffc:7886 with SMTP id
- 5b1f17b1804b1-43cfffc7ca2mr123536745e9.8.1741862343912; 
- Thu, 13 Mar 2025 03:39:03 -0700 (PDT)
+ AJvYcCXs7p/Pz10Gb51+PzLNgVo4B0QLvh8uHH/g6TxDYV48YhE3KWJDm/5NW2wBmldiCjxYtFhX8hsDrLRo@nongnu.org
+X-Gm-Message-State: AOJu0YzydQuaPcsk3LgahHU366Cbnz+lNENiC8WVh8X29UhsJYBaFJbn
+ F0wHmwl8nQiuJHSJhoJ+1FARhmtroBsZGWpHMZFpeIIThbdzoBaPy9hmPYMWa5Y=
+X-Gm-Gg: ASbGnct3mKc8TVVcuPBEzL7uUtV3+nmirtWLhFFTOFyoy8aCuh/+F+n8xvTkWDTW1Zv
+ HxgQ4SUXaZXuQ+eEKgIpDSAC84Mki+XIlzkEmvLtmZr5BjWWd+SOLCB4ge53s/XO0d4xHeE8qXa
+ wmp8+EIDF51E5X6H+gxtKzEvMeT3rLINyysuQp4fUtWJDy7nXpR+twc7K/N0G15Bweg9oDFiNOH
+ 4blLm5XPxo/HKkFu0JoqE5NSfNpkWY4423b45X81ZAsEzkAeIHmf4sHefL/7GR8KO3MmOstUeH1
+ WpDFZ9G3Ku/UBxbNxjO8Vk84r77wx7KWs0J0iFcZ4gKbYJs6Mpu/Wgcm8eCPCaM1ylcb10cbiGV
+ hrfCcwchOD8rRvC8=
+X-Google-Smtp-Source: AGHT+IHglwtD/k6GmPHzVWYMZ4EFMmff+m/sOuK65Iz8Mpn+PREh+DrLKCkxiya+HaH7dWCNAMXxNQ==
+X-Received: by 2002:a5d:648f:0:b0:390:fe13:e0ba with SMTP id
+ ffacd0b85a97d-39132d70bc4mr19234336f8f.27.1741862481992; 
+ Thu, 13 Mar 2025 03:41:21 -0700 (PDT)
 Received: from [192.168.1.20] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb7eb9d7sm1631821f8f.89.2025.03.13.03.39.03
+ ffacd0b85a97d-395cb318afbsm1689675f8f.72.2025.03.13.03.41.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 03:39:03 -0700 (PDT)
-Message-ID: <00d707e4-5e60-43fc-b372-72336d7af293@linaro.org>
-Date: Thu, 13 Mar 2025 11:39:02 +0100
+ Thu, 13 Mar 2025 03:41:21 -0700 (PDT)
+Message-ID: <f3138658-505e-4222-aa2c-624e11875efd@linaro.org>
+Date: Thu, 13 Mar 2025 11:41:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/37] common-user: Split out watchpoint-stub.c
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com
-References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-26-richard.henderson@linaro.org>
- <36f7e651-4df6-457d-a7ef-df7a7c4b2570@linaro.org>
+Subject: Re: [PATCH 3/3] target/loongarch: Remove unnecessary temporary
+ variable assignment
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250313091350.3770394-1-maobibo@loongson.cn>
+ <20250313091350.3770394-4-maobibo@loongson.cn>
 Content-Language: en-US
-In-Reply-To: <36f7e651-4df6-457d-a7ef-df7a7c4b2570@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250313091350.3770394-4-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,147 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/3/25 11:07, Philippe Mathieu-Daudé wrote:
-> On 13/3/25 04:45, Richard Henderson wrote:
->> Uninline the user-only stubs from hw/core/cpu.h.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/hw/core/cpu.h         | 23 -----------------------
->>   common-user/watchpoint-stub.c | 28 ++++++++++++++++++++++++++++
->>   common-user/meson.build       |  1 +
->>   3 files changed, 29 insertions(+), 23 deletions(-)
->>   create mode 100644 common-user/watchpoint-stub.c
->>
->> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
->> index 5d11d26556..2fdb115b19 100644
->> --- a/include/hw/core/cpu.h
->> +++ b/include/hw/core/cpu.h
->> @@ -1109,35 +1109,12 @@ static inline bool 
->> cpu_breakpoint_test(CPUState *cpu, vaddr pc, int mask)
->>       return false;
->>   }
->> -#if defined(CONFIG_USER_ONLY)
->> -static inline int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, 
->> vaddr len,
->> -                                        int flags, CPUWatchpoint 
->> **watchpoint)
->> -{
->> -    return -ENOSYS;
->> -}
->> -
->> -static inline int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
->> -                                        vaddr len, int flags)
->> -{
->> -    return -ENOSYS;
->> -}
->> -
->> -static inline void cpu_watchpoint_remove_by_ref(CPUState *cpu,
->> -                                                CPUWatchpoint *wp)
->> -{
->> -}
->> -
->> -static inline void cpu_watchpoint_remove_all(CPUState *cpu, int mask)
->> -{
->> -}
->> -#else
->>   int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
->>                             int flags, CPUWatchpoint **watchpoint);
->>   int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
->>                             vaddr len, int flags);
->>   void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint 
->> *watchpoint);
->>   void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
->> -#endif
->>   /**
->>    * cpu_get_address_space:
->> diff --git a/common-user/watchpoint-stub.c b/common-user/watchpoint- 
->> stub.c
->> new file mode 100644
->> index 0000000000..2489fca4f3
->> --- /dev/null
->> +++ b/common-user/watchpoint-stub.c
->> @@ -0,0 +1,28 @@
->> +/*
->> + * CPU watchpoint stubs
->> + *
->> + * Copyright (c) 2003 Fabrice Bellard
->> + * SPDX-License-Identifier: LGPL-2.1-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "hw/core/cpu.h"
->> +
->> +int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
->> +                          int flags, CPUWatchpoint **watchpoint)
->> +{
->> +    return -ENOSYS;
->> +}
->> +
->> +int cpu_watchpoint_remove(CPUState *cpu, vaddr addr, vaddr len, int 
->> flags)
->> +{
->> +    return -ENOSYS;
->> +}
->> +
->> +void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *wp)
->> +{
+On 13/3/25 10:13, Bibo Mao wrote:
+> Temporary variable ret is assigned at last line and return, it can
+> be removed and return directly.
 > 
-> Again, can this be elide? Otherwise better use g_assert_not_reached().
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/tcg/tlb_helper.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 
-We can, including:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
--- >8 --
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index dba1b3ffef..54d3879c56 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7545,4 +7545,6 @@ static void x86_cpu_reset_hold(Object *obj, 
-ResetType type)
-      env->dr[7] = DR7_FIXED_1;
-+#ifndef CONFIG_USER_ONLY
-      cpu_breakpoint_remove_all(cs, BP_CPU);
-      cpu_watchpoint_remove_all(cs, BP_CPU);
-+#endif
-
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index a9a619ba6b..f798569de7 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -368,2 +368,3 @@ static bool check_watchpoints(ARMCPU *cpu)
-
-+#ifndef CONFIG_USER_ONLY
-      for (n = 0; n < ARRAY_SIZE(env->cpu_watchpoint); n++) {
-@@ -373,2 +374,3 @@ static bool check_watchpoints(ARMCPU *cpu)
-      }
-+#endif
-      return false;
-@@ -555,2 +557,3 @@ void hw_watchpoint_update(ARMCPU *cpu, int n)
-
-+#ifndef CONFIG_USER_ONLY
-      if (env->cpu_watchpoint[n]) {
-@@ -559,2 +562,3 @@ void hw_watchpoint_update(ARMCPU *cpu, int n)
-      }
-+#endif
-
-@@ -631,4 +635,6 @@ void hw_watchpoint_update(ARMCPU *cpu, int n)
-
-+#ifndef CONFIG_USER_ONLY
-      cpu_watchpoint_insert(CPU(cpu), wvr, len, flags,
-                            &env->cpu_watchpoint[n]);
-+#endif
-  }
-@@ -637,3 +643,3 @@ void hw_watchpoint_update_all(ARMCPU *cpu)
-  {
--    int i;
-+#ifndef CONFIG_USER_ONLY
-      CPUARMState *env = &cpu->env;
-@@ -646,4 +652,5 @@ void hw_watchpoint_update_all(ARMCPU *cpu)
-      memset(env->cpu_watchpoint, 0, sizeof(env->cpu_watchpoint));
-+#endif
-
--    for (i = 0; i < ARRAY_SIZE(cpu->env.cpu_watchpoint); i++) {
-+    for (unsigned i = 0; i < ARRAY_SIZE(cpu->env.cpu_watchpoint); i++) {
-          hw_watchpoint_update(cpu, i);
----
 
