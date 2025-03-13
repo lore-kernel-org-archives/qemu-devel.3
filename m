@@ -4,99 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA50C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 12:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB39C282DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 13:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tshvt-0003gu-LF; Thu, 13 Mar 2025 08:45:05 -0400
+	id 1tsieu-00023B-R0; Thu, 13 Mar 2025 09:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tshvr-0003ea-81
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:45:03 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tshvk-0003m1-Rw
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 08:45:02 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-301493f45aeso116204a91.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 05:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1741869894; x=1742474694; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D6feM5Xy+zarRq9YhH8FI7IPuKUW/t+Or20kqkXx3d8=;
- b=jLmZUqykW51Ha6Bnqnpcg0C90p1j8gsZlpnWO+PaNEHG1/HY9iYqduAt24ODYjSh42
- l2ylgGm6Fz9LAc1sNhqcyA+pYiHAO9hHgZYAosL/eRrrb+jDxLFhR/2JAyAFALp4AsHd
- QDdVAfa1r1Kb0lAWMyb/o5Tog60l0Cdwwxgp3hsWgQ+XU4Ew17RFQyEfE8Tfm9NxijUW
- S2I/KhU1CrAEJA87iCxLBbF5viUgU4NGHyNrkPrRGRoWIx8KwmrMJ+uaEXaQyjxQHAQJ
- 9H9QzeQlDnqKcG4YMu3Z5EOr7rnSgKEoMr5rzf8m9C+uV3GIBXpXYP8bpG/6RWhT1N5D
- Ne6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741869894; x=1742474694;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D6feM5Xy+zarRq9YhH8FI7IPuKUW/t+Or20kqkXx3d8=;
- b=flJPZpSSiJFboTCG2F/8EAHMyPYZPBY3JtFyhxDNeEgeef/EbOYIbcjGLh51o/q5mN
- +mlJT39dV0qjpKMThd1G7uTspapTFyjj0ABpq7G05dEfxnYqOqP1FCRIdr6ihFJoaGpk
- 541ybU585xxFMUJxTS4Pjl4at01MLpGS/ErchP5UYRDLuY+2sOT0o77AfUpOqyyTi4l+
- fbD1WXgzEBTTsmdA/Ov46SjCIfDaKZUsbCCYrrubFOtMmOSPfGpdtscWl6qrbj3a7Yar
- z2m9uZprl7Xw7jGPjW6nV6T89T1yiQcWR25C3Z+1gay3vRomCJgEP0K/e4XLBb24q+Zq
- k62w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXG1D3EVVj8miGPyFkdGHNTieaC8Q/Pzx6A+7HY+SXOppV5erEGTULJf0+QeQdXKe6xgcAdBewkSNOQ@nongnu.org
-X-Gm-Message-State: AOJu0YzBIDHSoq4mKfehfEGgsS9bzv8fKErcIL8NPjjA4smN7pgvyZH0
- lSEreeDPZoR6TSyQqxZlb8YOZR1eVtYIf9aer7dGRuw+XHEc/KtBBCtpvhdpaso=
-X-Gm-Gg: ASbGnctxZcQ0+q6suHF+19BCd5vnkZp81OjUK2GmhyCwHZanM/JgjQ/gXuHAEAHEafh
- lWCMqqC04tQJPXL2z03MS02KuNrZl23KhkynRVk/v/DQJIkQyjb7FfPpAO8wdOfdYitzy3ron/x
- hNe5ELBFggvCy8NWNG3+0mzze3o6pXNEe3GmzWhHa+X8R5F4CMNwReH0VA4s44GElFOYiyno7ea
- xgU1yVzKFbwX43UWNOOm23FkdwZ54kqk98iTH9yhWDVSzFuO9jUwhzRpPW8NE+E1IApG5RSMf9d
- EwIuTTn7aVG4GUOD52UMW0Qnp2YbrDBfOf1doj8NzAa9DuConguxQqsLfkg=
-X-Google-Smtp-Source: AGHT+IFw5OLNJZQDskE2fPXy5V18FpjqlRl+dDtg/2iXjhxYt92tumniX2AfQMCJnjosEaoD+X1M9Q==
-X-Received: by 2002:a05:6a21:1519:b0:1f5:7280:1cdb with SMTP id
- adf61e73a8af0-1f572802b7amr25495560637.16.1741869894263; 
- Thu, 13 Mar 2025 05:44:54 -0700 (PDT)
-Received: from [192.168.68.110] ([177.170.117.79])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56ea95651sm1162523a12.73.2025.03.13.05.44.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 05:44:53 -0700 (PDT)
-Message-ID: <f08a8ad9-186a-4983-9c7e-3976668ae8fd@ventanamicro.com>
-Date: Thu, 13 Mar 2025 09:44:49 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/riscv/riscv-iommu: Connect the IOMMU with PCI
- hosts that have ATUs
-To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1tsied-00021s-GO
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:31:19 -0400
+Received: from mail.8bytes.org ([85.214.250.239])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <joro@8bytes.org>) id 1tsiea-000106-F5
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 09:31:18 -0400
+Received: from 8bytes.org (p4ffe03ae.dip0.t-ipconnect.de [79.254.3.174])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.8bytes.org (Postfix) with ESMTPSA id 30A1E45953;
+ Thu, 13 Mar 2025 14:31:13 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+ s=default; t=1741872673;
+ bh=bBUjnTRyyqPc8CVFTfn+Vi/TQK9CA6qYCHj5K+/GOA4=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Pfrm+mcNZo4ueS3tAn70uAnnHty7WDiRZd8Sp24h52kGtu/nBFI34CgiwzCNlEv9l
+ e7M4GyzsX8rj41Mq1RkpaYfwzk82mTrpmHHk4/ZI5fyCCeIc1BLvFwjAUgxy+bV6wc
+ gJlcI54fcB7MRvaKQYnL65eOcoaXjfxNokHPQCvLbUJcxYG3bz66i4SJBLStx9yFzE
+ 72TAdBAmp1ub9GfJr3cxyUZUXjE66Hz8KNVEWgA0ZpRY2RylUv44vMXo5Ys4iGsO+T
+ BCuFxyYFbj5sMrsqY6EQHtnnJl66KjJIThzHKIcz218TwoJLBqmjb48B3IB6E3CPa1
+ I1kVY6ibKSN5A==
+Date: Thu, 13 Mar 2025 14:31:12 +0100
+From: =?iso-8859-1?Q?J=F6rg_R=F6del?= <joro@8bytes.org>
+To: Gerd Hoffman <kraxel@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "open list:MCIMX7D SABRE / i..." <qemu-arm@nongnu.org>
-References: <20250307203952.13871-1-jason.chien@sifive.com>
- <20250307203952.13871-5-jason.chien@sifive.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250307203952.13871-5-jason.chien@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1030.google.com
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <Z9LeILiEU5GfEHrl@8bytes.org>
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+Received-SPF: pass client-ip=85.214.250.239; envelope-from=joro@8bytes.org;
+ helo=mail.8bytes.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,48 +78,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Gerd,
 
-
-On 3/7/25 5:39 PM, Jason Chien wrote:
-> When the IOMMU detects that bus->iommu_ops has been registered, indicating
-> the presence of an ATU, it sets the bus's downstream memory region to ensure
-> transactions are directed to the IOMMU.
+On Thu, Mar 13, 2025 at 01:05:13PM +0100, Gerd Hoffman wrote:
+> // regions_addr points to an array of this structure
+> struct vmfwupdate_regions {
+>     uint64_t size;
+>     uint64_t src_addr;       // source address (before update)
+>     uint64_t dst_addr;       // destination address (after update)
+>     uint64_t flags;          // control bits
+> };
 > 
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> ---
-
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-
->   hw/riscv/riscv-iommu.c | 15 ++++++++++-----
->   1 file changed, 10 insertions(+), 5 deletions(-)
+> // flags
+> #define VMFWUPDATE_REGION_FLAG_COPY     // data must be copied
+> #define VMFWUPDATE_REGION_FLAG_ZERO     // dest must be cleared
+> #define VMFWUPDATE_REGION_FLAG_MEASURE  // data must be measured
 > 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index d46beb2d64..9701fe3831 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2628,11 +2628,16 @@ static const PCIIOMMUOps riscv_iommu_ops = {
->   void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
->           Error **errp)
->   {
-> -    if (bus->iommu_ops &&
-> -        bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
-> -        /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
-> -        RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
-> -        QLIST_INSERT_AFTER(last, iommu, iommus);
-> +    if (bus->iommu_ops) {
-> +        if (bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
-> +            /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
-> +            RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
-> +            QLIST_INSERT_AFTER(last, iommu, iommus);
-> +        } else {
-> +            /* The bus has an ATU. Set its downsteam memory region. */
-> +            AddressSpace *as = riscv_iommu_space(iommu, 0);
-> +            pci_setup_iommu_downstream_mr(bus, as->root);
-> +        }
->       } else if (!bus->iommu_ops && !bus->iommu_opaque) {
->           pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
->       } else {
+> (1)   is still not covered.
+> (2+3) can be handled with FLAG_ZERO regions, with and without
+>       FLAG_MEASURE.
+> (4)   Alex already pointed that the cpuid page is special, guess we
+>       need additional flags for those oages.
 
+That looks better, when the host VMM guarantees the order in which it
+translates these regions into VM setup calls, then it is a step
+forward. Although there more things to keep in mind, like the guest
+policy and SEV status parameters.
+
+> Open question is what we do about IGVM.
+> 
+> One option would be the guest vmfwupdate tool loading and parsing igvm,
+> preparing the region list, then invoke the update.  Problem is that some
+> igvm feaures such as initial register state can not be easily supported
+> that way.
+> 
+> We could also expect the hypervisor support igvm, so the guest can
+> simply load the file into memory and pass address and size to the
+> hypervisor.  Either as option, say via VMFWUPDATE_REGION_FLAG_IGVM, or
+> mandatory, i.e. scratch the region list and use IGVM exclusively.
+
+This is of course up to the QEMU maintainers to decide, but I want to
+highlight that IGVM already solves all the problems mentioned above,
+including setting multiple memory regions of different type, special
+data pages (cpuid, secrets, id-blob, vmsa) and more. It defines the
+order of setup calls the VMM has to invoke for the new context and also
+works for multiple platforms like TDX, SNP, non-coco, and in the future
+ARM as well.
+
+Regards,
+
+	Joerg
 
