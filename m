@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0B7C35FF1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1337C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt20M-0006Ke-RC; Fri, 14 Mar 2025 06:11:02 -0400
+	id 1tt20M-0006KS-1F; Fri, 14 Mar 2025 06:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt20F-0006Iq-11
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt20E-0006Ip-Se
  for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:10:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt20C-00023C-Mn
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt20C-00023B-ML
  for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:10:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1741947051;
@@ -24,44 +24,43 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=baQ+HaROmmAM+TkdGfumBlYGTIxDaOf3UHesS9VAqik=;
- b=S+mFu/zaqGtB9kcfe2HWoJVAj65fIdIekYhLUsZEox1+GtLLS8yLCEfawELnEUmQgfFA2A
- wt9x+DJKocWocUFgiiO3BD5e0mOlSfuDPlOmJCum3FweV6Kg7gUiskaZAhU4bCamQFqiY5
- IKDrei8sL9UJ+FqoHttGOeWFkI2sSlo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=FMhx6loXPBAjuIXAlLsHOTwdp7+0R4NgyYOtMoaW8X0=;
+ b=Rr2AcfnptxhEdZp48VNPQOK5b/urYpTK8Vmsps5oFYErUh2d2HgGubaXgj/HvNljg939l9
+ XuGlVvvBYACM6Jgkl9C/a5i4oWZS/xbpI34o5NZWlGt16wwJNiOIPTRu2qvWKxuH+l7LBB
+ SdVPHb9jXxl265V2o6kAvBr7liuDZa4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-RBZoqkw3Ol2flFrXXwJXQA-1; Fri,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-9AGI9JAvMsGXl2srunHEQA-1; Fri,
  14 Mar 2025 06:10:49 -0400
-X-MC-Unique: RBZoqkw3Ol2flFrXXwJXQA-1
-X-Mimecast-MFC-AGG-ID: RBZoqkw3Ol2flFrXXwJXQA_1741947049
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+X-MC-Unique: 9AGI9JAvMsGXl2srunHEQA-1
+X-Mimecast-MFC-AGG-ID: 9AGI9JAvMsGXl2srunHEQA_1741947049
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E27571956048
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E21881800258
  for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:10:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F8A41801756
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88CCF1828AA4
  for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:10:48 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D28AD21E65FF; Fri, 14 Mar 2025 11:10:38 +0100 (CET)
+ id E652121E64F2; Fri, 14 Mar 2025 11:10:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 07/12] docs/qapidoc: add :namespace: option to qapi-doc
- directive
-Date: Fri, 14 Mar 2025 11:10:33 +0100
-Message-ID: <20250314101038.2408751-8-armbru@redhat.com>
+Subject: [PULL 12/12] docs: enable transmogrifier for QSD and QGA
+Date: Fri, 14 Mar 2025 11:10:38 +0100
+Message-ID: <20250314101038.2408751-13-armbru@redhat.com>
 In-Reply-To: <20250314101038.2408751-1-armbru@redhat.com>
 References: <20250314101038.2408751-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -89,60 +88,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Add a :namespace: option to the qapi-doc directive, which inserts a
-qapi:namespace directive into the start of the generated document. This,
-in turn, associates all auto-generated definitions by this directive
-with the specified namespace.
-
-The source info for these generated lines are credited to the start of
-the qapi-doc directive, which isn't precisely correct, but I wasn't sure
-how to get it more accurate without some re-parsing shenanigans.
+This also creates the `qapi-qsd-index` and `qapi-qga-index` QMP indices.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250313044312.189276-7-jsnow@redhat.com>
+Message-ID: <20250313044312.189276-12-jsnow@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ docs/conf.py                                 | 2 ++
+ docs/interop/qemu-ga-ref.rst                 | 2 ++
+ docs/interop/qemu-storage-daemon-qmp-ref.rst | 2 ++
+ qga/qapi-schema.json                         | 3 +++
+ storage-daemon/qapi/qapi-schema.json         | 8 ++++++++
+ 5 files changed, 17 insertions(+)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 432fef04b0..661b2c4ed0 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -451,6 +451,12 @@ def visit_entity(self, ent: QAPISchemaDefinition) -> None:
-         finally:
-             self._curr_ent = None
+diff --git a/docs/conf.py b/docs/conf.py
+index 9a86e84a80..7b5712e122 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -164,7 +164,9 @@
+ # Due to a limitation in Sphinx, we need to know which indices to
+ # generate in advance. Adding a namespace here allows that generation.
+ qapi_namespaces = {
++    "QGA",
+     "QMP",
++    "QSD",
+ }
  
-+    def set_namespace(self, namespace: str, source: str, lineno: int) -> None:
-+        self.add_line_raw(
-+            f".. qapi:namespace:: {namespace}", source, lineno + 1
-+        )
-+        self.ensure_blank_line()
+ # -- Options for HTML output ----------------------------------------------
+diff --git a/docs/interop/qemu-ga-ref.rst b/docs/interop/qemu-ga-ref.rst
+index 032d492455..19b5c7a549 100644
+--- a/docs/interop/qemu-ga-ref.rst
++++ b/docs/interop/qemu-ga-ref.rst
+@@ -5,3 +5,5 @@ QEMU Guest Agent Protocol Reference
+    :depth: 3
+ 
+ .. qapi-doc:: qga/qapi-schema.json
++   :transmogrify:
++   :namespace: QGA
+diff --git a/docs/interop/qemu-storage-daemon-qmp-ref.rst b/docs/interop/qemu-storage-daemon-qmp-ref.rst
+index 9fed68152f..d0228d63b8 100644
+--- a/docs/interop/qemu-storage-daemon-qmp-ref.rst
++++ b/docs/interop/qemu-storage-daemon-qmp-ref.rst
+@@ -5,3 +5,5 @@ QEMU Storage Daemon QMP Reference Manual
+    :depth: 3
+ 
+ .. qapi-doc:: storage-daemon/qapi/qapi-schema.json
++   :transmogrify:
++   :namespace: QSD
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 995594aaf4..35ec0e7db3 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -3,6 +3,9 @@
+ 
+ ##
+ # = QEMU guest agent protocol commands and structs
++#
++# For a concise listing of all commands, events, and types in the QEMU
++# guest agent, please consult the `qapi-qga-index`.
+ ##
+ 
+ { 'pragma': { 'doc-required': true } }
+diff --git a/storage-daemon/qapi/qapi-schema.json b/storage-daemon/qapi/qapi-schema.json
+index f10c949490..2a562ee32e 100644
+--- a/storage-daemon/qapi/qapi-schema.json
++++ b/storage-daemon/qapi/qapi-schema.json
+@@ -13,6 +13,14 @@
+ # the array type in the main schema, even if it is unused outside of the
+ # storage daemon.
+ 
++##
++# = QEMU storage daemon protocol commands and structs
++#
++# For a concise listing of all commands, events, and types in the QEMU
++# storage daemon, please consult the `qapi-qsd-index`.
++##
 +
- 
- class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
-     """A QAPI schema visitor which adds Sphinx dependencies each module
-@@ -496,6 +502,7 @@ class QAPIDocDirective(NestedDirective):
-     optional_arguments = 1
-     option_spec = {
-         "qapifile": directives.unchanged_required,
-+        "namespace": directives.unchanged,
-         "transmogrify": directives.flag,
-     }
-     has_content = False
-@@ -510,6 +517,11 @@ def transmogrify(self, schema: QAPISchema) -> nodes.Element:
-         vis = Transmogrifier()
-         modules = set()
- 
-+        if "namespace" in self.options:
-+            vis.set_namespace(
-+                self.options["namespace"], *self.get_source_info()
-+            )
 +
-         for doc in schema.docs:
-             module_source = doc.info.fname
-             if module_source not in modules:
+ { 'include': '../../qapi/pragma.json' }
+ 
+ # Documentation generated with qapi-gen.py is in source order, with
 -- 
 2.48.1
 
