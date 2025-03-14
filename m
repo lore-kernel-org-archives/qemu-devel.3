@@ -4,75 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFB3C28B2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 07:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D35C28B2F
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 07:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tszS5-0006IF-Cg; Fri, 14 Mar 2025 03:27:29 -0400
+	id 1tszff-0002JI-3S; Fri, 14 Mar 2025 03:41:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tszS0-0006GN-SE
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:27:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tszRx-0005Wh-O4
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:27:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741937239;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WRTHfyNrHtZ0Ngpx5dpBkdi9rv/B8WB5yijxdWvurUA=;
- b=K44wTGPnlZZ0kMfYtMIqA+AG9mFOXsXSC1VzaEqkGtSwRfeBeW20tpgPY3oWisdl/dbjky
- j5FR6jOlALI3UG9Kj6r3E6cRVmi2m5bNOE+rTNaLSxagECFjOco+3nVwTBmuAvstVAj2bl
- TVWgEmkRK/5E5oKbx4i43+PqCHbPXyc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-440-YUsWhaLmNreIRh2difLcOA-1; Fri,
- 14 Mar 2025 03:27:15 -0400
-X-MC-Unique: YUsWhaLmNreIRh2difLcOA-1
-X-Mimecast-MFC-AGG-ID: YUsWhaLmNreIRh2difLcOA_1741937234
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D5871801A00; Fri, 14 Mar 2025 07:27:14 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE1BC1944DD4; Fri, 14 Mar 2025 07:27:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4B5EB21E675E; Fri, 14 Mar 2025 08:27:10 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Konstantin Kostiuk <kkostiuk@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Kevin Wolf
- <kwolf@redhat.com>
-Subject: Re: [PATCH 09/11] docs: add QAPI namespace "QMP" to qemu-qmp-ref
-In-Reply-To: <20250313044312.189276-10-jsnow@redhat.com> (John Snow's message
- of "Thu, 13 Mar 2025 00:43:10 -0400")
-References: <20250313044312.189276-1-jsnow@redhat.com>
- <20250313044312.189276-10-jsnow@redhat.com>
-Date: Fri, 14 Mar 2025 08:27:10 +0100
-Message-ID: <87cyekul69.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tszfd-0002J1-Fl
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:41:29 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tszfb-0007eb-EI
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:41:29 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-22398e09e39so37229655ad.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 00:41:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1741938085; x=1742542885; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WMZ7bGsdyUxFQzv8iAUGh2h0oRF3xPj9mgSB3AvlNs4=;
+ b=e1fVJY8VYMfg2zMMpiDrBUCC8I6NU5NBA3jw/dX/eyIBiAIwWwId/Y+dKqbGTo/sju
+ mZCysxQwqGZxpEDYQRZJsjjJapCSOLmN30c1PRAjj8B3LfqGYPBzbSFo0z+XEtR5X7mm
+ 6ca4UXFuKRzh4iSxsVUWpvrYJt0gBacKHpEn4aWb+KbIUDbt2wKOHWfahVNKtmSleBhb
+ S2s9aDc7CkL0WQnewiYIy5k57SrOot1CGqArCcZI3K8rKnB7Lk64prx3jsQCxObAtxxf
+ Bp0Ji3CC9EMd7qr0Kp9N8a1s5iaRTyAn40tWCTNAqmn2tvXPONbuv7cfrK6ea8QHroDo
+ WdZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741938085; x=1742542885;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WMZ7bGsdyUxFQzv8iAUGh2h0oRF3xPj9mgSB3AvlNs4=;
+ b=dWvRIe+WJdQPp+4nnM9DdVC0aJwqefYLAI7fVQIenK8yEU6Oac+5l5mw/j3ZstXVfj
+ LOlWHaoW2yLgaqqD8liE5F+clQ6xlPxyqWcMiXqAWH/3RR9CI08ozCu9Q3HSXZ5LXioq
+ FlJ32WxK6Ysi6oVOKWOJS1XCFlpaCwW9zCGBV4dw4Pk0/VBkhzG6yNxIzQZfaYBCqua1
+ 7utbk21Ry+eIy/SaRvSFGwv6605muJjsqVhjIJUg5aj0CiUSgZ9RaTg4zDtmk3mHvmaF
+ GNVMxlQG8flh4DBeaTITnTTCzk8ZuObEaMJZNIndHoVUh9jsUU/uBPGG8OM2LxlfK8Gp
+ oEWw==
+X-Gm-Message-State: AOJu0Yx0zgBMxxxe1cU07+33AA77VHEq4eHZ519Z59Tc8BNzx00INoxW
+ K3isxWpMn4Zu7rWKf4wdzM46bBDkvOS7om+lFPNdldNRnBLW/HlsTtDd7WDp
+X-Gm-Gg: ASbGncsBD5B6cEIviKatdi+wc517zqbeydZ782yR3mGEb97hNaPHPWrkXddJzAWoje+
+ dly4iJG1WSK+78zl7Nbkn3RFDwRw9F+hjmtXBtFNCARMfjG0SBrKrgbWel3Hb7SczlJSeqsXxbd
+ l66HU6ryuF2pdIUYWngiHwaHEKxG6W6zFNpixEpuTHfyiNPRShKyUjyJE46Ubj65zItsXNL0KnE
+ 2aQxAdiSKlFXvKGoIHYCB+y9bDwJydnNzbIETWauPvKI3EX3RgI4WlMHfDEllzRCSKrwg/WkPlJ
+ 5YvbCTzA9ufVwyxwEUiqZhZtVm37Ha34pe3goZgqfItXvhY=
+X-Google-Smtp-Source: AGHT+IHQsrUB93GnZ89Twk7TIfBFKkudFgGaKaEvucHR7zOh38yvjsOUdWoTCYBffiHvjxZR/paIjQ==
+X-Received: by 2002:a17:903:1a2f:b0:224:1001:6787 with SMTP id
+ d9443c01a7336-225e0a19badmr25968245ad.4.1741938085293; 
+ Fri, 14 Mar 2025 00:41:25 -0700 (PDT)
+Received: from wheely.local0.net ([1.146.112.81])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-225c688857esm24322315ad.17.2025.03.14.00.41.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Mar 2025 00:41:24 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PATCH 1/2] gdbstub: Add phys_memory_rw_debug for physical memory
+ access
+Date: Fri, 14 Mar 2025 17:41:06 +1000
+Message-ID: <20250314074107.992163-2-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250314074107.992163-1-npiggin@gmail.com>
+References: <20250314074107.992163-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,61 +102,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Add an accessor for gdb physical memory access mode which sets the
+the .debug attribute for the MemTxAttribute, and also returns success
+to the caller.
 
-> This also creates the qapi-qmp-index.html index and cross-reference
-> target.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  docs/conf.py                  | 4 +++-
->  docs/interop/qemu-qmp-ref.rst | 1 +
->  qapi/qapi-schema.json         | 2 +-
->  3 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/docs/conf.py b/docs/conf.py
-> index 175491148c3..9a86e84a804 100644
-> --- a/docs/conf.py
-> +++ b/docs/conf.py
-> @@ -163,7 +163,9 @@
->  
->  # Due to a limitation in Sphinx, we need to know which indices to
->  # generate in advance. Adding a namespace here allows that generation.
-> -qapi_namespaces = set()
-> +qapi_namespaces = {
-> +    "QMP",
-> +}
->  
->  # -- Options for HTML output ----------------------------------------------
->  
-> diff --git a/docs/interop/qemu-qmp-ref.rst b/docs/interop/qemu-qmp-ref.rst
-> index e95eeac45e2..ef8792b53f5 100644
-> --- a/docs/interop/qemu-qmp-ref.rst
-> +++ b/docs/interop/qemu-qmp-ref.rst
-> @@ -8,3 +8,4 @@ QEMU QMP Reference Manual
->  
->  .. qapi-doc:: qapi/qapi-schema.json
->     :transmogrify:
-> +   :namespace: QMP
-> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-> index 4475e81cc3e..c41c01eb2ab 100644
-> --- a/qapi/qapi-schema.json
-> +++ b/qapi/qapi-schema.json
-> @@ -5,7 +5,7 @@
->  #
->  # This document describes all commands currently supported by QMP.
->  #
-> -# For locating a particular item, please see the `qapi-index`.
-> +# For locating a particular item, please see the `qapi-qmp-index`.
+GDB with PhyMemMode will now report failure from memory accesses outside
+valid system memory addresses, and it is also able to write to ROMs as
+GDB virtual memory access can.
 
-Output changes from "see the QAPI Index" to "see the QMP Index", which
-is an improvement.
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ docs/devel/loads-stores.rst | 11 +++++++++++
+ include/exec/cpu-common.h   |  3 +++
+ gdbstub/system.c            |  7 +------
+ system/physmem.c            | 16 ++++++++++++++++
+ 4 files changed, 31 insertions(+), 6 deletions(-)
 
-I think I'd rather spell it "QMP index", though.  "Index" comes from
-PATCH 08.  Not worth delaying the series. for that.
-
->  #
->  # Most of the time their usage is exactly the same as in the user
->  # Monitor, this means that any other document which also describe
+diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+index 9471bac8599..ac2e0d34d67 100644
+--- a/docs/devel/loads-stores.rst
++++ b/docs/devel/loads-stores.rst
+@@ -481,6 +481,17 @@ would ignore the write attempt).
+ 
+ ``cpu_memory_rw_debug``
+ 
++``phys_memory_rw_debug``
++~~~~~~~~~~~~~~~~~~~~~~~
++
++Access system memory by physical address for debug purposes.
++
++This function is intended for use by the GDB stub and similar code.
++It takes a physical address and operates on the system address space.
++Access is performed as in cpu_memory_rw_debug().
++
++``phys_memory_rw_debug``
++
+ ``dma_memory_*``
+ ~~~~~~~~~~~~~~~~
+ 
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 3771b2130c2..6429dc2331e 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -181,6 +181,9 @@ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
+ /* Returns: 0 on success, -1 on error */
+ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+                         void *ptr, size_t len, bool is_write);
++/* Returns: 0 on success, -1 on error */
++int phys_memory_rw_debug(hwaddr addr, void *buf,
++                         hwaddr len, bool is_write);
+ 
+ /* vl.c */
+ void list_cpus(void);
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index dd22ff0fb3a..79fcb30f6f0 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -457,12 +457,7 @@ int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
+                                uint8_t *buf, int len, bool is_write)
+ {
+     if (phy_memory_mode) {
+-        if (is_write) {
+-            cpu_physical_memory_write(addr, buf, len);
+-        } else {
+-            cpu_physical_memory_read(addr, buf, len);
+-        }
+-        return 0;
++        return phys_memory_rw_debug(addr, buf, len, is_write);
+     }
+ 
+     if (cpu->cc->memory_rw_debug) {
+diff --git a/system/physmem.c b/system/physmem.c
+index e97de3ef65c..aa78b0d514b 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3743,6 +3743,22 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+     return 0;
+ }
+ 
++/* physical memory access for debug (includes writing to ROM) */
++int phys_memory_rw_debug(hwaddr addr, void *buf,
++                         hwaddr len, bool is_write)
++{
++    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    MemTxResult res;
++
++    attrs.debug = 1;
++    res = address_space_rw(&address_space_memory, addr, attrs,
++                           buf, len, is_write);
++    if (res != MEMTX_OK) {
++        return -1;
++    }
++    return 0;
++}
++
+ bool cpu_physical_memory_is_io(hwaddr phys_addr)
+ {
+     MemoryRegion*mr;
+-- 
+2.47.1
 
 
