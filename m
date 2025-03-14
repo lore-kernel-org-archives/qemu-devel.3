@@ -4,94 +4,202 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADC6EC35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 15:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F934C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 15:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt77c-00088r-Ua; Fri, 14 Mar 2025 11:38:54 -0400
+	id 1tt7Cu-00021g-38; Fri, 14 Mar 2025 11:44:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tt77O-000868-OB
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:38:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
+ id 1tt7Cq-000214-VQ
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:44:17 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tt77K-0000jb-Hc
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:38:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741966711;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=JQGKBKXOHH2Mv9+V7IawRGJ4zdTputDRJl6j1G+R1vY=;
- b=CJHi4niE/Ji2He8sE8Y288hzurXMbfOt2MUj4JdKI7Fk8rlGhEIsuAmKgfLmz2KMrg07iJ
- pnJSZw5rOk80dqHhKt+l6GJ8jwHzYsW3Z8G6oUEU9oc20NuZ+KenDfdglCuwZv4bl5TBXg
- tPf/91hGWS9Jr/T4/fbabHibnYodfwg=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-FZxnOOizPGKWrfYrbA-9TA-1; Fri, 14 Mar 2025 11:38:29 -0400
-X-MC-Unique: FZxnOOizPGKWrfYrbA-9TA-1
-X-Mimecast-MFC-AGG-ID: FZxnOOizPGKWrfYrbA-9TA_1741966708
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ac31990bdfdso175153266b.1
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 08:38:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741966707; x=1742571507;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JQGKBKXOHH2Mv9+V7IawRGJ4zdTputDRJl6j1G+R1vY=;
- b=lnuHdGb084VF0th8FBu3bfNZHOzxPu56hlACVx+BJx2z3H+m4tHa0+nJVl5+SGVG39
- RVrPo/e2lY7z7tF04lbQniSs69r5grniJ9Q46mKuDUhTcLZmq9ZRDLlD53Opq0AM3rGx
- tKLSsb7tAtcfNaIJdSCuBC7D6vNBJl5V+ZD5ilqbN7IGbsSyPelx2Tnef3eFG5mDI4gK
- fTsjE/GNL+KxKyeljuhvZbYdAN9JU/l7jPmeUjN5G0cztXQMSJHh6MfKy1ETPPE/mqXx
- An3s4fVIyabGAaG2U8LCltSCWnpOIIAA8cJgXIWGaW+lp6cSw+KNWlUgUTIaYGnFAf7t
- sTmg==
-X-Gm-Message-State: AOJu0YwPHwozrb1sqmLe5ccLU0uZyYJdmEGisAY383/5egcxoxnVUQQS
- agu+j439z4Aaf/nEFUamxzsakfj0ZXJ/Ng47IWfjGRjYJ+KCJG5CwoztqFpBi4rb168RnqitpVu
- SFCNssEaMSml5sohoWEsa93oJCNOnBxt2ZUmp6mQU67AHEfkLACEz/8zeCa4PXVob1gtHEAFOfV
- E0PSSL6PZHT+uul2QusgWMs3HEKRt1bhmkGPQK
-X-Gm-Gg: ASbGnculchmR4WBy9fwXwqtb+CXONjG7Dj/atTEqxLNC4g0GGo6SY0QWzmBhB+T5LWU
- Wv+PHXel2vhdUgEH4cAz/+6rmZomi+3fIQhyIc8ZPB26Guw2JXpr0LbU4LAXe/RLL3OeNZjYviO
- IVzG7Qpqxtz7I2/17OV2lVMinMCXvZ5Cw3rJ7l+kyqVqgGuIEFsO3Ntd/A4o8giBx3eIcIZuVBf
- n534ZkzNVNQufUZI5I5uIDJiPiO+n7oU59ESmSYZMY5GLc+qGcpn4XrN3Bkol/RK3/mqY2neW1h
- 59OlAEqyhIiwVYogmsrJLQ==
-X-Received: by 2002:a17:907:7296:b0:abf:641a:5727 with SMTP id
- a640c23a62f3a-ac33011254emr386759466b.7.1741966707385; 
- Fri, 14 Mar 2025 08:38:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmbm2sdwmCW5oIfsx52R1GqMfrL6A4Kls67if0hoIjCwyECr9XUPhSf7NojVF9Wphh9gwKFQ==
-X-Received: by 2002:a17:907:7296:b0:abf:641a:5727 with SMTP id
- a640c23a62f3a-ac33011254emr386755866b.7.1741966706930; 
- Fri, 14 Mar 2025 08:38:26 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.122.167])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3149d0bc1sm241147566b.105.2025.03.14.08.38.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 08:38:25 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
-	Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: [PATCH] configure: disable split_debug on Windows and on non-git
- builds
-Date: Fri, 14 Mar 2025 16:38:24 +0100
-Message-ID: <20250314153824.65303-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.48.1
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
+ id 1tt7Co-0001sJ-OZ
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:44:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1741967055; x=1773503055;
+ h=date:from:to:cc:subject:message-id:references:
+ content-transfer-encoding:in-reply-to:mime-version;
+ bh=sK4CFT9QUSjFzsIqBocQ8zNJ1dcZaq/EKr+M/LGxoEc=;
+ b=UTfbNimRRCH64kvcN4XTuIHDP98DWFp4TOJ8nNyzXsv8yg0ss+Z3Fpss
+ WkkcahnsbZUblMeNMhG8YpWbXSi7KOAHUptARnNzeRZ31WJc2LitViDGl
+ UuOxWMi/bICDc4uBrKCKVjPLkXX4dkcwhd6Esv2OK55We1YLImo/2Zi5R
+ iZLqOEMbYq8V1QTWJANobhOQSiX6hhFm+H7aStREZ7OLkdmzioCtbMybr
+ km+f/FgoA0D/m9U6z3nGku4RQK3cveuvCQISm8Xcm1Gvr0hXwJ/UG+l6n
+ aVXvUUI44635L6ro3EmpTphkJ3y2hXxhNkeKo7Mu0JzYjiqUHsWkQkKh3 A==;
+X-CSE-ConnectionGUID: AJpjV5r6QOyZoWsiwDF/lQ==
+X-CSE-MsgGUID: Bg7u1Z5QRh2rd7w/SeiyMA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11373"; a="30710768"
+X-IronPort-AV: E=Sophos;i="6.14,246,1736841600"; d="scan'208";a="30710768"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Mar 2025 08:44:11 -0700
+X-CSE-ConnectionGUID: MpDCEPq3TCOmCiLfraCDYQ==
+X-CSE-MsgGUID: jmseVQf2TbSsrW55EpgN7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,246,1736841600"; d="scan'208";a="122034698"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by fmviesa009.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 14 Mar 2025 08:44:10 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Fri, 14 Mar 2025 08:44:10 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Fri, 14 Mar 2025 08:44:10 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.176)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Fri, 14 Mar 2025 08:44:10 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=y48Hnac7RnaU8mKhUEeuugpaflibjehDdP7c/EdmScizQnwhHjialZp/+3BnjdTyRKMCqI+BFBy+49xWZANVX9hPawXGa2Vg9PRXfbdSA1cXY50/ienF/QrXZErSp//1HZWPgnQ5EE3K+2fIk6J8qvdtylIWoQsCyVr9sH0InZohfJgzNhHxXLvBw515xfQK/YY6EL/2O7BHYsTbtYnet3CZ8GfGMx2pz4pr+bSvpHvj51B5/pSOCAAw+m67yEelN/mZ2OQZOixJX4JqnAwdCY2lcmsg8zeXdIPGp1M6C0VRdrzWE9Pa1s8zQtK6e5GFaGlzU/mNF8Mih0U52FGO9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ya9iIqy1/HYEn0AskArQKxvduLtal4uhLWFwMYmzzgM=;
+ b=voVhFtEfLArNd1JlBJMGq02orntyJv59oUXuIhkkn1+D4MqEBKS+wi/loXxMmKM0wxZsI6n3QZpH6RK9wcjgb9YF+x3k0a4SrhaIRNnYF6U+p6PeRbJTr8EkYtohshPav5fddOKNW4dRNwRC6Ik1L4iMW7bJiYs8VkUtwTKO7CSBcjC6U52hcJTQI5et6qgapl2guZ2jUytAEKHHmYiNS0KeDXzK8okorEEh+cKS3Gd0SDeB7M0q50exrXe3xgtbr9JzMnARjSjjUteuOCs5CAyXdU6l6AH9hP8SFaoqRE1brr0NtMWySnUj/C5iVbMRV+hu4g/mjQ4Ccj2SVzxe0g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
+ by SA2PR11MB5132.namprd11.prod.outlook.com (2603:10b6:806:11a::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.28; Fri, 14 Mar
+ 2025 15:44:08 +0000
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::6b05:74cf:a304:ecd8]) by PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::6b05:74cf:a304:ecd8%4]) with mapi id 15.20.8534.027; Fri, 14 Mar 2025
+ 15:44:08 +0000
+Date: Fri, 14 Mar 2025 08:44:05 -0700
+From: Dan Williams <dan.j.williams@intel.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Yuquan Wang
+ <wangyuquan1236@phytium.com.cn>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH] docs/cxl: Add serial number for persistent-memdev
+Message-ID: <67d44ec5a79c1_12e31294ea@dwillia2-xfh.jf.intel.com.notmuch>
+References: <20250217112039.138650-1-wangyuquan1236@phytium.com.cn>
+ <20250220161213.000049a9@huawei.com>
+ <20250221065509-mutt-send-email-mst@kernel.org>
+ <17b91a9f.2847.1955fd23d78.Coremail.wangyuquan1236@phytium.com.cn>
+ <20250305141359.00001288@huawei.com>
+ <4752672.2b5f.19565e01b65.Coremail.wangyuquan1236@phytium.com.cn>
+ <20250312181035.00006e32@huawei.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250312181035.00006e32@huawei.com>
+X-ClientProxiedBy: MW4PR04CA0323.namprd04.prod.outlook.com
+ (2603:10b6:303:82::28) To PH8PR11MB8107.namprd11.prod.outlook.com
+ (2603:10b6:510:256::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|SA2PR11MB5132:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1a1e93e5-9cce-4a6d-c622-08dd630f0e95
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Mis1ZXV4T3lLZ05INDUxVytIUCtyL0FmVklYUE40MmpFMEdURjFXRitGUW52?=
+ =?utf-8?B?ZzZlb3ZKMXhVSDN1NHpYbEpjTmlBa3hEdTBKenowLzI5Z1JCbE1MWGRvcjVS?=
+ =?utf-8?B?RG00QlFoQ0RsVzR6NUlrRVQ0TVZMK0hjaXkwWUFoUk9TenNWUkp0aXk3NEtS?=
+ =?utf-8?B?dk1xWS9pTytvUVYwRVJBTUpYNEptbjlIWGo3VTRhdUl1ZHRrN3U2QkVYa0J3?=
+ =?utf-8?B?Z084M1pjbldTR1NxWGdLN0RjT2kvSHoyS1FwaGdlaDh2S0VkbXg0bXZKMU5P?=
+ =?utf-8?B?SExqNmRGRzRDMlN2RXFKekJST3diK0x4YWZSK0VJd1daSDNKRjhxWDZrWE9E?=
+ =?utf-8?B?Qy9YdlcrWUhwVllLTTdPemlNRHk3bXZBT3FaTnY2NVpmWXFiVTduTFYyZXpl?=
+ =?utf-8?B?OXd3TjQ3TkE1RnRRN1kxMXZ0a1Y1VzRSVGkzYmpWQkYvbE9yaVVKLzdDMU9L?=
+ =?utf-8?B?R1kvL1RTekZsbVZ5QnJlQVpweU5samVVc29WSFVwejJNd0J5YU5xNU4wWVlo?=
+ =?utf-8?B?cHFTNzlpN3d2TmVqT1FOeS93bjVKZU1GNFVMTXc4OUpDenlkWWRON3pzK3F0?=
+ =?utf-8?B?SncrS0xkSnlJV1lsTlhZeExxdEZCL2NpcEZaNGhYOG02WFl2VW1PM1huS1NR?=
+ =?utf-8?B?Y3Q3bDVBNHdCcUdVK0JNYnJOWVVCZ2RCWDVCSXB2dDR1cXFTTnlNWEdZM3kw?=
+ =?utf-8?B?RStnNWpia0k2MjJFR0hnVjdCT3lsYy80WGJrWTl6Y1lneGduZVBuQlNVK2tP?=
+ =?utf-8?B?bmx3b1VteWU4NlNRTlpOcnp6Q0dOZ0dFNGpiSWgyZ3UrVXBYaFVDSU5EOTBn?=
+ =?utf-8?B?Q2JScUYrcER2TkxwS2FxajBta1lnZTdYUWhrTzk4ZlRKbVljbUdHL2VJYVd3?=
+ =?utf-8?B?RXZNZEE2bzF2NU4rTll2OEVjZFNiRjFOekhHelROcEhoK1dXaFp4TTFnb1ZK?=
+ =?utf-8?B?dTRIUlJQTFpjQXE2YVJCWEh4VUl6d1JDdzVWSDA2aXErb0JOWXZOU3VQcmxZ?=
+ =?utf-8?B?cTlCM1BOMUJyVEF1eGUvZlBJL2lVWXpDeHM4OFZEUUROQVlEOFJ4WWgrTW0z?=
+ =?utf-8?B?ait5ZUJqRUw0dzVKdUVyaGRzVkFOR3FDVFNkRDFXaU5QaHEwT1pGUDlMck93?=
+ =?utf-8?B?R0hVTE11SWs2Wk1rOWxuYVR0THlkRnpheTZvQkd4eVBxNlpHYlhudVRxSlc0?=
+ =?utf-8?B?K1BTMFFPem9uSHZOdVlXOVRNWXdQSnVsWDgwM0wwOWlZVGtnUW5rUDdWMVd5?=
+ =?utf-8?B?SDlyT3dMQ2N6UnhHT0dtWitlVGRPdmZZNjVMWlFIRjlDMlJwb2Q2aGc0SWJr?=
+ =?utf-8?B?YkJqeFd3bGd4am85UFpXV1VkMEY0YkpPdlp4Z2tzdEtPU09rZDhWQ0QxUENj?=
+ =?utf-8?B?b3hHaEt2YW4vR21pZGczVjM5d2dsYXJ1eEwrZ0cwMXlnOXpPNGtQTzViMEg3?=
+ =?utf-8?B?d1YrUUVRY1Y3MDhGZUpCU0J4ampTTnNPU01CSjF0MEdzQVJYUjhyeTNwdHRC?=
+ =?utf-8?B?R1MwTEZ5U1pIa0pRV0NKb3BnNDJEUUNNb1c5Y3Y4eU1UZnFrOFB2UjJrVmx1?=
+ =?utf-8?B?NUN6SHgwQTdjZktRemVyL3ZFWkdqd0RzanB4R0YxbkgyOUNobFh5aDRaTmJa?=
+ =?utf-8?B?UU1rQWhlblNHai9tbFhaNTREVnNOMkxOc2xGaGxUTTN1V3hsQVExa3l4T056?=
+ =?utf-8?B?Y0tEYXVtU0RXVjNZWTBBdDVRMjBIOWJ4SU8wTVc5WkIwUTdvY2VacXFQRk0x?=
+ =?utf-8?B?N2E4cUx2bHBkYXZPemhJNWgyUllmTmhzQi9PZzA5c0NFbFo5TnNWdmdWV1lY?=
+ =?utf-8?B?OTRkWW1Tazg4b052QU9lZEtOS2g2b1RRekg4aW1IcHJFWldGRSsxaTVGN1c4?=
+ =?utf-8?Q?IQcCQecV7nm6L?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH8PR11MB8107.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dVRJUm9WVXEwaGJwMEk3UURkWWtXaEhWMWRKU0duTHRIbVdLTkNUSE1PRXFB?=
+ =?utf-8?B?a1NxTGlldFRneXRZOFU0SEg1MjFaRlJ4cm1jQkhKU0JGU0g4ZVR0eUROMDRN?=
+ =?utf-8?B?K2VmckYwNkNLSnBFTG5kenhuR0tEaXRnLzZhQ05nRnhlZ24rL3cvaGhVaFJZ?=
+ =?utf-8?B?Wm43T0pVaXZoK05KMERmM1VsU3VWbEdEa0Qza2VjZzNiSWg5Sk1vTVBTay81?=
+ =?utf-8?B?VTlZWGhkd2o1VXp1c0ZVWlZ6bXh1b3dTUCt6RVBwemtrNTFQRlF5OFpKWVYw?=
+ =?utf-8?B?T3BOS3lHbndXNEQyODZKNGtiSThtZytWY3NqWGtUQmxJRnNheTd5dFh5SnlU?=
+ =?utf-8?B?RnhIWFVrUy8ybXhEWTZNQlc3NDFIeFZzU1BnZ1QvS0tRMDVzdWtnWnJNZ2Yw?=
+ =?utf-8?B?WVNUZTEvYjRGdVBoMEZGZVdjNjNTNWxvR1dyRW5pdjhDNFlwLzA0OE9KeWRU?=
+ =?utf-8?B?Zk5rZDNMOFJ6V3VCUENMbnl1cHJVb3c2WlZxdXJpYkxUbnFab0VDQUJlVHpN?=
+ =?utf-8?B?S0QvU1Z6dVE4cXRNZnZpVnNRdjl1OTdHZWV5Y0xlR0NZMDdjN2EwaHc0NFBl?=
+ =?utf-8?B?aHQrdzdYK0FYY0grcmVsWXdYRWQrZlBaUTdsTk1vWGFUMXRTWmFHV1dtZWhi?=
+ =?utf-8?B?c2FRM2RpeUdlSitlUzdjRk4xUzgwdUt1b2xsT0hGVlZCUE1aY3RxS1FLaVVX?=
+ =?utf-8?B?WCtwUTRhVEJLbU9PVnRqUHdGek8yN1h0L2Rxa05pekdleEdaU0REN2Mvbnp1?=
+ =?utf-8?B?SmhERG0rWXgyNWhtTnZuWEFnVFlvcDVTb3Vrd284djBhZzQyUjNSd3FFY3pJ?=
+ =?utf-8?B?dFVOY2FGYWFNOVJ0ckZxNVhLM1M2bm00bnl4V3ZpYSt6ZnBlcGl1M0JJMkxS?=
+ =?utf-8?B?ZjNFQWJLYjFlZE1qcHp0RGoxRmZsTEttbmFTL0h1alh1TmZPSVd0OUJPbDVG?=
+ =?utf-8?B?bUV4L3ZmeFE2R3hmQmNwWlhYQmwzZFNHemxCN21KelN2SmN4aGV4eUU5eDhj?=
+ =?utf-8?B?aFlnMG9kOERRY1hNQ3RkZ1M1NGptWXByRy8vdVN2RjRWakdaNnFxZGlPUHNY?=
+ =?utf-8?B?SlY1NDJ4ZUJEOFl4Rk51YS9yc0VEOTNrWlQ3Q0wwUkhkaDEybDhKUzZ4aGdT?=
+ =?utf-8?B?bk1rUi9zTkY0QjJWRjEwbTJwTnRtQUU2c1ZyMTh6S2szTnBZNWk1NWVDT2xS?=
+ =?utf-8?B?M1VlR1BhM3ZKTFkvTnVzYm1ETTA5emRiUTJsbWZxTE1NRXBpVlBjOWlaTEJt?=
+ =?utf-8?B?eXhYWlJvQUtZa1dRYjdiZWZBV3VKSWM4cDBoUDd4Mk9KZEwrNUJicEt4eVN5?=
+ =?utf-8?B?QkZrZVphL2lpZzNVSDJacjRRQi8wYXFZWXFuR3JkV3hEaTZ4aFYwQ1VIZUdN?=
+ =?utf-8?B?c1ZOdm1xMmhzVXIvQ1RhckUxcDV1aUgxY3RkQzhuZ1ZaQlFJUTArb0ZEU1JL?=
+ =?utf-8?B?Q1RKY0g3OE1YTU0ydWp4Q0U3M3psaUNQdGxBcGVrM0ZoWVZaUW5jdUVaTWZO?=
+ =?utf-8?B?bWJWakJaeDBvaXAvSlVYWFdPcTFSd3U4ci9MdlNTcjV1VEoxZENvcG93S1lU?=
+ =?utf-8?B?WUd0OUI5SmdWdXFJQ0NNWGdpWG00WjZaYVlIaHJsei9rUzhnMTNIRk9FSFNH?=
+ =?utf-8?B?a3B2RDlRNjJYR1ppN0dRckU2ZURTNWZ3QnVSd3hRMmVyR0tkVTdreS92TDhl?=
+ =?utf-8?B?emNwa1M5eURsM0ZydzhJRW1nL0k4bUpCWmYvMkd3SXpNV2szY3QrTEhyWkFp?=
+ =?utf-8?B?R1ZPWXVpTTJTUE1sL0lGL0hkOXJ4dlZ3UjJaaDJBWWtHT1k5THRBRVF1UkZE?=
+ =?utf-8?B?MmphUEljZlNjNDVuK3IyUXo3UzIvc3prcTdqenRkNkpwU1NrcFcybnl2Z294?=
+ =?utf-8?B?Mm16Q2NuWWZBc2lNazFaRDg3TDkwclZzK1hSWnRjNFp2QmFBaHpLZ01VRkJJ?=
+ =?utf-8?B?M3dzUTdMeFR0cWZTMWsrRlpUdU5EVCt2ZHFFNjBrM3huandtVWZMeHFKcjJn?=
+ =?utf-8?B?dXhPSm02aDBPZzFxV1FyekpjZ3Z4VG0wU2V3TmZ0blNEalRVRnhsZ0dyWHg5?=
+ =?utf-8?B?aVM2YnpzbzArTlJLVXY3WGwvdWJ6dE9KV1BZM2hkUktZbmJVRjk5dkh1ZlRn?=
+ =?utf-8?B?MFlRcjExTzNYSThCZDJEd09ZTmhjSzJtS05vM281Qmx6YkUxQ2JDQWhBUzlM?=
+ =?utf-8?B?T3c9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a1e93e5-9cce-4a6d-c622-08dd630f0e95
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Mar 2025 15:44:07.9724 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: b/0QOuSun2GYOEW/VotE/VXalQ7B2DoAqMpXqTkF8tnh3bOpHVgUwXzpHZNY6tRb/mkm92eouWCZz8Os6ebaaTyWvVwd+SAWoDE/DjwU33M=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5132
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.16;
+ envelope-from=dan.j.williams@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,68 +215,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
--gsplit-dwarf is reported to produce broken binaries on Windows.
-The linker produces warnings but exits successfully:
+Jonathan Cameron wrote:
+> On Wed, 5 Mar 2025 18:35:40 +0800
+> Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+> 
+> > > 
+> > > On Tue, 4 Mar 2025 14:22:48 +0800
+> > > Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+> > >   
+> > > > > 
+> > > > > On Thu, Feb 20, 2025 at 04:12:13PM +0000, Jonathan Cameron wrote:    
+> > > > > > On Mon, 17 Feb 2025 19:20:39 +0800
+> > > > > > Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+> > > > > >     
+> > > > > > > Add serial number parameter in the cxl persistent examples.
+> > > > > > > 
+> > > > > > > Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>    
+> > > > > > Looks good.  I've queued it up on my gitlab staging tree, but
+> > > > > > Michael if you want to pick this one directly that's fine as well.    
+> > > > > 
+> > > > > See no reason to, I was not even CC'd.    
+> > > > 
+> > > > Hi, Michael
+> > > > 
+> > > > I'm sorry, this is my fault. I used "get_maintainer.pl" to check this
+> > > > patch's maintainers but it shows "No maintainers found, printing recent
+> > > > contributors". 
+> > > >   
+> > > I usually stage up multiple series together and send on to Michael.
+> > > So it was be being lazy for a minor change rather than anything much
+> > > that you did wrong.
+> > > 
+> > > If I get time I'll post a series with this a few other patches
+> > > later today.  
+> > > 
+> > > Jonathan
+> > >   
+> > Thank you!
+> > 
+> > BTW, I found a corner case in CXL numa node creation.
+> > 
+> > Condition: 
+> > 1) A UMA/NUMA system without SRAT, but with CEDT.CFMWS
+> > 2）Enable CONFIG_ACPI_NUMA
+> > 
+> > Results:
+> > 1) acpi_numa_init: the fake_pxm will be 0 and send to acpi_parse_cfmws()
+> > 2）If dynamically create cxl ram region, the cxl memory would be assigned
+> > to node0 rather than a new node
+> > 
+> > Confusions:
+> > 1) Is a numa system a requirement for CXL memory usage?
+> 
+> Obviously discussion has gone on elsewhere, but I'd say in general it
+> would be a bad idea to not have an SRAT because the moment we add CXL
+> it is definitely a NUMA system and we want the Generic Port entry to
+> allow us to get perf information.
+> 
+> So I wouldn't mind if we fail CXL init in this case, but maybe
+> it is worth papering over things.
 
-/usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
-qga/qemu-ga.exe:/4: section below image base
-/usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
-qga/qemu-ga.exe:/24: section below image base
-
-and as a result qemu-ga.exe fails to start.
-
-On top of this, also disable -gsplit-dwarf unless building from git.
-Similar to -Werror, split debug info is probably not the best choice
-for people that want to build for installing.
-
-(Random thoughts: there is a tension here between adding an option
-that is useful for QEMU developers, and messing things up for everyone
-else by doing something decidedly non-standard.  For example, distros
-are starting to create a fake git repository just so that they can
-use "git am" to apply patches; while some of them, for example Fedora,
-are wise, or paranoid, enough to pass --disable-XXX for everything and
-then turn back on what they want, it cannot be expected that everyone
-does this.  It may be safer to make --enable-split-debug default off
-for everybody and add it somewhere in docs/.  For now I am keeping it
-enabled but we could consider doing something different during the hard
-freeze period).
-
-Reported-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- configure         | 4 ++++
- meson_options.txt | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/configure b/configure
-index 02f1dd2311f..9aece67ed08 100755
---- a/configure
-+++ b/configure
-@@ -1864,6 +1864,10 @@ if test "$skip_meson" = no; then
-       { test "$host_os" = linux || test "$host_os" = "windows"; }; then
-       echo 'werror = true' >> $cross
-   fi
-+  if test -e "$source_path/.git" && test "$host_os" != "windows"; then
-+      echo 'split_debug = true' >> $cross
-+  fi
-+
-   echo "[project options]" >> $cross
-   if test "$SMBD" != ''; then
-     echo "smbd = $(meson_quote "$SMBD")" >> $cross
-diff --git a/meson_options.txt b/meson_options.txt
-index 3432123fee2..f3546b9abc1 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -362,7 +362,7 @@ option('debug_mutex', type: 'boolean', value: false,
-        description: 'mutex debugging support')
- option('debug_stack_usage', type: 'boolean', value: false,
-        description: 'measure coroutine stack usage')
--option('split_debug', type: 'boolean', value: true,
-+option('split_debug', type: 'boolean', value: false,
-        description: 'split debug info from object files')
- option('qom_cast_debug', type: 'boolean', value: true,
-        description: 'cast debugging support')
--- 
-2.48.1
-
+I think that is too severe. If a driver has a path to advertise
+resources, even in a less than ideal way, it should make every effort to
+do that. There are plenty of ways for the NUMA information to fail, that
+does not mean the memory needs to be prevented from coming online. Let
+the end user decide if lack of performance information is fatal.
 
