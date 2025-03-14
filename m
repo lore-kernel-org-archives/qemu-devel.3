@@ -4,96 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414ECC28B2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 06:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54A3C28B2F
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 06:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsyL4-00050e-1i; Fri, 14 Mar 2025 02:16:10 -0400
+	id 1tsyOx-0004An-Lu; Fri, 14 Mar 2025 02:20:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tsyKn-0004dN-Ci
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:16:00 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tsyKi-0005Ql-W3
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:15:50 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2235189adaeso32584885ad.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 23:15:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741932946; x=1742537746;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=22fCYQFZajZ8TXm+rAJSoEKggXvSpPBIabKdwyTVXv4=;
- b=aOMdHdC3NgE6vHziNOcGGFNoSREn8oBbQtRoBBBMrzA7ml+mRnsQlBTzQSu4jdaXB/
- O/9YSbxmGe5G3Z5SJLQHH/3K4q/qj+SowpJwrumN8SM67/l4KoG2umxS7XpMvssTlVg+
- lkr+cBuyC3klYNnor9ybKVMvNcZnzGi1EBKiyLBKFDT4VjzJMmbPO4m+zJ/1rBBqyGHJ
- az+xEWFFCFIm9dlSUZ22sPr2EeO2uYPykDRj6a7+FUTS3G2M7u/prvntg/l/YSd2v2a0
- TMLLBHf1RMR2E+oVdH8kD3JwkM5IdO8rRMebiH4DhD8K5SOjgJ7U8qe4a/OAgZIOQqBx
- EX7A==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsyOr-00046o-RA
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:20:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsyOp-0005vt-PG
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:20:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741933202;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=hkB35K72/Y0yX+8kL6TUjZeWV5pxw4Qgi8AVI8/fdok=;
+ b=DP6Gq21l4HgLGCn477CGeHT9lhoBeHh8Q3VvWhTN0djnCmNzGOfatKk/lxzVCmTSBAnygd
+ DN/HlLHHc1Ue07C1wUBsOuQAtssqt4t7ffvDd/z5drHG/y7npaGe1HqAC1kiIba7/ZpmeC
+ MjfD/S2cxNjHNatj7/VDxZZ3+tuZWIU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-376-lH1x0t1eMzGh34MaugsMYQ-1; Fri, 14 Mar 2025 02:19:57 -0400
+X-MC-Unique: lH1x0t1eMzGh34MaugsMYQ-1
+X-Mimecast-MFC-AGG-ID: lH1x0t1eMzGh34MaugsMYQ_1741933196
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39143311936so809700f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 23:19:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741932946; x=1742537746;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=22fCYQFZajZ8TXm+rAJSoEKggXvSpPBIabKdwyTVXv4=;
- b=ieE056YPZtjLhMutiI2AcP3kfedSEiSgLK7V4kPhmUGLhCnRfNK4DU2MInsxVUXEWx
- HUXMg+/josCBENcw2MYkmH+qs+dWWHNsioEkFZl6C9Y38kHrLAO9LEITKmKlSoD0niNt
- YNg31eUw5cxveEUq1PMbZrOB7h/nlentxKrTX5b96ZxALW3u4q63DsbRL/dVN3Zcv5yO
- johGTkI6fm76l4GsBX0rmuU6Upg8IgmuR82aIOmpf7OCk5cGgpj3wrzek9g0fJWG0QVx
- 8LipH7PcAIjBRL1Jx5GXXMDTghwUsJaolrvxlKuFWG8Qf24jlsGtQCfl2h2EyTP45quM
- aETQ==
-X-Gm-Message-State: AOJu0Yws+UvjUkj+d/SmnCfPmGhe7r2gpuxwDBbwL94cUjd0eahciRx8
- 76WRI+tpUkp/rESOl8R6IIjCyQYq4+oMQYYa2ppGQld7IfOKG2mlFdOoTDWV2QI=
-X-Gm-Gg: ASbGncs9kxL0o/DF8Uspou5ZC7qcJlnmZsGCrwb2Ujo1VqDNzRV96k9FGHvEAAsAnJk
- 6LLimrJxZpuPgDXMEBTndWw+Enav3upjJdahXnqgXV6pTrMuVbHc/rnoZRxwSYMYhT8Hj2nVzSj
- bIeKREdhStSJ5iv7zx8Cb7dg+xuu27bJu6VsqCq6NerDEGU3Omks7Iw5FyHXbvRaKqfd9Q7KJ0y
- 2WCB26pbxQpugT14nMr8NaAnFQu5PD1S3yiTpGOTCdCDdHXKHApD3LmvM/Oxvvs1Wzd7WjBYWSR
- CFUWUNrVgDcTJT5wl23DJ/r8agVlHPShl6x40MBh3PFNbq6l
-X-Google-Smtp-Source: AGHT+IFtv/NBOn29RTeG14AinCIOW2a44zi+h1AX8Bs9ehGit81yOOwXvpbTY7z2TX2IOP0L4+6sTg==
-X-Received: by 2002:a17:903:1107:b0:215:a2f4:d4ab with SMTP id
- d9443c01a7336-225e169ba5emr14043435ad.7.1741932946550; 
- Thu, 13 Mar 2025 23:15:46 -0700 (PDT)
-Received: from localhost ([157.82.205.237])
- by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-225c68aa62csm23339445ad.92.2025.03.13.23.15.43
+ d=1e100.net; s=20230601; t=1741933196; x=1742537996;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hkB35K72/Y0yX+8kL6TUjZeWV5pxw4Qgi8AVI8/fdok=;
+ b=lTtRWbQRf/a7PdgP6+Z0eL9clJChVJSja8YZK8UA0D1NxPyFOQ4Z7hpwENgEPhooNd
+ saRHiaKn+oIYKhlbSw0Jm7kh5o/TQZDhRmbhyz5ETQ4vAI3hcEUqqxwTDVypkjshyD8J
+ JSYv5C37cJNTMo/24sKGqpi/ypuDBZJ2fJF+q5Aiq8KRgoJiGLwDxeeIcxkmQP81fCzL
+ 8xY9WEigTBmOX1W2Sxqj81jWplXwJnB8dCM5Y6qf1UKYf+SSQI9ld0vg0DhXpKVB3M57
+ VU9rJ7chn7GFezMserg5O9uOe65WR/aI0ow9tciERR0yYOhwuWKQlVIIqnzNKlDVW6Cc
+ q8Zg==
+X-Gm-Message-State: AOJu0Yy2/56yEdLDWyQd4/iXr4lspkUVIXo3sXvAoMx06twjyMrp9lFi
+ Svje/vjHbXr/QbbikxugOm52tvCCgD4Nb1AtwvSlADFrDsltWqebBrKEzk30XczpxgB5b1W3hSh
+ XkSlbVA5IT0Pk5NQwrWbP7y18SWp71slJVITyTdNmBLhlogiiTaRT
+X-Gm-Gg: ASbGncuW1hSp8UZS/Scc41+qFEMqPzL+fcCtlmBUrbMG/uq7gA8gHrZgkVdZdBM4isw
+ 74XlCVOOBIewzbTIGwI8XNeXKXXA6gY+1Hkf0nuuAQRfE4uiCEo/vNbGnB+usfxquLkIod057EI
+ Zzi5/WcsxaqpK/187X2qDQIeUSuAYeUEN0cGftlNQX9RlC+0IArF20uweFvmpaIxqSpejizWDH0
+ bR6yzC15mFcbRu5ZwH/qjTaTFf7N0mMuxt5szmFq2JfhkmtEibxBASqqWo6COymf7geBIbb9HBU
+ 5D7k17oBrlRdXHoD3vz98OMlzXaFlnTs1Sx2RDI325B6ZYU=
+X-Received: by 2002:a5d:588c:0:b0:391:47d8:de3a with SMTP id
+ ffacd0b85a97d-3971f7f6c9cmr1283187f8f.53.1741933195876; 
+ Thu, 13 Mar 2025 23:19:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGgS165mvNF7lINzUNYVFAeOOKqsb2yGVQnE9Mt2LOZau7FRD0bggjvzo2oEkEijegC5AYXBA==
+X-Received: by 2002:a5d:588c:0:b0:391:47d8:de3a with SMTP id
+ ffacd0b85a97d-3971f7f6c9cmr1283170f8f.53.1741933195491; 
+ Thu, 13 Mar 2025 23:19:55 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
+ [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d1fe05e8dsm6685895e9.9.2025.03.13.23.19.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 23:15:46 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 14 Mar 2025 15:14:57 +0900
-Subject: [PATCH for-10.1 v9 8/9] docs: Document composable SR-IOV device
+ Thu, 13 Mar 2025 23:19:54 -0700 (PDT)
+Message-ID: <ffe23ae0-a245-42a6-a74e-ea82f314275b@redhat.com>
+Date: Fri, 14 Mar 2025 07:19:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250314-sriov-v9-8-57dae8ae3ab5@daynix.com>
-References: <20250314-sriov-v9-0-57dae8ae3ab5@daynix.com>
-In-Reply-To: <20250314-sriov-v9-0-57dae8ae3ab5@daynix.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Jason Wang <jasowang@redhat.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com, 
- Yui Washizu <yui.washidu@gmail.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/72] ppc-for-10.0-1 queue
+To: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250311125815.903177-1-npiggin@gmail.com>
+ <CAJSP0QWLW+YwsLeJ1496Q8uT92E3wUDsOiVyzVFwrOFid3FUWA@mail.gmail.com>
+ <71d0b4bf-7732-44f2-8796-f19eb2822958@redhat.com>
+ <fff0b105-a317-4148-82d1-ac847a3fce6e@linaro.org>
+ <D8FMZLDM9Q5N.BOM6TN7LP5WD@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <D8FMZLDM9Q5N.BOM6TN7LP5WD@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,78 +156,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- MAINTAINERS           |  1 +
- docs/system/index.rst |  1 +
- docs/system/sriov.rst | 36 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+)
+On 14/03/2025 03.34, Nicholas Piggin wrote:
+> On Thu Mar 13, 2025 at 8:49 PM AEST, Philippe Mathieu-Daudé wrote:
+>> On 13/3/25 07:13, Thomas Huth wrote:
+>>> On 13/03/2025 03.34, Stefan Hajnoczi wrote:
+>>>> On Tue, Mar 11, 2025 at 8:59 PM Nicholas Piggin <npiggin@gmail.com>
+>>>> wrote:
+>>>>>
+>>>>> The following changes since commit
+>>>>> 825b96dbcee23d134b691fc75618b59c5f53da32:
+>>>>>
+>>>>>     Merge tag 'migration-20250310-pull-request' of https://gitlab.com/
+>>>>> farosas/qemu into staging (2025-03-11 09:32:07 +0800)
+>>>>>
+>>>>> are available in the Git repository at:
+>>>>>
+>>>>>     https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-10.0-1-20250311
+>>>>>
+>>>>> for you to fetch changes up to 0f17ae24b53eaab4bbe9cfab267c536e2f7fdbd7:
+>>>>>
+>>>>>     docs/system/ppc/amigang.rst: Update for NVRAM emulation
+>>>>> (2025-03-11 22:43:32 +1000)
+>>>>>
+>>>>> ----------------------------------------------------------------
+>>>>> * amigaone enhancements, NVRAM and kernel/initrd support
+>>>>> * Next round of XIVE group/crowd changes
+>>>>> * SPI updates for powernv
+>>>>> * Power10 2nd DAWR support for powernv and spapr
+>>>>> * powernv HOMER/OCC fixes and improvements for power management
+>>>>> * powernv PNOR support
+>>>>> * Big cleanup to move TCG code under ifdef or into its own file
+>>>>> * Update SLOF and skiboot ROMs
+>>>>> * Remove 405 boards and deprecate 405 CPU
+>>>>> * Add support for nested KVM "hostwide state" data.
+>>>>
+>>>> I fixed a CI failure on FreeBSD 14 hosts because of the __packed macro
+>>>> redefinition in hw/ppc/pnv_occ.c:
+>>>> https://gitlab.com/qemu-project/qemu/-/jobs/9388495246#L5857
+>>>>
+>>>> Here is my fix in the merge commit, if you prefer a different fix,
+>>>> please send a follow-up commit:
+>>>> diff --git i/hw/ppc/pnv_occ.c w/hw/ppc/pnv_occ.c
+>>>> index d9ce35a4d6..bda6b23ad3 100644
+>>>> --- i/hw/ppc/pnv_occ.c
+>>>> +++ w/hw/ppc/pnv_occ.c
+>>>> @@ -394,7 +394,9 @@ type_init(pnv_occ_register_types);
+>>>>    #define s64 int64_t
+>>>>    #define __be16 uint16_t
+>>>>    #define __be32 uint32_t
+>>>> +#ifndef __packed
+>>>>    #define __packed QEMU_PACKED
+>>>> +#endif /* !__packed */
+>>>
+>>> We should never define such macros in userspace - everything with two
+>>> underscores at the beginning is reserved for the system and the compiler
+>>> and must not be created by the userspace code.
+>>> Why doesn't this code use QEMU_PACKED directly instead?
+>>
+>> Similar question with __be16 / __be32.
+> 
+> Okay these were just because the type definition is taken from
+> skiboot firmware, so I added those defs just in the .c file to
+> make it a bit less change. It's not too much to change if that
+> is preferred.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0e5db7a57449..4cde71687645 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2029,6 +2029,7 @@ F: hw/pci-bridge/*
- F: qapi/pci.json
- F: docs/pci*
- F: docs/specs/*pci*
-+F: docs/system/sriov.rst
- 
- PCIE DOE
- M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
-diff --git a/docs/system/index.rst b/docs/system/index.rst
-index c21065e51932..718e9d3c56bb 100644
---- a/docs/system/index.rst
-+++ b/docs/system/index.rst
-@@ -39,3 +39,4 @@ or Hypervisor.Framework.
-    multi-process
-    confidential-guest-support
-    vm-templating
-+   sriov
-diff --git a/docs/system/sriov.rst b/docs/system/sriov.rst
-new file mode 100644
-index 000000000000..a851a66a4b8b
---- /dev/null
-+++ b/docs/system/sriov.rst
-@@ -0,0 +1,36 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+Compsable SR-IOV device
-+=======================
-+
-+SR-IOV (Single Root I/O Virtualization) is an optional extended capability of a
-+PCI Express device. It allows a single physical function (PF) to appear as
-+multiple virtual functions (VFs) for the main purpose of eliminating software
-+overhead in I/O from virtual machines.
-+
-+There are devices with predefined SR-IOV configurations, but it is also possible
-+to compose an SR-IOV device yourself. Composing an SR-IOV device is currently
-+only supported by virtio-net-pci.
-+
-+Users can configure an SR-IOV-capable virtio-net device by adding
-+virtio-net-pci functions to a bus. Below is a command line example:
-+
-+.. code-block:: shell
-+
-+    -netdev user,id=n -netdev user,id=o
-+    -netdev user,id=p -netdev user,id=q
-+    -device pcie-root-port,id=b
-+    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
-+    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
-+    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
-+    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
-+
-+The VFs specify the paired PF with ``sriov-pf`` property. The PF must be
-+added after all VFs. It is the user's responsibility to ensure that VFs have
-+function numbers larger than one of the PF, and that the function numbers
-+have a consistent stride.
-+
-+You may also need to perform additional steps to activate the SR-IOV feature on
-+your guest. For Linux, refer to [1]_.
-+
-+.. [1] https://docs.kernel.org/PCI/pci-iov-howto.html
+Yes, I think that would be more solid. Otherwise, there is theoretically a 
+chance that a system header defines __packed to something different (e.g. 
+"#define __packed __attribute__((ms_struct, packed))"), and then we might 
+run into problems here.
 
--- 
-2.48.1
+  Thomas
 
 
