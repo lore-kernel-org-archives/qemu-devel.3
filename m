@@ -4,102 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD8E9C35FF1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BB1C282EC
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 17:36:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt8ts-00061Q-NA; Fri, 14 Mar 2025 13:32:48 -0400
+	id 1tt8w3-0000z0-Dw; Fri, 14 Mar 2025 13:35:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tt8tE-0005ed-5z
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:32:10 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tt8t6-0008HG-HA
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:32:06 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22409077c06so62105905ad.1
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741973519; x=1742578319; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WZK4IDfbpcoj/UHXYNBc9hj61CH/qnmJNHrSERoWz24=;
- b=k285P5i9vOuCu9IxPnh7OBLSosROs8en99zv6zczWSCR9fI16nQSB1ZKJhuimUck6P
- QMT8a2nOci676V8rchwL97ywt4v5jj/U/zANyulfkxL33nnwRCSXBlSFli+5kOwMa5Sw
- Jct6qfL/2y3S415Be2+Ptd8kNpxao1GpH6lpRGGf/j+hkFmDGd8WtWCV3b1CJ4OIMoer
- tK+y6vtrSwy2LRnFEm5fnT4TW9BGr8FZz0+bocPDzY7Mb8MEmkkYcNsoa5B74dEEnOhm
- 1qH2c7ySCW4/BpS26uCJjZGCuHPfa8E+1aLs/ccFn4lUgLJloJJRCoUSFN5uUYFcOC5h
- mfgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741973519; x=1742578319;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WZK4IDfbpcoj/UHXYNBc9hj61CH/qnmJNHrSERoWz24=;
- b=SbYIyHJczAtdWV+zbe0jgoi9xlg/tnI6TW4VqgerRP7oQtghyByvnuJxCXgdHVjGLA
- gNdVtWG+kqBqHcpGG0a6EhFXxdtdzX8qHlrx102iEVgN8Fkd/AUwgwVuBiMsflN46av1
- EZEaAFOq9KQLa4tWiowmAraqi7Bk/xIccHEl32x47q2Av0TCtag4uzj1zFK+fkEbQAZw
- w+p/Aie/i1AILQOpA31KHKMJbfHtMqcowkU2gXUwMaFHKr7eDJfqHwKf2vRqWyW8ex1M
- xBxJPla2u0IoJ7NfqtaTC40Phou2o1zfO34rF39VL9p/bHrMjEaTrNJJ5erufdAw7yAM
- taZA==
-X-Gm-Message-State: AOJu0Yw1se82XyrCAvC2eyR94H/jLN0n9PNmeQoP/0E6kXRtdPZZkUgU
- n1xS1E4N8rFg6tuPO6ZfaReAVWSvJ5YKVJVWshIDU+0v7R3vHBz3AVhPkVvyXqQnNt9ZeQYtilt
- vQtY=
-X-Gm-Gg: ASbGnctoAY5PoC2QLK/kUwdan7L3DlIX2lC5DRSypi1CsUqg8YC7S8UJ9cxD6Csym2U
- HCBdSRI0ruIIwjfhTr+ODi5tT989WuImoufzFzeMH8nYSFWIgsh6hGthRsVTGbJq25xH3c5d1Oq
- WNoOUcQ1ZCs09qrdvHmzt+98JgIjjG6stpgdT/aiWVEQzJBLiElY/aRSKL26q4vmlpELQHVtmRB
- +DaNN8rrJz+R6PVvOuudfkV/GaHDd/3qPj412xq0PTp4rIWcY0jZLmsUgB0wdiiDxdHAu+t6THa
- UbE8gU/k/Q4fhlJQVv24IqWGLL8kA1LkgBNvCZkqfOJn
-X-Google-Smtp-Source: AGHT+IFO+PDwMeyLa4EGhItdNdod3PivHdGg2tuOsQqj5N7me/+24tmsBkj8Jw+BltKmizpirWlssg==
-X-Received: by 2002:a05:6a00:b4e:b0:736:533b:f6fa with SMTP id
- d2e1a72fcca58-737223bf5e7mr3790179b3a.13.1741973518933; 
- Fri, 14 Mar 2025 10:31:58 -0700 (PDT)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9cd03bsm2990529a12.8.2025.03.14.10.31.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 10:31:58 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
- Paul Durrant <paul@xen.org>, Peter Xu <peterx@redhat.com>,
- alex.bennee@linaro.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-riscv@nongnu.org,
- manos.pitsidianakis@linaro.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Anthony PERARD <anthony@xenproject.org>, kvm@vger.kernel.org,
- xen-devel@lists.xenproject.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Anthony PERARD <anthony.perard@vates.tech>
-Subject: [PATCH v5 12/17] hw/xen: add stubs for various functions
-Date: Fri, 14 Mar 2025 10:31:34 -0700
-Message-Id: <20250314173139.2122904-13-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250314173139.2122904-1-pierrick.bouvier@linaro.org>
-References: <20250314173139.2122904-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tt8vl-0000tP-8B
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:34:45 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tt8vc-00009o-R0
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:34:44 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cca4:0:640:432b:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C5100609F8;
+ Fri, 14 Mar 2025 20:34:31 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a420::1:c] (unknown
+ [2a02:6b8:b081:a420::1:c])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id UYII1m4FY0U0-OD6CR4il; Fri, 14 Mar 2025 20:34:31 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1741973671;
+ bh=hOYtcml10fClTglWTCzNU5YHKIi5VKA4k4Xv7DI91G4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=CudL3UmXRekMoHnXaDdBPDeIsJ0lmPtorfKp1fEdepOTnAuO4ZdtHW71Aetb2GvuB
+ 6gELwF+avQN8wfgtgsUD5/3rCN8KZvjTbIHxiHYm/ZNIUBziIsZv0vO65YTrwYPBiW
+ VCYjLyRmCY6BbrEM5j9ikw+1HzpHkZHjbd2N4VlQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <2442a3e3-c934-447d-9c9d-57e32dd3e0f5@yandex-team.ru>
+Date: Fri, 14 Mar 2025 20:34:30 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] utils/qemu-sockets: Introduce keep-alive-idle-period
+ inet socket option
+To: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
+Cc: vsementsov@virtuozzo.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250303143312.640909-1-jmarcin@redhat.com>
+ <20250303143312.640909-3-jmarcin@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250303143312.640909-3-jmarcin@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,94 +80,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those symbols are used by system/physmem.c, and are called only if
-xen_enabled() (which happens only if CONFIG_XEN is set and xen is
-available).
+On 03.03.25 17:33, Juraj Marcin wrote:
+> The default idle period for TCP connection could be even 2 hours.
+> However, in some cases, the application needs to be aware of a
+> connection issue much sooner.
+> 
+> This is the case, for example, for postcopy live migration. If there is
+> no traffic from the migration destination guest (server-side) to the
+> migration source guest (client-side), the destination keeps waiting for
+> pages indefinitely and does not switch to the postcopy-paused state.
+> This can happen, for example, if the destination QEMU instance is
+> started with '-S' command line option and the machine is not started yet
+> or if the machine is idle and produces no new page faults for
+> not-yet-migrated pages.
+> 
+> This patch introduces a new inet socket parameter on platforms where
+> TCP_KEEPIDLE is defined and passes the configured value to the
+> TCP_KEEPIDLE socket option when a client-side or server-side socket is
+> created.
+> 
+> The default value is 0, which means system configuration is used, and no
+> custom value is set.
+> 
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> ---
+>   io/dns-resolver.c   |  4 ++++
+>   meson.build         |  2 ++
+>   qapi/sockets.json   |  5 +++++
+>   util/qemu-sockets.c | 39 +++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 50 insertions(+)
+> 
+> diff --git a/io/dns-resolver.c b/io/dns-resolver.c
+> index ee7403b65b..03c59673f0 100644
+> --- a/io/dns-resolver.c
+> +++ b/io/dns-resolver.c
+> @@ -128,6 +128,10 @@ static int qio_dns_resolver_lookup_sync_inet(QIODNSResolver *resolver,
+>   #endif
+>               .has_keep_alive = iaddr->has_keep_alive,
+>               .keep_alive = iaddr->keep_alive,
+> +#ifdef HAVE_TCP_KEEPIDLE
+> +            .has_keep_alive_idle_period = iaddr->has_keep_alive_idle_period,
+> +            .keep_alive_idle_period = iaddr->keep_alive_idle_period,
+> +#endif
+>           };
+>   
+>           (*addrs)[i] = newaddr;
+> diff --git a/meson.build b/meson.build
+> index 0ee79c664d..ca726f317f 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2724,6 +2724,8 @@ config_host_data.set('HAVE_OPTRESET',
+>                        cc.has_header_symbol('getopt.h', 'optreset'))
+>   config_host_data.set('HAVE_IPPROTO_MPTCP',
+>                        cc.has_header_symbol('netinet/in.h', 'IPPROTO_MPTCP'))
+> +config_host_data.set('HAVE_TCP_KEEPIDLE',
+> +                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPIDLE'))
+>   
+>   # has_member
+>   config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
+> diff --git a/qapi/sockets.json b/qapi/sockets.json
+> index eb50f64e3a..ddd82b1e66 100644
+> --- a/qapi/sockets.json
+> +++ b/qapi/sockets.json
+> @@ -59,6 +59,10 @@
+>   # @keep-alive: enable keep-alive when connecting to/listening on this socket.
+>   #     (Since 4.2, not supported for listening sockets until 10.0)
+>   #
+> +# @keep-alive-idle-period: time in seconds the connection needs to be idle
+> +#     before sending a keepalive packet.  Only supported for TCP sockets on
+> +#     systems where TCP_KEEPIDLE socket option is defined.  (Since 10.0)
+> +#
+>   # @mptcp: enable multi-path TCP.  (Since 6.1)
+>   #
+>   # Since: 1.3
+> @@ -71,6 +75,7 @@
+>       '*ipv4': 'bool',
+>       '*ipv6': 'bool',
+>       '*keep-alive': 'bool',
+> +    '*keep-alive-idle-period': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPIDLE' },
+>       '*mptcp': { 'type': 'bool', 'if': 'HAVE_IPPROTO_MPTCP' } } }
+>   
+>   ##
+> diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+> index c30e4ac2ce..edcda846ef 100644
+> --- a/util/qemu-sockets.c
+> +++ b/util/qemu-sockets.c
+> @@ -349,6 +349,18 @@ listen_ok:
+>               slisten = -1;
+>               goto exit;
+>           }
+> +#ifdef HAVE_TCP_KEEPIDLE
+> +        if (saddr->has_keep_alive_idle_period && saddr->keep_alive_idle_period) {
+> +            int keepidle = saddr->has_keep_alive_idle_period;
+> +            ret = setsockopt(slisten, IPPROTO_TCP, TCP_KEEPIDLE, &keepidle, sizeof(keepidle));
+> +            if (ret < 0) {
+> +                error_setg_errno(errp, errno, "Unable to set TCP_KEEPIDLE");
+> +                close(slisten);
+> +                slisten = -1;
+> +                goto exit;
+> +            }
+> +        }
+> +#endif
+>       }
+>   exit:
+>       freeaddrinfo(res);
+> @@ -492,6 +504,17 @@ int inet_connect_saddr(InetSocketAddress *saddr, Error **errp)
+>               close(sock);
+>               return -1;
+>           }
+> +#ifdef HAVE_TCP_KEEPIDLE
+> +        if (saddr->has_keep_alive_idle_period && saddr->keep_alive_idle_period) {
+> +            int keepidle = saddr->keep_alive_idle_period;
+> +            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &keepidle, sizeof(keepidle));
+> +            if (ret < 0) {
+> +                error_setg_errno(errp, errno, "Unsable to set TCP_KEEPIDLE");
+> +                close(sock);
+> +                return -1;
+> +            }
+> +        }
+> +#endif
+>       }
 
-So we can crash the stubs in case those are called, as they are linked
-only when CONFIG_XEN is not set.
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Anthony PERARD <anthony.perard@vates.tech>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- hw/xen/xen_stubs.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++
- hw/xen/meson.build |  3 +++
- 2 files changed, 54 insertions(+)
- create mode 100644 hw/xen/xen_stubs.c
+Looks like we need some inet_setsockopt(*saddr) {}, which set both options and called from both client and server sockets, to avoid duplication.
 
-diff --git a/hw/xen/xen_stubs.c b/hw/xen/xen_stubs.c
-new file mode 100644
-index 00000000000..5e565df3929
---- /dev/null
-+++ b/hw/xen/xen_stubs.c
-@@ -0,0 +1,51 @@
-+/*
-+ * Various stubs for xen functions
-+ *
-+ * Those functions are used only if xen_enabled(). This file is linked only if
-+ * CONFIG_XEN is not set, so they should never be called.
-+ *
-+ * Copyright (c) 2025 Linaro, Ltd.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "system/xen.h"
-+#include "system/xen-mapcache.h"
-+
-+void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
-+                   struct MemoryRegion *mr, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+bool xen_mr_is_memory(MemoryRegion *mr)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void xen_invalidate_map_cache_entry(uint8_t *buffer)
-+{
-+    g_assert_not_reached();
-+}
-+
-+ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-+{
-+    g_assert_not_reached();
-+}
-+
-+uint8_t *xen_map_cache(MemoryRegion *mr,
-+                       hwaddr phys_addr,
-+                       hwaddr size,
-+                       ram_addr_t ram_addr_offset,
-+                       uint8_t lock,
-+                       bool dma,
-+                       bool is_write)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/hw/xen/meson.build b/hw/xen/meson.build
-index 4a486e36738..a1850e76988 100644
---- a/hw/xen/meson.build
-+++ b/hw/xen/meson.build
-@@ -9,6 +9,9 @@ system_ss.add(when: ['CONFIG_XEN_BUS'], if_true: files(
- 
- system_ss.add(when: ['CONFIG_XEN', xen], if_true: files(
-   'xen-operations.c',
-+),
-+if_false: files(
-+  'xen_stubs.c',
- ))
- 
- xen_specific_ss = ss.source_set()
+>   
+>       return sock;
+> @@ -698,6 +721,22 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
+>           }
+>           addr->has_keep_alive = true;
+>       }
+> +#ifdef HAVE_TCP_KEEPIDLE
+> +    begin = strstr(optstr, ",keep-alive-idle-period=");
+> +    if (begin) {
+> +        begin += strlen(",keep-alive-idle-period=");
+> +        if (sscanf(begin, "%" PRIu32 "%n", &addr->keep_alive_idle_period, &pos) != 1 ||
+> +            (begin[pos] != '\0' && begin[pos] != ',')) {
+> +            error_setg(errp, "error parsing keep-alive-idle-period argument");
+> +            return -1;
+> +        }
+> +        if (addr->keep_alive_idle_period > INT_MAX) {
+> +            error_setg(errp, "keep-alive-idle-period value is too large");
+> +            return -1;
+> +        }
+> +        addr->has_keep_alive_idle_period = true;
+> +    }
+> +#endif
+>   #ifdef HAVE_IPPROTO_MPTCP
+>       begin = strstr(optstr, ",mptcp");
+>       if (begin) {
+
 -- 
-2.39.5
+Best regards,
+Vladimir
 
 
