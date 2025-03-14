@@ -4,141 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54A3C28B2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 06:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD57AC28B2F
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 06:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsyOx-0004An-Lu; Fri, 14 Mar 2025 02:20:11 -0400
+	id 1tsyXq-00074Z-PE; Fri, 14 Mar 2025 02:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsyOr-00046o-RA
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:20:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tsyOp-0005vt-PG
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:20:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741933202;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hkB35K72/Y0yX+8kL6TUjZeWV5pxw4Qgi8AVI8/fdok=;
- b=DP6Gq21l4HgLGCn477CGeHT9lhoBeHh8Q3VvWhTN0djnCmNzGOfatKk/lxzVCmTSBAnygd
- DN/HlLHHc1Ue07C1wUBsOuQAtssqt4t7ffvDd/z5drHG/y7npaGe1HqAC1kiIba7/ZpmeC
- MjfD/S2cxNjHNatj7/VDxZZ3+tuZWIU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-376-lH1x0t1eMzGh34MaugsMYQ-1; Fri, 14 Mar 2025 02:19:57 -0400
-X-MC-Unique: lH1x0t1eMzGh34MaugsMYQ-1
-X-Mimecast-MFC-AGG-ID: lH1x0t1eMzGh34MaugsMYQ_1741933196
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39143311936so809700f8f.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 23:19:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741933196; x=1742537996;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hkB35K72/Y0yX+8kL6TUjZeWV5pxw4Qgi8AVI8/fdok=;
- b=lTtRWbQRf/a7PdgP6+Z0eL9clJChVJSja8YZK8UA0D1NxPyFOQ4Z7hpwENgEPhooNd
- saRHiaKn+oIYKhlbSw0Jm7kh5o/TQZDhRmbhyz5ETQ4vAI3hcEUqqxwTDVypkjshyD8J
- JSYv5C37cJNTMo/24sKGqpi/ypuDBZJ2fJF+q5Aiq8KRgoJiGLwDxeeIcxkmQP81fCzL
- 8xY9WEigTBmOX1W2Sxqj81jWplXwJnB8dCM5Y6qf1UKYf+SSQI9ld0vg0DhXpKVB3M57
- VU9rJ7chn7GFezMserg5O9uOe65WR/aI0ow9tciERR0yYOhwuWKQlVIIqnzNKlDVW6Cc
- q8Zg==
-X-Gm-Message-State: AOJu0Yy2/56yEdLDWyQd4/iXr4lspkUVIXo3sXvAoMx06twjyMrp9lFi
- Svje/vjHbXr/QbbikxugOm52tvCCgD4Nb1AtwvSlADFrDsltWqebBrKEzk30XczpxgB5b1W3hSh
- XkSlbVA5IT0Pk5NQwrWbP7y18SWp71slJVITyTdNmBLhlogiiTaRT
-X-Gm-Gg: ASbGncuW1hSp8UZS/Scc41+qFEMqPzL+fcCtlmBUrbMG/uq7gA8gHrZgkVdZdBM4isw
- 74XlCVOOBIewzbTIGwI8XNeXKXXA6gY+1Hkf0nuuAQRfE4uiCEo/vNbGnB+usfxquLkIod057EI
- Zzi5/WcsxaqpK/187X2qDQIeUSuAYeUEN0cGftlNQX9RlC+0IArF20uweFvmpaIxqSpejizWDH0
- bR6yzC15mFcbRu5ZwH/qjTaTFf7N0mMuxt5szmFq2JfhkmtEibxBASqqWo6COymf7geBIbb9HBU
- 5D7k17oBrlRdXHoD3vz98OMlzXaFlnTs1Sx2RDI325B6ZYU=
-X-Received: by 2002:a5d:588c:0:b0:391:47d8:de3a with SMTP id
- ffacd0b85a97d-3971f7f6c9cmr1283187f8f.53.1741933195876; 
- Thu, 13 Mar 2025 23:19:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgS165mvNF7lINzUNYVFAeOOKqsb2yGVQnE9Mt2LOZau7FRD0bggjvzo2oEkEijegC5AYXBA==
-X-Received: by 2002:a5d:588c:0:b0:391:47d8:de3a with SMTP id
- ffacd0b85a97d-3971f7f6c9cmr1283170f8f.53.1741933195491; 
- Thu, 13 Mar 2025 23:19:55 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
- [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe05e8dsm6685895e9.9.2025.03.13.23.19.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 23:19:54 -0700 (PDT)
-Message-ID: <ffe23ae0-a245-42a6-a74e-ea82f314275b@redhat.com>
-Date: Fri, 14 Mar 2025 07:19:52 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tsyXn-00073z-9I
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:29:19 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tsyXk-0006uE-EX
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:29:19 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxQK21zNNnYhaWAA--.41564S3;
+ Fri, 14 Mar 2025 14:29:09 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxzMSxzNNnSFpKAA--.12053S3;
+ Fri, 14 Mar 2025 14:29:08 +0800 (CST)
+Subject: Re: [PATCH 2/3] hw/loongarch/virt: Remove unnecessary NULL pointer
+ checking
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250313091350.3770394-1-maobibo@loongson.cn>
+ <20250313091350.3770394-3-maobibo@loongson.cn> <875xkdb4q5.fsf@pond.sub.org>
+ <10c55e3e-22f5-285d-7e38-3a6a08089302@loongson.cn>
+ <87v7scw4se.fsf@pond.sub.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <fc8a893c-9ff5-ad44-812a-66dd0f163269@loongson.cn>
+Date: Fri, 14 Mar 2025 14:28:27 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/72] ppc-for-10.0-1 queue
-To: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250311125815.903177-1-npiggin@gmail.com>
- <CAJSP0QWLW+YwsLeJ1496Q8uT92E3wUDsOiVyzVFwrOFid3FUWA@mail.gmail.com>
- <71d0b4bf-7732-44f2-8796-f19eb2822958@redhat.com>
- <fff0b105-a317-4148-82d1-ac847a3fce6e@linaro.org>
- <D8FMZLDM9Q5N.BOM6TN7LP5WD@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+In-Reply-To: <87v7scw4se.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <D8FMZLDM9Q5N.BOM6TN7LP5WD@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-CM-TRANSID: qMiowMAxzMSxzNNnSFpKAA--.12053S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXryUAr1kWr4UKr45ZrWUtrc_yoW5Kr4kpr
+ ZrJanrKrWkJry2vrZru3sYqFy8tryFyF43Gr9Yv347Gw4DWrnFqF1UKFWqgF47CF4kta48
+ Zw47WF4DZFnYgFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+ Ja73UjIFyTuYvjxU25EfUUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -156,75 +86,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/03/2025 03.34, Nicholas Piggin wrote:
-> On Thu Mar 13, 2025 at 8:49 PM AEST, Philippe Mathieu-Daudé wrote:
->> On 13/3/25 07:13, Thomas Huth wrote:
->>> On 13/03/2025 03.34, Stefan Hajnoczi wrote:
->>>> On Tue, Mar 11, 2025 at 8:59 PM Nicholas Piggin <npiggin@gmail.com>
->>>> wrote:
->>>>>
->>>>> The following changes since commit
->>>>> 825b96dbcee23d134b691fc75618b59c5f53da32:
->>>>>
->>>>>     Merge tag 'migration-20250310-pull-request' of https://gitlab.com/
->>>>> farosas/qemu into staging (2025-03-11 09:32:07 +0800)
->>>>>
->>>>> are available in the Git repository at:
->>>>>
->>>>>     https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-10.0-1-20250311
->>>>>
->>>>> for you to fetch changes up to 0f17ae24b53eaab4bbe9cfab267c536e2f7fdbd7:
->>>>>
->>>>>     docs/system/ppc/amigang.rst: Update for NVRAM emulation
->>>>> (2025-03-11 22:43:32 +1000)
->>>>>
->>>>> ----------------------------------------------------------------
->>>>> * amigaone enhancements, NVRAM and kernel/initrd support
->>>>> * Next round of XIVE group/crowd changes
->>>>> * SPI updates for powernv
->>>>> * Power10 2nd DAWR support for powernv and spapr
->>>>> * powernv HOMER/OCC fixes and improvements for power management
->>>>> * powernv PNOR support
->>>>> * Big cleanup to move TCG code under ifdef or into its own file
->>>>> * Update SLOF and skiboot ROMs
->>>>> * Remove 405 boards and deprecate 405 CPU
->>>>> * Add support for nested KVM "hostwide state" data.
->>>>
->>>> I fixed a CI failure on FreeBSD 14 hosts because of the __packed macro
->>>> redefinition in hw/ppc/pnv_occ.c:
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/9388495246#L5857
->>>>
->>>> Here is my fix in the merge commit, if you prefer a different fix,
->>>> please send a follow-up commit:
->>>> diff --git i/hw/ppc/pnv_occ.c w/hw/ppc/pnv_occ.c
->>>> index d9ce35a4d6..bda6b23ad3 100644
->>>> --- i/hw/ppc/pnv_occ.c
->>>> +++ w/hw/ppc/pnv_occ.c
->>>> @@ -394,7 +394,9 @@ type_init(pnv_occ_register_types);
->>>>    #define s64 int64_t
->>>>    #define __be16 uint16_t
->>>>    #define __be32 uint32_t
->>>> +#ifndef __packed
->>>>    #define __packed QEMU_PACKED
->>>> +#endif /* !__packed */
->>>
->>> We should never define such macros in userspace - everything with two
->>> underscores at the beginning is reserved for the system and the compiler
->>> and must not be created by the userspace code.
->>> Why doesn't this code use QEMU_PACKED directly instead?
->>
->> Similar question with __be16 / __be32.
+
+
+On 2025/3/14 下午1:38, Markus Armbruster wrote:
+> bibo mao <maobibo@loongson.cn> writes:
 > 
-> Okay these were just because the type definition is taken from
-> skiboot firmware, so I added those defs just in the .c file to
-> make it a bit less change. It's not too much to change if that
-> is preferred.
+> On 2025/3/13 下午6:32, Markus Armbruster wrote:
+> 
+> [...]
+> 
+>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>>> index a5840ff968..4674bd9163 100644
+>>> --- a/hw/loongarch/virt.c
+>>> +++ b/hw/loongarch/virt.c
+>>> @@ -859,30 +859,29 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+>>>       LoongArchCPU *cpu = LOONGARCH_CPU(dev);
+>>>       CPUState *cs = CPU(dev);
+>>>       CPUArchId *cpu_slot;
+>>> -    Error *err = NULL;
+>>>       LoongArchCPUTopo topo;
+>>>       int arch_id;
+>>>    
+>>>       if (lvms->acpi_ged) {
+>>>           if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
+>>> -            error_setg(&err,
+>>> +            error_setg(errp,
+>>>                          "Invalid thread-id %u specified, must be in range 1:%u",
+>>>                          cpu->thread_id, ms->smp.threads - 1);
+>>> -            goto out;
+>>> +            return;
+>>
+>> Hi Markus,
+>>
+>>   From APIs, it seems that function error_propagate() do much more than
+>> error appending, such as comparing dest_err with error_abort etc. Though
+>> caller function is local variable rather than error_abort/fatal/warn,
+>> error_propagate() seems useful. How about do propagate error and return
+>> directly as following:
+>>
+>> @@ -868,7 +868,8 @@ static void virt_cpu_pre_plug(HotplugHandler
+>> *hotplug_dev,
+>>               error_setg(&err,
+>>                          "Invalid thread-id %u specified, must be in
+>> range 1:%u",
+>>                          cpu->thread_id, ms->smp.threads - 1);
+>> -            goto out;
+>> +            error_propagate(errp, err);
+>> +            return;
+>>           }
+> 
+> This is strictly worse.  One, it's more verbose.  Two, the stack
+> backtrace on failure is less useful, which matters when @errp is
+> &error_abort, and when you set a breakpoint on error_handle(), abort(),
+> or exit().  Three, it doesn't actually add useful functionality.
+> 
+> To help you see the latter, let's compare the two versions, i.e.
+> 
+>     direct: error_setg(errp, ...)
+> 
+> and
+> 
+>     propagate: two steps, first error_setg(&err, ...), and then
+>     error_propagate(errp, err);
+> 
+> Cases: @errp can be NULL, &error_abort, &error_fatal, &error_warn, or a
+> non-null pointer to variable containing NULL.
+> 
+> 1. @errp is NULL
+> 
+>     Direct does nothing.
+> 
+>     Propagate step 1 creates an error object, and stores it in @err.
+>     Step 2 frees the error object.  Roundabout way to do nothing.
+> 
+> 2. @errp is &error_abort
+> 
+>     Direct creates an error object, reports it to stderr, and abort()s.
+>     Note that the stack backtrace shows where the error is created.
+> 
+>     Propagate step 1 creates an error object, and stores it in @err.
+>     Step 2 reports it to stderr, and abort()s.  No difference, except the
+>     stack backtrace shows where the error is propagated, which is less
+>     useful.
+> 
+> 3. @errp is &error_fatal
+> 
+>     Direct creates an error object, reports it to stderr, frees it, and
+>     exit(1)s.
+> 
+>     Propagate step 1 creates an error object, and stores it in @err.
+>     Step 2 reports it to stderr, frees it, and exit(1)s.  No difference.
+> 
+> 4. @errp is &error_warn
+> 
+>     Direct creates an error object, reports it to stderr, and frees it.
+> 
+>     Propagate step 1 creates an error object, and stores it in @err.
+>     Step 2 reports it to stderr, and frees it.  No difference.
+> 
+> 5. @errp points to variable containing NULL
+> 
+>     Direct creates an error object, and stores it in the variable.
+> 
+>     Propagate step 1 creates an error object, and stores it in @err.
+>     Step 2 copies it to the variable.  No difference.
+> 
+> Questions?
+The question how to use error_propagate() comparing with error_setg() 
+since there is such API. :)
 
-Yes, I think that would be more solid. Otherwise, there is theoretically a 
-chance that a system header defines __packed to something different (e.g. 
-"#define __packed __attribute__((ms_struct, packed))"), and then we might 
-run into problems here.
-
-  Thomas
+Regards
+Bibo Mao
+> 
+> [...]
+> 
 
 
