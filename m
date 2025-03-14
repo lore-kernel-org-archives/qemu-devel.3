@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5927FC28B30
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 13:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05BCC282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 13:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt4gP-0005gG-9u; Fri, 14 Mar 2025 09:02:37 -0400
+	id 1tt4gS-0005hV-HF; Fri, 14 Mar 2025 09:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1tt4gB-0005dp-Kb
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:02:23 -0400
+ id 1tt4g7-0005cK-Ee
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:02:21 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1tt4g7-0005w6-9P
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:02:22 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52EBloP7009747;
- Fri, 14 Mar 2025 13:02:14 GMT
+ id 1tt4g4-0005vB-MH
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:02:19 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52EBlrNM017176;
+ Fri, 14 Mar 2025 13:02:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=rpWaMipMYDlKwtXl+4qKcREqCJEd9xxu4Vacys2P/jc=; b=
- PhLvJz3Vni6TIpLHf21FWRR2nYog1AJ1N14z7Rcs5aNpf4jlfGVCd67yeNZo6fuE
- LYO7xDrm0fg2YibkagVFjjEt+v7+pnO7XHe/1OqXd/on1O9OXirHj2dcEdpgvmGp
- t6iEm33fxVKuQbo71dM5ZK4DqqrSHCK6XhDrcaw65tDzCy0mT7QmZJhyKlimeIns
- 076E/3rMFfUk0MVW/YPKmWqv2ldSn3VKR4DPR+DgXjbvD7nqhONKPjXeMfhDWngb
- E6E8jkdmzJWEoZpV6fJtMynsbls4qBE/BSp/R8z6SmyCjpb8OIdpE87s11O5sCxq
- fr0Er+B5X5UAnGyKsSDJPg==
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=corp-2023-11-20; bh=s4vIHzDK9Ck2Y2EC
+ zx/zRacJza8+4VhU0cSTCT5SaQY=; b=Xhy4J0ekrxl2341qt892O0rqJUjG/E3I
+ nnI3bUc4JUvfZlclSO4M3fFtmo9YGn8oeO3z5PARgQ6gjApg8hQ3V39kmOASMK6a
+ FX+/MCOOpdfDQAU3dGlWjacnDzLSHuxc9yxiXhaW1NmppsMhQEZNVq0s71Ga96iJ
+ nUpN3xwScXK2WR5AIqbQhk9VSsLYt3vZNQpYACHF+txx0/0wdeE7qtJ7x0YBGhwU
+ YAm7/mnl4UOZCMPMbkot9kY3HfL25kdxsO2v3U8arsHvfuZrEdk8JmTW7BOUMhoG
+ 3aec7RPIaPodSLKRAv5YBwQGnzZlXKj6Sea4PyFLyozAUMdc/2ZqRw==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45au4dxcar-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45au4dpesk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Mar 2025 13:02:14 +0000 (GMT)
+ Fri, 14 Mar 2025 13:02:09 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 52EBA6Mp012293; Fri, 14 Mar 2025 13:02:12 GMT
+ with ESMTP id 52EAoYlT012355; Fri, 14 Mar 2025 13:02:07 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 45atn41d4y-1
+ 45atn41d14-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Mar 2025 13:02:12 +0000
+ Fri, 14 Mar 2025 13:02:07 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52ED27RF015104;
- Fri, 14 Mar 2025 13:02:12 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52ED27R7015104;
+ Fri, 14 Mar 2025 13:02:07 GMT
 Received: from jonah-ol8.us.oracle.com
  (dhcp-10-43-73-135.usdhcp.oraclecorp.com [10.43.73.135])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 45atn41d05-5; Fri, 14 Mar 2025 13:02:11 +0000
+ 45atn41d05-1; Fri, 14 Mar 2025 13:02:07 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: eperezma@redhat.com, peterx@redhat.com, mst@redhat.com,
@@ -62,12 +61,10 @@ Cc: eperezma@redhat.com, peterx@redhat.com, mst@redhat.com,
  leiyan@redhat.com, parav@mellanox.com, sgarzare@redhat.com,
  si-wei.liu@oracle.com, lingshan.zhu@intel.com,
  boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [PATCH v3 4/7] vdpa: add listener_registered
-Date: Fri, 14 Mar 2025 09:01:51 -0400
-Message-ID: <20250314130204.11380-5-jonah.palmer@oracle.com>
+Subject: [PATCH v3 0/7] Move memory listener register to vhost_vdpa_init
+Date: Fri, 14 Mar 2025 09:01:47 -0400
+Message-ID: <20250314130204.11380-1-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250314130204.11380-1-jonah.palmer@oracle.com>
-References: <20250314130204.11380-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,8 +76,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  mlxscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 suspectscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
  definitions=main-2503140103
-X-Proofpoint-GUID: 3ybyFl4B062erae94xcyz1TOW4RUNqux
-X-Proofpoint-ORIG-GUID: 3ybyFl4B062erae94xcyz1TOW4RUNqux
+X-Proofpoint-GUID: Ti8yOvOFDvb46XlLIjjJVTq-d5w4CQqr
+X-Proofpoint-ORIG-GUID: Ti8yOvOFDvb46XlLIjjJVTq-d5w4CQqr
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -106,60 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eugenio Pérez <eperezma@redhat.com>
+Current memory operations like pinning may take a lot of time at the
+destination.  Currently they are done after the source of the migration is
+stopped, and before the workload is resumed at the destination.  This is a
+period where neigher traffic can flow, nor the VM workload can continue
+(downtime).
 
-Check if the listener has been registered or not, so it needs to be
-registered again at start.
+We can do better as we know the memory layout of the guest RAM at the
+destination from the moment that all devices are initializaed.  So
+moving that operation allows QEMU to communicate the kernel the maps
+while the workload is still running in the source, so Linux can start
+mapping them.
 
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+As a small drawback, there is a time in the initialization where QEMU
+cannot respond to QMP etc.  By some testing, this time is about
+0.2seconds.  This may be further reduced (or increased) depending on the
+vdpa driver and the platform hardware, and it is dominated by the cost
+of memory pinning.
+
+This matches the time that we move out of the called downtime window.
+The downtime is measured as checking the trace timestamp from the moment
+the source suspend the device to the moment the destination starts the
+eight and last virtqueue pair.  For a 39G guest, it goes from ~2.2526
+secs to 2.0949.
+
+Future directions on top of this series may include to move more things ahead
+of the migration time, like set DRIVER_OK or perform actual iterative migration
+of virtio-net devices.
+
+Comments are welcome.
+
+This series is a different approach of series [1]. As the title does not
+reflect the changes anymore, please refer to the previous one to know the
+series history.
+
+This series is based on [2], it must be applied after it.
+
+[Jonah Palmer]
+This series was rebased after [3] was pulled in, as [3] was a prerequisite
+fix for this series.
+
+v3:
 ---
- hw/virtio/vhost-vdpa.c         | 7 ++++++-
- include/hw/virtio/vhost-vdpa.h | 6 ++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+* Rebase
 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 939a5a28a1..61a0e8fdbd 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -1381,7 +1381,10 @@ static int vhost_vdpa_dev_start(struct vhost_dev *dev, bool started)
-                          "IOMMU and try again");
-             return -1;
-         }
--        memory_listener_register(&v->shared->listener, dev->vdev->dma_as);
-+        if (!v->shared->listener_registered) {
-+            memory_listener_register(&v->shared->listener, dev->vdev->dma_as);
-+            v->shared->listener_registered = true;
-+        }
- 
-         return vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_DRIVER_OK);
-     }
-@@ -1401,6 +1404,8 @@ static void vhost_vdpa_reset_status(struct vhost_dev *dev)
-     vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_ACKNOWLEDGE |
-                                VIRTIO_CONFIG_S_DRIVER);
-     memory_listener_unregister(&v->shared->listener);
-+    v->shared->listener_registered = false;
-+
- }
- 
- static int vhost_vdpa_set_log_base(struct vhost_dev *dev, uint64_t base,
-diff --git a/include/hw/virtio/vhost-vdpa.h b/include/hw/virtio/vhost-vdpa.h
-index 0a9575b469..221840987e 100644
---- a/include/hw/virtio/vhost-vdpa.h
-+++ b/include/hw/virtio/vhost-vdpa.h
-@@ -51,6 +51,12 @@ typedef struct vhost_vdpa_shared {
- 
-     bool iotlb_batch_begin_sent;
- 
-+    /*
-+     * The memory listener has been registered, so DMA maps have been sent to
-+     * the device.
-+     */
-+    bool listener_registered;
-+
-     /* Vdpa must send shadow addresses as IOTLB key for data queues, not GPA */
-     bool shadow_data;
- 
+v2:
+---
+* Move the memory listener registration to vhost_vdpa_set_owner function.
+* Move the iova_tree allocation to net_vhost_vdpa_init.
+
+v1 at https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02136.html.
+
+[1] https://patchwork.kernel.org/project/qemu-devel/cover/20231215172830.2540987-1-eperezma@redhat.com/
+[2] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05910.html
+[3] https://lore.kernel.org/qemu-devel/20250217144936.3589907-1-jonah.palmer@oracle.com/
+
+Eugenio Pérez (7):
+  vdpa: check for iova tree initialized at net_client_start
+  vdpa: reorder vhost_vdpa_set_backend_cap
+  vdpa: set backend capabilities at vhost_vdpa_init
+  vdpa: add listener_registered
+  vdpa: reorder listener assignment
+  vdpa: move iova_tree allocation to net_vhost_vdpa_init
+  vdpa: move memory listener register to vhost_vdpa_init
+
+ hw/virtio/vhost-vdpa.c         | 98 ++++++++++++++++++++++------------
+ include/hw/virtio/vhost-vdpa.h | 22 +++++++-
+ net/vhost-vdpa.c               | 34 ++----------
+ 3 files changed, 88 insertions(+), 66 deletions(-)
+
 -- 
 2.43.5
 
