@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9EEC282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 15:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADC6EC35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 15:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt6u2-0003bG-4x; Fri, 14 Mar 2025 11:24:50 -0400
+	id 1tt77c-00088r-Ua; Fri, 14 Mar 2025 11:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tt6u0-0003ai-6Q
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:24:48 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tt6tx-0006ka-QB
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:24:47 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cf257158fso15358785e9.2
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 08:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741965881; x=1742570681; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VEE2Nvq9vB+i56gB+Yw73qdxRVaeeqnHNFiA+opEREY=;
- b=Y+MS1EtjqPuxPQ+x4bDmob3cq3h37OfPR7FvTIh4dWW/Qc5oSmV7+n+RZ1cmytVKQq
- zmX92rXfyOVm/02ayHj85SzPaP1vfUQSFYch92aBuAkfu3yIOnzkEuuWN8Yk9pxiZjNZ
- wIiokir8sGMHGIrwmNfFPeCWH7mPRz+QtI6ZOKpnGK7D59LygzNEln7eb5KF54V+Jpjb
- Auqgxxu3UySkpFmf4xP+TPCMi1Y8bedhoosuqbsK5xme29mit4xvD74Zfba4otScM0zW
- Z87EWjX/qwDvmMg0pp/7xKEE82ZsOVtWCs1hD+crOfbad5L7mnx5PZGDKlVMtVB3eezt
- ySvg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tt77O-000868-OB
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:38:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tt77K-0000jb-Hc
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 11:38:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741966711;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JQGKBKXOHH2Mv9+V7IawRGJ4zdTputDRJl6j1G+R1vY=;
+ b=CJHi4niE/Ji2He8sE8Y288hzurXMbfOt2MUj4JdKI7Fk8rlGhEIsuAmKgfLmz2KMrg07iJ
+ pnJSZw5rOk80dqHhKt+l6GJ8jwHzYsW3Z8G6oUEU9oc20NuZ+KenDfdglCuwZv4bl5TBXg
+ tPf/91hGWS9Jr/T4/fbabHibnYodfwg=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-424-FZxnOOizPGKWrfYrbA-9TA-1; Fri, 14 Mar 2025 11:38:29 -0400
+X-MC-Unique: FZxnOOizPGKWrfYrbA-9TA-1
+X-Mimecast-MFC-AGG-ID: FZxnOOizPGKWrfYrbA-9TA_1741966708
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ac31990bdfdso175153266b.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 08:38:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741965881; x=1742570681;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VEE2Nvq9vB+i56gB+Yw73qdxRVaeeqnHNFiA+opEREY=;
- b=keen0Iomkoxv7rfy/NNv40uCuie7GPFYvXziF56Ac9UPYvNhBg4qkBb6Cdt0Uyk87Q
- wFrXrIq02iohgfmukjpjeWvfyxOERX/0JkWYOFXjyNuknOsgHYAJaRJ7Cc7VdiB8t5MS
- L/jfTfp9Wu9oPlqZinnOyADxhQ33XDDMEUyY52QpxHxUOLfZ6rDP1ruhWyWggGL2nwSW
- JczvgyL3D7lu6p8iPrTdYQSviu3wPd62ea3RjDDuYdSjcAEBdiJrfAIlX1omAPfFMCfV
- VtlsDVIEtQSl6V/qeXKxo7fo1f3nYegCS1Sx+U7d2dPoHVGZZJCqVZu24d2UjUSnubE8
- gn4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVyzvQVLblB1dy5PnuLbtgqt2N4tHVZeDR0fQE5jvQf+WNQu9hGQFFflyvO1Qr6XjXs1143DUeaAgi@nongnu.org
-X-Gm-Message-State: AOJu0YwqGllMO3JDx52CCJE8KHr8Img7Rkx1soCSe3fhk+fr8gldSyLL
- GGYfCYS/xZ+V9QYowAEOvjC/jjHOt9iYdgKLttz9gkmoUlKaIGCPuQp1RBFh5ZI=
-X-Gm-Gg: ASbGncsO8R5YewZjE47oO4BcE1Gd4VxUpiV7PVO18DP92f17t5lafTDdgR5aiVuDW46
- PnHGE7UBdPdUchTJMLpFulIg3gX6/fcnYgyyUDhKLl/wwZVDyxyYXmXfCD0K7AEUCMvQBTwk6Et
- GNfNurHZI1O1wnyh/nDwO7aqlVsqHFWCnX4iVyIUdmqtrBeFSv5gl6X2yE5q8F31WcuUNwp5RiC
- psvPO1UgIT2xap1FyZTEkSiQ9MWRmfiTp6thp3DIftELbsA6kkJiBVuF5Lzhon5bG5hahVDkFrf
- Y0WX7cgABoxcs/wqeFq43UowQ4enkrmm0Pg/6Px7dzzhqWauzsV9OilU8WtoYb+D1PpxmCub2oJ
- O0q/rDjn+Q9BpVGs=
-X-Google-Smtp-Source: AGHT+IHk/efd3Ueuu3HvcXnLbFlT9LIvpKTEMqkzCLNqVWmcmBMPrW3cTUl2WTXb1jevB/K1KLVD5w==
-X-Received: by 2002:a05:600c:3552:b0:43c:eeee:b706 with SMTP id
- 5b1f17b1804b1-43d1ed0028cmr34887475e9.24.1741965880682; 
- Fri, 14 Mar 2025 08:24:40 -0700 (PDT)
-Received: from [192.168.1.67] (88-178-97-237.subs.proxad.net. [88.178.97.237])
+ d=1e100.net; s=20230601; t=1741966707; x=1742571507;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JQGKBKXOHH2Mv9+V7IawRGJ4zdTputDRJl6j1G+R1vY=;
+ b=lnuHdGb084VF0th8FBu3bfNZHOzxPu56hlACVx+BJx2z3H+m4tHa0+nJVl5+SGVG39
+ RVrPo/e2lY7z7tF04lbQniSs69r5grniJ9Q46mKuDUhTcLZmq9ZRDLlD53Opq0AM3rGx
+ tKLSsb7tAtcfNaIJdSCuBC7D6vNBJl5V+ZD5ilqbN7IGbsSyPelx2Tnef3eFG5mDI4gK
+ fTsjE/GNL+KxKyeljuhvZbYdAN9JU/l7jPmeUjN5G0cztXQMSJHh6MfKy1ETPPE/mqXx
+ An3s4fVIyabGAaG2U8LCltSCWnpOIIAA8cJgXIWGaW+lp6cSw+KNWlUgUTIaYGnFAf7t
+ sTmg==
+X-Gm-Message-State: AOJu0YwPHwozrb1sqmLe5ccLU0uZyYJdmEGisAY383/5egcxoxnVUQQS
+ agu+j439z4Aaf/nEFUamxzsakfj0ZXJ/Ng47IWfjGRjYJ+KCJG5CwoztqFpBi4rb168RnqitpVu
+ SFCNssEaMSml5sohoWEsa93oJCNOnBxt2ZUmp6mQU67AHEfkLACEz/8zeCa4PXVob1gtHEAFOfV
+ E0PSSL6PZHT+uul2QusgWMs3HEKRt1bhmkGPQK
+X-Gm-Gg: ASbGnculchmR4WBy9fwXwqtb+CXONjG7Dj/atTEqxLNC4g0GGo6SY0QWzmBhB+T5LWU
+ Wv+PHXel2vhdUgEH4cAz/+6rmZomi+3fIQhyIc8ZPB26Guw2JXpr0LbU4LAXe/RLL3OeNZjYviO
+ IVzG7Qpqxtz7I2/17OV2lVMinMCXvZ5Cw3rJ7l+kyqVqgGuIEFsO3Ntd/A4o8giBx3eIcIZuVBf
+ n534ZkzNVNQufUZI5I5uIDJiPiO+n7oU59ESmSYZMY5GLc+qGcpn4XrN3Bkol/RK3/mqY2neW1h
+ 59OlAEqyhIiwVYogmsrJLQ==
+X-Received: by 2002:a17:907:7296:b0:abf:641a:5727 with SMTP id
+ a640c23a62f3a-ac33011254emr386759466b.7.1741966707385; 
+ Fri, 14 Mar 2025 08:38:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmbm2sdwmCW5oIfsx52R1GqMfrL6A4Kls67if0hoIjCwyECr9XUPhSf7NojVF9Wphh9gwKFQ==
+X-Received: by 2002:a17:907:7296:b0:abf:641a:5727 with SMTP id
+ a640c23a62f3a-ac33011254emr386755866b.7.1741966706930; 
+ Fri, 14 Mar 2025 08:38:26 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.122.167])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d200fae32sm20353825e9.31.2025.03.14.08.24.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Mar 2025 08:24:40 -0700 (PDT)
-Message-ID: <b1bf1986-d034-471a-ab4d-3ee19f501940@linaro.org>
-Date: Fri, 14 Mar 2025 16:24:39 +0100
+ a640c23a62f3a-ac3149d0bc1sm241147566b.105.2025.03.14.08.38.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Mar 2025 08:38:25 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com,
+	Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH] configure: disable split_debug on Windows and on non-git
+ builds
+Date: Fri, 14 Mar 2025 16:38:24 +0100
+Message-ID: <20250314153824.65303-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] memory: suppress INVALID_MEM logs caused by debug
- access
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-References: <20250314074107.992163-1-npiggin@gmail.com>
- <20250314074107.992163-3-npiggin@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250314074107.992163-3-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,86 +107,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/3/25 08:41, Nicholas Piggin wrote:
-> Debugger-driven invalid memory accesses are not guest errors, so should
-> not cause these error logs.
-> 
-> Debuggers can access memory wildly, including access to addresses not
-> specified by the user (e.g., gdb it might try to walk the stack or load
-> target addresses to display disassembly). Failure is reported
-> synchronously by the GDB protcol so the user can be notified via the
-> debugger client.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   system/memory.c | 37 ++++++++++++++++++++++---------------
->   1 file changed, 22 insertions(+), 15 deletions(-)
-> 
-> diff --git a/system/memory.c b/system/memory.c
-> index 4c829793a0a..960f66e8d7e 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1412,18 +1412,23 @@ bool memory_region_access_valid(MemoryRegion *mr,
->   {
+-gsplit-dwarf is reported to produce broken binaries on Windows.
+The linker produces warnings but exits successfully:
 
-Should we instead consider debug accesses as always valid? i.e.:
+/usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
+qga/qemu-ga.exe:/4: section below image base
+/usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
+qga/qemu-ga.exe:/24: section below image base
 
-         if (attrs.debug) {
-             return true;
-         }
+and as a result qemu-ga.exe fails to start.
 
->       if (mr->ops->valid.accepts
->           && !mr->ops->valid.accepts(mr->opaque, addr, size, is_write, attrs)) {
-> -        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-> -                      ", size %u, region '%s', reason: rejected\n",
-> -                      is_write ? "write" : "read",
-> -                      addr, size, memory_region_name(mr));
-> +        if (attrs.debug) {
-> +            /* Don't log memory errors due to debugger accesses */
-> +            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-> +                          ", size %u, region '%s', reason: rejected\n",
-> +                          is_write ? "write" : "read",
-> +                          addr, size, memory_region_name(mr));
-> +        }
->           return false;
->       }
->   
->       if (!mr->ops->valid.unaligned && (addr & (size - 1))) {
-> -        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-> -                      ", size %u, region '%s', reason: unaligned\n",
-> -                      is_write ? "write" : "read",
-> -                      addr, size, memory_region_name(mr));
-> +        if (attrs.debug) {
-> +            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-> +                          ", size %u, region '%s', reason: unaligned\n",
-> +                          is_write ? "write" : "read",
-> +                          addr, size, memory_region_name(mr));
-> +        }
->           return false;
->       }
->   
-> @@ -1434,13 +1439,15 @@ bool memory_region_access_valid(MemoryRegion *mr,
->   
->       if (size > mr->ops->valid.max_access_size
->           || size < mr->ops->valid.min_access_size) {
-> -        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-> -                      ", size %u, region '%s', reason: invalid size "
-> -                      "(min:%u max:%u)\n",
-> -                      is_write ? "write" : "read",
-> -                      addr, size, memory_region_name(mr),
-> -                      mr->ops->valid.min_access_size,
-> -                      mr->ops->valid.max_access_size);
-> +        if (attrs.debug) {
-> +            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-> +                          ", size %u, region '%s', reason: invalid size "
-> +                          "(min:%u max:%u)\n",
-> +                          is_write ? "write" : "read",
-> +                          addr, size, memory_region_name(mr),
-> +                          mr->ops->valid.min_access_size,
-> +                          mr->ops->valid.max_access_size);
-> +        }
->           return false;
->       }
->       return true;
+On top of this, also disable -gsplit-dwarf unless building from git.
+Similar to -Werror, split debug info is probably not the best choice
+for people that want to build for installing.
+
+(Random thoughts: there is a tension here between adding an option
+that is useful for QEMU developers, and messing things up for everyone
+else by doing something decidedly non-standard.  For example, distros
+are starting to create a fake git repository just so that they can
+use "git am" to apply patches; while some of them, for example Fedora,
+are wise, or paranoid, enough to pass --disable-XXX for everything and
+then turn back on what they want, it cannot be expected that everyone
+does this.  It may be safer to make --enable-split-debug default off
+for everybody and add it somewhere in docs/.  For now I am keeping it
+enabled but we could consider doing something different during the hard
+freeze period).
+
+Reported-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configure         | 4 ++++
+ meson_options.txt | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 02f1dd2311f..9aece67ed08 100755
+--- a/configure
++++ b/configure
+@@ -1864,6 +1864,10 @@ if test "$skip_meson" = no; then
+       { test "$host_os" = linux || test "$host_os" = "windows"; }; then
+       echo 'werror = true' >> $cross
+   fi
++  if test -e "$source_path/.git" && test "$host_os" != "windows"; then
++      echo 'split_debug = true' >> $cross
++  fi
++
+   echo "[project options]" >> $cross
+   if test "$SMBD" != ''; then
+     echo "smbd = $(meson_quote "$SMBD")" >> $cross
+diff --git a/meson_options.txt b/meson_options.txt
+index 3432123fee2..f3546b9abc1 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -362,7 +362,7 @@ option('debug_mutex', type: 'boolean', value: false,
+        description: 'mutex debugging support')
+ option('debug_stack_usage', type: 'boolean', value: false,
+        description: 'measure coroutine stack usage')
+-option('split_debug', type: 'boolean', value: true,
++option('split_debug', type: 'boolean', value: false,
+        description: 'split debug info from object files')
+ option('qom_cast_debug', type: 'boolean', value: true,
+        description: 'cast debugging support')
+-- 
+2.48.1
 
 
