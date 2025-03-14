@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 391C7C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 21:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7D6C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 21:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttC8G-0001Fm-Sj; Fri, 14 Mar 2025 16:59:52 -0400
+	id 1ttCMj-0004EZ-O6; Fri, 14 Mar 2025 17:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ttC8D-0001AY-4F
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 16:59:49 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ttCMc-0004Dv-Hx
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 17:14:43 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ttC8B-0008C0-Gg
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 16:59:48 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-300fefb8e06so269675a91.0
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 13:59:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ttCMa-0001KZ-JX
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 17:14:42 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43d07ca6a80so709945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 14:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741985985; x=1742590785; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XZ3K2WbM6tltlOHPyd4FtoiXB3ISik49Nr6oU8A8zuM=;
- b=Urf8p12iU8NBxQ4fPCSvACEZFdcbPNKQjGkZsYV4ARTiKQv/YJN2TNYnqfHj9E+Kl0
- UQ1RD9fbOZ+U7j3yR0XD7Sh0TmxM2xCDdehzZTnsqAIHKPUmSOCBwS9r4vKsS2kaB3nO
- YH1KAmuBGVFs4ZkczZ6xSxhGe/9NvdBbJwTimc8MuRL9e8ki+oikszTmwqgN05DAJzKb
- 82ZVXh9q1tw0LKmFMiCC87rpN7+ZZ4Ix0WJslsySmrqU0JqX6VEcEIZkGlcHZ/nCI26+
- Y+FNT0tyNpeYGXK8WwBmko/rIWICFwzKrgNYG92pX11ar+zHO8d9CuoVTSSTvhDk6AAP
- eLPA==
+ d=linaro.org; s=google; t=1741986877; x=1742591677; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0wJmvGjlSYsUOBrlOY9Jr1IghMpoUBzY7EoMKjxv48g=;
+ b=gaUJ3vQ1+uynWRxikElNhi87FWTczSGpBuB20s1bsIL0ljEDDCMT9oe5vz1PO3uQL/
+ GSkXIiSAsuD3tuY2OGa/1jmy1maBqd0guF5uCEAFtN31nIy1ssBtedOJHH/MnesG2YTl
+ fAWH+CkhkKv2vXcii1pdqBNknYx+/363543OcdLT5eukQJM5nXEqpwDU7v7veJtN6e++
+ izer4TzepyCYH9J8WsQf4LgTdMWveh19M44ZsTWzlGGyt3MXGwzjrXuLpnXSxbcNeLJ2
+ tN3ejRd1aUBb9+evmKd6k2PexlG6pLyDRKy//D8J99Wmwqx4DM58Jh9LQxY1lKVb5LU1
+ M45w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741985985; x=1742590785;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XZ3K2WbM6tltlOHPyd4FtoiXB3ISik49Nr6oU8A8zuM=;
- b=FmsVNcdJD6jbOXZvEBkGc7LeYegiXeijp9ENEwkz1aa3H3e6Bh0/wnzq7O/CW6CvQo
- iusbrigAuVRi33Xrsn/4BGGFqnSl9tBr1o4Z0dUFw7edkyRjP+qfMmbuB8ZNhxeyuuir
- 3cn/CHiri9JAJz3JtELqcTpuHKkF6kgYOtdzeXBOaQ3GbJMULdYcq95JfjGOhMS4wmkI
- UFy0Lq5NhQT6q0aGDwJ6hfkCgWVqQcU/hDloPEujmZSDglJrpIgPR/IE+Ct9C3pftztQ
- DxXAVEYcMeHeBwuxBUadRfB/BQ4vVX11P8doh1fZ+7lxKAOJ0Fq8KM+OHra7b5UT5Y23
- m9Fw==
+ d=1e100.net; s=20230601; t=1741986877; x=1742591677;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0wJmvGjlSYsUOBrlOY9Jr1IghMpoUBzY7EoMKjxv48g=;
+ b=a1jPFYBhC4XNNoeOR+SXUZwzzyuolTONukSGpPWmUfbfNedWpUnrXJExRz7v7em+m0
+ ngNcX9kHbqkPIn/DxfIODjsiPhMqh5i8X7VHZyjUGLOPE4kcFxkBoeHbYDmm+htLYJwL
+ dGhDEBDz3xN66hFZOSQOEq1xC5q6jcbQkiI8iDG4kG+RT00ifAeYpEVV0cmpltPhy46D
+ A1Y7NfvSV+XH3VHKUTTnynhKQXTAdWdtu/064rgqFC50dmd7bWPY8VPz3OIvvbgsILCr
+ dU0vLDcFMRsGy41h7CLi3VL5YD6K985KgVK0HIgSEUDWZ3M1xVcNJxUtyZZ6Y7IJ/nCf
+ 0gBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSt9x8pUr7ToC/Z0OScbsanmrKcMEwFmn2/GiiXaOyMXlhPuMtGOYZVV3zZKGEyg9mS+5mvSGvvywv@nongnu.org
-X-Gm-Message-State: AOJu0Yy5+HCPV+pakXex8TB7QJaZxECqL0h814HNgbiYUcrTHX6u2xLx
- eG5pe9u6Dmo5zjhlbqAuqDADWlhQUm7+lxIQc/wPkqijpxRHxHgHSskPIU3AXYg=
-X-Gm-Gg: ASbGncu9jH3FilGF7uqHY8y3Kdy1/I34kwtbyBz3PigQUZKqDC4BmYtjh9ZB8udEVDW
- p6KAcn61yc6a4LHZrWJ+xzW4v0Ag4Owm79z/0uEIOVtIjFRJsYgmbVF58LL0osu+s2PAzuaCnre
- DPqRfGanJh7YPIN0FAGJojNr9BdvOFmvi1iU1TXXG8HnzRc5COgcH4Nj6nRuTjO5OUoKMVpRyDr
- vqg7OKuU8mmjKvyypbfv74ckp9k4PQJ/E2gfuKJacGvU56thKe5u18rouTFPoJf8NJ4+cFM2nWE
- fcgzmNY+YOW3n0xtjz5GaHKH0sPixkE9JLG8E1g1dhq1VTEbPLBM/kIiXzlTwmA7uXbuN6a1aJr
- MJ2nTufym
-X-Google-Smtp-Source: AGHT+IFXF1yDzSMsGr8yjoge/4OKEieRnB/O148epHfxjfPZkpUvkQiTlcJEDxDV9x6q1wk8uWp7Kg==
-X-Received: by 2002:a17:90a:c2cd:b0:2ff:6f8a:3a12 with SMTP id
- 98e67ed59e1d1-30151dc7542mr5362316a91.33.1741985985678; 
- Fri, 14 Mar 2025 13:59:45 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-301539ed074sm1466187a91.15.2025.03.14.13.59.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Mar 2025 13:59:45 -0700 (PDT)
-Message-ID: <7f10a102-5cea-4543-bae0-927e89e8e471@linaro.org>
-Date: Fri, 14 Mar 2025 13:59:43 -0700
+ AJvYcCUUf0ODI8aCoTZ/rBlfx9S4+FFbpgv/8fnJcxL0YLR51AJe55IWMBW64K8Kn3Pm2zUdPuRMWCY9Y1s9@nongnu.org
+X-Gm-Message-State: AOJu0YxQMUhrU+5cwH0aI2410eBTG7A5rns6jt2u7/9jOvxGUW3oUuHk
+ kV+ko6TuO50wDWu1EfZsge3O2OgCmEoW0JiqQ26tiAg115/Sk7Xh8oK1BCA0XGg=
+X-Gm-Gg: ASbGncsVOic0BeLZ1+EIOk14b1fbRt0cxlSRwR++WeHi2LMPmNVeuw7IAaVrDyUiZcg
+ Ha8PEK21jjkEBlL/oq9fUs+uo4Syoj+tAcOa6+NkSSS154toUByvVc5LrJLBNMyLt19f4Nd6mmT
+ 1f9Y1ElinOdrfvQvJjZIufAmmj9SMoAAzBddkeFc5pshOlPpRQYI/dBdiBsY0M60cQVYsN5lIDW
+ Od4ROFvymyst7P+eYQWHLxIsvhAvIdyWSew3Qtjj+ND4Lv+DJhf6GyxEMjpqueZz81RiNe9Xw6V
+ ty/WOkuAzdS0/9E/4zhNMCaJ2hyPYu1dPRaop9o4+XkNGzUbXpyji9QnvQ==
+X-Google-Smtp-Source: AGHT+IGDRuWL5OdMBQOunEWgO2iXH4cVy8AaEVb13PDHojH/47AWQz0PzoUCVeh/WsG3qX+8yItwRg==
+X-Received: by 2002:a05:600c:3c8b:b0:43c:f332:703a with SMTP id
+ 5b1f17b1804b1-43d1ed22601mr53972205e9.31.1741986877091; 
+ Fri, 14 Mar 2025 14:14:37 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d200faebbsm28144495e9.30.2025.03.14.14.14.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Mar 2025 14:14:36 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A6FAC5F92C;
+ Fri, 14 Mar 2025 21:14:35 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,
+ berrange@redhat.com,  Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: Re: [PATCH] configure: disable split_debug on Windows and on
+ non-git builds
+In-Reply-To: <44fc2b85-ab20-401a-9c71-54240bb1e503@linaro.org> (Pierrick
+ Bouvier's message of "Fri, 14 Mar 2025 12:12:08 -0700")
+References: <20250314153824.65303-1-pbonzini@redhat.com>
+ <44fc2b85-ab20-401a-9c71-54240bb1e503@linaro.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Fri, 14 Mar 2025 21:14:35 +0000
+Message-ID: <87ldt7gvr8.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 32/37] include/hw/intc: Remove ifndef CONFIG_USER_ONLY
- from armv7m_nvic.h
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@linaro.org
-References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-33-richard.henderson@linaro.org>
- <7f665a47-2bba-4c3a-980c-a252ec44723c@linaro.org>
- <807dbc0d-db15-4bd3-95f3-b3e87951bd7f@linaro.org>
- <42b1f9f3-2ed4-461b-9460-0318011097ee@linaro.org>
- <e3d39823-734e-4186-95b6-07717663bdf2@linaro.org>
- <ad7cd476-1830-4806-b4d2-20d8456af849@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ad7cd476-1830-4806-b4d2-20d8456af849@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,38 +107,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/14/25 13:34, Pierrick Bouvier wrote:
-> On 3/14/25 13:03, Richard Henderson wrote:
->> I'm not quite sure what you're arguing for here.
->> A build-time error is vastly preferable to a run-time error.
->>
-> 
-> Even though this specific patch is safe (code calling those functions should be under 
-> system anyway, so it should not be linked in a user binary), I just wonder if we should 
-> not add explicit checks for this, for other kind of replacement we'll have to do.
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-Any such runtime check should not be for "system" vs "user", but for "feature enabled".
+> On 3/14/25 08:38, Paolo Bonzini wrote:
+>> -gsplit-dwarf is reported to produce broken binaries on Windows.
+>> The linker produces warnings but exits successfully:
+>> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bi=
+n/ld:
+>> qga/qemu-ga.exe:/4: section below image base
+>> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bi=
+n/ld:
+>> qga/qemu-ga.exe:/24: section below image base
+>> and as a result qemu-ga.exe fails to start.
+>> On top of this, also disable -gsplit-dwarf unless building from git.
+>> Similar to -Werror, split debug info is probably not the best choice
+>> for people that want to build for installing.
+>> (Random thoughts: there is a tension here between adding an option
+>> that is useful for QEMU developers, and messing things up for everyone
+>> else by doing something decidedly non-standard.  For example, distros
+>> are starting to create a fake git repository just so that they can
+>> use "git am" to apply patches; while some of them, for example Fedora,
+>> are wise, or paranoid, enough to pass --disable-XXX for everything and
+>> then turn back on what they want, it cannot be expected that everyone
+>> does this.  It may be safer to make --enable-split-debug default off
+>> for everybody and add it somewhere in docs/.  For now I am keeping it
+>> enabled but we could consider doing something different during the hard
+>> freeze period).
+>> Reported-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   configure         | 4 ++++
+>>   meson_options.txt | 2 +-
+>>   2 files changed, 5 insertions(+), 1 deletion(-)
+>> diff --git a/configure b/configure
+>> index 02f1dd2311f..9aece67ed08 100755
+>> --- a/configure
+>> +++ b/configure
+>> @@ -1864,6 +1864,10 @@ if test "$skip_meson" =3D no; then
+>>         { test "$host_os" =3D linux || test "$host_os" =3D "windows"; };=
+ then
+>>         echo 'werror =3D true' >> $cross
+>>     fi
+>> +  if test -e "$source_path/.git" && test "$host_os" !=3D "windows"; then
+>> +      echo 'split_debug =3D true' >> $cross
+>> +  fi
+>> +
+>>     echo "[project options]" >> $cross
+>>     if test "$SMBD" !=3D ''; then
+>>       echo "smbd =3D $(meson_quote "$SMBD")" >> $cross
+>> diff --git a/meson_options.txt b/meson_options.txt
+>> index 3432123fee2..f3546b9abc1 100644
+>> --- a/meson_options.txt
+>> +++ b/meson_options.txt
+>> @@ -362,7 +362,7 @@ option('debug_mutex', type: 'boolean', value: false,
+>>          description: 'mutex debugging support')
+>>   option('debug_stack_usage', type: 'boolean', value: false,
+>>          description: 'measure coroutine stack usage')
+>> -option('split_debug', type: 'boolean', value: true,
+>> +option('split_debug', type: 'boolean', value: false,
+>>          description: 'split debug info from object files')
+>>   option('qom_cast_debug', type: 'boolean', value: true,
+>>          description: 'cast debugging support')
+>
+> Unfortunate coincidence, this appears at the same time MSYS2 fixed
+> some issue triggering a segfault [1]. So I didn't investigate further
+> the current issue, thinking something else have been changed I don't
+> know where.
+>
+> Would be better to revert it completely indeed, creating another build
+> configuration is not worth the (cheap) disk storage saved.
 
->> If it's a lesser used configuration or feature, a run-time error could lay dormant for
->> years before a user encounters it.
->>
-> 
-> Sure, but wouldn't it better to have an explicit assert, instead of observing a random 
-> behaviour?
+Well we should disable debug info on the CI builds then. Nothing is free
+and our CI is pretty damned heavy and the builds all add up when debug
+info is on by default.
 
-What random behaviour are you suggesting?
+>
+> [1] https://github.com/msys2/MINGW-packages/issues/23577
 
-> I'm just worried we end up calling something we should not (user vs system, or any other 
-> ifdef CONFIG/TARGET that might be hidden somewhere), and silently return a wrong value, 
-> which would not be covered by our test suite.
-
-Where is the wrong value going to be returned from, the stub?
-Yes, many stubs do abort, typically after the "enabled" stub returns false.
-
-It's still best if "feature enabled" is compile-time false when possible, such that 
-everything after the feature check gets compiled out.  At which point we don't need the 
-stubs: they won't be reachable and errors are caught at build-time.
-
-
-r~
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
