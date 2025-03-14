@@ -4,49 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AF3C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 08:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4554EC28B2F
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 08:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt0lx-0007vi-HW; Fri, 14 Mar 2025 04:52:05 -0400
+	id 1tt0qb-0000xm-3k; Fri, 14 Mar 2025 04:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tt0lu-0007vI-P3
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:52:02 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tt0lo-0008UV-MI
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:52:02 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxbWsm7tNnFz+WAA--.58888S3;
- Fri, 14 Mar 2025 16:51:50 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxb8ck7tNn2ItKAA--.13804S2;
- Fri, 14 Mar 2025 16:51:48 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3] tests/qtest/cpu-plug-test: Add cpu hotplug support for
- LoongArch
-Date: Fri, 14 Mar 2025 16:51:30 +0800
-Message-Id: <20250314085130.4184272-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt0qZ-0000xM-MW
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:56:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt0qX-0000mx-KK
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:56:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741942607;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WKsf7dpFZB1NLRetgmhmAwf6kqZ5Fz9dEA6RZHoxLkw=;
+ b=Fp+hUwqB/Xstzs3LORxCBFedVemtROoz1gL7A372MmZcI9hXlJpM40330qNcc84wdwv1+H
+ AT1mBCKlOWhzSAc45HHFs8yVFdm6lHz3+1KvBRTAfuFtn+E3B8w8j6SLvUO0+DhCmfVXsS
+ nWkSO+N4tDJMWmBddIrmBiA1ldGM4V8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-Bx9BtSitPm-yea4bbtMnLg-1; Fri,
+ 14 Mar 2025 04:56:44 -0400
+X-MC-Unique: Bx9BtSitPm-yea4bbtMnLg-1
+X-Mimecast-MFC-AGG-ID: Bx9BtSitPm-yea4bbtMnLg_1741942603
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 63FD719560BB; Fri, 14 Mar 2025 08:56:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01E571955BCB; Fri, 14 Mar 2025 08:56:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1D17821E675F; Fri, 14 Mar 2025 09:56:37 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: bibo mao <maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 2/3] hw/loongarch/virt: Remove unnecessary NULL pointer
+ checking
+In-Reply-To: <fc8a893c-9ff5-ad44-812a-66dd0f163269@loongson.cn> (bibo mao's
+ message of "Fri, 14 Mar 2025 14:28:27 +0800")
+References: <20250313091350.3770394-1-maobibo@loongson.cn>
+ <20250313091350.3770394-3-maobibo@loongson.cn>
+ <875xkdb4q5.fsf@pond.sub.org>
+ <10c55e3e-22f5-285d-7e38-3a6a08089302@loongson.cn>
+ <87v7scw4se.fsf@pond.sub.org>
+ <fc8a893c-9ff5-ad44-812a-66dd0f163269@loongson.cn>
+Date: Fri, 14 Mar 2025 09:56:37 +0100
+Message-ID: <87a59ot2gq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8ck7tNn2ItKAA--.13804S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -64,86 +91,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cpu hotplug testcase support for LoongArch system, it passes to
-run with command "make check-qtest-loongarch64" as following:
-  qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 0.38s 1 subtests passed
+bibo mao <maobibo@loongson.cn> writes:
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
-v2 ... v3:
-  1. Remove redundant check with machine type since it is constant
-     string.
+> The question how to use error_propagate() comparing with error_setg() since there is such API. :)
 
-v1 ... v2:
-  1. Call test function add_loongarch_test_case() directly rather than
-     qtest_cb_for_every_machine() since compatible machine is not
-     supported on LoongArch system.
-  2. Add architecture specified test case in separate line.
----
- tests/qtest/cpu-plug-test.c | 24 ++++++++++++++++++++++++
- tests/qtest/meson.build     |  3 ++-
- 2 files changed, 26 insertions(+), 1 deletion(-)
+error_propagate() should be mostly avoided in new code.  It still exists
+because plenty of old code uses it.  It can also be used to keep only
+first of several errors, but that's rarely a good idea.
 
-diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
-index 6633abfc10..44d704680b 100644
---- a/tests/qtest/cpu-plug-test.c
-+++ b/tests/qtest/cpu-plug-test.c
-@@ -156,6 +156,28 @@ static void add_s390x_test_case(const char *mname)
-     g_free(path);
- }
- 
-+static void add_loongarch_test_case(const char *mname)
-+{
-+    char *path;
-+    PlugTestData *data;
-+
-+    data = g_new(PlugTestData, 1);
-+    data->machine = g_strdup(mname);
-+    data->cpu_model = "la464";
-+    data->device_model = g_strdup("la464-loongarch-cpu");
-+    data->sockets = 1;
-+    data->cores = 3;
-+    data->threads = 1;
-+    data->maxcpus = data->sockets * data->cores * data->threads;
-+
-+    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
-+                           mname, data->sockets, data->cores,
-+                           data->threads, data->maxcpus);
-+    qtest_add_data_func_full(path, data, test_plug_with_device_add,
-+                             test_data_free);
-+    g_free(path);
-+}
-+
- int main(int argc, char **argv)
- {
-     const char *arch = qtest_get_arch();
-@@ -168,6 +190,8 @@ int main(int argc, char **argv)
-         qtest_cb_for_every_machine(add_pseries_test_case, g_test_quick());
-     } else if (g_str_equal(arch, "s390x")) {
-         qtest_cb_for_every_machine(add_s390x_test_case, g_test_quick());
-+    } else if (g_str_equal(arch, "loongarch64")) {
-+        add_loongarch_test_case("virt");
-     }
- 
-     return g_test_run();
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 5a8c1f102c..788093f744 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -149,7 +149,8 @@ qtests_hppa = \
- 
- qtests_loongarch64 = qtests_filter + \
-   (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
--  ['boot-serial-test']
-+  ['boot-serial-test',
-+   'cpu-plug-test']
- 
- qtests_m68k = ['boot-serial-test'] + \
-   qtests_filter
+There's usage advice in include/qapi/error.h's big comment.  Relevant
+parts for your convenience:
 
-base-commit: 4c33c097f3a8a8093bcbaf097c3a178051e51b3e
--- 
-2.39.3
+ * = Passing errors around =
+ *
+ * Errors get passed to the caller through the conventional @errp
+ * parameter.
+ *
+ * Create a new error and pass it to the caller:
+ *     error_setg(errp, "situation normal, all fouled up");
+ *
+ * Call a function, receive an error from it, and pass it to the caller
+ * - when the function returns a value that indicates failure, say
+ *   false:
+ *     if (!foo(arg, errp)) {
+ *         handle the error...
+ *     }
+ * - when it does not, say because it is a void function:
+ *     ERRP_GUARD();
+ *     foo(arg, errp);
+ *     if (*errp) {
+ *         handle the error...
+ *     }
+ * More on ERRP_GUARD() below.
+ *
+ * Code predating ERRP_GUARD() still exists, and looks like this:
+ *     Error *err = NULL;
+ *     foo(arg, &err);
+ *     if (err) {
+ *         handle the error...
+ *         error_propagate(errp, err); // deprecated
+ *     }
+ * Avoid in new code.  Do *not* "optimize" it to
+ *     foo(arg, errp);
+ *     if (*errp) { // WRONG!
+ *         handle the error...
+ *     }
+ * because errp may be NULL without the ERRP_GUARD() guard.
+ *
+ * But when all you do with the error is pass it on, please use
+ *     foo(arg, errp);
+ * for readability.
+[...]
+ * Pass an existing error to the caller:
+ *     error_propagate(errp, err);
+ * This is rarely needed.  When @err is a local variable, use of
+ * ERRP_GUARD() commonly results in more readable code.
+ *
+ * Pass an existing error to the caller with the message modified:
+ *     error_propagate_prepend(errp, err,
+ *                             "Could not frobnicate '%s': ", name);
+ * This is more concise than
+ *     error_propagate(errp, err); // don't do this
+ *     error_prepend(errp, "Could not frobnicate '%s': ", name);
+ * and works even when @errp is &error_fatal.
+ *
+ * Receive and accumulate multiple errors (first one wins):
+ *     Error *err = NULL, *local_err = NULL;
+ *     foo(arg, &err);
+ *     bar(arg, &local_err);
+ *     error_propagate(&err, local_err);
+ *     if (err) {
+ *         handle the error...
+ *     }
+ *
+ * Do *not* "optimize" this to
+ *     Error *err = NULL;
+ *     foo(arg, &err);
+ *     bar(arg, &err); // WRONG!
+ *     if (err) {
+ *         handle the error...
+ *     }
+ * because this may pass a non-null err to bar().
+ *
+ * Likewise, do *not*
+ *     Error *err = NULL;
+ *     if (cond1) {
+ *         error_setg(&err, ...);
+ *     }
+ *     if (cond2) {
+ *         error_setg(&err, ...); // WRONG!
+ *     }
+ * because this may pass a non-null err to error_setg().
+
+Questions?
 
 
