@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC01C282DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Mar 2025 22:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6842C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 00:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsrUm-0002Jj-Vw; Thu, 13 Mar 2025 18:57:45 -0400
+	id 1tssaY-0003OL-54; Thu, 13 Mar 2025 20:07:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tsrUk-0002Ix-GB
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 18:57:42 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tssaW-0003Np-Bv
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:07:44 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tsrUi-00035o-NX
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 18:57:42 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5e5e34f4e89so2752249a12.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 15:57:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tssaT-0004L1-ED
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:07:42 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2fec3176ef3so2687456a91.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 17:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741906658; x=1742511458; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HsHQf/65xSZUBKVfcq9Ga2fEKqwVE2VdJKgAHBll4i0=;
- b=PZq5t7aMwETvGA6sPzDLJJ75ML4Iir0Bf9VhWHLaeUxoJR7U39jjLgxK+OD3Cgx6Sm
- fJR/+TtSb1dhvs7VJnv4cEdUJmIncXLzrHhawn0tq642SFrvrg+S9iE+Sq/3nDgJxW4Q
- BbXJ6YOHweEdfflw04vsaM6ztOCFfQSoYG6OezqI+fUW62otJvnKokk7753g0MWx1w1s
- YIdpzWLDeK6jOjFAKJ34+oda748eMUe0rTFYJ+J1q2DGtYwZOgEKdj++aKkEykgOcKWw
- 0Gr824TrTtOhrUwuiyUaY7hG/p+6DYZV52HJ7zB1aOe0EuGnrVsNMmn+4m5q8+CKRrz2
- Uwow==
+ d=linaro.org; s=google; t=1741910860; x=1742515660; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YUZlxK+roiOl2/8eDP8cANTJOOqGZstmyKZvkJUycWQ=;
+ b=rGYU0MwwTUtDJjwVr3nTtWwnf7RsNxlLqPStz9iZb9mbmuHvXzLIG24XT54tV/ezrY
+ ucy3lNv6ilnvYtws7nom3QGcZSy34bZ8tB3+4o6KUGs+Zy30oPExQcz5RC0+crZWytuC
+ yfiWRIOdxDF2XUtwHisMJFKB+9pa5gWUllnINpUXu3OCJbqJJEp5Um6Bd2pfptkZVarF
+ FvYnBK0FXJed/OuB4p5yosnrdVPR/XHWjdDUy+L5vFVxJBuJcLEfATBJpHFKlaqYiD9G
+ H4Z2G7P4OUUD29amRnlxTkNLoX5avMr3avHlgDh41wxGVhz3hJK1uuIRVYDoWdpOD0uZ
+ 6Pxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741906658; x=1742511458;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HsHQf/65xSZUBKVfcq9Ga2fEKqwVE2VdJKgAHBll4i0=;
- b=w/26FhSimyzJILbEz51UpBw0UzMRtCue+2XC3LOMsHtPAFtG3QKHqGDIocQOO6qb5n
- HS8zeU4bBrtREk50Hgp0Ie0L+gT8t8WrNOzp015mnmVI4Bbo41xWu6UQJWMS2BXSaBbm
- zN44DZnxcg7kX0WNH9frkLc/7/o+jBaaSekXCHrgnnJ+2lszJjSEP68o1YpQm8W5DuNO
- 2Ml33Z18hJM5HBMGW/kq3iNW5Qqz96QF6GwLsQQAvCTF6G+0ocjiuIoGprJqFtX4Ae/9
- HTW97DaXw5WI6yjr9B1OUVSB5KZ8eznFrZ63omhoxjdQDPDwbl4pjDzhBUsZiiqYKJ/f
- HaKA==
-X-Gm-Message-State: AOJu0YwwinqiSNTdhgNCUy1aMBpsI4uYVOvvV97WOfxG28iXah9kaNJk
- SoWxsfgcjKFdIzZExLcWo9he48Knedl/toPxyvOsXRBPyQIxj7MSC5pQoN37ogD5m/8RAPAKnNY
- l
-X-Gm-Gg: ASbGncvVTsXYwDvRiKl4vtbt1okAc1neHjnopzGU7zb8bIOyGYDkwtahgxN6aqM9lUW
- QHMpXvaMpwyNnv7JRneapg8LUeTM0wWiSNkrmvUYVGAWan8GEbcqeA4c4XcUfiYv4bcekR7oqaU
- tR4+cPGPIbFL6Mqg/BXTJUvLw+u7hxYTXZ+3vwgjFKd0pTaUvsizGdUJOQ6z8s+4+nZfCJ34on7
- 26WAIdj2Iv+5qf0eVxaBKY5wVHHMnhwpLfvBGVOI5yz+eKmg/9huAaSDzImjUfqrNfAx+kG3f5n
- 0IAlKqAGaSxI4CqBLOeBZhVZWXICEvcRlpu5vUA1dvqmUtM=
-X-Google-Smtp-Source: AGHT+IE8sCDn86YYd6mlV0lZTOmW5P9vi0TR09EHQnjPTew4PHMn66qO8EnIb2FrNEHgBffYGf2LAg==
-X-Received: by 2002:a05:6402:27cc:b0:5e0:8937:6ef2 with SMTP id
- 4fb4d7f45d1cf-5e89f92db6dmr382518a12.8.1741906658630; 
- Thu, 13 Mar 2025 15:57:38 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e8169792ebsm1183447a12.31.2025.03.13.15.57.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Mar 2025 15:57:38 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A30E65F873;
- Thu, 13 Mar 2025 22:57:36 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- pbonzini@redhat.com,  philmd@linaro.org
-Subject: Re: [PATCH 02/37] accel/tcg: Build plugin-gen.c once
-In-Reply-To: <20250313034524.3069690-3-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 12 Mar 2025 20:44:42 -0700")
-References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-3-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 13 Mar 2025 22:57:36 +0000
-Message-ID: <87zfho35en.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1741910860; x=1742515660;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YUZlxK+roiOl2/8eDP8cANTJOOqGZstmyKZvkJUycWQ=;
+ b=sI2DPlkiqc0/vaww7e4uBbGwXc2/uuG5xQYCLlMZkLFzj/F+5TjdLPcEcNaY4AFwzV
+ 4V+ml3JE7yATIn7t62ABU2/RvT4Z2qzl58TEVBdn+BWzK0aGu4vT6P79iF6XdhTY124E
+ kAaXJwLQ90E2l6cw6nhWDSyDRdmsl9ghDMOquXA/7j9NeQvx6eyuiyQOQn9/p2pf48B/
+ KZIqqYav5QpHhMqZe/EP5wVIbrBQZ1Jc0iDFbnqROvmhg4/V8oOKH/ougF64v8ebOc4R
+ vMYMQy2e/eRYDY22rWxCcLurkWiUvTv8lFFjFCdxcWd7wKrMt3BcI3eUK7hI3wjotEzK
+ ZB0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNQY5kX6q1sBdySAX88/h0gYRxJvhNw1jCBw69PO6x6VFWq03SCxODtQS6ZqUhjLsEmf/sZBBRfp2C@nongnu.org
+X-Gm-Message-State: AOJu0YyUtbZBm3dV7+8OTZdczCIbY8Xs+AtrqALJ0zC5u/l7s1VBsSiw
+ kJbyGh/0q/S3unHr1PCQcEHQjNgejRi4u8lS1kAsyAmJfJAbS8IZSeOZ8hhpA5M=
+X-Gm-Gg: ASbGncuhXGG1mz6ltClKRQHYSZSZ7fZVdQb6OSflxDPPDunXug3NPJVCy5ty725kRCS
+ 9eC8DPc6hRT2fSPYtssSfSDddNvZfYR7LDMSPjs3APIuBb3LjGN8KlkpHVskXmDi5K8SxiFH7X+
+ b/GxDo97+jwqDZ75gDyyp57uoLwBWU5UoC0CQoNuxNMwfAVHDW76rGP/EmuiJPJWGsklhw2UkAv
+ GR8EKqINXASpzLoxLKiL9DolhVyiUcfYgpBemsx//Q0XEGoy8vopHBiIsbLmI8ig02+Y4xaLklE
+ EZZ2B2qlHOfF555hjvinccpZLALi18tuXHUc42+RdhrVx+YybXl3U7hIox3z/kH0f6HLH3LR9JI
+ gxGiSbEQHni3QF+LsZug=
+X-Google-Smtp-Source: AGHT+IGBotO9+k3bFNMKqUL8PJcktIP7HKdwyJRpaz2qFK9yjJQIyoitoT5mk8KVUs2oFS5ldgCT+w==
+X-Received: by 2002:a17:90b:5706:b0:2ee:db8a:2a01 with SMTP id
+ 98e67ed59e1d1-30151d7aef1mr561484a91.30.1741910859682; 
+ Thu, 13 Mar 2025 17:07:39 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30138b3b4c6sm2025892a91.6.2025.03.13.17.07.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Mar 2025 17:07:39 -0700 (PDT)
+Message-ID: <7b320c8e-8278-4962-ac31-6f7e6cc1882d@linaro.org>
+Date: Thu, 13 Mar 2025 17:07:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/37] include/exec: Inline *_mmuidx_ra memory operations
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com
+References: <20250313034524.3069690-1-richard.henderson@linaro.org>
+ <20250313034524.3069690-6-richard.henderson@linaro.org>
+ <a6e79bf6-8b93-4b02-8888-6c2a417a34a2@linaro.org>
+ <6d26b188-189c-4714-81a7-6061bb8a6ff6@linaro.org>
+ <e1941fdb-b7e9-4c58-8776-9ff576e9d07b@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <e1941fdb-b7e9-4c58-8776-9ff576e9d07b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,17 +108,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+On 3/13/25 11:26, Philippe Mathieu-Daudé wrote:
+> On 13/3/25 19:05, Richard Henderson wrote:
+>> On 3/13/25 09:59, Pierrick Bouvier wrote:
+>>>> +static inline int
+>>>> +cpu_ldsw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
+>>>> +                      int mmu_idx, uintptr_t ra)
+>>>> +{
+>>>> +    return (int16_t)cpu_lduw_be_mmuidx_ra(env, addr, mmu_idx, ra);
+>>>
+>>> For my personal culture, is that strictly equivalent to doing the load with MO_BESW?
+>>
+>> If you're asking if it's the same as passing MO_BESW to tcg_gen_qemu_ld_i32(), yes.  The 
+>> tcg code generator takes care of making the value sign-extended.
+>>
+>> If you're asking if it's the same as passing MO_BESW to cpu_ldw_mmu(), no.  The core 
+>> functions only handle unsigned values.  This older api contained functions with a signed 
+>> return value, so we preserve that.
+> 
+> Are these 2 APIs doing the same thing? What are the uses? Can we rename
+> the legacy one?
 
-> We assert that env immediately follows CPUState in cpu-all.h.
-> Change the offsetof expressions to be based on CPUState instead
-> of ArchCPU.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+There are 4 apis doing the same thing:
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+   cpu_ld*_data()
+   cpu_ld*_data_ra()
+   cpu_ld*_mmuidx_ra()
+   cpu_ld*_mmu()
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+It would be lovely to get rid of some of them.
+A mere matter of coccinelle and lots of testing, I guess.
+
+
+r~
 
