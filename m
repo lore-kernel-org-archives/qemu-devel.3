@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F17BC28B2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A8CAC35FF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt20N-0006Km-4J; Fri, 14 Mar 2025 06:11:03 -0400
+	id 1tt20L-0006KI-Js; Fri, 14 Mar 2025 06:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt20G-0006JQ-HP
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:10:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt20B-0006I5-Mt
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:10:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt20C-00022z-Vu
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:10:56 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt208-00021v-C4
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:10:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741947051;
+ s=mimecast20190719; t=1741947047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zWM1J8OeYn4zhTwTnsdWw/CoR6nDQNvxa69361V/d1A=;
- b=fz0+INCqfcUB9J5QwK/yFo2NrxZVPHTlWVell6yPYtKSbIs1TGXbPTqR48EiBqSCrBAj80
- QR4HnO+qtR/WVRPUea2pxkFAA34u+qzYR+yM/WIkUCe5IKB/diPuQRR9DRJcuufGrLaSSo
- sKNWcA50bLFVsf/wsM2XMEPpJpD//6Y=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9DM5gO/mHUWf4r2tQdDbJnbbTizjhichNpsmghIv8zE=;
+ b=T9eJ4SIQHP6zu2DYbD+aeaVRTH7BwPoC9eHeXvPCM1z0LmJAPQYRw7ZuAqzuk8Tl/SjEwS
+ 3HPb3TQsXjod8tV7j4inBxaxoUPz36//HNyRqR7NnIOSfUlihNq9awx51soxzAvFhk8KZ3
+ KdDjZsQ95gmOZ1/Yv10KOFeqTQdPSCA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-sGEgBa_8OoaA5EI8toKpHg-1; Fri,
- 14 Mar 2025 06:10:50 -0400
-X-MC-Unique: sGEgBa_8OoaA5EI8toKpHg-1
-X-Mimecast-MFC-AGG-ID: sGEgBa_8OoaA5EI8toKpHg_1741947049
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-WKNsrGDkMpKaTVJU0JLGFA-1; Fri,
+ 14 Mar 2025 06:10:46 -0400
+X-MC-Unique: WKNsrGDkMpKaTVJU0JLGFA-1
+X-Mimecast-MFC-AGG-ID: WKNsrGDkMpKaTVJU0JLGFA_1741947045
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 413B21956087
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:10:49 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21F1419560B6; Fri, 14 Mar 2025 10:10:44 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DAF361955F2D
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:10:48 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BE7918001DE; Fri, 14 Mar 2025 10:10:43 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CE92E21E65DD; Fri, 14 Mar 2025 11:10:38 +0100 (CET)
+ id B9A0521E669B; Fri, 14 Mar 2025 11:10:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 06/12] docs/qapi-domain: add qapi:namespace directive
-Date: Fri, 14 Mar 2025 11:10:32 +0100
-Message-ID: <20250314101038.2408751-7-armbru@redhat.com>
+	Alberto Garcia <berto@igalia.com>
+Subject: [PULL 01/12] qapi/block-core: Improve x-blockdev-change documentation
+Date: Fri, 14 Mar 2025 11:10:27 +0100
+Message-ID: <20250314101038.2408751-2-armbru@redhat.com>
 In-Reply-To: <20250314101038.2408751-1-armbru@redhat.com>
 References: <20250314101038.2408751-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,103 +84,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+The description of feature @unstable is three paragraphs.  The second
+and third became part of the description by accident in commit
+9fb49daabfb (qapi: Mark unstable QMP parts with feature 'unstable').
 
-Add a new directive that marks the beginning of a QAPI "namespace", for
-example; "QMP", "QGA" or "QSD". This directive will associate all
-subsequent QAPI directives in a document with the specified
-namespace. This does not change the visual display of any of the
-definitions or index entries, but does change the "Fully Qualified Name"
-inside the QAPI domain's object table. This allows for two different
-"namespaces" to define entities with otherwise identical names -- which
-will come in handy for documenting both QEMU QMP and the QEMU Storage
-Daemon.
+The second paragraph describes a defect in terms of the
+implementation.  Fine, but doesn't belong into user-facing
+documentation.  Turn it into a TODO section.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250313044312.189276-6-jsnow@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
+Rewrite everything else for clarity and completeness.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20250311131715.1296101-1-armbru@redhat.com>
+Acked-by: Alberto Garcia <berto@igalia.com>
 ---
- docs/devel/qapi-domain.rst | 20 +++++++++++++++++++-
- docs/sphinx/qapi_domain.py | 13 +++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
+ qapi/block-core.json | 28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
-index 51b283277e..73e13ab45c 100644
---- a/docs/devel/qapi-domain.rst
-+++ b/docs/devel/qapi-domain.rst
-@@ -464,7 +464,8 @@ removed in a future version.
- QAPI standard options
- ---------------------
- 
--All QAPI directives -- *except* for module -- support these common options.
-+All QAPI directives -- *except* for namespace and module -- support
-+these common options.
- 
- * ``:namespace: name`` -- This option allows you to override the
-   namespace association of a given definition.
-@@ -482,6 +483,23 @@ All QAPI directives -- *except* for module -- support these common options.
-   production code.
- 
- 
-+qapi:namespace
-+--------------
-+
-+The ``qapi:namespace`` directive marks the start of a QAPI namespace. It
-+does not take a content body, nor any options. All subsequent QAPI
-+directives are associated with the most recent namespace. This affects
-+the definition's "fully qualified name", allowing two different
-+namespaces to create an otherwise identically named definition.
-+
-+Example::
-+
-+   .. qapi:namespace:: QMP
-+
-+
-+This directive has no visible effect.
-+
-+
- qapi:module
- -----------
- 
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index 6485c43206..a204af9b06 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -38,6 +38,7 @@
- from sphinx.locale import _, __
- from sphinx.roles import XRefRole
- from sphinx.util import logging
-+from sphinx.util.docutils import SphinxDirective
- from sphinx.util.nodes import make_id, make_refnode
- 
- 
-@@ -645,6 +646,17 @@ def run(self) -> List[Node]:
-         return ret
- 
- 
-+class QAPINamespace(SphinxDirective):
-+    has_content = False
-+    required_arguments = 1
-+
-+    def run(self) -> List[Node]:
-+        namespace = self.arguments[0].strip()
-+        self.env.ref_context["qapi:namespace"] = namespace
-+
-+        return []
-+
-+
- class QAPIIndex(Index):
-     """
-     Index subclass to provide the QAPI definition index.
-@@ -726,6 +738,7 @@ class QAPIDomain(Domain):
-     # Each of these provides a rST directive,
-     # e.g. .. qapi:module:: block-core
-     directives = {
-+        "namespace": QAPINamespace,
-         "module": QAPIModule,
-         "command": QAPICommand,
-         "event": QAPIEvent,
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index ee6eccc68c..b1937780e1 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -5913,35 +5913,31 @@
+ ##
+ # @x-blockdev-change:
+ #
+-# Dynamically reconfigure the block driver state graph.  It can be
+-# used to add, remove, insert or replace a graph node.  Currently only
+-# the Quorum driver implements this feature to add or remove its
+-# child.  This is useful to fix a broken quorum child.
++# Dynamically reconfigure the block driver state graph.
+ #
+-# If @node is specified, it will be inserted under @parent.  @child
+-# may not be specified in this case.  If both @parent and @child are
+-# specified but @node is not, @child will be detached from @parent.
++# Currently only supports adding and deleting quorum children.  A
++# child will be added at the end of the list of children.  Its
++# contents *must* be consistent with the other childrens' contents.
++# Deleting a child that is not last in the list of children is
++# problematic, because it "renumbers" the children following it.
+ #
+ # @parent: the id or name of the parent node.
+ #
+-# @child: the name of a child under the given parent node.
++# @child: the name of a child to be deleted.  Mutually exclusive with
++#     @node.
+ #
+-# @node: the name of the node that will be added.
++# @node: the name of the node to be added.  Mutually exclusive with
++#     @child.
+ #
+ # Features:
+ #
+-# @unstable: This command is experimental, and its API is not stable.
+-#     It does not support all kinds of operations, all kinds of
+-#     children, nor all block drivers.
++# @unstable: This command is experimental.
+ #
+-#     FIXME Removing children from a quorum node means introducing
++# TODO: Removing children from a quorum node means introducing
+ #     gaps in the child indices.  This cannot be represented in the
+ #     'children' list of BlockdevOptionsQuorum, as returned by
+ #     .bdrv_refresh_filename().
+ #
+-#     Warning: The data in a new quorum child MUST be consistent with
+-#     that of the rest of the array.
+-#
+ # Since: 2.7
+ #
+ # .. qmp-example::
 -- 
 2.48.1
 
