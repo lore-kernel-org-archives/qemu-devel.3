@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF116C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 00:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E13C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 00:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tstD6-0006h0-97; Thu, 13 Mar 2025 20:47:36 -0400
+	id 1tstMq-0000oL-1K; Thu, 13 Mar 2025 20:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tstCl-0006ax-2U
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:47:18 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tstMo-0000o2-Bg
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:57:38 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tstCj-0000UZ-95
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:47:14 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2243803b776so45943945ad.0
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 17:47:12 -0700 (PDT)
+ id 1tstMm-0001fp-TI
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:57:38 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2243803b776so46120815ad.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 17:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741913231; x=1742518031; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741913855; x=1742518655; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wkWX0TOe3VG0MU//3ZsYG9cAkYDJup76uZOhOaZ52E4=;
- b=NZTGkA2mXaeY4qks07UWtmWUnQaFVRYtXcuWKlGuNFb2anMHIk59ARA2+ySSySsfUE
- 4yVnvrjVYMeqayAE6W5v81YVVQs9S6AyOKeoYRSr0MKCmduQcE4tO5Z1EyYHHHKzQ1TB
- o3b9Xisd+YthGDxIghFgzxQqXGrC27ZG6IEReC4+vXF0nu8gCFnVTWNvpfoZRQRnOZM2
- AszMhkmmbrR6pxzy3i/aC6LPjehaj7cqQ3cpExy3l5r3GQHzVFCpD4oI10ci8BCadYRd
- wArPgBHIVBpUEFOp3XqydQNyFaXBwwxy4ZONyfWQEKLW0JMbjW1Pqvk3MQb+zlWa3UOs
- eS1w==
+ bh=/gsAnFdBC5vvV47kKGy8p32rAkjmOpD1MoWY3tb08uo=;
+ b=UyNM5HTutLCA6ZNL21egB2OelDODSzYPd1YqA/KJZNmpBTv4ecR4z3LsE/ysyb6K1x
+ TffNogGgxSH5bE9elPXET9pa2481nXZ1ZebixKnnyJVXtRN0C/FOiH1N6JwtjOrwvxQV
+ Len47YPQ7xUJUX4ud5O1KuNGCQ3q7Tk2TwlW7/E/edND7fqwu5KBa6MnQIxJSaM46vRy
+ AT4q1Jyo3tGqq2bi9XiTN3V5IKNfomBwbSxNDFief8LY1OcrGLWn3TX4X9netiuMdG9m
+ HOvmBTGx4/NMN4Y6AoOXsLE4kHlPwFVh+ciMuUMg9eGLZkrF6Yqg2xY3cpMezKBHzrXJ
+ flrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741913231; x=1742518031;
+ d=1e100.net; s=20230601; t=1741913855; x=1742518655;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wkWX0TOe3VG0MU//3ZsYG9cAkYDJup76uZOhOaZ52E4=;
- b=AZpXbKtLyNlU3n1BGqF2Ej692DmnQnLq1IWcaBI8ocUFOBcgDmg07yBq5KKAZZBpPL
- DL0ExLzBSIhx0V+sCaKDhEZct28w8tztUzKlKw5+Mb8YrNK05BRbS3WNx0+PmL4tNsoa
- qViWCjcJwv04QmyNY4xlkv7l4yG+gMcd5NYmNFMyAxcg9ifiGCTno/ZTikeRnIUPXoqA
- F4SHg2wB0VjEnwTKn8kJk+hIAUKHzxD+IER01GtGfSXmMI+odSlb3T2KQ2alhs/zs1JW
- V6r5gdsFiTKRTNd5wH+TFgbexNI87xBkWyPTvGOcJxmN7PdxFT8ZagEA2kYdz0UVO4+q
- 9ZHA==
+ bh=/gsAnFdBC5vvV47kKGy8p32rAkjmOpD1MoWY3tb08uo=;
+ b=iCJ/KJetcdozihMWab1GIhWJZzYi950hjPv2weGv1oFGNQDeUqw8HcRp1GigpUfAd/
+ 49cDQ6QU0h3o3MvrnzKIRc1689mOdnOuQ7UWmjVVoIhcrhLD+tN+NBskp84znMuKymOx
+ 0sgmd+nf4wvsjncyREZ8H1O6J7xvinFvAhskMuGjuawpMomMy27nlkW5iwZ8hDS8zXBY
+ xUZb+q7egj6n4MWYqLEASpnqrV72etHYE3AQG1AnPeXAKTaRf64oXPjzRwPWQ/TxoQ8q
+ V7ptuytiuPh0e5s8kJrAJiw2MaIus46XeyrH537XzI4SIEO7LvNZhlxwQg36KisYX4Ja
+ F+oQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDlN3riH4r3geUN+oc03uCATXSsTtSXXD2usQL3BA1X5kC09bOU1CRI25EwOSRmsFc/k2zFsWZ7ceu@nongnu.org
-X-Gm-Message-State: AOJu0Yz0OchDIeVlMKGFTtSjCbXrL+v44v/NczL5EztwwH8Cuj0QhUj4
- JZLR4JIfewG2npcyDrJe4gs9dGawuxpodUD3hlR/4m8rDTwtSz2Y+pthatMy5Pk=
-X-Gm-Gg: ASbGncvzRZFJMoTfZwsPaQyIQD4EVygBvhxQmgccWpzyIAOYEg3AbXQZRH+aYqlgvIe
- MGWn/ZH7s1C2rropEMH68na1Hvn6dVoxhIfUjIn7XSJcY5ejMrAHCq5xCgJccjfe75ybXaMKX2d
- BRAAVLR2+uHdgGik0pf8p/hoGEYeX3m0UZzarvBPbQreXG2Ed/BmvEvB7LbMVTL6IeaMYrB8KAo
- yDpu3IKPKckQ20YB6REQvz+bI2Eybm/TCmOdAl+vnOFUvzwwNsjPuCdr5PiPMuAjap9a3V/q7+B
- sblfQQg5qDSPlnSoUitfWY1gtK/xn7wAFxbejD+urjz5aVkuoS0JvfMC4e7PFPBWen6JWrZgrrW
- MNIaeEf4hpOm0+GdKQKw=
-X-Google-Smtp-Source: AGHT+IEOEmRH1nxm/alIWzQcxTHft5PM4w5RN3FNSS832DllLjLqKqR7lj8CxPj0/955eCVNmtopDA==
-X-Received: by 2002:a17:903:1b68:b0:220:d078:eb33 with SMTP id
- d9443c01a7336-225e0ae719bmr7738505ad.36.1741913230833; 
- Thu, 13 Mar 2025 17:47:10 -0700 (PDT)
+ AJvYcCUAYRZrQiRnIpWKuMlKJjUjCVZp8DWEQME0w/2yR7lMjUWF145YWkk/bgOjtyZzMqmcCoPpx8q3DI5/@nongnu.org
+X-Gm-Message-State: AOJu0YzgSXnbBUSxKpyXeXY996080OASHCtfYNUI81bZH3gqYGCm9KDS
+ m1BUYw2L7eH4iw2HVy0LZ2Hb1CHQ1RnMwRcl+JbXV7YwqXaBjLfCQZpQsnViXms=
+X-Gm-Gg: ASbGnctVUR9Lnu71IVMhEpxfSfK+RZTI9pqmc4L7wd0vXCG3u5460B4vrOJWBsIdljX
+ r1e28LlkWzQshpktmUBQ9HuIGq5XFafTpFGHSuEEfFqp4ZxEZw7QXGbGUx5+7Ym2CjnWWVoEt9G
+ R7Q/C1GvRKzOfZI/wnUgm+wxWMPbRRwuEP3vuwkOeWAaIKRKEzVOoLjzz5XhMTXgPnLBjYu3k72
+ CWSQ71Dh9kuwo2dlZbUuWxu3Aw3uSoqNIZjixcP7QMfz6wBkyH13AkePY2ercbijeGpLz5PYuWC
+ wmDbwUYgICOCeAt9e9dYGXFZHOBq+lGVQa0n2zHUOe+IBASsPM/Ya5bpd+ItI3csFQuWnKLSbn2
+ 0KlR6n/s8
+X-Google-Smtp-Source: AGHT+IGKZ4AtfL5E3sMwgxq0CVhF5DUdbUv+2gqVLOFUh53N/UAIBYy3VFr5CwBXAsWcHMuz2PBYTQ==
+X-Received: by 2002:a05:6a20:12c8:b0:1f5:9330:2a17 with SMTP id
+ adf61e73a8af0-1f5c13165b2mr1096551637.26.1741913855113; 
+ Thu, 13 Mar 2025 17:57:35 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6bbe960sm19702915ad.200.2025.03.13.17.47.10
+ 41be03b00d2f7-af56e9c94cesm1946122a12.6.2025.03.13.17.57.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 17:47:10 -0700 (PDT)
-Message-ID: <c31e1b0d-7d13-48b1-9122-3c381cc6d2ab@linaro.org>
-Date: Thu, 13 Mar 2025 17:47:08 -0700
+ Thu, 13 Mar 2025 17:57:34 -0700 (PDT)
+Message-ID: <58b9e84c-440e-494a-8fcf-fa1073999190@linaro.org>
+Date: Thu, 13 Mar 2025 17:57:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/37] accel/tcg: Perform aligned atomic reads in
- translator_ld
+Subject: Re: [PATCH 10/37] accel/tcg: Use cpu_ld*_code_mmu in translator.c
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@linaro.org
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-10-richard.henderson@linaro.org>
- <51cfbbc5-c258-49af-bcab-ad1ce21ff711@linaro.org>
+ <20250313034524.3069690-11-richard.henderson@linaro.org>
+ <a4ecadb5-2626-41f9-aeec-c08457e6e9cd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <51cfbbc5-c258-49af-bcab-ad1ce21ff711@linaro.org>
+In-Reply-To: <a4ecadb5-2626-41f9-aeec-c08457e6e9cd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/25 10:14, Pierrick Bouvier wrote:
->> +#ifdef CONFIG_ATOMIC64
->> +    case 8:
->> +        if (QEMU_IS_ALIGNED(pc, 8)) {
->> +            uint64_t t = qatomic_read__nocheck((uint64_t *)host);
->> +            stl_he_p(dest, t);
+On 3/13/25 10:21, Pierrick Bouvier wrote:
+> On 3/12/25 20:44, Richard Henderson wrote:
+>>   uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
+>>   {
+>> -    uint64_t raw, tgt;
+>> +    uint64_t val;
+>> -    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
+>> -        tgt = tswap64(raw);
+>> -    } else {
+>> -        tgt = cpu_ldq_code(env, pc);
+>> -        raw = tswap64(tgt);
+>> -        record_save(db, pc, &raw, sizeof(raw));
+>> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
+>> +        MemOpIdx oi = make_memop_idx(MO_UL, db->code_mmuidx);
 > 
-> Should it be stq_he_p?
+> Should it be MO_UQ?
 
-Good eyes, thanks.
-This would have only appeared as disassembly errors on x86_64 guest.
-
+Yep, thanks.
 
 r~
 
