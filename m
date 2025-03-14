@@ -4,78 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD64C28B30
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 05:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66651C35FF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 06:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsxkc-00062S-Vu; Fri, 14 Mar 2025 01:38:31 -0400
+	id 1tsyKH-0004OP-Rg; Fri, 14 Mar 2025 02:15:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsxkY-00060O-6c
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 01:38:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tsxkW-0001B3-9S
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 01:38:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741930702;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r9Z2Rtg4ACrAEKd+XksEAetapjE5uBGfuAYUBunNPpY=;
- b=cRFcQ2rU95AsG4ZCvzqVw/Ylc/hoXlNdhpPWh1AjLqtaGc8U3CiZOvRxjSv6iaBdVnI/6r
- d6/tsDMl3erX+8o3bKskuvQTAUT9dPdLxKr72QEbert1Xw2Y+LNGU86btdQTwLRoeuYMYg
- iNd33r0MSzeqqF0NEsUHg5jaX41Ct9Y=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-CX7r5WTIOhKCrLB3IX1dkA-1; Fri,
- 14 Mar 2025 01:38:15 -0400
-X-MC-Unique: CX7r5WTIOhKCrLB3IX1dkA-1
-X-Mimecast-MFC-AGG-ID: CX7r5WTIOhKCrLB3IX1dkA_1741930694
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8C4E19560B8; Fri, 14 Mar 2025 05:38:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E37B31828A98; Fri, 14 Mar 2025 05:38:12 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 57D6421E675F; Fri, 14 Mar 2025 06:38:09 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: bibo mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 2/3] hw/loongarch/virt: Remove unnecessary NULL pointer
- checking
-In-Reply-To: <10c55e3e-22f5-285d-7e38-3a6a08089302@loongson.cn> (bibo mao's
- message of "Fri, 14 Mar 2025 10:27:04 +0800")
-References: <20250313091350.3770394-1-maobibo@loongson.cn>
- <20250313091350.3770394-3-maobibo@loongson.cn>
- <875xkdb4q5.fsf@pond.sub.org>
- <10c55e3e-22f5-285d-7e38-3a6a08089302@loongson.cn>
-Date: Fri, 14 Mar 2025 06:38:09 +0100
-Message-ID: <87v7scw4se.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tsyKB-0004JX-Sv
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:15:15 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tsyK8-0005Ln-Oa
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:15:14 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso36662805ad.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 23:15:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741932904; x=1742537704;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bx6aQ1032OWCnTDj23FUcPkbt//lprYk9LJC+jooQ84=;
+ b=e3f1kZAQLOOnPJO1QKg+EO5W8KRG7JhXw/45PFse7hb0RTCp5IPflH+tZ+VCKlhXem
+ x08o3LIj8BvaXnj0HK8ngQJ3q1uelv2R3dpaVWk3Ejbc4LryJzp7JUHi7MKzyMjE80ZV
+ enEo8r3qoVwCZgZLUddo1Z1elcLfqMe3KjCJ4KfxbJl0gxfcsAdPECz6lKPlBiMMgcwD
+ txQ2KpPV7BXRd5vlxF/UjbUa+JK3X5EGgzT4bxXoiOIDXcLmJK4F7O2nhG3qfPwGkfpS
+ h23ixkYp/UrGzDsuj6YPj1DOxw+DxGGdruyKoq6TA+u8vPOOVTPI+of7yMJ4nN0PgYWA
+ HgZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741932904; x=1742537704;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Bx6aQ1032OWCnTDj23FUcPkbt//lprYk9LJC+jooQ84=;
+ b=Z7+ApIfpIkc3bM+cpg3z6/0mlThx+tVK/expCaV4FdlOP83QGdcDDZivDPxusuRj/y
+ TpmBpdrTgETfK+ynN4/mpS8vFJnWs3xiRhSFSNzPpR9UdnSUEJX8e/cAyDKrzqdm3Gyh
+ hOtrkfiOcdWMcDvlGHIsWFuY9SIvDd6zd8BbagkTIIAlKdXSz4Oj7wPHusB9QI2A+dex
+ t835VqL/5jktO6cjrIiuBufrd77KCU/SZDMwoYoiUZDwMBNGN8bLmN36y1/aV6mmsnSr
+ WfnBc79VdTUgV5nzMC320nOADuDmfie+VoEXgHKc87jC07VfFtDW+9/2Y3zOKgWyJn3h
+ jcUA==
+X-Gm-Message-State: AOJu0YwVHTNuLpgzDMwX3RqifqObF3AMQTf5CQOD5UKW0BQaHgsW8jLv
+ oFnw3zgnaIx4jV66h5SDAcijVoQbJunXL5Ft/+euQ67gVghRzscofU8DlQdMjIw=
+X-Gm-Gg: ASbGncv9BhTUkJWHilHri78Jb6V78VhiXWM+arPV1N1rIaoMLaIhzXDBpfRDtZFUmw4
+ q3EcBv6lpiwsJXyOzHydPTmucKUFqwSocD0g6GjHvT3HceyeInfjwJGxObieVliq8haJPVPqTQM
+ HV1CniCRYZgPes8gtHVFDjHPjmwSDpJn4UkTt4AonuScodKis0+eOetqmiDkjCZU9Sa/qB7BtAS
+ gsjyJ2fnh3P2OHVJg339Dnx/OmqpSUWPQoEoIjj2+g3XQRBqo/7wTW16PtYIMp95vfRE6tKzOwS
+ pHPabIm6b2zS5zx60P7Rh85mVJFA1go8D+cg/4kRdmLrPokE
+X-Google-Smtp-Source: AGHT+IEbLT0rfqg6YCBIAQLSDo4DPYRppAs/AtYLALce1xxeIB3ItE1JJwsnztDrzfUiO5gYNqbv0g==
+X-Received: by 2002:a05:6a00:1916:b0:736:b9f5:47c6 with SMTP id
+ d2e1a72fcca58-7372240eca2mr1491083b3a.16.1741932904324; 
+ Thu, 13 Mar 2025 23:15:04 -0700 (PDT)
+Received: from localhost ([157.82.205.237])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2e1a72fcca58-737115294b3sm2342755b3a.5.2025.03.13.23.15.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Mar 2025 23:15:03 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH for-10.1 v9 0/9] virtio-net: add support for SR-IOV emulation
+Date: Fri, 14 Mar 2025 15:14:49 +0900
+Message-Id: <20250314-sriov-v9-0-57dae8ae3ab5@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFnJ02cC/2XQzWrDMAwH8FcpPi9Flj9k77T3GDvEH1p9WFOSE
+ VpK3n1uwEu3XAxC/v2FdBdTHkuexOvhLsY8l6kM51r4l4OIp/78mbuSai0QUMn6dNNYhrnzGpA
+ DWgzZifr3MmYu1zXnXfAwdhKOUnzUzqlM38N4WwfMcu3/y5plB53CoAwBU0j2LfW3c7ke4/C1R
+ sz4xCQ0hpUFb3x2vU3c846pxjQoMI2pyvqQAhkiUIQ7pjem0TWmHyy6PlqU6N2emY2R/J1mHru
+ xMcqDV8xxx+zG3HYSWxlEx6x91Ej7k9ATk6oxqswZabIi0olpx1xjBiToxlxlxkqtI6dIyf9hy
+ 7L8AGE7rq0mAgAA
+X-Change-ID: 20231202-sriov-9402fb262be8
+To: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Jason Wang <jasowang@redhat.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
+ Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com, 
+ Yui Washizu <yui.washidu@gmail.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.15-dev-edae6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,114 +114,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bibo mao <maobibo@loongson.cn> writes:
+Based-on: <20250104-reuse-v18-0-c349eafd8673@daynix.com>
+("[PATCH v18 00/14] hw/pci: SR-IOV related fixes and improvements")
 
-On 2025/3/13 =E4=B8=8B=E5=8D=886:32, Markus Armbruster wrote:
+Introduction
+------------
 
-[...]
+This series is based on the RFC series submitted by Yui Washizu[1].
+See also [2] for the context.
 
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index a5840ff968..4674bd9163 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
->> @@ -859,30 +859,29 @@ static void virt_cpu_pre_plug(HotplugHandler *hotp=
-lug_dev,
->>      LoongArchCPU *cpu =3D LOONGARCH_CPU(dev);
->>      CPUState *cs =3D CPU(dev);
->>      CPUArchId *cpu_slot;
->> -    Error *err =3D NULL;
->>      LoongArchCPUTopo topo;
->>      int arch_id;
->>=20=20=20
->>      if (lvms->acpi_ged) {
->>          if ((cpu->thread_id < 0) || (cpu->thread_id >=3D ms->smp.thread=
-s)) {
->> -            error_setg(&err,
->> +            error_setg(errp,
->>                         "Invalid thread-id %u specified, must be in rang=
-e 1:%u",
->>                         cpu->thread_id, ms->smp.threads - 1);
->> -            goto out;
->> +            return;
->
-> Hi Markus,
->
->  From APIs, it seems that function error_propagate() do much more than=20
-> error appending, such as comparing dest_err with error_abort etc. Though=
-=20
-> caller function is local variable rather than error_abort/fatal/warn,=20
-> error_propagate() seems useful. How about do propagate error and return=20
-> directly as following:
->
-> @@ -868,7 +868,8 @@ static void virt_cpu_pre_plug(HotplugHandler=20
-> *hotplug_dev,
->              error_setg(&err,
->                         "Invalid thread-id %u specified, must be in=20
-> range 1:%u",
->                         cpu->thread_id, ms->smp.threads - 1);
-> -            goto out;
-> +            error_propagate(errp, err);
-> +            return;
->          }
+This series enables SR-IOV emulation for virtio-net. It is useful
+to test SR-IOV support on the guest, or to expose several vDPA devices
+in a VM. vDPA devices can also provide L2 switching feature for
+offloading though it is out of scope to allow the guest to configure
+such a feature.
 
-This is strictly worse.  One, it's more verbose.  Two, the stack
-backtrace on failure is less useful, which matters when @errp is
-&error_abort, and when you set a breakpoint on error_handle(), abort(),
-or exit().  Three, it doesn't actually add useful functionality.
+The PF side code resides in virtio-pci. The VF side code resides in
+the PCI common infrastructure, but it is restricted to work only for
+virtio-net-pci because of lack of validation.
 
-To help you see the latter, let's compare the two versions, i.e.
+User Interface
+--------------
 
-   direct: error_setg(errp, ...)
+A user can configure a SR-IOV capable virtio-net device by adding
+virtio-net-pci functions to a bus. Below is a command line example:
+  -netdev user,id=n -netdev user,id=o
+  -netdev user,id=p -netdev user,id=q
+  -device pcie-root-port,id=b
+  -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
+  -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
+  -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
+  -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
 
-and
+The VFs specify the paired PF with "sriov-pf" property. The PF must be
+added after all VFs. It is user's responsibility to ensure that VFs have
+function numbers larger than one of the PF, and the function numbers
+have a consistent stride.
 
-   propagate: two steps, first error_setg(&err, ...), and then
-   error_propagate(errp, err);
+Keeping VF instances
+--------------------
 
-Cases: @errp can be NULL, &error_abort, &error_fatal, &error_warn, or a
-non-null pointer to variable containing NULL.
+A problem with SR-IOV emulation is that it needs to hotplug the VFs as
+the guest requests. Previously, this behavior was implemented by
+realizing and unrealizing VFs at runtime. However, this strategy does
+not work well for the proposed virtio-net emulation; in this proposal,
+device options passed in the command line must be maintained as VFs
+are hotplugged, but they are consumed when the machine starts and not
+available after that, which makes realizing VFs at runtime impossible.
 
-1. @errp is NULL
+As an strategy alternative to runtime realization/unrealization, this
+series proposes to reuse the code to power down PCI Express devices.
+When a PCI Express device is powered down, it will be hidden from the
+guest but will be kept realized. This effectively implements the
+behavior we need for the SR-IOV emulation.
 
-   Direct does nothing.
+Summary
+-------
 
-   Propagate step 1 creates an error object, and stores it in @err.
-   Step 2 frees the error object.  Roundabout way to do nothing.
+Patch 1 disables ROM BAR, which virtio-net-pci enables by default, for
+VFs.
+Patch 2 makes zero stride valid for 1 VF configuration.
+Patch 3 and 4 adds validations.
+Patch 5 adds user-created SR-IOV VF infrastructure.
+Patch 6 makes virtio-pci work as SR-IOV PF for user-created VFs.
+Patch 7 allows user to create SR-IOV VFs with virtio-net-pci.
 
-2. @errp is &error_abort
+[1] https://patchew.org/QEMU/1689731808-3009-1-git-send-email-yui.washidu@gmail.com/
+[2] https://lore.kernel.org/all/5d46f455-f530-4e5e-9ae7-13a2297d4bc5@daynix.com/
 
-   Direct creates an error object, reports it to stderr, and abort()s.
-   Note that the stack backtrace shows where the error is created.
+Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+Changes in v9:
+- Rebased.
+- Link to v8: https://lore.kernel.org/r/20250104-sriov-v8-0-56144cfdc7d9@daynix.com
 
-   Propagate step 1 creates an error object, and stores it in @err.
-   Step 2 reports it to stderr, and abort()s.  No difference, except the
-   stack backtrace shows where the error is propagated, which is less
-   useful.
+Changes in v8:
+- Rebased.
+- Link to v7: https://lore.kernel.org/r/20240813-sriov-v7-0-8515e3774df7@daynix.com
 
-3. @errp is &error_fatal
+Changes in v7:
+- Removed #include <error-report.h>, which is no longer needed.
+- Rebased.
+- Link to v6: https://lore.kernel.org/r/20240802-sriov-v6-0-0c8ff49c4276@daynix.com
 
-   Direct creates an error object, reports it to stderr, frees it, and
-   exit(1)s.
+Changes in v6:
+- Added ARI extended capability.
+- Rebased.
+- Link to v5: https://lore.kernel.org/r/20240715-sriov-v5-0-3f5539093ffc@daynix.com
 
-   Propagate step 1 creates an error object, and stores it in @err.
-   Step 2 reports it to stderr, frees it, and exit(1)s.  No difference.
+Changes in v5:
+- Dropped the RFC tag.
+- Fixed device unrealization.
+- Rebased.
+- Link to v4: https://lore.kernel.org/r/20240428-sriov-v4-0-ac8ac6212982@daynix.com
 
-4. @errp is &error_warn
+Changes in v4:
+- Added patch "hw/pci: Fix SR-IOV VF number calculation" to fix division
+  by zero reported by Yui Washizu.
+- Rebased.
+- Link to v3: https://lore.kernel.org/r/20240305-sriov-v3-0-abdb75770372@daynix.com
 
-   Direct creates an error object, reports it to stderr, and frees it.
+Changes in v3:
+- Rebased.
+- Link to v2: https://lore.kernel.org/r/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com
 
-   Propagate step 1 creates an error object, and stores it in @err.
-   Step 2 reports it to stderr, and frees it.  No difference.
+Changes in v2:
+- Changed to keep VF instances.
+- Link to v1: https://lore.kernel.org/r/20231202-sriov-v1-0-32b3570f7bd6@daynix.com
 
-5. @errp points to variable containing NULL
+---
+Akihiko Odaki (9):
+      hw/pci: Do not add ROM BAR for SR-IOV VF
+      hw/pci: Fix SR-IOV VF number calculation
+      pcie_sriov: Ensure PF and VF are mutually exclusive
+      pcie_sriov: Check PCI Express for SR-IOV PF
+      pcie_sriov: Allow user to create SR-IOV device
+      virtio-pci: Implement SR-IOV PF
+      virtio-net: Implement SR-IOV VF
+      docs: Document composable SR-IOV device
+      pcie_sriov: Make a PCI device with user-created VF ARI-capable
 
-   Direct creates an error object, and stores it in the variable.
+ MAINTAINERS                    |   1 +
+ docs/system/index.rst          |   1 +
+ docs/system/sriov.rst          |  37 ++++++
+ include/hw/pci/pci_device.h    |   6 +-
+ include/hw/pci/pcie_sriov.h    |  21 +++
+ include/hw/virtio/virtio-pci.h |   1 +
+ hw/pci/pci.c                   |  76 +++++++----
+ hw/pci/pcie_sriov.c            | 294 +++++++++++++++++++++++++++++++++--------
+ hw/virtio/virtio-net-pci.c     |   1 +
+ hw/virtio/virtio-pci.c         |  24 +++-
+ 10 files changed, 378 insertions(+), 84 deletions(-)
+---
+base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+change-id: 20231202-sriov-9402fb262be8
 
-   Propagate step 1 creates an error object, and stores it in @err.
-   Step 2 copies it to the variable.  No difference.
-
-Questions?
-
-[...]
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
