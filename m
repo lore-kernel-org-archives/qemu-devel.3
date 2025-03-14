@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D77C28B2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A717CC282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt25h-00063t-Ec; Fri, 14 Mar 2025 06:16:33 -0400
+	id 1tt27c-00006x-Fu; Fri, 14 Mar 2025 06:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1tt25E-0005oe-PB
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:16:06 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tt27Z-00006I-Pm
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:18:30 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1tt25A-000356-9L
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:16:03 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2239aa5da08so37674415ad.3
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:15:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tt27X-0003cq-I2
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:18:29 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ac28e66c0e1so290300266b.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1741947357; x=1742552157;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1741947505; x=1742552305; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Eh6xZmod1XJzdJDqa+dorzqnDF3twPcYJbdIGQ8yqlo=;
- b=kZYZGZBzqVujGHqanFRetPGum5+sGR+1Grh5XCqARcGGYKlRkjSAs7ff+lEovnnSJ/
- nWlkleYQb2W+kAG1QaZtWQLHQERfyEpZ1+6yTPgBx/nRkwxBexEKHRh8ouXaVfmGoNRy
- nuosdtQ9CJmCFyF9ZwQ/gFk2GSCWZ22Y3MOaMbInAshvNkVIoZxIMDm21NZpsOUHwfnO
- 5GZRGAVw/iIRZtmJOEnmD7IzkKlRizZjKz+yuRt5LxW1JBDbGbl05juUXOnvPMIxjzSU
- u3d9PJvotFBjp5e95DxFvDZoTyclfGDJAcem5eAG4SlFIgkRR1r+x60bMBoF8Rh87wRi
- +Exg==
+ bh=kOPbLmcxiIatQY7sHe7b02oenu+TvYv2qO+PIG5C0Gw=;
+ b=f2PHZ2a+ClbJmxzhK+E23o7fWrMKffeIAxe+CWDGEttj4dTofDiy/wAW3m09UssdtM
+ ceiUo8Cg6s/mI/EXV3Ve9cX07pTcbrSK8YRDsxaQS5QVNkNGEz26AM+jhP6DlToPRR47
+ Gnt2JEmJr3/Uz0BB+W3N9XkHtEjbMt6dAiTArhNgiEDsvPqXdhcdMBqfOG0FId5dTbKi
+ ftqBLT2yY/Q7v1zEEGypWdbMpL2nbPVbHXKZ5KSJ8i58RayokgqaiPXhhxvdvqUNq65D
+ pNcO1acWRkUAWZtG+opQDlUDiI+h7l0ON+ffRYTEZvEurMMlftMPzhPtw/4RcHH4VwYM
+ u1fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741947357; x=1742552157;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Eh6xZmod1XJzdJDqa+dorzqnDF3twPcYJbdIGQ8yqlo=;
- b=TWm//psX1TM1lxUrXLBZS8yFybPNKUrP1Bkf2vLFfRv/dtGLVd1xo+uOSLyrLEtXHA
- e3UrHInrI03K+QS+41U5d1AzSrkxuDJNiCuAIONWmXrsHwHKB/qhIDEHCFOdw0abVt74
- SXuDRl8Sb14M2bjpM7MLpYCXXBVzArxHRKoYaDvnA/kN0rbpPCkzl7D4hZI4MgXT6T1N
- If96GhZXkpOgVcoZbV6saM2q3tzpgS0V8sDbVfSsewQhEV99lg8p3lxerVUuvNen1s9R
- FjFAt4VysRpPmw00lGDkMeuF4eDGMjPrvLSvTvT6WM4Qxa3HNchSt9jTMeWjgBabKUht
- YZPA==
-X-Gm-Message-State: AOJu0Yw4D0ro3gpJjPJm0QxeNdTQXu/xDzm4M/w5HoFSHbHoom/rYSYZ
- hd8UJjfLBR9rlKXj4iFnBScoaZ5qLKupWvuw0iwBsI+ZPcxIOrH2gAq53WtOukvDWVNnLbquXwx
- V4YNwIn4Xymo=
-X-Gm-Gg: ASbGncvpi4ymkPB+BpGOaXRAC2QxtuqC2EoJrUQwYt2gq6U7xknTFKHVVvsmxYXl8T9
- XW8Rlpmhwg1bW0ZFRGo12o9HgjjEfyjAiP94DljwuyLmZIoVy0tev5ldFxOUN2mo0Rlk9jbXoA8
- j4sOsb4lYctPWVncCnpNSQoxOyAwItCc29FEQCHRKt5/Z757SSpo3y4FkxOP03GUYQLAsCtBGAY
- YzT3mSz0liWUxWLqsU7/nzjprFinypN4lmawQXah0pOfKSscSUnGnGCpf6g1dQ86gFrAGKFHnPf
- DqjI0ziBWqrhyFlDFQxojRMGLJ1Xf0IP2tVCVXfbiFZQJ95wPJoM
-X-Google-Smtp-Source: AGHT+IELjadHM3CDZrgwr1snAkeKV/1wkKjaE7JoNZxBM7Ewnps9JWQB+8uU43QbznIX0azeh46AuA==
-X-Received: by 2002:a05:6a00:2e85:b0:736:7960:981f with SMTP id
- d2e1a72fcca58-73722354755mr3047213b3a.8.1741947357100; 
- Fri, 14 Mar 2025 03:15:57 -0700 (PDT)
-Received: from fedora.smartx.com ([103.85.74.92])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371169549fsm2698898b3a.131.2025.03.14.03.15.53
+ d=1e100.net; s=20230601; t=1741947505; x=1742552305;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kOPbLmcxiIatQY7sHe7b02oenu+TvYv2qO+PIG5C0Gw=;
+ b=m3x4+9gXuW+jyQzW3oOsylxIyTRO6iLuvvhmesrVbUEjpEz4DOOsBdZH+uEPUzC1tl
+ t7CxO1mn11jE3jFx2JPFhQvHclqwG+CGbd6zouP0LobksontOkPNh2OovXg2xZzBVMmf
+ Wxe9FLyKj//L4FEveXEyljOiroNCSFdtj0kkjVXHvcqNJZxwH8QkapFyXCDkHEoqitIh
+ YQeXlhPirBdwefjY1d8ZhxraqD7mmxR/2fe+AA+rrvWEIhiZCiWSygqerbNv8J7J1g1j
+ yoLNRcmvgj+MyslR/wF11GF9i744AJi7ScfLrsnWA2c7iwf8iCmf553ZUmrPsD9gcIs5
+ XqSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCWVKMUePANCYkMVQawJBufh/2d7EmknhXF+X313nTiBY4yVCi5gRf+kkYIiRQC2ObgBYdKO777ise@nongnu.org
+X-Gm-Message-State: AOJu0YzR2uanOGHDFxGJipUrpIg8keU3o8smPD2RVSdbO6LrBXj/lU2C
+ eKq10/wCVgiHSANMimsctPBEgeTS7jtDxmg3IDhx0GEPPDW6ux8t4b2R98XQnTFrfHXTWV0Ix9o
+ 2
+X-Gm-Gg: ASbGncvcd4CuyAlKeS5tAT0J2axc7B9Qn4p+Y4kvTxkzf5sqLtJEAgEhvydBqJITEub
+ 9j0m5a2apLHsQxsyLUpEqzB7xfyNhim4sp7l4xtfaXUOSH3igqWe6pHzMmpLLsGYRP3s6i4yUae
+ xSmruh9+EKn/xLSsrMtoAZPvkaHbrnQjjL04JrUY/5Zlnjut3ijfDfi6OSxOdffV9dAo9fz+K4r
+ drjmRLw/TdVKrl2djP6Ac/dgAievPSnFUcJBvF+bC0TTuGHARUO/mqfTS1WQFL2edE6uMNqygae
+ 5Qt3axh10xg3YgAocz+zm8osfXV2HGns3itVkCq2XBATODA=
+X-Google-Smtp-Source: AGHT+IG9fMSUJrx8RbpWyIvtvV6undzA/hz5NJKTBRjncNwQxTvLo8ICI7hIVTbrnfRFzwTCE/GYag==
+X-Received: by 2002:a17:907:a089:b0:ac2:972c:f732 with SMTP id
+ a640c23a62f3a-ac330324808mr232122966b.33.1741947504843; 
+ Fri, 14 Mar 2025 03:18:24 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac3146aea93sm204446766b.30.2025.03.14.03.18.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 03:15:56 -0700 (PDT)
-From: Haoqian He <haoqian.he@smartx.com>
-To: qemu-devel@nongnu.org
-Cc: fengli@smartx.com, yuhua@smartx.com,
- Raphael Norwitz <raphael@enfabrica.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH v2 2/3] vhost: return failure if stop virtqueue failed in
- vhost_dev_stop
-Date: Fri, 14 Mar 2025 06:15:33 -0400
-Message-ID: <20250314101535.1059308-3-haoqian.he@smartx.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20250314101535.1059308-1-haoqian.he@smartx.com>
-References: <20250309090708.3928953-1-haoqian.he@smartx.com>
- <20250314101535.1059308-1-haoqian.he@smartx.com>
+ Fri, 14 Mar 2025 03:18:24 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 495255F92C;
+ Fri, 14 Mar 2025 10:18:23 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Konstantin Kostiuk <kkostiuk@redhat.com>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  QEMU
+ <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Yan Vugenfirer <yvugenfi@redhat.com>
+Subject: Re: Cross-compilation artifact is broken
+In-Reply-To: <CAPMcbCrsvWJu6NsE8P6OYCLtKYG89zSviCoW9_YF+BTUB45HeQ@mail.gmail.com>
+ (Konstantin Kostiuk's message of "Fri, 14 Mar 2025 10:21:58 +0200")
+References: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
+ <Z9GUldol1IQT1uiY@redhat.com> <Z9GY3l2pTkbpMV8L@redhat.com>
+ <871pv25iar.fsf@draig.linaro.org>
+ <CAPMcbCrsvWJu6NsE8P6OYCLtKYG89zSviCoW9_YF+BTUB45HeQ@mail.gmail.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Fri, 14 Mar 2025 10:18:23 +0000
+Message-ID: <87tt7v3ogg.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,122 +110,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The backend maybe crash when vhost_dev_stop and GET_VRING_BASE
-would fail, we can return failure to indicate the connection
-with the backend is broken.
+Konstantin Kostiuk <kkostiuk@redhat.com> writes:
 
-Signed-off-by: Haoqian He <haoqian.he@smartx.com>
----
- hw/virtio/vhost.c         | 27 +++++++++++++++------------
- include/hw/virtio/vhost.h |  8 +++++---
- 2 files changed, 20 insertions(+), 15 deletions(-)
+> On Wed, Mar 12, 2025 at 6:24=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+>
+>  Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>
+>  > On Wed, Mar 12, 2025 at 02:05:09PM +0000, Daniel P. Berrang=C3=A9 wrot=
+e:
+>  >> On Wed, Mar 12, 2025 at 03:52:45PM +0200, Konstantin Kostiuk wrote:
+>  >> > Hi All,
+>  >> >=20
+>  >> > I cross-compiled qemu-ga from current master branch
+>  >> > (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavi=
+or.
+>  >> >=20
+<snip>
+>  >> > My question is, is this expected behavior or is this a bug?
+>  >>=20
+>  >> Your configure args don't include "--enable-debug", so I would
+>  >> not have expected -gsplit-dwarf to have been enabled, so I'm
+>  >> surprised that commit casued a problem.
+>  >
+>  > Hmm it appears that the meson  "get_option('debug')" is entirely
+>  > unconnected to QEMU's --enable-debug configure flag, which I did
+>  > not realize.
+>  >
+>  > IOW, we've got -gsplit-dwarf enabled by default for everyone
+>  > building QEMU, which feels dubious. IMHO only an explicit
+>  > --enable-debug configure arg should have triggered it.
+>
+>  --enable-debug is more than debug info, --enable-debug-info is enabled
+>  by default. If you build with --disable-debug-info then -gsplit-dwarf
+>  won't be applied.
+>
+> But as this broke the Windows build, maybe we should disable this for Win=
+dows
+> until resolve this problem
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6aa72fd434..c82bbbe4cc 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1368,23 +1368,23 @@ fail_alloc_desc:
-     return r;
- }
- 
--void vhost_virtqueue_stop(struct vhost_dev *dev,
--                          struct VirtIODevice *vdev,
--                          struct vhost_virtqueue *vq,
--                          unsigned idx)
-+int vhost_virtqueue_stop(struct vhost_dev *dev,
-+                         struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq,
-+                         unsigned idx)
- {
-     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
-     struct vhost_vring_state state = {
-         .index = vhost_vq_index,
-     };
--    int r;
-+    int r = 0;
- 
-     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
-         /* Don't stop the virtqueue which might have not been started */
--        return;
-+        return 0;
-     }
- 
--    r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
-+    r |= dev->vhost_ops->vhost_get_vring_base(dev, &state);
-     if (r < 0) {
-         VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
-         /* Connection to the backend is broken, so let's sync internal
-@@ -1412,6 +1412,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
-                        0, virtio_queue_get_avail_size(vdev, idx));
-     vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
-                        0, virtio_queue_get_desc_size(vdev, idx));
-+    return r;
- }
- 
- static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
-@@ -2136,9 +2137,10 @@ fail_features:
- }
- 
- /* Host notifiers must be enabled at this point. */
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
- {
-     int i;
-+    int rc = 0;
- 
-     /* should only be called after backend is connected */
-     assert(hdev->vhost_ops);
-@@ -2157,10 +2159,10 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         vhost_dev_set_vring_enable(hdev, false);
-     }
-     for (i = 0; i < hdev->nvqs; ++i) {
--        vhost_virtqueue_stop(hdev,
--                             vdev,
--                             hdev->vqs + i,
--                             hdev->vq_index + i);
-+        rc |= vhost_virtqueue_stop(hdev,
-+                                   vdev,
-+                                   hdev->vqs + i,
-+                                   hdev->vq_index + i);
-     }
-     if (hdev->vhost_ops->vhost_reset_status) {
-         hdev->vhost_ops->vhost_reset_status(hdev);
-@@ -2177,6 +2179,7 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-     hdev->started = false;
-     vdev->vhost_started = false;
-     hdev->vdev = NULL;
-+    return rc;
- }
- 
- int vhost_net_set_backend(struct vhost_dev *hdev,
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index a9469d50bc..fd96ec9c39 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -232,8 +232,10 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-  * Stop the vhost device. After the device is stopped the notifiers
-  * can be disabled (@vhost_dev_disable_notifiers) and the device can
-  * be torn down (@vhost_dev_cleanup).
-+ *
-+ * Return: 0 on success, != 0 on error when stopping dev.
-  */
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
- 
- /**
-  * DOC: vhost device configuration handling
-@@ -333,8 +335,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write);
- 
- int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vdev,
-                           struct vhost_virtqueue *vq, unsigned idx);
--void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
--                          struct vhost_virtqueue *vq, unsigned idx);
-+int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq, unsigned idx);
- 
- void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
- void vhost_dev_free_inflight(struct vhost_inflight *inflight);
--- 
-2.48.1
+Something like:
 
+if host_os !=3D 'windows'
+  if get_option('debug') and get_option('split_debug')
+    qemu_cflags +=3D '-gsplit-dwarf'
+  endif
+endif
+
+>=20=20
+>  >
+>  > In addition since its breaking Windows builds, it appears we
+>  > need to block its usage on Windows.
+>  >
+>  >
+>  > With regards,
+>  > Daniel
+>
+>  --=20
+>  Alex Benn=C3=A9e
+>  Virtualisation Tech Lead @ Linaro
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
