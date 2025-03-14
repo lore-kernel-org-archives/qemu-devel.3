@@ -4,93 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB40C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 14:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE654C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 14:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt6HQ-0002Sk-H1; Fri, 14 Mar 2025 10:44:56 -0400
+	id 1tt6L8-0003vn-W3; Fri, 14 Mar 2025 10:48:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tt6HN-0002JK-ST
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:44:54 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tt6L5-0003uS-HL
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:48:43 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tt6HJ-00011u-Jo
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:44:53 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-ac2bb7ca40bso408473366b.3
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 07:44:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1741963487; x=1742568287; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=E+mmioR0JlNqITuU0MHSCr02tRyusfA2SU12RVinQJE=;
- b=MW1GjXharW03i3aEo9Bt5sQhmPWC8SvUCWGwOugsN9OYG1Y11IzemkgAC2QJp66jkP
- Vtte3ivdmoQlLLHBXm3lZOL+iLShtrTNbcR82hAvfpoUWfGMP8M4ah6rdVjE544yc4kb
- cdAwIEMqfc8+dNc0V6/WkJED6PirCIwI+o4UQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741963487; x=1742568287;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=E+mmioR0JlNqITuU0MHSCr02tRyusfA2SU12RVinQJE=;
- b=R2ruV6Ey82SjoRSJetjR4QEPfZ92fTHm+MDgyNA+XRcwtDFnzMxjbiPsRsZ0sBLmId
- BWyNrqNwqBCGB+hKaycrr0RXYzjqSictREI2yGbPPlAZLncU4zPKbr2br6Ylsx/g4nzR
- isMxgjd/UTGr37HAAtpFmDbYQFulPpbDZDN9LcaWO55milYjGGFpisoAbWCdcwciCDQ2
- f5RXmXaKSTp2prMK34mpLb6mpCo9hnditKULYidcUvlovGsnBV+z+kSKlnjsVqnU07zB
- 0INKa30qaJkuVQVNWUKo/JjGzzWUCE62ah7VOB+EIVnFI4juSIOXArb2rK2C0op3rg8a
- 3sXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoALfApH704Lv5dspAg8z3q7chTAWGRBatsiCy1idzcgnOliNSWH3HtGdKyOyqBQkvidB1yGKI3QBn@nongnu.org
-X-Gm-Message-State: AOJu0YwWnYvZjl1RpyJAEDFbzHEi5SsUTOrVOFpLtkDLfgoan/fBuin8
- erzOtvi1YaCApqDfVgX0Zc16S9KE9XPo5sFnmYBOsSkCZJULDzGSBGGcnZmhnatFUSM2AlM2hqw
- JGk3VcKdEhJFKry0ZTc6WhAot9I3f1eGDNHtM
-X-Gm-Gg: ASbGncvZcLmrYMRJVuobxAc6cYoF9mU0gEwkkiYaHMbz6zOPd+8Viw6tg0HFKwD1bQF
- xIo9gZNdC1HeXSdj6r1BprSc7jLElh/Zw0lQ22f3A0SHl3WDJBEk821TJy2eMI6XK343hO7ca+b
- XNj6E3SC0cFzgbJdRpyV6j0Oe6j3M0
-X-Google-Smtp-Source: AGHT+IFcB66P3WuSLfFUXPdWeMVuD9xRdhZhOB0EEFFUlsycmCKgx2K6QI/lGiEFiUOetV4myECiUCKqshSPlQSkoqs=
-X-Received: by 2002:a17:907:d92:b0:ac2:d5e6:dea7 with SMTP id
- a640c23a62f3a-ac33017710cmr345011666b.13.1741963486995; Fri, 14 Mar 2025
- 07:44:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tt6Kx-0001iY-V7
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:48:43 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 10646211D6;
+ Fri, 14 Mar 2025 14:48:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741963713; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uoDT9fnMqcB0zEYJWHSYNMHut1KvzgiGr2yEN/eewmw=;
+ b=bHT8VmK4SyAipoXQpFohc8+6urUhg7MDv0E7B8+uTeAr3yrwnqtWCqQJ4aCcsiqGmLPs4x
+ X2Wl47D9LOrRuGZhBlkhYHqH+8spBuYvNNGbhPIkfBg2keRmJKFJTQCj8uF5YyYtsouNrk
+ r0RliP8gl9fjwC7z8pDL2wRCngpOBh8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741963713;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uoDT9fnMqcB0zEYJWHSYNMHut1KvzgiGr2yEN/eewmw=;
+ b=YNgM19800ItwPScKwi5Jj/m3PhxZpTIrSm9FJGEqhNIW4UExC8vZXHvMiqOSyx/At0YQtk
+ 1KgS1LLo+rN8wRDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1741963712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uoDT9fnMqcB0zEYJWHSYNMHut1KvzgiGr2yEN/eewmw=;
+ b=f02nhMn16wXJgiobTeNPNLsYcubpjtdXSLHUQSlOtw4+i3a5I44f8sYW3FDLeSDp0F9qo8
+ 292sScHc2Qj46W5IoVX2G5v6Th2w9sfqkKMMucEwspORhofJScc55VHVmVFBIDeX7h7uVI
+ b24ZRWb0dmuWW3wCXrARj/iuukJj/xw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1741963712;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uoDT9fnMqcB0zEYJWHSYNMHut1KvzgiGr2yEN/eewmw=;
+ b=D6WtqGaZZyjg+cK3Vnzta3BFl9A/+L1e/taVezuZSd7rnriw6Jwtwi3rpEJ7RAZT60Iz5s
+ neRfXJYiBTse8CBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D0AB7132DD;
+ Fri, 14 Mar 2025 14:48:30 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CCe7JL5B1GeVPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Mar 2025 14:48:30 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+	Steve Sistare <steven.sistare@oracle.com>
+Subject: [PULL 1/4] migration: cpr_is_incoming
+Date: Fri, 14 Mar 2025 11:48:21 -0300
+Message-Id: <20250314144824.1707-2-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20250314144824.1707-1-farosas@suse.de>
+References: <20250314144824.1707-1-farosas@suse.de>
 MIME-Version: 1.0
-References: <20250306160428.3041057-1-sjg@chromium.org>
- <20250307142255.GL2640854@bill-the-cat>
-In-Reply-To: <20250307142255.GL2640854@bill-the-cat>
-From: Simon Glass <sjg@chromium.org>
-Date: Fri, 14 Mar 2025 14:44:35 +0000
-X-Gm-Features: AQ5f1Jp-MmYnjUxHsnfWVgj9hifY91XGM0HctUYfs31ZVaqYpc5_gyTiGM0EclQ
-Message-ID: <CAFLszTgtYsVQW-kETzUAdvJvAT6fN_53TeoN7o8wu52Ze3u56Q@mail.gmail.com>
-Subject: Re: [PATCH v4 00/47] x86: Improve operation under QEMU
-To: Tom Rini <trini@konsulko.com>
-Cc: U-Boot Mailing List <u-boot@lists.denx.de>, Bin Meng <bmeng.cn@gmail.com>, 
- Andrew Goodbody <andrew.goodbody@linaro.org>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Angelo Dureghello <angelo@kernel-space.org>,
- Guillaume La Roque <glaroque@baylibre.com>, 
- Heinrich Schuchardt <xypron.glpk@gmx.de>, Igor Opaniuk <igor.opaniuk@gmail.com>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- Julien Masson <jmasson@baylibre.com>, 
- Julius Lehmann <lehmanju@devpi.de>, Love Kumar <love.kumar@amd.com>, 
- Marek Vasut <marek.vasut+renesas@mailbox.org>,
- Martyn Welch <martyn.welch@collabora.com>, 
- Mattijs Korpershoek <mkorpershoek@baylibre.com>, 
- Maximilian Brune <maximilian.brune@9elements.com>,
- Moritz Fischer <moritzf@google.com>, 
- Patrick Rudolph <patrick.rudolph@9elements.com>,
- Philip Oberfichtner <pro@denx.de>, 
- Quentin Schulz <quentin.schulz@cherry.de>, Richard Weinberger <richard@nod.at>,
- Stephen Warren <swarren@nvidia.com>, Stephen Warren <swarren@wwwdotorg.org>, 
- Sughosh Ganu <sughosh.ganu@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=sjg@chromium.org; helo=mail-ej1-x62d.google.com
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,51 +117,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tom,
+From: Steve Sistare <steven.sistare@oracle.com>
 
-On Fri, 7 Mar 2025 at 14:23, Tom Rini <trini@konsulko.com> wrote:
->
-> On Thu, Mar 06, 2025 at 09:03:27AM -0700, Simon Glass wrote:
->
-> > U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but it
-> > is not perfect.
-> >
-> > With both builds, executing the VESA ROM causes an intermittent hang, at
-> > least on some AMD CPUs.
-> >
-> > With qemu-x86_64 kvm cannot be used since the move to long mode (64-bit)
-> > is done in a way that works on real hardware but not with QEMU. This
-> > means that performance is 4-5x slower than it could be, at least on my
-> > CPU.
-> >
-> > We can work around the first problem by using Bochs, which is anyway a
-> > better choice than VESA for QEMU. The second can be addressed by using
-> > the same descriptor across the jump to long mode.
-> >
-> > With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
-> >
-> > In v3 some e820 patches are included to make booting reliable and avoid
-> > ACPI tables being dropped. Also, several MTTR problems are addressed, to
-> > support memory sizes above 4GB reliably.
->
-> Do you plan to rebase the prerequisite series' this requires so that it
-> can be merged?
+Define the cpr_is_incoming helper, to be used in several cpr fix patches.
 
-Here's my understanding of where things are:
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Message-ID: <1741380954-341079-2-git-send-email-steven.sistare@oracle.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ include/migration/cpr.h | 1 +
+ migration/cpr.c         | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-1. You rejected the membuf series and my replies to try to resolve
-that haven't gone anywhere yet. So your tree doesn't have any tests
-for that code and still has the old naming.
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 3a6deb7933..7561fc75ad 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -21,6 +21,7 @@ int cpr_find_fd(const char *name, int id);
+ 
+ MigMode cpr_get_incoming_mode(void);
+ void cpr_set_incoming_mode(MigMode mode);
++bool cpr_is_incoming(void);
+ 
+ int cpr_state_save(MigrationChannel *channel, Error **errp);
+ int cpr_state_load(MigrationChannel *channel, Error **errp);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 180faab247..42c46563e5 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -128,6 +128,11 @@ void cpr_set_incoming_mode(MigMode mode)
+     incoming_mode = mode;
+ }
+ 
++bool cpr_is_incoming(void)
++{
++    return incoming_mode != MIG_MODE_NONE;
++}
++
+ int cpr_state_save(MigrationChannel *channel, Error **errp)
+ {
+     int ret;
+-- 
+2.35.3
 
-2. I sent the first part of the PXE series so you could apply that.
-
-3. You rejected the second part of this series because it didn't
-include support for lwip without cmdline. I offered to handle that
-case later but I'm pretty sure you rejected that too.
-
-4. This series is now marked 'changes requested' but the only feedback
-I see is in the RFC patch.
-
-Regards,
-Simon
 
