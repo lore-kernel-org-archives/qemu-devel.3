@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F95C35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 06:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE58C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 06:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsyL2-0004vI-FP; Fri, 14 Mar 2025 02:16:08 -0400
+	id 1tsyL5-00054m-Ca; Fri, 14 Mar 2025 02:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tsyKd-0004Yd-7w
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:15:54 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tsyKp-0004eR-Sj
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:16:00 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tsyKX-0005PV-LW
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:15:40 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-224100e9a5cso36669075ad.2
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 23:15:37 -0700 (PDT)
+ id 1tsyKn-0005RS-6h
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:15:55 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-3014678689aso1495508a91.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 23:15:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741932936; x=1742537736;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741932951; x=1742537751;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kCa4397D91ooXWYS7EzfW5bkyX38spZtocr+6eEyKUQ=;
- b=fuMT8CurCZTYDbi+y366WZq/GCUutixTO6Ht9OiStsiKsgiQycJqQznRqJwJ8/vFHC
- MWDpnBtgbq/pqPyirysI7z6EnsJPd0UpFva4WaXzlN0HzZ3q6gud/OY2NOvxMCjGjZ57
- CCySHvWBJnAg+5UQjmK9RdhDdeNnF66cV5qJqHdwwjask2nm9fuc5uqjGDxShWYuLy0p
- WOkySZxHPksMQ3cTAcw2JfXpTYiWdjMG0msxaMshewWQVYM0QvRzcIDGk7iZXnKXa6yr
- opsaahiSyN2QW2ozkAEilWcqLUY13B8rNMOPDNvhXECKxSINjg5fgv25g2ry/CT+ceBz
- XJIg==
+ :reply-to; bh=aDmNiobrgHSYmMXzr2eeE+YlrOKJQMXJ7JvFhGvAhTY=;
+ b=Xu0Cm+JV1yds4kCxkScNfYR0ZltVDsdvWdwVEjoUdpA8bZbH9jwX84HRfpkIeBAboJ
+ 2ItJvzD3sYZRyo63kQQpt89nzhrY2F2giIt8RQZ+bLzDhV69ylNMwHYaV/2bk4Imt0YX
+ LZQrF48Gv0bqDgP4xJTx70UAfk/eVUhmPp7qxbPqJMQ7Dami7xYZQjVKNattmCd0Z56Y
+ 9Ms7lTSRDu26/YSgsryIkGzuLrA1Fn2lTcJh0Fz93OBDxTN61C++c9VQOCceG1yy4h/B
+ 8cBLHOFl/hWlsFEPqGD0P0ydGd95VmulRmuHyPJUUt37PdaLKT2NI0zk4lSKK0Nn6v9q
+ nIXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741932936; x=1742537736;
+ d=1e100.net; s=20230601; t=1741932951; x=1742537751;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kCa4397D91ooXWYS7EzfW5bkyX38spZtocr+6eEyKUQ=;
- b=INiAKGHiEdejnzrh9+0oD/itgeeQFskbOVx1sLNnPKtGbtj8RapIYArhliaebaMlMq
- 711VwLLVuSqYlrAZb8VUvQ8vcSQaIx0CrAiK1PQ3Y56vI+JmV423HWd6nkyHQxX+mUzT
- +UiGJCJ6P9efPq/+LuW4aJdFbquVgj10PvxKGtq8hH1SkRuuMNCmvbmKGxzYYMwTkGCe
- uBngyFkZG2PlzavjeuN9hQxTvYigO1JdmRJCvQPgb0og52WA+lj9zFyII+0NQELaLPQo
- +56UOSqFZVAFFQEgY7HEHAU0ynonoBAOvqhmS56VPz0invpsrfnVe4aykechkGkE/WAq
- 2GYA==
-X-Gm-Message-State: AOJu0YxmyM8PqOxeih3X+iy80Md63Qx5ZdG3/Fyu8jGFUP4C0R3phUIS
- V2cEsCRlTsHzgj7FhXUKPlKUzkHV7wLhKkNyFQqM4H0UocL5NGYW50jOiPV6vcE=
-X-Gm-Gg: ASbGncvEwQaImIgCi+qXKEC/8NVH+F5FVpg91aQIsQi/XDFo7wCjllXtMGO01K8Dxrx
- WmANayRz+8yaggVTPfbdWwTAsoafzS+NaZR9IRp0up39FrweRpdK73laT3fEgED0oSc3jNexZ2n
- kdL6SoeDwRh5ME6//UR8CCGOWvr6RfTJF0ZCcQ5xcnxfJY4cdHhPLp6YocqXKu6dw3Tt7grHplu
- Br9OTYs/eKCnuWicgoUKb+FZx55ZGSZ1rZxR0972F4RGUze8kLg6YCD4w1eUMTIIxhoce/p09xA
- rmRqNdnnKiesSmZ4i60bC+96/FR51GWJU2dGsy7eG4Wimdq+
-X-Google-Smtp-Source: AGHT+IFtghY7dbxgnsmREGjRdQmqMgcyRtaRbwWoCXlSKYcY/7IgnO+H3j95lacEHZc/Zvhm77QttQ==
-X-Received: by 2002:a17:903:13c6:b0:220:df73:b639 with SMTP id
- d9443c01a7336-225e0af5c1fmr20410405ad.36.1741932936138; 
- Thu, 13 Mar 2025 23:15:36 -0700 (PDT)
+ bh=aDmNiobrgHSYmMXzr2eeE+YlrOKJQMXJ7JvFhGvAhTY=;
+ b=VSNlwmU69A8ZFgXzehP37yijUHbMATo9msXk/ZUWni9hvKgcJsc512zw8uLlVU3EMP
+ thSm4I50RM8yRHR2S05bSquec/6yuCGEAqJr7H2Qh402e8Y6bVEgJZsUgp9mHTvqs001
+ wJU9GiTpAE08Ftp6bK5jvJ4IVd4OEfjcObJBS1Fqtz3y/plhNi1uGj0+ZUSisoyoVrZk
+ Ztg2+PxavWv59CkcuWiT2gZFjVrVlNRYtlTktLJG7xW913xVFJH1AU9yYDNClh+/p3Pa
+ Big1ScH7Tgbn1kMCCJ/AwOXjYLywXtZWNI7pzdiRvMfmcYt6Tau0J33UyDLKEwoT0A3c
+ SL4Q==
+X-Gm-Message-State: AOJu0YyM+I0wb3OWSmMcMoOlsHcTdCDHrgDllGF7W+i2IDWv0HtWD/+D
+ BIYdKgp4oLIKmpwSMA7q9ARy5xZCb00DspHsgEG2l0cU58kFnqUW2a2CQp3tqUc=
+X-Gm-Gg: ASbGncsflbfXe2gZG9JLxI/xGPXF7Kg5Rcr1GRi7Y7zwjQn5/fZAqR5x/KZiOv2oFTm
+ 7wxoPlQgxQ3xbLVYECxVe/x0JPN5WdGcY8Z39a4VQHoDi3ITrGnvvw+CXZc3XI+mO9Su7DdEW42
+ YIQ5u4nYniQZLSYEikb6Zm5qksF8Vwf6pyfgDJVs0YC3gnHv9Iv5kPmg5/LKyPHto8wGSMtdmWd
+ c4jXjpwPUKiX386qseIH38J5daW4MTza8O1HiuviDQ3JrTyN0KAkT/2bBZEF/Tr80vv+K2EbBh+
+ gEqaeE9yTfOQIYn0ol4OkuvMVijgzLuH3HS//Ly914WpWGjd
+X-Google-Smtp-Source: AGHT+IHN/A1L3pK5BOJ7R40Ifrc6ai1arICxo/VWDe0ogICHPUxULNY5mucYKrRTB4VkzSyPuBGTag==
+X-Received: by 2002:a17:90b:3d50:b0:2fa:13d9:39c with SMTP id
+ 98e67ed59e1d1-30151ce324fmr2304218a91.14.1741932951419; 
+ Thu, 13 Mar 2025 23:15:51 -0700 (PDT)
 Received: from localhost ([157.82.205.237])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-225c6bd4dabsm23176465ad.233.2025.03.13.23.15.32
+ d9443c01a7336-225c6ba6f38sm23155685ad.129.2025.03.13.23.15.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 23:15:35 -0700 (PDT)
+ Thu, 13 Mar 2025 23:15:51 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 14 Mar 2025 15:14:55 +0900
-Subject: [PATCH for-10.1 v9 6/9] virtio-pci: Implement SR-IOV PF
+Date: Fri, 14 Mar 2025 15:14:58 +0900
+Subject: [PATCH for-10.1 v9 9/9] pcie_sriov: Make a PCI device with
+ user-created VF ARI-capable
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250314-sriov-v9-6-57dae8ae3ab5@daynix.com>
+Message-Id: <20250314-sriov-v9-9-57dae8ae3ab5@daynix.com>
 References: <20250314-sriov-v9-0-57dae8ae3ab5@daynix.com>
 In-Reply-To: <20250314-sriov-v9-0-57dae8ae3ab5@daynix.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -86,8 +87,8 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com,
  Yui Washizu <yui.washidu@gmail.com>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -109,94 +110,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow user to attach SR-IOV VF to a virtio-pci PF.
-
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/hw/virtio/virtio-pci.h |  1 +
- hw/virtio/virtio-pci.c         | 20 +++++++++++++++-----
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ docs/system/sriov.rst       |  3 ++-
+ include/hw/pci/pcie_sriov.h |  7 +++++--
+ hw/pci/pcie_sriov.c         |  8 +++++++-
+ hw/virtio/virtio-pci.c      | 16 ++++++++++------
+ 4 files changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index 971c5fabd444..b473274834e9 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -155,6 +155,7 @@ struct VirtIOPCIProxy {
-     uint32_t modern_io_bar_idx;
-     uint32_t modern_mem_bar_idx;
-     int config_cap;
-+    uint16_t last_pcie_cap_offset;
-     uint32_t flags;
-     bool disable_modern;
-     bool ignore_backend_features;
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 3ca3f849d391..2463bff2ea5b 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1962,6 +1962,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-     uint8_t *config;
-     uint32_t size;
-     VirtIODevice *vdev = virtio_bus_get_device(bus);
-+    int16_t res;
+diff --git a/docs/system/sriov.rst b/docs/system/sriov.rst
+index a851a66a4b8b..d12178f3c319 100644
+--- a/docs/system/sriov.rst
++++ b/docs/system/sriov.rst
+@@ -28,7 +28,8 @@ virtio-net-pci functions to a bus. Below is a command line example:
+ The VFs specify the paired PF with ``sriov-pf`` property. The PF must be
+ added after all VFs. It is the user's responsibility to ensure that VFs have
+ function numbers larger than one of the PF, and that the function numbers
+-have a consistent stride.
++have a consistent stride. Both the PF and VFs are ARI-capable so you can have
++255 VFs at maximum.
  
-     /*
-      * Virtio capabilities present without
-@@ -2109,6 +2110,14 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-         pci_register_bar(&proxy->pci_dev, proxy->legacy_io_bar_idx,
-                          PCI_BASE_ADDRESS_SPACE_IO, &proxy->bar);
+ You may also need to perform additional steps to activate the SR-IOV feature on
+ your guest. For Linux, refer to [1]_.
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index f75b8f22ee92..aeaa38cf3456 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -43,12 +43,15 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+ 
+ /**
+  * pcie_sriov_pf_init_from_user_created_vfs() - Initialize PF with user-created
+- *                                              VFs.
++ *                                              VFs, adding ARI to PF
+  * @dev: A PCIe device being realized.
+  * @offset: The offset of the SR-IOV capability.
+  * @errp: pointer to Error*, to store an error if it happens.
+  *
+- * Return: The size of added capability. 0 if the user did not create VFs.
++ * Initializes a PF with user-created VFs, adding the ARI extended capability to
++ * the PF. The VFs should call pcie_ari_init() to form an ARI device.
++ *
++ * Return: The size of added capabilities. 0 if the user did not create VFs.
+  *         -1 if failed.
+  */
+ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 08f707e847fd..3ad18744f4a8 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -245,6 +245,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+     PCIDevice **vfs;
+     BusState *bus = qdev_get_parent_bus(DEVICE(dev));
+     uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
++    uint16_t size = PCI_EXT_CAP_SRIOV_SIZEOF;
+     uint16_t vf_dev_id;
+     uint16_t vf_offset;
+     uint16_t vf_stride;
+@@ -311,6 +312,11 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+         return -1;
      }
-+
-+    res = pcie_sriov_pf_init_from_user_created_vfs(&proxy->pci_dev,
-+                                                   proxy->last_pcie_cap_offset,
-+                                                   errp);
-+    if (res > 0) {
-+        proxy->last_pcie_cap_offset += res;
-+        virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
+ 
++    if (!pcie_find_capability(dev, PCI_EXT_CAP_ID_ARI)) {
++        pcie_ari_init(dev, offset + size);
++        size += PCI_ARI_SIZEOF;
 +    }
++
+     for (i = 0; i < pf->len; i++) {
+         vfs[i]->exp.sriov_vf.pf = dev;
+         vfs[i]->exp.sriov_vf.vf_number = i;
+@@ -331,7 +337,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+         }
+     }
+ 
+-    return PCI_EXT_CAP_SRIOV_SIZEOF;
++    return size;
  }
  
- static void virtio_pci_device_unplugged(DeviceState *d)
-@@ -2199,7 +2208,7 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+ bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 2463bff2ea5b..58abdda04bc3 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2111,12 +2111,16 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+                          PCI_BASE_ADDRESS_SPACE_IO, &proxy->bar);
+     }
  
-     if (pcie_port && pci_is_express(pci_dev)) {
-         int pos;
--        uint16_t last_pcie_cap_offset = PCI_CONFIG_SPACE_SIZE;
-+        proxy->last_pcie_cap_offset = PCI_CONFIG_SPACE_SIZE;
+-    res = pcie_sriov_pf_init_from_user_created_vfs(&proxy->pci_dev,
+-                                                   proxy->last_pcie_cap_offset,
+-                                                   errp);
+-    if (res > 0) {
+-        proxy->last_pcie_cap_offset += res;
+-        virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
++    if (pci_is_vf(&proxy->pci_dev)) {
++        pcie_ari_init(&proxy->pci_dev, proxy->last_pcie_cap_offset);
++        proxy->last_pcie_cap_offset += PCI_ARI_SIZEOF;
++    } else {
++        res = pcie_sriov_pf_init_from_user_created_vfs(
++            &proxy->pci_dev, proxy->last_pcie_cap_offset, errp);
++        if (res > 0) {
++            proxy->last_pcie_cap_offset += res;
++            virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
++        }
+     }
+ }
  
-         pos = pcie_endpoint_cap_init(pci_dev, 0);
-         assert(pos > 0);
-@@ -2216,9 +2225,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-         pci_set_word(pci_dev->config + pos + PCI_PM_PMC, 0x3);
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_AER) {
--            pcie_aer_init(pci_dev, PCI_ERR_VER, last_pcie_cap_offset,
-+            pcie_aer_init(pci_dev, PCI_ERR_VER, proxy->last_pcie_cap_offset,
-                           PCI_ERR_SIZEOF, NULL);
--            last_pcie_cap_offset += PCI_ERR_SIZEOF;
-+            proxy->last_pcie_cap_offset += PCI_ERR_SIZEOF;
-         }
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_DEVERR) {
-@@ -2243,9 +2252,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-         }
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_ATS) {
--            pcie_ats_init(pci_dev, last_pcie_cap_offset,
-+            pcie_ats_init(pci_dev, proxy->last_pcie_cap_offset,
-                           proxy->flags & VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED);
--            last_pcie_cap_offset += PCI_EXT_CAP_ATS_SIZEOF;
-+            proxy->last_pcie_cap_offset += PCI_EXT_CAP_ATS_SIZEOF;
-         }
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_FLR) {
-@@ -2273,6 +2282,7 @@ static void virtio_pci_exit(PCIDevice *pci_dev)
-                      !pci_bus_is_root(pci_get_bus(pci_dev));
-     bool modern_pio = proxy->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY;
- 
-+    pcie_sriov_pf_exit(&proxy->pci_dev);
-     msix_uninit_exclusive_bar(pci_dev);
-     if (proxy->flags & VIRTIO_PCI_FLAG_AER && pcie_port &&
-         pci_is_express(pci_dev)) {
 
 -- 
 2.48.1
