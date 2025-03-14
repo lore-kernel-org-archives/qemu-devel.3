@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6842C282DE
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 00:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F28C282DE
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 00:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tssaY-0003OL-54; Thu, 13 Mar 2025 20:07:46 -0400
+	id 1tssmm-0006fd-Ec; Thu, 13 Mar 2025 20:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tssaW-0003Np-Bv
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:07:44 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1tssmi-0006f8-Qu
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:20:21 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tssaT-0004L1-ED
- for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:07:42 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2fec3176ef3so2687456a91.1
- for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 17:07:40 -0700 (PDT)
+ id 1tssmf-0005sn-P8
+ for qemu-devel@nongnu.org; Thu, 13 Mar 2025 20:20:19 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2241053582dso39272665ad.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Mar 2025 17:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741910860; x=1742515660; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741911616; x=1742516416; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YUZlxK+roiOl2/8eDP8cANTJOOqGZstmyKZvkJUycWQ=;
- b=rGYU0MwwTUtDJjwVr3nTtWwnf7RsNxlLqPStz9iZb9mbmuHvXzLIG24XT54tV/ezrY
- ucy3lNv6ilnvYtws7nom3QGcZSy34bZ8tB3+4o6KUGs+Zy30oPExQcz5RC0+crZWytuC
- yfiWRIOdxDF2XUtwHisMJFKB+9pa5gWUllnINpUXu3OCJbqJJEp5Um6Bd2pfptkZVarF
- FvYnBK0FXJed/OuB4p5yosnrdVPR/XHWjdDUy+L5vFVxJBuJcLEfATBJpHFKlaqYiD9G
- H4Z2G7P4OUUD29amRnlxTkNLoX5avMr3avHlgDh41wxGVhz3hJK1uuIRVYDoWdpOD0uZ
- 6Pxw==
+ bh=8ab9WO9Q2CaOz84Rlok9TfoK2wAni5HdHf10j7XiYsY=;
+ b=UyIQjou+qxb/P8TZ3Td6c6EoygYTGxl3KQ6e6aKaEX1vC8ETYCIXXnprBrGdselQpT
+ Vh5gXIFSvNaANd2/EYiYSyYvjkiZnWGG5GCMheQoPOMrMce7pSEOO+ba7RDv0eGnpKi4
+ UwqSA8PnOilzewSp5uxP8F3tU5kukyNzHjahB4BtZCHnSwNZIb+RfbHysgLZMVa4akRb
+ 65il05q4QSnRWNKONDHBxdtIMdhD6+jdWN7IQaOqZ1e1zL9wpFTYOVEfiVBKfgqYJF8n
+ zYdsnEhzMPK2toswFrqG8uVau6zWk5dy18GnJiqSbhkSN9Y6HOayTWf1pjcN5pkRnuTu
+ zFqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741910860; x=1742515660;
+ d=1e100.net; s=20230601; t=1741911616; x=1742516416;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YUZlxK+roiOl2/8eDP8cANTJOOqGZstmyKZvkJUycWQ=;
- b=sI2DPlkiqc0/vaww7e4uBbGwXc2/uuG5xQYCLlMZkLFzj/F+5TjdLPcEcNaY4AFwzV
- 4V+ml3JE7yATIn7t62ABU2/RvT4Z2qzl58TEVBdn+BWzK0aGu4vT6P79iF6XdhTY124E
- kAaXJwLQ90E2l6cw6nhWDSyDRdmsl9ghDMOquXA/7j9NeQvx6eyuiyQOQn9/p2pf48B/
- KZIqqYav5QpHhMqZe/EP5wVIbrBQZ1Jc0iDFbnqROvmhg4/V8oOKH/ougF64v8ebOc4R
- vMYMQy2e/eRYDY22rWxCcLurkWiUvTv8lFFjFCdxcWd7wKrMt3BcI3eUK7hI3wjotEzK
- ZB0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNQY5kX6q1sBdySAX88/h0gYRxJvhNw1jCBw69PO6x6VFWq03SCxODtQS6ZqUhjLsEmf/sZBBRfp2C@nongnu.org
-X-Gm-Message-State: AOJu0YyUtbZBm3dV7+8OTZdczCIbY8Xs+AtrqALJ0zC5u/l7s1VBsSiw
- kJbyGh/0q/S3unHr1PCQcEHQjNgejRi4u8lS1kAsyAmJfJAbS8IZSeOZ8hhpA5M=
-X-Gm-Gg: ASbGncuhXGG1mz6ltClKRQHYSZSZ7fZVdQb6OSflxDPPDunXug3NPJVCy5ty725kRCS
- 9eC8DPc6hRT2fSPYtssSfSDddNvZfYR7LDMSPjs3APIuBb3LjGN8KlkpHVskXmDi5K8SxiFH7X+
- b/GxDo97+jwqDZ75gDyyp57uoLwBWU5UoC0CQoNuxNMwfAVHDW76rGP/EmuiJPJWGsklhw2UkAv
- GR8EKqINXASpzLoxLKiL9DolhVyiUcfYgpBemsx//Q0XEGoy8vopHBiIsbLmI8ig02+Y4xaLklE
- EZZ2B2qlHOfF555hjvinccpZLALi18tuXHUc42+RdhrVx+YybXl3U7hIox3z/kH0f6HLH3LR9JI
- gxGiSbEQHni3QF+LsZug=
-X-Google-Smtp-Source: AGHT+IGBotO9+k3bFNMKqUL8PJcktIP7HKdwyJRpaz2qFK9yjJQIyoitoT5mk8KVUs2oFS5ldgCT+w==
-X-Received: by 2002:a17:90b:5706:b0:2ee:db8a:2a01 with SMTP id
- 98e67ed59e1d1-30151d7aef1mr561484a91.30.1741910859682; 
- Thu, 13 Mar 2025 17:07:39 -0700 (PDT)
+ bh=8ab9WO9Q2CaOz84Rlok9TfoK2wAni5HdHf10j7XiYsY=;
+ b=p6aM4ai5sYilK/aYPhRspk4CXIEoo8asq8VWBX3R07PzwlDIQQfvbSM5srTq9vLuz4
+ 8jefdqAQN4V7HCeXpKBlfkozePf0hf0WzBNkwJftsaynE7581xdpHHvOp32N1z6fP44+
+ E1wX0JlBkEEkKyTLlC3GYvXsLHfENqN4MEwA1g1e1D++1KEboKAzv0E5vYTLtKVMtGes
+ jZ3E/erGvU//tfXMa/lAi+94+U0QfT0q0GMi1kXHdRE+NJT/hl1HIkNNJrz3Cks+J0C/
+ oieEFbOf2DTX6ILHdbg6JM/oW1L2ftE9ccu4DTvT9cPm97p4sOA/8ocjd2zabVeFLWRr
+ Sfhg==
+X-Gm-Message-State: AOJu0Yx9w4Oj/clnGAgFC+KfoDwrMcia1xCxe8vrIrIWx8TvrxzFb8I9
+ azZa7jhd/vAzFfdKfPOjI7Bf7MFIxcrO9dz7ISGdrRphWCw4DQpxm1AgamiQZTE=
+X-Gm-Gg: ASbGncsQwQFmCWwpzJai3gCHc7svAmkibJbyF4X488PD4n+MyRkAMWa4Abih1Olif/d
+ iIp95Ivn/7hWoFcBPMwDCW3usKrWMgK9SlIxmLPk5SvO3vYU1DzaRJOYCNftH+McewLJoKQ10aO
+ IR4MipWiBp2KuNyvI1uzvkDIP4J34NAWgATAcxsQv7Oq9XuUbGQsI3PjnOgWiV01oOp5XRswbkM
+ 7BSjYukS904Vi91Eaq6r8jwf7HfD1veEzYT0R8s3A5/lYr5orrZ3/8jBwaw1xtMzUBTwzUChNvz
+ CLyTzsvQpHHfiO0SguciFeszwR86xmqjWjjPUTcYDl146ey5OotSyQDqz0+LP4uFGBUR5NtwJk+
+ ekEki8CNn
+X-Google-Smtp-Source: AGHT+IGp62avIjoOmIZiqjVOmBhl8JDVwWIAWsysEnyr1dKg/bwgHFCg9+gGu/xzzmuuPxgd8+S8TA==
+X-Received: by 2002:a17:903:11c4:b0:21f:85ee:f2df with SMTP id
+ d9443c01a7336-225e0a896a9mr7310955ad.15.1741911615714; 
+ Thu, 13 Mar 2025 17:20:15 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30138b3b4c6sm2025892a91.6.2025.03.13.17.07.38
+ 98e67ed59e1d1-30138b47560sm2030679a91.13.2025.03.13.17.20.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Mar 2025 17:07:39 -0700 (PDT)
-Message-ID: <7b320c8e-8278-4962-ac31-6f7e6cc1882d@linaro.org>
-Date: Thu, 13 Mar 2025 17:07:37 -0700
+ Thu, 13 Mar 2025 17:20:14 -0700 (PDT)
+Message-ID: <8018fe1f-d757-4170-9354-6c6813772242@linaro.org>
+Date: Thu, 13 Mar 2025 17:20:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/37] include/exec: Inline *_mmuidx_ra memory operations
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
+Subject: Re: [PATCH 06/37] include/exec: Inline *_data_ra memory operations
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, pbonzini@redhat.com,
+ philmd@linaro.org
 References: <20250313034524.3069690-1-richard.henderson@linaro.org>
- <20250313034524.3069690-6-richard.henderson@linaro.org>
- <a6e79bf6-8b93-4b02-8888-6c2a417a34a2@linaro.org>
- <6d26b188-189c-4714-81a7-6061bb8a6ff6@linaro.org>
- <e1941fdb-b7e9-4c58-8776-9ff576e9d07b@linaro.org>
+ <20250313034524.3069690-7-richard.henderson@linaro.org>
+ <87msdo52a5.fsf@draig.linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <e1941fdb-b7e9-4c58-8776-9ff576e9d07b@linaro.org>
+In-Reply-To: <87msdo52a5.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,37 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/25 11:26, Philippe Mathieu-Daudé wrote:
-> On 13/3/25 19:05, Richard Henderson wrote:
->> On 3/13/25 09:59, Pierrick Bouvier wrote:
->>>> +static inline int
->>>> +cpu_ldsw_be_mmuidx_ra(CPUArchState *env, abi_ptr addr,
->>>> +                      int mmu_idx, uintptr_t ra)
->>>> +{
->>>> +    return (int16_t)cpu_lduw_be_mmuidx_ra(env, addr, mmu_idx, ra);
->>>
->>> For my personal culture, is that strictly equivalent to doing the load with MO_BESW?
->>
->> If you're asking if it's the same as passing MO_BESW to tcg_gen_qemu_ld_i32(), yes.  The 
->> tcg code generator takes care of making the value sign-extended.
->>
->> If you're asking if it's the same as passing MO_BESW to cpu_ldw_mmu(), no.  The core 
->> functions only handle unsigned values.  This older api contained functions with a signed 
->> return value, so we preserve that.
+On 3/13/25 09:22, Alex Bennée wrote:
+> Richard Henderson <richard.henderson@linaro.org> writes:
 > 
-> Are these 2 APIs doing the same thing? What are the uses? Can we rename
-> the legacy one?
+>> These expand inline to the *_mmuidx_ra api with
+>> a lookup of the target's cpu_mmu_index().
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> This is where my re-based bisect broke. Fixed by moving cpu.h
+> 
+> modified   target/ppc/tcg-excp_helper.c
+> @@ -19,6 +19,7 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu/main-loop.h"
+>   #include "qemu/log.h"
+> +#include "cpu.h"
+>   #include "exec/cpu_ldst.h"
+>   #include "exec/exec-all.h"
+>   #include "exec/helper-proto.h"
+> @@ -27,7 +28,6 @@
+>   #include "helper_regs.h"
+>   #include "hw/ppc/ppc.h"
+>   #include "internal.h"
+> -#include "cpu.h"
+>   #include "trace.h"
 
-There are 4 apis doing the same thing:
-
-   cpu_ld*_data()
-   cpu_ld*_data_ra()
-   cpu_ld*_mmuidx_ra()
-   cpu_ld*_mmu()
-
-It would be lovely to get rid of some of them.
-A mere matter of coccinelle and lots of testing, I guess.
+I shall move up the cpu-mmu-index.h split, so that I can include
+it in the proper place here in cpu_ldst.h.
 
 
 r~
+
 
