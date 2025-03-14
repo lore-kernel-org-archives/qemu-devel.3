@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A717CC282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245F4C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt27c-00006x-Fu; Fri, 14 Mar 2025 06:18:32 -0400
+	id 1tt28S-0000lh-77; Fri, 14 Mar 2025 06:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tt27Z-00006I-Pm
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:18:30 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tt28P-0000kN-IC
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:19:21 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tt27X-0003cq-I2
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:18:29 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ac28e66c0e1so290300266b.0
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:18:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tt28N-0003m9-Dv
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:19:21 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e637edaa652so1584892276.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741947505; x=1742552305; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kOPbLmcxiIatQY7sHe7b02oenu+TvYv2qO+PIG5C0Gw=;
- b=f2PHZ2a+ClbJmxzhK+E23o7fWrMKffeIAxe+CWDGEttj4dTofDiy/wAW3m09UssdtM
- ceiUo8Cg6s/mI/EXV3Ve9cX07pTcbrSK8YRDsxaQS5QVNkNGEz26AM+jhP6DlToPRR47
- Gnt2JEmJr3/Uz0BB+W3N9XkHtEjbMt6dAiTArhNgiEDsvPqXdhcdMBqfOG0FId5dTbKi
- ftqBLT2yY/Q7v1zEEGypWdbMpL2nbPVbHXKZ5KSJ8i58RayokgqaiPXhhxvdvqUNq65D
- pNcO1acWRkUAWZtG+opQDlUDiI+h7l0ON+ffRYTEZvEurMMlftMPzhPtw/4RcHH4VwYM
- u1fQ==
+ d=linaro.org; s=google; t=1741947556; x=1742552356; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8oeHu4lKIPm5zC2Kyv6pmRs6LHDCYHqEo1QuDik7tj0=;
+ b=dyArlN3QSqYh7qb0hhdMR7Q6izpJunhseajSzw3r3aZhkJgZCkdOyeSuVP4cemJ/Sp
+ G3gFUSI0eLKr4U9hyuy8JhjhT3x/0CKhi4PqLnVIHqVxnfUpaxmOI6LHBi53gQfzIkH4
+ gBuPLW430aaun0sFF5tJCppSaDNc/Dg0VtibYhSgChCnQdb26KtmxVxX7NeEeLcKXt5p
+ HAiKTzRHkh/M/AvmkL+eW9dXoclSeyPIJb5mhORWXVpZqiVqns3vZ1aDzJCF4zrppoQ2
+ WwrVFsLnOrGb/tzMYRVfKL0LdzKrK46t/1FaVlXGP7S6NCKxD7zC+wxVnTsV0dBQFGG7
+ JSwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741947505; x=1742552305;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kOPbLmcxiIatQY7sHe7b02oenu+TvYv2qO+PIG5C0Gw=;
- b=m3x4+9gXuW+jyQzW3oOsylxIyTRO6iLuvvhmesrVbUEjpEz4DOOsBdZH+uEPUzC1tl
- t7CxO1mn11jE3jFx2JPFhQvHclqwG+CGbd6zouP0LobksontOkPNh2OovXg2xZzBVMmf
- Wxe9FLyKj//L4FEveXEyljOiroNCSFdtj0kkjVXHvcqNJZxwH8QkapFyXCDkHEoqitIh
- YQeXlhPirBdwefjY1d8ZhxraqD7mmxR/2fe+AA+rrvWEIhiZCiWSygqerbNv8J7J1g1j
- yoLNRcmvgj+MyslR/wF11GF9i744AJi7ScfLrsnWA2c7iwf8iCmf553ZUmrPsD9gcIs5
- XqSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCWVKMUePANCYkMVQawJBufh/2d7EmknhXF+X313nTiBY4yVCi5gRf+kkYIiRQC2ObgBYdKO777ise@nongnu.org
-X-Gm-Message-State: AOJu0YzR2uanOGHDFxGJipUrpIg8keU3o8smPD2RVSdbO6LrBXj/lU2C
- eKq10/wCVgiHSANMimsctPBEgeTS7jtDxmg3IDhx0GEPPDW6ux8t4b2R98XQnTFrfHXTWV0Ix9o
- 2
-X-Gm-Gg: ASbGncvcd4CuyAlKeS5tAT0J2axc7B9Qn4p+Y4kvTxkzf5sqLtJEAgEhvydBqJITEub
- 9j0m5a2apLHsQxsyLUpEqzB7xfyNhim4sp7l4xtfaXUOSH3igqWe6pHzMmpLLsGYRP3s6i4yUae
- xSmruh9+EKn/xLSsrMtoAZPvkaHbrnQjjL04JrUY/5Zlnjut3ijfDfi6OSxOdffV9dAo9fz+K4r
- drjmRLw/TdVKrl2djP6Ac/dgAievPSnFUcJBvF+bC0TTuGHARUO/mqfTS1WQFL2edE6uMNqygae
- 5Qt3axh10xg3YgAocz+zm8osfXV2HGns3itVkCq2XBATODA=
-X-Google-Smtp-Source: AGHT+IG9fMSUJrx8RbpWyIvtvV6undzA/hz5NJKTBRjncNwQxTvLo8ICI7hIVTbrnfRFzwTCE/GYag==
-X-Received: by 2002:a17:907:a089:b0:ac2:972c:f732 with SMTP id
- a640c23a62f3a-ac330324808mr232122966b.33.1741947504843; 
- Fri, 14 Mar 2025 03:18:24 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3146aea93sm204446766b.30.2025.03.14.03.18.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 03:18:24 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 495255F92C;
- Fri, 14 Mar 2025 10:18:23 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  QEMU
- <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  Yan Vugenfirer <yvugenfi@redhat.com>
-Subject: Re: Cross-compilation artifact is broken
-In-Reply-To: <CAPMcbCrsvWJu6NsE8P6OYCLtKYG89zSviCoW9_YF+BTUB45HeQ@mail.gmail.com>
- (Konstantin Kostiuk's message of "Fri, 14 Mar 2025 10:21:58 +0200")
-References: <CAPMcbCquaBmWhx3jWBKMC1oLrMZBUVhfWFcW=_5uhVqOep4NWw@mail.gmail.com>
- <Z9GUldol1IQT1uiY@redhat.com> <Z9GY3l2pTkbpMV8L@redhat.com>
- <871pv25iar.fsf@draig.linaro.org>
- <CAPMcbCrsvWJu6NsE8P6OYCLtKYG89zSviCoW9_YF+BTUB45HeQ@mail.gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 14 Mar 2025 10:18:23 +0000
-Message-ID: <87tt7v3ogg.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1741947556; x=1742552356;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8oeHu4lKIPm5zC2Kyv6pmRs6LHDCYHqEo1QuDik7tj0=;
+ b=u0L5PqHJdXI+LMKgroecLqM+bm8OPAllayh/0YZem4fftO+dsx8i4XwCLUnZa++RFg
+ 5jcBYrNSTnu5IfeW+vipWW2iA6t3qWuXbBCIxC5bU2kNuaV4V6n1OwSatyeBFx20Nuw/
+ sQ+7MXf2yRFcwQGVXuiAMfNQw7ydeW8nyP15/C5gotHQfS5hC48XCkw8qmsr29PG2glE
+ ITZmagf//STSeHUAn7ollhpEhmOBAploypw0tHnzjsoki8qqsD4010Y8oCrYy188DIb+
+ ycSakm6kSMczCGmakfJZNBIMXtyVfFHx1Qx3NE7x9x9Ktros3YSEGjGncUMArFBOw6ZH
+ anJA==
+X-Gm-Message-State: AOJu0YxXIbDYJwUt30MMjUXqvXPhRTP+jw7wU9LELs8donPzOm6hUHsF
+ VrfcVRDk5Co1rUGr6LjHmjb+dgAleg27TR4TxZ8Np04iaQbf4YvyhAcv1hjiGb8+D72d694HGNq
+ 3sai6Ao8LOGvBtt8cGBKeOYc2SuQHfW0Akl/MZg==
+X-Gm-Gg: ASbGncvNaHf+gEj1L0CGJKTrA7Gj0lCh8Kp1mpL5Qjv8XRBTSmkwHWp9RqExh6qchC9
+ 3tDOeAMWNrc019EaqyyN3emFc4c/zLAFTuFiyXpssifWveIRZsrru/Rj5VYPvWgHUPpi1BKzvs1
+ orKTS9USNh1dxgKwfI4XG1SJ+Thng=
+X-Google-Smtp-Source: AGHT+IESl+2fqYqLr8WgKSINHp3zrIehBscX11kJkHoOJ3O1kZ7ajA6CWxEM4ORXyS3ZZpcxEddP1uOJVyYELALFz0E=
+X-Received: by 2002:a05:6902:118f:b0:e61:10fc:a9be with SMTP id
+ 3f1490d57ef6-e63f6517e13mr2109576276.23.1741947556590; Fri, 14 Mar 2025
+ 03:19:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+References: <20250313-clr-v1-1-2cc49df40fe9@daynix.com>
+ <CAFEAcA9pu_Y8Ki6TFznViO1UCqqSgHgn2ZKQjbcoKVob3qF5dg@mail.gmail.com>
+ <6959f6ef-c142-49e0-b742-a99da1a26b61@daynix.com>
+In-Reply-To: <6959f6ef-c142-49e0-b742-a99da1a26b61@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 14 Mar 2025 10:19:05 +0000
+X-Gm-Features: AQ5f1JqlrIBx6YwXnrGStBCx7C2IZ1_EPJw_7SNYfMH74QpQaM6T8YRUiBQqTKI
+Message-ID: <CAFEAcA8E5G-Q-RKXfN20o2bZjyTHiqEzJ3EZnrW90whS1QV4uw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Define raw write for PMU CLR registers
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,67 +93,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Konstantin Kostiuk <kkostiuk@redhat.com> writes:
-
-> On Wed, Mar 12, 2025 at 6:24=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
-aro.org> wrote:
+On Fri, 14 Mar 2025 at 08:15, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
->  Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+> On 2025/03/14 3:34, Peter Maydell wrote:
+> > On Thu, 13 Mar 2025 at 07:16, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+> >>
+> >> PMCNTENCLR_EL0 and PMINTENCLR_EL1 clears written bits so we need an
+> >> alternative raw write functions, which will be used to copy KVM kernel
+> >> coprocessor state into userspace.
+> >>
+> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> >> ---
+> >>   target/arm/helper.c | 6 ++++--
+> >>   1 file changed, 4 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> >> index f0ead22937bf..30883cd3a989 100644
+> >> --- a/target/arm/helper.c
+> >> +++ b/target/arm/helper.c
+> >> @@ -1907,7 +1907,8 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
+> >>         .fgt = FGT_PMCNTEN,
+> >>         .type = ARM_CP_ALIAS | ARM_CP_IO,
+> >>         .fieldoffset = offsetof(CPUARMState, cp15.c9_pmcnten),
+> >> -      .writefn = pmcntenclr_write },
+> >> +      .writefn = pmcntenclr_write,
+> >> +      .raw_writefn = raw_write },
+> >>       { .name = "PMOVSR", .cp = 15, .crn = 9, .crm = 12, .opc1 = 0, .opc2 = 3,
+> >>         .access = PL0_RW, .type = ARM_CP_IO,
+> >>         .fieldoffset = offsetoflow32(CPUARMState, cp15.c9_pmovsr),
+> >> @@ -2033,7 +2034,8 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
+> >>         .fgt = FGT_PMINTEN,
+> >>         .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_NO_RAW,
+> >>         .fieldoffset = offsetof(CPUARMState, cp15.c9_pminten),
+> >> -      .writefn = pmintenclr_write },
+> >> +      .writefn = pmintenclr_write,
+> >> +      .raw_writefn = raw_write },
+> >>       { .name = "CCSIDR", .state = ARM_CP_STATE_BOTH,
+> >>         .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 1, .opc2 = 0,
+> >>         .access = PL1_R,
+> >
+> > Hmm, looking more closely at this, I think this second one should
+> > not need a raw_writefn, because it's marked as ARM_CP_NO_RAW
+> > (meaning nothing should try to do a raw write to it).
 >
->  > On Wed, Mar 12, 2025 at 02:05:09PM +0000, Daniel P. Berrang=C3=A9 wrot=
-e:
->  >> On Wed, Mar 12, 2025 at 03:52:45PM +0200, Konstantin Kostiuk wrote:
->  >> > Hi All,
->  >> >=20
->  >> > I cross-compiled qemu-ga from current master branch
->  >> > (825b96dbcee23d134b691fc75618b59c5f53da32) and found strange behavi=
-or.
->  >> >=20
-<snip>
->  >> > My question is, is this expected behavior or is this a bug?
->  >>=20
->  >> Your configure args don't include "--enable-debug", so I would
->  >> not have expected -gsplit-dwarf to have been enabled, so I'm
->  >> surprised that commit casued a problem.
->  >
->  > Hmm it appears that the meson  "get_option('debug')" is entirely
->  > unconnected to QEMU's --enable-debug configure flag, which I did
->  > not realize.
->  >
->  > IOW, we've got -gsplit-dwarf enabled by default for everyone
->  > building QEMU, which feels dubious. IMHO only an explicit
->  > --enable-debug configure arg should have triggered it.
+> Good catch; I didn't notice ARM_CP_NO_RAW.
 >
->  --enable-debug is more than debug info, --enable-debug-info is enabled
->  by default. If you build with --disable-debug-info then -gsplit-dwarf
->  won't be applied.
+> >
+> > And the first one is marked ARM_CP_ALIAS, so I'm not
+> > sure why we would be using it in KVM register sync:
+> > add_cpreg_to_list() skips ARM_CP_ALIAS (and ARM_CP_NO_RAW)
+> > registers when we construct the cpreg_tuples[] array that
+> > defines which sysregs we sync to and from KVM.
 >
-> But as this broke the Windows build, maybe we should disable this for Win=
-dows
-> until resolve this problem
-
-Something like:
-
-if host_os !=3D 'windows'
-  if get_option('debug') and get_option('split_debug')
-    qemu_cflags +=3D '-gsplit-dwarf'
-  endif
-endif
-
->=20=20
->  >
->  > In addition since its breaking Windows builds, it appears we
->  > need to block its usage on Windows.
->  >
->  >
->  > With regards,
->  > Daniel
+> The register list is initialized with kvm_arm_init_cpreg_list() for KVM,
+> which ignores those flags.
 >
->  --=20
->  Alex Benn=C3=A9e
->  Virtualisation Tech Lead @ Linaro
+> target/arm/cpregs.h explicitly says: "registers marked ARM_CP_ALIAS will
+> not be migrated but may have their state set by syncing of register
+> state from KVM."
+>
+> ARM_CP_NO_RAW is still respected for KVM by write_cpustate_to_list() and
+> write_list_to_cpustate().
+>
+> >
+> > (We should arguably be consistent about our usage of the
+> > NO_RAW flag between the pmintenclr and pmcntenclr registers.)
+>
+> I sent v2 to drop the flag. target/arm/cpregs.h suggests ARM_CP_NO_RAW
+> is not a flag for these registers:
+>  > Flag: Register has no underlying state and does not support raw access
+>  > for state saving/loading; it will not be used for either migration or
+>  > KVM state synchronization. Typically this is for "registers" which are
+>  > actually used as instructions for cache maintenance and so on.
+>
+> These registers have underlying states and can support raw access.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+No, the CLR registers don't have their own underlying state.
+The underlying state is handled by the SET registers. NO_RAW
+for the CLR registers is correct, because:
+ * we don't want to migrate the state twice; the SET register
+   of a CLR/SET pair will handle it
+ * we don't want to try to write the state to KVM via the CLR
+   register
+
+-- PMM
 
