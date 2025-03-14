@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01BD2C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 13:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4054CC28B30
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 13:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt4uE-00059j-M6; Fri, 14 Mar 2025 09:16:54 -0400
+	id 1tt4uI-0005CH-Cc; Fri, 14 Mar 2025 09:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt4uA-00058R-Vc
+ id 1tt4uB-00058U-NS
  for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:16:52 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt4u9-00014p-1g
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:16:50 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-39130ee05b0so2065690f8f.3
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 06:16:48 -0700 (PDT)
+ id 1tt4u9-00015N-Mr
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:16:51 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43cf628cb14so20110265e9.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 06:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741958207; x=1742563007; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741958208; x=1742563008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PZV6zHs1ewUsWH9J0fMbzt0q9IpjkvsTqTb1g7WYdZ4=;
- b=OseBi+af6+49gxTf5zNPNbVKeuI943OLvqt5xyfHVINwEMMnNB+LxnE76flqLfvWa+
- u05wWcVGk75GPk6BCuoBxZGav0FPBlklSlaxIKVHXAjps6zAfi2RIhowdNvcYmCuH3R/
- jB3jQEOgkEzOA6bNa1PJzq38UaPtRnlf17gw7rAgHS3wL4FMwEQPb+DZwTo/5+0X5vNm
- vn8Oo9fgn66kVVgg2Zfaju3EE1FSO3rHhzda/EPRFlqELQ6WL2c+FAVw1iohhwZekbF4
- ChVxQ0GJxZM1n+e5YJsW/ZnPtyQSNwcx0vPqL6od3FFp0RlMeKMi+dX4GNsCEf47cme3
- Og0Q==
+ :reply-to; bh=UHA95dpymGqv9/OSGqYWddDTp72SBRI3UEcR8U6Ysio=;
+ b=mkp7yCX2o5NM3C/iM0Z1Ds0Pu0fsQgfYxUvx7GtlL3pcn7+GljkJVo8C+DCkFc6lP4
+ g6S+Ralx0paF8ZYcdX1KIzLTzQS78pE3xKmjVhnvSj/S2kfxjE1JZN9aR5wbJ5ZVoHcY
+ U13B70J58cvD9BvCPLXH1feNcWrrdQNLr67gFqniVocrlA3eGKHo63GH1BaepSQV0Vjo
+ maVvBsoloqUesQtgJyQJGqUWB1fGO4PLfBbtDamfmnAOLJFgCTmFz2YCjCz8I5V+/5WE
+ pk0aL1u9OMTxQ2RMKXhi37SdC9YBS7uIeIrdZUoto7Imp7gy2l54cQVzuqegJkcrUUNv
+ uPPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741958207; x=1742563007;
+ d=1e100.net; s=20230601; t=1741958208; x=1742563008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PZV6zHs1ewUsWH9J0fMbzt0q9IpjkvsTqTb1g7WYdZ4=;
- b=Rvwf+38agfmrKhgpKVVeLdTtWHqIQgaNFJeNe+Mll3w1Yjpc/XiBwS3kCCEF4yeKaJ
- FILnmHFEB7HO4l6gydB7hIPG3LjriLoqD3/t2gUPJnQUJ/WRjNz7CMnfd1fblxgY//Mj
- eAeLQnzg0ZnVHprGJtCTPlP9GYa1z4xbSsCD/Q6c1NRk1ef4SFkxZsV9+88NYQeixeol
- nymlaL7Sz6Il5G9Zl78/TnBHRExbfbWnDR12Jns2ZKZk61h+wRTtsWXYjx7UBQyEOKvF
- Y5sqZ6rp/UMPghb2I5Hmqy+guTFvF6VY3fUzvOFLQHeXd/1oQF4nNDMAIMwV4V5LBCEj
- H2ew==
-X-Gm-Message-State: AOJu0YzGLAQTZFkhh8z1mwAv53XBdYADk/oQ0voVIpGBP52qijEBVXco
- 4CzgyOMp4MCpec+At2y/F4BSCse+2Ud1AxmustDq/ypTmVu4up+bLLHcrEJ6XTLIQV8mhSd2Gvt
- O
-X-Gm-Gg: ASbGncvugcedUOKl3wPF50dmNc7Ns8Xtn1Vei2VO6wMvPFs5ysX2KcW0wtNH3foFXti
- nKffad+/Vp02BUFny8Ft07oacAVtaa9FMlBl3o/t1lVqTyntk34EthW9dZIblf9YYfsp5mT2HLz
- hPKKqYOP/1nyazUo3ZALQA83HYn+hdXr/5a+Y+4AWgvqMcBf0SsKkeZBB+az0fcj8sYpMLmPCtP
- afhGEMgQgcRCabXKzWHnbT6LPPvSomjzTySmyJFDhqak7BXnnQQCQPRjaj8q116Qgy41U/NA5PX
- AhtRa1KlvySsMscXnv56m2axc9ftFlNa59U+GPGELHr/ubUwrLw=
-X-Google-Smtp-Source: AGHT+IHcUtunci5Ethb6u/VAbBv6+KToy1Y+WWoaNvPmkwyON9kWeStFhbGNTuIOMmmN407tw+GcQg==
-X-Received: by 2002:adf:a31b:0:b0:390:eb50:37c3 with SMTP id
- ffacd0b85a97d-3971e0bfa2emr2754143f8f.27.1741958206808; 
- Fri, 14 Mar 2025 06:16:46 -0700 (PDT)
+ bh=UHA95dpymGqv9/OSGqYWddDTp72SBRI3UEcR8U6Ysio=;
+ b=ojqGHZgp3Df8Lf07zuJhQ0zuzG62CoTdE+uK8FhGUUCVzwp8nzA7fpyIz58TgbMP3G
+ r3Oe/nTuvuPzGGXmMjKnvBGjoRLyoPp+/9OOse72E2BN0DNUBziKY2S6t/s+QPS97k9k
+ 0T3mIBjVeEDkU3Pcl7kqPPYDumUM/mwNkzvJx35dFERU8rAdIa4qFrLD110HSjc4Gk/B
+ Tr9+ZZCETUYSbS5OJ3kUryZgkp3NF+N6A/57vgPazt1rF2sn8axRHvUaHRM2Oeh8+jpc
+ 8jBHlS5Q7TTBlhqoXwoDuIEOWnatgaY0ni9WbWmvK2YaXILMIjSyEPBw23n1vzySsuks
+ bG4A==
+X-Gm-Message-State: AOJu0YwH0CIu5enn3UwbF6EPl7ZXn2YJrwsbknNHhGMfmrqep9qbx00y
+ Y80hoQPMZtn3+/1eiMPeYtO/a43KhDpxzGndt8oFI7tqQVIriDl6CBc6cGPxVyNGcKjvB0WTcGw
+ x
+X-Gm-Gg: ASbGncu6GLYB9JJRDOUksyNIE7lSQiOg0WOhc+V19ctzmq9ngSIJ06PCHNdMgtu4aI9
+ uEXmlHVc1rTH7vcGBGjIdWFMwOA+GiOwlzYvOyoXJ1nWHPqb0GhZfCGbcDi7lhmRhwZNXNxA4QI
+ rskjjpQTsWFh/LkJ0fksoh4C3tC5uMJTLEzPZ33i+ToPrrNTsA4j2Xp3TJbHv1oEDCeCxa8bs8l
+ DnP9wL4dMBsn2gi/3YjTsxoEaz+uC2kbbFiYhx2SIjOSU816gVWKesrk1JwJROVzwsqmx88txpz
+ ZcS4t6HubodItfi46gGxIQ9nEDrBUrsMaLzn+hzj5UcVgVhZ3C4=
+X-Google-Smtp-Source: AGHT+IFp21aCGEDMzcZNgMKWtPY8jGffIj7BvPsq338BLgYlnCyyAQxIIMw/6mg9HALrCzDPAAMAUw==
+X-Received: by 2002:adf:a387:0:b0:38f:3224:65e5 with SMTP id
+ ffacd0b85a97d-3971c3ad3cbmr2630987f8f.12.1741958207778; 
+ Fri, 14 Mar 2025 06:16:47 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb7eb93csm5437923f8f.86.2025.03.14.06.16.45
+ ffacd0b85a97d-395cb7eb93csm5437923f8f.86.2025.03.14.06.16.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 06:16:46 -0700 (PDT)
+ Fri, 14 Mar 2025 06:16:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/17] target/arm: SCR_EL3.RW should be treated as 1 if EL2
- doesn't support AArch32
-Date: Fri, 14 Mar 2025 13:16:27 +0000
-Message-ID: <20250314131637.371866-8-peter.maydell@linaro.org>
+Subject: [PULL 08/17] target/arm: HCR_EL2.RW should be RAO/WI if EL1 doesn't
+ support AArch32
+Date: Fri, 14 Mar 2025 13:16:28 +0000
+Message-ID: <20250314131637.371866-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250314131637.371866-1-peter.maydell@linaro.org>
 References: <20250314131637.371866-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,27 +99,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The definition of SCR_EL3.RW says that its effective value is 1 if:
- - EL2 is implemented and does not support AArch32, and SCR_EL3.NS is 1
- - the effective value of SCR_EL3.{EEL2,NS} is {1,0} (i.e. we are
-   Secure and Secure EL2 is disabled)
+When EL1 doesn't support AArch32, the HCR_EL2.RW bit is supposed to
+be RAO/WI. Enforce the RAO/WI behaviour.
 
-We implement the second of these in arm_el_is_aa64(), but forgot the
-first.
-
-Provide a new function arm_scr_rw_eff() to return the effective
-value of SCR_EL3.RW, and use it in arm_el_is_aa64() and the other
-places that currently look directly at the bit value.
-
-(scr_write() enforces that the RW bit is RAO/WI if neither EL1 nor
-EL2 have AArch32 support, but if EL1 does but EL2 does not then the
-bit must still be writeable.)
-
-This will mean that if code at EL3 attempts to perform an exception
-return to AArch32 EL2 when EL2 is AArch64-only we will correctly
-handle this as an illegal exception return: it will be caught by the
-"return to an EL which is configured for a different register width"
-check in HELPER(exception_return).
+Note that we handle "reset value should honour RES1 bits" in the same
+way that SCR_EL3 does, via a reset function.
 
 We do already have some CPU types which don't implement AArch32
 above EL0, so this is technically a bug; it doesn't seem worth
@@ -131,76 +115,46 @@ did the right thing.
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h | 26 +++++++++++++++++++++++---
- target/arm/helper.c    |  4 ++--
- 2 files changed, 25 insertions(+), 5 deletions(-)
+ target/arm/helper.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index d161a3e396b..28585c07555 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -392,6 +392,27 @@ static inline FloatRoundMode arm_rmode_to_sf(ARMFPRounding rmode)
-     return arm_rmode_to_sf_map[rmode];
- }
- 
-+/* Return the effective value of SCR_EL3.RW */
-+static inline bool arm_scr_rw_eff(CPUARMState *env)
-+{
-+    /*
-+     * SCR_EL3.RW has an effective value of 1 if:
-+     *  - we are NS and EL2 is implemented but doesn't support AArch32
-+     *  - we are S and EL2 is enabled (in which case it must be AArch64)
-+     */
-+    ARMCPU *cpu = env_archcpu(env);
-+
-+    if (env->cp15.scr_el3 & SCR_RW) {
-+        return true;
-+    }
-+    if (env->cp15.scr_el3 & SCR_NS) {
-+        return arm_feature(env, ARM_FEATURE_EL2) &&
-+            !cpu_isar_feature(aa64_aa32_el2, cpu);
-+    } else {
-+        return env->cp15.scr_el3 & SCR_EEL2;
-+    }
-+}
-+
- /* Return true if the specified exception level is running in AArch64 state. */
- static inline bool arm_el_is_aa64(CPUARMState *env, int el)
- {
-@@ -411,9 +432,8 @@ static inline bool arm_el_is_aa64(CPUARMState *env, int el)
-         return aa64;
-     }
- 
--    if (arm_feature(env, ARM_FEATURE_EL3) &&
--        ((env->cp15.scr_el3 & SCR_NS) || !(env->cp15.scr_el3 & SCR_EEL2))) {
--        aa64 = aa64 && (env->cp15.scr_el3 & SCR_RW);
-+    if (arm_feature(env, ARM_FEATURE_EL3)) {
-+        aa64 = aa64 && arm_scr_rw_eff(env);
-     }
- 
-     if (el == 2) {
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index f0ead22937b..3df7d5347cb 100644
+index 3df7d5347cb..bb445e30cd1 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -9818,7 +9818,7 @@ uint32_t arm_phys_excp_target_el(CPUState *cs, uint32_t excp_idx,
-     uint64_t hcr_el2;
+@@ -5326,6 +5326,11 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+     /* Clear RES0 bits.  */
+     value &= valid_mask;
  
-     if (arm_feature(env, ARM_FEATURE_EL3)) {
--        rw = ((env->cp15.scr_el3 & SCR_RW) == SCR_RW);
-+        rw = arm_scr_rw_eff(env);
-     } else {
-         /*
-          * Either EL2 is the highest EL (and so the EL2 register width
-@@ -10627,7 +10627,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
++    /* RW is RAO/WI if EL1 is AArch64 only */
++    if (!cpu_isar_feature(aa64_aa32_el1, cpu)) {
++        value |= HCR_RW;
++    }
++
+     /*
+      * These bits change the MMU setup:
+      * HCR_VM enables stage 2 translation
+@@ -5383,6 +5388,12 @@ static void hcr_writelow(CPUARMState *env, const ARMCPRegInfo *ri,
+     do_hcr_write(env, value, MAKE_64BIT_MASK(32, 32));
+ }
  
-         switch (new_el) {
-         case 3:
--            is_aa64 = (env->cp15.scr_el3 & SCR_RW) != 0;
-+            is_aa64 = arm_scr_rw_eff(env);
-             break;
-         case 2:
-             hcr = arm_hcr_el2_eff(env);
++static void hcr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    /* hcr_write will set the RES1 bits on an AArch64-only CPU */
++    hcr_write(env, ri, 0);
++}
++
+ /*
+  * Return the effective value of HCR_EL2, at the given security state.
+  * Bits that are not included here:
+@@ -5618,6 +5629,7 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
+       .opc0 = 3, .opc1 = 4, .crn = 1, .crm = 1, .opc2 = 0,
+       .access = PL2_RW, .fieldoffset = offsetof(CPUARMState, cp15.hcr_el2),
+       .nv2_redirect_offset = 0x78,
++      .resetfn = hcr_reset,
+       .writefn = hcr_write, .raw_writefn = raw_write },
+     { .name = "HCR", .state = ARM_CP_STATE_AA32,
+       .type = ARM_CP_ALIAS | ARM_CP_IO,
 -- 
 2.43.0
 
