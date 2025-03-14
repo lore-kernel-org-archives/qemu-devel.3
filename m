@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D46C28B2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 07:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4AF8C28B2F
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 07:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tsz18-0006i6-65; Fri, 14 Mar 2025 02:59:38 -0400
+	id 1tszAQ-0001Jj-1J; Fri, 14 Mar 2025 03:09:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tsz15-0006gO-KZ
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:59:35 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tsz12-00025L-Eo
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 02:59:35 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxqmrM09NnHB6WAA--.59233S3;
- Fri, 14 Mar 2025 14:59:25 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBx3MTE09NnU2VKAA--.11189S3;
- Fri, 14 Mar 2025 14:59:19 +0800 (CST)
-Subject: Re: [PATCH 2/3] hw/loongarch/virt: Remove unnecessary NULL pointer
- checking
-From: bibo mao <maobibo@loongson.cn>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250313091350.3770394-1-maobibo@loongson.cn>
- <20250313091350.3770394-3-maobibo@loongson.cn> <875xkdb4q5.fsf@pond.sub.org>
- <10c55e3e-22f5-285d-7e38-3a6a08089302@loongson.cn>
- <87v7scw4se.fsf@pond.sub.org>
- <fc8a893c-9ff5-ad44-812a-66dd0f163269@loongson.cn>
-Message-ID: <7081e48e-89cb-fbad-fa24-56770dc0afec@loongson.cn>
-Date: Fri, 14 Mar 2025 14:58:38 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tszAO-0001Il-0A
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:09:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tszAL-0003LT-Oe
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:09:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741936147;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Oj2m631mOpZ0Fz8F/BznGk1ID2d0g63EY/kkj9iRmps=;
+ b=KzybG1ESUTTQlGZYdArxOkbIQUGAfgKtsMdawffLJH50vShN2pl51Ss81WEW8NAH5OD/SB
+ +RqUY2nzpgS67KHPi32b+9iu/0bVQAf9GcbjkzZr7qY9o8IUkCjD6Z3x4FrXAe5fcQ9P0J
+ rYK6rPL6eizfLCZRVaFJ/2mEvP0wNQ8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-pDkEtd1vPpayfGpGhl-UOQ-1; Fri,
+ 14 Mar 2025 03:09:05 -0400
+X-MC-Unique: pDkEtd1vPpayfGpGhl-UOQ-1
+X-Mimecast-MFC-AGG-ID: pDkEtd1vPpayfGpGhl-UOQ_1741936144
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D06419560AF; Fri, 14 Mar 2025 07:09:04 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4916218001F6; Fri, 14 Mar 2025 07:09:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8E0AC21E675E; Fri, 14 Mar 2025 08:08:59 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Konstantin Kostiuk
+ <kkostiuk@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Eric
+ Blake <eblake@redhat.com>,  Qemu-block <qemu-block@nongnu.org>,  Michael
+ Roth <michael.roth@amd.com>,  Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH 07/11] docs/qapi_domain: add namespace support to
+ cross-references
+In-Reply-To: <CAFn=p-YSuD1wso3WFyY02zVowcPccMZy7abePdqZcN7CZBOF7g@mail.gmail.com>
+ (John Snow's message of "Thu, 13 Mar 2025 14:59:44 -0400")
+References: <20250313044312.189276-1-jsnow@redhat.com>
+ <20250313044312.189276-8-jsnow@redhat.com>
+ <8734fhe8ag.fsf@pond.sub.org>
+ <CAFn=p-b2LUBzn-JE6P41wCxnW-vAB1moHWcw66d9Ta=tt_H1gQ@mail.gmail.com>
+ <87ikod56zf.fsf@pond.sub.org>
+ <CAFn=p-b8xsWJw4kROKFUDbBNuJU32_oyktUMB+F5gsE=M9S72w@mail.gmail.com>
+ <87o6y43our.fsf@pond.sub.org>
+ <CAFn=p-a90ujkHX5abhrW9SoGLp08vPt2W_EE3M3=4c6mTZJVJg@mail.gmail.com>
+ <87sengzsu1.fsf@pond.sub.org>
+ <CAFn=p-YSuD1wso3WFyY02zVowcPccMZy7abePdqZcN7CZBOF7g@mail.gmail.com>
+Date: Fri, 14 Mar 2025 08:08:59 +0100
+Message-ID: <87msdoum0k.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-In-Reply-To: <fc8a893c-9ff5-ad44-812a-66dd0f163269@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MTE09NnU2VKAA--.11189S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJw4kGF4fAr18uF4UCrykJFc_yoWrKry5pr
- s7J3WDtrZ5Ar1kJr4Utry8XFy8tryUJ3WDGrn5JFy7Gr4UJr1jqF4UXF1qgF4UCr48J3WU
- Zr45XF9rZFnxtFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r1q6r43MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
- KfnxnUUI43ZEXa7IU8r9N3UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.7,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,133 +99,311 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John Snow <jsnow@redhat.com> writes:
 
+> On Thu, Mar 13, 2025 at 2:30=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > On Thu, Mar 13, 2025, 11:57=E2=80=AFAM Markus Armbruster <armbru@redha=
+t.com> wrote:
+>> >
+>> >> John Snow <jsnow@redhat.com> writes:
+>> >>
+>> >> > On Thu, Mar 13, 2025 at 10:41=E2=80=AFAM Markus Armbruster <armbru@=
+redhat.com wrote:
 
-On 2025/3/14 下午2:28, bibo mao wrote:
-> 
-> 
-> On 2025/3/14 下午1:38, Markus Armbruster wrote:
->> bibo mao <maobibo@loongson.cn> writes:
->>
->> On 2025/3/13 下午6:32, Markus Armbruster wrote:
->>
->> [...]
->>
->>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->>>> index a5840ff968..4674bd9163 100644
->>>> --- a/hw/loongarch/virt.c
->>>> +++ b/hw/loongarch/virt.c
->>>> @@ -859,30 +859,29 @@ static void virt_cpu_pre_plug(HotplugHandler 
->>>> *hotplug_dev,
->>>>       LoongArchCPU *cpu = LOONGARCH_CPU(dev);
->>>>       CPUState *cs = CPU(dev);
->>>>       CPUArchId *cpu_slot;
->>>> -    Error *err = NULL;
->>>>       LoongArchCPUTopo topo;
->>>>       int arch_id;
->>>>       if (lvms->acpi_ged) {
->>>>           if ((cpu->thread_id < 0) || (cpu->thread_id >= 
->>>> ms->smp.threads)) {
->>>> -            error_setg(&err,
->>>> +            error_setg(errp,
->>>>                          "Invalid thread-id %u specified, must be in 
->>>> range 1:%u",
->>>>                          cpu->thread_id, ms->smp.threads - 1);
->>>> -            goto out;
->>>> +            return;
->>>
->>> Hi Markus,
->>>
->>>   From APIs, it seems that function error_propagate() do much more than
->>> error appending, such as comparing dest_err with error_abort etc. Though
->>> caller function is local variable rather than error_abort/fatal/warn,
->>> error_propagate() seems useful. How about do propagate error and return
->>> directly as following:
->>>
->>> @@ -868,7 +868,8 @@ static void virt_cpu_pre_plug(HotplugHandler
->>> *hotplug_dev,
->>>               error_setg(&err,
->>>                          "Invalid thread-id %u specified, must be in
->>> range 1:%u",
->>>                          cpu->thread_id, ms->smp.threads - 1);
->>> -            goto out;
->>> +            error_propagate(errp, err);
->>> +            return;
->>>           }
->>
->> This is strictly worse.  One, it's more verbose.  Two, the stack
->> backtrace on failure is less useful, which matters when @errp is
->> &error_abort, and when you set a breakpoint on error_handle(), abort(),
->> or exit().  Three, it doesn't actually add useful functionality.
->>
->> To help you see the latter, let's compare the two versions, i.e.
->>
->>     direct: error_setg(errp, ...)
->>
->> and
->>
->>     propagate: two steps, first error_setg(&err, ...), and then
->>     error_propagate(errp, err);
->>
->> Cases: @errp can be NULL, &error_abort, &error_fatal, &error_warn, or a
->> non-null pointer to variable containing NULL.
->>
->> 1. @errp is NULL
->>
->>     Direct does nothing.
->>
->>     Propagate step 1 creates an error object, and stores it in @err.
->>     Step 2 frees the error object.  Roundabout way to do nothing.
->>
->> 2. @errp is &error_abort
->>
->>     Direct creates an error object, reports it to stderr, and abort()s.
->>     Note that the stack backtrace shows where the error is created.
->>
->>     Propagate step 1 creates an error object, and stores it in @err.
->>     Step 2 reports it to stderr, and abort()s.  No difference, except the
->>     stack backtrace shows where the error is propagated, which is less
->>     useful.
->>
->> 3. @errp is &error_fatal
->>
->>     Direct creates an error object, reports it to stderr, frees it, and
->>     exit(1)s.
->>
->>     Propagate step 1 creates an error object, and stores it in @err.
->>     Step 2 reports it to stderr, frees it, and exit(1)s.  No difference.
->>
->> 4. @errp is &error_warn
->>
->>     Direct creates an error object, reports it to stderr, and frees it.
->>
->>     Propagate step 1 creates an error object, and stores it in @err.
->>     Step 2 reports it to stderr, and frees it.  No difference.
->>
->> 5. @errp points to variable containing NULL
->>
->>     Direct creates an error object, and stores it in the variable.
->>
->>     Propagate step 1 creates an error object, and stores it in @err.
->>     Step 2 copies it to the variable.  No difference.
->>
->> Questions?
-> The question how to use error_propagate() comparing with error_setg() 
-> since there is such API. :)
-I know nothing about error module, almost 80% code is copied from others.
+[...]
 
- From header file include/qapi/error.h, It seems that error_setg() is 
-used in error report leaf function, error_propagate() is used by caller 
-node function. Is that right?
+>> >> >> Regarding "2. If contextual information ...":
+>> >> >>
+>> >> >>     I guess "contextual information" is the context established by
+>> >> >>     qapi:namespace and qapi:module directives, i.e. the current
+>> >> >>     namespace and module, if any.
+>> >> >>
+>> >> >
+>> >> > Yep!
+>> >> >
+>> >> >
+>> >> >>
+>> >> >>     If the cross reference lacks a namespace, we substitute the cu=
+rrent
+>> >> >>     namespace.  Same for module.
+>> >> >>
+>> >> >>     We then use that "to find a direct match to the implied target
+>> >> >>     name".  Sounds greek to me.  Example(s) might help.
+>> >> >>
+>> >> >
+>> >> > If namespace or module is missing from the link target, we try to f=
+ill in
+>> >> > the blanks with the contextual information if present.
+>> >> >
+>> >> > Example, we are in the block-core section of the QEMU QMP reference=
+ manual
+>> >> > document and we reference `block-dirty-bitmap-add`. With context, w=
+e are
+>> >> > able to assemble a fully qualified name:
+>> >> > "QMP:block-core.block-dirty-bitmap-add`. This matches an item in the
+>> >> > registry directly, so it matches and no further search is performed.
+>> >>
+>> >> We try this lookup only when the reference lacks a namespace and we a=
+re
+>> >> "in" a namespace, or when it lacks a module and we are "in" a module.
+>> >> Correct?
+>> >>
+>> >
+>> > or both: if we provided only a name but the context has both a namespa=
+ce
+>> > and module.
+>>
+>> So my or is inclusive :)
+>>
+>> > essentially the algorithm splits the explicit target into (ns, mod, na=
+me)
+>> > and for any that are blank, we try to fill in those blanks with context
+>> > info where available. Sometimes you have neither explicit nor contextu=
+al
+>> > info for a component.
+>> >
+>> > Then we do a lookup for an exact match, in order;
+>> >
+>> > 1. explicit target name, whatever it was
+>>
+>> Fully qualified name.
+>>
+>
+> Yes, for lookup to succeed it should be fully qualified, though if the
+> target text is "ns:module", that's actually going to succeed here, too.
+>
+>
+>>
+>> If lookup succeeds, we're done.
+>>
+>> If lookup fails, we're also done.
+>>
+>
+> If lookup fails, we actually continue on to #2, but whether or not this
+> does anything useful depends on whether or not the original target text w=
+as
+> fully qualified or not. If it was, #2 searches with the exact same text a=
+nd
+> will fail again and proceed to #3, where because we had a fully qualified
+> name, none of the search conditions apply and we then just exit.
+>
+> (It just lacks an early return, but abstractly, if lookup on #1 fails with
+> a fully qualified name, we are indeed done.)
+>
+> If lookup fails because it wasn't actually fully qualified, then #2 has
+> some gaps to try to fill.
 
-Regards
-Bibo Mao
-> 
-> Regards
-> Bibo Mao
+So, instead of
+
+    if ref is fully qualified:
+        try to look up ref
+    else
+        proceed to 2.
+
+you do
+
+    look up ref
+    if found:
+        ref must be fully qualified
+    else
+        proceed to 2.
+
+Since "proceed to 2. won't do anything useful when ref is fully
+qualified", the two should produce the same result.
+
+>> *Except* for the ambiguous form NAMESPACE:MYSTERY.  If lookup fails for
+>> that, the name is not fully qualified after all.  Probably.  Maybe.  We
+>> assume it's missing a module, and proceed to 2.
 >>
->> [...]
+>> I'm mostly ignoring this exception from now on to keep things simple.
 >>
-> 
+>> > 2. FQN using contextual info
+>>
+>> Partially qualified name, but context can fill the gaps.
+>>
+>> If lookup succeeds, we're done.
+>>
+>> Else, we proceed to 3.
+>>
+>
+> That's right.
+>
+>
+>>
+>> > and we stop after the first hit - no chance for multiple results here,=
+ just
+>> > zero-or-one each step.
+>> >
+>> > i.e. any explicitly provided information is never "overwritten" with
+>> > context, context only fills in the blanks where that info was not prov=
+ided.
+>> >
+>> > If neither of these work, we move on to fuzzy searching.
+>> >
+>> >
+>> >> We then subsitute current namespace / module for the lacking one(s), =
+and
+>> >> try the same lookup as in 1.  Correct?
+>> >>
+>> >
+>> > Yes!
+>> >
+>> >
+>> >> If we have a reference of the form MYSTERY, it could either be a
+>> >> reference to module MYSTERY in the current namespace, or to definition
+>> >> MYSTERY in the current namespace and module.  How do we decide?
+>> >>
+>> >
+>> > fqn a: NS:MYSTERY
+>> > fqn b: NS:MOD:MYSTERY
+>> >
+>> > Given we have a current ns/mod context, it's going to pick the second =
+one.
+>> >
+>> > Hm. Maybe it ought to be ambiguous in this case... I'll have to revise
+>> > this. (question is: how soon do we need it?)
+>>
+>> While we should try to put this on a more solid foundation, it is not a
+>> blocker.
+>>
+>> >> >> Regarding "3. If both prior lookups fail ...":
+>> >> >>
+>> >> >>     I guess we get here when namespace or module are absent, and
+>> >> >>     substituting the current namespace or module doesn't resolve. =
+ We
+>> >> >>     then substitute a wildcard, so to speak, i.e. look in all name=
+spaces
+>> >> >>     / modules, and succeed if we find exactly one resolution.  Fai=
+r?
+>> >> >>
+>> >> >
+>> >> > More or less, though the mechanics are quite a bit more complex tha=
+n your
+>> >> > overview (and what I wrote in qapi-domain.rst.) We can get here for=
+ a few
+>> >> > reasons:
+>> >> >
+>> >> > (1) We didn't provide a fully qualified target, and we don't have f=
+ull
+>> >> > context to construct one.
+>>
+>> We skipped 1. because not fully qualified, and we skipped 2. because
+>> context can't fill the gaps.
+>>
+>
+> we tried #1 and failed, then we tried #2 and failed again.
+
+I think we're describing the same behavior with different words
+
+Behavior:
+
+    try to fill the gaps from context
+    if all filled:
+        look up
+        if found:
+            done
+
+When you say "tried #2 and failed", you're referring to the entire
+thing.
+
+When I say "skipped 2.", I'm referring to the lookup.
+
+>> >> >                           For example, we are not "in" a namespace =
+and/or
+>> >> > not "in" a module. This is quite likely to happen when writing simp=
+le
+>> >> > references to a definition name from outside of the transmogfrified=
+ QAPI
+>> >> > documentation, e.g. from qapi-domain.rst itself, or dirty-bitmaps.r=
+st, etc.
+>>
+>> Yes.
+>>
+>> >> > (2) We didn't provide a fully qualified target, and we are referenc=
+ing
+>> >> > something from outside of the local context. For example, we are "i=
+n" a
+>> >> > module but we are trying to link to a different module's definition=
+. e.g.
+>> >> > we are in QMP:transaction and we reference `block-dirty-bitmap-add`=
+. The
+>> >> > implied FQN will be QMP:transaction.block-dirty-bitmap.add, which w=
+ill not
+>> >> > resolve.
+>>
+>> We skipped 1. because not fully qualified, and we failed 2. because
+>> context filled the gaps, but lookup failed.
+>>
+>
+> Failed #1 and Failed #2.
+>
+>
+>>
+>> >> >
+>> >> > The fuzzy search portion has an order of precedence for how it sear=
+ches -
+>> >> > and not all searches are tried universally, they are conditional to=
+ what
+>> >> > was provided in the reference target and what context is available.
+>> >> >
+>> >> > 1. match against the explicitly provided namespace (module was not
+>> >> > explicitly provided)
+>> >>
+>> >> Look for the name in all of the namespace's modules?
+>> >>
+>> >
+>> > Yeah. search for "ns:*.name" and "ns:name" basically.
+>>
+>> Got it.
+>>
+>> >> > 2. match against the explicitly provided module (namespace was not
+>> >> > explicitly provided)
+>> >>
+>> >> Look for the name in all modules so named in all namespaces?
+>> >>
+>> >
+>> > Yes.
+>>
+>> Got it.
+>>
+>> >> > 3. match against the implied namespace (neither namespace/module was
+>> >> > explicitly provided)
+>> >>
+>> >> ?
+>> >>
+>> >
+>> > User gave `foo`, but we have a namespace from context, so we look for
+>> > ns:*.foo or ns:foo.
+>>
+>> Got it.
+>>
+>> Detail I had not considered until now: a namespace contains modules that
+>> contain definitions, but it also contains definitions directly.
+>>
+>> I can't recall offhand how schema.py represents this.  I'll figure it
+>> out and report back.
+>>
+>
+> I think it gets charged to a module named "qapi-schema". Silly, but it
+> doesn't really break anything.
+
+Alright, here's how it works.
+
+A QAPI schema consists of the main schema file and optionally included
+files.
+
+Each file's definitions go into a module named like the file.  The
+builtin definitions go into a special module './builtin'.
+
+A definition is *always* in a module.  Even when the schema is
+monolithic, i.e. includes nothing.
+
+Why do you need to support definitions directly in the namespace?
+
+[...]
 
 
