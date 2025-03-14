@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32CA8C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDBA7C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt2Lr-0007ML-Ub; Fri, 14 Mar 2025 06:33:16 -0400
+	id 1tt2U7-0000i9-CK; Fri, 14 Mar 2025 06:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tt2Lq-0007Lt-Jj
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:33:14 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tt2Ln-000627-MM
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:33:14 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-224191d92e4so39061605ad.3
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:33:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741948387; x=1742553187;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Wasqm4rQgtyHXlL0+HYi3h5zBeRTN1ns2DnLk6iH5Dc=;
- b=cfpGUw2jbgixal70GVRH7dfAkelKOGtWtwoeDT1Q0WA1jXl4mpO55IOjSz4mo+Uuei
- 47JMYEvXCg3O5vvb1omfdAZmeEM476W0bpr7WmuZmELrC7MxePJXEZaPrbPsBTZLjkdI
- Wk3UA13iZ3NZB6KjhuQE1aWg9I/wUq/U3RG4DJS+PnPEjqLqfQSU7ym8lzuSFbcwk4ng
- YgXfAK/N8fOAJ+eYmG1cPtNthfR3VNDZaSe/3nmXRBiLvm0XA9PuSn/a5cRyFxOla3Kw
- zK27Nlepc5Y0ZgQKDTLSclkijyPIk0z80a/VzDHVjGRoDUoEfdVCZSsgVwH3OQRsLw+U
- Nsbw==
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tt2U3-0000hj-GL
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:41:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tt2Tv-0007L2-Uj
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:41:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741948893;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ngJ3ircqWYsHCCK18Lp5L0HTrxUTDjyPeDH7DlB2UI4=;
+ b=YoR/lHx1Bg72H8WSqDzqkSb6oOBeVc10qO0GCzx75qPgbyOsSRIiRJTYyV9Nl4bCRZrFEb
+ fP4lxxkBqDxR/aoQDl39lc7W25i29RtoTqOwmDyN16tQvtpu0fAgWTF30ZZ0bYABeKUrHU
+ W3W5qQjaGpAx0V+zMM5Hhbex4skB4lY=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-400-pWS5RFRuPOWBbiH-0ZQeZw-1; Fri, 14 Mar 2025 06:41:31 -0400
+X-MC-Unique: pWS5RFRuPOWBbiH-0ZQeZw-1
+X-Mimecast-MFC-AGG-ID: pWS5RFRuPOWBbiH-0ZQeZw_1741948891
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7c3c8f8ab79so340574985a.2
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:41:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741948387; x=1742553187;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Wasqm4rQgtyHXlL0+HYi3h5zBeRTN1ns2DnLk6iH5Dc=;
- b=IQtbnY1uTfE/J62C1nNFpnPof/UTcg4CuW5cJi2H37iydO6R+EyZcaQM0zGo37xWtF
- 5vbv4iaF4nwqKwCqY4kEKp6gCi6rGcDFcFKBkjR4ajzoXEGPfqvfS8nJZ0IB52E7Ktc/
- cGMUIwRnyCRVewc4OEcY+ES7bQvghId066lQx1EnDQFvicExKVzhODqcby6dyG3bv4QZ
- n+ks2/c3Aw5IynpGSS5W78CfgvzG+voeYjLjiS6iul+cXrS43PX+792yfLkVTYPKWCk1
- B8Up/KBaRD0JdfuiCc7dLB+a7YmG+s5qelG6lfZYHBBOLFTaiDzQqNXHYFZW4fbcsCZN
- ZTNg==
-X-Gm-Message-State: AOJu0Yx7f/tYEpnRlOdsDCjAo9VhMbTi0yTezt0bN2iJyH0D7n66+mWQ
- stRrg8t0TAhOkUkDLTRYyulLYtNQTxzK+CH+OYSRWxPLfNql2cAZagLB8cvQ0o0=
-X-Gm-Gg: ASbGncuzMwUq+knOY7OTULOFbDm4UDjeEjGAoHNcGqt7NhEl6Y5bszHBLRbjPZN7qF2
- d0K8cEGao3qYqpz7FNoS6yTlk3D9ni+yR47CJ24mUMqvb/ExILXsjU+6kVbEIwDyO8NTiGYQ882
- NEXCMKxMNPHH/aLc+d1REb/feUHE79NKCKiq4VEibqk+6z1Qluiu36woyVkGtBwlzhvly2jnnA6
- 175Gk4Jf5VIjYmKjNHsPTS7SBBdGtVvbi2SfxdWRLQofIRRuqBG8isyXkVHPcOH+uQAMpd27M1K
- xJG1E8jTCXtrxXLJyfg6VvyuTlYz3gz+t+o80BogyJ0mVvkIYCOqXs9i/g==
-X-Google-Smtp-Source: AGHT+IEn8Q9jsS+HBFs8lUQOD4eie8+eCuApB80litRGORO0LaPGC52kxBk0Dp6yzwRHxaX5PNON9Q==
-X-Received: by 2002:a17:902:f686:b0:224:c47:cb7 with SMTP id
- d9443c01a7336-225e0867fa5mr28353405ad.0.1741948387120; 
- Fri, 14 Mar 2025 03:33:07 -0700 (PDT)
-Received: from [157.82.205.237] ([157.82.205.237])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6bbca77sm26123815ad.167.2025.03.14.03.33.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Mar 2025 03:33:06 -0700 (PDT)
-Message-ID: <945b9614-9b94-4d16-ad65-9215a8f56471@daynix.com>
-Date: Fri, 14 Mar 2025 19:33:05 +0900
+ d=1e100.net; s=20230601; t=1741948891; x=1742553691;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ngJ3ircqWYsHCCK18Lp5L0HTrxUTDjyPeDH7DlB2UI4=;
+ b=OsOk+B1bVN2lYTt3P3GztSaeViUbn8VXnOuLCygPiajJLhg9zlNGUssMGptcm6nt5a
+ wJPkXq+FVvkkuJlkQqGN308prm+5gpfj3qJxLczyon9cICquGJHRsUos44gNhpVb9poN
+ H6gifWdz492Qyz0V9v5nShrN4fN4ZAA1FANOwKZKpQr8vfISnQjdSra1mPb/AO7ilwKn
+ c6OK7YdloHQF95xyglWckJ8MJRhZrHBQHtBN5wdKkHGjqBeFwoGOfbTGVLyduuzMVqvA
+ /a3bpMk4JgQFjrPSWxPeokprJ09t6YY9uh1S+dc3YHNIKF2vc3gJSZpi2xgO9920TRxA
+ vJaQ==
+X-Gm-Message-State: AOJu0YwPFO8XzzbwE35/gLCPhoth/OWQvPAiD63sGdU2xuCHe4/HGNuM
+ /U6w/WiZuXT0pY3FV/g8q0C3b3a71hjjzZMLVQiOVDL8g2z01GpyJrC3GYP1P5ayo9HGV9/k7t2
+ Ulvy0vbWc7q7CWwoX9ACm7GB+V3YiRZ9v751b1ywNsElwtKbZe3xp62MEm5vZYJZtjvq+neA+7n
+ f1IYyh85F+n6mBDBN/X/LZ8J1KSCU=
+X-Gm-Gg: ASbGncuNjcjj+/6Qzpne4qvE/yVx7Y2NF8HA9YFxtEjWrHhH7o5UGx1EontaSP2UbrS
+ tNHjQO+Wvo3I1TWVbL+IA4QZOhsFmaEtiSgjzEl5GgqDtX145xfJhMx3xjK/S+3c3w62Ig5maLl
+ o=
+X-Received: by 2002:a05:620a:4515:b0:7c5:4194:bbcc with SMTP id
+ af79cd13be357-7c57c80ef7bmr211154185a.29.1741948890942; 
+ Fri, 14 Mar 2025 03:41:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFqe0cooRM1issZw5mbq7RTC0A9HcUtAOpc5os+TOnisXPa+8Ela8ZQYSKL3S7/FsOPMYbQeV5Y8Nika1lo3GU=
+X-Received: by 2002:a05:620a:4515:b0:7c5:4194:bbcc with SMTP id
+ af79cd13be357-7c57c80ef7bmr211152685a.29.1741948890670; Fri, 14 Mar 2025
+ 03:41:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/arm: Define raw write for PMU CLR registers
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
-References: <20250314-clr-v2-1-7c7220c177c9@daynix.com>
- <CAFEAcA9yKETtDhJroC7RD5itUjsYAkj0fVXHJaUxoU_bce7Gvw@mail.gmail.com>
- <52ffbdcb-abdc-459e-8d49-a0c9e1a5de92@daynix.com>
- <CAFEAcA8KVogRXr1PAocWPJzj0nLzCiQc9SQ1n9rWHHF3P=ZEVA@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFEAcA8KVogRXr1PAocWPJzj0nLzCiQc9SQ1n9rWHHF3P=ZEVA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250314102307.2806696-1-alex.bennee@linaro.org>
+In-Reply-To: <20250314102307.2806696-1-alex.bennee@linaro.org>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Fri, 14 Mar 2025 12:41:20 +0200
+X-Gm-Features: AQ5f1JodDbyv3hlHHliVtcbR-FG8IwXlhbCEVyKGEIcZ3n9jFYd9Cy4uD9fEhxQ
+Message-ID: <CAPMcbCoKBRererw0cjgyxnLdDLYEa0Vb5nzJ4MtPbUWYjdsTHg@mail.gmail.com>
+Subject: Re: [RFC PATCH] meson.build: don't bother with split-debug for windows
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000d8832706304b14e8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,56 +103,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/03/14 19:29, Peter Maydell wrote:
-> On Fri, 14 Mar 2025 at 10:24, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->>
->>
->> On 2025/03/14 19:22, Peter Maydell wrote:
->>> On Fri, 14 Mar 2025 at 08:13, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>
->>>> Raw writes to PMCNTENCLR and PMCNTENCLR_EL0 incorrectly used their
->>>> default write function, which clears written bits instead of writes the
->>>> raw value.
->>>>
->>>> PMINTENCLR and PMINTENCLR_EL1 are similar registers, but they instead
->>>> had ARM_CP_NO_RAW. target/arm/cpregs.h suggests this flag usage is
->>>> inappropriate:
->>>>> Flag: Register has no underlying state and does not support raw access
->>>>> for state saving/loading; it will not be used for either migration or
->>>>> KVM state synchronization. Typically this is for "registers" which are
->>>>> actually used as instructions for cache maintenance and so on.
->>>>
->>>> PMINTENCLR and PMINTENCLR_EL1 have underlying states and can support
->>>> raw access for state saving/loading. Flagging a register with
->>>> ARM_CP_NO_RAW has a side effect that hides it from GDB.
->>>
->>> No, the CLR registers don't have their own underlying state:
->>> all the state is handled by the SET registers, and it just
->>> happens that you can read it via the CLR registers.
->>>
->>>> Properly set raw write functions and drop the ARM_CP_NO_RAW flag from
->>>> PMINTENCLR and PMINTENCLR_EL1.
->>>
->>> I think the correct fix is to mark all the CLR registers as NO_RAW.
->>
->> My understanding is that ARM_CP_ALIAS is ignored for KVM to avoid making
->> an assumption what aliases KVM implement at cost of migrating one state
->> multiple times. The CLR registers should also remain as possible
->> sources/targets of raw values.
-> 
-> Why? There's nothing you can do by doing a raw write to the CLR
-> register that you shouldn't have done by doing a raw write to
-> the SET register instead.
+--000000000000d8832706304b14e8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In theory, KVM may choose to expose only the CLR register and hide the 
-SET register. There is no guarantee that both the CLR and SET are exposed.
+Best Regards,
+Konstantin Kostiuk.
 
-Regards,
-Akihiko Odaki
 
-> 
-> thanks
-> -- PMM
+On Fri, Mar 14, 2025 at 12:23=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+
+> It was reported this breaks the final artefacts on windows when run
+> under Wine.
+>
+
+Not only Wine, but Windows as well. Tested on Windows Server 2022.
+
+
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
+> ---
+>  meson.build | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/meson.build b/meson.build
+> index c2c71b6f8a..9b1af6d030 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -601,8 +601,10 @@ if get_option('tsan')
+>    qemu_ldflags =3D ['-fsanitize=3Dthread'] + qemu_ldflags
+>  endif
+>
+> -if get_option('debug') and get_option('split_debug')
+> -  qemu_cflags +=3D '-gsplit-dwarf'
+> +if host_os !=3D 'windows'
+> +  if get_option('debug') and get_option('split_debug')
+> +    qemu_cflags +=3D '-gsplit-dwarf'
+> +  endif
+>  endif
+>
+>  # Detect support for PT_GNU_RELRO + DT_BIND_NOW.
+> --
+> 2.39.5
+>
+>
+Tested-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+
+--000000000000d8832706304b14e8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div><br clear=3D"all"><=
+/div><div><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><div>=
+Best Regards,</div><div>Konstantin Kostiuk.</div></div></div></div><br></di=
+v><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On F=
+ri, Mar 14, 2025 at 12:23=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=3D"mailto=
+:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.org</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">It was rep=
+orted this breaks the final artefacts on windows when run<br>
+under Wine.<br></blockquote><div><br></div><div>Not only Wine, but Windows =
+as well. Tested on Windows Server 2022.</div><div>=C2=A0</div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">
+<br>
+Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.or=
+g" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+Cc: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com" target=3D=
+"_blank">kkostiuk@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0meson.build | 6 ++++--<br>
+=C2=A01 file changed, 4 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/meson.build b/meson.build<br>
+index c2c71b6f8a..9b1af6d030 100644<br>
+--- a/meson.build<br>
++++ b/meson.build<br>
+@@ -601,8 +601,10 @@ if get_option(&#39;tsan&#39;)<br>
+=C2=A0 =C2=A0qemu_ldflags =3D [&#39;-fsanitize=3Dthread&#39;] + qemu_ldflag=
+s<br>
+=C2=A0endif<br>
+<br>
+-if get_option(&#39;debug&#39;) and get_option(&#39;split_debug&#39;)<br>
+-=C2=A0 qemu_cflags +=3D &#39;-gsplit-dwarf&#39;<br>
++if host_os !=3D &#39;windows&#39;<br>
++=C2=A0 if get_option(&#39;debug&#39;) and get_option(&#39;split_debug&#39;=
+)<br>
++=C2=A0 =C2=A0 qemu_cflags +=3D &#39;-gsplit-dwarf&#39;<br>
++=C2=A0 endif<br>
+=C2=A0endif<br>
+<br>
+=C2=A0# Detect support for PT_GNU_RELRO + DT_BIND_NOW.<br>
+-- <br>
+2.39.5<br>
+<br></blockquote><div><br></div><div>Tested-by: Konstantin Kostiuk &lt;<a h=
+ref=3D"mailto:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a=
+>&gt;<br></div><div>Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:k=
+kostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><div=
+>=C2=A0</div></div></div>
+</div>
+
+--000000000000d8832706304b14e8--
 
 
