@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BAC5C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 13:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F140C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 13:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt4u8-00057b-OC; Fri, 14 Mar 2025 09:16:49 -0400
+	id 1tt4uL-0005DP-FK; Fri, 14 Mar 2025 09:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt4u5-00056Q-Mm
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:16:45 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1tt4uG-0005Ar-6s
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:16:56 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt4u3-00012O-TF
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:16:45 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso1172125f8f.3
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 06:16:43 -0700 (PDT)
+ id 1tt4uE-00017l-DS
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 09:16:55 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3913d45a148so1729079f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 06:16:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741958202; x=1742563002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741958213; x=1742563013; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fHuKfDxA2I3IuqcU9csI6nL0wPvBFIcds8Iwt3qt8Yw=;
- b=rQAzfUs2cahyizvg7F6shx28kr3tGO2z8YxGII8xMwfNpHQEyaeBRBx/eVJVJMWt7I
- dxju8zTSw0s01wXc4IYE8Ty6opTvIHkD4jYOjgNMIJl7ifQrIvCjs2WxnzeWujqhkjRJ
- WByWQB7bayWTE7eaV7Crl6B9ZjyqX+gO8glkOYCV400rBC+src12W6fEWgmPA1K2os3b
- 0ExWOuSgUqlvaZwdKU8wMU2I6dOAlE01Uq4+k7SKSWh3m2dlrUag3K3ONl89Mxb7+ySD
- cJDvSSxOct9KIgMdzcL53bQIOUSKxKKVKE1H85z4eK5ia4C3Sm5IFXooXKaZeFm5+Pcz
- lVww==
+ :reply-to; bh=ASyllHmufnMu1BxhqQoVFXG0Ckh8C1+NGqucyyEdqU4=;
+ b=rn+qzDJPWx2MT4+yRgzWLh026gpe7/8i41g+1B7dmi+9BAF9eeWAJRmTciczdAEljA
+ FdXd7g2OTyD5cswLo29MFnMP31k5djakXL8KDSFPRXt14IfYsgcMz6qUkj/LBRbfIadH
+ 68C8fHs5va1AyKcJx0eDbrH9MB0LG7JUT4ZrmuJMRbjWL4ko/srtL+H1DzuQPTguUjU0
+ QKL4Z0WqhWq7Ka9yYFF+7veFDCykLeUlxsYcPWPYjkFGwTIbffh0l3XK5yuLLopUq6ZZ
+ s2H+UMtoBSmr1S6JUarIkE0zc6N4krt5pCmxYObKwBFoV1hYs78JjLhBFHlKjVQrf/dP
+ MF0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741958202; x=1742563002;
+ d=1e100.net; s=20230601; t=1741958213; x=1742563013;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fHuKfDxA2I3IuqcU9csI6nL0wPvBFIcds8Iwt3qt8Yw=;
- b=nAGyEXcfRCgH4idGZwFh6Ik7AcYgOIPDn3BtaItlfp06ELvAC0xsD87QNGGoPh6a50
- ziTJ8x4ivAzc5yo3KqIPoj0anNwDET7Z0dp3bu8xOZ4ebNJQ53IesY3DuJvZoY75rpGf
- xVCxwvRqnyfU9cW8azIprAiFUK27m5i4qHmir68ol9l9JMQiva1ko6yoDIVTbCsnzCLa
- alxuSaUt0bMUEw1l4Roz3pFFMpasps30CRELkLZpXDFItSpzdu9QMTVDxsFLKCt3wR7t
- QWkBNUs8Xv9U0tHvUhN8Fh+sMFrRqk8/7+1gJsJ8Ofg0hNxalDR5cjXDloCm5gEh15NL
- 6r7w==
-X-Gm-Message-State: AOJu0Yy+BlsPsc+foARCW7/842pSP92kXyvLBSdeukEFjk+cHmAytqEN
- C+8ocDG9WcizYAZycnKSbsWNxXD1LjPFWWa7aazmwr8K3IU3PAQzKcRueFyvL24r/TwEkvIczwi
- S
-X-Gm-Gg: ASbGncvZtgqJ6cbTbZmX6GPfXE7azEDjmKz12X+ftcdCY7J2j6psyIL7xseiZolKbfi
- ckTYk53/X0nB7CtG0i1tS2PjoOSPHLg3lFZr+3n4Q91GOW1VaGgd1E2VqmTeiMDEdOmLkih54Qy
- HKvGGQq67jSm0eArGjxXZZLPjRJBckGncOT5hzNCZAdkNTH44EZJI7yq90z4AVjF+6lcL1MoM87
- 60rdH6ZQdpmZBvDa7+U4tRrMJxqth2Ed+WdZ3y+gzm7/P7eVFwnmk3uIQW/L2I26Aa6OJi4Ovxt
- EUN307Mk6IozICatV+M9mIIwiXWL0oag8ZuupwjtRX6qHR0/tYs=
-X-Google-Smtp-Source: AGHT+IF19bRrakaQAXt+EtN/2G3jfmNnfJUo5GSSDvCVFZ6KjW/OpwprXQdP8jVdpzQlqnFMNs/NHg==
-X-Received: by 2002:a5d:64ac:0:b0:390:f45e:c84a with SMTP id
- ffacd0b85a97d-39720e3c861mr3390466f8f.48.1741958201681; 
- Fri, 14 Mar 2025 06:16:41 -0700 (PDT)
+ bh=ASyllHmufnMu1BxhqQoVFXG0Ckh8C1+NGqucyyEdqU4=;
+ b=MV99kWCHoS5a/mJns2/4T+19eWlRaF8DlEgvhaYM5WJZR1tB8YZhfqJzt2y8SrHIb1
+ Byzy1MN4iZS16TNAJut5On5BoQMk6UV2vtrLcwhLA8OjJejvRZWz0L/UDum6efOow69U
+ HnFdQ3A0gpbBlIJ/1RYKk4a0Sv3vRh/DvB8U+k3rw7m3kAuateizpQOeQk+XMFVKUApy
+ 2MdUjPzY8P34iQl/Dwkd87FUE0yw3hqtRNaHTBhTGv2jtlPf58TozTi9zI70gPdh7yoD
+ +sXU44LBeyqlHFPsANQB6QR57rO5pzcbki2EmbRnicFCCl/jQJzVidBMx6Be9HFD4jGq
+ FANA==
+X-Gm-Message-State: AOJu0YyCJxcqRQjB0ZSZ5za53Kur1Zp7pj40/7JVTSNvie5km0eFwgmU
+ VXmGlrKGeXaBORIHYtxlbq2O253ExHJxFJg/2qfYxaLeeJJIp16T+VwpLyE+yi9I6hSoaYtjKhl
+ f
+X-Gm-Gg: ASbGncugz+4Dnnsa3Rg6Q6ET2+qdKxn1g5VVathyO/E4bVAIzKiBq6/fgkYJeuemjsm
+ S5StdDsRAQITJ6bIHbTR61o/dYAv92ipd8dQHqkOPogOKlwa/vwbppReweRx26/82onjp4dajuq
+ ezxcKHtSJPKp6pjFhOuO42v+wrDqCHaGR6FquhYa4OQJxR0TwUzjl3PTzIabc324sJoQDttdUxl
+ 9+pqzFOiXjg2zoEw7tKTos+1hbeoPugqaVbcxvz3/tDVOZ0pFegQJ/D4tfsJT2PZ0ji8QIqXjde
+ TP+SA8L2j8Er/05oO2PNVvqxR+xh0WdjVmcsyX7vZNncCbri2IY=
+X-Google-Smtp-Source: AGHT+IE/PgRV4rzT5LwormUA9To6yRlHjMfOzA9WE0yglZKghf8fhYk2hQNiH/Z7bAtdkQFUygW8Wg==
+X-Received: by 2002:adf:a29c:0:b0:391:a43:8bb6 with SMTP id
+ ffacd0b85a97d-3971e0be0fcmr3032860f8f.33.1741958212615; 
+ Fri, 14 Mar 2025 06:16:52 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb7eb93csm5437923f8f.86.2025.03.14.06.16.40
+ ffacd0b85a97d-395cb7eb93csm5437923f8f.86.2025.03.14.06.16.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 06:16:40 -0700 (PDT)
+ Fri, 14 Mar 2025 06:16:51 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/17] target/arm: Un-inline access_secure_reg()
-Date: Fri, 14 Mar 2025 13:16:22 +0000
-Message-ID: <20250314131637.371866-3-peter.maydell@linaro.org>
+Subject: [PULL 13/17] Revert "hw/char/pl011: Warn when using disabled receiver"
+Date: Fri, 14 Mar 2025 13:16:33 +0000
+Message-ID: <20250314131637.371866-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250314131637.371866-1-peter.maydell@linaro.org>
 References: <20250314131637.371866-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,77 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We would like to move arm_el_is_aa64() to internals.h; however, it is
-used by access_secure_reg().  Make that function not be inline, so
-that it can stay in cpu.h.
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-access_secure_reg() is used only in two places:
- * in hflags.c
- * in the user-mode arm emulators, to decide whether to store
-   the TLS value in the secure or non-secure banked field
+The guest does not control whether characters are sent on the UART.
+Sending them before the guest happens to boot will now result in a
+"guest error" log entry that is only because of timing, even if the
+guest _would_ later setup the receiver correctly.
 
-The second of these is not on a super-hot path that would care about
-the inlining (and incidentally will always use the NS banked field
-because our user-mode CPUs never set ARM_FEATURE_EL3); put the
-definition of access_secure_reg() in hflags.c, near its only use
-inside target/arm.
+This reverts the bulk of commit abf2b6a028670bd2890bb3aee7e103fe53e4b0df,
+and instead adds a comment about why we don't check the enable bits.
 
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-id: 20250311153717.206129-1-pbonzini@redhat.com
+[PMM: expanded comment]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h        | 12 +++---------
- target/arm/tcg/hflags.c |  9 +++++++++
- 2 files changed, 12 insertions(+), 9 deletions(-)
+ hw/char/pl011.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 15d3a79b0af..12d2706f2b5 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2668,21 +2668,15 @@ static inline bool arm_el_is_aa64(CPUARMState *env, int el)
-     return aa64;
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 23a9db8c57c..0e9ec1301d3 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -490,16 +490,17 @@ static int pl011_can_receive(void *opaque)
+     unsigned fifo_depth = pl011_get_fifo_depth(s);
+     unsigned fifo_available = fifo_depth - s->read_count;
+ 
+-    if (!(s->cr & CR_UARTEN)) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "PL011 receiving data on disabled UART\n");
+-    }
+-    if (!(s->cr & CR_RXE)) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "PL011 receiving data on disabled RX UART\n");
+-    }
+-    trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available);
++    /*
++     * In theory we should check the UART and RX enable bits here and
++     * return 0 if they are not set (so the guest can't receive data
++     * until you have enabled the UART). In practice we suspect there
++     * is at least some guest code out there which has been tested only
++     * on QEMU and which never bothers to enable the UART because we
++     * historically never enforced that. So we effectively keep the
++     * UART continuously enabled regardless of the enable bits.
++     */
+ 
++    trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available);
+     return fifo_available;
  }
  
--/* Function for determining whether guest cp register reads and writes should
-+/*
-+ * Function for determining whether guest cp register reads and writes should
-  * access the secure or non-secure bank of a cp register.  When EL3 is
-  * operating in AArch32 state, the NS-bit determines whether the secure
-  * instance of a cp register should be used. When EL3 is AArch64 (or if
-  * it doesn't exist at all) then there is no register banking, and all
-  * accesses are to the non-secure version.
-  */
--static inline bool access_secure_reg(CPUARMState *env)
--{
--    bool ret = (arm_feature(env, ARM_FEATURE_EL3) &&
--                !arm_el_is_aa64(env, 3) &&
--                !(env->cp15.scr_el3 & SCR_NS));
--
--    return ret;
--}
-+bool access_secure_reg(CPUARMState *env);
- 
- uint32_t arm_phys_excp_target_el(CPUState *cs, uint32_t excp_idx,
-                                  uint32_t cur_el, bool secure);
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index 9e6a1869f94..8d79b8b7ae1 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -63,6 +63,15 @@ static bool aprofile_require_alignment(CPUARMState *env, int el, uint64_t sctlr)
- #endif
- }
- 
-+bool access_secure_reg(CPUARMState *env)
-+{
-+    bool ret = (arm_feature(env, ARM_FEATURE_EL3) &&
-+                !arm_el_is_aa64(env, 3) &&
-+                !(env->cp15.scr_el3 & SCR_NS));
-+
-+    return ret;
-+}
-+
- static CPUARMTBFlags rebuild_hflags_common(CPUARMState *env, int fp_el,
-                                            ARMMMUIdx mmu_idx,
-                                            CPUARMTBFlags flags)
 -- 
 2.43.0
 
