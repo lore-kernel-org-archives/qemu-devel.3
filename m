@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CADC282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 12:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F196AC28B30
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 12:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt4Iv-0000eZ-ES; Fri, 14 Mar 2025 08:38:21 -0400
+	id 1tt4Rh-0002h1-1T; Fri, 14 Mar 2025 08:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tt4Io-0000dT-JW
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 08:38:14 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tt4Im-0000zP-An
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 08:38:14 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-219f8263ae0so36156595ad.0
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 05:38:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=161315f38=graf@amazon.de>)
+ id 1tt4Re-0002gW-Ue
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 08:47:23 -0400
+Received: from smtp-fw-80006.amazon.com ([99.78.197.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=161315f38=graf@amazon.de>)
+ id 1tt4Rc-0002tC-2g
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 08:47:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1741955886; x=1742560686; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=IJs8f30yW55SOit8VJw/gcB0+E9RfFJXCWxehHrW5m0=;
- b=FycQCiTL1zHXE/Qsu56RFi6D1pPgWFFis9fdvICvtyoPghz4FYJrOAF3Lgie7Ry4cL
- p1ALLg5MCwknAqeDG7CHkokmJoZc+2d6qHiSe7mrE2+5GjfDtrnIs6G4CLYTG1TJV+19
- jkFb0VLiktc5GReHoLPDs2IXXgNlNbYljON4KqC2kdFyJN+mc/JA9W3ybOhWyR2hYU8S
- 2WC9AYRWmQdNQTvLhLyInJlTh83CCzN3zbPi5JTRErUjt9VUCFh8rgfiIpjkDscwy+su
- DvQtUPnp7LdWwNdWEO0On20fyWcxvysvSmPCqOhwIgx8zL8cL8wLeuTB/eJGTDcERGt8
- yYFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741955886; x=1742560686;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IJs8f30yW55SOit8VJw/gcB0+E9RfFJXCWxehHrW5m0=;
- b=xL99VHy5CYqCYOBzesFt/W0rA0Bg2QDycva8trl27YmTgIE5s0CWPyl6hzzhgbnjJT
- J/3cPzXo5B1wmEjku0/ZBxlVBqJJ2rvbYpjl59HE00DgVFO1aahO2A5qf+waxIaPvct4
- EPs0TcmyQ6u0ZeD8P6gUa1dQBNGGAznO0dq9h7WVtsBz70Uhg1RGdfJLT4SEO3nA5jlE
- /L15o0GlTMdEQxrOPJXKOq8GZoqLNXGj3ZdafBSWIJ8HmLycmPGl3gzQ4hgUocWrb3QK
- Pu4QzNSIkrgeYrR94VPBB+SEuPnEdfX0LNqWdVZBiG/t2b2cK/BPtYB0tsJqsfSb9a61
- wknQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUW23oJGQvIH6AUNX5MiuCtjPkliJUjrViFoEOQjEquEvNNebhcL4BK9B/TKzXueDSpnoEWVwplAYbr@nongnu.org
-X-Gm-Message-State: AOJu0YzMcNMfYK+5PSvVSkmJwhWv3BsjIZdW2Cc+dFg6QEIMSdAV4aUy
- lm7Gj7zO4rkfQxS14/Qoxa+ozIQI2DcOnPef++R/adgkulNJAcUAXLf5CqkgsJ8=
-X-Gm-Gg: ASbGnctn3R22RU0qkr4Hb5b9Zv1XqzXgb2M04l4dY80x63dD5HsLVCVIBhyCYUastP8
- v+NZUwL7R5XYI1ejE5whDdSX1gkwFLKSjcOJcyaBddCSCEn3Bi7cmR2Y2tIplIS/ijr1x1dua1u
- EmYJd02AvCbR5JKTlgZxljhh56QsjFhZmVL9KObAOoGqWJhW96JXbSh03yU+PW0QG40D9njWvwO
- 0TUrsLIFY6/EF3HQC7TfPyP2i521hcQjDZQGsXA1P8DG/KoVwepcv8JQ5GPMeoZjycfk+lLBplI
- PGmpK4pcfPQW2P0P0IkwCyfJTdQ+eR01vaOlVXSoFNf2kjY7+LXW4ATBruwHyBFNOYPyPg==
-X-Google-Smtp-Source: AGHT+IFAVi2WeNu0Uahx0rrz+HrO8KZI25eAlacle+vpmlOMIjvfjF8u5cLUC125hsEwBXwj8C6PEQ==
-X-Received: by 2002:a17:903:f86:b0:220:c4e8:3b9f with SMTP id
- d9443c01a7336-225e08605f9mr30309315ad.0.1741955885686; 
- Fri, 14 Mar 2025 05:38:05 -0700 (PDT)
-Received: from [192.168.68.110] ([177.170.117.79])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6bd4e0dsm27816515ad.221.2025.03.14.05.38.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Mar 2025 05:38:05 -0700 (PDT)
-Message-ID: <d6295353-33d8-4816-b815-49958634d263@ventanamicro.com>
-Date: Fri, 14 Mar 2025 09:38:01 -0300
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1741956441; x=1773492441;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=5/2CO48dv3c/OYXVyiefmSEQ+x6J0RMkR+uHb6q1KYU=;
+ b=eaUN+9lo/p7KsLRiqCSgoKIPDwrRZ9rxAWiMFmV5JjDo/ghHqMD6KoPe
+ jF1R17tEpzLfh+HfvEbdyyvYUsslzgEP4lMyuzCD6vkJi1HFew12n0JEf
+ toDnqEXzSvpoSa+l8rtJ1D38/aY9nzVvKWpo2R8HSHc85+ylC2T0LL0UM U=;
+X-IronPort-AV: E=Sophos;i="6.14,246,1736812800"; d="scan'208";a="31915641"
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
+ by smtp-border-fw-80006.pdx80.corp.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2025 12:47:13 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [10.0.21.151:15647]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.52.235:2525]
+ with esmtp (Farcaster)
+ id ec14503d-2591-4755-98cb-2c0e255fa616; Fri, 14 Mar 2025 12:47:12 +0000 (UTC)
+X-Farcaster-Flow-ID: ec14503d-2591-4755-98cb-2c0e255fa616
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Fri, 14 Mar 2025 12:47:09 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Fri, 14 Mar 2025
+ 12:47:05 +0000
+Message-ID: <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+Date: Fri, 14 Mar 2025 13:47:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] target: riscv: Add Svrsw60b59b extension support
-To: Alexandre Ghiti <alexghiti@rivosinc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250314104833.369365-1-alexghiti@rivosinc.com>
- <CAHVXubjJ_oCKqjYBFRjn-BM-cB4JUsFJ-dX3Dqs6j=6vTh+yHA@mail.gmail.com>
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Gerd Hoffman <kraxel@redhat.com>, Ani Sinha <anisinha@redhat.com>
+CC: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Igor
+ Mammedov" <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ <qemu-devel@nongnu.org>
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+ <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAHVXubjJ_oCKqjYBFRjn-BM-cB4JUsFJ-dX3Dqs6j=6vTh+yHA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D045UWA001.ant.amazon.com (10.13.139.83) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=99.78.197.217;
+ envelope-from=prvs=161315f38=graf@amazon.de; helo=smtp-fw-80006.amazon.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,112 +103,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 14.03.25 12:27, Gerd Hoffman wrote:
+>    Hi,
+>
+>>>> Open question is what we do about IGVM.
+>>>>
+>>>> One option would be the guest vmfwupdate tool loading and parsing igvm,
+>>>> preparing the region list, then invoke the update.  Problem is that some
+>>>> igvm feaures such as initial register state can not be easily supported
+>>>> that way.
+>>>>
+>>>> We could also expect the hypervisor support igvm, so the guest can
+>>>> simply load the file into memory and pass address and size to the
+>>>> hypervisor.  Either as option, say via VMFWUPDATE_REGION_FLAG_IGVM, or
+>>>> mandatory, i.e. scratch the region list and use IGVM exclusively.
+>>> This is of course up to the QEMU maintainers to decide, but I want to
+>>> highlight that IGVM already solves all the problems mentioned above,
+>>> including setting multiple memory regions of different type, special
+>>> data pages (cpuid, secrets, id-blob, vmsa) and more. It defines the
+>>> order of setup calls the VMM has to invoke for the new context and also
+>>> works for multiple platforms like TDX, SNP, non-coco, and in the future
+>>> ARM as well.
+>> My take on this is that instead of making the interface more complex,
+>> let's empower the guest to use IGVM if they think they need more
+>> guarantees around those things that IGVM solves very well today. QEMU
+>> already has IGVM backend support.
+> Ok, assuming we allow the guest submit a IGVM image (which makes sense
+> indeed, otherwise we'll probably end up re-inventing IGVM).  How will
+> the kernel hashes be handled then?  I assume they will not be part of
+> the igvm image, but they must be part of the launch measurement ...
 
-On 3/14/25 9:11 AM, Alexandre Ghiti wrote:
-> On Fri, Mar 14, 2025 at 11:48 AM Alexandre Ghiti <alexghiti@rivosinc.com> wrote:
->>
->> The Svrsw60b59b extension allows to free the PTE reserved bits 60 and 59
->> for software to use.
-> 
-> I missed that the extension had been renamed to Svrsw60*t*59b, I'll
-> fix that in v2 later after I collect some feedback.
 
-Just to be clear: the extension is going to be named Svrsw60t59b, not
-"Svrsw60*t*59b". Correct?
+The kernel hashes must be embedded in the IGVM image by the time you 
+invoke vmfwupdate. That means when you generate the FUKI, you take 4 
+inputs: Generic firmware image, kernel, initramfs, cmdline. Out of 
+those, you generate and embed an IGVM image that consists of the 
+firmware image as well as the kernel hash page.
 
 
-Aside from that code LGTM. Thanks,
-
-Daniel
-
-
-> 
-> Thanks,
-> 
-> Alex
-> 
->>
->> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
->> ---
->>
->> I tested it by always setting the bits 60 and 59 in Linux which booted
->> fine.
->>
->>   target/riscv/cpu.c        | 2 ++
->>   target/riscv/cpu_bits.h   | 3 ++-
->>   target/riscv/cpu_cfg.h    | 1 +
->>   target/riscv/cpu_helper.c | 3 ++-
->>   4 files changed, 7 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->> index 3d4bd157d2..ee89cdef46 100644
->> --- a/target/riscv/cpu.c
->> +++ b/target/riscv/cpu.c
->> @@ -219,6 +219,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
->>       ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
->>       ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
->> +    ISA_EXT_DATA_ENTRY(svrsw60b59b, PRIV_VERSION_1_13_0, ext_svrsw60b59b),
->>       ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
->>       ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
->>       ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
->> @@ -1644,6 +1645,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->>       MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
->>       MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
->>       MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
->> +    MULTI_EXT_CFG_BOOL("svrsw60b59b", ext_svrsw60b59b, false),
->>       MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
->>
->>       MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
->> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
->> index f97c48a394..71f9e603c5 100644
->> --- a/target/riscv/cpu_bits.h
->> +++ b/target/riscv/cpu_bits.h
->> @@ -663,7 +663,8 @@ typedef enum {
->>   #define PTE_SOFT            0x300 /* Reserved for Software */
->>   #define PTE_PBMT            0x6000000000000000ULL /* Page-based memory types */
->>   #define PTE_N               0x8000000000000000ULL /* NAPOT translation */
->> -#define PTE_RESERVED        0x1FC0000000000000ULL /* Reserved bits */
->> +#define PTE_RESERVED(svrsw60b59b)              \
->> +               (svrsw60b59b ? 0x07C0000000000000ULL : 0x1FC0000000000000ULL) /* Reserved bits */
->>   #define PTE_ATTR            (PTE_N | PTE_PBMT) /* All attributes bits */
->>
->>   /* Page table PPN shift amount */
->> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
->> index b410b1e603..f6e4b0068a 100644
->> --- a/target/riscv/cpu_cfg.h
->> +++ b/target/riscv/cpu_cfg.h
->> @@ -89,6 +89,7 @@ struct RISCVCPUConfig {
->>       bool ext_svinval;
->>       bool ext_svnapot;
->>       bool ext_svpbmt;
->> +    bool ext_svrsw60b59b;
->>       bool ext_svvptc;
->>       bool ext_svukte;
->>       bool ext_zdinx;
->> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
->> index e1dfc4ecbf..6546cea403 100644
->> --- a/target/riscv/cpu_helper.c
->> +++ b/target/riscv/cpu_helper.c
->> @@ -1156,6 +1156,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->>       bool svade = riscv_cpu_cfg(env)->ext_svade;
->>       bool svadu = riscv_cpu_cfg(env)->ext_svadu;
->>       bool adue = svadu ? env->menvcfg & MENVCFG_ADUE : !svade;
->> +    bool svrsw60b59b = riscv_cpu_cfg(env)->ext_svrsw60b59b;
->>
->>       if (first_stage && two_stage && env->virt_enabled) {
->>           pbmte = pbmte && (env->henvcfg & HENVCFG_PBMTE);
->> @@ -1225,7 +1226,7 @@ restart:
->>           if (riscv_cpu_sxl(env) == MXL_RV32) {
->>               ppn = pte >> PTE_PPN_SHIFT;
->>           } else {
->> -            if (pte & PTE_RESERVED) {
->> +            if (pte & PTE_RESERVED(svrsw60b59b)) {
->>                   return TRANSLATE_FAIL;
->>               }
->>
->> --
->> 2.39.2
->>
+Alex
 
 
