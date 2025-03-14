@@ -4,207 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85133C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A903C35FF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt2Da-0003fs-Rp; Fri, 14 Mar 2025 06:24:42 -0400
+	id 1tt2De-0003hA-As; Fri, 14 Mar 2025 06:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tt2DY-0003fc-5f
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:24:40 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tt2DU-0004d6-3t
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:24:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1741947876; x=1773483876;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=RaXd9stPpyr5590Qm1yf4GBozGEUBZu0DcSXxkJCDKU=;
- b=dIqnJnN3OcMBSwibCxNSKe5kgc3dS1dYYflOt+3ORjaV5VPyLtbLvIXT
- hIzGoeLJj1Ut6p+EFGSFd2404oVSy5yBNE7vwY8AAgt6G4Jv3oPw4/h2C
- hRPCOCsuK15NmS99/GZr1wUwNIjyly8y60/q6vdzLzdrKtrSqY4zF6dpE
- pxci1ICzy+nWqQJd6vGZ36gjIz9Pj/NuVDFHiGODbnM3y5qOLNbj4v/r8
- LfBKJ6R5a7V5yzzAp3cmyKxCkPwAZIZSH1upoB6Vuf5y7IK9v2AQGP6gu
- fDLF3lKaAdADKsrxgcTgMCSR2FS+Xxc6goaWGOVb41gwhVA5+yCuS9gsK g==;
-X-CSE-ConnectionGUID: DJNy/FCnQdOH9F3jxJIFRA==
-X-CSE-MsgGUID: eTYczkdBTcqJUHyW4TIoig==
-X-IronPort-AV: E=McAfee;i="6700,10204,11372"; a="45861363"
-X-IronPort-AV: E=Sophos;i="6.14,246,1736841600"; d="scan'208";a="45861363"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Mar 2025 03:24:30 -0700
-X-CSE-ConnectionGUID: vfAvuXVESqCrRI+N7Fs3Xg==
-X-CSE-MsgGUID: jbTRYZuxRO6XSjz3PiFWOg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,246,1736841600"; d="scan'208";a="126430818"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by orviesa005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 14 Mar 2025 03:24:30 -0700
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Fri, 14 Mar 2025 03:24:29 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Fri, 14 Mar 2025 03:24:29 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.42) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Fri, 14 Mar 2025 03:24:29 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FjZgBiXs42KBphYSXbasMkdZJTpnwrKRzpx3DEHjjwch1W+jTuiiCXDYiLgmJewO3H57C/HIN2Tv1DUNbodu8sjDhc/kSnE0k8M1I+9jbbp0dvntGzGeiaZRCkc0PoStrW0lNPvI8tskyvgYQfw4n4gYNzjrScuvCuDE7k5uAdTjueqyd/ih9ZOQZhzO1DkbOikxoIKTva5jY2Zs+kZtMhHsOAG5+pi4WbBHXCCSwxSp5whRMmjQWlaoLinXijhH6zFkDYODkaQc7NpRxAZOjGOSXj3ubhfok5yA5SPUyjBNVadyh8t4QDqwsgb0TXCKg3LyzytjqTJE9ZzzjrK6Lg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iqP4lCFqpYFy4bLQmyyy0W8zgkfYBln8rP52HfiIbKo=;
- b=VC7jCFydVYF6x/TSqRCc5XXiOPY5O1tRBFTqfchzqpH14+rMSIZBumqji2bi0AAG9N9TDi6OGg4pHQ01oI6Ig1NE4Qt8DND5elgpKq+U1WaKVx0wQqWzB5wfB/sUibowoeFB7g/M+j4BI7X9D/Jp/8VsFmZfNv7T2kaEOQvuw1nLyhyS8ISAZ0M2bRkCx1EAqHMVvby320evTtO7gPZMUkGbvbWO00yjInSy0iepSHC6dduxy3Hl2fnlLVAQJ/Ht6ZwhpH6wFN9Y8DjD7t6oVm06o9PauwUiHuMuFMEw2g5AYhvIY0OnhjxzwI8LmLEOE3634tme+mpZ/GJDIHy7Gg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- SN7PR11MB7065.namprd11.prod.outlook.com (2603:10b6:806:298::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.28; Fri, 14 Mar
- 2025 10:23:47 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%7]) with mapi id 15.20.8534.027; Fri, 14 Mar 2025
- 10:23:47 +0000
-Message-ID: <b9d809c0-92c3-4bf4-b49e-c97383924e06@intel.com>
-Date: Fri, 14 Mar 2025 18:23:38 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] memory: Attach MemoryAttributeManager to
- guest_memfd-backed RAMBlocks
-To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, 
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
- <michael.roth@amd.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
- <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
- <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao
- <xiaoyao.li@intel.com>
-References: <20250310081837.13123-1-chenyi.qiang@intel.com>
- <20250310081837.13123-7-chenyi.qiang@intel.com>
- <8d9ff645-cfc2-4789-9c13-9275103fbd8c@intel.com>
- <11d40705-60d8-4ad6-8134-86b393bfae8f@redhat.com>
- <192a8ed9-fecb-4faa-b179-ed6f9ef18ac8@intel.com>
- <af80216e-7a09-48a3-97b8-5b19cc3ded28@redhat.com>
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <af80216e-7a09-48a3-97b8-5b19cc3ded28@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2P153CA0028.APCP153.PROD.OUTLOOK.COM (2603:1096:4:190::9)
- To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tt2Db-0003gR-R8
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:24:43 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tt2DY-0004dZ-05
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:24:42 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2ff6a98c638so4069027a91.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:24:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1741947877; x=1742552677;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JhWtI+vBoY/7LB6Vltp+kD2yeeTqmN+P9ReQa6Jox78=;
+ b=CHTrKwRx6PivjjcTdzv8AXafylg8YOA4SkUsDlQ0nFUsT9GK53y497WPT5iajI0F0D
+ AhAtM5fioY7y8f0PkTSDj32ytj0osOcyRoJ4hPpqyRgcqUv/0Ab1IjbMV1LiRtY7Hn47
+ JHOHfpDSb/rC/k1GDSp5QSenol/VRgdl3JP6/DbS20tTnPsBt2nYKnUbz39uCaOOa5/x
+ TqEJdIFhOU0q1yL49gRTIGevkgpkzHky+EQ8amcKhcliLIUJ07v5zNoyFdKoYi/EiQlb
+ 7vIyWBkcBPTxW0TlmS1RkUXsca/LrhgSFyr9RG8lAp7eocxeVMDlTR3xIpWY0H5Gl8uH
+ buXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1741947877; x=1742552677;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JhWtI+vBoY/7LB6Vltp+kD2yeeTqmN+P9ReQa6Jox78=;
+ b=QJTIJdFFU3Qn/oT7joUwU8ZJJ/9GBI4uQ5Zk6jKN/s+FV4GmErsiEUxZhJTLza6CAI
+ q5nETQkVh5Nq+mBdAG6xSJfIE+rb3s00JaCEgs3wNgHnBmGOfRLza29EgyGnNaxw5GLj
+ ILdh6ycdiiFlz2GBG3zRONZPzueP1s+rxgSLgotefpaiU4uVfk1xgzRUa/ihMwIBa5ow
+ vGZWfK0TsWYio6nMiKaz3WV9ASU9O9tx58H9gv4LeRKS17BD8BM1cvukjE+eZ4Aw7ivd
+ 18ZqJwRB5I3CJz/mwwq5qP6n+OWuwl6P3teKIfp6CAQJyA+bPVaqQBFaLMvSlhbhsvsq
+ /buQ==
+X-Gm-Message-State: AOJu0Yz2AQrx1oxD6b6G+fRlEeEfV4895ck7Dv1IeudNuS52jAQdG6Do
+ VDcOw/fZrP4+KgchNhy+8bEza5r2fftH97FZr3a8V1eJzEdqZqO5cuGZDGeG6x1WszSw9S0g+W3
+ /eek=
+X-Gm-Gg: ASbGncuhOlMgK0r0Kxv+5dvLPILLA228cWVGEMD8RZTgGD+SJtPn2rwFyY5P1sOltVN
+ gxD3xx95/za/t7Zmnp/au2pTqgFaXoxUX9hgvmMa56b0/H40dnPBRORzly26Ws3JN/0p0tTmtrB
+ J9ArmT9cYjF8I0jxS9R1ZxJUoiXXuPOxVkmTJtHerSsG3pN1iSNvD3W/ie/ERkCaB+v92kOGHrW
+ eMO6a7wuyPPnh+bxpAjc506yEkmBgSX9jG0MdiPS9X0tEKtc7aOPiZC7NjcHcxWxl1U3s0Jl1WL
+ +CGRm5cxn6XRZr4XwpS01cA8UmFKY6UM8C++IFTrzZBycE3apBotc8bEcw==
+X-Google-Smtp-Source: AGHT+IHl31MTxn7V+xXpLNBzH1hzMS4ONJxCk8KaYlD7KvCCcZXt8fVCOQunlGjxJ9eGKHJSN590fw==
+X-Received: by 2002:a17:90b:568c:b0:2ff:4f04:4261 with SMTP id
+ 98e67ed59e1d1-30151d65696mr2198135a91.34.1741947877099; 
+ Fri, 14 Mar 2025 03:24:37 -0700 (PDT)
+Received: from [157.82.205.237] ([157.82.205.237])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30153afeba1sm704124a91.26.2025.03.14.03.24.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 14 Mar 2025 03:24:36 -0700 (PDT)
+Message-ID: <52ffbdcb-abdc-459e-8d49-a0c9e1a5de92@daynix.com>
+Date: Fri, 14 Mar 2025 19:24:34 +0900
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|SN7PR11MB7065:EE_
-X-MS-Office365-Filtering-Correlation-Id: 857ebeaf-0f58-4184-a30e-08dd62e24dfa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bmJiVVdVTnlPU2NSRlEzUE9hdzNsWTNtL244MmNidnViM3hiYUV6R1B1bzVj?=
- =?utf-8?B?R0gwYW1TeDlXVEZKa01XYjE1NktLcE10TXpLYU5iMnZsUXdFS3VHQUZIbzFN?=
- =?utf-8?B?cUZJS3R0eG9GMlhNQVJJcU0wbjJ4VCtjL0NQZittRGNFbWZsekZjNVVTWFVm?=
- =?utf-8?B?eUpkMFpRQlNYNGxOcEZRQ3VhNWQzdGRVeTF0WE1acWFCU01uNlF2ZGhyeFMw?=
- =?utf-8?B?dFE4bmJ0eHRFUVhCZi95Q2FIZGFuQ3JobzhFR1k3cG50eDBXR0h5K0J6QTN5?=
- =?utf-8?B?TnR1SFR0eG9Jc2lqc2hXbjFpYzlwNW5EbVhLRGVGK0M0U0Z4bWxyQVZHRm5y?=
- =?utf-8?B?QmVvVkhvUVVrZWIwQ2N0Z013M3NzZFBrSHk1ME9WUTBzcXlrQUhjZGhPUXhu?=
- =?utf-8?B?OXovcDEzRi9vTDg1di9XOG9VK0pYbTNrYmpraU5KWlFUby9pb0tkSkxIVk9E?=
- =?utf-8?B?Z05nbXNCRXI4Nkh5RmRhVCtmNnJoZmFEdmp2dnUzVjBNWDNydW1EeEhVdUVx?=
- =?utf-8?B?S3l2c0lheW1QbStxdUNGeDlZa2ZUdTFaQUM0Zm1WS2QvZFJyVVhMbytESzNo?=
- =?utf-8?B?MEQwemF0YSt6WkI0MGZQMEJ5ZTgwdWt6RVRUS2hDM1ZWU2xvc0xIK2NISVUx?=
- =?utf-8?B?N0JXL1VKOVlxcm9QQXZXQTlsaWh3cGVnWktBVXJOcXNKb3dKYy9KaThXbEUv?=
- =?utf-8?B?WC8xbjdVeFFwbGVISGR1T045Rm1uLzhSbzFIamhBMHNjRFBhK2tMZGIrbFdF?=
- =?utf-8?B?cExwZS9BR2pZeUtJbVgvUTcxZmt6QjhFclYvbitKOStaSWR3MTZWNE9hcm9a?=
- =?utf-8?B?UE1OcXJuSEwxYlJlUFRsMVFnaDZrUEhCYWJNS21VZHFrN3lOVWhZUDNEWWdu?=
- =?utf-8?B?MHFKd0piYkhhazVkMkh0WHdjS3Z4SkFVb1o1YU55T00vYWNuNnpMUlJKcXA0?=
- =?utf-8?B?YURZWGpCZ0cwSy9PbERkekVXbGQ3MHp2NlVHT3NsNEY1RjI3OUpJTURHNDA3?=
- =?utf-8?B?ZFUxekozL0JNYno5Z1B6QXlwTXVXemdMSmczdGd0Z0IrbEhsWVhZbmhEZndB?=
- =?utf-8?B?TUNSK2t6ZkdiVG9wNHFTQmRFNzlqQmYvOCtrSlUwZFh4VU5Ec3BtdDdIZFgy?=
- =?utf-8?B?T00yd3BtSGFvbG1DNXpzc2trU0tmaXRHaXdpZlYzb3pRb2ovSzVOVTI0YjRo?=
- =?utf-8?B?OWdkZEo4NmdWUXJmeklwUFVTUFFzUWFqKy9OSDN4NUFhUFNSUWtXNGlScHZH?=
- =?utf-8?B?YnZtQ1lFNmZNbkp5K0hjbjFFMXdrQ3dtdWlIYXliVnJFWitQZWs2dXpxRE5P?=
- =?utf-8?B?NTNVSit6MzJpOTdlSmdKQzVoTDhNTWxab0ZVQ0NmNFU1OEw1dmhtYzI1eDNq?=
- =?utf-8?B?WWY0RkJkRytkKzFVOTJaNlVudHN0dXZackt4Y2c5VUNNdEVkZi9HMW5JL0E0?=
- =?utf-8?B?b29LSVA5QnhkTVRIdmhUbU9hNDVJNXBnSTluZ1hubUl0OFpLcXVXVm1DK21K?=
- =?utf-8?B?dmpYeXVINDl4NTNBbjdFN0FEenhVZ25rQTdCc3dITWRIVURzaHpieWFMWks2?=
- =?utf-8?B?SSsrOWxBbmlqQmtKbS8zejhPME9FekttMmh1ajBhTXI4bm1oMk9TMkVUNFFJ?=
- =?utf-8?B?bmdHaFdMQUpnZ0FOcTR2OG5DTWEyMmNqYzFreW1XN2QzT1lrS244TjdERTNz?=
- =?utf-8?B?SWNEY0FKQlhWM3liVlh4WHdLUzU4Q0RleE42QWJDZGdRNkRhRHcxL3ZDZExW?=
- =?utf-8?B?S3NIMjd0NjU1WUpLUGVJWTVXYWdUOFYrZ3BTSnQ3OWpkekY1VW1LSk5NcUxJ?=
- =?utf-8?B?SExkV3RrTERzUXVtQTVXQ2tLb1dIYmJxY2xwMDUreGVoSlhjMUpLYVJNNFUy?=
- =?utf-8?Q?I/nLQ+jOVM5sK?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R0syakhlZDAzZ2VzdjR5alR0Y3djRkhtcGxNMjNzaERVYmdKMU9CZmlFdnk2?=
- =?utf-8?B?NE53OGVUTXVZcDhWT3Fjb09zbGd5dzFtbGptWno3ajBRWUVaRDcwQ3Z0dE9B?=
- =?utf-8?B?dWUwUmxaMkFLdTBZWWNVeUZubmJST1RGV2oyRWV5NGpsTlRZamNrWDI3SUxo?=
- =?utf-8?B?bjBUSXZLM0l4bmZTcVRMYTUzUGJFSTV2dUJDNTFXSWh3UURZMTFtNGg0VGZo?=
- =?utf-8?B?eHR6eVpRbXllVkxkeXd3U3kwNVYyc2NVZ1NUSmV3QW5DbmwvNDNKZVVnZjJK?=
- =?utf-8?B?TmFReWxuNGVTQ3phOE44YTRJZUcybGI4UytVMzRabUhCWjQrdjdMUUp5ejRn?=
- =?utf-8?B?Z005d0tJVWltUG9ZYW5qUVkrMVpZTkk2NmFKWmd1RjFIdTRqOTd5QUM4cnJM?=
- =?utf-8?B?ZC9jNXJ6T1Y5cENlVGVzQk9aS1Q4RFVyOXA1bTFtMlpVdFBLNE9KWERZZzVa?=
- =?utf-8?B?czUrUkMrSlFqTFRSYUZjM2lsRWpqa3laaFFQcURsY1RTMVZMaFpFVmpnUFd2?=
- =?utf-8?B?UmNIZTJnWDJrSitoZWhoUHp3bHMzZ2xrRVVlNFk0TU13djJvbTFUcWR3U0Z1?=
- =?utf-8?B?d3FvQlB4eXgybmR2dmhYTHVXM09uWmZSUkJjeGRkUXBXNFlSdk8vK3U5Skts?=
- =?utf-8?B?RndHbVZNL0tidHVjbG5uUzFtLzl1WmwrU0N5aXg3dUlXNjJqeU12ZkdPaWs4?=
- =?utf-8?B?aXpFMTF4RVhzeGdBeUNwZ0w2MGNnUHQ3d2N1bUo3cnJQZ1lhSk9UWk13WjZK?=
- =?utf-8?B?cXE4NGZRWktDWitxK09EdDdYWFZCTGE2a0ZXOFFWdzBySUxSYjRrU1Bic3RW?=
- =?utf-8?B?ejNNS3U4WWVETnVWVmdEMDY4eU1yclU5RVQ1ckdxbkhSZWx0dzd3WlhwZ2Jz?=
- =?utf-8?B?dndaOXZ0Z0M2cmxMTnRZSTJibU1DSEY1VmNsQ3ovRElJMzhVRDBScU5XQ2xC?=
- =?utf-8?B?UGdXOTcvUlVKbW1DL1lUV2gzWktrUytGMS9MazkrN2JXNjFyZlhkak1lWjFT?=
- =?utf-8?B?VDZwYnZOeDhCdldGSGl5TXQxcDRmbi82L0tPY0FlRTBpbkIzajhwUHBwcG0w?=
- =?utf-8?B?b093dlpSNmU4ZUZUazVVVkhDY0FlTnlidjYzVllxMzIrOTkvN25uTVYvSGVt?=
- =?utf-8?B?blNPSWJlMzZRdUtmSUlSZGg4UDFaODh5d0VXdmx4QytvbWZBd2VtUE91bnVB?=
- =?utf-8?B?cmJSby9NWFB1b1UzZldTRWNRdVhJbSsyT3pyS1JJNWE2REZ3UGVkVWFoeHRC?=
- =?utf-8?B?SmN1ZlRWbWtudUtHWVZtbm5XTDl3OEhKT2tza3VuUWlNdlZhbGE0MkdOd0JC?=
- =?utf-8?B?aEJ4b3dlWDN0ajRHbjBnNDEyQ3E0djR1bU1qbzQ4YUYyV3BNd0JBYzhSdHdZ?=
- =?utf-8?B?SG9qcUZrb3VCNU1ZaFZjUzB1cmpUSEp1OWRTOXZWSFdDUGtpSDhxN1VhZjJj?=
- =?utf-8?B?QTVOdER1R0xCNmFLQkRadVNoOFdwV2Rka1p0aFZPcVpQUDRaTGh6ekR1R1pq?=
- =?utf-8?B?TjF0Yjh6WEZiUk5CUkMrMlJkcDlSRU1jSjJuNnl6NDR4Tm96MG1FL1pjUTBm?=
- =?utf-8?B?SXR1TXlnQmZOVVgwZXM2VmswalVTMWZyMitmN1EyTmozS2wwQnZqVFlMMTJP?=
- =?utf-8?B?Y3I4SDdWMlFhMmIzaVhPQ2tFekVJdmRlMEpDRDJ5NDlZVkcwVDM3VGdiQStI?=
- =?utf-8?B?U0I5eTgyRXlNVEtueXp1UGMxcXorZnhkUXFyQTdIVHJLMzBEMGdaU3BTUHps?=
- =?utf-8?B?WGZhcmE3eElrbkQ3NWFVSnlPZXVHN3diSnY5UTBlUjBFK3RYN3VyL1pvT0JE?=
- =?utf-8?B?M2lVeDFPdEptMGQ1QWlCVnJwQnN4TzhFeUo5cUwvNHFqRzJ5TS9RTzRqYXdr?=
- =?utf-8?B?blBEbUV3bFRZWGpZdVhXOEEzaFk0eVNhUTBjZnVFdDArdllEOHJrbUk5ejJ4?=
- =?utf-8?B?VithV2JZSTZySllyZHliS1Y5YlNMeVdsekI0aXRqZXB1RXhkc0RuMXhETGd4?=
- =?utf-8?B?S0w3ZFF4VmIzcC95ak9zUVVXQVF4ZWNuSUZIY2pReUt2RERnTzV5bjdobm42?=
- =?utf-8?B?QXErQ1lwWnFDT2pQQkpGZW1qYXBIbWFFOWFRdVNweVZXK0dENmpPRFJjeDN2?=
- =?utf-8?B?TE44WDBQWlpCcllkc2paVVJZMzlXazNlWTJhWHdwYkN5SWZnZG9WemoxS2Mw?=
- =?utf-8?B?aWc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 857ebeaf-0f58-4184-a30e-08dd62e24dfa
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Mar 2025 10:23:47.0189 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GNQmI/SFVqCqcG5HSSqLG+hTpivyzEYbFa3jBmXw2HJD/eoZjUQRK2utdCXr+lmm0pZhzfzRFZMi6kJFWAdCgw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7065
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/arm: Define raw write for PMU CLR registers
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
+References: <20250314-clr-v2-1-7c7220c177c9@daynix.com>
+ <CAFEAcA9yKETtDhJroC7RD5itUjsYAkj0fVXHJaUxoU_bce7Gvw@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAFEAcA9yKETtDhJroC7RD5itUjsYAkj0fVXHJaUxoU_bce7Gvw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -223,104 +104,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 3/14/2025 5:50 PM, David Hildenbrand wrote:
-> On 14.03.25 10:30, Chenyi Qiang wrote:
+On 2025/03/14 19:22, Peter Maydell wrote:
+> On Fri, 14 Mar 2025 at 08:13, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >>
+>> Raw writes to PMCNTENCLR and PMCNTENCLR_EL0 incorrectly used their
+>> default write function, which clears written bits instead of writes the
+>> raw value.
 >>
->> On 3/14/2025 5:00 PM, David Hildenbrand wrote:
->>> On 14.03.25 09:21, Chenyi Qiang wrote:
->>>> Hi David & Alexey,
->>>
->>> Hi,
->>>
->>>>
->>>> To keep the bitmap aligned, I add the undo operation for
->>>> set_memory_attributes() and use the bitmap + replay callback to do
->>>> set_memory_attributes(). Does this change make sense?
->>>
->>> I assume you mean this hunk:
->>>
->>> +    ret =
->>> memory_attribute_manager_state_change(MEMORY_ATTRIBUTE_MANAGER(mr->rdm),
->>> +                                                offset, size,
->>> to_private);
->>> +    if (ret) {
->>> +        warn_report("Failed to notify the listener the state change
->>> of "
->>> +                    "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
->>> +                    start, size, to_private ? "private" : "shared");
->>> +        args.to_private = !to_private;
->>> +        if (to_private) {
->>> +            ret = ram_discard_manager_replay_populated(mr->rdm,
->>> &section,
->>> +
->>> kvm_set_memory_attributes_cb,
->>> +                                                       &args);
->>> +        } else {
->>> +            ret = ram_discard_manager_replay_discarded(mr->rdm,
->>> &section,
->>> +
->>> kvm_set_memory_attributes_cb,
->>> +                                                       &args);
->>> +        }
->>> +        if (ret) {
->>> +            goto out_unref;
->>> +        }
->>>
-> 
-> We should probably document that memory_attribute_state_change() cannot
-> fail with "to_private", so you can simplify it to only handle the "to
-> shared" case.
-
-Yes, "to_private" branch is unnecessary.
-
-> 
->>>
->>> Why is that undo necessary? The bitmap + listeners should be held in
->>> sync inside of
->>> memory_attribute_manager_state_change(). Handling this in the caller
->>> looks wrong.
+>> PMINTENCLR and PMINTENCLR_EL1 are similar registers, but they instead
+>> had ARM_CP_NO_RAW. target/arm/cpregs.h suggests this flag usage is
+>> inappropriate:
+>>> Flag: Register has no underlying state and does not support raw access
+>>> for state saving/loading; it will not be used for either migration or
+>>> KVM state synchronization. Typically this is for "registers" which are
+>>> actually used as instructions for cache maintenance and so on.
 >>
->> state_change() handles the listener, i.e. VFIO/IOMMU. And the caller
->> handles the core mm side (guest_memfd set_attribute()) undo if
->> state_change() failed. Just want to keep the attribute consistent with
->> the bitmap on both side. Do we need this? If not, the bitmap can only
->> represent the status of listeners.
+>> PMINTENCLR and PMINTENCLR_EL1 have underlying states and can support
+>> raw access for state saving/loading. Flagging a register with
+>> ARM_CP_NO_RAW has a side effect that hides it from GDB.
 > 
-> Ah, so you meant that you effectively want to undo the attribute change,
-> because the state effectively cannot change, and we want to revert the
-> attribute change.
+> No, the CLR registers don't have their own underlying state:
+> all the state is handled by the SET registers, and it just
+> happens that you can read it via the CLR registers.
 > 
-> That makes sense when we are converting private->shared.
+>> Properly set raw write functions and drop the ARM_CP_NO_RAW flag from
+>> PMINTENCLR and PMINTENCLR_EL1.
 > 
-> 
-> BTW, I'm thinking if the orders should be the following (with in-place
-> conversion in mind where we would mmap guest_memfd for the shared memory
-> parts).
-> 
-> On private -> shared conversion:
-> 
-> (1) change_attribute()
-> (2) state_change(): IOMMU pins shared memory
-> (3) restore_attribute() if it failed
-> 
-> On shared -> private conversion
-> (1) state_change(): IOMMU unpins shared memory
-> (2) change_attribute(): can convert in-place because there are not pins
-> 
-> I'm wondering if the whole attribute change could actually be a
-> listener, invoked by the memory_attribute_manager_state_change() call
-> itself in the right order.
-> 
-> We'd probably need listener priorities, and invoke them in reverse order
-> on shared -> private conversion. Just an idea to get rid of the manual
-> ram_discard_manager_replay_discarded() call in your code.
+> I think the correct fix is to mark all the CLR registers as NO_RAW.
 
-Good idea. I think listener priorities can make it more elegant with
-in-place conversion. And the change_attribute() listener can be given a
-highest or lowest priority. Maybe we can add this change in advance
-before in-place conversion available.
+My understanding is that ARM_CP_ALIAS is ignored for KVM to avoid making 
+an assumption what aliases KVM implement at cost of migrating one state 
+multiple times. The CLR registers should also remain as possible 
+sources/targets of raw values.
+
+Regards,
+Akihiko Odaki
 
 > 
+> thanks
+> -- PMM
 
 
