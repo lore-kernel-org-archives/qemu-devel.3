@@ -4,100 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B7A3C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 16:08:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57348C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 16:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt7Yz-0003rv-Hv; Fri, 14 Mar 2025 12:07:10 -0400
+	id 1tt82M-0003US-Bf; Fri, 14 Mar 2025 12:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1tt7Yy-0003rH-0u
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:07:08 -0400
-Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tt82L-0003UF-0V
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:37:29 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1tt7Ys-0005eV-U8
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:07:07 -0400
-Received: by mail-qv1-xf31.google.com with SMTP id
- 6a1803df08f44-6e8f06e13a4so29826876d6.0
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:06:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tt82J-0001BF-9y
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:37:28 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-223a7065ff8so64370695ad.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=konsulko.com; s=google; t=1741968419; x=1742573219; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=3bXIWMAxZplKw7lGSDS09UCMaChdlmyHIWbWcmiQFak=;
- b=cyf9PlWA4Rnh/b+y+Szc8or8Czdee4Bv/SJtvBiqILXPztWsdlmcJ+rDfUWBnoWYNB
- 1tK6WezSQu2y7zZM8N7sU2c9CK7PIvYWOAOLP7BgVrLFYPfyG0Kw5shqmu0S4cWw5ytk
- o+GIbldazC28PC8BjDO7LD4vlqvXCtLmCUPYk=
+ d=linaro.org; s=google; t=1741970244; x=1742575044; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d66fnYWtIlocNzPnt9W8FJ0gwEYCu1jy520RKLdewqY=;
+ b=aWcv/M6ziBxRNR4bhIjzSZKhSj6bwe2tHfoSDBxvRfZiwS6RhEZ/mSY8bzvwrlKtWz
+ OGrx0w2tbeR0CAmaaV1bpd7OO4JwicLHRafv/KfxOGBRzcQKLgQvmNICZGN60BTnGpS/
+ 5MyhaTjpDy5zE6vmCIWduH9i1Xf06M7LKGmYL6jYmelS3HTFKdBIjb687BN8zuSP7oJi
+ Zz/KwqGwnwfJon9S+gcQMOt3BdsgVkihBCH905F8GRsyCaSmNJ2cDee14FqTKP+2jXpj
+ jkknV/zBBxkSabIsX4RMdnsap9M48MSd4Gfx4TK/eydOBrRDQt3AUbc4ROXv3JJLuyxt
+ weNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741968419; x=1742573219;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3bXIWMAxZplKw7lGSDS09UCMaChdlmyHIWbWcmiQFak=;
- b=LMGif3Y+vqyshNSiC8eIkOMCvr/mi82tA+aQu/h+VIDBDpJ70mwPvI/LBTzBk808Vr
- 2yguFdX3JOtXVXSctB2I/6A77W82Bwne21pKubuij1p0Ajs+914JWCFHa4cYLsxadyrD
- rWSUEzFpRrGxCwTluJ0P02+kzc01JSKvBM6uODYH4pXZCfrYcHX5iqdSdOBPo/ZhwnuK
- Z9231B+M3x5r7ysFiYE+bhoFQz5Wg1r/gflns86OyPg9dltB05VPa1lhGqlCeDF+rMlB
- vtZ8c10MLvxD9pWfWYYpeQyAOG7EKxaFtalztgq8GacFbUOEvoYIJVVt5QHpUwo9uGW8
- te0w==
+ d=1e100.net; s=20230601; t=1741970244; x=1742575044;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d66fnYWtIlocNzPnt9W8FJ0gwEYCu1jy520RKLdewqY=;
+ b=r1NKWH/7W4MiO+77XLJ8mhNpdDxSFhR+m0eJJmoaOdC7iPWY3yyxPCfaujxYxKRF66
+ DAh+k0Uj+kL0C2kamdW4zozZ13VF67IEYU3V0tH2x64BMmYJPGqUByVkhbOSW8MN+m8T
+ W0vfgzjUOZpMYeaqGH8I3WQFnY3WLqqFRUt4qEpqvWIBiKDKukj0qy+hIGiPbYOrtmDV
+ N2D/EBBxw1TCnFL/N8dLd7mw9x8AIM+csew48J21c3lzwAW+Ilpp9MmkKzFRrzApiZju
+ hsDa+gG2o8o/VZy/k8/yoFOqMlutez2vCek6qR5oZNndvEYPdqskGA2I9g9HXEargVQA
+ GG7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5fLQhD7cKTfxvG3bxyK6laOkYHoM4UIUUwf88zA45RshSDyomjayE3UHSKlDhWMuzmL7zPxRB70tK@nongnu.org
-X-Gm-Message-State: AOJu0YyCb4u9fOhf0unmpX9/zqy2lgs5ntU4zFvBaPUhYUS/SIlbXOPR
- llgeLOAS+2sOURb2cc23bfqwqdEX2CmGUI6lWdM/d9prrdAiEhBQh4N4Jb5sFSk=
-X-Gm-Gg: ASbGncsmOC1izQ1jdDwzZ3QjBKxXN8masIxdTiZg6b+daqFvX1/8hO6FHcUev6em/KU
- hu91wq1IZuqrxnm/kCYRmETPe1jyRGPbnUO6Neo/Gf6HGZ7SgF9jFVdDRjRVJusfvxumvpWmvbj
- hdrIY5+dSiFctU5ZAGHW849325JPGvEmurauDsL8R4qHLZ4ND1NDb5K0tVAR3taJAoz2YhVlItB
- 2kMFLicpGZVc44hjGnIbmDurA5lxBSfWNP6fRuEPu2FkGNTtxfZ7Yki8qdjENir/dp9c9IsE1cf
- 5zNYMKUWPoHcYwD6dx3HpxjJS+SyHXOcULEKpZYODOpuuQ==
-X-Google-Smtp-Source: AGHT+IEbpvWe/ihnPP3FJ6z5MtB8KQGI/IcDvYGpot8IoY4f1XtuxkSamlrz0+YAUmBlL7n/gOZsvw==
-X-Received: by 2002:a05:6214:ac9:b0:6e2:3761:71b0 with SMTP id
- 6a1803df08f44-6eaeabde063mr39558596d6.5.1741968418866; 
- Fri, 14 Mar 2025 09:06:58 -0700 (PDT)
-Received: from bill-the-cat ([187.192.142.234])
+ AJvYcCVjE3GpW2saVKnAEQJdIs9okWRqSgZLOFGgujKUB4mN0OzsmPDi5asdwZaR1BEEhd3mSVNdUMN3+FvL@nongnu.org
+X-Gm-Message-State: AOJu0YxeWGF+3LBdLmNuM4AWgpgAF2g5JF4BDoVDYQ0vlsThRCnWUi0w
+ xR1tiRH9nFPBRjlhL/gZe/VL5jS5AaOvc9JSut2TOfeJg+eon7d1VNmyytOahZw=
+X-Gm-Gg: ASbGncs9MTxH+//zbhBNRlE7JY49e+lIOUiMIoCMJkV0LGuMSBRhmw7BBcAYJW6mTzZ
+ MBdPVIHg9H7CeJltNJjMpcLQPe73QQK8O15dKktirAsdDzYRWHjeWSHF59CB3pinguJ/5XDPQek
+ 5isNH6lNQUzT37yCwnjZmLt8xssO5V7MtZ4SxrBssqzMsKLHdTOUyLsZPu/1hqyvyHufDzX4X6W
+ Ka3xt/I901SByUyN8UktrdSrbw5of8GKkQ/W+3nayF1/+0deQHKv3krg26FQfdf73AV4wrGrQMh
+ Z3mHHqkdOuwiPTW16pxabgqBBtEKVOISw0dA50gzFNFCduWrH9/p4ASeVeHSKCFYVTE7r0cGPjJ
+ nlnj2hx+2
+X-Google-Smtp-Source: AGHT+IGs1RoqVtgGdML3JflkrSI5WW7kA9f/aIY5RhO/hzcdvqitfx3VeNERyRMKsFmhCPdQSkatxA==
+X-Received: by 2002:a17:902:e784:b0:224:5a8:ba29 with SMTP id
+ d9443c01a7336-225e0b48377mr40764525ad.43.1741970243575; 
+ Fri, 14 Mar 2025 09:37:23 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6eade3501ebsm25537636d6.116.2025.03.14.09.06.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 09:06:57 -0700 (PDT)
-Date: Fri, 14 Mar 2025 10:06:52 -0600
-From: Tom Rini <trini@konsulko.com>
-To: Simon Glass <sjg@chromium.org>
-Cc: U-Boot Mailing List <u-boot@lists.denx.de>, Bin Meng <bmeng.cn@gmail.com>,
- Andrew Goodbody <andrew.goodbody@linaro.org>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Angelo Dureghello <angelo@kernel-space.org>,
- Guillaume La Roque <glaroque@baylibre.com>,
- Heinrich Schuchardt <xypron.glpk@gmx.de>,
- Igor Opaniuk <igor.opaniuk@gmail.com>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- Julien Masson <jmasson@baylibre.com>,
- Julius Lehmann <lehmanju@devpi.de>, Love Kumar <love.kumar@amd.com>,
- Marek Vasut <marek.vasut+renesas@mailbox.org>,
- Martyn Welch <martyn.welch@collabora.com>,
- Mattijs Korpershoek <mkorpershoek@baylibre.com>,
- Maximilian Brune <maximilian.brune@9elements.com>,
- Moritz Fischer <moritzf@google.com>,
- Patrick Rudolph <patrick.rudolph@9elements.com>,
- Philip Oberfichtner <pro@denx.de>,
- Quentin Schulz <quentin.schulz@cherry.de>,
- Richard Weinberger <richard@nod.at>, Stephen Warren <swarren@nvidia.com>,
- Stephen Warren <swarren@wwwdotorg.org>,
- Sughosh Ganu <sughosh.ganu@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 00/47] x86: Improve operation under QEMU
-Message-ID: <20250314160652.GS2640854@bill-the-cat>
-References: <20250306160428.3041057-1-sjg@chromium.org>
- <20250307142255.GL2640854@bill-the-cat>
- <CAFLszTgtYsVQW-kETzUAdvJvAT6fN_53TeoN7o8wu52Ze3u56Q@mail.gmail.com>
+ 41be03b00d2f7-af56ea7bd0csm2915876a12.47.2025.03.14.09.37.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 14 Mar 2025 09:37:23 -0700 (PDT)
+Message-ID: <27446562-38b0-46a1-8975-1c4ce24cf4c3@linaro.org>
+Date: Fri, 14 Mar 2025 09:37:21 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="M0o1PJS62GQK348u"
-Content-Disposition: inline
-In-Reply-To: <CAFLszTgtYsVQW-kETzUAdvJvAT6fN_53TeoN7o8wu52Ze3u56Q@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
- envelope-from=trini@konsulko.com; helo=mail-qv1-xf31.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 25/37] common-user: Split out watchpoint-stub.c
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, pbonzini@redhat.com
+References: <20250313034524.3069690-1-richard.henderson@linaro.org>
+ <20250313034524.3069690-26-richard.henderson@linaro.org>
+ <36f7e651-4df6-457d-a7ef-df7a7c4b2570@linaro.org>
+ <00d707e4-5e60-43fc-b372-72336d7af293@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <00d707e4-5e60-43fc-b372-72336d7af293@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,105 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/13/25 03:39, Philippe Mathieu-Daudé wrote:
+>>> --- /dev/null
+>>> +++ b/common-user/watchpoint-stub.c
+>>> @@ -0,0 +1,28 @@
+>>> +/*
+>>> + * CPU watchpoint stubs
+>>> + *
+>>> + * Copyright (c) 2003 Fabrice Bellard
+>>> + * SPDX-License-Identifier: LGPL-2.1-or-later
+>>> + */
+>>> +
+>>> +#include "qemu/osdep.h"
+>>> +#include "hw/core/cpu.h"
+>>> +
+>>> +int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+>>> +                          int flags, CPUWatchpoint **watchpoint)
+>>> +{
+>>> +    return -ENOSYS;
+>>> +}
+>>> +
+>>> +int cpu_watchpoint_remove(CPUState *cpu, vaddr addr, vaddr len, int flags)
+>>> +{
+>>> +    return -ENOSYS;
+>>> +}
+>>> +
+>>> +void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *wp)
+>>> +{
+>>
+>> Again, can this be elide? Otherwise better use g_assert_not_reached().
+> 
+> We can, including:
+> 
+> -- >8 --
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index dba1b3ffef..54d3879c56 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7545,4 +7545,6 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+>       env->dr[7] = DR7_FIXED_1;
+> +#ifndef CONFIG_USER_ONLY
+>       cpu_breakpoint_remove_all(cs, BP_CPU);
+>       cpu_watchpoint_remove_all(cs, BP_CPU);
+> +#endif
 
---M0o1PJS62GQK348u
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+But do we really want to add all those ifdefs?
 
-On Fri, Mar 14, 2025 at 02:44:35PM +0000, Simon Glass wrote:
-> Hi Tom,
->=20
-> On Fri, 7 Mar 2025 at 14:23, Tom Rini <trini@konsulko.com> wrote:
-> >
-> > On Thu, Mar 06, 2025 at 09:03:27AM -0700, Simon Glass wrote:
-> >
-> > > U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but =
-it
-> > > is not perfect.
-> > >
-> > > With both builds, executing the VESA ROM causes an intermittent hang,=
- at
-> > > least on some AMD CPUs.
-> > >
-> > > With qemu-x86_64 kvm cannot be used since the move to long mode (64-b=
-it)
-> > > is done in a way that works on real hardware but not with QEMU. This
-> > > means that performance is 4-5x slower than it could be, at least on my
-> > > CPU.
-> > >
-> > > We can work around the first problem by using Bochs, which is anyway a
-> > > better choice than VESA for QEMU. The second can be addressed by using
-> > > the same descriptor across the jump to long mode.
-> > >
-> > > With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
-> > >
-> > > In v3 some e820 patches are included to make booting reliable and avo=
-id
-> > > ACPI tables being dropped. Also, several MTTR problems are addressed,=
- to
-> > > support memory sizes above 4GB reliably.
-> >
-> > Do you plan to rebase the prerequisite series' this requires so that it
-> > can be merged?
->=20
-> Here's my understanding of where things are:
->=20
-> 1. You rejected the membuf series and my replies to try to resolve
-> that haven't gone anywhere yet. So your tree doesn't have any tests
-> for that code and still has the old naming.
 
-https://patchwork.ozlabs.org/comment/3473898/ is a well thought out not
-gratuitous summary of why the series as it stands is a step in the wrong
-direction. Tests are good. They're not a reason to pull an otherwise bad
-series. This series should be rebased to not depend on that series. The
-tests from the other series should be split out.
-
-> 2. I sent the first part of the PXE series so you could apply that.
-
-Yes, I should be applying that next week.
-
-> 3. You rejected the second part of this series because it didn't
-> include support for lwip without cmdline. I offered to handle that
-> case later but I'm pretty sure you rejected that too.
-
-That's not how I would characterize it, no. I said you should probably
-focus on sandbox + lwip, since you're the sandbox guru and ask Jerome to
-do the net_loop-alike thing, since he's one of the network custodians
-and the lwip person. I was trying to direct you to where your efforts
-might be most useful but if you insist on instead doing the
-net_loop-alike part and Jerome ack's it, that's fine.
-
-> 4. This series is now marked 'changes requested' but the only feedback
-> I see is in the RFC patch.
-
-Yes, rebase to something that can be applied is a change I've requested.
-Because my feedback was "Do you plan to rebase the prerequisite series'
-this requires so that it can be merged?". I would have otherwise merged
-it by now.
-
-Patchwork reflects mainline status.
-
---=20
-Tom
-
---M0o1PJS62GQK348u
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCgAdFiEEGjx/cOCPqxcHgJu/FHw5/5Y0tywFAmfUVBIACgkQFHw5/5Y0
-tyxRNQv+JUfeU9XnoR0ccrvsc10nUJvylokveHpsNTWamOc5xnrCCw6zhoweIFCz
-ahtPpa0NjX9iMpafqhi41cIOAAbIn0ICN5F2CKZ5HIVT1f7b7esDaanJU+eB5bDM
-u06wuYuvUeWtcQpytnBy4qu2m/udKU8i5H9ppqTStrxkASBctHJH6vI86yxUpSwM
-eunQ5Wkj/I16YdO/tnAFcLBI0aR3AGB6spF3Qz0opNER7RNh8kw265QOyGfoMqJL
-L/PVi5ThwH98xD1yTWtHPDOAjTAjmezGcRezG66WkAooL+Z/iZyImLnkk4vf1wPQ
-XSGJxzMjeb25/Ihf91YDs9JyL77/18Gu4oZIWGdEHHfiDMrv0Z97QXJpRU5gAjhI
-hTUOs6CoP3p8EuZR2Fx1IC/FkpF+XumtXGLvuN393ZjwFwgqisqoz9cX7E7BPT4u
-hF57ykTWLg+0/0+vpcBoXM87UC67IIN4VarJyqj6/eTWDBfENXgaUnsXVuRzTeVx
-6+wbpGLs
-=n6af
------END PGP SIGNATURE-----
-
---M0o1PJS62GQK348u--
+r~
 
