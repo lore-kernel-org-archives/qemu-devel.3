@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00051C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 14:50:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59373C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 14:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt6LM-0003yi-I1; Fri, 14 Mar 2025 10:49:00 -0400
+	id 1tt6LH-0003xd-8c; Fri, 14 Mar 2025 10:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tt6LK-0003yC-IY
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:48:58 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tt6LE-0003wX-D0
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:48:52 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tt6LI-0001nl-Ic
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:48:58 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tt6LC-0001mf-IG
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:48:52 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5A7FD1F453;
- Fri, 14 Mar 2025 14:48:37 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6865A1F84B;
+ Fri, 14 Mar 2025 14:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741963717; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741963715; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y17d/mTD60kA1nAKDtMTFIqWkNzLBmZZTvec22zZvys=;
- b=IcBwVrVQxMk2LV+mjXlpc18aq+5+Zp6Ba6jkaa8xHvy7dGfgHLw+VWc7TvlBre1zZcwp6F
- xMxoSWXyg06obO/OaJoZ2BomITEipgG/5Jv4hA4ty666tPXX6BnRSQwU3pArK8V7mi5M7H
- TmekhuK0zNQqAKdT1C3L9tb6FKQJkac=
+ bh=i2FX6fCHSAtfJRNiMdzoFd+Ca6UJI492RJTWWUu75ZY=;
+ b=XFWiTLyhx7oOmNe2XT+ouFQ2ihilj4cl4Sga1M3l+oYNCVRS2hLz+L08OHzC506edwSmee
+ N1dD0/Lu4bcmb/Ypxnw5NuShIThNj6W1s18QeQB19Pz0/DFnh5BzwJd33uI25v2N+Kjtge
+ zqGdRdJJbASH06wcRgS5KgrcSrlk3wM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741963717;
+ s=susede2_ed25519; t=1741963715;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y17d/mTD60kA1nAKDtMTFIqWkNzLBmZZTvec22zZvys=;
- b=gHmplMjgTZZXe/i2PnJ000z7C+P7KLS097K9yK+YMPU7Gp2m8/NLIBrviO+MqMCsgd4FGl
- nCJ+uB6/3dIzWPDQ==
+ bh=i2FX6fCHSAtfJRNiMdzoFd+Ca6UJI492RJTWWUu75ZY=;
+ b=cC9KkK1hLDzY/Cji5LVfZJXYIpZ2NdMHEMZ9VOTu/TgfjQka4WYvPL52GfPEgIlBHMEDFr
+ oKhpTFt00sWHkhAg==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IcBwVrVQ;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gHmplMjg
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XFWiTLyh;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cC9KkK1h
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1741963717; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1741963715; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y17d/mTD60kA1nAKDtMTFIqWkNzLBmZZTvec22zZvys=;
- b=IcBwVrVQxMk2LV+mjXlpc18aq+5+Zp6Ba6jkaa8xHvy7dGfgHLw+VWc7TvlBre1zZcwp6F
- xMxoSWXyg06obO/OaJoZ2BomITEipgG/5Jv4hA4ty666tPXX6BnRSQwU3pArK8V7mi5M7H
- TmekhuK0zNQqAKdT1C3L9tb6FKQJkac=
+ bh=i2FX6fCHSAtfJRNiMdzoFd+Ca6UJI492RJTWWUu75ZY=;
+ b=XFWiTLyhx7oOmNe2XT+ouFQ2ihilj4cl4Sga1M3l+oYNCVRS2hLz+L08OHzC506edwSmee
+ N1dD0/Lu4bcmb/Ypxnw5NuShIThNj6W1s18QeQB19Pz0/DFnh5BzwJd33uI25v2N+Kjtge
+ zqGdRdJJbASH06wcRgS5KgrcSrlk3wM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1741963717;
+ s=susede2_ed25519; t=1741963715;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y17d/mTD60kA1nAKDtMTFIqWkNzLBmZZTvec22zZvys=;
- b=gHmplMjgTZZXe/i2PnJ000z7C+P7KLS097K9yK+YMPU7Gp2m8/NLIBrviO+MqMCsgd4FGl
- nCJ+uB6/3dIzWPDQ==
+ bh=i2FX6fCHSAtfJRNiMdzoFd+Ca6UJI492RJTWWUu75ZY=;
+ b=cC9KkK1hLDzY/Cji5LVfZJXYIpZ2NdMHEMZ9VOTu/TgfjQka4WYvPL52GfPEgIlBHMEDFr
+ oKhpTFt00sWHkhAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D7144132DD;
- Fri, 14 Mar 2025 14:48:35 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2E306132DD;
+ Fri, 14 Mar 2025 14:48:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WMN3JsNB1GeVPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Mar 2025 14:48:35 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GFnTOMFB1GeVPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Mar 2025 14:48:33 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Steve Sistare <steven.sistare@oracle.com>,
- andrey.drobyshev@virtuozzo.com
-Subject: [PULL 4/4] hw/qxl: fix cpr
-Date: Fri, 14 Mar 2025 11:48:24 -0300
-Message-Id: <20250314144824.1707-5-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	Steve Sistare <steven.sistare@oracle.com>
+Subject: [PULL 3/4] hw/loader: fix roms during cpr
+Date: Fri, 14 Mar 2025 11:48:23 -0300
+Message-Id: <20250314144824.1707-4-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250314144824.1707-1-farosas@suse.de>
 References: <20250314144824.1707-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 5A7FD1F453
-X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 6865A1F84B
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
@@ -102,18 +101,20 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,105 +138,39 @@ then loads the preserved contents of the region from vmstate.
 
 During CPR, memory regions are preserved in place, then the realize
 method initializes the regions contents, losing the old contents.  To
-fix, skip writes to the qxl memory regions during CPR load.
+fix, skip the re-init during CPR.
 
-Reported-by: andrey.drobyshev@virtuozzo.com
-Tested-by: andrey.drobyshev@virtuozzo.com
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <1741380954-341079-5-git-send-email-steven.sistare@oracle.com>
+Message-ID: <1741380954-341079-4-git-send-email-steven.sistare@oracle.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/display/qxl.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ hw/core/loader.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index 2efdc77e61..da14da5209 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -30,6 +30,7 @@
- #include "qemu/module.h"
- #include "hw/qdev-properties.h"
- #include "system/runstate.h"
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 332b879a0b..ce6ff1b52e 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -51,6 +51,7 @@
+ #include "trace.h"
+ #include "hw/hw.h"
+ #include "disas/disas.h"
 +#include "migration/cpr.h"
  #include "migration/vmstate.h"
- #include "trace.h"
+ #include "monitor/monitor.h"
+ #include "system/reset.h"
+@@ -1029,7 +1030,9 @@ static void *rom_set_mr(Rom *rom, Object *owner, const char *name, bool ro)
+     vmstate_register_ram_global(rom->mr);
  
-@@ -333,6 +334,10 @@ static void init_qxl_rom(PCIQXLDevice *d)
-     uint32_t fb;
-     int i, n;
- 
-+    if (cpr_is_incoming()) {
-+        goto skip_init;
-+    }
-+
-     memset(rom, 0, d->rom_size);
- 
-     rom->magic         = cpu_to_le32(QXL_ROM_MAGIC);
-@@ -390,6 +395,7 @@ static void init_qxl_rom(PCIQXLDevice *d)
-             sizeof(rom->client_monitors_config));
-     }
- 
-+skip_init:
-     d->shadow_rom = *rom;
-     d->rom        = rom;
-     d->modes      = modes;
-@@ -403,6 +409,9 @@ static void init_qxl_ram(PCIQXLDevice *d)
- 
-     buf = d->vga.vram_ptr;
-     d->ram = (QXLRam *)(buf + le32_to_cpu(d->shadow_rom.ram_header_offset));
-+    if (cpr_is_incoming()) {
-+        return;
-+    }
-     d->ram->magic       = cpu_to_le32(QXL_RAM_MAGIC);
-     d->ram->int_pending = cpu_to_le32(0);
-     d->ram->int_mask    = cpu_to_le32(0);
-@@ -539,6 +548,10 @@ static void interface_set_compression_level(QXLInstance *sin, int level)
- 
-     trace_qxl_interface_set_compression_level(qxl->id, level);
-     qxl->shadow_rom.compression_level = cpu_to_le32(level);
-+    if (cpr_is_incoming()) {
-+        assert(qxl->rom->compression_level == cpu_to_le32(level));
-+        return;
-+    }
-     qxl->rom->compression_level = cpu_to_le32(level);
-     qxl_rom_set_dirty(qxl);
- }
-@@ -997,7 +1010,8 @@ static void interface_set_client_capabilities(QXLInstance *sin,
-     }
- 
-     if (runstate_check(RUN_STATE_INMIGRATE) ||
--        runstate_check(RUN_STATE_POSTMIGRATE)) {
-+        runstate_check(RUN_STATE_POSTMIGRATE) ||
-+        cpr_is_incoming()) {
-         return;
-     }
- 
-@@ -1200,6 +1214,10 @@ static void qxl_reset_state(PCIQXLDevice *d)
- {
-     QXLRom *rom = d->rom;
- 
-+    if (cpr_is_incoming()) {
-+        return;
-+    }
-+
-     qxl_check_state(d);
-     d->shadow_rom.update_id = cpu_to_le32(0);
-     *rom = d->shadow_rom;
-@@ -1370,8 +1388,11 @@ static int qxl_add_memslot(PCIQXLDevice *d, uint32_t slot_id, uint64_t delta,
-     memslot.virt_start = virt_start + (guest_start - pci_start);
-     memslot.virt_end   = virt_start + (guest_end   - pci_start);
-     memslot.addr_delta = memslot.virt_start - delta;
--    memslot.generation = d->rom->slot_generation = 0;
--    qxl_rom_set_dirty(d);
+     data = memory_region_get_ram_ptr(rom->mr);
+-    memcpy(data, rom->data, rom->datasize);
 +    if (!cpr_is_incoming()) {
-+        d->rom->slot_generation = 0;
-+        qxl_rom_set_dirty(d);
++        memcpy(data, rom->data, rom->datasize);
 +    }
-+    memslot.generation = d->rom->slot_generation;
  
-     qemu_spice_add_memslot(&d->ssd, &memslot, async);
-     d->guest_slots[slot_id].mr = mr;
+     return data;
+ }
 -- 
 2.35.3
 
