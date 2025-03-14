@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D8FC35FF1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 07:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DED2C35FF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 08:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tszfl-0002ML-8e; Fri, 14 Mar 2025 03:41:37 -0400
+	id 1tt00T-0006Rd-QK; Fri, 14 Mar 2025 04:03:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tszfj-0002LQ-Ev
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:41:35 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tszfh-0007f2-BP
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 03:41:34 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22355618fd9so36256045ad.3
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 00:41:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1741938091; x=1742542891; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=loRbL1QacVm6MsP7dUN2VAmZuHSFiZwpkSE40StNMUQ=;
- b=I89XPBnkxjq4iDS+qJzpkv7dKscurVRzGpJGbLIFHjrKJly/qgNYHSpA/p1VMSJxsy
- 2myXxx8PbIwzckR1pYyu3Q9ME/q7mHY+SxHHjBILKWGiJ4KgJXrehBNcpthageQla6ir
- 4vyt6wjD6T8Ray3aB1JuOoTHI4vxs1WQN4jjoFVwm55CfMa10s147CWVf48nIoSd/XoG
- HrtYfgdNo5lfU8VaMGvk9/eNDx2NXMAaraITyqgcUyKVn677uBFCVEajeTT5giT/XGzg
- ISD1zdGf/gS7DE8h6+MAvkkRSVaSB4FtUrjtAip9C11qpeY1J0IwgJSYumJWVYB3ZjeV
- KpZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741938091; x=1742542891;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=loRbL1QacVm6MsP7dUN2VAmZuHSFiZwpkSE40StNMUQ=;
- b=wbXLsePpjJQDDN4X6rXcZTsYL4HqMURLOdc3gipeVxniv1dC5ipQOoNzodd3vKG0sT
- RKgkVtJrU9pKrHGJDUdsglqknk9jDQ89FSMBpzAdJlq76ML00RlcMYpOJ0bBDUqcnPKt
- /bCwA6MaxIDZRyXm4N96cUAv8CZyebeOPalk6ujmpKDnpKPN9HOlUuxb/UwcdT/NE3vS
- NJpWfU95pDDqeaiKPdKD9yMcIVaKTfk3ZUcSr+YOpo9FJqaw1sJhe1789B1wFGS+X/yL
- J/pj9AwU1K96v3NhYXygOji8DnqqMvcDab84kofEItqxr49qWHkqNRM9poPLGd8s6OFb
- NyLw==
-X-Gm-Message-State: AOJu0YwUwLWqrGFNt15QE0d0W1bUirOsFdHGPpRPD+HaSLNGwKtX6+bT
- kjyMXpimMPG1WrA/gE0QjAV3Y/ruhQy8v8zVLD8JLjYE90dOxUCs4iDpZoP0
-X-Gm-Gg: ASbGnctheJbUP5geQXLU6PPJwQthZFwZsy9mXuDzX6o2cO49GZSOoiJlQKeH9HaW+DU
- ruhVu/zBVAo+MVjjBJvba4PMKg4v/rgGCe0F1aVf5pMwe689uoGh1ccloLWWNDjA0ZyrUPsCktf
- N5Y3PmdX5lwWv0Mz/YHWtJdaAYiLZGMQZUhBpz27zPaLC9gAS++1jJ9JyZ6ZXJ6k89sjv0u5juP
- jvjijejAxYUpwljg5HZS3PpG/7V8a301sqU2BbZI4lnVLNA5zLB49pq+afGdm64gon0TQvY+uGn
- 0EMd19aBdebCKSA7X0B/XKAPmrNeSoDx1+CEUnlSCHLhOWA=
-X-Google-Smtp-Source: AGHT+IEHC/XZzbckZsnxPs/RyJu+KVf1yNM8xqh9yrPBoRgzYJlJ2hb/1De5uzbgTqjBMtE+xm3FfA==
-X-Received: by 2002:a17:902:fc44:b0:220:eade:d77e with SMTP id
- d9443c01a7336-225e0aef1f3mr22356805ad.40.1741938091251; 
- Fri, 14 Mar 2025 00:41:31 -0700 (PDT)
-Received: from wheely.local0.net ([1.146.112.81])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c688857esm24322315ad.17.2025.03.14.00.41.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 00:41:30 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1tt00M-0006QC-Vy
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:02:56 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1tt00I-00023b-Vl
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:02:52 -0400
+Received: from sslproxy06.your-server.de ([78.46.172.3])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1tt00G-0009Ak-2o for qemu-devel@nongnu.org;
+ Fri, 14 Mar 2025 09:02:48 +0100
+Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
+ by sslproxy06.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1tt00F-000Kr1-2S for qemu-devel@nongnu.org;
+ Fri, 14 Mar 2025 09:02:48 +0100
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 37066480168
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:02:48 +0100 (CET)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id PtCnEL96qUBe for <qemu-devel@nongnu.org>;
+ Fri, 14 Mar 2025 09:02:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id EB9D8480194
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:02:47 +0100 (CET)
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id CDu8IIj2nLly for <qemu-devel@nongnu.org>;
+ Fri, 14 Mar 2025 09:02:47 +0100 (CET)
+Received: from zimbra.eb.localhost (unknown [10.10.171.10])
+ by mail.embedded-brains.de (Postfix) with ESMTPSA id 36EB1480168
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:02:46 +0100 (CET)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: [PATCH 2/2] memory: suppress INVALID_MEM logs caused by debug access
-Date: Fri, 14 Mar 2025 17:41:07 +1000
-Message-ID: <20250314074107.992163-3-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250314074107.992163-1-npiggin@gmail.com>
-References: <20250314074107.992163-1-npiggin@gmail.com>
+Subject: [PATCH] hw/riscv: Fix test for microchi-icicle-kit
+Date: Fri, 14 Mar 2025 09:02:40 +0100
+Message-ID: <20250314080240.26383-1-sebastian.huber@embedded-brains.de>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Authenticated-Sender: smtp-embedded@poldi-networks.de
+X-Virus-Scanned: Clear (ClamAV 1.0.7/27576/Thu Mar 13 09:48:52 2025)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,80 +81,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Debugger-driven invalid memory accesses are not guest errors, so should
-not cause these error logs.
+Fix this test failure:
 
-Debuggers can access memory wildly, including access to addresses not
-specified by the user (e.g., gdb it might try to walk the stack or load
-target addresses to display disassembly). Failure is reported
-synchronously by the GDB protcol so the user can be notified via the
-debugger client.
+  $ QTEST_QEMU_BINARY=3D./build/qemu-system-riscv64 \
+    ./build/tests/qtest/qom-test
+  (...)
+  # slow test /riscv64/qom/amd-microblaze-v-generic executed in 2.28 \
+    secs
+  # starting QEMU: exec ./build/qemu-system-riscv64 -qtest
+    unix:/tmp/qtest-1361875.sock -qtest-log /dev/null -chardev \
+    socket,path=3D/tmp/qtest-1361875.qmp,id=3Dchar0 -mon \
+    chardev=3Dchar0,mode=3Dcontrol -display none -audio none -machine \
+    microchip-icicle-kit -accel qtest
+  **
+  ERROR:../hw/riscv/boot.c:164:riscv_load_firmware: assertion failed: \
+   (firmware_filename !=3D NULL)
+  Bail out! ERROR:../hw/riscv/boot.c:164:riscv_load_firmware: \
+    assertion failed: (firmware_filename !=3D NULL)
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Use an approach similar to riscv_find_and_load_firmware().
+
+Reported-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
 ---
- system/memory.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ hw/riscv/microchip_pfsoc.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index 4c829793a0a..960f66e8d7e 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1412,18 +1412,23 @@ bool memory_region_access_valid(MemoryRegion *mr,
- {
-     if (mr->ops->valid.accepts
-         && !mr->ops->valid.accepts(mr->opaque, addr, size, is_write, attrs)) {
--        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
--                      ", size %u, region '%s', reason: rejected\n",
--                      is_write ? "write" : "read",
--                      addr, size, memory_region_name(mr));
-+        if (attrs.debug) {
-+            /* Don't log memory errors due to debugger accesses */
-+            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-+                          ", size %u, region '%s', reason: rejected\n",
-+                          is_write ? "write" : "read",
-+                          addr, size, memory_region_name(mr));
-+        }
-         return false;
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 9068eed780..616bb63982 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -609,12 +609,14 @@ static void microchip_icicle_kit_machine_init(Machi=
+neState *machine)
      }
- 
-     if (!mr->ops->valid.unaligned && (addr & (size - 1))) {
--        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
--                      ", size %u, region '%s', reason: unaligned\n",
--                      is_write ? "write" : "read",
--                      addr, size, memory_region_name(mr));
-+        if (attrs.debug) {
-+            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-+                          ", size %u, region '%s', reason: unaligned\n",
-+                          is_write ? "write" : "read",
-+                          addr, size, memory_region_name(mr));
+=20
+     /* Load the firmware if necessary */
++    firmware_end_addr =3D firmware_load_addr;
+     if (firmware_name) {
+-        const char *filename =3D riscv_find_firmware(firmware_name, NULL=
+);
+-        firmware_end_addr =3D riscv_load_firmware(filename, &firmware_lo=
+ad_addr,
+-                                                NULL);
+-    } else {
+-        firmware_end_addr =3D firmware_load_addr;
++        char *filename =3D riscv_find_firmware(firmware_name, NULL);
++        if (filename) {
++            firmware_end_addr =3D riscv_load_firmware(filename,
++                                                    &firmware_load_addr,=
+ NULL);
++            g_free(filename);
 +        }
-         return false;
      }
- 
-@@ -1434,13 +1439,15 @@ bool memory_region_access_valid(MemoryRegion *mr,
- 
-     if (size > mr->ops->valid.max_access_size
-         || size < mr->ops->valid.min_access_size) {
--        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
--                      ", size %u, region '%s', reason: invalid size "
--                      "(min:%u max:%u)\n",
--                      is_write ? "write" : "read",
--                      addr, size, memory_region_name(mr),
--                      mr->ops->valid.min_access_size,
--                      mr->ops->valid.max_access_size);
-+        if (attrs.debug) {
-+            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-+                          ", size %u, region '%s', reason: invalid size "
-+                          "(min:%u max:%u)\n",
-+                          is_write ? "write" : "read",
-+                          addr, size, memory_region_name(mr),
-+                          mr->ops->valid.min_access_size,
-+                          mr->ops->valid.max_access_size);
-+        }
-         return false;
-     }
-     return true;
--- 
-2.47.1
+=20
+     riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
+--=20
+2.43.0
 
 
