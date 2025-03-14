@@ -4,99 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39020C35FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 14:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB40C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 14:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt6FO-0000mx-MK; Fri, 14 Mar 2025 10:42:50 -0400
+	id 1tt6HQ-0002Sk-H1; Fri, 14 Mar 2025 10:44:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tt6FG-0000jq-CW
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:42:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tt6FE-0000j9-5j
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:42:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741963355;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QIEpXX/bVXJjXBXRPS2BKidefvabtH9oOzho8bUO/5o=;
- b=dhlbrscRvvw5R6y/YWSCOa0FpkodEJZ/8+MqwyEOHyDr9icwvxaX5IytBHS10o0BevzVpN
- mJ5zLrBPQvg8oAt7euAPZQGgI8B15t5zH4Vsv7fpSyGce3yoihalIb02rOaiL54iO7ZpI3
- mRhPksDO4/9wku8OETEEogOBik8LvvU=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-jJopZxI1NbyLwuzLjtFwSg-1; Fri, 14 Mar 2025 10:42:31 -0400
-X-MC-Unique: jJopZxI1NbyLwuzLjtFwSg-1
-X-Mimecast-MFC-AGG-ID: jJopZxI1NbyLwuzLjtFwSg_1741963351
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-8556de861d4so35679839f.1
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 07:42:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tt6HN-0002JK-ST
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:44:54 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1tt6HJ-00011u-Jo
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 10:44:53 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-ac2bb7ca40bso408473366b.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 07:44:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=chromium.org; s=google; t=1741963487; x=1742568287; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=E+mmioR0JlNqITuU0MHSCr02tRyusfA2SU12RVinQJE=;
+ b=MW1GjXharW03i3aEo9Bt5sQhmPWC8SvUCWGwOugsN9OYG1Y11IzemkgAC2QJp66jkP
+ Vtte3ivdmoQlLLHBXm3lZOL+iLShtrTNbcR82hAvfpoUWfGMP8M4ah6rdVjE544yc4kb
+ cdAwIEMqfc8+dNc0V6/WkJED6PirCIwI+o4UQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741963350; x=1742568150;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QIEpXX/bVXJjXBXRPS2BKidefvabtH9oOzho8bUO/5o=;
- b=MIzyLqzNmda8UDrrYwXP7FeFjgVqd+EVzw3m7LkHTSvewZw1at757nUamO0rz9d9Rt
- VIR4I7wgcVl9FeUKN9RNmiSAaEzgxSeFzlBYef0CcYq7yiDnGxx/ySlRsUrPCZ+0fpQW
- nAaBpcnNByRQ85c2pUE9FiSgyMRAvlBxg9z/JEo5292mZzUhosLc2TrgAhsSVM5uBt0l
- VpCwwghq6hkDW2PsNi0LzCMnBzQYKlIFQZLj5irCMdu4Tru/J8HdmemCxiAuvWAWhY/9
- jf49++BuOCvVrnsz+dwywlA5RsQvMGJyxUzVlz2mxKA/s2jx73X517F/21k0bQX0+vzN
- Luxw==
+ d=1e100.net; s=20230601; t=1741963487; x=1742568287;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E+mmioR0JlNqITuU0MHSCr02tRyusfA2SU12RVinQJE=;
+ b=R2ruV6Ey82SjoRSJetjR4QEPfZ92fTHm+MDgyNA+XRcwtDFnzMxjbiPsRsZ0sBLmId
+ BWyNrqNwqBCGB+hKaycrr0RXYzjqSictREI2yGbPPlAZLncU4zPKbr2br6Ylsx/g4nzR
+ isMxgjd/UTGr37HAAtpFmDbYQFulPpbDZDN9LcaWO55milYjGGFpisoAbWCdcwciCDQ2
+ f5RXmXaKSTp2prMK34mpLb6mpCo9hnditKULYidcUvlovGsnBV+z+kSKlnjsVqnU07zB
+ 0INKa30qaJkuVQVNWUKo/JjGzzWUCE62ah7VOB+EIVnFI4juSIOXArb2rK2C0op3rg8a
+ 3sXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXTr4CvCwyjiWRJTnQacVa6eGrbJbCIVBqlQE2DAQaotQE5rFdL0SV1ieI6/3TJO2j96SOi+iKaEQLu@nongnu.org
-X-Gm-Message-State: AOJu0YxM7fipGukXMWDeqe/mBYHzXByIrlVmTP70pu30uHzm3zkzT68W
- QnAVFOoBgDKgPSSZLPjiKVf2XbuoNRmRt1Vh7SXvwnEyBGtfigiWubwOBN7eEU73AZDBjpKmOL7
- iT4Lp+r9OdrshrcHC08/UUk+VHPppffRSXRmia4AMlSMLPjsXmDBykR/Il9QF
-X-Gm-Gg: ASbGnctlZKlE/EymDvSYz4vlb0npETyn9c0xLgp/BPwAP8Qj82Ls03kpnHtLdkYu1z4
- AGz/xcKudxgMEcT7lgmX4ZpTMVyuh7T3XtUJMyiBd/fPj7wbhSb071sEfHGsqOFr5xQyqtkMSuY
- avAd6hEwwv7h53fUGNQeXTnCDiR72PcdQ4AKvDlpRoGfK0iSEIpWdcjgUoBriEh/Xzed1lPa/BB
- Izpa8Zo8Vq4p2nCLQEcrLpmGMRVEf24/8zBpuD4C2MWc0d+qiDg6wWNTXzjSxrASHXOUTGzXhmZ
- EJF7ixUhx++GovT1cXc=
-X-Received: by 2002:a05:6e02:3f90:b0:3d4:29b5:dc0 with SMTP id
- e9e14a558f8ab-3d4839f5d28mr6092665ab.2.1741963350369; 
- Fri, 14 Mar 2025 07:42:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEeqsxTJOSasJ1hsNODDbAjIyMNLqQVfMoZEWYe0uUqu8opISNx7z87gEs6TWiVFTw6MOa4Mg==
-X-Received: by 2002:a05:6e02:3f90:b0:3d4:29b5:dc0 with SMTP id
- e9e14a558f8ab-3d4839f5d28mr6092595ab.2.1741963349727; 
- Fri, 14 Mar 2025 07:42:29 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f26382a77bsm896999173.141.2025.03.14.07.42.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 07:42:28 -0700 (PDT)
-Date: Fri, 14 Mar 2025 08:42:26 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?=
- <corvin.koehne@gmail.com>
-Subject: Re: [PATCH v2] vfio/igd: Update IGD passthrough documentation
-Message-ID: <20250314084226.6fe30233.alex.williamson@redhat.com>
-In-Reply-To: <20250313150339.358621-1-tomitamoeko@gmail.com>
-References: <20250313150339.358621-1-tomitamoeko@gmail.com>
-Organization: Red Hat
+ AJvYcCUoALfApH704Lv5dspAg8z3q7chTAWGRBatsiCy1idzcgnOliNSWH3HtGdKyOyqBQkvidB1yGKI3QBn@nongnu.org
+X-Gm-Message-State: AOJu0YwWnYvZjl1RpyJAEDFbzHEi5SsUTOrVOFpLtkDLfgoan/fBuin8
+ erzOtvi1YaCApqDfVgX0Zc16S9KE9XPo5sFnmYBOsSkCZJULDzGSBGGcnZmhnatFUSM2AlM2hqw
+ JGk3VcKdEhJFKry0ZTc6WhAot9I3f1eGDNHtM
+X-Gm-Gg: ASbGncvZcLmrYMRJVuobxAc6cYoF9mU0gEwkkiYaHMbz6zOPd+8Viw6tg0HFKwD1bQF
+ xIo9gZNdC1HeXSdj6r1BprSc7jLElh/Zw0lQ22f3A0SHl3WDJBEk821TJy2eMI6XK343hO7ca+b
+ XNj6E3SC0cFzgbJdRpyV6j0Oe6j3M0
+X-Google-Smtp-Source: AGHT+IFcB66P3WuSLfFUXPdWeMVuD9xRdhZhOB0EEFFUlsycmCKgx2K6QI/lGiEFiUOetV4myECiUCKqshSPlQSkoqs=
+X-Received: by 2002:a17:907:d92:b0:ac2:d5e6:dea7 with SMTP id
+ a640c23a62f3a-ac33017710cmr345011666b.13.1741963486995; Fri, 14 Mar 2025
+ 07:44:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250306160428.3041057-1-sjg@chromium.org>
+ <20250307142255.GL2640854@bill-the-cat>
+In-Reply-To: <20250307142255.GL2640854@bill-the-cat>
+From: Simon Glass <sjg@chromium.org>
+Date: Fri, 14 Mar 2025 14:44:35 +0000
+X-Gm-Features: AQ5f1Jp-MmYnjUxHsnfWVgj9hifY91XGM0HctUYfs31ZVaqYpc5_gyTiGM0EclQ
+Message-ID: <CAFLszTgtYsVQW-kETzUAdvJvAT6fN_53TeoN7o8wu52Ze3u56Q@mail.gmail.com>
+Subject: Re: [PATCH v4 00/47] x86: Improve operation under QEMU
+To: Tom Rini <trini@konsulko.com>
+Cc: U-Boot Mailing List <u-boot@lists.denx.de>, Bin Meng <bmeng.cn@gmail.com>, 
+ Andrew Goodbody <andrew.goodbody@linaro.org>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Angelo Dureghello <angelo@kernel-space.org>,
+ Guillaume La Roque <glaroque@baylibre.com>, 
+ Heinrich Schuchardt <xypron.glpk@gmx.de>, Igor Opaniuk <igor.opaniuk@gmail.com>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Julien Masson <jmasson@baylibre.com>, 
+ Julius Lehmann <lehmanju@devpi.de>, Love Kumar <love.kumar@amd.com>, 
+ Marek Vasut <marek.vasut+renesas@mailbox.org>,
+ Martyn Welch <martyn.welch@collabora.com>, 
+ Mattijs Korpershoek <mkorpershoek@baylibre.com>, 
+ Maximilian Brune <maximilian.brune@9elements.com>,
+ Moritz Fischer <moritzf@google.com>, 
+ Patrick Rudolph <patrick.rudolph@9elements.com>,
+ Philip Oberfichtner <pro@denx.de>, 
+ Quentin Schulz <quentin.schulz@cherry.de>, Richard Weinberger <richard@nod.at>,
+ Stephen Warren <swarren@nvidia.com>, Stephen Warren <swarren@wwwdotorg.org>, 
+ Sughosh Ganu <sughosh.ganu@linaro.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=sjg@chromium.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,24 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Mar 2025 23:03:39 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
+Hi Tom,
 
-> A previous change made the OpRegion and LPC quirks independent of the
-> existing legacy mode, update the documentation accordingly. More related
-> topics, like creating EFI Option ROM of IGD for OVMF, how to solve the
-> VFIO_DMA_MAP Invalid Argument warning, as well as details on IGD memory
-> internals, are also added.
-> 
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> ---
-> v2:
-> * Fixed typos
-> Link: https://lore.kernel.org/all/20250312155002.286841-1-tomitamoeko@gmail.com/
-> 
->  docs/igd-assign.txt | 265 ++++++++++++++++++++++++++++++++------------
->  1 file changed, 196 insertions(+), 69 deletions(-)
+On Fri, 7 Mar 2025 at 14:23, Tom Rini <trini@konsulko.com> wrote:
+>
+> On Thu, Mar 06, 2025 at 09:03:27AM -0700, Simon Glass wrote:
+>
+> > U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but it
+> > is not perfect.
+> >
+> > With both builds, executing the VESA ROM causes an intermittent hang, at
+> > least on some AMD CPUs.
+> >
+> > With qemu-x86_64 kvm cannot be used since the move to long mode (64-bit)
+> > is done in a way that works on real hardware but not with QEMU. This
+> > means that performance is 4-5x slower than it could be, at least on my
+> > CPU.
+> >
+> > We can work around the first problem by using Bochs, which is anyway a
+> > better choice than VESA for QEMU. The second can be addressed by using
+> > the same descriptor across the jump to long mode.
+> >
+> > With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
+> >
+> > In v3 some e820 patches are included to make booting reliable and avoid
+> > ACPI tables being dropped. Also, several MTTR problems are addressed, to
+> > support memory sizes above 4GB reliably.
+>
+> Do you plan to rebase the prerequisite series' this requires so that it
+> can be merged?
 
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Here's my understanding of where things are:
 
+1. You rejected the membuf series and my replies to try to resolve
+that haven't gone anywhere yet. So your tree doesn't have any tests
+for that code and still has the old naming.
+
+2. I sent the first part of the PXE series so you could apply that.
+
+3. You rejected the second part of this series because it didn't
+include support for lwip without cmdline. I offered to handle that
+case later but I'm pretty sure you rejected that too.
+
+4. This series is now marked 'changes requested' but the only feedback
+I see is in the RFC patch.
+
+Regards,
+Simon
 
