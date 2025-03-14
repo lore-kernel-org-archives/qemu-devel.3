@@ -4,136 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C3EC282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 17:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 468AAC282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 17:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt8Qz-0003J1-Lf; Fri, 14 Mar 2025 13:02:59 -0400
+	id 1tt8SF-00044x-Vh; Fri, 14 Mar 2025 13:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tt8Qe-0003D3-2E
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:02:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tt8SB-00040E-Mh
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:04:11 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tt8Qc-0004B2-0f
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:02:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1741971750;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qOXYfshuosOKEfrQLUoqo2MSqWv2OmsUad71rZA/oNY=;
- b=BxM+LTuC62oVpsWGDXWmZ2FfMhrNjlK8snZJ4VlYnyCeFRxPtR444vmr8PlcV6QrtLzb3y
- fFsuwicB1RYnWvSaWKR1Gc6ZWH6lWXQh7sUIZ6xF5jjvd5CQNyv5ASs4tSsrn9F/JcyZnO
- 1NFdSE6r5ycq/4rPSpfkMocYwP52hNo=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-pgNXQbl-NASjPOoifNRajg-1; Fri, 14 Mar 2025 13:02:28 -0400
-X-MC-Unique: pgNXQbl-NASjPOoifNRajg-1
-X-Mimecast-MFC-AGG-ID: pgNXQbl-NASjPOoifNRajg_1741971748
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ac2aa3513ccso202604366b.0
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:02:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741971747; x=1742576547;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qOXYfshuosOKEfrQLUoqo2MSqWv2OmsUad71rZA/oNY=;
- b=vFWQHvkR1jxBw2cTY8HCVgcC3l3ciFzJtxOepA9MRD1cXQ6SkdFe0z/oNhTvRWA2k9
- 1Xb2OiT86O6FMu4q5dhZJhWrdLTqLFGsaluUKEya+Wn6i9TeTfxx3gzf04Q3TzFkYDV2
- pnX0vKi3tQ0vGLBxFa4q6lrtSZbP72Pm86/DAeaIMVObjRdvrrQ3vQlMeukaEfKSKlXb
- 0WVBk0MNvT/Dp1YUyhvkLcOCcCZuyj70Q0FjLQ5UZgGEgg7gQOefsz3htdbRP23L0UKK
- pplsM2EAOvoS31R2j1uxG0EV3OQsLC3TU+H+a9TEbMixkzxHd+Ll+RtGeYmWjIin0OA3
- OlxA==
-X-Gm-Message-State: AOJu0YwLmyo8SmUsFP0GUu2R3DwXpvzDPa2C1u5kIBV94NXj+APCRns/
- WKM3sr/Crc+yQfxRAbSPLWmSFrz8k5/T9KCyLXdZzVZYSa69L+0tE2d9k5IpWTkcY29gMCXOp/P
- tkejZwAw6OTiZZ9yAK/O822QgXfbx8WlU057QKDnQzQi61rgZVO3o
-X-Gm-Gg: ASbGnctkgYUF/7Tz/8nx/zXnUSq9rdSb8XUdL/J2VgMK6PNhVpG6iCpbx6WraQmYtV5
- +XCcVtL4iy0EAQdlwF6FCZWNgM2jZdlgw6kgmmpQEPW4XRcVQiv3Qw1JxqCum4m9oElzf7FsCo7
- 5rAGRjJ1MIGLiJjkRcSV+7Nv8M+E7PlZFhZVLZNRZdkF1A17nRNENO+KPlw29j1K2B4U80eY2HS
- VAyGpCua/Q7hSl2NVWfDF8hzYxlkYIR4Qlt0CUXIp76x3LMcmKXZarIqK+cLo6g6VRZXos7wMLm
- YF6WDk39fMYlg/VVDdvk6Q==
-X-Received: by 2002:a17:906:6a0b:b0:ac3:45b5:f4cc with SMTP id
- a640c23a62f3a-ac345b5f616mr28314266b.44.1741971747397; 
- Fri, 14 Mar 2025 10:02:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHA+ippjV1f9fvVhIgKYN/qsFzA6QvvkBJbFtYzxuc4EjwZVxyr+Bup+9vkZRP8Ne213noVcw==
-X-Received: by 2002:a17:906:6a0b:b0:ac3:45b5:f4cc with SMTP id
- a640c23a62f3a-ac345b5f616mr28309266b.44.1741971746886; 
- Fri, 14 Mar 2025 10:02:26 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.122.167])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-ac314a9db94sm252364266b.171.2025.03.14.10.02.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Mar 2025 10:02:26 -0700 (PDT)
-Message-ID: <74429b0b-e012-4219-a74b-ed91fc524859@redhat.com>
-Date: Fri, 14 Mar 2025 18:02:25 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1tt8S9-0004Qp-4F
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:04:11 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZDrHK6F6Xz6JB7X;
+ Sat, 15 Mar 2025 01:01:17 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 340CE140D26;
+ Sat, 15 Mar 2025 01:03:59 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 14 Mar
+ 2025 18:03:58 +0100
+Date: Fri, 14 Mar 2025 17:03:57 +0000
+To: Dan Williams <dan.j.williams@intel.com>
+CC: Yuquan Wang <wangyuquan1236@phytium.com.cn>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH] docs/cxl: Add serial number for persistent-memdev
+Message-ID: <20250314170357.00000de3@huawei.com>
+In-Reply-To: <67d44ec5a79c1_12e31294ea@dwillia2-xfh.jf.intel.com.notmuch>
+References: <20250217112039.138650-1-wangyuquan1236@phytium.com.cn>
+ <20250220161213.000049a9@huawei.com>
+ <20250221065509-mutt-send-email-mst@kernel.org>
+ <17b91a9f.2847.1955fd23d78.Coremail.wangyuquan1236@phytium.com.cn>
+ <20250305141359.00001288@huawei.com>
+ <4752672.2b5f.19565e01b65.Coremail.wangyuquan1236@phytium.com.cn>
+ <20250312181035.00006e32@huawei.com>
+ <67d44ec5a79c1_12e31294ea@dwillia2-xfh.jf.intel.com.notmuch>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] configure: disable split_debug on Windows and on non-git
- builds
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Konstantin Kostiuk <kkostiuk@redhat.com>
-References: <20250314153824.65303-1-pbonzini@redhat.com>
- <CAFEAcA8J05Mp+VB9j+PEcB=ttpeAVZ-rJOPRAP53jhSqnp4oMA@mail.gmail.com>
- <Z9RfMALft87pBv70@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <Z9RfMALft87pBv70@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,25 +73,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/14/25 17:54, Daniel P. Berrangé wrote:
->> Same remark as on the other patch: can we have a comment
->> explaining why we disable this on Windows, please, ideally
->> with a URL of a bug report against the toolchain ?
-> 
-> Two likely candidates open a long time....
-> 
->    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=59474
->    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99973
+On Fri, 14 Mar 2025 08:44:05 -0700
+Dan Williams <dan.j.williams@intel.com> wrote:
 
-OMG...  Given this I think it should rather be reverted, and people can 
-use --extra-cflags=-gsplit-dwarf.
+> Jonathan Cameron wrote:
+> > On Wed, 5 Mar 2025 18:35:40 +0800
+> > Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+> >  =20
+> > > >=20
+> > > > On Tue, 4 Mar 2025 14:22:48 +0800
+> > > > Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+> > > >    =20
+> > > > > >=20
+> > > > > > On Thu, Feb 20, 2025 at 04:12:13PM +0000, Jonathan Cameron wrot=
+e:     =20
+> > > > > > > On Mon, 17 Feb 2025 19:20:39 +0800
+> > > > > > > Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+> > > > > > >      =20
+> > > > > > > > Add serial number parameter in the cxl persistent examples.
+> > > > > > > >=20
+> > > > > > > > Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn> =
+    =20
+> > > > > > > Looks good.  I've queued it up on my gitlab staging tree, but
+> > > > > > > Michael if you want to pick this one directly that's fine as =
+well.     =20
+> > > > > >=20
+> > > > > > See no reason to, I was not even CC'd.     =20
+> > > > >=20
+> > > > > Hi, Michael
+> > > > >=20
+> > > > > I'm sorry, this is my fault. I used "get_maintainer.pl" to check =
+this
+> > > > > patch's maintainers but it shows "No maintainers found, printing =
+recent
+> > > > > contributors".=20
+> > > > >    =20
+> > > > I usually stage up multiple series together and send on to Michael.
+> > > > So it was be being lazy for a minor change rather than anything much
+> > > > that you did wrong.
+> > > >=20
+> > > > If I get time I'll post a series with this a few other patches
+> > > > later today. =20
+> > > >=20
+> > > > Jonathan
+> > > >    =20
+> > > Thank you!
+> > >=20
+> > > BTW, I found a corner case in CXL numa node creation.
+> > >=20
+> > > Condition:=20
+> > > 1) A UMA/NUMA system without SRAT, but with CEDT.CFMWS
+> > > 2=EF=BC=89Enable CONFIG_ACPI_NUMA
+> > >=20
+> > > Results:
+> > > 1) acpi_numa_init: the fake_pxm will be 0 and send to acpi_parse_cfmw=
+s()
+> > > 2=EF=BC=89If dynamically create cxl ram region, the cxl memory would =
+be assigned
+> > > to node0 rather than a new node
+> > >=20
+> > > Confusions:
+> > > 1) Is a numa system a requirement for CXL memory usage? =20
+> >=20
+> > Obviously discussion has gone on elsewhere, but I'd say in general it
+> > would be a bad idea to not have an SRAT because the moment we add CXL
+> > it is definitely a NUMA system and we want the Generic Port entry to
+> > allow us to get perf information.
+> >=20
+> > So I wouldn't mind if we fail CXL init in this case, but maybe
+> > it is worth papering over things. =20
+>=20
+> I think that is too severe. If a driver has a path to advertise
+> resources, even in a less than ideal way, it should make every effort to
+> do that. There are plenty of ways for the NUMA information to fail, that
+> does not mean the memory needs to be prevented from coming online. Let
+> the end user decide if lack of performance information is fatal.
 
-(And in fact, since it's just an objcopy trick, it is even possible to 
-put a gcc wrapper in ~/bin that will do it for you).
+You are too nice to those firmware folk ;)  How will they learn!
 
-Paolo
+Everything in default node is fine.  I don't much like the having
+broken normal numa setup combined with CXL trying to carry on with
+its node. I suspect that will be fragile in the long run.
+
+numa_off and other things set in that path tend to spread there wings
+into surprising places and broken / missing SRAT + CXL is something
+that isn't likely to get much testing.
+
+Jonathan
+
+
+>=20
 
 
