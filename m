@@ -4,66 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DED2C35FF1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 08:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56830C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 08:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt00T-0006Rd-QK; Fri, 14 Mar 2025 04:03:01 -0400
+	id 1tt04Z-0007kB-9y; Fri, 14 Mar 2025 04:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tt00M-0006QC-Vy
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:02:56 -0400
-Received: from dedi548.your-server.de ([85.10.215.148])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt04X-0007jr-JV
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:07:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tt00I-00023b-Vl
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:02:52 -0400
-Received: from sslproxy06.your-server.de ([78.46.172.3])
- by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tt00G-0009Ak-2o for qemu-devel@nongnu.org;
- Fri, 14 Mar 2025 09:02:48 +0100
-Received: from [82.100.198.138] (helo=mail.embedded-brains.de)
- by sslproxy06.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
- id 1tt00F-000Kr1-2S for qemu-devel@nongnu.org;
- Fri, 14 Mar 2025 09:02:48 +0100
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id 37066480168
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:02:48 +0100 (CET)
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
- with ESMTP id PtCnEL96qUBe for <qemu-devel@nongnu.org>;
- Fri, 14 Mar 2025 09:02:48 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by mail.embedded-brains.de (Postfix) with ESMTP id EB9D8480194
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:02:47 +0100 (CET)
-X-Virus-Scanned: amavis at zimbra.eb.localhost
-Received: from mail.embedded-brains.de ([127.0.0.1])
- by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
- with ESMTP id CDu8IIj2nLly for <qemu-devel@nongnu.org>;
- Fri, 14 Mar 2025 09:02:47 +0100 (CET)
-Received: from zimbra.eb.localhost (unknown [10.10.171.10])
- by mail.embedded-brains.de (Postfix) with ESMTPSA id 36EB1480168
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:02:46 +0100 (CET)
-From: Sebastian Huber <sebastian.huber@embedded-brains.de>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] hw/riscv: Fix test for microchi-icicle-kit
-Date: Fri, 14 Mar 2025 09:02:40 +0100
-Message-ID: <20250314080240.26383-1-sebastian.huber@embedded-brains.de>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tt04U-0002Zd-F9
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 04:07:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1741939627;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gnCx8Dtq8jRX0uCSsquEgeHydz5Apf0wtj6x2LwP8F4=;
+ b=ezW7AqP/A/OIcK+1R57MzNIJPVvVipRtTQabv46nNGTYqagSR2zHrM/Ejd+UHtQraXp2Ow
+ 3D6sT6wLwg9wGIc+s7HsJ1KAu+qX4DlFWzxijX7lOqSjFKklIe1FJldP/H5VHg0cYYCfhh
+ P2MYhs36yhYQUSCMjYgWv0KEi4turxk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-46-vVXJAFBdN0KKCqDgJw64dQ-1; Fri,
+ 14 Mar 2025 04:07:04 -0400
+X-MC-Unique: vVXJAFBdN0KKCqDgJw64dQ-1
+X-Mimecast-MFC-AGG-ID: vVXJAFBdN0KKCqDgJw64dQ_1741939621
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F182B1800258; Fri, 14 Mar 2025 08:07:00 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBA8A19560AB; Fri, 14 Mar 2025 08:06:49 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 02E5721E66C4; Fri, 14 Mar 2025 09:06:41 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Konstantin Kostiuk <kkostiuk@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Kevin Wolf
+ <kwolf@redhat.com>
+Subject: Re: [PATCH 08/11] docs/qapi-domain: add namespaced index support
+In-Reply-To: <20250313044312.189276-9-jsnow@redhat.com> (John Snow's message
+ of "Thu, 13 Mar 2025 00:43:09 -0400")
+References: <20250313044312.189276-1-jsnow@redhat.com>
+ <20250313044312.189276-9-jsnow@redhat.com>
+Date: Fri, 14 Mar 2025 09:06:40 +0100
+Message-ID: <87tt7wt4rz.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Authenticated-Sender: smtp-embedded@poldi-networks.de
-X-Virus-Scanned: Clear (ClamAV 1.0.7/27576/Thu Mar 13 09:48:52 2025)
-Received-SPF: pass client-ip=85.10.215.148;
- envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,61 +88,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix this test failure:
+John Snow <jsnow@redhat.com> writes:
 
-  $ QTEST_QEMU_BINARY=3D./build/qemu-system-riscv64 \
-    ./build/tests/qtest/qom-test
-  (...)
-  # slow test /riscv64/qom/amd-microblaze-v-generic executed in 2.28 \
-    secs
-  # starting QEMU: exec ./build/qemu-system-riscv64 -qtest
-    unix:/tmp/qtest-1361875.sock -qtest-log /dev/null -chardev \
-    socket,path=3D/tmp/qtest-1361875.qmp,id=3Dchar0 -mon \
-    chardev=3Dchar0,mode=3Dcontrol -display none -audio none -machine \
-    microchip-icicle-kit -accel qtest
-  **
-  ERROR:../hw/riscv/boot.c:164:riscv_load_firmware: assertion failed: \
-   (firmware_filename !=3D NULL)
-  Bail out! ERROR:../hw/riscv/boot.c:164:riscv_load_firmware: \
-    assertion failed: (firmware_filename !=3D NULL)
+> Generate an index-per-namespace for the QAPI domain. Due to a limitation
+> with Sphinx's architecture, these indices must be defined during setup
+> time and cannot be dynamically created on-demand when a namespace
+> directive is encountered.
+>
+> Owing to that limitation, add a configuration value to conf.py that
+> specifies which QAPI namespaces we'll generate indices for.
+>
+> Indices will be named after their namespace, e.g. the "QMP" namespace
+> will generate to "qapi-qmp-index.html" and can be referenced using
+> `qapi-qmp-index`.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
-Use an approach similar to riscv_find_and_load_firmware().
+I'm going to state my understanding of a few things.  Please correct
+misunderstandings, if any.
 
-Reported-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
----
- hw/riscv/microchip_pfsoc.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+Before this patch, the QAPI domain creates a single index, and it's
+named "QAPI Index".
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 9068eed780..616bb63982 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -609,12 +609,14 @@ static void microchip_icicle_kit_machine_init(Machi=
-neState *machine)
-     }
-=20
-     /* Load the firmware if necessary */
-+    firmware_end_addr =3D firmware_load_addr;
-     if (firmware_name) {
--        const char *filename =3D riscv_find_firmware(firmware_name, NULL=
-);
--        firmware_end_addr =3D riscv_load_firmware(filename, &firmware_lo=
-ad_addr,
--                                                NULL);
--    } else {
--        firmware_end_addr =3D firmware_load_addr;
-+        char *filename =3D riscv_find_firmware(firmware_name, NULL);
-+        if (filename) {
-+            firmware_end_addr =3D riscv_load_firmware(filename,
-+                                                    &firmware_load_addr,=
- NULL);
-+            g_free(filename);
-+        }
-     }
-=20
-     riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
---=20
-2.43.0
+It has "everything".
+
+This patch adds one index per namespace.  There are none, yet.  The next
+patch will add namespace "QMP", and the last patch adds "QGA" and "QSD".
+
+Each of these indexes will have exactly the stuff in that namespace.
+
+The QAPI Index continues to have everything.
+
+The patch adding namespace "QMP" replaces the QEMU QMP Reference
+Manual's link to the QAPI Index by a link to the QMP reference (the QAPI
+index is no longer linked from anywhere).  At that time, their contents
+is still identical, but that stops when the last patch enables the
+transmogrifier more widely, so the replacement is clearly necessary.
+
+Since we put everything QAPI in a namespace, the QAPI index has no
+entries that aren't also in a namespace's index.
+
+Since QSD's schema is a subset of QMP's, everything in the QSD index and
+also in the QMP index.
+
+The QAPI index has everything...  does it link to QMP's copy or QSD's
+copy?  I checked block-commit, and it appears to link to QMP's.
 
 
