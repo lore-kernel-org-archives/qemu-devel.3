@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29DB4C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 17:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A9FC35FF1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 17:33:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt8tY-0005of-I5; Fri, 14 Mar 2025 13:32:28 -0400
+	id 1tt8uI-0006X3-Rw; Fri, 14 Mar 2025 13:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tt8t6-0005aZ-0Y
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:32:01 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tt8tI-0005fs-Q0
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:32:16 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tt8sx-0008DY-7F
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:31:57 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22409077c06so62101995ad.1
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:31:50 -0700 (PDT)
+ id 1tt8tF-0008Jj-19
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 13:32:12 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-219f8263ae0so42502505ad.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 10:32:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741973509; x=1742578309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1741973525; x=1742578325; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G6OuFeXnonCJBRRaCKlE2hD3nLeAbwsquVgoLJADjfc=;
- b=XrSCanhi6//y8zzrdi4v8BnHzauYNOujovCqPIhMBF/Vuoymke2Esn2dyHzT6T34ha
- lb40lTuhQijssrYb9qyzpO5N9xjtAvwlWb0/G6UJCu/u2hZWIufHflTk5yraaSUY9RT4
- hvbV5/X8mFjkKNxIw9x4YLYQTd1Lp3R2hIDN12kxMIyRDQPwoz/kETaTluhn8GpKcnrm
- A70rH7hIc5h8E3Y1yh9hOtoF7GYLuWRrei85xrUGRPDspcDMVBBjJAcmN0ilNk+QDm1W
- hd5KCHIDiMEdXBm91vykb8+9ZJD3XjKdDjCA71IepASxtJfFstt0eQJyhdwbOBRFJb02
- /8ew==
+ bh=pdsNHldr91xnqdGHk1DTLXuYnmkD/cCe/HKmA2EoKL4=;
+ b=o0TsBlHvwzPry7dZIYBB3/tKrBPkA7Ip6AGgpw4DSKNlQHzaP33D1IE4bMMxdgunbE
+ B2Q25p2kCZ/nrs1vAxfSmIziSaUFerD6z8YZWZf/+LICU2IqZMTqCpdCCqQFMTfQD3aC
+ h/scudom0yreY/ubpMqpBndAnObPEhYLwV43uJR1DMqbnUqGYXkOZ1dgMLKmRbC1PG+Y
+ M4SL8SX5Db9nt6oIBaFMG+1+VHFHh22PUMkwKXZkXva4v9h9Y5tgNYuOYOw/et4By5sZ
+ TEjNrc313mc25N/WBE5SU2NiUxb8mBj6LfxHUjox82uZfAdGQs3Qa0AZyk8HVqi9mo5S
+ iMcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741973509; x=1742578309;
+ d=1e100.net; s=20230601; t=1741973525; x=1742578325;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G6OuFeXnonCJBRRaCKlE2hD3nLeAbwsquVgoLJADjfc=;
- b=iSImYdIAm1IFUwDqnVc18n8aUaCNiIGJL3PCHqtgMAhnfkot0LqojPyQiPwp9MciXQ
- yBDcSs9K98PK9gXbaJKr913BriYY4qWCGBQYqaWCkb76IetnpMOBmlUHMQ5NE4pMnf8n
- 3QHxyY5I+cH74YwTdetBZ2sgSgYxpX7fyV6trT3OujB8bBFY9WbmtnEYMuUo93545+qL
- vzfE//HAJQxEi16e033S5yHyG7Hrd0wA/j9l2j7UboMsAokxToANjSpCrho1IsoSqngK
- meWgkzE4/B/yJVMQNnfebYAk62Y+3pK34WZtww7dWlFvMAWRFZt+z5LORapX9CSGdJTG
- YSfA==
-X-Gm-Message-State: AOJu0YyyL/BXK9ErtV58EP5pbIf5jo0Bt9131CmAl0Deq5dJ+O2uDmIE
- 48f9xJe8UNP4o//Rbc/VBs4i/1AUusAWHp/sFbyqqlk9aTS0/9IlenGB7GU98oAkYL1J8S5Exix
- DmPA=
-X-Gm-Gg: ASbGncu2+1iL5x+C1W+MaptHwTLJOEEpQoVpEzhOOR24+t3HwmSsMngzBPXWH+RXjBn
- mn/Fi1+PmUeupEeoYfO2kiTauonBxu41niVmxeDXEMmg8ioIsPUzpesbmz93UJlh3tdDFa/eXGQ
- AOHmNktwgSFwpImkTMA+sO7O7DtkPhIlaRriLK/VeUdhwnicwgrgk3AMngMvmNVIEjwNcBqUOGF
- hNwwtinF/seCpuW0rSKO77LjLWkyTVOrgnDpq5tGcvYHKuR2rBuYlavVXACVV9m3SjqJi2EPZI5
- f8smY8UVuEtwvV+RpC9tN/wEEmPEDw5Z2yyHSJ13+XZv
-X-Google-Smtp-Source: AGHT+IFQBeqqn3ezA5En8rRFWwDRdkhHWJ51dC4tNWFcY4zpXwmWJXk93HseKx7PQbRLNq1zxfYk9w==
-X-Received: by 2002:a05:6a21:1519:b0:1f5:8a1d:3905 with SMTP id
- adf61e73a8af0-1f5c10f7d60mr6252806637.7.1741973509576; 
- Fri, 14 Mar 2025 10:31:49 -0700 (PDT)
+ bh=pdsNHldr91xnqdGHk1DTLXuYnmkD/cCe/HKmA2EoKL4=;
+ b=lomcgqmBFRk7w2vRL9HFetNSE9Z0lGxlvGU0F/fDD4Z3XWYGhnms2/ZrpkMZervCej
+ +3sax8ti6zb6bdtMFuX8nrpHuxNtd6ne4T+xiQp7iWJWbIOiKz8NFy8kcuaFvEIYbvbF
+ 6BupUO4r9S++I4uwR9Q9eltCGn+CsesfljoVbklbMhu4/uAj6ELLehd0UbEnOJ2j9/4x
+ yTcmlYR4KwsWzceTiY+eb/t0G7dD/yXhaM5mCZEImykdpYniVA+pk1ISmOR9qwKkVAcp
+ ymBHgbltmX3p4qgQT9ggnkL6YFrtw7W9nXmZeRMZQLlGExzg3O4Zt12UOFKklGfHLJrY
+ 9qsw==
+X-Gm-Message-State: AOJu0YxgtayIUGC04CJhXeUdVQbhOvJ/AUiQQdx2NrVO/mtgSUJD8F9N
+ kZGyY2VDzJJ7u1acOZrFKFUkJIE9g1SqAV8czTVNJxKiMMC1V2NLELi4sLiO/xizrNAqp40jM3Z
+ E9MY=
+X-Gm-Gg: ASbGncvvSbj64I3HzVSh/nfeH0oKl9huFD08vI9fTp6M2XaoKQRfjWXdiDR8brolQkr
+ /QaiJYYGYkhFS9Cp9KWw/JQtNgczUGTgWlYQbv/bQy0WHfWAScjV5k0CLnSDjsTwSVGyuhvz+7I
+ yLDKf+L1KURA9Wy/BJ5/+wv2Fj+iZBVOxkhvbnv0CQS+Z8hxPV7Ow1+8cble5cU6b3loaxoWFmc
+ EK8F3nkOsZbC3ER2jH6qqZywNCQJOga+A3rT7MPypNW0kkGxvDo+NSoTWEezbj7Lt63QDKWoi0Z
+ Lop7pAORuX5PE8JSYLuQ3NHHa1lHys/oJDqr67/CjUsJ
+X-Google-Smtp-Source: AGHT+IHKE9NhNFaDqc44peROMWsjYJioKgZvs6KA5f3lAVTw3ISh5g4Lmu4Vqxy0jtgBCp9rXQffRQ==
+X-Received: by 2002:a05:6a21:1f81:b0:1f5:75a9:5257 with SMTP id
+ adf61e73a8af0-1f5c1174fd0mr5240657637.13.1741973524846; 
+ Fri, 14 Mar 2025 10:32:04 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9cd03bsm2990529a12.8.2025.03.14.10.31.48
+ 41be03b00d2f7-af56e9cd03bsm2990529a12.8.2025.03.14.10.32.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Mar 2025 10:31:49 -0700 (PDT)
+ Fri, 14 Mar 2025 10:32:04 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
@@ -82,24 +82,23 @@ Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
  Stefano Stabellini <sstabellini@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5 04/17] exec/memory_ldst_phys: extract memory_ldst_phys
- declarations from cpu-all.h
-Date: Fri, 14 Mar 2025 10:31:26 -0700
-Message-Id: <20250314173139.2122904-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 17/17] system/ioport: make compilation unit common
+Date: Fri, 14 Mar 2025 10:31:39 -0700
+Message-Id: <20250314173139.2122904-18-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250314173139.2122904-1-pierrick.bouvier@linaro.org>
 References: <20250314173139.2122904-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,127 +114,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-They are now accessible through exec/memory.h instead, and we make sure
-all variants are available for common or target dependent code.
-
-Move stl_phys_notdirty function as well.
-Cached endianness agnostic version rely on st/ld*_p, which is available
-through tswap.h.
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/exec/cpu-all.h              | 29 -----------------------------
- include/exec/memory.h               | 10 ++++++++++
- include/exec/memory_ldst_phys.h.inc |  5 +----
- 3 files changed, 11 insertions(+), 33 deletions(-)
+ system/ioport.c    | 1 -
+ system/meson.build | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 0e8205818a4..902ca1f3c7b 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -38,35 +38,6 @@
- #define BSWAP_NEEDED
- #endif
- 
--/* MMU memory access macros */
--
--#if !defined(CONFIG_USER_ONLY)
--
--#include "exec/hwaddr.h"
--
--static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val)
--{
--    address_space_stl_notdirty(as, addr, val,
--                               MEMTXATTRS_UNSPECIFIED, NULL);
--}
--
--#define SUFFIX
--#define ARG1         as
--#define ARG1_DECL    AddressSpace *as
--#define TARGET_ENDIANNESS
--#include "exec/memory_ldst_phys.h.inc"
--
--/* Inline fast path for direct RAM access.  */
--#define ENDIANNESS
--#include "exec/memory_ldst_cached.h.inc"
--
--#define SUFFIX       _cached
--#define ARG1         cache
--#define ARG1_DECL    MemoryRegionCache *cache
--#define TARGET_ENDIANNESS
--#include "exec/memory_ldst_phys.h.inc"
--#endif
--
- /* page related stuff */
- #include "exec/cpu-defs.h"
- #include "exec/target_page.h"
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index d09af58c971..da21e9150b5 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -21,6 +21,7 @@
- #include "exec/memattrs.h"
- #include "exec/memop.h"
- #include "exec/ramlist.h"
-+#include "exec/tswap.h"
- #include "qemu/bswap.h"
- #include "qemu/queue.h"
- #include "qemu/int128.h"
-@@ -2732,6 +2733,12 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
- #define ARG1_DECL    AddressSpace *as
- #include "exec/memory_ldst.h.inc"
- 
-+static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val)
-+{
-+    address_space_stl_notdirty(as, addr, val,
-+                               MEMTXATTRS_UNSPECIFIED, NULL);
-+}
-+
- #define SUFFIX
- #define ARG1         as
- #define ARG1_DECL    AddressSpace *as
-@@ -2798,6 +2805,9 @@ static inline void address_space_stb_cached(MemoryRegionCache *cache,
-     }
- }
- 
-+#define ENDIANNESS
-+#include "exec/memory_ldst_cached.h.inc"
-+
- #define ENDIANNESS   _le
- #include "exec/memory_ldst_cached.h.inc"
- 
-diff --git a/include/exec/memory_ldst_phys.h.inc b/include/exec/memory_ldst_phys.h.inc
-index ecd678610d1..db67de75251 100644
---- a/include/exec/memory_ldst_phys.h.inc
-+++ b/include/exec/memory_ldst_phys.h.inc
-@@ -19,7 +19,6 @@
-  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+diff --git a/system/ioport.c b/system/ioport.c
+index 55c2a752396..89daae9d602 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -26,7 +26,6 @@
   */
  
--#ifdef TARGET_ENDIANNESS
- static inline uint16_t glue(lduw_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
- {
-     return glue(address_space_lduw, SUFFIX)(ARG1, addr,
-@@ -55,7 +54,7 @@ static inline void glue(stq_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint64_t val)
-     glue(address_space_stq, SUFFIX)(ARG1, addr, val,
-                                     MEMTXATTRS_UNSPECIFIED, NULL);
- }
--#else
-+
- static inline uint8_t glue(ldub_phys, SUFFIX)(ARG1_DECL, hwaddr addr)
- {
-     return glue(address_space_ldub, SUFFIX)(ARG1, addr,
-@@ -139,9 +138,7 @@ static inline void glue(stq_be_phys, SUFFIX)(ARG1_DECL, hwaddr addr, uint64_t va
-     glue(address_space_stq_be, SUFFIX)(ARG1, addr, val,
-                                        MEMTXATTRS_UNSPECIFIED, NULL);
- }
--#endif
+ #include "qemu/osdep.h"
+-#include "cpu.h"
+ #include "exec/ioport.h"
+ #include "exec/memory.h"
+ #include "exec/address-spaces.h"
+diff --git a/system/meson.build b/system/meson.build
+index 4f44b78df31..063301c3ad0 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -1,6 +1,5 @@
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+   'arch_init.c',
+-  'ioport.c',
+   'globals-target.c',
+ )])
  
- #undef ARG1_DECL
- #undef ARG1
- #undef SUFFIX
--#undef TARGET_ENDIANNESS
+@@ -13,6 +12,7 @@ system_ss.add(files(
+   'dirtylimit.c',
+   'dma-helpers.c',
+   'globals.c',
++  'ioport.c',
+   'memory_mapping.c',
+   'memory.c',
+   'physmem.c',
 -- 
 2.39.5
 
