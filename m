@@ -4,71 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA6DC28B2F
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:23:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BA5C28B2F
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 10:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt2Bw-0002Hq-9e; Fri, 14 Mar 2025 06:23:00 -0400
+	id 1tt2CL-0002Ko-LL; Fri, 14 Mar 2025 06:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt2Br-0002Gn-N4
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:22:55 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tt2CH-0002KB-BL
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:23:22 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt2Bn-0004VP-D5
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:22:55 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e60cab0f287so1481045276.0
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:22:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tt2CB-0004X1-LU
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 06:23:19 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-391342fc148so1255961f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 03:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741947768; x=1742552568; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OYkiyS1XYmvyCyxAfD7RScZbhCwAx/jD+RBZEwHgFeg=;
- b=u66VO1Wx6SD+99QiT+EsDUhMKsq/KYKmz/N2EGWVojRxexWsPXZ3j/uLxzMhF6g5Uc
- YFAjF7y/Nu1n4urMjICOvb+WWDTw3dGq/LvHUz4eU//U86e0InFrKPNQVXAgf05UAr3D
- 3nKuI9/Wa8SZJ7VFEe/7/ngdPNlKDbL7G9wd7Suw5h0SttXXHJVCz/vAILIKc6L3cCXN
- 19nc9GHYfRYEEU5+G4tOzAMkhwhPgz+oCuwoCxqG0OMGHphSJCa3G+bbekASng8M8FMT
- XgEyHEzElvyh6UIFc0d7CgKgQrZPeT9dAdSnpyHjPxIppD6u8DIbdIDQ6D7/EMgEwifW
- 1PtQ==
+ d=linaro.org; s=google; t=1741947791; x=1742552591; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DMcvt7EpRcI2s9UrvwL2kMVfzGjB4NRcTQ9ZyhSq6JU=;
+ b=is5dh1YEIY6DKm2WAwECcSVVTHfKWDcHxnoiuW5xCuJeS/MtuU7IUHpqouY52dL9li
+ ++smWJuGLuzFw8NoWXlxhqA2sBDHgCCyAa+7Lw0WtIRMhtKxUW/9/T3tvA5BVEn/zk9a
+ 2IM4nJr340mDcahpxhkz2xgR6Vro1bfT8DTlccqW73AcsDtk34Y2jaiGL+hh8egUC65e
+ 3wEuqX9kJRJMSrH8vLAnmPWl2IdJq3g4y2opQ+Ge1lZqu1dYI9qgXsHIsKI9XBvs+tWj
+ pXFi3RgyADckOYB/YlOMzPvKmvsb8I9vHg8LxkUYVwdc0ueDJ7kTi4h4kS6MEYffkLUC
+ qETA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741947768; x=1742552568;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1741947791; x=1742552591;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OYkiyS1XYmvyCyxAfD7RScZbhCwAx/jD+RBZEwHgFeg=;
- b=FCxxTTUc3wQ2+ey2z+gZRqfjcgy7rEfpncQA++4goFJPceio3/beGdPFvfzgwJxA7s
- k+XXY5UngLP8wTHm10Ut1gmWIgb2oPa8oRX3fuluyBWFyCz9PuUun/jzyiNtR4CHSoq+
- 8GS/GOlIRgJcgOKbFNhb+jnDbPcTHpW94mUX5p8YniSMv0YqWG/iJdtxJQHf3yfhtwoq
- jQ5ruP+F+9/2nIg4FA2WcJttFC8Pby8EQkGM+Ho5Tq6DmZjAQbk4Ixbga5vUKQyEyEwP
- P16Eg3wER2EsKMK9dMtT9s/oIamvdqkWNzbiz9CaWhp2YNb2hilBg+csp7DZZrMWth0I
- xGJQ==
-X-Gm-Message-State: AOJu0YyA0Vex2qcdTSV+7bX44iUWNNpyzTXklHuS5X+HQCSwe+7JbBu9
- wusQL+phV7naVYt1zAVUrg0Ou2s/Re1hFCA/ANVbhifsM5Rvf7WIjC5fAcIaDu6nGaXtRpWyqte
- 2GuCuERn2zx4/+oWB13FzGR3WcITptnb7OM2s9Q==
-X-Gm-Gg: ASbGncsDglc4NN3YxvZtb4bi/Dd4lIFSbOgGXpV7AG1N4AB/yb8QvvBbRIWGPB2Qlgl
- blpdR10P9NfAAy+yEzaH0lgQxlrRIfkIwfhQTC5d/d0sBORoA57zGjd58ta7N+GYFmP1QaklIIb
- W1xurNsufsl7rKP6fm0PLT03bzDVk=
-X-Google-Smtp-Source: AGHT+IGsyg04OevbbkKLZAOsi1GJ4fhMSH8yrov91uooA5Jlw85nEWW4aFY9Xv7mPswQNobQ6jrWWqWRbzgoZp0t1gg=
-X-Received: by 2002:a05:6902:dc9:b0:e5d:cdc6:7acf with SMTP id
- 3f1490d57ef6-e63f65c5536mr2198074276.31.1741947768624; Fri, 14 Mar 2025
- 03:22:48 -0700 (PDT)
+ bh=DMcvt7EpRcI2s9UrvwL2kMVfzGjB4NRcTQ9ZyhSq6JU=;
+ b=IuWCPJZt3PGsA1SHQPvWpkZvkOz/N1beqDPyhSzAnmIlZ00JAZn5fTkJ7MLICUy9yq
+ U6CZWZ//HmHIy8JStkUIxtUIGTfB0SAEhvWV/HH7W9GNkLa94wPQPNUkDb8BGb5v/sA1
+ jcbYUfOo4YA1NGx/LkWCaA4+icz59lUKA68q50Qo/yJDWi5+9IKS6heVCLrVKXBdRhJv
+ XdMKKlI3agvX9pL73kXqbXZtuydn03ZBYsDSWo4ZYC94MN2dPRsw+rHkuNaIBua2xPDX
+ NUuIaUDqHGMeHLlpqqpvhPgMltcHBmhey6RzG09yxRJ4zp2dFq3ox49fh68jxsa2HGMV
+ IeBg==
+X-Gm-Message-State: AOJu0Yzuk8KkIDpoCS3H94XdWwuUUTgkS9GV3i2r6i0rd3qigS8OnEg0
+ ybo36o+p6PCWsbJ6/q/2rZ9b6kWjauN5N7nyyVV4/NICR91yEMZLkkl0n6m0zKA=
+X-Gm-Gg: ASbGnctJAZhy9ANQyaUDAc1ZsBcLftBOKm/NHU7VMXde17wcp+zFERb5Ofp8p6eZsD8
+ JZabo7rnAmeCuRLzn0jeC4U4bRtrDfifWyDS8Sq/Q8SS+ktzLPUM7YxuF0a0yzX/8Jq37v0Vjnt
+ P3QBWgKQSbl3BtLKMLQd1SHoAdgNg7AkIC1Gd4usy9MGh+M8xeeuvmBX5UGmKqsIwnWMaPosjPQ
+ 4sozJoOVWLvUlEJuJDCMWzXmfJQO5jbnm6v4t5VwCVn0aJ80sRf95X/rsgBTaTI/eVWT/C6Ayuj
+ Vgq7mL5ZWdSiNC7jfThWAjMndyaKkIaO3RFXy1V145768sg=
+X-Google-Smtp-Source: AGHT+IHvHlRiYQ2URlSHHpc53wDFax7PtcMuCgjUV7RcGyUtc49vgdN/B3LX5rPHHfbu9uNH5PpI3Q==
+X-Received: by 2002:a5d:64a4:0:b0:391:4999:776c with SMTP id
+ ffacd0b85a97d-3971ee444d6mr2864526f8f.40.1741947791176; 
+ Fri, 14 Mar 2025 03:23:11 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-395cb318a12sm5072038f8f.75.2025.03.14.03.23.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Mar 2025 03:23:10 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DF0DC5F92C;
+ Fri, 14 Mar 2025 10:23:09 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] meson.build: don't bother with split-debug for windows
+Date: Fri, 14 Mar 2025 10:23:07 +0000
+Message-Id: <20250314102307.2806696-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-References: <20250314-clr-v2-1-7c7220c177c9@daynix.com>
-In-Reply-To: <20250314-clr-v2-1-7c7220c177c9@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 14 Mar 2025 10:22:37 +0000
-X-Gm-Features: AQ5f1JpDZDzemazfQHx8KWpMLuRQEyUsTllxky7nainhk-4kLNIz4ejJ-itnIO8
-Message-ID: <CAFEAcA9yKETtDhJroC7RD5itUjsYAkj0fVXHJaUxoU_bce7Gvw@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: Define raw write for PMU CLR registers
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,33 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 14 Mar 2025 at 08:13, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> Raw writes to PMCNTENCLR and PMCNTENCLR_EL0 incorrectly used their
-> default write function, which clears written bits instead of writes the
-> raw value.
->
-> PMINTENCLR and PMINTENCLR_EL1 are similar registers, but they instead
-> had ARM_CP_NO_RAW. target/arm/cpregs.h suggests this flag usage is
-> inappropriate:
-> > Flag: Register has no underlying state and does not support raw access
-> > for state saving/loading; it will not be used for either migration or
-> > KVM state synchronization. Typically this is for "registers" which are
-> > actually used as instructions for cache maintenance and so on.
->
-> PMINTENCLR and PMINTENCLR_EL1 have underlying states and can support
-> raw access for state saving/loading. Flagging a register with
-> ARM_CP_NO_RAW has a side effect that hides it from GDB.
+It was reported this breaks the final artefacts on windows when run
+under Wine.
 
-No, the CLR registers don't have their own underlying state:
-all the state is handled by the SET registers, and it just
-happens that you can read it via the CLR registers.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
+---
+ meson.build | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-> Properly set raw write functions and drop the ARM_CP_NO_RAW flag from
-> PMINTENCLR and PMINTENCLR_EL1.
+diff --git a/meson.build b/meson.build
+index c2c71b6f8a..9b1af6d030 100644
+--- a/meson.build
++++ b/meson.build
+@@ -601,8 +601,10 @@ if get_option('tsan')
+   qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
+ endif
+ 
+-if get_option('debug') and get_option('split_debug')
+-  qemu_cflags += '-gsplit-dwarf'
++if host_os != 'windows'
++  if get_option('debug') and get_option('split_debug')
++    qemu_cflags += '-gsplit-dwarf'
++  endif
+ endif
+ 
+ # Detect support for PT_GNU_RELRO + DT_BIND_NOW.
+-- 
+2.39.5
 
-I think the correct fix is to mark all the CLR registers as NO_RAW.
-
-thanks
--- PMM
 
