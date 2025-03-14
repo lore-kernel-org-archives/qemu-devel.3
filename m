@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8D6C282EC
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 16:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9B60C282EC
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Mar 2025 16:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tt896-0005Y1-00; Fri, 14 Mar 2025 12:44:28 -0400
+	id 1tt8Hd-0007sF-9j; Fri, 14 Mar 2025 12:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt88y-0005XW-8X
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:44:24 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tt8Ha-0007r3-VG
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:53:16 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tt88v-0001vc-3b
- for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:44:19 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e461015fbd4so1880756276.2
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:44:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tt8HU-00039l-Ko
+ for qemu-devel@nongnu.org; Fri, 14 Mar 2025 12:53:14 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2f9d3d0f55dso3883101a91.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 09:53:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1741970655; x=1742575455; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tveQHSPaS+AlTWhls9X/c/Yt5dERDeAm5jVUIi8lTNQ=;
- b=LEXcUPa9m1pmfq0+ZPDMcXzwOTZ5vzA7VMaTlo4DL5NKbaplKvsQON7WFH7I0Y+98x
- V8jI+10h0/NF7KkmPR83jXjn7qjHOQgIRbpMOlN3njTnWNM5DP20YRV/KPXBDUec69F8
- 35woXxms4BCZLOCoAtXXNyw18aYnBI3RRpuQEL4+PxCjl4LYoMi79C7hOntiYvE5ek7x
- sHaSkFXfqhW/r5EJ9yg0kcgmYWbXuq5ullC+WxrXSHPmtlpZ/y4B4WLjjSQOePPtFlGw
- X7fwmM0ADUz9yLvNbJEm3RuPI9+nY7UKOB3tf8kmQFlrWr4Fj4QBkGqxu8mg/aA529Aq
- gNYA==
+ d=linaro.org; s=google; t=1741971184; x=1742575984; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iNubRIb9M8RY3ls2mjQtKLOZPpK+1Omx3xhI4KVZRyA=;
+ b=LRywXnQ5Pl19iDmeaBHn3CWy08X7eFilSEZqq7CvWcFkK9QZdg/vYe87GjGi6gCCF4
+ JQR8/ztqFG6YGazaqDPAf3mTy5f/s1ys0PPMkbUECkU+JFSu4Fn4YkPNERH5qN8RyEoJ
+ /AWWS8RSa4cqfF+PsbKhHDwtpvhbEglZ14pfp7BS8UWJZahSnAa0taSMM4AaX/w/tQ2A
+ UiR0BWjoeocet6z3/HTrbPtheAVbDx28Nx6IvC46JJzktxDh/c5khmhV7t4lcTPbpBJo
+ cSXlmXAG1qKKEwgZ6MPoHn+yIFxXylbqYU2Yv4a1JffP1jOZzVvcF/ewYJLXS004Q882
+ gHfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741970655; x=1742575455;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tveQHSPaS+AlTWhls9X/c/Yt5dERDeAm5jVUIi8lTNQ=;
- b=cN/vpuc+BhH9f1j5D1AYrRj9tV/2A6m8TXuU6Ag9r235YAW7kH/WrUU/wW8TjvCGen
- YjtFBsiBV7mpJ4v9CrIkqXvGthUau1iZ53M+C0J7ZPbWu6HMb/ZORzinx1asFR8DOObb
- g2fnAlLGBni4ibpPW9UC1Kaaw7HWh2tSYLZEPIuNxSeZBxL0/f0GKzOoTrYCFAjY+kB4
- zAFdbNu9M+5liRjtxnDNGqMk5lu7xgNu0nx/EikDEqcUv1+76+UUYbQbtcMAYuYgvHpC
- sOeTh4ItGPbzN/8fyL/eiR9MZt4cgAiPArwgiEKz5R+upHk0uhyrGlFfpvDLHG6OJjis
- D/Ug==
-X-Gm-Message-State: AOJu0Yxe090PfVRxVNHf0s44FPG4KoCweBPHcX48R9eDDIwwtaSg+Zf2
- 3lg4tB1e+2N1HDYqHAvChZuFIR+W+D1svUJ3w+DZnBFHIDIgfiHv5gmw5KIqdJZJEH+bQxXWFsu
- FMZ3tj/xMxTN/EC4dhbdR1zut00SS2Kpgdq++kw==
-X-Gm-Gg: ASbGncseJIvOT6xnG8AbsmDnN07y1gh5vyjrTszAr4miIu1iXn7d9ZNYvUgljB7ywVW
- oHWefG8UCTzyeK46Gd2VZFxDBMtA6VxBaITIiXg26D0rPhleTQ8BDxl1+RbUzV1PLajB1F6KMk9
- dfqO2cvT32mMP2QSpAaymNlFCokVbM+YWiTosdDA==
-X-Google-Smtp-Source: AGHT+IFAKvtqe/7st8JfcFkt5hufzFuQV3HvhQO2GzJ25lLFSlQJX7yxHAqRGLwmFqce5GUdyj8PyeBvu9GGVoHHfeo=
-X-Received: by 2002:a05:6902:2011:b0:e5b:1b55:1325 with SMTP id
- 3f1490d57ef6-e63f652f73emr3669813276.25.1741970654956; Fri, 14 Mar 2025
- 09:44:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1741971184; x=1742575984;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iNubRIb9M8RY3ls2mjQtKLOZPpK+1Omx3xhI4KVZRyA=;
+ b=NHPZcSDoa+pjNXD6Ck9SWXaWTB7B2vzZgft/7wfgMOUfM9cZx42G0LcurS/hRyuUcp
+ oWFhFMlS3gLogkTERe15+rFFJcP9bnn/eeROzcV9xeENExCMmDn+tfZIk6jDzSzH5Uhx
+ 7o9H5JunrqeEqfPc3kDMawEwSRe7ME5x8HHnyOVVX0seTD2rA1xzKF06ov6ZKBGd9y23
+ YDMDENmu+hccjqi1OvhJxdDvccPaNUlm3mSZv3wtyctpufHdat29lNvGrwgrLxFgpvEt
+ yi183x3vCG4o+g8O6HgTO195hWZuMKMS2UuA/PdM85BlOaQgVTJrIbjN+ZO/0CDvHjWt
+ uZow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgGmt5+rhcRzwAqNqD/IsyrBMlq8Muv9S+M9bKJICavITKwdAKzPyJ5g23TAkNq9f2s1vz7SqkoKGR@nongnu.org
+X-Gm-Message-State: AOJu0YzzPzeZSvZJhE7CjN/aVmA3rgMV/CwPoNsShIIkGfDkcc0vQZXa
+ LZqxOfBKB7RsIToCnUcs5BRs5ZIwRm4jeXiadB1sc5uDWsBi7YVvN/jlO/00eNE=
+X-Gm-Gg: ASbGncv4sjLzyTX/hTgU6NrG7218160aiCf9N4/37HkdCIOC3NOY40Lpyznr/qovEuP
+ A0DCFWhb1YUoGv5oGJ50jsWaAhQ2tmtifOSk9PXxbHXMec3EqQSXIbFXwOl3pf6PrTsxvOVcG6t
+ gTDoao+F+1YAH7PSlSe893/gw6TmkI2d9F0QdwYZ4X827HSKG0txLZoy+tTEqXe6AIMArq2MAl2
+ MyD5CIwamVlpZauYrsNUeQOth89fLTQTrFKu1KFhpuHTrzcZC9MVizN/QrU6gm3egFXjnY0yolw
+ 8YStw/1tjS266wbHndyJAiVm1vS63UrKPbzYY8j09+sm8fu/UYhDDTsRP2wWffuKgxuN
+X-Google-Smtp-Source: AGHT+IHWbLLB0JDV3q9QoRtUB6m8MX/fi08tPTelSHgJ5rnm9cHTgifEBE44ePXGMloMLjsrTN9fuA==
+X-Received: by 2002:a17:90b:3b46:b0:2ea:3f34:f18f with SMTP id
+ 98e67ed59e1d1-30151ca0bf3mr3926112a91.19.1741971184155; 
+ Fri, 14 Mar 2025 09:53:04 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30153b01204sm1358619a91.29.2025.03.14.09.53.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 14 Mar 2025 09:53:03 -0700 (PDT)
+Message-ID: <45baac7c-c489-497f-a618-3af0ce750ab9@linaro.org>
+Date: Fri, 14 Mar 2025 09:53:03 -0700
 MIME-Version: 1.0
-References: <20250314153824.65303-1-pbonzini@redhat.com>
-In-Reply-To: <20250314153824.65303-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 14 Mar 2025 16:44:01 +0000
-X-Gm-Features: AQ5f1JqHo5JB0WBWLymlbqYxEmoUPDYbzQ2EgIiVvj6L3m9TsknxF_p23T3gxTE
-Message-ID: <CAFEAcA8J05Mp+VB9j+PEcB=ttpeAVZ-rJOPRAP53jhSqnp4oMA@mail.gmail.com>
-Subject: Re: [PATCH] configure: disable split_debug on Windows and on non-git
- builds
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, 
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 25/37] common-user: Split out watchpoint-stub.c
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com
+References: <20250313034524.3069690-1-richard.henderson@linaro.org>
+ <20250313034524.3069690-26-richard.henderson@linaro.org>
+ <36f7e651-4df6-457d-a7ef-df7a7c4b2570@linaro.org>
+ <00d707e4-5e60-43fc-b372-72336d7af293@linaro.org>
+ <27446562-38b0-46a1-8975-1c4ce24cf4c3@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <27446562-38b0-46a1-8975-1c4ce24cf4c3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,57 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 14 Mar 2025 at 15:39, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> -gsplit-dwarf is reported to produce broken binaries on Windows.
-> The linker produces warnings but exits successfully:
->
-> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
-> qga/qemu-ga.exe:/4: section below image base
-> /usr/lib/gcc/x86_64-w64-mingw32/14.2.0/../../../../x86_64-w64-mingw32/bin/ld:
-> qga/qemu-ga.exe:/24: section below image base
->
-> and as a result qemu-ga.exe fails to start.
->
-> On top of this, also disable -gsplit-dwarf unless building from git.
-> Similar to -Werror, split debug info is probably not the best choice
-> for people that want to build for installing.
->
-> (Random thoughts: there is a tension here between adding an option
-> that is useful for QEMU developers, and messing things up for everyone
-> else by doing something decidedly non-standard.  For example, distros
-> are starting to create a fake git repository just so that they can
-> use "git am" to apply patches; while some of them, for example Fedora,
-> are wise, or paranoid, enough to pass --disable-XXX for everything and
-> then turn back on what they want, it cannot be expected that everyone
-> does this.  It may be safer to make --enable-split-debug default off
-> for everybody and add it somewhere in docs/.  For now I am keeping it
-> enabled but we could consider doing something different during the hard
-> freeze period).
->
-> Reported-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  configure         | 4 ++++
->  meson_options.txt | 2 +-
->  2 files changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/configure b/configure
-> index 02f1dd2311f..9aece67ed08 100755
-> --- a/configure
-> +++ b/configure
-> @@ -1864,6 +1864,10 @@ if test "$skip_meson" = no; then
->        { test "$host_os" = linux || test "$host_os" = "windows"; }; then
->        echo 'werror = true' >> $cross
->    fi
-> +  if test -e "$source_path/.git" && test "$host_os" != "windows"; then
-> +      echo 'split_debug = true' >> $cross
-> +  fi
-
-Same remark as on the other patch: can we have a comment
-explaining why we disable this on Windows, please, ideally
-with a URL of a bug report against the toolchain ?
-
-thanks
--- PMM
+T24gMy8xNC8yNSAwOTozNywgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDMvMTMv
+MjUgMDM6MzksIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPj4+PiAtLS0gL2Rl
+di9udWxsDQo+Pj4+ICsrKyBiL2NvbW1vbi11c2VyL3dhdGNocG9pbnQtc3R1Yi5jDQo+Pj4+
+IEBAIC0wLDAgKzEsMjggQEANCj4+Pj4gKy8qDQo+Pj4+ICsgKiBDUFUgd2F0Y2hwb2ludCBz
+dHVicw0KPj4+PiArICoNCj4+Pj4gKyAqIENvcHlyaWdodCAoYykgMjAwMyBGYWJyaWNlIEJl
+bGxhcmQNCj4+Pj4gKyAqIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBMR1BMLTIuMS1vci1s
+YXRlcg0KPj4+PiArICovDQo+Pj4+ICsNCj4+Pj4gKyNpbmNsdWRlICJxZW11L29zZGVwLmgi
+DQo+Pj4+ICsjaW5jbHVkZSAiaHcvY29yZS9jcHUuaCINCj4+Pj4gKw0KPj4+PiAraW50IGNw
+dV93YXRjaHBvaW50X2luc2VydChDUFVTdGF0ZSAqY3B1LCB2YWRkciBhZGRyLCB2YWRkciBs
+ZW4sDQo+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBpbnQgZmxhZ3MsIENQVVdhdGNocG9pbnQgKip3YXRjaHBvaW50KQ0KPj4+PiAr
+ew0KPj4+PiArwqDCoMKgIHJldHVybiAtRU5PU1lTOw0KPj4+PiArfQ0KPj4+PiArDQo+Pj4+
+ICtpbnQgY3B1X3dhdGNocG9pbnRfcmVtb3ZlKENQVVN0YXRlICpjcHUsIHZhZGRyIGFkZHIs
+IHZhZGRyIGxlbiwgaW50IGZsYWdzKQ0KPj4+PiArew0KPj4+PiArwqDCoMKgIHJldHVybiAt
+RU5PU1lTOw0KPj4+PiArfQ0KPj4+PiArDQo+Pj4+ICt2b2lkIGNwdV93YXRjaHBvaW50X3Jl
+bW92ZV9ieV9yZWYoQ1BVU3RhdGUgKmNwdSwgQ1BVV2F0Y2hwb2ludCAqd3ApDQo+Pj4+ICt7
+DQo+Pj4NCj4+PiBBZ2FpbiwgY2FuIHRoaXMgYmUgZWxpZGU/IE90aGVyd2lzZSBiZXR0ZXIg
+dXNlIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCkuDQo+Pg0KPj4gV2UgY2FuLCBpbmNsdWRpbmc6
+DQo+Pg0KPj4gLS0gPjggLS0NCj4+IGRpZmYgLS1naXQgYS90YXJnZXQvaTM4Ni9jcHUuYyBi
+L3RhcmdldC9pMzg2L2NwdS5jDQo+PiBpbmRleCBkYmExYjNmZmVmLi41NGQzODc5YzU2IDEw
+MDY0NA0KPj4gLS0tIGEvdGFyZ2V0L2kzODYvY3B1LmMNCj4+ICsrKyBiL3RhcmdldC9pMzg2
+L2NwdS5jDQo+PiBAQCAtNzU0NSw0ICs3NTQ1LDYgQEAgc3RhdGljIHZvaWQgeDg2X2NwdV9y
+ZXNldF9ob2xkKE9iamVjdCAqb2JqLCBSZXNldFR5cGUgdHlwZSkNCj4+ICAgwqDCoMKgwqAg
+ZW52LT5kcls3XSA9IERSN19GSVhFRF8xOw0KPj4gKyNpZm5kZWYgQ09ORklHX1VTRVJfT05M
+WQ0KPj4gICDCoMKgwqDCoCBjcHVfYnJlYWtwb2ludF9yZW1vdmVfYWxsKGNzLCBCUF9DUFUp
+Ow0KPj4gICDCoMKgwqDCoCBjcHVfd2F0Y2hwb2ludF9yZW1vdmVfYWxsKGNzLCBCUF9DUFUp
+Ow0KPj4gKyNlbmRpZg0KPiANCj4gQnV0IGRvIHdlIHJlYWxseSB3YW50IHRvIGFkZCBhbGwg
+dGhvc2UgaWZkZWZzPw0KPiANCg0KSSBhZ3JlZSB3aXRoIFJpY2hhcmQsIHRyYWRpbmcgaWZk
+ZWZzIGlzIG5vdCBhIHdpbiBpbiB0aGUgZW5kLg0KSGVyZSwgd2UgcmVwbGFjZSBoZWFkZXIg
+c3R1YnMgKHdoaWNoIGFyZSBhIHByb2JsZW0sIGJlY2F1c2UgdGhleSByZWx5IG9uIA0KaWZk
+ZWYgYnkgZGVzaWduKSB0byBkaWZmZXJlbnQgY29tcGlsYXRpb24gdW5pdHMsIHdoaWNoIGNh
+biBiZSBzZWxlY3RlZCANCmF0IGxpbmsgdGltZS4NCg0KSW4gdGhlIGVuZCwgd2UgbWlnaHQg
+ZXZlbiBoYXZlIHRvIHVuaWZ5IHNvbWUgc3R1YnMgYW5kIHRoZWlyIA0KaW1wbGVtZW50YXRp
+b25zLCB0byBoYXZlIGEgc2luZ2xlIGRlZmluaXRpb24gb2YgdGhvc2Ugc3ltYm9scy4NCg0K
+PiANCj4gcn4NCg0K
 
