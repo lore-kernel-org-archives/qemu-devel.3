@@ -4,77 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F2CEC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 14:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52D5DC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 14:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttSV2-0007bH-0n; Sat, 15 Mar 2025 10:28:28 -0400
+	id 1ttSf2-0002g2-8u; Sat, 15 Mar 2025 10:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSUz-0007QZ-87
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:28:25 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSey-0002eo-Vf
+ for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:38:46 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSUx-00040a-4t
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:28:24 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso7020995e9.3
- for <qemu-devel@nongnu.org>; Sat, 15 Mar 2025 07:28:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSew-0005As-KW
+ for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:38:44 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5e677f59438so4684242a12.2
+ for <qemu-devel@nongnu.org>; Sat, 15 Mar 2025 07:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1742048901; x=1742653701; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pEe7q4w3SeigGu9Yyevoz5YHH/txq64uIVifPcLXvEQ=;
- b=cBpSD3Hl1aBDcX0lxl7PBhvyeOmY13Z7eA2KU1yzifj4/dqFHXX5IFQ6eIkqH484yF
- HxqsSMotRy+/tphNePB+crTXg4UATHMhd9WsWLAVY9MB4a4d8BnoDqIPab+5pkVuJDZ+
- mqkk9LJe7u45hNzfqe3HamdlNWRw6fO5cPDrA=
+ d=chromium.org; s=google; t=1742049521; x=1742654321; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TVbtizlVjyZk3wsqRuH5bDpwtK5POmwHDxT89XS3p1g=;
+ b=FAciDXwsRXut3Ya3N3X1kFANuVk+Bv3e4HSLeQQzQtF8WIq023oW6YzuprVyLcFH/s
+ 6GsrKKfK479Kpqh8YgGPIcYyBdUK9YI1eoeHjefqqg63C3LAOFnbBIrXLacptCHeUNqU
+ UwKeJDnKtR4Qa6J1s3uass8sD4FqfgMf7501A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742048901; x=1742653701;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pEe7q4w3SeigGu9Yyevoz5YHH/txq64uIVifPcLXvEQ=;
- b=cIAJC5RX0hLRA2ZSOuailQ15F1Yr/OM4DKNHSkEE8PYCbgG/aEpLlLNIG1A/ggSZ44
- MpQJbJ30wcn/fcP9nsiCRc+Z+BySxDT9q2Ps6wGDdQhtrFCr3X4YrX4zIcFjyJfRklAm
- r1JWFs/QPLCy4kEX6taqJSLPML/1OslCemRO+tk4L2yLaBcBQBhd9vXCHSRYvn8/fb2u
- CGf3d2vE23/g72hfRlERJV/FERtD+rY6HaBaQRjxlY6cikW+l88F+ZB0/qAKAyvYuf3p
- cLkdcQh/KBesDOqvMQpjXUPeNPdxMAqMYNYkkNGmPO5EgTdgxdptK7M1VdAiJ2wbsXCE
- ECQg==
+ d=1e100.net; s=20230601; t=1742049521; x=1742654321;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TVbtizlVjyZk3wsqRuH5bDpwtK5POmwHDxT89XS3p1g=;
+ b=aE3HL3RDA7SGRZFYHcVLujSVi8/b3R7BRW5pLUkVaRKZV3N2ut2kzvMFQZb9UDd9VJ
+ CMhVNsDMw7R+QUY/fqtY5TEQKgwVQVGhFFq1Xoo9spi9gQKRPmajFuGc2IlMnb9A3Z2R
+ WnMKxHDPXzAgpnPbHspo97z/DW/wW1yiONEkpSVPUUHV6VBHR5cAAUFqNf931BU4sooE
+ ceYqcMOBGGS+5AJpX4e3xODOpS/PjixKta0bYEcrPksJO9nOd7jFyyx0A+G944AtPcfX
+ kvSUKhkocDMlGIEAUBcPs6Hmo9Ztcd2ud7aZCy42BcW/p0MJ9luM9BhQz0jLagN7z5BM
+ wWtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfOUuiIFi3MQQngF8Ci1dt2cwfaFnoyhjmUOQIAalPp8Buf3FsuZqo0n2atglj9CdnbdqyT6y0OoCE@nongnu.org
-X-Gm-Message-State: AOJu0YyzTAdvcq458ysIyw+Y2jjOuNMZqPWWSQ7Bu6AKhUrJmFvDIyj+
- LSOMoa1YO48cEl4bXbMtmkpsCWxMyrBt4UHDQrQxnoQGpSfWNy5P9vjD+Y94SP9q4aw43XF0E7F
- 5Sw==
-X-Gm-Gg: ASbGncvwdvZ/34XysI17GCKBu/vYHuHigkyYPJ5Yvq94mwlCwEIm4NYT32WddMhNMN5
- zMvQ2Tp5FuoTewb+561K/3sWeZVRJHx/rYC6zQOZYN8NRURt3BjAQt4lluLq+7Sdv5vT4jSBjvE
- 1AKa3AT6pfwqMLbLf6Fn+bXXlQd+yuuZ+Slhpl7M3gjcRKmGERe7IpSgMxiU/LlB9glXBS4Gkxx
- C3R10ENnXnvLcQ35j5STA5dOsvGLTwd6QbD5zxxYazF3VGB2YtiL64JLAihcwEA6LMHO8/qdiEF
- PKzYP2DxQx/bgZrzRLtq5+qnwARLNm61GLVNlCNF3g==
-X-Google-Smtp-Source: AGHT+IEr/rk4+ZqxB/vjG33oC+nkbbgb4MWMhTWMbsM1Uzr/n7zqJ4nmA0F9IvDYTmQerbiybDabKw==
-X-Received: by 2002:a05:600c:1c03:b0:43d:db5:7b21 with SMTP id
- 5b1f17b1804b1-43d1ed00187mr78758145e9.28.1742048901501; 
- Sat, 15 Mar 2025 07:28:21 -0700 (PDT)
-Received: from chromium.org ([169.155.233.10])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe29386sm52105055e9.17.2025.03.15.07.28.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Mar 2025 07:28:20 -0700 (PDT)
-From: Simon Glass <sjg@chromium.org>
-To: U-Boot Mailing List <u-boot@lists.denx.de>
-Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
- Tom Rini <trini@konsulko.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 34/46] x86: qemu: Use the new e820 API
-Date: Sat, 15 Mar 2025 14:25:54 +0000
-Message-ID: <20250315142643.2600605-35-sjg@chromium.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250315142643.2600605-1-sjg@chromium.org>
-References: <20250315142643.2600605-1-sjg@chromium.org>
+ AJvYcCW4+lI8qLdVUPd6/lW9YczbORLQvzd+blPDISHCjOYh7XGeta2yRI8Hvknqi0nKmq5ku2AIVss4m50e@nongnu.org
+X-Gm-Message-State: AOJu0Yy/VQ1ItfXxPyLHAKxwNExA0ApvgyfBf4xmvXJpzD3TbxjRHgk4
+ MhvIzdHg06oOu2N/9lQy4W+/wnrXTz0D69jth2RYJ5polGe187uMHMg+S3wrOVBjfZrBpCoV5sj
+ vyFU8/kdnqei3t8qUbbblSoCxMXExjCVlc2s3
+X-Gm-Gg: ASbGncv6YLo8BwVBbpW26LaLdyku+Xm4bfW8Tw0UlTBNJhMbfvw0H7290y3AvnLwh3R
+ uF3dhDYeaQS4fncfTtffbDFW08GttH+1IkjcmH4mpu+jbZ1vEVte8mS9aXIcStEzycgqjbn1aIV
+ rw3dFDiJdFieoENHYkIi4v2EovDfIheZTryXcRCQ==
+X-Google-Smtp-Source: AGHT+IHJaF9e0zV3ssuT+IiVhzCmNBte73n5CcXuKYJjrLmbw2arKls2ZPF9rh5JhvxJGOeh6TDAYLeE7UrzFjB3HCk=
+X-Received: by 2002:a05:6402:2793:b0:5e6:1996:7902 with SMTP id
+ 4fb4d7f45d1cf-5e8a0c0d26fmr6916482a12.32.1742049520664; Sat, 15 Mar 2025
+ 07:38:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=sjg@chromium.org; helo=mail-wm1-x330.google.com
+References: <20250306160428.3041057-1-sjg@chromium.org>
+ <20250307142255.GL2640854@bill-the-cat>
+ <CAFLszTgtYsVQW-kETzUAdvJvAT6fN_53TeoN7o8wu52Ze3u56Q@mail.gmail.com>
+ <20250314160652.GS2640854@bill-the-cat>
+ <CAFLszTjGV==WftDU6C=S8VB28QJLvFJGS0H3=PKwTCjkZvNibQ@mail.gmail.com>
+ <20250315135749.GI2640854@bill-the-cat>
+In-Reply-To: <20250315135749.GI2640854@bill-the-cat>
+From: Simon Glass <sjg@chromium.org>
+Date: Sat, 15 Mar 2025 14:38:29 +0000
+X-Gm-Features: AQ5f1JryOCU1CPd9qV8swCUkqyaT5LDarLbQvIYJbFTEBjjncUyBQewbAE2hkI4
+Message-ID: <CAFLszTjEONSErVbE0O5E0+izUDO8yFNZ+hwzvHjvx-nTczzeSQ@mail.gmail.com>
+Subject: Re: [PATCH v4 00/47] x86: Improve operation under QEMU
+To: Tom Rini <trini@konsulko.com>
+Cc: U-Boot Mailing List <u-boot@lists.denx.de>, Bin Meng <bmeng.cn@gmail.com>, 
+ Andrew Goodbody <andrew.goodbody@linaro.org>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Angelo Dureghello <angelo@kernel-space.org>,
+ Guillaume La Roque <glaroque@baylibre.com>, 
+ Heinrich Schuchardt <xypron.glpk@gmx.de>, Igor Opaniuk <igor.opaniuk@gmail.com>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Julien Masson <jmasson@baylibre.com>, 
+ Julius Lehmann <lehmanju@devpi.de>, Love Kumar <love.kumar@amd.com>, 
+ Marek Vasut <marek.vasut+renesas@mailbox.org>,
+ Martyn Welch <martyn.welch@collabora.com>, 
+ Mattijs Korpershoek <mkorpershoek@baylibre.com>, 
+ Maximilian Brune <maximilian.brune@9elements.com>,
+ Moritz Fischer <moritzf@google.com>, 
+ Patrick Rudolph <patrick.rudolph@9elements.com>,
+ Philip Oberfichtner <pro@denx.de>, 
+ Quentin Schulz <quentin.schulz@cherry.de>, Richard Weinberger <richard@nod.at>,
+ Stephen Warren <swarren@nvidia.com>, Stephen Warren <swarren@wwwdotorg.org>, 
+ Sughosh Ganu <sughosh.ganu@linaro.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=sjg@chromium.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,88 +111,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move over to use this API before making the code even more complicated.
+Hi Tom,
 
-Signed-off-by: Simon Glass <sjg@chromium.org>
----
+On Sat, 15 Mar 2025 at 13:57, Tom Rini <trini@konsulko.com> wrote:
+>
+> On Sat, Mar 15, 2025 at 12:54:25PM +0000, Simon Glass wrote:
+> > Hi Tom,
+> >
+> > On Fri, 14 Mar 2025 at 16:06, Tom Rini <trini@konsulko.com> wrote:
+> > >
+> > > On Fri, Mar 14, 2025 at 02:44:35PM +0000, Simon Glass wrote:
+> > > > Hi Tom,
+> > > >
+> > > > On Fri, 7 Mar 2025 at 14:23, Tom Rini <trini@konsulko.com> wrote:
+> > > > >
+> > > > > On Thu, Mar 06, 2025 at 09:03:27AM -0700, Simon Glass wrote:
+> > > > >
+> > > > > > U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but it
+> > > > > > is not perfect.
+> > > > > >
+> > > > > > With both builds, executing the VESA ROM causes an intermittent hang, at
+> > > > > > least on some AMD CPUs.
+> > > > > >
+> > > > > > With qemu-x86_64 kvm cannot be used since the move to long mode (64-bit)
+> > > > > > is done in a way that works on real hardware but not with QEMU. This
+> > > > > > means that performance is 4-5x slower than it could be, at least on my
+> > > > > > CPU.
+> > > > > >
+> > > > > > We can work around the first problem by using Bochs, which is anyway a
+> > > > > > better choice than VESA for QEMU. The second can be addressed by using
+> > > > > > the same descriptor across the jump to long mode.
+> > > > > >
+> > > > > > With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
+> > > > > >
+> > > > > > In v3 some e820 patches are included to make booting reliable and avoid
+> > > > > > ACPI tables being dropped. Also, several MTTR problems are addressed, to
+> > > > > > support memory sizes above 4GB reliably.
+> > > > >
+> > > > > Do you plan to rebase the prerequisite series' this requires so that it
+> > > > > can be merged?
+> > > >
+> > > > Here's my understanding of where things are:
+> > > >
+> > > > 1. You rejected the membuf series and my replies to try to resolve
+> > > > that haven't gone anywhere yet. So your tree doesn't have any tests
+> > > > for that code and still has the old naming.
+> > >
+> > > https://patchwork.ozlabs.org/comment/3473898/ is a well thought out not
+> > > gratuitous summary of why the series as it stands is a step in the wrong
+> > > direction. Tests are good. They're not a reason to pull an otherwise bad
+> > > series. This series should be rebased to not depend on that series. The
+> > > tests from the other series should be split out.
+> >
+> > It's not a bad series, unfortunately. I replied with my own comments
+> > and I stand by them.
+> >
+> > I don't mind if you want to drop the #ifdef (which shows how a flag
+> > could be used and the code-size impact). But other than that, I am
+> > firm on this for now. I've already applied it to my tree and a membuf
+> > implementation with tests and without a power-of-two limitation is
+> > important for my current work on distros and expo.
+>
+> Well, you need to rebase this series without that then as I'm not going
+> to take something another long time project contributor said was wrong
+> and offered lots of constructive feedback on.
 
-(no changes since v3)
+It doesn't affect this series. It is for future work.
 
-Changes in v3:
-- Add new patch to use the new e820 API
+We'll see if the LTPC replies to my concerns.
 
- arch/x86/cpu/qemu/e820.c | 48 ++++++++++------------------------------
- 1 file changed, 12 insertions(+), 36 deletions(-)
+>
+> > > > 2. I sent the first part of the PXE series so you could apply that.
+> > >
+> > > Yes, I should be applying that next week.
+> > >
+> > > > 3. You rejected the second part of this series because it didn't
+> > > > include support for lwip without cmdline. I offered to handle that
+> > > > case later but I'm pretty sure you rejected that too.
+> > >
+> > > That's not how I would characterize it, no. I said you should probably
+> > > focus on sandbox + lwip, since you're the sandbox guru and ask Jerome to
+> > > do the net_loop-alike thing, since he's one of the network custodians
+> > > and the lwip person. I was trying to direct you to where your efforts
+> > > might be most useful but if you insist on instead doing the
+> > > net_loop-alike part and Jerome ack's it, that's fine.
+> >
+> > As you know there have been many arguments from the EFI guys about
+> > sandbox and you have already rejected my sandbox-focussed EFI-memory
+> > series for your tree. If I were actually a guru, that wouldn't have
+> > happened.
+> >
+> > I see that Jerome has created some tests, which is good.
+> >
+> > So really, you should consider applying the full PXE series so that
+> > Jerome can build on that and add support for non-CMDLINE PXE in lwip
+> > in a way that you would like.
+>
+> I saw that Jerome posted sandbox for lwip as well and was pleased. You
+> can pickup whatever is left and move forward once both your current
+> series and his have been merged.
 
-diff --git a/arch/x86/cpu/qemu/e820.c b/arch/x86/cpu/qemu/e820.c
-index 17a04f86479..2b0ad179489 100644
---- a/arch/x86/cpu/qemu/e820.c
-+++ b/arch/x86/cpu/qemu/e820.c
-@@ -19,51 +19,27 @@ unsigned int install_e820_map(unsigned int max_entries,
- 			      struct e820_entry *entries)
- {
- 	u64 high_mem_size;
--	int n = 0;
-+	struct e820_ctx ctx;
- 
--	entries[n].addr = 0;
--	entries[n].size = ISA_START_ADDRESS;
--	entries[n].type = E820_RAM;
--	n++;
-+	e820_init(&ctx, entries, max_entries);
- 
--	entries[n].addr = ISA_START_ADDRESS;
--	entries[n].size = ISA_END_ADDRESS - ISA_START_ADDRESS;
--	entries[n].type = E820_RESERVED;
--	n++;
-+	e820_next(&ctx, E820_RAM, ISA_START_ADDRESS);
-+	e820_next(&ctx, E820_RESERVED, ISA_END_ADDRESS);
- 
- 	/*
- 	 * since we use memalign(malloc) to allocate high memory for
- 	 * storing ACPI tables, we need to reserve them in e820 tables,
- 	 * otherwise kernel will reclaim them and data will be corrupted
- 	 */
--	entries[n].addr = ISA_END_ADDRESS;
--	entries[n].size = gd->relocaddr - TOTAL_MALLOC_LEN - ISA_END_ADDRESS;
--	entries[n].type = E820_RAM;
--	n++;
--
--	/* for simplicity, reserve entire malloc space */
--	entries[n].addr = gd->relocaddr - TOTAL_MALLOC_LEN;
--	entries[n].size = TOTAL_MALLOC_LEN;
--	entries[n].type = E820_RESERVED;
--	n++;
--
--	entries[n].addr = gd->relocaddr;
--	entries[n].size = qemu_get_low_memory_size() - gd->relocaddr;
--	entries[n].type = E820_RESERVED;
--	n++;
--
--	entries[n].addr = CONFIG_PCIE_ECAM_BASE;
--	entries[n].size = CONFIG_PCIE_ECAM_SIZE;
--	entries[n].type = E820_RESERVED;
--	n++;
-+	e820_to_addr(&ctx, E820_RAM, gd->relocaddr - TOTAL_MALLOC_LEN);
-+	e820_next(&ctx, E820_RESERVED, TOTAL_MALLOC_LEN);
-+	e820_to_addr(&ctx, E820_RAM, qemu_get_low_memory_size());
-+	e820_add(&ctx, E820_RESERVED, CONFIG_PCIE_ECAM_BASE,
-+		 CONFIG_PCIE_ECAM_SIZE);
- 
- 	high_mem_size = qemu_get_high_memory_size();
--	if (high_mem_size) {
--		entries[n].addr = SZ_4G;
--		entries[n].size = high_mem_size;
--		entries[n].type = E820_RAM;
--		n++;
--	}
-+	if (high_mem_size)
-+		e820_add(&ctx, E820_RAM, SZ_4G, high_mem_size);
- 
--	return n;
-+	return e820_finish(&ctx);
- }
--- 
-2.43.0
+For now I've just applied it to my tree. I believe my offer of adding
+non-CMDLINE lwip immediately after you applied it was a good
+compromise, but not good enough, so for now I've decided to just move
+on.
 
+>
+> > > > 4. This series is now marked 'changes requested' but the only feedback
+> > > > I see is in the RFC patch.
+> > >
+> > > Yes, rebase to something that can be applied is a change I've requested.
+> > > Because my feedback was "Do you plan to rebase the prerequisite series'
+> > > this requires so that it can be merged?". I would have otherwise merged
+> > > it by now.
+> >
+> > OK I sent a PR.
+>
+> Eh? v4 as-is needs to be rebased to mainline. That you didn't make it
+> against mainline but instead your tree is why this wasn't merged
+> already.
+
+I sent a PR for the test series, to try to get that landed in your
+tree. At least that will help reduce the diff with new tests. The PR
+is the only prereq for v5 of this series (Ubuntu test).
+
+>
+> > > Patchwork reflects mainline status.
+> >
+> > OK. I am finding it more and more slow and painful. Since we are
+> > talking about Patchwork, I noticed some patches assigned to me in
+> > there, so I've assigned them to you. I'll try to look there more
+> > often.
+>
+> I guess you missed the email where I told you what was assigned to you
+> in patchwork and could easily be put in a pull request by you to me to
+> get to mainline.
+
+Well let's see how things go over the next few days.
+
+Regards,
+SImon
 
