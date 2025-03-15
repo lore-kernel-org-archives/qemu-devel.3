@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7531AC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7507FC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttME7-0003zI-0t; Sat, 15 Mar 2025 03:46:35 -0400
+	id 1ttMCs-0007VL-NJ; Sat, 15 Mar 2025 03:45:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttME3-0003l3-7X; Sat, 15 Mar 2025 03:46:31 -0400
+ id 1ttMCe-00071p-KF; Sat, 15 Mar 2025 03:45:05 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttME1-0005ML-3C; Sat, 15 Mar 2025 03:46:30 -0400
+ id 1ttMCb-000536-Hf; Sat, 15 Mar 2025 03:45:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2A745FFB1C;
- Sat, 15 Mar 2025 10:41:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E77FBFFB0E;
+ Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 194451CACE6;
- Sat, 15 Mar 2025 10:42:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D631F1CACD8;
+ Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B880055A24; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 966EA55A08; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Denis Rastyogin <gerben@altlinux.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 40/42] block: Zero block driver state before reopening
-Date: Sat, 15 Mar 2025 10:42:42 +0300
-Message-Id: <20250315074249.634718-40-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Rodrigo Dias Correa <r@drigo.nl>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 26/42] goldfish_rtc: Fix tick_offset migration
+Date: Sat, 15 Mar 2025 10:42:28 +0300
+Message-Id: <20250315074249.634718-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -61,61 +62,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Rodrigo Dias Correa <r@drigo.nl>
 
-Block drivers assume in their .bdrv_open() implementation that their
-state in bs->opaque has been zeroed; it is initially allocated with
-g_malloc0() in bdrv_open_driver().
+Instead of migrating the raw tick_offset, goldfish_rtc migrates a
+recalculated value based on QEMU_CLOCK_VIRTUAL. As QEMU_CLOCK_VIRTUAL
+stands still across a save-and-restore cycle, the guest RTC becomes out
+of sync with the host RTC when the VM is restored.
 
-bdrv_snapshot_goto() needs to make sure that it is zeroed again before
-calling drv->bdrv_open() to avoid that block drivers use stale values.
+As described in the bug description, it looks like this calculation was
+copied from pl031 RTC, which had its tick_offset migration fixed by
+Commit 032cfe6a79c8 ("pl031: Correctly migrate state when using -rtc
+clock=host").
 
-One symptom of this bug is VMDK running into a double free when the user
-tries to apply an internal snapshot like 'qemu-img snapshot -a test
-test.vmdk'. This should be a graceful error because VMDK doesn't support
-internal snapshots.
+Migrate the tick_offset directly, adding it as a version-dependent field
+to VMState. Keep the old behavior when migrating from previous versions.
 
-==25507== Invalid free() / delete / delete[] / realloc()
-==25507==    at 0x484B347: realloc (vg_replace_malloc.c:1801)
-==25507==    by 0x54B592A: g_realloc (gmem.c:171)
-==25507==    by 0x1B221D: vmdk_add_extent (../block/vmdk.c:570)
-==25507==    by 0x1B1084: vmdk_open_sparse (../block/vmdk.c:1059)
-==25507==    by 0x1AF3D8: vmdk_open (../block/vmdk.c:1371)
-==25507==    by 0x1A2AE0: bdrv_snapshot_goto (../block/snapshot.c:299)
-==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
-==25507==  Address 0x832f3e0 is 0 bytes inside a block of size 272 free'd
-==25507==    at 0x4846B83: free (vg_replace_malloc.c:989)
-==25507==    by 0x54AEAC4: g_free (gmem.c:208)
-==25507==    by 0x1AF629: vmdk_close (../block/vmdk.c:2889)
-==25507==    by 0x1A2A9C: bdrv_snapshot_goto (../block/snapshot.c:290)
-==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
-
-This error was discovered by fuzzing qemu-img.
-
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2853
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2851
-Reported-by: Denis Rastyogin <gerben@altlinux.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250310104858.28221-1-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit b75c5f9879166b86ed7c48b772fdcd0693e8a9a3)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2033
+Signed-off-by: Rodrigo Dias Correa <r@drigo.nl>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250114212150.228241-1-r@drigo.nl>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 3521f9cadc29c7d68b73b325ddb46a7acebf6212)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/snapshot.c b/block/snapshot.c
-index c4d40e80dd..7da0588712 100644
---- a/block/snapshot.c
-+++ b/block/snapshot.c
-@@ -297,6 +297,7 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
-         bdrv_graph_wrunlock(NULL);
+diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
+index 19a56402a0..81cc942b46 100644
+--- a/hw/rtc/goldfish_rtc.c
++++ b/hw/rtc/goldfish_rtc.c
+@@ -178,38 +178,21 @@ static void goldfish_rtc_write(void *opaque, hwaddr offset,
+     trace_goldfish_rtc_write(offset, value);
+ }
  
-         ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
-+        memset(bs->opaque, 0, drv->instance_size);
-         open_ret = drv->bdrv_open(bs, options, bs->open_flags, &local_err);
-         qobject_unref(options);
-         if (open_ret < 0) {
+-static int goldfish_rtc_pre_save(void *opaque)
+-{
+-    uint64_t delta;
+-    GoldfishRTCState *s = opaque;
+-
+-    /*
+-     * We want to migrate this offset, which sounds straightforward.
+-     * Unfortunately, we cannot directly pass tick_offset because
+-     * rtc_clock on destination Host might not be same source Host.
+-     *
+-     * To tackle, this we pass tick_offset relative to vm_clock from
+-     * source Host and make it relative to rtc_clock at destination Host.
+-     */
+-    delta = qemu_clock_get_ns(rtc_clock) -
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    s->tick_offset_vmstate = s->tick_offset + delta;
+-
+-    return 0;
+-}
+-
+ static int goldfish_rtc_post_load(void *opaque, int version_id)
+ {
+-    uint64_t delta;
+     GoldfishRTCState *s = opaque;
+ 
+-    /*
+-     * We extract tick_offset from tick_offset_vmstate by doing
+-     * reverse math compared to pre_save() function.
+-     */
+-    delta = qemu_clock_get_ns(rtc_clock) -
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    s->tick_offset = s->tick_offset_vmstate - delta;
++    if (version_id < 3) {
++        /*
++         * Previous versions didn't migrate tick_offset directly. Instead, they
++         * migrated tick_offset_vmstate, which is a recalculation based on
++         * QEMU_CLOCK_VIRTUAL. We use tick_offset_vmstate when migrating from
++         * older versions.
++         */
++        uint64_t delta = qemu_clock_get_ns(rtc_clock) -
++                 qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++        s->tick_offset = s->tick_offset_vmstate - delta;
++    }
+ 
+     goldfish_rtc_set_alarm(s);
+ 
+@@ -239,8 +222,7 @@ static const MemoryRegionOps goldfish_rtc_ops[2] = {
+ 
+ static const VMStateDescription goldfish_rtc_vmstate = {
+     .name = TYPE_GOLDFISH_RTC,
+-    .version_id = 2,
+-    .pre_save = goldfish_rtc_pre_save,
++    .version_id = 3,
+     .post_load = goldfish_rtc_post_load,
+     .fields = (VMStateField[]) {
+         VMSTATE_UINT64(tick_offset_vmstate, GoldfishRTCState),
+@@ -249,6 +231,7 @@ static const VMStateDescription goldfish_rtc_vmstate = {
+         VMSTATE_UINT32(irq_pending, GoldfishRTCState),
+         VMSTATE_UINT32(irq_enabled, GoldfishRTCState),
+         VMSTATE_UINT32(time_high, GoldfishRTCState),
++        VMSTATE_UINT64_V(tick_offset, GoldfishRTCState, 3),
+         VMSTATE_END_OF_LIST()
+     }
+ };
 -- 
 2.39.5
 
