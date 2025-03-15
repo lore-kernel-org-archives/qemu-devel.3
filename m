@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BF32C35FF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31ACAC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttME5-0003ox-6m; Sat, 15 Mar 2025 03:46:33 -0400
+	id 1ttMBo-0003ak-0Q; Sat, 15 Mar 2025 03:44:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttME0-0003bR-8T; Sat, 15 Mar 2025 03:46:29 -0400
+ id 1ttMBk-0003VI-Gm; Sat, 15 Mar 2025 03:44:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMDy-0005M0-LW; Sat, 15 Mar 2025 03:46:27 -0400
+ id 1ttMBi-0004zt-T7; Sat, 15 Mar 2025 03:44:08 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 26A9EFFB1B;
- Sat, 15 Mar 2025 10:41:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CB8E3FFB07;
+ Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 157031CACE5;
- Sat, 15 Mar 2025 10:42:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BA54A1CACD1;
+ Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B617255A22; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 8561A559FA; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ myluo24@m.fudan.edu.cn, "Michael S . Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 39/42] hw/xen/hvm: Fix Aarch64 typo
-Date: Sat, 15 Mar 2025 10:42:41 +0300
-Message-Id: <20250315074249.634718-39-mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 19/42] cryptodev/vhost: allocate CryptoDevBackendVhost
+ using g_mem0()
+Date: Sat, 15 Mar 2025 10:42:21 +0300
+Message-Id: <20250315074249.634718-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -65,30 +64,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-There is no TARGET_ARM_64 definition. Luckily enough,
-when TARGET_AARCH64 is defined, TARGET_ARM also is.
+The function `vhost_dev_init()` expects the `struct vhost_dev`
+(passed as a parameter) to be fully initialized. This is important
+because some parts of the code check whether `vhost_dev->config_ops`
+is NULL to determine if it has been set (e.g. later via
+`vhost_dev_set_config_notifier`).
 
-Fixes: 733766cd373 ("hw/arm: introduce xenpvh machine")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250305153929.43687-2-philmd@linaro.org>
-(cherry picked from commit 3a11b653a63fee0e43f4ab84b93f068b961d8fe7)
+To ensure this initialization, it’s better to allocate the entire
+`CryptoDevBackendVhost` structure (which includes `vhost_dev`) using
+`g_mem0()`, following the same approach used for other vhost devices,
+such as in `vhost_net_init()`.
+
+Fixes: 042cea274c ("cryptodev: add vhost-user as a new cryptodev backend")
+Cc: qemu-stable@nongnu.org
+Reported-by: myluo24@m.fudan.edu.cn
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20250211135523.101203-1-sgarzare@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 83cb18ac4500f3a14067b19408705068647cb0c5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/xen/arch_hvm.h b/include/hw/xen/arch_hvm.h
-index c7c515220d..df39c819c8 100644
---- a/include/hw/xen/arch_hvm.h
-+++ b/include/hw/xen/arch_hvm.h
-@@ -1,5 +1,5 @@
- #if defined(TARGET_I386) || defined(TARGET_X86_64)
- #include "hw/i386/xen_arch_hvm.h"
--#elif defined(TARGET_ARM) || defined(TARGET_ARM_64)
-+#elif defined(TARGET_ARM) || defined(TARGET_AARCH64)
- #include "hw/arm/xen_arch_hvm.h"
- #endif
+diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
+index 93523732f3..5901b3ec4c 100644
+--- a/backends/cryptodev-vhost.c
++++ b/backends/cryptodev-vhost.c
+@@ -53,7 +53,7 @@ cryptodev_vhost_init(
+     CryptoDevBackendVhost *crypto;
+     Error *local_err = NULL;
+ 
+-    crypto = g_new(CryptoDevBackendVhost, 1);
++    crypto = g_new0(CryptoDevBackendVhost, 1);
+     crypto->dev.max_queues = 1;
+     crypto->dev.nvqs = 1;
+     crypto->dev.vqs = crypto->vqs;
 -- 
 2.39.5
 
