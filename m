@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68889C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3765C35FF3
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMCJ-0004xP-Bn; Sat, 15 Mar 2025 03:44:44 -0400
+	id 1ttMBN-0002ms-5J; Sat, 15 Mar 2025 03:43:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMC9-0004eP-3E; Sat, 15 Mar 2025 03:44:33 -0400
+ id 1ttMBK-0002k0-Fe; Sat, 15 Mar 2025 03:43:42 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMC5-00050K-HU; Sat, 15 Mar 2025 03:44:31 -0400
+ id 1ttMBI-0004xB-85; Sat, 15 Mar 2025 03:43:42 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CF80BFFB08;
+ by isrv.corpit.ru (Postfix) with ESMTP id BBAF8FFB03;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BE2C21CACD2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A8B141CACCD;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 87EA7559FC; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 7C142559F2; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Lei Yang <leiyang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 20/42] vdpa: Fix endian bugs in shadow virtqueue
-Date: Sat, 15 Mar 2025 10:42:22 +0300
-Message-Id: <20250315074249.634718-20-mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 15/42] target/arm: Honour SDCR.TDCC and SCR.TERR in
+ AArch32 EL3 non-Monitor modes
+Date: Sat, 15 Mar 2025 10:42:17 +0300
+Message-Id: <20250315074249.634718-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -64,89 +65,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-VDPA didn't work on a big-endian machine due to missing/incorrect
-CPU<->LE data format conversions.
+There are not many traps in AArch32 which should trap to Monitor
+mode, but these trap bits should trap not just lower ELs to Monitor
+mode but also the non-Monitor modes running at EL3 (i.e.  Secure
+System, Secure Undef, etc).
 
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Message-Id: <20250212164923.1971538-1-kshk@linux.ibm.com>
-Fixes: 10857ec0ad ("vhost: Add VhostShadowVirtqueue")
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 50e9754149066dc91f58405d3378b589098cb408)
+We get this wrong because the relevant access functions implement the
+AArch64-style logic of
+   if (el < 3 && trap_bit_set) {
+       return CP_ACCESS_TRAP_EL3;
+   }
+which won't trap the non-Monitor modes at EL3.
+
+Correct this error by using arm_is_el3_or_mon() instead, which
+returns true when the CPU is at AArch64 EL3 or AArch32 Monitor mode.
+(Since the new callsites are compiled also for the linux-user mode,
+we need to provide a dummy implementation for CONFIG_USER_ONLY.)
+
+This affects only:
+ * trapping of ERRIDR via SCR.TERR
+ * trapping of the debug channel registers via SDCR.TDCC
+ * trapping of GICv3 registers via SCR.IRQ and SCR.FIQ
+   (which we already used arm_is_el3_or_mon() for)
+
+This patch changes the handling of SCR.TERR and SDCR.TDCC. This
+patch only changes guest-visible behaviour for "-cpu max" on
+the qemu-system-arm binary, because SCR.TERR
+and SDCR.TDCC (and indeed the entire SDCR register) only arrived
+in Armv8, and the only guest CPU we support which has any v8
+features and also starts in AArch32 EL3 is the 32-bit 'max'.
+
+Other uses of CP_ACCESS_TRAP_EL3 don't need changing:
+
+ * uses in code paths that can't happen when EL3 is AArch32:
+   access_trap_aa32s_el1, cpacr_access, cptr_access, nsacr_access
+ * uses which are in accessfns for AArch64-only registers:
+   gt_stimer_access, gt_cntpoff_access, access_hxen, access_tpidr2,
+   access_smpri, access_smprimap, access_lor_ns, access_pauth,
+   access_mte, access_tfsr_el2, access_scxtnum, access_fgt
+ * trap bits which exist only in the AArch64 version of the
+   trap register, not the AArch32 one:
+   access_tpm, pmreg_access, access_dbgvcr32, access_tdra,
+   access_tda, access_tdosa (TPM, TDA and TDOSA exist only in
+   MDCR_EL3, not in SDCR, and we enforce this in sdcr_write())
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250130182309.717346-8-peter.maydell@linaro.org
+(cherry picked from commit 4d436fb05c2a1fff7befc815ebcbb04a14977448)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index fc5f408f77..ca60167b08 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -165,10 +165,10 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
-         descs[i].len = cpu_to_le32(iovec[n].iov_len);
- 
-         last = i;
--        i = cpu_to_le16(svq->desc_next[i]);
-+        i = svq->desc_next[i];
-     }
- 
--    svq->free_head = le16_to_cpu(svq->desc_next[last]);
-+    svq->free_head = svq->desc_next[last];
-     return true;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 3a45c35b75..c1b18b8478 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2630,6 +2630,11 @@ static inline bool arm_is_secure_below_el3(CPUARMState *env)
+     return false;
  }
  
-@@ -228,10 +228,12 @@ static void vhost_svq_kick(VhostShadowVirtqueue *svq)
-     smp_mb();
- 
-     if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
--        uint16_t avail_event = *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]);
-+        uint16_t avail_event = le16_to_cpu(
-+                *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]));
-         needs_kick = vring_need_event(avail_event, svq->shadow_avail_idx, svq->shadow_avail_idx - 1);
-     } else {
--        needs_kick = !(svq->vring.used->flags & VRING_USED_F_NO_NOTIFY);
-+        needs_kick =
-+                !(svq->vring.used->flags & cpu_to_le16(VRING_USED_F_NO_NOTIFY));
-     }
- 
-     if (!needs_kick) {
-@@ -365,7 +367,7 @@ static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
-         return true;
-     }
- 
--    svq->shadow_used_idx = cpu_to_le16(*(volatile uint16_t *)used_idx);
-+    svq->shadow_used_idx = le16_to_cpu(*(volatile uint16_t *)used_idx);
- 
-     return svq->last_used_idx != svq->shadow_used_idx;
- }
-@@ -383,7 +385,7 @@ static bool vhost_svq_enable_notification(VhostShadowVirtqueue *svq)
++static inline bool arm_is_el3_or_mon(CPUARMState *env)
++{
++    return false;
++}
++
+ static inline ARMSecuritySpace arm_security_space(CPUARMState *env)
  {
-     if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
-         uint16_t *used_event = (uint16_t *)&svq->vring.avail->ring[svq->vring.num];
--        *used_event = svq->shadow_used_idx;
-+        *used_event = cpu_to_le16(svq->shadow_used_idx);
-     } else {
-         svq->vring.avail->flags &= ~cpu_to_le16(VRING_AVAIL_F_NO_INTERRUPT);
+     return ARMSS_NonSecure;
+diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
+index cbfba532f5..d0666500fa 100644
+--- a/target/arm/debug_helper.c
++++ b/target/arm/debug_helper.c
+@@ -870,7 +870,8 @@ static CPAccessResult access_tdcc(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (el < 2 && (mdcr_el2_tda || mdcr_el2_tdcc)) {
+         return CP_ACCESS_TRAP_EL2;
      }
-@@ -408,7 +410,7 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
-                                              uint16_t num, uint16_t i)
- {
-     for (uint16_t j = 0; j < (num - 1); ++j) {
--        i = le16_to_cpu(svq->desc_next[i]);
-+        i = svq->desc_next[i];
+-    if (el < 3 && ((env->cp15.mdcr_el3 & MDCR_TDA) || mdcr_el3_tdcc)) {
++    if (!arm_is_el3_or_mon(env) &&
++        ((env->cp15.mdcr_el3 & MDCR_TDA) || mdcr_el3_tdcc)) {
+         return CP_ACCESS_TRAP_EL3;
      }
- 
-     return i;
-@@ -681,7 +683,7 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
-     svq->desc_state = g_new0(SVQDescState, svq->vring.num);
-     svq->desc_next = g_new0(uint16_t, svq->vring.num);
-     for (unsigned i = 0; i < svq->vring.num - 1; i++) {
--        svq->desc_next[i] = cpu_to_le16(i + 1);
-+        svq->desc_next[i] = i + 1;
+     return CP_ACCESS_OK;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0d092bc99b..eff8563527 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6664,7 +6664,7 @@ static CPAccessResult access_terr(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (el < 2 && (arm_hcr_el2_eff(env) & HCR_TERR)) {
+         return CP_ACCESS_TRAP_EL2;
      }
- }
- 
+-    if (el < 3 && (env->cp15.scr_el3 & SCR_TERR)) {
++    if (!arm_is_el3_or_mon(env) && (env->cp15.scr_el3 & SCR_TERR)) {
+         return CP_ACCESS_TRAP_EL3;
+     }
+     return CP_ACCESS_OK;
 -- 
 2.39.5
 
