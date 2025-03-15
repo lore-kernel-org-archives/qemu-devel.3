@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA0BC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD402C28B30
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKtw-0000BA-V7; Sat, 15 Mar 2025 02:21:41 -0400
+	id 1ttKtw-00009W-KW; Sat, 15 Mar 2025 02:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKs0-0003zi-Ll; Sat, 15 Mar 2025 02:19:40 -0400
+ id 1ttKsW-0004nE-L6; Sat, 15 Mar 2025 02:20:13 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKrw-0003LT-Ty; Sat, 15 Mar 2025 02:19:39 -0400
+ id 1ttKsU-0003bV-8b; Sat, 15 Mar 2025 02:20:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A7431FF9DD;
+ by isrv.corpit.ru (Postfix) with ESMTP id BF048FF9E3;
  Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7E9BD1CAC46;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 961EB1CAC4C;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 540D7558D1; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 62927558DD; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexander Graf <graf@amazon.com>,
- Vikrant Garg <vikrant1garg@gmail.com>,
- Dorjoy Chowdhury <dorjoychy111@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 17/51] hw/virtio/virtio-nsm: Respond with correct length
-Date: Sat, 15 Mar 2025 09:17:23 +0300
-Message-Id: <20250315061801.622606-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 23/51] target/riscv: rvv: Fix unexpected behavior of
+ vector reduction instructions when vl is 0
+Date: Sat, 15 Mar 2025 09:17:29 +0300
+Message-Id: <20250315061801.622606-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,43 +64,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+From: Max Chou <max.chou@sifive.com>
 
-When we return a response packet from NSM, we need to indicate its
-length according to the content of the response. Prior to this patch, we
-returned the length of the source buffer, which may confuse guest code
-that relies on the response size.
+According to the Vector Reduction Operations section in the RISC-V "V"
+Vector Extension spec,
+"If vl=0, no operation is performed and the destination register is not
+updated."
 
-Fix it by returning the response payload size instead.
+The vd should be updated when vl is larger than 0.
 
-Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module device")
-Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Message-Id: <20250213114541.67515-1-graf@amazon.com>
-Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Fixes: bb154e3e0cc715 (&quot;device/virtio-nsm: Support for Nitro Secure Module device&quot;)<br>
-Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Vikrant Garg <vikrant1garg@gmail.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 131fe64e63c88ec52c45a5946a478c0edeb31b78)
+Fixes: fe5c9ab1fc ("target/riscv: vector single-width integer reduction instructions")
+Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20250124101452.2519171-1-max.chou@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit ffd455963f230c7dc04965609d6675da687a5a78)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
-index a3db8eef3e..5dd56cf274 100644
---- a/hw/virtio/virtio-nsm.c
-+++ b/hw/virtio/virtio-nsm.c
-@@ -1589,7 +1589,7 @@ static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
-     g_free(req.iov_base);
-     g_free(res.iov_base);
-     virtqueue_push(vq, out_elem, 0);
--    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
-+    virtqueue_push(vq, in_elem, sz);
-     virtio_notify(vdev, vq);
-     return;
- 
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index a85dd1d200..3731500717 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -4648,7 +4648,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
+         }                                                 \
+         s1 = OP(s1, (TD)s2);                              \
+     }                                                     \
+-    *((TD *)vd + HD(0)) = s1;                             \
++    if (vl > 0) {                                         \
++        *((TD *)vd + HD(0)) = s1;                         \
++    }                                                     \
+     env->vstart = 0;                                      \
+     /* set tail elements to 1s */                         \
+     vext_set_elems_1s(vd, vta, esz, vlenb);               \
+@@ -4734,7 +4736,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,           \
+         }                                                  \
+         s1 = OP(s1, (TD)s2, &env->fp_status);              \
+     }                                                      \
+-    *((TD *)vd + HD(0)) = s1;                              \
++    if (vl > 0) {                                          \
++        *((TD *)vd + HD(0)) = s1;                          \
++    }                                                      \
+     env->vstart = 0;                                       \
+     /* set tail elements to 1s */                          \
+     vext_set_elems_1s(vd, vta, esz, vlenb);                \
 -- 
 2.39.5
 
