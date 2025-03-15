@@ -4,38 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD402C28B30
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79ACEC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKtw-00009W-KW; Sat, 15 Mar 2025 02:21:41 -0400
+	id 1ttKu4-0000hd-VK; Sat, 15 Mar 2025 02:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKsW-0004nE-L6; Sat, 15 Mar 2025 02:20:13 -0400
+ id 1ttKsS-0004hS-KF; Sat, 15 Mar 2025 02:20:10 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKsU-0003bV-8b; Sat, 15 Mar 2025 02:20:12 -0400
+ id 1ttKsQ-0003My-4S; Sat, 15 Mar 2025 02:20:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BF048FF9E3;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6EECFF9E1;
  Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 961EB1CAC4C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8E6A21CAC4A;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 62927558DD; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 5DF2E558D9; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 23/51] target/riscv: rvv: Fix unexpected behavior of
- vector reduction instructions when vl is 0
-Date: Sat, 15 Mar 2025 09:17:29 +0300
-Message-Id: <20250315061801.622606-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Joelle van Dyne <j@getutm.app>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 21/51] target/arm/hvf: Disable SME feature
+Date: Sat, 15 Mar 2025 09:17:27 +0300
+Message-Id: <20250315061801.622606-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
@@ -64,50 +61,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Joelle van Dyne <j@getutm.app>
 
-According to the Vector Reduction Operations section in the RISC-V "V"
-Vector Extension spec,
-"If vl=0, no operation is performed and the destination register is not
-updated."
+macOS 15.2's Hypervisor.framework exposes SME feature on M4 Macs.
+However, QEMU's hvf accelerator code does not properly support it
+yet, causing QEMU to fail to start when hvf accelerator is used on
+these systems, with the error message:
 
-The vd should be updated when vl is larger than 0.
+  qemu-aarch64-softmmu: cannot disable sme4224
+  All SME vector lengths are disabled.
+  With SME enabled, at least one vector length must be enabled.
 
-Fixes: fe5c9ab1fc ("target/riscv: vector single-width integer reduction instructions")
-Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250124101452.2519171-1-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit ffd455963f230c7dc04965609d6675da687a5a78)
+Ideally we would have SME support on these hosts; however, until that
+point, we must suppress the SME feature in the ID registers, so that
+users can at least run non-SME guests.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2665
+Signed-off-by: Joelle van Dyne <j@getutm.app>
+Message-id: 20250224165735.36792-1-j@getutm.app
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: expanded commit message, comment]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit fd207677a83087454b8afef31651985a1df0d2dd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index a85dd1d200..3731500717 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -4648,7 +4648,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
-         }                                                 \
-         s1 = OP(s1, (TD)s2);                              \
-     }                                                     \
--    *((TD *)vd + HD(0)) = s1;                             \
-+    if (vl > 0) {                                         \
-+        *((TD *)vd + HD(0)) = s1;                         \
-+    }                                                     \
-     env->vstart = 0;                                      \
-     /* set tail elements to 1s */                         \
-     vext_set_elems_1s(vd, vta, esz, vlenb);               \
-@@ -4734,7 +4736,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,           \
-         }                                                  \
-         s1 = OP(s1, (TD)s2, &env->fp_status);              \
-     }                                                      \
--    *((TD *)vd + HD(0)) = s1;                              \
-+    if (vl > 0) {                                          \
-+        *((TD *)vd + HD(0)) = s1;                          \
-+    }                                                      \
-     env->vstart = 0;                                       \
-     /* set tail elements to 1s */                          \
-     vext_set_elems_1s(vd, vta, esz, vlenb);                \
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index ca7ea92774..0089174b36 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -897,6 +897,18 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ 
+     clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar.id_aa64mmfr0);
+ 
++    /*
++     * Disable SME, which is not properly handled by QEMU hvf yet.
++     * To allow this through we would need to:
++     * - make sure that the SME state is correctly handled in the
++     *   get_registers/put_registers functions
++     * - get the SME-specific CPU properties to work with accelerators
++     *   other than TCG
++     * - fix any assumptions we made that SME implies SVE (since
++     *   on the M4 there is SME but not SVE)
++     */
++    host_isar.id_aa64pfr1 &= ~R_ID_AA64PFR1_SME_MASK;
++
+     ahcf->isar = host_isar;
+ 
+     /*
 -- 
 2.39.5
 
