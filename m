@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B8BC35FF3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420C0C28B30
 	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKx0-0006qN-4H; Sat, 15 Mar 2025 02:24:50 -0400
+	id 1ttKvi-00054H-G2; Sat, 15 Mar 2025 02:23:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKu2-0000gu-1l; Sat, 15 Mar 2025 02:21:46 -0400
+ id 1ttKtW-0007cJ-Ng; Sat, 15 Mar 2025 02:21:16 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKtz-0003lR-SR; Sat, 15 Mar 2025 02:21:45 -0400
+ id 1ttKtU-0003iw-Ds; Sat, 15 Mar 2025 02:21:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 07438FF9F2;
- Sat, 15 Mar 2025 09:17:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E74FAFF9ED;
+ Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D2F281CAC5B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BEDEA1CAC56;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8658B558FB; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 79E4B558F1; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 38/51] hw/arm: enable secure EL2 timers for sbsa machine
-Date: Sat, 15 Mar 2025 09:17:44 +0300
-Message-Id: <20250315061801.622606-38-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 33/51] target/arm: Make CNTPS_* UNDEF from Secure EL1
+ when Secure EL2 is enabled
+Date: Sat, 15 Mar 2025 09:17:39 +0300
+Message-Id: <20250315061801.622606-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
@@ -63,30 +64,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250204125009.2281315-10-peter.maydell@linaro.org
+When we added Secure EL2 support, we missed that this needs an update
+to the access code for the EL3 physical timer registers.  These are
+supposed to UNDEF from Secure EL1 when Secure EL2 is enabled.
+
+(Note for stable backporting: for backports to branches where
+CP_ACCESS_UNDEFINED is not defined, the old name to use instead
+is CP_ACCESS_TRAP_UNCATEGORIZED.)
+
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 9a9d9e82093efa22e3e2bdaac0f24c823f8786f7)
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20250204125009.2281315-4-peter.maydell@linaro.org
+(cherry picked from commit bdd641541fbef0a27bf9f60e7eba6f8a31d4706c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index e3195d5449..e9985a5e3b 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -484,6 +484,8 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
-             [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
-             [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
-             [GTIMER_HYPVIRT] = ARCH_TIMER_NS_EL2_VIRT_IRQ,
-+            [GTIMER_S_EL2_PHYS] = ARCH_TIMER_S_EL2_IRQ,
-+            [GTIMER_S_EL2_VIRT] = ARCH_TIMER_S_EL2_VIRT_IRQ,
-         };
- 
-         for (irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 404ef983f3..a881e890e9 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2654,6 +2654,9 @@ static CPAccessResult gt_stimer_access(CPUARMState *env,
+         if (!arm_is_secure(env)) {
+             return CP_ACCESS_TRAP_UNCATEGORIZED;
+         }
++        if (arm_is_el2_enabled(env)) {
++            return CP_ACCESS_UNDEFINED;
++        }
+         if (!(env->cp15.scr_el3 & SCR_ST)) {
+             return CP_ACCESS_TRAP_EL3;
+         }
 -- 
 2.39.5
 
