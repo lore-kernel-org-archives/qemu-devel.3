@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ACE2C28B28
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EFABC3DA4A
 	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMAo-00022b-9r; Sat, 15 Mar 2025 03:43:10 -0400
+	id 1ttMAd-0001uB-J9; Sat, 15 Mar 2025 03:42:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMAl-0001zA-Sa; Sat, 15 Mar 2025 03:43:08 -0400
+ id 1ttMAb-0001tW-Gu; Sat, 15 Mar 2025 03:42:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMAj-0004nC-PM; Sat, 15 Mar 2025 03:43:07 -0400
+ id 1ttMAY-0004jq-2r; Sat, 15 Mar 2025 03:42:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9A9DEFFAFB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 828EAFFAF5;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 895E31CACC5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 713331CACBF;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6930F559E2; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 5B1B1559D6; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 07/42] linux-user: Honor elf alignment when placing
- images
-Date: Sat, 15 Mar 2025 10:42:09 +0300
-Message-Id: <20250315074249.634718-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Khem Raj <raj.khem@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 01/42] linux-user: Do not define struct sched_attr if
+ libc headers do
+Date: Sat, 15 Mar 2025 10:42:03 +0300
+Message-Id: <20250315074249.634718-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -62,103 +62,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Khem Raj <raj.khem@gmail.com>
 
-Most binaries don't actually depend on more than page alignment,
-but any binary can request it.  Not honoring this was a bug.
+glibc 2.41+ has added [1] definitions for sched_setattr and
+sched_getattr functions and struct sched_attr.  Therefore, it needs
+to be checked for here as well before defining sched_attr, to avoid
+a compilation failure.
 
-This became obvious when gdb reported
+Define sched_attr conditionally only when SCHED_ATTR_SIZE_VER0 is
+not defined.
 
-    Failed to read a valid object file image from memory
+[1] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=21571ca0d70302909cf72707b2a7736cf12190a0;hp=298bc488fdc047da37482f4003023cb9adef78f8
 
-when examining some vdso which are marked as needing more
-than page alignment.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit c81d1fafa6233448bcc2d8fcd2ba63a4ae834f3a)
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2799
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 27a8d899c7a100fd5aa040a8b993bb257687c393)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 17cd547c0c..e1a8b102d4 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3278,7 +3278,8 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-                            char **pinterp_name)
- {
-     g_autofree struct elf_phdr *phdr = NULL;
--    abi_ulong load_addr, load_bias, loaddr, hiaddr, error;
-+    abi_ulong load_addr, load_bias, loaddr, hiaddr, error, align;
-+    size_t reserve_size, align_size;
-     int i, prot_exec;
-     Error *err = NULL;
- 
-@@ -3362,6 +3363,9 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
- 
-     load_addr = loaddr;
- 
-+    align = pow2ceil(info->alignment);
-+    info->alignment = align;
-+
-     if (pinterp_name != NULL) {
-         if (ehdr->e_type == ET_EXEC) {
-             /*
-@@ -3370,8 +3374,6 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-              */
-             probe_guest_base(image_name, loaddr, hiaddr);
-         } else {
--            abi_ulong align;
--
-             /*
-              * The binary is dynamic, but we still need to
-              * select guest_base.  In this case we pass a size.
-@@ -3389,10 +3391,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-              * Since we do not have complete control over the guest
-              * address space, we prefer the kernel to choose some address
-              * rather than force the use of LOAD_ADDR via MAP_FIXED.
--             * But without MAP_FIXED we cannot guarantee alignment,
--             * only suggest it.
-              */
--            align = pow2ceil(info->alignment);
-             if (align) {
-                 load_addr &= -align;
-             }
-@@ -3416,13 +3415,35 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-      * In both cases, we will overwrite pages in this range with mappings
-      * from the executable.
-      */
--    load_addr = target_mmap(load_addr, (size_t)hiaddr - loaddr + 1, PROT_NONE,
-+    reserve_size = (size_t)hiaddr - loaddr + 1;
-+    align_size = reserve_size;
-+
-+    if (ehdr->e_type != ET_EXEC && align > qemu_real_host_page_size()) {
-+        align_size += align - 1;
-+    }
-+
-+    load_addr = target_mmap(load_addr, align_size, PROT_NONE,
-                             MAP_PRIVATE | MAP_ANON | MAP_NORESERVE |
-                             (ehdr->e_type == ET_EXEC ? MAP_FIXED_NOREPLACE : 0),
-                             -1, 0);
-     if (load_addr == -1) {
-         goto exit_mmap;
-     }
-+
-+    if (align_size != reserve_size) {
-+        abi_ulong align_addr = ROUND_UP(load_addr, align);
-+        abi_ulong align_end = align_addr + reserve_size;
-+        abi_ulong load_end = load_addr + align_size;
-+
-+        if (align_addr != load_addr) {
-+            target_munmap(load_addr, align_addr - load_addr);
-+        }
-+        if (align_end != load_end) {
-+            target_munmap(align_end, load_end - align_end);
-+        }
-+        load_addr = align_addr;
-+    }
-+
-     load_bias = load_addr - loaddr;
- 
-     if (elf_is_fdpic(ehdr)) {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 7ee1d61248..4dff03d2bd 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -358,7 +358,8 @@ _syscall3(int, sys_sched_getaffinity, pid_t, pid, unsigned int, len,
+ #define __NR_sys_sched_setaffinity __NR_sched_setaffinity
+ _syscall3(int, sys_sched_setaffinity, pid_t, pid, unsigned int, len,
+           unsigned long *, user_mask_ptr);
+-/* sched_attr is not defined in glibc */
++/* sched_attr is not defined in glibc < 2.41 */
++#ifndef SCHED_ATTR_SIZE_VER0
+ struct sched_attr {
+     uint32_t size;
+     uint32_t sched_policy;
+@@ -371,6 +372,7 @@ struct sched_attr {
+     uint32_t sched_util_min;
+     uint32_t sched_util_max;
+ };
++#endif
+ #define __NR_sys_sched_getattr __NR_sched_getattr
+ _syscall4(int, sys_sched_getattr, pid_t, pid, struct sched_attr *, attr,
+           unsigned int, size, unsigned int, flags);
 -- 
 2.39.5
 
