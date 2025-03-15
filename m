@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976F6C28B30
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D2EC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKt6-0005rT-5v; Sat, 15 Mar 2025 02:20:50 -0400
+	id 1ttKtS-00073j-3M; Sat, 15 Mar 2025 02:21:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKs1-00040p-8L; Sat, 15 Mar 2025 02:19:41 -0400
+ id 1ttKsQ-0004fk-Lx; Sat, 15 Mar 2025 02:20:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKry-0003Lp-Vx; Sat, 15 Mar 2025 02:19:40 -0400
+ id 1ttKsM-0003MY-S1; Sat, 15 Mar 2025 02:20:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB19AFF9DE;
+ by isrv.corpit.ru (Postfix) with ESMTP id B310AFF9E0;
  Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 827B91CAC47;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A7671CAC49;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 56A83558D3; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 5B9DC558D7; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Dorinda Bassey <dbassey@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 18/51] vhost-user-snd: correct the calculation of
- config_size
-Date: Sat, 15 Mar 2025 09:17:24 +0300
-Message-Id: <20250315061801.622606-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 20/51] physmem: replace assertion with error
+Date: Sat, 15 Mar 2025 09:17:26 +0300
+Message-Id: <20250315061801.622606-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
@@ -66,87 +65,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Use virtio_get_config_size() rather than sizeof(struct
-virtio_snd_config) for the config_size in the vhost-user-snd frontend.
-The frontend shall rely on device features for the size of the device
-configuration space. The presence of `controls` in the config space
-depends on VIRTIO_SND_F_CTLS according to the specification (v1.3):
-`
-5.14.4 Device Configuration Layout
-...
+It is possible to start QEMU with a confidential-guest-support object
+even in TCG mode.  While there is already a check in qemu_machine_creation_done:
 
-controls
-(driver-read-only) indicates a total number of all available control
-elements if VIRTIO_SND_F_CTLS has been negotiated.
-`
-This fixes an issue introduced by commit ab0c7fb2 ("linux-headers:
-update to current kvm/next") in which the optional field `controls` is
-added to the virtio_snd_config structure. This breaks vhost-user-device
-backends that do not implement the `controls` field.
+    if (machine->cgs && !machine->cgs->ready) {
+        error_setg(errp, "accelerator does not support confidential guest %s",
+                   object_get_typename(OBJECT(machine->cgs)));
+        exit(1);
+    }
 
-Fixes: ab0c7fb22b ("linux-headers: update to current kvm/next")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2805
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
-Message-Id: <20250217131255.829892-1-mvaralar@redhat.com>
+the creation of RAMBlocks happens earlier, in qemu_init_board(), if
+the command line does not override the default memory backend with
+-M memdev.  Then the RAMBlock will try to use guest_memfd (because
+machine_require_guest_memfd correctly returns true; at least correctly
+according to the current implementation) and trigger the assertion
+failure for kvm_enabled().  This happend with a command line as
+simple as the following:
+
+    qemu-system-x86_64 -m 512 -nographic -object sev-snp-guest,reduced-phys-bits=48,id=sev0 \
+       -M q35,kernel-irqchip=split,confidential-guest-support=sev0
+    qemu-system-x86_64: ../system/physmem.c:1871: ram_block_add: Assertion `kvm_enabled()' failed.
+
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Dorinda Bassey <dbassey@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit e87b6efb11be9f5ff213461f5ecdbae47d9402b9)
-(Mjt: context fix for 9.2)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20250217120812.396522-1-pbonzini@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 6debfb2cb1795427d2dc6a741c7430a233c76695)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
-index 9a217543f8..348de6a486 100644
---- a/hw/virtio/vhost-user-snd.c
-+++ b/hw/virtio/vhost-user-snd.c
-@@ -16,6 +16,18 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_snd.h"
+diff --git a/system/physmem.c b/system/physmem.c
+index 75389064a8..83013b59f7 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1868,7 +1868,11 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     if (new_block->flags & RAM_GUEST_MEMFD) {
+         int ret;
  
-+static const VirtIOFeature feature_sizes[] = {
-+    {.flags = 1ULL << VIRTIO_SND_F_CTLS,
-+    .end = endof(struct virtio_snd_config, controls)},
-+    {}
-+};
-+
-+static const VirtIOConfigSizeParams cfg_size_params = {
-+    .min_size = endof(struct virtio_snd_config, chmaps),
-+    .max_size = sizeof(struct virtio_snd_config),
-+    .feature_sizes = feature_sizes
-+};
-+
- static const VMStateDescription vu_snd_vmstate = {
-     .name = "vhost-user-snd",
-     .unmigratable = 1,
-@@ -23,6 +35,8 @@ static const VMStateDescription vu_snd_vmstate = {
+-        assert(kvm_enabled());
++        if (!kvm_enabled()) {
++            error_setg(errp, "cannot set up private guest memory for %s: KVM required",
++                       object_get_typename(OBJECT(current_machine->cgs)));
++            goto out_free;
++        }
+         assert(new_block->guest_memfd < 0);
  
- static Property vsnd_properties[] = {
-     DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-+    DEFINE_PROP_BIT64("controls", VHostUserBase,
-+                      parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-@@ -30,10 +44,12 @@ static void vu_snd_base_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-     VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
-+    VirtIODevice *vdev = &vub->parent_obj;
- 
-     vub->virtio_id = VIRTIO_ID_SOUND;
-     vub->num_vqs = 4;
--    vub->config_size = sizeof(struct virtio_snd_config);
-+    vub->config_size = virtio_get_config_size(&cfg_size_params,
-+                                              vdev->host_features);
-     vub->vq_size = 64;
- 
-     vubs->parent_realize(dev, errp);
+         ret = ram_block_discard_require(true);
 -- 
 2.39.5
 
