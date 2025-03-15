@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3765C35FF3
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC0AC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMBN-0002ms-5J; Sat, 15 Mar 2025 03:43:45 -0400
+	id 1ttMCg-0006yj-3P; Sat, 15 Mar 2025 03:45:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMBK-0002k0-Fe; Sat, 15 Mar 2025 03:43:42 -0400
+ id 1ttMCa-0006ja-Iy; Sat, 15 Mar 2025 03:45:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMBI-0004xB-85; Sat, 15 Mar 2025 03:43:42 -0400
+ id 1ttMCY-00052X-Hd; Sat, 15 Mar 2025 03:45:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BBAF8FFB03;
+ by isrv.corpit.ru (Postfix) with ESMTP id E3548FFB0D;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8B141CACCD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D20BE1CACD7;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7C142559F2; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 93B3E55A06; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 15/42] target/arm: Honour SDCR.TDCC and SCR.TERR in
- AArch32 EL3 non-Monitor modes
-Date: Sat, 15 Mar 2025 10:42:17 +0300
-Message-Id: <20250315074249.634718-15-mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 25/42] target/riscv: throw debug exception before page
+ fault
+Date: Sat, 15 Mar 2025 10:42:27 +0300
+Message-Id: <20250315074249.634718-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,103 +65,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-There are not many traps in AArch32 which should trap to Monitor
-mode, but these trap bits should trap not just lower ELs to Monitor
-mode but also the non-Monitor modes running at EL3 (i.e.  Secure
-System, Secure Undef, etc).
+In the RISC-V privileged ISA section 3.1.15 table 15, it is determined
+that a debug exception that is triggered from a load/store has a higher
+priority than a possible fault that this access might trigger.
 
-We get this wrong because the relevant access functions implement the
-AArch64-style logic of
-   if (el < 3 && trap_bit_set) {
-       return CP_ACCESS_TRAP_EL3;
-   }
-which won't trap the non-Monitor modes at EL3.
+This is not the case ATM as shown in [1]. Adding a breakpoint in an
+address that deliberately will fault is causing a load page fault
+instead of a debug exception. The reason is that we're throwing in the
+page fault as soon as the fault occurs (end of riscv_cpu_tlb_fill(),
+raise_mmu_exception()), not allowing the installed watchpoints to
+trigger.
 
-Correct this error by using arm_is_el3_or_mon() instead, which
-returns true when the CPU is at AArch64 EL3 or AArch32 Monitor mode.
-(Since the new callsites are compiled also for the linux-user mode,
-we need to provide a dummy implementation for CONFIG_USER_ONLY.)
+Call cpu_check_watchpoint() in the page fault path to search and execute
+any watchpoints that might exist for the address, never returning back
+to the fault path. If no watchpoints are found cpu_check_watchpoint()
+will return and we'll fall-through the regular path to
+raise_mmu_exception().
 
-This affects only:
- * trapping of ERRIDR via SCR.TERR
- * trapping of the debug channel registers via SDCR.TDCC
- * trapping of GICv3 registers via SCR.IRQ and SCR.FIQ
-   (which we already used arm_is_el3_or_mon() for)
+[1] https://gitlab.com/qemu-project/qemu/-/issues/2627
 
-This patch changes the handling of SCR.TERR and SDCR.TDCC. This
-patch only changes guest-visible behaviour for "-cpu max" on
-the qemu-system-arm binary, because SCR.TERR
-and SDCR.TDCC (and indeed the entire SDCR register) only arrived
-in Armv8, and the only guest CPU we support which has any v8
-features and also starts in AArch32 EL3 is the 32-bit 'max'.
-
-Other uses of CP_ACCESS_TRAP_EL3 don't need changing:
-
- * uses in code paths that can't happen when EL3 is AArch32:
-   access_trap_aa32s_el1, cpacr_access, cptr_access, nsacr_access
- * uses which are in accessfns for AArch64-only registers:
-   gt_stimer_access, gt_cntpoff_access, access_hxen, access_tpidr2,
-   access_smpri, access_smprimap, access_lor_ns, access_pauth,
-   access_mte, access_tfsr_el2, access_scxtnum, access_fgt
- * trap bits which exist only in the AArch64 version of the
-   trap register, not the AArch32 one:
-   access_tpm, pmreg_access, access_dbgvcr32, access_tdra,
-   access_tda, access_tdosa (TPM, TDA and TDOSA exist only in
-   MDCR_EL3, not in SDCR, and we enforce this in sdcr_write())
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2627
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250130182309.717346-8-peter.maydell@linaro.org
-(cherry picked from commit 4d436fb05c2a1fff7befc815ebcbb04a14977448)
+Message-ID: <20250121170626.1992570-3-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit c86edc547692d812d1dcc04220c38310be2c00c3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 3a45c35b75..c1b18b8478 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2630,6 +2630,11 @@ static inline bool arm_is_secure_below_el3(CPUARMState *env)
-     return false;
- }
- 
-+static inline bool arm_is_el3_or_mon(CPUARMState *env)
-+{
-+    return false;
-+}
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 7fb2185863..a9dca4cd0f 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -26,6 +26,7 @@
+ #include "exec/exec-all.h"
+ #include "instmap.h"
+ #include "tcg/tcg-op.h"
++#include "hw/core/tcg-cpu-ops.h"
+ #include "trace.h"
+ #include "semihosting/common-semi.h"
+ #include "sysemu/cpu-timers.h"
+@@ -1409,6 +1410,23 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     } else if (probe) {
+         return false;
+     } else {
++        int wp_access = 0;
 +
- static inline ARMSecuritySpace arm_security_space(CPUARMState *env)
- {
-     return ARMSS_NonSecure;
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index cbfba532f5..d0666500fa 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -870,7 +870,8 @@ static CPAccessResult access_tdcc(CPUARMState *env, const ARMCPRegInfo *ri,
-     if (el < 2 && (mdcr_el2_tda || mdcr_el2_tdcc)) {
-         return CP_ACCESS_TRAP_EL2;
-     }
--    if (el < 3 && ((env->cp15.mdcr_el3 & MDCR_TDA) || mdcr_el3_tdcc)) {
-+    if (!arm_is_el3_or_mon(env) &&
-+        ((env->cp15.mdcr_el3 & MDCR_TDA) || mdcr_el3_tdcc)) {
-         return CP_ACCESS_TRAP_EL3;
-     }
-     return CP_ACCESS_OK;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 0d092bc99b..eff8563527 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6664,7 +6664,7 @@ static CPAccessResult access_terr(CPUARMState *env, const ARMCPRegInfo *ri,
-     if (el < 2 && (arm_hcr_el2_eff(env) & HCR_TERR)) {
-         return CP_ACCESS_TRAP_EL2;
-     }
--    if (el < 3 && (env->cp15.scr_el3 & SCR_TERR)) {
-+    if (!arm_is_el3_or_mon(env) && (env->cp15.scr_el3 & SCR_TERR)) {
-         return CP_ACCESS_TRAP_EL3;
-     }
-     return CP_ACCESS_OK;
++        if (access_type == MMU_DATA_LOAD) {
++            wp_access |= BP_MEM_READ;
++        } else if (access_type == MMU_DATA_STORE) {
++            wp_access |= BP_MEM_WRITE;
++        }
++
++        /*
++         * If a watchpoint isn't found for 'addr' this will
++         * be a no-op and we'll resume the mmu_exception path.
++         * Otherwise we'll throw a debug exception and execution
++         * will continue elsewhere.
++         */
++        cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
++                             wp_access, retaddr);
++
+         raise_mmu_exception(env, address, access_type, pmp_violation,
+                             first_stage_error, two_stage_lookup,
+                             two_stage_indirect_error);
 -- 
 2.39.5
 
