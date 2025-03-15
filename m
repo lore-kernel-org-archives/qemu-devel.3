@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F372C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71F6C35FF3
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNbx-0002sW-K9; Sat, 15 Mar 2025 05:15:17 -0400
+	id 1ttNfY-0007xT-1V; Sat, 15 Mar 2025 05:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNbs-0002n3-AF; Sat, 15 Mar 2025 05:15:13 -0400
+ id 1ttNdl-0004XN-8J; Sat, 15 Mar 2025 05:17:14 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNbo-0007xk-GI; Sat, 15 Mar 2025 05:15:10 -0400
+ id 1ttNdg-00088q-3L; Sat, 15 Mar 2025 05:17:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C67A9FFBBB;
- Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 16637FFBCC;
+ Sat, 15 Mar 2025 12:13:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CEE9D1CAD54;
- Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1ECA41CAD65;
+ Sat, 15 Mar 2025 12:14:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AAA3255A3E; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id D421255A60; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 10/27] Kconfig: Extract CONFIG_USB_CHIPIDEA from
- CONFIG_IMX
-Date: Sat, 15 Mar 2025 12:14:21 +0300
-Message-Id: <20250315091439.657371-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 27/27] docs: Rename default-configs to configs
+Date: Sat, 15 Mar 2025 12:14:38 +0300
+Message-Id: <20250315091439.657371-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,98 +63,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Greg Kurz <groug@kaod.org>
 
-TYPE_CHIPIDEA models an IP block which is also used in TYPE_ZYNQ_MACHINE which
-itself is not an IMX device. CONFIG_ZYNQ selects CONFIG_USB_EHCI_SYSBUS while
-TYPE_CHIPIDEA is a separate compilation unit, so only works by accident if
-CONFIG_IMX is given. Fix that by extracting CONFIG_USB_CHIPIDEA from CONFIG_IMX.
+This was missed at the time.
 
-cc: qemu-stable@nongnu.org
-Fixes: 616ec12d0fcc "hw/arm/xilinx_zynq: Fix USB port instantiation"
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-id: 20250209103604.29545-1-shentey@gmail.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 464ce71a963b3dfc290cd59c3d1bfedf11c004df)
-(Mjt: context fixup due to missing
- v8.0.0-1939-gde6cd7599b51 "meson: Replace softmmu_ss -> system_ss",
- v9.1.0-609-ge02491903d50 "hw/usb: Remove tusb6010 USB controller",
- v9.2.0-1303-g1b326f278d05 "hw/pci-host/designware: Expose MSI IRQ")
+Fixes: 812b31d3f91 ("configs: rename default-configs to configs and reorganise")
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250306174113.427116-1-groug@kaod.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 48170c2d865a5937092b1384421b01cd38113042)
+(Mjt: context fix in docs/devel/kconfig.rst)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 17fcde8e1c..837d0c5d41 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -300,7 +300,7 @@ config ZYNQ
-     select PL330
-     select SDHCI
-     select SSI_M25P80
--    select USB_EHCI_SYSBUS
-+    select USB_CHIPIDEA
-     select XILINX # UART
-     select XILINX_AXI
-     select XILINX_SPI
-@@ -416,6 +416,7 @@ config FSL_IMX25
-     select IMX
-     select IMX_FEC
-     select IMX_I2C
-+    select USB_CHIPIDEA
-     select WDT_IMX2
-     select SDHCI
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index 1894721743..21fff65d28 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -193,7 +193,7 @@ Target-dependent emulator sourcesets:
+   Each emulator also includes sources for files in the ``hw/`` and ``target/``
+   subdirectories.  The subdirectory used for each emulator comes
+   from the target's definition of ``TARGET_BASE_ARCH`` or (if missing)
+-  ``TARGET_ARCH``, as found in ``default-configs/targets/*.mak``.
++  ``TARGET_ARCH``, as found in ``configs/targets/*.mak``.
  
-@@ -438,6 +439,7 @@ config FSL_IMX6
-     select IMX_USBPHY
-     select WDT_IMX2
-     select SDHCI
-+    select USB_CHIPIDEA
+   Each subdirectory in ``hw/`` adds one sourceset to the ``hw_arch`` dictionary,
+   for example::
+@@ -250,8 +250,8 @@ Utility sourcesets:
+ The following files concur in the definition of which files are linked
+ into each emulator:
  
- config ASPEED_SOC
-     bool
-@@ -488,6 +490,7 @@ config FSL_IMX7
-     select PCI_EXPRESS_DESIGNWARE
-     select SDHCI
-     select UNIMP
-+    select USB_CHIPIDEA
+-``default-configs/devices/*.mak``
+-  The files under ``default-configs/devices/`` control the boards and devices
++``configs/devices/*.mak``
++  The files under ``configs/devices/`` control the boards and devices
+   that are built into each QEMU system emulation targets. They merely contain
+   a list of config variable definitions such as::
  
- config ARM_SMMUV3
-     bool
-@@ -501,6 +504,7 @@ config FSL_IMX6UL
-     select IMX_I2C
-     select WDT_IMX2
-     select SDHCI
-+    select USB_CHIPIDEA
-     select UNIMP
+@@ -260,11 +260,11 @@ into each emulator:
+     CONFIG_XLNX_VERSAL=y
  
- config MICROBIT
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index ce4f433976..db17750a64 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -138,3 +138,7 @@ config XLNX_USB_SUBSYS
-     bool
-     default y if XLNX_VERSAL
-     select USB_DWC3
-+
-+config USB_CHIPIDEA
-+    bool
-+    select USB_EHCI_SYSBUS
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index 793df42e21..ed5d0ad7e5 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -25,9 +25,9 @@ softmmu_ss.add(when: 'CONFIG_USB_XHCI_NEC', if_true: files('hcd-xhci-nec.c'))
- softmmu_ss.add(when: 'CONFIG_USB_MUSB', if_true: files('hcd-musb.c'))
- softmmu_ss.add(when: 'CONFIG_USB_DWC2', if_true: files('hcd-dwc2.c'))
- softmmu_ss.add(when: 'CONFIG_USB_DWC3', if_true: files('hcd-dwc3.c'))
-+softmmu_ss.add(when: 'CONFIG_USB_CHIPIDEA', if_true: files('chipidea.c'))
+ ``*/Kconfig``
+-  These files are processed together with ``default-configs/devices/*.mak`` and
++  These files are processed together with ``configs/devices/*.mak`` and
+   describe the dependencies between various features, subsystems and
+   device models.  They are described in :ref:`kconfig`
  
- softmmu_ss.add(when: 'CONFIG_TUSB6010', if_true: files('tusb6010.c'))
--softmmu_ss.add(when: 'CONFIG_IMX', if_true: files('chipidea.c'))
- softmmu_ss.add(when: 'CONFIG_IMX_USBPHY', if_true: files('imx-usb-phy.c'))
- softmmu_ss.add(when: 'CONFIG_VT82C686', if_true: files('vt82c686-uhci-pci.c'))
- specific_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-usb2-ctrl-regs.c'))
+-``default-configs/targets/*.mak``
++``configs/targets/*.mak``
+   These files mostly define symbols that appear in the ``*-config-target.h``
+   file for each emulator [#cfgtarget]_.  However, the ``TARGET_ARCH``
+   and ``TARGET_BASE_ARCH`` will also be used to select the ``hw/`` and
+diff --git a/docs/devel/kconfig.rst b/docs/devel/kconfig.rst
+index 69674d008a..ba5e1f399a 100644
+--- a/docs/devel/kconfig.rst
++++ b/docs/devel/kconfig.rst
+@@ -38,7 +38,7 @@ originated in the Linux kernel, though it was heavily simplified and
+ the handling of dependencies is stricter in QEMU.
+ 
+ Unlike Linux, there is no user interface to edit the configuration, which
+-is instead specified in per-target files under the ``default-configs/``
++is instead specified in per-target files under the ``configs/``
+ directory of the QEMU source tree.  This is because, unlike Linux,
+ configuration and dependencies can be treated as a black box when building
+ QEMU; the default configuration that QEMU ships with should be okay in
+@@ -103,7 +103,7 @@ directives can be included:
+ **default value**: ``default <value> [if <expr>]``
+ 
+   Default values are assigned to the config symbol if no other value was
+-  set by the user via ``default-configs/*.mak`` files, and only if
++  set by the user via ``configs/*.mak`` files, and only if
+   ``select`` or ``depends on`` directives do not force the value to true
+   or false respectively.  ``<value>`` can be ``y`` or ``n``; it cannot
+   be an arbitrary Boolean expression.  However, a condition for applying
+@@ -119,7 +119,7 @@ directives can be included:
+   This is similar to ``select`` as it applies a lower limit of ``y``
+   to another symbol.  However, the lower limit is only a default
+   and the "implied" symbol's value may still be set to ``n`` from a
+-  ``default-configs/*.mak`` files.  The following two examples are
++  ``configs/*.mak`` files.  The following two examples are
+   equivalent::
+ 
+     config FOO
+@@ -146,7 +146,7 @@ declares its dependencies in different ways:
+       bool
+ 
+   Subsystems always default to false (they have no ``default`` directive)
+-  and are never visible in ``default-configs/*.mak`` files.  It's
++  and are never visible in ``configs/*.mak`` files.  It's
+   up to other symbols to ``select`` whatever subsystems they require.
+ 
+   They sometimes have ``select`` directives to bring in other required
+@@ -229,7 +229,7 @@ declares its dependencies in different ways:
+   cannot be started at all without it.  It should be listed under
+   ``imply`` if (depending on the QEMU command line) the board may or
+   may not be started without it.  Boards also default to false; they are
+-  enabled by the ``default-configs/*.mak`` for the target they apply to.
++  enabled by the ``configs/*.mak`` for the target they apply to.
+ 
+ **internal elements**
+ 
+@@ -241,18 +241,18 @@ declares its dependencies in different ways:
+ 
+   Internal elements group code that is useful in several boards or
+   devices.  They are usually enabled with ``select`` and in turn select
+-  other elements; they are never visible in ``default-configs/*.mak``
++  other elements; they are never visible in ``configs/*.mak``
+   files, and often not even in the Makefile.
+ 
+ Writing and modifying default configurations
+ --------------------------------------------
+ 
+ In addition to the Kconfig files under hw/, each target also includes
+-a file called ``default-configs/TARGETNAME-softmmu.mak``.  These files
++a file called ``configs/TARGETNAME-softmmu.mak``.  These files
+ initialize some Kconfig variables to non-default values and provide the
+ starting point to turn on devices and subsystems.
+ 
+-A file in ``default-configs/`` looks like the following example::
++A file in ``configs/`` looks like the following example::
+ 
+     # Default configuration for alpha-softmmu
+ 
 -- 
 2.39.5
 
