@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 437C1C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E3DC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKzH-0002Ge-9A; Sat, 15 Mar 2025 02:27:11 -0400
+	id 1ttKy3-0008Gu-Rq; Sat, 15 Mar 2025 02:25:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKv2-00034g-K4; Sat, 15 Mar 2025 02:22:48 -0400
+ id 1ttKvA-0003jo-Sy; Sat, 15 Mar 2025 02:22:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKus-0003pM-E1; Sat, 15 Mar 2025 02:22:48 -0400
+ id 1ttKv8-0003tI-ML; Sat, 15 Mar 2025 02:22:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 24CFAFF9F9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 38ADDFF9FE;
  Sat, 15 Mar 2025 09:17:08 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EFB601CAC62;
- Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 100E31CAC67;
+ Sat, 15 Mar 2025 09:18:02 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9755455909; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id A34C555913; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 45/51] ppc/pnv/occ: Fix common area sensor offsets
-Date: Sat, 15 Mar 2025 09:17:51 +0300
-Message-Id: <20250315061801.622606-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Denis Rastyogin <gerben@altlinux.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 50/51] block: Zero block driver state before reopening
+Date: Sat, 15 Mar 2025 09:17:56 +0300
+Message-Id: <20250315061801.622606-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
@@ -61,79 +61,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-The commit to fix the OCC common area sensor mappings didn't update the
-register offsets to match.
+Block drivers assume in their .bdrv_open() implementation that their
+state in bs->opaque has been zeroed; it is initially allocated with
+g_malloc0() in bdrv_open_driver().
 
-Before this change, skiboot reports:
+bdrv_snapshot_goto() needs to make sure that it is zeroed again before
+calling drv->bdrv_open() to avoid that block drivers use stale values.
 
-[    0.347100086,3] OCC: Chip 0 sensor data invalid
+One symptom of this bug is VMDK running into a double free when the user
+tries to apply an internal snapshot like 'qemu-img snapshot -a test
+test.vmdk'. This should be a graceful error because VMDK doesn't support
+internal snapshots.
 
-Afterward, there is no error and the sensor_groups directory appears
-under /sys/firmware/opal/.
+==25507== Invalid free() / delete / delete[] / realloc()
+==25507==    at 0x484B347: realloc (vg_replace_malloc.c:1801)
+==25507==    by 0x54B592A: g_realloc (gmem.c:171)
+==25507==    by 0x1B221D: vmdk_add_extent (../block/vmdk.c:570)
+==25507==    by 0x1B1084: vmdk_open_sparse (../block/vmdk.c:1059)
+==25507==    by 0x1AF3D8: vmdk_open (../block/vmdk.c:1371)
+==25507==    by 0x1A2AE0: bdrv_snapshot_goto (../block/snapshot.c:299)
+==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
+==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
+==25507==  Address 0x832f3e0 is 0 bytes inside a block of size 272 free'd
+==25507==    at 0x4846B83: free (vg_replace_malloc.c:989)
+==25507==    by 0x54AEAC4: g_free (gmem.c:208)
+==25507==    by 0x1AF629: vmdk_close (../block/vmdk.c:2889)
+==25507==    by 0x1A2A9C: bdrv_snapshot_goto (../block/snapshot.c:290)
+==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
+==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
 
-The SLW_IMAGE_BASE address looks like a workaround to intercept firmware
-memory accesses, but that does not seem to be required now (and would
-have been broken by the OCC common area region mapping change anyway).
-So it can be removed.
+This error was discovered by fuzzing qemu-img.
 
-Fixes: 3a1b70b66b5cb4 ("ppc/pnv: Fix OCC common area region mapping")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 29c041ca7f8d6910c894788482efff892789dcd2)
+Cc: qemu-stable@nongnu.org
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2853
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2851
+Reported-by: Denis Rastyogin <gerben@altlinux.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20250310104858.28221-1-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit b75c5f9879166b86ed7c48b772fdcd0693e8a9a3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index 48123ceae1..c6681a035a 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -32,22 +32,21 @@
- #define OCB_OCI_OCCMISC_OR      0x4022
+diff --git a/block/snapshot.c b/block/snapshot.c
+index 8fd1756777..357c1469ab 100644
+--- a/block/snapshot.c
++++ b/block/snapshot.c
+@@ -296,6 +296,7 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
+         bdrv_graph_wrunlock();
  
- /* OCC sensors */
--#define OCC_SENSOR_DATA_BLOCK_OFFSET          0x580000
--#define OCC_SENSOR_DATA_VALID                 0x580001
--#define OCC_SENSOR_DATA_VERSION               0x580002
--#define OCC_SENSOR_DATA_READING_VERSION       0x580004
--#define OCC_SENSOR_DATA_NR_SENSORS            0x580008
--#define OCC_SENSOR_DATA_NAMES_OFFSET          0x580010
--#define OCC_SENSOR_DATA_READING_PING_OFFSET   0x580014
--#define OCC_SENSOR_DATA_READING_PONG_OFFSET   0x58000c
--#define OCC_SENSOR_DATA_NAME_LENGTH           0x58000d
--#define OCC_SENSOR_NAME_STRUCTURE_TYPE        0x580023
--#define OCC_SENSOR_LOC_CORE                   0x580022
--#define OCC_SENSOR_LOC_GPU                    0x580020
--#define OCC_SENSOR_TYPE_POWER                 0x580003
--#define OCC_SENSOR_NAME                       0x580005
--#define HWMON_SENSORS_MASK                    0x58001e
--#define SLW_IMAGE_BASE                        0x0
-+#define OCC_SENSOR_DATA_BLOCK_OFFSET          0x0000
-+#define OCC_SENSOR_DATA_VALID                 0x0001
-+#define OCC_SENSOR_DATA_VERSION               0x0002
-+#define OCC_SENSOR_DATA_READING_VERSION       0x0004
-+#define OCC_SENSOR_DATA_NR_SENSORS            0x0008
-+#define OCC_SENSOR_DATA_NAMES_OFFSET          0x0010
-+#define OCC_SENSOR_DATA_READING_PING_OFFSET   0x0014
-+#define OCC_SENSOR_DATA_READING_PONG_OFFSET   0x000c
-+#define OCC_SENSOR_DATA_NAME_LENGTH           0x000d
-+#define OCC_SENSOR_NAME_STRUCTURE_TYPE        0x0023
-+#define OCC_SENSOR_LOC_CORE                   0x0022
-+#define OCC_SENSOR_LOC_GPU                    0x0020
-+#define OCC_SENSOR_TYPE_POWER                 0x0003
-+#define OCC_SENSOR_NAME                       0x0005
-+#define HWMON_SENSORS_MASK                    0x001e
- 
- static void pnv_occ_set_misc(PnvOCC *occ, uint64_t val)
- {
-@@ -129,8 +128,6 @@ static uint64_t pnv_occ_common_area_read(void *opaque, hwaddr addr,
-     case HWMON_SENSORS_MASK:
-     case OCC_SENSOR_LOC_GPU:
-         return 0x8e00;
--    case SLW_IMAGE_BASE:
--        return 0x1000000000000000;
-     }
-     return 0;
- }
+         ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
++        memset(bs->opaque, 0, drv->instance_size);
+         open_ret = drv->bdrv_open(bs, options, bs->open_flags, &local_err);
+         qobject_unref(options);
+         if (open_ret < 0) {
 -- 
 2.39.5
 
