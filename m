@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7B9C28B30
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48BD9C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKyZ-0000sN-2g; Sat, 15 Mar 2025 02:26:29 -0400
+	id 1ttKzf-0003wF-I7; Sat, 15 Mar 2025 02:27:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKuY-0001rd-Ou; Sat, 15 Mar 2025 02:22:19 -0400
+ id 1ttKvY-0004ZH-UZ; Sat, 15 Mar 2025 02:23:21 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKuW-0003p2-Et; Sat, 15 Mar 2025 02:22:18 -0400
+ id 1ttKvV-0003uS-MK; Sat, 15 Mar 2025 02:23:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 203C4FF9F8;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E1F8FF9FF;
  Sat, 15 Mar 2025 09:17:08 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EB5E91CAC61;
- Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 13F901CAC68;
+ Sat, 15 Mar 2025 09:18:02 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 951F455907; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id A5BD055915; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefano Stabellini <stefano.stabellini@amd.com>,
- Olaf Hering <olaf@aepfle.de>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Anthony PERARD <anthony.perard@vates.tech>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 44/51] xen: No need to flush the mapcache for grants
-Date: Sat, 15 Mar 2025 09:17:50 +0300
-Message-Id: <20250315061801.622606-44-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 51/51] docs: Rename default-configs to configs
+Date: Sat, 15 Mar 2025 09:17:57 +0300
+Message-Id: <20250315061801.622606-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,38 +63,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Stabellini <stefano.stabellini@amd.com>
+From: Greg Kurz <groug@kaod.org>
 
-On IOREQ_TYPE_INVALIDATE we need to invalidate the mapcache for regular
-mappings. Since recently we started reusing the mapcache also to keep
-track of grants mappings. However, there is no need to remove grant
-mappings on IOREQ_TYPE_INVALIDATE requests, we shouldn't do that. So
-remove the function call.
+This was missed at the time.
 
-Fixes: 9ecdd4bf08 (xen: mapcache: Add support for grant mappings)
-Cc: qemu-stable@nongnu.org
-Reported-by: Olaf Hering <olaf@aepfle.de>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
-Message-Id: <20250206194915.3357743-2-edgar.iglesias@gmail.com>
-Signed-off-by: Anthony PERARD <anthony.perard@vates.tech>
-(cherry picked from commit 68adcc784bad13421ac7211c316a751fb99fcb94)
+Fixes: 812b31d3f91 ("configs: rename default-configs to configs and reorganise")
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250306174113.427116-1-groug@kaod.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 48170c2d865a5937092b1384421b01cd38113042)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 18ba7b1d8f..cd412493ea 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -700,7 +700,6 @@ void xen_invalidate_map_cache(void)
-     bdrv_drain_all();
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index d42045a232..a759982f45 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -260,7 +260,7 @@ Target-dependent emulator sourcesets:
+   Each emulator also includes sources for files in the ``hw/`` and ``target/``
+   subdirectories.  The subdirectory used for each emulator comes
+   from the target's definition of ``TARGET_BASE_ARCH`` or (if missing)
+-  ``TARGET_ARCH``, as found in ``default-configs/targets/*.mak``.
++  ``TARGET_ARCH``, as found in ``configs/targets/*.mak``.
  
-     xen_invalidate_map_cache_single(mapcache);
--    xen_invalidate_map_cache_single(mapcache_grants);
- }
+   Each subdirectory in ``hw/`` adds one sourceset to the ``hw_arch`` dictionary,
+   for example::
+@@ -317,8 +317,8 @@ Utility sourcesets:
+ The following files concur in the definition of which files are linked
+ into each emulator:
  
- static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
+-``default-configs/devices/*.mak``
+-  The files under ``default-configs/devices/`` control the boards and devices
++``configs/devices/*.mak``
++  The files under ``configs/devices/`` control the boards and devices
+   that are built into each QEMU system emulation targets. They merely contain
+   a list of config variable definitions such as::
+ 
+@@ -327,11 +327,11 @@ into each emulator:
+     CONFIG_XLNX_VERSAL=y
+ 
+ ``*/Kconfig``
+-  These files are processed together with ``default-configs/devices/*.mak`` and
++  These files are processed together with ``configs/devices/*.mak`` and
+   describe the dependencies between various features, subsystems and
+   device models.  They are described in :ref:`kconfig`
+ 
+-``default-configs/targets/*.mak``
++``configs/targets/*.mak``
+   These files mostly define symbols that appear in the ``*-config-target.h``
+   file for each emulator\ [#cfgtarget]_.  However, the ``TARGET_ARCH``
+   and ``TARGET_BASE_ARCH`` will also be used to select the ``hw/`` and
+diff --git a/docs/devel/kconfig.rst b/docs/devel/kconfig.rst
+index 52d4b905f6..493b76c4fb 100644
+--- a/docs/devel/kconfig.rst
++++ b/docs/devel/kconfig.rst
+@@ -38,7 +38,7 @@ originated in the Linux kernel, though it was heavily simplified and
+ the handling of dependencies is stricter in QEMU.
+ 
+ Unlike Linux, there is no user interface to edit the configuration, which
+-is instead specified in per-target files under the ``default-configs/``
++is instead specified in per-target files under the ``configs/``
+ directory of the QEMU source tree.  This is because, unlike Linux,
+ configuration and dependencies can be treated as a black box when building
+ QEMU; the default configuration that QEMU ships with should be okay in
+@@ -103,7 +103,7 @@ directives can be included:
+ **default value**: ``default <value> [if <expr>]``
+ 
+   Default values are assigned to the config symbol if no other value was
+-  set by the user via ``default-configs/*.mak`` files, and only if
++  set by the user via ``configs/*.mak`` files, and only if
+   ``select`` or ``depends on`` directives do not force the value to true
+   or false respectively.  ``<value>`` can be ``y`` or ``n``; it cannot
+   be an arbitrary Boolean expression.  However, a condition for applying
+@@ -119,7 +119,7 @@ directives can be included:
+   This is similar to ``select`` as it applies a lower limit of ``y``
+   to another symbol.  However, the lower limit is only a default
+   and the "implied" symbol's value may still be set to ``n`` from a
+-  ``default-configs/*.mak`` files.  The following two examples are
++  ``configs/*.mak`` files.  The following two examples are
+   equivalent::
+ 
+     config FOO
+@@ -146,7 +146,7 @@ declares its dependencies in different ways:
+       bool
+ 
+   Subsystems always default to false (they have no ``default`` directive)
+-  and are never visible in ``default-configs/*.mak`` files.  It's
++  and are never visible in ``configs/*.mak`` files.  It's
+   up to other symbols to ``select`` whatever subsystems they require.
+ 
+   They sometimes have ``select`` directives to bring in other required
+@@ -238,7 +238,7 @@ declares its dependencies in different ways:
+   include libraries (such as ``FDT``) or ``TARGET_BIG_ENDIAN``
+   (possibly negated).
+ 
+-  Boards are listed for convenience in the ``default-configs/*.mak``
++  Boards are listed for convenience in the ``configs/*.mak``
+   for the target they apply to.
+ 
+ **internal elements**
+@@ -251,18 +251,18 @@ declares its dependencies in different ways:
+ 
+   Internal elements group code that is useful in several boards or
+   devices.  They are usually enabled with ``select`` and in turn select
+-  other elements; they are never visible in ``default-configs/*.mak``
++  other elements; they are never visible in ``configs/*.mak``
+   files, and often not even in the Makefile.
+ 
+ Writing and modifying default configurations
+ --------------------------------------------
+ 
+ In addition to the Kconfig files under hw/, each target also includes
+-a file called ``default-configs/TARGETNAME-softmmu.mak``.  These files
++a file called ``configs/TARGETNAME-softmmu.mak``.  These files
+ initialize some Kconfig variables to non-default values and provide the
+ starting point to turn on devices and subsystems.
+ 
+-A file in ``default-configs/`` looks like the following example::
++A file in ``configs/`` looks like the following example::
+ 
+     # Default configuration for alpha-softmmu
+ 
 -- 
 2.39.5
 
