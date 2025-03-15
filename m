@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8296DC35FF3
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBA3C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMEE-0004HL-Gi; Sat, 15 Mar 2025 03:46:51 -0400
+	id 1ttMDq-0002dj-3T; Sat, 15 Mar 2025 03:46:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttME6-00042T-UH; Sat, 15 Mar 2025 03:46:35 -0400
+ id 1ttMDd-00024B-3a; Sat, 15 Mar 2025 03:46:05 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttME4-0005OX-OD; Sat, 15 Mar 2025 03:46:34 -0400
+ id 1ttMDZ-0005LN-Jh; Sat, 15 Mar 2025 03:46:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 32699FFB1E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1EEDFFFB19;
  Sat, 15 Mar 2025 10:41:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 213421CACE8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0DB171CACE3;
  Sat, 15 Mar 2025 10:42:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BD53655A28; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id B0FB855A1E; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 42/42] ui/cocoa: Temporarily ignore annoying
- deprecated declaration warnings
-Date: Sat, 15 Mar 2025 10:42:44 +0300
-Message-Id: <20250315074249.634718-42-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 37/42] hw/net/smc91c111: Sanitize packet length on tx
+Date: Sat, 15 Mar 2025 10:42:39 +0300
+Message-Id: <20250315074249.634718-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -64,64 +63,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-These warnings are breaking some build configurations since 2 months
-now (https://gitlab.com/qemu-project/qemu/-/issues/2575):
+When the smc91c111 transmits a packet, it must read a control byte
+which is at the end of the data area and CRC.  However, we don't
+sanitize the length field in the packet buffer, so if the guest sets
+the length field to something large we will try to read past the end
+of the packet data buffer when we access the control byte.
 
-  ui/cocoa.m:662:14: error: 'CVDisplayLinkCreateWithCGDisplay' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
-    662 |         if (!CVDisplayLinkCreateWithCGDisplay(display, &displayLink)) {
-        |              ^
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:89:20: note: 'CVDisplayLinkCreateWithCGDisplay' has been explicitly marked deprecated here
-     89 | CV_EXPORT CVReturn CVDisplayLinkCreateWithCGDisplay(
-        |                    ^
-  ui/cocoa.m:663:29: error: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
-    663 |             CVTime period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
-        |                             ^
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:182:18: note: 'CVDisplayLinkGetNominalOutputVideoRefreshPeriod' has been explicitly marked deprecated here
-    182 | CV_EXPORT CVTime CVDisplayLinkGetNominalOutputVideoRefreshPeriod( CVDisplayLinkRef CV_NONNULL displayLink );
-        |                  ^
-  ui/cocoa.m:664:13: error: 'CVDisplayLinkRelease' is deprecated: first deprecated in macOS 15.0 - use NSView.displayLink(target:selector:), NSWindow.displayLink(target:selector:), or NSScreen.displayLink(target:selector:)  [-Werror,-Wdeprecated-declarations]
-    664 |             CVDisplayLinkRelease(displayLink);
-        |             ^
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVDisplayLink.h:249:16: note: 'CVDisplayLinkRelease' has been explicitly marked deprecated here
-    249 | CV_EXPORT void CVDisplayLinkRelease( CV_RELEASES_ARGUMENT CVDisplayLinkRef CV_NULLABLE displayLink );
-        |                ^
-  3 errors generated.
+As usual, the datasheet says nothing about the behaviour of the
+hardware if the guest misprograms it in this way.  It says only that
+the maximum valid length is 2048 bytes.  We choose to log the guest
+error and silently drop the packet.
 
-For the next release, ignore the warnings using #pragma directives.
-At least until we figure the correct new API usage.
+This requires us to factor out the "mark the tx packet as complete"
+logic, so we can call it for this "drop packet" case as well as at
+the end of the loop when we send a valid packet.
 
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2742
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250228174802.1945417-3-peter.maydell@linaro.org>
+[PMD: Update smc91c111_do_tx() as len > MAX_PACKET_SIZE]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Message-Id: <20241121131954.98949-1-philmd@linaro.org>
-(cherry picked from commit 9cf6e41fe293dd56089faac94c36ff5cb3d96726)
+(cherry picked from commit aad6f264add3f2be72acb660816588fe09110069)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index d39c9e2a3b..4bca03ae1a 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -553,6 +553,9 @@ - (void) setContentDimensions
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 3a3cfa1f6a..36415425db 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -23,6 +23,13 @@
+ 
+ /* Number of 2k memory pages available.  */
+ #define NUM_PACKETS 4
++/*
++ * Maximum size of a data frame, including the leading status word
++ * and byte count fields and the trailing CRC, last data byte
++ * and control byte (per figure 8-1 in the Microchip Technology
++ * LAN91C111 datasheet).
++ */
++#define MAX_PACKET_SIZE 2048
+ 
+ #define TYPE_SMC91C111 "smc91c111"
+ OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
+@@ -241,6 +248,16 @@ static void smc91c111_release_packet(smc91c111_state *s, int packet)
+     smc91c111_flush_queued_packets(s);
+ }
+ 
++static void smc91c111_complete_tx_packet(smc91c111_state *s, int packetnum)
++{
++    if (s->ctr & CTR_AUTO_RELEASE) {
++        /* Race?  */
++        smc91c111_release_packet(s, packetnum);
++    } else if (s->tx_fifo_done_len < NUM_PACKETS) {
++        s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
++    }
++}
++
+ /* Flush the TX FIFO.  */
+ static void smc91c111_do_tx(smc91c111_state *s)
+ {
+@@ -264,6 +281,17 @@ static void smc91c111_do_tx(smc91c111_state *s)
+         *(p++) = 0x40;
+         len = *(p++);
+         len |= ((int)*(p++)) << 8;
++        if (len > MAX_PACKET_SIZE) {
++            /*
++             * Datasheet doesn't say what to do here, and there is no
++             * relevant tx error condition listed. Log, and drop the packet.
++             */
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "smc91c111: tx packet with bad length %d, dropping\n",
++                          len);
++            smc91c111_complete_tx_packet(s, packetnum);
++            continue;
++        }
+         len -= 6;
+         control = p[len + 1];
+         if (control & 0x20)
+@@ -292,11 +320,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
+             }
+         }
+ #endif
+-        if (s->ctr & CTR_AUTO_RELEASE)
+-            /* Race?  */
+-            smc91c111_release_packet(s, packetnum);
+-        else if (s->tx_fifo_done_len < NUM_PACKETS)
+-            s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
++        smc91c111_complete_tx_packet(s, packetnum);
+         qemu_send_packet(qemu_get_queue(s->nic), p, len);
      }
- }
- 
-+#pragma clang diagnostic push
-+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-+
- - (void) updateUIInfoLocked
- {
-     /* Must be called with the iothread lock, i.e. via updateUIInfo */
-@@ -598,6 +601,8 @@ - (void) updateUIInfoLocked
-     dpy_set_ui_info(dcl.con, &info, TRUE);
- }
- 
-+#pragma clang diagnostic pop
-+
- - (void) updateUIInfo
- {
-     if (!allow_events) {
+     s->tx_fifo_len = 0;
 -- 
 2.39.5
 
