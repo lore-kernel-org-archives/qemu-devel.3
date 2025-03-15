@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBA3C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1931C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMDq-0002dj-3T; Sat, 15 Mar 2025 03:46:18 -0400
+	id 1ttMDq-0002ln-NT; Sat, 15 Mar 2025 03:46:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMDd-00024B-3a; Sat, 15 Mar 2025 03:46:05 -0400
+ id 1ttMDb-0001wD-H6; Sat, 15 Mar 2025 03:46:03 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMDZ-0005LN-Jh; Sat, 15 Mar 2025 03:46:04 -0400
+ id 1ttMDZ-0005KS-Fy; Sat, 15 Mar 2025 03:46:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1EEDFFFB19;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1ADE1FFB18;
  Sat, 15 Mar 2025 10:41:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0DB171CACE3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 099681CACE2;
  Sat, 15 Mar 2025 10:42:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B0FB855A1E; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id AE5B355A1C; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 37/42] hw/net/smc91c111: Sanitize packet length on tx
-Date: Sat, 15 Mar 2025 10:42:39 +0300
-Message-Id: <20250315074249.634718-37-mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 36/42] hw/net/smc91c111: Sanitize packet numbers
+Date: Sat, 15 Mar 2025 10:42:38 +0300
+Message-Id: <20250315074249.634718-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -65,97 +65,129 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-When the smc91c111 transmits a packet, it must read a control byte
-which is at the end of the data area and CRC.  However, we don't
-sanitize the length field in the packet buffer, so if the guest sets
-the length field to something large we will try to read past the end
-of the packet data buffer when we access the control byte.
+The smc91c111 uses packet numbers as an index into its internal
+s->data[][] array. Valid packet numbers are between 0 and 3, but
+the code does not generally check this, and there are various
+places where the guest can hand us an arbitrary packet number
+and cause an out-of-bounds access to the data array.
 
-As usual, the datasheet says nothing about the behaviour of the
-hardware if the guest misprograms it in this way.  It says only that
-the maximum valid length is 2048 bytes.  We choose to log the guest
-error and silently drop the packet.
+Add validation of packet numbers. The datasheet is not very
+helpful about how guest errors like this should be handled:
+it says nothing on the subject, and none of the documented
+error conditions are relevant. We choose to log the situation
+with LOG_GUEST_ERROR and silently ignore the attempted operation.
 
-This requires us to factor out the "mark the tx packet as complete"
-logic, so we can call it for this "drop packet" case as well as at
-the end of the loop when we send a valid packet.
+In the places where we are about to access the data[][] array
+using a packet number and we know the number is valid because
+we got it from somewhere that has already validated, we add
+an assert() to document that belief.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2742
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250228174802.1945417-3-peter.maydell@linaro.org>
-[PMD: Update smc91c111_do_tx() as len > MAX_PACKET_SIZE]
+Message-ID: <20250228174802.1945417-2-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit aad6f264add3f2be72acb660816588fe09110069)
+(cherry picked from commit 2fa3a5b9469615d06091cf473d172794148e1248)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 3a3cfa1f6a..36415425db 100644
+index dcf6e5117f..3a3cfa1f6a 100644
 --- a/hw/net/smc91c111.c
 +++ b/hw/net/smc91c111.c
-@@ -23,6 +23,13 @@
+@@ -119,6 +119,11 @@ static const VMStateDescription vmstate_smc91c111 = {
+ #define RS_TOOSHORT     0x0400
+ #define RS_MULTICAST    0x0001
  
- /* Number of 2k memory pages available.  */
- #define NUM_PACKETS 4
-+/*
-+ * Maximum size of a data frame, including the leading status word
-+ * and byte count fields and the trailing CRC, last data byte
-+ * and control byte (per figure 8-1 in the Microchip Technology
-+ * LAN91C111 datasheet).
-+ */
-+#define MAX_PACKET_SIZE 2048
- 
- #define TYPE_SMC91C111 "smc91c111"
- OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
-@@ -241,6 +248,16 @@ static void smc91c111_release_packet(smc91c111_state *s, int packet)
-     smc91c111_flush_queued_packets(s);
- }
- 
-+static void smc91c111_complete_tx_packet(smc91c111_state *s, int packetnum)
++static inline bool packetnum_valid(int packet_num)
 +{
-+    if (s->ctr & CTR_AUTO_RELEASE) {
-+        /* Race?  */
-+        smc91c111_release_packet(s, packetnum);
-+    } else if (s->tx_fifo_done_len < NUM_PACKETS) {
-+        s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
-+    }
++    return packet_num >= 0 && packet_num < NUM_PACKETS;
 +}
 +
- /* Flush the TX FIFO.  */
- static void smc91c111_do_tx(smc91c111_state *s)
+ /* Update interrupt status.  */
+ static void smc91c111_update(smc91c111_state *s)
  {
-@@ -264,6 +281,17 @@ static void smc91c111_do_tx(smc91c111_state *s)
-         *(p++) = 0x40;
-         len = *(p++);
-         len |= ((int)*(p++)) << 8;
-+        if (len > MAX_PACKET_SIZE) {
-+            /*
-+             * Datasheet doesn't say what to do here, and there is no
-+             * relevant tx error condition listed. Log, and drop the packet.
-+             */
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "smc91c111: tx packet with bad length %d, dropping\n",
-+                          len);
-+            smc91c111_complete_tx_packet(s, packetnum);
-+            continue;
-+        }
-         len -= 6;
-         control = p[len + 1];
-         if (control & 0x20)
-@@ -292,11 +320,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
-             }
-         }
- #endif
--        if (s->ctr & CTR_AUTO_RELEASE)
--            /* Race?  */
--            smc91c111_release_packet(s, packetnum);
--        else if (s->tx_fifo_done_len < NUM_PACKETS)
--            s->tx_fifo_done[s->tx_fifo_done_len++] = packetnum;
-+        smc91c111_complete_tx_packet(s, packetnum);
-         qemu_send_packet(qemu_get_queue(s->nic), p, len);
-     }
-     s->tx_fifo_len = 0;
+@@ -219,6 +224,17 @@ static void smc91c111_pop_tx_fifo_done(smc91c111_state *s)
+ /* Release the memory allocated to a packet.  */
+ static void smc91c111_release_packet(smc91c111_state *s, int packet)
+ {
++    if (!packetnum_valid(packet)) {
++        /*
++         * Data sheet doesn't document behaviour in this guest error
++         * case, and there is no error status register to report it.
++         * Log and ignore the attempt.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "smc91c111: attempt to release invalid packet %d\n",
++                      packet);
++        return;
++    }
+     s->allocated &= ~(1 << packet);
+     if (s->tx_alloc == 0x80)
+         smc91c111_tx_alloc(s);
+@@ -240,6 +256,8 @@ static void smc91c111_do_tx(smc91c111_state *s)
+         return;
+     for (i = 0; i < s->tx_fifo_len; i++) {
+         packetnum = s->tx_fifo[i];
++        /* queue_tx checked the packet number was valid */
++        assert(packetnum_valid(packetnum));
+         p = &s->data[packetnum][0];
+         /* Set status word.  */
+         *(p++) = 0x01;
+@@ -288,6 +306,17 @@ static void smc91c111_do_tx(smc91c111_state *s)
+ /* Add a packet to the TX FIFO.  */
+ static void smc91c111_queue_tx(smc91c111_state *s, int packet)
+ {
++    if (!packetnum_valid(packet)) {
++        /*
++         * Datasheet doesn't document behaviour in this error case, and
++         * there's no error status register we could report it in.
++         * Log and ignore.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "smc91c111: attempt to queue invalid packet %d\n",
++                      packet);
++        return;
++    }
+     if (s->tx_fifo_len == NUM_PACKETS)
+         return;
+     s->tx_fifo[s->tx_fifo_len++] = packet;
+@@ -458,6 +487,13 @@ static void smc91c111_writeb(void *opaque, hwaddr offset,
+                     n = s->rx_fifo[0];
+                 else
+                     n = s->packet_num;
++                if (!packetnum_valid(n)) {
++                    /* Datasheet doesn't document what to do here */
++                    qemu_log_mask(LOG_GUEST_ERROR,
++                                  "smc91c111: attempt to write data to invalid packet %d\n",
++                                  n);
++                    return;
++                }
+                 p = s->ptr & 0x07ff;
+                 if (s->ptr & 0x4000) {
+                     s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x7ff);
+@@ -606,6 +642,13 @@ static uint32_t smc91c111_readb(void *opaque, hwaddr offset)
+                     n = s->rx_fifo[0];
+                 else
+                     n = s->packet_num;
++                if (!packetnum_valid(n)) {
++                    /* Datasheet doesn't document what to do here */
++                    qemu_log_mask(LOG_GUEST_ERROR,
++                                  "smc91c111: attempt to read data from invalid packet %d\n",
++                                  n);
++                    return 0;
++                }
+                 p = s->ptr & 0x07ff;
+                 if (s->ptr & 0x4000) {
+                     s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x07ff);
+@@ -714,6 +757,8 @@ static ssize_t smc91c111_receive(NetClientState *nc, const uint8_t *buf, size_t
+         return -1;
+     s->rx_fifo[s->rx_fifo_len++] = packetnum;
+ 
++    /* allocate_packet() will not hand us back an invalid packet number */
++    assert(packetnum_valid(packetnum));
+     p = &s->data[packetnum][0];
+     /* ??? Multicast packets?  */
+     status = 0;
 -- 
 2.39.5
 
