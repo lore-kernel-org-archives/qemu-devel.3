@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28826C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5E9C28B30
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKt8-0005uA-DI; Sat, 15 Mar 2025 02:20:55 -0400
+	id 1ttKtg-0007hk-0l; Sat, 15 Mar 2025 02:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKrV-0003Kt-99; Sat, 15 Mar 2025 02:19:11 -0400
+ id 1ttKrx-0003va-19; Sat, 15 Mar 2025 02:19:39 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKrR-0003IF-A4; Sat, 15 Mar 2025 02:19:08 -0400
+ id 1ttKru-0003LD-MY; Sat, 15 Mar 2025 02:19:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 97C38FF9D9;
+ by isrv.corpit.ru (Postfix) with ESMTP id A3503FF9DC;
  Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6F40B1CAC42;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7AB021CAC45;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4A43A558C9; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 517F1558CF; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sairaj Kodilkar <sarunkod@amd.com>,
- Vasant Hegde <vasant.hegde@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 13/51] amd_iommu: Use correct DTE field for interrupt
- passthrough
-Date: Sat, 15 Mar 2025 09:17:19 +0300
-Message-Id: <20250315061801.622606-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 16/51] vdpa: Fix endian bugs in shadow virtqueue
+Date: Sat, 15 Mar 2025 09:17:22 +0300
+Message-Id: <20250315061801.622606-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,44 +64,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
-Interrupt passthrough is determine by the bits 191,190,187-184.
-These bits are part of the 3rd quad word (i.e. index 2) in DTE. Hence
-replace dte[3] by dte[2].
+VDPA didn't work on a big-endian machine due to missing/incorrect
+CPU<->LE data format conversions.
 
-Fixes: b44159fe0 ("x86_iommu/amd: Add interrupt remap support when VAPIC is not enabled")
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250207045354.27329-2-sarunkod@amd.com>
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Message-Id: <20250212164923.1971538-1-kshk@linux.ibm.com>
+Fixes: 10857ec0ad ("vhost: Add VhostShadowVirtqueue")
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 63dc0b8647391b372f3bb38ff1066f6b4a5e6ea1)
+(cherry picked from commit 50e9754149066dc91f58405d3378b589098cb408)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index af0f4da1f6..9cf5b40200 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1309,15 +1309,15 @@ static int amdvi_int_remap_msi(AMDVIState *iommu,
-         ret = -AMDVI_IR_ERR;
-         break;
-     case AMDVI_IOAPIC_INT_TYPE_NMI:
--        pass = dte[3] & AMDVI_DEV_NMI_PASS_MASK;
-+        pass = dte[2] & AMDVI_DEV_NMI_PASS_MASK;
-         trace_amdvi_ir_delivery_mode("nmi");
-         break;
-     case AMDVI_IOAPIC_INT_TYPE_INIT:
--        pass = dte[3] & AMDVI_DEV_INT_PASS_MASK;
-+        pass = dte[2] & AMDVI_DEV_INT_PASS_MASK;
-         trace_amdvi_ir_delivery_mode("init");
-         break;
-     case AMDVI_IOAPIC_INT_TYPE_EINT:
--        pass = dte[3] & AMDVI_DEV_EINT_PASS_MASK;
-+        pass = dte[2] & AMDVI_DEV_EINT_PASS_MASK;
-         trace_amdvi_ir_delivery_mode("eint");
-         break;
-     default:
+diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+index 37aca8b431..4af0d7c669 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.c
++++ b/hw/virtio/vhost-shadow-virtqueue.c
+@@ -165,10 +165,10 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
+         descs[i].len = cpu_to_le32(iovec[n].iov_len);
+ 
+         last = i;
+-        i = cpu_to_le16(svq->desc_next[i]);
++        i = svq->desc_next[i];
+     }
+ 
+-    svq->free_head = le16_to_cpu(svq->desc_next[last]);
++    svq->free_head = svq->desc_next[last];
+     return true;
+ }
+ 
+@@ -228,10 +228,12 @@ static void vhost_svq_kick(VhostShadowVirtqueue *svq)
+     smp_mb();
+ 
+     if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
+-        uint16_t avail_event = *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]);
++        uint16_t avail_event = le16_to_cpu(
++                *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]));
+         needs_kick = vring_need_event(avail_event, svq->shadow_avail_idx, svq->shadow_avail_idx - 1);
+     } else {
+-        needs_kick = !(svq->vring.used->flags & VRING_USED_F_NO_NOTIFY);
++        needs_kick =
++                !(svq->vring.used->flags & cpu_to_le16(VRING_USED_F_NO_NOTIFY));
+     }
+ 
+     if (!needs_kick) {
+@@ -365,7 +367,7 @@ static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
+         return true;
+     }
+ 
+-    svq->shadow_used_idx = cpu_to_le16(*(volatile uint16_t *)used_idx);
++    svq->shadow_used_idx = le16_to_cpu(*(volatile uint16_t *)used_idx);
+ 
+     return svq->last_used_idx != svq->shadow_used_idx;
+ }
+@@ -383,7 +385,7 @@ static bool vhost_svq_enable_notification(VhostShadowVirtqueue *svq)
+ {
+     if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
+         uint16_t *used_event = (uint16_t *)&svq->vring.avail->ring[svq->vring.num];
+-        *used_event = svq->shadow_used_idx;
++        *used_event = cpu_to_le16(svq->shadow_used_idx);
+     } else {
+         svq->vring.avail->flags &= ~cpu_to_le16(VRING_AVAIL_F_NO_INTERRUPT);
+     }
+@@ -408,7 +410,7 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
+                                              uint16_t num, uint16_t i)
+ {
+     for (uint16_t j = 0; j < (num - 1); ++j) {
+-        i = le16_to_cpu(svq->desc_next[i]);
++        i = svq->desc_next[i];
+     }
+ 
+     return i;
+@@ -683,7 +685,7 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
+     svq->desc_state = g_new0(SVQDescState, svq->vring.num);
+     svq->desc_next = g_new0(uint16_t, svq->vring.num);
+     for (unsigned i = 0; i < svq->vring.num - 1; i++) {
+-        svq->desc_next[i] = cpu_to_le16(i + 1);
++        svq->desc_next[i] = i + 1;
+     }
+ }
+ 
 -- 
 2.39.5
 
