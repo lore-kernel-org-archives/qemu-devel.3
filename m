@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CAB5C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7B9C28B30
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKuf-00029k-4M; Sat, 15 Mar 2025 02:22:25 -0400
+	id 1ttKyZ-0000sN-2g; Sat, 15 Mar 2025 02:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKta-0007mU-3F; Sat, 15 Mar 2025 02:21:26 -0400
+ id 1ttKuY-0001rd-Ou; Sat, 15 Mar 2025 02:22:19 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKtX-0003jR-GW; Sat, 15 Mar 2025 02:21:17 -0400
+ id 1ttKuW-0003p2-Et; Sat, 15 Mar 2025 02:22:18 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EBD26FF9EE;
- Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 203C4FF9F8;
+ Sat, 15 Mar 2025 09:17:08 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C327A1CAC57;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EB5E91CAC61;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7C493558F3; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 951F455907; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Stefano Stabellini <stefano.stabellini@amd.com>,
+ Olaf Hering <olaf@aepfle.de>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Anthony PERARD <anthony.perard@vates.tech>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 34/51] target/arm: Always apply CNTVOFF_EL2 for
- CNTV_TVAL_EL02 accesses
-Date: Sat, 15 Mar 2025 09:17:40 +0300
-Message-Id: <20250315061801.622606-34-mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 44/51] xen: No need to flush the mapcache for grants
+Date: Sat, 15 Mar 2025 09:17:50 +0300
+Message-Id: <20250315061801.622606-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,101 +64,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Stefano Stabellini <stefano.stabellini@amd.com>
 
-Currently we handle CNTV_TVAL_EL02 by calling gt_tval_read() for the
-EL1 virt timer.  This is almost correct, but the underlying
-CNTV_TVAL_EL0 register behaves slightly differently.  CNTV_TVAL_EL02
-always applies the CNTVOFF_EL2 offset; CNTV_TVAL_EL0 doesn't do so if
-we're at EL2 and HCR_EL2.E2H is 1.
+On IOREQ_TYPE_INVALIDATE we need to invalidate the mapcache for regular
+mappings. Since recently we started reusing the mapcache also to keep
+track of grants mappings. However, there is no need to remove grant
+mappings on IOREQ_TYPE_INVALIDATE requests, we shouldn't do that. So
+remove the function call.
 
-We were getting this wrong, because we ended up in
-gt_virt_cnt_offset() and did the E2H check.
-
-Factor out the tval read/write calculation from the selection of the
-offset, so that we can special case gt_virt_tval_read() and
-gt_virt_tval_write() to unconditionally pass CNTVOFF_EL2.
-
+Fixes: 9ecdd4bf08 (xen: mapcache: Add support for grant mappings)
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20250204125009.2281315-5-peter.maydell@linaro.org
-(cherry picked from commit 4aecd4b442d7abb4355896d878ffc9b028625b01)
+Reported-by: Olaf Hering <olaf@aepfle.de>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
+Message-Id: <20250206194915.3357743-2-edgar.iglesias@gmail.com>
+Signed-off-by: Anthony PERARD <anthony.perard@vates.tech>
+(cherry picked from commit 68adcc784bad13421ac7211c316a751fb99fcb94)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index a881e890e9..6f741f5c00 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2867,6 +2867,12 @@ static void gt_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     gt_recalc_timer(env_archcpu(env), timeridx);
+diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+index 18ba7b1d8f..cd412493ea 100644
+--- a/hw/xen/xen-mapcache.c
++++ b/hw/xen/xen-mapcache.c
+@@ -700,7 +700,6 @@ void xen_invalidate_map_cache(void)
+     bdrv_drain_all();
+ 
+     xen_invalidate_map_cache_single(mapcache);
+-    xen_invalidate_map_cache_single(mapcache_grants);
  }
  
-+static uint64_t do_tval_read(CPUARMState *env, int timeridx, uint64_t offset)
-+{
-+    return (uint32_t)(env->cp15.c14_timer[timeridx].cval -
-+                      (gt_get_countervalue(env) - offset));
-+}
-+
- static uint64_t gt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri,
-                              int timeridx)
- {
-@@ -2881,8 +2887,16 @@ static uint64_t gt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri,
-         break;
-     }
- 
--    return (uint32_t)(env->cp15.c14_timer[timeridx].cval -
--                      (gt_get_countervalue(env) - offset));
-+    return do_tval_read(env, timeridx, offset);
-+}
-+
-+static void do_tval_write(CPUARMState *env, int timeridx, uint64_t value,
-+                          uint64_t offset)
-+{
-+    trace_arm_gt_tval_write(timeridx, value);
-+    env->cp15.c14_timer[timeridx].cval = gt_get_countervalue(env) - offset +
-+                                         sextract64(value, 0, 32);
-+    gt_recalc_timer(env_archcpu(env), timeridx);
- }
- 
- static void gt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -2899,11 +2913,7 @@ static void gt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         offset = gt_phys_cnt_offset(env);
-         break;
-     }
--
--    trace_arm_gt_tval_write(timeridx, value);
--    env->cp15.c14_timer[timeridx].cval = gt_get_countervalue(env) - offset +
--                                         sextract64(value, 0, 32);
--    gt_recalc_timer(env_archcpu(env), timeridx);
-+    do_tval_write(env, timeridx, value, offset);
- }
- 
- static void gt_ctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -3035,13 +3045,21 @@ static void gt_virt_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
- 
- static uint64_t gt_virt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
--    return gt_tval_read(env, ri, GTIMER_VIRT);
-+    /*
-+     * This is CNTV_TVAL_EL02; unlike the underlying CNTV_TVAL_EL0
-+     * we always apply CNTVOFF_EL2. Special case that here rather
-+     * than going into the generic gt_tval_read() and then having
-+     * to re-detect that it's this register.
-+     * Note that the accessfn/perms mean we know we're at EL2 or EL3 here.
-+     */
-+    return do_tval_read(env, GTIMER_VIRT, env->cp15.cntvoff_el2);
- }
- 
- static void gt_virt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                uint64_t value)
- {
--    gt_tval_write(env, ri, GTIMER_VIRT, value);
-+    /* Similarly for writes to CNTV_TVAL_EL02 */
-+    do_tval_write(env, GTIMER_VIRT, value, env->cp15.cntvoff_el2);
- }
- 
- static void gt_virt_ctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ static uint8_t *xen_replace_cache_entry_unlocked(MapCache *mc,
 -- 
 2.39.5
 
