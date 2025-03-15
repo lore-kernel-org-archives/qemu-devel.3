@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE7AC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11A54C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:25:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKv1-00030f-Sk; Sat, 15 Mar 2025 02:22:48 -0400
+	id 1ttKv5-0003Gs-L6; Sat, 15 Mar 2025 02:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKtS-0007G4-Hs; Sat, 15 Mar 2025 02:21:10 -0400
+ id 1ttKsy-0005ug-MG; Sat, 15 Mar 2025 02:20:48 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKtM-0003gq-Po; Sat, 15 Mar 2025 02:21:09 -0400
+ id 1ttKsw-0003fm-AR; Sat, 15 Mar 2025 02:20:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DBC76FF9EA;
+ by isrv.corpit.ru (Postfix) with ESMTP id CEB58FF9E7;
  Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2C611CAC53;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A63131CAC50;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 73046558EB; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 6C204558E5; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Patrick Venture <venture@google.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 30/51] hw/gpio: npcm7xx: fixup out-of-bounds access
-Date: Sat, 15 Mar 2025 09:17:36 +0300
-Message-Id: <20250315061801.622606-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Rodrigo Dias Correa <r@drigo.nl>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 27/51] goldfish_rtc: Fix tick_offset migration
+Date: Sat, 15 Mar 2025 09:17:33 +0300
+Message-Id: <20250315061801.622606-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,43 +62,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Patrick Venture <venture@google.com>
+From: Rodrigo Dias Correa <r@drigo.nl>
 
-The reg isn't validated to be a possible register before
-it's dereferenced for one case.  The mmio space registered
-for the gpio device is 4KiB but there aren't that many
-registers in the struct.
+Instead of migrating the raw tick_offset, goldfish_rtc migrates a
+recalculated value based on QEMU_CLOCK_VIRTUAL. As QEMU_CLOCK_VIRTUAL
+stands still across a save-and-restore cycle, the guest RTC becomes out
+of sync with the host RTC when the VM is restored.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 526dbbe0874 ("hw/gpio: Add GPIO model for Nuvoton NPCM7xx")
-Signed-off-by: Patrick Venture <venture@google.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250226024603.493148-1-venture@google.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 3b2e22c0bbe2ce07123d93961d52f17644562cd7)
+As described in the bug description, it looks like this calculation was
+copied from pl031 RTC, which had its tick_offset migration fixed by
+Commit 032cfe6a79c8 ("pl031: Correctly migrate state when using -rtc
+clock=host").
+
+Migrate the tick_offset directly, adding it as a version-dependent field
+to VMState. Keep the old behavior when migrating from previous versions.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2033
+Signed-off-by: Rodrigo Dias Correa <r@drigo.nl>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250114212150.228241-1-r@drigo.nl>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 3521f9cadc29c7d68b73b325ddb46a7acebf6212)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/gpio/npcm7xx_gpio.c b/hw/gpio/npcm7xx_gpio.c
-index ba19b9ebad..00ffd413ba 100644
---- a/hw/gpio/npcm7xx_gpio.c
-+++ b/hw/gpio/npcm7xx_gpio.c
-@@ -220,8 +220,6 @@ static void npcm7xx_gpio_regs_write(void *opaque, hwaddr addr, uint64_t v,
-         return;
-     }
+diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
+index a6dfbf89f3..3dcf307e99 100644
+--- a/hw/rtc/goldfish_rtc.c
++++ b/hw/rtc/goldfish_rtc.c
+@@ -178,38 +178,21 @@ static void goldfish_rtc_write(void *opaque, hwaddr offset,
+     trace_goldfish_rtc_write(offset, value);
+ }
  
--    diff = s->regs[reg] ^ value;
+-static int goldfish_rtc_pre_save(void *opaque)
+-{
+-    uint64_t delta;
+-    GoldfishRTCState *s = opaque;
 -
-     switch (reg) {
-     case NPCM7XX_GPIO_TLOCK1:
-     case NPCM7XX_GPIO_TLOCK2:
-@@ -242,6 +240,7 @@ static void npcm7xx_gpio_regs_write(void *opaque, hwaddr addr, uint64_t v,
-     case NPCM7XX_GPIO_PU:
-     case NPCM7XX_GPIO_PD:
-     case NPCM7XX_GPIO_IEM:
-+        diff = s->regs[reg] ^ value;
-         s->regs[reg] = value;
-         npcm7xx_gpio_update_pins(s, diff);
-         break;
+-    /*
+-     * We want to migrate this offset, which sounds straightforward.
+-     * Unfortunately, we cannot directly pass tick_offset because
+-     * rtc_clock on destination Host might not be same source Host.
+-     *
+-     * To tackle, this we pass tick_offset relative to vm_clock from
+-     * source Host and make it relative to rtc_clock at destination Host.
+-     */
+-    delta = qemu_clock_get_ns(rtc_clock) -
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    s->tick_offset_vmstate = s->tick_offset + delta;
+-
+-    return 0;
+-}
+-
+ static int goldfish_rtc_post_load(void *opaque, int version_id)
+ {
+-    uint64_t delta;
+     GoldfishRTCState *s = opaque;
+ 
+-    /*
+-     * We extract tick_offset from tick_offset_vmstate by doing
+-     * reverse math compared to pre_save() function.
+-     */
+-    delta = qemu_clock_get_ns(rtc_clock) -
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    s->tick_offset = s->tick_offset_vmstate - delta;
++    if (version_id < 3) {
++        /*
++         * Previous versions didn't migrate tick_offset directly. Instead, they
++         * migrated tick_offset_vmstate, which is a recalculation based on
++         * QEMU_CLOCK_VIRTUAL. We use tick_offset_vmstate when migrating from
++         * older versions.
++         */
++        uint64_t delta = qemu_clock_get_ns(rtc_clock) -
++                 qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++        s->tick_offset = s->tick_offset_vmstate - delta;
++    }
+ 
+     goldfish_rtc_set_alarm(s);
+ 
+@@ -239,8 +222,7 @@ static const MemoryRegionOps goldfish_rtc_ops[2] = {
+ 
+ static const VMStateDescription goldfish_rtc_vmstate = {
+     .name = TYPE_GOLDFISH_RTC,
+-    .version_id = 2,
+-    .pre_save = goldfish_rtc_pre_save,
++    .version_id = 3,
+     .post_load = goldfish_rtc_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(tick_offset_vmstate, GoldfishRTCState),
+@@ -249,6 +231,7 @@ static const VMStateDescription goldfish_rtc_vmstate = {
+         VMSTATE_UINT32(irq_pending, GoldfishRTCState),
+         VMSTATE_UINT32(irq_enabled, GoldfishRTCState),
+         VMSTATE_UINT32(time_high, GoldfishRTCState),
++        VMSTATE_UINT64_V(tick_offset, GoldfishRTCState, 3),
+         VMSTATE_END_OF_LIST()
+     }
+ };
 -- 
 2.39.5
 
