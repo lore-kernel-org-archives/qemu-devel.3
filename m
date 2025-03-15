@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9371BC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE0FC35FF3
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNeY-0005jL-JK; Sat, 15 Mar 2025 05:17:59 -0400
+	id 1ttNcK-00031Z-Bx; Sat, 15 Mar 2025 05:15:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNdK-0004Jt-Ck; Sat, 15 Mar 2025 05:16:47 -0400
+ id 1ttNcG-0002wb-5W; Sat, 15 Mar 2025 05:15:38 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNdH-00088U-WF; Sat, 15 Mar 2025 05:16:41 -0400
+ id 1ttNcD-0007yQ-UE; Sat, 15 Mar 2025 05:15:35 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0E522FFBCA;
- Sat, 15 Mar 2025 12:13:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CE557FFBBD;
+ Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 16C571CAD63;
- Sat, 15 Mar 2025 12:14:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D6D4A1CAD56;
+ Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CF40B55A5C; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id AF7B355A42; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 25/27] hw/net/smc91c111: Don't allow data register
- access to overrun buffer
-Date: Sat, 15 Mar 2025 12:14:36 +0300
-Message-Id: <20250315091439.657371-25-mjt@tls.msk.ru>
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 12/27] hw/i386/amd_iommu: Explicit use of
+ AMDVI_BASE_ADDR in amdvi_init
+Date: Sat, 15 Mar 2025 12:14:23 +0300
+Message-Id: <20250315091439.657371-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
@@ -64,147 +64,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-For accesses to the 91c111 data register, the address within the
-packet's data frame is determined by a combination of the pointer
-register and the offset used to access the data register, so that you
-can access data at effectively wider than byte width.  The pointer
-register's pointer field is 11 bits wide, which is exactly the size
-to index a 2048-byte data frame.
+By accessing MemoryRegion internals, amdvi_init() gives the false
+idea that the PCI BAR can be modified. However this isn't true
+(at least the model isn't ready for that): the device is explicitly
+maps at the BAR at the fixed AMDVI_BASE_ADDR address in
+amdvi_sysbus_realize(). Since the SysBus API isn't designed to
+remap regions, directly use the fixed address in amdvi_init().
 
-We weren't quite getting the logic right for ensuring that we end up
-with a pointer value to use in the s->data[][] array that isn't out
-of bounds:
-
- * we correctly mask when getting the initial pointer value
- * for the "autoincrement the pointer register" case, we
-   correctly mask after adding 1 so that the pointer register
-   wraps back around at the 2048 byte mark
- * but for the non-autoincrement case where we have to add the
-   low 2 bits of the data register offset, we don't account
-   for the possibility that the pointer register is 0x7ff
-   and the addition should wrap
-
-Fix this bug by factoring out the "get the p value to use as an array
-index" into a function, making it use FIELD macro names rather than
-hard-coded constants, and having a utility function that does "add a
-value and wrap it" that we can use both for the "autoincrement" and
-"add the offset bits" codepaths.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2758
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250228191652.1957208-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 700d3d6dd41de3bd3f1153e3cfe00b93f99b1441)
+Message-Id: <20230313153031.86107-3-philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 6291a28645a0656477bc5962a81b181e6a99487c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 67e11bdedd..81e5c823d1 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -13,6 +13,7 @@
- #include "net/net.h"
- #include "hw/irq.h"
- #include "hw/net/smc91c111.h"
-+#include "hw/registerfields.h"
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-@@ -126,6 +127,13 @@ static const VMStateDescription vmstate_smc91c111 = {
- #define RS_TOOSHORT     0x0400
- #define RS_MULTICAST    0x0001
- 
-+FIELD(PTR, PTR, 0, 11)
-+FIELD(PTR, NOT_EMPTY, 11, 1)
-+FIELD(PTR, RESERVED, 12, 1)
-+FIELD(PTR, READ, 13, 1)
-+FIELD(PTR, AUTOINCR, 14, 1)
-+FIELD(PTR, RCV, 15, 1)
-+
- static inline bool packetnum_valid(int packet_num)
- {
-     return packet_num >= 0 && packet_num < NUM_PACKETS;
-@@ -372,6 +380,49 @@ static void smc91c111_reset(DeviceState *dev)
- #define SET_LOW(name, val) s->name = (s->name & 0xff00) | val
- #define SET_HIGH(name, val) s->name = (s->name & 0xff) | (val << 8)
- 
-+/*
-+ * The pointer register's pointer is an 11 bit value (so it exactly
-+ * indexes a 2048-byte data frame). Add the specified offset to it,
-+ * wrapping around at the 2048 byte mark, and return the resulting
-+ * wrapped value. There are flag bits in the top part of the register,
-+ * but we can ignore them here as the mask will mask them out.
-+ */
-+static int ptr_reg_add(smc91c111_state *s, int offset)
-+{
-+    return (s->ptr + offset) & R_PTR_PTR_MASK;
-+}
-+
-+/*
-+ * For an access to the Data Register at @offset, return the
-+ * required offset into the packet's data frame. This will
-+ * perform the pointer register autoincrement if required, and
-+ * guarantees to return an in-bounds offset.
-+ */
-+static int data_reg_ptr(smc91c111_state *s, int offset)
-+{
-+    int p;
-+
-+    if (s->ptr & R_PTR_AUTOINCR_MASK) {
-+        /*
-+         * Autoincrement: use the current pointer value, and
-+         * increment the pointer register's pointer field.
-+         */
-+        p = FIELD_EX32(s->ptr, PTR, PTR);
-+        s->ptr = FIELD_DP32(s->ptr, PTR, PTR, ptr_reg_add(s, 1));
-+    } else {
-+        /*
-+         * No autoincrement: register offset determines which
-+         * byte we're addressing. Setting the pointer to the top
-+         * of the data buffer and then using the pointer wrapping
-+         * to read the bottom byte of the buffer is not something
-+         * sensible guest software will do, but the datasheet
-+         * doesn't say what the behaviour is, so we don't forbid it.
-+         */
-+        p = ptr_reg_add(s, offset & 3);
-+    }
-+    return p;
-+}
-+
- static void smc91c111_writeb(void *opaque, hwaddr offset,
-                              uint32_t value)
- {
-@@ -518,12 +569,7 @@ static void smc91c111_writeb(void *opaque, hwaddr offset,
-                                   n);
-                     return;
-                 }
--                p = s->ptr & 0x07ff;
--                if (s->ptr & 0x4000) {
--                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x7ff);
--                } else {
--                    p += (offset & 3);
--                }
-+                p = data_reg_ptr(s, offset);
-                 s->data[n][p] = value;
-             }
-             return;
-@@ -673,12 +719,7 @@ static uint32_t smc91c111_readb(void *opaque, hwaddr offset)
-                                   n);
-                     return 0;
-                 }
--                p = s->ptr & 0x07ff;
--                if (s->ptr & 0x4000) {
--                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x07ff);
--                } else {
--                    p += (offset & 3);
--                }
-+                p = data_reg_ptr(s, offset);
-                 return s->data[n][p];
-             }
-         case 12: /* Interrupt status.  */
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index d94c0f9bfb..e6da60fc15 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1514,9 +1514,9 @@ static void amdvi_init(AMDVIState *s)
+     /* reset AMDVI specific capabilities, all r/o */
+     pci_set_long(s->pci.dev.config + s->capab_offset, AMDVI_CAPAB_FEATURES);
+     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_BAR_LOW,
+-                 s->mmio.addr & ~(0xffff0000));
++                 AMDVI_BASE_ADDR & ~(0xffff0000));
+     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_BAR_HIGH,
+-                (s->mmio.addr & ~(0xffff)) >> 16);
++                (AMDVI_BASE_ADDR & ~(0xffff)) >> 16);
+     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_RANGE,
+                  0xff000000);
+     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_MISC, 0);
 -- 
 2.39.5
 
