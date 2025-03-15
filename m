@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECF1C35FF3
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 586CAC28B2F
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMAm-0001yO-5T; Sat, 15 Mar 2025 03:43:08 -0400
+	id 1ttMBt-0003ko-4A; Sat, 15 Mar 2025 03:44:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMAi-0001ws-Cf; Sat, 15 Mar 2025 03:43:04 -0400
+ id 1ttMBk-0003VC-0X; Sat, 15 Mar 2025 03:44:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMAg-0004mD-JJ; Sat, 15 Mar 2025 03:43:04 -0400
+ id 1ttMBi-0004zl-7A; Sat, 15 Mar 2025 03:44:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 92CB3FFAF9;
+ by isrv.corpit.ru (Postfix) with ESMTP id C798BFFB06;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 816AB1CACC3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B66351CACD0;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 649B1559DE; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 830D3559F8; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 05/42] hw/net/smc91c111: Ignore attempt to pop from
- empty RX fifo
-Date: Sat, 15 Mar 2025 10:42:07 +0300
-Message-Id: <20250315074249.634718-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sairaj Kodilkar <sarunkod@amd.com>,
+ Vasant Hegde <vasant.hegde@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 18/42] amd_iommu: Use correct bitmask to set
+ capability BAR
+Date: Sat, 15 Mar 2025 10:42:20 +0300
+Message-Id: <20250315074249.634718-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,52 +63,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-The SMC91C111 includes an MMU Command register which permits
-the guest to remove entries from the RX FIFO. The datasheet
-does not specify what happens if the guest tries to do this
-when the FIFO is already empty; there are no status registers
-containing error bits which might be applicable.
+AMD IOMMU provides the base address of control registers through
+IVRS table and PCI capability. Since this base address is of 64 bit,
+use 32 bits mask (instead of 16 bits) to set BAR low and high.
 
-Currently we don't guard at all against pop of an empty
-RX FIFO, with the result that we allow the guest to drive
-the rx_fifo_len index to negative values, which will cause
-smc91c111_receive() to write to the rx_fifo[] array out of
-bounds when we receive the next packet.
-
-Instead ignore attempts to pop an empty RX FIFO.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 80337b66a8e7 ("NIC emulation for qemu arm-softmmu")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2780
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250207151157.3151776-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 937df81af6757638a7f1908747560dd342947213)
+Fixes: d29a09ca68 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250207045354.27329-3-sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 3684717b7407cc395dc9bf522e193dbc85293dee)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 876a78456a..dcf6e5117f 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -183,6 +183,15 @@ static void smc91c111_pop_rx_fifo(smc91c111_state *s)
- {
-     int i;
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 4697864123..ac612813be 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1543,9 +1543,9 @@ static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
+     /* reset AMDVI specific capabilities, all r/o */
+     pci_set_long(pdev->config + s->capab_offset, AMDVI_CAPAB_FEATURES);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_LOW,
+-                 AMDVI_BASE_ADDR & ~(0xffff0000));
++                 AMDVI_BASE_ADDR & MAKE_64BIT_MASK(14, 18));
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_HIGH,
+-                (AMDVI_BASE_ADDR & ~(0xffff)) >> 16);
++                AMDVI_BASE_ADDR >> 32);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_RANGE,
+                  0xff000000);
+     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_MISC, 0);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index c5065a3e27..555a7a5162 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -185,7 +185,7 @@
+         AMDVI_CAPAB_FLAG_HTTUNNEL |  AMDVI_CAPAB_EFR_SUP)
  
-+    if (s->rx_fifo_len == 0) {
-+        /*
-+         * The datasheet doesn't document what the behaviour is if the
-+         * guest tries to pop an empty RX FIFO, and there's no obvious
-+         * error status register to report it. Just ignore the attempt.
-+         */
-+        return;
-+    }
-+
-     s->rx_fifo_len--;
-     if (s->rx_fifo_len) {
-         for (i = 0; i < s->rx_fifo_len; i++)
+ /* AMDVI default address */
+-#define AMDVI_BASE_ADDR 0xfed80000
++#define AMDVI_BASE_ADDR 0xfed80000ULL
+ 
+ /* page management constants */
+ #define AMDVI_PAGE_SHIFT 12
 -- 
 2.39.5
 
