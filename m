@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BEDEC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B62E9C28B2F
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMBK-0002iw-EJ; Sat, 15 Mar 2025 03:43:42 -0400
+	id 1ttMAh-0001wR-6C; Sat, 15 Mar 2025 03:43:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMBI-0002fi-8P; Sat, 15 Mar 2025 03:43:40 -0400
+ id 1ttMAe-0001vJ-TI; Sat, 15 Mar 2025 03:43:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMBG-0004wX-IM; Sat, 15 Mar 2025 03:43:39 -0400
+ id 1ttMAd-0004lB-5w; Sat, 15 Mar 2025 03:43:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B6185FFB02;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8A932FFAF7;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A4CAE1CACCC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 794AD1CACC1;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 79B32559F0; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 5FDCF559DA; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 14/42] hw/intc/arm_gicv3_cpuif: Don't downgrade
- monitor traps for AArch32 EL3
-Date: Sat, 15 Mar 2025 10:42:16 +0300
-Message-Id: <20250315074249.634718-14-mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 03/42] gitlab-ci.d/cirrus: Update the FreeBSD job to
+ v14.2
+Date: Sat, 15 Mar 2025 10:42:05 +0300
+Message-Id: <20250315074249.634718-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -65,66 +64,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-In the gicv3_{irq,fiq,irqfiq}_access() functions, there is a check
-which downgrades a CP_ACCESS_TRAP_EL3 to CP_ACCESS_TRAP if EL3 is not
-AArch64.  This has been there since the GIC was first implemented,
-but it isn't right: if we are trapping because of SCR.IRQ or SCR.FIQ
-then we definitely want to be going to EL3 (doing
-AArch32.TakeMonitorTrapException() in pseudocode terms).  We might
-want to not take a trap at all, but we don't ever want to go to the
-default target EL, because that would mean, for instance, taking a
-trap to Hyp mode if the trapped access was made from Hyp mode.
+The FreeBSD job started to fail since the 14-1 image disappeared
+from the cloud. Update the job to v14.2 to fix it.
 
-(This might have been an attempt to work around our failure to
-properly implement Monitor Traps.)
-
-Remove the bogus check.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 359fbe65e01e ("hw/intc/arm_gicv3: Implement GICv3 CPU interface registers")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250130182309.717346-7-peter.maydell@linaro.org
-(cherry picked from commit d04c6c3c000ab3e588a2b91641310aeea89408f7)
+Message-ID: <20250211120817.35050-1-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 66a1b4991c32e370a4e0ddabf496aa1563aff286)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 8eacf4101c..f2440597ea 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -2099,9 +2099,6 @@ static CPAccessResult gicv3_irqfiq_access(CPUARMState *env,
-         }
-     }
- 
--    if (r == CP_ACCESS_TRAP_EL3 && !arm_el_is_aa64(env, 3)) {
--        r = CP_ACCESS_TRAP;
--    }
-     return r;
- }
- 
-@@ -2164,9 +2161,6 @@ static CPAccessResult gicv3_fiq_access(CPUARMState *env,
-         }
-     }
- 
--    if (r == CP_ACCESS_TRAP_EL3 && !arm_el_is_aa64(env, 3)) {
--        r = CP_ACCESS_TRAP;
--    }
-     return r;
- }
- 
-@@ -2203,9 +2197,6 @@ static CPAccessResult gicv3_irq_access(CPUARMState *env,
-         }
-     }
- 
--    if (r == CP_ACCESS_TRAP_EL3 && !arm_el_is_aa64(env, 3)) {
--        r = CP_ACCESS_TRAP;
--    }
-     return r;
- }
- 
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index a79d04200d..ed890f8d0f 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -52,7 +52,7 @@ x64-freebsd-14-build:
+     NAME: freebsd-14
+     CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
+     CIRRUS_VM_IMAGE_SELECTOR: image_family
+-    CIRRUS_VM_IMAGE_NAME: freebsd-14-1
++    CIRRUS_VM_IMAGE_NAME: freebsd-14-2
+     CIRRUS_VM_CPUS: 8
+     CIRRUS_VM_RAM: 8G
+     UPDATE_COMMAND: pkg update; pkg upgrade -y
 -- 
 2.39.5
 
