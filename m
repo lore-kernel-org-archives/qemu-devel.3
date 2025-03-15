@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48BD9C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DC1C35FF3
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKzf-0003wF-I7; Sat, 15 Mar 2025 02:27:36 -0400
+	id 1ttKxd-0007jt-UC; Sat, 15 Mar 2025 02:25:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKvY-0004ZH-UZ; Sat, 15 Mar 2025 02:23:21 -0400
+ id 1ttKvA-0003fZ-6G; Sat, 15 Mar 2025 02:22:56 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKvV-0003uS-MK; Sat, 15 Mar 2025 02:23:20 -0400
+ id 1ttKv8-0003t8-8Q; Sat, 15 Mar 2025 02:22:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E1F8FF9FF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3590CFF9FD;
  Sat, 15 Mar 2025 09:17:08 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 13F901CAC68;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0C12A1CAC66;
  Sat, 15 Mar 2025 09:18:02 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A5BD055915; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id A100F55911; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 51/51] docs: Rename default-configs to configs
-Date: Sat, 15 Mar 2025 09:17:57 +0300
-Message-Id: <20250315061801.622606-51-mjt@tls.msk.ru>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 49/51] hw/xen/hvm: Fix Aarch64 typo
+Date: Sat, 15 Mar 2025 09:17:55 +0300
+Message-Id: <20250315061801.622606-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
@@ -63,127 +65,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Greg Kurz <groug@kaod.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This was missed at the time.
+There is no TARGET_ARM_64 definition. Luckily enough,
+when TARGET_AARCH64 is defined, TARGET_ARM also is.
 
-Fixes: 812b31d3f91 ("configs: rename default-configs to configs and reorganise")
-Signed-off-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250306174113.427116-1-groug@kaod.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 48170c2d865a5937092b1384421b01cd38113042)
+Fixes: 733766cd373 ("hw/arm: introduce xenpvh machine")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250305153929.43687-2-philmd@linaro.org>
+(cherry picked from commit 3a11b653a63fee0e43f4ab84b93f068b961d8fe7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index d42045a232..a759982f45 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -260,7 +260,7 @@ Target-dependent emulator sourcesets:
-   Each emulator also includes sources for files in the ``hw/`` and ``target/``
-   subdirectories.  The subdirectory used for each emulator comes
-   from the target's definition of ``TARGET_BASE_ARCH`` or (if missing)
--  ``TARGET_ARCH``, as found in ``default-configs/targets/*.mak``.
-+  ``TARGET_ARCH``, as found in ``configs/targets/*.mak``.
- 
-   Each subdirectory in ``hw/`` adds one sourceset to the ``hw_arch`` dictionary,
-   for example::
-@@ -317,8 +317,8 @@ Utility sourcesets:
- The following files concur in the definition of which files are linked
- into each emulator:
- 
--``default-configs/devices/*.mak``
--  The files under ``default-configs/devices/`` control the boards and devices
-+``configs/devices/*.mak``
-+  The files under ``configs/devices/`` control the boards and devices
-   that are built into each QEMU system emulation targets. They merely contain
-   a list of config variable definitions such as::
- 
-@@ -327,11 +327,11 @@ into each emulator:
-     CONFIG_XLNX_VERSAL=y
- 
- ``*/Kconfig``
--  These files are processed together with ``default-configs/devices/*.mak`` and
-+  These files are processed together with ``configs/devices/*.mak`` and
-   describe the dependencies between various features, subsystems and
-   device models.  They are described in :ref:`kconfig`
- 
--``default-configs/targets/*.mak``
-+``configs/targets/*.mak``
-   These files mostly define symbols that appear in the ``*-config-target.h``
-   file for each emulator\ [#cfgtarget]_.  However, the ``TARGET_ARCH``
-   and ``TARGET_BASE_ARCH`` will also be used to select the ``hw/`` and
-diff --git a/docs/devel/kconfig.rst b/docs/devel/kconfig.rst
-index 52d4b905f6..493b76c4fb 100644
---- a/docs/devel/kconfig.rst
-+++ b/docs/devel/kconfig.rst
-@@ -38,7 +38,7 @@ originated in the Linux kernel, though it was heavily simplified and
- the handling of dependencies is stricter in QEMU.
- 
- Unlike Linux, there is no user interface to edit the configuration, which
--is instead specified in per-target files under the ``default-configs/``
-+is instead specified in per-target files under the ``configs/``
- directory of the QEMU source tree.  This is because, unlike Linux,
- configuration and dependencies can be treated as a black box when building
- QEMU; the default configuration that QEMU ships with should be okay in
-@@ -103,7 +103,7 @@ directives can be included:
- **default value**: ``default <value> [if <expr>]``
- 
-   Default values are assigned to the config symbol if no other value was
--  set by the user via ``default-configs/*.mak`` files, and only if
-+  set by the user via ``configs/*.mak`` files, and only if
-   ``select`` or ``depends on`` directives do not force the value to true
-   or false respectively.  ``<value>`` can be ``y`` or ``n``; it cannot
-   be an arbitrary Boolean expression.  However, a condition for applying
-@@ -119,7 +119,7 @@ directives can be included:
-   This is similar to ``select`` as it applies a lower limit of ``y``
-   to another symbol.  However, the lower limit is only a default
-   and the "implied" symbol's value may still be set to ``n`` from a
--  ``default-configs/*.mak`` files.  The following two examples are
-+  ``configs/*.mak`` files.  The following two examples are
-   equivalent::
- 
-     config FOO
-@@ -146,7 +146,7 @@ declares its dependencies in different ways:
-       bool
- 
-   Subsystems always default to false (they have no ``default`` directive)
--  and are never visible in ``default-configs/*.mak`` files.  It's
-+  and are never visible in ``configs/*.mak`` files.  It's
-   up to other symbols to ``select`` whatever subsystems they require.
- 
-   They sometimes have ``select`` directives to bring in other required
-@@ -238,7 +238,7 @@ declares its dependencies in different ways:
-   include libraries (such as ``FDT``) or ``TARGET_BIG_ENDIAN``
-   (possibly negated).
- 
--  Boards are listed for convenience in the ``default-configs/*.mak``
-+  Boards are listed for convenience in the ``configs/*.mak``
-   for the target they apply to.
- 
- **internal elements**
-@@ -251,18 +251,18 @@ declares its dependencies in different ways:
- 
-   Internal elements group code that is useful in several boards or
-   devices.  They are usually enabled with ``select`` and in turn select
--  other elements; they are never visible in ``default-configs/*.mak``
-+  other elements; they are never visible in ``configs/*.mak``
-   files, and often not even in the Makefile.
- 
- Writing and modifying default configurations
- --------------------------------------------
- 
- In addition to the Kconfig files under hw/, each target also includes
--a file called ``default-configs/TARGETNAME-softmmu.mak``.  These files
-+a file called ``configs/TARGETNAME-softmmu.mak``.  These files
- initialize some Kconfig variables to non-default values and provide the
- starting point to turn on devices and subsystems.
- 
--A file in ``default-configs/`` looks like the following example::
-+A file in ``configs/`` looks like the following example::
- 
-     # Default configuration for alpha-softmmu
- 
+diff --git a/include/hw/xen/arch_hvm.h b/include/hw/xen/arch_hvm.h
+index c7c515220d..df39c819c8 100644
+--- a/include/hw/xen/arch_hvm.h
++++ b/include/hw/xen/arch_hvm.h
+@@ -1,5 +1,5 @@
+ #if defined(TARGET_I386) || defined(TARGET_X86_64)
+ #include "hw/i386/xen_arch_hvm.h"
+-#elif defined(TARGET_ARM) || defined(TARGET_ARM_64)
++#elif defined(TARGET_ARM) || defined(TARGET_AARCH64)
+ #include "hw/arm/xen_arch_hvm.h"
+ #endif
 -- 
 2.39.5
 
