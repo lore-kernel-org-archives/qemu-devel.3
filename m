@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F07ADC35FF3
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA58C28B2F
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMDF-0008Rh-Q3; Sat, 15 Mar 2025 03:45:42 -0400
+	id 1ttMAq-000252-ML; Sat, 15 Mar 2025 03:43:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMCi-0007JT-P3; Sat, 15 Mar 2025 03:45:09 -0400
+ id 1ttMAo-00022r-Oe; Sat, 15 Mar 2025 03:43:10 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMCg-00055U-GF; Sat, 15 Mar 2025 03:45:08 -0400
+ id 1ttMAn-0004o9-1b; Sat, 15 Mar 2025 03:43:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F3539FFB11;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9E8BEFFAFC;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E22161CACDB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D4591CACC6;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9D7E755A0E; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 6B5BA559E4; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Patrick Venture <venture@google.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 29/42] hw/gpio: npcm7xx: fixup out-of-bounds access
-Date: Sat, 15 Mar 2025 10:42:31 +0300
-Message-Id: <20250315074249.634718-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 08/42] elfload: Fix alignment when unmapping excess
+ reservation
+Date: Sat, 15 Mar 2025 10:42:10 +0300
+Message-Id: <20250315074249.634718-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,43 +63,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Patrick Venture <venture@google.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-The reg isn't validated to be a possible register before
-it's dereferenced for one case.  The mmio space registered
-for the gpio device is 4KiB but there aren't that many
-registers in the struct.
+When complying with the alignment requested in the ELF and unmapping
+the excess reservation, having align_end not aligned to the guest page
+causes the unmap to be rejected by the alignment check at
+target_munmap and later brk adjustments hit an EEXIST.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 526dbbe0874 ("hw/gpio: Add GPIO model for Nuvoton NPCM7xx")
-Signed-off-by: Patrick Venture <venture@google.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250226024603.493148-1-venture@google.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 3b2e22c0bbe2ce07123d93961d52f17644562cd7)
+Fix by aligning the start of region to be unmapped.
+
+Fixes: c81d1fafa6 ("linux-user: Honor elf alignment when placing images")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1913
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+[rth: Align load_end as well.]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250213143558.10504-1-farosas@suse.de>
+(cherry picked from commit 4b7b20a3b72c5000ea71bef505c16e6e628268b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/gpio/npcm7xx_gpio.c b/hw/gpio/npcm7xx_gpio.c
-index 3376901ab1..c75f9e073d 100644
---- a/hw/gpio/npcm7xx_gpio.c
-+++ b/hw/gpio/npcm7xx_gpio.c
-@@ -220,8 +220,6 @@ static void npcm7xx_gpio_regs_write(void *opaque, hwaddr addr, uint64_t v,
-         return;
-     }
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index e1a8b102d4..84b640c1bf 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3432,8 +3432,8 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
  
--    diff = s->regs[reg] ^ value;
--
-     switch (reg) {
-     case NPCM7XX_GPIO_TLOCK1:
-     case NPCM7XX_GPIO_TLOCK2:
-@@ -242,6 +240,7 @@ static void npcm7xx_gpio_regs_write(void *opaque, hwaddr addr, uint64_t v,
-     case NPCM7XX_GPIO_PU:
-     case NPCM7XX_GPIO_PD:
-     case NPCM7XX_GPIO_IEM:
-+        diff = s->regs[reg] ^ value;
-         s->regs[reg] = value;
-         npcm7xx_gpio_update_pins(s, diff);
-         break;
+     if (align_size != reserve_size) {
+         abi_ulong align_addr = ROUND_UP(load_addr, align);
+-        abi_ulong align_end = align_addr + reserve_size;
+-        abi_ulong load_end = load_addr + align_size;
++        abi_ulong align_end = TARGET_PAGE_ALIGN(align_addr + reserve_size);
++        abi_ulong load_end = TARGET_PAGE_ALIGN(load_addr + align_size);
+ 
+         if (align_addr != load_addr) {
+             target_munmap(load_addr, align_addr - load_addr);
 -- 
 2.39.5
 
