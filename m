@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 586CAC28B2F
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D6FC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMBt-0003ko-4A; Sat, 15 Mar 2025 03:44:17 -0400
+	id 1ttMAo-00022V-2H; Sat, 15 Mar 2025 03:43:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMBk-0003VC-0X; Sat, 15 Mar 2025 03:44:09 -0400
+ id 1ttMAl-0001yN-HA; Sat, 15 Mar 2025 03:43:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMBi-0004zl-7A; Sat, 15 Mar 2025 03:44:07 -0400
+ id 1ttMAj-0004n5-M9; Sat, 15 Mar 2025 03:43:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C798BFFB06;
+ by isrv.corpit.ru (Postfix) with ESMTP id 96CB2FFAFA;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B66351CACD0;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 857151CACC4;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 830D3559F8; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 66EE9559E0; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sairaj Kodilkar <sarunkod@amd.com>,
- Vasant Hegde <vasant.hegde@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 18/42] amd_iommu: Use correct bitmask to set
- capability BAR
-Date: Sat, 15 Mar 2025 10:42:20 +0300
-Message-Id: <20250315074249.634718-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mikael Szreder <git@miszr.win>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 06/42] target/sparc: Fix gdbstub incorrectly handling
+ registers f32-f62
+Date: Sat, 15 Mar 2025 10:42:08 +0300
+Message-Id: <20250315074249.634718-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -63,50 +63,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Mikael Szreder <git@miszr.win>
 
-AMD IOMMU provides the base address of control registers through
-IVRS table and PCI capability. Since this base address is of 64 bit,
-use 32 bits mask (instead of 16 bits) to set BAR low and high.
+The gdbstub implementation for the Sparc architecture would
+incorrectly calculate the the floating point register offset.
+This resulted in, for example, registers f32 and f34 to point to
+the same value.
 
-Fixes: d29a09ca68 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250207045354.27329-3-sarunkod@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 3684717b7407cc395dc9bf522e193dbc85293dee)
+The issue was caused by the confusion between even register numbers
+and even register indexes. For example, the register index of f32 is 64
+and f34 is 65.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 30038fd81808 ("target-sparc: Change fpr representation to doubles.")
+Signed-off-by: Mikael Szreder <git@miszr.win>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250214070343.11501-1-git@miszr.win>
+(cherry picked from commit 7a74e468089a58756b438d31a2a9a97f183780d7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 4697864123..ac612813be 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1543,9 +1543,9 @@ static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
-     /* reset AMDVI specific capabilities, all r/o */
-     pci_set_long(pdev->config + s->capab_offset, AMDVI_CAPAB_FEATURES);
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_LOW,
--                 AMDVI_BASE_ADDR & ~(0xffff0000));
-+                 AMDVI_BASE_ADDR & MAKE_64BIT_MASK(14, 18));
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_BAR_HIGH,
--                (AMDVI_BASE_ADDR & ~(0xffff)) >> 16);
-+                AMDVI_BASE_ADDR >> 32);
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_RANGE,
-                  0xff000000);
-     pci_set_long(pdev->config + s->capab_offset + AMDVI_CAPAB_MISC, 0);
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index c5065a3e27..555a7a5162 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -185,7 +185,7 @@
-         AMDVI_CAPAB_FLAG_HTTUNNEL |  AMDVI_CAPAB_EFR_SUP)
- 
- /* AMDVI default address */
--#define AMDVI_BASE_ADDR 0xfed80000
-+#define AMDVI_BASE_ADDR 0xfed80000ULL
- 
- /* page management constants */
- #define AMDVI_PAGE_SHIFT 12
+diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+index a1c8fdc4d5..109b7237e0 100644
+--- a/target/sparc/gdbstub.c
++++ b/target/sparc/gdbstub.c
+@@ -80,8 +80,13 @@ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+         }
+     }
+     if (n < 80) {
+-        /* f32-f62 (double width, even numbers only) */
+-        return gdb_get_reg64(mem_buf, env->fpr[(n - 32) / 2].ll);
++        /* f32-f62 (16 double width registers, even register numbers only)
++         * n == 64: f32 : env->fpr[16]
++         * n == 65: f34 : env->fpr[17]
++         * etc...
++         * n == 79: f62 : env->fpr[31]
++         */
++        return gdb_get_reg64(mem_buf, env->fpr[(n - 64) + 16].ll);
+     }
+     switch (n) {
+     case 80:
+@@ -174,8 +179,13 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+         }
+         return 4;
+     } else if (n < 80) {
+-        /* f32-f62 (double width, even numbers only) */
+-        env->fpr[(n - 32) / 2].ll = tmp;
++        /* f32-f62 (16 double width registers, even register numbers only)
++         * n == 64: f32 : env->fpr[16]
++         * n == 65: f34 : env->fpr[17]
++         * etc...
++         * n == 79: f62 : env->fpr[31]
++         */
++        env->fpr[(n - 64) + 16].ll = tmp;
+     } else {
+         switch (n) {
+         case 80:
 -- 
 2.39.5
 
