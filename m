@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD738C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA0BC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKrt-0003ke-OB; Sat, 15 Mar 2025 02:19:34 -0400
+	id 1ttKtw-0000BA-V7; Sat, 15 Mar 2025 02:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKrO-0003Ha-Vr; Sat, 15 Mar 2025 02:19:09 -0400
+ id 1ttKs0-0003zi-Ll; Sat, 15 Mar 2025 02:19:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKrM-0003HO-FQ; Sat, 15 Mar 2025 02:19:02 -0400
+ id 1ttKrw-0003LT-Ty; Sat, 15 Mar 2025 02:19:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8FEDFFF9D7;
+ by isrv.corpit.ru (Postfix) with ESMTP id A7431FF9DD;
  Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 675511CAC40;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7E9BD1CAC46;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4568D558C5; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 540D7558D1; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
+Cc: qemu-stable@nongnu.org, Alexander Graf <graf@amazon.com>,
+ Vikrant Garg <vikrant1garg@gmail.com>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 11/51] hw/i386/pc: Fix crash that occurs when
- introspecting TYPE_PC_MACHINE machines
-Date: Sat, 15 Mar 2025 09:17:17 +0300
-Message-Id: <20250315061801.622606-11-mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 17/51] hw/virtio/virtio-nsm: Respond with correct length
+Date: Sat, 15 Mar 2025 09:17:23 +0300
+Message-Id: <20250315061801.622606-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,68 +65,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Alexander Graf <graf@amazon.com>
 
-QEMU currently crashes when you try to inspect the machines based on
-TYPE_PC_MACHINE for their properties:
+When we return a response packet from NSM, we need to indicate its
+length according to the content of the response. Prior to this patch, we
+returned the length of the source buffer, which may confuse guest code
+that relies on the response size.
 
- $ echo '{ "execute": "qmp_capabilities" }
-         { "execute": "qom-list-properties","arguments":
-                      { "typename": "pc-q35-10.0-machine"}}' \
-   | ./qemu-system-x86_64 -M pc -qmp stdio
- {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 9},
-  "package": "v9.2.0-1070-g87e115c122-dirty"}, "capabilities": ["oob"]}}
- {"return": {}}
- Segmentation fault (core dumped)
+Fix it by returning the response payload size instead.
 
-This happens because TYPE_PC_MACHINE machines add a machine_init-
-done_notifier in their instance_init function - but instance_init
-of machines are not only called for machines that are realized,
-but also for machines that are introspected, so in this case the
-listener is added for a q35 machine that is never realized. But
-since there is already a running pc machine, the listener function
-is triggered immediately, causing a crash since it was not for the
-right machine it was meant for.
-
-Such listener functions must never be installed from an instance_init
-function. Let's do it from pc_basic_device_init() instead - this
-function is called from the MachineClass->init() function instead,
-i.e. guaranteed to be only called once in the lifetime of a QEMU
-process.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2779
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20250117192106.471029-1-thuth@redhat.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Fixes: bb154e3e0cc715 ("device/virtio-nsm: Support for Nitro Secure Module device")
+Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Message-Id: <20250213114541.67515-1-graf@amazon.com>
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Fixes: bb154e3e0cc715 (&quot;device/virtio-nsm: Support for Nitro Secure Module device&quot;)<br>
+Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Vikrant Garg <vikrant1garg@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit de538288e4dac21332cc94ba9727ed8ec8fe5ea1)
+(cherry picked from commit 131fe64e63c88ec52c45a5946a478c0edeb31b78)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 317aaca25a..9b89b51b8f 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1236,6 +1236,9 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-     /* Super I/O */
-     pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
-                     pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
-+
-+    pcms->machine_done.notify = pc_machine_done;
-+    qemu_add_machine_init_done_notifier(&pcms->machine_done);
- }
+diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
+index a3db8eef3e..5dd56cf274 100644
+--- a/hw/virtio/virtio-nsm.c
++++ b/hw/virtio/virtio-nsm.c
+@@ -1589,7 +1589,7 @@ static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
+     g_free(req.iov_base);
+     g_free(res.iov_base);
+     virtqueue_push(vq, out_elem, 0);
+-    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
++    virtqueue_push(vq, in_elem, sz);
+     virtio_notify(vdev, vq);
+     return;
  
- void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
-@@ -1709,9 +1712,6 @@ static void pc_machine_initfn(Object *obj)
-     if (pcmc->pci_enabled) {
-         cxl_machine_init(obj, &pcms->cxl_devices_state);
-     }
--
--    pcms->machine_done.notify = pc_machine_done;
--    qemu_add_machine_init_done_notifier(&pcms->machine_done);
- }
- 
- static void pc_machine_reset(MachineState *machine, ResetType type)
 -- 
 2.39.5
 
