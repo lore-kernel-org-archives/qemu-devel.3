@@ -4,104 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A6EC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73FFC28B30
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKhs-0007ql-L8; Sat, 15 Mar 2025 02:09:12 -0400
+	id 1ttKr9-00033U-JJ; Sat, 15 Mar 2025 02:18:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1ttKhr-0007qb-Dr
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 02:09:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ttKr1-0002ya-DT; Sat, 15 Mar 2025 02:18:41 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1ttKhp-00027B-9i
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 02:09:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742018946;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=58WnGVzNfvl7rhxPJmCWerojBGye0IKaLgzTOxHLN0g=;
- b=fWLV7XGKjcld3a1DEAZDilpjb+umT3LVf3aJ1G6Fgt38ktLw2vSTYh2xz2UC/A94bV5HER
- vfRTCxqOsHtA6SreUb45L6OQ3yGiuQXKUEK9qOCpP2raZ4jMJgBoOCqONp9813XlBE/zdj
- iSjO8IgIhvjcoDBGHWB5bmWhGTCMWMk=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-355-ud11UAlqPyeHVhhPNTXwXA-1; Sat, 15 Mar 2025 02:09:04 -0400
-X-MC-Unique: ud11UAlqPyeHVhhPNTXwXA-1
-X-Mimecast-MFC-AGG-ID: ud11UAlqPyeHVhhPNTXwXA_1742018943
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ac316d639d2so231463466b.3
- for <qemu-devel@nongnu.org>; Fri, 14 Mar 2025 23:09:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742018943; x=1742623743;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=58WnGVzNfvl7rhxPJmCWerojBGye0IKaLgzTOxHLN0g=;
- b=pyke7iWKfzfIvQ378lr/r8bq5qbI0uF81o15ZytT9U/CT3JY0G9zbgzhO7lXBOdwu6
- j2cr7CXN14EemYmLXwANGZt4l3Y/qEwgMNkj1/diq9uur+tbJ7kbFmEygg1BEPD+yXLt
- 37YUkifN/Fj1XJ6fyIGTyyYORWpfvia555Xkzdf6L0lXywVMGSJdg1ZQYcXGCyNNbkQg
- IiunOfFWR71QL58kSevHvZnHFZaqKGdpPQYIOmqKomvASSwD+OZtaGFW6HpoMkqv7yqC
- it6T66WfnboUgdkzVmKPpfS0JpTY4VVeQudF3xk9krYyFZF+7ci5LFY8Grf42MIRZ1OQ
- rOsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWxWWcwsMqk54Gvltq7c28Ixu+WKWtl1OTBWmmf4UqQL3Glnnv2fwYT050b9ztGZ0FJCgC2UTUuJbj@nongnu.org
-X-Gm-Message-State: AOJu0Yw5eE5UVAisEq4+iqfavktVAdIK22F/uCE3u0yN5tmqVzlFVuV/
- y8aSgtDhdWUldvVXFnXlVOlVA7DlofhwPpbqEsUoHSMv31J9wwME4XS9wSJeIfsczYRKTG6gE0j
- w4O2VkkN5ZvEJb4mleCefNdd4b5B7EjOUzpIrefn9ktyJv9EhhKk6CUMt8/jUUo1cTAWrj7stV9
- 9D/5JQRhkVJ+/qjS3YNj8+dX3YTiw=
-X-Gm-Gg: ASbGncsmmWuBzP/Hz8Q6aS9fVE2oNpoV9xz+5G9YrhJmmb7z+w9XnONkz1f4sdDZJ2b
- FC5ddgUYpVRq1u88vNIIQp6H1tsQafXBF2VJBEO7GjQnFr0KlTwjkZPN3wh+/nIWZQ7FSAlQW
-X-Received: by 2002:a17:907:9687:b0:ac2:b086:88d5 with SMTP id
- a640c23a62f3a-ac3301d26a2mr549496866b.18.1742018943303; 
- Fri, 14 Mar 2025 23:09:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKSClLNw35zzaS68iuUtVIlfSBKwtHltn4zMG+5CdrLvxd3eB2spXDrCnTr5MEMM+M1GHfPBYZz5A7kETVagQ=
-X-Received: by 2002:a17:907:9687:b0:ac2:b086:88d5 with SMTP id
- a640c23a62f3a-ac3301d26a2mr549495866b.18.1742018943010; Fri, 14 Mar 2025
- 23:09:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
- <Z9LeILiEU5GfEHrl@8bytes.org>
- <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
- <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
- <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
- <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
- <Z9RIaPTxn7tTX9c9@8bytes.org>
-In-Reply-To: <Z9RIaPTxn7tTX9c9@8bytes.org>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Sat, 15 Mar 2025 11:38:51 +0530
-X-Gm-Features: AQ5f1JpLSa0kh11zrqcUgFWt0i18Zwcjt36KN7w-KA6ebjwQltXy_U6TSeE1moQ
-Message-ID: <CAK3XEhPt22mcXEvXdy8C0Wa5kdg2g8RUSmMN6Av7haw3FkqZ7Q@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
-Cc: Gerd Hoffman <kraxel@redhat.com>, Alexander Graf <graf@amazon.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ttKqu-0003CE-F6; Sat, 15 Mar 2025 02:18:38 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 70805FF9CF;
+ Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4806A1CAC38;
+ Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 3219B558B5; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 03/51] target/arm: Report correct syndrome for
+ UNDEFINED S1E2 AT ops at EL3
+Date: Sat, 15 Mar 2025 09:17:09 +0300
+Message-Id: <20250315061801.622606-3-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
+References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,25 +63,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 14, 2025 at 8:47=E2=80=AFPM J=C3=B6rg R=C3=B6del <joro@8bytes.o=
-rg> wrote:
->
-> On Fri, Mar 14, 2025 at 03:08:43PM +0100, Gerd Hoffman wrote:
-> > If your input firmware image already is an IGVM (say coconut), what is
-> > supposed to happen?
->
-> The COCONUT igvmbuilder has the ability to take another IGVM file as
-> input and add its directive and contents to the output file. This is
-> needed for the Hyper-V firmware, which is also provided as an IGVM file.
-> I think it can also make changes when processing an input IGVM, like
-> changing the VMPL of a VMSA.
->
-> This can be extended to cover more use-cases, e.g. like direct-boot of a
-> linux kernel with initrd and command-line.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Have we considered how IGVM will be deployed in the FUKI case? I have
-always assumed that UKI would be the right means for this. For edk2
-for example, we are implementing support in UKI. Hopefully the same
-can apply for IGVM.
+The pseudocode for AT S1E2R and AT S1E2W says that they should be
+UNDEFINED if executed at EL3 when EL2 is not enabled. We were
+incorrectly using CP_ACCESS_TRAP and reporting the wrong exception
+syndrome as a result. Use CP_ACCESS_TRAP_UNCATEGORIZED.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 2a47df953202e1 ("target-arm: Wire up AArch64 EL2 and EL3 address translation ops")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250130182309.717346-4-peter.maydell@linaro.org
+(cherry picked from commit ccda792945d650bce4609c8dbce8814a220df1bb)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 32cf6039e3..63cdb29510 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3878,7 +3878,7 @@ static CPAccessResult at_s1e2_access(CPUARMState *env, const ARMCPRegInfo *ri,
+ {
+     if (arm_current_el(env) == 3 &&
+         !(env->cp15.scr_el3 & (SCR_NS | SCR_EEL2))) {
+-        return CP_ACCESS_TRAP;
++        return CP_ACCESS_TRAP_UNCATEGORIZED;
+     }
+     return at_e012_access(env, ri, isread);
+ }
+-- 
+2.39.5
 
 
