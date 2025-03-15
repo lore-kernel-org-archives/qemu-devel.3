@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 730D2C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F0ABC28B2F
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMAs-00026c-VR; Sat, 15 Mar 2025 03:43:15 -0400
+	id 1ttMCu-0007cD-6E; Sat, 15 Mar 2025 03:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMAp-00023E-Fd; Sat, 15 Mar 2025 03:43:11 -0400
+ id 1ttMCe-00075q-UR; Sat, 15 Mar 2025 03:45:06 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMAn-0004oJ-Cf; Sat, 15 Mar 2025 03:43:11 -0400
+ id 1ttMCc-00054m-AO; Sat, 15 Mar 2025 03:45:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A29B6FFAFD;
+ by isrv.corpit.ru (Postfix) with ESMTP id EB7E1FFB0F;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 914661CACC7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DA3B01CACD9;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6DBD7559E6; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 98E2A55A0A; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 09/42] target/arm: Report correct syndrome for
- UNDEFINED CNTPS_*_EL1 from EL2 and NS EL1
-Date: Sat, 15 Mar 2025 10:42:11 +0300
-Message-Id: <20250315074249.634718-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Denis Rastyogin <gerben@altlinux.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 27/42] block/qed: fix use-after-free by nullifying
+ timer pointer after free
+Date: Sat, 15 Mar 2025 10:42:29 +0300
+Message-Id: <20250315074249.634718-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,48 +62,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Denis Rastyogin <gerben@altlinux.org>
 
-The access pseudocode for the CNTPS_TVAL_EL1, CNTPS_CTL_EL1 and
-CNTPS_CVAL_EL1 secure timer registers says that they are UNDEFINED
-from EL2 or NS EL1.  We incorrectly return CP_ACCESS_TRAP from the
-access function in these cases, which means that we report the wrong
-syndrome value to the target EL.
+This error was discovered by fuzzing qemu-img.
 
-Use CP_ACCESS_TRAP_UNCATEGORIZED, which reports the correct syndrome
-value for an UNDEFINED instruction.
+In the QED block driver, the need_check_timer timer is freed in
+bdrv_qed_detach_aio_context, but the pointer to the timer is not
+set to NULL. This can lead to a use-after-free scenario
+in bdrv_qed_drain_begin().
 
-Cc: qemu-stable@nongnu.org
-Fixes: b4d3978c2fd ("target-arm: Add the AArch64 view of the Secure physical timer")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250130182309.717346-2-peter.maydell@linaro.org
-(cherry picked from commit b819fd6994243aee6f9613edbbacedce4f511c32)
+The need_check_timer pointer is set to NULL after freeing the timer.
+Which helps catch this condition when checking in bdrv_qed_drain_begin().
+
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2852
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+Message-ID: <20250304083927.37681-1-gerben@altlinux.org>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 2ad638a3d160923ef3dbf87c73944e6e44bdc724)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7bef2c6675..92d5ee95e6 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2579,7 +2579,7 @@ static CPAccessResult gt_stimer_access(CPUARMState *env,
-     switch (arm_current_el(env)) {
-     case 1:
-         if (!arm_is_secure(env)) {
--            return CP_ACCESS_TRAP;
-+            return CP_ACCESS_TRAP_UNCATEGORIZED;
-         }
-         if (!(env->cp15.scr_el3 & SCR_ST)) {
-             return CP_ACCESS_TRAP_EL3;
-@@ -2587,7 +2587,7 @@ static CPAccessResult gt_stimer_access(CPUARMState *env,
-         return CP_ACCESS_OK;
-     case 0:
-     case 2:
--        return CP_ACCESS_TRAP;
-+        return CP_ACCESS_TRAP_UNCATEGORIZED;
-     case 3:
-         return CP_ACCESS_OK;
-     default:
+diff --git a/block/qed.c b/block/qed.c
+index bc2f0a61c0..b986353979 100644
+--- a/block/qed.c
++++ b/block/qed.c
+@@ -353,6 +353,7 @@ static void bdrv_qed_detach_aio_context(BlockDriverState *bs)
+ 
+     qed_cancel_need_check_timer(s);
+     timer_free(s->need_check_timer);
++    s->need_check_timer = NULL;
+ }
+ 
+ static void bdrv_qed_attach_aio_context(BlockDriverState *bs,
 -- 
 2.39.5
 
