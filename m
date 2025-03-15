@@ -4,40 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F0ABC28B2F
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E66C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMCu-0007cD-6E; Sat, 15 Mar 2025 03:45:20 -0400
+	id 1ttMCQ-0005eN-0R; Sat, 15 Mar 2025 03:44:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMCe-00075q-UR; Sat, 15 Mar 2025 03:45:06 -0400
+ id 1ttMCG-0004xV-3o; Sat, 15 Mar 2025 03:44:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMCc-00054m-AO; Sat, 15 Mar 2025 03:45:03 -0400
+ id 1ttMCE-00052U-G2; Sat, 15 Mar 2025 03:44:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EB7E1FFB0F;
+ by isrv.corpit.ru (Postfix) with ESMTP id DF616FFB0C;
  Sat, 15 Mar 2025 10:41:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DA3B01CACD9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CE0DC1CACD6;
  Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 98E2A55A0A; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id 915AD55A04; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Denis Rastyogin <gerben@altlinux.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 27/42] block/qed: fix use-after-free by nullifying
- timer pointer after free
-Date: Sat, 15 Mar 2025 10:42:29 +0300
-Message-Id: <20250315074249.634718-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 24/42] target/riscv/debug.c: use wp size = 4 for
+ 32-bit CPUs
+Date: Sat, 15 Mar 2025 10:42:26 +0300
+Message-Id: <20250315074249.634718-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,37 +66,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis Rastyogin <gerben@altlinux.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-This error was discovered by fuzzing qemu-img.
+The mcontrol select bit (19) is always zero, meaning our triggers will
+always match virtual addresses. In this condition, if the user does not
+specify a size for the trigger, the access size defaults to XLEN.
 
-In the QED block driver, the need_check_timer timer is freed in
-bdrv_qed_detach_aio_context, but the pointer to the timer is not
-set to NULL. This can lead to a use-after-free scenario
-in bdrv_qed_drain_begin().
+At this moment we're using def_size = 8 regardless of CPU XLEN. Use
+def_size = 4 in case we're running 32 bits.
 
-The need_check_timer pointer is set to NULL after freeing the timer.
-Which helps catch this condition when checking in bdrv_qed_drain_begin().
-
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2852
-Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
-Message-ID: <20250304083927.37681-1-gerben@altlinux.org>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 2ad638a3d160923ef3dbf87c73944e6e44bdc724)
+Fixes: 95799e36c1 ("target/riscv: Add initial support for the Sdtrig extension")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250121170626.1992570-2-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 3fba76e61caa46329afc399b3ecaaba70c8b0a4e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qed.c b/block/qed.c
-index bc2f0a61c0..b986353979 100644
---- a/block/qed.c
-+++ b/block/qed.c
-@@ -353,6 +353,7 @@ static void bdrv_qed_detach_aio_context(BlockDriverState *bs)
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index 4945d1a1f2..49de0e4ea9 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -305,7 +305,7 @@ static void type2_breakpoint_insert(CPURISCVState *env, target_ulong index)
+     bool enabled = type2_breakpoint_enabled(ctrl);
+     CPUState *cs = env_cpu(env);
+     int flags = BP_CPU | BP_STOP_BEFORE_ACCESS;
+-    uint32_t size;
++    uint32_t size, def_size;
  
-     qed_cancel_need_check_timer(s);
-     timer_free(s->need_check_timer);
-+    s->need_check_timer = NULL;
- }
- 
- static void bdrv_qed_attach_aio_context(BlockDriverState *bs,
+     if (!enabled) {
+         return;
+@@ -328,7 +328,9 @@ static void type2_breakpoint_insert(CPURISCVState *env, target_ulong index)
+             cpu_watchpoint_insert(cs, addr, size, flags,
+                                   &env->cpu_watchpoint[index]);
+         } else {
+-            cpu_watchpoint_insert(cs, addr, 8, flags,
++            def_size = riscv_cpu_mxl(env) == MXL_RV64 ? 8 : 4;
++
++            cpu_watchpoint_insert(cs, addr, def_size, flags,
+                                   &env->cpu_watchpoint[index]);
+         }
+     }
 -- 
 2.39.5
 
