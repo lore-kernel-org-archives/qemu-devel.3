@@ -4,39 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD9BC35FF3
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807D6C35FF1
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNeR-0005ES-SX; Sat, 15 Mar 2025 05:17:54 -0400
+	id 1ttNeW-0005SI-0J; Sat, 15 Mar 2025 05:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNcl-0003VW-73; Sat, 15 Mar 2025 05:16:13 -0400
+ id 1ttNck-0003VU-NX; Sat, 15 Mar 2025 05:16:13 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNcj-00081I-4e; Sat, 15 Mar 2025 05:16:06 -0400
+ id 1ttNci-00084n-GN; Sat, 15 Mar 2025 05:16:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E651FFFBC3;
+ by isrv.corpit.ru (Postfix) with ESMTP id EB7F8FFBC4;
  Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EE9891CAD5C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id F2DD31CAD5D;
  Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BE4EE55A4E; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id C0B5955A50; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: qemu-stable@nongnu.org, Rodrigo Dias Correa <r@drigo.nl>,
  Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 18/27] target/riscv: throw debug exception before page
- fault
-Date: Sat, 15 Mar 2025 12:14:29 +0300
-Message-Id: <20250315091439.657371-18-mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 19/27] goldfish_rtc: Fix tick_offset migration
+Date: Sat, 15 Mar 2025 12:14:30 +0300
+Message-Id: <20250315091439.657371-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
@@ -65,72 +62,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Rodrigo Dias Correa <r@drigo.nl>
 
-In the RISC-V privileged ISA section 3.1.15 table 15, it is determined
-that a debug exception that is triggered from a load/store has a higher
-priority than a possible fault that this access might trigger.
+Instead of migrating the raw tick_offset, goldfish_rtc migrates a
+recalculated value based on QEMU_CLOCK_VIRTUAL. As QEMU_CLOCK_VIRTUAL
+stands still across a save-and-restore cycle, the guest RTC becomes out
+of sync with the host RTC when the VM is restored.
 
-This is not the case ATM as shown in [1]. Adding a breakpoint in an
-address that deliberately will fault is causing a load page fault
-instead of a debug exception. The reason is that we're throwing in the
-page fault as soon as the fault occurs (end of riscv_cpu_tlb_fill(),
-raise_mmu_exception()), not allowing the installed watchpoints to
-trigger.
+As described in the bug description, it looks like this calculation was
+copied from pl031 RTC, which had its tick_offset migration fixed by
+Commit 032cfe6a79c8 ("pl031: Correctly migrate state when using -rtc
+clock=host").
 
-Call cpu_check_watchpoint() in the page fault path to search and execute
-any watchpoints that might exist for the address, never returning back
-to the fault path. If no watchpoints are found cpu_check_watchpoint()
-will return and we'll fall-through the regular path to
-raise_mmu_exception().
+Migrate the tick_offset directly, adding it as a version-dependent field
+to VMState. Keep the old behavior when migrating from previous versions.
 
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2627
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2627
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2033
+Signed-off-by: Rodrigo Dias Correa <r@drigo.nl>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250121170626.1992570-3-dbarboza@ventanamicro.com>
+Message-ID: <20250114212150.228241-1-r@drigo.nl>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit c86edc547692d812d1dcc04220c38310be2c00c3)
+(cherry picked from commit 3521f9cadc29c7d68b73b325ddb46a7acebf6212)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 278d163803..b68327e13f 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -25,6 +25,7 @@
- #include "exec/exec-all.h"
- #include "instmap.h"
- #include "tcg/tcg-op.h"
-+#include "hw/core/tcg-cpu-ops.h"
- #include "trace.h"
- #include "semihosting/common-semi.h"
- #include "cpu_bits.h"
-@@ -1345,6 +1346,23 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     } else if (probe) {
-         return false;
-     } else {
-+        int wp_access = 0;
-+
-+        if (access_type == MMU_DATA_LOAD) {
-+            wp_access |= BP_MEM_READ;
-+        } else if (access_type == MMU_DATA_STORE) {
-+            wp_access |= BP_MEM_WRITE;
-+        }
-+
+diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
+index 19a56402a0..81cc942b46 100644
+--- a/hw/rtc/goldfish_rtc.c
++++ b/hw/rtc/goldfish_rtc.c
+@@ -178,38 +178,21 @@ static void goldfish_rtc_write(void *opaque, hwaddr offset,
+     trace_goldfish_rtc_write(offset, value);
+ }
+ 
+-static int goldfish_rtc_pre_save(void *opaque)
+-{
+-    uint64_t delta;
+-    GoldfishRTCState *s = opaque;
+-
+-    /*
+-     * We want to migrate this offset, which sounds straightforward.
+-     * Unfortunately, we cannot directly pass tick_offset because
+-     * rtc_clock on destination Host might not be same source Host.
+-     *
+-     * To tackle, this we pass tick_offset relative to vm_clock from
+-     * source Host and make it relative to rtc_clock at destination Host.
+-     */
+-    delta = qemu_clock_get_ns(rtc_clock) -
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    s->tick_offset_vmstate = s->tick_offset + delta;
+-
+-    return 0;
+-}
+-
+ static int goldfish_rtc_post_load(void *opaque, int version_id)
+ {
+-    uint64_t delta;
+     GoldfishRTCState *s = opaque;
+ 
+-    /*
+-     * We extract tick_offset from tick_offset_vmstate by doing
+-     * reverse math compared to pre_save() function.
+-     */
+-    delta = qemu_clock_get_ns(rtc_clock) -
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    s->tick_offset = s->tick_offset_vmstate - delta;
++    if (version_id < 3) {
 +        /*
-+         * If a watchpoint isn't found for 'addr' this will
-+         * be a no-op and we'll resume the mmu_exception path.
-+         * Otherwise we'll throw a debug exception and execution
-+         * will continue elsewhere.
++         * Previous versions didn't migrate tick_offset directly. Instead, they
++         * migrated tick_offset_vmstate, which is a recalculation based on
++         * QEMU_CLOCK_VIRTUAL. We use tick_offset_vmstate when migrating from
++         * older versions.
 +         */
-+        cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
-+                             wp_access, retaddr);
-+
-         raise_mmu_exception(env, address, access_type, pmp_violation,
-                             first_stage_error,
-                             riscv_cpu_virt_enabled(env) ||
++        uint64_t delta = qemu_clock_get_ns(rtc_clock) -
++                 qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++        s->tick_offset = s->tick_offset_vmstate - delta;
++    }
+ 
+     goldfish_rtc_set_alarm(s);
+ 
+@@ -239,8 +222,7 @@ static const MemoryRegionOps goldfish_rtc_ops[2] = {
+ 
+ static const VMStateDescription goldfish_rtc_vmstate = {
+     .name = TYPE_GOLDFISH_RTC,
+-    .version_id = 2,
+-    .pre_save = goldfish_rtc_pre_save,
++    .version_id = 3,
+     .post_load = goldfish_rtc_post_load,
+     .fields = (VMStateField[]) {
+         VMSTATE_UINT64(tick_offset_vmstate, GoldfishRTCState),
+@@ -249,6 +231,7 @@ static const VMStateDescription goldfish_rtc_vmstate = {
+         VMSTATE_UINT32(irq_pending, GoldfishRTCState),
+         VMSTATE_UINT32(irq_enabled, GoldfishRTCState),
+         VMSTATE_UINT32(time_high, GoldfishRTCState),
++        VMSTATE_UINT64_V(tick_offset, GoldfishRTCState, 3),
+         VMSTATE_END_OF_LIST()
+     }
+ };
 -- 
 2.39.5
 
