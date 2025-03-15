@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21FDC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9371BC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNcU-0003Ed-Pn; Sat, 15 Mar 2025 05:15:50 -0400
+	id 1ttNeY-0005jL-JK; Sat, 15 Mar 2025 05:17:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNcN-00039P-Lb; Sat, 15 Mar 2025 05:15:43 -0400
+ id 1ttNdK-0004Jt-Ck; Sat, 15 Mar 2025 05:16:47 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNcL-00080x-By; Sat, 15 Mar 2025 05:15:42 -0400
+ id 1ttNdH-00088U-WF; Sat, 15 Mar 2025 05:16:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DE11CFFBC1;
- Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0E522FFBCA;
+ Sat, 15 Mar 2025 12:13:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E67761CAD5A;
- Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 16C571CAD63;
+ Sat, 15 Mar 2025 12:14:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B96B655A4A; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id CF40B55A5C; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 16/27] target/riscv: rvv: Fix unexpected behavior of
- vector reduction instructions when vl is 0
-Date: Sat, 15 Mar 2025 12:14:27 +0300
-Message-Id: <20250315091439.657371-16-mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 25/27] hw/net/smc91c111: Don't allow data register
+ access to overrun buffer
+Date: Sat, 15 Mar 2025 12:14:36 +0300
+Message-Id: <20250315091439.657371-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,50 +64,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-According to the Vector Reduction Operations section in the RISC-V "V"
-Vector Extension spec,
-"If vl=0, no operation is performed and the destination register is not
-updated."
+For accesses to the 91c111 data register, the address within the
+packet's data frame is determined by a combination of the pointer
+register and the offset used to access the data register, so that you
+can access data at effectively wider than byte width.  The pointer
+register's pointer field is 11 bits wide, which is exactly the size
+to index a 2048-byte data frame.
 
-The vd should be updated when vl is larger than 0.
+We weren't quite getting the logic right for ensuring that we end up
+with a pointer value to use in the s->data[][] array that isn't out
+of bounds:
 
-Fixes: fe5c9ab1fc ("target/riscv: vector single-width integer reduction instructions")
-Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250124101452.2519171-1-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit ffd455963f230c7dc04965609d6675da687a5a78)
+ * we correctly mask when getting the initial pointer value
+ * for the "autoincrement the pointer register" case, we
+   correctly mask after adding 1 so that the pointer register
+   wraps back around at the 2048 byte mark
+ * but for the non-autoincrement case where we have to add the
+   low 2 bits of the data register offset, we don't account
+   for the possibility that the pointer register is 0x7ff
+   and the addition should wrap
+
+Fix this bug by factoring out the "get the p value to use as an array
+index" into a function, making it use FIELD macro names rather than
+hard-coded constants, and having a utility function that does "add a
+value and wrap it" that we can use both for the "autoincrement" and
+"add the offset bits" codepaths.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2758
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250228191652.1957208-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 700d3d6dd41de3bd3f1153e3cfe00b93f99b1441)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index a6ac61c724..d2fe96e5c8 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -4621,7 +4621,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
-         }                                                 \
-         s1 = OP(s1, (TD)s2);                              \
-     }                                                     \
--    *((TD *)vd + HD(0)) = s1;                             \
-+    if (vl > 0) {                                         \
-+        *((TD *)vd + HD(0)) = s1;                         \
-+    }                                                     \
-     env->vstart = 0;                                      \
-     /* set tail elements to 1s */                         \
-     vext_set_elems_1s(vd, vta, esz, vlenb);               \
-@@ -4707,7 +4709,9 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,           \
-         }                                                  \
-         s1 = OP(s1, (TD)s2, &env->fp_status);              \
-     }                                                      \
--    *((TD *)vd + HD(0)) = s1;                              \
-+    if (vl > 0) {                                          \
-+        *((TD *)vd + HD(0)) = s1;                          \
-+    }                                                      \
-     env->vstart = 0;                                       \
-     /* set tail elements to 1s */                          \
-     vext_set_elems_1s(vd, vta, esz, vlenb);                \
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 67e11bdedd..81e5c823d1 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -13,6 +13,7 @@
+ #include "net/net.h"
+ #include "hw/irq.h"
+ #include "hw/net/smc91c111.h"
++#include "hw/registerfields.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+@@ -126,6 +127,13 @@ static const VMStateDescription vmstate_smc91c111 = {
+ #define RS_TOOSHORT     0x0400
+ #define RS_MULTICAST    0x0001
+ 
++FIELD(PTR, PTR, 0, 11)
++FIELD(PTR, NOT_EMPTY, 11, 1)
++FIELD(PTR, RESERVED, 12, 1)
++FIELD(PTR, READ, 13, 1)
++FIELD(PTR, AUTOINCR, 14, 1)
++FIELD(PTR, RCV, 15, 1)
++
+ static inline bool packetnum_valid(int packet_num)
+ {
+     return packet_num >= 0 && packet_num < NUM_PACKETS;
+@@ -372,6 +380,49 @@ static void smc91c111_reset(DeviceState *dev)
+ #define SET_LOW(name, val) s->name = (s->name & 0xff00) | val
+ #define SET_HIGH(name, val) s->name = (s->name & 0xff) | (val << 8)
+ 
++/*
++ * The pointer register's pointer is an 11 bit value (so it exactly
++ * indexes a 2048-byte data frame). Add the specified offset to it,
++ * wrapping around at the 2048 byte mark, and return the resulting
++ * wrapped value. There are flag bits in the top part of the register,
++ * but we can ignore them here as the mask will mask them out.
++ */
++static int ptr_reg_add(smc91c111_state *s, int offset)
++{
++    return (s->ptr + offset) & R_PTR_PTR_MASK;
++}
++
++/*
++ * For an access to the Data Register at @offset, return the
++ * required offset into the packet's data frame. This will
++ * perform the pointer register autoincrement if required, and
++ * guarantees to return an in-bounds offset.
++ */
++static int data_reg_ptr(smc91c111_state *s, int offset)
++{
++    int p;
++
++    if (s->ptr & R_PTR_AUTOINCR_MASK) {
++        /*
++         * Autoincrement: use the current pointer value, and
++         * increment the pointer register's pointer field.
++         */
++        p = FIELD_EX32(s->ptr, PTR, PTR);
++        s->ptr = FIELD_DP32(s->ptr, PTR, PTR, ptr_reg_add(s, 1));
++    } else {
++        /*
++         * No autoincrement: register offset determines which
++         * byte we're addressing. Setting the pointer to the top
++         * of the data buffer and then using the pointer wrapping
++         * to read the bottom byte of the buffer is not something
++         * sensible guest software will do, but the datasheet
++         * doesn't say what the behaviour is, so we don't forbid it.
++         */
++        p = ptr_reg_add(s, offset & 3);
++    }
++    return p;
++}
++
+ static void smc91c111_writeb(void *opaque, hwaddr offset,
+                              uint32_t value)
+ {
+@@ -518,12 +569,7 @@ static void smc91c111_writeb(void *opaque, hwaddr offset,
+                                   n);
+                     return;
+                 }
+-                p = s->ptr & 0x07ff;
+-                if (s->ptr & 0x4000) {
+-                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x7ff);
+-                } else {
+-                    p += (offset & 3);
+-                }
++                p = data_reg_ptr(s, offset);
+                 s->data[n][p] = value;
+             }
+             return;
+@@ -673,12 +719,7 @@ static uint32_t smc91c111_readb(void *opaque, hwaddr offset)
+                                   n);
+                     return 0;
+                 }
+-                p = s->ptr & 0x07ff;
+-                if (s->ptr & 0x4000) {
+-                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x07ff);
+-                } else {
+-                    p += (offset & 3);
+-                }
++                p = data_reg_ptr(s, offset);
+                 return s->data[n][p];
+             }
+         case 12: /* Interrupt status.  */
 -- 
 2.39.5
 
