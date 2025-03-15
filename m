@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B242AC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BDAC35FF3
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNc0-0002u7-Vw; Sat, 15 Mar 2025 05:15:21 -0400
+	id 1ttNc4-0002uz-Kb; Sat, 15 Mar 2025 05:15:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNbi-0002fu-NB; Sat, 15 Mar 2025 05:15:03 -0400
+ id 1ttNbs-0002n4-Aa; Sat, 15 Mar 2025 05:15:13 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNbg-0007lv-V8; Sat, 15 Mar 2025 05:15:02 -0400
+ id 1ttNbo-0007xq-Ls; Sat, 15 Mar 2025 05:15:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B68FFFFBB7;
+ by isrv.corpit.ru (Postfix) with ESMTP id CA7A8FFBBC;
  Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BEF5B1CAD50;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D2EBC1CAD55;
  Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A0ED255A36; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id AD0E055A40; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 06/27] target/arm: Report correct syndrome for
- UNDEFINED S1E2 AT ops at EL3
-Date: Sat, 15 Mar 2025 12:14:17 +0300
-Message-Id: <20250315091439.657371-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sairaj Kodilkar <sarunkod@amd.com>,
+ Vasant Hegde <vasant.hegde@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 11/27] amd_iommu: Use correct DTE field for interrupt
+ passthrough
+Date: Sat, 15 Mar 2025 12:14:22 +0300
+Message-Id: <20250315091439.657371-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
@@ -63,34 +63,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-The pseudocode for AT S1E2R and AT S1E2W says that they should be
-UNDEFINED if executed at EL3 when EL2 is not enabled. We were
-incorrectly using CP_ACCESS_TRAP and reporting the wrong exception
-syndrome as a result. Use CP_ACCESS_TRAP_UNCATEGORIZED.
+Interrupt passthrough is determine by the bits 191,190,187-184.
+These bits are part of the 3rd quad word (i.e. index 2) in DTE. Hence
+replace dte[3] by dte[2].
 
-Cc: qemu-stable@nongnu.org
-Fixes: 2a47df953202e1 ("target-arm: Wire up AArch64 EL2 and EL3 address translation ops")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250130182309.717346-4-peter.maydell@linaro.org
-(cherry picked from commit ccda792945d650bce4609c8dbce8814a220df1bb)
+Fixes: b44159fe0 ("x86_iommu/amd: Add interrupt remap support when VAPIC is not enabled")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250207045354.27329-2-sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 63dc0b8647391b372f3bb38ff1066f6b4a5e6ea1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index d1e176e711..f33fc5c4a6 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3516,7 +3516,7 @@ static CPAccessResult at_s1e2_access(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     if (arm_current_el(env) == 3 &&
-         !(env->cp15.scr_el3 & (SCR_NS | SCR_EEL2))) {
--        return CP_ACCESS_TRAP;
-+        return CP_ACCESS_TRAP_UNCATEGORIZED;
-     }
-     return CP_ACCESS_OK;
- }
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 02597db1e1..d94c0f9bfb 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1279,15 +1279,15 @@ static int amdvi_int_remap_msi(AMDVIState *iommu,
+         ret = -AMDVI_IR_ERR;
+         break;
+     case AMDVI_IOAPIC_INT_TYPE_NMI:
+-        pass = dte[3] & AMDVI_DEV_NMI_PASS_MASK;
++        pass = dte[2] & AMDVI_DEV_NMI_PASS_MASK;
+         trace_amdvi_ir_delivery_mode("nmi");
+         break;
+     case AMDVI_IOAPIC_INT_TYPE_INIT:
+-        pass = dte[3] & AMDVI_DEV_INT_PASS_MASK;
++        pass = dte[2] & AMDVI_DEV_INT_PASS_MASK;
+         trace_amdvi_ir_delivery_mode("init");
+         break;
+     case AMDVI_IOAPIC_INT_TYPE_EINT:
+-        pass = dte[3] & AMDVI_DEV_EINT_PASS_MASK;
++        pass = dte[2] & AMDVI_DEV_EINT_PASS_MASK;
+         trace_amdvi_ir_delivery_mode("eint");
+         break;
+     default:
 -- 
 2.39.5
 
