@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E197C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 14:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F2CEC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 14:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttSUo-0006oC-5w; Sat, 15 Mar 2025 10:28:14 -0400
+	id 1ttSV2-0007bH-0n; Sat, 15 Mar 2025 10:28:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSUl-0006dr-K6
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:28:11 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSUz-0007QZ-87
+ for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:28:25 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSUk-0003xc-0P
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:28:11 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43d0782d787so4389645e9.0
- for <qemu-devel@nongnu.org>; Sat, 15 Mar 2025 07:28:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSUx-00040a-4t
+ for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:28:24 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43cf0d787eeso7020995e9.3
+ for <qemu-devel@nongnu.org>; Sat, 15 Mar 2025 07:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1742048888; x=1742653688; darn=nongnu.org;
+ d=chromium.org; s=google; t=1742048901; x=1742653701; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YBw5RnVhttKdF2Qo8bwI9+KLvnZSt3HCKA4Su8eQKxU=;
- b=cMlgGDk0wZtzt5Q7DLBPOqeWTs6sYXwosapwmHczrC0G4C7KitGaRx6Dnnc/R49YkM
- BZy+xJ+/YPOOOIh2YUUdGoHSzA1WcY9BrgOQC2xQmFw9oSQmJ9x+2yJlEgYQodJRdQgZ
- LB1C5rw7RIS4je53+f1LSb1iFBSeC/yEOqrAE=
+ bh=pEe7q4w3SeigGu9Yyevoz5YHH/txq64uIVifPcLXvEQ=;
+ b=cBpSD3Hl1aBDcX0lxl7PBhvyeOmY13Z7eA2KU1yzifj4/dqFHXX5IFQ6eIkqH484yF
+ HxqsSMotRy+/tphNePB+crTXg4UATHMhd9WsWLAVY9MB4a4d8BnoDqIPab+5pkVuJDZ+
+ mqkk9LJe7u45hNzfqe3HamdlNWRw6fO5cPDrA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742048888; x=1742653688;
+ d=1e100.net; s=20230601; t=1742048901; x=1742653701;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YBw5RnVhttKdF2Qo8bwI9+KLvnZSt3HCKA4Su8eQKxU=;
- b=ZP+QLvEHTPDfclOVdN11zyOZQWr164+nDhbxtF7Hoyv52p6FuFTWmGDUKohU4RwmtT
- woPuZfYnqx7r7nd2CtZhxxZM8MHgw+af2NP3HSun1o8sbSj49aUUs+ZUKWxY5IU70uTr
- Q0YU0/z7paOOsqT3Qk8LC0GSnL8w0vyYmXcBAHAlCIF9sNFagXZ08KyJSe4Z/ClDKz2m
- xDceTfRJ98Obkti8HWpHQ0T0VdioquEm1s0t9tlS9MC5kP5Ckh2MwaxqnJtvYeWJfMV4
- 6oEGcuWZfW4KB/hatRHl3fJh1P+ESsRea0LY27Bu5yyWU0hEzGt2/BLJqvk8T0B8HUK5
- ilDQ==
+ bh=pEe7q4w3SeigGu9Yyevoz5YHH/txq64uIVifPcLXvEQ=;
+ b=cIAJC5RX0hLRA2ZSOuailQ15F1Yr/OM4DKNHSkEE8PYCbgG/aEpLlLNIG1A/ggSZ44
+ MpQJbJ30wcn/fcP9nsiCRc+Z+BySxDT9q2Ps6wGDdQhtrFCr3X4YrX4zIcFjyJfRklAm
+ r1JWFs/QPLCy4kEX6taqJSLPML/1OslCemRO+tk4L2yLaBcBQBhd9vXCHSRYvn8/fb2u
+ CGf3d2vE23/g72hfRlERJV/FERtD+rY6HaBaQRjxlY6cikW+l88F+ZB0/qAKAyvYuf3p
+ cLkdcQh/KBesDOqvMQpjXUPeNPdxMAqMYNYkkNGmPO5EgTdgxdptK7M1VdAiJ2wbsXCE
+ ECQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJo+hibFEJkSiaddWpd3PbF1N4LmQ+0FglWi2iZ/2Nop2BMRHofQV6YrQu+0e9093qQmYfjNapXAAG@nongnu.org
-X-Gm-Message-State: AOJu0Yxpv84X+NdlIV+cI2l+bwkBdeNWIo7Qcu9hff4ArYvb15reHBEd
- YH0gn4yvxDXXt5bmZdvyvZAZgEU59JpAy+D2/KpGcEYHBJkJ+BbLkazyb8ncfA==
-X-Gm-Gg: ASbGncvACT9VCtLnrYEIGNWdZqTLkzsfOCpm+P+qRVvKDAwy4SEkOYB3E0x8HVGo7PT
- JRxUnIKkcl3YxFiWSz5spHHpXgnEi54NaF+qc1agXQBWguM9mLMGimCraNYKDQe+ll644m0qe9L
- 4nIz9N23bND5BXVkaKogvX9teFOwU3tGGFKLz+ACObQfAPbSgJqLOgnl9DYMDjVcwE6/7GfyHk8
- JP1axEL+WJPaCrgxmOUT8wO77YwaEDWoGNwKhrZU5xuR25ClSwjvRFXAyINQa68+H/S0SRpWMLe
- 37T3P/Iz60WjCSP1XwIUOooIqYJHDR0/du5NtVZQGQ==
-X-Google-Smtp-Source: AGHT+IGu9fj3IB/3JJZSuGapRjOiDGUdzhm6XhlWU53ITcgn2d0W/XgrpVYSlW+dk1imD/Us4n+VhQ==
-X-Received: by 2002:a05:600c:510f:b0:43d:aed:f7de with SMTP id
- 5b1f17b1804b1-43d1ece301amr72592455e9.21.1742048888257; 
- Sat, 15 Mar 2025 07:28:08 -0700 (PDT)
+ AJvYcCWfOUuiIFi3MQQngF8Ci1dt2cwfaFnoyhjmUOQIAalPp8Buf3FsuZqo0n2atglj9CdnbdqyT6y0OoCE@nongnu.org
+X-Gm-Message-State: AOJu0YyzTAdvcq458ysIyw+Y2jjOuNMZqPWWSQ7Bu6AKhUrJmFvDIyj+
+ LSOMoa1YO48cEl4bXbMtmkpsCWxMyrBt4UHDQrQxnoQGpSfWNy5P9vjD+Y94SP9q4aw43XF0E7F
+ 5Sw==
+X-Gm-Gg: ASbGncvwdvZ/34XysI17GCKBu/vYHuHigkyYPJ5Yvq94mwlCwEIm4NYT32WddMhNMN5
+ zMvQ2Tp5FuoTewb+561K/3sWeZVRJHx/rYC6zQOZYN8NRURt3BjAQt4lluLq+7Sdv5vT4jSBjvE
+ 1AKa3AT6pfwqMLbLf6Fn+bXXlQd+yuuZ+Slhpl7M3gjcRKmGERe7IpSgMxiU/LlB9glXBS4Gkxx
+ C3R10ENnXnvLcQ35j5STA5dOsvGLTwd6QbD5zxxYazF3VGB2YtiL64JLAihcwEA6LMHO8/qdiEF
+ PKzYP2DxQx/bgZrzRLtq5+qnwARLNm61GLVNlCNF3g==
+X-Google-Smtp-Source: AGHT+IEr/rk4+ZqxB/vjG33oC+nkbbgb4MWMhTWMbsM1Uzr/n7zqJ4nmA0F9IvDYTmQerbiybDabKw==
+X-Received: by 2002:a05:600c:1c03:b0:43d:db5:7b21 with SMTP id
+ 5b1f17b1804b1-43d1ed00187mr78758145e9.28.1742048901501; 
+ Sat, 15 Mar 2025 07:28:21 -0700 (PDT)
 Received: from chromium.org ([169.155.233.10])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe29386sm52105055e9.17.2025.03.15.07.28.06
+ 5b1f17b1804b1-43d1fe29386sm52105055e9.17.2025.03.15.07.28.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Mar 2025 07:28:07 -0700 (PDT)
+ Sat, 15 Mar 2025 07:28:20 -0700 (PDT)
 From: Simon Glass <sjg@chromium.org>
 To: U-Boot Mailing List <u-boot@lists.denx.de>
 Cc: Bin Meng <bmeng.cn@gmail.com>, Simon Glass <sjg@chromium.org>,
  Tom Rini <trini@konsulko.com>, qemu-devel@nongnu.org
-Subject: [PATCH v5 28/46] x86: qemu: Support environment and cat command
-Date: Sat, 15 Mar 2025 14:25:48 +0000
-Message-ID: <20250315142643.2600605-29-sjg@chromium.org>
+Subject: [PATCH v5 34/46] x86: qemu: Use the new e820 API
+Date: Sat, 15 Mar 2025 14:25:54 +0000
+Message-ID: <20250315142643.2600605-35-sjg@chromium.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250315142643.2600605-1-sjg@chromium.org>
 References: <20250315142643.2600605-1-sjg@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=sjg@chromium.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=sjg@chromium.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,75 +97,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for an environment stored in the first partition of the
-disk, which is assumed to hold a FAT filesystem.
-
-Support the 'cat' command as it is useful for looking at extlinux.conf
-files.
+Move over to use this API before making the code even more complicated.
 
 Signed-off-by: Simon Glass <sjg@chromium.org>
 ---
 
-(no changes since v1)
+(no changes since v3)
 
- configs/qemu-x86_64_defconfig | 6 ++++--
- configs/qemu-x86_defconfig    | 4 ++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+Changes in v3:
+- Add new patch to use the new e820 API
 
-diff --git a/configs/qemu-x86_64_defconfig b/configs/qemu-x86_64_defconfig
-index 84b7dc8e99f..ae34cc2a6f8 100644
---- a/configs/qemu-x86_64_defconfig
-+++ b/configs/qemu-x86_64_defconfig
-@@ -41,9 +41,7 @@ CONFIG_SPL_NO_BSS_LIMIT=y
- CONFIG_SPL_BOARD_INIT=y
- CONFIG_SPL_SYS_MALLOC_SIMPLE=y
- CONFIG_SPL_CPU=y
--CONFIG_SPL_ENV_SUPPORT=y
- CONFIG_SPL_DM_SPI_FLASH=y
--CONFIG_SPL_NET=y
- CONFIG_SPL_PCI=y
- CONFIG_SPL_PCH=y
- CONFIG_SPL_RTC=y
-@@ -54,6 +52,7 @@ CONFIG_CMD_MEM_SEARCH=y
- CONFIG_CMD_IDE=y
- CONFIG_CMD_SPI=y
- CONFIG_CMD_USB=y
-+CONFIG_CMD_CAT=y
- # CONFIG_CMD_SETEXPR is not set
- CONFIG_BOOTP_BOOTFILESIZE=y
- CONFIG_CMD_EFIDEBUG=y
-@@ -61,6 +60,9 @@ CONFIG_CMD_TIME=y
- CONFIG_CMD_BOOTSTAGE=y
- CONFIG_CMD_EXT4_WRITE=y
- CONFIG_ENV_OVERWRITE=y
-+CONFIG_ENV_IS_IN_FAT=y
-+CONFIG_ENV_FAT_INTERFACE="virtio"
-+CONFIG_ENV_FAT_DEVICE_AND_PART="0:1"
- CONFIG_SYS_RELOC_GD_ENV_ADDR=y
- CONFIG_USE_BOOTFILE=y
- CONFIG_BOOTFILE="bzImage"
-diff --git a/configs/qemu-x86_defconfig b/configs/qemu-x86_defconfig
-index d52afa42955..7afa3827e61 100644
---- a/configs/qemu-x86_defconfig
-+++ b/configs/qemu-x86_defconfig
-@@ -34,6 +34,7 @@ CONFIG_CMD_MEM_SEARCH=y
- CONFIG_CMD_IDE=y
- CONFIG_CMD_SPI=y
- CONFIG_CMD_USB=y
-+CONFIG_CMD_CAT=y
- # CONFIG_CMD_SETEXPR is not set
- CONFIG_BOOTP_BOOTFILESIZE=y
- CONFIG_CMD_EFIDEBUG=y
-@@ -42,6 +43,9 @@ CONFIG_CMD_BOOTSTAGE=y
- CONFIG_CMD_EXT4_WRITE=y
- CONFIG_MAC_PARTITION=y
- CONFIG_ENV_OVERWRITE=y
-+CONFIG_ENV_IS_IN_FAT=y
-+CONFIG_ENV_FAT_INTERFACE="virtio"
-+CONFIG_ENV_FAT_DEVICE_AND_PART="0:1"
- CONFIG_SYS_RELOC_GD_ENV_ADDR=y
- CONFIG_USE_BOOTFILE=y
- CONFIG_BOOTFILE="bzImage"
+ arch/x86/cpu/qemu/e820.c | 48 ++++++++++------------------------------
+ 1 file changed, 12 insertions(+), 36 deletions(-)
+
+diff --git a/arch/x86/cpu/qemu/e820.c b/arch/x86/cpu/qemu/e820.c
+index 17a04f86479..2b0ad179489 100644
+--- a/arch/x86/cpu/qemu/e820.c
++++ b/arch/x86/cpu/qemu/e820.c
+@@ -19,51 +19,27 @@ unsigned int install_e820_map(unsigned int max_entries,
+ 			      struct e820_entry *entries)
+ {
+ 	u64 high_mem_size;
+-	int n = 0;
++	struct e820_ctx ctx;
+ 
+-	entries[n].addr = 0;
+-	entries[n].size = ISA_START_ADDRESS;
+-	entries[n].type = E820_RAM;
+-	n++;
++	e820_init(&ctx, entries, max_entries);
+ 
+-	entries[n].addr = ISA_START_ADDRESS;
+-	entries[n].size = ISA_END_ADDRESS - ISA_START_ADDRESS;
+-	entries[n].type = E820_RESERVED;
+-	n++;
++	e820_next(&ctx, E820_RAM, ISA_START_ADDRESS);
++	e820_next(&ctx, E820_RESERVED, ISA_END_ADDRESS);
+ 
+ 	/*
+ 	 * since we use memalign(malloc) to allocate high memory for
+ 	 * storing ACPI tables, we need to reserve them in e820 tables,
+ 	 * otherwise kernel will reclaim them and data will be corrupted
+ 	 */
+-	entries[n].addr = ISA_END_ADDRESS;
+-	entries[n].size = gd->relocaddr - TOTAL_MALLOC_LEN - ISA_END_ADDRESS;
+-	entries[n].type = E820_RAM;
+-	n++;
+-
+-	/* for simplicity, reserve entire malloc space */
+-	entries[n].addr = gd->relocaddr - TOTAL_MALLOC_LEN;
+-	entries[n].size = TOTAL_MALLOC_LEN;
+-	entries[n].type = E820_RESERVED;
+-	n++;
+-
+-	entries[n].addr = gd->relocaddr;
+-	entries[n].size = qemu_get_low_memory_size() - gd->relocaddr;
+-	entries[n].type = E820_RESERVED;
+-	n++;
+-
+-	entries[n].addr = CONFIG_PCIE_ECAM_BASE;
+-	entries[n].size = CONFIG_PCIE_ECAM_SIZE;
+-	entries[n].type = E820_RESERVED;
+-	n++;
++	e820_to_addr(&ctx, E820_RAM, gd->relocaddr - TOTAL_MALLOC_LEN);
++	e820_next(&ctx, E820_RESERVED, TOTAL_MALLOC_LEN);
++	e820_to_addr(&ctx, E820_RAM, qemu_get_low_memory_size());
++	e820_add(&ctx, E820_RESERVED, CONFIG_PCIE_ECAM_BASE,
++		 CONFIG_PCIE_ECAM_SIZE);
+ 
+ 	high_mem_size = qemu_get_high_memory_size();
+-	if (high_mem_size) {
+-		entries[n].addr = SZ_4G;
+-		entries[n].size = high_mem_size;
+-		entries[n].type = E820_RAM;
+-		n++;
+-	}
++	if (high_mem_size)
++		e820_add(&ctx, E820_RAM, SZ_4G, high_mem_size);
+ 
+-	return n;
++	return e820_finish(&ctx);
+ }
 -- 
 2.43.0
 
