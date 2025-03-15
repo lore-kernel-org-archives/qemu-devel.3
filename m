@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 186F6C35FF3
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C15C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:15:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNbc-0002c2-Hl; Sat, 15 Mar 2025 05:14:56 -0400
+	id 1ttNc3-0002uh-6q; Sat, 15 Mar 2025 05:15:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNbU-0002b2-Bm; Sat, 15 Mar 2025 05:14:49 -0400
+ id 1ttNbm-0002kH-T2; Sat, 15 Mar 2025 05:15:08 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNbR-0007j8-J5; Sat, 15 Mar 2025 05:14:47 -0400
+ id 1ttNbl-0007mY-5D; Sat, 15 Mar 2025 05:15:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9E0DEFFBB1;
+ by isrv.corpit.ru (Postfix) with ESMTP id C24B5FFBBA;
  Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A3D541CAD4A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CAC481CAD53;
  Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 92D3255A2A; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id A83BA55A3C; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 00/27] Patch Round-up for stable 7.2.17,
- freeze on 2025-03-24
-Date: Sat, 15 Mar 2025 12:14:11 +0300
-Message-Id: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 09/27] hw/intc/arm_gicv3_cpuif: Don't downgrade
+ monitor traps for AArch32 EL3
+Date: Sat, 15 Mar 2025 12:14:20 +0300
+Message-Id: <20250315091439.657371-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
+References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,79 +65,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v7.2.17:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+In the gicv3_{irq,fiq,irqfiq}_access() functions, there is a check
+which downgrades a CP_ACCESS_TRAP_EL3 to CP_ACCESS_TRAP if EL3 is not
+AArch64.  This has been there since the GIC was first implemented,
+but it isn't right: if we are trapping because of SCR.IRQ or SCR.FIQ
+then we definitely want to be going to EL3 (doing
+AArch32.TakeMonitorTrapException() in pseudocode terms).  We might
+want to not take a trap at all, but we don't ever want to go to the
+default target EL, because that would mean, for instance, taking a
+trap to Hyp mode if the trapped access was made from Hyp mode.
 
-Patch freeze is 2025-03-24, and the release is planned for 2025-03-26:
+(This might have been an attempt to work around our failure to
+properly implement Monitor Traps.)
 
-  https://wiki.qemu.org/Planning/7.2
+Remove the bogus check.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Cc: qemu-stable@nongnu.org
+Fixes: 359fbe65e01e ("hw/intc/arm_gicv3: Implement GICv3 CPU interface registers")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250130182309.717346-7-peter.maydell@linaro.org
+(cherry picked from commit d04c6c3c000ab3e588a2b91641310aeea89408f7)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index 9811fb3fb4..8d36f57f3d 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -2097,9 +2097,6 @@ static CPAccessResult gicv3_irqfiq_access(CPUARMState *env,
+         }
+     }
+ 
+-    if (r == CP_ACCESS_TRAP_EL3 && !arm_el_is_aa64(env, 3)) {
+-        r = CP_ACCESS_TRAP;
+-    }
+     return r;
+ }
+ 
+@@ -2162,9 +2159,6 @@ static CPAccessResult gicv3_fiq_access(CPUARMState *env,
+         }
+     }
+ 
+-    if (r == CP_ACCESS_TRAP_EL3 && !arm_el_is_aa64(env, 3)) {
+-        r = CP_ACCESS_TRAP;
+-    }
+     return r;
+ }
+ 
+@@ -2201,9 +2195,6 @@ static CPAccessResult gicv3_irq_access(CPUARMState *env,
+         }
+     }
+ 
+-    if (r == CP_ACCESS_TRAP_EL3 && !arm_el_is_aa64(env, 3)) {
+-        r = CP_ACCESS_TRAP;
+-    }
+     return r;
+ }
+ 
+-- 
+2.39.5
 
-Thanks!
-
-/mjt
-
---------------------------------------
-01 27a8d899c7a1 Khem Raj:
-   linux-user: Do not define struct sched_attr if libc headers do
-02 4dafba778aa3 Volker Rümelin:
-   ui/sdl2: reenable the SDL2 Windows keyboard hook procedure
-03 937df81af675 Peter Maydell:
-   hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
-04 7a74e468089a Mikael Szreder:
-   target/sparc: Fix gdbstub incorrectly handling registers f32-f62
-05 b819fd699424 Peter Maydell:
-   target/arm: Report correct syndrome for UNDEFINED CNTPS_*_EL1 from EL2 
-   and NS EL1
-06 ccda792945d6 Peter Maydell:
-   target/arm: Report correct syndrome for UNDEFINED S1E2 AT ops at EL3
-07 707d478ed8f2 Peter Maydell:
-   target/arm: Report correct syndrome for UNDEFINED LOR sysregs when NS=0
-08 4cf494865161 Peter Maydell:
-   target/arm: Make CP_ACCESS_TRAPs to AArch32 EL3 be Monitor traps
-09 d04c6c3c000a Peter Maydell:
-   hw/intc/arm_gicv3_cpuif: Don't downgrade monitor traps for AArch32 EL3
-10 464ce71a963b Bernhard Beschow:
-   Kconfig: Extract CONFIG_USB_CHIPIDEA from CONFIG_IMX
-11 63dc0b864739 Sairaj Kodilkar:
-   amd_iommu: Use correct DTE field for interrupt passthrough
-12 6291a28645a0 Philippe Mathieu-Daudé:
-   hw/i386/amd_iommu: Explicit use of AMDVI_BASE_ADDR in amdvi_init
-13 3684717b7407 Sairaj Kodilkar:
-   amd_iommu: Use correct bitmask to set capability BAR
-14 83cb18ac4500 Stefano Garzarella:
-   cryptodev/vhost: allocate CryptoDevBackendVhost using g_mem0()
-15 50e975414906 Konstantin Shkolnyy:
-   vdpa: Fix endian bugs in shadow virtqueue
-16 ffd455963f23 Max Chou:
-   target/riscv: rvv: Fix unexpected behavior of vector reduction 
-   instructions when vl is 0
-17 3fba76e61caa Daniel Henrique Barboza:
-   target/riscv/debug.c: use wp size = 4 for 32-bit CPUs
-18 c86edc547692 Daniel Henrique Barboza:
-   target/riscv: throw debug exception before page fault
-19 3521f9cadc29 Rodrigo Dias Correa:
-   goldfish_rtc: Fix tick_offset migration
-20 2ad638a3d160 Denis Rastyogin:
-   block/qed: fix use-after-free by nullifying timer pointer after free
-21 3b2e22c0bbe2 Patrick Venture:
-   hw/gpio: npcm7xx: fixup out-of-bounds access
-22 29c041ca7f8d Nicholas Piggin:
-   ppc/pnv/occ: Fix common area sensor offsets
-23 2fa3a5b94696 Peter Maydell:
-   hw/net/smc91c111: Sanitize packet numbers
-24 aad6f264add3 Peter Maydell:
-   hw/net/smc91c111: Sanitize packet length on tx
-25 700d3d6dd41d Peter Maydell:
-   hw/net/smc91c111: Don't allow data register access to overrun buffer
-26 b75c5f987916 Kevin Wolf:
-   block: Zero block driver state before reopening
-27 48170c2d865a Greg Kurz:
-   docs: Rename default-configs to configs
 
