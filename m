@@ -4,97 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52D5DC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 14:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B7CC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 17:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttSf2-0002g2-8u; Sat, 15 Mar 2025 10:38:48 -0400
+	id 1ttVXY-00087b-8j; Sat, 15 Mar 2025 13:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSey-0002eo-Vf
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:38:46 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sjg@chromium.org>) id 1ttSew-0005As-KW
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 10:38:44 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5e677f59438so4684242a12.2
- for <qemu-devel@nongnu.org>; Sat, 15 Mar 2025 07:38:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1742049521; x=1742654321; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TVbtizlVjyZk3wsqRuH5bDpwtK5POmwHDxT89XS3p1g=;
- b=FAciDXwsRXut3Ya3N3X1kFANuVk+Bv3e4HSLeQQzQtF8WIq023oW6YzuprVyLcFH/s
- 6GsrKKfK479Kpqh8YgGPIcYyBdUK9YI1eoeHjefqqg63C3LAOFnbBIrXLacptCHeUNqU
- UwKeJDnKtR4Qa6J1s3uass8sD4FqfgMf7501A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742049521; x=1742654321;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TVbtizlVjyZk3wsqRuH5bDpwtK5POmwHDxT89XS3p1g=;
- b=aE3HL3RDA7SGRZFYHcVLujSVi8/b3R7BRW5pLUkVaRKZV3N2ut2kzvMFQZb9UDd9VJ
- CMhVNsDMw7R+QUY/fqtY5TEQKgwVQVGhFFq1Xoo9spi9gQKRPmajFuGc2IlMnb9A3Z2R
- WnMKxHDPXzAgpnPbHspo97z/DW/wW1yiONEkpSVPUUHV6VBHR5cAAUFqNf931BU4sooE
- ceYqcMOBGGS+5AJpX4e3xODOpS/PjixKta0bYEcrPksJO9nOd7jFyyx0A+G944AtPcfX
- kvSUKhkocDMlGIEAUBcPs6Hmo9Ztcd2ud7aZCy42BcW/p0MJ9luM9BhQz0jLagN7z5BM
- wWtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4+lI8qLdVUPd6/lW9YczbORLQvzd+blPDISHCjOYh7XGeta2yRI8Hvknqi0nKmq5ku2AIVss4m50e@nongnu.org
-X-Gm-Message-State: AOJu0Yy/VQ1ItfXxPyLHAKxwNExA0ApvgyfBf4xmvXJpzD3TbxjRHgk4
- MhvIzdHg06oOu2N/9lQy4W+/wnrXTz0D69jth2RYJ5polGe187uMHMg+S3wrOVBjfZrBpCoV5sj
- vyFU8/kdnqei3t8qUbbblSoCxMXExjCVlc2s3
-X-Gm-Gg: ASbGncv6YLo8BwVBbpW26LaLdyku+Xm4bfW8Tw0UlTBNJhMbfvw0H7290y3AvnLwh3R
- uF3dhDYeaQS4fncfTtffbDFW08GttH+1IkjcmH4mpu+jbZ1vEVte8mS9aXIcStEzycgqjbn1aIV
- rw3dFDiJdFieoENHYkIi4v2EovDfIheZTryXcRCQ==
-X-Google-Smtp-Source: AGHT+IHJaF9e0zV3ssuT+IiVhzCmNBte73n5CcXuKYJjrLmbw2arKls2ZPF9rh5JhvxJGOeh6TDAYLeE7UrzFjB3HCk=
-X-Received: by 2002:a05:6402:2793:b0:5e6:1996:7902 with SMTP id
- 4fb4d7f45d1cf-5e8a0c0d26fmr6916482a12.32.1742049520664; Sat, 15 Mar 2025
- 07:38:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
+ id 1ttVXL-0007yK-TR; Sat, 15 Mar 2025 13:43:07 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.54])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
+ id 1ttVXG-00021n-FK; Sat, 15 Mar 2025 13:43:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1742060568; bh=zcrxujq8oAr4C4FYOrWGAxou0NszWeHnYrryhZrzvGk=;
+ h=From:To:Cc:Subject:Date;
+ b=rRHZFSLTyjZl39xX2mS+swkFcS6YphWhQcVQbb2pUM5alLvoTgIKK37eF+fBlRwAD
+ GGC7/ankQlWz0aH3wBf11KfPBGPOAc6Ig1GoJKc5TWzKv35heK3weeVVxffBP9PDH3
+ RAWTZDgNS5ROBaL2kwYLimfxDxm8ODMpQvDLKR/Y=
+Received: from localhost.localdomain ([120.46.176.49])
+ by newxmesmtplogicsvrszb16-1.qq.com (NewEsmtp) with SMTP
+ id 799AC488; Sun, 16 Mar 2025 01:30:25 +0800
+X-QQ-mid: xmsmtpt1742059825til0gwr29
+Message-ID: <tencent_C6F198B4EA3ABA591C57084BA7125D04B306@qq.com>
+X-QQ-XMAILINFO: NhJmSc9h8ndd8ukIdUi1fCOcmz27QYj9qtVMSPLvPeYC6fX6Aosj0defr9LV6w
+ bIpWp4cWvTcNQRuao3bDVedjCSuUxr+xs3ZIf7CIc9LnuMGiR+V4pmW04JwktJmKoz6I42nBN4D9
+ Q2xjfjw6UKd9zNQsTFowI7+YvBbEWc24Pa02MP5Rka6JtKq7IiYEOSifYx39dhNA2Y7IqDw1wOrO
+ mQDMAL5D1XM20qt7wTTTkRT1+wDKwkuEc+7J8vojsUOyL1kSxoEJmnZbGqL0YYkXC/Ln0fXFLN2G
+ ewCMJq2VaXo91eBKxQQebOBBxrmVieJ50LnNKXoy/Ux28m2pYpiBYbwFavGBeRAp4NoqPjZzW2CU
+ 9ZXXIh0lsKkmINdFf1Ul8gnRPVu/ICcE3GdMvE9/esakNFLTnw9JTrzCV+kDwtzYrhsx2+Njdsyn
+ ZzTLHY9sexatbfZekgQLfV/30YU0fqfSZg5ruLxfEcjjhIxfEm9RCBaCMngNZPnc/EgFKC3SRRa+
+ WFLTnHFHHrPGpuHzdhq0qGYtz82G1gfLbslWzCoA3ic2XwPU/YPvyHs6tJI/xYEVnh2qtVAEefQY
+ dPdW8lS0lZfZ2gXkgIQUGG/GIyq2DZBDDeDHUcUaKqxKgqyiJU3/zGpPYiuAjGd7I5VgME4Q+XBz
+ BmcXbiw/7RyNFHN5XE1P8pGQve9Wyldk/2WBH+cfML3ZKancB8hw3opPQdlvRy1h0qleioGwv/Ju
+ XBhLAPFAJBYGPySREJg7WYb4vthrYmzBCik3T1dQdS49wvD+oTwQgDj8FKE5LyJZUqhT13FD2SuK
+ ianIiAXiYfqZ0xy2uWpy4jk5TpvQvMj7RK+WzzSZqY19XPoE4wUtR9oWmWTJiad1RhE4MOGG0qo6
+ EbbXL3E+M1y3D4nYoAbeh+Xj6NBTvxtHvrk8MMLI3ZOodWglbEIm/RDnUCmOMAz8Q3/Wuc6IYpN0
+ yzpwkhbfM/9t+Q8qmXsg==
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+From: saz97 <sa.z@qq.com>
+To: qemu-devel@nongnu.org
+Cc: hreitz@redhat.com, kwolf@redhat.com, stefanha@redhat.com,
+ qemu-block@nongnu.org, saz97 <sa.z@qq.com>
+Subject: [PATCH RFC v2] Integration coroutines into fuse export
+Date: Sun, 16 Mar 2025 01:30:20 +0800
+X-OQ-MSGID: <20250315173020.52011-1-sa.z@qq.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250306160428.3041057-1-sjg@chromium.org>
- <20250307142255.GL2640854@bill-the-cat>
- <CAFLszTgtYsVQW-kETzUAdvJvAT6fN_53TeoN7o8wu52Ze3u56Q@mail.gmail.com>
- <20250314160652.GS2640854@bill-the-cat>
- <CAFLszTjGV==WftDU6C=S8VB28QJLvFJGS0H3=PKwTCjkZvNibQ@mail.gmail.com>
- <20250315135749.GI2640854@bill-the-cat>
-In-Reply-To: <20250315135749.GI2640854@bill-the-cat>
-From: Simon Glass <sjg@chromium.org>
-Date: Sat, 15 Mar 2025 14:38:29 +0000
-X-Gm-Features: AQ5f1JryOCU1CPd9qV8swCUkqyaT5LDarLbQvIYJbFTEBjjncUyBQewbAE2hkI4
-Message-ID: <CAFLszTjEONSErVbE0O5E0+izUDO8yFNZ+hwzvHjvx-nTczzeSQ@mail.gmail.com>
-Subject: Re: [PATCH v4 00/47] x86: Improve operation under QEMU
-To: Tom Rini <trini@konsulko.com>
-Cc: U-Boot Mailing List <u-boot@lists.denx.de>, Bin Meng <bmeng.cn@gmail.com>, 
- Andrew Goodbody <andrew.goodbody@linaro.org>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Angelo Dureghello <angelo@kernel-space.org>,
- Guillaume La Roque <glaroque@baylibre.com>, 
- Heinrich Schuchardt <xypron.glpk@gmx.de>, Igor Opaniuk <igor.opaniuk@gmail.com>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- Julien Masson <jmasson@baylibre.com>, 
- Julius Lehmann <lehmanju@devpi.de>, Love Kumar <love.kumar@amd.com>, 
- Marek Vasut <marek.vasut+renesas@mailbox.org>,
- Martyn Welch <martyn.welch@collabora.com>, 
- Mattijs Korpershoek <mkorpershoek@baylibre.com>, 
- Maximilian Brune <maximilian.brune@9elements.com>,
- Moritz Fischer <moritzf@google.com>, 
- Patrick Rudolph <patrick.rudolph@9elements.com>,
- Philip Oberfichtner <pro@denx.de>, 
- Quentin Schulz <quentin.schulz@cherry.de>, Richard Weinberger <richard@nod.at>,
- Stephen Warren <swarren@nvidia.com>, Stephen Warren <swarren@wwwdotorg.org>, 
- Sughosh Ganu <sughosh.ganu@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=sjg@chromium.org; helo=mail-ed1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=43.163.128.54; envelope-from=sa.z@qq.com;
+ helo=xmbghk7.mail.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,144 +79,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tom,
+Signed-off-by: Changzhi Xie <sa.z@qq.com>
 
-On Sat, 15 Mar 2025 at 13:57, Tom Rini <trini@konsulko.com> wrote:
->
-> On Sat, Mar 15, 2025 at 12:54:25PM +0000, Simon Glass wrote:
-> > Hi Tom,
-> >
-> > On Fri, 14 Mar 2025 at 16:06, Tom Rini <trini@konsulko.com> wrote:
-> > >
-> > > On Fri, Mar 14, 2025 at 02:44:35PM +0000, Simon Glass wrote:
-> > > > Hi Tom,
-> > > >
-> > > > On Fri, 7 Mar 2025 at 14:23, Tom Rini <trini@konsulko.com> wrote:
-> > > > >
-> > > > > On Thu, Mar 06, 2025 at 09:03:27AM -0700, Simon Glass wrote:
-> > > > >
-> > > > > > U-Boot can start and boot an OS in both qemu-x86 and qemu-x86_64 but it
-> > > > > > is not perfect.
-> > > > > >
-> > > > > > With both builds, executing the VESA ROM causes an intermittent hang, at
-> > > > > > least on some AMD CPUs.
-> > > > > >
-> > > > > > With qemu-x86_64 kvm cannot be used since the move to long mode (64-bit)
-> > > > > > is done in a way that works on real hardware but not with QEMU. This
-> > > > > > means that performance is 4-5x slower than it could be, at least on my
-> > > > > > CPU.
-> > > > > >
-> > > > > > We can work around the first problem by using Bochs, which is anyway a
-> > > > > > better choice than VESA for QEMU. The second can be addressed by using
-> > > > > > the same descriptor across the jump to long mode.
-> > > > > >
-> > > > > > With an MTRR fix this allows booting into Ubuntu on qemu-x86_64
-> > > > > >
-> > > > > > In v3 some e820 patches are included to make booting reliable and avoid
-> > > > > > ACPI tables being dropped. Also, several MTTR problems are addressed, to
-> > > > > > support memory sizes above 4GB reliably.
-> > > > >
-> > > > > Do you plan to rebase the prerequisite series' this requires so that it
-> > > > > can be merged?
-> > > >
-> > > > Here's my understanding of where things are:
-> > > >
-> > > > 1. You rejected the membuf series and my replies to try to resolve
-> > > > that haven't gone anywhere yet. So your tree doesn't have any tests
-> > > > for that code and still has the old naming.
-> > >
-> > > https://patchwork.ozlabs.org/comment/3473898/ is a well thought out not
-> > > gratuitous summary of why the series as it stands is a step in the wrong
-> > > direction. Tests are good. They're not a reason to pull an otherwise bad
-> > > series. This series should be rebased to not depend on that series. The
-> > > tests from the other series should be split out.
-> >
-> > It's not a bad series, unfortunately. I replied with my own comments
-> > and I stand by them.
-> >
-> > I don't mind if you want to drop the #ifdef (which shows how a flag
-> > could be used and the code-size impact). But other than that, I am
-> > firm on this for now. I've already applied it to my tree and a membuf
-> > implementation with tests and without a power-of-two limitation is
-> > important for my current work on distros and expo.
->
-> Well, you need to rebase this series without that then as I'm not going
-> to take something another long time project contributor said was wrong
-> and offered lots of constructive feedback on.
+This commit refactors the FUSE export to process read and write operations
+using coroutines, improving concurrency and avoiding blocking the main loop.
 
-It doesn't affect this series. It is for future work.
+The main changes include:
+1.  Introduce FuseIORequest structure to encapsulate I/O parameters and state
+2.  Move read/write processing into coroutine fuse_read_coroutine and fuse_write_coroutine
+3.  Use blk_co_pread/pwrite for async block layer access
+---
+ block/export/fuse.c | 189 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 132 insertions(+), 57 deletions(-)
 
-We'll see if the LTPC replies to my concerns.
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 465cc9891d..3314f64706 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -39,6 +39,7 @@
+ 
+ #ifdef __linux__
+ #include <linux/fs.h>
++#include <linux/fuse.h>
+ #endif
+ 
+ /* Prevent overly long bounce buffer allocations */
+@@ -49,7 +50,6 @@ typedef struct FuseExport {
+     BlockExport common;
+ 
+     struct fuse_session *fuse_session;
+-    struct fuse_buf fuse_buf;
+     unsigned int in_flight; /* atomic */
+     bool mounted, fd_handler_set_up;
+ 
+@@ -64,6 +64,14 @@ typedef struct FuseExport {
+     gid_t st_gid;
+ } FuseExport;
+ 
++typedef struct FuseIORequest {
++    fuse_req_t req;
++    size_t size;
++    off_t offset;
++    FuseExport *exp;
++    char *write_buf;
++} FuseIORequest;
++
+ static GHashTable *exports;
+ static const struct fuse_lowlevel_ops fuse_ops;
+ 
+@@ -288,6 +296,7 @@ fail:
+ static void read_from_fuse_export(void *opaque)
+ {
+     FuseExport *exp = opaque;
++    struct fuse_buf buf = {};
+     int ret;
+ 
+     blk_exp_ref(&exp->common);
+@@ -295,20 +304,30 @@ static void read_from_fuse_export(void *opaque)
+     qatomic_inc(&exp->in_flight);
+ 
+     do {
+-        ret = fuse_session_receive_buf(exp->fuse_session, &exp->fuse_buf);
++        ret = fuse_session_receive_buf(exp->fuse_session, &buf);
+     } while (ret == -EINTR);
+     if (ret < 0) {
+         goto out;
+     }
+ 
+-    fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
++    fuse_session_process_buf(exp->fuse_session, &buf);
+ 
+ out:
++    struct fuse_in_header *in = (struct fuse_in_header *)buf.mem;
++
++    if (in->opcode == FUSE_WRITE || in->opcode == FUSE_READ) {
++        g_free(buf.mem);
++        return;
++    }
++
+     if (qatomic_fetch_dec(&exp->in_flight) == 1) {
+         aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
+     }
+ 
+     blk_exp_unref(&exp->common);
++
++    g_free(buf.mem);
++
+ }
+ 
+ static void fuse_export_shutdown(BlockExport *blk_exp)
+@@ -347,7 +366,6 @@ static void fuse_export_delete(BlockExport *blk_exp)
+         fuse_session_destroy(exp->fuse_session);
+     }
+ 
+-    free(exp->fuse_buf.mem);
+     g_free(exp->mountpoint);
+ }
+ 
+@@ -570,102 +588,159 @@ static void fuse_open(fuse_req_t req, fuse_ino_t inode,
+     fuse_reply_open(req, fi);
+ }
+ 
+-/**
+- * Handle client reads from the exported image.
+- */
+-static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+-                      size_t size, off_t offset, struct fuse_file_info *fi)
++static void coroutine_fn fuse_read_coroutine(void *opaque)
+ {
+-    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = opaque;
++    FuseExport *exp = io_req->exp;
+     int64_t length;
+-    void *buf;
++    void *buffer;
+     int ret;
+ 
+-    /* Limited by max_read, should not happen */
+-    if (size > FUSE_MAX_BOUNCE_BYTES) {
+-        fuse_reply_err(req, EINVAL);
+-        return;
++    if (io_req->size > FUSE_MAX_BOUNCE_BYTES) {
++        fuse_reply_err(io_req->req, EINVAL);
++        goto cleanup;
+     }
+ 
+-    /**
+-     * Clients will expect short reads at EOF, so we have to limit
+-     * offset+size to the image length.
+-     */
+     length = blk_getlength(exp->common.blk);
+     if (length < 0) {
+-        fuse_reply_err(req, -length);
+-        return;
++        fuse_reply_err(io_req->req, -length);
++        goto cleanup;
+     }
+ 
+-    if (offset + size > length) {
+-        size = length - offset;
++    if (io_req->offset + io_req->size > length) {
++        io_req->size = length - io_req->offset;
+     }
+ 
+-    buf = qemu_try_blockalign(blk_bs(exp->common.blk), size);
+-    if (!buf) {
+-        fuse_reply_err(req, ENOMEM);
+-        return;
++    if (io_req->size == 0) {
++        fuse_reply_buf(io_req->req, NULL, 0);
++        goto cleanup;
+     }
+ 
+-    ret = blk_pread(exp->common.blk, offset, size, buf, 0);
++    buffer = qemu_try_blockalign(blk_bs(exp->common.blk), io_req->size);
++    if (!buffer) {
++        fuse_reply_err(io_req->req, ENOMEM);
++        goto cleanup;
++    }
++
++    ret = blk_co_pread(exp->common.blk, io_req->offset,
++                       io_req->size, buffer, 0);
+     if (ret >= 0) {
+-        fuse_reply_buf(req, buf, size);
++        fuse_reply_buf(io_req->req, buffer, io_req->size);
+     } else {
+-        fuse_reply_err(req, -ret);
++        fuse_reply_err(io_req->req, -ret);
++    }
++
++    qemu_vfree(buffer);
++
++cleanup:
++    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
++        aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
+     }
+ 
+-    qemu_vfree(buf);
++    blk_exp_unref(&exp->common);
++
++    g_free(io_req);
+ }
+ 
+-/**
+- * Handle client writes to the exported image.
+- */
+-static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+-                       size_t size, off_t offset, struct fuse_file_info *fi)
++static void coroutine_fn fuse_write_coroutine(void *opaque)
+ {
+-    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = opaque;
++    FuseExport *exp = io_req->exp;
+     int64_t length;
+     int ret;
+ 
+-    /* Limited by max_write, should not happen */
+-    if (size > BDRV_REQUEST_MAX_BYTES) {
+-        fuse_reply_err(req, EINVAL);
+-        return;
++    if (io_req->size > BDRV_REQUEST_MAX_BYTES) {
++        fuse_reply_err(io_req->req, EINVAL);
++        goto cleanup;
+     }
+ 
+     if (!exp->writable) {
+-        fuse_reply_err(req, EACCES);
+-        return;
++        fuse_reply_err(io_req->req, EACCES);
++        goto cleanup;
+     }
+ 
+-    /**
+-     * Clients will expect short writes at EOF, so we have to limit
+-     * offset+size to the image length.
+-     */
+     length = blk_getlength(exp->common.blk);
+     if (length < 0) {
+-        fuse_reply_err(req, -length);
+-        return;
++        fuse_reply_err(io_req->req, -length);
++        goto cleanup;
+     }
+ 
+-    if (offset + size > length) {
++    if (io_req->offset + io_req->size > length) {
+         if (exp->growable) {
+-            ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
++            ret = fuse_do_truncate(exp, io_req->offset + io_req->size,
++                                   true, PREALLOC_MODE_OFF);
+             if (ret < 0) {
+-                fuse_reply_err(req, -ret);
+-                return;
++                fuse_reply_err(io_req->req, -ret);
++                goto cleanup;
+             }
+         } else {
+-            size = length - offset;
++            io_req->size = MAX(0, length - io_req->offset);
++            if (io_req->size == 0) {
++                fuse_reply_write(io_req->req, 0);
++                goto cleanup;
++            }
+         }
+     }
+ 
+-    ret = blk_pwrite(exp->common.blk, offset, size, buf, 0);
++    ret = blk_co_pwrite(exp->common.blk, io_req->offset, io_req->size,
++                        io_req->write_buf, 0);
+     if (ret >= 0) {
+-        fuse_reply_write(req, size);
++        fuse_reply_write(io_req->req, io_req->size);
+     } else {
+-        fuse_reply_err(req, -ret);
++        fuse_reply_err(io_req->req, -ret);
++    }
++
++cleanup:
++    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
++        aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
+     }
++
++    blk_exp_unref(&exp->common);
++
++    g_free(io_req->write_buf);
++    g_free(io_req);
++}
++
++/**
++ * Handle client reads from the exported image.
++ */
++static void fuse_read(fuse_req_t req, fuse_ino_t inode,
++                      size_t size, off_t offset, struct fuse_file_info *fi)
++{
++    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = g_new(FuseIORequest, 1);
++
++    *io_req = (FuseIORequest) {
++        .req = req,
++        .size = size,
++        .offset = offset,
++        .exp = exp,
++    };
++
++    Coroutine *co = qemu_coroutine_create(fuse_read_coroutine, io_req);
++    qemu_coroutine_enter(co);
++}
++
++
++/**
++ * Handle client writes to the exported image.
++ */
++static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
++                       size_t size, off_t offset, struct fuse_file_info *fi)
++{
++    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = g_new(FuseIORequest, 1);
++
++    *io_req = (FuseIORequest) {
++        .req = req,
++        .size = size,
++        .offset = offset,
++        .exp = exp,
++        .write_buf = g_memdup2_qemu(buf, size),
++    };
++
++    Coroutine *co = qemu_coroutine_create(fuse_write_coroutine, io_req);
++    qemu_coroutine_enter(co);
+ }
+ 
+ /**
+-- 
+2.34.1
 
->
-> > > > 2. I sent the first part of the PXE series so you could apply that.
-> > >
-> > > Yes, I should be applying that next week.
-> > >
-> > > > 3. You rejected the second part of this series because it didn't
-> > > > include support for lwip without cmdline. I offered to handle that
-> > > > case later but I'm pretty sure you rejected that too.
-> > >
-> > > That's not how I would characterize it, no. I said you should probably
-> > > focus on sandbox + lwip, since you're the sandbox guru and ask Jerome to
-> > > do the net_loop-alike thing, since he's one of the network custodians
-> > > and the lwip person. I was trying to direct you to where your efforts
-> > > might be most useful but if you insist on instead doing the
-> > > net_loop-alike part and Jerome ack's it, that's fine.
-> >
-> > As you know there have been many arguments from the EFI guys about
-> > sandbox and you have already rejected my sandbox-focussed EFI-memory
-> > series for your tree. If I were actually a guru, that wouldn't have
-> > happened.
-> >
-> > I see that Jerome has created some tests, which is good.
-> >
-> > So really, you should consider applying the full PXE series so that
-> > Jerome can build on that and add support for non-CMDLINE PXE in lwip
-> > in a way that you would like.
->
-> I saw that Jerome posted sandbox for lwip as well and was pleased. You
-> can pickup whatever is left and move forward once both your current
-> series and his have been merged.
-
-For now I've just applied it to my tree. I believe my offer of adding
-non-CMDLINE lwip immediately after you applied it was a good
-compromise, but not good enough, so for now I've decided to just move
-on.
-
->
-> > > > 4. This series is now marked 'changes requested' but the only feedback
-> > > > I see is in the RFC patch.
-> > >
-> > > Yes, rebase to something that can be applied is a change I've requested.
-> > > Because my feedback was "Do you plan to rebase the prerequisite series'
-> > > this requires so that it can be merged?". I would have otherwise merged
-> > > it by now.
-> >
-> > OK I sent a PR.
->
-> Eh? v4 as-is needs to be rebased to mainline. That you didn't make it
-> against mainline but instead your tree is why this wasn't merged
-> already.
-
-I sent a PR for the test series, to try to get that landed in your
-tree. At least that will help reduce the diff with new tests. The PR
-is the only prereq for v5 of this series (Ubuntu test).
-
->
-> > > Patchwork reflects mainline status.
-> >
-> > OK. I am finding it more and more slow and painful. Since we are
-> > talking about Patchwork, I noticed some patches assigned to me in
-> > there, so I've assigned them to you. I'll try to look there more
-> > often.
->
-> I guess you missed the email where I told you what was assigned to you
-> in patchwork and could easily be put in a pull request by you to me to
-> get to mainline.
-
-Well let's see how things go over the next few days.
-
-Regards,
-SImon
 
