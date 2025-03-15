@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7AF6C28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9393C35FF3
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNfO-0007CH-DV; Sat, 15 Mar 2025 05:18:50 -0400
+	id 1ttNeb-0005s5-68; Sat, 15 Mar 2025 05:18:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNdi-0004Uy-Fz; Sat, 15 Mar 2025 05:17:12 -0400
+ id 1ttNcp-0003ZH-ES; Sat, 15 Mar 2025 05:16:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNdc-00088W-0d; Sat, 15 Mar 2025 05:17:05 -0400
+ id 1ttNcm-00085A-6m; Sat, 15 Mar 2025 05:16:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 125FBFFBCB;
- Sat, 15 Mar 2025 12:13:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F26A5FFBC5;
+ Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1AC041CAD64;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 02E2C1CAD5E;
  Sat, 15 Mar 2025 12:14:40 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D1A9C55A5E; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id C31F655A52; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Denis Rastyogin <gerben@altlinux.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 26/27] block: Zero block driver state before reopening
-Date: Sat, 15 Mar 2025 12:14:37 +0300
-Message-Id: <20250315091439.657371-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Denis Rastyogin <gerben@altlinux.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 20/27] block/qed: fix use-after-free by nullifying
+ timer pointer after free
+Date: Sat, 15 Mar 2025 12:14:31 +0300
+Message-Id: <20250315091439.657371-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
@@ -61,61 +62,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
-
-Block drivers assume in their .bdrv_open() implementation that their
-state in bs->opaque has been zeroed; it is initially allocated with
-g_malloc0() in bdrv_open_driver().
-
-bdrv_snapshot_goto() needs to make sure that it is zeroed again before
-calling drv->bdrv_open() to avoid that block drivers use stale values.
-
-One symptom of this bug is VMDK running into a double free when the user
-tries to apply an internal snapshot like 'qemu-img snapshot -a test
-test.vmdk'. This should be a graceful error because VMDK doesn't support
-internal snapshots.
-
-==25507== Invalid free() / delete / delete[] / realloc()
-==25507==    at 0x484B347: realloc (vg_replace_malloc.c:1801)
-==25507==    by 0x54B592A: g_realloc (gmem.c:171)
-==25507==    by 0x1B221D: vmdk_add_extent (../block/vmdk.c:570)
-==25507==    by 0x1B1084: vmdk_open_sparse (../block/vmdk.c:1059)
-==25507==    by 0x1AF3D8: vmdk_open (../block/vmdk.c:1371)
-==25507==    by 0x1A2AE0: bdrv_snapshot_goto (../block/snapshot.c:299)
-==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
-==25507==  Address 0x832f3e0 is 0 bytes inside a block of size 272 free'd
-==25507==    at 0x4846B83: free (vg_replace_malloc.c:989)
-==25507==    by 0x54AEAC4: g_free (gmem.c:208)
-==25507==    by 0x1AF629: vmdk_close (../block/vmdk.c:2889)
-==25507==    by 0x1A2A9C: bdrv_snapshot_goto (../block/snapshot.c:290)
-==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
+From: Denis Rastyogin <gerben@altlinux.org>
 
 This error was discovered by fuzzing qemu-img.
 
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2853
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2851
-Reported-by: Denis Rastyogin <gerben@altlinux.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250310104858.28221-1-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit b75c5f9879166b86ed7c48b772fdcd0693e8a9a3)
+In the QED block driver, the need_check_timer timer is freed in
+bdrv_qed_detach_aio_context, but the pointer to the timer is not
+set to NULL. This can lead to a use-after-free scenario
+in bdrv_qed_drain_begin().
+
+The need_check_timer pointer is set to NULL after freeing the timer.
+Which helps catch this condition when checking in bdrv_qed_drain_begin().
+
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2852
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+Message-ID: <20250304083927.37681-1-gerben@altlinux.org>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 2ad638a3d160923ef3dbf87c73944e6e44bdc724)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/snapshot.c b/block/snapshot.c
-index 86e29ca59f..2f6c35f7eb 100644
---- a/block/snapshot.c
-+++ b/block/snapshot.c
-@@ -286,6 +286,7 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
-         bdrv_unref_child(bs, fallback);
+diff --git a/block/qed.c b/block/qed.c
+index 2f36ad342c..1ebb00fe04 100644
+--- a/block/qed.c
++++ b/block/qed.c
+@@ -340,6 +340,7 @@ static void bdrv_qed_detach_aio_context(BlockDriverState *bs)
  
-         ret = bdrv_snapshot_goto(fallback_bs, snapshot_id, errp);
-+        memset(bs->opaque, 0, drv->instance_size);
-         open_ret = drv->bdrv_open(bs, options, bs->open_flags, &local_err);
-         qobject_unref(options);
-         if (open_ret < 0) {
+     qed_cancel_need_check_timer(s);
+     timer_free(s->need_check_timer);
++    s->need_check_timer = NULL;
+ }
+ 
+ static void bdrv_qed_attach_aio_context(BlockDriverState *bs,
 -- 
 2.39.5
 
