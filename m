@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28AEC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE05C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 09:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttNcN-00035O-6c; Sat, 15 Mar 2025 05:15:43 -0400
+	id 1ttNbx-0002ro-3N; Sat, 15 Mar 2025 05:15:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNcG-0002we-6s; Sat, 15 Mar 2025 05:15:38 -0400
+ id 1ttNbf-0002dv-Ax; Sat, 15 Mar 2025 05:14:59 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttNcD-0007yP-RQ; Sat, 15 Mar 2025 05:15:35 -0400
+ id 1ttNbc-0007l3-3U; Sat, 15 Mar 2025 05:14:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D228BFFBBE;
+ by isrv.corpit.ru (Postfix) with ESMTP id B2DBFFFBB6;
  Sat, 15 Mar 2025 12:13:45 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DAAA21CAD57;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BB0681CAD4F;
  Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B1F8E55A44; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
+ id 9E9D555A34; Sat, 15 Mar 2025 12:14:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sairaj Kodilkar <sarunkod@amd.com>,
- Vasant Hegde <vasant.hegde@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 13/27] amd_iommu: Use correct bitmask to set
- capability BAR
-Date: Sat, 15 Mar 2025 12:14:24 +0300
-Message-Id: <20250315091439.657371-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 05/27] target/arm: Report correct syndrome for
+ UNDEFINED CNTPS_*_EL1 from EL2 and NS EL1
+Date: Sat, 15 Mar 2025 12:14:16 +0300
+Message-Id: <20250315091439.657371-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 References: <qemu-stable-7.2.17-20250315101625@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,51 +65,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-AMD IOMMU provides the base address of control registers through
-IVRS table and PCI capability. Since this base address is of 64 bit,
-use 32 bits mask (instead of 16 bits) to set BAR low and high.
+The access pseudocode for the CNTPS_TVAL_EL1, CNTPS_CTL_EL1 and
+CNTPS_CVAL_EL1 secure timer registers says that they are UNDEFINED
+from EL2 or NS EL1.  We incorrectly return CP_ACCESS_TRAP from the
+access function in these cases, which means that we report the wrong
+syndrome value to the target EL.
 
-Fixes: d29a09ca68 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250207045354.27329-3-sarunkod@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 3684717b7407cc395dc9bf522e193dbc85293dee)
-(Mjt: adjust for 7.2.x)
+Use CP_ACCESS_TRAP_UNCATEGORIZED, which reports the correct syndrome
+value for an UNDEFINED instruction.
+
+Cc: qemu-stable@nongnu.org
+Fixes: b4d3978c2fd ("target-arm: Add the AArch64 view of the Secure physical timer")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250130182309.717346-2-peter.maydell@linaro.org
+(cherry picked from commit b819fd6994243aee6f9613edbbacedce4f511c32)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index e6da60fc15..d68e85b606 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1514,9 +1514,9 @@ static void amdvi_init(AMDVIState *s)
-     /* reset AMDVI specific capabilities, all r/o */
-     pci_set_long(s->pci.dev.config + s->capab_offset, AMDVI_CAPAB_FEATURES);
-     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_BAR_LOW,
--                 AMDVI_BASE_ADDR & ~(0xffff0000));
-+                 AMDVI_BASE_ADDR & MAKE_64BIT_MASK(14, 18));
-     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_BAR_HIGH,
--                (AMDVI_BASE_ADDR & ~(0xffff)) >> 16);
-+                AMDVI_BASE_ADDR >> 32);
-     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_RANGE,
-                  0xff000000);
-     pci_set_long(s->pci.dev.config + s->capab_offset + AMDVI_CAPAB_MISC, 0);
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 210a37dfb1..1899e9aee1 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -185,7 +185,7 @@
-         AMDVI_CAPAB_FLAG_HTTUNNEL |  AMDVI_CAPAB_EFR_SUP)
- 
- /* AMDVI default address */
--#define AMDVI_BASE_ADDR 0xfed80000
-+#define AMDVI_BASE_ADDR 0xfed80000ULL
- 
- /* page management constants */
- #define AMDVI_PAGE_SHIFT 12
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 5c22626b80..d1e176e711 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2505,7 +2505,7 @@ static CPAccessResult gt_stimer_access(CPUARMState *env,
+     switch (arm_current_el(env)) {
+     case 1:
+         if (!arm_is_secure(env)) {
+-            return CP_ACCESS_TRAP;
++            return CP_ACCESS_TRAP_UNCATEGORIZED;
+         }
+         if (!(env->cp15.scr_el3 & SCR_ST)) {
+             return CP_ACCESS_TRAP_EL3;
+@@ -2513,7 +2513,7 @@ static CPAccessResult gt_stimer_access(CPUARMState *env,
+         return CP_ACCESS_OK;
+     case 0:
+     case 2:
+-        return CP_ACCESS_TRAP;
++        return CP_ACCESS_TRAP_UNCATEGORIZED;
+     case 3:
+         return CP_ACCESS_OK;
+     default:
 -- 
 2.39.5
 
