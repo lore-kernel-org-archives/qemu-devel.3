@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F63FC28B28
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A51AC28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 06:25:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttKtW-0007NO-7H; Sat, 15 Mar 2025 02:21:15 -0400
+	id 1ttKu3-0000dM-11; Sat, 15 Mar 2025 02:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKsZ-0004vh-48; Sat, 15 Mar 2025 02:20:15 -0400
+ id 1ttKtS-0007I3-Sn; Sat, 15 Mar 2025 02:21:11 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttKsW-0003c3-NF; Sat, 15 Mar 2025 02:20:14 -0400
+ id 1ttKtQ-0003hE-GK; Sat, 15 Mar 2025 02:21:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C2CBBFF9E4;
+ by isrv.corpit.ru (Postfix) with ESMTP id DFC29FF9EB;
  Sat, 15 Mar 2025 09:17:07 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9A4B11CAC4D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B73811CAC54;
  Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 64FF0558DF; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
+ id 75523558ED; Sat, 15 Mar 2025 09:18:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 24/51] target/riscv: rvv: Fix incorrect vlen comparison
- in prop_vlen_set
-Date: Sat, 15 Mar 2025 09:17:30 +0300
-Message-Id: <20250315061801.622606-24-mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 31/51] target/arm: Apply correct timer offset when
+ calculating deadlines
+Date: Sat, 15 Mar 2025 09:17:37 +0300
+Message-Id: <20250315061801.622606-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250315091645@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,47 +64,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-In prop_vlen_set function, there is an incorrect comparison between
-vlen(bit) and vlenb(byte).
-This will cause unexpected error when user applies the `vlen=1024` cpu
-option with a vendor predefined cpu type that the default vlen is
-1024(vlenb=128).
+When we are calculating timer deadlines, the correct definition of
+whether or not to apply an offset to the physical count is described
+in the Arm ARM DDI4087 rev L.a section D12.2.4.1.  This is different
+from when the offset should be applied for a direct read of the
+counter sysreg.
 
-Fixes: 4f6d036ccc ("target/riscv/cpu.c: remove cpu->cfg.vlen")
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250124090539.2506448-1-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit bf3adf93f16730ca5aaa6c26cf969e64eeff6e7b)
+We got this right for the EL1 physical timer and for the EL1 virtual
+timer, but got all the rest wrong: they should be using a zero offset
+always.
+
+Factor the offset calculation out into a function that has a comment
+documenting exactly which offset it is calculating and which gets the
+HYP, SEC, and HYPVIRT cases right.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20250204125009.2281315-2-peter.maydell@linaro.org
+(cherry picked from commit db6c2192839ee0282d38f6f6666a87e0629fcd13)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index f219f0c3b5..261db879a2 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1897,6 +1897,7 @@ static void prop_vlen_set(Object *obj, Visitor *v, const char *name,
-                          void *opaque, Error **errp)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 8df38a30a1..417801d9c3 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2727,6 +2727,32 @@ static uint64_t gt_phys_cnt_offset(CPUARMState *env)
+     return gt_phys_raw_cnt_offset(env);
+ }
+ 
++static uint64_t gt_indirect_access_timer_offset(CPUARMState *env, int timeridx)
++{
++    /*
++     * Return the timer offset to use for indirect accesses to the timer.
++     * This is the Offset value as defined in D12.2.4.1 "Operation of the
++     * CompareValue views of the timers".
++     *
++     * The condition here is not always the same as the condition for
++     * whether to apply an offset register when doing a direct read of
++     * the counter sysreg; those conditions are described in the
++     * access pseudocode for each counter register.
++     */
++    switch (timeridx) {
++    case GTIMER_PHYS:
++        return gt_phys_raw_cnt_offset(env);
++    case GTIMER_VIRT:
++        return env->cp15.cntvoff_el2;
++    case GTIMER_HYP:
++    case GTIMER_SEC:
++    case GTIMER_HYPVIRT:
++        return 0;
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
  {
-     RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint16_t cpu_vlen = cpu->cfg.vlenb << 3;
-     uint16_t value;
- 
-     if (!visit_type_uint16(v, name, &value, errp)) {
-@@ -1908,10 +1909,10 @@ static void prop_vlen_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    if (value != cpu->cfg.vlenb && riscv_cpu_is_vendor(obj)) {
-+    if (value != cpu_vlen && riscv_cpu_is_vendor(obj)) {
-         cpu_set_prop_err(cpu, name, errp);
-         error_append_hint(errp, "Current '%s' val: %u\n",
--                          name, cpu->cfg.vlenb << 3);
-+                          name, cpu_vlen);
-         return;
-     }
- 
+     ARMGenericTimer *gt = &cpu->env.cp15.c14_timer[timeridx];
+@@ -2736,8 +2762,7 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+          * Timer enabled: calculate and set current ISTATUS, irq, and
+          * reset timer to when ISTATUS next has to change
+          */
+-        uint64_t offset = timeridx == GTIMER_VIRT ?
+-            cpu->env.cp15.cntvoff_el2 : gt_phys_raw_cnt_offset(&cpu->env);
++        uint64_t offset = gt_indirect_access_timer_offset(&cpu->env, timeridx);
+         uint64_t count = gt_get_countervalue(&cpu->env);
+         /* Note that this must be unsigned 64 bit arithmetic: */
+         int istatus = count - offset >= gt->cval;
 -- 
 2.39.5
 
