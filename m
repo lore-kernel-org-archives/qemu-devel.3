@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477FFC35FF3
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82629C28B28
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Mar 2025 07:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttMDx-0003Lr-Rl; Sat, 15 Mar 2025 03:46:26 -0400
+	id 1ttMEA-00047p-Eg; Sat, 15 Mar 2025 03:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMDf-0002BS-Hy; Sat, 15 Mar 2025 03:46:08 -0400
+ id 1ttME3-0003ma-R9; Sat, 15 Mar 2025 03:46:32 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ttMDd-0005Lk-1U; Sat, 15 Mar 2025 03:46:07 -0400
+ id 1ttME1-0005OA-LE; Sat, 15 Mar 2025 03:46:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 22C35FFB1A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2E780FFB1D;
  Sat, 15 Mar 2025 10:41:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 118761CACE4;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1D2731CACE7;
  Sat, 15 Mar 2025 10:42:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B3AA455A20; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
+ id BAEDD55A26; Sat, 15 Mar 2025 10:42:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 38/42] hw/net/smc91c111: Don't allow data register
- access to overrun buffer
-Date: Sat, 15 Mar 2025 10:42:40 +0300
-Message-Id: <20250315074249.634718-38-mjt@tls.msk.ru>
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 41/42] docs: Rename default-configs to configs
+Date: Sat, 15 Mar 2025 10:42:43 +0300
+Message-Id: <20250315074249.634718-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
 References: <qemu-stable-8.2.10-20250315104136@cover.tls.msk.ru>
@@ -64,147 +63,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Greg Kurz <groug@kaod.org>
 
-For accesses to the 91c111 data register, the address within the
-packet's data frame is determined by a combination of the pointer
-register and the offset used to access the data register, so that you
-can access data at effectively wider than byte width.  The pointer
-register's pointer field is 11 bits wide, which is exactly the size
-to index a 2048-byte data frame.
+This was missed at the time.
 
-We weren't quite getting the logic right for ensuring that we end up
-with a pointer value to use in the s->data[][] array that isn't out
-of bounds:
-
- * we correctly mask when getting the initial pointer value
- * for the "autoincrement the pointer register" case, we
-   correctly mask after adding 1 so that the pointer register
-   wraps back around at the 2048 byte mark
- * but for the non-autoincrement case where we have to add the
-   low 2 bits of the data register offset, we don't account
-   for the possibility that the pointer register is 0x7ff
-   and the addition should wrap
-
-Fix this bug by factoring out the "get the p value to use as an array
-index" into a function, making it use FIELD macro names rather than
-hard-coded constants, and having a utility function that does "add a
-value and wrap it" that we can use both for the "autoincrement" and
-"add the offset bits" codepaths.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2758
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 812b31d3f91 ("configs: rename default-configs to configs and reorganise")
+Signed-off-by: Greg Kurz <groug@kaod.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250228191652.1957208-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 700d3d6dd41de3bd3f1153e3cfe00b93f99b1441)
+Message-ID: <20250306174113.427116-1-groug@kaod.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 48170c2d865a5937092b1384421b01cd38113042)
+(Mjt: context fix in docs/devel/kconfig.rst)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 36415425db..22b3cede5c 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -13,6 +13,7 @@
- #include "net/net.h"
- #include "hw/irq.h"
- #include "hw/net/smc91c111.h"
-+#include "hw/registerfields.h"
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-@@ -126,6 +127,13 @@ static const VMStateDescription vmstate_smc91c111 = {
- #define RS_TOOSHORT     0x0400
- #define RS_MULTICAST    0x0001
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index 43d6005881..73ebc65aae 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -280,7 +280,7 @@ Target-dependent emulator sourcesets:
+   Each emulator also includes sources for files in the ``hw/`` and ``target/``
+   subdirectories.  The subdirectory used for each emulator comes
+   from the target's definition of ``TARGET_BASE_ARCH`` or (if missing)
+-  ``TARGET_ARCH``, as found in ``default-configs/targets/*.mak``.
++  ``TARGET_ARCH``, as found in ``configs/targets/*.mak``.
  
-+FIELD(PTR, PTR, 0, 11)
-+FIELD(PTR, NOT_EMPTY, 11, 1)
-+FIELD(PTR, RESERVED, 12, 1)
-+FIELD(PTR, READ, 13, 1)
-+FIELD(PTR, AUTOINCR, 14, 1)
-+FIELD(PTR, RCV, 15, 1)
-+
- static inline bool packetnum_valid(int packet_num)
- {
-     return packet_num >= 0 && packet_num < NUM_PACKETS;
-@@ -372,6 +380,49 @@ static void smc91c111_reset(DeviceState *dev)
- #define SET_LOW(name, val) s->name = (s->name & 0xff00) | val
- #define SET_HIGH(name, val) s->name = (s->name & 0xff) | (val << 8)
+   Each subdirectory in ``hw/`` adds one sourceset to the ``hw_arch`` dictionary,
+   for example::
+@@ -337,8 +337,8 @@ Utility sourcesets:
+ The following files concur in the definition of which files are linked
+ into each emulator:
  
-+/*
-+ * The pointer register's pointer is an 11 bit value (so it exactly
-+ * indexes a 2048-byte data frame). Add the specified offset to it,
-+ * wrapping around at the 2048 byte mark, and return the resulting
-+ * wrapped value. There are flag bits in the top part of the register,
-+ * but we can ignore them here as the mask will mask them out.
-+ */
-+static int ptr_reg_add(smc91c111_state *s, int offset)
-+{
-+    return (s->ptr + offset) & R_PTR_PTR_MASK;
-+}
-+
-+/*
-+ * For an access to the Data Register at @offset, return the
-+ * required offset into the packet's data frame. This will
-+ * perform the pointer register autoincrement if required, and
-+ * guarantees to return an in-bounds offset.
-+ */
-+static int data_reg_ptr(smc91c111_state *s, int offset)
-+{
-+    int p;
-+
-+    if (s->ptr & R_PTR_AUTOINCR_MASK) {
-+        /*
-+         * Autoincrement: use the current pointer value, and
-+         * increment the pointer register's pointer field.
-+         */
-+        p = FIELD_EX32(s->ptr, PTR, PTR);
-+        s->ptr = FIELD_DP32(s->ptr, PTR, PTR, ptr_reg_add(s, 1));
-+    } else {
-+        /*
-+         * No autoincrement: register offset determines which
-+         * byte we're addressing. Setting the pointer to the top
-+         * of the data buffer and then using the pointer wrapping
-+         * to read the bottom byte of the buffer is not something
-+         * sensible guest software will do, but the datasheet
-+         * doesn't say what the behaviour is, so we don't forbid it.
-+         */
-+        p = ptr_reg_add(s, offset & 3);
-+    }
-+    return p;
-+}
-+
- static void smc91c111_writeb(void *opaque, hwaddr offset,
-                              uint32_t value)
- {
-@@ -518,12 +569,7 @@ static void smc91c111_writeb(void *opaque, hwaddr offset,
-                                   n);
-                     return;
-                 }
--                p = s->ptr & 0x07ff;
--                if (s->ptr & 0x4000) {
--                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x7ff);
--                } else {
--                    p += (offset & 3);
--                }
-+                p = data_reg_ptr(s, offset);
-                 s->data[n][p] = value;
-             }
-             return;
-@@ -673,12 +719,7 @@ static uint32_t smc91c111_readb(void *opaque, hwaddr offset)
-                                   n);
-                     return 0;
-                 }
--                p = s->ptr & 0x07ff;
--                if (s->ptr & 0x4000) {
--                    s->ptr = (s->ptr & 0xf800) | ((s->ptr + 1) & 0x07ff);
--                } else {
--                    p += (offset & 3);
--                }
-+                p = data_reg_ptr(s, offset);
-                 return s->data[n][p];
-             }
-         case 12: /* Interrupt status.  */
+-``default-configs/devices/*.mak``
+-  The files under ``default-configs/devices/`` control the boards and devices
++``configs/devices/*.mak``
++  The files under ``configs/devices/`` control the boards and devices
+   that are built into each QEMU system emulation targets. They merely contain
+   a list of config variable definitions such as::
+ 
+@@ -347,11 +347,11 @@ into each emulator:
+     CONFIG_XLNX_VERSAL=y
+ 
+ ``*/Kconfig``
+-  These files are processed together with ``default-configs/devices/*.mak`` and
++  These files are processed together with ``configs/devices/*.mak`` and
+   describe the dependencies between various features, subsystems and
+   device models.  They are described in :ref:`kconfig`
+ 
+-``default-configs/targets/*.mak``
++``configs/targets/*.mak``
+   These files mostly define symbols that appear in the ``*-config-target.h``
+   file for each emulator [#cfgtarget]_.  However, the ``TARGET_ARCH``
+   and ``TARGET_BASE_ARCH`` will also be used to select the ``hw/`` and
+diff --git a/docs/devel/kconfig.rst b/docs/devel/kconfig.rst
+index 73f52de106..9f5cd68eff 100644
+--- a/docs/devel/kconfig.rst
++++ b/docs/devel/kconfig.rst
+@@ -38,7 +38,7 @@ originated in the Linux kernel, though it was heavily simplified and
+ the handling of dependencies is stricter in QEMU.
+ 
+ Unlike Linux, there is no user interface to edit the configuration, which
+-is instead specified in per-target files under the ``default-configs/``
++is instead specified in per-target files under the ``configs/``
+ directory of the QEMU source tree.  This is because, unlike Linux,
+ configuration and dependencies can be treated as a black box when building
+ QEMU; the default configuration that QEMU ships with should be okay in
+@@ -103,7 +103,7 @@ directives can be included:
+ **default value**: ``default <value> [if <expr>]``
+ 
+   Default values are assigned to the config symbol if no other value was
+-  set by the user via ``default-configs/*.mak`` files, and only if
++  set by the user via ``configs/*.mak`` files, and only if
+   ``select`` or ``depends on`` directives do not force the value to true
+   or false respectively.  ``<value>`` can be ``y`` or ``n``; it cannot
+   be an arbitrary Boolean expression.  However, a condition for applying
+@@ -119,7 +119,7 @@ directives can be included:
+   This is similar to ``select`` as it applies a lower limit of ``y``
+   to another symbol.  However, the lower limit is only a default
+   and the "implied" symbol's value may still be set to ``n`` from a
+-  ``default-configs/*.mak`` files.  The following two examples are
++  ``configs/*.mak`` files.  The following two examples are
+   equivalent::
+ 
+     config FOO
+@@ -146,7 +146,7 @@ declares its dependencies in different ways:
+       bool
+ 
+   Subsystems always default to false (they have no ``default`` directive)
+-  and are never visible in ``default-configs/*.mak`` files.  It's
++  and are never visible in ``configs/*.mak`` files.  It's
+   up to other symbols to ``select`` whatever subsystems they require.
+ 
+   They sometimes have ``select`` directives to bring in other required
+@@ -229,7 +229,7 @@ declares its dependencies in different ways:
+   cannot be started at all without it.  It should be listed under
+   ``imply`` if (depending on the QEMU command line) the board may or
+   may not be started without it.  Boards also default to false; they are
+-  enabled by the ``default-configs/*.mak`` for the target they apply to.
++  enabled by the ``configs/*.mak`` for the target they apply to.
+ 
+ **internal elements**
+ 
+@@ -241,18 +241,18 @@ declares its dependencies in different ways:
+ 
+   Internal elements group code that is useful in several boards or
+   devices.  They are usually enabled with ``select`` and in turn select
+-  other elements; they are never visible in ``default-configs/*.mak``
++  other elements; they are never visible in ``configs/*.mak``
+   files, and often not even in the Makefile.
+ 
+ Writing and modifying default configurations
+ --------------------------------------------
+ 
+ In addition to the Kconfig files under hw/, each target also includes
+-a file called ``default-configs/TARGETNAME-softmmu.mak``.  These files
++a file called ``configs/TARGETNAME-softmmu.mak``.  These files
+ initialize some Kconfig variables to non-default values and provide the
+ starting point to turn on devices and subsystems.
+ 
+-A file in ``default-configs/`` looks like the following example::
++A file in ``configs/`` looks like the following example::
+ 
+     # Default configuration for alpha-softmmu
+ 
 -- 
 2.39.5
 
