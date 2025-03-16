@@ -4,78 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F24EC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 11:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A8EC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 12:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu92r-0005EN-AP; Mon, 17 Mar 2025 07:54:13 -0400
+	id 1tu9LU-0001iM-R4; Mon, 17 Mar 2025 08:13:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tu92d-0005DT-47
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 07:53:59 -0400
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tu92a-0007yT-Vw
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 07:53:58 -0400
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e63504bedd0so2827672276.0
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 04:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742212434; x=1742817234; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pPe/7/yUQFRB8Elsl01jkfv7Oja5Bi+E+6DbLmo998k=;
- b=bwZjc2wBo1X7q6keHAQ+1KDi7RLK+x8o0KG5SEZzKdXwdG/ScKRanUoCICYj4K49Go
- xbFLeyKxJEHDWjsUqQ/AA1RGwuy0A1ASpLTjwXxYOwq433p/OcLdgo7QJ3bGAqqfgo7F
- UmkGltjjF2KOhpGoGa3CS15SIPlv48T98b97nEgV+IPSnZmdALs/ELZiCnSUKmdbHv0/
- YXJ6qn/JWNiOtGTHbSkatlTxgv5S2tsZ6V/9o1C/3/qsfdOJ4i+tg0ihj3Qc3CJzv6EF
- TeWN3C8m1LvrTijGHyX76p/I2mGTEPjJJqk9SvPB5ZHdxEqtzZPBImBBZBcnrTEczuiq
- ecTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742212434; x=1742817234;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pPe/7/yUQFRB8Elsl01jkfv7Oja5Bi+E+6DbLmo998k=;
- b=Ejwu0hbS6qmAecxl4NObcXWAFpcMz61mZMDIJhV3pkohSzlTcYEXg1VhjGJ0S1VrE8
- 0VPHwMqxyEKN+/FsaRCjLPHfwOBjdgqIgUUAVAFMpnDpX7cmgq++Eyric9tKOr3rObMB
- eTT7n9D+GVmAPNpsaO70H6kaHL7NX7WLmvqTWWmH6SC7/vKDR1BjuI6V8IQbRAwTcDbu
- aODC3Sz4ZU668J7IjJjjSgOn/mTiUK6Vcd8mQFAw59PdowyTaOGiG3kilRq+E4h15neD
- uO1GD2Oe71i71zgwQUY2uNfoB90GLbFsE4JSEH18QcmzoTxhof1M1e9lxNFpL7Q8EWHG
- 2Q0A==
-X-Gm-Message-State: AOJu0YzHLjfXH9JziLC+TnER917RdwAXjUSqjxV9qk9qdqY862+pYbzn
- fkP+knT3dJQ1+dcFya9UXozMQm+g3szhSVijwiWImKtfgLi44N1jDDFdinQh9Zhqy6V5qzcP54P
- hnNdDDM7abSb7mYH4X32jz2Z6sLpgveQK8cyadg==
-X-Gm-Gg: ASbGncuimUbQaNzdJ8AqPN9xDFtIratEw+DMC1IdEEk65at9UFBwXX9zWq8XGKZvHxS
- fFzeOz837AWDhztjmix6Ux20tFKliXT9xcl2EboKUHhRVQZkbG+wA7L0ZOT5hcZ527cIZxckxsy
- 9TE40X5RL2i+Ek+Y444ywjYRVXN8E=
-X-Google-Smtp-Source: AGHT+IGkM90m6MNtELPBPZZPgdMV9jm4BAePYqZW8a3P7L9zfRD+b4O53LjfmATaxhaFbu5RqMseaChuWkMTqJrjCmE=
-X-Received: by 2002:a05:6902:2807:b0:e5d:aeb7:6e62 with SMTP id
- 3f1490d57ef6-e63f64d236emr14202391276.7.1742212432444; Mon, 17 Mar 2025
- 04:53:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tu9Kh-0001RW-5O
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:12:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tu9KW-0002j0-4g
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:12:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742213536;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=npIf0dyo6VG8MghpTlIGYQPDvkUkxfTZOZRxhGp1LDI=;
+ b=Vj4vvjo7JoPZE0D4lnLt/f1UOZAEcjkB8MGWMtaAc6fGvVsv6LcuIsAHL492YkhLTgO+E0
+ ccdC9WxSUCmOy55hWWLbU/pCHP9b2bo/ebtqZVzQkfNb4wH3jNKe1LFUVPKAf+3qnsdIBp
+ wJpOMMCvsJR7Qj9bnHRcXRqTplhFk3Y=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-pBqfD_dLPOquXNFTG0kWxw-1; Mon,
+ 17 Mar 2025 08:12:15 -0400
+X-MC-Unique: pBqfD_dLPOquXNFTG0kWxw-1
+X-Mimecast-MFC-AGG-ID: pBqfD_dLPOquXNFTG0kWxw_1742213534
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5381519560B3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 12:12:13 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.82])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5E1AD1955BED; Mon, 17 Mar 2025 12:12:11 +0000 (UTC)
+Date: Sun, 16 Mar 2025 06:09:55 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Subject: Re: [PULL 00/12] QAPI patches patches for 2025-03-14
+Message-ID: <20250316100955.GA1182058@fedora>
+References: <20250314101038.2408751-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20250317-raw-v1-0-09e2dfff0e90@daynix.com>
-In-Reply-To: <20250317-raw-v1-0-09e2dfff0e90@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Mar 2025 11:53:40 +0000
-X-Gm-Features: AQ5f1Jo5nBE7BSVUIahWWqdqD8IY585B7lrGv5MupP0LJ7p1lUOZobD71SQzxls
-Message-ID: <CAFEAcA9Cy_870gxNmPFykzTjXOfi0raotmA1NRpZEQKfFfB=0g@mail.gmail.com>
-Subject: Re: [PATCH 0/4] target/arm: Flag PMCNTENCLR with ARM_CP_NO_RAW
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="ZQLvZbBa621Y0bIQ"
+Content-Disposition: inline
+In-Reply-To: <20250314101038.2408751-1-armbru@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
+ DKIMWL_WL_HIGH=-0.335, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,48 +86,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Mar 2025 at 11:16, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> Supersedes: <20250314-clr-v2-1-7c7220c177c9@daynix.com>
-> ("[PATCH v2] target/arm: Define raw write for PMU CLR registers")
->
-> A normal write to PMCNTENCLR clears written bits so it is not
-> appropriate for writing a raw value. This kind of situation is usually
-> handled by setting a raw write function, but flag the register with
-> ARM_CP_NO_RAW instead to workaround a problem with KVM.
 
-I'm not sure there's a "problem with KVM" here -- it implements the
-write to PMCNTENCLR to have the semantics the architecture specifies.
+--ZQLvZbBa621Y0bIQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> KVM also has the same problem with PMINTENSET so add a comment to
-> note that. This register is already flagged with ARM_CP_NO_RAW.
+Applied, thanks.
 
-What are we trying to achieve with this patchset?
-You can't write to registers from gdb, and reading PMCNTENCLR
-just gives you the same value as PMCNTENSET, so you might as
-well read that, which we already expose.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
 
-More generally, the gdb-stub access to system registers is
-something we put in on a "this is a minimal amount of code
-to provide something that more or less works" basis. If we
-want it to work better (i.e. more comprehensively, possibly
-with write support) then we should address that by looking at
-the design of doing that more holistically, not by making
-tweaks to address individual registers.
+--ZQLvZbBa621Y0bIQ
+Content-Type: application/pgp-signature; name=signature.asc
 
-Specifically, I'm not really happy with adding explicit
-ARM_CP_NO_GDB flags to everything we currently mark as
-ARM_CP_NO_RAW. Either we stick with our existing
-"minimal changes to produce something that works" approach,
-in which case we deny gdb access to NO_RAW registers because
-that's easy and most of them it won't work or doesn't make
-sense. Or else we do the actual design work. That might turn
-out to mean "we explicitly mark no-gdb registers rather than
-overloading NO_RAW for this", or it might mean something else.
-But we won't know until we actually do that design work.
+-----BEGIN PGP SIGNATURE-----
 
-(see also https://gitlab.com/qemu-project/qemu/-/issues/2760 )
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfWo3MACgkQnKSrs4Gr
+c8gKHQgAg33tR4Or2aY9xRMu5wSP3GJgIB/1lEkbMzSsLp0F7d2thEqw6EKuKdAD
+4RMSbd4bs86P/nGRfKp2in/H01jg9SCpH0viLE0RaOkoYohEjFTO+zfHLnwwWKAL
+fUenjlLJossCgNEhLoOPd+vpI1vLvuEvdkUpbnxxj8IcezjMOHG0P6CuiQ8QnIuw
+mDrPubakh6MxW3+Z/fuF9cMDjqwpbXeIKHUMylEmAxhFR4HTVPTNWyDBT6/EpReK
+zH2IZgTqPCBWkpUOMeQ4nQs9cUNeBc1wMfW8Jju8u7ERQ1JiQJVbtKaqUyEG7gTN
+LsB19ObfqySq214oMerIWkCG5cYtuA==
+=BAxE
+-----END PGP SIGNATURE-----
 
-thanks
--- PMM
+--ZQLvZbBa621Y0bIQ--
+
 
