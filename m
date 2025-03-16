@@ -4,47 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E711C28B28
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Mar 2025 00:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE24C282DE
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Mar 2025 06:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttbkU-0004fq-49; Sat, 15 Mar 2025 20:21:02 -0400
+	id 1tthjJ-0003t5-EQ; Sun, 16 Mar 2025 02:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1ttbkP-0004fH-Uc
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 20:20:58 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1ttbkN-0004uv-KR
- for qemu-devel@nongnu.org; Sat, 15 Mar 2025 20:20:57 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B99C44E6014;
- Sun, 16 Mar 2025 01:20:48 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Ku5TAPA9U-Ie; Sun, 16 Mar 2025 01:20:46 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D066A4E6004; Sun, 16 Mar 2025 01:20:46 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] alsaaudio: Set try-poll to false by default
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tthjD-0003pE-5T
+ for qemu-devel@nongnu.org; Sun, 16 Mar 2025 02:44:08 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tthjA-000052-Q9
+ for qemu-devel@nongnu.org; Sun, 16 Mar 2025 02:44:06 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e8be1bdb7bso2206293a12.0
+ for <qemu-devel@nongnu.org>; Sat, 15 Mar 2025 23:44:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742107442; x=1742712242; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KL+GNOWVhkYvcOAATTjiaghKFZ38IYqr+XCZ/CnogQg=;
+ b=gaHMXXUTN/NLc9PKvayvGPODJOyqUXRg7RJaeiInYBmcpSYd6EHmw6PGwqpXEiQL90
+ u1SqivqcL3MxQ7CkyE9sPQriIMgEQHg3NPxVh6yODuQF20cmXPk8/hexCnN+Rho8+pIb
+ RCgvWOb++2+hNb+vVir+n0NafBGpQ3nCZV6S38mGAcUdIx5gJ8Hrt4/4+WWfg4f6OGOt
+ pxMjDBmK15GO1cXlEHHm5EC+3Md6Eskk+XE+rYCqef96FDsVW36WZfCsZKiR5G9UD66h
+ mmFkBPYttvAd56B+V0sal1dsYFJDKyW/VB9tc3eiqBiUxZEqlj8uoqcO0GQpKF3glWC/
+ T/Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742107442; x=1742712242;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KL+GNOWVhkYvcOAATTjiaghKFZ38IYqr+XCZ/CnogQg=;
+ b=dCW1Rlrqj72qh5kFuSggjPNnVc+9Bus2dB+Rdm8LjveOi9UdVXmO/UdCnyz8MK/b05
+ 50G0zFmanux21Sp4NhqPDU8yCQtLpgG4HSBbfR999XfaywexRJRS26+Qb2ttlOCLABcg
+ eXGNarO+viFdT/7FXEuaInfZMfFdQmFHsdz7CuFQ3mv/intXlq+upvU4ah6kIcS/IfYZ
+ nysvm6J79+6NfetRVuUNrbAVX0mehO0Hj1E2HQgDCJ7a4d8nA2bLE41vjhVTTzIQcsJm
+ uxchUlQIH9EfY5FF3FpZ5ix/+LKey5YSzNe50rFaYAGAjGOxTCtoQbAHVAbpd8sOcVNB
+ /+7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXddyWNcbCrOYfixIGf4W7QV9sK5aIdHzb8lcVgyIF2Y7pPIxzOHWtEdcjDEDkUGB8pHlVuKHXGh8dU@nongnu.org
+X-Gm-Message-State: AOJu0YxNddLrHejYb/L8Zqju+yIyB1XBMCi3ov5A0hWWIOghr9nZfhWA
+ fq6Al2XowTteNdLg33eOap+IKfoaGZevvXHbmos3Yr7TLZcb9GkAmxE3EixHQOWGE1ZKI2QO/1z
+ IErfWanv3oDkllY3uEW66iEDQsEc=
+X-Gm-Gg: ASbGnctR7tGAtTDvquVMunULrWkuZQo362JelcjIIrY1ZGzd/WMKRe/HV/odK5Z550z
+ fry4P0vJh0blyOr+b5EZHESD6w12xfZVlhT7GGTgnw4G5bcIdnwafhazCQ7EfTgVP0Rwilm2qBb
+ P4sEIqe/cTnb4bvURCa/WEn3H6
+X-Google-Smtp-Source: AGHT+IFhSNaQ2wZj+MASoogyZiNQijk2t0DTiLI4nKA9ChEge7XqAyMUgw9bL8sjM9QeaZAbRPdYbcLRbEwkL/fIQ9c=
+X-Received: by 2002:a05:6402:518b:b0:5e5:ea02:1223 with SMTP id
+ 4fb4d7f45d1cf-5e8a0c10a10mr7891060a12.31.1742107442226; Sat, 15 Mar 2025
+ 23:44:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Volker Ruemelin <vr_qemu@t-online.de>, Gerd Hoffmann <kraxel@redhat.com>
-Message-Id: <20250316002046.D066A4E6004@zero.eik.bme.hu>
-Date: Sun, 16 Mar 2025 01:20:46 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <CAJSP0QWKnLDsVUbqO_kNB7GiZPU0-YpOU8T4BNCgyNBi54dtDQ@mail.gmail.com>
+ <12d09c42-e6b2-49d1-9b06-e5a26acc2c5b@redhat.com>
+ <CAJSP0QUWkeaSsVmdfrXNAaSqB_uMUxqAD+GR7Xm4FHEgwYArNg@mail.gmail.com>
+ <CAPan3Wozs=BX2pYxgBR3R_TtV75Pk8T=TNXZjgRHajzYw47Y-A@mail.gmail.com>
+ <CAPan3WqR_UmrJMtYEe02K6vKy4joNE5frGDMW1KWFH-so24nbw@mail.gmail.com>
+In-Reply-To: <CAPan3WqR_UmrJMtYEe02K6vKy4joNE5frGDMW1KWFH-so24nbw@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sun, 16 Mar 2025 02:43:50 -0400
+X-Gm-Features: AQ5f1JpdQBfpEnZae4W0-zXLE3cQdiH9oDIAbnANAZCFW793DVV6hpAlnRljdoE
+Message-ID: <CAJSP0QV7JK5UhzvSobb10TXUKKcvvdfW4uCydYgQxrggSWP5qg@mail.gmail.com>
+Subject: Re: Broken NetBSD Orange Pi image URL in QEMU tests
+To: Niek Linnenbank <nieklinnenbank@gmail.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -61,54 +102,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Quoting Volker Rümelin: "try-poll=on tells the ALSA backend to try to
-use an event loop instead of the audio timer. This works most of the
-time. But the poll event handler in the ALSA backend has a bug. For
-example, if the guest can't provide enough audio frames in time, the
-ALSA buffer is only partly full and the event handler will be called
-again and again on every iteration of the main loop. This increases
-the processor load and the guest has less processor time to provide
-new audio frames in time. I have two examples where a guest can't
-recover from this situation and the guest seems to hang."
+On Sat, Mar 15, 2025 at 5:01=E2=80=AFPM Niek Linnenbank
+<nieklinnenbank@gmail.com> wrote:
+>
+> Hello Stefan,
+>
+> As of today, it seems the URL is working properly again. I've done a few =
+downloads without any error.
+> What I did notice is that NetBSD provides a 'cdn.netbsd.org' also, but I =
+can't see any noticable difference yet.
+>
+> Tests are also running OK now, at least on my local system:
+>
+> $ QEMU_TEST_ALLOW_LARGE_STORAGE=3D1 pyvenv/bin/python3 ../tests/functiona=
+l/test_arm_orangepi.py
+> TAP version 13
+> ok 1 test_arm_orangepi.BananaPiMachine.test_arm_orangepi
+> ok 2 test_arm_orangepi.BananaPiMachine.test_arm_orangepi_armbian
+> ok 3 test_arm_orangepi.BananaPiMachine.test_arm_orangepi_initrd
+> ok 4 test_arm_orangepi.BananaPiMachine.test_arm_orangepi_sd
+> ok 5 test_arm_orangepi.BananaPiMachine.test_arm_orangepi_uboot_netbsd9
+> 1..5
+>
+> Can you confirm the URL is working again properly on CI also?
 
-One reproducer I've found is booting MorphOS demo iso on
-qemu-system-ppc -machine pegasos2 -audio alsa which should play a
-startup sound but instead it freezes. Even when it does not hang it
-plays choppy sound. Volker suggested using command line to set
-try-poll=off saying: "The try-poll=off arguments are typically
-necessary, because the alsa backend has a design issue with
-try-poll=on. If the guest can't provide enough audio frames, it's
-really unhelpful to ask for new audio frames on every main loop
-iteration until the guest can provide enough audio frames. Timer based
-playback doesn't have that problem."
+Thanks, Niek. The URL is working again for me.
 
-But users cannot easily find this option and having a non-working
-default is really unhelpful so to make life easier just set it to
-false by default which works until the issue with the alsa backend can
-be fixed.
+Stefan
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
-This fixes my issue but if somebody has a better fix I'm open to that
-too.
-
- audio/alsaaudio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-index cacae1ea59..9b6c01c0ef 100644
---- a/audio/alsaaudio.c
-+++ b/audio/alsaaudio.c
-@@ -899,7 +899,7 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
- static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
- {
-     if (!apdo->has_try_poll) {
--        apdo->try_poll = true;
-+        apdo->try_poll = false;
-         apdo->has_try_poll = true;
-     }
- }
--- 
-2.41.3
-
+>
+> Regards
+> Niek
+>
+> On Thu, Mar 13, 2025 at 10:22=E2=80=AFPM Niek Linnenbank <nieklinnenbank@=
+gmail.com> wrote:
+>>
+>> Hello Stefan, Thomas,
+>>
+>> Thanks for reporting this. I'll try to spend some time to figure out the=
+ issue and perhaps propose a new image for this test, if needed.
+>>
+>> Regards,
+>> Niek
+>>
+>> On Thu, Mar 13, 2025 at 8:39=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.=
+com> wrote:
+>>>
+>>> On Thu, Mar 13, 2025 at 1:48=E2=80=AFPM Thomas Huth <thuth@redhat.com> =
+wrote:
+>>> >
+>>> > On 13/03/2025 03.22, Stefan Hajnoczi wrote:
+>>> > > Hi,
+>>> > > CI jobs that run test_arm_orangepi.py are failing:
+>>> > > https://gitlab.com/qemu-project/qemu/-/jobs/9390048284#L1138
+>>> > >
+>>> > > Please consider how to resolve this so the CI job passes again. If =
+you
+>>> > > are in contact with the archive.netbsd.org administrators, maybe
+>>> > > contacting them will lead to a fix. Otherwise please update the QEM=
+U
+>>> > > test to use a URL that works or remove the test.
+>>> > >
+>>> > > The NetBSD Orange Pi image fails to download cleanly:
+>>> > >
+>>> > > $ curl -O 'https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0=
+/evbarm-earmv7hf/binary/gzimg/armv7.img.gz'
+>>> > >    % Total    % Received % Xferd  Average Speed   Time    Time     =
+Time  Current
+>>> > >                                   Dload  Upload   Total   Spent    =
+Left  Speed
+>>> > >    0  303M    0 2048k    0     0  1098k      0  0:04:42  0:00:01  0=
+:04:41 1098k
+>>> > > curl: (18) end of response with 315646186 bytes missing
+>>> >
+>>> > FYI, Nicholas already provided a nice patch series to skip the test i=
+n case
+>>> > of such incomplete downloads:
+>>> >
+>>> >   https://lore.kernel.org/qemu-devel/20250312130002.945508-1-npiggin@=
+gmail.com/
+>>> >
+>>> > I'll try to assemble a pull request with these patches today.
+>>>
+>>> Thank you!
+>>>
+>>> Stefan
+>>
+>>
+>>
+>> --
+>> Niek Linnenbank
+>>
+>
+>
+> --
+> Niek Linnenbank
+>
 
