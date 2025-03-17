@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F85C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 04:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B557C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 04:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu23J-0008U8-JP; Mon, 17 Mar 2025 00:26:18 -0400
+	id 1tu28X-0001iE-W8; Mon, 17 Mar 2025 00:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu1zL-0008Tw-7c; Mon, 17 Mar 2025 00:22:07 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tu1zB-0008TQ-9F; Mon, 17 Mar 2025 00:21:58 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu1zJ-0000hp-Oa; Mon, 17 Mar 2025 00:22:06 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22359001f1aso21276075ad.3; 
- Sun, 16 Mar 2025 21:22:05 -0700 (PDT)
+ id 1tu1z9-0000hA-O8; Mon, 17 Mar 2025 00:21:57 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22403cbb47fso68099115ad.0; 
+ Sun, 16 Mar 2025 21:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742185324; x=1742790124; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1742185313; x=1742790113; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rC7L0rRFhPblcvh4yB37ZMVfoqzWp7quOzAYn/tIObQ=;
- b=ffcTANJHJ6Ukscg6ldRWz1gzoH2rYfeU8yqwCV3xfi7LbJeo7hztPXiUkHo3ui/0Rb
- c5K8b6KpOovGYV9IG9uYXN/GDXgBka7Nj2LJABf/96Np7RBhhrxLrYj3T0aqF5L3YhLA
- yFjuk4Lssd2KYLr4oVuJEypYHlvs7iyvKIXO72YCc5cuIag5ijybx9XZ2J6+mYHIdChO
- vA7b4jat0d2NfVM/wbrpFZStYMEl36IHP2f2AayhOzWH6bvCGU3NwGEhh842E1nsF4UP
- r+W+uWPf6zXnQb6aORt1JYgT6D5SLIbuQpch6FPkIJ+WOGUs7vs/fN2JBS624fUyUtdl
- ckhQ==
+ bh=ICspqdLfGPu7MEZoMgsn5HQu4uodzX6/IROIWZG4fxc=;
+ b=TRrmYwJwQX3HEBcn1cwJzWC6QE5pVbBay0KhIZ1/sRCnMycDYJKIp03rapmDxb6VJy
+ x7l6qpP225Ypnf52gLWlj4zhzXiPr9NIjiPlrLaiIBk8EYcfhD1MRQ8qnW1jKhDnI6w+
+ JTGGM8s97J/x9nKF44HtY3/SCp7dw4dLk1vSSoBZMF3VPnOC4WClPHy5x34m7Mr8Lf9r
+ tsHgefyACE1N8zhdBmRSjezdlM34HJg4ZSfOaFNICo8CzXbkjFyBo0g8EGF+/kNzmQbK
+ vz63TSi8sF0PEdx6krekj0383dEFMBCI+hh0Q2/89j4R28v5r5NfvQV0wuehn1/rCvr7
+ ru+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742185324; x=1742790124;
- h=in-reply-to:references:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1742185313; x=1742790113;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rC7L0rRFhPblcvh4yB37ZMVfoqzWp7quOzAYn/tIObQ=;
- b=sc+PUOkEJQ2Wjg6R0r0hbja8cVek0tsTOtM/GdwM80oThI3aUs07Um4tNstJP+Yt6a
- CU1+2yyb3JeXRavdEDmFygxc0PIJDwBrqEqPl4uNqSnpSQrPlAYgFdJfNTNyB5b/1isr
- Un0b5qlA1+smwWC3a0c/n588NFU0tDIJYAnLOv6eO440YIZ4zANSGMZXFDjVJHJMN+lc
- owXwodVPsc6JfmyIplz24ZctTOVHxd1X7KjdF6hFIYKXM8JE5P/MA6BHVmPZRv0TfuK7
- DOT0rhionlHYXZ6RK6Q/CYb6NFWv3mrAoKpDlaJnRUbA6OM+A6+XSmaolFmM5yYNk1pO
- BfSA==
+ bh=ICspqdLfGPu7MEZoMgsn5HQu4uodzX6/IROIWZG4fxc=;
+ b=BZtz/ap0Z/EnULLmmxffML3dTRskT8TV0VuyYstgNIF0KVWGw/lTy0igz42S9nJzb4
+ zpzkW9XuUVB00SgWDkgVZrGe/avoTDK26JkYXUfa3J6MInzE6ya/v5g0MRyTgw00+JfY
+ 5WHWk0pK1bADANQcBmO+1DdvnNyUdJEp9eKR9vRIBnul5B7WHraB1EA6RulEKUezlVBw
+ lKoaqRTQZwy/uu6zJV1RPVGHddLsoAywdoGhgwDh6KVIIz221Eb7ZSJEOcewDmCMBOL2
+ OmSArcmcgYrKTR+cxCYQfYMETmzdkkpgAVJ6A8caHHgxDY1q5UrKCvMg0GW/1xZLJzRf
+ 3m/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVatFToyijQq/AWcGux8MYyXH6dZQ5WZh45dFyIl8NAysflk0OHDR1vqvnOKIL/kxqCG75ovf+8LTQ=@nongnu.org,
- AJvYcCWoK5eBUlscaxx4ssQ7Pga6kjBTsB5l0QcOqDfjLRv7/3xCw9d/PzGR8wtnLSitriNWKqsoCYJGOk4W@nongnu.org
-X-Gm-Message-State: AOJu0YxnL0cQ3C9lJcBWvZNxvgLDjtLte1G4OUs6fy9EiR+zdTRsH4gw
- Ph4LVSGTtYLDbPDuag/JgY5053IbDwnNxaZaoJb8zE3Najw5V+bleZSlpg==
-X-Gm-Gg: ASbGncsGDMA+lGWXLfV2qn/xW8sHqQg0BvzlnYFcTlSOKaYtXzaDkW8vt4e2baQda6r
- lFFXXNWQndM52EBWX15Bu06XPZDQ/V6j3Gt5/prCIDyouAkWo1EEi4mBGA/T9WMKf4mJz/jnAkB
- QB1zsWQ8Nb7+7xi8b9gIrherzmsR0JIe2rfMBTEsLOdQvlxaEJjeeaMsb2pTSRR9Pq4vJ+7KCke
- fKxbHV2es9/eAsMut/qL2m6UW61rlMIySV9JplOkImKQvCqkyaX8Bqa85ptRnvVCpc5Ne4w7z7l
- EH7AUbfp5AF0ZC4z4OZljDiJUrHIAz32fle8SjU=
-X-Google-Smtp-Source: AGHT+IHb+3Pz6Y3WglDCzZRi3u+8OyYZEpwTUqoW3RMMUIuzpATLE12pBKDWchXA9GY/YEg5lAFXeA==
-X-Received: by 2002:a17:903:1446:b0:224:c76:5e57 with SMTP id
- d9443c01a7336-225e0ae708bmr139445415ad.39.1742185323804; 
- Sun, 16 Mar 2025 21:22:03 -0700 (PDT)
+ AJvYcCVToLKXWBE/fXHBhZ+bYYvZa1/MFnEe0mIYPBkFg8BcahYoHqa9dnirK54ctKZrw/g/ftnpTvjiPks=@nongnu.org,
+ AJvYcCVUFQqLPWeKCS5ZPu/vJ9qLQvVtznvE8wTuy6u8mc9UZZTfRz7NX3nkEYnwVLR9gSvvVaO814UVA+HP@nongnu.org
+X-Gm-Message-State: AOJu0Yy8sHK59bhgJ64s+9ZvMeCQP59qJaO8pRurfKq48EXsB87Sqfko
+ SKvxMH873ZRX7T6jVI06QVQxj2zzXTrPfueGjxJPu8as/qQxCZxM
+X-Gm-Gg: ASbGncvPW15rrjI7t3fflnUMv6hRr8CmeYZlEl5RIPXxUyZOQlAL1sqpyNo4WeMAJSD
+ vmZQ18kZ7R7DJDXpjLawTxD5yo0vmA0Sz7RUS+p0iBc3TT+S+cMOKHDRiKSevDwxBkwf7TBu5B9
+ 5FYK1WHa4pZDOhyJT+Gm/DToGiSzI5cqrrQsRucf7S3eJ6z1aKijmygrzQKsNLHinAiuSoykYWE
+ vGojMHp/OprNraW25ok0KyajV1t8CaeLEYmn6YuBDOEHXENWOFiKM/aGLe7y9GKECApuZZaLc10
+ 4ZbtsXiG4Y+8Qb2KkPkLAmYYPYy1yxQm+oOdK2Y=
+X-Google-Smtp-Source: AGHT+IFGj9ITzTNabyd64VJNRO+izzRFDoHaLmmFbtPOWS2eu6oMQBwlX5JL3ew6RB7Bs1QHPt8Gtw==
+X-Received: by 2002:a05:6a21:6191:b0:1f5:7862:7f3a with SMTP id
+ adf61e73a8af0-1f5c121e71cmr15955752637.14.1742185313448; 
+ Sun, 16 Mar 2025 21:21:53 -0700 (PDT)
 Received: from localhost ([118.208.135.36]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c68a6e2dsm65441035ad.58.2025.03.16.21.22.01
+ d2e1a72fcca58-7371167db05sm6799700b3a.92.2025.03.16.21.21.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Mar 2025 21:22:03 -0700 (PDT)
+ Sun, 16 Mar 2025 21:21:52 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 17 Mar 2025 14:21:59 +1000
-Message-Id: <D8I95IV1G7O4.3LYPKXT7QU1ZE@gmail.com>
-Subject: Re: [PATCH] ppc/amigaone: Constify default_env
+Date: Mon, 17 Mar 2025 14:21:48 +1000
+Message-Id: <D8I95DKVY8MV.2C4QYAQI25GHI@gmail.com>
+Cc: <clg@redhat.com>
+Subject: Re: [PATCH] ppc/amigaone: Check blk_pwrite return value
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.19.0
-References: <20250314200145.08E0F4E6067@zero.eik.bme.hu>
-In-Reply-To: <20250314200145.08E0F4E6067@zero.eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+References: <20250314200140.2DBE74E6069@zero.eik.bme.hu>
+In-Reply-To: <20250314200140.2DBE74E6069@zero.eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,28 +101,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sat Mar 15, 2025 at 6:01 AM AEST, BALATON Zoltan wrote:
-> The variable holding default env is not supposed to be written.
+> Coverity reported that return value of blk_pwrite() maybe should not
+> be ignored. We can't do much if this happens other than report an
+> error but let's do that to silence this report.
 >
+> Resolves: Coverity CID 1593725
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
 > ---
->  hw/ppc/amigaone.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  hw/ppc/amigaone.c | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
 >
 > diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> index 5d787c3059..e9407a51b5 100644
+> index 483512125f..5d787c3059 100644
 > --- a/hw/ppc/amigaone.c
 > +++ b/hw/ppc/amigaone.c
-> @@ -63,7 +63,7 @@ static const char dummy_fw[] =3D {
->  #define NVRAM_ADDR 0xfd0e0000
->  #define NVRAM_SIZE (4 * KiB)
+> @@ -108,8 +108,8 @@ static void nvram_write(void *opaque, hwaddr addr, ui=
+nt64_t val,
+>      uint8_t *p =3D memory_region_get_ram_ptr(&s->mr);
 > =20
-> -static char default_env[] =3D
-> +static const char default_env[] =3D
->      "baudrate=3D115200\0"
->      "stdout=3Dvga\0"
->      "stdin=3Dps2kbd\0"
+>      p[addr] =3D val;
+> -    if (s->blk) {
+> -        blk_pwrite(s->blk, addr, 1, &val, 0);
+> +    if (s->blk && blk_pwrite(s->blk, addr, 1, &val, 0) < 0) {
+> +        error_report("%s: could not write %s", __func__, blk_name(s->blk=
+));
+>      }
+>  }
+> =20
+> @@ -151,15 +151,17 @@ static void nvram_realize(DeviceState *dev, Error *=
+*errp)
+>          *c =3D cpu_to_be32(CRC32_DEFAULT_ENV);
+>          /* Also copies terminating \0 as env is terminated by \0\0 */
+>          memcpy(p + 4, default_env, sizeof(default_env));
+> -        if (s->blk) {
+> -            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, =
+0);
+> +        if (s->blk &&
+> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, =
+0) < 0
+> +           ) {
+> +            error_report("%s: could not write %s", __func__, blk_name(s-=
+>blk));
+>          }
+>          return;
+>      }
+>      if (*c =3D=3D 0) {
+>          *c =3D cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
+> -        if (s->blk) {
+> -            blk_pwrite(s->blk, 0, 4, p, 0);
+> +        if (s->blk && blk_pwrite(s->blk, 0, 4, p, 0) < 0) {
+> +            error_report("%s: could not write %s", __func__, blk_name(s-=
+>blk));
+>          }
+>      }
+>      if (be32_to_cpu(*c) !=3D crc) {
 
 
