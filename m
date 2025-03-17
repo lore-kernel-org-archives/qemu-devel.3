@@ -4,52 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20951C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36DCC35FF3
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu70x-00041Q-BP; Mon, 17 Mar 2025 05:44:07 -0400
+	id 1tu72p-00061Y-OA; Mon, 17 Mar 2025 05:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tu70v-00040i-Lt
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:05 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tu70q-0006zQ-2V
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:05 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bxjazc7tdn_cyZAA--.31062S3;
- Mon, 17 Mar 2025 17:43:56 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxb8fa7tdnP3tPAA--.30227S4;
- Mon, 17 Mar 2025 17:43:55 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/4] hw/intc/loongarch_pch: Rename register name
-Date: Mon, 17 Mar 2025 17:43:52 +0800
-Message-Id: <20250317094354.1028221-3-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250317094354.1028221-1-maobibo@loongson.cn>
-References: <20250317094354.1028221-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
+ id 1tu72T-0005eL-D8
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:45:41 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
+ id 1tu72Q-0007Ix-Qg
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:45:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1742204739; x=1773740739;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=2L7KDp9FOHdilaL0CR+rsa4VNZkaVaclZPPZcERIo9M=;
+ b=IcZB9IotKS4awhK32A2Pkxm8sUBGCT1ZFojLjpykrmmd0D1xC+BTVK4r
+ 65NXgdJT+PPaA0r4WYhgpJMZQ9N2iEc3HvgF5p+0RLTtA6ukjKkrDfvt+
+ vJ7/t6SLYRTJ1rkrlwJBCTRmnm5EiVyud+tQ0bb4tXFNEVi1pWfgg2uGe
+ I8T993LbQ2dDTSm7uNj7Nqp+kJzM4xf6mWH0hVW+LeQetbjERNgpyC1bk
+ OXshjQrzo9420ioza4J3yBlvujoQJpyCn9H0Zwh/3rybQ/z5yziilign4
+ NTwFhgzkcTMpP92MJQbbDcHodbftdxRQFP5x0hLcSItWE9M5C9y1QysPP g==;
+X-CSE-ConnectionGUID: zIWjWhTaRYKHWNHgZHLiaQ==
+X-CSE-MsgGUID: RuaaqUGmR8WMnWr8cemssg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11375"; a="53917612"
+X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="53917612"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2025 02:45:35 -0700
+X-CSE-ConnectionGUID: KiI60iehTDqFb1rIF07FWA==
+X-CSE-MsgGUID: KJK2d+JYRlCzVfXqZ1+Qpw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="121882215"
+Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost)
+ ([10.245.246.8])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2025 02:45:30 -0700
+Date: Mon, 17 Mar 2025 11:45:25 +0200
+From: Tony Lindgren <tony.lindgren@linux.intel.com>
+To: Chenyi Qiang <chenyi.qiang@intel.com>
+Cc: David Hildenbrand <david@redhat.com>,
+ Alexey Kardashevskiy <aik@amd.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ "Maloor, Kishen" <kishen.maloor@intel.com>
+Subject: Re: [PATCH v3 6/7] memory: Attach MemoryAttributeManager to
+ guest_memfd-backed RAMBlocks
+Message-ID: <Z9fvNU4EvnI6ScWv@tlindgre-MOBL1>
+References: <20250310081837.13123-1-chenyi.qiang@intel.com>
+ <20250310081837.13123-7-chenyi.qiang@intel.com>
+ <Z9e-0OcFoKpaG796@tlindgre-MOBL1>
+ <b158a3ef-b115-4961-a9c3-6e90b49e3366@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8fa7tdnP3tPAA--.30227S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b158a3ef-b115-4961-a9c3-6e90b49e3366@intel.com>
+Received-SPF: none client-ip=192.198.163.9;
+ envelope-from=tony.lindgren@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,176 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For some registers with width 8 bytes, its name is something like
-PCH_PIC_INT_ID_LO and PCH_PIC_INT_ID_HI. From hardware manual,
-register name is PCH_PIC_INT_ID instead. Here name PCH_PIC_INT_ID
-is used, and PCH_PIC_INT_ID + 4 is used for PCH_PIC_INT_ID_HI.
+On Mon, Mar 17, 2025 at 03:32:16PM +0800, Chenyi Qiang wrote:
+> 
+> 
+> On 3/17/2025 2:18 PM, Tony Lindgren wrote:
+> > Hi,
+> > 
+> > On Mon, Mar 10, 2025 at 04:18:34PM +0800, Chenyi Qiang wrote:
+> >> --- a/system/physmem.c
+> >> +++ b/system/physmem.c
+> >> @@ -1885,6 +1886,16 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+> >>              qemu_mutex_unlock_ramlist();
+> >>              goto out_free;
+> >>          }
+> >> +
+> >> +        new_block->memory_attribute_manager = MEMORY_ATTRIBUTE_MANAGER(object_new(TYPE_MEMORY_ATTRIBUTE_MANAGER));
+> >> +        if (memory_attribute_manager_realize(new_block->memory_attribute_manager, new_block->mr)) {
+> >> +            error_setg(errp, "Failed to realize memory attribute manager");
+> >> +            object_unref(OBJECT(new_block->memory_attribute_manager));
+> >> +            close(new_block->guest_memfd);
+> >> +            ram_block_discard_require(false);
+> >> +            qemu_mutex_unlock_ramlist();
+> >> +            goto out_free;
+> >> +        }
+> >>      }
+> >>  
+> >>      ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+> > 
+> > Might as well put the above into a separate memory manager init function
+> > to start with. It keeps the goto out_free error path unified, and makes
+> > things more future proof if the rest of ram_block_add() ever develops a
+> > need to check for errors.
+> 
+> Which part to be defined in a separate function? The init function of
+> object_new() + realize(), or the error handling operation
+> (object_unref() + close() + ram_block_discard_require(false))?
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_pch_pic.c            | 32 +++++++++++++-------------
- hw/loongarch/virt.c                    |  2 +-
- include/hw/intc/loongarch_pic_common.h | 27 ++++++++--------------
- 3 files changed, 26 insertions(+), 35 deletions(-)
+I was thinking the whole thing, including freeing :) But maybe there's
+something more to consider to keep calls paired.
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 3fc4227159..428809b927 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -79,10 +79,10 @@ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
-     uint32_t offset = addr & 0xfff;
- 
-     switch (offset) {
--    case PCH_PIC_INT_ID_LO:
-+    case PCH_PIC_INT_ID:
-         val = PCH_PIC_INT_ID_VAL;
-         break;
--    case PCH_PIC_INT_ID_HI:
-+    case PCH_PIC_INT_ID + 4:
-         /*
-          * With 7A1000 manual
-          *   bit  0-15 pch irqchip version
-@@ -90,22 +90,22 @@ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
-          */
-         val = deposit32(PCH_PIC_INT_ID_VER, 16, 16, s->irq_num - 1);
-         break;
--    case PCH_PIC_INT_MASK_LO:
-+    case PCH_PIC_INT_MASK:
-         val = (uint32_t)s->int_mask;
-         break;
--    case PCH_PIC_INT_MASK_HI:
-+    case PCH_PIC_INT_MASK + 4:
-         val = s->int_mask >> 32;
-         break;
--    case PCH_PIC_INT_EDGE_LO:
-+    case PCH_PIC_INT_EDGE:
-         val = (uint32_t)s->intedge;
-         break;
--    case PCH_PIC_INT_EDGE_HI:
-+    case PCH_PIC_INT_EDGE + 4:
-         val = s->intedge >> 32;
-         break;
--    case PCH_PIC_HTMSI_EN_LO:
-+    case PCH_PIC_HTMSI_EN:
-         val = (uint32_t)s->htmsi_en;
-         break;
--    case PCH_PIC_HTMSI_EN_HI:
-+    case PCH_PIC_HTMSI_EN + 4:
-         val = s->htmsi_en >> 32;
-         break;
-     default:
-@@ -135,7 +135,7 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-     trace_loongarch_pch_pic_low_writew(size, addr, data);
- 
-     switch (offset) {
--    case PCH_PIC_INT_MASK_LO:
-+    case PCH_PIC_INT_MASK:
-         old = s->int_mask;
-         s->int_mask = get_writew_val(old, data, 0);
-         old_valid = (uint32_t)old;
-@@ -146,7 +146,7 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-             pch_pic_update_irq(s, (~old_valid & data), 0);
-         }
-         break;
--    case PCH_PIC_INT_MASK_HI:
-+    case PCH_PIC_INT_MASK + 4:
-         old = s->int_mask;
-         s->int_mask = get_writew_val(old, data, 1);
-         old_valid = (uint32_t)(old >> 32);
-@@ -159,20 +159,20 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-             pch_pic_update_irq(s, int_mask << 32, 0);
-         }
-         break;
--    case PCH_PIC_INT_EDGE_LO:
-+    case PCH_PIC_INT_EDGE:
-         s->intedge = get_writew_val(s->intedge, data, 0);
-         break;
--    case PCH_PIC_INT_EDGE_HI:
-+    case PCH_PIC_INT_EDGE + 4:
-         s->intedge = get_writew_val(s->intedge, data, 1);
-         break;
--    case PCH_PIC_INT_CLEAR_LO:
-+    case PCH_PIC_INT_CLEAR:
-         if (s->intedge & data) {
-             s->intirr &= (~data);
-             pch_pic_update_irq(s, data, 0);
-             s->intisr &= (~data);
-         }
-         break;
--    case PCH_PIC_INT_CLEAR_HI:
-+    case PCH_PIC_INT_CLEAR + 4:
-         value <<= 32;
-         if (s->intedge & value) {
-             s->intirr &= (~value);
-@@ -180,10 +180,10 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-             s->intisr &= (~value);
-         }
-         break;
--    case PCH_PIC_HTMSI_EN_LO:
-+    case PCH_PIC_HTMSI_EN:
-         s->htmsi_en = get_writew_val(s->htmsi_en, data, 0);
-         break;
--    case PCH_PIC_HTMSI_EN_HI:
-+    case PCH_PIC_HTMSI_EN + 4:
-         s->htmsi_en = get_writew_val(s->htmsi_en, data, 1);
-         break;
-     default:
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a5840ff968..f886b08c6d 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -430,7 +430,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-                             VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY_OFFSET,
-                             sysbus_mmio_get_region(d, 1));
-     memory_region_add_subregion(get_system_memory(),
--                            VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS_LO,
-+                            VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS,
-                             sysbus_mmio_get_region(d, 2));
- 
-     /* Connect pch_pic irqs to extioi */
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index 43cce48978..c04471b08d 100644
---- a/include/hw/intc/loongarch_pic_common.h
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -12,28 +12,19 @@
- 
- #define PCH_PIC_INT_ID_VAL              0x7000000UL
- #define PCH_PIC_INT_ID_VER              0x1UL
--#define PCH_PIC_INT_ID_LO               0x00
--#define PCH_PIC_INT_ID_HI               0x04
--#define PCH_PIC_INT_MASK_LO             0x20
--#define PCH_PIC_INT_MASK_HI             0x24
--#define PCH_PIC_HTMSI_EN_LO             0x40
--#define PCH_PIC_HTMSI_EN_HI             0x44
--#define PCH_PIC_INT_EDGE_LO             0x60
--#define PCH_PIC_INT_EDGE_HI             0x64
--#define PCH_PIC_INT_CLEAR_LO            0x80
--#define PCH_PIC_INT_CLEAR_HI            0x84
--#define PCH_PIC_AUTO_CTRL0_LO           0xc0
--#define PCH_PIC_AUTO_CTRL0_HI           0xc4
--#define PCH_PIC_AUTO_CTRL1_LO           0xe0
--#define PCH_PIC_AUTO_CTRL1_HI           0xe4
-+#define PCH_PIC_INT_ID                  0x00
-+#define PCH_PIC_INT_MASK                0x20
-+#define PCH_PIC_HTMSI_EN                0x40
-+#define PCH_PIC_INT_EDGE                0x60
-+#define PCH_PIC_INT_CLEAR               0x80
-+#define PCH_PIC_AUTO_CTRL0              0xc0
-+#define PCH_PIC_AUTO_CTRL1              0xe0
- #define PCH_PIC_ROUTE_ENTRY_OFFSET      0x100
- #define PCH_PIC_ROUTE_ENTRY_END         0x13f
- #define PCH_PIC_HTMSI_VEC_OFFSET        0x200
- #define PCH_PIC_HTMSI_VEC_END           0x23f
--#define PCH_PIC_INT_STATUS_LO           0x3a0
--#define PCH_PIC_INT_STATUS_HI           0x3a4
--#define PCH_PIC_INT_POL_LO              0x3e0
--#define PCH_PIC_INT_POL_HI              0x3e4
-+#define PCH_PIC_INT_STATUS              0x3a0
-+#define PCH_PIC_INT_POL                 0x3e0
- 
- #define STATUS_LO_START                 0
- #define STATUS_HI_START                 0x4
--- 
-2.39.3
+> If need to check for errors in the rest of ram_block_add() in future,
+> how about adding a new label before out_free and move the error handling
+> there?
 
+Yeah that would work too.
+
+Regards,
+
+Tony
 
