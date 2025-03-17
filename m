@@ -4,98 +4,170 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEECC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 12:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8151AC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 12:37:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu9cO-0000io-VR; Mon, 17 Mar 2025 08:30:56 -0400
+	id 1tu9hq-0002WY-Ai; Mon, 17 Mar 2025 08:36:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tu9c6-0000gO-MK
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:30:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1tu9hd-0002Vz-CQ
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:36:22 -0400
+Received: from mail-dm3nam02on20617.outbound.protection.outlook.com
+ ([2a01:111:f403:2405::617]
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tu9c4-0005Ts-Kx
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:30:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742214634;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MtV0U7M06v0EMP4sZiAS8CUle8jscDt+mYWLXYbueBw=;
- b=GTdkECQUtGh68uikDk8DHjBno9PxUU1r7gW6/8sGvmNA7t7k2kbETeSDLOG91ManVlQMJV
- h1iXpahMraEKSrHNOqg5jhmhLftVjvN02gnss7Mc1BoFoScJuWCsn4Ymx7k1sTsGgUZsq/
- SeW2W8glX3Szbt/RRHSm/F+bVPeNjYg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-HnADsDNtOc--oM2Xz6PH6g-1; Mon, 17 Mar 2025 08:30:33 -0400
-X-MC-Unique: HnADsDNtOc--oM2Xz6PH6g-1
-X-Mimecast-MFC-AGG-ID: HnADsDNtOc--oM2Xz6PH6g_1742214632
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3914bc0cc4aso2536403f8f.3
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 05:30:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742214632; x=1742819432;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MtV0U7M06v0EMP4sZiAS8CUle8jscDt+mYWLXYbueBw=;
- b=SRwsGGkNlMOTFGou7GPLDFqNLpm5CdQ4cT34viOBsAam59EJDsMkvf/GYphDpoLu+v
- iu42VN3zJO8JzQisZ3KCAfcFXeEMdNQ6jdDz/x6dkNtdwaitOC8C/0+Noog2MD1LUY0Z
- hCo1GLUDLp3yKHryKmhexW0wt+/qztKTyDnVDaJkLZCmO6czlPpW0PdH3Y1eUvuhplJ+
- w9JW7KlzJ3bIepBP6VgmRHzIc6pxTyilYOMhysVhODMyOebInaWdpo2ydPouU/xwoQWE
- /xweRkvpquucH2oqHrIZW2zGJYnSH/TFRGFEvdB9ezS5ESgDeGWsCRikY+1vgbQgdfel
- aPmg==
-X-Gm-Message-State: AOJu0Yy9igbPOPdiCpT4js0y5i5TVFQeqGMUQmlpMjWA5A67PCh3H8HD
- Y+elQYTeOgbMG6nLLxx8MQr1Q4XBsL7+HzI3iIBQGo7b8Oe2IvxU9MOPDw9rYH7U4ZGo22RdOjc
- E4xbcVFfph3j9v+UG/QddTgB7CqFZ1mE/BjCkqNicr0WG0qlIb6J5VCulEDpcnAqyv1FMgBVjEM
- GxiBeDL6yF4DiWfeELJal/AHgHWG4O5DSRPq2m3A==
-X-Gm-Gg: ASbGncsGLxRXR3KWki7ZSu9teV5zHJU3WBk/ju4DIlEJjQyOJ0A3jNr2gVcd3JzuNez
- NjNFLwB3FXw75yXNMl7gRBxzOS06hZumOioRi93rFVngDj7NLtdaOpXnLUYUfewtWXN8JmHgNpc
- k=
-X-Received: by 2002:a5d:5f84:0:b0:391:3fa7:bf77 with SMTP id
- ffacd0b85a97d-3971e3a54cbmr15337885f8f.31.1742214631801; 
- Mon, 17 Mar 2025 05:30:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpFcawllQbxT4wPvpCnmUS6hHrR6O7723AvHN66zN83vo1TDXS21ko9v2YwHv1kbgHN0HY8G6mnrNcwMO1I54=
-X-Received: by 2002:a5d:5f84:0:b0:391:3fa7:bf77 with SMTP id
- ffacd0b85a97d-3971e3a54cbmr15337851f8f.31.1742214631391; Mon, 17 Mar 2025
- 05:30:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1tu9ha-0005wp-UA
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:36:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PUK2Ba71pNkwPfilTxhQT/Ie3Ks0VfU/uj8xehRO8su9Y9ebV09emf9JvZ1cIIOp0BjeiACKiBFa81vrhADHxZBlz4yU85yDE93GW5VKY5hVbGmMEKMPixYUz3qKxIwTmlQcOqQaNdICkBALluf9Syc/iKdfSsUm1t6AW9MmF1nwDLpb1HnfutoYChQ/5K9rq91Yhc8CYqUB8gbkIc5FuMkWzHiYcXF/G+zNfeBaiflyqJCsrB3nJj4I8C+vFu9oxePbAiPDWRc0W2m5cWiPFSozwvkjh/NvA+0cDeYJew6ib4OJ65RDXcMQ+FrNb5umNfMN+wBQTh18ybbGB9nQYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=En7nwZ0XX14I5FFgI2WZbSc5s0ciM5f+K/XbUwubk7E=;
+ b=Tc9MbSnVvGFiAsEmPON1Kwf7ehAkPfTPqlDWc+mZKn8mKVAbCOgiPgaLQMReOkp/gRSW5HoT1vtCm3JZ18+YvGArW0bwQj54sDz1l3zAWdPQ1WhDZSvpAqZJ3G1bEUiRCcxeC/h/KGbE/hQ4JRFrh7+ykVv//zs8Qz8xzjpn0p65+A3APkTDXoWhjA+oVmAIM98+ZOEWdP73uGOKnl9Avkw6UiM7grzOpoCjUEfE60G/YsWw7IzAJ826ysa2bzXWDB+5KvyiOdiYZiN8ApWpqnSwlMhehbPJzmMmAeIlIupqHAyUcJKeMUBYae92eEBg4/K0oHKdIZVGLaT8/7WiUA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=En7nwZ0XX14I5FFgI2WZbSc5s0ciM5f+K/XbUwubk7E=;
+ b=zhLYnDlifqgQwKPF5SA8ha0tu24KgA/nMTIRAgHoJKGWXiscckyTHqHWlRLXnpTYDwH+7WywOrBGcgxp2MLGAo+3s1rNvTd/52xCre4zLPwnTOMK6IEO9IZ0qQ1kX6Xe2E8kjmt/g7Gf4ge5uM++YGM9UlzEaxTZGiHptCH2vNw=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ CH3PR12MB7762.namprd12.prod.outlook.com (2603:10b6:610:151::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.33; Mon, 17 Mar
+ 2025 12:36:11 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%4]) with mapi id 15.20.8534.031; Mon, 17 Mar 2025
+ 12:36:11 +0000
+Message-ID: <ff224392-47f3-4afa-b854-fd80dd22cf47@amd.com>
+Date: Mon, 17 Mar 2025 18:06:02 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] amd_iommu: Update bitmasks representing DTE reserved
+ fields
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ "Arun Kodilkar, Sairaj" <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mst@redhat.com, mjt@tls.msk.ru,
+ marcel.apfelbaum@gmail.com, suravee.suthikulpanit@amd.com,
+ santosh.shukla@amd.com, Wei.Huang2@amd.com, joao.m.martins@oracle.com,
+ boris.ostrovsky@oracle.com
+References: <20250311152446.45086-1-alejandro.j.jimenez@oracle.com>
+ <20250311152446.45086-4-alejandro.j.jimenez@oracle.com>
+ <0be5765e-2ade-4743-a089-0846f60943dd@amd.com>
+ <0e4993c5-33d8-4dfc-8089-0efa50881f8e@oracle.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <0e4993c5-33d8-4dfc-8089-0efa50881f8e@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN2PR01CA0220.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:ea::18) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
 MIME-Version: 1.0
-References: <Z8G9Wj3DWSgdLkNQ@x1.local>
- <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
- <Z8XBowkG72G-l3L4@x1.local>
- <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
- <Z8cPnxqOvp1hFpx8@x1.local>
- <CAE8KmOw1CCQUt0wyELVhy5j-CfwVuA2XNsecW=y6rwJv7dempw@mail.gmail.com>
- <Z8hJeneeuKqD1i8Q@x1.local>
- <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
- <Z8t3uKo54T_Xls_O@x1.local>
- <CAE8KmOwdLk4oZg8TAt0z6rd27f0MpbSS54TWNDshZFU7WPxk-Q@mail.gmail.com>
- <Z9M7MYUPqHFIQPuV@x1.local>
-In-Reply-To: <Z9M7MYUPqHFIQPuV@x1.local>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 17 Mar 2025 18:00:14 +0530
-X-Gm-Features: AQ5f1Jr0DnM_rWjbTuSGe0OmiVh7Q-P0JNrFTi-m-GY2xQOCqFcc0VAuHfzF5Ts
-Message-ID: <CAE8KmOwcgvZekToHbznDWAidXM2L_4Aoszz6j19bSC4U8f4oRg@mail.gmail.com>
-Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|CH3PR12MB7762:EE_
+X-MS-Office365-Filtering-Correlation-Id: ace11393-f686-43cc-f286-08dd65504c8e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?d2ludEJtaWdYbHhRYkFQa1hPTDlLRkRRVkEwSEJpcTB4SkxnenpsRk1QVmpK?=
+ =?utf-8?B?YUF5VjFTdkhwa2V2Rk51RjN1VndFS0VwMm8vNzFMRGUrY090Vzl4OGVxZ3Ns?=
+ =?utf-8?B?a2YwWkVNRnpDbG9UbER6ZmlUYXJidzhxTlZZVGJvd3JkSXVHUWtocnFrWkR6?=
+ =?utf-8?B?WXVvdVNJWk1ZM0JoQmYvSnZNaTBvcDZmdnNVamxjZWRKTUFuYjd2Z0UvZlJq?=
+ =?utf-8?B?dnI2bEdyamZSaTRvUlVxbkI2WHE1T2o5Y2Q5VHpaY1ozUlNmYkNVYjVuRm1Z?=
+ =?utf-8?B?QitxalBDUW1FamxoT3pqaFBkSTY3SUt1dmNnZm5tZmcreWczTjZTeUNiR00r?=
+ =?utf-8?B?M2Y0eVQveitsTDBTSDI1S1NKK3J4YlZYdU5zbGFnR3NWQTIzVkJ6d1dXeHd0?=
+ =?utf-8?B?NTEzT040ZTBuenI4V1J3ZUYvaCtzN1NNY2ZPdWhGOW1RZTVYcysyY1BITFlo?=
+ =?utf-8?B?Nkd2VjhJK0k0RUplZGZERE5IMlpyVU9YNDhTQkhTVCsraGF5VVV5VlZhSlBa?=
+ =?utf-8?B?aks4NjFWRWwwcnVtUjRiVnJGdzBHbGtwSy96cmU0dWJVVk5GalV5eWV3ZU9Y?=
+ =?utf-8?B?a1NTaml3c1IvTktJbmRjUVk1MWJFemJlc0NyQXpVR3Z5YmNWMytJQWxSWEt0?=
+ =?utf-8?B?bGpFS1FUTEgxMU84SklFRkhTaUJuZmo2Znp5OTMzeTR2Nkw3eVREalBuL0cz?=
+ =?utf-8?B?d01FTzhjbndHSTRUd05PUDZTeUxWMC9GdUg3OGxkS2J0VE83TWxQbktySVoz?=
+ =?utf-8?B?K0FLbEtBT2pDcmpWT24rYlYvL2NhSkh1QVozWjVncWR0OGQ2eDJDUlNWTG1z?=
+ =?utf-8?B?YjVDQTZ4amJ6YzR4WWJtdmhCekY1cklrQVkwZm1YZTk4QW9FQXBQWHNyQVYv?=
+ =?utf-8?B?Z3E0Q0h0YVlrQXI1bGdMb1laZGRWZU5zOTFiNUl1M3hVazQrZExtZUt0Y0hU?=
+ =?utf-8?B?amF1RmRSYVNnUkw4TnRQNTRxc1JkblNGRVl1a0ZaKzBnWU1CMklGc1k2Z01t?=
+ =?utf-8?B?TFQ1QzZacEZTYm5talpwUTEzZW5FUDVuYVlMUm9kaHQ0eHZuY2R0Qk50VVkw?=
+ =?utf-8?B?bDdLUTNEVytVYlVjUW84L3BIMzI4aDdCcjQzcGIwZWVsZDNCNTgyMnBRbkJk?=
+ =?utf-8?B?akt2bGVUaGNabFVOU3dYVktRbFpKbkNDUkdhTEJhaHhTL0Rtb3JtZndjMjhZ?=
+ =?utf-8?B?ZlFSbDVNQXZBU2dETThMVTAwOHRMMWw1REYveVV4TlIrN1dlN0Z2b2s1STYx?=
+ =?utf-8?B?QkVtaGw3NFZIOTJvK2JONGpZQ3BYU3R2OVRiY0xYeUM2YXJWbk9PRElnUzc2?=
+ =?utf-8?B?MFVZOERBcGFsY01tbmIrcjEycTBISzE5b3lLSzhPQXFWMzZ0V09zblpXalhj?=
+ =?utf-8?B?YzkvbENCTTRjRitwTEsxTE5XUnZpVnBOV2h5dG9sTXZ4bUFycXVsWHQrNTcz?=
+ =?utf-8?B?RThTejVlS2VNMVo1REhiYk1wTkdyeG8zcVpFaHpRWmR0Sm9mUXNNU0xMalY4?=
+ =?utf-8?B?NTFsVm00SEFxaEltT280NklZT1MxaFVoOGluVEc4eEx0MVc3MkRTV0xvNWlq?=
+ =?utf-8?B?VFhGQVRCSUtGRTZXVnBPZ3U5dXY0ZWpnak80emdqRFlGQ2V3d3c4ZGsrVTRP?=
+ =?utf-8?B?ZmN4U3lrbFVVZHJrNlR3L0U1cFl2VUtTaWFBS2t0TlcvQVJSUHNFaExRdGRN?=
+ =?utf-8?B?bzE5S2xRN3ZRYndTUHgxbGNjRnU0VzRZVDQzeWxuNnFCMUtVaUdsL1VEVHYy?=
+ =?utf-8?B?V0c4Vk9WdGRlMnJnQ0liTHQ5ZVlWWTJGK1FpdlBSdENlQ1ErQzhxY1d6S3Z0?=
+ =?utf-8?B?cXF5SEhIOFQ3MndScTFOOTg5MVZtaGJBZFJuTFJudy9iOFpDUUpXVE0rUi9Y?=
+ =?utf-8?Q?2tDNRjvqi2OA/?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR12MB6048.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R1FvNjNCSUNsU2l1UXRXUFliUFZ6ak5IQWtXN2UzUmZab0cwSldJcjREZFBS?=
+ =?utf-8?B?cmdyZkx5NHlkVmI0RVhZRUlveU8zekFxV3lPRnVpMUw3UTAxdjBJKzBVN3F3?=
+ =?utf-8?B?QStpdlI1aUVuc3RVSXhlTTl1N0p6ZUU5K3ExR01DOTVWSS9Nbnh1dGg4KzhW?=
+ =?utf-8?B?UmQvUEsxT2tyWGN0b0NQVXVnQTdRTmdJdCtGRThBVG5xS1dDRlRxNUxXY3do?=
+ =?utf-8?B?R1ZZd3BlVlc3RzQvQnAvTldNQ2VSbEdwQW1zNGNteDJicUtUcW5DR29GL2FG?=
+ =?utf-8?B?aFRGUnVaUkNqM1JQNW1SY1gvVlFJa1hQeDN6N3NJSE8ybXBnaGNSMlJLdUtE?=
+ =?utf-8?B?WkFldHB0UDNTRzM0WTMwNVFKUmc2R25pcXVXR05GSy9qODBMK2xLKzM5K0pw?=
+ =?utf-8?B?R2FPZ05zcEJPYXRtQ2Q5UEFUbnFuL3hLTlJCMUFYYzIrNDFVWVZTVklOTlVz?=
+ =?utf-8?B?ZWZ4RnZua216bmpQbWQzOElXNk1uRzYxczRYOWxoWTUvcERrUnRQQnBrRVA1?=
+ =?utf-8?B?RDdZRmdsWTc0OG1WZis4ZXdQakFTalFGSWd1SVRKcjVISE1OcVdaem1wVG5V?=
+ =?utf-8?B?YlZzWTJDcHZXMG12N2lveUpscDA3V1k5OG4xTWR3TTVTQmVaTk43cCtyRmdh?=
+ =?utf-8?B?a2V3VVNadGhyekpYR2xibTZDL0QzdlNueXlOUVovMFhZVEJSUTdPQTBOUUxz?=
+ =?utf-8?B?SnNyQzNWMEMwa29uUjc3OUZKL3ZzMkt4ZmpPZFRBbWIrZ1kwRk9FWGo0a21L?=
+ =?utf-8?B?MW9yNjAwbW5TVmdCd055VFYwbS9Fd21OQlFzeWR4ZzJEQ3A2R3hjUUMrcG1U?=
+ =?utf-8?B?K2R6UTVLZHZEbXpJdHlzUU5Pb2ZkaGtSQUhSdEkzUUhCbDl2ZkRFZ0pka3RQ?=
+ =?utf-8?B?amR5VUdjenRITWpvZlZWanZuUHkrYkpXWG5xQkY1d2wzTndtMW8wMVJNTHox?=
+ =?utf-8?B?K3dLOEFQS0ZRazgrSVJOR0Q0RVpJMThGdGFrK25pYkdJR2MrRGd3WGFmVGs0?=
+ =?utf-8?B?ejBLL2d5enpnRk9SWjljdjViRW1MOVQ2WHFDb1loeUpCcVE0dUNuQWxHWG80?=
+ =?utf-8?B?SU4zV3FhUTErODdQUHVYS3hDQ1JxdFlyVklOTjVJN3QyUHVtb0VLTzZrc3Js?=
+ =?utf-8?B?QXQ1ZG9RVDJ0eGtNamQxVHFRQWhjS3BNeUR1LzhhV2t3VHM3Ykc3VW1uaFpG?=
+ =?utf-8?B?OGQ2bFh0MkFaUkFpSEcrZUdaZ01tc1dRQm15aVlFaWwvZVdYdGlxL241R3ZW?=
+ =?utf-8?B?aXpHOHE2TCtPbjhHT1J5VXA0RkY1NW5EM2pncHJrUklsTFJMb2d4RGhSOHd1?=
+ =?utf-8?B?YWxjRHA3R215NkxxZ1J6K0Iwc3VQcW9jVTZMaFo2dkhBY2FMa2orUUhLLzBK?=
+ =?utf-8?B?a3BvY1JoNUlYRjAzMGM1d2ZsYmswM3E1NEprbmluaEp1dC8wOU5GMnVKN3l6?=
+ =?utf-8?B?WGx3dXhWZHZzQ2xvaXlwdllxMGQ0dWhGSXNVNGdOaWhBbWdoR1N4cnd4dkhM?=
+ =?utf-8?B?M0paOXFiYldJYzhnd1NqRWdhUTh2YjE4NFhiN3ZtWjJNUHNoRXkzUVVyV3pz?=
+ =?utf-8?B?YTFTVWQ3M0QwR3B3NTJ2ZGdsekFuMldXa00rdVpZS0FJbnl4dEE2ODIreDAw?=
+ =?utf-8?B?Z2NnYTRVZ0FOOE83V1BPcTN5SjZaYUtoVHhMUmNMbXcwWWxBVzRSbjVHNldE?=
+ =?utf-8?B?UThVZGVGZW1hNElid0NHNkZoR0NheEwxTC9JUFZFU2ZNemNuWVVsUkpjNHZr?=
+ =?utf-8?B?YVl4S0VUaVhHckkrbjVWZ3Y1TW1ZUFR4YkVXZi9jNlhqSm5TbnY2bG5Ba0pM?=
+ =?utf-8?B?bHNDdjRKeDZDWHBZVmFGZmNJb090SzhpaGUwVDFHbVZGWW5qWDl6OFBaZnhI?=
+ =?utf-8?B?UU1jcUY1dFJuZGFDZXNYOW9TWHB0RjJCbFNTM3N5aGthdzFYZnQzLzQ1Ykwr?=
+ =?utf-8?B?Z0NNTWRzdGFqaXZ4U0NlcllzWVVBOGRZK3BCd3hOTHBqZVkrR081M3piN3FN?=
+ =?utf-8?B?Q2txM2F1d3F0NVJWSDQzTzRDZUNTYnVIYkFMMjJQdjVXem9uazRTc3ZHdExO?=
+ =?utf-8?B?Z2didWRGNkdZMlVvL04xdzZPZmgrNHl6bnltSzNxa3lHempPWEJVSVNVNWUv?=
+ =?utf-8?Q?aNuodQ5YC1oit5cjnB6URoOrX?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ace11393-f686-43cc-f286-08dd65504c8e
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2025 12:36:11.6040 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RwBoYPLMDTFva8KAYlNfXGUATyxfpUJOLsO9DHHJcfOr75i1m0w55nCGslPfGZEAdsbKWQpeeC3D/LaEMHBjTw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7762
+Received-SPF: permerror client-ip=2a01:111:f403:2405::617;
+ envelope-from=Vasant.Hegde@amd.com;
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,236 +183,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi ,
 
-On Fri, 14 Mar 2025 at 01:40, Peter Xu <peterx@redhat.com> wrote:
->+        save_section_header(f, se, QEMU_VM_SECTION_PART);
-> +        ram_save_zero_page(f, se->opaque);
->I'll stop requesting a why here...
 
-* Earlier in this thread you mentioned 'We need a header'. I took it
-as a 'RAM page' header, not save_section_header(). Section type
-(QEMU_VM_COMMAND) was sent by qemu_savevm_command_send() as well.
+On 3/13/2025 7:53 PM, Alejandro Jimenez wrote:
+> 
+> 
+> On 3/12/25 12:12 AM, Arun Kodilkar, Sairaj wrote:
+>> Hi Alejandro,
+>>
+>> On 3/11/2025 8:54 PM, Alejandro Jimenez wrote:
+> 
+> [...]
+> 
+>>> --- a/hw/i386/amd_iommu.h
+>>> +++ b/hw/i386/amd_iommu.h
+>>> @@ -25,6 +25,8 @@
+>>>   #include "hw/i386/x86-iommu.h"
+>>>   #include "qom/object.h"
+>>> +#define GENMASK64(h, l)  (((~0ULL) >> (63 - (h) + (l))) << (l))
+>>> +
+>>
+>> qemu provides the similar macro 'MAKE_64BIT_MASK' in file
+>> 'include/qemu/bitops.h', you can use this existing macro
+>> instead of redefining.
+> 
+> Hi Sairaj,
+> 
+> I became aware of MAKE_64BIT_MASK() because you used it in your recent patch,
+> but as you mentioned they are similar but not the same. I personally find that
+> using bit indexes is less prone to errors since that is the same format the spec
+> uses to define the fields.
+> So translating a RSVD[6:2] field from the spec becomes:
+> 
+> GENMASK64(6, 2);
+> vs
+> MAKE_64BIT_MASK(6, 5);
+> 
+> The latter is more prone to off-by-one errors in my opinion, specially when you
+> are defining lots of masks. Perhaps more importantly, I'd like to progressively
+> convert the amd_iommu definitions to use GENMASK() and the code that retrieves
+> bit fields to use FIELD_GET().
+> 
+> I am planning on later porting the generic GENMASK* definitions (from the kernel
+> into "qemu/bitops.h", since the RISC-V IOMMU is also a consumer of GENMASK, but
+> I am trying to keep the focus on the AMD vIOMMU for this series.
 
-> but I think this is another example that even if all the tests pass it may not be correct.
+I like GENMASK. Its easy to read.
 
-* This is also an example of - communication is hard.
+RISCV has GENMASK_ULL. As you said, we can consider consolidating them later.
 
-> From f9343dfc777ef04168443e86a1fa3922296ea563 Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Thu, 13 Mar 2025 15:34:10 -0400
-> Subject: [PATCH 1/2] migration: Add save_postcopy_prepare() savevm handler
->
-> Add a savevm handler for a module to opt-in sending extra sections right
-> before postcopy starts, and before VM is stopped.
->
-> RAM will start to use this new savevm handler in the next patch to do flush
-> and sync for multifd pages.
->
-> Note that we choose to do it before VM stopped because the current only
-> potential user is not sensitive to VM status, so doing it before VM is
-> stopped is preferred to enlarge any postcopy downtime.
->
-> It is still a bit unfortunate that we need to introduce such a new savevm
-> handler just for the only use case, however it's so far the cleanest.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  include/migration/register.h | 15 +++++++++++++++
->  migration/savevm.h           |  1 +
->  migration/migration.c        |  4 ++++
->  migration/savevm.c           | 33 +++++++++++++++++++++++++++++++++
->  4 files changed, 53 insertions(+)
->
-> diff --git a/include/migration/register.h b/include/migration/register.h
-> index c041ce32f2..b79dc81b8d 100644
-> --- a/include/migration/register.h
-> +++ b/include/migration/register.h
-> @@ -189,6 +189,21 @@ typedef struct SaveVMHandlers {
->
->      /* This runs outside the BQL!  */
->
-> +    /**
-> +     * @save_postcopy_prepare
-> +     *
-> +     * This hook will be invoked on the source side right before switching
-> +     * to postcopy (before VM stopped).
-> +     *
-> +     * @f:      QEMUFile where to send the data
-> +     * @opaque: Data pointer passed to register_savevm_live()
-> +     * @errp:   Error** used to report error message
-> +     *
-> +     * Returns: true if succeeded, false if error occured.  When false is
-> +     * returned, @errp must be set.
-> +     */
-> +    bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
-> +
->      /**
->       * @state_pending_estimate
->       *
-> diff --git a/migration/savevm.h b/migration/savevm.h
-> index 138c39a7f9..2d5e9c7166 100644
-> --- a/migration/savevm.h
-> +++ b/migration/savevm.h
-> @@ -45,6 +45,7 @@ void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
->  void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
->                                          uint64_t *can_postcopy);
->  int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
-> +bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
->  void qemu_savevm_send_ping(QEMUFile *f, uint32_t value);
->  void qemu_savevm_send_open_return_path(QEMUFile *f);
->  int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len);
-> diff --git a/migration/migration.c b/migration/migration.c
-> index d46e776e24..212f6b4145 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2707,6 +2707,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->          }
->      }
->
-> +    if (!qemu_savevm_state_postcopy_prepare(ms->to_dst_file, errp)) {
-> +        return -1;
-> +    }
-> +
->      trace_postcopy_start();
->      bql_lock();
->      trace_postcopy_start_set_run();
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index ce158c3512..23ef4c7dc9 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1523,6 +1523,39 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
->      qemu_fflush(f);
->  }
->
-> +bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp)
-> +{
-> +    SaveStateEntry *se;
-> +    bool ret;
-> +
-> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-> +        if (!se->ops || !se->ops->save_postcopy_prepare) {
-> +            continue;
-> +        }
-> +
-> +        if (se->ops->is_active) {
-> +            if (!se->ops->is_active(se->opaque)) {
-> +                continue;
-> +            }
-> +        }
-> +
-> +        trace_savevm_section_start(se->idstr, se->section_id);
-> +
-> +        save_section_header(f, se, QEMU_VM_SECTION_PART);
-> +        ret = se->ops->save_postcopy_prepare(f, se->opaque, errp);
-> +        save_section_footer(f, se);
-> +
-> +        trace_savevm_section_end(se->idstr, se->section_id, ret);
-> +
-> +        if (!ret) {
-> +            assert(*errp);
-> +            return false;
-> +        }
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
->  {
->      int64_t start_ts_each, end_ts_each;
-> --
-> 2.47.0
->
->
-> From 299e1cdd9b28802f361ed012673825685e30f965 Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Thu, 13 Mar 2025 15:56:01 -0400
-> Subject: [PATCH 2/2] migration/ram: Implement save_postcopy_prepare()
->
-> Implement save_postcopy_prepare(), preparing for the enablement of both
-> multifd and postcopy.
->
-> Please see the rich comment for the rationals.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/ram.c | 37 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
->
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 424df6d9f1..119e7d3ac2 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -4420,6 +4420,42 @@ static int ram_resume_prepare(MigrationState *s, void *opaque)
->      return 0;
->  }
->
-> +static bool ram_save_postcopy_prepare(QEMUFile *f, void *opaque, Error **errp)
-> +{
-> +    int ret;
-> +
-> +    if (migrate_multifd()) {
-> +        /*
-> +         * When multifd is enabled, source QEMU needs to make sure all the
-> +         * pages queued before postcopy starts to be flushed.
-> +         *
-> +         * Meanwhile, the load of these pages must happen before switching
-> +         * to postcopy.  It's because loading of guest pages (so far) in
-> +         * multifd recv threads is still non-atomic, so the load cannot
-> +         * happen with vCPUs running on destination side.
-> +         *
-> +         * This flush and sync will guarantee those pages loaded _before_
-> +         * postcopy starts on destination. The rational is, this happens
-> +         * before VM stops (and before source QEMU sends all the rest of
-> +         * the postcopy messages).  So when the destination QEMU received
-> +         * the postcopy messages, it must have received the sync message on
-> +         * the main channel (either RAM_SAVE_FLAG_MULTIFD_FLUSH, or
-> +         * RAM_SAVE_FLAG_EOS), and such message should have guaranteed all
-> +         * previous guest pages queued in the multifd channels to be
-> +         * completely loaded.
-> +         */
-> +        ret = multifd_ram_flush_and_sync(f);
-> +        if (ret < 0) {
-> +            error_setg(errp, "%s: multifd flush and sync failed", __func__);
-> +            return false;
-> +        }
-> +    }
-> +
-> +    qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
-> +
-> +    return true;
-> +}
-> +
->  void postcopy_preempt_shutdown_file(MigrationState *s)
->  {
->      qemu_put_be64(s->postcopy_qemufile_src, RAM_SAVE_FLAG_EOS);
-> @@ -4439,6 +4475,7 @@ static SaveVMHandlers savevm_ram_handlers = {
->      .load_setup = ram_load_setup,
->      .load_cleanup = ram_load_cleanup,
->      .resume_prepare = ram_resume_prepare,
-> +    .save_postcopy_prepare = ram_save_postcopy_prepare,
->  };
->
->  static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
-> --
-> 2.47.0
+-Vasant
 
-* I get the infrastructural changes that they'll help to take
-'section' specific action before postcopy starts. It's not clear how
-tying flush and sync with a RAM section helps; because on the
-destination side 'section' is only used to call
-se->ops->load_state()->ram_load->ram_load_precopy()->multifd_recv_sync_main().
-
-* To confirm:
-    -  Benefit of this approach is that 'flush and sync' works via
-vmstate_load -> se->ops->load_state() -> ram_load ->
-ram_load_precopy() sequence?
-
-* Thank you for the patches, I'll send a revised patchset including them.
-
-Thank you.
----
-  - Prasad
 
 
