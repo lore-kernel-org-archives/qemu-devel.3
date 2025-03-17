@@ -4,97 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA5DFC28B2F
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 00:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D416C28B2F
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 01:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ttyTe-0001ho-OJ; Sun, 16 Mar 2025 20:37:10 -0400
+	id 1ttyxP-0006Rt-SB; Sun, 16 Mar 2025 21:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ttyTW-0001hD-JY
- for qemu-devel@nongnu.org; Sun, 16 Mar 2025 20:37:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ttyTV-0000RF-3h
- for qemu-devel@nongnu.org; Sun, 16 Mar 2025 20:37:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742171818;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+fgebysWf0lPGNZlaalXmtawqCO2uSQo6km2bL4Ozdw=;
- b=BfdyeXQ8A2uftedUTE05U8atx9sZ26GoHkorhjbsQ0fTsvF8pDo21cJIsT1AtQSyEPXRsq
- axWdzpE2RIVeqEFX7OXhrHyLqwHPqZsUaFu5tlyPK40QOHghlq8wP2qeJHXCLfQ9JV/3Y/
- MfezVcZWXDQFwsY9d2A4t4qOJqG5KoA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-VJH8hlV5OCCRJDOSdNyVjw-1; Sun, 16 Mar 2025 20:36:56 -0400
-X-MC-Unique: VJH8hlV5OCCRJDOSdNyVjw-1
-X-Mimecast-MFC-AGG-ID: VJH8hlV5OCCRJDOSdNyVjw_1742171815
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43947a0919aso10705775e9.0
- for <qemu-devel@nongnu.org>; Sun, 16 Mar 2025 17:36:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742171815; x=1742776615;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+fgebysWf0lPGNZlaalXmtawqCO2uSQo6km2bL4Ozdw=;
- b=FsMZZ8TnI+DyNKFOe0rczhKsLh36qfYMHK7mhMbJatfq4I+XWBea+AhouED6mq0CKJ
- EMqE1pYtp0lGDvPbYIAGW4nnh8n5vpV8ziQpFKcwvcUv6E9FzGdY9PnIPhc9xPGdciha
- U+8Km73x8rRkSPxsF9DZrhCo999NYmG/4NPDHRw2LVVKOiikVevsLMuHC7mcf27KmjcT
- 4DucaaSUUBKRtAFafJZoAEchXs28IBjq7cx62eh94Lm03NR44DKYkuxAN891NAECEKyk
- TduKddySo0jJifY/Vbyy1PSLWF1mq+NfgdGHAd0IurqsK7ftF20K8FnY7/CoOS+r0dLB
- 7XCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5alcYw/TMY8R764CxgWSLPTsDBCxt1zil7J28oqLaK24rtTk0gke2htJBbSjKCKCyVEP6aDwY8Ykg@nongnu.org
-X-Gm-Message-State: AOJu0YzRaiY99jgPLWrpR4PUPcxklpG1662N6aBu1jzg2+Xr/ylptPNF
- ZVzj+WW/xrLvy0YvwxXNaWEVbNJ2OkQep4Z0YAAhiX9ee/1rOsM1DMUiVYs3pG4atLdG2ASW8ki
- HQaOKygVJpG1gn+lK4Nh037rrS8DoVPubqMtgdJdUt+v2/cQ2uRYv
-X-Gm-Gg: ASbGncsPkqYT5N+IKe1GTZTlAGaAtnLuzMGDShQ3A4jjXegodAa2zH9L6x6z9H/KtBO
- mWYY08gfLiCdy1vGByydqiQFsGAokHDKV8eEcprx2u3yvpWkFXTn9igVbxQLZVLY2UfbmRnMesX
- cAC6+nS1/0KiE4N4jTqlkrdtc09Ko2zEnEzzo0bE/Hsz5Q5f1ptoKB/uBI2xkBcSYeKSU7+WPyE
- 4JnjmhJaSJF56o2umlkLu9RwUblLvAQz43wz+J4ptRdOim4AH0ue3U9JdWKZ+6XZ3bt8/6IO7Mu
- vOWGVoy2Qw==
-X-Received: by 2002:a05:600c:198e:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-43d1ecd8631mr103936545e9.20.1742171815025; 
- Sun, 16 Mar 2025 17:36:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHogb6FXpoWwAh/ITekqmz/MwTnZXLb57x7zFqXWm5iI6ut3KI9wPc+ZpPNBBdQY4zeIa364w==
-X-Received: by 2002:a05:600c:198e:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-43d1ecd8631mr103936435e9.20.1742171814640; 
- Sun, 16 Mar 2025 17:36:54 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe29386sm90158515e9.17.2025.03.16.17.36.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Mar 2025 17:36:53 -0700 (PDT)
-Date: Sun, 16 Mar 2025 20:36:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: Konstantin Shkolnyy <kshk@linux.ibm.com>, eperezma@redhat.com,
- sgarzare@redhat.com, mjrosato@linux.ibm.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] vdpa: Allow vDPA to work on big-endian machine
-Message-ID: <20250316203639-mutt-send-email-mst@kernel.org>
-References: <20250221190733.490308-1-kshk@linux.ibm.com>
- <CACGkMEtm5gapBTmM_cA=jxAEg4GMkyMf4Wa47kvkFvN05uJ__w@mail.gmail.com>
- <0ea107ce-82f1-4333-b766-fda8e0cef454@linux.ibm.com>
- <CACGkMEsrFoQ9QXYPAGDE6p7FOK=a+vAUv4FePZOkTngn1izCuw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1ttyxJ-0006RV-5c
+ for qemu-devel@nongnu.org; Sun, 16 Mar 2025 21:07:49 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1ttyxG-0003fV-Em
+ for qemu-devel@nongnu.org; Sun, 16 Mar 2025 21:07:48 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxaeHXdddnwTWZAA--.19257S3;
+ Mon, 17 Mar 2025 09:07:35 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxLcXSdddnPHdOAA--.24109S3;
+ Mon, 17 Mar 2025 09:07:33 +0800 (CST)
+Subject: Re: [PATCH] host/include/loongarch64: Fix inline assembly
+ compatibility with Clang
+To: Yao Zi <ziyao@disroot.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+References: <20250314033150.53268-3-ziyao@disroot.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <067de39b-de90-3dcb-f784-e514f613cd9b@loongson.cn>
+Date: Mon, 17 Mar 2025 09:06:52 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20250314033150.53268-3-ziyao@disroot.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACGkMEsrFoQ9QXYPAGDE6p7FOK=a+vAUv4FePZOkTngn1izCuw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-CM-TRANSID: qMiowMCxLcXSdddnPHdOAA--.24109S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZw1rZrW7ur4kGFy8trW3CFX_yoW5ur4kpF
+ 9Ikw4kKF4xW3ySvFyUA347tr13Xw129F1jgrWYkw18CFy293WUXFsFkas29F1jqws29r12
+ qF48Ka1rWa92qrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-
+ e5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.664,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,34 +83,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 17, 2025 at 08:26:37AM +0800, Jason Wang wrote:
-> On Thu, Mar 13, 2025 at 11:14 PM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
-> >
-> > On 2/23/2025 19:57, Jason Wang wrote:
-> > > On Sat, Feb 22, 2025 at 3:08 AM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
-> > >>
-> > >> Add .set_vnet_le() function that always returns success, assuming that
-> > >> vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
-> > >> outputs the message:
-> > >> "backend does not support LE vnet headers; falling back on userspace virtio"
-> > >>
-> > >> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-> > >> ---
-> > >> Changes in V2: Add code comment.
-> > >>
-> > >
-> > > Acked-by: Jason Wang <jasowang@redhat.com>
-> >
-> > Is this patch all set to be eventually integrated, or more review is needed?
-> >
+Reviewed-by: Mao Bibo <maobibo@loongson.cn>
+
+On 2025/3/14 上午11:31, Yao Zi wrote:
+> Clang on LoongArch only accepts fp register names in the dollar-prefixed
+> form, while GCC allows omitting the dollar. Change registers in ASM
+> clobbers to the dollar-prefixed form to make user emulators buildable
+> with Clang on loongarch64. No functional change invovled.
 > 
-> Michael, do you want to queue this or can I do that?
+> Signed-off-by: Yao Zi <ziyao@disroot.org>
+> ---
+>   host/include/loongarch64/host/atomic128-ldst.h.inc        | 4 ++--
+>   host/include/loongarch64/host/bufferiszero.c.inc          | 6 ++++--
+>   host/include/loongarch64/host/load-extract-al16-al8.h.inc | 2 +-
+>   3 files changed, 7 insertions(+), 5 deletions(-)
 > 
-> Thanks
-
-Go ahead.
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
+> diff --git a/host/include/loongarch64/host/atomic128-ldst.h.inc b/host/include/loongarch64/host/atomic128-ldst.h.inc
+> index 9a4a8f8b9e..754d2143f0 100644
+> --- a/host/include/loongarch64/host/atomic128-ldst.h.inc
+> +++ b/host/include/loongarch64/host/atomic128-ldst.h.inc
+> @@ -28,7 +28,7 @@ static inline Int128 atomic16_read_ro(const Int128 *ptr)
+>       asm("vld $vr0, %2, 0\n\t"
+>           "vpickve2gr.d %0, $vr0, 0\n\t"
+>           "vpickve2gr.d %1, $vr0, 1"
+> -	: "=r"(l), "=r"(h) : "r"(ptr), "m"(*ptr) : "f0");
+> +        : "=r"(l), "=r"(h) : "r"(ptr), "m"(*ptr) : "$f0");
+>   
+>       return int128_make128(l, h);
+>   }
+> @@ -46,7 +46,7 @@ static inline void atomic16_set(Int128 *ptr, Int128 val)
+>       asm("vinsgr2vr.d $vr0, %1, 0\n\t"
+>           "vinsgr2vr.d $vr0, %2, 1\n\t"
+>           "vst $vr0, %3, 0"
+> -	: "=m"(*ptr) : "r"(l), "r"(h), "r"(ptr) : "f0");
+> +        : "=m"(*ptr) : "r"(l), "r"(h), "r"(ptr) : "$f0");
+>   }
+>   
+>   #endif /* LOONGARCH_ATOMIC128_LDST_H */
+> diff --git a/host/include/loongarch64/host/bufferiszero.c.inc b/host/include/loongarch64/host/bufferiszero.c.inc
+> index 69891eac80..bb2598fdc3 100644
+> --- a/host/include/loongarch64/host/bufferiszero.c.inc
+> +++ b/host/include/loongarch64/host/bufferiszero.c.inc
+> @@ -61,7 +61,8 @@ static bool buffer_is_zero_lsx(const void *buf, size_t len)
+>       "2:"
+>           : "=&r"(ret), "+r"(p)
+>           : "r"(buf), "r"(e), "r"(l)
+> -        : "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "fcc0");
+> +        : "$f0", "$f1", "$f2", "$f3", "$f4", "$f5", "$f6", "$f7", "$f8",
+> +          "$fcc0");
+>   
+>       return ret;
+>   }
+> @@ -119,7 +120,8 @@ static bool buffer_is_zero_lasx(const void *buf, size_t len)
+>       "3:"
+>           : "=&r"(ret), "+r"(p)
+>           : "r"(buf), "r"(e), "r"(l)
+> -        : "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "fcc0");
+> +        : "$f0", "$f1", "$f2", "$f3", "$f4", "$f5", "$f6", "$f7", "$f8",
+> +          "$fcc0");
+>   
+>       return ret;
+>   }
+> diff --git a/host/include/loongarch64/host/load-extract-al16-al8.h.inc b/host/include/loongarch64/host/load-extract-al16-al8.h.inc
+> index d1fb59d8af..9528521e7d 100644
+> --- a/host/include/loongarch64/host/load-extract-al16-al8.h.inc
+> +++ b/host/include/loongarch64/host/load-extract-al16-al8.h.inc
+> @@ -31,7 +31,7 @@ static inline uint64_t load_atom_extract_al16_or_al8(void *pv, int s)
+>       asm("vld $vr0, %2, 0\n\t"
+>           "vpickve2gr.d %0, $vr0, 0\n\t"
+>           "vpickve2gr.d %1, $vr0, 1"
+> -	: "=r"(l), "=r"(h) : "r"(ptr_align), "m"(*ptr_align) : "f0");
+> +        : "=r"(l), "=r"(h) : "r"(ptr_align), "m"(*ptr_align) : "$f0");
+>   
+>       return (l >> shr) | (h << (-shr & 63));
+>   }
+>
 
 
