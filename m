@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953C9C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 557BDC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu4Yb-00031B-IS; Mon, 17 Mar 2025 03:06:41 -0400
+	id 1tu4Z9-00049q-32; Mon, 17 Mar 2025 03:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4YU-0002pM-9E
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:06:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4Yo-0003am-UC
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:06:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4YR-0002V1-K6
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:06:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4Yn-0002YU-BP
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:06:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742195187;
+ s=mimecast20190719; t=1742195211;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xx0CwcbMZhMUr5qDlX0twpMxptVYHrfNI6BB+Mujk2E=;
- b=RROdV6O2vrKTvlDP20FHzZzH0ToXS4AZSu1ize6vF3QlVO1dcNm6FrUrle45liN3zbnxRk
- D0F+RP6+H5qnvCculm/MTWyPF7UApWjlsXsaehh5GiUm1kJomJcRZP1PXkcA6id4i957LS
- I+4RR1pgvMqVQ2VeFd3SD3tFluyUPGw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iX+ZBvCwKNQUkx71u4WL2Mede/aZ58kO88LKJxYdB1U=;
+ b=RZTcvee71ieseLxD3vLVFYYul3Jv9kgSeVH3JDJo4hgDRhKK48SWVoEaUWfPpArXgYfKfT
+ YWDySU1ab5pQhkb6xMXrPFLCUjFMvnaQzybhHrP4e8bysXyWcUXzr3pUz0yKjuxtmhDX3L
+ LWsbtcmlmOqRPly6PCVF6kuZFY35Dqw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-GC8vVe3INAeL7s7w14TsJw-1; Mon, 17 Mar 2025 03:06:26 -0400
-X-MC-Unique: GC8vVe3INAeL7s7w14TsJw-1
-X-Mimecast-MFC-AGG-ID: GC8vVe3INAeL7s7w14TsJw_1742195185
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43ceed237efso13719465e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:06:25 -0700 (PDT)
+ us-mta-665-WbLZfrAZM8WYfOEEgRIuOA-1; Mon, 17 Mar 2025 03:06:50 -0400
+X-MC-Unique: WbLZfrAZM8WYfOEEgRIuOA-1
+X-Mimecast-MFC-AGG-ID: WbLZfrAZM8WYfOEEgRIuOA_1742195209
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912e4e2033so1608407f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:06:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742195184; x=1742799984;
+ d=1e100.net; s=20230601; t=1742195209; x=1742800009;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xx0CwcbMZhMUr5qDlX0twpMxptVYHrfNI6BB+Mujk2E=;
- b=foI7vhwlQyZhrq3Z3lD1r99WXHamIvdeHVwSG0piBwRQp3UhWvbQMVZV6iBjqReRoQ
- UWVDSUA8Y4ZDe/KCKZHcx5olYYds7LxisspGF1a7o3VUwk+MkhSdDmLr9c3V5yO+8GyY
- 2bUgdpXGGz8g3dZOT6jBKMIaEf08AHWJdyAM9GoZFrkyhQOyKNjkisPDG//09nvZXzrq
- rH7MfX+o1MhGey4hHrtqmte6IyurqhtgzjyLYzRUrNyiunFPkp2i8OLIcfoDF01aKAvN
- hNS44snHAEMeq37sAvjhSwyU3AI8dkn8pkcgsctxaB8ObfwU3ZmTFZ8eq/OZLvvQz+gf
- MlJQ==
+ bh=iX+ZBvCwKNQUkx71u4WL2Mede/aZ58kO88LKJxYdB1U=;
+ b=ktpwk74Np7udE4rlfpsV4LRMymzZfiGJY7BrXkRs7yST4eatJhuXgwW7oqesIVB+vG
+ mxdCtttNZcctPQT+Ak/mvSEA/aXkgApB0z7ZUgKyFNV9SufRl87NENXgzGfqmP0YyMTs
+ UnYPIKxVg/MClkME/ga7HgigLsIsTw+gMolgE35NurpjKu1FXco/wQrKGinkxcIjr9IE
+ Gjsh6tg/h4xW/roPCS9yJtVV3V9qv/y8h9+ZGPSS4tJ6PtUq3914SAyWO9VO2e8IEzX4
+ o2/PaRDbC9ym3JpipGKTTwrYYOzTO8InhzVJJlhgRHiaGeUW6l6Z+5FvhN89UnmF64Hs
+ efaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8A30QXyy7C7MSa2b+EI9tr7lFgkw0MzIx4LyTq43EuIzP7b71EtVlzOt7SGzufxJA/Dra2MaiKLke@nongnu.org
-X-Gm-Message-State: AOJu0YwQM+599AXkAo5BDnhJIYp8UdP3ajMIGCZ+blaIZRc8pgw+Od/b
- SeTQ9+6SvCLPkgv8GVCxguxhkATJhgAFSKHK2fydiRp1zsQF0+KhF+THNnePJ5v0RYP6CaatfEC
- Ep4FGc+2LPyN/riy+CFM90ZvGs8DDmt+MPuSY/vRwnKt5JPqtAJ2DOiNIbCoz+CA=
-X-Gm-Gg: ASbGnctlJFNMsdUr4kZQIG+hOc5ZcoX3YDFuxZyHUqTf5mIvKXtORkFB2nroo8Tzer1
- H7tXUAzq6Pbz0RQP6dzZbOec5XzScBQiFAvPYRaHlI8n9tSoxCBSAzNh6xge+ypsvLXcnkL4o6K
- ADf8DJf4I7IOTCC7UgLBotawCvbjtOpHPwsREALg4HFJgrMDAfd3tJgpdK1xlOv5ELlWQTdwyPP
- HK5Lo1ZRu9YzHrWZcOneOW4tbe48yisWENTZ2DPv+W2cAzOgeKKdrZZK4OvcO/c5FVpXJ74gbqg
- K3v+7+Qe1rIthZXa82aU74cxmkHzUZitom/38ZdqCHjKVqLQqxZclQ==
-X-Received: by 2002:a05:6000:2c7:b0:391:30b9:556a with SMTP id
- ffacd0b85a97d-3971cd57406mr12016338f8f.7.1742195184479; 
- Mon, 17 Mar 2025 00:06:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcESucZhLUgVhK1O27Fvigw9y+J5ZAcsJvb6TGT34rHuq77pdetq28a/iwF7gvkyWKyTmmgA==
-X-Received: by 2002:a05:6000:2c7:b0:391:30b9:556a with SMTP id
- ffacd0b85a97d-3971cd57406mr12016315f8f.7.1742195184077; 
- Mon, 17 Mar 2025 00:06:24 -0700 (PDT)
+ AJvYcCXYox7nc16l2vJl5Uuy43XQUEQUQ/6sOl2QGiGDzEwHwmt6hABzO702PPwW0r5Qep3CudXK3uwotXju@nongnu.org
+X-Gm-Message-State: AOJu0Yx9kVj3k0CmYpKR2E7bsYJbH4r0CjtgfKGY0pMqlibYIwxHreYD
+ 2PQZqcDG6QvjNi4UeLXfFQhJk81WiUOBfyMTm0cXG1TDdxxf3I1B80Fm+P4pvd7PlYEXSECVtPr
+ UBH4g3mFJaARru3kfr++NDiFBteiujzk7Os28F5nb+5GNSEp2e+xp
+X-Gm-Gg: ASbGnctFSaFm902z1vmA9/YHFn78IqmSdgky+VuDL1xjP6IU6/TwRrfWPJB1OI5Ts5z
+ el4bNiNdF8aAxIEaomak3xS/tEeNGp4/dxphRAXzli5Y3iuUUotE6EOVbpD+Oi/GBzS+FQlZfIT
+ tYmAj98RcxS9HK2Xv7eyKGFdVooHP2xv4coyOIA6opsze/gyczD+gCavFRbZLolgjyI8mq+WCSO
+ m51FjSJc32lQ5oUodtJl9mY3GpYCqlMr4BCJ3YRTnwMp7j5+rXX5W3KvBkewDZwN+pRcsYS+Fic
+ w5Rqc2Sdt8aGgin58XUYwBPAJXs3ZtOQZ4tfUfbpWW2VrYVhfOarTA==
+X-Received: by 2002:a05:6000:1aca:b0:390:d6ab:6c49 with SMTP id
+ ffacd0b85a97d-397209627cbmr14780750f8f.35.1742195209000; 
+ Mon, 17 Mar 2025 00:06:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHfsEfgJ5la1vTrWAeVGSNIu1qRbRUKliwO1hPVLKHTT+15WUFG4yggjhelYlJ6AmI1xUHoww==
+X-Received: by 2002:a05:6000:1aca:b0:390:d6ab:6c49 with SMTP id
+ ffacd0b85a97d-397209627cbmr14780724f8f.35.1742195208634; 
+ Mon, 17 Mar 2025 00:06:48 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c7df3512sm14561047f8f.12.2025.03.17.00.06.23
+ ffacd0b85a97d-395cb7ebbc3sm13897117f8f.88.2025.03.17.00.06.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 00:06:23 -0700 (PDT)
-Message-ID: <30852eb7-ef37-4da1-b014-ad4131d74c29@redhat.com>
-Date: Mon, 17 Mar 2025 08:06:22 +0100
+ Mon, 17 Mar 2025 00:06:48 -0700 (PDT)
+Message-ID: <0082d527-8366-449a-8450-36027c2c492a@redhat.com>
+Date: Mon, 17 Mar 2025 08:06:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/amigaone: Check blk_pwrite return value
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>
-References: <20250314200140.2DBE74E6069@zero.eik.bme.hu>
+Subject: Re: [PATCH 3/6] ppc/xive2: Fix logical / bitwise comparison typo
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.vnet.ibm.com>,
+ Michael Kowal <kowal@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20250317052339.1108322-1-npiggin@gmail.com>
+ <20250317052339.1108322-4-npiggin@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,9 +129,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250314200140.2DBE74E6069@zero.eik.bme.hu>
+In-Reply-To: <20250317052339.1108322-4-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
@@ -139,7 +141,7 @@ X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,71 +157,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/14/25 21:01, BALATON Zoltan wrote:
-> Coverity reported that return value of blk_pwrite() maybe should not
-> be ignored. We can't do much if this happens other than report an
-> error but let's do that to silence this report.
+On 3/17/25 06:23, Nicholas Piggin wrote:
+> The comparison as written is always false (perhaps confusingly, because
+> the functions/macros are not really booleans but return 0 or the tested
+> bit value). Change to use logical-and.
 > 
-> Resolves: Coverity CID 1593725
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/ppc/amigaone.c | 14 ++++++++------
->   1 file changed, 8 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> index 483512125f..5d787c3059 100644
-> --- a/hw/ppc/amigaone.c
-> +++ b/hw/ppc/amigaone.c
-> @@ -108,8 +108,8 @@ static void nvram_write(void *opaque, hwaddr addr, uint64_t val,
->       uint8_t *p = memory_region_get_ram_ptr(&s->mr);
+> Resolves: Coverity CID 1593721
+> Cc: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-why is the nvram never read ?
 
->   
->       p[addr] = val;
-> -    if (s->blk) {
-> -        blk_pwrite(s->blk, addr, 1, &val, 0);
-> +    if (s->blk && blk_pwrite(s->blk, addr, 1, &val, 0) < 0) {
-> +        error_report("%s: could not write %s", __func__, blk_name(s->blk));
-
-hmm, guest_error maybe ? since this is a runtime error.
-
->       }
->   }
->   
-> @@ -151,15 +151,17 @@ static void nvram_realize(DeviceState *dev, Error **errp)
->           *c = cpu_to_be32(CRC32_DEFAULT_ENV);
->           /* Also copies terminating \0 as env is terminated by \0\0 */
->           memcpy(p + 4, default_env, sizeof(default_env));
-> -        if (s->blk) {
-> -            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, 0);
-> +        if (s->blk &&
-> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, 0) < 0
-> +           ) {
-> +            error_report("%s: could not write %s", __func__, blk_name(s->blk));
-
-This should use the errp parameter.
-
->           }
->           return;
->       }
->       if (*c == 0) {
->           *c = cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
-> -        if (s->blk) {
-> -            blk_pwrite(s->blk, 0, 4, p, 0);
-> +        if (s->blk && blk_pwrite(s->blk, 0, 4, p, 0) < 0) {
-> +            error_report("%s: could not write %s", __func__, blk_name(s->blk));
-
-same here.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-
->           }
+> ---
+>   hw/intc/xive2.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index 311b42e15d3..7d584dfafaf 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -1344,7 +1344,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+>           return;
 >       }
->       if (be32_to_cpu(*c) != crc) {
+>   
+> -    if (xive2_end_is_crowd(&end) & !xive2_end_is_ignore(&end)) {
+> +    if (xive2_end_is_crowd(&end) && !xive2_end_is_ignore(&end)) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "XIVE: invalid END, 'crowd' bit requires 'ignore' bit\n");
+>           return;
 
 
