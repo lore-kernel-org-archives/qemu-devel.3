@@ -4,73 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E95C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB0B8C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:20:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu3eo-0000iw-6g; Mon, 17 Mar 2025 02:09:02 -0400
+	id 1tu3p5-00066u-CS; Mon, 17 Mar 2025 02:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tu3ec-0000ff-BL
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:08:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
+ id 1tu3on-00060P-9g
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:19:21 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tu3ea-0004jv-QV
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:08:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742191726;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sZ7+eLkD043FeVXlXZZBzPOIlcPLrb5Hr6t7qi8myvk=;
- b=Pfbw2LmsH8MDgLUnmXNKdSLGGcrv6aIlSBckyAwZc2DI9OIMNaZAveDYINJSYiu5a7vV8L
- 2Cx40iiGBl9dOPQ1kqZOridU4L1dGnyxBDDQ5Rq15o6typ22psKJNEXTsWXFbZskbNx8MH
- KUe6WDKjbaZyUwwJoy7ioeuFvNKcyuo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-_bblhuTjNc64JaRVIC6Mwg-1; Mon,
- 17 Mar 2025 02:08:42 -0400
-X-MC-Unique: _bblhuTjNc64JaRVIC6Mwg-1
-X-Mimecast-MFC-AGG-ID: _bblhuTjNc64JaRVIC6Mwg_1742191721
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E7B119560B7; Mon, 17 Mar 2025 06:08:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C6791955BC0; Mon, 17 Mar 2025 06:08:39 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C17AB21E66C4; Mon, 17 Mar 2025 07:08:35 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 2/3] hw/loongarch/virt: Remove unnecessary NULL pointer
-In-Reply-To: <20250317022922.802988-3-maobibo@loongson.cn> (Bibo Mao's message
- of "Mon, 17 Mar 2025 10:29:21 +0800")
-References: <20250317022922.802988-1-maobibo@loongson.cn>
- <20250317022922.802988-3-maobibo@loongson.cn>
-Date: Mon, 17 Mar 2025 07:08:35 +0100
-Message-ID: <8734fcgpek.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
+ id 1tu3ok-0005sO-Ps
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:19:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1742192359; x=1773728359;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=h0BsSohuwjOJjBU5oHdhP3ZYhu82D4a41VuNYAddxVI=;
+ b=NnzrL6HZgp832cheEeENTVSnXt3KHHZkF1zLaa+bTcKd/LAlXaMNtLXm
+ O+gP3kNdgpyuA1aXQ7IUGp2/eJ83f0/XL3/VILu0hI1FnAx51zKqblqCd
+ hBfzE2RHP5Qu9Ja4aG1hvXE0QGtT187CR0bJE8QsU72ou9VeHayVdDfN+
+ vFxjcP9+jzgKDfwjjMp8NrmpzSuTcLsg8Vjc129TZkIE7eREBSc7fAF0K
+ EC9QGWqMlA6QBaDP/Ku1EBLtYiWkBk3fL1krBQlrstyCNOHHNWLbCVcjk
+ zVAX4GYB/3b7Laj0LvKBviZEdx/fzdt0yVlyOd7adh0p2Gs8Rg0S5EiWT w==;
+X-CSE-ConnectionGUID: PuHWsK8lTQuq9qnzyEJVug==
+X-CSE-MsgGUID: 8wsIvlqqRjG6dWXxgT6ALg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11375"; a="60664467"
+X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="60664467"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Mar 2025 23:19:07 -0700
+X-CSE-ConnectionGUID: k0gWf8DHS9GhD4uHidG+4w==
+X-CSE-MsgGUID: N//J7haCQVeK8ULxe6wvBA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="122590083"
+Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost)
+ ([10.245.246.8])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Mar 2025 23:19:01 -0700
+Date: Mon, 17 Mar 2025 08:18:56 +0200
+From: Tony Lindgren <tony.lindgren@linux.intel.com>
+To: Chenyi Qiang <chenyi.qiang@intel.com>
+Cc: David Hildenbrand <david@redhat.com>,
+ Alexey Kardashevskiy <aik@amd.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ "Maloor, Kishen" <kishen.maloor@intel.com>
+Subject: Re: [PATCH v3 6/7] memory: Attach MemoryAttributeManager to
+ guest_memfd-backed RAMBlocks
+Message-ID: <Z9e-0OcFoKpaG796@tlindgre-MOBL1>
+References: <20250310081837.13123-1-chenyi.qiang@intel.com>
+ <20250310081837.13123-7-chenyi.qiang@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250310081837.13123-7-chenyi.qiang@intel.com>
+Received-SPF: none client-ip=198.175.65.10;
+ envelope-from=tony.lindgren@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,120 +93,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bibo Mao <maobibo@loongson.cn> writes:
+Hi,
 
-> There is NULL pointer checking function error_propagate() already,
-> it is not necessary to add checking for function parameter. Here remove
-> NULL pointer checking with function parameter.
->
-> Since function will return directly when there is error report, this
-> patch removes combination about error_setg() and error_propagate(),
-> error_setg() with dest error object is used directly such as:
->
->   error_setg(err);                 -------->      error_setg(errp);
->   error_propagate(errp, err);                     return;
->   return;
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->  hw/loongarch/virt.c | 28 +++++++++++-----------------
->  1 file changed, 11 insertions(+), 17 deletions(-)
->
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index a5840ff968..1fd91f94b5 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -865,24 +865,24 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->  
->      if (lvms->acpi_ged) {
->          if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                         "Invalid thread-id %u specified, must be in range 1:%u",
->                         cpu->thread_id, ms->smp.threads - 1);
-> -            goto out;
-> +            return;
+On Mon, Mar 10, 2025 at 04:18:34PM +0800, Chenyi Qiang wrote:
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1885,6 +1886,16 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>              qemu_mutex_unlock_ramlist();
+>              goto out_free;
 >          }
->  
->          if ((cpu->core_id < 0) || (cpu->core_id >= ms->smp.cores)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                         "Invalid core-id %u specified, must be in range 1:%u",
->                         cpu->core_id, ms->smp.cores - 1);
-> -            goto out;
-> +            return;
->          }
->  
->          if ((cpu->socket_id < 0) || (cpu->socket_id >= ms->smp.sockets)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                         "Invalid socket-id %u specified, must be in range 1:%u",
->                         cpu->socket_id, ms->smp.sockets - 1);
-> -            goto out;
-> +            return;
->          }
->  
->          topo.socket_id = cpu->socket_id;
-> @@ -891,11 +891,11 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->          arch_id =  virt_get_arch_id_from_topo(ms, &topo);
->          cpu_slot = virt_find_cpu_slot(ms, arch_id);
->          if (CPU(cpu_slot->cpu)) {
-> -            error_setg(&err,
-> +            error_setg(errp,
->                         "cpu(id%d=%d:%d:%d) with arch-id %" PRIu64 " exists",
->                         cs->cpu_index, cpu->socket_id, cpu->core_id,
->                         cpu->thread_id, cpu_slot->arch_id);
-> -            goto out;
-> +            return;
->          }
->      } else {
->          /* For cold-add cpu, find empty cpu slot */
-> @@ -912,10 +912,6 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
->      cpu->phy_id = cpu_slot->arch_id;
->      cs->cpu_index = cpu_slot - ms->possible_cpus->cpus;
->      numa_cpu_pre_plug(cpu_slot, dev, &err);
-
-You need to pass errp instead of &err now.
-
-> -out:
-> -    if (err) {
-> -        error_propagate(errp, err);
-> -    }
->  }
->  
->  static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
-> @@ -927,17 +923,14 @@ static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
->      CPUState *cs = CPU(dev);
->  
->      if (cs->cpu_index == 0) {
-> -        error_setg(&err, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
-> +        error_setg(errp, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
->                     cs->cpu_index, cpu->socket_id,
->                     cpu->core_id, cpu->thread_id);
-> -        error_propagate(errp, err);
->          return;
+> +
+> +        new_block->memory_attribute_manager = MEMORY_ATTRIBUTE_MANAGER(object_new(TYPE_MEMORY_ATTRIBUTE_MANAGER));
+> +        if (memory_attribute_manager_realize(new_block->memory_attribute_manager, new_block->mr)) {
+> +            error_setg(errp, "Failed to realize memory attribute manager");
+> +            object_unref(OBJECT(new_block->memory_attribute_manager));
+> +            close(new_block->guest_memfd);
+> +            ram_block_discard_require(false);
+> +            qemu_mutex_unlock_ramlist();
+> +            goto out_free;
+> +        }
 >      }
 >  
->      hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
-> -    if (err) {
-> -        error_propagate(errp, err);
-> -    }
-> +    error_propagate(errp, err);
+>      ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
 
-Missed this cleanup:
+Might as well put the above into a separate memory manager init function
+to start with. It keeps the goto out_free error path unified, and makes
+things more future proof if the rest of ram_block_add() ever develops a
+need to check for errors.
 
-       hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, errp);
- }
+Regards,
 
->  }
->  
->  static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
-> @@ -1003,6 +996,7 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
->          if (err) {
->              error_propagate(errp, err);
-> +            return;
->          }
->      }
-
+Tony
 
