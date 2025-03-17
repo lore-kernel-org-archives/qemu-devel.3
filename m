@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D371C28B28
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 10:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7E7C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 11:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu7uh-0003ps-P3; Mon, 17 Mar 2025 06:41:45 -0400
+	id 1tu8Jp-0001DG-Hs; Mon, 17 Mar 2025 07:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tu7ua-0003pY-8C
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 06:41:36 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tu7uX-0006k1-1c
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 06:41:35 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2240b4de12bso29203425ad.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 03:41:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742208091; x=1742812891; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4wHymbGZD4WoSW8wUdBrV2zxjPDwL1khzCbVKjkhNAo=;
- b=HjQirAa3u0EhmGwjuDb7nWe9yQIFSxdD83mxqCAIWI4W4H7xD9V+G1MAiuklAeUCF2
- dTobzkYYXkIzMCLZ4St/qlFWtcQ4gT6w1boLnSkiSNlqy3AZSChjU3O5O0KbLRSf2KyA
- t9Ez4d9F2m3MuojNelHJx4G/9UDEUZRAy8ZGjOQbNNuIrn+qc9XQhd9cJvfIKpScc1TP
- +/zYEMC9ZPszLI2LohdfCBu/OD+gd02Ts5LcbkR+7+pzGqmUHTTU6aIq5vj/QbPlO+qF
- VYcTgyv2s8Vs52325kfi105fQjXG0q5BCjxdv9RW9MKAtQUGDtqI/pFX0ldpGQrVBYsM
- O82g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742208091; x=1742812891;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=4wHymbGZD4WoSW8wUdBrV2zxjPDwL1khzCbVKjkhNAo=;
- b=f2ueqc2l3mZoZ9b+9CFa0knxxqxgsX2wtqcrEkULVpsN9rZqB7L0L5MU2dFI0gZQa9
- S9aJ5k278Rg2KBamiyJ7YVpI8HZtTN/zhxNG/IMddFBv85ZojkbV45/oSjxryujmfUH9
- Y5o/EZRuoGbPiXgXnuqpikz9cPoSnvr0UdSwx7yuqKXxTJyuZRr55LvOQUK9fHt+Uxm5
- DUXkZ49HbGR9YU5bSTAQ0JhFJWWk7uAWLQtRjDovQZkxBnv4nB9Do1sR3qBWhUhln74a
- 1hNk/nMQBXGCnkHbMuJZjn6cLgc22+nxvENumH6ZBeafMf6Bkq8fMw1BaeIeE9cumqVe
- zfVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGGscMYjZtokn2DOlWjCPHxMf1uBm4KNPZZRH53Lm3PtB92JIaMzHczKq0+77Z2GJ7Ps0JEzth9STq@nongnu.org
-X-Gm-Message-State: AOJu0YyYn107ExaAGI8zqvaD9ZG6MVpaIfRzGD0a4srUVRbfH9FEqtrS
- b6HBgAq1cGt/B15kQRkRFQuuRWCd0/gP3DxkMo5C5u7EXWw9Fwop
-X-Gm-Gg: ASbGnctv7DlLWeDEz5mTzrBLl1YvEvupuvvcN91yZq9VSlAZ8Rlkzpr8VHIKqO773R8
- 334CmTFKxC2qTpWAxd8LPV4fQY6gXDJbuoeUMTksmUQwbouVLDJDaJbgFTOWpS76RyEMCE5UnK7
- 8h+p0w+sfCklkpkkaxrRjxC0WexVoTE2DUlfxjtlXnGeoOOMytym6CIM+VXl5pRTHbK1cEy4uSW
- /ic7mrrt06cS80sLdtXiULLX73ygjJ3eWdEGRNakAsn5SjRHVSGlbd1QSdBUIOJnEmBV3Y3ykq9
- 9j6JAGbSMtT2IkbGcZxMsYAquTMabsrlX3y9t9c=
-X-Google-Smtp-Source: AGHT+IGogHy/alE51CPX8nBzdAqroOiUcI5GXA9EfMLne4r1CwzLTV2kcK7K5FmT/enAuhtJClJ+Hw==
-X-Received: by 2002:a05:6a00:2343:b0:730:9752:d02a with SMTP id
- d2e1a72fcca58-7372236c6a7mr14959591b3a.4.1742208091440; 
- Mon, 17 Mar 2025 03:41:31 -0700 (PDT)
-Received: from localhost ([118.208.135.36]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-737116b10e1sm7209191b3a.165.2025.03.17.03.41.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 03:41:30 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 17 Mar 2025 20:41:25 +1000
-Message-Id: <D8IH81HZG5OJ.Y5UEA1WLU4DL@gmail.com>
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
- <pbonzini@redhat.com>, "Peter Xu" <peterx@redhat.com>, "David Hildenbrand"
- <david@redhat.com>
-Subject: Re: [PATCH 2/2] memory: suppress INVALID_MEM logs caused by debug
- access
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250314074107.992163-1-npiggin@gmail.com>
- <20250314074107.992163-3-npiggin@gmail.com>
- <4be1fdc1-3c50-4e20-aaf5-f6831a944246@linaro.org>
-In-Reply-To: <4be1fdc1-3c50-4e20-aaf5-f6831a944246@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
+ id 1tu8Jb-0001Bp-IE
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 07:07:29 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
+ id 1tu8JZ-00021k-5r
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 07:07:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1742209645; x=1773745645;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=k5W7aJHoyc9RtxT/s/LlELHVqJxMJ6x+kzqirpBGnKw=;
+ b=e44tqmRD+1OtmULorgtTpD+e3ZSfZucMDFDRebdphGYKUc0aQuoDPoHk
+ qyrfwphWPLH3x95kyUCSmFuv1267O889CMlpdGJpMaiYk1aKhZLpX4XuH
+ Kht6rlLt+TnoPytDPtgkRj0zDrEY8MyEtfvdh1RFtISfbi43qTw1Ma/sQ
+ 8mVHaPtnXVjpwVJ3kICeuxmiS8ZW8sy+WqukM2QXE1QwyJDEuDFTdCrd8
+ xz6jZ9KN0vZ7a5S6QuwYY8NMZUkLPYfmX+6LhgW77tLTry76x4BcDQ4h/
+ IrYQnjcucdogTUglPoy/3RrGGCeNNI6LzFUjT+JCgu8vdX0VGpeZm5GHA g==;
+X-CSE-ConnectionGUID: LKCBD8X7StCKMaiZRYIR4g==
+X-CSE-MsgGUID: hDM7ssaER6mxXTiTiFxuKA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11375"; a="53506227"
+X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="53506227"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2025 04:07:21 -0700
+X-CSE-ConnectionGUID: Et/mW7WVSZOPEjjd1Rwh2A==
+X-CSE-MsgGUID: JJvGKHbUQXq/o17sPaI4Lw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="121710785"
+Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost)
+ ([10.245.246.8])
+ by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2025 04:07:15 -0700
+Date: Mon, 17 Mar 2025 13:07:10 +0200
+From: Tony Lindgren <tony.lindgren@linux.intel.com>
+To: Chenyi Qiang <chenyi.qiang@intel.com>
+Cc: David Hildenbrand <david@redhat.com>,
+ Alexey Kardashevskiy <aik@amd.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ "Maloor, Kishen" <kishen.maloor@intel.com>
+Subject: Re: [PATCH v3 6/7] memory: Attach MemoryAttributeManager to
+ guest_memfd-backed RAMBlocks
+Message-ID: <Z9gCXoWhTxzurXvb@tlindgre-MOBL1>
+References: <20250310081837.13123-1-chenyi.qiang@intel.com>
+ <20250310081837.13123-7-chenyi.qiang@intel.com>
+ <Z9e-0OcFoKpaG796@tlindgre-MOBL1>
+ <b158a3ef-b115-4961-a9c3-6e90b49e3366@intel.com>
+ <Z9fvNU4EvnI6ScWv@tlindgre-MOBL1>
+ <ebc6f8ed-3525-4bd8-8be0-143b1c7e75ee@intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ebc6f8ed-3525-4bd8-8be0-143b1c7e75ee@intel.com>
+Received-SPF: none client-ip=198.175.65.11;
+ envelope-from=tony.lindgren@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,58 +96,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon Mar 17, 2025 at 7:03 PM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 14/3/25 08:41, Nicholas Piggin wrote:
->> Debugger-driven invalid memory accesses are not guest errors, so should
->> not cause these error logs.
->>=20
->> Debuggers can access memory wildly, including access to addresses not
->> specified by the user (e.g., gdb it might try to walk the stack or load
->> target addresses to display disassembly). Failure is reported
->> synchronously by the GDB protcol so the user can be notified via the
->> debugger client.
->>=20
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>   system/memory.c | 37 ++++++++++++++++++++++---------------
->>   1 file changed, 22 insertions(+), 15 deletions(-)
->>=20
->> diff --git a/system/memory.c b/system/memory.c
->> index 4c829793a0a..960f66e8d7e 100644
->> --- a/system/memory.c
->> +++ b/system/memory.c
->> @@ -1412,18 +1412,23 @@ bool memory_region_access_valid(MemoryRegion *mr=
-,
->>   {
->
-> Alternatively:
->
->          int invalid_mem_mask =3D attrs.debug ? LOG_INVALID_MEM : 0;
+On Mon, Mar 17, 2025 at 06:21:13PM +0800, Chenyi Qiang wrote:
+> 
+> 
+> On 3/17/2025 5:45 PM, Tony Lindgren wrote:
+> > On Mon, Mar 17, 2025 at 03:32:16PM +0800, Chenyi Qiang wrote:
+> >>
+> >>
+> >> On 3/17/2025 2:18 PM, Tony Lindgren wrote:
+> >>> Hi,
+> >>>
+> >>> On Mon, Mar 10, 2025 at 04:18:34PM +0800, Chenyi Qiang wrote:
+> >>>> --- a/system/physmem.c
+> >>>> +++ b/system/physmem.c
+> >>>> @@ -1885,6 +1886,16 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+> >>>>              qemu_mutex_unlock_ramlist();
+> >>>>              goto out_free;
+> >>>>          }
+> >>>> +
+> >>>> +        new_block->memory_attribute_manager = MEMORY_ATTRIBUTE_MANAGER(object_new(TYPE_MEMORY_ATTRIBUTE_MANAGER));
+> >>>> +        if (memory_attribute_manager_realize(new_block->memory_attribute_manager, new_block->mr)) {
+> >>>> +            error_setg(errp, "Failed to realize memory attribute manager");
+> >>>> +            object_unref(OBJECT(new_block->memory_attribute_manager));
+> >>>> +            close(new_block->guest_memfd);
+> >>>> +            ram_block_discard_require(false);
+> >>>> +            qemu_mutex_unlock_ramlist();
+> >>>> +            goto out_free;
+> >>>> +        }
+> >>>>      }
+> >>>>  
+> >>>>      ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+> >>>
+> >>> Might as well put the above into a separate memory manager init function
+> >>> to start with. It keeps the goto out_free error path unified, and makes
+> >>> things more future proof if the rest of ram_block_add() ever develops a
+> >>> need to check for errors.
+> >>
+> >> Which part to be defined in a separate function? The init function of
+> >> object_new() + realize(), or the error handling operation
+> >> (object_unref() + close() + ram_block_discard_require(false))?
+> > 
+> > I was thinking the whole thing, including freeing :) But maybe there's
+> > something more to consider to keep calls paired.
+> 
+> If putting the whole thing separately, I think the rest part to do error
+> handling still needs to add the same operation. Or I misunderstand
+> something?
 
-Oh that's a thing? Would save a level of indent and might look
-nicer. (I guess you have x : y expressions reversed)
+So maybe you suggestion of just a separate clean-up function would work:
 
-Thanks,
-Nick
+new_block->memory_attribute_manager =
+    MEMORY_ATTRIBUTE_MANAGER(object_new(TYPE_MEMORY_ATTRIBUTE_MANAGER));
+if (memory_attribute_manager_realize(new_block->memory_attribute_manager,
+    new_block->mr)) {
+    memory_attribute_manager_cleanup(...);
+    goto out_free;
+}
 
->
->>       if (mr->ops->valid.accepts
->>           && !mr->ops->valid.accepts(mr->opaque, addr, size, is_write, a=
-ttrs)) {
->> -        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_=
-PRIX
->> -                      ", size %u, region '%s', reason: rejected\n",
->> -                      is_write ? "write" : "read",
->> -                      addr, size, memory_region_name(mr));
->> +        if (attrs.debug) {
->> +            /* Don't log memory errors due to debugger accesses */
->> +            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWA=
-DDR_PRIX
->> +                          ", size %u, region '%s', reason: rejected\n",
->> +                          is_write ? "write" : "read",
->> +                          addr, size, memory_region_name(mr));
->> +        }
->>           return false;
->>       }
+> >> If need to check for errors in the rest of ram_block_add() in future,
+> >> how about adding a new label before out_free and move the error handling
+> >> there?
+> > 
+> > Yeah that would work too.
+> 
+> I'm not sure if we should add such change directly, or we can wait for
+> the real error check introduced in future.
 
+Right, not sure either.
+
+Regards,
+
+Tony
 
