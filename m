@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF63C35FF9
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3E4FC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuBqI-00053x-NA; Mon, 17 Mar 2025 10:53:26 -0400
+	id 1tuBqc-0005EK-34; Mon, 17 Mar 2025 10:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuBpk-0004uf-69; Mon, 17 Mar 2025 10:52:54 -0400
+ id 1tuBpz-0004z4-TI; Mon, 17 Mar 2025 10:53:10 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuBpc-00061r-TM; Mon, 17 Mar 2025 10:52:50 -0400
+ id 1tuBpv-00061l-MP; Mon, 17 Mar 2025 10:53:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742223165; x=1773759165;
+ t=1742223184; x=1773759184;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=VJljKNmjPdcPw2FYw9qRNJPbq/zXEvkClaRKs0KyTKs=;
- b=GxyNWaWURLRITaU+a7Je6ty8a3/MouWCg5kZAhdTExZIYp5PDysHgH27
- YO6kU++1pyQjaE76N41ZQRIQ783u9/1jYKpLVxdDXMKLye7BHZT3r/b++
- yYn8J/pVlN71rwcFeQ3brRTUubcwih+cZZ6xy38srRCTp2Z89xWCGfTAt
- cG3XIoEsXBG6ofOuxxqSNSsTrLayKgpx+CnPMJWL7aUZBGVNJ409PZmuV
- Mu6tDCmTj16xyoVY+WYflUSJ0q7KJi4nEkfk4c2ElhybTLcjAicM7c9qG
- eBUAIe60xz3QvFkl7ttWkZFxL9nfx+6IYgzPAKx++2sOZToHPK7DMHM5G w==;
-X-CSE-ConnectionGUID: lEZI2fZoQW2gEQogiVSJ/Q==
-X-CSE-MsgGUID: EhCXD2UJQcGiC4Zr61Q/Eg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="54694593"
-X-IronPort-AV: E=Sophos;i="6.14,254,1736841600"; d="scan'208";a="54694593"
+ bh=jlKXnezCHcjIhH3WjaMUbqvSVZ9t93vIsbszukrJ9VI=;
+ b=aI4vBU5ZJCNcBv+lQsa8kcESs4Ej2gQiXTLmPjFLbTDqUR+NKFBDmOGV
+ 5NNMzmzWbDCMJ6URrLj7dhkzxOXrTkaFb3Xb5PUHvbU/hQEyyMSVJZxX9
+ GySwSXAIwCZziYvvux/7T418oJQ0RjLsx9iw7zH/v8PSnM9rHzck3Z+IG
+ i/U6hdM8N5dBeFCassGcWtK2Z4DcvaXcWXbSyM+baBJ9WjkSauYIhDGXF
+ UOHJDAflb1bmxB3XOQKOvcAtbOMRk8biiwO6RKYq2dMKmde+iJLTxKJj8
+ ZSaY7HNcx+dcTaDbUlqcXdNT9vRHyta6ZiB+gWUvTBNcvHooqB1YxamFi A==;
+X-CSE-ConnectionGUID: l3eGhOZWSjSt6dx6Zh3WlQ==
+X-CSE-MsgGUID: mM7fj2amSWyAPdcCpuaxPQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="54694608"
+X-IronPort-AV: E=Sophos;i="6.14,254,1736841600"; d="scan'208";a="54694608"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2025 07:52:31 -0700
-X-CSE-ConnectionGUID: dt74G+7CQzqd2f396YJjdQ==
-X-CSE-MsgGUID: p4VLoG94Rs2X0h895iR0iw==
+ 17 Mar 2025 07:52:39 -0700
+X-CSE-ConnectionGUID: BgMRYzjmSuWDrG9U2pv3QA==
+X-CSE-MsgGUID: CKovuUqgSwibt5uVUay4gQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,254,1736841600"; d="scan'208";a="126988499"
+X-IronPort-AV: E=Sophos;i="6.14,254,1736841600"; d="scan'208";a="126988526"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 17 Mar 2025 07:52:30 -0700
+ by orviesa004.jf.intel.com with ESMTP; 17 Mar 2025 07:52:38 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 03/17] rust/vmstate: Add a prefix separator ",
- " for the array field in vmstate macros
-Date: Mon, 17 Mar 2025 23:12:22 +0800
-Message-Id: <20250317151236.536673-4-zhao1.liu@intel.com>
+Subject: [PATCH 09/17] rust/vmstate: Fix unnecessary VMState bound of
+ with_varray_flag()
+Date: Mon, 17 Mar 2025 23:12:28 +0800
+Message-Id: <20250317151236.536673-10-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250317151236.536673-1-zhao1.liu@intel.com>
 References: <20250317151236.536673-1-zhao1.liu@intel.com>
@@ -80,36 +80,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fields are separated by ",", so it's necessary to add ", " in array
-field to avoid matching failure.
+The VMState type bound is not used in with_varray_flag().
+
+And for vmstate_struct, Rust cannot infer the type of `num` from the
+call_func_with_field(), so this causes the compiling error because it
+complains "cannot satisfy `_: VMState`" in with_varray_flag().
+
+Note Rust can infer the type in vmstate_of macro so that
+with_varray_flag() can work at there. It is possible that the different
+initialization ways in the two macros cause differences in Rust's
+type inference.
+
+But in fact, the VMState type bound is not used in with_varray_flag()
+and vmstate_varray_flag() has already checked the VMState type, it's
+safe to drop VMState bound of with_varray_flag(), which can fix the
+above compiling error.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/qemu-api/src/vmstate.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/qemu-api/src/vmstate.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 9533b1250fa5..94efbd8bb735 100644
+index a9d97d9a856e..2749e8af2b5a 100644
 --- a/rust/qemu-api/src/vmstate.rs
 +++ b/rust/qemu-api/src/vmstate.rs
-@@ -202,7 +202,7 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
- /// and [`impl_vmstate_forward!`](crate::impl_vmstate_forward) help with this.
- #[macro_export]
- macro_rules! vmstate_of {
--    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
-+    ($struct_name:ty, $field_name:ident $(, [0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
-         $crate::bindings::VMStateField {
-             name: ::core::concat!(::core::stringify!($field_name), "\0")
-                 .as_bytes()
-@@ -435,7 +435,7 @@ macro_rules! vmstate_unused {
- #[doc(alias = "VMSTATE_STRUCT")]
- #[macro_export]
- macro_rules! vmstate_struct {
--    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])?, $vmsd:expr, $type:ty $(,)?) => {
-+    ($struct_name:ty, $field_name:ident $(, [0 .. $num:ident $(* $factor:expr)?])?, $vmsd:expr, $type:ty $(,)?) => {
-         $crate::bindings::VMStateField {
-             name: ::core::concat!(::core::stringify!($field_name), "\0")
-                 .as_bytes()
+@@ -275,7 +275,7 @@ pub const fn with_pointer_flag(mut self) -> Self {
+     }
+ 
+     #[must_use]
+-    pub const fn with_varray_flag<T: VMState>(mut self, flag: VMStateFlags) -> VMStateField {
++    pub const fn with_varray_flag(mut self, flag: VMStateFlags) -> VMStateField {
+         assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) != 0);
+         self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_ARRAY.0);
+         self.flags = VMStateFlags(self.flags.0 | flag.0);
 -- 
 2.34.1
 
