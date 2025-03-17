@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A192C35FF3
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 17:21:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07CBC35FF3
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 17:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuE8o-0003xc-Vz; Mon, 17 Mar 2025 13:20:43 -0400
+	id 1tuEHt-00077K-PO; Mon, 17 Mar 2025 13:30:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tuE8m-0003vE-HN
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:20:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <prvs=1643bdb98=graf@amazon.de>)
+ id 1tuEHj-00073n-Ja
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:29:56 -0400
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tuE8f-0000hJ-PY
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:20:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742232030;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pAkgqrelAe4YIX3NAm9ZTxDn/cN/Kq4AFcPnu3EncxM=;
- b=Kfxs26maWG3Jonz+LpSZY+kwcScpyG66EOmJotIxPqhgWH/GUUx09f+sxwsgZRhUxROQ6Y
- BgwrzUxlNFqQiQYyxliWr48Kowh6PSqZfEczrCicq92OCbzCR/R2WVQVQUwofyuqxpXluw
- 7/su5h7aMoXb/AXGX7uYBsYBibO9Efw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-533-9Znu15tdMr6_y6WuA3sVZg-1; Mon, 17 Mar 2025 13:20:29 -0400
-X-MC-Unique: 9Znu15tdMr6_y6WuA3sVZg-1
-X-Mimecast-MFC-AGG-ID: 9Znu15tdMr6_y6WuA3sVZg_1742232028
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cf44b66f7so17859665e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 10:20:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742232028; x=1742836828;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pAkgqrelAe4YIX3NAm9ZTxDn/cN/Kq4AFcPnu3EncxM=;
- b=IRIr5BTUmYOV+VcdNrXVGsWYdRno91hNsV160q0ZcpFRMQZdphvUYDRAcRJ8usRiSM
- UXEr3W1DxG/zm/hEQcID1qXOlwY8VmgLv8Xp+elsUE3SJq8r6dtFkKp8NfTbI0Hp19jf
- t/prBYIDolEzPoBOAS9IYyL4U7r3PzG7rW15Lu4H8YztYkGVcpPR8U9iSmrW3huBovlI
- wLmPG+Tcoj1Y5ee37G4cob0HvjjigYWO6xSNjgYlWSgWsd+esVE9sPaqsOAckVnv1X90
- baWsV4Uu9wFPbupMmarDLfBX7AgRKiGAZqhjt3D4n4CeQe+gdW/RGTnsYSt9yuV1T1th
- wjGA==
-X-Gm-Message-State: AOJu0YxugknCWgl0HkP/q3GaC2xaUVHBEfgwGC7kyp/InQC6K7OCUPHb
- HvPU8UIGI58ug7bXkgVKIUSgWu3dV7WFeDa2mIsbgYNUDBMOnfr944I1Lstl7v4OrUXZUIC4/eF
- GZ+rHg6dxngA0qsps9NqnwgyIAYZZbMvFQWGytZx1zy2KBdNrPd3t2o1z6nG5B2DORc4PkMcf7x
- hw84kys6O/Zh3nup4c0kd+p2nvCdU=
-X-Gm-Gg: ASbGncvNdFw4PySvn0yNM5JDNdBsLxUrrK/Qpts/dHE0ZVMAxCrZFRpkY9/NL44KfeB
- iQP/iz9vmv3Ra8fJRYOdD0+6SpwnXIfEFL/3ujuCz58/vCIuTq70RUlxbbyKuh8hCqnuOsCagqw
- ==
-X-Received: by 2002:a5d:5983:0:b0:391:231b:8e0d with SMTP id
- ffacd0b85a97d-3996b499f9amr539219f8f.39.1742232028109; 
- Mon, 17 Mar 2025 10:20:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFe7gKAVPP61hBKnKNkDAes+rayUO1PttJbPDctjksYGid1q7NzLltpkrtGr05bU3OzvI4czoK525pnoo9svmo=
-X-Received: by 2002:a5d:5983:0:b0:391:231b:8e0d with SMTP id
- ffacd0b85a97d-3996b499f9amr539195f8f.39.1742232027793; Mon, 17 Mar 2025
- 10:20:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=1643bdb98=graf@amazon.de>)
+ id 1tuEHY-00021Q-O9
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:29:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1742232584; x=1773768584;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=9CsYtDFxMspjRFQ4cDjdb2WUgsmiSWilOydzAZInoE8=;
+ b=GIdRqK8KtDqBpLakfvqgRjSxe8Zg15yRbaYk4tmaRdYeuQRJACQTrM0M
+ rnbxFQ+9Mdn8lJGi+nSq/RDeifPCeCdIBT4zQIBogxd+FvxWkWQ+XJN5/
+ rm2CaqWNWb1pqiR9KA23OcG1qzPQE3wBUEhupGOhzS769a3aHicMfCyZO Q=;
+X-IronPort-AV: E=Sophos;i="6.14,254,1736812800"; d="scan'208";a="481114960"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-6002.iad6.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2025 17:29:29 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [10.0.21.151:25933]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.52.235:2525]
+ with esmtp (Farcaster)
+ id fdf63275-6946-4907-8eb7-a8e70f163ea7; Mon, 17 Mar 2025 17:29:28 +0000 (UTC)
+X-Farcaster-Flow-ID: fdf63275-6946-4907-8eb7-a8e70f163ea7
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Mon, 17 Mar 2025 17:29:28 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Mon, 17 Mar 2025
+ 17:29:24 +0000
+Message-ID: <6684f169-29d6-4f46-b274-1efd4c191b21@amazon.com>
+Date: Mon, 17 Mar 2025 18:29:22 +0100
 MIME-Version: 1.0
-References: <20250317151236.536673-1-zhao1.liu@intel.com>
-In-Reply-To: <20250317151236.536673-1-zhao1.liu@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 17 Mar 2025 18:20:15 +0100
-X-Gm-Features: AQ5f1JpXue-MvO9yOQMLIGNJiq_Ly6h2D9fE93JjCgkuem8P4bzX9thSk8Wkpr0
-Message-ID: <CABgObfZaGU9C47BemJQubhmwaOiDDPaWVBC=ebAxGvU_NiRU-w@mail.gmail.com>
-Subject: Re: [PATCH 00/17] rust/vmstate: Clean up, fix, enhance & test
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Gerd Hoffman <kraxel@redhat.com>
+CC: Ani Sinha <anisinha@redhat.com>, =?UTF-8?B?SsO2cmcgUsO2ZGVs?=
+ <joro@8bytes.org>, Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Igor
+ Mammedov" <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ <qemu-devel@nongnu.org>
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+ <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D044UWB001.ant.amazon.com (10.13.139.171) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=52.95.49.90;
+ envelope-from=prvs=1643bdb98=graf@amazon.de; helo=smtp-fw-6002.amazon.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,25 +106,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 17, 2025 at 3:52=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
-> Hi,
+
+On 17.03.25 10:56, Gerd Hoffman wrote:
+> On Fri, Mar 14, 2025 at 03:50:19PM +0100, Alexander Graf wrote:
+>> On 14.03.25 15:08, Gerd Hoffman wrote:
+>>>     Hi,
+>>>
+>>>>> Ok, assuming we allow the guest submit a IGVM image (which makes sense
+>>>>> indeed, otherwise we'll probably end up re-inventing IGVM).  How will
+>>>>> the kernel hashes be handled then?  I assume they will not be part of
+>>>>> the igvm image, but they must be part of the launch measurement ...
+>>>> The kernel hashes must be embedded in the IGVM image by the time you invoke
+>>>> vmfwupdate. That means when you generate the FUKI, you take 4 inputs:
+>>>> Generic firmware image, kernel, initramfs, cmdline. Out of those, you
+>>>> generate and embed an IGVM image that consists of the firmware image as well
+>>>> as the kernel hash page.
+>>> If your input firmware image already is an IGVM (say coconut), what is
+>>> supposed to happen?
+>> I'll leave the details to Jörg on how he envisions it, but IIUC the flow for
+>> a "readily assembled IGVM" is different. In case of a COCONUT-SVSM IGVM, you
+>> expect chaining of trust. So the SVSM implements a TPM which then the OS
+>> would use with measured boot etc etc.
+> Well, I don't consider igvm being useful for svsm only.  Shipping
+> standard edk2 as igvm looks useful to me.  Main benefit: pre-calculate
+> launch measurements without having to know qemu internals.
 >
-> This series is in preparation for HPET migration support (in particular,
-> to support varray and vmstate_validate), and it also cleans up and fixes
-> the current vmstate! However, there is still the gap from being a =E2=80=
-=98stable=E2=80=99
-> vmstate.
+>> It's a fundamentally different concept from FUKI.
+> Hmm?  IGVM is just a different way to ship the firmware (and optionally
+> more).
+>
+>> But it could share the same vmfwupdate mechanism to load.
+> Yep.  But we have to sort the details.
+>
+>   (1) How we are going to load kernel + initrd in case the firmware is
+>       igvm?  Just update the igvm to also include linux kernel and
+>       initrd (see parallel reply from Jörg)?  If so, how does the
+>       launched firmware find the kernel + initrd?
+>       While digging around in the igvm spec I've seen there is the
+>       concept of 'parameters'.  Can this be used to pass on the memory
+>       location of kernel + initrd + cmdline?  Maybe the kernel hashes too?
 
-Already a great improvement!
 
-I quickly went through things that I was planning to do in a slightly
-different way, but overall this is great work.  Give me a day or two
-to finish reviewing and testing, most of it can already be applied to
-qemu-rust or even to 10.0.
+I don't know. But even if not, the only thing customers can actually 
+reason about is a combined hash of firmware + kernel + initrd + cmdline. 
+Whether we assemble that using an edk2 IGVM plus parameters or by 
+generating an IGVM from a "proprietary format" such as the edk2 BIOS 
+blob plus a generated kernel hash page does not really make a difference 
+from the user's point of view.
 
-Thanks,
+The flow will be the same: You use ukify to generate a FUKI from source 
+files and get a FUKI plus precalculated hashes.
 
-Paolo
 
+>   (2) Will the igvm be generated on the fly from FUKI data?  Or should
+>       the distros ship igvm images with firmware + kernel + initrd?
+
+
+If your distro embraces UKIs today, they should IMHO also embrace 
+prebuilt FUKIs. Whether they are building their IGVM on the fly but 
+precalculate the hash for that on-the-fly generated image ahead of time 
+or whether they embed an IGVM is not terribly important I think.
+
+The main difference between the 2 approaches is that dynamic generation 
+allows you to have multiple different environment builds in a single 
+FUKI. That way you can for example support UKI addons [1]
+
+
+>   (3) How we are going to handle uki add-ons?
+
+
+You can only (sensibly) handle them with on the fly generation.
+
+
+>   (4) Do we want keep the region list?  Or declare that igvm should be
+>       used in case a single region is not enough?  Or even go all-in and
+>       use IGVM exclusively?
+
+
+IGVM would replace the region list I think. Before making that jump, I 
+would like to see it actually work though.
+
+
+Alex
+
+
+[1] 
+https://archive.fosdem.org/2024/events/attachments/fosdem-2024-2024-uki-addons-and-extensions-safely-extending-ukis-kernel-command-line-and-initrd/slides/22125/Uki_addons_O97iYns.pdf
+
+
+>
+> take care,
+>    Gerd
+>
 
