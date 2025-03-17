@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA35C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 17:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A85C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 17:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuEPA-0002pc-8n; Mon, 17 Mar 2025 13:37:36 -0400
+	id 1tuEWU-0004rf-F3; Mon, 17 Mar 2025 13:45:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuEP8-0002pO-D3
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:37:34 -0400
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ id 1tuEVo-0004VX-BI
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:44:33 -0400
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuEP6-0003pd-1t
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:37:34 -0400
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-4766631a6a4so47690451cf.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 10:37:31 -0700 (PDT)
+ id 1tuEVg-0005JA-VD
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 13:44:28 -0400
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-7c0e135e953so481810585a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 10:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742233050; x=1742837850; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742233459; x=1742838259; darn=nongnu.org;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=9mOuqXKun01F04BN3HX7j+CBoxZIHG2hV5VcBc0giaQ=;
- b=H4WGa8sBQelK+FRTkp0bFRsXWYzXYj/NeRtBVqad1Rs8mHFcMnZ6nCf6Sz++vDkT0J
- EEduQ2q9sle9f2F9qYQ20S27F9LY1t0gXPGp1Z7GKW8KIxsHhr0ooC2GNQsKO8x1jik3
- R5wjgblxpRnb2KvpVpzlafUk+qUF/VEhmxN3bJQJbzfLsTnGGEkZ35/gkoqzcNSLTeRW
- apAJDlqz29PReof+8MgcUl9aJ0A2k6yIVDIDVjbnAfDxuN7+61e74WoacoU6YH0rir45
- D5DZgQFUfLF45pJNRQc8LsNEPICelddQNGY8FDTenG6oTjR2YDqGCfKd9MtASQNSy2pL
- E1SA==
+ bh=LhhIF/fNCPgSPXXaDlf6TA460H+OiZEgNGTB9jMCU0A=;
+ b=Skp4ZePLGAxGbwxd/qe25SNAMbWTelHuAodgaj/96NY2G53vekpvQ14wN0bOraFAeD
+ tPu52eqj5g/jW5oWmklQcTII2oamNHU1tsa5nM0mFtTXk7WRxYsXu1NEs5s4Vpd7tRdn
+ eBUvSwzRpofRyMZ4ZPiBqTMhAsQ1SdmLLwUFp26z7u30AE4rr6+qGHaUFi2Md4nNakUt
+ 78LRIws68dMyFpIad0FMWkXXmyzV4FrGEkGufKTTOMIU7xIYr5cJOo1ujTI3nHDbxgTe
+ SZS6gf+Q8ad4QcGTrKR8G2ZlJy2FPb8DisBoVmfVtUPP8JedJ/H4NRbpmec6B5k0bv3G
+ 5fZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742233050; x=1742837850;
+ d=1e100.net; s=20230601; t=1742233459; x=1742838259;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9mOuqXKun01F04BN3HX7j+CBoxZIHG2hV5VcBc0giaQ=;
- b=CZye4INcQ7QUI4QuHYsogxOeLAkk6LhUYgyymmIzRL030oSrwAzHrUQ3gQBWtZpvn8
- URvT0Tgjcj231dgE7t35ECMkHkiA/MS7+AKzT9e7MCShBGd5MnmEH9GVi/hDER8FCRUN
- qo1Xwl2EANecYhVXWYrbigKyEB9kZYQQtoWpZjYacrZ1XV6b401tSzVfr5x4n4Th/wg8
- dDAfUe+gvh2qa/qUqzK87ky4jN9ZSw6pS4tej2MF+6BTcDsgjvrQD6kQkj/QGVpHeKEg
- ILcyLcNw4lSvTdu2cXBzkdGq0mMg6afQwFdhr3FQpkGES76MINh/rkrR+gaW1KgxX0FD
- GWIQ==
+ bh=LhhIF/fNCPgSPXXaDlf6TA460H+OiZEgNGTB9jMCU0A=;
+ b=CEO2DzocVpCwWdfav3TGiDabj7FjLKQsPo4BUpKkjyBw9KWtbhwGI6iVPg4sRy94ve
+ N5Rf5PBgzu32IS3rgRx8EdUO04aFVYgLPJj7oLVaQM+WfmGjzzY86wgm1Qrl8BOk0m7u
+ STQ9ZoVld9wzuOktB2EGz6c/cBczOVDPJvuQCO4da0rj7Y+SdhzCH7Ok/kcXbQpcxFwy
+ UwQc/PdfEeOjswVXNMd6hHY2QbUUE7EU76eMThEwnd1aYvzAPGh3lk80zr/9iol+ZsBk
+ 19zvw/H3B1Qn2KH92lpeNiiNIadCJm9h5FVJ071XcdUwSukvqHKDltRTaE0ooyH/629I
+ 8Kkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURUHW4GDEPeSqNseNlPXjQEW+AkGrrouNBWkkAPYB2DItTOeR0XjYaaStBP9nQ16ykixbJVIQEec4p@nongnu.org
-X-Gm-Message-State: AOJu0YwmKUaqBx+Mo7xgIqSdOF9uv7nhpqU2avC4GcgSngNcQLzSWkJq
- 0UVsqnxXCkxZ0e8YJP/dTnR6wmAfmU06wQRWh0MMFQpepHKeYU3l
-X-Gm-Gg: ASbGncvsjtljTeBx+Sye9JLLja5KPryfnv6LSzzbEAbIxXpBDHbBuMWQz47tvfAPnDY
- v+YUUZKn3jZdWlCZNf4zK4N1Utuf9U7aFKiIjOZpkXrLykpVMf8J9bxtr8Wm1k57pSxG0pxyymj
- b3klAJeal1ZsmzOT1rLVhkXKz4KG1tKwGiH23E6YWME9fVEeH9U5ibBcOwI/vf8dKCS8yEctF20
- 0VPa9lnvA2aRVPEP7QKU/kXZfoPVrh4b5/OCnt6XwOWBQjzS1rW0PtiWe0HXUgZCfVnQGdGYqrD
- uowijAlu8ih3eTyjTQZaYTQMNw69vzLftzaWjPaZI5VWzLpVwiC4vfhIBDAXB1s=
-X-Google-Smtp-Source: AGHT+IHhSXXc4eL3wc4AfnsaeJcbxFvIvce63n5moBn+arf/aulm6XoiRU8OZ86ETxvrIXQ0ReHPSg==
-X-Received: by 2002:a05:622a:4a8f:b0:473:8698:de12 with SMTP id
- d75a77b69052e-476fc970535mr6646001cf.4.1742233050476; 
- Mon, 17 Mar 2025 10:37:30 -0700 (PDT)
+ AJvYcCUnJOOb4clebj7za8YzSjie7apFvYfW6zEDUaUd85XCZDqm1eOEGrjsAByySjuoX4JPRR5ISae2QAg9@nongnu.org
+X-Gm-Message-State: AOJu0YxHqbJRo/ebnTv7Km+l7hrt7EcH5Ie/7n/GotLqJBwstO42A1zS
+ BQeNiLtvlZm5GQFqtkK4NtZQaXLndRVvrbUlFRGSRPwcjJi8kfQA
+X-Gm-Gg: ASbGncssWzBruxCGVz8gMrwVH+EUXfeEuan5ZbS39qdzuRY7p7RpDWY89WZte7ei4v8
+ RfWF2F+1PsmoItuC3B4Wk2TaIG8Vp7aX1+mjBNZS1kfRn6h2DWt468P+rcgLNqspC1Qv0V7wxMT
+ 4kw0RFooSt5XkBmjCtlrBaxboKeBBusWD6TpMjm6wmOrsnXuRlh6FETTHYOhhgOTfn2SR+R8b8o
+ v7tS6yBXAFX9Tj97rilsAc7z0/8ng6OVnBh9ZamEEn8A/BTtbXxPSdcLQBcMZSthp8Almeeuc3p
+ /tVDIhXLlwvso/pJcyI4Kt9I3ytEdW5D8ZnPcUBFqGp4t1cn5ODtbHNzbZpWtG4=
+X-Google-Smtp-Source: AGHT+IHDsRwITGiNLHF6ZilqjXpsAjLOfECclDCoabFkYyuaQLuqSL6FONhGQZ8Qn+y/vSsuwwtlMQ==
+X-Received: by 2002:a05:620a:d8b:b0:7c5:3b52:517d with SMTP id
+ af79cd13be357-7c59b2c436emr80366885a.54.1742233458765; 
+ Mon, 17 Mar 2025 10:44:18 -0700 (PDT)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:3131:60d1:4874:e2c7])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-476bb673824sm57856881cf.45.2025.03.17.10.37.28
+ af79cd13be357-7c573c5205bsm616222985a.3.2025.03.17.10.44.17
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 17 Mar 2025 10:37:29 -0700 (PDT)
+ Mon, 17 Mar 2025 10:44:18 -0700 (PDT)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -74,22 +74,22 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-6-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052845.1012069-6-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 05/39] target/hexagon: Implement modify SSR
-Date: Mon, 17 Mar 2025 12:37:28 -0500
-Message-ID: <017101db9763$41ae4ca0$c50ae5e0$@gmail.com>
+ <20250301052845.1012069-7-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052845.1012069-7-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 06/39] target/hexagon: Implement {g,s}etimask helpers
+Date: Mon, 17 Mar 2025 12:44:16 -0500
+Message-ID: <017301db9764$35236f00$9f6a4d00$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQH/in6LsvITJWA=
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQIo/XVlsvDY1MA=
 Content-Language: en-us
 X-Antivirus: Norton (VPS 250317-4, 3/17/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x832.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x736.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,211 +123,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 05/39] target/hexagon: Implement modify SSR
->=20
+> Subject: [PATCH 06/39] target/hexagon: Implement {g,s}etimask helpers
+> 
 > From: Brian Cain <bcain@quicinc.com>
->=20
-> The per-vCPU System Status Register controls many modal behaviors of =
-the
-> system architecture.  When the SSR is updated, we trigger the =
-necessary
-> effects for interrupts, privilege/MMU, and HVX context mapping.
->=20
+> 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/cpu_helper.c | 100
-> +++++++++++++++++++++++++++++++++++-
->  1 file changed, 99 insertions(+), 1 deletion(-)
->=20
-> diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
-> index e151c6335a..3e2364a7b0 100644
-> --- a/target/hexagon/cpu_helper.c
-> +++ b/target/hexagon/cpu_helper.c
-> @@ -14,6 +14,8 @@
->  #else
->  #include "hw/boards.h"
->  #include "hw/hexagon/hexagon.h"
-> +#include "hex_interrupts.h"
-> +#include "hex_mmu.h"
->  #endif
->  #include "exec/exec-all.h"
->  #include "exec/cpu_ldst.h"
-> @@ -69,9 +71,105 @@ void
-> hexagon_set_sys_pcycle_count(CPUHexagonState *env, uint64_t cycles)
->      g_assert_not_reached();
->  }
->=20
-> +static MMVector VRegs[VECTOR_UNIT_MAX][NUM_VREGS];
-> +static MMQReg QRegs[VECTOR_UNIT_MAX][NUM_QREGS];
-
-This won't scale for a system with multiple Hexagon instances.  See =
-discussion on how to handle shared resources.
-
-> +
-> +/*
-> + *                            EXT_CONTEXTS
-> + * SSR.XA   2              4              6              8
-> + * 000      HVX Context 0  HVX Context 0  HVX Context 0  HVX Context =
-0
-> + * 001      HVX Context 1  HVX Context 1  HVX Context 1  HVX Context =
-1
-> + * 010      HVX Context 0  HVX Context 2  HVX Context 2  HVX Context =
-2
-> + * 011      HVX Context 1  HVX Context 3  HVX Context 3  HVX Context =
-3
-> + * 100      HVX Context 0  HVX Context 0  HVX Context 4  HVX Context =
-4
-> + * 101      HVX Context 1  HVX Context 1  HVX Context 5  HVX Context =
-5
-> + * 110      HVX Context 0  HVX Context 2  HVX Context 2  HVX Context =
-6
-> + * 111      HVX Context 1  HVX Context 3  HVX Context 3  HVX Context =
-7
-> + */
-
-This is different from what the HVX PRM says.  It only specifies what XA =
-values  4, 5, 6, 7 mean.
-
-Here is what it says:
-The HVX scalar core can contain any number of hardware threads greater =
-or equal to the number
-of vector contexts. The scalar hardware thread is assignable to a vector =
-context through per-
-thread SSR:XA programming, as follows:
-- SSR:XA =3D 4: HVX instructions use vector context 0.
-- SSR:XA =3D 5: HVX instructions use vector context 1, if it is =
-available.
-- SSR:XA =3D 6: HVX instructions use vector context 2, if it is =
-available.
-- SSR:XA =3D 7: HVX instructions use vector context 3, if it is =
-available.
-
-> +static int parse_context_idx(CPUHexagonState *env, uint8_t XA) {
-> +    int ret;
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-
-You should assert that cpu->hvx_contexts is in { 2, 4, 6, 8 }.  This =
-will future proof against changes to the hardware as well as protect =
-against bad command-line settings.
-
-> +    if (cpu->hvx_contexts =3D=3D 6 && XA >=3D 6) {
-> +        ret =3D XA - 6 + 2;
-> +    } else {
-> +        ret =3D XA % cpu->hvx_contexts;
-> +    }
-> +    g_assert(ret >=3D 0 && ret < VECTOR_UNIT_MAX);
-> +    return ret;
-> +}
-> +
-> +static void check_overcommitted_hvx(CPUHexagonState *env, uint32_t
-> ssr)
-> +{
-> +    if (!GET_FIELD(SSR_XE, ssr)) {
-> +        return;
-> +    }
-
-What does SSR_XE indicate?
-
-> +
-> +    uint8_t XA =3D GET_SSR_FIELD(SSR_XA, ssr);
-> +
+>  target/hexagon/op_helper.c | 31 +++++++++++++++++++++++++++++--
+>  1 file changed, 29 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+> index 9f79b1a20c..83088cfaa3 100644
+> --- a/target/hexagon/op_helper.c
+> +++ b/target/hexagon/op_helper.c
+> @@ -1468,12 +1468,39 @@ void HELPER(resume)(CPUHexagonState *env,
+> uint32_t mask)
+> 
+>  uint32_t HELPER(getimask)(CPUHexagonState *env, uint32_t tid)  {
+> -    g_assert_not_reached();
 > +    CPUState *cs;
 > +    CPU_FOREACH(cs) {
-> +        CPUHexagonState *env_ =3D cpu_env(cs);
-
-This underscore is confusing.  Use a full name such as thread_env.
-
-> +        if (env_ =3D=3D env) {
-> +            continue;
-> +        }
-> +        /* Check if another thread has the XE bit set and same XA */
-> +        uint32_t ssr_ =3D arch_get_system_reg(env_, HEX_SREG_SSR);
-
-Ditto
-
-> +        if (GET_SSR_FIELD(SSR_XE2, ssr_) && GET_FIELD(SSR_XA, ssr_) =
-=3D=3D XA) {
-
-The comment says check the XE bit but the code checks XE2.  Also, note =
-the XE check on the current thread above.
-
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                    "setting SSR.XA '%d' on thread %d but thread"
-> +                    " %d has same extension active\n", XA, =
-env->threadId,
-> +                    env_->threadId);
+> +        HexagonCPU *found_cpu = HEXAGON_CPU(cs);
+> +        CPUHexagonState *found_env = &found_cpu->env;
+> +        if (found_env->threadId == tid) {
+> +            target_ulong imask = arch_get_system_reg(found_env,
+> HEX_SREG_IMASK);
+> +            qemu_log_mask(CPU_LOG_INT, "%s: tid %d imask = 0x%x\n",
+> +                          __func__, env->threadId,
+> +                          (unsigned)GET_FIELD(IMASK_MASK, imask));
+> +            return GET_FIELD(IMASK_MASK, imask);
 > +        }
 > +    }
-> +}
-> +
->  void hexagon_modify_ssr(CPUHexagonState *env, uint32_t new, uint32_t
-> old)  {
-> -    g_assert_not_reached();
-> +    g_assert(bql_locked());
-> +
-> +    bool old_EX =3D GET_SSR_FIELD(SSR_EX, old);
-> +    bool old_UM =3D GET_SSR_FIELD(SSR_UM, old);
-> +    bool old_GM =3D GET_SSR_FIELD(SSR_GM, old);
-> +    bool old_IE =3D GET_SSR_FIELD(SSR_IE, old);
-> +    uint8_t old_XA =3D GET_SSR_FIELD(SSR_XA, old);
-> +    bool new_EX =3D GET_SSR_FIELD(SSR_EX, new);
-> +    bool new_UM =3D GET_SSR_FIELD(SSR_UM, new);
-> +    bool new_GM =3D GET_SSR_FIELD(SSR_GM, new);
-> +    bool new_IE =3D GET_SSR_FIELD(SSR_IE, new);
-> +    uint8_t new_XA =3D GET_SSR_FIELD(SSR_XA, new);
-> +
-> +    if ((old_EX !=3D new_EX) ||
-> +        (old_UM !=3D new_UM) ||
-> +        (old_GM !=3D new_GM)) {
-> +        hex_mmu_mode_change(env);
-> +    }
-> +
-> +    uint8_t old_asid =3D GET_SSR_FIELD(SSR_ASID, old);
-> +    uint8_t new_asid =3D GET_SSR_FIELD(SSR_ASID, new);
-> +    if (new_asid !=3D old_asid) {
-> +        CPUState *cs =3D env_cpu(env);
-> +        tlb_flush(cs);
-> +    }
-> +
-> +    if (old_XA !=3D new_XA) {
-> +        int old_unit =3D parse_context_idx(env, old_XA);
-> +        int new_unit =3D parse_context_idx(env, new_XA);
-
-Check that old_unit !=3D new_unit.  Per the table above, different XA =
-values can point to the same unit.  For example, if cpu->hvx_contexts is =
-2, the XA=3D0 and XA=3D2 both point to context 0.
-
-> +
-> +        /* Ownership exchange */
-> +        memcpy(VRegs[old_unit], env->VRegs, sizeof(env->VRegs));
-> +        memcpy(QRegs[old_unit], env->QRegs, sizeof(env->QRegs));
-> +        memcpy(env->VRegs, VRegs[new_unit], sizeof(env->VRegs));
-> +        memcpy(env->QRegs, QRegs[new_unit], sizeof(env->QRegs));
-
-What does the hardware do?  Does it clear the context, or is that the =
-OS'es job?
-
-If the hardware leaves the context alone, the above should be
-1) Copy env->{VQ}Regs to old_unit
-2) Copy new_unit to env->{VQ}Regs
-
-Should you check SSR_EX before doing these copies?
-
-Do you need to do anything when SSR_EX changes?
-
-> +
-> +        check_overcommitted_hvx(env, new);
-> +    }
-> +
-> +    /* See if the interrupts have been enabled or we have exited EX =
-mode */
-> +    if ((new_IE && !old_IE) ||
-> +        (!new_EX && old_EX)) {
-> +        hex_interrupt_update(env);
-> +    }
+> +    return 0;
 >  }
->=20
->  void clear_wait_mode(CPUHexagonState *env)
+> 
+>  void HELPER(setimask)(CPUHexagonState *env, uint32_t pred, uint32_t
+> imask)  {
+
+The name pred sounds like a predicate register.  Use tid instead.
+
+> -    g_assert_not_reached();
+> +    CPUState *cs;
+> +
+> +    BQL_LOCK_GUARD();
+> +    CPU_FOREACH(cs) {
+> +        HexagonCPU *found_cpu = HEXAGON_CPU(cs);
+> +        CPUHexagonState *found_env = &found_cpu->env;
+> +
+> +        if (pred == found_env->threadId) {
+> +            SET_SYSTEM_FIELD(found_env, HEX_SREG_IMASK, IMASK_MASK,
+> imask);
+> +            qemu_log_mask(CPU_LOG_INT, "%s: tid %d imask 0x%x\n",
+> +                          __func__, found_env->threadId, imask);
+> +            hex_interrupt_update(env);
+
+Shouldn't this be found_env?
+
+> +            return;
+> +        }
+> +    }
+> +    hex_interrupt_update(env);
+
+Do you need to update if the thread wasn't found?
+
+>  }
+> 
+>  static bool handle_pmu_sreg_write(CPUHexagonState *env, uint32_t reg,
 > --
 > 2.34.1
 
