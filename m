@@ -4,106 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA4B2C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 16:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769B8C35FF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 16:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuD1h-0008PX-Ti; Mon, 17 Mar 2025 12:09:18 -0400
+	id 1tuD1Q-000889-3N; Mon, 17 Mar 2025 12:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuD0x-0007yK-J9
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:08:32 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuD0v-0007xG-7S
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:08:31 -0400
+Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuD0u-0002oU-C7
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:08:30 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-223fb0f619dso76051135ad.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 09:08:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuD0s-0002oL-OE
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:08:28 -0400
+Received: by mail-qv1-xf30.google.com with SMTP id
+ 6a1803df08f44-6ddcff5a823so32562146d6.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 09:08:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742227705; x=1742832505; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mzbTl5nkQKFBnmZRI2ae2XnEho9KAwozFu9d7AODj48=;
- b=QTaKELa8fDaj2sCINvLexXtsdrZeFVmZEH4Hy1ZpFL72aZHCdiHmkaQNjlUGuH7oAv
- ejg/Lv51tspbEpcHJulFQphHJMFirfy+IOgbVywLhVcY7xLq4lFOcLSrJ/uLZonxhCi5
- 9Pu60I4hRmbq7xKzl3CRkZmDlkTzndFIl7angZd3e6hqkm/gWZXwbe/IbdLDzK7oNxbo
- s3vNhCLOIAz5ydCIrhoxnhjVx7LyXnqD6X0dUSMKJH6IOS8C5Lu23hUvRd9r+tBaUl0n
- kLYKCZmrFrcO/orWGMAkyWRioGtZtlKVDOpOGCvqLuWjeke7mUhLLSfQGdkFE4PMpKf/
- w3Mg==
+ d=gmail.com; s=20230601; t=1742227703; x=1742832503; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IgdEPjlewsmW+2amy1A1G3R6y5MEZyL8GrPsazu3OYE=;
+ b=LvrS+e7TvTuke7bh4bA1Sgkem/rAtAaX/zM1y00FkP6c8dOZcdvvF53i0JfxOVyCfj
+ lC8uC26HZ1Fz1E/S8TqKQta9YdUsJM7MJ/Lrhdsd9ViX73Op2dj4J96A2aNrf9V268L8
+ LQFBqK82FR3WsIbpVviPXLCsIa0pBYFc9yTcdJcEFPjL1Kd0M8Ex49FOKYdT3D8G/HOC
+ 4yRKvzOK2E6+/cFHZ/LcSEFNxnHFRybTzF221UrjmWYiNAAVLz9V73fNIT8qyCl/Bgfp
+ HswkKpI6OGnNdj62FtT1uJM3KRtRNG+jdTgKVaJHkr6DlLrM9ea6WLTk4iwXkOTPiLY0
+ 9Tfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742227705; x=1742832505;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mzbTl5nkQKFBnmZRI2ae2XnEho9KAwozFu9d7AODj48=;
- b=sLBb2CmDpYl986yDKDLansB2Jal2LayvNNyAaI2q8kaWD8LdsO3yf33InM2IRRGK8e
- ZYVsXXTl9brgCSh1XArwBTw6SveYqlB+L7ttoFncu5KlQqxV6umjUa94oTHB5K7ZKkbo
- 4LvYWlsqLGWe+ublXVPWYmJ1SXV2sAGhbwY+zaoWlZJe4oGdNvVTMAdkD6zE8LiUIj+S
- qXzrI4qsC13Hu870dISzFi4ICNdqZxsz4V1w6DSnWSO0Cp+cQmpXBWqLH+wQV3wLPoGv
- wkrPHfsLdeF6/2EvXM6s7ZLAW2iWQlZFURej/hVGxMXwJ6W4xM5QqxyW32GgNFkI2Rnu
- dacA==
+ d=1e100.net; s=20230601; t=1742227703; x=1742832503;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IgdEPjlewsmW+2amy1A1G3R6y5MEZyL8GrPsazu3OYE=;
+ b=ZCjGptMn/WHH5lbvbS6fuoisNCCf9AOkxv6F6fveDlMAYD9C5+Pr88vlw1Q42TRDaf
+ xXaQ1U0ECsDG+1g+p6G0vN15yBGL021rrQWwmrpHEobS1UZx6f7mvb5855WRon5WExev
+ I7WrwUWaNuMAxQfebmz2SPFJQSuGB1oLx4BTnRvrOOlb3z5BHDByCjD1Va4j94aPFhiL
+ NdMlAtP13Ngl4me1SR3100kTQFeJhGezGzxRvAO5Q/P9ugutZoRgkeIjY/qBLYhlIbdW
+ KM8wP9vWM8p5yeho74u31k51Y9ZShhTx6NKdrwL9Q4yMNjMrIjuLGIk6OU7IMu8GTIXT
+ 07bg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/+bYO/XR08Qusir2yfCnV5jGczg06RVVdBrGSq5ZJ5PS7sJ7BsxojilCV7+NeATnqyIdW87yvWY89@nongnu.org
-X-Gm-Message-State: AOJu0Yzej7OeXu7B9w0p+bVXSuOJl9Cxzy7njbwF6BcqEqs80ANKMv/1
- Ed9iSRnh2Ms2mRS4Oaw16oP2yrWNmesK7RTi10HjJyoe23V5yZHjQHsDXQfYSgY=
-X-Gm-Gg: ASbGncvoZ4p6BK0N1qQeOcAYr0G0HYKIsIE4JvW3VBpjCNnO8qjx0Xo5NMsZkAZxHN8
- l4ENlH2lTwS3fXrhK9Kz73yl+C1Mho4qzi6k3BX4mcPQ3yfEcgsHg49elknOiRObAIxNIAzWEjv
- c20O97B7zA79SNvaG6Xq+f8h4YKJg1jl9rfC6PAjgB54xtIr/HkQyydcTasDxymlyGj7Rmrl+cv
- fBHegdkd4EKOcyEI63E17I1LjbXq533J8rTUFM6gu4tnZOlOM8V4wTDFxHBYuhLmP63mDMB7rP9
- xCikaO2kQf0xNJ4qN//2GX5xIcdUH/xIrMJjgpmG/VqUaB7Qv7j4l1YGNw==
-X-Google-Smtp-Source: AGHT+IF6KgkWQt4kB3+J3NVrqV33E3W11zYKhfEgS1LyTWV2K7KDq8lWeWA7BEGG4QAbFg5GBaiRXg==
-X-Received: by 2002:a05:6a20:cf8a:b0:1f5:80a3:b006 with SMTP id
- adf61e73a8af0-1f5c1201c3fmr19005019637.21.1742227704759; 
- Mon, 17 Mar 2025 09:08:24 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ AJvYcCVU/OF+x4O8LqWq6O96fB5XgOsgFpdFDQ/LKbb7Kj9vhwHO/0TTVkQFHoZiRN7LvP6C/nTKPm6CYr7K@nongnu.org
+X-Gm-Message-State: AOJu0YzcZf1+ic6V5Y4zRwKarpzrsLSmKyfrIxUXpG11PRhu+4XZ/eUk
+ sC04mkQ2ZRhkg7291hv+uau/wH200y+XwRlaD0K4I2r33MP6Im+v
+X-Gm-Gg: ASbGncuO8kyU9BccjYNwbH9NV5CIRHMP4dUQ4AyoyTgBR0FmEFwvdaFcfAK7GFN6M5A
+ dXg4Yij/SoEq283BRXP+Vt/BCAFO0WvOxQQm+z4frlVgFB322DulZ0AV3BRZ1XBAQPcSkLVHlTE
+ zQUm2c2XACkNQKrjSiozPi9jmeit0k3j/awzdgtjanW12iwzEfEIDDZrtwjYpAGqNbfxlhRcvez
+ EvAloTCxU3xeuNwESZg/Hbo9rfAipnh6iZn3/1heJizQnz6sbkpCqdF13c/wpsxTKNyRvK0zSTY
+ JwIk25hw1IRVizLWTUptx/LZjPd/L50DP40z4qzVugp3RpZ99KdVk11k2VtWUPs=
+X-Google-Smtp-Source: AGHT+IHF9Xb1jPcLradIx+Ry8ouCds6/t1csBkOWpdPNbNuDeOZqylT5kMSYaRJU8rqJb2dPYmxLGg==
+X-Received: by 2002:a05:6214:cc7:b0:6e8:9cd3:80d5 with SMTP id
+ 6a1803df08f44-6eaea9f6459mr185043366d6.13.1742227703037; 
+ Mon, 17 Mar 2025 09:08:23 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:3131:60d1:4874:e2c7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56ea7c718sm7406992a12.62.2025.03.17.09.08.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 09:08:24 -0700 (PDT)
-Message-ID: <7430b4de-284b-46b9-b29d-f018d0639431@linaro.org>
-Date: Mon, 17 Mar 2025 09:08:23 -0700
+ 6a1803df08f44-6eade330c73sm56050876d6.89.2025.03.17.09.08.21
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 17 Mar 2025 09:08:22 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
+ <20250301052845.1012069-2-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052845.1012069-2-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 01/39] target/hexagon: Implement ciad helper
+Date: Mon, 17 Mar 2025 11:08:21 -0500
+Message-ID: <016201db9756$cee11240$6ca336c0$@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/17] exec/memory.h: make devend_memop "target
- defines" agnostic
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
- Paul Durrant <paul@xen.org>, Peter Xu <peterx@redhat.com>,
- alex.bennee@linaro.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-riscv@nongnu.org,
- manos.pitsidianakis@linaro.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Anthony PERARD <anthony@xenproject.org>, kvm@vger.kernel.org,
- xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Weiwei Li <liwei1518@gmail.com>
-References: <20250314173139.2122904-1-pierrick.bouvier@linaro.org>
- <20250314173139.2122904-6-pierrick.bouvier@linaro.org>
- <d5e2aa98-5b9c-4521-927f-86585b7b2cfa@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <d5e2aa98-5b9c-4521-927f-86585b7b2cfa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQIUXHWhsvFjLiA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250317-2, 3/17/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,43 +112,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xNy8yNSAwODo0OCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDE0LzMvMjUgMTg6MzEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBXaWxsIGFsbG93
-IHRvIG1ha2Ugc3lzdGVtL21lbW9yeS5jIGNvbW1vbiBsYXRlci4NCj4+DQo+PiBSZXZpZXdl
-ZC1ieTogUmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+
-DQo+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVy
-QGxpbmFyby5vcmc+DQo+PiAtLS0NCj4+ICAgIGluY2x1ZGUvZXhlYy9tZW1vcnkuaCB8IDE2
-ICsrKystLS0tLS0tLS0tLS0NCj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMo
-KyksIDEyIGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2V4ZWMv
-bWVtb3J5LmggYi9pbmNsdWRlL2V4ZWMvbWVtb3J5LmgNCj4+IGluZGV4IGRhMjFlOTE1MGI1
-Li4wNjkwMjFhYzNmZiAxMDA2NDQNCj4+IC0tLSBhL2luY2x1ZGUvZXhlYy9tZW1vcnkuaA0K
-Pj4gKysrIGIvaW5jbHVkZS9leGVjL21lbW9yeS5oDQo+PiBAQCAtMzEzOCwyNSArMzEzOCwx
-NyBAQCBhZGRyZXNzX3NwYWNlX3dyaXRlX2NhY2hlZChNZW1vcnlSZWdpb25DYWNoZSAqY2Fj
-aGUsIGh3YWRkciBhZGRyLA0KPj4gICAgTWVtVHhSZXN1bHQgYWRkcmVzc19zcGFjZV9zZXQo
-QWRkcmVzc1NwYWNlICphcywgaHdhZGRyIGFkZHIsDQo+PiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICB1aW50OF90IGMsIGh3YWRkciBsZW4sIE1lbVR4QXR0cnMgYXR0cnMp
-Ow0KPj4gICAgDQo+PiAtI2lmZGVmIENPTVBJTElOR19QRVJfVEFSR0VUDQo+PiAgICAvKiBl
-bnVtIGRldmljZV9lbmRpYW4gdG8gTWVtT3AuICAqLw0KPj4gICAgc3RhdGljIGlubGluZSBN
-ZW1PcCBkZXZlbmRfbWVtb3AoZW51bSBkZXZpY2VfZW5kaWFuIGVuZCkNCj4+ICAgIHsNCj4+
-ICAgICAgICBRRU1VX0JVSUxEX0JVR19PTihERVZJQ0VfSE9TVF9FTkRJQU4gIT0gREVWSUNF
-X0xJVFRMRV9FTkRJQU4gJiYNCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICBERVZJQ0Vf
-SE9TVF9FTkRJQU4gIT0gREVWSUNFX0JJR19FTkRJQU4pOw0KPj4gICAgDQo+PiAtI2lmIEhP
-U1RfQklHX0VORElBTiAhPSBUQVJHRVRfQklHX0VORElBTg0KPj4gLSAgICAvKiBTd2FwIGlm
-IG5vbi1ob3N0IGVuZGlhbm5lc3Mgb3IgbmF0aXZlICh0YXJnZXQpIGVuZGlhbm5lc3MgKi8N
-Cj4+IC0gICAgcmV0dXJuIChlbmQgPT0gREVWSUNFX0hPU1RfRU5ESUFOKSA/IDAgOiBNT19C
-U1dBUDsNCj4+IC0jZWxzZQ0KPj4gLSAgICBjb25zdCBpbnQgbm9uX2hvc3RfZW5kaWFubmVz
-cyA9DQo+PiAtICAgICAgICBERVZJQ0VfTElUVExFX0VORElBTiBeIERFVklDRV9CSUdfRU5E
-SUFOIF4gREVWSUNFX0hPU1RfRU5ESUFOOw0KPj4gLQ0KPj4gLSAgICAvKiBJbiB0aGlzIGNh
-c2UsIG5hdGl2ZSAodGFyZ2V0KSBlbmRpYW5uZXNzIG5lZWRzIG5vIHN3YXAuICAqLw0KPj4g
-LSAgICByZXR1cm4gKGVuZCA9PSBub25faG9zdF9lbmRpYW5uZXNzKSA/IE1PX0JTV0FQIDog
-MDsNCj4+IC0jZW5kaWYNCj4+ICsgICAgYm9vbCBiaWdfZW5kaWFuID0gKGVuZCA9PSBERVZJ
-Q0VfTkFUSVZFX0VORElBTg0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgPyB0YXJnZXRf
-d29yZHNfYmlnZW5kaWFuKCkNCj4+ICsgICAgICAgICAgICAgICAgICAgICAgIDogZW5kID09
-IERFVklDRV9CSUdfRU5ESUFOKTsNCj4gDQo+IFVubmVjZXNzYXJ5IHBhcmVudGhlc2lzPw0K
-PiANCg0KTm90IHN0cmljdGx5IG5lZWRlZCBpbmRlZWQuDQpDb2RlIGlzIHJlZmFjdG9yZWQg
-aW4gcGF0Y2ggMTQgYW55d2F5cy4NCg0KPj4gKyAgICByZXR1cm4gYmlnX2VuZGlhbiA/IE1P
-X0JFIDogTU9fTEU7DQo+PiAgICB9DQo+PiAtI2VuZGlmIC8qIENPTVBJTElOR19QRVJfVEFS
-R0VUICovDQo+PiAgICANCj4+ICAgIC8qDQo+PiAgICAgKiBJbmhpYml0IHRlY2hub2xvZ2ll
-cyB0aGF0IHJlcXVpcmUgZGlzY2FyZGluZyBvZiBwYWdlcyBpbiBSQU0gYmxvY2tzLCBlLmcu
-LA0KPiANCg0K
+
+
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Friday, February 28, 2025 11:28 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
+> Subject: [PATCH 01/39] target/hexagon: Implement ciad helper
+>=20
+> From: Brian Cain <bcain@quicinc.com>
+>=20
+> ciad is the clear interrupt auto disable instruction.
+>=20
+> This instruction is defined in the Qualcomm Hexagon V71 Programmer's
+> Reference Manual - https://docs.qualcomm.com/bundle/publicresource/80-
+> N2040-51_REV_AB_Hexagon_V71_ProgrammerS_Reference_Manual.pdf
+> See =C2=A711.9.2 SYSTEM MONITOR.
+
+Put this reference in somewhere easier to find.  See prior discussion on =
+this.
+
+If it's only in the commit comment, it will be lost quickly.
+
+>=20
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/op_helper.c | 39 ++++++++++++++++++++++++++++++++-
+> -----
+>  1 file changed, 33 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+> index fd9caafefc..b28a18adf6 100644
+> --- a/target/hexagon/op_helper.c
+> +++ b/target/hexagon/op_helper.c
+> @@ -34,6 +34,11 @@
+>  #include "op_helper.h"
+>  #include "cpu_helper.h"
+>  #include "translate.h"
+> +#ifndef CONFIG_USER_ONLY
+> +#include "hex_mmu.h"
+> +#include "hw/intc/l2vic.h"
+> +#include "hex_interrupts.h"
+> +#endif
+>=20
+>  #define SF_BIAS        127
+>  #define SF_MANTBITS    23
+> @@ -1338,9 +1343,36 @@ void HELPER(vwhist128qm)(CPUHexagonState
+> *env, int32_t uiV)  }
+>=20
+>  #ifndef CONFIG_USER_ONLY
+> +static void hexagon_set_vid(CPUHexagonState *env, uint32_t offset, =
+int
+> +val) {
+> +    g_assert((offset =3D=3D L2VIC_VID_0) || (offset =3D=3D =
+L2VIC_VID_1));
+> +    CPUState *cs =3D env_cpu(env);
+> +    HexagonCPU *cpu =3D HEXAGON_CPU(cs);
+> +    const hwaddr pend_mem =3D cpu->l2vic_base_addr + offset;
+> +    cpu_physical_memory_write(pend_mem, &val, sizeof(val)); }
+
+Careful here - an int is different sizes on 32-bit and 64-bit hosts.  =
+Change the type to int32_t or int64_t.
+
+> +
+> +static void hexagon_clear_last_irq(CPUHexagonState *env, uint32_t
+> +offset) {
+> +    /*
+> +     * currently only l2vic is the only attached it uses vid0, remove
+> +     * the assert below if anther is added
+
+What assert?
+
+> +     */
+> +    hexagon_set_vid(env, offset, L2VIC_CIAD_INSTRUCTION); }
+> +
+>  void HELPER(ciad)(CPUHexagonState *env, uint32_t mask)  {
+> -    g_assert_not_reached();
+> +    uint32_t ipendad;
+> +    uint32_t iad;
+> +
+> +    BQL_LOCK_GUARD();
+> +    ipendad =3D READ_SREG(HEX_SREG_IPENDAD);
+> +    iad =3D fGET_FIELD(ipendad, IPENDAD_IAD);
+> +    fSET_FIELD(ipendad, IPENDAD_IAD, iad & ~(mask));
+> +    arch_set_system_reg(env, HEX_SREG_IPENDAD, ipendad);
+> +    hexagon_clear_last_irq(env, L2VIC_VID_0);
+> +    hex_interrupt_update(env);
+>  }
+>=20
+>  void HELPER(siad)(CPUHexagonState *env, uint32_t mask) @@ -1416,11
+> +1448,6 @@ static void modify_syscfg(CPUHexagonState *env, uint32_t =
+val)
+>      g_assert_not_reached();
+>  }
+>=20
+> -static void hexagon_set_vid(CPUHexagonState *env, uint32_t offset, =
+int
+> val) -{
+> -    g_assert_not_reached();
+> -}
+> -
+>  static uint32_t hexagon_find_last_irq(CPUHexagonState *env, uint32_t =
+vid)
+> {
+>      g_assert_not_reached();
+> --
+> 2.34.1
+
+
 
