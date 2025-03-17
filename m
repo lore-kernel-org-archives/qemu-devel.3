@@ -4,58 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7422AC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 12:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEECC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 12:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu9RE-0004cX-Uy; Mon, 17 Mar 2025 08:19:24 -0400
+	id 1tu9cO-0000io-VR; Mon, 17 Mar 2025 08:30:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1tu9RC-0004bK-6t; Mon, 17 Mar 2025 08:19:22 -0400
-Received: from szxga04-in.huawei.com ([45.249.212.190])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tu9c6-0000gO-MK
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:30:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1tu9R8-0003js-27; Mon, 17 Mar 2025 08:19:21 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.163])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4ZGYn60P1gz2RTyG;
- Mon, 17 Mar 2025 20:14:34 +0800 (CST)
-Received: from kwepemk500007.china.huawei.com (unknown [7.202.194.92])
- by mail.maildlp.com (Postfix) with ESMTPS id 1A1B1180214;
- Mon, 17 Mar 2025 20:19:02 +0800 (CST)
-Received: from huawei.com (10.246.99.19) by kwepemk500007.china.huawei.com
- (7.202.194.92) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 17 Mar
- 2025 20:19:00 +0800
-To: <stefanha@redhat.com>
-CC: <fam@euphon.net>, <hreitz@redhat.com>, <kwolf@redhat.com>,
- <qemu-block@nongnu.org>, <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>,
- <zhuyangyang14@huawei.com>, <luolongmin@huawei.com>,
- <suxiaodong1@huawei.com>, <wangyan122@huawei.com>, <yebiaoxiang@huawei.com>,
- <wangjian161@huawei.com>, <mujinsheng@huawei.com>, <alex.chen@huawei.com>,
- <eric.fangyi@huawei.com>, <zoudongjie@huawei.com>, <chenjianfei3@huawei.com>, 
- <renxuming@huawei.com>
-Subject: Re: [PATCH 1/2] io/block: Refactoring the bdrv_drained_begin()
- function and implement a timeout mechanism.
-Date: Mon, 17 Mar 2025 20:18:28 +0800
-Message-ID: <20250317121828.4069621-1-zoudongjie@huawei.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20250313040945.GB1074020@fedora>
-References: <20250313040945.GB1074020@fedora>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tu9c4-0005Ts-Kx
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 08:30:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742214634;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MtV0U7M06v0EMP4sZiAS8CUle8jscDt+mYWLXYbueBw=;
+ b=GTdkECQUtGh68uikDk8DHjBno9PxUU1r7gW6/8sGvmNA7t7k2kbETeSDLOG91ManVlQMJV
+ h1iXpahMraEKSrHNOqg5jhmhLftVjvN02gnss7Mc1BoFoScJuWCsn4Ymx7k1sTsGgUZsq/
+ SeW2W8glX3Szbt/RRHSm/F+bVPeNjYg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-138-HnADsDNtOc--oM2Xz6PH6g-1; Mon, 17 Mar 2025 08:30:33 -0400
+X-MC-Unique: HnADsDNtOc--oM2Xz6PH6g-1
+X-Mimecast-MFC-AGG-ID: HnADsDNtOc--oM2Xz6PH6g_1742214632
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3914bc0cc4aso2536403f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 05:30:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742214632; x=1742819432;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MtV0U7M06v0EMP4sZiAS8CUle8jscDt+mYWLXYbueBw=;
+ b=SRwsGGkNlMOTFGou7GPLDFqNLpm5CdQ4cT34viOBsAam59EJDsMkvf/GYphDpoLu+v
+ iu42VN3zJO8JzQisZ3KCAfcFXeEMdNQ6jdDz/x6dkNtdwaitOC8C/0+Noog2MD1LUY0Z
+ hCo1GLUDLp3yKHryKmhexW0wt+/qztKTyDnVDaJkLZCmO6czlPpW0PdH3Y1eUvuhplJ+
+ w9JW7KlzJ3bIepBP6VgmRHzIc6pxTyilYOMhysVhODMyOebInaWdpo2ydPouU/xwoQWE
+ /xweRkvpquucH2oqHrIZW2zGJYnSH/TFRGFEvdB9ezS5ESgDeGWsCRikY+1vgbQgdfel
+ aPmg==
+X-Gm-Message-State: AOJu0Yy9igbPOPdiCpT4js0y5i5TVFQeqGMUQmlpMjWA5A67PCh3H8HD
+ Y+elQYTeOgbMG6nLLxx8MQr1Q4XBsL7+HzI3iIBQGo7b8Oe2IvxU9MOPDw9rYH7U4ZGo22RdOjc
+ E4xbcVFfph3j9v+UG/QddTgB7CqFZ1mE/BjCkqNicr0WG0qlIb6J5VCulEDpcnAqyv1FMgBVjEM
+ GxiBeDL6yF4DiWfeELJal/AHgHWG4O5DSRPq2m3A==
+X-Gm-Gg: ASbGncsGLxRXR3KWki7ZSu9teV5zHJU3WBk/ju4DIlEJjQyOJ0A3jNr2gVcd3JzuNez
+ NjNFLwB3FXw75yXNMl7gRBxzOS06hZumOioRi93rFVngDj7NLtdaOpXnLUYUfewtWXN8JmHgNpc
+ k=
+X-Received: by 2002:a5d:5f84:0:b0:391:3fa7:bf77 with SMTP id
+ ffacd0b85a97d-3971e3a54cbmr15337885f8f.31.1742214631801; 
+ Mon, 17 Mar 2025 05:30:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGpFcawllQbxT4wPvpCnmUS6hHrR6O7723AvHN66zN83vo1TDXS21ko9v2YwHv1kbgHN0HY8G6mnrNcwMO1I54=
+X-Received: by 2002:a5d:5f84:0:b0:391:3fa7:bf77 with SMTP id
+ ffacd0b85a97d-3971e3a54cbmr15337851f8f.31.1742214631391; Mon, 17 Mar 2025
+ 05:30:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.246.99.19]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- kwepemk500007.china.huawei.com (7.202.194.92)
-Received-SPF: pass client-ip=45.249.212.190;
- envelope-from=zoudongjie@huawei.com; helo=szxga04-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+References: <Z8G9Wj3DWSgdLkNQ@x1.local>
+ <CAE8KmOxenqyqOxEFozgP1gBZPtneEqcbop9F_f+VW3ukPfw37A@mail.gmail.com>
+ <Z8XBowkG72G-l3L4@x1.local>
+ <CAE8KmOyssf_2RYBw2LLpxP2Z5bmtyU==Qs+4HWp=mOVb9o82-g@mail.gmail.com>
+ <Z8cPnxqOvp1hFpx8@x1.local>
+ <CAE8KmOw1CCQUt0wyELVhy5j-CfwVuA2XNsecW=y6rwJv7dempw@mail.gmail.com>
+ <Z8hJeneeuKqD1i8Q@x1.local>
+ <CAE8KmOyKiEt9t0vUwVyqD7tx01vkm+NHA1p1tmQnJ9mKY0Za7w@mail.gmail.com>
+ <Z8t3uKo54T_Xls_O@x1.local>
+ <CAE8KmOwdLk4oZg8TAt0z6rd27f0MpbSS54TWNDshZFU7WPxk-Q@mail.gmail.com>
+ <Z9M7MYUPqHFIQPuV@x1.local>
+In-Reply-To: <Z9M7MYUPqHFIQPuV@x1.local>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 17 Mar 2025 18:00:14 +0530
+X-Gm-Features: AQ5f1Jr0DnM_rWjbTuSGe0OmiVh7Q-P0JNrFTi-m-GY2xQOCqFcc0VAuHfzF5Ts
+Message-ID: <CAE8KmOwcgvZekToHbznDWAidXM2L_4Aoszz6j19bSC4U8f4oRg@mail.gmail.com>
+Subject: Re: [PATCH v7 5/5] migration: add MULTIFD_RECV_SYNC migration command
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,340 +108,239 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zoudongjie <zoudongjie@huawei.com>
-From:  zoudongjie via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Mar, 2025 at 12:09:45 +0800, Stefan Hajnoczi wrote:
-> On Sat, Mar 08, 2025 at 06:16:17PM +0800, zoudongjie wrote:
-> > From: Zhu Yangyang <zhuyangyang14@huawei.com>
-> > 
-> > The bdrv_drained_begin() function is a blocking function. In scenarios where network storage
-> > is used and network links fail, it may block for a long time.
-> > Therefore, we add a timeout parameter to control the duration of the block.
-> > 
-> > Since bdrv_drained_begin() has been widely adopted, both bdrv_drained_begin()
-> > and bdrv_drained_begin_timeout() will be retained.
-> > 
-> > Signed-off-by: Zhu Yangyang <zhuyangyang14@huawei.com>
-> > ---
-> >  block/io.c               | 55 ++++++++++++++++++++++++++++++-------
-> >  include/block/aio-wait.h | 58 ++++++++++++++++++++++++++++++++++++++++
-> >  include/block/block-io.h |  7 +++++
-> >  util/aio-wait.c          |  7 +++++
-> >  4 files changed, 117 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/block/io.c b/block/io.c
-> > index d369b994df..03b8b2dca7 100644
-> > --- a/block/io.c
-> > +++ b/block/io.c
-> > @@ -255,6 +255,8 @@ typedef struct {
-> >      bool begin;
-> >      bool poll;
-> >      BdrvChild *parent;
-> > +    int ret;
-> > +    int64_t timeout;
-> 
-> Please put the units (milliseconds) into the variable name here and
-> everywhere else in the patch to avoid confusion about units:
-> 
->   int64_t timeout_ms;
+Hi,
 
-Ok, I'm going to modify it in patch V2.
+On Fri, 14 Mar 2025 at 01:40, Peter Xu <peterx@redhat.com> wrote:
+>+        save_section_header(f, se, QEMU_VM_SECTION_PART);
+> +        ram_save_zero_page(f, se->opaque);
+>I'll stop requesting a why here...
 
-> 
-> >  } BdrvCoDrainData;
-> >  
-> >  /* Returns true if BDRV_POLL_WHILE() should go into a blocking aio_poll() */
-> > @@ -283,6 +285,8 @@ static bool bdrv_drain_poll_top_level(BlockDriverState *bs,
-> >      return bdrv_drain_poll(bs, ignore_parent, false);
-> >  }
-> >  
-> > +static int bdrv_do_drained_begin_timeout(BlockDriverState *bs,
-> > +    BdrvChild *parent, bool poll, int64_t timeout);
-> >  static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
-> >                                    bool poll);
-> >  static void bdrv_do_drained_end(BlockDriverState *bs, BdrvChild *parent);
-> > @@ -296,7 +300,8 @@ static void bdrv_co_drain_bh_cb(void *opaque)
-> >      if (bs) {
-> >          bdrv_dec_in_flight(bs);
-> >          if (data->begin) {
-> > -            bdrv_do_drained_begin(bs, data->parent, data->poll);
-> > +            data->ret = bdrv_do_drained_begin_timeout(
-> > +                bs, data->parent, data->poll, data->timeout);
-> >          } else {
-> >              assert(!data->poll);
-> >              bdrv_do_drained_end(bs, data->parent);
-> > @@ -310,10 +315,11 @@ static void bdrv_co_drain_bh_cb(void *opaque)
-> >      aio_co_wake(co);
-> >  }
-> >  
-> > -static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
-> > -                                                bool begin,
-> > -                                                BdrvChild *parent,
-> > -                                                bool poll)
-> > +static int coroutine_fn bdrv_co_yield_to_drain_timeout(BlockDriverState *bs,
-> > +                                                         bool begin,
-> > +                                                         BdrvChild *parent,
-> > +                                                         bool poll,
-> > +                                                         int64_t timeout)
-> >  {
-> >      BdrvCoDrainData data;
-> >      Coroutine *self = qemu_coroutine_self();
-> > @@ -329,6 +335,8 @@ static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
-> >          .begin = begin,
-> >          .parent = parent,
-> >          .poll = poll,
-> > +        .timeout = timeout,
-> > +        .ret = 0
-> >      };
-> >  
-> >      if (bs) {
-> > @@ -342,16 +350,25 @@ static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
-> >      /* If we are resumed from some other event (such as an aio completion or a
-> >       * timer callback), it is a bug in the caller that should be fixed. */
-> >      assert(data.done);
-> > +    return data.ret;
-> >  }
-> >  
-> > -static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
-> > -                                  bool poll)
-> > +static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
-> > +                                                bool begin,
-> > +                                                BdrvChild *parent,
-> > +                                                bool poll)
-> > +{
-> > +    bdrv_co_yield_to_drain_timeout(bs, begin, parent, poll, -1);
-> 
-> Is this safe on 32-bit platforms?
+* Earlier in this thread you mentioned 'We need a header'. I took it
+as a 'RAM page' header, not save_section_header(). Section type
+(QEMU_VM_COMMAND) was sent by qemu_savevm_command_send() as well.
 
-I'm sorry, can it be more specific here, I didn't get it.
+> but I think this is another example that even if all the tests pass it may not be correct.
 
-> 
-> > +}
-> > +
-> > +static int bdrv_do_drained_begin_timeout(BlockDriverState *bs,
-> > +    BdrvChild *parent, bool poll, int64_t timeout_ms)
-> >  {
-> >      IO_OR_GS_CODE();
-> >  
-> >      if (qemu_in_coroutine()) {
-> > -        bdrv_co_yield_to_drain(bs, true, parent, poll);
-> > -        return;
-> > +        return bdrv_co_yield_to_drain_timeout(bs, true, parent, poll,
-> > +                                              timeout_ms);
-> >      }
-> >  
-> >      GLOBAL_STATE_CODE();
-> > @@ -375,8 +392,20 @@ static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
-> >       * nodes.
-> >       */
-> >      if (poll) {
-> > -        BDRV_POLL_WHILE(bs, bdrv_drain_poll_top_level(bs, parent));
-> > +        if (timeout_ms < 0) {
-> > +            BDRV_POLL_WHILE(bs, bdrv_drain_poll_top_level(bs, parent));
-> > +        } else {
-> > +            return BDRV_POLL_WHILE_TIMEOUT(
-> > +                bs, bdrv_drain_poll_top_level(bs, parent), timeout_ms);
-> > +        }
-> 
-> Any reason to handle timeout_ms < 0 here instead of in
-> BDRV_POLL_WHILE_TIMEOUT()? It would be more consistent to support -1 in
-> BDRV_POLL_WHILE_TIMEOUT() so that you don't need to remember which
-> functions/macros support timeout_ms=-1 and which dont.
+* This is also an example of - communication is hard.
 
-Previously, BDRV_POLL_WHILE_TIMEOUT() was not done very well, aio_poll() exits
-frequently because interval is used in the timer. but now I will support -1 in
-BDRV_POLL_WHILE_TIMEOUT().
+> From f9343dfc777ef04168443e86a1fa3922296ea563 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Thu, 13 Mar 2025 15:34:10 -0400
+> Subject: [PATCH 1/2] migration: Add save_postcopy_prepare() savevm handler
+>
+> Add a savevm handler for a module to opt-in sending extra sections right
+> before postcopy starts, and before VM is stopped.
+>
+> RAM will start to use this new savevm handler in the next patch to do flush
+> and sync for multifd pages.
+>
+> Note that we choose to do it before VM stopped because the current only
+> potential user is not sensitive to VM status, so doing it before VM is
+> stopped is preferred to enlarge any postcopy downtime.
+>
+> It is still a bit unfortunate that we need to introduce such a new savevm
+> handler just for the only use case, however it's so far the cleanest.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/migration/register.h | 15 +++++++++++++++
+>  migration/savevm.h           |  1 +
+>  migration/migration.c        |  4 ++++
+>  migration/savevm.c           | 33 +++++++++++++++++++++++++++++++++
+>  4 files changed, 53 insertions(+)
+>
+> diff --git a/include/migration/register.h b/include/migration/register.h
+> index c041ce32f2..b79dc81b8d 100644
+> --- a/include/migration/register.h
+> +++ b/include/migration/register.h
+> @@ -189,6 +189,21 @@ typedef struct SaveVMHandlers {
+>
+>      /* This runs outside the BQL!  */
+>
+> +    /**
+> +     * @save_postcopy_prepare
+> +     *
+> +     * This hook will be invoked on the source side right before switching
+> +     * to postcopy (before VM stopped).
+> +     *
+> +     * @f:      QEMUFile where to send the data
+> +     * @opaque: Data pointer passed to register_savevm_live()
+> +     * @errp:   Error** used to report error message
+> +     *
+> +     * Returns: true if succeeded, false if error occured.  When false is
+> +     * returned, @errp must be set.
+> +     */
+> +    bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
+> +
+>      /**
+>       * @state_pending_estimate
+>       *
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index 138c39a7f9..2d5e9c7166 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -45,6 +45,7 @@ void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+>  void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+>                                          uint64_t *can_postcopy);
+>  int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
+> +bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
+>  void qemu_savevm_send_ping(QEMUFile *f, uint32_t value);
+>  void qemu_savevm_send_open_return_path(QEMUFile *f);
+>  int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len);
+> diff --git a/migration/migration.c b/migration/migration.c
+> index d46e776e24..212f6b4145 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -2707,6 +2707,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>          }
+>      }
+>
+> +    if (!qemu_savevm_state_postcopy_prepare(ms->to_dst_file, errp)) {
+> +        return -1;
+> +    }
+> +
+>      trace_postcopy_start();
+>      bql_lock();
+>      trace_postcopy_start_set_run();
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index ce158c3512..23ef4c7dc9 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1523,6 +1523,39 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
+>      qemu_fflush(f);
+>  }
+>
+> +bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp)
+> +{
+> +    SaveStateEntry *se;
+> +    bool ret;
+> +
+> +    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+> +        if (!se->ops || !se->ops->save_postcopy_prepare) {
+> +            continue;
+> +        }
+> +
+> +        if (se->ops->is_active) {
+> +            if (!se->ops->is_active(se->opaque)) {
+> +                continue;
+> +            }
+> +        }
+> +
+> +        trace_savevm_section_start(se->idstr, se->section_id);
+> +
+> +        save_section_header(f, se, QEMU_VM_SECTION_PART);
+> +        ret = se->ops->save_postcopy_prepare(f, se->opaque, errp);
+> +        save_section_footer(f, se);
+> +
+> +        trace_savevm_section_end(se->idstr, se->section_id, ret);
+> +
+> +        if (!ret) {
+> +            assert(*errp);
+> +            return false;
+> +        }
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>  int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
+>  {
+>      int64_t start_ts_each, end_ts_each;
+> --
+> 2.47.0
+>
+>
+> From 299e1cdd9b28802f361ed012673825685e30f965 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Thu, 13 Mar 2025 15:56:01 -0400
+> Subject: [PATCH 2/2] migration/ram: Implement save_postcopy_prepare()
+>
+> Implement save_postcopy_prepare(), preparing for the enablement of both
+> multifd and postcopy.
+>
+> Please see the rich comment for the rationals.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/ram.c | 37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 424df6d9f1..119e7d3ac2 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -4420,6 +4420,42 @@ static int ram_resume_prepare(MigrationState *s, void *opaque)
+>      return 0;
+>  }
+>
+> +static bool ram_save_postcopy_prepare(QEMUFile *f, void *opaque, Error **errp)
+> +{
+> +    int ret;
+> +
+> +    if (migrate_multifd()) {
+> +        /*
+> +         * When multifd is enabled, source QEMU needs to make sure all the
+> +         * pages queued before postcopy starts to be flushed.
+> +         *
+> +         * Meanwhile, the load of these pages must happen before switching
+> +         * to postcopy.  It's because loading of guest pages (so far) in
+> +         * multifd recv threads is still non-atomic, so the load cannot
+> +         * happen with vCPUs running on destination side.
+> +         *
+> +         * This flush and sync will guarantee those pages loaded _before_
+> +         * postcopy starts on destination. The rational is, this happens
+> +         * before VM stops (and before source QEMU sends all the rest of
+> +         * the postcopy messages).  So when the destination QEMU received
+> +         * the postcopy messages, it must have received the sync message on
+> +         * the main channel (either RAM_SAVE_FLAG_MULTIFD_FLUSH, or
+> +         * RAM_SAVE_FLAG_EOS), and such message should have guaranteed all
+> +         * previous guest pages queued in the multifd channels to be
+> +         * completely loaded.
+> +         */
+> +        ret = multifd_ram_flush_and_sync(f);
+> +        if (ret < 0) {
+> +            error_setg(errp, "%s: multifd flush and sync failed", __func__);
+> +            return false;
+> +        }
+> +    }
+> +
+> +    qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
+> +
+> +    return true;
+> +}
+> +
+>  void postcopy_preempt_shutdown_file(MigrationState *s)
+>  {
+>      qemu_put_be64(s->postcopy_qemufile_src, RAM_SAVE_FLAG_EOS);
+> @@ -4439,6 +4475,7 @@ static SaveVMHandlers savevm_ram_handlers = {
+>      .load_setup = ram_load_setup,
+>      .load_cleanup = ram_load_cleanup,
+>      .resume_prepare = ram_resume_prepare,
+> +    .save_postcopy_prepare = ram_save_postcopy_prepare,
+>  };
+>
+>  static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
+> --
+> 2.47.0
 
-> 
-> >      }
-> > +    return 0;
-> > +}
-> > +
-> > +static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
-> > +                                  bool poll)
-> > +{
-> > +    bdrv_do_drained_begin_timeout(bs, parent, poll, -1);
-> >  }
-> >  
-> >  void bdrv_do_drained_begin_quiesce(BlockDriverState *bs, BdrvChild *parent)
-> > @@ -390,6 +419,12 @@ bdrv_drained_begin(BlockDriverState *bs)
-> >      IO_OR_GS_CODE();
-> >      bdrv_do_drained_begin(bs, NULL, true);
-> >  }
-> > +int coroutine_mixed_fn
-> > +bdrv_drained_begin_timeout(BlockDriverState *bs, int64_t timeout_ms)
-> > +{
-> > +    IO_OR_GS_CODE();
-> > +    return bdrv_do_drained_begin_timeout(bs, NULL, true, timeout_ms);
-> > +}
-> >  
-> >  /**
-> >   * This function does not poll, nor must any of its recursively called
-> > diff --git a/include/block/aio-wait.h b/include/block/aio-wait.h
-> > index cf5e8bde1c..efbcb9777a 100644
-> > --- a/include/block/aio-wait.h
-> > +++ b/include/block/aio-wait.h
-> > @@ -28,6 +28,8 @@
-> >  #include "block/aio.h"
-> >  #include "qemu/main-loop.h"
-> >  
-> > +#define AIO_WAIT_INTERVAL 10  /* ms */
-> > +
-> >  /**
-> >   * AioWait:
-> >   *
-> > @@ -56,6 +58,11 @@ typedef struct {
-> >      unsigned num_waiters;
-> >  } AioWait;
-> >  
-> > +typedef struct {
-> > +    struct QEMUTimer *timer;
-> 
-> struct is not necessary since QEMUTimer is a typedef:
-> 
->   QEMUTimer *timer;
-> 
-> Also, can this be a struct field instead of a pointer by using
-> aio_timer_init_ms() instead of aio_timer_new()?
+* I get the infrastructural changes that they'll help to take
+'section' specific action before postcopy starts. It's not clear how
+tying flush and sync with a RAM section helps; because on the
+destination side 'section' is only used to call
+se->ops->load_state()->ram_load->ram_load_precopy()->multifd_recv_sync_main().
 
-Ok, I'm going to modify it in patch V2.
+* To confirm:
+    -  Benefit of this approach is that 'flush and sync' works via
+vmstate_load -> se->ops->load_state() -> ram_load ->
+ram_load_precopy() sequence?
 
-> 
-> > +    int64_t interval;
-> > +} AioWaitTimer;
-> > +
-> >  extern AioWait global_aio_wait;
-> >  
-> >  /**
-> > @@ -99,6 +106,55 @@ extern AioWait global_aio_wait;
-> >      qatomic_dec(&wait_->num_waiters);                              \
-> >      waited_; })
-> >  
-> > +/**
-> > + * AIO_WAIT_WHILE_TIMEOUT:
-> > + *
-> > + * Refer to the implementation of AIO_WAIT_WHILE_INTERNAL,
-> > + * the timeout parameter is added.
-> > + */
-> > +#define AIO_WAIT_WHILE_TIMEOUT(ctx, cond, timeout) ({                    \
-> > +    int ret_ = 0;                                                        \
-> > +    AioWait *wait_ = &global_aio_wait;                                   \
-> > +    AioContext *ctx_ = (ctx);                                            \
-> > +    int64_t start_ = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);             \
-> > +    int64_t deadline_ = start_ + (timeout);                              \
-> > +    /* Ensure that the aio_poll exits periodically to check timeout. */  \
-> > +    AioWaitTimer *s_ = g_malloc0(sizeof(AioWaitTimer));                  \
-> 
-> Can this be allocated on the stack instead of the heap?
+* Thank you for the patches, I'll send a revised patchset including them.
 
-Yes, it's certainly better.
+Thank you.
+---
+  - Prasad
 
-> 
-> > +    s_->interval = AIO_WAIT_INTERVAL;                                    \
-> > +    /* Increment wait_->num_waiters before evaluating cond. */           \
-> > +    qatomic_inc(&wait_->num_waiters);                                    \
-> > +    /* Paired with smp_mb in aio_wait_kick(). */                         \
-> > +    smp_mb__after_rmw();                                                 \
-> > +    if (ctx_ && in_aio_context_home_thread(ctx_)) {                      \
-> > +        s_->timer = aio_timer_new(ctx_, QEMU_CLOCK_REALTIME,             \
-> > +                        SCALE_MS, aio_wait_timer_retry, s_);             \
-> > +        aio_wait_timer_retry(s_);                                        \
-> > +        while ((cond)) {                                                 \
-> > +            aio_poll(ctx_, true);                                        \
-> > +            if (qemu_clock_get_ms(QEMU_CLOCK_REALTIME) > deadline_) {    \
-> > +                ret_ = -ETIMEDOUT;                                       \
-> > +                break;                                                   \
-> > +            }                                                            \
-> > +        }                                                                \
-> 
-> What is the purpose of interval?
-> 
-> I expected the timer's callback function to be an empty function that is
-> called when the deadline expires. The while loop here would use
-> timer_pending() to check for expiry instead of explicitly checking
-> against the deadline.
-
-This was really a good idea; it resolved some of my doubts and made everything
-look better.
-
-> 
-> > +    } else {                                                             \
-> > +        s_->timer = aio_timer_new(qemu_get_aio_context(),                \
-> > +            QEMU_CLOCK_REALTIME, SCALE_MS, aio_wait_timer_retry, s_);    \
-> > +        aio_wait_timer_retry(s_);                                        \
-> > +        while ((cond)) {                                                 \
-> > +            assert(qemu_get_current_aio_context() ==                     \
-> > +                   qemu_get_aio_context());                              \
-> > +            aio_poll(qemu_get_aio_context(), true);                      \
-> > +            if (qemu_clock_get_ms(QEMU_CLOCK_REALTIME) > deadline_) {    \
-> > +                ret_ = -ETIMEDOUT;                                       \
-> > +                break;                                                   \
-> > +            }                                                            \
-> > +        }                                                                \
-> > +    }                                                                    \
-> > +    qatomic_dec(&wait_->num_waiters);                                    \
-> > +    timer_free(s_->timer);                                               \
-> 
-> This will need to be timer_del() when the QEMUTimer is moved onto the
-> stack.
-> 
-> > +    g_free(s_);                                                          \
-> > +    ret_; })
-> > +
-> >  #define AIO_WAIT_WHILE(ctx, cond)                                  \
-> >      AIO_WAIT_WHILE_INTERNAL(ctx, cond)
-> >  
-> > @@ -149,4 +205,6 @@ static inline bool in_aio_context_home_thread(AioContext *ctx)
-> >      }
-> >  }
-> >  
-> > +void aio_wait_timer_retry(void *opaque);
-> > +
-> >  #endif /* QEMU_AIO_WAIT_H */
-> > diff --git a/include/block/block-io.h b/include/block/block-io.h
-> > index b49e0537dd..84f92d2b09 100644
-> > --- a/include/block/block-io.h
-> > +++ b/include/block/block-io.h
-> > @@ -354,6 +354,11 @@ bdrv_co_copy_range(BdrvChild *src, int64_t src_offset,
-> >      AIO_WAIT_WHILE(bdrv_get_aio_context(bs_),              \
-> >                     cond); })
-> >  
-> > +#define BDRV_POLL_WHILE_TIMEOUT(bs, cond, timeout) ({      \
-> > +    BlockDriverState *bs_ = (bs);                          \
-> > +    AIO_WAIT_WHILE_TIMEOUT(bdrv_get_aio_context(bs_),      \
-> > +                           cond, timeout); })
-> > +
-> >  void bdrv_drain(BlockDriverState *bs);
-> >  
-> >  int co_wrapper_mixed_bdrv_rdlock
-> > @@ -431,6 +436,8 @@ bdrv_drain_poll(BlockDriverState *bs, BdrvChild *ignore_parent,
-> >   */
-> >  void bdrv_drained_begin(BlockDriverState *bs);
-> >  
-> > +int bdrv_drained_begin_timeout(BlockDriverState *bs, int64_t timeout_ms);
-> > +
-> >  /**
-> >   * bdrv_do_drained_begin_quiesce:
-> >   *
-> > diff --git a/util/aio-wait.c b/util/aio-wait.c
-> > index b5336cf5fd..9aed165529 100644
-> > --- a/util/aio-wait.c
-> > +++ b/util/aio-wait.c
-> > @@ -84,3 +84,10 @@ void aio_wait_bh_oneshot(AioContext *ctx, QEMUBHFunc *cb, void *opaque)
-> >      aio_bh_schedule_oneshot(ctx, aio_wait_bh, &data);
-> >      AIO_WAIT_WHILE_UNLOCKED(NULL, !data.done);
-> >  }
-> > +
-> > +void aio_wait_timer_retry(void *opaque)
-> > +{
-> > +    AioWaitTimer *s = opaque;
-> > +
-> > +    timer_mod(s->timer, qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + s->interval);
-> > +}
-> > -- 
-> > 2.33.0
-> > 
 
