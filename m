@@ -4,72 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16740C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 21:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B867EC28B28
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 21:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuHdU-0004FZ-NT; Mon, 17 Mar 2025 17:04:39 -0400
+	id 1tuHhx-0005p3-DE; Mon, 17 Mar 2025 17:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tuHdE-0004Do-L0
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 17:04:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1tuHhv-0005oC-0v; Mon, 17 Mar 2025 17:09:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tuHdA-0002cq-MZ
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 17:04:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742245454;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LnvXHcqFIbUwpVCt8bCseMBRX8FTHRrJAItDbeDB8M0=;
- b=VwYhhEbSJmfoLrO7P9vtR8WLj+G5vZzPPMmDwsE5df7YeeopXxqjFVqwl8eelV6MGuhWx5
- ir/JvgfJlOePBakA1xi1i/MLbcfouMnz+S5ayJLrIEmuMhGL/aGsyuVsYbhUYoeEJXolWf
- TCUE+rNBnxQ7EewxsgPKnn1PERGAp6g=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-388-d4R26mBRPuaTqq5TugLFfg-1; Mon,
- 17 Mar 2025 17:04:12 -0400
-X-MC-Unique: d4R26mBRPuaTqq5TugLFfg-1
-X-Mimecast-MFC-AGG-ID: d4R26mBRPuaTqq5TugLFfg_1742245451
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C882118001F8; Mon, 17 Mar 2025 21:04:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45320180174E; Mon, 17 Mar 2025 21:04:09 +0000 (UTC)
-Date: Mon, 17 Mar 2025 17:04:08 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: saz97 <sa.z@qq.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- qemu-block@nongnu.org
-Subject: Re: [PATCH RFC v2] Integration coroutines into fuse export
-Message-ID: <20250317210408.GF1214048@fedora>
-References: <tencent_C6F198B4EA3ABA591C57084BA7125D04B306@qq.com>
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1tuHhs-0004oC-QZ; Mon, 17 Mar 2025 17:09:10 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52HKZnIT028011;
+ Mon, 17 Mar 2025 21:09:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=WjbMBwh0kqxd9IkNl7g8n0YNnuDa
+ XhFiiD1Hxw39Oko=; b=rPlE4sUhi5p6dxq/6dxy/KI2g98ABTT2BdXltJWamUGT
+ SgS8WRudAgxLaoY/REchoJ/zMjPp9iqhYI0xZ40Vm+pg1Tyf05KwoDV0fk/865+g
+ Llj6/G9u6FrqCKRBHx8ZfQ2+3o2KovIGCsfepkzu+kZDXDK4kHCtxCfzs97HVT6P
+ Ol5PYGb7Vk5ow+abGVBuQxpF3GaNWv6ZCaFKqDn9b0cEBbWsbtuhhHxM5mCfgmK8
+ z+KLP9d78ucQxQ6SrTpuqYGu62l1WKwipyghkG+rJQ0qYN94jWwn/rT1HTOcho8r
+ giZ+n78YPGF1Ve+iQKPV0L1W07NFf3go0Rz6qrkXFg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45etwq83kq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Mar 2025 21:09:06 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52HL96xb030289;
+ Mon, 17 Mar 2025 21:09:06 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45etwq83kp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Mar 2025 21:09:06 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52HISafJ009157;
+ Mon, 17 Mar 2025 21:09:05 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45dm8yrf3m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Mar 2025 21:09:05 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52HL94qD32965256
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Mar 2025 21:09:05 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D503D58059;
+ Mon, 17 Mar 2025 21:09:04 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9FC4F58055;
+ Mon, 17 Mar 2025 21:09:04 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Mar 2025 21:09:04 +0000 (GMT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="s+NNU7avonaiVvLf"
-Content-Disposition: inline
-In-Reply-To: <tencent_C6F198B4EA3ABA591C57084BA7125D04B306@qq.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Date: Tue, 18 Mar 2025 02:39:04 +0530
+From: misanjum <misanjum@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com
+Subject: =?UTF-8?Q?=5BBUG=5D=5Bpowerpc=5D_KVM_Guest_Boot_Failure_?=
+ =?UTF-8?Q?=E2=80=93_Hangs_at_=22Booting_Linux_via_=5F=5Fstart=28=29?=
+ =?UTF-8?Q?=E2=80=9D?=
+Message-ID: <fbb76ecc616d4065de7ab56d1311f876@linux.ibm.com>
+X-Sender: misanjum@linux.ibm.com
+Organization: IBM
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: yUWCgDohyChJ0ZkVdplHLOFl_TWMWO0P
+X-Proofpoint-ORIG-GUID: pUS-E0z2YRyblPpP006DOYK1mKgczQvB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-17_09,2025-03-17_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 malwarescore=0
+ phishscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502280000 definitions=main-2503170151
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=misanjum@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,369 +115,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Bug Description:
+Encountering a boot failure when launching a KVM guest with 
+qemu-system-ppc64. The guest hangs at boot, and the QEMU monitor 
+crashes.
 
---s+NNU7avonaiVvLf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Mar 16, 2025 at 01:30:20AM +0800, saz97 wrote:
-> Signed-off-by: Changzhi Xie <sa.z@qq.com>
->=20
-> This commit refactors the FUSE export to process read and write operations
-> using coroutines, improving concurrency and avoiding blocking the main lo=
-op.
->=20
-> The main changes include:
-> 1.  Introduce FuseIORequest structure to encapsulate I/O parameters and s=
-tate
-> 2.  Move read/write processing into coroutine fuse_read_coroutine and fus=
-e_write_coroutine
-> 3.  Use blk_co_pread/pwrite for async block layer access
-> ---
->  block/export/fuse.c | 189 +++++++++++++++++++++++++++++++-------------
->  1 file changed, 132 insertions(+), 57 deletions(-)
->=20
-> diff --git a/block/export/fuse.c b/block/export/fuse.c
-> index 465cc9891d..3314f64706 100644
-> --- a/block/export/fuse.c
-> +++ b/block/export/fuse.c
-> @@ -39,6 +39,7 @@
-> =20
->  #ifdef __linux__
->  #include <linux/fs.h>
-> +#include <linux/fuse.h>
->  #endif
-> =20
->  /* Prevent overly long bounce buffer allocations */
-> @@ -49,7 +50,6 @@ typedef struct FuseExport {
->      BlockExport common;
-> =20
->      struct fuse_session *fuse_session;
-> -    struct fuse_buf fuse_buf;
->      unsigned int in_flight; /* atomic */
->      bool mounted, fd_handler_set_up;
-> =20
-> @@ -64,6 +64,14 @@ typedef struct FuseExport {
->      gid_t st_gid;
->  } FuseExport;
-> =20
-> +typedef struct FuseIORequest {
-> +    fuse_req_t req;
-> +    size_t size;
-> +    off_t offset;
-> +    FuseExport *exp;
-> +    char *write_buf;
-> +} FuseIORequest;
-> +
->  static GHashTable *exports;
->  static const struct fuse_lowlevel_ops fuse_ops;
-> =20
-> @@ -288,6 +296,7 @@ fail:
->  static void read_from_fuse_export(void *opaque)
->  {
->      FuseExport *exp =3D opaque;
-> +    struct fuse_buf buf =3D {};
->      int ret;
-> =20
->      blk_exp_ref(&exp->common);
-> @@ -295,20 +304,30 @@ static void read_from_fuse_export(void *opaque)
->      qatomic_inc(&exp->in_flight);
-> =20
->      do {
-> -        ret =3D fuse_session_receive_buf(exp->fuse_session, &exp->fuse_b=
-uf);
-> +        ret =3D fuse_session_receive_buf(exp->fuse_session, &buf);
->      } while (ret =3D=3D -EINTR);
->      if (ret < 0) {
->          goto out;
->      }
-> =20
-> -    fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
-> +    fuse_session_process_buf(exp->fuse_session, &buf);
-> =20
->  out:
-> +    struct fuse_in_header *in =3D (struct fuse_in_header *)buf.mem;
-> +
-> +    if (in->opcode =3D=3D FUSE_WRITE || in->opcode =3D=3D FUSE_READ) {
-> +        g_free(buf.mem);
-> +        return;
+Reproduction Steps:
+# qemu-system-ppc64 --version
+QEMU emulator version 9.2.50 (v9.2.0-2799-g0462a32b4f)
+Copyright (c) 2003-2025 Fabrice Bellard and the QEMU Project developers
 
-Returning here is not safe because &buf was passed to
-fuse_session_process_buf() and is located on read_from_fuse_export()'s
-stack. The coroutine must not access buf after this function returns.
+# /usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine 
+pseries,accel=kvm \
+   -m 32768 -smp 32,sockets=1,cores=32,threads=1 -nographic \
+   -device virtio-scsi-pci,id=scsi \
+   -drive 
+file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,if=none,id=drive0,format=qcow2 
+\
+   -device scsi-hd,drive=drive0,bus=scsi.0 \
+   -netdev bridge,id=net0,br=virbr0 \
+   -device virtio-net-pci,netdev=net0 \
+   -serial pty \
+   -device virtio-balloon-pci \
+   -cpu host
+QEMU 9.2.50 monitor - type 'help' for more information
+char device redirected to /dev/pts/2 (label serial0)
+(qemu)
+(qemu) qemu-system-ppc64: warning: kernel_irqchip allowed but 
+unavailable: IRQ_XIVE capability must be present for KVM
+Falling back to kernel-irqchip=off
+** Qemu Hang
 
-I suggest moving most of this function into a coroutine so that struct
-fuse_buf can be on the coroutine's stack. That way it outlives
-fuse_session_process_buf().
+(In another ssh session)
+# screen /dev/pts/2
+Preparing to boot Linux version 6.10.4-200.fc40.ppc64le 
+(mockbuild@c23cc4e677614c34bb22d54eeea4dc1f) (gcc (GCC) 14.2.1 20240801 
+(Red Hat 14.2.1-1), GNU ld version 2.41-37.fc40) #1 SMP Sun Aug 11 
+15:20:17 UTC 2024
+Detected machine type: 0000000000000101
+command line: 
+BOOT_IMAGE=(ieee1275/disk,msdos2)/vmlinuz-6.10.4-200.fc40.ppc64le 
+root=/dev/mapper/fedora-root ro rd.lvm.lv=fedora/root crashkernel=1024M
+Max number of cores passed to firmware: 2048 (NR_CPUS = 2048)
+Calling ibm,client-architecture-support... done
+memory layout at init:
+   memory_limit : 0000000000000000 (16 MB aligned)
+   alloc_bottom : 0000000008200000
+   alloc_top    : 0000000030000000
+   alloc_top_hi : 0000000800000000
+   rmo_top      : 0000000030000000
+   ram_top      : 0000000800000000
+instantiating rtas at 0x000000002fff0000... done
+prom_hold_cpus: skipped
+copying OF device tree...
+Building dt strings...
+Building dt structure...
+Device tree strings 0x0000000008210000 -> 0x0000000008210bd0
+Device tree struct  0x0000000008220000 -> 0x0000000008230000
+Quiescing Open Firmware ...
+Booting Linux via __start() @ 0x0000000000440000 ...
+** Guest Console Hang
 
-Doing this also avoids duplicating the code below and eliminates the
-need for FuseIORequest.
 
-> +    }
-> +
->      if (qatomic_fetch_dec(&exp->in_flight) =3D=3D 1) {
->          aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
->      }
-> =20
->      blk_exp_unref(&exp->common);
-> +
-> +    g_free(buf.mem);
+Git Bisect:
+Performing git bisect points to the following patch:
+# git bisect bad
+e8291ec16da80566c121c68d9112be458954d90b is the first bad commit
+commit e8291ec16da80566c121c68d9112be458954d90b (HEAD)
+Author: Nicholas Piggin <npiggin@gmail.com>
+Date:   Thu Dec 19 13:40:31 2024 +1000
 
-Please make this free(buf.mem) since libfuse uses malloc(3).
+     target/ppc: fix timebase register reset state
 
-> +
->  }
-> =20
->  static void fuse_export_shutdown(BlockExport *blk_exp)
-> @@ -347,7 +366,6 @@ static void fuse_export_delete(BlockExport *blk_exp)
->          fuse_session_destroy(exp->fuse_session);
->      }
-> =20
-> -    free(exp->fuse_buf.mem);
->      g_free(exp->mountpoint);
->  }
-> =20
-> @@ -570,102 +588,159 @@ static void fuse_open(fuse_req_t req, fuse_ino_t =
-inode,
->      fuse_reply_open(req, fi);
->  }
-> =20
-> -/**
-> - * Handle client reads from the exported image.
-> - */
-> -static void fuse_read(fuse_req_t req, fuse_ino_t inode,
-> -                      size_t size, off_t offset, struct fuse_file_info *=
-fi)
-> +static void coroutine_fn fuse_read_coroutine(void *opaque)
->  {
-> -    FuseExport *exp =3D fuse_req_userdata(req);
-> +    FuseIORequest *io_req =3D opaque;
-> +    FuseExport *exp =3D io_req->exp;
->      int64_t length;
-> -    void *buf;
-> +    void *buffer;
->      int ret;
-> =20
-> -    /* Limited by max_read, should not happen */
-> -    if (size > FUSE_MAX_BOUNCE_BYTES) {
-> -        fuse_reply_err(req, EINVAL);
-> -        return;
-> +    if (io_req->size > FUSE_MAX_BOUNCE_BYTES) {
-> +        fuse_reply_err(io_req->req, EINVAL);
-> +        goto cleanup;
->      }
-> =20
-> -    /**
-> -     * Clients will expect short reads at EOF, so we have to limit
-> -     * offset+size to the image length.
-> -     */
->      length =3D blk_getlength(exp->common.blk);
->      if (length < 0) {
-> -        fuse_reply_err(req, -length);
-> -        return;
-> +        fuse_reply_err(io_req->req, -length);
-> +        goto cleanup;
->      }
-> =20
-> -    if (offset + size > length) {
-> -        size =3D length - offset;
-> +    if (io_req->offset + io_req->size > length) {
-> +        io_req->size =3D length - io_req->offset;
->      }
-> =20
-> -    buf =3D qemu_try_blockalign(blk_bs(exp->common.blk), size);
-> -    if (!buf) {
-> -        fuse_reply_err(req, ENOMEM);
-> -        return;
-> +    if (io_req->size =3D=3D 0) {
-> +        fuse_reply_buf(io_req->req, NULL, 0);
-> +        goto cleanup;
->      }
-> =20
-> -    ret =3D blk_pread(exp->common.blk, offset, size, buf, 0);
-> +    buffer =3D qemu_try_blockalign(blk_bs(exp->common.blk), io_req->size=
-);
-> +    if (!buffer) {
-> +        fuse_reply_err(io_req->req, ENOMEM);
-> +        goto cleanup;
-> +    }
-> +
-> +    ret =3D blk_co_pread(exp->common.blk, io_req->offset,
-> +                       io_req->size, buffer, 0);
->      if (ret >=3D 0) {
-> -        fuse_reply_buf(req, buf, size);
-> +        fuse_reply_buf(io_req->req, buffer, io_req->size);
->      } else {
-> -        fuse_reply_err(req, -ret);
-> +        fuse_reply_err(io_req->req, -ret);
-> +    }
-> +
-> +    qemu_vfree(buffer);
-> +
-> +cleanup:
-> +    if (qatomic_fetch_dec(&exp->in_flight) =3D=3D 1) {
-> +        aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
->      }
-> =20
-> -    qemu_vfree(buf);
-> +    blk_exp_unref(&exp->common);
-> +
-> +    g_free(io_req);
->  }
-> =20
-> -/**
-> - * Handle client writes to the exported image.
-> - */
-> -static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-> -                       size_t size, off_t offset, struct fuse_file_info =
-*fi)
-> +static void coroutine_fn fuse_write_coroutine(void *opaque)
->  {
-> -    FuseExport *exp =3D fuse_req_userdata(req);
-> +    FuseIORequest *io_req =3D opaque;
-> +    FuseExport *exp =3D io_req->exp;
->      int64_t length;
->      int ret;
-> =20
-> -    /* Limited by max_write, should not happen */
-> -    if (size > BDRV_REQUEST_MAX_BYTES) {
-> -        fuse_reply_err(req, EINVAL);
-> -        return;
-> +    if (io_req->size > BDRV_REQUEST_MAX_BYTES) {
-> +        fuse_reply_err(io_req->req, EINVAL);
-> +        goto cleanup;
->      }
-> =20
->      if (!exp->writable) {
-> -        fuse_reply_err(req, EACCES);
-> -        return;
-> +        fuse_reply_err(io_req->req, EACCES);
-> +        goto cleanup;
->      }
-> =20
-> -    /**
-> -     * Clients will expect short writes at EOF, so we have to limit
-> -     * offset+size to the image length.
-> -     */
->      length =3D blk_getlength(exp->common.blk);
->      if (length < 0) {
-> -        fuse_reply_err(req, -length);
-> -        return;
-> +        fuse_reply_err(io_req->req, -length);
-> +        goto cleanup;
->      }
-> =20
-> -    if (offset + size > length) {
-> +    if (io_req->offset + io_req->size > length) {
->          if (exp->growable) {
-> -            ret =3D fuse_do_truncate(exp, offset + size, true, PREALLOC_=
-MODE_OFF);
-> +            ret =3D fuse_do_truncate(exp, io_req->offset + io_req->size,
-> +                                   true, PREALLOC_MODE_OFF);
->              if (ret < 0) {
-> -                fuse_reply_err(req, -ret);
-> -                return;
-> +                fuse_reply_err(io_req->req, -ret);
-> +                goto cleanup;
->              }
->          } else {
-> -            size =3D length - offset;
-> +            io_req->size =3D MAX(0, length - io_req->offset);
-> +            if (io_req->size =3D=3D 0) {
-> +                fuse_reply_write(io_req->req, 0);
-> +                goto cleanup;
-> +            }
->          }
->      }
-> =20
-> -    ret =3D blk_pwrite(exp->common.blk, offset, size, buf, 0);
-> +    ret =3D blk_co_pwrite(exp->common.blk, io_req->offset, io_req->size,
-> +                        io_req->write_buf, 0);
->      if (ret >=3D 0) {
-> -        fuse_reply_write(req, size);
-> +        fuse_reply_write(io_req->req, io_req->size);
->      } else {
-> -        fuse_reply_err(req, -ret);
-> +        fuse_reply_err(io_req->req, -ret);
-> +    }
-> +
-> +cleanup:
-> +    if (qatomic_fetch_dec(&exp->in_flight) =3D=3D 1) {
-> +        aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
->      }
-> +
-> +    blk_exp_unref(&exp->common);
-> +
-> +    g_free(io_req->write_buf);
-> +    g_free(io_req);
-> +}
-> +
-> +/**
-> + * Handle client reads from the exported image.
-> + */
-> +static void fuse_read(fuse_req_t req, fuse_ino_t inode,
-> +                      size_t size, off_t offset, struct fuse_file_info *=
-fi)
-> +{
-> +    FuseExport *exp =3D fuse_req_userdata(req);
-> +    FuseIORequest *io_req =3D g_new(FuseIORequest, 1);
-> +
-> +    *io_req =3D (FuseIORequest) {
-> +        .req =3D req,
-> +        .size =3D size,
-> +        .offset =3D offset,
-> +        .exp =3D exp,
-> +    };
-> +
-> +    Coroutine *co =3D qemu_coroutine_create(fuse_read_coroutine, io_req);
-> +    qemu_coroutine_enter(co);
-> +}
-> +
-> +
-> +/**
-> + * Handle client writes to the exported image.
-> + */
-> +static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-> +                       size_t size, off_t offset, struct fuse_file_info =
-*fi)
-> +{
-> +    FuseExport *exp =3D fuse_req_userdata(req);
-> +    FuseIORequest *io_req =3D g_new(FuseIORequest, 1);
-> +
-> +    *io_req =3D (FuseIORequest) {
-> +        .req =3D req,
-> +        .size =3D size,
-> +        .offset =3D offset,
-> +        .exp =3D exp,
-> +        .write_buf =3D g_memdup2_qemu(buf, size),
-> +    };
-> +
-> +    Coroutine *co =3D qemu_coroutine_create(fuse_write_coroutine, io_req=
-);
-> +    qemu_coroutine_enter(co);
->  }
-> =20
->  /**
-> --=20
-> 2.34.1
->=20
+     (H)DEC and PURR get reset before icount does, which causes them to 
+be
+     skewed and not match the init state. This can cause replay to not
+     match the recorded trace exactly. For DEC and HDEC this is usually 
+not
+     noticable since they tend to get programmed before affecting the
+     target machine. PURR has been observed to cause replay bugs when
+     running Linux.
 
---s+NNU7avonaiVvLf
-Content-Type: application/pgp-signature; name=signature.asc
+     Fix this by resetting using a time of 0.
 
------BEGIN PGP SIGNATURE-----
+     Message-ID: <20241219034035.1826173-2-npiggin@gmail.com>
+     Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfYjkgACgkQnKSrs4Gr
-c8gRUgf/VdYmTOZFYgCIFu0b/+igX+tm4EmzTY6eIT9llJuX6tC/N5RthvvIuTI2
-kczVyQ7veoIZnKrUi53XbV+BtHpmJ6M0GKrrXTJ/BnOn0FbjeIBMKVxDascn2Pfm
-z6Qs8odG/L9jZZ8o9Yjqrs4s4Gs9GUqCKhNAYZBvRPxWUmp+vEYmTZ+WtIttFOVK
-/CwXCJhDweCeMCrr5AzBDuSNtJ44hCVGzU6RtSm2QhDOqBOAVPAtHRg2bUmpuN4R
-J8qG0ApNj53wvCeNFfNV9KQiAoaLHUnNBVNTG41BxykjiX749CRMggtGMgeAu2UT
-rs1TCnpKoWj46Z7qy+7dj62kTWy2gg==
-=woYw
------END PGP SIGNATURE-----
+  hw/ppc/ppc.c | 11 ++++++++---
+  1 file changed, 8 insertions(+), 3 deletions(-)
 
---s+NNU7avonaiVvLf--
 
+Reverting the patch helps boot the guest.
+Thanks,
+Misbah Anjum N
 
