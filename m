@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC21CC35FF3
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BCF0C35FF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu70v-00040e-Dt; Mon, 17 Mar 2025 05:44:05 -0400
+	id 1tu70w-00041E-I0; Mon, 17 Mar 2025 05:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tu70u-00040E-Jm
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:04 -0400
+ id 1tu70t-0003zh-5F
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:03 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tu70q-0006zV-5t
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:04 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1tu70p-0006zK-H0
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:02 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxaeHc7tdnAc2ZAA--.20113S3;
- Mon, 17 Mar 2025 17:43:56 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxLGva7tdn8syZAA--.63889S3;
+ Mon, 17 Mar 2025 17:43:54 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxb8fa7tdnP3tPAA--.30227S5;
- Mon, 17 Mar 2025 17:43:56 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxb8fa7tdnP3tPAA--.30227S2;
+ Mon, 17 Mar 2025 17:43:54 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 3/4] hw/intc/loongarch_pch: Rename macro PCH_PIC_xxx_OFFSET
- with PCH_PIC_xxx
-Date: Mon, 17 Mar 2025 17:43:53 +0800
-Message-Id: <20250317094354.1028221-4-maobibo@loongson.cn>
+Subject: [PATCH 0/4] hw/intc/loongarch_pch: Cleanup with register name
+Date: Mon, 17 Mar 2025 17:43:50 +0800
+Message-Id: <20250317094354.1028221-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250317094354.1028221-1-maobibo@loongson.cn>
-References: <20250317094354.1028221-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8fa7tdnP3tPAA--.30227S5
+X-CM-TRANSID: qMiowMBxb8fa7tdnP3tPAA--.30227S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,99 +63,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Macro PCH_PIC_HTMSI_VEC_OFFSET and PCH_PIC_ROUTE_ENTRY_OFFSET is renamed
-as PCH_PIC_HTMSI_VEC and PCH_PIC_ROUTE_ENTRY separately, it is easier to
-understand.
+Here is cleanup with register name, the width of some registers are 64 bit.
+To emulate 32 bit memory access, it is split into two registers with suffix
+name low and high. Here register name and (register name + 4) is used
+rather than splitting into two registers.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_pch_pic.c            | 20 ++++++++++----------
- hw/loongarch/virt.c                    |  2 +-
- include/hw/intc/loongarch_pic_common.h |  4 ++--
- 3 files changed, 13 insertions(+), 13 deletions(-)
+There is no function change in this patch set.
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 428809b927..087ab80ff8 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -251,18 +251,18 @@ static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
- {
-     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
-     uint64_t val = 0;
--    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_OFFSET;
-+    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY;
-     int64_t offset_tmp;
- 
-     switch (offset) {
--    case PCH_PIC_HTMSI_VEC_OFFSET ... PCH_PIC_HTMSI_VEC_END:
--        offset_tmp = offset - PCH_PIC_HTMSI_VEC_OFFSET;
-+    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
-+        offset_tmp = offset - PCH_PIC_HTMSI_VEC;
-         if (offset_tmp >= 0 && offset_tmp < 64) {
-             val = s->htmsi_vector[offset_tmp];
-         }
-         break;
--    case PCH_PIC_ROUTE_ENTRY_OFFSET ... PCH_PIC_ROUTE_ENTRY_END:
--        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_OFFSET;
-+    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
-+        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY;
-         if (offset_tmp >= 0 && offset_tmp < 64) {
-             val = s->route_entry[offset_tmp];
-         }
-@@ -280,19 +280,19 @@ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
- {
-     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
-     int32_t offset_tmp;
--    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY_OFFSET;
-+    uint32_t offset = (addr & 0xfff) + PCH_PIC_ROUTE_ENTRY;
- 
-     trace_loongarch_pch_pic_writeb(size, addr, data);
- 
-     switch (offset) {
--    case PCH_PIC_HTMSI_VEC_OFFSET ... PCH_PIC_HTMSI_VEC_END:
--        offset_tmp = offset - PCH_PIC_HTMSI_VEC_OFFSET;
-+    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
-+        offset_tmp = offset - PCH_PIC_HTMSI_VEC;
-         if (offset_tmp >= 0 && offset_tmp < 64) {
-             s->htmsi_vector[offset_tmp] = (uint8_t)(data & 0xff);
-         }
-         break;
--    case PCH_PIC_ROUTE_ENTRY_OFFSET ... PCH_PIC_ROUTE_ENTRY_END:
--        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY_OFFSET;
-+    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
-+        offset_tmp = offset - PCH_PIC_ROUTE_ENTRY;
-         if (offset_tmp >= 0 && offset_tmp < 64) {
-             s->route_entry[offset_tmp] = (uint8_t)(data & 0xff);
-         }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index f886b08c6d..a18455bc89 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -427,7 +427,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-     memory_region_add_subregion(get_system_memory(), VIRT_IOAPIC_REG_BASE,
-                             sysbus_mmio_get_region(d, 0));
-     memory_region_add_subregion(get_system_memory(),
--                            VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY_OFFSET,
-+                            VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY,
-                             sysbus_mmio_get_region(d, 1));
-     memory_region_add_subregion(get_system_memory(),
-                             VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS,
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index c04471b08d..b33bebb129 100644
---- a/include/hw/intc/loongarch_pic_common.h
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -19,9 +19,9 @@
- #define PCH_PIC_INT_CLEAR               0x80
- #define PCH_PIC_AUTO_CTRL0              0xc0
- #define PCH_PIC_AUTO_CTRL1              0xe0
--#define PCH_PIC_ROUTE_ENTRY_OFFSET      0x100
-+#define PCH_PIC_ROUTE_ENTRY             0x100
- #define PCH_PIC_ROUTE_ENTRY_END         0x13f
--#define PCH_PIC_HTMSI_VEC_OFFSET        0x200
-+#define PCH_PIC_HTMSI_VEC               0x200
- #define PCH_PIC_HTMSI_VEC_END           0x23f
- #define PCH_PIC_INT_STATUS              0x3a0
- #define PCH_PIC_INT_POL                 0x3e0
+Bibo Mao (4):
+  hw/intc/loongarch_pch: Use default path when access some registers
+  hw/intc/loongarch_pch: Rename register name
+  hw/intc/loongarch_pch: Rename macro PCH_PIC_xxx_OFFSET with
+    PCH_PIC_xxx
+  hw/intc/loongarch_pch: Remove some duplicate macro
+
+ hw/intc/loongarch_pch_pic.c            | 82 +++++++++++---------------
+ hw/loongarch/virt.c                    |  4 +-
+ include/hw/intc/loongarch_pic_common.h | 36 ++++-------
+ 3 files changed, 49 insertions(+), 73 deletions(-)
+
+
+base-commit: aa90f1161bb17a4863e16ec2f75104cff0752d4e
 -- 
 2.39.3
 
