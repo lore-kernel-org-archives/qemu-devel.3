@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D931C282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F52C35FF3
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuBSO-0000o0-KO; Mon, 17 Mar 2025 10:28:44 -0400
+	id 1tuBSK-0000hJ-1r; Mon, 17 Mar 2025 10:28:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuBSG-0000fs-GB
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:37 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tuBS8-0000Zk-NV
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:29 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuBSC-0001DX-DB
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:35 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43d2d952eb1so10336575e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:28:31 -0700 (PDT)
+ id 1tuBS6-000196-0y
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:28 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43d2d952eb1so10334855e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:28:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742221710; x=1742826510; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742221704; x=1742826504; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IGKVMeg4aDxvbEQfJftU83jMmdBHS/KLNHZo9WpIB6Q=;
- b=KgPl5X+vBGiWG4s0QK/MBma0/dJNievroG8yTAHVEzk3Zt5NYmkFyX1i9H20fgGTa3
- 2DCPfEN3tMKbQofs3wuuM2z7HUEOuld0l0JNs+xzL2u3s2XXgXEOUA9OEqK5TBV16mTZ
- dn4maArEOH2BcVQO9T0ywJAiL9K77e5gRGzkp9xiyeLKMXFbAHb7JuwO/mPUvxea3doB
- MInur6daRYUBA7axJm2mzUjd+WpbX5nJI38dXvS4s7cpZOwB6KxqmjZc8vfAhGzBgkgF
- TO6zzCj0pC3/GS4cca1FM/dP7/DjHGa+mKx3IJbAF8Dp8Ps1liUK2o4f9FWYJXqHxoeY
- BnLw==
+ :reply-to; bh=NaCPyDdxmRmZpYCr7DKDsJe3bk+lLzZjopyFV4R3vdM=;
+ b=Vk+WsdMnu4yb7RZcok/WPH5AOa9COQOol5i1a/EwttGcA3LsnOOyl4af/3J89Ai4sv
+ B7rt9i34RtD9mkpl0J2T0M60jhhuysLM5r2vOWrLT6LQ+d/Ee8t4Rv7DIC/TMbk3+j65
+ sRCf3jOO9L5mrqRmMSy4laEzlpOinjE7xpZ3lsAeSq+9m5I/5Us1mKPTYz09lU/iQSTx
+ /6hSWWBX7zN5+2Eepv1pTKOw5tpCYQsbWqSGeyu+6m1yZJ5NIwcSP9uIGhsS61NAhjW7
+ 3My6FMcb/j9ZAmrM7vRxpcvY8oAKTRZFGbCuwA/E89EeBlcFMWRPiooCRIOrhz8X5KYC
+ FfUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742221710; x=1742826510;
+ d=1e100.net; s=20230601; t=1742221704; x=1742826504;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IGKVMeg4aDxvbEQfJftU83jMmdBHS/KLNHZo9WpIB6Q=;
- b=EgZRMA0d8bg/VrZeDCfO+Ttms5VehwLfAtlqEreO6Wv7Uty5j29oPx7QnVWkOPazSN
- Dsn07cvJPnbaSNpK5dWtI6luvcLhro23FkF/O+X04I2Bf1F1Df42KBZJWdfQ8eRq1+bz
- i157JVaGTgv12IzVAzUhE9JS5LUIyHVL2MiPYDJ85/pYdGK7FHoCNUbImcl28ocVfQDX
- 9jaDzxLxeFtTC77XLuVMf3vN++GYutSMjpBFs0S/h3iYcwB9x7PCjcCa5lXCXRSdzxRq
- v4THRDlB9i9PWoel8YKSw/I/zNZE52lr2g+ReGss4SK2wmvZL+1+j9+URGmbids/y9Vb
- RyHw==
+ bh=NaCPyDdxmRmZpYCr7DKDsJe3bk+lLzZjopyFV4R3vdM=;
+ b=L7TZ3/lBc0JLi9eZVcP/OnjTw6T/Awh1c90bUC3JM/kL3lNMI99Xb4C7m9Oxvt391F
+ QD+IjEdkjL06jn2oWVtb9YAIexK1huFORXwJaDLGukijEBuo4bJzYDV99YPbAoJWGhci
+ 7YqMF8jbDzU/ODSJGZ7qzLWF2v6kZRGVdK/MxUjXcOatwRccdWMB16dBTUVHG1nx73cU
+ 1jHD5WIIZGShojgzaZGyiBbBcMBBbbTtuVlX6BVtERDeZlFvmS8J/SgqSvBrZfT+OyCo
+ m4ENI26uNnTPd7jqcipxNX1XmVIh+1y+mBfziblj30iVBmwp6/xbcizxWNAg12v8RCtf
+ ZBxA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9zBg6MIZZ0F4mq3cqKq42GxbFvxRxQVDOOGt5dBf3+LY+wKEMKgkj4wnQB/dsi13Wmc6bbHVOW/3F@nongnu.org
-X-Gm-Message-State: AOJu0Yx0ehbhQoseVqqkdhdYiPs/bDMOOsio3XCnj7ZBXNXebGDgRN28
- CUEVme3XPnDo69B9kCHZ+pall4mWgbwDgwjfXM+VU1jqdjZ1FY1BiyaF50Mk/EnPWYugAfP4JeG
- 1
-X-Gm-Gg: ASbGncu91MbLvMD5wmbbkVwdAt6l5cFzeZ7K7SIdv/A21H/Nhxl4EkCAtvSr9aD4eLh
- 7cWwRXijdM7ghQAyammZQYxgVfcy4csdx7XTQQVJ4OybVCb/DfWCICJjos80/ZgcWFKUl2sb5Vm
- 8FUEAnQSg5fbMkja+MosvafQrapc6NUvtvF+uX0vlKatEXkuXhKu8q8Rjhlrz2iBhZAVe/YQxBa
- alXgpnqvJnDfVi/11Npn5ISgG4XyPRnURmJlsmBo5vsKYc68SleODs5Z1gozJ5IuMS+A/ieQ4bH
- pbZn9b+FzR0UYbQZskOdvbIaGFLm83AvMZH/zpjRJqVnnQYuhJG2LOYj1eTaSQ==
-X-Google-Smtp-Source: AGHT+IHjQSceXaoTiB7jwNXtux+dMPc0ELOg/8WD+nn1wAZVcN96rMvzmT0XM0yTabxYV+MCitMQYg==
-X-Received: by 2002:a05:600c:3c99:b0:43c:f597:d565 with SMTP id
- 5b1f17b1804b1-43d3897499bmr577705e9.12.1742221710402; 
- Mon, 17 Mar 2025 07:28:30 -0700 (PDT)
+ AJvYcCWUnA2xnf0BYTjZVP+Nm2+kWRTQ0O2saxIOQGvljsSwbkD7xmF6x67MELvBnmw8577Hqn8yCv8tqe4O@nongnu.org
+X-Gm-Message-State: AOJu0YwnDMArBfyPKzOpAJPjHXEMc6oHlU5c3W//QHewAs9OdDnES3VL
+ fsOTvWRDPvBCZrEuUzWMacpuE2P6ATrRR2FK/vSwH+h6RtqejHD3p23mQWHlWK0=
+X-Gm-Gg: ASbGncuohIbtpQ/tqGBeoMAtSjWQ6tyNrzeaH9+Jc9o4ewx346vwqpwpcSpANWR/jxN
+ vd4gGXWo7EmuLk8z/yJlta5HvVPLqTXd7FpqSij2Yy8QKBmnLPiCpcUjol72R87YgeE6G0YPqRX
+ Na5bQGuFP3HG03nf9d3XVKmoSX+0Wusp1nDTfrsGyeTzFqP+KEl22Io0fL4jHq5CV4DCA97lfUV
+ Q0/AdUIfhP/spNjbFVIxrTR8R9ceIhE7j0vvc/ggZFnMLdnnSHYWpsCpMakqXqimoxn0YA8A4gS
+ fUu4VcSU5/UkjRdwLSVa48YVFZm4/9+ICRTBpNFUQXKbGUGlXTQ=
+X-Google-Smtp-Source: AGHT+IFZgSA/cAkWsL0NANo70r3hAPr+GdqpLT9y7NSc4S/7MvPAGpv2x8FLpBZMLwhaZhgiayEm0Q==
+X-Received: by 2002:a05:600c:46ca:b0:43c:ee62:33f5 with SMTP id
+ 5b1f17b1804b1-43d389ae727mr261045e9.27.1742221704183; 
+ Mon, 17 Mar 2025 07:28:24 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe60ad4sm107914985e9.29.2025.03.17.07.28.29
+ 5b1f17b1804b1-43d1fe60ad4sm107914985e9.29.2025.03.17.07.28.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 07:28:29 -0700 (PDT)
+ Mon, 17 Mar 2025 07:28:23 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-10.1 9/9] target/arm: Remove TYPE_AARCH64_CPU
-Date: Mon, 17 Mar 2025 14:28:19 +0000
-Message-ID: <20250317142819.900029-10-peter.maydell@linaro.org>
+Subject: [PATCH for-10.1 3/9] target/arm: Handle AArch64 in TYPE_ARM_CPU
+ gdb_arch_name
+Date: Mon, 17 Mar 2025 14:28:13 +0000
+Message-ID: <20250317142819.900029-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250317142819.900029-1-peter.maydell@linaro.org>
 References: <20250317142819.900029-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,141 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TYPE_AARCH64_CPU class is an abstract type that is the parent of
-all the AArch64 CPUs.  It now has no special behaviour of its own, so
-we can eliminate it and make the AArch64 CPUs directly inherit from
-TYPE_ARM_CPU.
+Instead of having the TYPE_AARCH64_CPU subclass set
+CPUClass::gdb_arch_name to a different function, make the
+TYPE_ARM_CPU implementation of the method handle AArch64.
+
+For the moment we make the "is this AArch64?" function test "is the
+CPU of TYPE_AARCH64_CPU?", so that this produces no behavioural
+change.  When we've moved all the gdbstub related methods across to
+the base class, we will be able to change this to be "does the CPU
+have the ARM_FEATURE_AARCH64 feature?".
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-qom.h   |  5 -----
- target/arm/cpu.h       |  4 ----
- target/arm/internals.h |  1 -
- target/arm/cpu64.c     | 49 +-----------------------------------------
- target/arm/tcg/cpu64.c |  2 +-
- 5 files changed, 2 insertions(+), 59 deletions(-)
+ target/arm/internals.h | 6 ++++++
+ target/arm/cpu.c       | 3 +++
+ target/arm/cpu64.c     | 6 ------
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
-index b497667d61e..2fcb0e12525 100644
---- a/target/arm/cpu-qom.h
-+++ b/target/arm/cpu-qom.h
-@@ -28,11 +28,6 @@ OBJECT_DECLARE_CPU_TYPE(ARMCPU, ARMCPUClass, ARM_CPU)
- 
- #define TYPE_ARM_MAX_CPU "max-" TYPE_ARM_CPU
- 
--#define TYPE_AARCH64_CPU "aarch64-cpu"
--typedef struct AArch64CPUClass AArch64CPUClass;
--DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
--                       TYPE_AARCH64_CPU)
--
- #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
- #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 8f52380c88c..c9c53a6294b 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1161,10 +1161,6 @@ struct ARMCPUClass {
-     ResettablePhases parent_phases;
- };
- 
--struct AArch64CPUClass {
--    ARMCPUClass parent_class;
--};
--
- /* Callback functions for the generic timer's timers. */
- void arm_gt_ptimer_cb(void *opaque);
- void arm_gt_vtimer_cb(void *opaque);
 diff --git a/target/arm/internals.h b/target/arm/internals.h
-index a18d87fa28b..0c24208f183 100644
+index bb962389192..a14c269fa5a 100644
 --- a/target/arm/internals.h
 +++ b/target/arm/internals.h
-@@ -350,7 +350,6 @@ static inline int r14_bank_number(int mode)
- }
+@@ -1691,6 +1691,12 @@ void aarch64_add_sve_properties(Object *obj);
+ void aarch64_add_sme_properties(Object *obj);
+ #endif
  
- void arm_cpu_register(const ARMCPUInfo *info);
--void aarch64_cpu_register(const ARMCPUInfo *info);
++/* Return true if the gdbstub is presenting an AArch64 CPU */
++static inline bool arm_gdbstub_is_aarch64(ARMCPU *cpu)
++{
++    return object_dynamic_cast(OBJECT(cpu), TYPE_AARCH64_CPU);
++}
++
+ /* Read the CONTROL register as the MRS instruction would. */
+ uint32_t arm_v7m_mrs_control(CPUARMState *env, uint32_t secure);
  
- void register_cp_regs_for_features(ARMCPU *cpu);
- void init_cpreg_list(ARMCPU *cpu);
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 01786ac7879..d69403fda90 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2647,6 +2647,9 @@ static const gchar *arm_gdb_arch_name(CPUState *cs)
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+ 
++    if (arm_gdbstub_is_aarch64(cpu)) {
++        return "aarch64";
++    }
+     if (arm_feature(env, ARM_FEATURE_IWMMXT)) {
+         return "iwmmxt";
+     }
 diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 49cf06a7bdc..200da1c489b 100644
+index 8188ede5cc8..020b32f21e9 100644
 --- a/target/arm/cpu64.c
 +++ b/target/arm/cpu64.c
-@@ -781,59 +781,12 @@ static const ARMCPUInfo aarch64_cpus[] = {
- #endif
- };
- 
--static void aarch64_cpu_finalizefn(Object *obj)
--{
--}
--
--static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
--{
--}
--
--static void aarch64_cpu_instance_init(Object *obj)
--{
--    ARMCPUClass *acc = ARM_CPU_GET_CLASS(obj);
--
--    acc->info->initfn(obj);
--    arm_cpu_post_init(obj);
--}
--
--static void cpu_register_class_init(ObjectClass *oc, void *data)
--{
--    ARMCPUClass *acc = ARM_CPU_CLASS(oc);
--
--    acc->info = data;
--}
--
--void aarch64_cpu_register(const ARMCPUInfo *info)
--{
--    TypeInfo type_info = {
--        .parent = TYPE_AARCH64_CPU,
--        .instance_init = aarch64_cpu_instance_init,
--        .class_init = info->class_init ?: cpu_register_class_init,
--        .class_data = (void *)info,
--    };
--
--    type_info.name = g_strdup_printf("%s-" TYPE_ARM_CPU, info->name);
--    type_register_static(&type_info);
--    g_free((void *)type_info.name);
--}
--
--static const TypeInfo aarch64_cpu_type_info = {
--    .name = TYPE_AARCH64_CPU,
--    .parent = TYPE_ARM_CPU,
--    .instance_finalize = aarch64_cpu_finalizefn,
--    .abstract = true,
--    .class_init = aarch64_cpu_class_init,
--};
--
- static void aarch64_cpu_register_types(void)
+@@ -813,11 +813,6 @@ static void aarch64_cpu_finalizefn(Object *obj)
  {
-     size_t i;
+ }
  
--    type_register_static(&aarch64_cpu_type_info);
+-static const gchar *aarch64_gdb_arch_name(CPUState *cs)
+-{
+-    return "aarch64";
+-}
 -
-     for (i = 0; i < ARRAY_SIZE(aarch64_cpus); ++i) {
--        aarch64_cpu_register(&aarch64_cpus[i]);
-+        arm_cpu_register(&aarch64_cpus[i]);
-     }
- }
+ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+ {
+     CPUClass *cc = CPU_CLASS(oc);
+@@ -825,7 +820,6 @@ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+     cc->gdb_read_register = aarch64_cpu_gdb_read_register;
+     cc->gdb_write_register = aarch64_cpu_gdb_write_register;
+     cc->gdb_core_xml_file = "aarch64-core.xml";
+-    cc->gdb_arch_name = aarch64_gdb_arch_name;
  
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 29ab0ac79da..5d8ed2794d3 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1316,7 +1316,7 @@ static void aarch64_cpu_register_types(void)
-     size_t i;
- 
-     for (i = 0; i < ARRAY_SIZE(aarch64_cpus); ++i) {
--        aarch64_cpu_register(&aarch64_cpus[i]);
-+        arm_cpu_register(&aarch64_cpus[i]);
-     }
- }
- 
+     object_class_property_add_bool(oc, "aarch64", aarch64_cpu_get_aarch64,
+                                    aarch64_cpu_set_aarch64);
 -- 
 2.43.0
 
