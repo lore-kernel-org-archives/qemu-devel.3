@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5AA1C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51803C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuBSW-0000q2-Qw; Mon, 17 Mar 2025 10:28:52 -0400
+	id 1tuBSP-0000oU-FC; Mon, 17 Mar 2025 10:28:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuBSF-0000es-FW
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:35 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tuBSA-0000bP-KM
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:30 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuBSB-0001Ck-6l
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:35 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43cef035a3bso15639525e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:28:30 -0700 (PDT)
+ id 1tuBS8-0001Ag-8z
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:30 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43cf3192f3bso23339265e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742221709; x=1742826509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742221707; x=1742826507; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=w7WKqYLy7NEpjkefHXnJSfu6zGOyWq7eC8uKJPQR8rk=;
- b=PezYq2v3+2uzC+l3+J7jMyxj4kb/fdEgmf75MIuQ+e11TMJVtOQ4QUdjQ1tC3tvRxY
- aXNN+mtLgqqviVhfsLt+yyiozLTTSeFojRPLKXtjHEX6nVAQmpT0rW0QzXLqB9Tyxs4q
- PYqgU+AjJaMBUwiLn2pW8ub6gzIh2Bv4xx2l1I4JCPrzYXvHxZChOKcIT/gVilBc7CMz
- ntFOuYbKgUfH8giBunbYoMLfmoG3Klz32dufecUk75JgK0koi5f/1QqMQKzOJK8KB3fw
- uJXH+zeZUb7xSKmUbmJFuDK9nWGGFunugDtPBiEGgqyduinBX1aSJX8qzq7mOHJhGIck
- wOcQ==
+ :reply-to; bh=atXgH53MeniOdFRyZrcV1yr26nprAD2zadvZy6dUHWo=;
+ b=UCugk+Vng20OsnjC+Q6M/WVE+ldyhjzLLmsrGW6lWVcAgmrtNsaStoFm9R2CzdFmVa
+ S/QkjOOFztyn9tTBjp8a1KHFioW9yNZDzZcsu5xmo2OccFDwDeObFKtZKAZYSRjXcq7n
+ l1h1C0bX5cyyTu9BLCtnzHNAhUkxRVqVvSdo1RZe76BXJ3qFH+KdOtlzlSPpkt9CjrbI
+ Yb5tCubVitJheIi0k3DfYX0q6veoeNyENHEfVWLf0vJqwdovaWHdDdLxEyT81N/LqAg+
+ WfMJj2RuW+cC1pWHwn25HMyESwyLsxsmJLAmpqt7mKRMERlR9dQ+oslaridZYlng6iV+
+ wGVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742221709; x=1742826509;
+ d=1e100.net; s=20230601; t=1742221707; x=1742826507;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w7WKqYLy7NEpjkefHXnJSfu6zGOyWq7eC8uKJPQR8rk=;
- b=bl/sb3Sao9nOi87UliPDvPIqYlf/kdtc8XSTC7OR785Fo/tbJvcEcAFt1Bm4CtdBl1
- tOu8wgJA0pxzStiFX1tHILn9R/V5q7m+rmTBhCcENcG4ML5p546n3+PomdCDky4e8aXd
- x9RvGLXXjtOuPurhy70PoOwhr1+l4xc5BXu3cjFvlDU/4KcSAgrcClZXzeR5ehINtFiR
- KujoON1gGeivHD/AyVk3jb8/+jXrTmg5WYO4D+9i461opk2w1fyQ8ex42mkl2H88iV5D
- EPaZhFAdgf+8xdEqPiLay7s9/LpWLRv0qj9IhIMTKudvX/hM92VjrqhFI1ta08Wp8fcv
- Rtog==
+ bh=atXgH53MeniOdFRyZrcV1yr26nprAD2zadvZy6dUHWo=;
+ b=Pm69YHaoA1sPZroGhs3XAqsMYIOgyqYgkcwoiD52yUYqlnqL2tmsi74Hnt/K43Fybu
+ 2VrCDFVGxCkTmgSW5URZQnIHGevtJbcCPSMUPZXZfuIXWFwJJnQu6Xsi6sHAAKaUHDke
+ 3IYJ4v1NBYrk+r1zWzqtLd799jhin2FgtqRj2qfpgZgH1NlL0VOlhYKp5Tg4r0JSm4W0
+ 6Vo1GlV52oJp/n9LZY5/0UWuMXuwRW8BIlL3rxQ65EsfUXRyQ7uqswKa6kNtb20HK8u2
+ 51e7395+jRyxwL/Bk+GVmjsP1YWAKLwpv933YA6VKH0UlFJfpu81feQjoW9a0bjnma0n
+ 6Hrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF2hHDOYRt3bq7ECGeBRsb5zli1bhHe6ImwT5DpJ1iw/GyziXx9RtqoHib5AXAMFS9TQzClJcikjMC@nongnu.org
-X-Gm-Message-State: AOJu0Yzee9YKNGmFm87RyxjQv0ozAG1rH/Ck7225RlLunej/GfiXvutQ
- rC/hbemO58rRWr8zxs5pMfeKUK51qAyNqSWliPWgGgqX5WxKzV7KJns+n3qkhtU=
-X-Gm-Gg: ASbGncsyLJQSezeA5K+y3e5315cts6oGe5FvRXh97pP2jb9GtvmWy16+NcIHFYhcVte
- Zg6V8uUwiF22tciRLcvT9qitcrgRJd383BIw6KYSSLAnWXCXLUIW4w+DZ+4Y0kouOPCwHtM4a4H
- 4uwyX6korqEoyzKt1h2jpaj0U5h+XJiK2svTQenY7H9VnHpjeHck/ifkN6HN5fySWhzbnE75QWf
- 4BsAK6ZZ7V7N6ONcHKShBd6nfjrrbs18/3KgjDWyOJ07JliBejSV9rHDA4YfC/YuhwtfSCO/80U
- 5o8Lj6MNbu3CvIiOpmMHPnohRNLcbeUN4W1Iiyjl/RHY7PjOWbk=
-X-Google-Smtp-Source: AGHT+IGteN4Bi1WBu6nBwMrKa4VYjQSO/0ELq2zu/dSlQ2PFYdag+Z9iJ4ZF/MX8mO5OUpYbpVWV/w==
-X-Received: by 2002:a05:600c:3c9e:b0:43d:ea:51d2 with SMTP id
- 5b1f17b1804b1-43d1ecc380dmr145325795e9.14.1742221709423; 
- Mon, 17 Mar 2025 07:28:29 -0700 (PDT)
+ AJvYcCW5lcYjxCf4MwlqB4CUskFFXC7RcJf0mP7i3SBxq0/OAVz3uHTnZibJWG+xilHeAn6vxbQ3Z8oH4lvB@nongnu.org
+X-Gm-Message-State: AOJu0YzzJ3aC8pLIKgU/Rs0GEMGc0aZIaotWzYpHV5yCKUqhI3a1CrRB
+ Jsdis7/jFRSnxzKkXRXS9/E7XiAN7YaVTsisiFIxumr4JnhIaXLQxxz16w5rNuE=
+X-Gm-Gg: ASbGncsxSBObt90rp7y5C127QbSiByQoB0FvF2Zlmgg/UmwKyfA95DprN9yFv5Mv3rA
+ +MJfz0ulsc5Xo7kFrHeBm29Au4zVBE2Q8w7ebV50zLZsKWMkglyRMjlSc399XoGt93g0+AuVl/N
+ s7RLutcPpPOK3bZRsz12YHNadVYW1ibRVYxB1imuY6NSuEYd7iRRBIMid4c0ONB7SehF4p6B5m7
+ y5GLV4qXrdMoYOH1sMBnVlahhyKlkB9XvzV8m1ow25en2p2YfTWYzGunV2sugg/mgd+9tVBJHg2
+ o52dy3sIg21HVnXENsKN1Ru6lvlm6VYAcxCJY63d5MqsF0Q7ozA=
+X-Google-Smtp-Source: AGHT+IGxB/aWI1Mkhl86W9dSOU0Wyd6RYRUj8KvbZaqTlX5KoUho4aJUjvFD3dlvX2Ahogmpi4otHg==
+X-Received: by 2002:a05:600c:5489:b0:43c:e8a5:87a with SMTP id
+ 5b1f17b1804b1-43d1ecaa83amr145402645e9.16.1742221706689; 
+ Mon, 17 Mar 2025 07:28:26 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe60ad4sm107914985e9.29.2025.03.17.07.28.28
+ 5b1f17b1804b1-43d1fe60ad4sm107914985e9.29.2025.03.17.07.28.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 07:28:28 -0700 (PDT)
+ Mon, 17 Mar 2025 07:28:25 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-10.1 8/9] target/arm/kvm: don't check TYPE_AARCH64_CPU
-Date: Mon, 17 Mar 2025 14:28:18 +0000
-Message-ID: <20250317142819.900029-9-peter.maydell@linaro.org>
+Subject: [PATCH for-10.1 5/9] target/arm: Handle AArch64 gdb read/write regs
+ in TYPE_ARM_CPU
+Date: Mon, 17 Mar 2025 14:28:15 +0000
+Message-ID: <20250317142819.900029-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250317142819.900029-1-peter.maydell@linaro.org>
 References: <20250317142819.900029-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,35 +100,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to merge TYPE_AARCH64_CPU with TYPE_ARM_CPU, so enforcing in
-kvm_arch_init_vcpu() that the CPU class is a subclass of
-TYPE_AARCH64_CPU will no longer be possible.
-
-It's safe to just remove this test, because any purely-AArch32 CPU
-will fail the "kvm_target isn't set" check, because we no longer
-support the old AArch32-host KVM setup and so CPUs like the Cortex-A7
-no longer set cpu->kvm_target. Only the 'host', 'max', and the
-odd special cases 'cortex-a53' and 'cortex-a57' set kvm_target.
+Instead of having the TYPE_AARCH64_CPU subclass set
+CPUClass::gdb_read_register and ::gdb_write_register to different
+methods from those of the TYPE_ARM_CPU parent class, have the
+TYPE_ARM_CPU methods handle either AArch32 or AArch64 at runtime.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/kvm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ target/arm/cpu64.c   |  5 -----
+ target/arm/gdbstub.c | 12 ++++++++++++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index da30bdbb234..7418eb57537 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1882,8 +1882,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     CPUARMState *env = &cpu->env;
-     uint64_t psciver;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 3094df366ec..2f87df082cd 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -815,11 +815,6 @@ static void aarch64_cpu_finalizefn(Object *obj)
  
--    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE ||
--        !object_dynamic_cast(OBJECT(cpu), TYPE_AARCH64_CPU)) {
-+    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
-         error_report("KVM is not supported for this guest CPU type");
-         return -EINVAL;
-     }
+ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+ {
+-    CPUClass *cc = CPU_CLASS(oc);
+-
+-    cc->gdb_read_register = aarch64_cpu_gdb_read_register;
+-    cc->gdb_write_register = aarch64_cpu_gdb_write_register;
+-
+     object_class_property_add_bool(oc, "aarch64", aarch64_cpu_get_aarch64,
+                                    aarch64_cpu_set_aarch64);
+     object_class_property_set_description(oc, "aarch64",
+diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+index 30068c22627..ce4497ad7c3 100644
+--- a/target/arm/gdbstub.c
++++ b/target/arm/gdbstub.c
+@@ -44,6 +44,12 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+ 
++#ifdef TARGET_AARCH64
++    if (arm_gdbstub_is_aarch64(cpu)) {
++        return aarch64_cpu_gdb_read_register(cs, mem_buf, n);
++    }
++#endif
++
+     if (n < 16) {
+         /* Core integer register.  */
+         return gdb_get_reg32(mem_buf, env->regs[n]);
+@@ -66,6 +72,12 @@ int arm_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     CPUARMState *env = &cpu->env;
+     uint32_t tmp;
+ 
++#ifdef TARGET_AARCH64
++    if (arm_gdbstub_is_aarch64(cpu)) {
++        return aarch64_cpu_gdb_write_register(cs, mem_buf, n);
++    }
++#endif
++
+     tmp = ldl_p(mem_buf);
+ 
+     /*
 -- 
 2.43.0
 
