@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12D7C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 19:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D40A3C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 19:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuGYl-0006Ly-Pn; Mon, 17 Mar 2025 15:55:39 -0400
+	id 1tuGad-0007IQ-81; Mon, 17 Mar 2025 15:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuGYj-0006LT-Cg
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 15:55:37 -0400
-Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
+ id 1tuGaa-0007IB-TC
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 15:57:32 -0400
+Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuGYg-0005Zw-QG
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 15:55:36 -0400
-Received: by mail-qv1-xf35.google.com with SMTP id
- 6a1803df08f44-6e6c082eac0so44748926d6.0
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 12:55:34 -0700 (PDT)
+ id 1tuGaZ-0005rt-4Y
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 15:57:32 -0400
+Received: by mail-qv1-xf2a.google.com with SMTP id
+ 6a1803df08f44-6e8f94c2698so23506936d6.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 12:57:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742241333; x=1742846133; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742241450; x=1742846250; darn=nongnu.org;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=+sDUSUrerDwewjtcp0ahQVvGpH4HxEOFVa2zW+VNp24=;
- b=X5TsjcX6iBPMYVTED4A+VO8NFrYxgbyGK7VsGoUFP2JhjKWedJ9qdAYpMAQYUtgP7w
- FkWEinVwFICJkd9YclpxwJeoW7OX6Aj9TikvuJCMOYmCEhYuZuNgErTToqNdryc3DtzN
- LL3xp373I+Oygph2e0yK0a5K2fTpJsdng39gWwbTA9IJQ502lLL8strNlmbSKJ826owO
- EuF8dbOD8Q5NNSGQIAip3XAl7HlWh4oA7sglc00nFl6A643xca6g0Rq59EDMphNwdKt3
- 9R4QbIkuXTEpRDtedimEK0iklGxq8rtAbdJ1Pi9tl1cHByhc67vP4mvggnM2BGDEPckE
- VqRA==
+ bh=Ku1WWaBghJdB7R8aFc2pAPIx+PZhUi6+nK9EF2tbWeg=;
+ b=nL2kOfvVuwsaQjQM2GMWNcKEmicxzs8jOepUHoLNqWE/zWPOgXaeaEHfiRygenja6L
+ kyZbS10PwQVfpc2jzSfgcIeYoTNzEhZ/KF6eny07fz6rm575XR3qfmRXUgGAzI6pJFN4
+ PmajNECeaeGMgPfG+ix0rx8x9P6P46cL26K+mEEpD0QbxxxdNEKWw7ny7Gzt0FNbvjfg
+ VQD6H5FinMfqMpitNfpBKBAMfxLl/dLFUC4ZvSRdXtffPqoRGKdpI2UYIXz6WS/xIGnO
+ gs7Kfh9JgGkQNUYoS76nSaNEEX4dCENxFDcqp1dExEr2FSONQFvIJ8ejN8qOuzyC14zd
+ y3wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742241333; x=1742846133;
+ d=1e100.net; s=20230601; t=1742241450; x=1742846250;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+sDUSUrerDwewjtcp0ahQVvGpH4HxEOFVa2zW+VNp24=;
- b=uicaUURlENsv7t9d9x1O7mAZ2yhiDYD06iJrzIQqnPuD2hpseonnIS5uEExHbmQRHq
- +tMuocxCfGKtrfQK1aSvtcV5NHrJI6f0ADqPgRVUkWs1APPJyRjuECPBjgys4c6eOYwC
- S8wommsrhtuqDsD413CO/e52hiq4fSe/b/5Zs0b0P/Ydly4Pxd+JPqsitDc7U9Ta5mvE
- 6jqkdnlHiTtZV7nWo0RFtuRI0wKLPzKataOl1BbLCpD4pTKe2oYx8Zt/jrpnvG8quMQr
- fUOjJYkCjRHuhdiIa0XlOHlomnvOuijvhpUEXVQhgI/5o6FHw+R+DNzVT1B2JLoufwmm
- xOPQ==
+ bh=Ku1WWaBghJdB7R8aFc2pAPIx+PZhUi6+nK9EF2tbWeg=;
+ b=B737pnfNtPfzYPvvVTCto2V1dXeHFzXlySxR2wWFdThxv41ypsGM9CBfGF1soyyD46
+ N6A07pyhzjUe1l3Xn8uMDFhczclHQsdJQt1py9mhgx8E2628iUzxWFmNCaplBrOIOMT7
+ U/aExT8eEdo2XubIKUO0pk3QXgEYOWIeOO4DWe4luZB5JnH+Ylwutox8wyCqt8TLjuXI
+ TXP2Wfpv5Gvis1Wlb4T6SZfCGgR0n8kCjPJttjGZt6vLk2wZN4cPHwOknhqtQQxF+d1T
+ d4i5ESAqnXMEjV0vuvg+NdDaE96YzsmXw7ET/tT7Yue9jS8tFwnJXeFX6iv+oQl4E5HD
+ 8HUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYFlAuvl5WJHw+O5Sw0b31p6K7wWZU0YxOEm24YnAnoAJ5E2BXWCyemfeGVcBbNuzmjb2Ekl5iHbbH@nongnu.org
-X-Gm-Message-State: AOJu0YxEnIKi5SGPSD3CWTpCgYxvxVOV5cFXjTiVAEXAUIMuxvTRtJao
- R+5hnJQEe3mZahrE6skIh1f1NAA1h+c9ZK9PW74MD/B4efgoSOKxgt7B5c5kG+8=
-X-Gm-Gg: ASbGnct1Pb7LnL2PdNi0ZzFPX4QD1wksa+AODIDy2a6wPlJYuWfHLQX8+dSiVM+KADG
- 197DDwYd7pyBfqELehV0mGHgaChp7Y75fc1HBkSkou1oqmkx4QVQULGc7BN/7HtYh7CALYBg9T8
- Py6U7bDTD5kbqC2pJYChBAfA2vJeOQuJkArhirEcOVMKHj2dcvg0Q1vk3Cp4j6dVWHRRO4gbPU9
- 2l/nVMYNK5bn4LZEd8znGT/ldV6TMLWkr77z7iA3f+OTN3wwEO7Ubz62USKu9KgW/ZbrFx/dWDr
- NiUmd4k5uN6bVDcSSwl1efu3ETvkKOrGH9cX9W5CREtIGeBbKYGwhWMDHD7U89M=
-X-Google-Smtp-Source: AGHT+IF4sO+PsENGxAXrUXbCNrhDHgSWK/f0v963fIEfL38J0zPl4fit42sqNbL+lxpgS1gw6wr9Mw==
-X-Received: by 2002:a05:6214:2426:b0:6e8:fb7e:d33b with SMTP id
- 6a1803df08f44-6eaeaae68dfmr174192736d6.33.1742241333709; 
- Mon, 17 Mar 2025 12:55:33 -0700 (PDT)
+ AJvYcCX7b4EX+94jZKDQqX3b+7+Mun8TJELw/CSZEzSp+/C+M6LjW7rUUMZqrOcmhxiAkqThEuI5V0U47Rj4@nongnu.org
+X-Gm-Message-State: AOJu0YwJitOU6lZzU1a41s8QnaCPXdyZWhaipack/igcOWkCuOAhj+Xv
+ Vrb42upDeIqrHD2clczS01bI24CviCJLEQUMHcBNznFFe3tZIqPn
+X-Gm-Gg: ASbGnctszJ7qfeJONymVbeGFZW4VaETe6BbAXn27EMeoc+SdGoLVRb2wH6hdsDnJzec
+ JXnsWnp7NceGkK1u6QJVmRBRaXmi4r85pP2dYrAwxYea+mv6lsYrfeVVr+UtkRkqUkD6BImFL8r
+ Jg2KCAmQ3d0ZLwJT+Rn9Omx8uyge0+43x4uTzVDo52OMZTwWpZvJBNbrsxOygccyJ0+cxPAlgiw
+ dLwQ5+8j6LZCwCsSx3uAz5PGmJmTpTNTo/pBZGFAaBVzlH8Oi/zofVmhgmABAPvrlPKps2e1K65
+ 2gBJhT9NFiwIAk3Wh02qH8MRsbvY8suur6Lw0E9heWF0h9oyitp0IrjHgsKBTv0=
+X-Google-Smtp-Source: AGHT+IHmgmkVNC5oic6+VIdRRUeYDWLf5wfQImscMmzn78aAwcpJtFB6r7+F7hRSko3W3xn2I/95aw==
+X-Received: by 2002:ad4:5946:0:b0:6e8:fe60:fdeb with SMTP id
+ 6a1803df08f44-6eaeaa08163mr195127096d6.17.1742241449774; 
+ Mon, 17 Mar 2025 12:57:29 -0700 (PDT)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:3131:60d1:4874:e2c7])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6eade2092e6sm58700006d6.21.2025.03.17.12.55.32
+ 6a1803df08f44-6eade35ca18sm58379116d6.125.2025.03.17.12.57.28
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 17 Mar 2025 12:55:33 -0700 (PDT)
+ Mon, 17 Mar 2025 12:57:29 -0700 (PDT)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -74,22 +74,22 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-20-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052845.1012069-20-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 19/39] target/hexagon: Implement hexagon_tlb_fill()
-Date: Mon, 17 Mar 2025 14:55:31 -0500
-Message-ID: <018401db9776$8af811d0$a0e83570$@gmail.com>
+ <20250301052845.1012069-21-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052845.1012069-21-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 20/39] target/hexagon: Implement siad inst
+Date: Mon, 17 Mar 2025 14:57:28 -0500
+Message-ID: <018501db9776$d0236fc0$706a4f40$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQLnzw5AsusFrNA=
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQKZUTmwsu19C5A=
 Content-Language: en-us
 X-Antivirus: Norton (VPS 250317-4, 3/17/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,9 +123,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 19/39] target/hexagon: Implement hexagon_tlb_fill()
+> Subject: [PATCH 20/39] target/hexagon: Implement siad inst
 > 
 > From: Brian Cain <bcain@quicinc.com>
+> 
+> siad is the 'Set interrupt auto disable' instruction.
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
