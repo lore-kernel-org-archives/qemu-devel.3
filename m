@@ -4,140 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5978BC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86681C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu4J9-0006Cw-28; Mon, 17 Mar 2025 02:50:43 -0400
+	id 1tu4Kc-0007Tp-UJ; Mon, 17 Mar 2025 02:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4Ie-0005oH-Im
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:50:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tu4Jm-0006qt-Oa; Mon, 17 Mar 2025 02:51:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4IY-0000oD-Bn
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:50:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742194205;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kdnn8FkUZO4a6qwLoBeEecTRo9TL7EwfSuxKTPZVTLg=;
- b=YZW6Bi5CX5jojlPO1ZAJIuVfOGql0pPoQZZzaue8LQk1rtczpQyjCmHPYxW8Pabyg2e/bV
- y9y6QeLjHbZcYirj3TRNtGubL1BlTqSUE5gAGa4yO+u1HIeIgInw9Z5qzKlLcclnUTuAWw
- 9PfE9iu3bGh8X7KoBbeT1ps2H3i/1Zw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-442-wYeni29aPkWSQADXmOKZXw-1; Mon, 17 Mar 2025 02:50:03 -0400
-X-MC-Unique: wYeni29aPkWSQADXmOKZXw-1
-X-Mimecast-MFC-AGG-ID: wYeni29aPkWSQADXmOKZXw_1742194202
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-39149cbc77dso2635339f8f.3
- for <qemu-devel@nongnu.org>; Sun, 16 Mar 2025 23:50:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742194202; x=1742799002;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kdnn8FkUZO4a6qwLoBeEecTRo9TL7EwfSuxKTPZVTLg=;
- b=MkFtJXZ5NqJkI0jGKCq6qHvZhf3F0DUxFUo10P4OheLnJ8I4umUjqJGmpSl9Alff9n
- ZyYolaee2K7MtnHEhC8h/6+Di0cSnfL2uDxGq/uXcup4GOAPc9uIo0ixxo+bN/m6ikVj
- 21zEIbeNJYfcTxrOUcSPndDcR450Sy4GEo7aoOJjoPQs756VQnLev7z2pAL2R0ijBrbn
- i0ezSip363uWJuaM4ltuHo3Rv8c0ZTzOnZJDnamgpthv8eI9ssY2Rzn5HPacucpCpeYG
- 98zI/IufSqu4jYmyhqzInOxRNX0R3vPb9VRcCXzOI+evz29A7t2/2yHkD7ONw9rZeTCz
- 79zA==
-X-Gm-Message-State: AOJu0YxGER9t4SQsiVnDrvrP/qzpQN672CTZ6AU3gCto9moDyocpj5pe
- 0sO8hvuFcrxtEHpuyhZ08ljC8Kj7mVGJyAWZj27RYP+kNHx6hE9reDVOB/wQZ3yQehhmNp2zKtJ
- 8IO8XjLWtNQW6d68KhN1sxn3OTAernh1oWW+oe6ozCZPCb7ckrpmi
-X-Gm-Gg: ASbGnctWNScTVtD725LKTo7AKr6hnZwPTJmjWti7eiEINESgG/Tr93WlycXfxHVvkQC
- 94I+ZgaTm7Hq9aXD+L4h0iHwvXZZHlvQ+Q0KexBROSdG8wCOXacloNqBxzxzB+AlQqHvuvGkYhz
- wQVgLezCCDqk/oLZQaPzbNuHvwzUWwlU79ZLFQB+eZGvCQiKAVf/pISV/h6PoG8EbYmRvEYTq5O
- TyaKXuAp1ohs4GWpMnc//0aBTFbi7f/f/RQI3h/bp27skBNj7VR/g9GZMzyCmoN4NXHNXMh7W19
- UZPJX0087NspR97F7CA/x2TmhWiqckLMRbyk3zx+yR1y9BM=
-X-Received: by 2002:a5d:648a:0:b0:391:2dea:c98d with SMTP id
- ffacd0b85a97d-3971dce07e1mr12207199f8f.8.1742194202088; 
- Sun, 16 Mar 2025 23:50:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGay3MILdiDWacIX30/mMaWcytsaXmvGw50xQaf6kUOAjnTq1kSxo/oDLDRbIUmhKOIHJGCTw==
-X-Received: by 2002:a5d:648a:0:b0:391:2dea:c98d with SMTP id
- ffacd0b85a97d-3971dce07e1mr12207183f8f.8.1742194201756; 
- Sun, 16 Mar 2025 23:50:01 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
- [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb318a3dsm14084626f8f.74.2025.03.16.23.50.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Mar 2025 23:50:01 -0700 (PDT)
-Message-ID: <982cba8b-72e6-49d9-80bb-05053c00819c@redhat.com>
-Date: Mon, 17 Mar 2025 07:49:59 +0100
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tu4Jj-0000zJ-5q; Mon, 17 Mar 2025 02:51:22 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52GNIAcJ024773;
+ Mon, 17 Mar 2025 06:51:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=iA4I9c
+ /upNAOZwuQflRq+mpjNDpROdDCgp2iI7dKarU=; b=qwT0SMzZleybXIKrFayQ1F
+ 2hMsjMFuJlOxTU1fT2T97OPaVuJlb8ifzsfbxprTahPEWPXEtqzGZbjhSqjwKpq4
+ U+6RYlA/nfIA5Q3g3GvhR34sKKA33ujB8z0aCsIkLICgZNy27ko8RWwSQNTBtMN9
+ 2LjRXiv0qT88IDa8C+tgzsThWq8KAfsSensy2hJhCxABfUiT12klZBDJzgXfET+u
+ eQo9VFvpn29X/c/2uUqEpbKnQrn6uKCzPebvdoR/bw0LTF59lTkOwy9SBo1f5dsy
+ Qxy9PAT1nifLqqJmK1mBN2dv5QM6kp9+NbuRt+SMzYTCVDMQ3FgmmggS4YuD/PBw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45e5v01q2y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Mar 2025 06:51:16 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52H6pFsH012410;
+ Mon, 17 Mar 2025 06:51:15 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45e5v01q2v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Mar 2025 06:51:15 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52H6eAwE005803;
+ Mon, 17 Mar 2025 06:51:14 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45dpk24ed9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Mar 2025 06:51:14 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52H6pBf758720746
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Mar 2025 06:51:11 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 575BB20043;
+ Mon, 17 Mar 2025 06:51:11 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F1F4E20040;
+ Mon, 17 Mar 2025 06:51:08 +0000 (GMT)
+Received: from [9.109.199.160] (unknown [9.109.199.160])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Mar 2025 06:51:08 +0000 (GMT)
+Message-ID: <9eaf6719-ce8f-4d38-8ae3-b23506d69fe2@linux.ibm.com>
+Date: Mon, 17 Mar 2025 12:21:07 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/system: Fix the information on how to run certain
- functional tests
-To: Niek Linnenbank <nieklinnenbank@gmail.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-arm@nongnu.org
-References: <20250311160847.388670-1-thuth@redhat.com>
- <CAPan3WqXwAWeAqbQypF7PCXh_pjDUgbbiWwXkPSbXrFetfMZAQ@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 8/8] tests/functional: Add test for fadump in PSeries
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250315064636.611714-1-adityag@linux.ibm.com>
+ <20250315064636.611714-9-adityag@linux.ibm.com>
+ <8dad5654-6d0a-4045-abb1-2dee489f3102@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAPan3WqXwAWeAqbQypF7PCXh_pjDUgbbiWwXkPSbXrFetfMZAQ@mail.gmail.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <8dad5654-6d0a-4045-abb1-2dee489f3102@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 9FD0aNJPtOWEcGCfQ6wIOjg0bcLQmlez
+X-Proofpoint-GUID: rjFpq_wo77EY_n7I-guM7QbNlZHSl69R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-17_02,2025-03-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0
+ impostorscore=0 adultscore=0 mlxscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503170045
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,66 +122,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi!
+Hi Thomas,
 
-On 16/03/2025 21.21, Niek Linnenbank wrote:
-> Hi Thomas,
-> 
-> On Tue, Mar 11, 2025 at 5:08 PM Thomas Huth <thuth@redhat.com 
-> <mailto:thuth@redhat.com>> wrote:
-> 
->     The tests have been converted to the functional framework, so
->     we should not talk about Avocado here anymore.
-...
->     diff --git a/docs/system/arm/orangepi.rst b/docs/system/arm/orangepi.rst
->     index db87e81fec4..8b9448ca7b0 100644
->     --- a/docs/system/arm/orangepi.rst
->     +++ b/docs/system/arm/orangepi.rst
->     @@ -257,9 +257,9 @@ Orange Pi PC integration tests
-> 
-> Perhaps for consistency, we can also rename to 'functional tests' here.
+On 17/03/25 11:55, Thomas Huth wrote:
+>  Hi!
+>
+> On 15/03/2025 07.46, Aditya Gupta wrote:
+>> Add testcases for testing fadump with PSeries and PSeries+KVM
+>> combinations
+> ...
+>> diff --git a/tests/functional/test_ppc64_fadump.py 
+>> b/tests/functional/test_ppc64_fadump.py
+>> new file mode 100755
+>> index 000000000000..3d6d3734e243
+>> --- /dev/null
+>> +++ b/tests/functional/test_ppc64_fadump.py
+>> @@ -0,0 +1,185 @@
+>> +#!/usr/bin/env python3
+>
+> scripts/checkpatch.pl recently got a check for SPDX license tags, so 
+> please add a SPDX-License-Identifier here now to avoid a warning when 
+> the script is run with your patch.
+>
+Sure, don't know how I missed it. Will fix it.
 
-Agreed, we don't use the term "integration tests" for this anymore.
 
-> 
->       The Orange Pi PC machine has several integration tests included.
-> 
-> And same on this line.
-> 
->       To run the whole set of tests, build QEMU from source and simply
->     -provide the following command:
->     +provide the following command from the build directory:
-> 
->       .. code-block:: bash
-> 
->     -  $ AVOCADO_ALLOW_LARGE_STORAGE=yes avocado --show=app,console run \
->     -     -t machine:orangepi-pc tests/avocado/boot_linux_console.py
->     +  $ QEMU_TEST_ALLOW_LARGE_STORAGE=1 \
->     +    meson test --suite thorough func-arm-arm_orangepi
-> 
-> I've tried to run on my Ubuntu 24.04.1 LTS based system using this exact 
-> same command, but got this error:
-> 
-> $ QEMU_TEST_ALLOW_LARGE_STORAGE=1 meson test --suite thorough func-arm- 
-> arm_orangepi
-> 
-> ERROR: Build data file '/home/user/qemu/build/meson-private/build.dat' 
-> references functions or classes that don't exist. This probably means that 
-> it was generated with an old version of meson. Consider reconfiguring the 
-> directory with "meson setup --reconfigure".
-> 
-> The meson version I have installed via apt-get is 1.3.2-1ubuntu1. Only when 
-> running using the 'meson' command from the pyvenv, it runs OK:
-> 
-> $ QEMU_TEST_ALLOW_LARGE_STORAGE=1 ./pyvenv/bin/meson test --suite thorough 
-> func-arm-arm_orangepi
+>> <...snip...>
+>>
+>> +    @skipUnless(platform.machine().startswith("ppc64"),
+>> +                "KVM tests require the same host and guest 
+>> architecture")
+>
+> I think this is likely unreliable: The test could run on a ppc64 host, 
+> but KVM could still be unavailable, e.g. if it has been disabled in 
+> the kernel. It's better to use self.require_accelerator("kvm") instead 
+> (which will also skip the test if it is not available).
+>
+Thanks, agreed, will remove it, and add self.require_accelerator("kvm").
+>
+> Also, shouldn't there be a "-accel kvm" somewhere if you really want 
+> to be sure to enable KVM ?
+>
+Will add it, this whole time I thought it's using kvm, guess the tests 
+were running in tcg mode only.
+>> +    def test_fadump_pseries_kvm(self):
+>> +        """
+>> +        Test Fadump in PSeries with KVM accel
+>> +        """
+>> +        self.do_test_fadump(is_kvm=True, is_powernv=False)
+>> +
+>> +if __name__ == '__main__':
+>> +    if os.getenv("DEBUG"):
+>> +        logging.basicConfig(level=logging.DEBUG)
+>
+> The setUp function in QemuSystemTest already sets the log level to 
+> DEBUG, so this should not be necessary?
+>
+I did that to see the QEMU VM booting logs. I see in QemuSystemTest, it 
+sets the log level of some loggers to DEBUG, don't know if it's the 
+same, as I didn't see the boot logs during testing (also, in 
+QemuSystemTest, we are setting specific loggers to DEBUG, while I did 
+.basicConfig to DEBUG which I think is like a global debug level setting)
 
-Oh, you're right! Thanks for catching it!
+How do I get the system booting logs in `make check` ? I didn't find it 
+in the docs.
 
-I guess I still had a "export PYTHONPATH=$HOME/qemu/python" in my 
-environment, so I did not notice. Would you like to send a patch, or want me 
-to do it?
 
-  Thomas
+Thanks,
 
+Aditya Gupta
+
+>  Thomas
+>
 
