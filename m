@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B557C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 04:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE60C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 04:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu28X-0001iE-W8; Mon, 17 Mar 2025 00:31:38 -0400
+	id 1tu29q-0002YL-QM; Mon, 17 Mar 2025 00:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu1zB-0008TQ-9F; Mon, 17 Mar 2025 00:21:58 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tu21g-0000Iw-0t; Mon, 17 Mar 2025 00:24:32 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu1z9-0000hA-O8; Mon, 17 Mar 2025 00:21:57 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22403cbb47fso68099115ad.0; 
- Sun, 16 Mar 2025 21:21:54 -0700 (PDT)
+ id 1tu21d-0000oT-Dj; Mon, 17 Mar 2025 00:24:30 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2232aead377so85623405ad.0; 
+ Sun, 16 Mar 2025 21:24:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742185313; x=1742790113; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1742185466; x=1742790266; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ICspqdLfGPu7MEZoMgsn5HQu4uodzX6/IROIWZG4fxc=;
- b=TRrmYwJwQX3HEBcn1cwJzWC6QE5pVbBay0KhIZ1/sRCnMycDYJKIp03rapmDxb6VJy
- x7l6qpP225Ypnf52gLWlj4zhzXiPr9NIjiPlrLaiIBk8EYcfhD1MRQ8qnW1jKhDnI6w+
- JTGGM8s97J/x9nKF44HtY3/SCp7dw4dLk1vSSoBZMF3VPnOC4WClPHy5x34m7Mr8Lf9r
- tsHgefyACE1N8zhdBmRSjezdlM34HJg4ZSfOaFNICo8CzXbkjFyBo0g8EGF+/kNzmQbK
- vz63TSi8sF0PEdx6krekj0383dEFMBCI+hh0Q2/89j4R28v5r5NfvQV0wuehn1/rCvr7
- ru+w==
+ bh=huoqUTp7ZtbwawFX3uJ5a51YaBtU9ooDniZbVgpzX2Y=;
+ b=LF/ERNuMAaBHtTGZRay9HZs9Rpmmt4a1V538VDojTjlO4Vn8zXng/297nkXGeE6mIZ
+ WhlUZEwm3NxwFVoCthWASiaI7HosZSToYsSW5LRaQyLyJMUQOuQDNOvb6tA/UD6Asjab
+ O7JNFLNAudy0IbyB0UrpZW627ni1IQvdbVecEN5ldvLYRIHIb6v1h0r/yY1LoaP3uri7
+ RRwde+YWDkY7ar5gTgwjZhudmZNBGV3e/b/R077fvpXGkNg+BsFZ5afjIXzQ4p5j9RAs
+ RAHmfah7WwdAVoj8ko72SAdITQxgSZ8muSB8yiBHV82+KtVU8LRgFRpkLLAZU474eZGI
+ 07Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742185313; x=1742790113;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1742185466; x=1742790266;
+ h=in-reply-to:references:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ICspqdLfGPu7MEZoMgsn5HQu4uodzX6/IROIWZG4fxc=;
- b=BZtz/ap0Z/EnULLmmxffML3dTRskT8TV0VuyYstgNIF0KVWGw/lTy0igz42S9nJzb4
- zpzkW9XuUVB00SgWDkgVZrGe/avoTDK26JkYXUfa3J6MInzE6ya/v5g0MRyTgw00+JfY
- 5WHWk0pK1bADANQcBmO+1DdvnNyUdJEp9eKR9vRIBnul5B7WHraB1EA6RulEKUezlVBw
- lKoaqRTQZwy/uu6zJV1RPVGHddLsoAywdoGhgwDh6KVIIz221Eb7ZSJEOcewDmCMBOL2
- OmSArcmcgYrKTR+cxCYQfYMETmzdkkpgAVJ6A8caHHgxDY1q5UrKCvMg0GW/1xZLJzRf
- 3m/Q==
+ bh=huoqUTp7ZtbwawFX3uJ5a51YaBtU9ooDniZbVgpzX2Y=;
+ b=hSYU2QGCeHLETTBA7ZcZf7my8GGLhDlCowx9sVeeuh0LatvHospqGMM9qWVHtcm04g
+ SKqZNqxcmx7L/ChhvNQ20EGf6EorwGGqIL9KyRUuvOaB4TyBbMvlcv8pRdXVvZWwQ6p+
+ Aq/n0V0otbc9UBXrwIKR2/ph3tSPnwVs/sWMQ+6jQ7HG66FYRNcUp6k4mnAIrnjFODUU
+ rKrrgYv7zA4oyQ05gs5Z6hSlq4LEjKbjT3fGMoKJ5vLWM/96fvfmv+Gi1l/Ho8kwnp8+
+ 1aTVRvxqwGvmDUwQAt53Z2eZ4obBUxzOksgkRRSYKTKW1yqBUYTEJyZ0zjlLyBZwWEqa
+ 88mQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVToLKXWBE/fXHBhZ+bYYvZa1/MFnEe0mIYPBkFg8BcahYoHqa9dnirK54ctKZrw/g/ftnpTvjiPks=@nongnu.org,
- AJvYcCVUFQqLPWeKCS5ZPu/vJ9qLQvVtznvE8wTuy6u8mc9UZZTfRz7NX3nkEYnwVLR9gSvvVaO814UVA+HP@nongnu.org
-X-Gm-Message-State: AOJu0Yy8sHK59bhgJ64s+9ZvMeCQP59qJaO8pRurfKq48EXsB87Sqfko
- SKvxMH873ZRX7T6jVI06QVQxj2zzXTrPfueGjxJPu8as/qQxCZxM
-X-Gm-Gg: ASbGncvPW15rrjI7t3fflnUMv6hRr8CmeYZlEl5RIPXxUyZOQlAL1sqpyNo4WeMAJSD
- vmZQ18kZ7R7DJDXpjLawTxD5yo0vmA0Sz7RUS+p0iBc3TT+S+cMOKHDRiKSevDwxBkwf7TBu5B9
- 5FYK1WHa4pZDOhyJT+Gm/DToGiSzI5cqrrQsRucf7S3eJ6z1aKijmygrzQKsNLHinAiuSoykYWE
- vGojMHp/OprNraW25ok0KyajV1t8CaeLEYmn6YuBDOEHXENWOFiKM/aGLe7y9GKECApuZZaLc10
- 4ZbtsXiG4Y+8Qb2KkPkLAmYYPYy1yxQm+oOdK2Y=
-X-Google-Smtp-Source: AGHT+IFGj9ITzTNabyd64VJNRO+izzRFDoHaLmmFbtPOWS2eu6oMQBwlX5JL3ew6RB7Bs1QHPt8Gtw==
-X-Received: by 2002:a05:6a21:6191:b0:1f5:7862:7f3a with SMTP id
- adf61e73a8af0-1f5c121e71cmr15955752637.14.1742185313448; 
- Sun, 16 Mar 2025 21:21:53 -0700 (PDT)
+ AJvYcCU4Girvv+aer8Omv66bDfAfauG7rqlf6pXd6BnFInJRA6/M509F8o+tmRbGtBqjsLzoT3s95oQsxGQ=@nongnu.org,
+ AJvYcCWHcxhmSXokya1NIQiy5nNl8OtEXjVNOX7qktBYdfzl7H4aPmlCBWpIrZe4G6yjeIvW7UxsG/R4Rqbj@nongnu.org
+X-Gm-Message-State: AOJu0YyNHyavLDyIwUmG4nl+LxYF775NCYuiQ9EynI26F9h5GQs3DgF9
+ Lc7uv8M1+PXYz1T5676zOVY0nt2LXxWFn+Xscf7zhUHu0U8AG1HBG/0bXA==
+X-Gm-Gg: ASbGncu9Ip0noXlC6eLqG6lyaAZy30XTX4fbQitboJXZMU2Cq19+9+Xsbdx/UKmk7zu
+ aTG9HMA2LZo+RecpY/IPgN7GlXbmyk+fNfhJvw1ueBsSHFYwflK1q6zUhj1I7gnSsPqV9ZP8VAg
+ oAGIACr/b3STvC8p+CL2CsFoyo4OotID4TITwj7Y9KYmXLvzY2TcDI53V0tdDksNExscrKHB3fF
+ GYDb4dn5RDiWl/v33KaOVqi0g9E8xzLCGScBKsnD08YzRBtS2gO0s0vzJJ9Y23puycGltYNci7v
+ NMiK/xXssoDQua4tQSO17i8O5P+RyDhDeSDIMOI=
+X-Google-Smtp-Source: AGHT+IGJGL6G83MYc76m0+kXLG8QevetYL3SzRX8i0D7m8payplS7OmIUvKN0eHnAtUB7j6IgoVY5A==
+X-Received: by 2002:a17:903:40ce:b0:224:2717:7993 with SMTP id
+ d9443c01a7336-225e0b0ed1dmr143828325ad.45.1742185466367; 
+ Sun, 16 Mar 2025 21:24:26 -0700 (PDT)
 Received: from localhost ([118.208.135.36]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167db05sm6799700b3a.92.2025.03.16.21.21.50
+ d9443c01a7336-225c6bbeb94sm65061435ad.199.2025.03.16.21.24.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Mar 2025 21:21:52 -0700 (PDT)
+ Sun, 16 Mar 2025 21:24:25 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 17 Mar 2025 14:21:48 +1000
-Message-Id: <D8I95DKVY8MV.2C4QYAQI25GHI@gmail.com>
-Cc: <clg@redhat.com>
-Subject: Re: [PATCH] ppc/amigaone: Check blk_pwrite return value
+Date: Mon, 17 Mar 2025 14:24:22 +1000
+Message-Id: <D8I97CI501PM.29Q1AWDR7ZM09@gmail.com>
+Subject: Re: [PATCH] target/ppc: Add PIR to ppc_cpu_dump_state() for debug
+ print out
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.19.0
-References: <20250314200140.2DBE74E6069@zero.eik.bme.hu>
-In-Reply-To: <20250314200140.2DBE74E6069@zero.eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+References: <20250316144341.39E6F4E6014@zero.eik.bme.hu>
+In-Reply-To: <20250316144341.39E6F4E6014@zero.eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,63 +100,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat Mar 15, 2025 at 6:01 AM AEST, BALATON Zoltan wrote:
-> Coverity reported that return value of blk_pwrite() maybe should not
-> be ignored. We can't do much if this happens other than report an
-> error but let's do that to silence this report.
+On Mon Mar 17, 2025 at 12:43 AM AEST, BALATON Zoltan wrote:
+> Some CPU variants have a Processor Identification Register which was
+> not printed in register dump. Add it to ppc_cpu_dump_state() which is
+> used by debug options to print CPU register values.
 >
-> Resolves: Coverity CID 1593725
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+
+Looks okay. I suppose it's not worth a ppc_cpu_get_pir() type function
+to get it...
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
+Thanks,
+Nick
+
 > ---
->  hw/ppc/amigaone.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
+>  target/ppc/cpu_init.c | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
 >
-> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> index 483512125f..5d787c3059 100644
-> --- a/hw/ppc/amigaone.c
-> +++ b/hw/ppc/amigaone.c
-> @@ -108,8 +108,8 @@ static void nvram_write(void *opaque, hwaddr addr, ui=
-nt64_t val,
->      uint8_t *p =3D memory_region_get_ram_ptr(&s->mr);
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 8b590e7f17..b1f32662ed 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -7606,9 +7606,14 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int=
+ flags)
+>      int i;
 > =20
->      p[addr] =3D val;
-> -    if (s->blk) {
-> -        blk_pwrite(s->blk, addr, 1, &val, 0);
-> +    if (s->blk && blk_pwrite(s->blk, addr, 1, &val, 0) < 0) {
-> +        error_report("%s: could not write %s", __func__, blk_name(s->blk=
-));
->      }
->  }
-> =20
-> @@ -151,15 +151,17 @@ static void nvram_realize(DeviceState *dev, Error *=
-*errp)
->          *c =3D cpu_to_be32(CRC32_DEFAULT_ENV);
->          /* Also copies terminating \0 as env is terminated by \0\0 */
->          memcpy(p + 4, default_env, sizeof(default_env));
-> -        if (s->blk) {
-> -            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, =
-0);
-> +        if (s->blk &&
-> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p, =
-0) < 0
-> +           ) {
-> +            error_report("%s: could not write %s", __func__, blk_name(s-=
->blk));
->          }
->          return;
->      }
->      if (*c =3D=3D 0) {
->          *c =3D cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
-> -        if (s->blk) {
-> -            blk_pwrite(s->blk, 0, 4, p, 0);
-> +        if (s->blk && blk_pwrite(s->blk, 0, 4, p, 0) < 0) {
-> +            error_report("%s: could not write %s", __func__, blk_name(s-=
->blk));
->          }
->      }
->      if (be32_to_cpu(*c) !=3D crc) {
+>      qemu_fprintf(f, "NIP " TARGET_FMT_lx "   LR " TARGET_FMT_lx " CTR "
+> -                 TARGET_FMT_lx " XER " TARGET_FMT_lx " CPU#%d\n",
+> -                 env->nip, env->lr, env->ctr, cpu_read_xer(env),
+> -                 cs->cpu_index);
+> +                 TARGET_FMT_lx " XER " TARGET_FMT_lx,
+> +                 env->nip, env->lr, env->ctr, cpu_read_xer(env));
+> +    if (env->spr_cb[SPR_PIR].name) {
+> +        qemu_fprintf(f, " PIR " TARGET_FMT_lx, env->spr[SPR_PIR]);
+> +    } else if (env->spr_cb[SPR_BOOKE_PIR].name) {
+> +        qemu_fprintf(f, " PIR " TARGET_FMT_lx, env->spr[SPR_BOOKE_PIR]);
+> +    }
+> +    qemu_fprintf(f, " CPU#%d\n", cs->cpu_index);
+>      qemu_fprintf(f, "MSR " TARGET_FMT_lx " HID0 " TARGET_FMT_lx "  HF "
+>                   "%08x iidx %d didx %d\n",
+>                   env->msr, env->spr[SPR_HID0], env->hflags,
 
 
