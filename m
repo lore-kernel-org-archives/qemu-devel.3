@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F958C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9210CC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu4Bp-0002Ve-29; Mon, 17 Mar 2025 02:43:09 -0400
+	id 1tu4Ey-0004EQ-Ua; Mon, 17 Mar 2025 02:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4Bf-0002Oc-Uw
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:42:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4EM-00045F-BT
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:45:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4Be-0008Mw-Gu
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:42:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4EF-0000SN-G4
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:45:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742193777;
+ s=mimecast20190719; t=1742193935;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ckxieCsRVd2gUlaszx6gcEDAe6xqugpI1Ubo06FKUDs=;
- b=LkJJg4jGYehN3SJR6iI1aGNy4RLUdv/RKbKjfdyxDK6/Y3EgiUrfIclM3f9PWqmaBXxTmF
- Y6LcMGb3vwUfIbfyWdGRFcu77tqdO4M/yzv6IjUPBPKPD22vHSD4z9s4fNGJiS5XcqzUM6
- cgwxYTW/9MzRoOHYyWATj/dTyVSlFBE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=781+xg6HnjjABuYPKkMdiErpSv7mzW+5jjzPTMjXV5A=;
+ b=iuIZ6V5D+5PeDtibpXL/XwcEEe5ZpEiE2+XkH7G0cyLG7sW40KcBGwYojbHKs3K67+ia/E
+ RHGdCCT+03joY8VFOFF7q8zyYJdDGCr1/2BwNKXeClNbSpxJc2g5trLWtl25zfMcoKTfDf
+ +5RKRjqiHsiPaTZc7bwQGq+y5LkRmyE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-8XODwd-wPSavTa4SQiszRQ-1; Mon, 17 Mar 2025 02:42:54 -0400
-X-MC-Unique: 8XODwd-wPSavTa4SQiszRQ-1
-X-Mimecast-MFC-AGG-ID: 8XODwd-wPSavTa4SQiszRQ_1742193773
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cf172ffe1so14716155e9.3
- for <qemu-devel@nongnu.org>; Sun, 16 Mar 2025 23:42:53 -0700 (PDT)
+ us-mta-60-grSH83RwONmdWHymceas4g-1; Mon, 17 Mar 2025 02:45:31 -0400
+X-MC-Unique: grSH83RwONmdWHymceas4g-1
+X-Mimecast-MFC-AGG-ID: grSH83RwONmdWHymceas4g_1742193930
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-438e4e9a53fso10362845e9.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Mar 2025 23:45:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742193773; x=1742798573;
+ d=1e100.net; s=20230601; t=1742193930; x=1742798730;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ckxieCsRVd2gUlaszx6gcEDAe6xqugpI1Ubo06FKUDs=;
- b=l4n338iJV8HRVJhkbTbwk4NYwkP792QHfB8J+PQjxuw9QgBntdMMSw2uc0btRnXJvS
- vy6t1MYF6ScMdUKyUZR81sjrItC2F3/3HL7U2T8zfQCSmH25Gmmf6VAvNIJfU8FAcQzT
- XoqAPl4C6KHUN2tpVg1alOpTkQhVHsd2NWJVH1SqqNEheXbB9uuGCjJcHTe6uhj0MFh/
- IWJw43JsDGszzSwW12+Jhu6ij3MiPriIyr0k9prhKlkbPhIUF7EDbNdi9dtKEttl21EE
- gO7/dKkeqwQMOzBmVr2LF9MNoRdBGH/hgs3d/xUr9AC+cdYesWHCVIXpf92eWu0eWHTk
- id1A==
+ bh=781+xg6HnjjABuYPKkMdiErpSv7mzW+5jjzPTMjXV5A=;
+ b=D9w9PZ3qZdLvsushWVr5YDZOqZABQx92RQJKXI4todLW23o2zLglgVmN2vIr4/pYNc
+ PJ/9Cq/K3Anlda+m1hcAYEsZHtCk4QXivZWkOFlMJ6y50zew7xmzJLmk0LC/+UmZVaIj
+ t6cWTmOC/jU314jHhqZvAUnvcZx6EfURkv48i592wjclYGXIDq+85VW77M6Ra68SKf4e
+ g/+fSbOMFIDwM48BmfwcjlzvH/fWWEJa5JMAQghVMuxk8CldK8z1WVCuH2+Wglg4izw7
+ lnNl+8AhVrOW64DRsA05HEQIsU07eLpNZXm4/GLSA0V2ZjQPaePfbjC3/BpW8uOGBivd
+ iqmg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVTE1gBe6LAPGKT6TaWQwKRUuCG9NQKmsVpVu29nNP3MHhRaC/P6M+RIiOzW17t0AayE6WEQzwEBnL@nongnu.org
-X-Gm-Message-State: AOJu0YyCdaeSSQrQxkEIalFrShBKQBGWW6OFTZQ1PJ2SxiGM8UJN9eTL
- boSsggldtiMWVpKeTPtZ4B1WFvmgZQurEEhACruVoojFDFwF8FhtdIMn+9wBZh7viSfMpw/4UhQ
- SUXP8d8iAZXjOoGpu3bf5bLHsPNyx1X3w+QelvILDAa5Tv8Nq6H4+nrCqKfAl
-X-Gm-Gg: ASbGnctuehcyjkGBfxI/pihuMFt9nBSbqxkWdfYep9hNZC/dH/9F9836iHPK057i63z
- s1hSwVmUZipcIP4MF5janM1NkDFoHjuPZqt15RIrga55pMGUw9H/B7EmwhenM0tjObOQJBVvpFR
- Iw4O/SoCpwj+TLAQwUNLORt8L794A+eLTyLug++xgO+ZUUGXZU2calqutfxcutDDTiUqyAnlDzI
- oB/re3Ba502LnbZGIBlkhJYK2MbEhUFOkEA7hbxE47EOBFawzZ+XqWJSpK4a8lL5WEOrpZSrLqx
- Ow7U4QNdods0PUJGghBlJ5oyFyhINTccn4Thf1vc+YGOQig=
-X-Received: by 2002:a05:600c:198e:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-43d1ecd8631mr108179505e9.20.1742193772796; 
- Sun, 16 Mar 2025 23:42:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGSPG5sp5OnDMg2s+oMWz9+cWSpq2Wq1Aq5HBVWdlTm/mITfxQJqrrxWCLi4EYhuhIl6/cd1A==
-X-Received: by 2002:a05:600c:198e:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-43d1ecd8631mr108179385e9.20.1742193772520; 
- Sun, 16 Mar 2025 23:42:52 -0700 (PDT)
+ AJvYcCVVBWXhzhHFDtuURZM7bEzy4WtGnXpSKTWzdnVzp6/STEaPASxbpYDavYuaeICXH7q5RrlUkNRVjupg@nongnu.org
+X-Gm-Message-State: AOJu0Ywu6UuRm3C7gX8zVqZw5UiIAX9AJKAK7LBUN1WCIgH48WWUoIN3
+ ghClbiEmguqFdsy24I2GT7NWrjOnC739WZIaMwiZhE8THUTLI0L/4/Oks8xrIsPkv4xfNk20Jen
+ hFhJFoxJjZnfrJioY3ACzVjtaS/YQYs3vDDDDBzseF93SoKA7B/PN
+X-Gm-Gg: ASbGncsOi3qcxCGa3QxJRB8RLmIvatt4UnKNaN619aMfR6zEwnmpf6JbL6enlr2TMg9
+ soMO0s+rD9K0qra6KBSQllm3IdKgIUmIEofmXgNaK3VtDvFERldQeUNCf7Cuu8BCoit6pOBFVY7
+ suYrXuZ43pXqFNtMwr7TSk+uelnm/FjUsWarAwkltm7/9Q+6Uilj5YLhzDoaQGmOJ76PDfX5SM9
+ JbiEBy7Nqb3TWskIr8KKuqsVVxZHhO4ThRFAynV2krzxoTLGt7QgvNDq3BxUF7mTc7+73VZpmkd
+ nU7rlqkvofTsqlfXs9o+cVdaWv20WUoFUQzrBPL+K6/4yBE=
+X-Received: by 2002:a05:600c:cc3:b0:43c:ec28:d310 with SMTP id
+ 5b1f17b1804b1-43d24c80a4bmr83057335e9.10.1742193929988; 
+ Sun, 16 Mar 2025 23:45:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrrjoWMGz/d4vMhlg8yrxlmjbRLDQ/KhTLa5fcedM85iFHsKN1bkBG5jHuvcTiCrHDOEY/Dg==
+X-Received: by 2002:a05:600c:cc3:b0:43c:ec28:d310 with SMTP id
+ 5b1f17b1804b1-43d24c80a4bmr83057265e9.10.1742193929683; 
+ Sun, 16 Mar 2025 23:45:29 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
  [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c7df35bdsm13648544f8f.5.2025.03.16.23.42.50
+ 5b1f17b1804b1-43d1ffb6292sm96400635e9.1.2025.03.16.23.45.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Mar 2025 23:42:52 -0700 (PDT)
-Message-ID: <9d044a37-bb53-4bd1-9833-3b09823b2e7e@redhat.com>
-Date: Mon, 17 Mar 2025 07:42:49 +0100
+ Sun, 16 Mar 2025 23:45:29 -0700 (PDT)
+Message-ID: <de4274eb-999e-48b7-bd52-4c2b2aa86620@redhat.com>
+Date: Mon, 17 Mar 2025 07:45:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] ppc/pnv: Fix system symbols in HOMER structure
- definitions
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.vnet.ibm.com>,
- Michael Kowal <kowal@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@gmail.com>
-References: <20250317052339.1108322-1-npiggin@gmail.com>
- <20250317052339.1108322-7-npiggin@gmail.com>
+Subject: Re: [PATCH] tests/functional/test_arm_orangepi: rename test class to
+ 'OrangePiMachine'
+To: Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-devel@nongnu.org
+Cc: berrange@redhat.com, stefanha@gmail.com
+References: <20250316210232.46298-1-nieklinnenbank@gmail.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,17 +125,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250317052339.1108322-7-npiggin@gmail.com>
+In-Reply-To: <20250316210232.46298-1-nieklinnenbank@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -158,22 +153,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/03/2025 06.23, Nicholas Piggin wrote:
-> These definitions were taken from skiboot firmware. I naively thought it
-> would be nicer to keep the code similar by using the preprocessor, but
-> it was pointed out that system headers might still use those symbols and
-> cause something unexpected. Also just nicer to keep the QEMU tree clean.
+On 16/03/2025 22.02, Niek Linnenbank wrote:
+> The test class in this file contains all functional test cases
+> for testing the Orange Pi PC board. It should be given a name
+> matching the Qemu machine it covers.
 > 
-> Cc: Thomas Huth <thuth@redhat.com>
-> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-> Cc: "Stefan Hajnoczi" <stefanha@gmail.com>
-> Fixes: 70bc5c2498f46 ("ppc/pnv: Make HOMER memory a RAM region")
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> This commit sets the test class name to 'OrangePiMachine'.
+> 
+> Signed-off-by: Niek Linnenbank <nieklinnenbank@gmail.com>
 > ---
->   hw/ppc/pnv_occ.c | 201 ++++++++++++++++++++++-------------------------
->   1 file changed, 96 insertions(+), 105 deletions(-)
+>   tests/functional/test_arm_orangepi.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
+> index 18ee50216b..28919391e5 100755
+> --- a/tests/functional/test_arm_orangepi.py
+> +++ b/tests/functional/test_arm_orangepi.py
+> @@ -14,7 +14,7 @@
+>   from qemu_test.utils import image_pow2ceil_expand
+>   
+>   
+> -class BananaPiMachine(LinuxKernelTest):
+> +class OrangePiMachine(LinuxKernelTest):
 
-Thanks for cleaning it up!
+D'oh, copy-n-paste bug ...
+
+Fixes: 380f7268b7b ("tests/functional: Convert the OrangePi tests to the 
+functional framework")
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
