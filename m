@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D79CC35FF3
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 15:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A131C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 15:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuCHO-0000Vt-Qm; Mon, 17 Mar 2025 11:21:26 -0400
+	id 1tuCHO-0000Vu-R4; Mon, 17 Mar 2025 11:21:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tuCHM-0000VK-Qp
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:21:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tuCHK-0000Ue-91
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:21:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tuCHK-0002bt-CM
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:21:23 -0400
+ id 1tuCHH-0002bO-VL
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:21:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742224880;
+ s=mimecast20190719; t=1742224878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jG/Zv4feCbekspzVUUTIkdZ0XHo9PzS/ZISlUZ48iZQ=;
- b=U5Ich1sHRNRRqCGrytZ/tjyaKZl9XYO4AYykEsAoiyKx9Pje6zECPO/hSnJ4iRFi392YUy
- izwdB7fNDaaPRNXgMULHLbfediF0Org4JMNfRguAIxtLwqHdxyyum1imIdfpsLRebxmxF+
- vdO6btrpj271/ZcT/iLZVAGMbtrGeNU=
+ bh=FrM1yGcdPBxGotEaB8in1nzGMu9ufRO6SSao+aFwRPA=;
+ b=OHk+dv/QBQkWKOcbmAAl5pIcnHLP1iUM+yUWmGea0FF6hPqvdi2WAmthZW60/2NJKq530u
+ g7lwtlQXBNjfNqfzb7A6pWSdRzSSMTJnQilWUwhWJ1pdhZ3qwEwbsElorvxHvG7XMYb9Su
+ roBv2cMoxD9zJ+MjB7B8YygZq3rnKDg=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-X-rbWKhLNeyvVobvGhaOvQ-1; Mon, 17 Mar 2025 11:21:19 -0400
-X-MC-Unique: X-rbWKhLNeyvVobvGhaOvQ-1
-X-Mimecast-MFC-AGG-ID: X-rbWKhLNeyvVobvGhaOvQ_1742224878
+ us-mta-367-UtBuDhInORCqjzvPd1tG5Q-1; Mon, 17 Mar 2025 11:21:17 -0400
+X-MC-Unique: UtBuDhInORCqjzvPd1tG5Q-1
+X-Mimecast-MFC-AGG-ID: UtBuDhInORCqjzvPd1tG5Q_1742224876
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-391459c0395so1983015f8f.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 08:21:19 -0700 (PDT)
+ ffacd0b85a97d-39141ffa913so2746394f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 08:21:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742224877; x=1742829677;
+ d=1e100.net; s=20230601; t=1742224875; x=1742829675;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jG/Zv4feCbekspzVUUTIkdZ0XHo9PzS/ZISlUZ48iZQ=;
- b=gMb7ApyhFI8LQp/hvkHzBLNoPoQS0ydQflYe728vWBhuxJS8+TQMGRL8/zwkhWwjjO
- UDdhR9ACddPHY+QQAC4jYpvh3UFwcmQc6llP5iUpkEviCVbF8mVL1nhGQVApSw/0BWcS
- tH6jkC3tMWhVptjB/krH3aS/PgkcWxnuajSz645u5Emf0C4RiJdpeYDWuor87az4RtK5
- voVqLdlO4rddug9ywTbAdk9xc+j+YFXdmU33wOiZyrsRHXrBNefABlcaqNquuS59kq2R
- gJCOprFU06WbfvyolR4E0vq2gXBTjT1JWrtYibGZc1vKOWHtkWWUiZWQyXm1+bPBqdww
- 1Wnw==
-X-Gm-Message-State: AOJu0YxR1j6sTRgDilGO6fDuws2wKfUBVCtWjC6uklbNv0P40N+XPmQX
- 59YJfsaf/y9H07uVNogAGnqYbpCL3TLgc6KkZuqsX2IBK2KBmNy/1CKUyriytB1uAaHowhgYmLw
- fyfamLApr0dTIrZt1+J3kKCoW+bDLtLjyKw+d7Z5W5D8QhTEoroRhb9zsGCBuE3e2kn+Dpj5/zl
- v7D1YPcjYX7+uxDUQd14GJvwjwisLzkJW5+M9Q
-X-Gm-Gg: ASbGncugtJyEKrw9DwYCp2wZhVACbX5SUDhEZ0Upg1RzTjkFCcRtCEIepTdAinY2mj9
- rDdpt0V4UQ1Nhr3wWFSNqb6ssvTYhdYoC27QvZXtSb8wJgQibpUwle7yZS/6V+M1EjJsvEu6ssA
- vUTAXBKqPs/mQ/Kgi0dzmQ+OWfInyeannMZ3XI8QEGNW8+4Kv0O7dBeuojRgOQWhPOk5ZXPV+Lr
- G0oeS36RmQgHfYnG//SdZ4qbODNYTv7IwjTTTD87QnT9iEImE6XUeH3oU9Vwaj3ACIt4TBQMElY
- q5PDHymlCh/dezyeavUi
-X-Received: by 2002:a05:6000:402a:b0:38f:4d40:358 with SMTP id
- ffacd0b85a97d-3971ddd60femr14075444f8f.9.1742224877212; 
- Mon, 17 Mar 2025 08:21:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBPCaZyh99v9AklbkIeSK+KetkeMMfOIlWyn8TGdOHHovYJdOC6DR8XXmyLdZyulVj+abzOA==
-X-Received: by 2002:a05:6000:402a:b0:38f:4d40:358 with SMTP id
- ffacd0b85a97d-3971ddd60femr14075418f8f.9.1742224876777; 
- Mon, 17 Mar 2025 08:21:16 -0700 (PDT)
+ bh=FrM1yGcdPBxGotEaB8in1nzGMu9ufRO6SSao+aFwRPA=;
+ b=peTT62ztkTbQ800YpEp4JH/O0FHfM4vo/EB60pfnr3N2ACAWtRLnYUJj9kqSlXVoEj
+ iAlqSdVFaSH7cGpZ2EY8ww1y2SdMgDf3TJIosF+dcmuSlmN4wSZG16A75AeEmmKkSqJz
+ oqu2Xf2fFoY4P0Z2EKG7TX9DU/wTdJmJEfdtWTltieIcsaDUrzbLeDlCL2Oi77tMzPNY
+ zZnqhrXDS4AkqbWQgmWJKNtPnmimvZ6+KG7slIavHzfTM1rBgoNZv3tydJ2Kes9WNMBl
+ UVAEvunktDnmTdeEtcGyVfTlcjZAgWQSP6j8A030pdj1XAsGkcHwD8g91oNeR6A9Yk15
+ dnMw==
+X-Gm-Message-State: AOJu0YzfX0eqezn+kn7Mp6jeWchkjuo4Lwi14JV1u3UwwDU6OEb9oV2F
+ ocJ+AZEduQmFVWjuCbT7g8hCLl/9/j+2tYneIPu7l2mATdiHZeOJqLa7nNqQav5daA06AWWHuLS
+ 23QV5hnPbABqRneNSTgQu6zkx0588hOLfUaWlrl7DyPEkyDgVZroi2YH/DcyJuAMymJS5VZCWG/
+ GQbs3SA4zwsvy0ylIg4vsQ4+yQbnupp3tFvgIc
+X-Gm-Gg: ASbGncv1BVbZ8aLblyIT/WP/zqV8MYFyQT+RzD07evHtHUmKQfk6cokNWXgVKalJx9a
+ uSPls/fEGoGwoInwp5mhZUehWBkTJIFi7bNPR13RKXX5RRqUoszOGrECBACSdJbJYR6tVnsz8Pu
+ 3G9AMRbS27wfjcEPlKY6jJ0aqpsLc9oNPEjtDD/In/AZBF6hkFXH4GlhqCoem9mNZYl3ELlwIud
+ Su3GpdfZxVwJhz+V/QJ4RrC7rHq2IMRSqwuk5MYTbVIz5/lonSZLnPm2v/hgIuX9wjDXJAI2lYP
+ Tm9wpsRy31gQQmRl4wr3
+X-Received: by 2002:a5d:6d88:0:b0:391:2a9a:47a3 with SMTP id
+ ffacd0b85a97d-3971a873726mr16774014f8f.0.1742224875159; 
+ Mon, 17 Mar 2025 08:21:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENGTwWIxiV9SgD23AgGGcyTx6enDHf8vpM/+zFghby0t0QzoVpM0XIUIqGErqjD7AcHw6tDA==
+X-Received: by 2002:a5d:6d88:0:b0:391:2a9a:47a3 with SMTP id
+ ffacd0b85a97d-3971a873726mr16773982f8f.0.1742224874733; 
+ Mon, 17 Mar 2025 08:21:14 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.194.153])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1ffc3e67sm107185005e9.17.2025.03.17.08.21.15
+ ffacd0b85a97d-395cb7ec14bsm15213620f8f.100.2025.03.17.08.21.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 08:21:15 -0700 (PDT)
+ Mon, 17 Mar 2025 08:21:13 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Konstantin Kostiuk <kkostiuk@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 2/2] Revert "meson.build: default to -gsplit-dwarf for debug
- info"
-Date: Mon, 17 Mar 2025 16:21:11 +0100
-Message-ID: <20250317152111.316627-3-pbonzini@redhat.com>
+Cc: Tigran Sogomonian <tsogomonian@astralinux.ru>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 1/2] hw/misc: use extract64 instead of 1 << i
+Date: Mon, 17 Mar 2025 16:21:10 +0100
+Message-ID: <20250317152111.316627-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250317152111.316627-1-pbonzini@redhat.com>
 References: <20250317152111.316627-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -111,71 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 563b1a35ed1f1151505d4fe5f723827d1b3fd4bc.
+From: Tigran Sogomonian <tsogomonian@astralinux.ru>
 
-Split debug info support is broken when cross compiling
-(https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99973).  People
-that would like to use it can add it via --extra-cflags.
+1 << i is casted to uint64_t while bitwise and with val.
+So this value may become 0xffffffff80000000 but only
+31th "start" bit is required.
+Use the bitfield extract() API instead.
 
-Reported-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Tigran Sogomonian <tsogomonian@astralinux.ru>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Link: https://lore.kernel.org/r/20241227104618.2526-1-tsogomonian@astralinux.ru
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                   | 6 ------
- meson_options.txt             | 2 --
- scripts/meson-buildoptions.sh | 2 --
- 3 files changed, 10 deletions(-)
+ hw/misc/mps2-fpgaio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 7f75256acf9..41f68d38069 100644
---- a/meson.build
-+++ b/meson.build
-@@ -604,10 +604,6 @@ if get_option('tsan')
-   qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
- endif
+diff --git a/hw/misc/mps2-fpgaio.c b/hw/misc/mps2-fpgaio.c
+index d07568248d6..04a3da5db05 100644
+--- a/hw/misc/mps2-fpgaio.c
++++ b/hw/misc/mps2-fpgaio.c
+@@ -198,7 +198,7 @@ static void mps2_fpgaio_write(void *opaque, hwaddr offset, uint64_t value,
  
--if get_option('debug') and get_option('split_debug')
--  qemu_cflags += '-gsplit-dwarf'
--endif
--
- # Detect support for PT_GNU_RELRO + DT_BIND_NOW.
- # The combination is known as "full relro", because .got.plt is read-only too.
- qemu_ldflags += cc.get_supported_link_arguments('-Wl,-z,relro', '-Wl,-z,now')
-@@ -4599,8 +4595,6 @@ if have_rust
-   summary_info += {'bindgen':         bindgen.full_path()}
-   summary_info += {'bindgen version': bindgen.version()}
- endif
--# option_cflags is purely for the summary display, meson will pass
--# -g/-O options directly
- option_cflags = (get_option('debug') ? ['-g'] : [])
- if get_option('optimization') != 'plain'
-   option_cflags += ['-O' + get_option('optimization')]
-diff --git a/meson_options.txt b/meson_options.txt
-index 3432123fee2..59d973bca00 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -362,8 +362,6 @@ option('debug_mutex', type: 'boolean', value: false,
-        description: 'mutex debugging support')
- option('debug_stack_usage', type: 'boolean', value: false,
-        description: 'measure coroutine stack usage')
--option('split_debug', type: 'boolean', value: true,
--       description: 'split debug info from object files')
- option('qom_cast_debug', type: 'boolean', value: true,
-        description: 'cast debugging support')
- option('slirp_smbd', type : 'feature', value : 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index aca6e688302..3e8e00852b2 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -504,8 +504,6 @@ _meson_option_parse() {
-     --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=false ;;
-     --enable-strip) printf "%s" -Dstrip=true ;;
-     --disable-strip) printf "%s" -Dstrip=false ;;
--    --enable-split-debug) printf "%s" -Dsplit_debug=true ;;
--    --disable-split-debug) printf "%s" -Dsplit_debug=false ;;
-     --sysconfdir=*) quote_sh "-Dsysconfdir=$2" ;;
-     --enable-tcg) printf "%s" -Dtcg=enabled ;;
-     --disable-tcg) printf "%s" -Dtcg=disabled ;;
+             s->led0 = value & MAKE_64BIT_MASK(0, s->num_leds);
+             for (i = 0; i < s->num_leds; i++) {
+-                led_set_state(s->led[i], value & (1 << i));
++                led_set_state(s->led[i], extract64(value, i, 1));
+             }
+         }
+         break;
 -- 
 2.48.1
 
