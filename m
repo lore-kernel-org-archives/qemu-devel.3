@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471A0C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 05:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55D99C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 05:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu2xA-0006dc-Qh; Mon, 17 Mar 2025 01:23:57 -0400
+	id 1tu2xK-0006gn-ME; Mon, 17 Mar 2025 01:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2x6-0006dG-54; Mon, 17 Mar 2025 01:23:52 -0400
+ id 1tu2xF-0006fB-KI; Mon, 17 Mar 2025 01:24:02 -0400
 Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2x4-0007n0-H5; Mon, 17 Mar 2025 01:23:51 -0400
+ id 1tu2xE-0007no-68; Mon, 17 Mar 2025 01:24:01 -0400
 Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-22349bb8605so80465065ad.0; 
- Sun, 16 Mar 2025 22:23:49 -0700 (PDT)
+ d9443c01a7336-2232aead377so86267215ad.0; 
+ Sun, 16 Mar 2025 22:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742189028; x=1742793828; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Zwfk/klmzmPGpfHaFqqk2IGyHBeZO9L6L1vDs8m/L58=;
- b=KRI5WTvOHEUSKFcJvB6z41PTB/pH+7gGJlarbFOJnqCa08noYfZ99ctMcfFVG+RT/u
- pZGwR51B+Dp0SpEXRvLNnsP9J3wBWf8/C59BZyc1IFcw/lj0T0xAH7UJAq7cV3QdGOtt
- RpWnUv4rbFq5hwD+wKizkWb1eF4W1kTC74OrHoyrHYOgy60OOA+TNi3nMCKDVPb7vX1z
- FLqggUVSKt88meRdWbojvqa3x/3GTAD5ZP25/KqW97PkdgGe6dKR4COOig1CaXhg7VU1
- DgGPGLIUjGquM1EqVS54weM2B3ccHZ46N2bs8Gw74p3LLZZemwcrdtV6P+Oa0YUi3j53
- yoig==
+ d=gmail.com; s=20230601; t=1742189038; x=1742793838; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rCQzO/RWV9mKGsPnnGRAGAxs7AhCxziXIi4niuyH6/o=;
+ b=Mr9rRtd3EYa61+L8n01pdFg0rbBl9cYGPePNLYa7lJOpT+yVG58B4Ho5EySGmjgLbN
+ OA2CLqc8bOur8TLn9v+88dpe8eIk9u+2pBPmURD7Z+ZO1o4o7bktae2dX8qXp887r9DF
+ mZaYpY8+Oeoz4S3eOjOU6QrspiTUy5OvMgVMz6UcCCS8PDjBI1kA+mFz/MKgohSrXRWD
+ Ying49Vg7ix7IjPE4BQIOsJNifQcnimg9gT6Fhq2dix6Oqarz2/LXO9MbPB5A9V8+PTN
+ eZpcKzWUk5f/9PlZ4wIEUyPTL9xDfEs3aPV+TfK1vy+Rz4mo8PCf1+1AIp46KGz4fWmI
+ B0tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742189028; x=1742793828;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Zwfk/klmzmPGpfHaFqqk2IGyHBeZO9L6L1vDs8m/L58=;
- b=gzR4a5ruSV1Zn45KAG7fPz1xAe1aWEMcRw2xZlEQpfU2nCDdMo8nL8LV+dfvssDhIT
- yiF0RB2XCuH7OYf5CAjRzjkghgjE3iduPOB36ZxlyEGL4wkG4ICk1GU2iYFXq8Mp4Zvb
- qouDeYm+lFLr23oc1o1+2TX7mTLKF6VaCEMKmz7s0X4Ahx9F4Q8gE+aqiUiNzOzLghCL
- Wk7AzTLQE4tACI7x+D4YVNZK5wdC2TqpYKtjqiOk/O7JFVjOGwYdVYFnwOxD5xl0NMuX
- 51P0kPZrKNlHXkZoQrNrE4YE16F8vAOyBJpnQ2MOcxqB9sEHyQmXjMmH4100zeZOj3RW
- jOTA==
+ d=1e100.net; s=20230601; t=1742189038; x=1742793838;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rCQzO/RWV9mKGsPnnGRAGAxs7AhCxziXIi4niuyH6/o=;
+ b=Bw6LAJ/p+o0IcI/ySLQ5Gatkq8jjYqQQJ3Db7uo5J0TaMWQqiEtKIKHdL7GzhD3cB0
+ cZwc3cR4BMDuor4sO5IjuNc+FjMFWA9zog1Hh0IAvrOGnvALLtkdTzuchw7mx2tX4v4e
+ ++ok+lUQy3jEvsUQmCAQ6pgpICLCjxuCs198J2TPUB3WlaVNOt85kaC+LODsCBMcvqot
+ XkOMF0pHSXDC0ejjQ7cnoD2KN5NCqTnV/X1KKnuq0oL1kIxbxYym9rThr2mslhos9FdV
+ 8Nldb8F/lrg8qd/2jylRUrLMUdD71TverPePqbfrTN7/XzPgSCTkAgsgSgfce2IPSR/v
+ 0LzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVK0o3Wnlj8MENwIaX1gzcIHQRkzrvpIHqc6nv1cAiGLOOdEXhCDyYR/65dW7pmAjSQmg3a9dazFQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzDjwYCjzW14doO6l1rPcN4jw8McPDqxIcnj8sMUnrtC2HxA01Q
- FWlPqNmBn7Zq0WS/cKUtm04OFZ6qK7vU9x7um1Ceu9PJLGYgAqBYWi2zow==
-X-Gm-Gg: ASbGncuBkFP4dDDKMKTsGX+fFWsoXi7dZwJx2X25oabOFXIniizdUWPNItVu5Kn1DYX
- sUUL7KM4hp2polhmCCMppJYzdDM9ME6xgW4jMLU09p+QUbyQ0J9azyX291XAIXOHS0H6CPD3dFg
- o0cNwEPxxE1EyUgKC2UvgffZsGa826ohlg0cIVofDTtgJ52eApB0TL9M9MAGDwKhLCg4YhLfBYP
- cJrjc6sEBMGb45XIkID/2yPwuMeyM4VxofY85D/coVZSsyuDi7FniFGeNaVRy+dKn9mQRHuCXUf
- XDBx7WqHxMgUQexaRjt04jcQbPzn8zOWXIBs41MqaJMtOpBCcQ==
-X-Google-Smtp-Source: AGHT+IHP5RWNBMWgGk/AYJePMYutq0HoI5J2toPN6zRufcoR2biEDIWUtmhqxeleK2zr3YeqlBO43g==
-X-Received: by 2002:a05:6a00:1256:b0:736:5c8e:bab8 with SMTP id
- d2e1a72fcca58-7372236c795mr12060532b3a.3.1742189028108; 
- Sun, 16 Mar 2025 22:23:48 -0700 (PDT)
+ AJvYcCW6VE9WdTp0/2T+chFK5kSRozL/U9hTzRcD3zQDmFB9MfLbv46nJCEpdu9/TdYE4xnn3tWs7ZfyIg==@nongnu.org
+X-Gm-Message-State: AOJu0YzrjwcA6Rb8P2r2kD7CKpFUt5yQO/jVvi7pu2lh/s5GpIVwLEb/
+ lOPfclosd1GqxFpTCeMnzVXROLHNnWptcStEL1f3VrbuTxfXRQc6NbwBsA==
+X-Gm-Gg: ASbGnctTj0nTP37IKPUObEdUBEM4TrGI/mRtSNzLtCO1iVv7MOvACxQf5BqEWMjOA67
+ HbU7UT5dBa6/PgqFhKOJayrkEl/SERYBEl135t0TUfYaMYVAQJq1t/Zxqa81rmEYvKceDbLuotB
+ HY67ErqOJHgJr0eCdye4oui/MaoIOu0AkONZfCqcXL7cQrZdlNGJ+LnNQl3ZohSXoxvJHbLAg7e
+ JDuoOA/mME/EyoZUoQIOelM1vWtTzI9lOL6f9Dei9zcCtYK2UjpuzuX/RvGi25917qJBcXe0afK
+ shHRP4dLiat3HHJwiwcYTPDO3OoRmfAB/7smjK8BgEuyxvAZVn20HH3MNZBu
+X-Google-Smtp-Source: AGHT+IF5qNYq1eMrY99ebl6tU0UfyeHKpZgx3juxDS6gerqVLJCtDB4d2kkvMa7Y9q3ZDxyjt8FSPw==
+X-Received: by 2002:a05:6a20:d74d:b0:1f5:8eb1:d5d2 with SMTP id
+ adf61e73a8af0-1f5c114b9a0mr14828867637.13.1742189038499; 
+ Sun, 16 Mar 2025 22:23:58 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.135.36])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711695b6bsm6879495b3a.148.2025.03.16.22.23.45
+ d2e1a72fcca58-73711695b6bsm6879495b3a.148.2025.03.16.22.23.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Mar 2025 22:23:47 -0700 (PDT)
+ Sun, 16 Mar 2025 22:23:58 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Glenn Miles <milesg@linux.vnet.ibm.com>,
  Michael Kowal <kowal@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH 0/6] ppc small fixes for 10.0
-Date: Mon, 17 Mar 2025 15:23:32 +1000
-Message-ID: <20250317052339.1108322-1-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 3/6] ppc/xive2: Fix logical / bitwise comparison typo
+Date: Mon, 17 Mar 2025 15:23:35 +1000
+Message-ID: <20250317052339.1108322-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250317052339.1108322-1-npiggin@gmail.com>
+References: <20250317052339.1108322-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -99,32 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reported a bunch of issues with the last ppc PR
-(thanks Cedric), and a couple of other things that were
-noticed too. With Zoltan's amigaone patches this should
-fix all Coverity bugs I hope.
+The comparison as written is always false (perhaps confusingly, because
+the functions/macros are not really booleans but return 0 or the tested
+bit value). Change to use logical-and.
 
-Thanks,
-Nick
+Resolves: Coverity CID 1593721
+Cc: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/intc/xive2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Nicholas Piggin (6):
-  ppc/xive: Fix typo in crowd block level calculation
-  pnv/xive: Fix possible undefined shift error in group size calculation
-  ppc/xive2: Fix logical / bitwise comparison typo
-  ppc/spapr: Fix possible pa_features memory overflow
-  ppc/pnv: Move the PNOR LPC address into struct PnvPnor
-  ppc/pnv: Fix system symbols in HOMER structure definitions
-
- include/hw/ppc/pnv_pnor.h |   1 +
- hw/intc/xive.c            |  29 +++++-
- hw/intc/xive2.c           |  21 ++--
- hw/ppc/pnv.c              |   2 +-
- hw/ppc/pnv_bmc.c          |   4 +-
- hw/ppc/pnv_occ.c          | 201 ++++++++++++++++++--------------------
- hw/ppc/pnv_pnor.c         |   2 +
- hw/ppc/spapr.c            |   1 +
- 8 files changed, 143 insertions(+), 118 deletions(-)
-
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 311b42e15d3..7d584dfafaf 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -1344,7 +1344,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+         return;
+     }
+ 
+-    if (xive2_end_is_crowd(&end) & !xive2_end_is_ignore(&end)) {
++    if (xive2_end_is_crowd(&end) && !xive2_end_is_ignore(&end)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "XIVE: invalid END, 'crowd' bit requires 'ignore' bit\n");
+         return;
 -- 
 2.47.1
 
