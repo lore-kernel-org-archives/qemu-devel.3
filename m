@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE07C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148E6C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:13:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu4eK-0005i5-Tf; Mon, 17 Mar 2025 03:12:36 -0400
+	id 1tu4fB-0006Ij-SS; Mon, 17 Mar 2025 03:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4dq-0005fH-5G
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:12:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4f9-0006F0-Ma
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:13:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4do-0003Am-2F
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:12:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4f7-0003HV-6C
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:13:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742195521;
+ s=mimecast20190719; t=1742195602;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=g8RmMrGTNPbKNn1duiV8XtfqEKLNsIPYoOZb54FiNOQ=;
- b=b1psirondZv17PUPLzVgOZIez4vKArp6qqFtUXXeMVMiI0MC+TCyLHde8peZH1z8adbevT
- VgoWmnBPOID6sj7VY4qT0wfrNgtNlJ7TdyBV2EF5Rix9kWW5BCRMfu8jQUjAC40dTFUqKX
- +iiZZgD7MwkqUc/15PlPyMZGM7nJBds=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=j3R7Srod0CmFLuYr0W1ywGXYa8jqiaB96i9FX52WwS4=;
+ b=bsUFbDcDm5veA+srNUe/JywK/wvDrBxLj51gfnq4hkBAwC5xowzuXto5ZeO5lTmqzjSi0h
+ ucvFPjPXLtjDaUT06OZplZSos5Sv2Z/+6lRFbqHhy9oOxfJ3M/CXTK647Pwj1XraHvifhM
+ u7DDiDC0Rf8cYRhS7uM3mS1HN2uYEa4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-9qlx7qIWMJ6NEpbc_EyhEQ-1; Mon, 17 Mar 2025 03:10:51 -0400
-X-MC-Unique: 9qlx7qIWMJ6NEpbc_EyhEQ-1
-X-Mimecast-MFC-AGG-ID: 9qlx7qIWMJ6NEpbc_EyhEQ_1742195450
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so13602305e9.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:10:51 -0700 (PDT)
+ us-mta-386-xelmX_lcOOeHSRLOzhKZuA-1; Mon, 17 Mar 2025 03:13:20 -0400
+X-MC-Unique: xelmX_lcOOeHSRLOzhKZuA-1
+X-Mimecast-MFC-AGG-ID: xelmX_lcOOeHSRLOzhKZuA_1742195600
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43bd0586b86so9504595e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:13:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742195449; x=1742800249;
+ d=1e100.net; s=20230601; t=1742195599; x=1742800399;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g8RmMrGTNPbKNn1duiV8XtfqEKLNsIPYoOZb54FiNOQ=;
- b=DOcSbf/ju3QBGLrWrOoN6vGQzYVnW53JILX7tejYglm7v2ghbm9ck4VAMBLgQCURmg
- evUUqhEeGaf+DKp7YIqLGQcX4lFb4lv18ZZfENJscnGsHOV9F2rTbVfu+7YHr/DPLR0U
- Kp93Br6su0IlQL6o24j4pk2bKr4jME9fVNx9GDVvyNsdH5IE4uUaeOyNmPAmUk77CG+9
- zznofToCATe/XTKWlgHWtdwJi0odV1pscHnbsNPcOfnNYGIpFUAmelCEpD3uKnr28jRj
- hRWETkVfCxnOgoMWt9/fjbgZFPpwqz6foxkBQI6oZGC/XUJ04Pjj0cPyxlgz7DIHjs4V
- Sr0w==
+ bh=j3R7Srod0CmFLuYr0W1ywGXYa8jqiaB96i9FX52WwS4=;
+ b=e0b8bLVofuOCTeUZLWTNT8cPtzk/XE7k+Hn31g42/Uf8qC+wXpP321p92H1lbPm7Ay
+ U0CpkQkjJcw+hGe1jtNcvw57gWKyGeMcj4d9ItKnNNJ01AV0KE02QEnDNKMBEsEbA1H3
+ 5leJzL3YpAd0AvRUebC25c3h5Cl0HIJ5vrkwQPaTp4743pl9PzacSubpce2LbQ0yoxKQ
+ 1RD5z5t+XOhzVU4FpUHQ5EV0T+ZYkYhi7XhnX4xIGmmGjZYu6vsCBeLhH5nUQ/74JSfY
+ FWrZl2DlqK19CvYsyh7FldZnWgVzmHlsxGBkbCKARKzLb/SfZTIECaXkQxdarLmmFQr3
+ uWrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYqhmaVVx3jw8OmnKD2icgPRDWy7wreCGaimOZ+1ctVJXRPY5SvPoY08HMCb9v+8QL61qGJD+Fyjca@nongnu.org
-X-Gm-Message-State: AOJu0YzijXMyM4uO+9QxN3RSSbmrFlWHuSbOuJNgfssFYbo6gEbGOROU
- qRIeNx5kqRVqVeIvDAqzsT53zYGJLJcT4kywNSCZZObcub7Sr4CmbH2HlKh93U2p6Qi020QTPhe
- VHjNZcZMjhdzJKP1mYW3ijP5KuwF4AXfpDKQbkNlmS4ySwxcFoPkJUH+uNh34Ev0=
-X-Gm-Gg: ASbGnct61muvK6FsbBZpXQdcqg/tklqnBXuHEoK0jsGtKduhENNU4M5nHUjI97u7m3f
- cDyB5FZcPXsGJCQulxU3sL7op1EcDQrgkN4wffg4ibPBOnMqJRVeYeazIgkRflRju0IIOGOlczz
- g0eVPW7nh7I2w98/GgQSTvWQZy8rKmML0BLDO4t+ThjePPlLQhFnxK+dsSEl0iFmzu89MToVnpV
- 2hknMjFxm8ZyChACp53fkSMXbh9pEjBIBvjbgpSK7GGWLa9N20GjgWt8UuiVCjwoaF1aD7N+H5q
- oXrBJY6oJ3WsXB61fZPm8WrE8wvFx8BKlxyGua2/RrEu2WLT/b/llg==
-X-Received: by 2002:a05:600c:46d1:b0:43c:eec7:eab7 with SMTP id
- 5b1f17b1804b1-43d1ec81224mr130118445e9.11.1742195449149; 
- Mon, 17 Mar 2025 00:10:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFW8cqxBvjSV++oXGbLQhYc4clyLfOwenxfD94qXCGkaw5Wx5yecL5aZpyNcdTL7bRQRoBzCQ==
-X-Received: by 2002:a05:600c:46d1:b0:43c:eec7:eab7 with SMTP id
- 5b1f17b1804b1-43d1ec81224mr130118265e9.11.1742195448747; 
- Mon, 17 Mar 2025 00:10:48 -0700 (PDT)
+ AJvYcCVDyu37PLlvXdgzzdguHLsZe8RR/LLfB8fWcbPSoKLoQDP48QFrj8RvMfoEp4iW4DQ2PrjzlFR+MMOP@nongnu.org
+X-Gm-Message-State: AOJu0YzNoUa3IDH9cfHr5cCQ3YyNdMjTMr+/smwdMnKWe9Eh8u23pqmb
+ cX1qLLM3TfFgCa37ys6AwJCVCCYnBXLhXW01EMSiFSdLgd+3zIvfGGFUb/dnVcZwJ58A+k+mqJM
+ KL/VQYpDJpUWVp3GUNaNL0VYSemtkALNsWM4aiMxl1wbnsd8uO395
+X-Gm-Gg: ASbGncv1W2SL5tkMIHbxTyk202rO6zB/Thvrgpcbxhrpftqfr93rGeO4Rrvv9rrt9Mv
+ ASvTORR3OfbM8BY0Kk7m0TpeChl0oY6fqiDne140IGTH/bN5PJfd2dYlcTidbECYD2fOU+VJE6P
+ o2GxA1YuyZ6cyUjQkLfB+aHWH8DQ+MJKOswAn18Oo2INOOwbw0L5ZDbPOuVzPtT3ige7jqCbb6q
+ AHpGIfl0LKSZq0AbP1W42Gjj8cpVttvurMO5SRgqWZWP9TsYcCDRl92eeurb4cl64lVzZh9sUj+
+ N/C0cHow/HOtyyZCP9tVlXCkdm5fWsiroSBPlAiAcrmY2uYjO9HowA==
+X-Received: by 2002:a05:600c:358c:b0:43c:eeee:b713 with SMTP id
+ 5b1f17b1804b1-43d1ecc31admr109168645e9.20.1742195599395; 
+ Mon, 17 Mar 2025 00:13:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcDGQ8HGQXXchdiQiPtPXNqNF/WbBd/SOOtDLYS7m4oXxJ9vRuSdSa+bISGLn9j/DqmU2uwA==
+X-Received: by 2002:a05:600c:358c:b0:43c:eeee:b713 with SMTP id
+ 5b1f17b1804b1-43d1ecc31admr109168535e9.20.1742195599023; 
+ Mon, 17 Mar 2025 00:13:19 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1ffb626esm96157085e9.8.2025.03.17.00.10.47
+ 5b1f17b1804b1-43d28565b17sm61545305e9.37.2025.03.17.00.13.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 00:10:48 -0700 (PDT)
-Message-ID: <edb2f134-1053-40d1-89ed-57404b14398d@redhat.com>
-Date: Mon, 17 Mar 2025 08:10:47 +0100
+ Mon, 17 Mar 2025 00:13:18 -0700 (PDT)
+Message-ID: <4e000bfd-cdf1-474f-9359-0ab1ce29a7ff@redhat.com>
+Date: Mon, 17 Mar 2025 08:13:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] ppc/spapr: Fix possible pa_features memory overflow
+Subject: Re: [PATCH 5/6] ppc/pnv: Move the PNOR LPC address into struct PnvPnor
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.vnet.ibm.com>,
  Michael Kowal <kowal@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <20250317052339.1108322-1-npiggin@gmail.com>
- <20250317052339.1108322-5-npiggin@gmail.com>
+ <20250317052339.1108322-6-npiggin@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -130,7 +129,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250317052339.1108322-5-npiggin@gmail.com>
+In-Reply-To: <20250317052339.1108322-6-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -159,32 +158,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/17/25 06:23, Nicholas Piggin wrote:
-> Coverity reports a possible memory overflow in spapr_dt_pa_features().
-> This should not be a true bug since DAWR1 cap is only be true for
-> CPU_POWERPC_LOGICAL_3_10. Add an assertion to ensure any bug there is
-> caught.
+> Rather than use the hardcoded define throughout the tree for the
+> PNOR LPC address, keep it within the PnvPnor object.
 > 
-> Resolves: Coverity CID 1593722
-> Fixes: 5f361ea187ba ("ppc: spapr: Enable 2nd DAWR on Power10 pSeries machine")
-> Cc: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> This should solve a dead code issue in the BMC HIOMAP checks where
+> Coverity (correctly) reported that the sanity checks are dead code.
+> We would like to keep the sanity checks without turning them into a
+> compile time assert in case we would like to make them configurable
+> in future.
+> 
+> Fixes: 4c84a0a4a6e5 ("ppc/pnv: Add a PNOR address and size sanity checks")
+> Resolves: Coverity CID 1593723
 > Cc: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   hw/ppc/spapr.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index a415e51d077..9865d7147ff 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -296,6 +296,7 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
->           pa_features[40 + 2] &= ~0x80; /* Radix MMU */
->       }
->       if (spapr_get_cap(spapr, SPAPR_CAP_DAWR1)) {
-> +        g_assert(pa_size > 66);
->           pa_features[66] |= 0x80;
->       }
->   
+
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -192,5 +180,75 @@ Thanks,
 
 C.
 
+
+> ---
+>   include/hw/ppc/pnv_pnor.h | 1 +
+>   hw/ppc/pnv.c              | 2 +-
+>   hw/ppc/pnv_bmc.c          | 4 ++--
+>   hw/ppc/pnv_pnor.c         | 2 ++
+>   4 files changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/hw/ppc/pnv_pnor.h b/include/hw/ppc/pnv_pnor.h
+> index 19c2d642e82..b44cafe918d 100644
+> --- a/include/hw/ppc/pnv_pnor.h
+> +++ b/include/hw/ppc/pnv_pnor.h
+> @@ -28,6 +28,7 @@ struct PnvPnor {
+>       BlockBackend   *blk;
+>   
+>       uint8_t        *storage;
+> +    uint32_t       lpc_address; /* Offset within LPC FW space */
+>       int64_t        size;
+>       MemoryRegion   mmio;
+>   };
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 59365370c37..63f2232f32f 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1191,7 +1191,7 @@ static void pnv_init(MachineState *machine)
+>        * Since we can not reach the remote BMC machine with LPC memops,
+>        * map it always for now.
+>        */
+> -    memory_region_add_subregion(pnv->chips[0]->fw_mr, PNOR_SPI_OFFSET,
+> +    memory_region_add_subregion(pnv->chips[0]->fw_mr, pnv->pnor->lpc_address,
+>                                   &pnv->pnor->mmio);
+>   
+>       /*
+> diff --git a/hw/ppc/pnv_bmc.c b/hw/ppc/pnv_bmc.c
+> index 811ba3d7a49..fb70a8c1f22 100644
+> --- a/hw/ppc/pnv_bmc.c
+> +++ b/hw/ppc/pnv_bmc.c
+> @@ -174,8 +174,8 @@ static void hiomap_cmd(IPMIBmcSim *ibs, uint8_t *cmd, unsigned int cmd_len,
+>   {
+>       PnvPnor *pnor = PNV_PNOR(object_property_get_link(OBJECT(ibs), "pnor",
+>                                                         &error_abort));
+> +    uint32_t pnor_addr = pnor->lpc_address;
+>       uint32_t pnor_size = pnor->size;
+> -    uint32_t pnor_addr = PNOR_SPI_OFFSET;
+>       bool readonly = false;
+>   
+>       rsp_buffer_push(rsp, cmd[2]);
+> @@ -251,8 +251,8 @@ static const IPMINetfn hiomap_netfn = {
+>   
+>   void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor)
+>   {
+> +    uint32_t pnor_addr = pnor->lpc_address;
+>       uint32_t pnor_size = pnor->size;
+> -    uint32_t pnor_addr = PNOR_SPI_OFFSET;
+>   
+>       if (!pnv_bmc_is_simulator(bmc)) {
+>           return;
+> diff --git a/hw/ppc/pnv_pnor.c b/hw/ppc/pnv_pnor.c
+> index 863e2e70aca..9db44ca21d8 100644
+> --- a/hw/ppc/pnv_pnor.c
+> +++ b/hw/ppc/pnv_pnor.c
+> @@ -108,6 +108,8 @@ static void pnv_pnor_realize(DeviceState *dev, Error **errp)
+>           memset(s->storage, 0xFF, s->size);
+>       }
+>   
+> +    s->lpc_address = PNOR_SPI_OFFSET;
+> +
+>       memory_region_init_io(&s->mmio, OBJECT(s), &pnv_pnor_ops, s,
+>                             TYPE_PNV_PNOR, s->size);
+>   }
 
 
