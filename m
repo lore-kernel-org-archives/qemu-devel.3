@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36DCC35FF3
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADD34C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu72p-00061Y-OA; Mon, 17 Mar 2025 05:46:08 -0400
+	id 1tu7Cp-00016g-4v; Mon, 17 Mar 2025 05:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
- id 1tu72T-0005eL-D8
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:45:41 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tu7Cl-00015w-U2
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:56:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tony.lindgren@linux.intel.com>)
- id 1tu72Q-0007Ix-Qg
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:45:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742204739; x=1773740739;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=2L7KDp9FOHdilaL0CR+rsa4VNZkaVaclZPPZcERIo9M=;
- b=IcZB9IotKS4awhK32A2Pkxm8sUBGCT1ZFojLjpykrmmd0D1xC+BTVK4r
- 65NXgdJT+PPaA0r4WYhgpJMZQ9N2iEc3HvgF5p+0RLTtA6ukjKkrDfvt+
- vJ7/t6SLYRTJ1rkrlwJBCTRmnm5EiVyud+tQ0bb4tXFNEVi1pWfgg2uGe
- I8T993LbQ2dDTSm7uNj7Nqp+kJzM4xf6mWH0hVW+LeQetbjERNgpyC1bk
- OXshjQrzo9420ioza4J3yBlvujoQJpyCn9H0Zwh/3rybQ/z5yziilign4
- NTwFhgzkcTMpP92MJQbbDcHodbftdxRQFP5x0hLcSItWE9M5C9y1QysPP g==;
-X-CSE-ConnectionGUID: zIWjWhTaRYKHWNHgZHLiaQ==
-X-CSE-MsgGUID: RuaaqUGmR8WMnWr8cemssg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11375"; a="53917612"
-X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="53917612"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2025 02:45:35 -0700
-X-CSE-ConnectionGUID: KiI60iehTDqFb1rIF07FWA==
-X-CSE-MsgGUID: KJK2d+JYRlCzVfXqZ1+Qpw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,253,1736841600"; d="scan'208";a="121882215"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost)
- ([10.245.246.8])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2025 02:45:30 -0700
-Date: Mon, 17 Mar 2025 11:45:25 +0200
-From: Tony Lindgren <tony.lindgren@linux.intel.com>
-To: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: David Hildenbrand <david@redhat.com>,
- Alexey Kardashevskiy <aik@amd.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
- "Maloor, Kishen" <kishen.maloor@intel.com>
-Subject: Re: [PATCH v3 6/7] memory: Attach MemoryAttributeManager to
- guest_memfd-backed RAMBlocks
-Message-ID: <Z9fvNU4EvnI6ScWv@tlindgre-MOBL1>
-References: <20250310081837.13123-1-chenyi.qiang@intel.com>
- <20250310081837.13123-7-chenyi.qiang@intel.com>
- <Z9e-0OcFoKpaG796@tlindgre-MOBL1>
- <b158a3ef-b115-4961-a9c3-6e90b49e3366@intel.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tu7Ck-0000Ji-0J
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:56:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742205374;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=owhvDCMRzMyIcGNEkUsHGgyRSRubwpu7Eakvhy31Lts=;
+ b=ClsVFr8ICst3fTN6vMu+FHRWSs1TW2adImGIGdp0gkzIaMSNzGx6XBH1tJm38MPxPOg6th
+ Bd0SQWN1a4Ktci+/LwmSjBACSthaZv517kd1vK7BpnjEwzMMSZ9IgltL6kgSfJ2ogHdIe8
+ NWCpaj4fn0NQ0tEDDYPVnl2GFFlf3ko=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-nPk-xugjNFW9t4Kcn_EdSw-1; Mon,
+ 17 Mar 2025 05:56:10 -0400
+X-MC-Unique: nPk-xugjNFW9t4Kcn_EdSw-1
+X-Mimecast-MFC-AGG-ID: nPk-xugjNFW9t4Kcn_EdSw_1742205368
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0DE461800258; Mon, 17 Mar 2025 09:56:08 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.38])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22E3F180175F; Mon, 17 Mar 2025 09:56:07 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 7CF9518000BB; Mon, 17 Mar 2025 10:56:04 +0100 (CET)
+Date: Mon, 17 Mar 2025 10:56:04 +0100
+From: Gerd Hoffman <kraxel@redhat.com>
+To: Alexander Graf <graf@amazon.com>
+Cc: Ani Sinha <anisinha@redhat.com>, 
+ =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+ <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <b158a3ef-b115-4961-a9c3-6e90b49e3366@intel.com>
-Received-SPF: none client-ip=192.198.163.9;
- envelope-from=tony.lindgren@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,52 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 17, 2025 at 03:32:16PM +0800, Chenyi Qiang wrote:
+On Fri, Mar 14, 2025 at 03:50:19PM +0100, Alexander Graf wrote:
 > 
-> 
-> On 3/17/2025 2:18 PM, Tony Lindgren wrote:
-> > Hi,
+> On 14.03.25 15:08, Gerd Hoffman wrote:
+> >    Hi,
 > > 
-> > On Mon, Mar 10, 2025 at 04:18:34PM +0800, Chenyi Qiang wrote:
-> >> --- a/system/physmem.c
-> >> +++ b/system/physmem.c
-> >> @@ -1885,6 +1886,16 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-> >>              qemu_mutex_unlock_ramlist();
-> >>              goto out_free;
-> >>          }
-> >> +
-> >> +        new_block->memory_attribute_manager = MEMORY_ATTRIBUTE_MANAGER(object_new(TYPE_MEMORY_ATTRIBUTE_MANAGER));
-> >> +        if (memory_attribute_manager_realize(new_block->memory_attribute_manager, new_block->mr)) {
-> >> +            error_setg(errp, "Failed to realize memory attribute manager");
-> >> +            object_unref(OBJECT(new_block->memory_attribute_manager));
-> >> +            close(new_block->guest_memfd);
-> >> +            ram_block_discard_require(false);
-> >> +            qemu_mutex_unlock_ramlist();
-> >> +            goto out_free;
-> >> +        }
-> >>      }
-> >>  
-> >>      ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-> > 
-> > Might as well put the above into a separate memory manager init function
-> > to start with. It keeps the goto out_free error path unified, and makes
-> > things more future proof if the rest of ram_block_add() ever develops a
-> > need to check for errors.
+> > > > Ok, assuming we allow the guest submit a IGVM image (which makes sense
+> > > > indeed, otherwise we'll probably end up re-inventing IGVM).  How will
+> > > > the kernel hashes be handled then?  I assume they will not be part of
+> > > > the igvm image, but they must be part of the launch measurement ...
+> > > The kernel hashes must be embedded in the IGVM image by the time you invoke
+> > > vmfwupdate. That means when you generate the FUKI, you take 4 inputs:
+> > > Generic firmware image, kernel, initramfs, cmdline. Out of those, you
+> > > generate and embed an IGVM image that consists of the firmware image as well
+> > > as the kernel hash page.
+> > If your input firmware image already is an IGVM (say coconut), what is
+> > supposed to happen?
 > 
-> Which part to be defined in a separate function? The init function of
-> object_new() + realize(), or the error handling operation
-> (object_unref() + close() + ram_block_discard_require(false))?
+> I'll leave the details to Jörg on how he envisions it, but IIUC the flow for
+> a "readily assembled IGVM" is different. In case of a COCONUT-SVSM IGVM, you
+> expect chaining of trust. So the SVSM implements a TPM which then the OS
+> would use with measured boot etc etc.
 
-I was thinking the whole thing, including freeing :) But maybe there's
-something more to consider to keep calls paired.
+Well, I don't consider igvm being useful for svsm only.  Shipping
+standard edk2 as igvm looks useful to me.  Main benefit: pre-calculate
+launch measurements without having to know qemu internals.
 
-> If need to check for errors in the rest of ram_block_add() in future,
-> how about adding a new label before out_free and move the error handling
-> there?
+> It's a fundamentally different concept from FUKI.
 
-Yeah that would work too.
+Hmm?  IGVM is just a different way to ship the firmware (and optionally
+more).
 
-Regards,
+> But it could share the same vmfwupdate mechanism to load.
 
-Tony
+Yep.  But we have to sort the details.
+
+ (1) How we are going to load kernel + initrd in case the firmware is
+     igvm?  Just update the igvm to also include linux kernel and
+     initrd (see parallel reply from Jörg)?  If so, how does the
+     launched firmware find the kernel + initrd?
+     While digging around in the igvm spec I've seen there is the
+     concept of 'parameters'.  Can this be used to pass on the memory
+     location of kernel + initrd + cmdline?  Maybe the kernel hashes too?
+
+ (2) Will the igvm be generated on the fly from FUKI data?  Or should
+     the distros ship igvm images with firmware + kernel + initrd?
+
+ (3) How we are going to handle uki add-ons?
+
+ (4) Do we want keep the region list?  Or declare that igvm should be
+     used in case a single region is not enough?  Or even go all-in and
+     use IGVM exclusively?
+
+take care,
+  Gerd
+
 
