@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45975C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 16:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89ABAC35FF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 16:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuD61-0003Ua-NF; Mon, 17 Mar 2025 12:13:45 -0400
+	id 1tuD6I-0003Xl-2C; Mon, 17 Mar 2025 12:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuD5s-0003TC-Bk
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:13:41 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuD61-0003UY-7Q
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:13:45 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuD5q-0003g3-15
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:13:35 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso23033285e9.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 09:13:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuD5y-0003h8-Ni
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:13:44 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-38f2f391864so2649082f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 09:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742228011; x=1742832811; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Rb3LS0vNPhnknUl9Yi62tIxsFcdNc1tr/8ma9EHvQ3I=;
- b=huKSqmZKlXs6B74KC9QMzmNbsgHvQSgk/odIDpeZ41qp1gaXO+O2OaIoMEBeU8nY4X
- f6g2AY8O6YSSbMYEAtgbIO8eToLaF6dxUqQhysaW8Ocq15rVfwkRgn//QbdduntdGbFn
- NnxoBEWU4qVkvotB+uuQ3eSmE284VNvPac//jYBEbkanHn99HvuB/R2DLxSjwazCGT3U
- UycvjJ9lWWBFjtSApOg2avwzQ4fZGBnbvy/J79Jad9UUUzLN7EaLQAbTPtTJI0A+g9Pb
- 3eBWszZND3NWHTcmD3rTXTDY7U1cdCpD5wpYrDClMXT5kbFQVxM1mwH1tHa1tYMxaOCx
- RTTQ==
+ d=linaro.org; s=google; t=1742228021; x=1742832821; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9NJx4AwvlUnmR3t10jY6mrzdFJXWIigMof79SEafyw0=;
+ b=WH7gs6MXPT7bIK5cwM+7jpCegc0vSzJCHw8KB9u5LsSVo3/nt7ZYyTzb14u8yX8btG
+ RnkaNBsci7UoL4nM8tCSC9Y8nliQcYpTRmFdis5/RqsWbUScCNZB2gAEuQatPuCztTFH
+ 55Zwhvhj7E8y40TaakKtQDkgcqTqttL1d3nAjMAZ5A/U9zPQvew0VXZP2/Qyd4+j7ODn
+ d6VV5keoU2jlEPOjAik1O063YcqWfUWLNYhBAASep5DcdqW+gedbZ3El8CmyCB/iAB8X
+ tw/jsqFFlSu4OnFCaB+sZ9MjUqpa+un9Pq7EB86Z3n/HioqYk7dtQc7SzNyJGwukx+Pt
+ r9Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742228011; x=1742832811;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Rb3LS0vNPhnknUl9Yi62tIxsFcdNc1tr/8ma9EHvQ3I=;
- b=PiXdmH80VVb6+phq2Dr9utac2cxoHa5IzQiONoF8y47389Z1q/nhsG4M9I5lNRqLuX
- AKCkqIqj4BWNQutv+s9GMcvh7ftpH6cu5naWvIPPoaYm0GN0z6ZWYHcX1xlFgY4oydSG
- rmVW8iZCOkpsKiT/WhqcT/tLQGXV7Vg3wwu5hNIwx9Gn3YWpez/t5C4hmC0etmtiIuLR
- /NB7qFqRRGG96ytOfxJC613eU51Bj2RgQEx43o4fvVqImbXoX9UNOS6iiVyllXTTuVNe
- kAgdh7c6lBnuI/ZLn8c95FpTOPZmcuL+QZZepiuZohKgWLcrxa7npmdEElCh9nv0zunN
- pWMQ==
-X-Gm-Message-State: AOJu0YyATFN+Uiz/5Rs1I41N9+JbxDdckU++v1g8VytGpHrACXqXC5WB
- kMinzENgojXqBMR+S/NH14UZDD+sPzXe6sIKdSgHSiGOHf82k6tcvMVXGMJDVFczUnchomLMGX9
- R
-X-Gm-Gg: ASbGncvyWI/DFoPu8WDzFoiS+6FOomyZT7EgwEK/s5FPHEgwbmNrcc+eNui6Rl/oRWD
- Vou/bdkifGj+ObHYGn5O0jQpimLRRnzLkKlP7LMZp9tqAKJ6GzWBT9YylhxOuN32K48eJLchj7D
- jKD7wXl4A7LJfoh6/AWTrn9RcucBk/VUELFSr0o2H20kbGYGIGkwwQw+g217Ete9gJzbbyonupY
- 7XcUuma8niozwTNkI5V1Rt3UJLBh1zMgty91zZo9wFWb8wrcSV5tJXpsxW8/8rd2Lqk/FLq0MnD
- 8HLYCNV0Rf9Fj5HQUpeyL46hTkqw6OIZgV5XbEBrakGQAmy+lW6y3IO0i8x/NppH047mVTjhk1w
- i74a7S3g1MxKtWiwXv/c=
-X-Google-Smtp-Source: AGHT+IEp94Iit9UOvxjGsdLbkpAxIV3w2OsjsSQBDGC1Te7+SAoNykoO+bbm885p9kpf9o6KO7iKXw==
-X-Received: by 2002:a5d:6da7:0:b0:391:2e31:c7e5 with SMTP id
- ffacd0b85a97d-3971dce07d6mr11729466f8f.6.1742228010978; 
- Mon, 17 Mar 2025 09:13:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742228021; x=1742832821;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9NJx4AwvlUnmR3t10jY6mrzdFJXWIigMof79SEafyw0=;
+ b=VwGJHVRnhPvOFStGOFCV8Hjv1zOiCET3URuY3Cct/tQPvKBz04yMXJ39wSMxCfYXsT
+ 3rwTacxyqHwFOHyDWIAW5/ThQYwyVW4E3cn6SWD41VCacnppc809/gVCznik6A9e9jbU
+ WCXc1kqigwmBLcwShyQZouw8vvKDcPGJ8jspTmf6avuMz46Zy0pU9cFQekTYmQMYhc5b
+ G/Bmk6iU0Z0HGhHjr3adtwRFvaQVu00w8zNfBX1YseYs9+pBz3eS/Vhz4rqIUyypINKT
+ l4UuWvmD+eId/rnMnTA32D/oB1bJFaQRDNxOGut8YNLStayYmjqL49WxBF/s3+T/55yQ
+ cx5Q==
+X-Gm-Message-State: AOJu0Yz76xEaKP2Zdnn+sjHGFB7TF/VCoBRnDWOV0d4GbZKBTwgbOFru
+ rHMFmtoyqPJUyvrzFr6RMZO/Pi2dZBjKxzEThYaJiFY1OGupo9NNvTrU8e7lFvG/7KwAMiArPKn
+ i
+X-Gm-Gg: ASbGnctXKC9bo/sSYCos0iidhsWg+BWd6OM0GeUbiEYMgQyxV/3pYPOuPyD9ISR260S
+ WyhVUbr/oyO00oPTyuDCEdz2K5Udqx6jUY+Bi/YO1o8dixfLXkWPtMLUH9ChQ7SziuG0Xj0454A
+ YyKFYP6r6+HsjGuIphY8QtMKEPuKADzt9a5BouExTmuQTF05bOVBFkCn9jwnPlcogLcom15braS
+ yUXshazqmjF4onNgWiB2S9Evms0uMWy2vH+vRKUlJYvsLXqsAXBVoJfgOXOZMsLw07fJCxu2tsC
+ oqoxtxmrGmPpFYoRIl1DpAoQXqM1PTa6+XeWR1riw3HNvkZSB7FTYAa1TWl2F9Mm079dQ/hexOQ
+ BUWmlsKU+ms2t0yCnkcY=
+X-Google-Smtp-Source: AGHT+IGMARGdAzQpNp58cXY1dngIJmhTLCMEg3BLT1P9WDXA6C6eXAaFnr7iSz+G11LN9Sk7ep37rw==
+X-Received: by 2002:a05:6000:1789:b0:391:29f:4f87 with SMTP id
+ ffacd0b85a97d-3971fadef12mr13442481f8f.49.1742228020705; 
+ Mon, 17 Mar 2025 09:13:40 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb7ea16csm15273358f8f.82.2025.03.17.09.13.29
+ ffacd0b85a97d-395c83b6a32sm15681861f8f.33.2025.03.17.09.13.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Mar 2025 09:13:30 -0700 (PDT)
+ Mon, 17 Mar 2025 09:13:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -69,15 +70,17 @@ Cc: Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] exec: Restrict memory-internal.h to system/
-Date: Mon, 17 Mar 2025 17:13:27 +0100
-Message-ID: <20250317161329.40300-1-philmd@linaro.org>
+Subject: [PATCH 2/2] exec: Restrict memory-internal.h to system/
+Date: Mon, 17 Mar 2025 17:13:29 +0100
+Message-ID: <20250317161329.40300-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250317161329.40300-1-philmd@linaro.org>
+References: <20250317161329.40300-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,23 +104,96 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Only file units within the system/ directory need access to
-"memory-internal.h". Move it to system/ to restrict its scope.
+"memory-internal.h". Restrict its scope by moving it there.
 
-Based-on: <20250314173139.2122904-1-pierrick.bouvier@linaro.org>
+The comment from commit 9d70618c684 ("memory-internal.h:
+Remove obsolete claim that header is obsolete") is now obsolete,
+remove it.
 
-Philippe Mathieu-Daudé (2):
-  accel/tcg: Remove unnecesary inclusion of memory-internal.h in
-    cputlb.c
-  exec: Restrict memory-internal.h to system/
-
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
  MAINTAINERS                                | 2 +-
  {include/exec => system}/memory-internal.h | 6 ------
- accel/tcg/cputlb.c                         | 1 -
  system/memory.c                            | 3 ++-
  system/physmem.c                           | 3 ++-
- 5 files changed, 5 insertions(+), 10 deletions(-)
+ 4 files changed, 5 insertions(+), 9 deletions(-)
  rename {include/exec => system}/memory-internal.h (88%)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8f470a1c9b7..b9f6c3cf15c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3115,7 +3115,7 @@ F: system/ioport.c
+ F: system/memory.c
+ F: system/memory_mapping.c
+ F: system/physmem.c
+-F: include/exec/memory-internal.h
++F: system/memory-internal.h
+ F: scripts/coccinelle/memory-region-housekeeping.cocci
+ 
+ Memory devices
+diff --git a/include/exec/memory-internal.h b/system/memory-internal.h
+similarity index 88%
+rename from include/exec/memory-internal.h
+rename to system/memory-internal.h
+index c75178a3d6b..085e81a9fe4 100644
+--- a/include/exec/memory-internal.h
++++ b/system/memory-internal.h
+@@ -11,12 +11,6 @@
+  *
+  */
+ 
+-/*
+- * This header is for use by exec.c, memory.c and accel/tcg/cputlb.c ONLY,
+- * for declarations which are shared between the memory subsystem's
+- * internals and the TCG TLB code. Do not include it from elsewhere.
+- */
+-
+ #ifndef MEMORY_INTERNAL_H
+ #define MEMORY_INTERNAL_H
+ 
+diff --git a/system/memory.c b/system/memory.c
+index eddd21a6cdb..f9b34cf4254 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -25,7 +25,6 @@
+ #include "qom/object.h"
+ #include "trace.h"
+ 
+-#include "exec/memory-internal.h"
+ #include "exec/ram_addr.h"
+ #include "system/kvm.h"
+ #include "system/runstate.h"
+@@ -35,6 +34,8 @@
+ #include "migration/vmstate.h"
+ #include "exec/address-spaces.h"
+ 
++#include "memory-internal.h"
++
+ //#define DEBUG_UNASSIGNED
+ 
+ static unsigned memory_region_transaction_depth;
+diff --git a/system/physmem.c b/system/physmem.c
+index e97de3ef65c..d4fbda9310d 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -66,7 +66,6 @@
+ #include "qemu/main-loop.h"
+ #include "system/replay.h"
+ 
+-#include "exec/memory-internal.h"
+ #include "exec/ram_addr.h"
+ 
+ #include "qemu/pmem.h"
+@@ -88,6 +87,8 @@
+ #include <daxctl/libdaxctl.h>
+ #endif
+ 
++#include "memory-internal.h"
++
+ //#define DEBUG_SUBPAGE
+ 
+ /* ram_list is read under rcu_read_lock()/rcu_read_unlock().  Writes
 -- 
 2.47.1
 
