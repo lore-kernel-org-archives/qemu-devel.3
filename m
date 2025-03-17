@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA8FC35FF3
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 05:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CAFBC35FF3
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 05:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu2xU-0006jD-1n; Mon, 17 Mar 2025 01:24:16 -0400
+	id 1tu2xE-0006eX-4t; Mon, 17 Mar 2025 01:24:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2xS-0006ig-19; Mon, 17 Mar 2025 01:24:14 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tu2xC-0006eK-M0; Mon, 17 Mar 2025 01:23:58 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2xQ-0007op-2T; Mon, 17 Mar 2025 01:24:13 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2239c066347so77731905ad.2; 
- Sun, 16 Mar 2025 22:24:11 -0700 (PDT)
+ id 1tu2xB-0007nW-2d; Mon, 17 Mar 2025 01:23:58 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-223594b3c6dso76633905ad.2; 
+ Sun, 16 Mar 2025 22:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742189050; x=1742793850; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742189035; x=1742793835; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qHPO8QJN6uV1YuZzM8KiBcANdL4KZSwmj3dkmnjbsok=;
- b=X+E/B1FOCDIqh+WF/yB6QRwMvWOt/+VTw33w0hnlkWbsuCAsEYn+oimUyTlcUU7Vwx
- 0DSOmLFUO4DmS4o6OlpGlIa7XJSVghsAX5U0KXq6HMsCRr6ypJZoyqmvFI+TsArFyTyH
- GYAAk+cYtOsb25+w07xlJaLUKNiM3CqI2v21jPmU0SN9IkdYeUCFK4zI3sgn5nxR3NoT
- 1m1JwfyIoQXQp4poh4/iOFWcU+cxxuBhrC1V9+w+KP2HrG4hBImoAHzKthFQa8RXGRHb
- ywvAVIw5yfRB7e2a/BPRPNviITAWL363UPAprhO4Q94PNqHiRP/KW5djBDIAxVhDyQrz
- HyvA==
+ bh=gKory0aORXHwx2AW1UJ2qnqZAC9gkLCaJS83bjYZRC0=;
+ b=GLZDdHe0eCEQrQ2rknTkySm2w0P5nXbxwp9uxHo374Iw7yc8bCMo9p2hJkNJZW6QYy
+ Yph/twuhWRrEOk9An0e9A8dEZ3EuphBiMU/kjizf7pwVqtBhcxGe63C7f1LegpLJ8Dbf
+ 8RLxE5XXFjz62IcrmpNNjGkkOMwTeS6dJ9lTzMm/TitHg1Hs3XOgFCpAFAYqiSQYpeCG
+ oVqCPb1oLdKLG6/FpjxpX0hNAylQ1Q/7RiPmuLmBtGQRNn0yDYQv0Jilp6lkYtAfJ0t3
+ lWXo7Fow3QD4fyDhvLG8mpojfDUnwXihN/myfdxbN4iPdZRfXtv0DBsh9CurpeWrIHOU
+ pzsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742189050; x=1742793850;
+ d=1e100.net; s=20230601; t=1742189035; x=1742793835;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qHPO8QJN6uV1YuZzM8KiBcANdL4KZSwmj3dkmnjbsok=;
- b=lSDyOImRR7r5jtrX+h0EWHi3RjDCUOvVp7f4dB54z8In8slE2vJBZebHJY0yeTjEA3
- 6P8CMxpBUekPP/c4wNSvSwz828mq+uATs2AEG1pIUogto2oKCVPpEMaLVkVtoCtlXgQz
- L3LrreOPT2ZnVI+3enq0eLckAS8ezh7meetcKUxQaGgtAGQkUCmoKMJjED+7KcRQR77o
- hW+kxRPP0cB1aKKPxh7Zn5IWPQZqukjWEPUlf1+074aB8hNAe3Li4ewTu+SIfTNYwkuI
- N7G6JRMvBFBK+NhWIiCvTaXpKuXCR/secQFwnVE4PE42eDA0el9DGIsWEvNSZVPUCqwr
- f4Ww==
+ bh=gKory0aORXHwx2AW1UJ2qnqZAC9gkLCaJS83bjYZRC0=;
+ b=YMRp5N0KzLHIbzKZJ3IeC5GuxtbELB6XMx/suODE/mNmzMd5pvxJWTXlWIKay9wKmh
+ 70xsaHMbv6oKIHx9+gJzp8ry2I0M6rUqwyjxQ2zazsr8utixaPbAsilN00Spn7OtHHhw
+ Sv2P5nKgbicD2At/IMnwr/V7fU9kh2t98eBANtiaKFAIcdRXBYoosmfPDgvYc7OEbh9K
+ A3izPvI/7XGTesbpTXgpgIiBtT7nzoSWeVp0Su8lLm/1Uc59LgAaN7jMkeCa0rRKu7Cq
+ cK9CypFa3E0vlblip5dPz4k6EtCw9j4cM1XeiDyOhaYkrFFXWUxDRCKChARGlv/Hti80
+ 7DKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsdyvpc0FoAr1CjBU/lAhmZBwRkrORDsUoJf0ItqqAxtProouzXwYA2PTt/cjIJwPtc/6auYL/gA==@nongnu.org
-X-Gm-Message-State: AOJu0Yyb7D9GgIHPCW6QZ8L9/ujQjvNaW7RalA+qmPRshhtsbZYFJ6TB
- 34ZNyMOJsUnbd2JqahCpUuWdIxw2uYCzF1O35TiU5uRYrhUBbB1REhxkwg==
-X-Gm-Gg: ASbGncuSHCElxCtEdcMfwwwZWlN1IVB6QjcUzbXXDAYjJG5kMXDlJg5m9AZjTy4nWR+
- CmBtTSd2za7MFu8/rmvSFRZIuCGOIzxbZHbVB5Kkv49MzDtR0VIGem23Ac16UUFt+yQKjEmvjRL
- kX7VGxDcFjQ/bGUhQsBEXhRaTFy5a9GAmJOw5GXBq0bf3xHadU8qgrVa+vmkHDw3ePlYUaipXzp
- t3SGb+XYBZLq4tN5L4YM4GFnKVBu9zT8+ihsBxmSDELdKJwGEZ20i1/lCjthkHqN9w5rDgDdopX
- +sd/1DkY7/YPZFrB5anNiztVkgvL11zvzHlJK1GSd9X6qNcrgQ==
-X-Google-Smtp-Source: AGHT+IFX0vYJLxJhOzWGShIZU9ko5C/MWk9RcE/Q6dsEO0bnuGrTCvH6v2ML8WM3Cvw8Zi44xX8kZQ==
-X-Received: by 2002:a05:6a20:2d08:b0:1f5:8714:8147 with SMTP id
- adf61e73a8af0-1f5c11c3c61mr16592957637.23.1742189050123; 
- Sun, 16 Mar 2025 22:24:10 -0700 (PDT)
+ AJvYcCX2MzYBY3P397Gyd+iYVy6mY/TAb3tVmTAMFmon6fkJTILnbYAycNBea0YXOhDCtgwKpu6pMUeBNw==@nongnu.org
+X-Gm-Message-State: AOJu0Yyz/hlTo8k4f5sIpRp8T0hGYa+CZtEHZVSqgxEkIQFoqElbj92X
+ AarIpozpOdpnB4GH6uZCEtwR9EmrkIl1hjeMXmGinBQ1jgX09xNG5VzWQQ==
+X-Gm-Gg: ASbGncu44QLtjJQnvkZY7pCVPHbTBu6qU/rgFFqDwZF/HxLiCFojzXuqcppK9gwO1UK
+ vqplGUw5Ogm3CjWvZ1v18OkvbAs+CACB8Y3AstPYZ3IkSN5+Yx+PFQxx4OAP1ovn5vVpQcKmLZw
+ aciMVJayTdRdBxNU1f3LloRLrMnBxbTQ9RpXTNQVN/6OrmmdRtsE3bzVM4mX/7fLFlPUvV9afKE
+ jUQVhg4YBA/ujaCvCkiS1qITtGShq6TQoXqGk/BRIMx0ZDls4BFYKQhK3oeeynW2lLOrfq3c1dU
+ yKqbUb2mT4LmzOcBjf2VMnzheflPhLGGZtrvYSkK3BuGgdh3pA==
+X-Google-Smtp-Source: AGHT+IFop+lMLtmUwqVSFMRq8l5cGwGRY2WDfGXMe7wtrRaCCwffHD4+Sad+KDzkiBxQ9m+AvrZvkQ==
+X-Received: by 2002:a05:6a00:808:b0:730:9502:d564 with SMTP id
+ d2e1a72fcca58-7372238490dmr14020131b3a.14.1742189034947; 
+ Sun, 16 Mar 2025 22:23:54 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.135.36])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711695b6bsm6879495b3a.148.2025.03.16.22.24.06
+ d2e1a72fcca58-73711695b6bsm6879495b3a.148.2025.03.16.22.23.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Mar 2025 22:24:09 -0700 (PDT)
+ Sun, 16 Mar 2025 22:23:54 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Glenn Miles <milesg@linux.vnet.ibm.com>,
  Michael Kowal <kowal@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Stefan Hajnoczi" <stefanha@gmail.com>
-Subject: [PATCH 6/6] ppc/pnv: Fix system symbols in HOMER structure definitions
-Date: Mon, 17 Mar 2025 15:23:38 +1000
-Message-ID: <20250317052339.1108322-7-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 2/6] pnv/xive: Fix possible undefined shift error in group
+ size calculation
+Date: Mon, 17 Mar 2025 15:23:34 +1000
+Message-ID: <20250317052339.1108322-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250317052339.1108322-1-npiggin@gmail.com>
 References: <20250317052339.1108322-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,279 +104,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These definitions were taken from skiboot firmware. I naively thought it
-would be nicer to keep the code similar by using the preprocessor, but
-it was pointed out that system headers might still use those symbols and
-cause something unexpected. Also just nicer to keep the QEMU tree clean.
+Coverity discovered a potential shift overflow in group size calculation
+in the case of a guest error. Add checks and logs to ensure a issues are
+caught.
 
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-Cc: "Stefan Hajnoczi" <stefanha@gmail.com>
-Fixes: 70bc5c2498f46 ("ppc/pnv: Make HOMER memory a RAM region")
+Make the group and crowd error checking code more similar to one another
+while here.
+
+Resolves: Coverity CID 1593724
+Fixes: 9cb7f6ebed60 ("ppc/xive2: Support group-matching when looking for target")
+Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_occ.c | 201 ++++++++++++++++++++++-------------------------
- 1 file changed, 96 insertions(+), 105 deletions(-)
+ hw/intc/xive.c  | 27 ++++++++++++++++++++++++---
+ hw/intc/xive2.c | 19 ++++++++++++++-----
+ 2 files changed, 38 insertions(+), 8 deletions(-)
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index bda6b23ad3c..177c5e514b7 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -364,7 +364,12 @@ static void pnv_occ_register_types(void)
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index e86f2749328..3eb28c2265d 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -1662,12 +1662,20 @@ uint32_t xive_get_vpgroup_size(uint32_t nvp_index)
+      * (starting with the least significant bits) in the NVP index
+      * gives the size of the group.
+      */
+-    return 1 << (ctz32(~nvp_index) + 1);
++    int first_zero = cto32(nvp_index);
++    if (first_zero >= 31) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group index 0x%08x",
++                                       nvp_index);
++        return 0;
++    }
++
++    return 1U << (first_zero + 1);
+ }
  
- type_init(pnv_occ_register_types);
+ static uint8_t xive_get_group_level(bool crowd, bool ignore,
+                                     uint32_t nvp_blk, uint32_t nvp_index)
+ {
++    int first_zero;
+     uint8_t level;
  
--/* From skiboot/hw/occ.c with tab to space conversion */
-+/*
-+ * From skiboot/hw/occ.c with following changes:
-+ * - tab to space conversion
-+ * - Type conversions u8->uint8_t s8->int8_t __be16->uint16_t etc
-+ * - __packed -> QEMU_PACKED
-+ */
- /* OCC Communication Area for PStates */
+     if (!ignore) {
+@@ -1675,12 +1683,25 @@ static uint8_t xive_get_group_level(bool crowd, bool ignore,
+         return 0;
+     }
  
- #define OPAL_DYNAMIC_DATA_OFFSET        0x0B80
-@@ -384,20 +389,6 @@ type_init(pnv_occ_register_types);
- #define FREQ_MAX_IN_DOMAIN              0
- #define FREQ_MOST_RECENTLY_SET          1
+-    level = (ctz32(~nvp_index) + 1) & 0b1111;
++    first_zero = cto32(nvp_index);
++    if (first_zero >= 31) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group index 0x%08x",
++                                       nvp_index);
++        return 0;
++    }
++
++    level = (first_zero + 1) & 0b1111;
+     if (crowd) {
+         uint32_t blk;
  
--#define u8 uint8_t
--#define s8 int8_t
--#define u16 uint16_t
--#define s16 int16_t
--#define u32 uint32_t
--#define s32 int32_t
--#define u64 uint64_t
--#define s64 int64_t
--#define __be16 uint16_t
--#define __be32 uint32_t
--#ifndef __packed
--#define __packed QEMU_PACKED
--#endif /* !__packed */
--
- /**
-  * OCC-OPAL Shared Memory Region
-  *
-@@ -434,69 +425,69 @@ type_init(pnv_occ_register_types);
-  * @spare/reserved/pad:         Unused data
-  */
- struct occ_pstate_table {
--    u8 valid;
--    u8 version;
--    union __packed {
--        struct __packed { /* Version 0x01 and 0x02 */
--            u8 throttle;
--            s8 pstate_min;
--            s8 pstate_nom;
--            s8 pstate_turbo;
--            s8 pstate_ultra_turbo;
--            u8 spare;
--            u64 reserved;
--            struct __packed {
--                s8 id;
--                u8 flags;
--                u8 vdd;
--                u8 vcs;
--                __be32 freq_khz;
-+    uint8_t valid;
-+    uint8_t version;
-+    union QEMU_PACKED {
-+        struct QEMU_PACKED { /* Version 0x01 and 0x02 */
-+            uint8_t throttle;
-+            int8_t pstate_min;
-+            int8_t pstate_nom;
-+            int8_t pstate_turbo;
-+            int8_t pstate_ultra_turbo;
-+            uint8_t spare;
-+            uint64_t reserved;
-+            struct QEMU_PACKED {
-+                int8_t id;
-+                uint8_t flags;
-+                uint8_t vdd;
-+                uint8_t vcs;
-+                uint32_t freq_khz;
-             } pstates[MAX_PSTATES];
--            s8 core_max[MAX_P8_CORES];
--            u8 pad[100];
-+            int8_t core_max[MAX_P8_CORES];
-+            uint8_t pad[100];
-         } v2;
--        struct __packed { /* Version 0x90 */
--            u8 occ_role;
--            u8 pstate_min;
--            u8 pstate_nom;
--            u8 pstate_turbo;
--            u8 pstate_ultra_turbo;
--            u8 spare;
--            u64 reserved1;
--            u64 reserved2;
--            struct __packed {
--                u8 id;
--                u8 flags;
--                u16 reserved;
--                __be32 freq_khz;
-+        struct QEMU_PACKED { /* Version 0x90 */
-+            uint8_t occ_role;
-+            uint8_t pstate_min;
-+            uint8_t pstate_nom;
-+            uint8_t pstate_turbo;
-+            uint8_t pstate_ultra_turbo;
-+            uint8_t spare;
-+            uint64_t reserved1;
-+            uint64_t reserved2;
-+            struct QEMU_PACKED {
-+                uint8_t id;
-+                uint8_t flags;
-+                uint16_t reserved;
-+                uint32_t freq_khz;
-             } pstates[MAX_PSTATES];
--            u8 core_max[MAX_P9_CORES];
--            u8 pad[56];
-+            uint8_t core_max[MAX_P9_CORES];
-+            uint8_t pad[56];
-         } v9;
--        struct __packed { /* Version 0xA0 */
--            u8 occ_role;
--            u8 pstate_min;
--            u8 pstate_fixed_freq;
--            u8 pstate_base;
--            u8 pstate_ultra_turbo;
--            u8 pstate_fmax;
--            u8 minor;
--            u8 pstate_bottom_throttle;
--            u8 spare;
--            u8 spare1;
--            u32 reserved_32;
--            u64 reserved_64;
--            struct __packed {
--                u8 id;
--                u8 valid;
--                u16 reserved;
--                __be32 freq_khz;
-+        struct QEMU_PACKED { /* Version 0xA0 */
-+            uint8_t occ_role;
-+            uint8_t pstate_min;
-+            uint8_t pstate_fixed_freq;
-+            uint8_t pstate_base;
-+            uint8_t pstate_ultra_turbo;
-+            uint8_t pstate_fmax;
-+            uint8_t minor;
-+            uint8_t pstate_bottom_throttle;
-+            uint8_t spare;
-+            uint8_t spare1;
-+            uint32_t reserved_32;
-+            uint64_t reserved_64;
-+            struct QEMU_PACKED {
-+                uint8_t id;
-+                uint8_t valid;
-+                uint16_t reserved;
-+                uint32_t freq_khz;
-             } pstates[MAX_PSTATES];
--            u8 core_max[MAX_P10_CORES];
--            u8 pad[48];
-+            uint8_t core_max[MAX_P10_CORES];
-+            uint8_t pad[48];
-         } v10;
-     };
--} __packed;
-+} QEMU_PACKED;
+         /* crowd level is bit position of first 0 from the right in nvp_blk */
+-        blk = ctz32(~nvp_blk) + 1;
++        first_zero = cto32(nvp_blk);
++        if (first_zero >= 31) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd block 0x%08x",
++                                           nvp_blk);
++            return 0;
++        }
++        blk = first_zero + 1;
  
- /**
-  * OPAL-OCC Command Response Interface
-@@ -531,13 +522,13 @@ struct occ_pstate_table {
-  * @spare:                      Unused byte
-  */
- struct opal_command_buffer {
--    u8 flag;
--    u8 request_id;
--    u8 cmd;
--    u8 spare;
--    __be16 data_size;
--    u8 data[MAX_OPAL_CMD_DATA_LENGTH];
--} __packed;
-+    uint8_t flag;
-+    uint8_t request_id;
-+    uint8_t cmd;
-+    uint8_t spare;
-+    uint16_t data_size;
-+    uint8_t data[MAX_OPAL_CMD_DATA_LENGTH];
-+} QEMU_PACKED;
+         /*
+          * Supported crowd sizes are 2^1, 2^2, and 2^4. 2^3 is not supported.
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index f8ef6154878..311b42e15d3 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -1153,13 +1153,15 @@ static bool xive2_vp_match_mask(uint32_t cam1, uint32_t cam2,
  
- /**
-  * OPAL-OCC Response Buffer
-@@ -571,13 +562,13 @@ struct opal_command_buffer {
-  * @data:                       Response specific data
-  */
- struct occ_response_buffer {
--    u8 flag;
--    u8 request_id;
--    u8 cmd;
--    u8 status;
--    __be16 data_size;
--    u8 data[MAX_OCC_RSP_DATA_LENGTH];
--} __packed;
-+    uint8_t flag;
-+    uint8_t request_id;
-+    uint8_t cmd;
-+    uint8_t status;
-+    uint16_t data_size;
-+    uint8_t data[MAX_OCC_RSP_DATA_LENGTH];
-+} QEMU_PACKED;
+ static uint8_t xive2_get_vp_block_mask(uint32_t nvt_blk, bool crowd)
+ {
+-    uint8_t size, block_mask = 0b1111;
++    uint8_t block_mask = 0b1111;
  
- /**
-  * OCC-OPAL Shared Memory Interface Dynamic Data Vx90
-@@ -608,31 +599,31 @@ struct occ_response_buffer {
-  * @rsp:                        OCC Response Buffer
-  */
- struct occ_dynamic_data {
--    u8 occ_state;
--    u8 major_version;
--    u8 minor_version;
--    u8 gpus_present;
--    union __packed {
--        struct __packed { /* Version 0x90 */
--            u8 spare1;
-+    uint8_t occ_state;
-+    uint8_t major_version;
-+    uint8_t minor_version;
-+    uint8_t gpus_present;
-+    union QEMU_PACKED {
-+        struct QEMU_PACKED { /* Version 0x90 */
-+            uint8_t spare1;
-         } v9;
--        struct __packed { /* Version 0xA0 */
--            u8 wof_enabled;
-+        struct QEMU_PACKED { /* Version 0xA0 */
-+            uint8_t wof_enabled;
-         } v10;
-     };
--    u8 cpu_throttle;
--    u8 mem_throttle;
--    u8 quick_pwr_drop;
--    u8 pwr_shifting_ratio;
--    u8 pwr_cap_type;
--    __be16 hard_min_pwr_cap;
--    __be16 max_pwr_cap;
--    __be16 cur_pwr_cap;
--    __be16 soft_min_pwr_cap;
--    u8 pad[110];
-+    uint8_t cpu_throttle;
-+    uint8_t mem_throttle;
-+    uint8_t quick_pwr_drop;
-+    uint8_t pwr_shifting_ratio;
-+    uint8_t pwr_cap_type;
-+    uint16_t hard_min_pwr_cap;
-+    uint16_t max_pwr_cap;
-+    uint16_t cur_pwr_cap;
-+    uint16_t soft_min_pwr_cap;
-+    uint8_t pad[110];
-     struct opal_command_buffer cmd;
-     struct occ_response_buffer rsp;
--} __packed;
-+} QEMU_PACKED;
+     /* 3 supported crowd sizes: 2, 4, 16 */
+     if (crowd) {
+-        size = xive_get_vpgroup_size(nvt_blk);
+-        if (size == 8) {
+-            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd size of 8n");
++        uint32_t size = xive_get_vpgroup_size(nvt_blk);
++
++        if (size != 2 && size != 4 && size != 16) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd size of %d",
++                                           size);
+             return block_mask;
+         }
+         block_mask &= ~(size - 1);
+@@ -1172,7 +1174,14 @@ static uint32_t xive2_get_vp_index_mask(uint32_t nvt_index, bool cam_ignore)
+     uint32_t index_mask = 0xFFFFFF; /* 24 bits */
  
- enum occ_response_status {
-     OCC_RSP_SUCCESS                 = 0x00,
+     if (cam_ignore) {
+-        index_mask &= ~(xive_get_vpgroup_size(nvt_index) - 1);
++        uint32_t size = xive_get_vpgroup_size(nvt_index);
++
++        if (size < 2) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group size of %d",
++                                           size);
++            return index_mask;
++        }
++        index_mask &= ~(size - 1);
+     }
+     return index_mask;
+ }
 -- 
 2.47.1
 
