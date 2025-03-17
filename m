@@ -4,99 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A14FC35FF8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F69C282EC
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 20:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuGwa-0007D0-25; Mon, 17 Mar 2025 16:20:16 -0400
+	id 1tuGwP-00076I-Nr; Mon, 17 Mar 2025 16:20:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuGwW-0007CU-FK
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 16:20:12 -0400
-Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuGwU-0002To-Lx
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 16:20:12 -0400
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-6e91d323346so51570986d6.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 13:20:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742242809; x=1742847609; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=42SBUni0O8QVuSi0HjH/MKJsRrSTSy5sUknyLA4sC50=;
- b=RKZEascJh1pDXmYtsTPnjsZd6kY7lDVGAlTZCZwDZdAHblC57KDDkpF+b13/R1LjoJ
- 2Wc7k2IUnI5DV9gzn/oCESycKd0NdLUCr3Rr3HDjfnkwZY4Y32tSZxsOD+x30qHdOTCN
- AmqSWYIFULbedsNYZG6YLXLvPsgy/RJhbxOW+DipueTal+3uzhqkhcBoyUM0XYT2bsu2
- f/7CzgpNbIJNjS/8RqhI9Kz3rAAOe2T49OLWHmmwWCfDgQSaGGRdkMLdCoxgaQgrwY25
- 01kwH/V8r8hWKZDtWJiuSR0Z/bjFlTpp2BALFQiaStCDlcj1gzWVWaIW8BbVdtDZ8lZm
- kngQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742242809; x=1742847609;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=42SBUni0O8QVuSi0HjH/MKJsRrSTSy5sUknyLA4sC50=;
- b=Aygaba/H8/eQDsO2SR9PAvDZCap0pvFTndOxUIfTLmg5scGY6VnKTxgl5xn8VOp+RG
- d7un1kVrGNEi503fcS0iA2sK4qkgwPkbzWziJffWZX50SDZRtAmjGy/Gpwh6Y+ZJATl8
- I4RPvvmu6TWaYSsGn244wYG4NgpdprTVX9f6T++AEJadGZldw21So9MZekP49wu1rKcA
- B3PvMdIixEmnBxwniSX/kpEcYF0fA817La8HFphwhN8o+bR6WpbwVYhaTX9vFdHny27X
- Y37/XNG2U5pirpyl/r83B3XbpLAd6TXWK7XpUMZXqSexUlsRafP2C9FQVybankfCYgcc
- jMdg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUztRVIVnfpvvaHI8SauEynrMA2NbBtxZm28cN6G8L2VfCH5fboee76WN0bnjxN3kOi2X8XuQbg7hbY@nongnu.org
-X-Gm-Message-State: AOJu0YxCqZ+8bUUrxtjTRzbQAXjynIswIeOnh4dHonm/OVD4R3XDTOQ3
- khsQMalizx8XY0kCxoIRZwkenNkmESWAxqIhzlNgUDb6hVq6rcMp
-X-Gm-Gg: ASbGncsCJoDxF9W1xj1ik59k1yQxiuUPVw+3utcH3dai8PedFfdiGKF7mcIfZ4VikZL
- KAGUE3JQ4MfG/zsFQQuy+OA+vg2vDU8D3Gt7YFylU1HlZuRkOPtLj8A3hAZ+a4Mye45JRCVZi1v
- vg3he4zYK/LmCw4wQZLdwnP9mSY+IIFNodQx+s67ZJaJUVb2pvgSBcLjYpygkRoZUwWpVeuA4I2
- 02bQBlVD6WdYrfAa35HxN/X8lxAQRswkPQ2HvZwIgxuBpGPLnbhOTgkurVyecOZU5o9PRuoclS5
- 6K3HutjbIGhWZuhblDNwMFhbPvVWETL23Z4D6AkyIboWQpe2WUg5vzumuKkY4HA=
-X-Google-Smtp-Source: AGHT+IEO8bTArR2pGgNf0z0sTjXgk08+iTNSJQ9AvwsOJUhFdzF5QKtjAvP3Fp2yIFQb7h2nk0lnJQ==
-X-Received: by 2002:a05:6214:e4e:b0:6e4:4012:b6f1 with SMTP id
- 6a1803df08f44-6eb1bbbea02mr11926606d6.3.1742242809530; 
- Mon, 17 Mar 2025 13:20:09 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:6d71:de10:2e5e:506a])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6eade234b92sm58814756d6.43.2025.03.17.13.20.08
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 17 Mar 2025 13:20:09 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
-References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-30-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052845.1012069-30-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 29/39] target/hexagon: Add pkt_ends_tb to translation
-Date: Mon, 17 Mar 2025 15:20:07 -0500
-Message-ID: <018b01db9779$fa969090$efc3b1b0$@gmail.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tuGwF-000740-BN; Mon, 17 Mar 2025 16:19:55 -0400
+Received: from mail-bn7nam10on20630.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::630]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tuGw3-0002ER-7L; Mon, 17 Mar 2025 16:19:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oNzpgBi7ZTevGFzuN+i+QkvUpU0pS6ZJqEdEMHDy+CpfsLmy8L6iZLhe0vNYPGeU9mS3aOhxYQvUUM93N96sSj07z37+WazMpcZ1c9kThRujxeNzkf5d8oGwlowOgarlswTB51lDh1tb6VpJJ7q3+/rin4hFCpwk4vUTdPp+KYFUrmDOwWi83g+tAuiZq5v0yzMiy0BqwWp17vnEQGOJrKt4IjShX2MN8VWQNAKU3vvJFgE24/9q/OEt1S87qOYD/MRHxVmPRYob5/Ed+ITXxPn3Im8fj4WbsHgh8h9DfHax/A4EGwDZ2890e6sOdhWPaS/+owxssLlLrVgdXjrcpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FhYAzmX0US2UqCdw/cp3ubwd7J6VKBrvM0Tz1LJMNWQ=;
+ b=c9ASHBSmWPSU9BIgaBwohH3VykWi4k/g3dE/EtiDyJlm8KBQHTyFuyqY7RBp/sa08bktv7OJUGJg0ZvTp32iqTpjtIyOzN+PNsJ6CjO/45HNc9qikKaBglGpXsN5kiPynrRXn/BgZ0NA/W++azdPHiRMbcY++NIqGy9F9me3/QKxjPnZf5d1GUpbLPYPHvbn0pecJdn6x86ZP4o+a3hbiC5ZteEnVePF0WOWnHZ1t0+jfPnuvjXAMqrff+HUf5Hwfly+lku7WyTy5LulUZ4ABt0mHhEYo+v2LHHMCChPK/JUKz8+behZqS5JG+RP9tje8rg2TLPhCOp8DMh+BYXpmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FhYAzmX0US2UqCdw/cp3ubwd7J6VKBrvM0Tz1LJMNWQ=;
+ b=B70e9kpvwORDeVtAPSMw1ocwcor7/RjXxeqGq+tp/RdRC+GsWIOSZ5+zOGwU5L5eh4TeJMfjJqEjXX4Hybv0f1yai6mgV3eOJ5e6sfYQLUaM5wROw9PQITvoWLLIBmeDDBHWgT+ssQ7Kl5FsarzPLro2YTuLHta6fdnzn5j+FY8SK91Ar7+LgFCxwEUsT0WA6HwFXQB0ZpnYVhGQLVwOvug0WOpIns/7HHpk4cklNn04HuNNjL4ZbrGDPW1gLK1ZOeB1WbAvB7UebIzHAUKXZ2qJnHGWG7EaHWatOKIVf3Br9vTgvH6XtxzJ6pUzk5XIu07txzyrxWraUo53bJzGdw==
+Received: from SJ0PR05CA0089.namprd05.prod.outlook.com (2603:10b6:a03:332::34)
+ by DS5PPF5A66AFD1C.namprd12.prod.outlook.com (2603:10b6:f:fc00::64d)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.33; Mon, 17 Mar
+ 2025 20:19:37 +0000
+Received: from SJ1PEPF000026CA.namprd04.prod.outlook.com
+ (2603:10b6:a03:332:cafe::3b) by SJ0PR05CA0089.outlook.office365.com
+ (2603:10b6:a03:332::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.33 via Frontend Transport; Mon,
+ 17 Mar 2025 20:19:37 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ1PEPF000026CA.mail.protection.outlook.com (10.167.244.107) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8534.20 via Frontend Transport; Mon, 17 Mar 2025 20:19:37 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 17 Mar
+ 2025 13:19:21 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 17 Mar
+ 2025 13:19:20 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 17 Mar 2025 13:19:19 -0700
+Date: Mon, 17 Mar 2025 13:19:17 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Eric Auger <eric.auger@redhat.com>, Shameer Kolothum
+ <shameerali.kolothum.thodi@huawei.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>
+Subject: Re: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
+ infrastructure for smmuv3-accel device
+Message-ID: <Z9iDxSvZVsgtasGj@Asurada-Nvidia>
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
+ <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
+ <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
+ <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
+ <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
+ <20250317192453.GR9311@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQOKXza3suX6J/A=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250317-4, 3/17/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250317192453.GR9311@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000026CA:EE_|DS5PPF5A66AFD1C:EE_
+X-MS-Office365-Filtering-Correlation-Id: be717946-c084-4f27-244c-08dd65910a59
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?8k8xl2ilkSsbDMNhAl4O5iTZkcsaQRfHpD9GXZ6khfXVKoPrK7aJjGqEjK27?=
+ =?us-ascii?Q?prngCeCirvFrAHc6faJt0E9cuLvBIAWZ8B+WRKEp0vicD34UaPAgxFvfUk5H?=
+ =?us-ascii?Q?04ViSwT6+nPxUDy3GfzlNb4eKO+SIegb11dwh3BjzqYMFQedXfhewZf8qZkf?=
+ =?us-ascii?Q?cifSFbwzosIrDRKIGfCPGpT/fbuw/Qm5kNVVHBMQtKGtwgXpFDk61mCcBxJg?=
+ =?us-ascii?Q?PfD+thFoJPESVhRye3xeRJK5CkI+W/BBNscAIPbNsAhKJh3xp2VU4rz1qzSK?=
+ =?us-ascii?Q?Ikjgkc0eIh1TmB3N/BUzN1pyNcOnePefwfSL5mAVLxO87CYBXJIEwF5w1YIg?=
+ =?us-ascii?Q?q3dgu90Zwb/mb3hJYsI0GQgB0d89hZKcqe63jXf9msvnoEuapmXCvooPL4bL?=
+ =?us-ascii?Q?1VX7ba//3/6bm93Fb38izERT0lYB7zGDm6EKTbK63Wqu90kpnsLVcmhfmM8w?=
+ =?us-ascii?Q?q4yCZUPh0nwT2trWV8dZAu+WTYLxsTPVjlBzEUYZczJ0V64qSKtmqEFZ5BwH?=
+ =?us-ascii?Q?vdCVbdNh68pAI7ZOm4+5FJCO8K+d9Wv76wmQEsu1EihSu/mSMHK6/azXhkh/?=
+ =?us-ascii?Q?h7GNf2yFTxy8/BFOg8fPMold+uIg82UQtJTVSKX3pOdOGUAVeJFXrTWb4amc?=
+ =?us-ascii?Q?wgFKfagNF5oGRAz6Z3VQy2OPF0noiY2h8TmfANbiRkFG/0ITAQXJGCUsikny?=
+ =?us-ascii?Q?3N+Lege5X3T22qlAA2Jn9Vdqdty+BeKAL+NDQoBZC2Kghci57wTCcffnf4Fo?=
+ =?us-ascii?Q?aknyYSpauPlwoeuqZdOh5603D689Ci/7WOhjb/YKz0hHpezOhWV+Qjha2pIt?=
+ =?us-ascii?Q?Nyt3ThMhXyPHmXU2OEX1CWZ5TIf4dykEaOH+6aLtYoqt1wOjbvgWntHumD9F?=
+ =?us-ascii?Q?Zetz/60VTddyicXR3622g/dvTM/W/cwzV6AHCxHGT6a7epeg8FQA+GBrvb+Z?=
+ =?us-ascii?Q?XDfodDLx5ztJYpc6jKJ/7DDex+m3bTvRf/9dK1sNQjVmzC0ZTZD3pdFc/kLl?=
+ =?us-ascii?Q?x5lnQ6zc0fpgkKqv6yryTPtYIpf/o1f8arj2xYdTR1rhjT6s1aboPynlrxpN?=
+ =?us-ascii?Q?fgenVUkW6Jp3g8HldINF03OcNmiBkVHECRSBIeHMRYivHA4hMEid0W6BM1SX?=
+ =?us-ascii?Q?DipzA0L7HscdRlAEkhnKdpe5jI3E4yCAltH9uXSFMudrso6mIH6s0xvQiWgb?=
+ =?us-ascii?Q?RBd2l6Bt7iw13vWyIXeXY9xLqD4Ppi+Hpo14y4yFVfUN9XvbsJe4DFFqR2h1?=
+ =?us-ascii?Q?N1Yo0l8qEn1RbjfkOApoZsPg5Vq9Tbx7WFr514R4CYwZHcsY1W0dyGMcxg6M?=
+ =?us-ascii?Q?5EiVCOstEA1ad7sUIkqGuBb0XhujyHLes0eJ7vJ1rdTojdqXJFiRiUXsE1Uh?=
+ =?us-ascii?Q?9mMn5P/BINL9I3pKvhpaweLQzrmIe4eNSlRJZVCPU8GblaCa8o1nI1mr3cCH?=
+ =?us-ascii?Q?OEMs9T+LqpgofnbfPAUecQBtkAheU1i3raq7C2o/l5gYz2xqjpoV5G68EyD3?=
+ =?us-ascii?Q?FjvqRXYx6dSXPl4=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2025 20:19:37.3505 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: be717946-c084-4f27-244c-08dd65910a59
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000026CA.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPF5A66AFD1C
+Received-SPF: permerror client-ip=2a01:111:f403:2009::630;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,78 +166,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Mar 17, 2025 at 04:24:53PM -0300, Jason Gunthorpe wrote:
+> On Mon, Mar 17, 2025 at 12:10:19PM -0700, Nicolin Chen wrote:
+> > Another question: how does an emulated device work with a vSMMUv3?
+> > I could imagine that all the accel steps would be bypassed since
+> > !sdev->idev. Yet, the emulated iotlb should cache its translation
+> > so we will need to flush the iotlb, which will increase complexity
+> > as the TLBI command dispatching function will need to be aware what
+> > ASID is for emulated device and what is for vfio device..
+> 
+> I think you should block it. We already expect different vSMMU's
+> depending on the physical SMMU under the PCI device, it makes sense
+> that a SW VFIO device would have it's own, non-accelerated, vSMMU
+> model in the guest.
 
+Yea, I agree and it'd be cleaner for an implementation separating
+them.
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Friday, February 28, 2025 11:29 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 29/39] target/hexagon: Add pkt_ends_tb to translation
->=20
-> From: Brian Cain <bcain@quicinc.com>
->=20
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/translate.h |  1 +
->  target/hexagon/translate.c | 99
-> +++++++++++++++++++++++++++++++++++++-
->  2 files changed, 99 insertions(+), 1 deletion(-)
->=20
+In my mind, the general idea of "accel=on" is also to keep things
+in a more efficient way: passthrough devices go to HW-accelerated
+vSMMUs (separated PCIE buses), while emulated ones go to a vSMMU-
+bypassed (PCIE0).
 
+Though I do see the point from QEMU prospective that user may want
+to start a VM with HW-accelerated vSMMU for one passthrough device
+using a simple setup without caring about the routing via command.
 
-> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c =
-index
-> 060df6e5eb..475726388a 100644
-> --- a/target/hexagon/translate.c
-> +++ b/target/hexagon/translate.c
-> @@ -259,6 +259,18 @@ static bool check_for_attrib(Packet *pkt, int =
-attrib)
->      return false;
->  }
->=20
-> +#ifndef CONFIG_USER_ONLY
-> +static bool check_for_opcode(Packet *pkt, uint16_t opcode) {
-> +    for (int i =3D 0; i < pkt->num_insns; i++) {
-> +        if (pkt->insn[i].opcode =3D=3D opcode) {
-> +            return true;
-> +        }
-> +    }
-> +    return false;
-> +}
-> +#endif
-> +
->  static bool need_slot_cancelled(Packet *pkt)  {
->      /* We only need slot_cancelled for conditional store instructions =
-*/ @@ -
-> 272,6 +284,90 @@ static bool need_slot_cancelled(Packet *pkt)
->      return false;
->  }
->=20
-> +#ifndef CONFIG_USER_ONLY
-> +static bool sreg_write_to_global(int reg_num) {
-> +    return reg_num =3D=3D HEX_SREG_SSR ||
-> +           reg_num =3D=3D HEX_SREG_STID ||
-> +           reg_num =3D=3D HEX_SREG_IMASK ||
-
-The name of this function is misleading since SSR, STID, and IMASK are =
-not global.
-A better name would be sreg_write_ends_tb
-
-> +           reg_num =3D=3D HEX_SREG_IPENDAD ||
-> +           reg_num =3D=3D HEX_SREG_BESTWAIT ||
-> +           reg_num =3D=3D HEX_SREG_SCHEDCFG; }
-> +
-> +static bool has_sreg_write_to_global(Packet const *pkt) {
-
-Ditto
-
-Otherwise
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
-
+Thanks
+Nicolin
 
