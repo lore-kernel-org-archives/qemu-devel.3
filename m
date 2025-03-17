@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F75EC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 18:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97782C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 18:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuFJH-0004nk-Az; Mon, 17 Mar 2025 14:35:35 -0400
+	id 1tuFJQ-0004yO-VH; Mon, 17 Mar 2025 14:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuFIm-0004Ut-2H
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 14:35:09 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tuFIl-0004US-R6
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 14:35:08 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuFIU-0006Cs-1f
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 14:35:01 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-224341bbc1dso88731915ad.3
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 11:34:41 -0700 (PDT)
+ id 1tuFIO-0006B6-Lj
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 14:34:58 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-225b5448519so88590945ad.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 11:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742236481; x=1742841281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742236474; x=1742841274; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cOa15ppvF5kxsldjPkSIJYe5T0c824L9GaUvR3via0Q=;
- b=H9vB6z5EbsXQH5NQ61mhUXNOByRlDmN05TQo/y7BSE+wBbHTp1WFXWVNzY0U3LlYwA
- 7miH5FCWuM+9uehGpbIhAtp0GOqA3859ZDVJtDLEbRfZTtxmBY40xe1TlqMvK6YHir5+
- FfiYM2rraan8swxOJ4XzqkTfQud/FQlrJ3ICbVKZ8d/9Nr9hVyjyc3f/s3Ub9cehAU8F
- IdtsrMid5K4l3ZV+oTrr0XtrdUHI8A2CtUb/Sl1p5mZ/3zSwv9FWqft35x6ivwHdaPjg
- bAjuqjmE9iLLF27037fuqDcr1y0LfPImR70ec6/FzNM3Stj4yXXyi0In0HLmwdk5+ZHX
- 1ZSg==
+ bh=Rp8GQC6vA5rTxSSazblnkjuLZPjrJAYUOFg9uGM493s=;
+ b=lJ3Jk9jgB2vzvglhUh5wIQVJsbOiyjAei3e4E50N9JZJI28cwku5hpR3qtYtpBqJGE
+ MH3Tl7qgjJ0ZvtxAP2dnMmNCgFgi/yGaAV2/QkFELTcIrk92Ezlu2VOHA2XwOodUkOQL
+ pzTsvFLxo1t7CNfvzrVB2u00NdB/Ivc6PVB4K5YJFn9JWUX85QSAqiIADODX12CrkwGx
+ vpYgf6A/pyxgQSDnWi6ZEK0XLAfWE/yIZP2V3nqq8RozXIqSeOkrhhvcJsScIjOo2kON
+ 6PRlPaFxBqcc29/EABtQUCPZ7wnsXKiEzZupbNPnn4BvMabPxVGUK5Z6E9joHx63sqqK
+ 3uMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742236481; x=1742841281;
+ d=1e100.net; s=20230601; t=1742236474; x=1742841274;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cOa15ppvF5kxsldjPkSIJYe5T0c824L9GaUvR3via0Q=;
- b=pjV1reK4MtiikwgKcKOWjLUNB1bUCBTiU5GSHZFzamlkguDKLhu6nVTetPm6UzjVf+
- fluRlzRcMee9ovvAcfhjVQD5ftJVQXipn12zdYsbre95k3J8bmC8A3nRkKrEpUx/LNPB
- +66iA6OUvoQDJm1kF6lPbBm/zPCrK9ELvsSmx4zK9aDVWBYIvMuImEU0Z2eb3pwp+oDx
- 4y8UedOzjSL8gCilHUjMFvV/UmuKQwBc3M6eH6XFQKuUqohqxPAHfAssqOImj7o5YGKC
- pZ2hhXx5eaPlLeTk5fPs/mhXqDGDYhho5Li+67WPANW5Svm++9dJmSFUqDVl4p+xDscS
- IA+A==
-X-Gm-Message-State: AOJu0Yxrt4jr9jAv/FZy6AlotwmhvqAwOtPFTzB7oLJjHEicvIL6+H2E
- Q2osLejPJbS2hdBG8cZuNGxkw95YYEgQiqtAjWEF1ZCIN7UFJKKQCQjV8akhKD2M99KwfHLHiii
- g
-X-Gm-Gg: ASbGncuGNnMg0SguaSErT+1+iDOF0j/rH2b4E4Xvg0qLw8deu/j6lrPgCnklfORd2un
- 2uJ4LCde7AhgId7qY1FjNu7bYDC5NP1VxY08wBU0o4lRNQW/PL08ucnzLbra+sloNJHbfS+/i/5
- N+cJhJeflK7c/frRA7CRJXwAOZIg3AqFRXEwkHA9qzK/8GlrNuiG1SxEK61NlGMytyO4hAKSXYs
- marH9vJxsB8DgP5ezZZ1irJ6+pCS8Bc+RYMA23Lx1R2zP4Vj6g4oVqcW0S3Vn/bYFMbpj1yI/gv
- bFERBTSkC2bz29gjintrLDhumyxS++axpWursiiyv+yT7xM8rbY4WnI=
-X-Google-Smtp-Source: AGHT+IHJvFyPD498ouch6ktpEIoYmR6xx3vtpzwDFb0ar1DtZX7lkpskC+JCwilCa8dJd3A5JvQbZw==
-X-Received: by 2002:a05:6a21:7895:b0:1f5:9961:c40 with SMTP id
- adf61e73a8af0-1fa43acdf8emr1048891637.8.1742236480716; 
- Mon, 17 Mar 2025 11:34:40 -0700 (PDT)
+ bh=Rp8GQC6vA5rTxSSazblnkjuLZPjrJAYUOFg9uGM493s=;
+ b=H7RnuR4Dr0x06AXna17DAYsMLefxK0qy5I4AYPfDf7rX7V2pRwT8DdB9Mf64UaQYSz
+ z12qL07Q7FaGAsKY8V/6ZCpXonbfkfcKWO1cghFiexL4mu+dgrGbDRh+he9eiVK/wnlF
+ ezE9Ya73RUUp+Fsboghm1kAlFSH4PH7zE092cOtuHdSSD7ynKRNHzh+K3haHpbgkNAvw
+ qTrKtVpIxkFCAUF6CBd5AS8JRB5f6qahBa5XGh61hHW/45j0viuYjdG2UI8V1dI1JG/b
+ fiSLf01CJbpeyNDsKMA6hNCiKjv2atJFvKa5gH2Ex3AJVqG8v9UViNWENAZwhlTRybAw
+ n6tQ==
+X-Gm-Message-State: AOJu0Yz3u9A9QlNrcyNcP5I7hnKdZSxgWh5hFkQZrq4/34K1wrg1t3ev
+ stxfJloUZPy6+GV7eIVpOWEOc8Uc8mUrSy90zWRih2L5VAa3rhFaLYRZL6ucHZjeUyK1EhF9iDG
+ m
+X-Gm-Gg: ASbGncv/EqQhh+R8SEa2Y0P1zG/7thMQQ1TcVkH5d0vEDEBmez3dHJ5r5y0AdzlbsEB
+ KPcEEA9cTUcOyydvQtlZb1fhhGF0hq1D8jdVa5LOLcrweZuH1I3OvIe8ByMM6b9DSl9ckHa9Wb+
+ +xHXmkFar5f98jgOTzZbe2nwyboHUH1Ijp0J7UMjV1V//XpIvALH+CMdlcstgsjS6MkSb5+Jnra
+ JoZ1iHtOvaVSSQlwMg8YOrQuxvFnJKGHNxA2q+Zqx7NK5vlPPCcqDY31OIN1LY3SkpA3+QjUlQw
+ m8Br0j9XKI1NkTB6yYa0SDTPgmZZupZAtaBK5/Ub+nrZ
+X-Google-Smtp-Source: AGHT+IHGRjUHfsZhtfemIo+dlcyT/9a20csro4vrsnSjWHRpRL87+9vnxPcq6naL2TxBdu+3gDVtPg==
+X-Received: by 2002:a05:6a00:9a7:b0:736:6ac4:d204 with SMTP id
+ d2e1a72fcca58-73722375218mr14371340b3a.11.1742236473962; 
+ Mon, 17 Mar 2025 11:34:33 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711695a2esm8188770b3a.144.2025.03.17.11.34.39
+ d2e1a72fcca58-73711695a2esm8188770b3a.144.2025.03.17.11.34.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 11:34:40 -0700 (PDT)
+ Mon, 17 Mar 2025 11:34:33 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org,
@@ -83,17 +83,16 @@ Cc: Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org,
  Stefano Stabellini <sstabellini@kernel.org>,
  Nicholas Piggin <npiggin@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 14/18] system/physmem: compilation unit is now common to
- all targets
-Date: Mon, 17 Mar 2025 11:34:13 -0700
-Message-Id: <20250317183417.285700-15-pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 08/18] exec/memory-internal: remove dependency on cpu.h
+Date: Mon, 17 Mar 2025 11:34:07 -0700
+Message-Id: <20250317183417.285700-9-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250317183417.285700-1-pierrick.bouvier@linaro.org>
 References: <20250317183417.285700-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,32 +115,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Needed so compilation units including it can be common.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- system/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/exec/memory-internal.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/system/meson.build b/system/meson.build
-index eec07a94513..bd82ef132e7 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -3,7 +3,6 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
-   'ioport.c',
-   'globals-target.c',
-   'memory.c',
--  'physmem.c',
- )])
+diff --git a/include/exec/memory-internal.h b/include/exec/memory-internal.h
+index 100c1237ac2..b729f3b25ad 100644
+--- a/include/exec/memory-internal.h
++++ b/include/exec/memory-internal.h
+@@ -20,8 +20,6 @@
+ #ifndef MEMORY_INTERNAL_H
+ #define MEMORY_INTERNAL_H
  
- system_ss.add(files(
-@@ -16,6 +15,7 @@ system_ss.add(files(
-   'dma-helpers.c',
-   'globals.c',
-   'memory_mapping.c',
-+  'physmem.c',
-   'qdev-monitor.c',
-   'qtest.c',
-   'rtc.c',
+-#include "cpu.h"
+-
+ #ifndef CONFIG_USER_ONLY
+ static inline AddressSpaceDispatch *flatview_to_dispatch(FlatView *fv)
+ {
 -- 
 2.39.5
 
