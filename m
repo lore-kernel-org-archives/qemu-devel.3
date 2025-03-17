@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BCF0C35FF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F64C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu70w-00041E-I0; Mon, 17 Mar 2025 05:44:06 -0400
+	id 1tu70y-00041y-4g; Mon, 17 Mar 2025 05:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tu70t-0003zh-5F
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:03 -0400
+ id 1tu70v-00040h-Jq
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:05 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tu70p-0006zK-H0
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:02 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1tu70q-0006zM-5S
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:44:05 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxLGva7tdn8syZAA--.63889S3;
- Mon, 17 Mar 2025 17:43:54 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxDGvb7tdn+MyZAA--.63667S3;
+ Mon, 17 Mar 2025 17:43:55 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxb8fa7tdnP3tPAA--.30227S2;
+ by front1 (Coremail) with SMTP id qMiowMBxb8fa7tdnP3tPAA--.30227S3;
  Mon, 17 Mar 2025 17:43:54 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 0/4] hw/intc/loongarch_pch: Cleanup with register name
-Date: Mon, 17 Mar 2025 17:43:50 +0800
-Message-Id: <20250317094354.1028221-1-maobibo@loongson.cn>
+Subject: [PATCH 1/4] hw/intc/loongarch_pch: Use default path when access some
+ registers
+Date: Mon, 17 Mar 2025 17:43:51 +0800
+Message-Id: <20250317094354.1028221-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250317094354.1028221-1-maobibo@loongson.cn>
+References: <20250317094354.1028221-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8fa7tdnP3tPAA--.30227S2
+X-CM-TRANSID: qMiowMBxb8fa7tdnP3tPAA--.30227S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,27 +66,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here is cleanup with register name, the width of some registers are 64 bit.
-To emulate 32 bit memory access, it is split into two registers with suffix
-name low and high. Here register name and (register name + 4) is used
-rather than splitting into two registers.
+For some registers such as PCH_PIC_AUTO_CTRL0_LO etc which are not
+emulated, emulation driver does nothing. It is the same with default
+handling, here remove these registers and use the default path for
+simplification.
 
-There is no function change in this patch set.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/intc/loongarch_pch_pic.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-Bibo Mao (4):
-  hw/intc/loongarch_pch: Use default path when access some registers
-  hw/intc/loongarch_pch: Rename register name
-  hw/intc/loongarch_pch: Rename macro PCH_PIC_xxx_OFFSET with
-    PCH_PIC_xxx
-  hw/intc/loongarch_pch: Remove some duplicate macro
-
- hw/intc/loongarch_pch_pic.c            | 82 +++++++++++---------------
- hw/loongarch/virt.c                    |  4 +-
- include/hw/intc/loongarch_pic_common.h | 36 ++++-------
- 3 files changed, 49 insertions(+), 73 deletions(-)
-
-
-base-commit: aa90f1161bb17a4863e16ec2f75104cff0752d4e
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index acd75ccb0c..3fc4227159 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -108,11 +108,6 @@ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+     case PCH_PIC_HTMSI_EN_HI:
+         val = s->htmsi_en >> 32;
+         break;
+-    case PCH_PIC_AUTO_CTRL0_LO:
+-    case PCH_PIC_AUTO_CTRL0_HI:
+-    case PCH_PIC_AUTO_CTRL1_LO:
+-    case PCH_PIC_AUTO_CTRL1_HI:
+-        break;
+     default:
+         break;
+     }
+@@ -191,11 +186,6 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
+     case PCH_PIC_HTMSI_EN_HI:
+         s->htmsi_en = get_writew_val(s->htmsi_en, data, 1);
+         break;
+-    case PCH_PIC_AUTO_CTRL0_LO:
+-    case PCH_PIC_AUTO_CTRL0_HI:
+-    case PCH_PIC_AUTO_CTRL1_LO:
+-    case PCH_PIC_AUTO_CTRL1_HI:
+-        break;
+     default:
+         break;
+     }
 -- 
 2.39.3
 
