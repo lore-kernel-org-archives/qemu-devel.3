@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB04CC28B28
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 19:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D1DC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 19:49:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuGSE-0007eY-Hd; Mon, 17 Mar 2025 15:48:55 -0400
+	id 1tuGS3-0007Tu-Rv; Mon, 17 Mar 2025 15:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1tuDZ7-0003Vs-Hx
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:43:58 -0400
+ id 1tuDZi-0003g3-SM
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:44:29 -0400
 Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1tuDZ3-0001DB-CW
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:43:48 -0400
+ id 1tuDZW-0001Ge-Mi
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 12:44:25 -0400
 Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-225d66a4839so56114685ad.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 09:43:40 -0700 (PDT)
+ d9443c01a7336-226185948ffso22914575ad.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 09:44:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742229818; x=1742834618; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742229846; x=1742834646; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mFCl+PuL71rwLfqWjVxR8UqDMsn9wX/Wj1FpBaxlxKs=;
- b=I6vInkTO9/9TReoVaGSE72so7BMImRPk+kxcdY6oGVOrn+39IaNxtQwjuZKfX046GF
- nqhUCiICUWgOyHJHGYrEzp68vou1UR3ZOWIzRv4hg477MDVxcNpISSZ+9L6fL/zoiKgX
- uBo8dfksz6gVU56hBe036dl7KEssLJSmHe899SuEDb4sJFG60ny47Vgl+TV4WN0meS3U
- Xi98GB7SNHPzrU1H9TxkBp9vOGBW+nOwXSSabeDbbdmRMZkz997kziOtoOfxSkaimfua
- XzayvgKbNbiafzZot9+bUl59zLsOVHhz9s0XykzOxZ1NySeti+q7WdrrxEGwAAs+E0n7
- /iqg==
+ bh=353TAKo8VnbJ8QqIp//xm5+02cW4+3eAhYTJE+s11Po=;
+ b=dUDZBP3rOaoGRg7FVgxfs7nuk9RYpeL8XfWjjuijeerHn+NGIEKFBune8FCfnD6Vzu
+ vi0u4oHNLfo2h5VS7I3nL8EzFkRYMGDkul5wDZLDnb1B2IhxHl5gvNAxlnYSXH+o86E1
+ BAWaMg3w8BmfS/RYwwl66oFJLqMzjX45by7UerHZZuReyAqtJPR59YmFUKpulsPFqLsm
+ 372cLtBT/a1xyRpDZvrhubnekrO8jkCOBuaLm0N/RuGE9mQKMrmgSLcw4IrKfgtmCTiD
+ I1lMtSy9770GT+L/vGCPjTlNUG0KRArvg1OZHKoi6OsY2z9dWZMDsK2y5H2t7dUzzTQ5
+ uhJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742229818; x=1742834618;
+ d=1e100.net; s=20230601; t=1742229846; x=1742834646;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mFCl+PuL71rwLfqWjVxR8UqDMsn9wX/Wj1FpBaxlxKs=;
- b=uWQA25ZaIIKVkwWplEw0mYyPfVA/iMxHuS+afLSmNrNUAgOuyuh4VbeDr4diSwtUi5
- dUf9U2sYhk5Kei/hG6smiWsqtu/2j4TcPStQHksptyWD285iodugEpI6UPjImQBf6JrE
- aEewlDgM6PLHYr4nkej1ArAr8ebvT7OxUprkhXb831fHZZ7NelxIh9SQlJNt1RUluNVF
- 0NVXTofSAETctCezVrxZPqDDkKtY6ZTg2QMr7U7Q8N/DBKf9FAmrluTxtpMBZdJulCwl
- 13J+qtQrTzCFR8SKpwfM4lQN2iIIVh1fJV1Gff8rlhoe9hgS2jFbh1R+uPN+P3Kpx0Gw
- ztSg==
-X-Gm-Message-State: AOJu0Yx/KSUhc7sgYo4H+Jb4V38KzzDuJjdUQSeQBmJFEzuWaaamEdey
- z1VJO7500mwaCkErYa5BbHtM57WkXSq5BwuIoKt5ropzRwcA/E0EbjJFEg==
-X-Gm-Gg: ASbGncsij62MKFJekdu+w92CBfLAU4nuCLYyHCl41+gyxq5un324ZwbdBIQq2Rjgkk2
- rEi+I//JnkTC0L3W3CFRRXOEYiumgWEse6tFHVovdEmFwbebfHmao6NHKZjPOmW7i/+hZaKo+N0
- 8nmVUOJXGI+9Kz7UU8VS7musiyJFLSGMN5RW+qngJ4O2apf4HbK/onPe059HvwsAjIC059zLlBn
- X7gZKsYy4jywI2Q7gfLFEeWmdRGlBu4VGgHdYWvWUQXL/DOmQIFEBZVQmQGc1WkH9rLsmPiVbL4
- AumXXpr6YEp1lSyDE5Fgy6wlkloy5WMSVRNS63jv/2leuM25sk4zbKap8/EDQcfDNg==
-X-Google-Smtp-Source: AGHT+IEyirkL/BekZ2sWuYBKXsGbAnndgmUTBSB4qasF2yNHne2DfTlFWrpxNJXBQMHxhsjOyLsxtA==
-X-Received: by 2002:a17:903:228c:b0:226:194f:48ef with SMTP id
- d9443c01a7336-2262c9d26d4mr1856565ad.13.1742229818322; 
- Mon, 17 Mar 2025 09:43:38 -0700 (PDT)
+ bh=353TAKo8VnbJ8QqIp//xm5+02cW4+3eAhYTJE+s11Po=;
+ b=E46GkJWwC34cTmBXBwPTYnoQATgvpYER6FD1pIts4lZobGhp/Zy+zltmS6nFixcbPq
+ OqVdY0eZNvf80HUBSxnOuITZWLceWslQJ/ODKlMDQE3801LgTv6MlB4zjwI9bhuGzERl
+ S7v2Pw6dQ7ykXlHBmUxhTOnkOd/3FBHlucLqQvMwj1sp8rLXYxKtdtJJ/T/RUmBwf8JA
+ Jo/A6E6ygsgzr3e3NeRypcvnSNwzxtwu5GwRWUpJ4Lrg+Y0Ffkeb93jOUzXf23wabnR6
+ mQDLOAeSUcJIcffkOtPZZYt98IwfuHcaQYgaXsgNiGBwjRkZTgF+YyAZKlm9HV4xvS8X
+ Z7Lw==
+X-Gm-Message-State: AOJu0YzXMOXcwdiXE1sPrJaKiehWou2UJUh62Xlo7bj149HtR4Z/fQrN
+ i0TeEgWg1R248IW2GlEG2uGgvPt8dmWILwCT7dQ5VQZ7UVEwdGNDggMqhQ==
+X-Gm-Gg: ASbGncuZTwvd9SoYcwEXJMM+eibozl3jGmm+Z1tE6jN09rpLnCqld/kBw200JGUKGA+
+ JtXG4OEbKwfzH/qBk+KtA1N8xzgwPSnOWETaza+Q+S/qN84BCtf2YjC9EJYnWJiImNMtSlKow0C
+ f6S7QtTgB27efcMmIYtOEEbkaSp0u0jLKjkSIrskw6W1b/l/7rjcBDFSi49205htjS8KqqUT2sv
+ qoHbLOddT8anZTDurIpIqKjJMfUvuL6xB3PXoJBvby+1VTNYxSI6XvkhIXfwfQOFnMLz0g14392
+ Yq84X9fLkreW2U1OoGZFkQMcLfaykFmnex+swadQEHOBjBN9p1dQ4wRc29HeP8RJNw==
+X-Google-Smtp-Source: AGHT+IH2UQVAMxqKvpv3asrn5zmBcvf0OAu7rzB4rOpB6x7Pz7Oqydnwl9BwCTj1jDJg3+oVjydsTw==
+X-Received: by 2002:a17:902:ec81:b0:220:fe50:5b44 with SMTP id
+ d9443c01a7336-2262c583a37mr3222255ad.31.1742229846058; 
+ Mon, 17 Mar 2025 09:44:06 -0700 (PDT)
 Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6888461sm77810085ad.23.2025.03.17.09.43.37
+ d9443c01a7336-225c6888461sm77810085ad.23.2025.03.17.09.44.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 09:43:38 -0700 (PDT)
+ Mon, 17 Mar 2025 09:44:05 -0700 (PDT)
 From: anisa.su887@gmail.com
 To: qemu-devel@nongnu.org
 Cc: jonathan.cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
  linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
-Subject: [PATCH 2/9] cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
-Date: Mon, 17 Mar 2025 16:31:29 +0000
-Message-ID: <20250317164204.2299371-3-anisa.su887@gmail.com>
+Subject: [PATCH 7/9] cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region Extent
+ Lists
+Date: Mon, 17 Mar 2025 16:31:34 +0000
+Message-ID: <20250317164204.2299371-8-anisa.su887@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250317164204.2299371-1-anisa.su887@gmail.com>
 References: <20250317164204.2299371-1-anisa.su887@gmail.com>
@@ -86,7 +87,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 17 Mar 2025 15:48:00 -0400
+X-Mailman-Approved-At: Mon, 17 Mar 2025 15:48:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,138 +104,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Section 7.6.7.6.1
+FM DCD Management command 0x5603 implemented per CXL r3.2 Spec Section 7.6.7.6.4
+Very similar to previously implemented command 0x4801.
 
 Signed-off-by: Anisa Su <anisa.su@samsung.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 67 ++++++++++++++++++++++++++++++++++++++
- hw/cxl/i2c_mctp_cxl.c      |  6 +++-
- 2 files changed, 72 insertions(+), 1 deletion(-)
+ hw/cxl/cxl-mailbox-utils.c | 84 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 84 insertions(+)
 
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 1b62d36101..e9991fd1a7 100644
+index 51ead2b152..77cf0fdb15 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -122,6 +122,8 @@ enum {
-         #define MANAGEMENT_COMMAND     0x0
-     MHD = 0x55,
-         #define GET_MHD_INFO 0x0
-+    FMAPI_DCD_MGMT = 0x56,
-+        #define GET_DCD_INFO 0x0
+@@ -126,6 +126,7 @@ enum {
+         #define GET_DCD_INFO 0x0
+         #define GET_HOST_DC_REGION_CONFIG 0x1
+         #define SET_DC_REGION_CONFIG 0x2
++        #define GET_DC_REGION_EXTENT_LIST 0x3
  };
  
  /* CCI Message Format CXL r3.1 Figure 7-19 */
-@@ -3341,6 +3343,62 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+@@ -3587,6 +3588,87 @@ static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
      return CXL_MBOX_SUCCESS;
  }
  
 +/*
-+ * CXL r3.2 section 7.6.7.6.1: Get DCD Info (Opcode 5600h)
++ * CXL r3.2 section 7.6.7.6.4 Get DC Region Extent Lists (Opcode 5603h)
 + */
-+static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
-+                                      uint8_t *payload_in,
-+                                      size_t len_in,
-+                                      uint8_t *payload_out,
-+                                      size_t *len_out,
-+                                      CXLCCI *cci)
++static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
++                                                   uint8_t *payload_in,
++                                                   size_t len_in,
++                                                   uint8_t *payload_out,
++                                                   size_t *len_out,
++                                                   CXLCCI *cci)
 +{
 +    struct {
-+        uint8_t num_hosts;
-+        uint8_t num_regions_supported;
-+        uint8_t rsvd1[2];
-+        uint16_t add_select_policy_bitmask;
-+        uint8_t rsvd2[2];
-+        uint16_t release_select_policy_bitmask;
-+        uint8_t sanitize_on_release_bitmask;
-+        uint8_t rsvd3;
-+        uint64_t total_dynamic_capacity;
-+        uint64_t region_blk_size_bitmasks[8];
-+    } QEMU_PACKED *out;
++        uint16_t host_id;
++        uint8_t rsvd[2];
++        uint32_t extent_cnt;
++        uint32_t start_extent_id;
++    } QEMU_PACKED *in = (void *)payload_in;
++    struct {
++        uint16_t host_id;
++        uint8_t rsvd[2];
++        uint32_t start_extent_id;
++        uint32_t extents_returned;
++        uint32_t total_extents;
++        uint32_t list_generation_num;
++        uint8_t rsvd2[4];
++        CXLDCExtentRaw records[];
++    } QEMU_PACKED *out = (void *)payload_out;
++    QEMU_BUILD_BUG_ON(sizeof(*in) != 0xc);
 +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLDCRegion region;
-+    int i;
++    CXLDCExtent *ent;
++    CXLDCExtentRaw *out_rec;
++    uint16_t record_count = 0, record_done = 0, i = 0;
++    uint16_t out_pl_len, max_size;
 +
 +    if (ct3d->dc.num_regions == 0) {
 +        return CXL_MBOX_UNSUPPORTED;
 +    }
 +
-+    out = (void *)payload_out;
-+
-+    /* TODO: num hosts set to 1 for now */
-+    out->num_hosts = 1;
-+    out->num_regions_supported = ct3d->dc.num_regions;
-+    /* TODO: only prescriptive supported for now */
-+    stw_le_p(&out->add_select_policy_bitmask,
-+             CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE);
-+    stw_le_p(&out->release_select_policy_bitmask,
-+             CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE);
-+    /* TODO: sanitize on release bitmask cleared for now */
-+    out->sanitize_on_release_bitmask = 0;
-+
-+    stq_le_p(&out->total_dynamic_capacity,
-+             ct3d->dc.total_capacity / CXL_CAPACITY_MULTIPLIER);
-+
-+    for (i = 0; i < ct3d->dc.num_regions; i++) {
-+        region = ct3d->dc.regions[i];
-+        memcpy(&out->region_blk_size_bitmasks[i],
-+                &region.supported_blk_size_bitmask, 8);
++    if (in->host_id != 0) {
++        return CXL_MBOX_INVALID_INPUT;
 +    }
 +
-+    *len_out = sizeof(*out);
++    if (in->start_extent_id > ct3d->dc.total_extent_count) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    record_count = MIN(in->extent_cnt,
++                       ct3d->dc.total_extent_count - in->start_extent_id);
++    max_size = CXL_MAILBOX_MAX_PAYLOAD_SIZE - sizeof(*out);
++    record_count = MIN(record_count, max_size / sizeof(out->records[0]));
++    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
++
++    stw_le_p(&out->host_id, in->host_id);
++    stl_le_p(&out->start_extent_id, in->start_extent_id);
++    stl_le_p(&out->extents_returned, record_count);
++    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
++    stl_le_p(&out->list_generation_num, ct3d->dc.ext_list_gen_seq);
++
++    if (record_count > 0) {
++        out_rec = &out->records[record_done];
++
++        QTAILQ_FOREACH(ent, &ct3d->dc.extents, node) {
++            if (i++ < in->start_extent_id) {
++                continue;
++            }
++            stq_le_p(&out_rec->start_dpa, ent->start_dpa);
++            stq_le_p(&out_rec->len, ent->len);
++            memcpy(&out_rec->tag, ent->tag, 0x10);
++            stw_le_p(&out_rec->shared_seq, ent->shared_seq);
++
++            record_done++;
++            out_rec++;
++            if (record_done == record_count) {
++                break;
++            }
++        }
++    }
++
++    *len_out = out_pl_len;
 +    return CXL_MBOX_SUCCESS;
 +}
 +
  static const struct cxl_cmd cxl_cmd_set[256][256] = {
      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
          cmd_infostat_bg_op_abort, 0, 0 },
-@@ -3462,6 +3520,11 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-                                      cmd_tunnel_management_cmd, ~0, 0 },
+@@ -3720,6 +3802,8 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+          CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+          CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+          CXL_MBOX_IMMEDIATE_DATA_CHANGE)},
++    [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
++        cmd_fm_get_dc_region_extent_list, 12, 0},
  };
  
-+static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-+    [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
-+        cmd_fm_get_dcd_info, 0, 0},
-+};
-+
  /*
-  * While the command is executing in the background, the device should
-  * update the percentage complete in the Background Command Status Register
-@@ -3764,7 +3827,11 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
-                                            DeviceState *intf,
-                                            size_t payload_max)
- {
-+    CXLType3Dev *ct3d = CXL_TYPE3(d);
-     cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
-+    if (ct3d->dc.num_regions) {
-+        cxl_copy_cci_commands(cci, cxl_cmd_set_fm_dcd);
-+    }
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
-diff --git a/hw/cxl/i2c_mctp_cxl.c b/hw/cxl/i2c_mctp_cxl.c
-index 7d2cbc3b75..df95182925 100644
---- a/hw/cxl/i2c_mctp_cxl.c
-+++ b/hw/cxl/i2c_mctp_cxl.c
-@@ -46,6 +46,9 @@
- /* Implementation choice - may make this configurable */
- #define MCTP_CXL_MAILBOX_BYTES 512
- 
-+/* Supported FMAPI Cmds */
-+#define FMAPI_CMD_MAX_OPCODE 0x57
-+
- typedef struct CXLMCTPMessage {
-     /*
-      * DSP0236 (MCTP Base) Integrity Check + Message Type
-@@ -200,7 +203,8 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
-         if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
-               msg->command_set < 0x51) &&
-             !(msg->message_type == MCTP_MT_CXL_FMAPI &&
--              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
-+              msg->command_set >= 0x51 &&
-+              msg->command_set < FMAPI_CMD_MAX_OPCODE)) {
-             buf->rc = CXL_MBOX_UNSUPPORTED;
-             st24_le_p(buf->pl_length, len_out);
-             s->len = s->pos;
 -- 
 2.47.2
 
