@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9D2C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD5CC282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu6Lm-0002wH-3U; Mon, 17 Mar 2025 05:01:34 -0400
+	id 1tu6O9-0004AQ-3l; Mon, 17 Mar 2025 05:04:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1tu6Lb-0002tF-Gz; Mon, 17 Mar 2025 05:01:24 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1tu6LW-0001G4-Vs; Mon, 17 Mar 2025 05:01:22 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxlnDS5Ndnk7yZAA--.63385S3;
- Mon, 17 Mar 2025 17:01:06 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMCxPsfP5NdnzGhPAA--.32040S3;
- Mon, 17 Mar 2025 17:01:05 +0800 (CST)
-Subject: Re: [PULL v2 1/6] target/loongarch: Fix vldi inst
-To: Bibo Mao <maobibo@loongson.cn>, Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Guo Hongyu <guohongyu24@mails.ucas.ac.cn>,
- Xianglai Li <lixianglai@loongson.cn>, Thomas Huth <thuth@redhat.com>,
- bibo mao <maobibo@loongson.cn>, qemu-stable@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-References: <20241227062208.1232281-1-maobibo@loongson.cn>
- <20241227062208.1232281-2-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <85afdc11-d931-bbe2-9d7d-fb5836456d5c@loongson.cn>
-Date: Mon, 17 Mar 2025 17:03:28 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tu6Nk-00043z-P9
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:03:37 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tu6Ni-0001VF-W9
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:03:36 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43cef035a3bso12624635e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 02:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742202212; x=1742807012; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0NzP5ues2cUTX5oSD4nW3ka8/QDaW3K1Y9I5K10kfb4=;
+ b=ouM7nymGMILRsS2mHYFn119vGO5S2p5LK7XGrfk0dvFSYK2l6cF6ujxJ3IlX+hHrCl
+ ksEeB1UrwufYNQIYCkbwkLnRZDzqUmpc3Kg6rdSpVbAC7K5pEmP3W0p+WCfFVthCC3tg
+ zNa99iYGSPH1w1bLSVp5Ei09KLW1HLwBm4p+oNI5CMf/PP5FB35SPx3YX08d7CJhvHzy
+ kRrfUbilbGth1jGfcMKNta0gdmma01TIVVEEYNnV9kaGf88nmyicNRKPmBoRbsTFi1qa
+ +szt1nXpbIdaiw8HL3/UDxpUDvG33qTEcdp348kNLqDEM9WJ2iicYuaqF2C+UabP1jwH
+ /EjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742202212; x=1742807012;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0NzP5ues2cUTX5oSD4nW3ka8/QDaW3K1Y9I5K10kfb4=;
+ b=RS/8v29VBp4260nAbTLJ75qH1RqOI1SYkLewWMtVEIarJu0Ls5hUbuA7KCUoq3iext
+ Av3PKdlnGPyHpKiNHrGhOKsoCWpKLal/Y9co+4C+u5Lb+z5KgeV77oH9l/dpJfvxyPsE
+ 4a3vUis4RVTNmOEOL6R5GljBgevIc7Rky7PjwbfEtcRl/INXsfRx6iF21sbhal6+BG1S
+ dX/+SZmhdTta/7Tnw4FAsuRDWkutjMsASzY0zGHcedAZPseZcV32XRFK864cLk+Asfoj
+ 0Sp9nssviMJOzM56bLHISf7BI4xtwNE76W1sTuMeDbvcw2yCJkJOJkX7blge9hvNUo1J
+ gOOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUZ7iHfTIrVPGZ0295ZApSK3/0JBqUZXXjLeLlkw7LGB+Njc5inbtu2eK02nKi4j7fKqdOHEdSoQH0h@nongnu.org
+X-Gm-Message-State: AOJu0Yy4LOeoBoKuc6P079fOWZvAHuhnZeo91lSQJqzRQ6B9+c0IXOq9
+ 4SjswFzZtlAB/DGQXineMnoUn0bC/hrjC3ZMu1gEfZg6yThmXSp/fdLjN00hMFc=
+X-Gm-Gg: ASbGnctT0x37JRVT30hviMQVGFgc7vDgEXWl1JwT5XWVw7tK221McBWUjt3dlut7pBy
+ QTVyaKgxnyZM8Bu3XIKbrn6i1O877KA+xwbzfRXhH3xMvPWgVWamC5xN5PWnXH+Z5MnyT8LKZhP
+ RyDCcIa6a9zV71TSAxs1oDqm4ZGdJBE5S2t+XP93zgU1V3vPNtKjeJq0jy0yK8rufkVrg5uMmWk
+ Vdqcv5Tj1XdFHzWk4tgl+UK3H8ThK1WT96h+VcyHnlvFjZVRGgkjMDdnFRztHhMohoaPNZll+Kh
+ JRAZdPJb49tmRnl+k+PG8Z7GEeTSVzH9FeCFHnotEzWYtmu8ROYBf3IzgnQwB6KjtuUEcBxWuET
+ eLlk3t4RuEDI=
+X-Google-Smtp-Source: AGHT+IHUZLx6v+/rMbt2CU1hAcTr6TJ5WZAdaMRRK277NE9RKrD6+z8sE/eVWBCKAx0BpuAYbHUPjQ==
+X-Received: by 2002:a05:600c:4245:b0:43d:2230:303b with SMTP id
+ 5b1f17b1804b1-43d22303221mr91954895e9.20.1742202211768; 
+ Mon, 17 Mar 2025 02:03:31 -0700 (PDT)
+Received: from [10.223.46.213] (109.21.205.77.rev.sfr.net. [77.205.21.109])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d1ffc49adsm98657195e9.24.2025.03.17.02.03.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Mar 2025 02:03:30 -0700 (PDT)
+Message-ID: <4be1fdc1-3c50-4e20-aaf5-f6831a944246@linaro.org>
+Date: Mon, 17 Mar 2025 10:03:28 +0100
 MIME-Version: 1.0
-In-Reply-To: <20241227062208.1232281-2-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] memory: suppress INVALID_MEM logs caused by debug
+ access
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20250314074107.992163-1-npiggin@gmail.com>
+ <20250314074107.992163-3-npiggin@gmail.com>
 Content-Language: en-US
-X-CM-TRANSID: qMiowMCxPsfP5NdnzGhPAA--.32040S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Zw4UAF1kJr18JF1DAryUtwc_yoW8GrWkp3
- y3CF4DKryrtFZ3C3yfX3y5Jr17KaykKan2qF1xt3s3ZFZxJwnaqa1ktwsFgF17Ja48WF1U
- ZFnY9ry5KayYv3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-0.664, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250314074107.992163-3-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,38 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: qemu-stable@nongnu.org
-
-Fix : https://gitlab.com/qemu-project/qemu/-/issues/2865
-
-ÔÚ 2024/12/27 ÏÂÎç2:22, Bibo Mao Ð´µÀ:
-> From: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
->
-> Refer to the link below for a description of the vldi instructions:
-> https://jia.je/unofficial-loongarch-intrinsics-guide/lsx/misc/#synopsis_88
-> Fixed errors in vldi instruction implementation.
->
-> Signed-off-by: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
-> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+On 14/3/25 08:41, Nicholas Piggin wrote:
+> Debugger-driven invalid memory accesses are not guest errors, so should
+> not cause these error logs.
+> 
+> Debuggers can access memory wildly, including access to addresses not
+> specified by the user (e.g., gdb it might try to walk the stack or load
+> target addresses to display disassembly). Failure is reported
+> synchronously by the GDB protcol so the user can be notified via the
+> debugger client.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> index 92b1d22e28..d317dfcc1c 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> @@ -3480,7 +3480,7 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
->           break;
->       case 1:
->           /* data: {2{16'0, imm[7:0], 8'0}} */
-> -        data = (t << 24) | (t << 8);
-> +        data = (t << 40) | (t << 8);
->           break;
->       case 2:
->           /* data: {2{8'0, imm[7:0], 16'0}} */
+>   system/memory.c | 37 ++++++++++++++++++++++---------------
+>   1 file changed, 22 insertions(+), 15 deletions(-)
+> 
+> diff --git a/system/memory.c b/system/memory.c
+> index 4c829793a0a..960f66e8d7e 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -1412,18 +1412,23 @@ bool memory_region_access_valid(MemoryRegion *mr,
+>   {
+
+Alternatively:
+
+         int invalid_mem_mask = attrs.debug ? LOG_INVALID_MEM : 0;
+
+>       if (mr->ops->valid.accepts
+>           && !mr->ops->valid.accepts(mr->opaque, addr, size, is_write, attrs)) {
+> -        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
+> -                      ", size %u, region '%s', reason: rejected\n",
+> -                      is_write ? "write" : "read",
+> -                      addr, size, memory_region_name(mr));
+> +        if (attrs.debug) {
+> +            /* Don't log memory errors due to debugger accesses */
+> +            qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
+> +                          ", size %u, region '%s', reason: rejected\n",
+> +                          is_write ? "write" : "read",
+> +                          addr, size, memory_region_name(mr));
+> +        }
+>           return false;
+>       }
 
 
