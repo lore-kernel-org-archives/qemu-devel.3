@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35756C35FF3
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F958C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu3vm-0007Rr-3K; Mon, 17 Mar 2025 02:26:34 -0400
+	id 1tu4Bp-0002Ve-29; Mon, 17 Mar 2025 02:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu3vR-0007Pp-3I
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:26:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4Bf-0002Oc-Uw
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:42:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu3vN-0006YF-9U
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:26:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu4Be-0008Mw-Gu
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:42:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742192766;
+ s=mimecast20190719; t=1742193777;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pFqeKHcZrFbjYMh1/cRWWIZVLM5LVO9hN6db9wPBBl0=;
- b=gMdGoW0h/7YCM3z0RfilaIVN1+nMNFyEnbud5nY/ywfOVw3t++GPhBEUeReFI8RFw8Ts54
- 7pMYn8Ulf2Y5WWKb3cKsgTp6MvzcFC/6SBNOgyh4nZbyfUKBe1jgNG4pVM1pz3FhaCmLod
- N63mSAv3YsbS4mRAtLcbrYN3wAzJokI=
+ bh=ckxieCsRVd2gUlaszx6gcEDAe6xqugpI1Ubo06FKUDs=;
+ b=LkJJg4jGYehN3SJR6iI1aGNy4RLUdv/RKbKjfdyxDK6/Y3EgiUrfIclM3f9PWqmaBXxTmF
+ Y6LcMGb3vwUfIbfyWdGRFcu77tqdO4M/yzv6IjUPBPKPD22vHSD4z9s4fNGJiS5XcqzUM6
+ cgwxYTW/9MzRoOHYyWATj/dTyVSlFBE=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-59-Cmo5CxqFMAaVReCgWr7cFg-1; Mon, 17 Mar 2025 02:26:03 -0400
-X-MC-Unique: Cmo5CxqFMAaVReCgWr7cFg-1
-X-Mimecast-MFC-AGG-ID: Cmo5CxqFMAaVReCgWr7cFg_1742192761
+ us-mta-695-8XODwd-wPSavTa4SQiszRQ-1; Mon, 17 Mar 2025 02:42:54 -0400
+X-MC-Unique: 8XODwd-wPSavTa4SQiszRQ-1
+X-Mimecast-MFC-AGG-ID: 8XODwd-wPSavTa4SQiszRQ_1742193773
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d209dc2d3so9927785e9.3
- for <qemu-devel@nongnu.org>; Sun, 16 Mar 2025 23:26:03 -0700 (PDT)
+ 5b1f17b1804b1-43cf172ffe1so14716155e9.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Mar 2025 23:42:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742192761; x=1742797561;
+ d=1e100.net; s=20230601; t=1742193773; x=1742798573;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pFqeKHcZrFbjYMh1/cRWWIZVLM5LVO9hN6db9wPBBl0=;
- b=mP5dnofDzfD73OkdD9snRWCaJ2JJ8LdNJWiAS7UITHPjJhMhioTppbu8OCs5WML2mZ
- lS27Z2oAX64/RrPz2JJ1p9sbTyXh+qzGsFpQ7u4KxAgyAjpHlrFKKJlu4fUOOV07C+Uv
- VCuc1hvqAHzXVOzonIJLmV47KdD1wricbfqsTDbLvGY8o2QvUXDIo050HdW7jy1uRpra
- vi4TCWeSqoKgqgPqempT6QPrJsOrvKZEJfk5mpkozZ6WgTT8c726oTtEqJeNK3KD7rpZ
- CyaNUxlmCtFIHvw42u2WMik1DH757RwRH9JIR+5TgP60fGD5wkWLCWZEsXAG4YhPiKHf
- Xr3w==
+ bh=ckxieCsRVd2gUlaszx6gcEDAe6xqugpI1Ubo06FKUDs=;
+ b=l4n338iJV8HRVJhkbTbwk4NYwkP792QHfB8J+PQjxuw9QgBntdMMSw2uc0btRnXJvS
+ vy6t1MYF6ScMdUKyUZR81sjrItC2F3/3HL7U2T8zfQCSmH25Gmmf6VAvNIJfU8FAcQzT
+ XoqAPl4C6KHUN2tpVg1alOpTkQhVHsd2NWJVH1SqqNEheXbB9uuGCjJcHTe6uhj0MFh/
+ IWJw43JsDGszzSwW12+Jhu6ij3MiPriIyr0k9prhKlkbPhIUF7EDbNdi9dtKEttl21EE
+ gO7/dKkeqwQMOzBmVr2LF9MNoRdBGH/hgs3d/xUr9AC+cdYesWHCVIXpf92eWu0eWHTk
+ id1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXTzXkq7pAimP9xyWnw6tkz+uiQk0mhSKlqHTAHTncGRRM1qoelEPTqIu74hHSSHyTmMhDZeVOigkK@nongnu.org
-X-Gm-Message-State: AOJu0Yxeg+j4LGg9wCuohECK4IbE4ch7TpENCJf4H1H8FBJHFxDjElL0
- tnKHeVOaaQSiwxEVhY7zZ0hxzYkLm6IS4vqRzxW4/Cdh6OK7h7anO8oevUXV1aRntuCYArqcN0D
- we17Uxb1ABRNrVYroGzotzmccgGELpJyudXtipOdm5IHZNoVYi/Yn
-X-Gm-Gg: ASbGnctBva2NqrcllRvWQovDlrIi2FGxJ/gyxdlq6NdSsJsBJE/sccoSuTSk4GQn2XT
- fkiTNhufPn8+5Oi81ipU3++IFX1PgAW4aZVXPX+tVEgHGFLvjiNrBU49yDqVzVzWK+7gRvudP3V
- sOpd6sprH3qdHLmi8C5mtJoDZvkjM0Y7v5PLwrDPbTiPFttLy8jdRhjbFWtxOxTksiS3KCwQFlE
- wEjFIqOj26OH0g5HDLFfbpue23qu3a8h1gws3e0UdccjRVpLpy35L3tkel69kplk6AlcI0Mv69G
- JtEoWlWnAwzd2phKmBbUXLbk4uKUlPmfC9xSjvZqqDPSGD8=
-X-Received: by 2002:a05:600c:511c:b0:43c:fceb:91a with SMTP id
- 5b1f17b1804b1-43d1ec729a9mr130929125e9.11.1742192760897; 
- Sun, 16 Mar 2025 23:26:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0uXdhknQC0GClVBAUqvdgfTrHOcm4+BKA9K8cBPLQnfaMxwimDlTKN/C43mLxAEsf09F0sg==
-X-Received: by 2002:a05:600c:511c:b0:43c:fceb:91a with SMTP id
- 5b1f17b1804b1-43d1ec729a9mr130928975e9.11.1742192760474; 
- Sun, 16 Mar 2025 23:26:00 -0700 (PDT)
+ AJvYcCUVTE1gBe6LAPGKT6TaWQwKRUuCG9NQKmsVpVu29nNP3MHhRaC/P6M+RIiOzW17t0AayE6WEQzwEBnL@nongnu.org
+X-Gm-Message-State: AOJu0YyCdaeSSQrQxkEIalFrShBKQBGWW6OFTZQ1PJ2SxiGM8UJN9eTL
+ boSsggldtiMWVpKeTPtZ4B1WFvmgZQurEEhACruVoojFDFwF8FhtdIMn+9wBZh7viSfMpw/4UhQ
+ SUXP8d8iAZXjOoGpu3bf5bLHsPNyx1X3w+QelvILDAa5Tv8Nq6H4+nrCqKfAl
+X-Gm-Gg: ASbGnctuehcyjkGBfxI/pihuMFt9nBSbqxkWdfYep9hNZC/dH/9F9836iHPK057i63z
+ s1hSwVmUZipcIP4MF5janM1NkDFoHjuPZqt15RIrga55pMGUw9H/B7EmwhenM0tjObOQJBVvpFR
+ Iw4O/SoCpwj+TLAQwUNLORt8L794A+eLTyLug++xgO+ZUUGXZU2calqutfxcutDDTiUqyAnlDzI
+ oB/re3Ba502LnbZGIBlkhJYK2MbEhUFOkEA7hbxE47EOBFawzZ+XqWJSpK4a8lL5WEOrpZSrLqx
+ Ow7U4QNdods0PUJGghBlJ5oyFyhINTccn4Thf1vc+YGOQig=
+X-Received: by 2002:a05:600c:198e:b0:43c:fa52:7d2d with SMTP id
+ 5b1f17b1804b1-43d1ecd8631mr108179505e9.20.1742193772796; 
+ Sun, 16 Mar 2025 23:42:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGSPG5sp5OnDMg2s+oMWz9+cWSpq2Wq1Aq5HBVWdlTm/mITfxQJqrrxWCLi4EYhuhIl6/cd1A==
+X-Received: by 2002:a05:600c:198e:b0:43c:fa52:7d2d with SMTP id
+ 5b1f17b1804b1-43d1ecd8631mr108179385e9.20.1742193772520; 
+ Sun, 16 Mar 2025 23:42:52 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
  [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe292dbsm95071915e9.19.2025.03.16.23.25.57
+ ffacd0b85a97d-395c7df35bdsm13648544f8f.5.2025.03.16.23.42.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Mar 2025 23:25:58 -0700 (PDT)
-Message-ID: <8dad5654-6d0a-4045-abb1-2dee489f3102@redhat.com>
-Date: Mon, 17 Mar 2025 07:25:56 +0100
+ Sun, 16 Mar 2025 23:42:52 -0700 (PDT)
+Message-ID: <9d044a37-bb53-4bd1-9833-3b09823b2e7e@redhat.com>
+Date: Mon, 17 Mar 2025 07:42:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] tests/functional: Add test for fadump in PSeries
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
+Subject: Re: [PATCH 6/6] ppc/pnv: Fix system symbols in HOMER structure
+ definitions
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.vnet.ibm.com>,
+ Michael Kowal <kowal@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250315064636.611714-1-adityag@linux.ibm.com>
- <20250315064636.611714-9-adityag@linux.ibm.com>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+References: <20250317052339.1108322-1-npiggin@gmail.com>
+ <20250317052339.1108322-7-npiggin@gmail.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,9 +130,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250315064636.611714-9-adityag@linux.ibm.com>
+In-Reply-To: <20250317052339.1108322-7-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
@@ -142,7 +142,7 @@ X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,218 +158,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi!
+On 17/03/2025 06.23, Nicholas Piggin wrote:
+> These definitions were taken from skiboot firmware. I naively thought it
+> would be nicer to keep the code similar by using the preprocessor, but
+> it was pointed out that system headers might still use those symbols and
+> cause something unexpected. Also just nicer to keep the QEMU tree clean.
+> 
+> Cc: Thomas Huth <thuth@redhat.com>
+> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+> Cc: "Stefan Hajnoczi" <stefanha@gmail.com>
+> Fixes: 70bc5c2498f46 ("ppc/pnv: Make HOMER memory a RAM region")
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   hw/ppc/pnv_occ.c | 201 ++++++++++++++++++++++-------------------------
+>   1 file changed, 96 insertions(+), 105 deletions(-)
 
-On 15/03/2025 07.46, Aditya Gupta wrote:
-> Add testcases for testing fadump with PSeries and PSeries+KVM
-> combinations
-...
-> diff --git a/tests/functional/test_ppc64_fadump.py b/tests/functional/test_ppc64_fadump.py
-> new file mode 100755
-> index 000000000000..3d6d3734e243
-> --- /dev/null
-> +++ b/tests/functional/test_ppc64_fadump.py
-> @@ -0,0 +1,185 @@
-> +#!/usr/bin/env python3
+Thanks for cleaning it up!
 
-scripts/checkpatch.pl recently got a check for SPDX license tags, so please 
-add a SPDX-License-Identifier here now to avoid a warning when the script is 
-run with your patch.
-
-> +import logging
-> +import platform
-> +import os
-> +from unittest import skip, skipUnless
-> +from qemu_test import Asset
-> +from qemu_test import wait_for_console_pattern
-> +from qemu_test import LinuxKernelTest
-> +from qemu_test import exec_command, exec_command_and_wait_for_pattern
-> +
-> +class QEMUFadump(LinuxKernelTest):
-> +    """
-> +    Functional test to verify Fadump is working in following scenarios:
-> +
-> +    1. test_fadump_pseries:       PSeries
-> +    2. test_fadump_pseries_kvm:   PSeries + KVM
-> +    """
-> +
-> +    timeout = 90
-> +    KERNEL_COMMON_COMMAND_LINE = 'console=hvc0 fadump=on '
-> +    msg_panic = 'Kernel panic - not syncing'
-> +    msg_not_supported = 'Firmware-Assisted Dump is not supported on this hardware'
-> +    msg_registered_success = ''
-> +    msg_registered_failed = ''
-> +    msg_dump_active = ''
-> +
-> +    ASSET_EPAPR_KERNEL = Asset(
-> +        ('https://github.com/open-power/op-build/releases/download/v2.7/'
-> +         'zImage.epapr'),
-> +        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
-> +
-> +    ASSET_VMLINUZ_KERNEL = Asset(
-> +        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-> +         'releases/39/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
-> +        ('81e5541d243b50c8f9568906c6918dda22239744d637bb9a7b22d23c3d661226'
-> +         '8d5302beb2ca5c06f93bdbc9736c414ef5120756c8bf496ff488ad07d116d67f')
-> +        )
-> +
-> +    ASSET_FEDORA_INITRD = Asset(
-> +        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-> +        'releases/39/Everything/ppc64le/os/ppc/ppc64/initrd.img'),
-> +        'e7f24b44cb2aaa67d30e551db6ac8d29cc57c934b158dabca6b7f885f2cfdd9b')
-> +
-> +    def do_test_fadump(self, is_kvm=False, is_powernv=False):
-> +        """
-> +        Helper Function for Fadump tests below
-> +
-> +        It boots the VM with fadump enabled, checks if fadump is correctly
-> +        registered.
-> +        Then crashes the system causing a QEMU_SYSTEM_RESET, after which
-> +        dump should be available in the kernel.
-> +        Finally it checks the filesize of the exported /proc/vmcore in 2nd
-> +        kernel to verify it's same as the VM's memory size
-> +        """
-> +        if not is_kvm:
-> +            self.require_accelerator("tcg")
-> +
-> +        if is_powernv:
-> +            self.set_machine("powernv10")
-> +        else:
-> +            # SLOF takes upto >20s in startup time, use VOF
-> +            self.set_machine("pseries")
-> +            self.vm.add_args("-machine", "x-vof=on")
-> +            self.vm.add_args("-m", "6G")
-> +
-> +        self.vm.set_console()
-> +
-> +        kernel_path = None
-> +
-> +        if is_powernv:
-> +            kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
-> +        else:
-> +            kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
-> +
-> +        initrd_path = self.ASSET_FEDORA_INITRD.fetch()
-> +
-> +        self.vm.add_args('-kernel', kernel_path)
-> +        self.vm.add_args('-initrd', initrd_path)
-> +        self.vm.add_args('-append', "fadump=on"\
-> +                         " -nodefaults -serial mon:stdio crashkernel=2G"\
-> +                         " rdinit=/bin/sh ")
-> +
-> +        self.vm.launch()
-> +
-> +        # If kernel detects fadump support, and "fadump=on" is in command
-> +        # line which we add above, it will print something like:
-> +        #
-> +        #     fadump: Reserved 1024MB of memory at 0x00000040000000 ...
-> +        #
-> +        # Else, if the kernel doesn't detect fadump support, it prints:
-> +        #
-> +        #     fadump: Firmware-Assisted Dump is not supported on this hardware
-> +        #
-> +        # Timeout after 10s if kernel doesn't print any fadump logs, this
-> +        # can happen due to fadump being disabled in the kernel
-> +        self.wait_for_regex_console_pattern(
-> +            success_pattern="fadump: Reserved ",
-> +            failure_pattern=r"fadump: (Firmware-Assisted Dump is not"\
-> +            " supported on this hardware|Failed to find memory chunk for"\
-> +            " reservation!)",
-> +            timeout=10
-> +        )
-> +
-> +        # Ensure fadump is registered successfully, if registration
-> +        # succeeds, we get a log from rtas fadump:
-> +        #
-> +        #     rtas fadump: Registration is successful!
-> +        self.wait_for_console_pattern(
-> +            "rtas fadump: Registration is successful!"
-> +        )
-> +
-> +        # Wait for the shell
-> +        self.wait_for_console_pattern("#")
-> +
-> +        # Mount /proc since not available in the initrd used
-> +        exec_command(self, command="mount -t proc proc /proc")
-> +
-> +        # Crash the kernel
-> +        exec_command(self, command="echo c > /proc/sysrq-trigger")
-> +
-> +        # Check for the kernel panic message, setting timeout to 10s as it
-> +        # should occur almost immediately after previous echo c
-> +        self.wait_for_regex_console_pattern(
-> +            success_pattern="Kernel panic - not syncing: sysrq" \
-> +                " triggered crash",
-> +            timeout=10
-> +        )
-> +
-> +        # Check if fadump is active
-> +        # If the kernel shows that fadump is active, that implies it's a
-> +        # crashkernel boot
-> +        # Else if the kernel shows "fadump: Reserved ..." then it's
-> +        # treating this as the first kernel boot, this is likely the case
-> +        # that qemu didn't pass the 'ibm,kernel-dump' device tree node
-> +        wait_for_console_pattern(
-> +            test=self,
-> +            success_message="rtas fadump: Firmware-assisted dump is active",
-> +            failure_message="fadump: Reserved "
-> +        )
-> +
-> +        # In a successful fadump boot, we get these logs:
-> +        #
-> +        # [    0.000000] fadump: Firmware-assisted dump is active.
-> +        # [    0.000000] fadump: Reserving <>MB of memory at <> for preserving crash data
-> +        #
-> +        # Check if these logs are present in the fadump boot
-> +        self.wait_for_console_pattern("preserving crash data")
-> +
-> +        # Wait for prompt
-> +        self.wait_for_console_pattern("sh-5.2#")
-> +
-> +        # Mount /proc since not available in the initrd used
-> +        exec_command_and_wait_for_pattern(self,
-> +            command="mount -t proc proc /proc",
-> +            success_message="#"
-> +        )
-> +
-> +        # Check if vmcore exists
-> +        exec_command_and_wait_for_pattern(self,
-> +            command="stat /proc/vmcore",
-> +            success_message="File: /proc/vmcore",
-> +            failure_message="No such file or directory"
-> +        )
-> +
-> +    def test_fadump_pseries(self):
-> +        return self.do_test_fadump(is_kvm=False, is_powernv=False)
-> +
-> +    @skip("PowerNV Fadump not supported yet")
-> +    def test_fadump_powernv(self):
-> +        return
-> +
-> +    @skipUnless(platform.machine().startswith("ppc64"),
-> +                "KVM tests require the same host and guest architecture")
-
-I think this is likely unreliable: The test could run on a ppc64 host, but 
-KVM could still be unavailable, e.g. if it has been disabled in the kernel. 
-It's better to use self.require_accelerator("kvm") instead (which will also 
-skip the test if it is not available).
-
-Also, shouldn't there be a "-accel kvm" somewhere if you really want to be 
-sure to enable KVM ?
-
-> +    def test_fadump_pseries_kvm(self):
-> +        """
-> +        Test Fadump in PSeries with KVM accel
-> +        """
-> +        self.do_test_fadump(is_kvm=True, is_powernv=False)
-> +
-> +if __name__ == '__main__':
-> +    if os.getenv("DEBUG"):
-> +        logging.basicConfig(level=logging.DEBUG)
-
-The setUp function in QemuSystemTest already sets the log level to DEBUG, so 
-this should not be necessary?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
