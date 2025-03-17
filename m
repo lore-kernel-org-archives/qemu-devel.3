@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FE1C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2CB2C35FF3
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuBIN-0006lj-Ol; Mon, 17 Mar 2025 10:18:23 -0400
+	id 1tuBSI-0000gr-IB; Mon, 17 Mar 2025 10:28:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tuBIM-0006lS-No
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:18:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tuBIK-0007km-HY
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:18:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742221095;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zSZ8Do+JUpykJ2zCQhUxERaTrqkaxuPL1EfpZMPmHTI=;
- b=Ly2mXOEeRoCSbJMIVjPcf1cgC9JVYa1g5cp9Ue1cQPx84DnQnplcpnpQNL9pzTdgFp582F
- 5tbSoHf6t6m/w8Kpetbb7ERpoYPfugjb2SKHQAf0Zna/CHGKHz2cCNrmbVZ5CGjQnAPrr9
- TAK6abhyAWFmNfd4mPNZMglx+EJKZ1s=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-vGbgpIsvNVm7Td2oxVF79A-1; Mon, 17 Mar 2025 10:18:13 -0400
-X-MC-Unique: vGbgpIsvNVm7Td2oxVF79A-1
-X-Mimecast-MFC-AGG-ID: vGbgpIsvNVm7Td2oxVF79A_1742221092
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43cf3168b87so11385575e9.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:18:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuBSA-0000ah-9Q
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:30 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuBS6-00019c-SE
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:30 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cf257158fso14434815e9.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:28:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742221705; x=1742826505; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=r0RXj7jkfyGIIHIemiTV2rQyBmqYdyg7U5RYGOz4wfM=;
+ b=vDkoqEt/T2wTWpoXTANMb6bjfhy58J359d77mdBu+FBWtyEL2fFPaZpRgMsFmm/utb
+ K+fhs5tNyoauwQCusBdPxcbCUHD4ZO9flqIE/MrxT6dNuyjFsIbRFeiNa6M60i2lPKj9
+ ekYFbDTradsmf6gvQ7ddIb5xX7VpEYVIq0lsGuKfeYEbaPtNMwMMWNYdtOqSthneiagn
+ jYcVEvSMXqx8H78p8XjfymokivxfTqwBBdBekGld/QXRyLe+i7MNvUG2FWP15U09z4PS
+ kjXDhfv+AEdLApTsqvvwvHfMU49QHokMRODEk/0MbnSSXtVgk5OAVB2yq3oEM+mJPlp4
+ zwxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742221092; x=1742825892;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zSZ8Do+JUpykJ2zCQhUxERaTrqkaxuPL1EfpZMPmHTI=;
- b=YARKvQssmuXnYChuZbY5TQc9vm/V4aMExxVOXKWfjU+bmIBlFDSWueXgbqtyLHfQkN
- RzQXwz+szTsdX7Dw+mC+uJqnfe0g3PEktHLSrZrXV4l527MeZNLZMuSXkaYSCkgTmHE1
- mHBClmFRhgsHWrPdrN93Wh0fURYUkCvqkQy6LHMeI/mKYHPenk+7L/vIhus17PejEAm0
- llSvqDRfmzoJF304HyifnbTn7oloqiCU4PGSYx76dIZ8YLT7fwykiLFiIOZhmQvrJIHM
- m2dEOOqWbrMR2wb5W39kBElFCJkOGPFE4kxshlMWmsz8v0wOeuXBMugCvJdRPiAtm0/X
- R7eA==
-X-Gm-Message-State: AOJu0YxPLTEPWF6VgmEP+jTIdjeJfm8M60SpgqqIMEd4afIVgUCp1ARI
- Qgnc4WxhLp6jcR+JyfSLQMwHNEw+oVr1G0ug12yN27UKMDCvSOnt6cGQVQC5tr9tgluEbtS8VZ7
- W/H7XWZkiAhYD/uKTGUWFqHs5pfWGao3gyrVovcUOLtMqZaUAGXm/
-X-Gm-Gg: ASbGncvrCT2RfWaPQSBYwVJ2u+Cyg45HgS2taOATXpnRNGu+LohG3JSLHJkubqA+HLO
- TK52ZKiTDkCjwUrMB+TBX7MJFMVMesjQGNQEpo9ONCIfm09mEbcAiLVbETzbScK6rIo1Alh0K0c
- j0wZYLneKbdsx4WVmluvE2c8NHRx/h1Mt+zEr9KOFoI5kI8RILkjskb4fwS2S4P6x6N9EeFhvS5
- yUc0VlCCxabD14eL52TmggB9CBJpffOAyN/WixXkR1qOO3PTpsXTwOLDuyVM84bz+nGZCbLByP0
- t8XlUyuZvQ==
-X-Received: by 2002:a05:600c:4451:b0:43c:fa24:8721 with SMTP id
- 5b1f17b1804b1-43d1ec8a44cmr128896685e9.17.1742221092094; 
- Mon, 17 Mar 2025 07:18:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3kITUxkS53hQ/af6lqcfNUNwqZnhcJaxt7iESKS4HX/Yz/FY1iAC4t9+XcraSANS3NMYxSQ==
-X-Received: by 2002:a05:600c:4451:b0:43c:fa24:8721 with SMTP id
- 5b1f17b1804b1-43d1ec8a44cmr128896305e9.17.1742221091429; 
- Mon, 17 Mar 2025 07:18:11 -0700 (PDT)
-Received: from rh-jmarcin ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fdda2dbsm106961425e9.2.2025.03.17.07.18.10
+ d=1e100.net; s=20230601; t=1742221705; x=1742826505;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=r0RXj7jkfyGIIHIemiTV2rQyBmqYdyg7U5RYGOz4wfM=;
+ b=sQYW8vVDdQtog+PYvqmsVZ+KenGsYD9XUBzuAhc1QhoAlgET7TyCvfakUIkhypsQ3u
+ SL60QFpRixCVdxcyYhi5cDB4ovRSDHYHDOyr+fWV53ZI/dGP1ahnEM7jDpJ3RB4bvv72
+ EpPB8ukZgo79D3ott0gZWoozYvc4kJGV4NvCSBpBG9zhja8qIkqxD4+K26M/gURMdChE
+ oF8rijtjyelqX1a4M3Ciq2BJxe+t+50V1eu+6s/49TgvxsD7ONzazUdwg1aSma6leZqM
+ Qn42rneRHhWriRoVSr7JUgqy/eg+qehhTeccj+F+fQ0QkJHEOgo6b6ibwdJ+EJKEYKti
+ rDog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgM7eANvzjvEmF8Q+F5IrMFk3/1HnLyteyKCvuC0h9mZ1gtlpIZtkkd9fcFbQwgnM4zumpZaRxhwVK@nongnu.org
+X-Gm-Message-State: AOJu0Ywq1oyk46D4TFej2jhVbInGxP6peDgCkJYsESKRHyMlg4KzuO6u
+ tgxfl7flvlie4ajL81vnj1NsWdre+LvXG0sPw+cAQDI/M6SVwmefqdhoQQDiYIA=
+X-Gm-Gg: ASbGncup8oPVrXaDi8fP+N6nL7FHLDsYM5/40UVQsXpE7IVgK14g22eqrF6OzQMf0j0
+ vF7A7mf6jFS7v1cjonA9cBjiT11F8AA2pK6l8Y/cTUsMdjtg+t5y06CfAUMmA5OefhWLJJGF7AL
+ FX0IhC9cLGmwIxIRQzguQQp/BEVlxeVAEw4wvMOvYoRWWq192LqktzaKqtp8V0qB0RAxUe14MpI
+ p/HWetbCbt4UTm+gdy/M6r/hk0ig/V0Bs6ss7D3SyXHJTkGMt7eVe34CxdYPVw1y/nDl2EjVmOl
+ iMWWAkRyivEtEQtjVU31/QsCQdN8J3jZDlu3EXUxCidbEpv4hKsKaidnIqzFug==
+X-Google-Smtp-Source: AGHT+IHFSEsW1sFp2DzSYMzCONdn1uXheMf21KtNFzkhb9ByC2UWNy6DFOF/4DSRcXlqamGqs/bIXQ==
+X-Received: by 2002:a05:600c:3146:b0:43d:db5:7b1a with SMTP id
+ 5b1f17b1804b1-43d1ecb33b0mr126240395e9.12.1742221705039; 
+ Mon, 17 Mar 2025 07:28:25 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d1fe60ad4sm107914985e9.29.2025.03.17.07.28.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 07:18:11 -0700 (PDT)
-Date: Mon, 17 Mar 2025 15:18:08 +0100
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/2] util/qemu-sockets: Add support for keep-alive flag
- to passive sockets
-Message-ID: <vlbkduq3jivca5je6fwgfb6dwxf6jyv5mb474ilx7gpywjemki@3rwsttdfcshp>
-References: <20250303143312.640909-1-jmarcin@redhat.com>
- <20250303143312.640909-2-jmarcin@redhat.com>
- <8ca88996-07e7-4882-8169-328b599e5570@yandex-team.ru>
+ Mon, 17 Mar 2025 07:28:24 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH for-10.1 4/9] target/arm: Handle gdb_core_xml_file in
+ TYPE_ARM_CPU
+Date: Mon, 17 Mar 2025 14:28:14 +0000
+Message-ID: <20250317142819.900029-5-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250317142819.900029-1-peter.maydell@linaro.org>
+References: <20250317142819.900029-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8ca88996-07e7-4882-8169-328b599e5570@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,104 +100,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-03-14 20:24, Vladimir Sementsov-Ogievskiy wrote:
-> On 03.03.25 17:33, Juraj Marcin wrote:
-> > Commit aec21d3175 (qapi: Add InetSocketAddress member keep-alive)
-> > introduces the keep-alive flag, which enables the SO_KEEPALIVE socket
-> > option, but only on client-side sockets. However, this option is also
-> > useful for server-side sockets, so they can check if a client is still
-> > reachable or drop the connection otherwise.
-> > 
-> > This patch enables the SO_KEEPALIVE socket option on passive server-side
-> > sockets if the keep-alive flag is enabled. This socket option is then
-> > inherited by active server-side sockets communicating with connected
-> > clients.
-> > 
-> > This patch also fixes an issue in 'qio_dns_resolver_lookup_sync_inet()'
-> > where the keep-alive flag is not copied together with other attributes.
-> > 
-> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> > ---
-> >   io/dns-resolver.c   |  2 ++
-> >   qapi/sockets.json   |  4 ++--
-> >   util/qemu-sockets.c | 19 +++++++++++++------
-> >   3 files changed, 17 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/io/dns-resolver.c b/io/dns-resolver.c
-> > index 53b0e8407a..ee7403b65b 100644
-> > --- a/io/dns-resolver.c
-> > +++ b/io/dns-resolver.c
-> > @@ -126,6 +126,8 @@ static int qio_dns_resolver_lookup_sync_inet(QIODNSResolver *resolver,
-> >               .has_mptcp = iaddr->has_mptcp,
-> >               .mptcp = iaddr->mptcp,
-> >   #endif
-> > +            .has_keep_alive = iaddr->has_keep_alive,
-> > +            .keep_alive = iaddr->keep_alive,
-> >           };
-> >           (*addrs)[i] = newaddr;
-> > diff --git a/qapi/sockets.json b/qapi/sockets.json
-> > index 6a95023315..eb50f64e3a 100644
-> > --- a/qapi/sockets.json
-> > +++ b/qapi/sockets.json
-> > @@ -56,8 +56,8 @@
-> >   # @ipv6: whether to accept IPv6 addresses, default try both IPv4 and
-> >   #     IPv6
-> >   #
-> > -# @keep-alive: enable keep-alive when connecting to this socket.  Not
-> > -#     supported for passive sockets.  (Since 4.2)
-> > +# @keep-alive: enable keep-alive when connecting to/listening on this socket.
-> > +#     (Since 4.2, not supported for listening sockets until 10.0)
-> >   #
-> >   # @mptcp: enable multi-path TCP.  (Since 6.1)
-> >   #
-> > diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-> > index 77477c1cd5..c30e4ac2ce 100644
-> > --- a/util/qemu-sockets.c
-> > +++ b/util/qemu-sockets.c
-> > @@ -220,12 +220,6 @@ static int inet_listen_saddr(InetSocketAddress *saddr,
-> >       int saved_errno = 0;
-> >       bool socket_created = false;
-> > -    if (saddr->keep_alive) {
-> > -        error_setg(errp, "keep-alive option is not supported for passive "
-> > -                   "sockets");
-> > -        return -1;
-> > -    }
-> > -
-> >       memset(&ai,0, sizeof(ai));
-> >       ai.ai_flags = AI_PASSIVE;
-> >       if (saddr->has_numeric && saddr->numeric) {
-> > @@ -344,6 +338,19 @@ listen_failed:
-> >       return -1;
-> >   listen_ok:
-> > +    if (saddr->keep_alive) {
-> > +        int val = 1;
-> > +        int ret = setsockopt(slisten, SOL_SOCKET, SO_KEEPALIVE,
-> > +                             &val, sizeof(val));
-> > +
-> > +        if (ret < 0) {
-> > +            error_setg_errno(errp, errno, "Unable to set KEEPALIVE");
-> > +            close(slisten);
-> 
-> previous code do the trick to not rewrite errno by close() call. I'm not sure it's really needed, but consistency counts. So should do the same here. Or drop the logic around errno at all in this function if it's not really needed (need to check the callers).
-> 
-> Or this way: just goto listen_failed here. And don't add extra "exit:" label. And to make final code more readable, move "listen_failed:" block to the and of the function and rename to just "fail:" (better to do it in additional preparation patch).
+Instead of having the TYPE_AARCH64_CPU subclass set
+CPUClass:gdb_core_xml_file to a different value from that that
+TYPE_ARM_CPU uses, implement the gdb_get_core_xml_file method in the
+TYPE_ARM_CPU class to return either the AArch64 or AArch32 XML file
+name.
 
-Good point, I will update it. Thank you.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpu.c         | 16 +++++++++++++++-
+ target/arm/cpu64.c       |  1 -
+ target/arm/tcg/cpu-v7m.c |  1 -
+ 3 files changed, 15 insertions(+), 3 deletions(-)
 
-> 
-> > +            slisten = -1;
-> > +            goto exit;
-> > +        }
-> > +    }
-> > +exit:
-> >       freeaddrinfo(res);
-> >       return slisten;
-> >   }
-> 
-> -- 
-> Best regards,
-> Vladimir
-> 
-> 
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index d69403fda90..75d5df4879b 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2656,6 +2656,20 @@ static const gchar *arm_gdb_arch_name(CPUState *cs)
+     return "arm";
+ }
+ 
++static const char *arm_gdb_get_core_xml_file(CPUState *cs)
++{
++    ARMCPU *cpu = ARM_CPU(cs);
++    CPUARMState *env = &cpu->env;
++
++    if (arm_gdbstub_is_aarch64(cpu)) {
++        return "aarch64-core.xml";
++    }
++    if (arm_feature(env, ARM_FEATURE_M)) {
++        return "arm-m-profile.xml";
++    }
++    return "arm-core.xml";
++}
++
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/core/sysemu-cpu-ops.h"
+ 
+@@ -2721,6 +2735,7 @@ static void arm_cpu_class_init(ObjectClass *oc, void *data)
+     cc->sysemu_ops = &arm_sysemu_ops;
+ #endif
+     cc->gdb_arch_name = arm_gdb_arch_name;
++    cc->gdb_get_core_xml_file = arm_gdb_get_core_xml_file;
+     cc->gdb_stop_before_watchpoint = true;
+     cc->disas_set_info = arm_disas_set_info;
+ 
+@@ -2743,7 +2758,6 @@ static void cpu_register_class_init(ObjectClass *oc, void *data)
+     CPUClass *cc = CPU_CLASS(acc);
+ 
+     acc->info = data;
+-    cc->gdb_core_xml_file = "arm-core.xml";
+     if (acc->info->deprecation_note) {
+         cc->deprecation_note = acc->info->deprecation_note;
+     }
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 020b32f21e9..3094df366ec 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -819,7 +819,6 @@ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+ 
+     cc->gdb_read_register = aarch64_cpu_gdb_read_register;
+     cc->gdb_write_register = aarch64_cpu_gdb_write_register;
+-    cc->gdb_core_xml_file = "aarch64-core.xml";
+ 
+     object_class_property_add_bool(oc, "aarch64", aarch64_cpu_get_aarch64,
+                                    aarch64_cpu_set_aarch64);
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index c4dd3092726..8acaf860b68 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -261,7 +261,6 @@ static void arm_v7m_class_init(ObjectClass *oc, void *data)
+ 
+     acc->info = data;
+     cc->tcg_ops = &arm_v7m_tcg_ops;
+-    cc->gdb_core_xml_file = "arm-m-profile.xml";
+ }
+ 
+ static const ARMCPUInfo arm_v7m_cpus[] = {
+-- 
+2.43.0
 
 
