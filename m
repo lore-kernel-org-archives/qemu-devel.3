@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B56EC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8012C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 14:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuBSD-0000da-Ra; Mon, 17 Mar 2025 10:28:34 -0400
+	id 1tuBST-0000oa-4A; Mon, 17 Mar 2025 10:28:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuBS7-0000Yx-TN
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:28 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1tuBSF-0000fI-UM
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:36 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuBS4-00018P-Qv
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:27 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cf3192f3bso23338305e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:28:24 -0700 (PDT)
+ id 1tuBSA-0001C1-Cu
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 10:28:35 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43cfba466b2so22627285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 07:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742221703; x=1742826503; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742221709; x=1742826509; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+SwrrX67kenI+BYFfzChB1e3tHX2NRLJrXjCUBc/EtU=;
- b=NaaUKEXZCPw0AG4v7+OB3EqnKQESV3Yi/XxS8n+cigLg9qEMeRKtON8s1rqQrceGRX
- jM0r6tOiXJLrDBrVDSXs/sLymbbp8isKMPYWs/rJ00uMNBTVgguf/FSlKsjTRzUBse++
- IZEO4Svtl/Kf/jxEIONwx+Q0SHxyoX9QjXF3oXjXTwFtzwMLXtV56d+WVxicPBUjNvZY
- RqIwoYpt/ElzST+4Tq6gM4rVHAAg+8vsNyJ+Hfm5DYaz3TUDBZSy0o45poR/+yyF2Ba0
- S0rKodHHv2xit7ZhQCoCUnuhXLrpiucyjhTth/umYHyqA90h7GJB/HbpLY8yZkD8aRAq
- 5lyA==
+ :reply-to; bh=12NoV+qUwolNTR/lyBhiD8xL6EvtlX/77nQHYFb4d7s=;
+ b=kMVHGNouJDtVDHVEQLzlJo0h7I2E44kyk1DsXF+vVzlZJ4KQcWDAz0tokvoJ6Unm/M
+ 4VGYmVMi/4SH1EQ2+6VCCb70Be6AH0N/My8qf8f7UnrV11pajbosbMXYLX8Bh25RRiCM
+ fiopiWTXOp8ymedXghNH+I5YGwWN05xA95oDmOudqOFJcpNSucz3kOosm+kDaU8a1q8g
+ alkdAgZ30e9Ti15V8uvplKSj2hk499s/bIR6A7ucaOCFaIHCWhZNdOBSV1Fan6Qz1Zd/
+ kZftuBD92e71/tRarpBrdlPd55eozSSXmWZEW+DAZnEy8mADrN3LXPDg/ygOcHy0eBrG
+ Ko/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742221703; x=1742826503;
+ d=1e100.net; s=20230601; t=1742221709; x=1742826509;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+SwrrX67kenI+BYFfzChB1e3tHX2NRLJrXjCUBc/EtU=;
- b=eu1g7brn+S3GPuIMsufcsSX/S85m9W5Bsr8YMjQ26GbMOpy9gTLEWRrZZXhFFCxbHj
- 2jY5ra44TpjpvuYH0g6FauVZv+V6R9EHld7zhA/tLBSpMQXnwG7lEJ6mQRKshTN6bYRx
- 2s5yqb8iECv1G19xPzSwzCuNRJlIEZy35m9w2wHiTjpewQb/vPjmZmz95kiVijpdV461
- oBLCmIrk1AkRA4QiFIscWIimz2WfXCgIEjJyHc2s1/fvTv9rOYYiefR9WnsT7QPxkS2V
- PJD3mDruJ6brUrEOmiNKF0AbCqPb3mv6hnWdJxhu0smPIqp9g11bFd86Qaf1xaxJGnsX
- Yz8g==
+ bh=12NoV+qUwolNTR/lyBhiD8xL6EvtlX/77nQHYFb4d7s=;
+ b=nGGwT7MjjCId6OONzV6eygTML5rG1lVpG9wm0Dx0eqOZgmIGTemgL787yqQOV+RTcj
+ 80nJkVh5x7iPm25R4Afk2dBz91hd0NTJ6Q+rpfAw0cwrbPXS08RCMlWKBPk3THBBJaWx
+ K/mAvT1S3Kwdq0NNm/Gd/4A6YwwYXah9ugvACzpLpXWlgr4wifPkGLOTd/wii60URG58
+ dHSTlaaSLj+BeMMMleM+ZnpM2MHndkidJpFhpJw1UXvqZugzpD5RVv5L8uji6Efhy+gK
+ vGO4RWPai0kvKzK1eSaeKnC52vEvsq7A4OkkyelZZV7sRoFLT7CL4DWaLEQkyg6n0Xj6
+ vhzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwLhvlff95DWhUlCcxuLj+W7nfpEwGOvIv0p1ORGMR4+mbe9QjARFEnPot7Qilm8RTi2oN4o5joNYp@nongnu.org
-X-Gm-Message-State: AOJu0YyF9OoJYU604uEWkqeStNt4tsdPHapkzO0acJrH6YlcycPnI+o9
- YD1IKY9j+cpEUkCOZXS0Hzwj0QsX1VqRAvzGf0ulCIJpmbHZQ6CEQaDmtEyYrfk=
-X-Gm-Gg: ASbGncvmiZmyPDh64QedVMBoOkPOW1PLOiPco9ppXk3mS7uLWU+X1Uwj++bf4abf0IF
- zuRASRr3M3HfGK0DY0S10mMExLvi90Cymotz4Zf7koAEgkHkZ6OBCg+rH/iDCznt+2lsDoQIWFV
- A72r23mT5c5FnlCdzzggSho2itkNjoAGAX1yUfn/R7HNp0qL5opSAK0gk07Ww2ckb5wpewD7vDV
- 4UpRNlL1qfQlPcpb+v3y0aJ0KUwWlSKNvHggt3Qu/I//n1KP9lDG6VOA8wkT2iYoeRH8MDMFj7t
- 3MaOIp4a/XxzonI45OBSCbCmn4TE65c2XRtHkq+/YAwW503NJRo=
-X-Google-Smtp-Source: AGHT+IErkAhhdXBKho8GPlk0wYiIcg5Ye7a2sQXenDsQmAoDyf4+p9dqggPgZyjl8PeI5Virdqflzw==
-X-Received: by 2002:a05:600c:3b8b:b0:43c:f895:cb4e with SMTP id
- 5b1f17b1804b1-43d1ecb13camr135691515e9.17.1742221703155; 
- Mon, 17 Mar 2025 07:28:23 -0700 (PDT)
+ AJvYcCWV6ujvSnN8uE4fUWWnagmhR8j47oh1oSE1sjg2MKzKzmk2Tg25F873HIH5FI6mxtLD/r8EaDpzGZs1@nongnu.org
+X-Gm-Message-State: AOJu0Ywvev5TMJ3olVoHCQHOFKQ1wbSgJXeZ0LWQyOgrWTeFzVUfh4uw
+ GP7you4CzyyuS1/ZlmeHdbxJ8Vz6+86MCwIN69mjmWqGb25iPnb9H5faR0BNJ1ispUlipjAVF0R
+ y
+X-Gm-Gg: ASbGncslgpyUK8KK9QfsrrRKP/AMPqmTbd+AZLP7Ul2+YNGISMJLArcKhMp1DkMs2D5
+ 5zH0q6LG1N3p8eMR1hFu2xXLTUEt2tHvbk+DAmvsDcgtgSAW2To810svKj3AgDaLpbrJe4zOFCo
+ gkfdR4m9ziRfly10wiAPwwDyi6ewJikSgj8eHP/MTAGkN6xXD6eXzw5U9yQ+0r/ILwwsJQ7Aiyg
+ DHmlNdfdXCunzP9drv0nhVGhs02xFKQq+iuqhUwk34f043uT0hODOsFtqMepZEQSb8jdZK15pkh
+ 1qLObGJvIGFcOxAMypcmZBehqI8jb2Zi9MEAYeeGnuyI+EDi/tM=
+X-Google-Smtp-Source: AGHT+IGpBHCzykbXxWcXhiu7h/aN6iP/PHg8IQjHJIIz9irlj1m3HfoLJsjVINPdWH6VTW9MCVhycA==
+X-Received: by 2002:a7b:c4c9:0:b0:43c:f969:13c0 with SMTP id
+ 5b1f17b1804b1-43d23cb505fmr111623215e9.29.1742221708482; 
+ Mon, 17 Mar 2025 07:28:28 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d1fe60ad4sm107914985e9.29.2025.03.17.07.28.22
+ 5b1f17b1804b1-43d1fe60ad4sm107914985e9.29.2025.03.17.07.28.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 07:28:22 -0700 (PDT)
+ Mon, 17 Mar 2025 07:28:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH for-10.1 2/9] gdbstub: Allow gdb_core_xml_file to be set at
- runtime
-Date: Mon, 17 Mar 2025 14:28:12 +0000
-Message-ID: <20250317142819.900029-3-peter.maydell@linaro.org>
+Subject: [PATCH for-10.1 7/9] target/arm: Move aarch64 CPU property code to
+ TYPE_ARM_CPU
+Date: Mon, 17 Mar 2025 14:28:17 +0000
+Message-ID: <20250317142819.900029-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250317142819.900029-1-peter.maydell@linaro.org>
 References: <20250317142819.900029-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,99 +101,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the CPUClass:gdb_core_xml_file setting is a simple 'const
-char *' which the CPU class must set to a fixed string.  Allow the
-CPU class to instead set a new method gdb_get_core_xml_file() which
-returns this string.
+The only thing we have left in the TYPE_AARCH64_CPU class that makes
+it different to TYPE_ARM_CPU is that we register the handling of the
+"aarch64" property there.
 
-This will allow Arm CPUs to use different XML files for AArch32 vs
-AArch64 without having to have an extra AArch64-specific class type
-purely to give somewhere to set cc->gdb_core_xml_file differently.
+Move the handling of this property to the base class, where we make
+it a property of the object rather than of the class, and add it
+to the CPU if it has the ARM_FEATURE_AARCH64 property present at
+init.  This is in line with how we handle other Arm CPU properties,
+and should not change which CPUs it's visible for.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/core/cpu.h |  5 +++++
- gdbstub/gdbstub.c     | 23 +++++++++++++++++++----
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ target/arm/cpu.c   | 36 ++++++++++++++++++++++++++++++++++++
+ target/arm/cpu64.c | 33 ---------------------------------
+ 2 files changed, 36 insertions(+), 33 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5873ee5998f..140d8a0bd79 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -132,6 +132,10 @@ struct SysemuCPUOps;
-  * @gdb_num_core_regs: Number of core registers accessible to GDB or 0 to infer
-  *                     from @gdb_core_xml_file.
-  * @gdb_core_xml_file: File name for core registers GDB XML description.
-+ * @gdb_get_core_xml_file: Optional callback that returns the file name for
-+ * the core registers GDB XML description. The returned value is expected to
-+ * be a simple constant string: the caller will not g_free() it. If this
-+ * is NULL then @gdb_core_xml_file will be used instead.
-  * @gdb_stop_before_watchpoint: Indicates whether GDB expects the CPU to stop
-  *           before the insn which triggers a watchpoint rather than after it.
-  * @gdb_arch_name: Optional callback that returns the architecture name known
-@@ -167,6 +171,7 @@ struct CPUClass {
- 
-     const char *gdb_core_xml_file;
-     const gchar * (*gdb_arch_name)(CPUState *cpu);
-+    const char * (*gdb_get_core_xml_file)(CPUState *cpu);
- 
-     void (*disas_set_info)(CPUState *cpu, disassemble_info *info);
- 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 282e13e163f..565f6b33a90 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -565,15 +565,30 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
-     g_array_append_val(cpu->gdb_regs, s);
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 75d5df4879b..9c6e8f5a935 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1608,6 +1608,35 @@ static void arm_set_pmu(Object *obj, bool value, Error **errp)
+     cpu->has_pmu = value;
  }
  
-+static const char *gdb_get_core_xml_file(CPUState *cpu)
++static bool aarch64_cpu_get_aarch64(Object *obj, Error **errp)
 +{
-+    CPUClass *cc = cpu->cc;
++    ARMCPU *cpu = ARM_CPU(obj);
 +
-+    /*
-+     * The CPU class can provide the XML filename via a method,
-+     * or as a simple fixed string field.
-+     */
-+    if (cc->gdb_get_core_xml_file) {
-+        return cc->gdb_get_core_xml_file(cpu);
-+    }
-+    return cc->gdb_core_xml_file;
++    return arm_feature(&cpu->env, ARM_FEATURE_AARCH64);
 +}
 +
- void gdb_init_cpu(CPUState *cpu)
++static void aarch64_cpu_set_aarch64(Object *obj, bool value, Error **errp)
++{
++    ARMCPU *cpu = ARM_CPU(obj);
++
++    /*
++     * At this time, this property is only allowed if KVM is enabled.  This
++     * restriction allows us to avoid fixing up functionality that assumes a
++     * uniform execution state like do_interrupt.
++     */
++    if (value == false) {
++        if (!kvm_enabled() || !kvm_arm_aarch32_supported()) {
++            error_setg(errp, "'aarch64' feature cannot be disabled "
++                             "unless KVM is enabled and 32-bit EL1 "
++                             "is supported");
++            return;
++        }
++        unset_feature(&cpu->env, ARM_FEATURE_AARCH64);
++    } else {
++        set_feature(&cpu->env, ARM_FEATURE_AARCH64);
++    }
++}
++
+ unsigned int gt_cntfrq_period_ns(ARMCPU *cpu)
  {
-     CPUClass *cc = cpu->cc;
-     const GDBFeature *feature;
-+    const char *xmlfile = gdb_get_core_xml_file(cpu);
+     /*
+@@ -1735,6 +1764,13 @@ void arm_cpu_post_init(Object *obj)
+      */
+     arm_cpu_propagate_feature_implications(cpu);
  
-     cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
++    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
++        object_property_add_bool(obj, "aarch64", aarch64_cpu_get_aarch64,
++                                       aarch64_cpu_set_aarch64);
++        object_property_set_description(obj, "aarch64",
++                                        "Set on/off to enable/disable aarch64 "
++                                        "execution state ");
++    }
+     if (arm_feature(&cpu->env, ARM_FEATURE_CBAR) ||
+         arm_feature(&cpu->env, ARM_FEATURE_CBAR_RO)) {
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_reset_cbar_property);
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 2f87df082cd..49cf06a7bdc 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -781,45 +781,12 @@ static const ARMCPUInfo aarch64_cpus[] = {
+ #endif
+ };
  
--    if (cc->gdb_core_xml_file) {
--        feature = gdb_find_static_feature(cc->gdb_core_xml_file);
-+    if (xmlfile) {
-+        feature = gdb_find_static_feature(xmlfile);
-         gdb_register_feature(cpu, 0,
-                              cc->gdb_read_register, cc->gdb_write_register,
-                              feature);
-@@ -1644,7 +1659,7 @@ void gdb_extend_qsupported_features(char *qflags)
- static void handle_query_supported(GArray *params, void *user_ctx)
+-static bool aarch64_cpu_get_aarch64(Object *obj, Error **errp)
+-{
+-    ARMCPU *cpu = ARM_CPU(obj);
+-
+-    return arm_feature(&cpu->env, ARM_FEATURE_AARCH64);
+-}
+-
+-static void aarch64_cpu_set_aarch64(Object *obj, bool value, Error **errp)
+-{
+-    ARMCPU *cpu = ARM_CPU(obj);
+-
+-    /* At this time, this property is only allowed if KVM is enabled.  This
+-     * restriction allows us to avoid fixing up functionality that assumes a
+-     * uniform execution state like do_interrupt.
+-     */
+-    if (value == false) {
+-        if (!kvm_enabled() || !kvm_arm_aarch32_supported()) {
+-            error_setg(errp, "'aarch64' feature cannot be disabled "
+-                             "unless KVM is enabled and 32-bit EL1 "
+-                             "is supported");
+-            return;
+-        }
+-        unset_feature(&cpu->env, ARM_FEATURE_AARCH64);
+-    } else {
+-        set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+-    }
+-}
+-
+ static void aarch64_cpu_finalizefn(Object *obj)
  {
-     g_string_printf(gdbserver_state.str_buf, "PacketSize=%x", MAX_PACKET_LENGTH);
--    if (first_cpu->cc->gdb_core_xml_file) {
-+    if (gdb_get_core_xml_file(first_cpu)) {
-         g_string_append(gdbserver_state.str_buf, ";qXfer:features:read+");
-     }
+ }
  
-@@ -1701,7 +1716,7 @@ static void handle_query_xfer_features(GArray *params, void *user_ctx)
-     }
+ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+ {
+-    object_class_property_add_bool(oc, "aarch64", aarch64_cpu_get_aarch64,
+-                                   aarch64_cpu_set_aarch64);
+-    object_class_property_set_description(oc, "aarch64",
+-                                          "Set on/off to enable/disable aarch64 "
+-                                          "execution state ");
+ }
  
-     process = gdb_get_cpu_process(gdbserver_state.g_cpu);
--    if (!gdbserver_state.g_cpu->cc->gdb_core_xml_file) {
-+    if (!gdb_get_core_xml_file(gdbserver_state.g_cpu)) {
-         gdb_put_packet("");
-         return;
-     }
+ static void aarch64_cpu_instance_init(Object *obj)
 -- 
 2.43.0
 
