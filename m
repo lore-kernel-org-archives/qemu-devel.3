@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 557BDC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE07C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu4Z9-00049q-32; Mon, 17 Mar 2025 03:07:15 -0400
+	id 1tu4eK-0005i5-Tf; Mon, 17 Mar 2025 03:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4Yo-0003am-UC
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:06:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4dq-0005fH-5G
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:12:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4Yn-0002YU-BP
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:06:54 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4do-0003Am-2F
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:12:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742195211;
+ s=mimecast20190719; t=1742195521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iX+ZBvCwKNQUkx71u4WL2Mede/aZ58kO88LKJxYdB1U=;
- b=RZTcvee71ieseLxD3vLVFYYul3Jv9kgSeVH3JDJo4hgDRhKK48SWVoEaUWfPpArXgYfKfT
- YWDySU1ab5pQhkb6xMXrPFLCUjFMvnaQzybhHrP4e8bysXyWcUXzr3pUz0yKjuxtmhDX3L
- LWsbtcmlmOqRPly6PCVF6kuZFY35Dqw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g8RmMrGTNPbKNn1duiV8XtfqEKLNsIPYoOZb54FiNOQ=;
+ b=b1psirondZv17PUPLzVgOZIez4vKArp6qqFtUXXeMVMiI0MC+TCyLHde8peZH1z8adbevT
+ VgoWmnBPOID6sj7VY4qT0wfrNgtNlJ7TdyBV2EF5Rix9kWW5BCRMfu8jQUjAC40dTFUqKX
+ +iiZZgD7MwkqUc/15PlPyMZGM7nJBds=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-WbLZfrAZM8WYfOEEgRIuOA-1; Mon, 17 Mar 2025 03:06:50 -0400
-X-MC-Unique: WbLZfrAZM8WYfOEEgRIuOA-1
-X-Mimecast-MFC-AGG-ID: WbLZfrAZM8WYfOEEgRIuOA_1742195209
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912e4e2033so1608407f8f.0
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:06:49 -0700 (PDT)
+ us-mta-649-9qlx7qIWMJ6NEpbc_EyhEQ-1; Mon, 17 Mar 2025 03:10:51 -0400
+X-MC-Unique: 9qlx7qIWMJ6NEpbc_EyhEQ-1
+X-Mimecast-MFC-AGG-ID: 9qlx7qIWMJ6NEpbc_EyhEQ_1742195450
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d007b2c79so13602305e9.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:10:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742195209; x=1742800009;
+ d=1e100.net; s=20230601; t=1742195449; x=1742800249;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iX+ZBvCwKNQUkx71u4WL2Mede/aZ58kO88LKJxYdB1U=;
- b=ktpwk74Np7udE4rlfpsV4LRMymzZfiGJY7BrXkRs7yST4eatJhuXgwW7oqesIVB+vG
- mxdCtttNZcctPQT+Ak/mvSEA/aXkgApB0z7ZUgKyFNV9SufRl87NENXgzGfqmP0YyMTs
- UnYPIKxVg/MClkME/ga7HgigLsIsTw+gMolgE35NurpjKu1FXco/wQrKGinkxcIjr9IE
- Gjsh6tg/h4xW/roPCS9yJtVV3V9qv/y8h9+ZGPSS4tJ6PtUq3914SAyWO9VO2e8IEzX4
- o2/PaRDbC9ym3JpipGKTTwrYYOzTO8InhzVJJlhgRHiaGeUW6l6Z+5FvhN89UnmF64Hs
- efaw==
+ bh=g8RmMrGTNPbKNn1duiV8XtfqEKLNsIPYoOZb54FiNOQ=;
+ b=DOcSbf/ju3QBGLrWrOoN6vGQzYVnW53JILX7tejYglm7v2ghbm9ck4VAMBLgQCURmg
+ evUUqhEeGaf+DKp7YIqLGQcX4lFb4lv18ZZfENJscnGsHOV9F2rTbVfu+7YHr/DPLR0U
+ Kp93Br6su0IlQL6o24j4pk2bKr4jME9fVNx9GDVvyNsdH5IE4uUaeOyNmPAmUk77CG+9
+ zznofToCATe/XTKWlgHWtdwJi0odV1pscHnbsNPcOfnNYGIpFUAmelCEpD3uKnr28jRj
+ hRWETkVfCxnOgoMWt9/fjbgZFPpwqz6foxkBQI6oZGC/XUJ04Pjj0cPyxlgz7DIHjs4V
+ Sr0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYox7nc16l2vJl5Uuy43XQUEQUQ/6sOl2QGiGDzEwHwmt6hABzO702PPwW0r5Qep3CudXK3uwotXju@nongnu.org
-X-Gm-Message-State: AOJu0Yx9kVj3k0CmYpKR2E7bsYJbH4r0CjtgfKGY0pMqlibYIwxHreYD
- 2PQZqcDG6QvjNi4UeLXfFQhJk81WiUOBfyMTm0cXG1TDdxxf3I1B80Fm+P4pvd7PlYEXSECVtPr
- UBH4g3mFJaARru3kfr++NDiFBteiujzk7Os28F5nb+5GNSEp2e+xp
-X-Gm-Gg: ASbGnctFSaFm902z1vmA9/YHFn78IqmSdgky+VuDL1xjP6IU6/TwRrfWPJB1OI5Ts5z
- el4bNiNdF8aAxIEaomak3xS/tEeNGp4/dxphRAXzli5Y3iuUUotE6EOVbpD+Oi/GBzS+FQlZfIT
- tYmAj98RcxS9HK2Xv7eyKGFdVooHP2xv4coyOIA6opsze/gyczD+gCavFRbZLolgjyI8mq+WCSO
- m51FjSJc32lQ5oUodtJl9mY3GpYCqlMr4BCJ3YRTnwMp7j5+rXX5W3KvBkewDZwN+pRcsYS+Fic
- w5Rqc2Sdt8aGgin58XUYwBPAJXs3ZtOQZ4tfUfbpWW2VrYVhfOarTA==
-X-Received: by 2002:a05:6000:1aca:b0:390:d6ab:6c49 with SMTP id
- ffacd0b85a97d-397209627cbmr14780750f8f.35.1742195209000; 
- Mon, 17 Mar 2025 00:06:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfsEfgJ5la1vTrWAeVGSNIu1qRbRUKliwO1hPVLKHTT+15WUFG4yggjhelYlJ6AmI1xUHoww==
-X-Received: by 2002:a05:6000:1aca:b0:390:d6ab:6c49 with SMTP id
- ffacd0b85a97d-397209627cbmr14780724f8f.35.1742195208634; 
- Mon, 17 Mar 2025 00:06:48 -0700 (PDT)
+ AJvYcCUYqhmaVVx3jw8OmnKD2icgPRDWy7wreCGaimOZ+1ctVJXRPY5SvPoY08HMCb9v+8QL61qGJD+Fyjca@nongnu.org
+X-Gm-Message-State: AOJu0YzijXMyM4uO+9QxN3RSSbmrFlWHuSbOuJNgfssFYbo6gEbGOROU
+ qRIeNx5kqRVqVeIvDAqzsT53zYGJLJcT4kywNSCZZObcub7Sr4CmbH2HlKh93U2p6Qi020QTPhe
+ VHjNZcZMjhdzJKP1mYW3ijP5KuwF4AXfpDKQbkNlmS4ySwxcFoPkJUH+uNh34Ev0=
+X-Gm-Gg: ASbGnct61muvK6FsbBZpXQdcqg/tklqnBXuHEoK0jsGtKduhENNU4M5nHUjI97u7m3f
+ cDyB5FZcPXsGJCQulxU3sL7op1EcDQrgkN4wffg4ibPBOnMqJRVeYeazIgkRflRju0IIOGOlczz
+ g0eVPW7nh7I2w98/GgQSTvWQZy8rKmML0BLDO4t+ThjePPlLQhFnxK+dsSEl0iFmzu89MToVnpV
+ 2hknMjFxm8ZyChACp53fkSMXbh9pEjBIBvjbgpSK7GGWLa9N20GjgWt8UuiVCjwoaF1aD7N+H5q
+ oXrBJY6oJ3WsXB61fZPm8WrE8wvFx8BKlxyGua2/RrEu2WLT/b/llg==
+X-Received: by 2002:a05:600c:46d1:b0:43c:eec7:eab7 with SMTP id
+ 5b1f17b1804b1-43d1ec81224mr130118445e9.11.1742195449149; 
+ Mon, 17 Mar 2025 00:10:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFW8cqxBvjSV++oXGbLQhYc4clyLfOwenxfD94qXCGkaw5Wx5yecL5aZpyNcdTL7bRQRoBzCQ==
+X-Received: by 2002:a05:600c:46d1:b0:43c:eec7:eab7 with SMTP id
+ 5b1f17b1804b1-43d1ec81224mr130118265e9.11.1742195448747; 
+ Mon, 17 Mar 2025 00:10:48 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb7ebbc3sm13897117f8f.88.2025.03.17.00.06.47
+ 5b1f17b1804b1-43d1ffb626esm96157085e9.8.2025.03.17.00.10.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 00:06:48 -0700 (PDT)
-Message-ID: <0082d527-8366-449a-8450-36027c2c492a@redhat.com>
-Date: Mon, 17 Mar 2025 08:06:46 +0100
+ Mon, 17 Mar 2025 00:10:48 -0700 (PDT)
+Message-ID: <edb2f134-1053-40d1-89ed-57404b14398d@redhat.com>
+Date: Mon, 17 Mar 2025 08:10:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] ppc/xive2: Fix logical / bitwise comparison typo
+Subject: Re: [PATCH 4/6] ppc/spapr: Fix possible pa_features memory overflow
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.vnet.ibm.com>,
  Michael Kowal <kowal@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
 References: <20250317052339.1108322-1-npiggin@gmail.com>
- <20250317052339.1108322-4-npiggin@gmail.com>
+ <20250317052339.1108322-5-npiggin@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -129,19 +130,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250317052339.1108322-4-npiggin@gmail.com>
+In-Reply-To: <20250317052339.1108322-5-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,14 +159,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/17/25 06:23, Nicholas Piggin wrote:
-> The comparison as written is always false (perhaps confusingly, because
-> the functions/macros are not really booleans but return 0 or the tested
-> bit value). Change to use logical-and.
+> Coverity reports a possible memory overflow in spapr_dt_pa_features().
+> This should not be a true bug since DAWR1 cap is only be true for
+> CPU_POWERPC_LOGICAL_3_10. Add an assertion to ensure any bug there is
+> caught.
 > 
-> Resolves: Coverity CID 1593721
+> Resolves: Coverity CID 1593722
+> Fixes: 5f361ea187ba ("ppc: spapr: Enable 2nd DAWR on Power10 pSeries machine")
+> Cc: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 > Cc: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-
+> ---
+>   hw/ppc/spapr.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index a415e51d077..9865d7147ff 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -296,6 +296,7 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+>           pa_features[40 + 2] &= ~0x80; /* Radix MMU */
+>       }
+>       if (spapr_get_cap(spapr, SPAPR_CAP_DAWR1)) {
+> +        g_assert(pa_size > 66);
+>           pa_features[66] |= 0x80;
+>       }
+>   
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -173,23 +192,5 @@ Thanks,
 
 C.
 
-
-> ---
->   hw/intc/xive2.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 311b42e15d3..7d584dfafaf 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -1344,7 +1344,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
->           return;
->       }
->   
-> -    if (xive2_end_is_crowd(&end) & !xive2_end_is_ignore(&end)) {
-> +    if (xive2_end_is_crowd(&end) && !xive2_end_is_ignore(&end)) {
->           qemu_log_mask(LOG_GUEST_ERROR,
->                         "XIVE: invalid END, 'crowd' bit requires 'ignore' bit\n");
->           return;
 
 
