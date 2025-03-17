@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20957C28B30
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 13:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA78C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 13:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuAj2-0001Yy-AY; Mon, 17 Mar 2025 09:41:53 -0400
+	id 1tuAll-0002i1-Jt; Mon, 17 Mar 2025 09:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAim-0001W6-O7
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:41:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAlk-0002hl-OQ
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:44:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAil-0000k7-2D
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:41:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAlj-00013u-Ak
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:44:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742218892;
+ s=mimecast20190719; t=1742219078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QqfwtvlblDJBk8WUeg9UYrPs059izbFi06n4mzryQ5g=;
- b=MIvyPBnl9CRQ4PowbIh1mCKQhIlWEf00/MSWAibSVspGyRlnKWFK4mx4nH0Iey3x/8PUGd
- rf0MUvjQJDfDLmbwg7JQRRcgiTRv0FBAD2sZKreV+je0s4ZbuQJBSfBU/Bgy/BSLUZq2XH
- d64dTC1V8siK7MOmEF7PUihwFsebnoA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wkpOUh9GuXYHFBX5ZjAe2WSGdwKZUFy9h3xJz0a3GCc=;
+ b=aIW6LvexLJOjy/29o4tEaJkYO1QTFaVQilHJSwzeATVmbt9bgMc2jiUCCtnJJgCTMPJ5bD
+ x7L96qXD/dNU9m6MzjgtKg2ynBVGwTtoU+yNEeQplAGbruTtWeSxGGELkld5n3eQ/ZJ0NW
+ OOEF7c5H9P8TGLJ0FcgZjrnMkFUHJlc=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-uP3YFhJQOH6k6dbPMiDL2g-1; Mon, 17 Mar 2025 09:41:31 -0400
-X-MC-Unique: uP3YFhJQOH6k6dbPMiDL2g-1
-X-Mimecast-MFC-AGG-ID: uP3YFhJQOH6k6dbPMiDL2g_1742218890
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-39131f2bbe5so1860191f8f.3
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 06:41:31 -0700 (PDT)
+ us-mta-627-2zFrECMvPLyi2FRzAxEOFw-1; Mon, 17 Mar 2025 09:44:36 -0400
+X-MC-Unique: 2zFrECMvPLyi2FRzAxEOFw-1
+X-Mimecast-MFC-AGG-ID: 2zFrECMvPLyi2FRzAxEOFw_1742219075
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3978ef9a284so1025403f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 06:44:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742218890; x=1742823690;
+ d=1e100.net; s=20230601; t=1742219075; x=1742823875;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QqfwtvlblDJBk8WUeg9UYrPs059izbFi06n4mzryQ5g=;
- b=wRjpnLJsSTfEVg8dZplko5gry8qE7pAcDjRCCHsRfQfzlOfQ7nfvaNk5UuvgXZy8Je
- 34tH4rpnjioMB+XZYVazfgmwSC1bX+SC/F6xf6QVDMJAFI6cW9a3j2TeJOwes3pni1Yy
- uru35U3H5VY+qbJ2ZI+73C/kCw5u1xmQA/tuh8j2sIEcRNajs7vgYQYzfFoHzYv+wzJR
- PRbK1FMbJsz4EX9N2938Hj1ZbDt2uiTVrMHbtH/Pqcb4yEqKsp13nuLVPUWQcy0crLuu
- 8h5WX9IkuCA23cCwQburHN3Fov5x46vD/yW5V8Wu83yOSh4hf+xhS4KhNKuNkLZReX2S
- pBkQ==
+ bh=wkpOUh9GuXYHFBX5ZjAe2WSGdwKZUFy9h3xJz0a3GCc=;
+ b=vWmbZNROeM/u+Bx7IxRHMZT4aP3tytnTpo5t9jqWSAd16JDzCRjBX3HltXHgD/o2fD
+ m0qjjE79P3BBn82IcJxnYjFWR7pqMktMt/W3QA1NjMR+h+euppt2ApG0PXbvXKjvwmap
+ /x/71OOc5EUbR4jg5wMC30uJ4YBBy1TgyohQUZ1a/lGF7EaF9Jc7Laqmab2YhkEiNwRH
+ gNFQ06JG3r3qPr2jWG4WoH5dWiwVjhBzOklS0vtJGmPzJokWM2l1Xw9CLcmSpTzjcvgH
+ ibZ5xSGEJzQ0nSGD8RB2PdMJMjPyxW7fezMeDgT6wS9+VKkoUfaLSPHvjeVjZA1wJFrB
+ SaWQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKxkpCLKJMVVNvTaG4v4HV1QTMCeqhlk3JEta1lYPDb4MYKByUvIvB7j9zdGzWXMuRXkSVgEgDLNbP@nongnu.org
-X-Gm-Message-State: AOJu0Yy/P6VTeuFkm7DJ29N28xSgJiuQM1xVacPAFqpRcekL3XiLfTDm
- og0/mKyZtY2lZDUi4gTNEfYyoEzElfZXdg5SphWIjK7voVVoScf9wpW7/VUR5CxpDl5FKCzpemI
- bNEBM4yDCco1nOj+hw8a/MepCUQexqLq/USD5TfKUjXpA2uFu9oJh
-X-Gm-Gg: ASbGncu44jettX6+DFvBvi91u46G9crZZySPG9GS7EWkHw42w/5bp9LJB1W6mDLgude
- HQLWgFgwXV9618JBSbS+HZ/ewOgLsl8B4nxfeep3ycy0WSVqZjkpW/O04g47//n9GztKSk74soo
- HWmENi/PS3MNmf66WX6KA3HV177qAXfGGg4QS4THNoIjfY1QOORsyLBz33mbFkD4s0bUOGeZkZ7
- odr7qFVe0K5PZsXbNsWfkymk6StrxDU7K/+VOJqaAyo9ug3fq6147V5dCGxMGUfadZNntKBbH4K
- E2B6zMGKuAAof7WwiAFfHg2QetOTa0BaW+eeKDJAVGyTA4Y=
-X-Received: by 2002:a05:6000:1acb:b0:391:3406:b4df with SMTP id
- ffacd0b85a97d-3971d9f0e43mr10555913f8f.20.1742218889965; 
- Mon, 17 Mar 2025 06:41:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAF1+x1HycAfyO3vhtywQPqUueewhvtliwc45br8x8/quXxEbW8bRKeEEX5sFjSAw0MpCTEg==
-X-Received: by 2002:a05:6000:1acb:b0:391:3406:b4df with SMTP id
- ffacd0b85a97d-3971d9f0e43mr10555895f8f.20.1742218889563; 
- Mon, 17 Mar 2025 06:41:29 -0700 (PDT)
+ AJvYcCXrysS+wA2vrfmLpgJy5uU5CU0G2BzxmBPof+7qqHq3S1BMagowTda7CRmDkNC2s/U0l0AO1QeZP4SO@nongnu.org
+X-Gm-Message-State: AOJu0Yx67gQFTXBgq+SlQEdJYhyr1n5OuUnAPYWWBGwA/n/R8WxK9ORf
+ +DjCp6dSxACroncLeBXAaQ+YthrfJkKz/oHV3zvQs8rYWaXMa6MbWPCMTSj1VtyakDRJEwK5VX8
+ 51jFHSnxRLqhrGxW94rtj2uiPNx5g4pCloEWgbKcYI6wZibW8ABMh/mbz7Og8
+X-Gm-Gg: ASbGncu6Fl8b8+7aLhNTUcEmoIj6XEerSKoaJnahjZOQ/7bZclTApADEElef1eZmihA
+ Ne4lz1eu5OAuixmGUN8uvw+/+/7xToY3SXHpS/4eBstGRTZpG1Z3axM0IC7wFMq6v0o9tzacoZi
+ 7VoIZa7ODNBG+k4cdQr1+lAaY6zLXNkuX3Qt6wJRUGNUWS1dBKXw+kSyqr1ZOiXifgnC5gdf1VO
+ s9LbI/zy/FvZa2kvEj5nBpPCLRCJEGy/YGGG949mPa3YTcggnXPhM0lB1cF4QdLC9cou6dKPY/N
+ IebBJ+sjdNeutpqsTFj48GtrCDJReayYr3MqnKzKwqg4suA=
+X-Received: by 2002:a05:6000:184d:b0:391:47d8:de3e with SMTP id
+ ffacd0b85a97d-3971ffb1c82mr13935773f8f.46.1742219075349; 
+ Mon, 17 Mar 2025 06:44:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGmX1koR/A/led3gLlbva3lMdWgV2e7FQuGEt7XwXjS1iBfI1m4xdcLnZJJMys8PBYsV15rsg==
+X-Received: by 2002:a05:6000:184d:b0:391:47d8:de3e with SMTP id
+ ffacd0b85a97d-3971ffb1c82mr13935750f8f.46.1742219074965; 
+ Mon, 17 Mar 2025 06:44:34 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
  [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb40cdc5sm15031349f8f.80.2025.03.17.06.41.28
+ ffacd0b85a97d-395cb7eb9ccsm15292514f8f.96.2025.03.17.06.44.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 06:41:29 -0700 (PDT)
-Message-ID: <f2168937-5252-4e91-80d6-2ad344f443fa@redhat.com>
-Date: Mon, 17 Mar 2025 14:41:27 +0100
+ Mon, 17 Mar 2025 06:44:34 -0700 (PDT)
+Message-ID: <9af888f6-6826-4ae4-9c4b-7909bb4ce14a@redhat.com>
+Date: Mon, 17 Mar 2025 14:44:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 5/5] s390: implementing CHSC SEI for AP config
- change
-To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, clg@redhat.com, akrowiak@linux.ibm.com
-References: <20250311151616.98244-1-rreyes@linux.ibm.com>
- <20250311151616.98244-6-rreyes@linux.ibm.com>
+Subject: Re: [PATCH v3 1/4] hw/s390x/skeys: Declare QOM types using
+ DEFINE_TYPES() macro
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+References: <20250310151414.11550-1-philmd@linaro.org>
+ <20250310151414.11550-2-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,17 +138,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250311151616.98244-6-rreyes@linux.ibm.com>
+In-Reply-To: <20250310151414.11550-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -157,67 +166,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/03/2025 16.16, Rorie Reyes wrote:
-> Handle interception of the CHSC SEI instruction for requests
-> indicating the guest's AP configuration has changed.
+On 10/03/2025 16.14, Philippe Mathieu-Daudé wrote:
+> When multiple QOM types are registered in the same file,
+> it is simpler to use the the DEFINE_TYPES() macro. In
+> particular because type array declared with such macro
+> are easier to review.
 > 
-> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-> Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-> Tested-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/ioinst.c | 11 +++++++++--
->   1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
-> index a944f16c25..f061c6db14 100644
-> --- a/target/s390x/ioinst.c
-> +++ b/target/s390x/ioinst.c
-> @@ -17,6 +17,7 @@
->   #include "trace.h"
->   #include "hw/s390x/s390-pci-bus.h"
->   #include "target/s390x/kvm/pv.h"
-> +#include "hw/s390x/ap-bridge.h"
->   
->   /* All I/O instructions but chsc use the s format */
->   static uint64_t get_address_from_regs(CPUS390XState *env, uint32_t ipb,
-> @@ -573,13 +574,19 @@ out:
->   
->   static int chsc_sei_nt0_get_event(void *res)
->   {
-> -    /* no events yet */
-> +    if (s390_has_feat(S390_FEAT_AP)) {
-> +        return ap_chsc_sei_nt0_get_event(res);
-> +    }
-> +
->       return 1;
->   }
->   
->   static int chsc_sei_nt0_have_event(void)
->   {
-> -    /* no events yet */
-> +    if (s390_has_feat(S390_FEAT_AP)) {
-> +        return ap_chsc_sei_nt0_have_event();
-> +    }
-> +
->       return 0;
->   }
+>   hw/s390x/s390-skeys.c | 39 +++++++++++++++++----------------------
+>   1 file changed, 17 insertions(+), 22 deletions(-)
 
-  Hi!
-
-This unfortunately fails to link when configuring QEMU with the 
-"--without-default-devices" configure switch:
-
-/usr/bin/ld: libqemu-s390x-softmmu.a.p/target_s390x_ioinst.c.o: in function 
-`ioinst_handle_chsc':
-/tmp/qemu-mini/target/s390x/ioinst.c:587:(.text+0x1ce1): undefined reference 
-to `ap_chsc_sei_nt0_have_event'
-/usr/bin/ld: /tmp/qemu-mini/target/s390x/ioinst.c:578:(.text+0x1d1c): 
-undefined reference to `ap_chsc_sei_nt0_get_event'
-collect2: error: ld returned 1 exit status
-
-I guess you have to rather use some callback mechanism, stubs or #ifdefs 
-here instead.
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
