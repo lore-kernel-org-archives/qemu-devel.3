@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5CFC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 20:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884C8C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 20:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuGlN-00037v-F0; Mon, 17 Mar 2025 16:08:43 -0400
+	id 1tuGme-00042n-A7; Mon, 17 Mar 2025 16:10:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuGl5-00036C-GX
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 16:08:23 -0400
-Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
+ id 1tuGmS-0003yB-76
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 16:09:52 -0400
+Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuGl1-00007D-Un
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 16:08:23 -0400
-Received: by mail-qk1-x731.google.com with SMTP id
- af79cd13be357-7c597760323so57063485a.3
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 13:08:19 -0700 (PDT)
+ id 1tuGmQ-0000Wi-Lh
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 16:09:47 -0400
+Received: by mail-qv1-xf30.google.com with SMTP id
+ 6a1803df08f44-6e8efefec89so43011456d6.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 13:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742242099; x=1742846899; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742242185; x=1742846985; darn=nongnu.org;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=9NYGOcCw6SoYA6v2e93u1bqwnABs3nwQw7RLHYZ/QgE=;
- b=MFsn8bX9w82kKqk5W32rEB/f7ZIoFREtdCy9U2tdTkYeRdWAWzXoSB5BswnNMpvoFv
- 48IDeQKnVlUK5gquDes6PHuMFbxgJpoJu9QOzRCATN2rtqKqy0hI9nZDkYmnrZ8o9HTu
- whOy9SzehKBxVJtglWbMJ+w7ycUQFhPsikLUR4H/GgziONK58aBZ5QzFkmhvLD7zuaDa
- h9i1v1evu68kMitYXqPlB+E4d0sGaCx3RA5rpRfz80nnoFIbp2FXaEZqralyc4qZHg5r
- 3anr5UuRAqvZ3P9cDLhfKj7Ivf6qZigY4sp9DE0mMGc3ljZPA5QBH+yjte7Bj7hL+5rL
- DFXQ==
+ bh=75jIoJ/CGWsgn6LIvBjiiHc8kVh94jDqJOfCPj+nERk=;
+ b=U0UQOCiEPhQ+Iyg7i9fSdEantwEW4QbNR4lvsxd3kRx3sBHC/tC3p5ul1chu24UjQA
+ XyYZ+ug0p/sRByjb1cpe6oQyPR8oDFPfl044sIu6RCBZww+7FiZoUSHtIqp8NfqGWbQo
+ kgn6ZES069pJ1Mr1hQ8pGJyB9kyvDUeqOeig2ZCa9Zfnv8e+RUBxaTK2w9BoxC6bcnJh
+ OtDDHPog/Y8qocWl4//s1ofOKxybNTu61Rgq69/YGBlz/mkBajOngqiEqf8urVGTbi7O
+ Esax9+EL4IWXY31JrEk7p6O4ieqDRqRj7a7dpGAbWRv/vO4qCgwDrm/7+d4UTsaPd73q
+ f16g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742242099; x=1742846899;
+ d=1e100.net; s=20230601; t=1742242185; x=1742846985;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9NYGOcCw6SoYA6v2e93u1bqwnABs3nwQw7RLHYZ/QgE=;
- b=LAyKrau0Zghc1J1Y5Qhm5v2f2HAgBc/qAxDDJAecSBOiq+O9B8sPb8R35CN2N3Ultv
- uVYwPMOTFJ4EkpViroIxGoHlHdpaYdN3CwBkdFDqAv4iGks1LhfNh8L9feWUDo0FD4WT
- oxwj7TuVZJ2TK46GafA8ChxNi2m2+oCIOUgTIY5dAVpgaE99vkHuDW6q8F2edHKT9UPC
- Oq2psKYecmyM/Tt1NqItoCapM+PekAEIFHF33NPzadFP6l4juP+SwQhJfIf0N5iOQztd
- PPkXiZThiaKF87kfLqX3DfyCK5nalbojU9czZ6ThGyLLllUXMRm+y5OwhBRDftKCK9Gn
- ykZA==
+ bh=75jIoJ/CGWsgn6LIvBjiiHc8kVh94jDqJOfCPj+nERk=;
+ b=DvAd+vLZKAiQM0dBvvjZWia6S25Dn/cXPinmzB5LZI3s9tMgDyQqtb6ZFFVEJ0XxzH
+ 7Crq7bcoANdJni25Wr37IjJCWqtSydfOps55qVQ1zugrKl0VwyEXyDfnbfp/bF4AHiZQ
+ KX0SL7QkwfvxchBv241KhZ+fYoORntiD+Ds4c4cqEQijoTXaDcG17BEjNuOoLcf6zrar
+ /nlRP32yo6sgKb/sCoCz20OV+NENfXLhrCeAyHXDHi/m/Orsc1HiWLYvrUB9qVCpSMMU
+ wU0V+ly+aIJomub+3olyUrI5jA+HpHCdutIWbsfVj4mBsRGncItk3sUZluPMJYSD9X6I
+ ZjNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWKCUQDsDMDTH5IlfSpY4I1Xe2FQKdU6KbVgFynha3R5pnPi5ZF9IIpBV8qbzTRDD5jWKfjye4365X@nongnu.org
-X-Gm-Message-State: AOJu0YzJ3Vsvr+NakAElhdf/Y1rfCeZxQggqUUhcIX7oXvynlpHNC9E4
- fyGGo2jRQzyGI3sNhg3wu7opKAdhZesjAG9nZ04yiBrx/sxsCGxO
-X-Gm-Gg: ASbGncuvfOzWVANNnKb66+TJ51ny+4RZx1Bkdfx+9c13gpYWMRdbRN4GcO3SsBufYTd
- 9B8HJGURuDjyqlkmR/NlRlks9Va4f4Fr0rtVnjFW0mSggqyvpZW+hrSRYnkQgCTG8p1IukrK5XF
- AjALejiNf0B45pONSxR9KgQjt/HKEheGljbtTDNlFmtZwG2L4F3huwms0nbwatDvOCSeV5j7ia0
- AqT6w8ljThJ2ek6BlRtqBQb94Jp12FQDmSQCNXWy2N2psaeQXXkn6kU9DdH/VI5S7twIYnNmrsh
- AYq2yVRqBrYtivjdX1uyAx3TbAmXDRm2zeGwBwiLc6HppbtWQDGWlqashv9pAAs=
-X-Google-Smtp-Source: AGHT+IERV5Z8b28znTkzywvfrR5h/z4aBwOXLma0aYb7v938jCzW+9/wTX6y7u5K7bZ/lUrvpYaNGQ==
-X-Received: by 2002:a05:620a:454e:b0:7c5:54d8:3d42 with SMTP id
- af79cd13be357-7c59b1e84f7mr131900285a.31.1742242098882; 
- Mon, 17 Mar 2025 13:08:18 -0700 (PDT)
+ AJvYcCW6smSFt6A/Bat5Hdx+Al7twMiOroBl66Ptz+Ut6e4O+z1fvFmFDddw95JIl5eshZZXByhwKavRB8aY@nongnu.org
+X-Gm-Message-State: AOJu0YyU0zTbynKu59VMe8DnQ6P1MrqTpRhug7+RtA/untIva2/U6+cw
+ XMqApon5YjV0DHPI8EAW0vtV0jz1XYs+HwOQleHtmt0SMveKTdMD
+X-Gm-Gg: ASbGncvHLBCBOpN4PykYOT72Gvvn2J/+O+EtstuE27a1hdR35AAD12KNUCfTyMHop9p
+ 3lDzZaZL1HGttITOnuGyhz+EG3KRRfrCjwnjBKwdxy4oJ4Yn86j+JgoYO2Yvp93Ak9rOiJtGgmr
+ Am5N7103FSU36DSH3pGfANi5Y8qQjM2RUXPrIyD019OgVvAl3tqWjy4E4AJ5Xf3GIAUSahoZK7P
+ qm9r1d+B1Y7DumV4LnY7fX8lgT75fD/kPOiMzpuBEQWyYFbCTlFu6FYF7aqsl3Vj/Fcr12rRbDV
+ /lgArS3XgPtcEoV6+e64Hk0aEvAAyKvn9I5V6WVJJ++dJq5RX858vn52ncpNR48=
+X-Google-Smtp-Source: AGHT+IGPV7WGk8V/erlggfl1NJtccJ455gGgh58pxq5PzPYIsVB04gvXUqKoDj8ISy2KRWffIur6gw==
+X-Received: by 2002:a05:6214:dc7:b0:6e8:9b52:7a1d with SMTP id
+ 6a1803df08f44-6eaea9f4483mr268137126d6.8.1742242185528; 
+ Mon, 17 Mar 2025 13:09:45 -0700 (PDT)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:3131:60d1:4874:e2c7])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c573d89b16sm624241785a.92.2025.03.17.13.08.17
+ 6a1803df08f44-6eade20998asm58677966d6.18.2025.03.17.13.09.44
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 17 Mar 2025 13:08:18 -0700 (PDT)
+ Mon, 17 Mar 2025 13:09:45 -0700 (PDT)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
@@ -74,22 +74,22 @@ Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
  "'Brian Cain'" <bcain@quicinc.com>
 References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-27-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052845.1012069-27-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 26/39] target/hexagon: Decode trap1, rte as COF
-Date: Mon, 17 Mar 2025 15:08:17 -0500
-Message-ID: <018801db9778$5311b260$f9351720$@gmail.com>
+ <20250301052845.1012069-28-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052845.1012069-28-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 27/39] target/hexagon: Implement hexagon_find_last_irq()
+Date: Mon, 17 Mar 2025 15:09:43 -0500
+Message-ID: <018901db9778$86b0e050$9412a0f0$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQFM/9wPsvfirCA=
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQGBmc+nsvY+RBA=
 Content-Language: en-us
 X-Antivirus: Norton (VPS 250317-4, 3/17/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x731.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,14 +123,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
 > sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 26/39] target/hexagon: Decode trap1, rte as COF
+> Subject: [PATCH 27/39] target/hexagon: Implement hexagon_find_last_irq()
 > 
 > From: Brian Cain <bcain@quicinc.com>
-> 
-> Also: handle rte instructions at the end of the packet.
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+
 
 
