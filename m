@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E84CC35FF3
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 05:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1803EC35FF3
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 05:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu2xJ-0006fc-Am; Mon, 17 Mar 2025 01:24:05 -0400
+	id 1tu2xM-0006h7-3R; Mon, 17 Mar 2025 01:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2x8-0006dV-Tx; Mon, 17 Mar 2025 01:23:56 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tu2xK-0006gB-87; Mon, 17 Mar 2025 01:24:06 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2x7-0007nF-FS; Mon, 17 Mar 2025 01:23:54 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2235189adaeso65380475ad.0; 
- Sun, 16 Mar 2025 22:23:52 -0700 (PDT)
+ id 1tu2xI-0007o5-L7; Mon, 17 Mar 2025 01:24:05 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-223a7065ff8so26316685ad.0; 
+ Sun, 16 Mar 2025 22:24:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742189031; x=1742793831; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742189042; x=1742793842; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q1MB5EMdjVFVxNgGF88Q0t4+APTkh4DaVr1Cd/A8YJY=;
- b=cfIHsIt9DpVP2iRKCK0Dcuc+KDA3OYstLGlSbfi9ZkrHIjcSAje5wMqwlSeYpq5vDL
- B5h//H1WgjFFCKKVOzHxEZtHlxzJJsGRzsMsdyczYGkP9rPPDzBscBtJVrLTCgTALk3f
- j9j22xeUvmk0euNFZ/YzBp0mZhrvu9ZOLoDW4BBuwvtGNhHrF2uAYg0G5UeHmzzfcSZZ
- cW+eTlJx42hEai6dZVTexFMJ31BlAX6hUsY8ctKdVN3lKQAPgDHsJMJzhvjojdpZiWKc
- VrkRCc4cwyYI2HPwUnjdvW3AqcJ94v6IdpFQSuPYoEzcWtL/xbGPfQbDuz9YCCqYJ64f
- AkRQ==
+ bh=KkPaY1ymYYgtxcx8c4vM0EvVZxyRLrUg4YxSDzdPJ34=;
+ b=btVGsgSmIwrBgs3ElJmrXDRRqQvVWb5pM5LluIWPvLbusBmhfajfo3LGOk7j1xdO2H
+ KiMzwo/Em4MIpm7X7NSIDZlUUbRN0cwz1QzsMJX0uMJ6sXLTxDgwmYuFpH3kPnzOFwUv
+ Pl1R8mBktk4ZldzporWITXDX+ox0TYV2KacH1m1Ud08tvicBBHObzlITzR9x/+cla4BC
+ dnG/4XSkmFiL+X32JviC6Fm+o06bTxSDy/I9NZ4dQnAkR5tfcZhgwKLWMxjRRtUBoYaT
+ FtbqK0GjPEkJFuHrXzanGbRRf+o8uOja/OwdRq80FOFcef3mX8jQL3O+1L2Tfqkmz+LZ
+ yn+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742189031; x=1742793831;
+ d=1e100.net; s=20230601; t=1742189042; x=1742793842;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q1MB5EMdjVFVxNgGF88Q0t4+APTkh4DaVr1Cd/A8YJY=;
- b=sgp5csP15CJ+Y0uPGcO5opvksY5RnD5PyLj0UZVRpIJNB4GhZRK0ko4fHsjNXwVBHW
- ezt2LMjMA/H7vL/iSj3jTa66tHBJgV4KsEQZretg6QhHVh+dAR9cDu5nxpnOXNqULYFg
- 8KmvTCGf6th+2JQnEa1BNeGrObd10wN0aubJBW/JQ3G8uEpvrNWVwmr1h2OeX/lU8Nsd
- H7S6hzABM8N9wicKzvPFspZRqVSqZV3cBLaVxJzDz5nTzzkr62kq1tqQHAsJf+jyXOPm
- 7ymX4mUQ+3NKrnRsYg+2UxJ4UL250swZvFoEqbwaJyKZ8pZAPU/BORF1K31AyGgC13pN
- BAOA==
+ bh=KkPaY1ymYYgtxcx8c4vM0EvVZxyRLrUg4YxSDzdPJ34=;
+ b=HBvFhmlH1cKaW2Irax5H/dzoE+1mPHglJ525vik5uciblEVmwa8R/XH4Zr8ao6WnsA
+ fu+kPVbJeYGmA97CkH2MVV7I1vlkWiom4XLZqWglTdrFTTIIO+evZvwlM5YWU3ibb+Np
+ HJJS7Z5woWUbiKSIZJ2l5yP53aVkQK2Vf8PQP1Oqz1SqFYYpY/tZmlYd/R6Zhmj57wkH
+ a0w/pJ4CzvfZBBHtzbusIA6eeFqQhCQFuBRkl9SREMpjsE1LF8ZvCzT+Dp7NfekSWEXZ
+ 1Cw7eOy4j5jwb2qjTf/QfDum4ESRdrO62q6eUEfeTWPNkB70wK57W7saPHDWImV5IrhU
+ m7sw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3myxs9w8Qtfy6sk5SKkv19LHzd8GVArQNgVpzeYFiIjLkPhIl2qExbj1fhzSxd1vIdjS/PxCn+Q==@nongnu.org
-X-Gm-Message-State: AOJu0YwApI8wJ3+i9xadS7hcREj/1MLWWJDthuEuO/mNEEGmlm4GJsGB
- l2ULEejQmOj5SabBnAdqQ5UQBAN06BrclsRUpkYBQkVsP+pRAPCk/XiQUw==
-X-Gm-Gg: ASbGnctw+DdzeC3Kp5AgZlDXg/8364UabirBqz0y6kJWBWAnr7uDUirEwptz9+FSTHL
- LAvp8tz71OIyzvIWIVisN6rYApAErzEevSf5idbt/gn/jOz495ZvwL+UVhtnBCRqtbddvBxirk+
- r83ERIqgT0TMetqvXYfVrsa1bUx6ks9BLbodlwnMo7snGFLAfC3kFIuvOK3D7kOWw3Xq1T98aBE
- ts5tQ2qC2egWGbb5Wp+MfuKLnJ12RRgjcywvFAGdiwBYTCYMOvXoChuU1SfEe6dw9ul1h646rdc
- 1c8WJevjNGpYw1VKzUjz8jcV1QLTKIVIMyXVKEK8yoQctzICLQ==
-X-Google-Smtp-Source: AGHT+IG4wYuVxZVKituNR6Ctui3omdzLfCBiSov8cpksGDEFvtQJUxY67UE795CY4SHBvLn5bM1FRQ==
-X-Received: by 2002:a17:902:f681:b0:21f:6f33:f96 with SMTP id
- d9443c01a7336-225c651f518mr179898465ad.6.1742189031357; 
- Sun, 16 Mar 2025 22:23:51 -0700 (PDT)
+ AJvYcCWxL5+PNpYnRbUQrWjBHHlZe2NJXUI7bqybhHUQ0lfdUjPipgzs9glH8Qd0aXLSuVkXZZuotpG9+Q==@nongnu.org
+X-Gm-Message-State: AOJu0YzjQrXv0HP5gGoqIRgBwsTqrCH9Qwo6NaqzyyZv5Dd0GRHmOFvW
+ jDqaoS6xyuLy3nmpGvELHFwa4cKx6OoiYZRDkwY/TMYODMdOOaAdpZbfkg==
+X-Gm-Gg: ASbGncubscPy0uBcmRHn/0Q5a1dUQJ1a3Qb3/tjr4Nh77CQe26NfHVvWA4X46oyW78j
+ HLSoRmiSTPUF4H34Vt5tB6jJXmV0ygxms6/gvYkYXP6lswcgU1o4fq2K4UzqgiORZZoPbv1np9A
+ D+gAbi5jk9UDqq9k57NR0RWwDwFtYDHp6EljPatwITsIO7nhRvLu2GWrqA/sYufdzZOfqAm1CX7
+ s8RD7Hb/71m9qlp4Q76vMkp/e6PmtpuudTi8q8YgiMd1uFvi9qgO8xJmM1a5cD7UCMTLWaTobJc
+ D3E0ffswgqaftSA5tBokBrsZrIWHfRDUJ0iqfCPWhk7Y5sx1yw==
+X-Google-Smtp-Source: AGHT+IGp5wvGM6WpWDTIDW43gLrf+bawLzKgIakpCyz2nXIT2c2cSKlPxSDkYg1/Tb9e78mO22LDtQ==
+X-Received: by 2002:a05:6a00:228e:b0:735:d89c:4b8e with SMTP id
+ d2e1a72fcca58-7372236c644mr11966743b3a.5.1742189042351; 
+ Sun, 16 Mar 2025 22:24:02 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.135.36])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711695b6bsm6879495b3a.148.2025.03.16.22.23.48
+ d2e1a72fcca58-73711695b6bsm6879495b3a.148.2025.03.16.22.23.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Mar 2025 22:23:51 -0700 (PDT)
+ Sun, 16 Mar 2025 22:24:01 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Glenn Miles <milesg@linux.vnet.ibm.com>,
  Michael Kowal <kowal@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH 1/6] ppc/xive: Fix typo in crowd block level calculation
-Date: Mon, 17 Mar 2025 15:23:33 +1000
-Message-ID: <20250317052339.1108322-2-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 4/6] ppc/spapr: Fix possible pa_features memory overflow
+Date: Mon, 17 Mar 2025 15:23:36 +1000
+Message-ID: <20250317052339.1108322-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250317052339.1108322-1-npiggin@gmail.com>
 References: <20250317052339.1108322-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,28 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I introduced this bug when "tidying" the original patch, not Frederic.
-Paper bag for me.
+Coverity reports a possible memory overflow in spapr_dt_pa_features().
+This should not be a true bug since DAWR1 cap is only be true for
+CPU_POWERPC_LOGICAL_3_10. Add an assertion to ensure any bug there is
+caught.
 
-Fixes: 9cb7f6ebed60 ("ppc/xive2: Support group-matching when looking for target")
+Resolves: Coverity CID 1593722
+Fixes: 5f361ea187ba ("ppc: spapr: Enable 2nd DAWR on Power10 pSeries machine")
+Cc: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ppc/spapr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index c77df2c1f8c..e86f2749328 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -1686,7 +1686,7 @@ static uint8_t xive_get_group_level(bool crowd, bool ignore,
-          * Supported crowd sizes are 2^1, 2^2, and 2^4. 2^3 is not supported.
-          * HW will encode level 4 as the value 3.  See xive2_pgofnext().
-          */
--        switch (level) {
-+        switch (blk) {
-         case 1:
-         case 2:
-             break;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index a415e51d077..9865d7147ff 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -296,6 +296,7 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+         pa_features[40 + 2] &= ~0x80; /* Radix MMU */
+     }
+     if (spapr_get_cap(spapr, SPAPR_CAP_DAWR1)) {
++        g_assert(pa_size > 66);
+         pa_features[66] |= 0x80;
+     }
+ 
 -- 
 2.47.1
 
