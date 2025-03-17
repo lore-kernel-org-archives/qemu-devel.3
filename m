@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD99C28B30
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 13:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08566C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 13:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuACT-00059g-JT; Mon, 17 Mar 2025 09:08:13 -0400
+	id 1tuAD2-0005Dp-6T; Mon, 17 Mar 2025 09:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuACR-000591-U2
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:08:11 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuACt-0005CX-EO
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:08:44 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuACQ-0003mw-3p
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:08:11 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3912e96c8e8so2826771f8f.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 06:08:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuACq-0003pn-CV
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:08:39 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cf628cb14so12063405e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 06:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742216887; x=1742821687; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742216914; x=1742821714; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hTEOtA9jZeioeWGG3gtGy8I0zYfEGqP6P2FsXnFWvPM=;
- b=URLRGsG6ZwIuVI3TnW09xMLFHEtsUM7pq5qv6USPKldZXMwrniMMLjmfJ5PFE2P6+H
- I1KhLR1KoT8CZRSPiHW9tdLueKNBkXOEtd8BTOdWCQe/pVlv2Tfu36FyyEc59W/9CDId
- auGCTz4bonTrtf2EX30EAeYkdtFhFQcY2HESLYwxjCLk1qrL3gY4jm+n5aksJW/sSHiy
- Nf3mu1I0JtOWPQW46C6DngEenVAi4evp/W7hKMPjh1oqgOFBE21yCV4spEGT6+ttjUEN
- 3vwmyw4iyyLY8K45s2PNq9qX60V1Gv/DpFbYPJCEqAb2l3jj1KC2mEtoyGlaGICgFoy0
- X3Ig==
+ bh=zW5ILPwnSPp5y0jGrA0j3V5RWYx5pvXEPdAKsHiM0jw=;
+ b=hAi5GLm6tu6fIjWnNCdPSQls8WfUSophy4x7iNwpGsun8UFuRoq0CGNMJJXOypSTIJ
+ IWDWG9nVAsajEAZ/kkD+KxHI+geGKdXJFKkXHhdlpeg14CTu0pGFhqGY34Oecq3Nzm1D
+ zdthBIOs+fBUIOFT9gOqhI4u6RC010NfRgwyrZvrIXbI/2mEn39g9bsZOjDU5ULjlW+A
+ uYjuORPuFC9txxHq9R3Ye3zoWDQY3RCkTnf+vZKLXMw6+rtZcFkHVh+2Nm6Gtceq2sYb
+ qN1p7iSJFMDWy31PO/+O9DgXafG/ymdXkOBt0CM4cgz+8f7jqMDum2YHluT6Zln5so2X
+ 1Icw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742216887; x=1742821687;
+ d=1e100.net; s=20230601; t=1742216914; x=1742821714;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hTEOtA9jZeioeWGG3gtGy8I0zYfEGqP6P2FsXnFWvPM=;
- b=KypQB4StE97ci/R8oQQJb2QHLXuW9XL7mQu+M40KRM52tbAoj+EzbMJLdieJ9ufzER
- 5OhpHXji4urqO30ikBVBy6dnqyceFQKQdQaxVwrxi7bbPz1bm38rpFsWK7rjXTS69zxM
- CvTi0SS7Qfm0ZOhQQEZiybzb8EJXKKCB++3lqbkqNacH09Zhw9LfFQ+y1nBxSzbHe/4y
- NyYCYfu2IBZmRg1B/jpNJ9tKnzodbPeQVNmGMIjZjq48nQuXPMf8liK8Tgw0I5mKb4h3
- yhWXMFGIaCQ9QdirJUoyBsx6WDwh5QWwOja7/VYFmyfo1YY38+zXhecVKB/nVW4+wblR
- FbrA==
+ bh=zW5ILPwnSPp5y0jGrA0j3V5RWYx5pvXEPdAKsHiM0jw=;
+ b=id2TE441vcZmGaLA88coUGAuJRDxjdPAbQ0+VjEOY1q6RMjNW7V4OuGG2VvLn5SBH2
+ 1YBntXzNVfc9BcidHZHaKDyv+e3h5UOl0ECt8+ApWWXr9tRoZcjpSxMXv8o3xdojem4N
+ EVQVIeR4aNfcr/RHWv8a16hGJR2nkD/mb1iPmvl3iwg9iMEQPry2DoxmsAUVJks8FhLY
+ QC95dksT/MDoJgDaRvC0DDkjV6jGF4HRX2N7u47cjsolrRSkDENsgCLj1Cvr4FWgdVc+
+ xss8yn4VG5DIKp0uGGzb/fVV2ZR74gyQ17lbUii7uwhretjg+7R+Mhvh2LLVNWADtCN2
+ tOiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/T5O1545/sf/W6uz12s10+jI0owpsX9JmyqEWmAjAW+Odz5QhTsgwDCZJRjzryOAItPQ7+W1GAgox@nongnu.org
-X-Gm-Message-State: AOJu0YzsaN7fwk3nPZ4zvs7UmKnEJXo1nDkQRfn1lXQhY7/1XncOgv46
- KF9lcuUZLi7apimuFbsdgK4kuIAcrFsxXIhtMAAycrVuqW4E61BQSzYJWsaGqh4=
-X-Gm-Gg: ASbGncsHGQQpCu3bal4gUEJJbKAbk2+d5yWvYrpl8PAQHBmH+Qb1m/GKJAYfXOXUzBH
- AATn8V+JetvLgvp9eyC/C39MRnoZ9ibT4gmmqAdccofjeygLpheZJL6456Hg0YhG5Ozj4kFVwrm
- mIgINpC5+v+rZBvnrYcLNdPmf+u5s3ZqDvR+wYUkiHSkYWRMpwK+9nyn1M0RQbNDy+S5gbZ/37Y
- qZhWTEC5MMjEk/yhPMH8TcXdXtDMQBLZ5TFExCQWI/8RTybj259gduNRkWPDmP4663grogYfOOs
- KvdSRIBOz49juMraA9xbF60bUr6TXMdN5QWQHFTPU8CJRSBMu98LCPro150H/G9Gd0++fcclMji
- JZeXpZrxpH7UosWQD70L/tkY=
-X-Google-Smtp-Source: AGHT+IE/fSIXz7uFxPevErVop0v+/GAARefYKKXBfoah7xx4mqPAk6EHHmuhxvQjYkVLWysvIwbquw==
-X-Received: by 2002:a05:6000:1aca:b0:391:3b11:d604 with SMTP id
- ffacd0b85a97d-39720584d0fmr14617525f8f.54.1742216886670; 
- Mon, 17 Mar 2025 06:08:06 -0700 (PDT)
+ AJvYcCU3lZ5SkqQTT4VKPkYPLjBOkyNisMZSWROUUSSAzemCW494ofnP0t2qMulAIkhGqutS0HZBBuX5vpHV@nongnu.org
+X-Gm-Message-State: AOJu0YwJjtSyvamAP82W3zRtBXDD3z777Os/tGy4re9g6U/2bx1fzbWo
+ +ECZe7UZwyg1997SfHEndKLKe0f0SD7GDJOFQ4B4W00yaKEWCMzD9tZnXeDX7Jo=
+X-Gm-Gg: ASbGncsBtOQgY68r9SVfKEB/EF15NAXpgu/AjRFggU15BtBBgc0iA9cswGXZkq5Uy1T
+ ovYWxK5yYPPJFU/Y+PmMkVtG068G/HL/zYXwcVcd/YpdQt/dJUc9lrvTQGV2N/yzKT4Dg3SkmSe
+ AlzjSn8JFbCwtizdy1IVofgdggnoeFD4yVBxzycVRsYhpPaedhrp2L57BsmoDZpJ7Jq+5M2rBaa
+ Nzp35tTnzOe50HC9IXXa8ldIA80lCr/u5qYts/0AwtC12rAI9ej7eD5eIRss7sAEkx+y50g47KU
+ 8FA+qhw+WWx9VS4wMx9xDgeCd37oCtuA2jQQaf3HZ2Z0y+YXzgUNXHf/Sj+YifyR4Bv9lIZoQ0q
+ 2TD1b9x8noY4C
+X-Google-Smtp-Source: AGHT+IE++mwj28Qpa4jqFts362H2VOpBasiy/SGomPXJx5aD4SKsnsI1ux3FYtyCr/CEx+0fQAxumQ==
+X-Received: by 2002:a05:600c:17d1:b0:43c:ed33:a500 with SMTP id
+ 5b1f17b1804b1-43d180acf99mr165699735e9.10.1742216914551; 
+ Mon, 17 Mar 2025 06:08:34 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c7df33d7sm15391827f8f.17.2025.03.17.06.08.05
+ 5b1f17b1804b1-43d1ffbcf1dsm104025995e9.13.2025.03.17.06.08.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 06:08:06 -0700 (PDT)
-Message-ID: <9c7280b8-7857-4391-9823-8ad588d73d0a@linaro.org>
-Date: Mon, 17 Mar 2025 14:08:04 +0100
+ Mon, 17 Mar 2025 06:08:34 -0700 (PDT)
+Message-ID: <efa36fe9-d0c3-457c-a1f5-3eccb1c8f80b@linaro.org>
+Date: Mon, 17 Mar 2025 14:08:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/test_arm_orangepi: rename test class to
- 'OrangePiMachine'
-To: Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, berrange@redhat.com, stefanha@gmail.com
-References: <20250316210232.46298-1-nieklinnenbank@gmail.com>
+Subject: Re: [PATCH] ppc/amigaone: Constify default_env
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>
+References: <20250314200145.08E0F4E6067@zero.eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250316210232.46298-1-nieklinnenbank@gmail.com>
+In-Reply-To: <20250314200145.08E0F4E6067@zero.eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +102,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/3/25 22:02, Niek Linnenbank wrote:
-> The test class in this file contains all functional test cases
-> for testing the Orange Pi PC board. It should be given a name
-> matching the Qemu machine it covers.
+On 14/3/25 21:01, BALATON Zoltan wrote:
+> The variable holding default env is not supposed to be written.
 > 
-> This commit sets the test class name to 'OrangePiMachine'.
-> 
-> Signed-off-by: Niek Linnenbank <nieklinnenbank@gmail.com>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   tests/functional/test_arm_orangepi.py | 2 +-
+>   hw/ppc/amigaone.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
