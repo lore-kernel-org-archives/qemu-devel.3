@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148E6C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953A3C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 07:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu4fB-0006Ij-SS; Mon, 17 Mar 2025 03:13:29 -0400
+	id 1tu4i4-000829-OI; Mon, 17 Mar 2025 03:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4f9-0006F0-Ma
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:13:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4hi-0007zh-FX
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:16:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4f7-0003HV-6C
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:13:27 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tu4hc-0003oQ-2D
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 03:16:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742195602;
+ s=mimecast20190719; t=1742195736;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=j3R7Srod0CmFLuYr0W1ywGXYa8jqiaB96i9FX52WwS4=;
- b=bsUFbDcDm5veA+srNUe/JywK/wvDrBxLj51gfnq4hkBAwC5xowzuXto5ZeO5lTmqzjSi0h
- ucvFPjPXLtjDaUT06OZplZSos5Sv2Z/+6lRFbqHhy9oOxfJ3M/CXTK647Pwj1XraHvifhM
- u7DDiDC0Rf8cYRhS7uM3mS1HN2uYEa4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=S+OgSwcTaBYzIEdrOOultqxAYZ4eYWQxoRCjUBP5Tc0=;
+ b=Iz+TEoaF5yK/Yn7gvYEhBzjLiKQ53Imy2FF1YWJ3ejK1WagEC2xYpGuKlsFRsAxcQ7b3Ww
+ MkimU4PK11/8pQqhLEjCAger1jfj+XvldizkOOY1Q+TYir+OujPhXwujuw9UhjPC6pbc1R
+ 7lh6DJRQ+1j5n91QJwdIu+YK6C3QF1A=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-386-xelmX_lcOOeHSRLOzhKZuA-1; Mon, 17 Mar 2025 03:13:20 -0400
-X-MC-Unique: xelmX_lcOOeHSRLOzhKZuA-1
-X-Mimecast-MFC-AGG-ID: xelmX_lcOOeHSRLOzhKZuA_1742195600
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43bd0586b86so9504595e9.3
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:13:20 -0700 (PDT)
+ us-mta-607-FHvsuDFTP_Kx5I3yDIejWQ-1; Mon, 17 Mar 2025 03:15:35 -0400
+X-MC-Unique: FHvsuDFTP_Kx5I3yDIejWQ-1
+X-Mimecast-MFC-AGG-ID: FHvsuDFTP_Kx5I3yDIejWQ_1742195734
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4394c747c72so8146615e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 00:15:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742195599; x=1742800399;
+ d=1e100.net; s=20230601; t=1742195734; x=1742800534;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j3R7Srod0CmFLuYr0W1ywGXYa8jqiaB96i9FX52WwS4=;
- b=e0b8bLVofuOCTeUZLWTNT8cPtzk/XE7k+Hn31g42/Uf8qC+wXpP321p92H1lbPm7Ay
- U0CpkQkjJcw+hGe1jtNcvw57gWKyGeMcj4d9ItKnNNJ01AV0KE02QEnDNKMBEsEbA1H3
- 5leJzL3YpAd0AvRUebC25c3h5Cl0HIJ5vrkwQPaTp4743pl9PzacSubpce2LbQ0yoxKQ
- 1RD5z5t+XOhzVU4FpUHQ5EV0T+ZYkYhi7XhnX4xIGmmGjZYu6vsCBeLhH5nUQ/74JSfY
- FWrZl2DlqK19CvYsyh7FldZnWgVzmHlsxGBkbCKARKzLb/SfZTIECaXkQxdarLmmFQr3
- uWrg==
+ bh=S+OgSwcTaBYzIEdrOOultqxAYZ4eYWQxoRCjUBP5Tc0=;
+ b=cUFhSr6ON7C4NVVqCaMHsApfakDex3hS0ceGYtjWbiNaVobUJ5hD1fqWVPnlDgJ9lc
+ ft7gbnobimjsR+4fgF/3IvjRdD5PI9DkUCvgXZYWVFq9S6Lj4Uke7F2MVC5eyngFtw1C
+ kZcXjtk+d9mNd0a2XouDcpurkfRG9sSBpHAONezd29QTG8NMkp3xJ4xKqad7BOdhbVZ/
+ EwWSIaXsWPo8c158SclTmXisu31sv8sUidtOGdwPRS9SOwLDKyEfmt5puvItS78L7zbY
+ w4qp3f9drqzYXTjFH0ghuTsMN0hFv9lobUIrNgfWq2iLS3/vdUwxxkA+q985qpgNtvH/
+ 72Uw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDyu37PLlvXdgzzdguHLsZe8RR/LLfB8fWcbPSoKLoQDP48QFrj8RvMfoEp4iW4DQ2PrjzlFR+MMOP@nongnu.org
-X-Gm-Message-State: AOJu0YzNoUa3IDH9cfHr5cCQ3YyNdMjTMr+/smwdMnKWe9Eh8u23pqmb
- cX1qLLM3TfFgCa37ys6AwJCVCCYnBXLhXW01EMSiFSdLgd+3zIvfGGFUb/dnVcZwJ58A+k+mqJM
- KL/VQYpDJpUWVp3GUNaNL0VYSemtkALNsWM4aiMxl1wbnsd8uO395
-X-Gm-Gg: ASbGncv1W2SL5tkMIHbxTyk202rO6zB/Thvrgpcbxhrpftqfr93rGeO4Rrvv9rrt9Mv
- ASvTORR3OfbM8BY0Kk7m0TpeChl0oY6fqiDne140IGTH/bN5PJfd2dYlcTidbECYD2fOU+VJE6P
- o2GxA1YuyZ6cyUjQkLfB+aHWH8DQ+MJKOswAn18Oo2INOOwbw0L5ZDbPOuVzPtT3ige7jqCbb6q
- AHpGIfl0LKSZq0AbP1W42Gjj8cpVttvurMO5SRgqWZWP9TsYcCDRl92eeurb4cl64lVzZh9sUj+
- N/C0cHow/HOtyyZCP9tVlXCkdm5fWsiroSBPlAiAcrmY2uYjO9HowA==
-X-Received: by 2002:a05:600c:358c:b0:43c:eeee:b713 with SMTP id
- 5b1f17b1804b1-43d1ecc31admr109168645e9.20.1742195599395; 
- Mon, 17 Mar 2025 00:13:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcDGQ8HGQXXchdiQiPtPXNqNF/WbBd/SOOtDLYS7m4oXxJ9vRuSdSa+bISGLn9j/DqmU2uwA==
-X-Received: by 2002:a05:600c:358c:b0:43c:eeee:b713 with SMTP id
- 5b1f17b1804b1-43d1ecc31admr109168535e9.20.1742195599023; 
- Mon, 17 Mar 2025 00:13:19 -0700 (PDT)
+ AJvYcCUx7DJrSUTULpl5veUYq+Qor1AEJmR4Msin6yy8HuPpvCi5TBBb986nVlJAO5cK2QlMRA4mJGIS3EDv@nongnu.org
+X-Gm-Message-State: AOJu0YwajwYOogQILp8aJR1QaQ4j4T61bRidT0zaqC1xnDobxLQMcYyY
+ Y0yXvoY3zaKkqKLPOywiTiupsmE3dEXIZpMaAQgZnuzx1JXqjUR2RtE6278fTk0Pw9QntSWNGJt
+ ZC362CoWUc5i2URETgLS5/t4t8870TQC0yZt9bjQf8fXubXSDBQfW
+X-Gm-Gg: ASbGncvXVxaNyg4ECTE53Gyx+H2IkTsz9Y0EyaLmgSDjwFcRmq6HZnd5LhwGNIjIKFB
+ Z4DiuU9Ij2p1eaozbxm1tdSl1dV4EQUV0ndM8zVUCY5848THXruFX3c1pUI3yEEwSVpxzHBegtP
+ r+aYM0iLxOCt/2UYYcPsCm8PkQOxav++8T0M4P7BUhao1utXhgWsA2860McufttEHKDwhfTQexl
+ z6V9GdfjExW34Ew9qrB9KE5YyJ2A1ptDJn89XLNJ4vfXPZgoAgZ5Qly80W5yj5EewRPTPy+KKk1
+ gSGqbN8/Wh7J55bxsAx0Z4TUD08Dcrwy2Yysa+1rTY8egElkdXDalg==
+X-Received: by 2002:a05:600c:4446:b0:43c:fd2b:823a with SMTP id
+ 5b1f17b1804b1-43d1eccbfc0mr113120095e9.24.1742195733931; 
+ Mon, 17 Mar 2025 00:15:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEm9CIqAH5GzvzUH9drBR2FjoHyX8tuj/vpd8xeyzSKTomoqTJR11sNVO/xgeFrN1jfPDcIOw==
+X-Received: by 2002:a05:600c:4446:b0:43c:fd2b:823a with SMTP id
+ 5b1f17b1804b1-43d1eccbfc0mr113119805e9.24.1742195733460; 
+ Mon, 17 Mar 2025 00:15:33 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d28565b17sm61545305e9.37.2025.03.17.00.13.18
+ ffacd0b85a97d-395c7df385bsm13892387f8f.4.2025.03.17.00.15.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 00:13:18 -0700 (PDT)
-Message-ID: <4e000bfd-cdf1-474f-9359-0ab1ce29a7ff@redhat.com>
-Date: Mon, 17 Mar 2025 08:13:17 +0100
+ Mon, 17 Mar 2025 00:15:33 -0700 (PDT)
+Message-ID: <b527124d-b772-459d-8167-b5ac41862aef@redhat.com>
+Date: Mon, 17 Mar 2025 08:15:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] ppc/pnv: Move the PNOR LPC address into struct PnvPnor
+Subject: Re: [PATCH 2/6] pnv/xive: Fix possible undefined shift error in group
+ size calculation
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.vnet.ibm.com>,
  Michael Kowal <kowal@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <20250317052339.1108322-1-npiggin@gmail.com>
- <20250317052339.1108322-6-npiggin@gmail.com>
+ <20250317052339.1108322-3-npiggin@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -129,19 +130,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250317052339.1108322-6-npiggin@gmail.com>
+In-Reply-To: <20250317052339.1108322-3-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,20 +159,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/17/25 06:23, Nicholas Piggin wrote:
-> Rather than use the hardcoded define throughout the tree for the
-> PNOR LPC address, keep it within the PnvPnor object.
+> Coverity discovered a potential shift overflow in group size calculation
+> in the case of a guest error. Add checks and logs to ensure a issues are
+> caught.
 > 
-> This should solve a dead code issue in the BMC HIOMAP checks where
-> Coverity (correctly) reported that the sanity checks are dead code.
-> We would like to keep the sanity checks without turning them into a
-> compile time assert in case we would like to make them configurable
-> in future.
+> Make the group and crowd error checking code more similar to one another
+> while here.
 > 
-> Fixes: 4c84a0a4a6e5 ("ppc/pnv: Add a PNOR address and size sanity checks")
-> Resolves: Coverity CID 1593723
+> Resolves: Coverity CID 1593724
+> Fixes: 9cb7f6ebed60 ("ppc/xive2: Support group-matching when looking for target")
 > Cc: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -182,73 +180,103 @@ C.
 
 
 > ---
->   include/hw/ppc/pnv_pnor.h | 1 +
->   hw/ppc/pnv.c              | 2 +-
->   hw/ppc/pnv_bmc.c          | 4 ++--
->   hw/ppc/pnv_pnor.c         | 2 ++
->   4 files changed, 6 insertions(+), 3 deletions(-)
+>   hw/intc/xive.c  | 27 ++++++++++++++++++++++++---
+>   hw/intc/xive2.c | 19 ++++++++++++++-----
+>   2 files changed, 38 insertions(+), 8 deletions(-)
 > 
-> diff --git a/include/hw/ppc/pnv_pnor.h b/include/hw/ppc/pnv_pnor.h
-> index 19c2d642e82..b44cafe918d 100644
-> --- a/include/hw/ppc/pnv_pnor.h
-> +++ b/include/hw/ppc/pnv_pnor.h
-> @@ -28,6 +28,7 @@ struct PnvPnor {
->       BlockBackend   *blk;
->   
->       uint8_t        *storage;
-> +    uint32_t       lpc_address; /* Offset within LPC FW space */
->       int64_t        size;
->       MemoryRegion   mmio;
->   };
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 59365370c37..63f2232f32f 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -1191,7 +1191,7 @@ static void pnv_init(MachineState *machine)
->        * Since we can not reach the remote BMC machine with LPC memops,
->        * map it always for now.
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index e86f2749328..3eb28c2265d 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -1662,12 +1662,20 @@ uint32_t xive_get_vpgroup_size(uint32_t nvp_index)
+>        * (starting with the least significant bits) in the NVP index
+>        * gives the size of the group.
 >        */
-> -    memory_region_add_subregion(pnv->chips[0]->fw_mr, PNOR_SPI_OFFSET,
-> +    memory_region_add_subregion(pnv->chips[0]->fw_mr, pnv->pnor->lpc_address,
->                                   &pnv->pnor->mmio);
+> -    return 1 << (ctz32(~nvp_index) + 1);
+> +    int first_zero = cto32(nvp_index);
+> +    if (first_zero >= 31) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group index 0x%08x",
+> +                                       nvp_index);
+> +        return 0;
+> +    }
+> +
+> +    return 1U << (first_zero + 1);
+>   }
 >   
->       /*
-> diff --git a/hw/ppc/pnv_bmc.c b/hw/ppc/pnv_bmc.c
-> index 811ba3d7a49..fb70a8c1f22 100644
-> --- a/hw/ppc/pnv_bmc.c
-> +++ b/hw/ppc/pnv_bmc.c
-> @@ -174,8 +174,8 @@ static void hiomap_cmd(IPMIBmcSim *ibs, uint8_t *cmd, unsigned int cmd_len,
+>   static uint8_t xive_get_group_level(bool crowd, bool ignore,
+>                                       uint32_t nvp_blk, uint32_t nvp_index)
 >   {
->       PnvPnor *pnor = PNV_PNOR(object_property_get_link(OBJECT(ibs), "pnor",
->                                                         &error_abort));
-> +    uint32_t pnor_addr = pnor->lpc_address;
->       uint32_t pnor_size = pnor->size;
-> -    uint32_t pnor_addr = PNOR_SPI_OFFSET;
->       bool readonly = false;
+> +    int first_zero;
+>       uint8_t level;
 >   
->       rsp_buffer_push(rsp, cmd[2]);
-> @@ -251,8 +251,8 @@ static const IPMINetfn hiomap_netfn = {
->   
->   void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor)
->   {
-> +    uint32_t pnor_addr = pnor->lpc_address;
->       uint32_t pnor_size = pnor->size;
-> -    uint32_t pnor_addr = PNOR_SPI_OFFSET;
->   
->       if (!pnv_bmc_is_simulator(bmc)) {
->           return;
-> diff --git a/hw/ppc/pnv_pnor.c b/hw/ppc/pnv_pnor.c
-> index 863e2e70aca..9db44ca21d8 100644
-> --- a/hw/ppc/pnv_pnor.c
-> +++ b/hw/ppc/pnv_pnor.c
-> @@ -108,6 +108,8 @@ static void pnv_pnor_realize(DeviceState *dev, Error **errp)
->           memset(s->storage, 0xFF, s->size);
+>       if (!ignore) {
+> @@ -1675,12 +1683,25 @@ static uint8_t xive_get_group_level(bool crowd, bool ignore,
+>           return 0;
 >       }
 >   
-> +    s->lpc_address = PNOR_SPI_OFFSET;
+> -    level = (ctz32(~nvp_index) + 1) & 0b1111;
+> +    first_zero = cto32(nvp_index);
+> +    if (first_zero >= 31) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group index 0x%08x",
+> +                                       nvp_index);
+> +        return 0;
+> +    }
 > +
->       memory_region_init_io(&s->mmio, OBJECT(s), &pnv_pnor_ops, s,
->                             TYPE_PNV_PNOR, s->size);
+> +    level = (first_zero + 1) & 0b1111;
+>       if (crowd) {
+>           uint32_t blk;
+>   
+>           /* crowd level is bit position of first 0 from the right in nvp_blk */
+> -        blk = ctz32(~nvp_blk) + 1;
+> +        first_zero = cto32(nvp_blk);
+> +        if (first_zero >= 31) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd block 0x%08x",
+> +                                           nvp_blk);
+> +            return 0;
+> +        }
+> +        blk = first_zero + 1;
+>   
+>           /*
+>            * Supported crowd sizes are 2^1, 2^2, and 2^4. 2^3 is not supported.
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index f8ef6154878..311b42e15d3 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -1153,13 +1153,15 @@ static bool xive2_vp_match_mask(uint32_t cam1, uint32_t cam2,
+>   
+>   static uint8_t xive2_get_vp_block_mask(uint32_t nvt_blk, bool crowd)
+>   {
+> -    uint8_t size, block_mask = 0b1111;
+> +    uint8_t block_mask = 0b1111;
+>   
+>       /* 3 supported crowd sizes: 2, 4, 16 */
+>       if (crowd) {
+> -        size = xive_get_vpgroup_size(nvt_blk);
+> -        if (size == 8) {
+> -            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd size of 8n");
+> +        uint32_t size = xive_get_vpgroup_size(nvt_blk);
+> +
+> +        if (size != 2 && size != 4 && size != 16) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd size of %d",
+> +                                           size);
+>               return block_mask;
+>           }
+>           block_mask &= ~(size - 1);
+> @@ -1172,7 +1174,14 @@ static uint32_t xive2_get_vp_index_mask(uint32_t nvt_index, bool cam_ignore)
+>       uint32_t index_mask = 0xFFFFFF; /* 24 bits */
+>   
+>       if (cam_ignore) {
+> -        index_mask &= ~(xive_get_vpgroup_size(nvt_index) - 1);
+> +        uint32_t size = xive_get_vpgroup_size(nvt_index);
+> +
+> +        if (size < 2) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group size of %d",
+> +                                           size);
+> +            return index_mask;
+> +        }
+> +        index_mask &= ~(size - 1);
+>       }
+>       return index_mask;
 >   }
 
 
