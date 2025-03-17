@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B9FC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 15:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C114C282EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 15:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuCZG-0001uP-HS; Mon, 17 Mar 2025 11:39:54 -0400
+	id 1tuCaL-00035K-60; Mon, 17 Mar 2025 11:41:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuCZC-0001oV-T6
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:39:50 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuCaJ-00033g-4g
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:40:59 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuCZA-000620-Ph
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:39:50 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4394a0c65fcso21343295e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 08:39:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuCaH-0006NH-8w
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 11:40:58 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cef035a3bso16400485e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 08:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742225987; x=1742830787; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742226055; x=1742830855; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dnU1iaIjyphAuTTJ24Wz/YJtJ7FKCuQp+pKPpgYiNA8=;
- b=wr8ZrRoMoI21f7T8scilD0mi4HbFigpquG1ZYv3ddT84AGN+veldmifIY0TIkXXLeJ
- Fd1tFEyZqyzZtqRb31+RjSyCtuuedEqm0cG+cc+ylbNXwEdV30btG5MiRR0dcQsm6bAs
- y4ZZBJwGu1P/jJ6ZR/EqR4QOskAxtIAvry+RbXY6RRNAbpO7TfuWP6a5Zw1MXQzuYJ4/
- ES/1Ua5XpMwle/1ZJ/qSKDaMpz4qcaZFLZAZWoXEe9o/ZXRCuk1FicecYT1jd6YGukOb
- GTMNJ3QQdzlJRb4hV83VAvb8MwpVqfyCFLKBNPjD0B1CLlF33njbc946eAfjFgNJiG/8
- LRyw==
+ bh=7U6GKad7d5wHAblMe/tmj5AtpY2LZZcCgj/vdBJVDVA=;
+ b=JB1+akPWyRYKKr4Sn95+b2I1OdeBZ9CI/XrLlhujiPHt7L/uFrLznxT40RXgn2abNL
+ AppPGELNfeuH9D9pljHlFwTKFnqjAG+xu1BTkUQNIyHGRXv+jMhK1dg76xBRqXz9Ss7o
+ +PkpzjRHx5Wjc8sx7/a+wJ3twPwJytaWb3nus+SxpjYu+qa+kOhdVvXt8DSQlV5acXmP
+ IcRWzS9j38HHFa2t+SBHQSNhYV4gdNThlHZs5GM5RtdhBALg4XWnw9QcLhFMrDeV2Dn8
+ 1P5U6X8D4LXSw6GIl0xoIVZazJF3TJCivs2f8Q6kjhQDuXSRq7Ox0JuzoRRsiVAyLlK0
+ B0Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742225987; x=1742830787;
+ d=1e100.net; s=20230601; t=1742226055; x=1742830855;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dnU1iaIjyphAuTTJ24Wz/YJtJ7FKCuQp+pKPpgYiNA8=;
- b=tL2dsT3Zfjh/3NHQliJjxevY/Pf2OmjZ9X1jGBP+K88tlDgzHMkYmajE4vzefz2pte
- tpSHw9C039k9szfUfYS5/YCsTiTe/PVlyZNNkHgreNN2xKfMsTQmmKvytFHkYEJMRFii
- kDoJjJmMj98t9IHpW7svV9N1CTK/VI4bPbzenCW77810xry98J7Qb5jPXhevEYH8ishN
- 3HQ/A18CUZsYruyhN0zixDJScy8t20Oq9eoBL5io9buRQiHrp3lAfuTv8ZWkpqNZMLFS
- Or7C74NQidQecHrwRfyVn2kDFfNApWAr/OWRBFTKfqcvR0H54nyKkqZfg8EUV1BQ7eEF
- GKTA==
+ bh=7U6GKad7d5wHAblMe/tmj5AtpY2LZZcCgj/vdBJVDVA=;
+ b=nqYhwhwTVvUFt5vzBUMIT+EI3VM5KVCj3oscrCRLRgFIh7NuabN6tV16WbSddiBXIP
+ iPpTTuffJe2TXUVN4P/b9/5osIkjviMsRq7R52k2e3Uo5ERZahszlsuTx4FSlvXRflzW
+ g4UTDsx9/rVKJVx2Kgw8jzbGp76zbf5zInCkZLbFc7/TrxZLUBnPaXS5yAoL+Rx9ZhMk
+ Foa7OqJi2yxLrsIgaro2wJWh8/wYvrWo6rXxRwOZTbz4cJpYE+QU2JS+eOqMFfV3w9s4
+ 2UQNBN6bLKKORwRlGf+ZFg4Hmfl8eGSPyJeOJSmZjdhNsdfa3/CM90Y9GGOSTxl5c6FR
+ n+/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUoD0ZOICd60SjmkHoC8h9fU5KlX6vCnryehgBZ8/ZegdbUnqwKTBEEzbbeItSTP1qKymDqaJLN+caw@nongnu.org
-X-Gm-Message-State: AOJu0YweZyAH/un6b5FrEeL2Htjn/6s1nPHYv3Jhf+leZVHmIlA7T/fn
- OIpY8JbBzWf37mqqOm3mXApGyyaSFXHQStDmlOacJ9aS68iCr0d+70NGjO45pLs=
-X-Gm-Gg: ASbGncvq7J105YqikctMVm1qss1bPDDtIttWJppPnTCb1/o423gxrFJ/I5CuERebEEz
- Xe9kAJR16DVXKQjNUjY6tQMcxVYQCMOkYhBD1yN7OM5KY9BJQjNbtGZQ2H4qLEMorQ8zBKCQNs/
- K4VuUcPynRHiRs6hXl42Q0WJ17vgdHbWilK2e5P8UmR2M2CA0ES6NddvX43lYnDJ9fefItcPwdm
- /2ta7cdabDSJkrSI4OLstWOHsnPx9KhW9wJjrabkUfHAMlRVjg5Yc3u597ZVJuUIiQWSCTskmr0
- W3RU2jQ2Pn//sOgb6I/8KrtykIJgzHpPQQabzPLDg1dzoSBycXS7wAZDntVCct2XeQjz63Ib13O
- iPgiygs1cmg==
-X-Google-Smtp-Source: AGHT+IFMKnQvfHUXc8gK7vJc630XzPwBlYGnUvr0+6PvAfWZ0i4TveJrNoE1WhojrMnekUUZ4uVNWw==
-X-Received: by 2002:a05:6000:4011:b0:391:3124:f287 with SMTP id
- ffacd0b85a97d-3971e2add48mr12939402f8f.16.1742225987020; 
- Mon, 17 Mar 2025 08:39:47 -0700 (PDT)
+ AJvYcCU9P7LNt6z9O+z4anDGdBlsNu/GAsnccqRSPqTLMGnpX8u8njOqUAPoW++8SlpAuP6TNYNZI1YSbEbB@nongnu.org
+X-Gm-Message-State: AOJu0Yy29qWAEDeGcQjiT4Z9ttlUo2UNKyXFRaKZRwX3bqTX7L4Jo3oI
+ Lql4+mYwNXRk8Hx1kZl1puVrY9v4eoxzWhEY4lAkr/HUMgAzDBzgPWWkrRBaEpc=
+X-Gm-Gg: ASbGncu/U+oXs1A6rU5TApXJspxnIJRv7tbKjBcqE7cD51laA7AT96J68PGM2+x3D/7
+ aI13rUTzSLaiaKBLKHzn3JlofYoGbes0P+RWKNuXWZjlvm4ZX+KKfZVZjrvDoIrzqt72wXdd4VC
+ Mi9ASYWYiZDZvR2BBLD8Iy6VYlKhaiWEZoMmVHGc8EuJiKBdsLLX7QbXakpnP+DvIQTG1AjwBja
+ VQf5pXeyoHcMnXWNdac4MPDbgca1YpBa1G+KoFzudavkYay6e5KaDJHQpzcB3aJmtHQ4/yKALCS
+ 8NaN/bYLRKQWA6Dx8CYv7T1Hh021xFL8RqQDP4ePUzCY2GBD+9Gej219EfAD2hyCcGezLIYOYvI
+ 9kuOHLK9GvQ==
+X-Google-Smtp-Source: AGHT+IEYwBk0dUdQRJT9sqJGaCayj6bL4LFjurb9TpcIfyKVU0kX1cAvJGoQW83QeaXr7408J8Yo5g==
+X-Received: by 2002:a05:600c:56c5:b0:43c:fffc:7886 with SMTP id
+ 5b1f17b1804b1-43d1ef4b074mr112131375e9.8.1742226055531; 
+ Mon, 17 Mar 2025 08:40:55 -0700 (PDT)
 Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb318afbsm15770725f8f.72.2025.03.17.08.39.45
+ ffacd0b85a97d-395c8e43244sm15653788f8f.60.2025.03.17.08.40.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 08:39:46 -0700 (PDT)
-Message-ID: <77a5875d-f9a7-4eb8-a090-4863ea9af36b@linaro.org>
-Date: Mon, 17 Mar 2025 16:39:45 +0100
+ Mon, 17 Mar 2025 08:40:55 -0700 (PDT)
+Message-ID: <1b3b4ca7-5522-4e43-b165-2f6aa53ee4a2@linaro.org>
+Date: Mon, 17 Mar 2025 16:40:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 9/9] target/arm: Remove TYPE_AARCH64_CPU
+Subject: Re: [PATCH for-10.1 6/9] target/arm: Present AArch64 gdbstub based on
+ ARM_FEATURE_AARCH64
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250317142819.900029-1-peter.maydell@linaro.org>
- <20250317142819.900029-10-peter.maydell@linaro.org>
+ <20250317142819.900029-7-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250317142819.900029-10-peter.maydell@linaro.org>
+In-Reply-To: <20250317142819.900029-7-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +104,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/3/25 15:28, Peter Maydell wrote:
-> The TYPE_AARCH64_CPU class is an abstract type that is the parent of
-> all the AArch64 CPUs.  It now has no special behaviour of its own, so
-> we can eliminate it and make the AArch64 CPUs directly inherit from
-> TYPE_ARM_CPU.
+> Currently we provide an AArch64 gdbstub for CPUs which are
+> TYPE_AARCH64_CPU, and an AArch32 gdbstub for those which are only
+> TYPE_ARM_CPU.  This mostly does the right thing, except in the
+> corner case of KVM with -cpu host,aarch64=off.  That produces a CPU
+> which is TYPE_AARCH64_CPU but which has ARM_FEATURE_AARCH64 removed
+> and which to the guest is in AArch32 mode.
+> 
+> Now we have moved all the handling of AArch64-vs-AArch32 gdbstub
+> behaviour into TYPE_ARM_CPU we can change the condition we use for
+> whether to select the AArch64 gdbstub to look at ARM_FEATURE_AARCH64.
+> This will mean that we now correctly provide an AArch32 gdbstub for
+> aarch64=off CPUs.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/cpu-qom.h   |  5 -----
->   target/arm/cpu.h       |  4 ----
->   target/arm/internals.h |  1 -
->   target/arm/cpu64.c     | 49 +-----------------------------------------
->   target/arm/tcg/cpu64.c |  2 +-
->   5 files changed, 2 insertions(+), 59 deletions(-)
-
-Thanks!
+>   target/arm/internals.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
