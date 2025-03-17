@@ -4,90 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55D99C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 05:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6291C35FF3
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 06:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu2xK-0006gn-ME; Mon, 17 Mar 2025 01:24:06 -0400
+	id 1tu3Zz-0007zc-7a; Mon, 17 Mar 2025 02:04:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2xF-0006fB-KI; Mon, 17 Mar 2025 01:24:02 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tu2xE-0007no-68; Mon, 17 Mar 2025 01:24:01 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2232aead377so86267215ad.0; 
- Sun, 16 Mar 2025 22:23:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742189038; x=1742793838; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rCQzO/RWV9mKGsPnnGRAGAxs7AhCxziXIi4niuyH6/o=;
- b=Mr9rRtd3EYa61+L8n01pdFg0rbBl9cYGPePNLYa7lJOpT+yVG58B4Ho5EySGmjgLbN
- OA2CLqc8bOur8TLn9v+88dpe8eIk9u+2pBPmURD7Z+ZO1o4o7bktae2dX8qXp887r9DF
- mZaYpY8+Oeoz4S3eOjOU6QrspiTUy5OvMgVMz6UcCCS8PDjBI1kA+mFz/MKgohSrXRWD
- Ying49Vg7ix7IjPE4BQIOsJNifQcnimg9gT6Fhq2dix6Oqarz2/LXO9MbPB5A9V8+PTN
- eZpcKzWUk5f/9PlZ4wIEUyPTL9xDfEs3aPV+TfK1vy+Rz4mo8PCf1+1AIp46KGz4fWmI
- B0tA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu3ZO-0007wd-F8
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:03:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tu3ZM-00046g-Sm
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 02:03:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742191402;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ZdFajaLTZczCh5Xi/1eTDUxNYxUBo2oJ1/PS5Agr430=;
+ b=HVCYpAuWybiWQZw6nJVaI/KAOM9H+VI8hjbV6rqSSHdfcZOi5PdQEougD2GE/bx4UOJnqT
+ pVTQxrQYEhcjpqm7t5g4BZQBimHtof8gAD67DDfsjSxaZSxdS7MIQI1Sh59XnO4lNYsUb5
+ q8HnafIPYA5V51CNhbze+lWPxTT28zU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-196-SDlnesg_PdKrBV9qBJ2csQ-1; Mon, 17 Mar 2025 02:03:20 -0400
+X-MC-Unique: SDlnesg_PdKrBV9qBJ2csQ-1
+X-Mimecast-MFC-AGG-ID: SDlnesg_PdKrBV9qBJ2csQ_1742191399
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-39130f02631so1900018f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Mar 2025 23:03:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742189038; x=1742793838;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rCQzO/RWV9mKGsPnnGRAGAxs7AhCxziXIi4niuyH6/o=;
- b=Bw6LAJ/p+o0IcI/ySLQ5Gatkq8jjYqQQJ3Db7uo5J0TaMWQqiEtKIKHdL7GzhD3cB0
- cZwc3cR4BMDuor4sO5IjuNc+FjMFWA9zog1Hh0IAvrOGnvALLtkdTzuchw7mx2tX4v4e
- ++ok+lUQy3jEvsUQmCAQ6pgpICLCjxuCs198J2TPUB3WlaVNOt85kaC+LODsCBMcvqot
- XkOMF0pHSXDC0ejjQ7cnoD2KN5NCqTnV/X1KKnuq0oL1kIxbxYym9rThr2mslhos9FdV
- 8Nldb8F/lrg8qd/2jylRUrLMUdD71TverPePqbfrTN7/XzPgSCTkAgsgSgfce2IPSR/v
- 0LzA==
+ d=1e100.net; s=20230601; t=1742191399; x=1742796199;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZdFajaLTZczCh5Xi/1eTDUxNYxUBo2oJ1/PS5Agr430=;
+ b=JTpj7xKdAZXSKQr089Z/IYeeH6d0f0XiGxCJe8hGvSYpvLr94SpajXr0FQW6G/m1Se
+ xY43Dj0JEJvjiz969AEi4Vha3yQFq5dk5KRb3yqr3S0Fxu5I0yd6a721UgvU1JsLf5B+
+ +kOc+7jjTd4Dh2Uc0hjBpwkCzF8OOMUoTTsNuUgOqRhQ/myWeBb2gC5j5VnGAot7zEa2
+ dQ6EsaExrM+UHpmYM/BAEyx6C99WFOSyfUcC5xSs4pQW+g8IwEA+mUnqwaVkR5sqUVb1
+ Yg4802OPKOHPIeP1Swvf1AtytrJsWR1akfpY9L9/eBeE96U68qP2p9PMnKdHOCTKTwMt
+ KSig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW6VE9WdTp0/2T+chFK5kSRozL/U9hTzRcD3zQDmFB9MfLbv46nJCEpdu9/TdYE4xnn3tWs7ZfyIg==@nongnu.org
-X-Gm-Message-State: AOJu0YzrjwcA6Rb8P2r2kD7CKpFUt5yQO/jVvi7pu2lh/s5GpIVwLEb/
- lOPfclosd1GqxFpTCeMnzVXROLHNnWptcStEL1f3VrbuTxfXRQc6NbwBsA==
-X-Gm-Gg: ASbGnctTj0nTP37IKPUObEdUBEM4TrGI/mRtSNzLtCO1iVv7MOvACxQf5BqEWMjOA67
- HbU7UT5dBa6/PgqFhKOJayrkEl/SERYBEl135t0TUfYaMYVAQJq1t/Zxqa81rmEYvKceDbLuotB
- HY67ErqOJHgJr0eCdye4oui/MaoIOu0AkONZfCqcXL7cQrZdlNGJ+LnNQl3ZohSXoxvJHbLAg7e
- JDuoOA/mME/EyoZUoQIOelM1vWtTzI9lOL6f9Dei9zcCtYK2UjpuzuX/RvGi25917qJBcXe0afK
- shHRP4dLiat3HHJwiwcYTPDO3OoRmfAB/7smjK8BgEuyxvAZVn20HH3MNZBu
-X-Google-Smtp-Source: AGHT+IF5qNYq1eMrY99ebl6tU0UfyeHKpZgx3juxDS6gerqVLJCtDB4d2kkvMa7Y9q3ZDxyjt8FSPw==
-X-Received: by 2002:a05:6a20:d74d:b0:1f5:8eb1:d5d2 with SMTP id
- adf61e73a8af0-1f5c114b9a0mr14828867637.13.1742189038499; 
- Sun, 16 Mar 2025 22:23:58 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.135.36])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711695b6bsm6879495b3a.148.2025.03.16.22.23.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Mar 2025 22:23:58 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Glenn Miles <milesg@linux.vnet.ibm.com>,
- Michael Kowal <kowal@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 3/6] ppc/xive2: Fix logical / bitwise comparison typo
-Date: Mon, 17 Mar 2025 15:23:35 +1000
-Message-ID: <20250317052339.1108322-4-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250317052339.1108322-1-npiggin@gmail.com>
-References: <20250317052339.1108322-1-npiggin@gmail.com>
+ AJvYcCWD+2m6CpjoXnZC3exIzTNKtm4EwrR8/yldFv6AFBH1aucnF6ywkYVyvR9M5p49I8Js8AfDZ+VbarR9@nongnu.org
+X-Gm-Message-State: AOJu0YwyZ4k1J0/0OJ0X38Tc9vLVYrGAQlNsjmzJzS+K95Gk+DiMWuzV
+ EqHr94mEZJFOmwrs4JX7uTRCE01Cj2mGHsZhtUTqmSWKW9NdN52bdgX+ep1RRuz/ZQdKTZQ/BJK
+ brS5b4KFmWaHsiPIA7E4pu+Eqkmw8NFTjmtDnLUIP31URpTpJiKVn
+X-Gm-Gg: ASbGncs48B+7wcJejlNksejOLioLUCAv/AxexZXIQPbY9vflgmffn7gsX/ReQhryR1t
+ nK9nW68aw5u4GLwYC4pYeIy9OiLxVxw5Dt4X5hxjz2xTQk7/eqStgsuNebMRiZ9bBqCoO+aoFiO
+ u9Ssa/+3YSM+YwFpPstGdWV5i3gjgSP5jer8gp2h/BoMqGUiOIJnhYIy346qIDHlyGIp9DhPUdB
+ T1uzMH8+iqtP33DLfcidJh4AETPio/vTwA9vnL+QOE2Kge0XWsqSNfL3BLNqU70MBmevzxvJsuQ
+ GG270gmCoJKTx9OAI6Gcxf+p1b2qztoUGVIy/3UORLZ1VMM=
+X-Received: by 2002:a5d:6d8f:0:b0:391:48d4:bcf2 with SMTP id
+ ffacd0b85a97d-3971d5227d9mr11302158f8f.12.1742191399064; 
+ Sun, 16 Mar 2025 23:03:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2ltEpRJB3Zp9UKWT4XUnZFJ45Ah03h/gLW4EvfnFLJT3UZtbMoVvwjbmvcvFd7LlsraBAcg==
+X-Received: by 2002:a5d:6d8f:0:b0:391:48d4:bcf2 with SMTP id
+ ffacd0b85a97d-3971d5227d9mr11301947f8f.12.1742191392486; 
+ Sun, 16 Mar 2025 23:03:12 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
+ [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-395cb7ea16csm13771756f8f.82.2025.03.16.23.03.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 16 Mar 2025 23:03:12 -0700 (PDT)
+Message-ID: <a1991d55-95f9-4c1b-9977-cd40e566acec@redhat.com>
+Date: Mon, 17 Mar 2025 07:03:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: Broken NetBSD Orange Pi image URL in QEMU tests
+To: Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Reinoud Zandijk <reinoud@netbsd.org>, Ryo ONODERA <ryoon@netbsd.org>
+References: <CAJSP0QWKnLDsVUbqO_kNB7GiZPU0-YpOU8T4BNCgyNBi54dtDQ@mail.gmail.com>
+ <12d09c42-e6b2-49d1-9b06-e5a26acc2c5b@redhat.com>
+ <CAJSP0QUWkeaSsVmdfrXNAaSqB_uMUxqAD+GR7Xm4FHEgwYArNg@mail.gmail.com>
+ <CAPan3Wozs=BX2pYxgBR3R_TtV75Pk8T=TNXZjgRHajzYw47Y-A@mail.gmail.com>
+ <CAPan3WqR_UmrJMtYEe02K6vKy4joNE5frGDMW1KWFH-so24nbw@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAPan3WqR_UmrJMtYEe02K6vKy4joNE5frGDMW1KWFH-so24nbw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.333,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,31 +159,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The comparison as written is always false (perhaps confusingly, because
-the functions/macros are not really booleans but return 0 or the tested
-bit value). Change to use logical-and.
+On 15/03/2025 22.01, Niek Linnenbank wrote:
+> Hello Stefan,
+> 
+> As of today, it seems the URL is working properly again. I've done a few 
+> downloads without any error.
+> What I did notice is that NetBSD provides a 'cdn.netbsd.org <http:// 
+> cdn.netbsd.org>' also, but I can't see any noticable difference yet.
 
-Resolves: Coverity CID 1593721
-Cc: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/intc/xive2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Oh, weird, in commit 380f7268b7ba4a6 I had to switch the URL from the cdn to 
+the archive one since the file was not available on the cdn server 
+anymore... but now it seems to be back! Certainly something to keep in mind 
+in case we face problems with this asset again.
 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 311b42e15d3..7d584dfafaf 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -1344,7 +1344,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-         return;
-     }
- 
--    if (xive2_end_is_crowd(&end) & !xive2_end_is_ignore(&end)) {
-+    if (xive2_end_is_crowd(&end) && !xive2_end_is_ignore(&end)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "XIVE: invalid END, 'crowd' bit requires 'ignore' bit\n");
-         return;
--- 
-2.47.1
+  Thomas
 
 
