@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253B9C282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 13:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20957C28B30
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 13:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuAZY-0005nz-Vc; Mon, 17 Mar 2025 09:32:09 -0400
+	id 1tuAj2-0001Yy-AY; Mon, 17 Mar 2025 09:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAYs-0005aC-Qe
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:31:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAim-0001W6-O7
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:41:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAYr-0007tq-27
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:31:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuAil-0000k7-2D
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 09:41:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742218279;
+ s=mimecast20190719; t=1742218892;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=D6UthiIIyouVd7p5cIu3QGB9PkG0z50DgnwW3yQIh90=;
- b=hGoCblZcRhoaeUUfsuopXAFVR4vA5J0zYNtZmVesOIUgnsgACDrrjGvpv4MxManJaL7kLN
- J0rz8/HbCzIIX+jPZhApK/bkpuZMjFvdBrnmbMwFvxKi57ymi7jEW6DGlbw2Lzpdx+dOQr
- wJ6h+HfUIM+0hxVTCKfXTkeIQKIfqOM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QqfwtvlblDJBk8WUeg9UYrPs059izbFi06n4mzryQ5g=;
+ b=MIvyPBnl9CRQ4PowbIh1mCKQhIlWEf00/MSWAibSVspGyRlnKWFK4mx4nH0Iey3x/8PUGd
+ rf0MUvjQJDfDLmbwg7JQRRcgiTRv0FBAD2sZKreV+je0s4ZbuQJBSfBU/Bgy/BSLUZq2XH
+ d64dTC1V8siK7MOmEF7PUihwFsebnoA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-Y4rRANrqM0-0ZgIe9k0CpA-1; Mon, 17 Mar 2025 09:31:17 -0400
-X-MC-Unique: Y4rRANrqM0-0ZgIe9k0CpA-1
-X-Mimecast-MFC-AGG-ID: Y4rRANrqM0-0ZgIe9k0CpA_1742218276
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3912fc9861cso2015697f8f.1
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 06:31:17 -0700 (PDT)
+ us-mta-280-uP3YFhJQOH6k6dbPMiDL2g-1; Mon, 17 Mar 2025 09:41:31 -0400
+X-MC-Unique: uP3YFhJQOH6k6dbPMiDL2g-1
+X-Mimecast-MFC-AGG-ID: uP3YFhJQOH6k6dbPMiDL2g_1742218890
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-39131f2bbe5so1860191f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 06:41:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742218276; x=1742823076;
+ d=1e100.net; s=20230601; t=1742218890; x=1742823690;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D6UthiIIyouVd7p5cIu3QGB9PkG0z50DgnwW3yQIh90=;
- b=aIB/aVSulStAof7Mnw56aCIkC+5tKNhcVL1EOP2tSc+ax7LSaJRirn3mNL5JXK9cMM
- q8J704BvoRi+bYAI3IASohEpiK/qGVeg5JFWnUlFV0E364EYzatv64SAeucdVjffipNA
- 9VxwAbRU72uT8wK0IXjt0GjsyPiSAHxmtH583EtZGITlqLhij6l9KcpbLpMsEGIi11a8
- 0HKYx0EQg1sASmcLF1TCD1nFLbnaN0ZJRVmo0mbj9ZTKg5oL97YtRw1mEmWXSOFSJJot
- D8My7Hd+W+WgHKWHVUPfdbMztszKGRVUKfGVbYvv1mpGs2lolyhdC2OD82MgGjBNBJrX
- ugcQ==
-X-Gm-Message-State: AOJu0YzORSqCT49oG/PdnJOayvpFMJe4dOuvdw+22gN+eYP4JCS312fO
- w1gseq6+J3TyS+NiJCWLG9MpQ7oExQ4GGGeYMKudrN6tEVf7YF+LpDzyXf/zrDwN77EnKOANCwj
- c4CpgQbvmHmgISyHVPzeyalTU70iak3L++yEc+ajTOw9j07ecmBEz
-X-Gm-Gg: ASbGnctrk1wtOnBHSXdT62/iuC9fq5beB4Czwrj5vQrJAUeMB+1yzsL1t8+bNY3y9H7
- xHj4nfDW6p2HoQcrjLBzVHCMWfvhyDb7aEf5vr8yU5u3lg1KP9YJV+3ANVkWZt7GwZtck4fgOby
- sGzA7sSfOPo98WutoN85Esx9zm4z4UPoPmLbT6BxqM42r4xzkYYrolD8hgA57bCubIScxRs3MpQ
- T+nnv8USB7t+9XXXKNIdxdTFn9bzcnagdEmEcbLRQD1+plRQs7+bfaKmEKK6+i55YvsJ+l7nt89
- VXXnS6UUy4jGrIWGT7OMCH27BAGvgSb8GUfQhZoiXaCgNbk=
-X-Received: by 2002:a05:6000:1fa7:b0:391:2889:4ea4 with SMTP id
- ffacd0b85a97d-3971d133919mr12198731f8f.9.1742218276548; 
- Mon, 17 Mar 2025 06:31:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEafqAiyTHa4/aKqU9GQjIEoYf0dQAUvByQWpeA0iLqvizl1v6MHhQgnkdd8P3YlLquCU5dg==
-X-Received: by 2002:a05:6000:1fa7:b0:391:2889:4ea4 with SMTP id
- ffacd0b85a97d-3971d133919mr12198708f8f.9.1742218276181; 
- Mon, 17 Mar 2025 06:31:16 -0700 (PDT)
+ bh=QqfwtvlblDJBk8WUeg9UYrPs059izbFi06n4mzryQ5g=;
+ b=wRjpnLJsSTfEVg8dZplko5gry8qE7pAcDjRCCHsRfQfzlOfQ7nfvaNk5UuvgXZy8Je
+ 34tH4rpnjioMB+XZYVazfgmwSC1bX+SC/F6xf6QVDMJAFI6cW9a3j2TeJOwes3pni1Yy
+ uru35U3H5VY+qbJ2ZI+73C/kCw5u1xmQA/tuh8j2sIEcRNajs7vgYQYzfFoHzYv+wzJR
+ PRbK1FMbJsz4EX9N2938Hj1ZbDt2uiTVrMHbtH/Pqcb4yEqKsp13nuLVPUWQcy0crLuu
+ 8h5WX9IkuCA23cCwQburHN3Fov5x46vD/yW5V8Wu83yOSh4hf+xhS4KhNKuNkLZReX2S
+ pBkQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWKxkpCLKJMVVNvTaG4v4HV1QTMCeqhlk3JEta1lYPDb4MYKByUvIvB7j9zdGzWXMuRXkSVgEgDLNbP@nongnu.org
+X-Gm-Message-State: AOJu0Yy/P6VTeuFkm7DJ29N28xSgJiuQM1xVacPAFqpRcekL3XiLfTDm
+ og0/mKyZtY2lZDUi4gTNEfYyoEzElfZXdg5SphWIjK7voVVoScf9wpW7/VUR5CxpDl5FKCzpemI
+ bNEBM4yDCco1nOj+hw8a/MepCUQexqLq/USD5TfKUjXpA2uFu9oJh
+X-Gm-Gg: ASbGncu44jettX6+DFvBvi91u46G9crZZySPG9GS7EWkHw42w/5bp9LJB1W6mDLgude
+ HQLWgFgwXV9618JBSbS+HZ/ewOgLsl8B4nxfeep3ycy0WSVqZjkpW/O04g47//n9GztKSk74soo
+ HWmENi/PS3MNmf66WX6KA3HV177qAXfGGg4QS4THNoIjfY1QOORsyLBz33mbFkD4s0bUOGeZkZ7
+ odr7qFVe0K5PZsXbNsWfkymk6StrxDU7K/+VOJqaAyo9ug3fq6147V5dCGxMGUfadZNntKBbH4K
+ E2B6zMGKuAAof7WwiAFfHg2QetOTa0BaW+eeKDJAVGyTA4Y=
+X-Received: by 2002:a05:6000:1acb:b0:391:3406:b4df with SMTP id
+ ffacd0b85a97d-3971d9f0e43mr10555913f8f.20.1742218889965; 
+ Mon, 17 Mar 2025 06:41:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAF1+x1HycAfyO3vhtywQPqUueewhvtliwc45br8x8/quXxEbW8bRKeEEX5sFjSAw0MpCTEg==
+X-Received: by 2002:a05:6000:1acb:b0:391:3406:b4df with SMTP id
+ ffacd0b85a97d-3971d9f0e43mr10555895f8f.20.1742218889563; 
+ Mon, 17 Mar 2025 06:41:29 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-207.web.vodafone.de.
  [109.42.51.207]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c7df3419sm14724162f8f.9.2025.03.17.06.31.15
+ ffacd0b85a97d-395cb40cdc5sm15031349f8f.80.2025.03.17.06.41.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Mar 2025 06:31:15 -0700 (PDT)
-Message-ID: <e66516bd-27d9-43ad-a1e2-be7ee75037a7@redhat.com>
-Date: Mon, 17 Mar 2025 14:31:14 +0100
+ Mon, 17 Mar 2025 06:41:29 -0700 (PDT)
+Message-ID: <f2168937-5252-4e91-80d6-2ad344f443fa@redhat.com>
+Date: Mon, 17 Mar 2025 14:41:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/npcm_clk: fix buffer-overflow
-To: Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20250224205053.104959-1-pierrick.bouvier@linaro.org>
- <CAFEAcA_sz-_6WGCQ=4kC2vtK2RUBXbAtMVzh3iZsp0xmNbgaxQ@mail.gmail.com>
- <829e9fd0-2d0f-45e6-ab89-d933d344cfe2@linaro.org>
- <CAFEAcA8BHzA_P7yX+cDMb1WiyGTzkh6xjvam4RHs5aoM1X6mkw@mail.gmail.com>
- <5c25f67a-2677-4162-9477-f51f230403b0@linaro.org>
- <CAFEAcA8jzYvCLxDTybE34K5DxQqOG4-m8_-oNwiATVBHYbEV9A@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 5/5] s390: implementing CHSC SEI for AP config
+ change
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, akrowiak@linux.ibm.com
+References: <20250311151616.98244-1-rreyes@linux.ibm.com>
+ <20250311151616.98244-6-rreyes@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAFEAcA8jzYvCLxDTybE34K5DxQqOG4-m8_-oNwiATVBHYbEV9A@mail.gmail.com>
+In-Reply-To: <20250311151616.98244-6-rreyes@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -156,47 +157,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/02/2025 21.50, Peter Maydell wrote:
-> (edited cc list since it's moved away from a discussion of this
-> particular patch and on to a testing/ci coverage issue)
+On 11/03/2025 16.16, Rorie Reyes wrote:
+> Handle interception of the CHSC SEI instruction for requests
+> indicating the guest's AP configuration has changed.
 > 
-> On Wed, 26 Feb 2025 at 19:03, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
->>
->> On 2/26/25 03:50, Peter Maydell wrote:
->>> On Tue, 25 Feb 2025 at 20:57, Pierrick Bouvier
->>> <pierrick.bouvier@linaro.org> wrote:
->>>>
->>>> On 2/25/25 05:41, Peter Maydell wrote:
->>>>> (Looking more closely at the cold_reset_values handling
->>>>> in npcm_gcr.c, that looks not quite right in a different
->>>>> way; I'll send a reply to that patch email about that.)
->>>>>
->>>>
->>>> It may be a hole in our CI right now.
->>>> Would that be interesting for CI to run all tests (check-functional +
->>>> check w/o functional) with both ubsan and asan?
->>>
->>> We do have at least some ubsan tests in our CI right now
->>> (eg the "clang-system" job). The problem with ubsan coverage
->>> is the usual one that we already have too much CI going on,
->>> and it takes forever and we don't have that much headroom
->>> for adding more jobs.
-...
->> Would that hurt so much to have one configuration enabled with ubsan and
->> asan, which catches *real* bugs, and potential security issues?
->> Yes, it adds overhead, but it should not be x10. Around x2 to x3.
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+> Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Tested-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> ---
+>   target/s390x/ioinst.c | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
 > 
-> You'd need to have a duplicate of all of the above
-> functional-system-* test jobs if you wanted
-> to test all the guest architectures, I think. So it's
-> 30 mins build * six configs plus 60 mins total for testing.
-> Or we could convert (some of?) the existing jobs to use the
-> sanitisers if we needed to economise on CI time.
+> diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
+> index a944f16c25..f061c6db14 100644
+> --- a/target/s390x/ioinst.c
+> +++ b/target/s390x/ioinst.c
+> @@ -17,6 +17,7 @@
+>   #include "trace.h"
+>   #include "hw/s390x/s390-pci-bus.h"
+>   #include "target/s390x/kvm/pv.h"
+> +#include "hw/s390x/ap-bridge.h"
+>   
+>   /* All I/O instructions but chsc use the s format */
+>   static uint64_t get_address_from_regs(CPUS390XState *env, uint32_t ipb,
+> @@ -573,13 +574,19 @@ out:
+>   
+>   static int chsc_sei_nt0_get_event(void *res)
+>   {
+> -    /* no events yet */
+> +    if (s390_has_feat(S390_FEAT_AP)) {
+> +        return ap_chsc_sei_nt0_get_event(res);
+> +    }
+> +
+>       return 1;
+>   }
+>   
+>   static int chsc_sei_nt0_have_event(void)
+>   {
+> -    /* no events yet */
+> +    if (s390_has_feat(S390_FEAT_AP)) {
+> +        return ap_chsc_sei_nt0_have_event();
+> +    }
+> +
+>       return 0;
+>   }
 
-I agree with Peter that having additional build jobs is currently rather a 
-no-go ... but maybe we could enable ubsan and/or asan in some (more) of the 
-existing pipelines?
+  Hi!
+
+This unfortunately fails to link when configuring QEMU with the 
+"--without-default-devices" configure switch:
+
+/usr/bin/ld: libqemu-s390x-softmmu.a.p/target_s390x_ioinst.c.o: in function 
+`ioinst_handle_chsc':
+/tmp/qemu-mini/target/s390x/ioinst.c:587:(.text+0x1ce1): undefined reference 
+to `ap_chsc_sei_nt0_have_event'
+/usr/bin/ld: /tmp/qemu-mini/target/s390x/ioinst.c:578:(.text+0x1d1c): 
+undefined reference to `ap_chsc_sei_nt0_get_event'
+collect2: error: ld returned 1 exit status
+
+I guess you have to rather use some callback mechanism, stubs or #ifdefs 
+here instead.
 
   Thomas
 
