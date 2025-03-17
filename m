@@ -4,65 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D0DC282EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE9FC35FF3
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Mar 2025 09:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tu6gC-0007dl-K2; Mon, 17 Mar 2025 05:22:40 -0400
+	id 1tu6yZ-0003GR-7n; Mon, 17 Mar 2025 05:41:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tu6fx-0007SJ-T8
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:22:28 -0400
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tu6yX-0003Fb-7w
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:41:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tu6fu-0004HP-NL
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:22:24 -0400
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tu6yV-0006o3-BM
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 05:41:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742203341;
+ s=mimecast20190719; t=1742204492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NhuRtfn92kG4Im5Jrhj99U+SsewYQ7ePZzod5uuoe8I=;
- b=CVFm7fgauR8FP+j+NN21TmtSvnPJtqfB5wbAo4TQ9bFUBsq50pYcNw+UwFy1T88EA5nyqv
- OpEpFk4f28CQeNK1z0qcWa80lQHY9UM/3wXsGusDbe0mmq5QynEN0pZItyqYHMUFZneHMI
- jmOFklnnMjuCNc5EH0v6yMNlzZzO1m4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-fHPcKUj9NR-fiqpSurhCxg-1; Mon,
- 17 Mar 2025 05:21:12 -0400
-X-MC-Unique: fHPcKUj9NR-fiqpSurhCxg-1
-X-Mimecast-MFC-AGG-ID: fHPcKUj9NR-fiqpSurhCxg_1742203271
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC42C180899B; Mon, 17 Mar 2025 09:21:11 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.72.112.202])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 447431828A92; Mon, 17 Mar 2025 09:21:07 +0000 (UTC)
-From: Jason Wang <jasowang@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Konstantin Shkolnyy <kshk@linux.ibm.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PULL 1/1] vdpa: Allow vDPA to work on big-endian machine
-Date: Mon, 17 Mar 2025 17:21:02 +0800
-Message-ID: <20250317092102.4381-2-jasowang@redhat.com>
-In-Reply-To: <20250317092102.4381-1-jasowang@redhat.com>
-References: <20250317092102.4381-1-jasowang@redhat.com>
+ bh=HzhdwtJEUenVDmTXktA9sItAz8Kq5AgaNcpeNF/lFo8=;
+ b=bHAEkYsiPGStNKdrtYw3/36AUIbuur6mc1sJIb361TNinW4ZWeqwwcrwjoy+rY9sryJSZC
+ VqaLte45lNdClHgwTu3q6wG7QS3WoG4KYMIAAkNlZp1a0To9R/FlK28zzh+7HFsK7oJ8to
+ ccmYo4F4V6jNb7zuuBx+IUtoAnVteks=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-554-ldIaoGAGPBOFikQLQqKVtQ-1; Mon, 17 Mar 2025 05:41:30 -0400
+X-MC-Unique: ldIaoGAGPBOFikQLQqKVtQ-1
+X-Mimecast-MFC-AGG-ID: ldIaoGAGPBOFikQLQqKVtQ_1742204489
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5e67df8c373so4473409a12.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 02:41:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742204489; x=1742809289;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HzhdwtJEUenVDmTXktA9sItAz8Kq5AgaNcpeNF/lFo8=;
+ b=om+Xh2yUUZpTkF+QuCh2lCVvUUYI2/brPhSsJwQTenD+Wm+onq+bt/qMumun+yc9M6
+ 4Hte3ai8Y9G5nEGm+FunAGe3ls+Gyrs2f+o8tMheQjPXY5KFWyVM/gLEfGH2imnIMbCq
+ miHwswpfRS1NEEC3Le4Miq+iWZZp4nZ/sQOHnTgdc72JgigtE/fyiAnLbH/XuEPVgEUf
+ rI5X0o82EoP3dL7HZOUxhaQ26c6YJp8drmRT7foWO6IRnFltWfnpbHoZtcYjTopfHd7B
+ 6Fxzbo7354hqC46z+n2xFlLG79iNxsemXqWzwwyg5rSwYyjYWU88kCK+PCprUkG7PEEm
+ HoZw==
+X-Gm-Message-State: AOJu0YxLp9ZqyT7WBvyEJdq+sGvh12dFWXqL7lczaNJtlta2GpnfSvlh
+ Ukgb7ubrWHtYWYSVLn8V/LeWBipS+Svr/0GZ8iL2XfyPapE3dJXK3E42hrNKnQY6idyOG8KxToS
+ DBKve8dBqjVLKmDqHgXcx6b45UpJDRB40NzVYBtbhy2lYbgnHDIlTVcnGFnRB84wn9OOLSJt5LL
+ px3rhwSGnD1iP98zlsS4S1K8prQGA=
+X-Gm-Gg: ASbGncvcAb3LOf3Kkbbtm3VJYGmGLlVQuh5A+gyq9XCFEBEgLeZa74Xt62fB0QoA6bZ
+ 18Sy4JsDWvTY/5/XAfzDJpbY2ITs0ozaAadV9otcPBJMM9L+PZmK/+wVmHBVEeiiDOT23szwwCw
+ ==
+X-Received: by 2002:a05:6402:42c5:b0:5e6:60da:dc45 with SMTP id
+ 4fb4d7f45d1cf-5e8a0520618mr9282107a12.31.1742204489229; 
+ Mon, 17 Mar 2025 02:41:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHMZ++bbNcahuIpjV91VmvmYZL7d4VWpzOppgHUxXBmD/iWetxioLZBrDSZ4OW+UQoseUNApyl2OVm7TK0MkA4=
+X-Received: by 2002:a05:6402:42c5:b0:5e6:60da:dc45 with SMTP id
+ 4fb4d7f45d1cf-5e8a0520618mr9282084a12.31.1742204488738; Mon, 17 Mar 2025
+ 02:41:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+References: <20250313-hash-v4-0-c75c494b495e@daynix.com>
+In-Reply-To: <20250313-hash-v4-0-c75c494b495e@daynix.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Mon, 17 Mar 2025 17:40:51 +0800
+X-Gm-Features: AQ5f1JqmZlOHofNsBbGsfMG23HCaBUKjYjEVYTASl2tqLTdbnINT5MlSfGturog
+Message-ID: <CAPpAL=xCj+=ts8Anq19suBahrbJ_sa62EjDjxhK8kJDnH5T-0g@mail.gmail.com>
+Subject: Re: [PATCH RFC v4 00/11] virtio-net: Offload hashing without eBPF
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -87,53 +104,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+QE tested this RFC series of patches with virtio-net regression tests,
+everything works fine.
 
-Add .set_vnet_le() function that always returns success, assuming that
-vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
-outputs the message:
-"backend does not support LE vnet headers; falling back on userspace virtio"
+Tested-by: Lei Yang <leiyang@redhat.com>
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
----
- net/vhost-vdpa.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index f7a54f46aa..7ca8b46eee 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -262,6 +262,18 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
- 
- }
- 
-+/*
-+ * FIXME: vhost_vdpa doesn't have an API to "set h/w endianness". But it's
-+ * reasonable to assume that h/w is LE by default, because LE is what
-+ * virtio 1.0 and later ask for. So, this function just says "yes, the h/w is
-+ * LE". Otherwise, on a BE machine, higher-level code would mistakely think
-+ * the h/w is BE and can't support VDPA for a virtio 1.0 client.
-+ */
-+static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool enable)
-+{
-+    return 0;
-+}
-+
- static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
-                                        Error **errp)
- {
-@@ -429,6 +441,7 @@ static NetClientInfo net_vhost_vdpa_info = {
-         .cleanup = vhost_vdpa_cleanup,
-         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
-         .has_ufo = vhost_vdpa_has_ufo,
-+        .set_vnet_le = vhost_vdpa_set_vnet_le,
-         .check_peer_type = vhost_vdpa_check_peer_type,
-         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
- };
--- 
-2.42.0
+On Thu, Mar 13, 2025 at 2:56=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
+>
+> I'm proposing to add a feature to offload virtio-net RSS/hash report to
+> Linux. This series contain patches to utilize the proposed Linux feature.
+> The patches for Linux are available at:
+> https://lore.kernel.org/r/20250307-rss-v9-0-df76624025eb@daynix.com/
+>
+> This work was presented at LPC 2024:
+> https://lpc.events/event/18/contributions/1963/
+>
+> Patch "docs/devel/ebpf_rss.rst: Update for peer RSS" provides comparion
+> of existing RSS mechanism and the new one (called "peer RSS") and
+> explains how QEMU selects one.
+>
+> ---
+> Changes in v4:
+> - Rebased.
+> - Added a reference to the documentation to the cover letter.
+> - Link to v3: https://lore.kernel.org/r/20240915-hash-v3-0-79cb08d28647@d=
+aynix.com
+>
+> ---
+> Akihiko Odaki (11):
+>       qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
+>       net/vhost-vdpa: Report hashing capability
+>       virtio-net: Move virtio_net_get_features() down
+>       virtio-net: Retrieve peer hashing capability
+>       net/vhost-vdpa: Remove dummy SetSteeringEBPF
+>       virtio-net: Add hash type options
+>       net: Allow configuring virtio hashing
+>       virtio-net: Use qemu_set_vnet_hash()
+>       virtio-net: Offload hashing without vhost
+>       tap: Report virtio-net hashing support on Linux
+>       docs/devel/ebpf_rss.rst: Update for peer RSS
+>
+>  docs/devel/ebpf_rss.rst        |  23 ++-
+>  include/hw/qdev-properties.h   |  18 +++
+>  include/hw/virtio/virtio-net.h |   6 +-
+>  include/net/net.h              |  20 +++
+>  net/tap-linux.h                |   2 +
+>  net/tap_int.h                  |   3 +
+>  hw/core/qdev-properties.c      |  67 ++++++++-
+>  hw/net/virtio-net.c            | 331 +++++++++++++++++++++++++++++------=
+------
+>  net/net.c                      |  14 ++
+>  net/tap-bsd.c                  |  10 ++
+>  net/tap-linux.c                |  18 +++
+>  net/tap-solaris.c              |  10 ++
+>  net/tap-stub.c                 |  10 ++
+>  net/tap.c                      |  15 ++
+>  net/vhost-vdpa.c               |  41 ++++-
+>  15 files changed, 478 insertions(+), 110 deletions(-)
+> ---
+> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+> change-id: 20240828-hash-628329a45d4d
+>
+> Best regards,
+> --
+> Akihiko Odaki <akihiko.odaki@daynix.com>
+>
+>
 
 
