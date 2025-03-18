@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2135BC28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 13:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 745C7C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 13:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWib-0000Oy-Tx; Tue, 18 Mar 2025 09:10:54 -0400
+	id 1tuWkh-00034b-7m; Tue, 18 Mar 2025 09:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWiJ-00084M-Nh; Tue, 18 Mar 2025 09:10:42 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1tuWj1-0002Kf-85; Tue, 18 Mar 2025 09:11:32 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWiH-0003g0-Pg; Tue, 18 Mar 2025 09:10:35 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ac298c8fa50so1046306866b.1; 
- Tue, 18 Mar 2025 06:10:31 -0700 (PDT)
+ id 1tuWix-0003nr-K4; Tue, 18 Mar 2025 09:11:18 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-ac2a81e41e3so1252847966b.1; 
+ Tue, 18 Mar 2025 06:11:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742303430; x=1742908230; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742303473; x=1742908273; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1G7hSFteNb8Ei9umQoeYx+vzWa3qyKqrpQiR8QrHJCs=;
- b=duHA4i6Jn/MaNjF/a6zZNKSTcXYcQ8vIGTPIxkrNkXvt54FixtUyKxF9LgVmNSRet/
- TVZ4ln6PmdJG2IKLP7WcSIhZeKpqIl3Y7d/xiHMG3XiqNmvk3u52uVBZz7UcaPQUSHEs
- aZ21BviM+98+Y3JpXrqV9wihsIvbw75TYrOUh+vRQAZkpW9GUmJCmAlE4hNBFZ9hTZSn
- +xV/C551WRJKg2NhSBuSvNM9VQqg6EMDm0yzq0tDFFEqR25EiRhws7Q2fLwJFdbIl+HB
- WO9te9O2tr9mraLg8y9wE0RROQyg1gYQGoXYGbwEs61F3wL+P0mf8nwkI49H0DARrnF6
- tjNg==
+ bh=SXfXuqOifdkruB2nrZjTD84VGmjUDrLwEA4V1suXy7k=;
+ b=CIMHkLSu/Yy0FMVkSVD5Dr2lt0AZBVj7sCluDCPDFCpaPjANYWE/W/QriHZKeCia/U
+ aldn+IEN3WU8kDNhbGZ2MPOjRo93jgjv7LdJLlTtfg5+8qO3f3pcHAEyR/3EDLo1Q2lB
+ 0EphX2Wl/OzhUOvxgCdGY0j84Jr2w9dyTeXR1c/QQwfR/cy1FST92+VTkss2dgfezqpL
+ xURIcYh8uXGf7iy0TcNpTiNrmAjdh0Pj8aOh10MnKDH/Ff9BqLPHzB8cDdX66cL3yaxP
+ 77hOO4rpPk7S4nJQpoGsK89abAgESVKOaiWCO/IzoUTdeslRiTIrKX5am8kS0ed2zoSj
+ bRAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742303430; x=1742908230;
+ d=1e100.net; s=20230601; t=1742303473; x=1742908273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1G7hSFteNb8Ei9umQoeYx+vzWa3qyKqrpQiR8QrHJCs=;
- b=FlyyNAkSHufQfwcTRd+jYMeYT2yz7J0+vUsd+vLuOgGWASm46n+H9+8Y8v09P1aR+a
- i2vrAhwBYCQq6G2RV0I7levX/irgTosYveY9SoTgJXHDn1jF/c3EzPrUz5EcLCmkkyqt
- jcJBs44/woP+1XvXmqXgaI2RfR22lYAEJbJAyBZLLyGuivHBmoLVIUlnHyKnffjIFdjn
- ftKxB8OJeGsVRLnco1VrGFENDvlneubgmlSyekNrisWFB/yR08RIh+Ey1XQO6+7vP7cp
- iLn2tp9Xyhbt9DIsXV7BrlpB9laZHV+nEH9SSBNQDuvrGCPiklSbldrQFhHPUsvJgMeX
- udyQ==
+ bh=SXfXuqOifdkruB2nrZjTD84VGmjUDrLwEA4V1suXy7k=;
+ b=UwkshT8kiwRbig/iDGB7xSjOB59Hw/wqBMeB5IV+3P9cL+4327LRrQH4X4+f5CXJ3e
+ P13GLYtfAaqjYwTjH2YtsIe1+RpsmdWj21gyJdU/qd0pbvm2vPyxMCaiVPCBCirrMNUs
+ aVjyIGC0z71byeVbHUpxsZbE6jWgKGOcyuIpHEYt3G3+Hg+vsOQNKtpT72j6vd554cM4
+ f8rnhh8C92IogcWhCDHA01Zc2SS7nSbYyY0Fj+o4Kma7D399TWBmIkcfn3/egR+zyyT0
+ shLwJNIV58o5zltS3LjvW/SYUhIik43RX1BQKzMCvTud20RZcMc3+rlubHGlRKXP4cld
+ rL3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFT80MLp6MegScCrTA9QcfVdR8lZs8EOXzX94sJOT6txODUcchrirDtzvzPatCNsAVPxFwy5TT9Q==@nongnu.org
-X-Gm-Message-State: AOJu0YzcUTgA3L4+BPYb9zbmAFnDuemwNRambKIw4Yhp9Kf6I14g5Cy6
- jNlQhFKe55O3eVlBdQc9byz98T/8NrtiMUVlhnawdEB6mu10W0oC+jv/syog
-X-Gm-Gg: ASbGncvb2UDAts3GiJIOj8B5qHenSjXT/bDaZP4HyhGIBgG/X8CSYALGFa25Gw2O2OQ
- S/BZHSaMfPD5bRTw21bHPWbTmR7HOX8aPLRpBBqXw08OHd1X6O9e3EM9kv+pWV9rJhXW0rBiE8W
- z/7Zx7ZKXgSvbw6sCevuYKQ8rYYnou/W9X88KOTFSKAPxkmaYfVs2feywkESdj1Smh6HR1BECmf
- Es8N0hX5e3G74xmCzl6U+FcMicXJzrgxZAYgRweuwLUYeFjKRiLRsAiFWf74vJaNyxGyT02SK4b
- /WjFffAHPLEr0YYezaSLPOBkZtO6dvFTB1bw20gUSXStQR1AylMoZ+WffyzvYfm/Aoo=
-X-Google-Smtp-Source: AGHT+IHfFobVjvuuug6M3ImzyoJ7UeMyS3NRx2uUbsMvRum4kfiIaMbCen3uCkRrcGqJCw88XHPG7w==
-X-Received: by 2002:a17:906:6a0a:b0:ac2:9c7d:e144 with SMTP id
- a640c23a62f3a-ac3303f770amr1898767966b.40.1742303419230; 
- Tue, 18 Mar 2025 06:10:19 -0700 (PDT)
+ AJvYcCX3ZgrgyATkrnvBRwIrY7d8VMh8Gssh3lnkdJzHElHn169nBDc50D40YSY9hu8irKencxdjFaRrtw==@nongnu.org
+X-Gm-Message-State: AOJu0YzUUVgMuV9Q17Rdlux8CN8xgwK3dD4mjgLg8IXgxZj9qkzIRFaN
+ kwb4Avn4d2em8osOK88gG+Ar5jmdprnmlpw/2nug2u2ctLzkw1Gf3CWigdSs
+X-Gm-Gg: ASbGncuVzwBqgaF8sOBiAmMs20rGNLSZQnULO9XHOPsvF2zRUfwrF1SnkQ29768iMUZ
+ /qMj/W59CoJfpW8BxtafzgHiZYjInMAhfjipfYa/Jpmjxns5mXAuvhq+cFEHE03fpj3AbqPkNZS
+ DP2XGvsjJ2BuvTYIITjvnMwlIYY8WA+gfXCM2uJip4gVo8cwPZf6Q5+apvrQ/S298GA7UL6Owxg
+ EyNRdwlQotv1PDdGTnPjsfedZqhFi70eegz+LLbNI13aPM23K5RLKO281ckxilNV45wVVS5KQ66
+ XN78JJtIAN18bV9RgpdAzOe5eDGek/lgqEX5WFng8zCFg//exHjq2i6RR1zwNsyWtrw=
+X-Google-Smtp-Source: AGHT+IE0lcnpuFUZ8J1Qns90x+egNbeWfvr7x8ntwDgqy1y/rmgNeRNsiXeKCAzMqwHHv6Kl704dQg==
+X-Received: by 2002:a17:906:ee85:b0:ac3:4489:790f with SMTP id
+ a640c23a62f3a-ac38d407bf4mr414434366b.24.1742303471954; 
+ Tue, 18 Mar 2025 06:11:11 -0700 (PDT)
 Received: from corvink-nb.beckhoff.com ([195.226.174.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3147f3101sm850678066b.69.2025.03.18.06.10.18
+ a640c23a62f3a-ac3147f3101sm850678066b.69.2025.03.18.06.11.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 06:10:18 -0700 (PDT)
+ Tue, 18 Mar 2025 06:11:11 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ qemu-arm@nongnu.org
 Cc: =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Paolo Bonzini <pbonzini@redhat.com>, YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH 06/21] hw/dma/zynq-devcfg: Simulate dummy PL reset
-Date: Tue, 18 Mar 2025 14:07:57 +0100
-Message-ID: <20250318130817.119636-7-corvin.koehne@gmail.com>
+Subject: [PATCH 13/21] hw/arm/beckhoff_CX7200: Remove second SD controller
+Date: Tue, 18 Mar 2025 14:08:04 +0100
+Message-ID: <20250318130817.119636-14-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250318130817.119636-1-corvin.koehne@gmail.com>
 References: <20250318130817.119636-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,54 +107,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-Setting PCFG_PROG_B should reset the PL. After a reset PCFG_INIT
-should indicate that the reset is finished successfully.
-
-In order to add a MMIO-Device as part of the PL in the Zynq, the
-reset logic must succeed. The PCFG_INIT flag is now set when the
-PL reset is triggered by PCFG_PROG_B. Indicating the reset was
-successful.
+The CX7200 has one SD controller connected to address 0xE0101000.
+The controller connected to address 0xE0100000 can be removed.
 
 Signed-off-by: Yannick Voßen <y.vossen@beckhoff.com>
 ---
- hw/dma/xlnx-zynq-devcfg.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/arm/beckhoff_CX7200.c | 48 ++++++++++++++++++----------------------
+ 1 file changed, 21 insertions(+), 27 deletions(-)
 
-diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index 611a57b4d4..c44b802b22 100644
---- a/hw/dma/xlnx-zynq-devcfg.c
-+++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -49,6 +49,7 @@
+diff --git a/hw/arm/beckhoff_CX7200.c b/hw/arm/beckhoff_CX7200.c
+index 89466cfdd8..bf3c66e5a4 100644
+--- a/hw/arm/beckhoff_CX7200.c
++++ b/hw/arm/beckhoff_CX7200.c
+@@ -207,11 +207,13 @@ static void beckhoff_cx7200_init(MachineState *machine)
+     CX7200MachineState *cx7200_machine = CX7200_MACHINE(machine);
+     MemoryRegion *address_space_mem = get_system_memory();
+     MemoryRegion *ocm_ram = g_new(MemoryRegion, 1);
+-    DeviceState *dev, *slcr;
++    DeviceState *carddev, *dev, *slcr;
+     SysBusDevice *busdev;
+     qemu_irq pic[64];
+     int n;
+     unsigned int smp_cpus = machine->smp.cpus;
++    DriveInfo *di;
++    BlockBackend *blk;
  
- REG32(CTRL, 0x00)
-     FIELD(CTRL,     FORCE_RST,          31,  1) /* Not supported, wr ignored */
-+    FIELD(CTRL,     PCFG_PROG_B,        30,  1)
-     FIELD(CTRL,     PCAP_PR,            27,  1) /* Forced to 0 on bad unlock */
-     FIELD(CTRL,     PCAP_MODE,          26,  1)
-     FIELD(CTRL,     MULTIBOOT_EN,       24,  1)
-@@ -116,6 +117,7 @@ REG32(STATUS, 0x14)
-     FIELD(STATUS,   PSS_GTS_USR_B,      11,  1)
-     FIELD(STATUS,   PSS_FST_CFG_B,      10,  1)
-     FIELD(STATUS,   PSS_CFG_RESET_B,     5,  1)
-+    FIELD(STATUS,   PCFG_INIT,           4,  1)
+     /* max 2GB ram */
+     if (machine->ram_size > 2 * GiB) {
+@@ -318,33 +320,25 @@ static void beckhoff_cx7200_init(MachineState *machine)
+     gem_init(0xE000B000, pic[54 - IRQ_OFFSET]);
+     gem_init(0xE000C000, pic[77 - IRQ_OFFSET]);
  
- REG32(DMA_SRC_ADDR, 0x18)
- REG32(DMA_DST_ADDR, 0x1C)
-@@ -209,6 +211,14 @@ static uint64_t r_ctrl_pre_write(RegisterInfo *reg, uint64_t val)
-             val |= lock_ctrl_map[i] & s->regs[R_CTRL];
-         }
-     }
-+
-+    uint32_t pcfg_prog_b = FIELD_EX32(val, CTRL, PCFG_PROG_B);
-+    if (pcfg_prog_b) {
-+        s->regs[R_STATUS] |= R_STATUS_PCFG_INIT_MASK;
-+    } else {
-+        s->regs[R_STATUS] &= ~R_STATUS_PCFG_INIT_MASK;
-+    }
-+
-     return val;
- }
+-    for (n = 0; n < 2; n++) {
+-        int hci_irq = n ? 79 : 56;
+-        hwaddr hci_addr = n ? 0xE0101000 : 0xE0100000;
+-        DriveInfo *di;
+-        BlockBackend *blk;
+-        DeviceState *carddev;
++    /*
++     * Compatible with:
++     * - SD Host Controller Specification Version 2.0 Part A2
++     * - SDIO Specification Version 2.0
++     * - MMC Specification Version 3.31
++     */
++    dev = qdev_new(TYPE_SYSBUS_SDHCI);
++    qdev_prop_set_uint8(dev, "sd-spec-version", 2);
++    qdev_prop_set_uint64(dev, "capareg", ZYNQ_SDHCI_CAPABILITIES);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xE0101000);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[79 - IRQ_OFFSET]);
  
+-        /*
+-         * Compatible with:
+-         * - SD Host Controller Specification Version 2.0 Part A2
+-         * - SDIO Specification Version 2.0
+-         * - MMC Specification Version 3.31
+-         */
+-        dev = qdev_new(TYPE_SYSBUS_SDHCI);
+-        qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+-        qdev_prop_set_uint64(dev, "capareg", ZYNQ_SDHCI_CAPABILITIES);
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, hci_addr);
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[hci_irq - IRQ_OFFSET]);
+-
+-        di = drive_get(IF_SD, 0, n);
+-        blk = di ? blk_by_legacy_dinfo(di) : NULL;
+-        carddev = qdev_new(TYPE_SD_CARD);
+-        qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-        qdev_realize_and_unref(carddev, qdev_get_child_bus(dev, "sd-bus"),
+-                               &error_fatal);
+-    }
++    di = drive_get(IF_SD, 0, 0);
++    blk = di ? blk_by_legacy_dinfo(di) : NULL;
++    carddev = qdev_new(TYPE_SD_CARD);
++    qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
++    qdev_realize_and_unref(carddev, qdev_get_child_bus(dev, "sd-bus"),
++                       &error_fatal);
+ 
+     dev = qdev_new(TYPE_ZYNQ_XADC);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 -- 
 2.49.0
 
