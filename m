@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B95E5C282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7882C28B28
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 13:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWiW-0008Pd-Ng; Tue, 18 Mar 2025 09:10:49 -0400
+	id 1tuWho-00072W-3u; Tue, 18 Mar 2025 09:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWiE-00083h-Gy; Tue, 18 Mar 2025 09:10:41 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1tuWh3-0006Ro-Ve; Tue, 18 Mar 2025 09:09:23 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWiB-0003f9-3C; Tue, 18 Mar 2025 09:10:30 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-ac25d2b2354so956551266b.1; 
- Tue, 18 Mar 2025 06:10:25 -0700 (PDT)
+ id 1tuWh1-0003B6-Ck; Tue, 18 Mar 2025 09:09:17 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ac25d2b2354so956144366b.1; 
+ Tue, 18 Mar 2025 06:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742303424; x=1742908224; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742303353; x=1742908153; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mggqB81grCqRlFJug6lfjJdqHWYTQWBu9Z0EKFmQF74=;
- b=Da2N9IWkV5mD4hbrTGHJGRlb2qWphmlol0ymnU0pEBCy3tGaVLt4RXYe/dwPHCOVNB
- w5cGQedJvsuo/4ANxSZzTv2QO9fhltI3S8dXVTL9LEhfgS0/N8PVNeFagx1M3npPkaOT
- QDCBNO31zLXh597UT4UUKhE3IXhi/fZXHrRSisbQPolevJ+FvGKaapWrOvOq3DFhfjpx
- SczLKrPs3jfQkrGQqYPadcnUeC3pJ7NCg9gcr/ETBMqTIQCy+zcYQTl6NbKpeZLOHLiq
- m3/TM/aTIw3W++4eg6QUijjJKK2289UXbz+xSJGvimAe4htCtK6UDW+zMUzDdcwY6EKD
- gIRA==
+ bh=xSqhzaN+M9hdNsbBzriOUGWRrnB6G7MJ7OrsPut7pwk=;
+ b=JIter+l3AchIETleV+OG7GmB28f9PThHGIOD7nKSK5SkfibsDh3sCBj2X2sS9DpYbN
+ /nmMhBl6r5KKU8YrlNT6XaeRta6eYw9Wgyjy6wMTJV+ReO02M6Un6WZMhMEZfHjmbqGS
+ TeWuyOz7uYYoxSd5UQ6/8f5jjYvV/Q9QbATt4RIbp4C3lFphXRqsOsAW2WCcbcHuC2kx
+ ATHLcMQ/QhFsMGtHET/jXXvHYwRmoB3OJUjqzCxpns8zgifzRc+PeUowWndf4rEq2EdI
+ LXVQQ2jyMnqg/bzc7wo09nv+PsvosUZd1q3vVY/5gz65hL840el5mCD08SvT4bxsy+Oa
+ kaTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742303424; x=1742908224;
+ d=1e100.net; s=20230601; t=1742303353; x=1742908153;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mggqB81grCqRlFJug6lfjJdqHWYTQWBu9Z0EKFmQF74=;
- b=ERffCxemPuFF5t98FmQOuXNYlJo/OTJS4Bmsa4ZJfNQKUzv/ix4SGq+fhhh8nV3dnK
- zPAwDMD90o+N9cMC8h2uMwuTpjQdAdesBmB+uRRFCr9zAduqAbmOMHJV0zybpxm3G/bo
- 4D25m30YSkukDrEPkIgTlx0rv/tXrDK7GMyb+wvG/+lWyuiJU+C0S156IF7t0SFl/wXs
- BCrx7KsFYhpz4vO9i2G2KzRImdioBcWpaU8U0x6W1jsjvabHR0z19uQIfaKAeBf1+p68
- ywor5FG4onY/omQaCcj75SAyUPeXcS06IogeO3nNRV91Go+Oc1eULirYLEiSafSI6egk
- 7GpA==
+ bh=xSqhzaN+M9hdNsbBzriOUGWRrnB6G7MJ7OrsPut7pwk=;
+ b=GicRI1q2YROdOKVnTMf7uPBhdSsQ/cjHrYLy8h4mJVcHulk1N41dDmC1QGNaVoQ5yk
+ P6r1g/V/oAd0ufPq2P5I/Gq/6usF5O/eWHYvSveGduAr2onmnUHb51ZucEDE8LNn0nSf
+ rCqxtTTAslkbRmZ/4XxSS7PFDprwFr7zCtceH5m7hdOfbr/RMD13FqpyAtd/AD8SmwTn
+ WONEGgRHckUn9UZDRYl4a7tLpTQZEcZKix7Xcl02y69nNFSfysyxGswDGB6+5cer1+fo
+ O06lj8WpMwuN3FpUJuX3PxXthJZfdyCD02JVsdfLnMtDOSWKPZhExeBIpUWxpjEI6WRf
+ Be9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsbU7fGbwoI0+oHelcX8pnKVavmhOhVzgIPyGOUEEb8bI6P8LMwgp6vE6Q9yPtFa2HJZ2dB22mAA==@nongnu.org
-X-Gm-Message-State: AOJu0YxYRavG/BFb6TDhj6GBT9uC7Er8EkdWeopJFPQCPdVVA6vnoKpF
- rbNtxyWEXymVLZtKa44T3DrBa/g8U0MKN7+JG0yHjc4F++NpUvsLd6cJ/hJe
-X-Gm-Gg: ASbGncuzxxZnau1+V/QQpRKITb0mWkACD7hZKBDbm2dAeT/YsrwL3QSIQ8SCjv0nkAb
- cqW4x62syqFXYMPlcesWygV5bZSCIAnjsNMScRRcI8CoPgP37LmPEZtQVZqVdyz+NHhdX/x/4p/
- QHs+qgy8Jci9ueLvsEYpMmFYIuJkSQVDkrSqkbIzDlU/wiS6opQ00VXlIkVNLhd9l+KzbZ/YXW0
- vhYQWRXpZ751xf5h3kwqjAT+Jp4kfV+ZZXyqaxFgQk189rw2xG6hC1UFZz+7MxSLyAFctMGojly
- SElBR9EPR9JpzEKNXG3SF3iNE66q+aVr1TfloLXKT1NDkXdaX7gx/EegUh8evg7wMVk=
-X-Google-Smtp-Source: AGHT+IHUto3hASebI0ih7GIScn07BWDKs+1MsLnPSfAv/i4vvmVCgQ0ZCM7sCnVcGga+InEB3EV1+Q==
-X-Received: by 2002:a17:906:6a0b:b0:ac3:4489:7910 with SMTP id
- a640c23a62f3a-ac344897c1fmr1423080466b.49.1742303400739; 
- Tue, 18 Mar 2025 06:10:00 -0700 (PDT)
+ AJvYcCXkKFOIIWCgBLU33P6o/0eHLlU3kwBRyyMeb/t07NwPX7+McOYcJi7tKZKxZqn3iluSGK1XNLYTQw==@nongnu.org
+X-Gm-Message-State: AOJu0YyfxR5OmULA9J3rXWvrEa2IQ+0GwMKgSr4KWPgrdTnGewi/doCU
+ yy9q3FJgpEH2TNZ/P5NH8fdhEO4D474EYdKBRyx/G1WSEiu1tFlh7qAuLf9/
+X-Gm-Gg: ASbGncsANJrXAcdL0tT2JGAYSTxjrOQYuA2B/b9v7I8EI1YRn89yDt4HxYD1SsPo1Ut
+ Qb0Web9mNhlAhzjoA3rnpp+kz3DowsBIb+016NpA8unp9BkR64HXkYPeuIIAZ9XG2VHOXNVlIVG
+ dGQ7zxxLItVlI3K0ouwIfLyWaHAUCTFzWTuGIhnh1UtYOwCpdx1wJt9wnCFBSqJWrkNq8c0G8aA
+ L8zn0xoqA65u4XQTTdcW/2hioQQ6WQzA5EsMTA9WNQGDNV8wRAyJQ8u/SCIxfc2iFIFcrNRTJk5
+ i5clT8/8qRn7Uctzjd3tdl99hFTnJPr5pBzxN8rxjizifkPnxcxm0uFt55wT+7czPYo=
+X-Google-Smtp-Source: AGHT+IFV5Fk2KtlA54F4IdB0wl0hXoN/YP2bAza4Zc5oy8tbYdixl24f+aM8TGdNnpt1gQI1or2JtA==
+X-Received: by 2002:a17:907:9495:b0:abe:c81a:985d with SMTP id
+ a640c23a62f3a-ac3304d6112mr1439830366b.48.1742303342285; 
+ Tue, 18 Mar 2025 06:09:02 -0700 (PDT)
 Received: from corvink-nb.beckhoff.com ([195.226.174.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3147f3101sm850678066b.69.2025.03.18.06.09.57
+ a640c23a62f3a-ac3147f3101sm850678066b.69.2025.03.18.06.08.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 06:09:57 -0700 (PDT)
+ Tue, 18 Mar 2025 06:08:59 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
@@ -72,18 +72,17 @@ Cc: =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
  Alistair Francis <alistair@alistair23.me>,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Paolo Bonzini <pbonzini@redhat.com>, YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH 04/21] hw/arm/zynq-devcfg: Prevent unintended unlock during
- initialization
-Date: Tue, 18 Mar 2025 14:07:55 +0100
-Message-ID: <20250318130817.119636-5-corvin.koehne@gmail.com>
+Subject: [PATCH 02/21] hw/timer: Make PERIPHCLK period configurable
+Date: Tue, 18 Mar 2025 14:07:53 +0100
+Message-ID: <20250318130817.119636-3-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250318130817.119636-1-corvin.koehne@gmail.com>
 References: <20250318130817.119636-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,64 +107,182 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-During the emulation startup, all registers are reset, which triggers the
-`r_unlock_post_write` function with a value of 0. This led to an
-unintended memory access disable, making the devcfg unusable.
+The a9 global timer and arm mp timer rely on the PERIPHCLK
+as their clock source. The period of PERIPHCLK (denoted as N)
+must be a multiple of the core CLK period, with N being equal
+to or greater than two. However, the current implementation
+does not take the PERIPHCLK period into account, leading to
+unexpected behavior in systems where the application assumes
+PERIPHCLK is clocked differently.
 
-To address this, a property 'is_initialized' is introduced. It is set
-to false during reset and updated to true once the initialization is
-complete. The unlock function is simply ignored while 'is_initialized'
-is false.
+The property periphclk-period represents the period N, the CLK
+is devided by to get the peripheral clock PERIPHCLK. We can now
+configure clock properties for the a9 global timer and arm mp
+timer. That ensures timers can behave according to the
+applications needs.
 
-I have no idea how this ever worked. Nevertheless, this restores the
-correct behavior.
+The PERIPHCLK period can also be set via the command line, for
+example for the a9 global timer:
+-global driver=arm.cortex-a9-global-timer,
+	       property=periphclk-period,value=2
+
+Information can be found in the Zynq 7000 Soc Technical
+Reference Manual under Timers.
+https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM
 
 Signed-off-by: Yannick Voßen <y.vossen@beckhoff.com>
 ---
- hw/dma/xlnx-zynq-devcfg.c         | 6 +++++-
- include/hw/dma/xlnx-zynq-devcfg.h | 2 ++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/timer/a9gtimer.c            | 19 ++++++++++++++++++-
+ hw/timer/arm_mptimer.c         | 20 +++++++++++++++++++-
+ include/hw/timer/a9gtimer.h    |  1 +
+ include/hw/timer/arm_mptimer.h |  2 ++
+ 4 files changed, 40 insertions(+), 2 deletions(-)
 
-diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index b838c1c0d0..03b5280228 100644
---- a/hw/dma/xlnx-zynq-devcfg.c
-+++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -143,9 +143,11 @@ static void xlnx_zynq_devcfg_reset(DeviceState *dev)
-     XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(dev);
-     int i;
+diff --git a/hw/timer/a9gtimer.c b/hw/timer/a9gtimer.c
+index a1f5540e75..83aa75889e 100644
+--- a/hw/timer/a9gtimer.c
++++ b/hw/timer/a9gtimer.c
+@@ -27,6 +27,7 @@
+ #include "hw/timer/a9gtimer.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
++#include "qemu/error-report.h"
+ #include "qemu/timer.h"
+ #include "qemu/bitops.h"
+ #include "qemu/log.h"
+@@ -62,9 +63,17 @@ static inline int a9_gtimer_get_current_cpu(A9GTimerState *s)
  
-+    s->is_initialized = false;
-     for (i = 0; i < XLNX_ZYNQ_DEVCFG_R_MAX; ++i) {
-         register_reset(&s->regs_info[i]);
-     }
-+    s->is_initialized = true;
+ static inline uint64_t a9_gtimer_get_conv(A9GTimerState *s)
+ {
++    /*
++     * Referring to the ARM-Cortex-A9 MPCore TRM
++     * 
++     * The a9 global timer relies on the PERIPHCLK as its clock source.
++     * The PERIPHCLK clock period must be configured as a multiple of the
++     * main clock CLK. The conversion from the qemu clock (1GHz) to a9
++     * gtimer ticks can be calculated like this:
++     */
+     uint64_t prescale = extract32(s->control, R_CONTROL_PRESCALER_SHIFT,
+                                   R_CONTROL_PRESCALER_LEN) + 1;
+-    uint64_t ret = NANOSECONDS_PER_SECOND * prescale * 10;
++    uint64_t ret = NANOSECONDS_PER_SECOND * prescale * s->periphclk_period;
+     return (uint32_t) (ret / s->cpu_clk_freq_hz);
  }
  
- static void xlnx_zynq_devcfg_dma_go(XlnxZynqDevcfg *s)
-@@ -221,7 +223,9 @@ static void r_unlock_post_write(RegisterInfo *reg, uint64_t val)
- {
-     XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
-     const char *device_prefix = object_get_typename(OBJECT(s));
--
-+    if (!s->is_initialized) {
-+        return;
-+    }
-     if (val == R_UNLOCK_MAGIC) {
-         DB_PRINT("successful unlock\n");
-         s->regs[R_CTRL] |= R_CTRL_PCAP_PR_MASK;
-diff --git a/include/hw/dma/xlnx-zynq-devcfg.h b/include/hw/dma/xlnx-zynq-devcfg.h
-index e4cf085d70..2ab054e598 100644
---- a/include/hw/dma/xlnx-zynq-devcfg.h
-+++ b/include/hw/dma/xlnx-zynq-devcfg.h
-@@ -55,6 +55,8 @@ struct XlnxZynqDevcfg {
-     XlnxZynqDevcfgDMACmd dma_cmd_fifo[XLNX_ZYNQ_DEVCFG_DMA_CMD_FIFO_LEN];
-     uint8_t dma_cmd_fifo_num;
+@@ -312,6 +321,12 @@ static void a9_gtimer_realize(DeviceState *dev, Error **errp)
+     sysbus_init_mmio(sbd, &s->iomem);
+     s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, a9_gtimer_update_no_sync, s);
  
-+    bool is_initialized;
++    if (s->periphclk_period < 2) {
++        error_report("Invalid periphclk-period (%lu), must be >= 2",
++                     s->periphclk_period);
++        exit(1);
++    }
 +
-     uint32_t regs[XLNX_ZYNQ_DEVCFG_R_MAX];
-     RegisterInfo regs_info[XLNX_ZYNQ_DEVCFG_R_MAX];
+     for (i = 0; i < s->num_cpu; i++) {
+         A9GTimerPerCPU *gtb = &s->per_cpu[i];
+ 
+@@ -377,6 +392,8 @@ static const Property a9_gtimer_properties[] = {
+     DEFINE_PROP_UINT64("cpu-freq", A9GTimerState, cpu_clk_freq_hz,
+                        NANOSECONDS_PER_SECOND),
+     DEFINE_PROP_UINT32("num-cpu", A9GTimerState, num_cpu, 0),
++    DEFINE_PROP_UINT64("periphclk-period", A9GTimerState,
++                       periphclk_period, 10),
  };
+ 
+ static void a9_gtimer_class_init(ObjectClass *klass, void *data)
+diff --git a/hw/timer/arm_mptimer.c b/hw/timer/arm_mptimer.c
+index a748b6ab1a..767413c77a 100644
+--- a/hw/timer/arm_mptimer.c
++++ b/hw/timer/arm_mptimer.c
+@@ -27,6 +27,7 @@
+ #include "hw/timer/arm_mptimer.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
++#include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "hw/core/cpu.h"
+ 
+@@ -61,8 +62,16 @@ static inline void timerblock_update_irq(TimerBlock *tb)
+ /* Return conversion factor from mpcore timer ticks to qemu timer ticks.  */
+ static inline uint32_t timerblock_scale(TimerBlock *tb, uint32_t control)
+ {
++    /*
++     * Referring to the ARM-Cortex-A9 MPCore TRM
++     * 
++     * The arm mp timer relies on the PERIPHCLK as its clock source.
++     * The PERIPHCLK clock period must be configured as a multiple of the
++     * main clock CLK. The conversion from the qemu clock (1GHz) to arm mp
++     * timer ticks can be calculated like this:
++     */
+     uint64_t prescale = (((control >> 8) & 0xff) + 1);
+-    uint64_t ret = NANOSECONDS_PER_SECOND * prescale * 10;
++    uint64_t ret = NANOSECONDS_PER_SECOND * prescale * tb->periphclk_period;
+     return (uint32_t) (ret / tb->freq_hz);
+ }
+ 
+@@ -273,6 +282,12 @@ static void arm_mptimer_realize(DeviceState *dev, Error **errp)
+     for (i = 0; i < s->num_cpu; i++) {
+         TimerBlock *tb = &s->timerblock[i];
+         tb->freq_hz = s->clk_freq_hz;
++        if (s->periphclk_period < 2) {
++            error_report("Invalid periphclk-period (%lu), must be >= 2",
++                         s->periphclk_period);
++            exit(1);
++        }
++        tb->periphclk_period = s->periphclk_period;
+         tb->timer = ptimer_init(timerblock_tick, tb, PTIMER_POLICY);
+         sysbus_init_irq(sbd, &tb->irq);
+         memory_region_init_io(&tb->iomem, OBJECT(s), &timerblock_ops, tb,
+@@ -288,6 +303,7 @@ static const VMStateDescription vmstate_timerblock = {
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(control, TimerBlock),
+         VMSTATE_UINT64(freq_hz, TimerBlock),
++        VMSTATE_UINT64(periphclk_period, TimerBlock),
+         VMSTATE_UINT32(status, TimerBlock),
+         VMSTATE_PTIMER(timer, TimerBlock),
+         VMSTATE_END_OF_LIST()
+@@ -309,6 +325,8 @@ static const Property arm_mptimer_properties[] = {
+     DEFINE_PROP_UINT64("clk-freq", ARMMPTimerState, clk_freq_hz,
+                        NANOSECONDS_PER_SECOND),
+     DEFINE_PROP_UINT32("num-cpu", ARMMPTimerState, num_cpu, 0),
++    DEFINE_PROP_UINT64("periphclk-period", ARMMPTimerState,
++                       periphclk_period, 10),
+ };
+ 
+ static void arm_mptimer_class_init(ObjectClass *klass, void *data)
+diff --git a/include/hw/timer/a9gtimer.h b/include/hw/timer/a9gtimer.h
+index 8ce507a793..edb51f91e3 100644
+--- a/include/hw/timer/a9gtimer.h
++++ b/include/hw/timer/a9gtimer.h
+@@ -77,6 +77,7 @@ struct A9GTimerState {
+     MemoryRegion iomem;
+     /* static props */
+     uint64_t cpu_clk_freq_hz;
++    uint64_t periphclk_period;
+     uint32_t num_cpu;
+ 
+     QEMUTimer *timer;
+diff --git a/include/hw/timer/arm_mptimer.h b/include/hw/timer/arm_mptimer.h
+index 8b936cceac..2c4cb5c1c3 100644
+--- a/include/hw/timer/arm_mptimer.h
++++ b/include/hw/timer/arm_mptimer.h
+@@ -32,6 +32,7 @@ typedef struct {
+     uint32_t status;
+     struct ptimer_state *timer;
+     uint64_t freq_hz;
++    uint64_t periphclk_period;
+     qemu_irq irq;
+     MemoryRegion iomem;
+ } TimerBlock;
+@@ -45,6 +46,7 @@ struct ARMMPTimerState {
+     /*< public >*/
+ 
+     uint64_t clk_freq_hz;
++    uint64_t periphclk_period;
+     uint32_t num_cpu;
+     TimerBlock timerblock[ARM_MPTIMER_MAX_CPUS];
+     MemoryRegion iomem;
 -- 
 2.49.0
 
