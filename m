@@ -4,67 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7F9C35FFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44BAAC28B28
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWLz-0003bd-5i; Tue, 18 Mar 2025 08:47:33 -0400
+	id 1tuWMZ-0005BI-Di; Tue, 18 Mar 2025 08:48:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuWHV-0008I6-UH; Tue, 18 Mar 2025 08:42:53 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuWHT-0002we-AG; Tue, 18 Mar 2025 08:42:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742301772; x=1773837772;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=S0m7KRq5Ui1gk8/x2KtA7lizHbDll0NmXB5KwgO99qI=;
- b=dcUkwDgwva7U1za+qYcfG6Kf6/NEoGZDei3m3m1j3kwZ7OUz3aMzz1th
- GBJqIBhKiEhPecddduX7aUMciuAMotFgaBy18ImHFb5ChzM5+W9dkzhkp
- DL6qKF0T+CrXdgU0SPnMNRnf4q+SoTnWYRoTSBE0pNhNa4Og8c5/MVeWh
- wgHGXhyj1MEoNaOw1lQclMj5xlcO0QgFT9NjQ/+DkVu7MIsAe6OhKAl/O
- TGFPl2NWLMHJxnqsIsxWyL1YZwImP8I3K9JPOwkWdqR8WWEZi3JUc2O9j
- h8d6dp4NT0JGf/HVaoPDXf+KFhCeejiH+jR69HqXTJ80u3grt+0iireVA Q==;
-X-CSE-ConnectionGUID: dDmE3jwMT7aE5oL/j717sw==
-X-CSE-MsgGUID: CTeJ4X5fTcej4aQ/gRasIw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11377"; a="54824614"
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="54824614"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2025 05:42:23 -0700
-X-CSE-ConnectionGUID: Cx6t65SHQOaZx0yWFfI64A==
-X-CSE-MsgGUID: 4kBWLVX/Sk+awEDf/Q+G3w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="121980467"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 18 Mar 2025 05:42:21 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 10/15] rust/vmstate: Support vmstate_validate
-Date: Tue, 18 Mar 2025 21:02:14 +0800
-Message-Id: <20250318130219.1799170-11-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250318130219.1799170-1-zhao1.liu@intel.com>
-References: <20250318130219.1799170-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1tuQxj-0000bW-Fj
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 03:02:07 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1tuQxh-0002lg-PQ
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 03:02:07 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22398e09e39so111937945ad.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 00:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1742281324; x=1742886124; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Zgq72ZLImj4lKu2rvyuxiEEvV59jy+OySRur4RXmIHM=;
+ b=W2PGQlQ8E8MaYZkqwhnBqxUGq8bC46hZ5uYE+doLPdqDcqotUW3aRO+FwHYLr6Dn65
+ Q5NDGwJYWHlEO6IQ5zwgGu52TTNgwcJM+NFgbz5c18gsM3eZ3fF+5cEOl4Pfw4d4XgB6
+ Zfzcz5dGX1inPKpmgc1xG0GACYl9ZulbdesfmKNB2tBGNTcMJiIc7xeaJO+wqTyUpVCs
+ L8y0NMBuivxJ7eeeNngcT8oW7W/jhjUMwWMdAa4tuVsteLT/jsJJ1zdF3PcNRpmOIhn4
+ K8CIP5i+oM+TtgXkpoHwSawmX6ptDFI8HigrfOn5zUxaOINfVM8a1/byHxzedkYq8SHb
+ rzZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742281324; x=1742886124;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Zgq72ZLImj4lKu2rvyuxiEEvV59jy+OySRur4RXmIHM=;
+ b=pQR12QbLco+sz1cbJITu+uBbyfhNwvCFMAdo5kjtzRWfa2BZp7IDmgmLP6U5CgG1eR
+ hQvNd8oTbUkrEaO6/ZeuzBbhpTGePRKHpcNwGoTu8qlA/4L7qrVXJxSDxkYTZRCB7v62
+ 4xEFhra+A2bdUg1fmtsUQEsPj/kvxEYv5ND+gnFnJv0spcFQnHcO/PObxFTpzWouXyG1
+ AuVXdJ77dksGuH+/pPTvxdPOguK8oU4AjFroeSVX1OPuyEYeOP8pCDtQ0zSO6x0Alb/r
+ pmEkan07spkycTvqVuw8IAolK6wF8s9D+CJItOAZSPCAR2WnZMeYhDo/e3HzukClqe6W
+ t5Jw==
+X-Gm-Message-State: AOJu0YwtJhZT3N/bOzsDACA3gNhs2aGAZWJjU/mC5l8vO32JBXTyJSAF
+ D19TqURtQoEvTYpLNJs6rnjILqEyFdJ9fGGgli2Oijgg6KoaP9YpjBmZmy/LJf4yNQmaNKePeNY
+ a8OsCUXzVxEFjnola/Yv6QkRqeqt2jli5pSTpJjx4q2cYb8SxUwnbjBzDCe27H5MGkcu0lkA/ff
+ Y0o6IJX/SoXcpuetDR4+riYiFKKR6TUEQk40cuZzk=
+X-Gm-Gg: ASbGnctRC3kPyuLREtkIQ0F+w+OZwmFRfqmipxh6qtey5TxOOstuHmzlh+pzIoIeVYX
+ kpZ6iOzewGxikDwWg0Sw5te0b66dcRa/ZihRYUQ2P7+C0iC5B7N4IWbIPO3FyZNxTY+CFeKei9o
+ 5B0GwVCRd/h8DiAMp+Ji7BpRDJocRrx/F1EYp5luUOREFWjniFKA0vKKCKvsdKNHPW7sWJ66b8h
+ IRfVorujwHeaP+mpnJEkoc/RD8fNEBUPKjFwJjxRSfobd1uvNkDKEUnQHlzbXB+5oBz4gTNf13V
+ xQ9zPJX0NZmPE2Tzh2IDBKzjv/MItMW7FhsCuV6S1jaLQmzURiTIy5lRlR1rL+sBbsRMjjFXs9h
+ 1J83foVjj
+X-Google-Smtp-Source: AGHT+IHLLq+8UgUa93r+t1fJaPfJiNLcX2puM2GzwRV6Rx9pvf91iEMqjHTZUf0Qw7ONGWvGmHsEtA==
+X-Received: by 2002:a17:902:dacc:b0:220:f140:f7be with SMTP id
+ d9443c01a7336-225e0af5c2amr178891315ad.41.1742281323790; 
+ Tue, 18 Mar 2025 00:02:03 -0700 (PDT)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.172])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-225c68885a1sm86966235ad.13.2025.03.18.00.02.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 18 Mar 2025 00:02:03 -0700 (PDT)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH 2/2] target/riscv: Restrict midelegh access to S-mode harts
+Date: Tue, 18 Mar 2025 15:01:36 +0800
+Message-ID: <20250318070136.38898-2-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250318070136.38898-1-jay.chang@sifive.com>
+References: <20250318070136.38898-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=jay.chang@sifive.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 18 Mar 2025 08:44:57 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,116 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In C version, VMSTATE_VALIDATE accepts the function pointer, which is
-used to check if some conditions of structure could meet, although the
-C version macro doesn't accept any structure as the opaque type.
+RISC-V AIA Spec states:
+"For a machine-level environment, extension Smaia encompasses all added
+CSRs and all modifications to interrupt response behavior that the AIA
+specifies for a hart, over all privilege levels. For a supervisor-level
+environment, extension Ssaia is essentially the same as Smaia except
+excluding the machine-level CSRs and behavior not directly visible to
+supervisor level."
 
-But it's hard to integrate VMSTATE_VALIDAE into vmstate_struct, a new
-macro has to be introduced to specifically handle the case corresponding
-to VMSTATE_VALIDATE.
+Since midelegh is an AIA machine-mode CSR, add Smaia extension check in
+aia_smode32 predicate.
 
-One of the difficulties is inferring the type of a callback by its name
-`test_fn`. We can't directly use `test_fn` as a parameter of
-test_cb_builder__() to get its type "F", because in this way, Rust
-compiler will be too conservative on drop check and complain "the
-destructor for this type cannot be evaluated in constant functions".
-
-Fortunately, PhantomData<T> could help in this case, because it is
-considered to never have a destructor, no matter its field type [*].
-
-The `phantom__()` in the `call_func_with_field` macro provides a good
-example of using PhantomData to infer type. So copy this idea and apply
-it to the `vmstate_validate` macro.
-
-[*]: https://doc.rust-lang.org/std/ops/trait.Drop.html#drop-check
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
 ---
-Changes since v1:
- * Rename `with_exist_check()` to `with_validate_flag()`.
- * Add a `with_exist_check()` method to help add field_exists callback,
-   though it can't be used in static VMStateDescription definition but
-   will be useful for vmstate builder.
+ target/riscv/csr.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-Changes since v2:
- * Drop `with_exist_check()` and `with_validate_flag()`.
----
- rust/qemu-api/src/vmstate.rs | 52 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 51 insertions(+), 1 deletion(-)
-
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 01f06ed7379e..9740931fb16a 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -25,9 +25,12 @@
- //!   functionality that is missing from `vmstate_of!`.
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 975d6e307f..c3dd8e6cda 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -372,8 +372,11 @@ static RISCVException aia_smode(CPURISCVState *env, int csrno)
+ static RISCVException aia_smode32(CPURISCVState *env, int csrno)
+ {
+     int ret;
++    int csr_priv;
  
- use core::{marker::PhantomData, mem, ptr::NonNull};
-+use std::os::raw::{c_int, c_void};
+-    if (!riscv_cpu_cfg(env)->ext_ssaia) {
++    if (csr_priv == PRV_M && !riscv_cpu_cfg(env)->ext_smaia) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    } else if (!riscv_cpu_cfg(env)->ext_ssaia) {
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
  
- pub use crate::bindings::{VMStateDescription, VMStateField};
--use crate::{bindings::VMStateFlags, prelude::*, qom::Owned, zeroable::Zeroable};
-+use crate::{
-+    bindings::VMStateFlags, callbacks::FnCall, prelude::*, qom::Owned, zeroable::Zeroable,
-+};
+@@ -5832,7 +5835,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_MVIP]     = { "mvip",     aia_any, NULL, NULL, rmw_mvip    },
  
- /// This macro is used to call a function with a generic argument bound
- /// to the type of a field.  The function must take a
-@@ -508,6 +511,53 @@ macro_rules! vmstate_fields {
-     }}
- }
- 
-+pub extern "C" fn rust_vms_test_field_exists<T, F: for<'a> FnCall<(&'a T, u8), bool>>(
-+    opaque: *mut c_void,
-+    version_id: c_int,
-+) -> bool {
-+    let owner: &T = unsafe { &*(opaque.cast::<T>()) };
-+    let version: u8 = version_id.try_into().unwrap();
-+    // SAFETY: the opaque was passed as a reference to `T`.
-+    F::call((owner, version))
-+}
-+
-+pub type VMSFieldExistCb = unsafe extern "C" fn(
-+    opaque: *mut std::os::raw::c_void,
-+    version_id: std::os::raw::c_int,
-+) -> bool;
-+
-+#[doc(alias = "VMSTATE_VALIDATE")]
-+#[macro_export]
-+macro_rules! vmstate_validate {
-+    ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
-+        $crate::bindings::VMStateField {
-+            name: ::std::ffi::CStr::as_ptr($test_name),
-+            field_exists: {
-+                const fn test_cb_builder__<
-+                    T,
-+                    F: for<'a> $crate::callbacks::FnCall<(&'a T, u8), bool>,
-+                >(
-+                    _phantom: ::core::marker::PhantomData<F>,
-+                ) -> $crate::vmstate::VMSFieldExistCb {
-+                    let _: () = F::ASSERT_IS_SOME;
-+                    $crate::vmstate::rust_vms_test_field_exists::<T, F>
-+                }
-+
-+                const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
-+                    ::core::marker::PhantomData
-+                }
-+                Some(test_cb_builder__::<$struct_name, _>(phantom__(&$test_fn)))
-+            },
-+            flags: $crate::bindings::VMStateFlags(
-+                $crate::bindings::VMStateFlags::VMS_MUST_EXIST.0
-+                    | $crate::bindings::VMStateFlags::VMS_ARRAY.0,
-+            ),
-+            num: 0, // 0 elements: no data, only run test_fn callback
-+            ..$crate::zeroable::Zeroable::ZERO
-+        }
-+    };
-+}
-+
- /// A transparent wrapper type for the `subsections` field of
- /// [`VMStateDescription`].
- ///
+     /* Machine-Level High-Half CSRs (AIA) */
+-    [CSR_MIDELEGH] = { "midelegh", aia_any32, NULL, NULL, rmw_midelegh },
++    [CSR_MIDELEGH] = { "midelegh", aia_smode32, NULL, NULL, rmw_midelegh },
+     [CSR_MIEH]     = { "mieh",     aia_any32, NULL, NULL, rmw_mieh     },
+     [CSR_MVIENH]   = { "mvienh",   aia_any32, NULL, NULL, rmw_mvienh   },
+     [CSR_MVIPH]    = { "mviph",    aia_any32, NULL, NULL, rmw_mviph    },
 -- 
-2.34.1
+2.48.1
 
 
