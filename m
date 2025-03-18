@@ -4,209 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F81CC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 01:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F318C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 02:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuMAE-0005VW-0T; Mon, 17 Mar 2025 21:54:42 -0400
+	id 1tuMU4-0001Pw-VQ; Mon, 17 Mar 2025 22:15:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tuMA9-0005UJ-0y
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 21:54:37 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tuMU1-0001Ow-GV
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 22:15:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tuMA4-0004Oz-RI
- for qemu-devel@nongnu.org; Mon, 17 Mar 2025 21:54:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742262873; x=1773798873;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=f1rJjPPgsTmcEDtTPTdQOusFKN+PS11ZVZpYugcXfuk=;
- b=FT5F+rNZdNmOqQ7gTo0+bhNLK3fXygkCh46uIi+Zr8sfc11k9cJRQfsY
- 4jpFcsPaEHzLAAlTegL8ttjXoqMvP4hd5xF5xxYmz4B8juH7RyA3w20CX
- LZemQds+ZLqAWv/b/6Zjs+y2xD2B2QH3oM+kaGQ/5FHjeWrwMBQtf5xi4
- zaxLwF/oC7d0Jl9mlqaA3qRp7sPvUUitR4zcz9FOQP5sTYTKPrX7dM89W
- T9IDIqJNP0w1SeU4yWKEIB89O03pqZ3aKhi2k4C4gqo3SNPSh0RHZSt/7
- JUdSely4w4Xh972qPFS8TKPD9pyvI4ISnbUHgX2aPCCK5Y15I7DNAlZ30 w==;
-X-CSE-ConnectionGUID: g4xG1ZcfQ0iJWMFnOSt7+Q==
-X-CSE-MsgGUID: qKEbc/vWT0KTR/7ihmnKGw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="65840982"
-X-IronPort-AV: E=Sophos;i="6.14,255,1736841600"; d="scan'208";a="65840982"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2025 18:54:27 -0700
-X-CSE-ConnectionGUID: fnrOVVL4SBO5+wNVS8+UfA==
-X-CSE-MsgGUID: sUlFqg4MSb263WMhTiA+nw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,255,1736841600"; d="scan'208";a="122103005"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by orviesa006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 17 Mar 2025 18:54:23 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Mon, 17 Mar 2025 18:54:20 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Mon, 17 Mar 2025 18:54:20 -0700
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.41) by
- edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Mon, 17 Mar 2025 18:54:19 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zRNH/lQLDD/IIWhaTo0vs2vwCkJttWB1qlttcGu2JsUfKM32d/+VBsFCMfs4EvFBo1AKvO5VCzYq/nIGkwH/tFTNLSTZdWmxRKKQk6H1yiCLHIRCQJm3qYP9hdEDtjt8eE7Fp6dTCMvyFXaltpTQDhk9kCCeFJ25lpeNdPM4jy8kPsdHvncYLKnHbplQjS1tS5z341XK4PRFQCOp+d+rvNc9u5u9nJ14jWV0Kd3DmZSUXUFsnzqMm1QCOgLvy+P4lqUbnpmR9fhrKirVeVQN4e2OiuPob9bwsndJ9OFeAarfjgaXaeLoWaMEnvbDVQ1DDQzqCsn5Gp2jf+DPlFm8ZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m0Dus/kIuTDUenR7e3KWfZrIb5BFqFVGIc0M46rg2J4=;
- b=wsPlQkAcJ2ea0JE+KBWVFMJYzdaUcbH0Ausso3pVZbj7zkHLtFrL76OKfxOLrTofhkc+jLXVtLW0alnmeWFtNgv5A1xg5km/f3EKVM01JnK6wDR2Q7OPOWuOXOl4diVoDgNB1g9XdmsVVXGtjnEdZ62oqypcDRPR9Q/k9PvzBWLRddpesYIFKUMkHHDJsSWvXDC1HZw2iHbn59XDY1co2DqT8/WViHt/nrEz42NEt1j7gGtHzUHYBE39vxq5gSsyR3kBl1W+KGfWLRzIdhJHT2qMYgu7K5GW9/Sqzpuo5g6+cKF6+Y82BVFVnTNIPDESBVRrH/g7dOwQH5sX7rssvQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- PH0PR11MB7493.namprd11.prod.outlook.com (2603:10b6:510:284::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.33; Tue, 18 Mar
- 2025 01:54:17 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%7]) with mapi id 15.20.8534.031; Tue, 18 Mar 2025
- 01:54:17 +0000
-Message-ID: <9c05e977-119c-481b-82a2-76506c537d97@intel.com>
-Date: Tue, 18 Mar 2025 09:54:08 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/7] memory-attribute-manager: Introduce
- MemoryAttributeManager to manage RAMBLock with guest_memfd
-To: "Gupta, Pankaj" <pankaj.gupta@amd.com>, David Hildenbrand
- <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, Peter Xu
- <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
- <michael.roth@amd.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
- <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
- <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao
- <xiaoyao.li@intel.com>
-References: <20250310081837.13123-1-chenyi.qiang@intel.com>
- <20250310081837.13123-5-chenyi.qiang@intel.com>
- <2ab368b2-62ca-4163-a483-68e9d332201a@amd.com>
- <3907507d-4383-41bc-a3cb-581694f1adfa@intel.com>
- <58ad6709-b229-4223-9956-fa9474bad4a6@redhat.com>
- <5a8b453a-f3b6-4a46-9e1a-af3f0e5842df@amd.com>
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <5a8b453a-f3b6-4a46-9e1a-af3f0e5842df@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR06CA0013.apcprd06.prod.outlook.com
- (2603:1096:4:186::18) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tuMTz-000219-4B
+ for qemu-devel@nongnu.org; Mon, 17 Mar 2025 22:15:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742264104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=E6eyyp7sbfv8sA1WSc+sRiZXx7MwTcMnUviQWgAmN1Y=;
+ b=EjNR6QamVQeyXN0Fjuecq2UKxSYcI5LLXVYqK5/s3py8l4ueYkBdieDO/QHswgQdVhdohD
+ 66vytgLcfelE9U4bK8BzcQp245+p70unIo/RvVGt+RkGDyL7y0Orb0J2oqUtxXX2shd6hv
+ +7yf9Wa8ELriGL8BquVJcmtWwdMRjM0=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-4AdJjK7COeWSJ4X1rEz3tw-1; Mon, 17 Mar 2025 22:15:01 -0400
+X-MC-Unique: 4AdJjK7COeWSJ4X1rEz3tw-1
+X-Mimecast-MFC-AGG-ID: 4AdJjK7COeWSJ4X1rEz3tw_1742264100
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2ff854a2541so4244135a91.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 19:15:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742264100; x=1742868900;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=E6eyyp7sbfv8sA1WSc+sRiZXx7MwTcMnUviQWgAmN1Y=;
+ b=V2CVDVbqxBhRfQNT9tlIxPTjKx9g+uUsACu0ZqnqcNEfwzomalElOLfTwwpJgmqacY
+ K65uLGeEQ5ntZG6lBhBNGLzokm5TUPD7OpUOH2kkKEBFObz877+a8PsdkcINh24w/z51
+ xZ+m+vKzhlNgiPt1cj1fTI700SobBTxc23+ZUcAr7dfvrSvx40pMiMzK4GzKHK5r2dIQ
+ QfBHNoNc0Qnc+xiwM2aWS5m9H4r6yqHrqll4tbzBWPWfkzMEI+TdGzUbflDbwmmxPFjU
+ hERgueeL/V3hs9MoX7Giy0FQktWmMkEguXrYT2rx9LXJ3S2ZVOMealiLvGpBJe4R54AV
+ 2UpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUV82+TkiCQKcF6uCjh3JWl7r/eQ/0NtOY5EHNstj3JccLvFx5N/LHUvYSZdPINe0A9rSgpweB+5aC@nongnu.org
+X-Gm-Message-State: AOJu0YzO402dALjAet21Xpm485BR0MK6W+ghNfEpPy330V+afVWBU9eL
+ MiHp5k642TqfaoC0nM/hhwg4Y/xbNas+0j7EI4JSP9Kn9GtsxmVa00sd/sY7twP2oxzPlTqdmcb
+ Vua0glIeWKiPcrfMeASguO3E9I1x+jMY2gQgByCWMcmMcyeL2xMx3JM8Oof+zu73ciYZFaF2iAC
+ eKNaPDJAjSoG8yRporUuxXJpASpEs=
+X-Gm-Gg: ASbGncsNYz8t/KekQ6PLtUwjpvzk43EWclcQlJM0jorCeNR47ZSH10wdD/OatecYCwg
+ lDtncBcoy3cs8tHSUQ5+YHtZR1l8NuzBVpAakuSNP2dwXSSHa4UYqhfuFV11f1kCFckXkVg==
+X-Received: by 2002:a17:90b:3c91:b0:301:1bce:c26f with SMTP id
+ 98e67ed59e1d1-301a5b028b4mr780240a91.3.1742264099781; 
+ Mon, 17 Mar 2025 19:14:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFw0sYGuMaTgraPO9vkp1wadjThCbvmDM0s7s+X/gV4kXmBGQZBwd3UNMYxmP9S6BhZEAZJwwZcCtdIK7NGFAo=
+X-Received: by 2002:a17:90b:3c91:b0:301:1bce:c26f with SMTP id
+ 98e67ed59e1d1-301a5b028b4mr780204a91.3.1742264099371; Mon, 17 Mar 2025
+ 19:14:59 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|PH0PR11MB7493:EE_
-X-MS-Office365-Filtering-Correlation-Id: ba2ecff7-c545-4d32-63de-08dd65bfcac0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RDFheVFnMGcwaEJ0OHYyMUtmbS9aeWthd0JPYStqL2QzTHZpVWFQRDJtVExs?=
- =?utf-8?B?aks1MDh5bVQreU93WHF4YmFTempjNUh4cFhsWFFUL2RtRm5Sa044VnZMN2pV?=
- =?utf-8?B?bjhkRHpTL0VObDdoMDd0WW56OUxCQmhlakxBbWhaVWlaY1FJU1hEV016M2x4?=
- =?utf-8?B?NVlsYTB5SzlTUFNMbEx1VTJGWWQzMjhmZmIwY0o1c1NVUUdweGJsV1YzM2Uv?=
- =?utf-8?B?Ri9BTmhlNGQwa2RvS0ZyK2ZIY0o4SjRydnZreUc4N2hNcXFCY2l4L2NLekRh?=
- =?utf-8?B?SGJuajF0UFY1SHdYTDZJRWJNK3pTaVJoeDU2Ym1PM3BIZDlUQXEwcWxJNWc5?=
- =?utf-8?B?cFVZWUlRZDlkVG5nNUtFdEFRdXVRemZxL0NnR1RyaUpTUkYxRDRhU2prdm5G?=
- =?utf-8?B?eW1JanZqZUxSdGJ6bXNJVmE0RHN5dnd4OCtGT2NuWFNDMFlYYzVQZnMvNzNI?=
- =?utf-8?B?Z2t1T3l2QVhQb2VxckFWTFIrUGkrc1p3dTRPeXlOSmpMYXpUR0U4cEVhK0Jz?=
- =?utf-8?B?MXRtRVpDaWpvWGd0NG5US1VtR0duMlZDZi91dWk0aE5rSGxaUnc3Nm83Uzhs?=
- =?utf-8?B?MitJOFlFakNCbStiRXBpc3lFa21kOFF3UGZEWkF4RFRMb2dMamZ0Ym4wRGJO?=
- =?utf-8?B?RjNQbFNLWktmQ1dpUHdVNzFVak05QWE3TVhnZEhtREdCQnJQdUFNYzYyUkVF?=
- =?utf-8?B?SHpKaU9rN0FpZFJpUkg3RWp2RUhmeEpzaUI4cG5ja2dJaTdNVFBObGxGTy95?=
- =?utf-8?B?TGxHbmNhbWxWbXFiWm1oMm5rYkVSMmpCL2JRZlZuQXdPczN3cXhudFRWQWpQ?=
- =?utf-8?B?aEx1NStiY3JoamxlMC90UUthdGM5ZHRmWDdNUDV5OTdIYlNoeUw2Z1F4OVZP?=
- =?utf-8?B?bUQzMzJER2Y0OHF6TGw2NXZpcGZqakVtTTAwZEpyelV3ZXFhWTFmS2NXRkp6?=
- =?utf-8?B?NnNDOGlKQUNsOVdNYXMzcktBNi9ka25rMmx6YlIxRDlqQ2M5bHI2ejE1WDZV?=
- =?utf-8?B?TG5kelJPWUpwTDZnV0ZsYzFqSjJqVnNiY1RnODVYVGMzZktyYTgzVE5aRlI0?=
- =?utf-8?B?WWRlWHgwTWFXY0lIaEY2M2dPN2hzL2xiWDNHSDYrcTc2MG5GVEJ3K3QyZG9w?=
- =?utf-8?B?QmNleEVjVzd5S3g0N3RiY2RGTmJCZmg3SnpNTW5QQ3N2K05MUDNFTkRWOWtt?=
- =?utf-8?B?R3MrNnhHZ3BVOFNWNmYvN1BvanplcW1xSnAyVlN1ZnpBYTRZZ2NKdGJXdXpD?=
- =?utf-8?B?QXFHcjBSK1JYUzFERGVhQUExRE94b2hYNVA0ZEU2bStiRTJPZTFzWkp5TEwz?=
- =?utf-8?B?Y1BuR1QxZHV4bFNzakJaOG1CalJRRU5DcXQvc1RVall0YlZ6NTJxYm1JZjZW?=
- =?utf-8?B?R1VkUHVqdXJQVUFRMXEwNG94NThPUHBLbXpvT3IwSk9GUW9qVXZlOUpaS0Iz?=
- =?utf-8?B?clYvcjh3TUlrZXhMWnJHelhqV055cmp2RUxLK2xvNm85a2Naa1djZTJ0RHFs?=
- =?utf-8?B?WUlWaGJ4S3NIYUtUNWxwZzdxTlZxNTdPTzAxMHRuajFDKzlabU51MU1MbGJK?=
- =?utf-8?B?T0tuVmcvcVhHQzNqYlVEZUxIOTRDbjM2eWNNMUkwQ25QRExYSmF4Tm9QOXNk?=
- =?utf-8?B?ZzZQTm9VLzBObUlPWjVieTlKaFlPWVlybU96YXpqSi9QSTM2THl5NUlvMCtN?=
- =?utf-8?B?K0lURTl2ZG1JRDlJYXVUelY4TlhGN2N2L3hJZG1oWlZkOCtEN2paeDA5Z1cw?=
- =?utf-8?B?TzBIVTBOQTBDS1NoVVVoTUIxWVVzYnNsNXFMVjU1YnZJcWZBOUc5SllVQWJE?=
- =?utf-8?B?cXArRmhUK1BiSGFtandWa1BPM2xsdVhaWjVIZzVKenJYWnEyemV1Q2k4bC9a?=
- =?utf-8?Q?/y4G3eh/lj4Mm?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NW5mUHlwVHhxamY1cFd5NW1CTExiSUk3R2lJMEpZM2RsRmlnMUt5cWRBMzRu?=
- =?utf-8?B?UXRQb2tmZ0duWWlIcXk1Y0lKZTVNd0U1VkNYN1psQWNJRU11U1J4VjNzQWRa?=
- =?utf-8?B?bXJEMDlZNUtSWXpRT1VyK04wUnM5cWthcVFYZ245blhQNDBhalRiZ01hTW9B?=
- =?utf-8?B?dzNNSFRMeHdBV0JhamdTem44cndTUlFYWjZEbHFPV0E1VzU4OGsweHc4U2Zp?=
- =?utf-8?B?VmlJVUUxRWVBdm84V1NzUVhNRkVuVmdXNTVjTjdDY1V0aHVrNEkxSWZGWE9w?=
- =?utf-8?B?ZkxMRDNYRzBpQlJpd3cwUWFYR1JKdWtKcXE2bGV4aWthZTc0c0RXSVFoSnRT?=
- =?utf-8?B?Sm1zYU1ZelpidjB4bTl0bzJPQ0IreldTSjFRMTBFMStrYzJERnFmQUd5dy81?=
- =?utf-8?B?bmI5N1Y4RHo3YmFhRVFSUWp6RDdJK0xwZVY1QnlHSnFkcGo0Mm40S09zL0Zh?=
- =?utf-8?B?RDlNdkhCbHNRYytmNXhBanlXcnBPVE9xYTAxKzA0M2NDblhHaXBuRUJuY0VB?=
- =?utf-8?B?alduYWhIazRBR1pyaFkxZE1BQ0xyWlQ0WlRNNk5RaHMvakdIdkRiZ1p2Qmhy?=
- =?utf-8?B?RnlCWE12UmgzZTBCMTFDZ2xyMG5seERQS25LMEVWRnRKTFh0ZEE0VzFqRDlQ?=
- =?utf-8?B?WE9ab1dsRGovaWh2MnAwMWxtR0oyWTdINEhiL29FRnNkcVJ5OEZhWTVmd0g3?=
- =?utf-8?B?QUpYaGpremloaVdWM210TmFtR1dnVVBCZEo1MXd0Mzd4Z0wzRk5TVXRwY1p2?=
- =?utf-8?B?a2lzSGhJSlFpMnVyV1BaMHJERFI4N09iaDdtZkdBak8xSFJDRlcvcjRZclZQ?=
- =?utf-8?B?QXlDdHZhRVloRTN2djF3bExvSUlFbGV5YjlBaDc4MHF5S25FdHZVVU1LY2Zk?=
- =?utf-8?B?cTVxdFRPTDhCeDlWODJUbE9wWGZjUWhwNXQ3RXlQNjNZckJiVm5BUTY4eWJW?=
- =?utf-8?B?Mkd6R3RpdTd6QWxUNFhadG03cDVpeTZHRzVlQ3lqVVpKOE5ybmNFVzFIY2pP?=
- =?utf-8?B?ODRtQUVMcjVIL2F3WHczbWJFbWpsRmhuc0RJc3lKRVdYT2xrSVZxT1JVWjY3?=
- =?utf-8?B?U2FYamUzYUI0cnZPMDFQNXV3TnJIWmxrazJQei9KTHZScHZzYTY0MlIrM3cy?=
- =?utf-8?B?VXVtUkk3MzRsb3NtZHBNZ01nZHlMYlhaK3MwTGphUGcwcmtTdkhjVXQ1VlNO?=
- =?utf-8?B?cE9kcEtWMFVJV3J1emtDb3o1cXNPVEhpMHF3U0NQUENuZWJPUGlvYmNHekxM?=
- =?utf-8?B?ckV3dTZmV0dMQTRZOEhiTjM5clBuQVdhVXpHWmp3dnZjZDdBNDJzTS9LTWIx?=
- =?utf-8?B?RWV6dC9heWJJMnZveEtIa2gyK3ZQVXdab3BHQWZ0RldUMUJ6eDFaZ3JZYi9v?=
- =?utf-8?B?YmY2dFZyMHB3Tm04V0FoUEdaU2NVQnFyT2tXN0NyVEJVYnZPQlZKMjZNeXNI?=
- =?utf-8?B?R1NCdVRaRmd3Y0huaGVQblhCOEJXYVdvRkFjOFd3aHVjcFJpMG1LWFFKMlpP?=
- =?utf-8?B?U0RvT1BvcU54QUE0b2VnUS9uRm9jUWRMNitPbjlMbkxSY3FVN1RPZUF6Nld2?=
- =?utf-8?B?a2FWZFFYd2tQaHZsbHJXR01wVGlUM3JEYVdsMVVjbElKeWtoNmNJeDVsWm1a?=
- =?utf-8?B?WkFtTE01L3YwUDJzUUtlNnUzMDhxSDVOWndkY0JwalJTbFFPUzhvOW1STWN1?=
- =?utf-8?B?aTZsS1AzMjdPUjVQdEJlUE9POHYrMVZrdWJ0K3FHWU9DeitRK3Y4ZXhYUzdY?=
- =?utf-8?B?N1dKRFJkRkZteHRpUWQ3cEFwS0w2amhqRE91Qlk1ZFA2ejM3eENkNHdGQitp?=
- =?utf-8?B?OGZRUHphVGoxODk4TnU1L3hFRkhkemF6RGZjcTN1ZUlHSHk3bmxBelQrT05G?=
- =?utf-8?B?ZC9yTFFPV0N4SVRDRnFNRHgwQWh5akplaWxaK1lpOXFEdktiVkp5cU1senRi?=
- =?utf-8?B?aEptR3ppM254aVdGQncyOGM0V0k5Wjc0R3MvMXp1d2pSb2ZNdVhvdVJCcFN2?=
- =?utf-8?B?TWNzdE5uUENlSys0VjAxQVBsSHVxS3R0aERPRVRhVXRHelpxa2ZpeFdONm5l?=
- =?utf-8?B?RDlvNEZUN0NueUNEdXB6ZzFsMzNnLzV2U2N1QnZvNHVxWU1DWVpHUHZRUjMw?=
- =?utf-8?B?Tlhnd2JyYmhJYzJUQjhPd1RJVHp6aFBubzBLTmpJemc1SERwUXM4MVpROGJ1?=
- =?utf-8?B?cGc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: ba2ecff7-c545-4d32-63de-08dd65bfcac0
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2025 01:54:17.4935 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: y1OyMvqOHXMrCSVYVV66lYK2NMbEMm34IKl9lcmZCRk8Lp3Wv9LR6bA010YMhO6nsRFwOGzsg6QyzhtQbPBWEg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB7493
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=chenyi.qiang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+References: <20250314130204.11380-1-jonah.palmer@oracle.com>
+ <CAPpAL=wMpNHMjGJuZQTVxDkdH_tCKP18OzdrUZpXL_N2e=JJ=A@mail.gmail.com>
+In-Reply-To: <CAPpAL=wMpNHMjGJuZQTVxDkdH_tCKP18OzdrUZpXL_N2e=JJ=A@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 18 Mar 2025 10:14:47 +0800
+X-Gm-Features: AQ5f1JovMR7UZie8cddoG_HApy_KLAyrp_ezhBcwVZzKwgd0Z2QWRzePgsBRpBg
+Message-ID: <CACGkMEu6pNCJsd0BFcC4B0W68yMvaA3K-mv0KxTqbVdfS7-x8Q@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] Move memory listener register to vhost_vdpa_init
+To: Lei Yang <leiyang@redhat.com>
+Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
+ eperezma@redhat.com, 
+ peterx@redhat.com, mst@redhat.com, jasowant@redhat.com, lvivier@redhat.com, 
+ dtatulea@nvidia.com, leiyan@redhat.com, parav@mellanox.com, 
+ sgarzare@redhat.com, si-wei.liu@oracle.com, lingshan.zhu@intel.com, 
+ boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -222,93 +109,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Mar 18, 2025 at 9:55=E2=80=AFAM Lei Yang <leiyang@redhat.com> wrote=
+:
+>
+> Hi Jonah
+>
+> I tested this series with the vhost_vdpa device based on mellanox
+> ConnectX-6 DX nic and hit the host kernel crash. This problem can be
+> easier to reproduce under the hotplug/unplug device scenario.
+> For the core dump messages please review the attachment.
+> FW version:
+> #  flint -d 0000:0d:00.0 q |grep Version
+> FW Version:            22.44.1036
+> Product Version:       22.44.1036
 
+The trace looks more like a mlx5e driver bug other than vDPA?
 
-On 3/18/2025 1:01 AM, Gupta, Pankaj wrote:
-> On 3/17/2025 11:36 AM, David Hildenbrand wrote:
->> On 17.03.25 03:54, Chenyi Qiang wrote:
->>>
->>>
->>> On 3/14/2025 8:11 PM, Gupta, Pankaj wrote:
->>>> On 3/10/2025 9:18 AM, Chenyi Qiang wrote:
->>>>> As the commit 852f0048f3 ("RAMBlock: make guest_memfd require
->>>>> uncoordinated discard") highlighted, some subsystems like VFIO may
->>>>> disable ram block discard. However, guest_memfd relies on the discard
->>>>> operation to perform page conversion between private and shared
->>>>> memory.
->>>>> This can lead to stale IOMMU mapping issue when assigning a hardware
->>>>> device to a confidential VM via shared memory. To address this, it is
->>>>> crucial to ensure systems like VFIO refresh its IOMMU mappings.
->>>>>
->>>>> RamDiscardManager is an existing concept (used by virtio-mem) to
->>>>> adjust
->>>>> VFIO mappings in relation to VM page assignment. Effectively page
->>>>> conversion is similar to hot-removing a page in one mode and adding it
->>>>> back in the other. Therefore, similar actions are required for page
->>>>> conversion events. Introduce the RamDiscardManager to guest_memfd to
->>>>> facilitate this process.
->>>>>
->>>>> Since guest_memfd is not an object, it cannot directly implement the
->>>>> RamDiscardManager interface. One potential attempt is to implement
->>>>> it in
->>>>> HostMemoryBackend. This is not appropriate because guest_memfd is per
->>>>> RAMBlock. Some RAMBlocks have a memory backend but others do not. In
->>>>> particular, the ones like virtual BIOS calling
->>>>> memory_region_init_ram_guest_memfd() do not.
->>>>>
->>>>> To manage the RAMBlocks with guest_memfd, define a new object named
->>>>> MemoryAttributeManager to implement the RamDiscardManager
->>>>> interface. The
->>>>
->>>> Isn't this should be the other way around. 'MemoryAttributeManager'
->>>> should be an interface and RamDiscardManager a type of it, an
->>>> implementation?
->>>
->>> We want to use 'MemoryAttributeManager' to represent RAMBlock to
->>> implement the RamDiscardManager interface callbacks because RAMBlock is
->>> not an object. It includes some metadata of guest_memfd like
->>> shared_bitmap at the same time.
->>>
->>> I can't get it that make 'MemoryAttributeManager' an interface and
->>> RamDiscardManager a type of it. Can you elaborate it a little bit? I
->>> think at least we need someone to implement the RamDiscardManager
->>> interface.
->>
->> shared <-> private is translated (abstracted) to "populated <->
->> discarded", which makes sense. The other way around would be wrong.
->>
->> It's going to be interesting once we have more logical states, for
->> example supporting virtio-mem for confidential VMs.
->>
->> Then we'd have "shared+populated, private+populated, shared+discard,
->> private+discarded". Not sure if this could simply be achieved by
->> allowing multiple RamDiscardManager that are effectively chained, or
->> if we'd want a different interface.
-> 
-> Exactly! In any case generic manager (parent class) would make more
-> sense that can work on different operations/states implemented in child
-> classes (can be chained as well).
+[ 3256.256707] Call Trace:
+[ 3256.256708]  <IRQ>
+[ 3256.256709]  ? show_trace_log_lvl+0x1c4/0x2df
+[ 3256.256714]  ? show_trace_log_lvl+0x1c4/0x2df
+[ 3256.256715]  ? __build_skb+0x4a/0x60
+[ 3256.256719]  ? __die_body.cold+0x8/0xd
+[ 3256.256720]  ? die_addr+0x39/0x60
+[ 3256.256725]  ? exc_general_protection+0x1ec/0x420
+[ 3256.256729]  ? asm_exc_general_protection+0x22/0x30
+[ 3256.256736]  ? __build_skb_around+0x8c/0xf0
+[ 3256.256738]  __build_skb+0x4a/0x60
+[ 3256.256740]  build_skb+0x11/0xa0
+[ 3256.256743]  mlx5e_skb_from_cqe_mpwrq_linear+0x156/0x280 [mlx5_core]
+[ 3256.256872]  mlx5e_handle_rx_cqe_mpwrq_rep+0xcb/0x1e0 [mlx5_core]
+[ 3256.256964]  mlx5e_rx_cq_process_basic_cqe_comp+0x39f/0x3c0 [mlx5_core]
+[ 3256.257053]  mlx5e_poll_rx_cq+0x3a/0xc0 [mlx5_core]
+[ 3256.257139]  mlx5e_napi_poll+0xe2/0x710 [mlx5_core]
+[ 3256.257226]  __napi_poll+0x29/0x170
+[ 3256.257229]  net_rx_action+0x29c/0x370
+[ 3256.257231]  handle_softirqs+0xce/0x270
+[ 3256.257236]  __irq_exit_rcu+0xa3/0xc0
+[ 3256.257238]  common_interrupt+0x80/0xa0
 
-Ah, we are talking about the generic state management. Sorry for my slow
-reaction.
+Which kernel tree did you use? Can you please try net.git?
 
-So we need to
-1. Define a generic manager Interface, e.g.
-MemoryStateManager/GenericStateManager.
-2. Make RamDiscardManager the child of MemoryStateManager which manages
-the state of populated and discarded.
-3. Define a new child manager Interface PrivateSharedManager which
-manages the state of private and shared.
-4. Define a new object ConfidentialMemoryAttribute to implement the
-PrivateSharedManager interface.
-(Welcome to rename the above Interface/Object)
+Thanks
 
-Is my understanding correct?
-
-> 
-> Best regards,
-> Pankaj
->>
-> 
+>
+> Best Regards
+> Lei
+>
+> On Fri, Mar 14, 2025 at 9:04=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle=
+.com> wrote:
+> >
+> > Current memory operations like pinning may take a lot of time at the
+> > destination.  Currently they are done after the source of the migration=
+ is
+> > stopped, and before the workload is resumed at the destination.  This i=
+s a
+> > period where neigher traffic can flow, nor the VM workload can continue
+> > (downtime).
+> >
+> > We can do better as we know the memory layout of the guest RAM at the
+> > destination from the moment that all devices are initializaed.  So
+> > moving that operation allows QEMU to communicate the kernel the maps
+> > while the workload is still running in the source, so Linux can start
+> > mapping them.
+> >
+> > As a small drawback, there is a time in the initialization where QEMU
+> > cannot respond to QMP etc.  By some testing, this time is about
+> > 0.2seconds.  This may be further reduced (or increased) depending on th=
+e
+> > vdpa driver and the platform hardware, and it is dominated by the cost
+> > of memory pinning.
+> >
+> > This matches the time that we move out of the called downtime window.
+> > The downtime is measured as checking the trace timestamp from the momen=
+t
+> > the source suspend the device to the moment the destination starts the
+> > eight and last virtqueue pair.  For a 39G guest, it goes from ~2.2526
+> > secs to 2.0949.
+> >
+> > Future directions on top of this series may include to move more things=
+ ahead
+> > of the migration time, like set DRIVER_OK or perform actual iterative m=
+igration
+> > of virtio-net devices.
+> >
+> > Comments are welcome.
+> >
+> > This series is a different approach of series [1]. As the title does no=
+t
+> > reflect the changes anymore, please refer to the previous one to know t=
+he
+> > series history.
+> >
+> > This series is based on [2], it must be applied after it.
+> >
+> > [Jonah Palmer]
+> > This series was rebased after [3] was pulled in, as [3] was a prerequis=
+ite
+> > fix for this series.
+> >
+> > v3:
+> > ---
+> > * Rebase
+> >
+> > v2:
+> > ---
+> > * Move the memory listener registration to vhost_vdpa_set_owner functio=
+n.
+> > * Move the iova_tree allocation to net_vhost_vdpa_init.
+> >
+> > v1 at https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02136.ht=
+ml.
+> >
+> > [1] https://patchwork.kernel.org/project/qemu-devel/cover/2023121517283=
+0.2540987-1-eperezma@redhat.com/
+> > [2] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05910.html
+> > [3] https://lore.kernel.org/qemu-devel/20250217144936.3589907-1-jonah.p=
+almer@oracle.com/
+> >
+> > Eugenio P=C3=A9rez (7):
+> >   vdpa: check for iova tree initialized at net_client_start
+> >   vdpa: reorder vhost_vdpa_set_backend_cap
+> >   vdpa: set backend capabilities at vhost_vdpa_init
+> >   vdpa: add listener_registered
+> >   vdpa: reorder listener assignment
+> >   vdpa: move iova_tree allocation to net_vhost_vdpa_init
+> >   vdpa: move memory listener register to vhost_vdpa_init
+> >
+> >  hw/virtio/vhost-vdpa.c         | 98 ++++++++++++++++++++++------------
+> >  include/hw/virtio/vhost-vdpa.h | 22 +++++++-
+> >  net/vhost-vdpa.c               | 34 ++----------
+> >  3 files changed, 88 insertions(+), 66 deletions(-)
+> >
+> > --
+> > 2.43.5
+> >
+> >
 
 
