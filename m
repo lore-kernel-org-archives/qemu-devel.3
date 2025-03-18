@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B268FC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 06:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08511C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 06:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuQFe-0004D0-D2; Tue, 18 Mar 2025 02:16:34 -0400
+	id 1tuQO8-0007an-5H; Tue, 18 Mar 2025 02:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuQFa-0004AO-BJ; Tue, 18 Mar 2025 02:16:30 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ id 1tuQNu-0007Wu-6i; Tue, 18 Mar 2025 02:25:10 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuQFX-0003Z8-EG; Tue, 18 Mar 2025 02:16:29 -0400
+ id 1tuQNr-0005jJ-DR; Tue, 18 Mar 2025 02:25:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742278588; x=1773814588;
+ t=1742279103; x=1773815103;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=fOECzhny/oA7GZROn9Pky9w6OPheaR0WCegJEIidTKI=;
- b=MDuvNl2lgBKGobfr7bR516lkmsIHHHSoyGJIAUDP9SCgGamErWanhDwJ
- FVhRizWDBTYP4swVMni+ae/wHl1mjmNM7dP0hTFsWCslxy5pG2olUzaQk
- 78JCY7Ijr4vEp5u1exLzGPu0N0PqC9NgiLg1cKk+LOMLgs6D0aMW7Fmsc
- BdKEEBMqj6HvWMs422r2Am2WWTqnHZF2TqtRQbUyqLOrlcEeOgNHF4+Ki
- cbsybzIE5O77Sl61uFAt8eQjT3ADH+uPu8R1xa/tcTWbA/P28zQXpPWRF
- YGKP6Q5tmYBEE6/Wdl1zmnNX7hTcAMxV0u0ck0keKyAaMKojXc/TganMt g==;
-X-CSE-ConnectionGUID: pEiKP1hWQB+GMuqoLYtXEA==
-X-CSE-MsgGUID: 9KQx9SajRU22/ahld3Ip3w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="54776627"
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="54776627"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2025 23:16:24 -0700
-X-CSE-ConnectionGUID: /4Tq/5tkTkSWxh7EGC7vmw==
-X-CSE-MsgGUID: a151oO44Sea+hAskit1wFQ==
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=3Pq6PWKDudu7MLTJ+MS6d3xcTEicGhPOVkg5N/uaMFQ=;
+ b=l3mNYUl4ZVW2EgKwAvnS68hXtopFDpdJ5s3XBIfrrgE/4SaAoWcipXLi
+ nG00r3xL0yW0AXHuQhnPPnmDCdBusxRuXUOuudAmc5SdVJBfDukeqj/Z6
+ 3L+z+jGrP7s3uM9MK9yEIlkxpLNVUzjVjIQUHG6u01t8WsKCerZ1DyM6Y
+ nMa9TNGvUEKPFsJy8jZYpaYQcXbhMs+M7KbAsh5sRHCxL0sgYaMOj44dI
+ ig+FvyRs/idxuRyb+2f9K4JYG63jhUozRvANiN65HvkKuEvIzzpSgT0mL
+ 1MxkwZaVhNuygUqpNyTaCn6GvmumUczJikcWJqkxdrOeK6Gq11Qe2Znmp Q==;
+X-CSE-ConnectionGUID: Bl8vK+lERGS9rR4jLgIUig==
+X-CSE-MsgGUID: Odqv8u2/TxWcN8CqLN3vDw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="42649707"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="42649707"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2025 23:25:00 -0700
+X-CSE-ConnectionGUID: Atyp8IGfTze2YERBO+ccIg==
+X-CSE-MsgGUID: rFBZQ+j1T+mvKxokkTkJbg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="122176472"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="126819147"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 17 Mar 2025 23:16:22 -0700
-Date: Tue, 18 Mar 2025 14:36:36 +0800
+ by fmviesa005.fm.intel.com with ESMTP; 17 Mar 2025 23:24:59 -0700
+Date: Tue, 18 Mar 2025 14:45:12 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 13/17] rust/vmstate: Support vmstate_validate
-Message-ID: <Z9kUdJUP0JrkcKMJ@intel.com>
+Subject: Re: [PATCH 14/17] rust/vmstate: Add unit test for vmstate_of macro
+Message-ID: <Z9kWeCZnCjjs2Xkp@intel.com>
 References: <20250317151236.536673-1-zhao1.liu@intel.com>
- <20250317151236.536673-14-zhao1.liu@intel.com>
- <CABgObfauvyAbmt7GewurAEw9d+HanhjvDa1tT=S_4Oo9Huty0g@mail.gmail.com>
+ <20250317151236.536673-15-zhao1.liu@intel.com>
+ <CABgObfaHDrKPx7jRLtOn9CdjC8A1zjpAwBDuuY7WGY9bwYzckw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABgObfauvyAbmt7GewurAEw9d+HanhjvDa1tT=S_4Oo9Huty0g@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfaHDrKPx7jRLtOn9CdjC8A1zjpAwBDuuY7WGY9bwYzckw@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -82,75 +83,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > +#[doc(alias = "VMSTATE_VALIDATE")]
-> > +#[macro_export]
-> > +macro_rules! vmstate_validate {
-> > +    ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
-> > +        $crate::bindings::VMStateField {
-> > +            name: ::std::ffi::CStr::as_ptr($test_name),
-> > +            // TODO: Use safe callback.
+On Mon, Mar 17, 2025 at 06:11:35PM +0100, Paolo Bonzini wrote:
+> Date: Mon, 17 Mar 2025 18:11:35 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 14/17] rust/vmstate: Add unit test for vmstate_of macro
 > 
-> Why is the TODO still there?
-
-I forgot to delete this comment...
-
-> > +            field_exists: {
-> > +                const fn test_cb_builder__<
-> > +                    T,
-> > +                    F: for<'a> $crate::callbacks::FnCall<(&'a T, u8), bool>,
-> > +                >(
-> > +                    _phantom: ::core::marker::PhantomData<F>,
-> > +                ) -> $crate::vmstate::VMSFieldExistCb {
-> > +                    let _: () = F::ASSERT_IS_SOME;
-> > +                    $crate::vmstate::rust_vms_test_field_exists::<T, F>
-> > +                }
-> > +
-> > +                const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
-> > +                    ::core::marker::PhantomData
-> > +                }
-> > +                Some(test_cb_builder__::<$struct_name, _>(phantom__(&$test_fn)))
-> > +            },
-> > +            ..$crate::zeroable::Zeroable::ZERO
-> > +        }
-> > +        .with_exist_check()
-> > +    };
+> Thanks very much for the tests!
 > 
-> Would it be possible, or make sense, to move most of the code for
-> field_exists inside .with_exist_check()?
+> On Mon, Mar 17, 2025 at 3:52 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+> > -pub use crate::bindings::{VMStateDescription, VMStateField};
+> > -use crate::{
+> > -    bindings::VMStateFlags, callbacks::FnCall, prelude::*, qom::Owned, zeroable::Zeroable,
+> > -};
+> > +pub use crate::bindings::{VMStateDescription, VMStateField, VMStateFlags};
 > 
+> Does VMStateFlags have to be part of the public API?
 
-If so, the method would be like:
+I can do `use qemu_api::bindings::VMStateFlags` in vmstate_test.rs
+directly, which is better since it's the raw value of VMStateField that
+I need to check!
 
-    pub fn with_exist_check<T, F>(
-         mut self,
-         _cb: F
-     ) -> Self
-     where
-         F: for<'a> FnCall<(&'a T, u8), bool>,
+> > +    assert_eq!(foo_fields[0].info, unsafe {
+> > +        ::core::ptr::addr_of!(vmstate_info_int8)
+> > +    });
+> 
+> You can use & instead of addr_of here.
 
-Then the use case could be like:
+Thanks! Will fix.
 
-    vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER,
-BqlRefCell<HPETTimer>).with_exist_check<HPETState, _>(foo_field_check),
-
-Here we need to specify the structure type in with_exist_check, though it's
-already specified in vmstate_struct as the first field.
-
-In this way, I understand with_exist_check() doesn't need phantom__()
-trick.
-
-Instead, (after I dropped the few patches you mentioned,) now vmstate_of
-& vmstate_struct could accept the optional "test_fn" field (luckily, at
-least test_fn can still be parsed!), then the example would be:
-
-    vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER,
-BqlRefCell<HPETTimer>, foo_field_check)
-
-And in this way, phantom__() is necessary.
-
-So I think the main issue is the format, which do you prefer?
-
-Thanks,
+Regards,
 Zhao
 
 
