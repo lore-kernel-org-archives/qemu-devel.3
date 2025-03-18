@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552F8C282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC141C35FF3
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 13:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWkq-0003YX-1S; Tue, 18 Mar 2025 09:13:12 -0400
+	id 1tuWkA-0002l0-FD; Tue, 18 Mar 2025 09:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWiz-0002Ht-Cn; Tue, 18 Mar 2025 09:11:32 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1tuWiz-0002JI-Qn; Tue, 18 Mar 2025 09:11:28 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWiu-0003n4-GL; Tue, 18 Mar 2025 09:11:15 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ab78e6edb99so866016466b.2; 
- Tue, 18 Mar 2025 06:11:11 -0700 (PDT)
+ id 1tuWiv-0003nP-Ln; Tue, 18 Mar 2025 09:11:17 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e56b229d60so12210749a12.0; 
+ Tue, 18 Mar 2025 06:11:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742303470; x=1742908270; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742303471; x=1742908271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s2z3osT8h7ewZgx/qICYbX5hRMSuhv1wkR46Mb73ULA=;
- b=aHTipcpsd6hjgFl3OpkYUtG1Vd8A7z4G3EDg8wHOKhnRsrZFNVH/iPttBn6zOoocL4
- uYBxLpeRb9YBp5qS9VY1ya+pXpZrJLQ9hgvmMJ2WCCIEIvAgDgwVCJusCsGJUDz4JSah
- evmCRTsy6ptllNcWaI6xOegU7NV7DPM0L1Pg92HgoHBDNnrYXNCexFHig8vwFwH3j+5v
- 6lsCm3DMEH4KfdVRx2u+3MvFgniy4Cvaeh8qCSdi3AK8ZnQzAS/8c14wOLWXtOVZZgN5
- QL/RMbVsTEUZzTkmRnkLT7PmrbdNfzqwzBO3GwQd2YVScIl5aC3vk3jjsbqHkj0SMsEL
- 8LRw==
+ bh=httd73l5LjYVuSPlvII/RNKPP4D/+MRG7pSLtstB4g8=;
+ b=ekgkHat11AV4IBHtcYYh/YcMjwHWjjOCVS3vyD8u51flrAZbjwd6C3oU1TXl1TgaHQ
+ P1o6YF0XB5jtvkiheu26Jzkies72fJ+VdYld588m4Ojm+MVtTxzN65suA1TPRDTy/lgY
+ /1KtHsHeO2v8nOg4YosObIKJyYiVa8AZKQnyFCMfJjA7ApcfbeZCeV+72my4aykQsw8v
+ lW3WK8UbXZg8fFDcCIgEe0FSt6ALa6qpPr3ZZyYuTm0WP74vG8q6Kgy19HrdZKbsA8+o
+ FpCaZWbGBm5Q9gg61JXLL5nsWvQqYV/0G9Y6WZDn27pOXAU7eOhMK1xbYEZX5BkyDKKp
+ dFrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742303470; x=1742908270;
+ d=1e100.net; s=20230601; t=1742303471; x=1742908271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s2z3osT8h7ewZgx/qICYbX5hRMSuhv1wkR46Mb73ULA=;
- b=JGW9ICg48VCwsbeYX9LZ0x5FMZaqdhDKIh3X3YScRPhyy6SLxbc1VB7YyfYJRrUqDm
- 0DUffpAdiaJ70iKLhhwSS3QaknI+03kqcYSnm03+qUQR7p28I94Fk4iaGkUrrC7zmtS4
- /5gVJ1EH+eLnxmFUZb3JrryWq8O6rlb9czBkXOLmeNzGr+0FsmbGaGKWKMPMym/cpxPJ
- Dv+6BylMtYoO3OHi62Qx2Hutxg+EEMXhu7PHHKjKgtGP13j3YR5hLfA75VkyvxfXXY5+
- ZN+2wjP0TNHz+aV3Vf4MHvQ98JGhLmn9pnE7anx54rJUBV09j4d71aneOQo1HPzWXyGV
- XarQ==
+ bh=httd73l5LjYVuSPlvII/RNKPP4D/+MRG7pSLtstB4g8=;
+ b=cBUoc27JGbuyEdsbUg7czYKGhrz8Srea34sGnt5OMMtUe0gx2mBALuOy6B0uLKMUin
+ LPg7YdTokB4ZMQTC4MtB6H40zSrc52cauKzG5euDFcMWL/d+OSFLHumpohtWdcQ0otm0
+ QFJK5qiaRncVltTIiRAHmvB6TMoRM5s99w4U8kVGJvegOC18tQ6s2nTpdbhDmLbkJacx
+ Bfu87P9sMWoNk6ByCasXbBdIp3VEGvrBd3LvxUZ1MP5iEtpWuOtS0w8/sV4VrTvoCQq8
+ rIdRI6WZgKbHnWZv7BV9afj6UoEHWybsQ7ty3fD4QAE/CsqnGx/ChxwQkTZWsiVrx6ie
+ vEBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnTNRUmKhd56RpADgm/JkdfMCUKrxVLMebHI9/e+f5dgUbnj2LzHFvwKGYXBCUHaeJe8oW6c1l1A==@nongnu.org
-X-Gm-Message-State: AOJu0YyupDucp/h4LbDJwncxtIzKzpnOaGJfmCloxJVhj6YS4tPgVleS
- 6tQbN6aZxrNSTQwypHFCCUymuFkX3pKGcT7x0p+AgcjhnWhKY4wHX71uELlS
-X-Gm-Gg: ASbGncsT4sCcoXVzbWZ/4zgiXrY9P3sbFzCf8DeTt89vTE1ajh+k41eX0RG1w+sA4By
- STr0xt56pmK6EZNEKiwFDilA9IZYpypvHKBrESFeQz9Ye+RZv5Fz+nQv1Xpu1KA9y80O4aY859I
- KdzBLwr1vHSjtnL02Vi3VySSPvf32eFuogVkx/OK1uQ4jcheYrCuTScj9LcSk8Ox4JAILeOgCBQ
- dYQY0cr4waOSjmZ0fYOdyi1sVp4u/fTAXqJRKV9PTtZtyabUNg9KiHfe6qj2QIwoZLT7AE2H20o
- CwKyM1O6SVgg5vP+1MP0V7AEdsOxa4UwO9IppZE7rd+YaKfKxjq4LM8o56mihs7B/MY=
-X-Google-Smtp-Source: AGHT+IHrBv7vxPgrrtJ0Kcv9NhG6+27FIaBrXmgVMG76k0HKdpuiE4hPDMzjTBPN3jJWeMTNG1gg6w==
-X-Received: by 2002:a17:907:7241:b0:ac0:527c:9cd5 with SMTP id
- a640c23a62f3a-ac330441df6mr1828641766b.42.1742303468234; 
- Tue, 18 Mar 2025 06:11:08 -0700 (PDT)
+ AJvYcCVXMT6+jNydDT7hj1oKWNlrWtDDVGtA6YNazhBGPQTw/Njh6X/rfgng3zL0FoDuq9/TB8f6KLiEsw==@nongnu.org
+X-Gm-Message-State: AOJu0YyBy+L7hc627V9HQLKNR3c67jksV+x+vTzzqms49pqqPoGAmAfT
+ BsccZA5vFXVel+7ohSplxTVcZtFDB700YEJJaB9wgld4Z1L+N3UKiJUhU6r5
+X-Gm-Gg: ASbGncuvTKaSdAJj2dD4atfrG8KbU/hTgj+/INZu7rW4/B7xqcy+kLoMAt3AkjEhk/A
+ Md6oJfm9JDIdYCN1shg3vPqrM/vQTrOTIJLXS03sEQUk537z38ov+MuzGjWeoXyoJOIHN9kzKiC
+ HrIImNBSC9EoroXIDgiyZYWB6HXmUw3MTyBhQCG4Qz9U4jvuyFLO92j1gus6t5tdkaTHeLMJ/Iq
+ eqVyWOhkCIpMcRxMrcuiZKu0ASF1Nk77hbsLMSwzOKWAkHqcDlgdqSI1Sb/J7irkA8IAkXKkvlK
+ u1vpL0okey2Na5CyyMpsQQ66E2Ar4WQ2Pm4uuuu8qy1NIfH3tmxQW9KC3ddFWuRXtGQ=
+X-Google-Smtp-Source: AGHT+IEDKYZYeafecTnDmSel6sXjJtf4ID1L4nzftbVsUkuo2GDc4X7LEBYRpCia9E8Mmxbq0o9pgg==
+X-Received: by 2002:a17:907:1c89:b0:abf:68b5:f78b with SMTP id
+ a640c23a62f3a-ac38f95e9f5mr309230266b.24.1742303470903; 
+ Tue, 18 Mar 2025 06:11:10 -0700 (PDT)
 Received: from corvink-nb.beckhoff.com ([195.226.174.194])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3147f3101sm850678066b.69.2025.03.18.06.11.07
+ a640c23a62f3a-ac3147f3101sm850678066b.69.2025.03.18.06.11.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 06:11:07 -0700 (PDT)
+ Tue, 18 Mar 2025 06:11:10 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
@@ -72,17 +72,18 @@ Cc: =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>,
  Paolo Bonzini <pbonzini@redhat.com>, YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH 11/21] hw/misc: Add Beckhoff CCAT device
-Date: Tue, 18 Mar 2025 14:08:02 +0100
-Message-ID: <20250318130817.119636-12-corvin.koehne@gmail.com>
+Subject: [PATCH 12/21] hw/arm: Add new machine based on xilinx-zynq-a9 for
+ Beckhoff CX7200
+Date: Tue, 18 Mar 2025 14:08:03 +0100
+Message-ID: <20250318130817.119636-13-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250318130817.119636-1-corvin.koehne@gmail.com>
 References: <20250318130817.119636-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,419 +108,565 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-This adds the Beckhoff Communication Controller (CCAT). The information
-block, EEPROM interface and DMA controller are currently  implemented.
+This commit introduces a new machine, derived from xilinx-zynq-a9,
+as a starting point for the Beckhoff CX7200 integration. Functions
+and structs are renamed to delimit the CX7200 board emulation from
+the existing Zynq emulation.
 
-The EEPROM provides production information for Beckhoff Devices.
-An EEPORM binary must therefor be handed over. It should be aligned to
-a power of two. If no EEPROM binary is handed over an empty EEPROM of
-size 4096 is initialized.
-
-This device is needed for the Beckhoff CX7200 board emulation.
+At this stage, the new machine is a direct copy of hw/arm/xilinx_zynq.c.
+Future commits will adapt it to match the CX7200 hardware requirements.
 
 Signed-off-by: Yannick Voßen <y.vossen@beckhoff.com>
 ---
- hw/misc/Kconfig         |   3 +
- hw/misc/beckhoff_ccat.c | 365 ++++++++++++++++++++++++++++++++++++++++
- hw/misc/meson.build     |   1 +
- 3 files changed, 369 insertions(+)
- create mode 100644 hw/misc/beckhoff_ccat.c
+ hw/arm/Kconfig           |  18 ++
+ hw/arm/beckhoff_CX7200.c | 496 +++++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build       |   1 +
+ 3 files changed, 515 insertions(+)
+ create mode 100644 hw/arm/beckhoff_CX7200.c
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1bc4228572..c264862046 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -225,4 +225,7 @@ config XLNX_VERSAL_TRNG
- config DDR_CTRLR
-     bool
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 15200a2d7e..8727b3e837 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -311,6 +311,24 @@ config ZYNQ
+     select XILINX_SPIPS
+     select ZYNQ_DEVCFG
  
-+config BECKHOFF_CCAT
++config BECK_CX7200
 +    bool
++    default y
++    depends on TCG && ARM
++    select A9MPCORE
++    select CADENCE # UART
++    select PFLASH_CFI02
++    select PL310 # cache controller
++    select PL330
++    select SDHCI
++    select SSI_M25P80
++    select USB_EHCI_SYSBUS
++    select XILINX # UART
++    select XILINX_AXI
++    select XILINX_SPI
++    select XILINX_SPIPS
++    select ZYNQ_DEVCFG
 +
- source macio/Kconfig
-diff --git a/hw/misc/beckhoff_ccat.c b/hw/misc/beckhoff_ccat.c
+ config ARM_V7M
+     bool
+     # currently v7M must be included in a TCG build due to translate.c
+diff --git a/hw/arm/beckhoff_CX7200.c b/hw/arm/beckhoff_CX7200.c
 new file mode 100644
-index 0000000000..3ab1259702
+index 0000000000..89466cfdd8
 --- /dev/null
-+++ b/hw/misc/beckhoff_ccat.c
-@@ -0,0 +1,365 @@
++++ b/hw/arm/beckhoff_CX7200.c
+@@ -0,0 +1,496 @@
 +/*
-+ * Beckhoff Communication Controller Emulation
++ * Modified Xilinx Zynq Baseboard System emulation for Beckhoff CX7200.
 + *
-+ * Copyright (c) Beckhoff Automation GmbH. & Co. KG
++ * Based on /hw/arm/xilinx_zynq.c:
++ * Copyright (c) 2010 Xilinx.
++ * Copyright (c) 2012 Peter A.G. Crosthwaite (peter.croshtwaite@petalogix.com)
++ * Copyright (c) 2012 Petalogix Pty Ltd.
++ * Original code by Haibing Ma.
 + *
 + * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
++ * under the terms of the GNU General Public License as published by the Free
++ * Software Foundation; either version 2 of the License, or (at your option)
++ * any later version.
 + *
 + * You should have received a copy of the GNU General Public License along
 + * with this program; if not, see <http://www.gnu.org/licenses/>.
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/sysbus.h"
-+#include "hw/register.h"
-+#include "qemu/bitops.h"
-+#include "qemu/log.h"
++#include "qemu/units.h"
 +#include "qapi/error.h"
-+#include "system/block-backend.h"
-+#include "exec/address-spaces.h"
-+#include "exec/memory.h"
-+#include "system/dma.h"
++#include "hw/sysbus.h"
++#include "hw/arm/boot.h"
++#include "net/net.h"
++#include "system/system.h"
++#include "hw/boards.h"
++#include "hw/block/flash.h"
++#include "hw/loader.h"
++#include "hw/adc/zynq-xadc.h"
++#include "hw/ssi/ssi.h"
++#include "hw/usb/chipidea.h"
 +#include "qemu/error-report.h"
-+#include "block/block.h"
-+#include "block/block_int.h"
-+#include "block/qdict.h"
-+#include "hw/block/block.h"
++#include "hw/sd/sdhci.h"
++#include "hw/char/cadence_uart.h"
++#include "hw/net/cadence_gem.h"
++#include "hw/cpu/a9mpcore.h"
++#include "hw/qdev-clock.h"
++#include "hw/misc/unimp.h"
++#include "system/reset.h"
++#include "qom/object.h"
++#include "exec/tswap.h"
++#include "target/arm/cpu-qom.h"
++#include "qapi/visitor.h"
 +
-+#ifndef CCAT_ERR_DEBUG
-+#define CCAT_ERR_DEBUG 0
-+#endif
++#define TYPE_CX7200_MACHINE MACHINE_TYPE_NAME("beckhoff-cx7200")
++OBJECT_DECLARE_SIMPLE_TYPE(CX7200MachineState, CX7200_MACHINE)
 +
-+#define DB_PRINT_L(level, ...) do { \
-+    if (CCAT_ERR_DEBUG > (level)) { \
-+        fprintf(stderr,  ": %s: ", __func__); \
-+        fprintf(stderr, ## __VA_ARGS__); \
-+    } \
-+} while (0)
++/* board base frequency: 33.333333 MHz */
++#define PS_CLK_FREQUENCY (100 * 1000 * 1000 / 3)
 +
-+#define DB_PRINT(...) DB_PRINT_L(0, ## __VA_ARGS__)
++#define NUM_SPI_FLASHES 4
++#define NUM_QSPI_FLASHES 2
++#define NUM_QSPI_BUSSES 2
 +
-+#define TYPE_BECKHOFF_CCAT "beckhoff-ccat"
-+#define BECKHOFF_CCAT(obj) \
-+    OBJECT_CHECK(BeckhoffCcat, (obj), TYPE_BECKHOFF_CCAT)
++#define FLASH_SIZE (64 * 1024 * 1024)
++#define FLASH_SECTOR_SIZE (128 * 1024)
 +
-+#define MAX_NUM_SLOTS 32
++#define IRQ_OFFSET 32 /* pic interrupts start from index 32 */
 +
-+#define CCAT_EEPROM_OFFSET 0x100
-+#define CCAT_DMA_OFFSET 0x8000
++#define MPCORE_PERIPHBASE 0xF8F00000
++#define ZYNQ_BOARD_MIDR 0x413FC090
 +
-+#define CCAT_MEM_SIZE 0xFFFF
-+#define CCAT_DMA_SIZE 0x800
-+#define CCAT_EEPROM_SIZE 0x20
++static const int dma_irqs[8] = {
++    46, 47, 48, 49, 72, 73, 74, 75
++};
 +
-+#define EEPROM_MEMORY_SIZE 0x1000
++#define BOARD_SETUP_ADDR        0x100
 +
-+#define EEPROM_CMD_OFFSET (CCAT_EEPROM_OFFSET + 0x00)
-+    #define EEPROM_CMD_WRITE_MASK 0x2
-+    #define EEPROM_CMD_READ_MASK 0x1
-+#define EEPROM_ADR_OFFSET (CCAT_EEPROM_OFFSET + 0x04)
-+#define EEPROM_DATA_OFFSET (CCAT_EEPROM_OFFSET + 0x08)
++#define SLCR_LOCK_OFFSET        0x004
++#define SLCR_UNLOCK_OFFSET      0x008
++#define SLCR_ARM_PLL_OFFSET     0x100
 +
-+#define DMA_BUFFER_OFFSET (CCAT_DMA_OFFSET + 0x00)
-+#define DMA_DIRECTION_OFFSET (CCAT_DMA_OFFSET + 0x7c0)
-+    #define DMA_DIRECTION_MASK 1
-+#define DMA_TRANSFER_OFFSET (CCAT_DMA_OFFSET + 0x7c4)
-+#define DMA_HOST_ADR_OFFSET (CCAT_DMA_OFFSET + 0x7c8)
-+#define DMA_TRANSFER_LENGTH_OFFSET (CCAT_DMA_OFFSET + 0x7cc)
++#define SLCR_XILINX_UNLOCK_KEY  0xdf0d
++#define SLCR_XILINX_LOCK_KEY    0x767b
++
++#define ZYNQ_SDHCI_CAPABILITIES 0x69ec0080  /* Datasheet: UG585 (v1.12.1) */
++
++#define ARMV7_IMM16(x) (extract32((x),  0, 12) | \
++                        extract32((x), 12,  4) << 16)
 +
 +/*
-+ * The informationblock  is always located at address 0x0.
-+ * Address and size are therefor replaced by two identifiers.
-+ * The Parameter give information about the maximal number of
-+ * function slots and the creation date (in this case 01.01.2001)
++ * Write immediate val to address r0 + addr. r0 should contain base offset
++ * of the SLCR block. Clobbers r1.
 + */
-+#define CCAT_ID_1 0x88a4
-+#define CCAT_ID_2 0x54414343
-+#define CCAT_INFO_BLOCK_PARAMS (MAX_NUM_SLOTS << 0) | (0x1 << 8) | \
-+                              (0x1 << 16) | (0x1 << 24)
 +
-+#define CCAT_FUN_TYPE_ENTRY 0x0001
-+#define CCAT_FUN_TYPE_EEPROM 0x0012
-+#define CCAT_FUN_TYPE_DMA 0x0013
++#define SLCR_WRITE(addr, val) \
++    0xe3001000 + ARMV7_IMM16(extract32((val),  0, 16)), /* movw r1 ... */ \
++    0xe3401000 + ARMV7_IMM16(extract32((val), 16, 16)), /* movt r1 ... */ \
++    0xe5801000 + (addr)
 +
-+typedef struct BeckhoffCcat {
-+    SysBusDevice parent_obj;
++#define ZYNQ_MAX_CPUS 2
 +
-+    MemoryRegion iomem;
++struct CX7200MachineState {
++    MachineState parent;
++    Clock *ps_clk;
++    ARMCPU *cpu[ZYNQ_MAX_CPUS];
++    uint8_t boot_mode;
++};
 +
-+    uint8_t mem[CCAT_MEM_SIZE];
-+
-+    BlockBackend *eeprom_blk;
-+    uint8_t *eeprom_storage;
-+    int64_t eeprom_size;
-+} BeckhoffCcat;
-+
-+typedef struct __attribute__((packed)) CcatFunctionBlock {
-+    uint16_t type;
-+    uint16_t revision;
-+    uint32_t parameter;
-+    uint32_t address_offset;
-+    uint32_t size;
-+} CcatFunctionBlock;
-+
-+static void sync_eeprom(BeckhoffCcat *s)
++static void beckhoff_cx7200_write_board_setup(ARMCPU *cpu,
++                                   const struct arm_boot_info *info)
 +{
-+    if (!s->eeprom_blk) {
++    int n;
++    uint32_t board_setup_blob[] = {
++        0xe3a004f8, /* mov r0, #0xf8000000 */
++        SLCR_WRITE(SLCR_UNLOCK_OFFSET, SLCR_XILINX_UNLOCK_KEY),
++        SLCR_WRITE(SLCR_ARM_PLL_OFFSET, 0x00014008),
++        SLCR_WRITE(SLCR_LOCK_OFFSET, SLCR_XILINX_LOCK_KEY),
++        0xe12fff1e, /* bx lr */
++    };
++    for (n = 0; n < ARRAY_SIZE(board_setup_blob); n++) {
++        board_setup_blob[n] = tswap32(board_setup_blob[n]);
++    }
++    rom_add_blob_fixed("board-setup", board_setup_blob,
++                       sizeof(board_setup_blob), BOARD_SETUP_ADDR);
++}
++
++static struct arm_boot_info beckhoff_cx7200_binfo = {};
++
++static void gem_init(uint32_t base, qemu_irq irq)
++{
++    DeviceState *dev;
++    SysBusDevice *s;
++
++    dev = qdev_new(TYPE_CADENCE_GEM);
++    qemu_configure_nic_device(dev, true, NULL);
++    object_property_set_int(OBJECT(dev), "phy-addr", 7, &error_abort);
++    s = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_mmio_map(s, 0, base);
++    sysbus_connect_irq(s, 0, irq);
++}
++
++static inline int beckhoff_cx7200_init_spi_flashes(uint32_t base_addr,
++                                        qemu_irq irq, bool is_qspi, int unit0)
++{
++    int unit = unit0;
++    DeviceState *dev;
++    SysBusDevice *busdev;
++    SSIBus *spi;
++    DeviceState *flash_dev;
++    int i, j;
++    int num_busses =  is_qspi ? NUM_QSPI_BUSSES : 1;
++    int num_ss = is_qspi ? NUM_QSPI_FLASHES : NUM_SPI_FLASHES;
++
++    dev = qdev_new(is_qspi ? "xlnx.ps7-qspi" : "xlnx.ps7-spi");
++    qdev_prop_set_uint8(dev, "num-txrx-bytes", is_qspi ? 4 : 1);
++    qdev_prop_set_uint8(dev, "num-ss-bits", num_ss);
++    qdev_prop_set_uint8(dev, "num-busses", num_busses);
++    busdev = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_mmio_map(busdev, 0, base_addr);
++    if (is_qspi) {
++        sysbus_mmio_map(busdev, 1, 0xFC000000);
++    }
++    sysbus_connect_irq(busdev, 0, irq);
++
++    for (i = 0; i < num_busses; ++i) {
++        char bus_name[16];
++        qemu_irq cs_line;
++
++        snprintf(bus_name, 16, "spi%d", i);
++        spi = (SSIBus *)qdev_get_child_bus(dev, bus_name);
++
++        for (j = 0; j < num_ss; ++j) {
++            DriveInfo *dinfo = drive_get(IF_MTD, 0, unit++);
++            flash_dev = qdev_new("n25q128");
++            if (dinfo) {
++                qdev_prop_set_drive_err(flash_dev, "drive",
++                                        blk_by_legacy_dinfo(dinfo),
++                                        &error_fatal);
++            }
++            qdev_prop_set_uint8(flash_dev, "cs", j);
++            qdev_realize_and_unref(flash_dev, BUS(spi), &error_fatal);
++
++            cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
++            sysbus_connect_irq(busdev, i * num_ss + j + 1, cs_line);
++        }
++    }
++
++    return unit;
++}
++
++static void beckhoff_cx7200_set_boot_mode(Object *obj, const char *str,
++                                               Error **errp)
++{
++    CX7200MachineState *m = CX7200_MACHINE(obj);
++    uint8_t mode = 0;
++
++    if (!strncasecmp(str, "qspi", 4)) {
++        mode = 1;
++    } else if (!strncasecmp(str, "sd", 2)) {
++        mode = 5;
++    } else if (!strncasecmp(str, "nor", 3)) {
++        mode = 2;
++    } else if (!strncasecmp(str, "jtag", 4)) {
++        mode = 0;
++    } else {
++        error_setg(errp, "%s boot mode not supported", str);
 +        return;
 +    }
-+    blk_pwrite(s->eeprom_blk, 0, s->eeprom_size, s->eeprom_storage, 0);
++    m->boot_mode = mode;
 +}
 +
-+static uint64_t beckhoff_ccat_eeprom_read(void *opaque, hwaddr addr,
-+                                          unsigned size)
++static void beckhoff_cx7200_init(MachineState *machine)
 +{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t val = 0;
-+    memcpy(&val, &s->mem[addr], size);
-+    return val;
-+}
++    CX7200MachineState *cx7200_machine = CX7200_MACHINE(machine);
++    MemoryRegion *address_space_mem = get_system_memory();
++    MemoryRegion *ocm_ram = g_new(MemoryRegion, 1);
++    DeviceState *dev, *slcr;
++    SysBusDevice *busdev;
++    qemu_irq pic[64];
++    int n;
++    unsigned int smp_cpus = machine->smp.cpus;
 +
-+static void beckhoff_ccat_eeprom_write(void *opaque, hwaddr addr, uint64_t val,
-+                              unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t eeprom_adr;
-+    switch (addr) {
-+    case EEPROM_CMD_OFFSET:
-+        eeprom_adr = *(uint32_t *)&s->mem[EEPROM_ADR_OFFSET];
-+        eeprom_adr = (eeprom_adr * 2) % s->eeprom_size;
-+        if (val & EEPROM_CMD_READ_MASK) {
-+            uint64_t buf = 0;
-+            uint32_t bytes_to_read = 8;
-+            if (eeprom_adr > s->eeprom_size - 8) {
-+                bytes_to_read = s->eeprom_size - eeprom_adr;
-+            }
-+            memcpy(&buf, s->eeprom_storage + eeprom_adr, bytes_to_read);
-+            *(uint64_t *)&s->mem[EEPROM_DATA_OFFSET] = buf;
-+
-+        } else if (val & EEPROM_CMD_WRITE_MASK) {
-+            uint32_t buf = *(uint32_t *)&s->mem[EEPROM_DATA_OFFSET];
-+            memcpy(s->eeprom_storage + eeprom_adr, &buf, 2);
-+            sync_eeprom(s);
-+        }
-+        break;
-+    default:
-+            memcpy(&s->mem[addr], &val, size);
-+    }
-+}
-+
-+static uint64_t beckhoff_ccat_dma_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t val = 0;
-+
-+    switch (addr) {
-+    case DMA_TRANSFER_OFFSET:
-+        if (s->mem[DMA_TRANSFER_OFFSET] & 0x1) {
-+            DB_PRINT("DMA transfer finished\n");
-+            s->mem[DMA_TRANSFER_OFFSET] = 0;
-+        }
-+        break;
-+    }
-+    memcpy(&val, &s->mem[addr], size);
-+    return val;
-+}
-+
-+static void beckhoff_ccat_dma_write(void *opaque, hwaddr addr, uint64_t val,
-+                           unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    switch (addr) {
-+    case DMA_TRANSFER_OFFSET:
-+        uint8_t len = s->mem[DMA_TRANSFER_LENGTH_OFFSET];
-+        uint8_t *mem_buf = &s->mem[DMA_BUFFER_OFFSET];
-+
-+        if (s->mem[DMA_DIRECTION_OFFSET] & DMA_DIRECTION_MASK) {
-+            dma_addr_t dmaAddr = *(uint32_t *)&s->mem[DMA_HOST_ADR_OFFSET];
-+            dma_memory_read(&address_space_memory, dmaAddr,
-+                            mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
-+        } else {
-+            dma_addr_t dmaAddr = *(uint32_t *)&s->mem[DMA_HOST_ADR_OFFSET];
-+            dma_memory_write(&address_space_memory, dmaAddr + 8,
-+                                mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
-+        }
-+        break;
-+    }
-+    memcpy(&s->mem[addr], &val, size);
-+}
-+static uint64_t beckhoff_ccat_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    DB_PRINT("CCAT_READ addr=0x%lx size=%u\n", addr, size);
-+
-+    BeckhoffCcat *s = opaque;
-+    uint64_t val = 0;
-+
-+    if (addr > CCAT_MEM_SIZE - size) {
-+        error_report("Overflow. Address or size is too large.\n");
-+        exit(1);
++    /* max 2GB ram */
++    if (machine->ram_size > 2 * GiB) {
++        error_report("RAM size more than 2 GiB is not supported");
++        exit(EXIT_FAILURE);
 +    }
 +
-+    if (addr >= CCAT_EEPROM_OFFSET &&
-+                        addr <= CCAT_EEPROM_OFFSET + s->eeprom_size) {
-+        return beckhoff_ccat_eeprom_read(opaque, addr, size);
-+    } else if (addr >= CCAT_DMA_OFFSET &&
-+                        addr <= CCAT_DMA_OFFSET + CCAT_DMA_SIZE) {
-+        return beckhoff_ccat_dma_read(opaque, addr, size);
-+    } else {
-+         memcpy(&val, &s->mem[addr], size);
++    for (n = 0; n < smp_cpus; n++) {
++        Object *cpuobj = object_new(machine->cpu_type);
++
++        object_property_set_int(cpuobj, "midr", ZYNQ_BOARD_MIDR,
++                                &error_fatal);
++        object_property_set_int(cpuobj, "reset-cbar", MPCORE_PERIPHBASE,
++                                &error_fatal);
++
++        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
++
++        cx7200_machine->cpu[n] = ARM_CPU(cpuobj);
 +    }
 +
-+    return val;
-+}
++    /* DDR remapped to address zero.  */
++    memory_region_add_subregion(address_space_mem, 0, machine->ram);
 +
-+static void beckhoff_ccat_write(void *opaque, hwaddr addr, uint64_t val,
-+                                unsigned size)
-+{
-+    DB_PRINT("CCAT_WRITE addr=0x%lx size=%u val=0x%lx\n", addr, size, val);
++    /* 256K of on-chip memory */
++    memory_region_init_ram(ocm_ram, NULL, "zynq.ocm_ram", 256 * KiB,
++                           &error_fatal);
++    memory_region_add_subregion(address_space_mem, 0xFFFC0000, ocm_ram);
 +
-+    BeckhoffCcat *s = opaque;
++    DriveInfo *dinfo = drive_get(IF_PFLASH, 0, 0);
 +
-+    if (addr > CCAT_MEM_SIZE - size) {
-+        error_report("Overflow. Address or size is too large.\n");
-+        exit(1);
++    /* AMD */
++    pflash_cfi02_register(0xe2000000, "zynq.pflash", FLASH_SIZE,
++                          dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
++                          FLASH_SECTOR_SIZE, 1,
++                          1, 0x0066, 0x0022, 0x0000, 0x0000, 0x0555, 0x2aa,
++                          0);
++
++    /* Create the main clock source, and feed slcr with it */
++    cx7200_machine->ps_clk = CLOCK(object_new(TYPE_CLOCK));
++    object_property_add_child(OBJECT(cx7200_machine), "ps_clk",
++                              OBJECT(cx7200_machine->ps_clk));
++    object_unref(OBJECT(cx7200_machine->ps_clk));
++    clock_set_hz(cx7200_machine->ps_clk, PS_CLK_FREQUENCY);
++
++    /* Create slcr, keep a pointer to connect clocks */
++    slcr = qdev_new("xilinx-zynq_slcr");
++    qdev_connect_clock_in(slcr, "ps_clk", cx7200_machine->ps_clk);
++    qdev_prop_set_uint8(slcr, "boot-mode", cx7200_machine->boot_mode);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(slcr), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(slcr), 0, 0xF8000000);
++
++    dev = qdev_new(TYPE_A9MPCORE_PRIV);
++    qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
++    busdev = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
++    beckhoff_cx7200_binfo.gic_cpu_if_addr = MPCORE_PERIPHBASE + 0x100;
++    sysbus_create_varargs("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
++    for (n = 0; n < smp_cpus; n++) {
++        /* See "hw/intc/arm_gic.h" for the IRQ line association */
++        DeviceState *cpudev = DEVICE(cx7200_machine->cpu[n]);
++        sysbus_connect_irq(busdev, n,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
++        sysbus_connect_irq(busdev, smp_cpus + n,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
 +    }
 +
-+    if (addr >= CCAT_EEPROM_OFFSET &&
-+                        addr <= CCAT_EEPROM_OFFSET + s->eeprom_size) {
-+        beckhoff_ccat_eeprom_write(opaque, addr, val, size);
-+    } else if (addr >= CCAT_DMA_OFFSET &&
-+                        addr <= CCAT_DMA_OFFSET + CCAT_DMA_SIZE) {
-+        beckhoff_ccat_dma_write(opaque, addr, val, size);
-+    } else {
-+        memcpy(&s->mem[addr], &val, size);
++    for (n = 0; n < 64; n++) {
++        pic[n] = qdev_get_gpio_in(dev, n);
 +    }
-+}
 +
-+static const MemoryRegionOps beckhoff_ccat_ops = {
-+    .read = beckhoff_ccat_read,
-+    .write = beckhoff_ccat_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
++    n = beckhoff_cx7200_init_spi_flashes(0xE0006000, pic[58 - IRQ_OFFSET],
++                                         false, 0);
++    n = beckhoff_cx7200_init_spi_flashes(0xE0007000, pic[81 - IRQ_OFFSET],
++                                         false, n);
++    n = beckhoff_cx7200_init_spi_flashes(0xE000D000, pic[51 - IRQ_OFFSET],
++                                         true, n);
 +
++    sysbus_create_simple(TYPE_CHIPIDEA, 0xE0002000, pic[53 - IRQ_OFFSET]);
++    sysbus_create_simple(TYPE_CHIPIDEA, 0xE0003000, pic[76 - IRQ_OFFSET]);
 +
-+static void beckhoff_ccat_reset(DeviceState *dev)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(dev);
++    dev = qdev_new(TYPE_CADENCE_UART);
++    busdev = SYS_BUS_DEVICE(dev);
++    qdev_prop_set_chr(dev, "chardev", serial_hd(0));
++    qdev_connect_clock_in(dev, "refclk",
++                          qdev_get_clock_out(slcr, "uart0_ref_clk"));
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_mmio_map(busdev, 0, 0xE0000000);
++    sysbus_connect_irq(busdev, 0, pic[59 - IRQ_OFFSET]);
++    dev = qdev_new(TYPE_CADENCE_UART);
++    busdev = SYS_BUS_DEVICE(dev);
++    qdev_prop_set_chr(dev, "chardev", serial_hd(1));
++    qdev_connect_clock_in(dev, "refclk",
++                          qdev_get_clock_out(slcr, "uart1_ref_clk"));
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_mmio_map(busdev, 0, 0xE0001000);
++    sysbus_connect_irq(busdev, 0, pic[82 - IRQ_OFFSET]);
 +
-+    CcatFunctionBlock function_blocks[MAX_NUM_SLOTS] = {0};
++    sysbus_create_varargs("cadence_ttc", 0xF8001000, pic[42 - IRQ_OFFSET],
++                          pic[43 - IRQ_OFFSET], pic[44 - IRQ_OFFSET], NULL);
++    sysbus_create_varargs("cadence_ttc", 0xF8002000, pic[69 - IRQ_OFFSET],
++                          pic[70 - IRQ_OFFSET], pic[71 - IRQ_OFFSET], NULL);
 +
-+    CcatFunctionBlock info_block = {
-+        .type = CCAT_FUN_TYPE_ENTRY,
-+        .revision = 0x0001,
-+        .parameter = CCAT_INFO_BLOCK_PARAMS,
-+        .address_offset = CCAT_ID_1,
-+        .size = CCAT_ID_2
-+    };
-+    CcatFunctionBlock eeprom_block = {
-+        .type = CCAT_FUN_TYPE_EEPROM,
-+        .revision = 0x0001,
-+        .parameter = 0,
-+        .address_offset = CCAT_EEPROM_OFFSET,
-+        .size = CCAT_EEPROM_SIZE
-+    };
-+    CcatFunctionBlock dma_block = {
-+        .type = CCAT_FUN_TYPE_DMA,
-+        .revision = 0x0000,
-+        .parameter = 0,
-+        .address_offset = CCAT_DMA_OFFSET,
-+        .size = CCAT_DMA_SIZE
-+    };
++    gem_init(0xE000B000, pic[54 - IRQ_OFFSET]);
++    gem_init(0xE000C000, pic[77 - IRQ_OFFSET]);
++
++    for (n = 0; n < 2; n++) {
++        int hci_irq = n ? 79 : 56;
++        hwaddr hci_addr = n ? 0xE0101000 : 0xE0100000;
++        DriveInfo *di;
++        BlockBackend *blk;
++        DeviceState *carddev;
++
++        /*
++         * Compatible with:
++         * - SD Host Controller Specification Version 2.0 Part A2
++         * - SDIO Specification Version 2.0
++         * - MMC Specification Version 3.31
++         */
++        dev = qdev_new(TYPE_SYSBUS_SDHCI);
++        qdev_prop_set_uint8(dev, "sd-spec-version", 2);
++        qdev_prop_set_uint64(dev, "capareg", ZYNQ_SDHCI_CAPABILITIES);
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, hci_addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[hci_irq - IRQ_OFFSET]);
++
++        di = drive_get(IF_SD, 0, n);
++        blk = di ? blk_by_legacy_dinfo(di) : NULL;
++        carddev = qdev_new(TYPE_SD_CARD);
++        qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
++        qdev_realize_and_unref(carddev, qdev_get_child_bus(dev, "sd-bus"),
++                               &error_fatal);
++    }
++
++    dev = qdev_new(TYPE_ZYNQ_XADC);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xF8007100);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[39 - IRQ_OFFSET]);
++
++    dev = qdev_new("pl330");
++    object_property_set_link(OBJECT(dev), "memory",
++                             OBJECT(address_space_mem),
++                             &error_fatal);
++    qdev_prop_set_uint8(dev, "num_chnls",  8);
++    qdev_prop_set_uint8(dev, "num_periph_req",  4);
++    qdev_prop_set_uint8(dev, "num_events",  16);
++
++    qdev_prop_set_uint8(dev, "data_width",  64);
++    qdev_prop_set_uint8(dev, "wr_cap",  8);
++    qdev_prop_set_uint8(dev, "wr_q_dep",  16);
++    qdev_prop_set_uint8(dev, "rd_cap",  8);
++    qdev_prop_set_uint8(dev, "rd_q_dep",  16);
++    qdev_prop_set_uint16(dev, "data_buffer_dep",  256);
++
++    busdev = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_mmio_map(busdev, 0, 0xF8003000);
++    sysbus_connect_irq(busdev, 0, pic[45 - IRQ_OFFSET]); /* abort irq line */
++    for (n = 0; n < ARRAY_SIZE(dma_irqs); ++n) { /* event irqs */
++        sysbus_connect_irq(busdev, n + 1, pic[dma_irqs[n] - IRQ_OFFSET]);
++    }
++
++    dev = qdev_new("xlnx.ps7-dev-cfg");
++    busdev = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_connect_irq(busdev, 0, pic[40 - IRQ_OFFSET]);
++    sysbus_mmio_map(busdev, 0, 0xF8007000);
 +
 +    /*
-+     * The EEPROM interface is usually at function slot 11.
-+     * The DMA controller is usually at function slot 15.
++     * Refer to the ug585-Zynq-7000-TRM manual B.3 (Module Summary) and
++     * the zynq-7000.dtsi. Add placeholders for unimplemented devices.
 +     */
-+    function_blocks[0] = info_block;
-+    function_blocks[11] = eeprom_block;
-+    function_blocks[15] = dma_block;
++    create_unimplemented_device("zynq.i2c0", 0xE0004000, 4 * KiB);
++    create_unimplemented_device("zynq.i2c1", 0xE0005000, 4 * KiB);
++    create_unimplemented_device("zynq.can0", 0xE0008000, 4 * KiB);
++    create_unimplemented_device("zynq.can1", 0xE0009000, 4 * KiB);
++    create_unimplemented_device("zynq.gpio", 0xE000A000, 4 * KiB);
++    create_unimplemented_device("zynq.smcc", 0xE000E000, 4 * KiB);
 +
-+    memcpy(&s->mem[0], function_blocks, sizeof(function_blocks));
++    /* Direct Memory Access Controller, PL330, Non-Secure Mode */
++    create_unimplemented_device("zynq.dma_ns", 0xF8004000, 4 * KiB);
++
++    /* System Watchdog Timer Registers */
++    create_unimplemented_device("zynq.swdt", 0xF8005000, 4 * KiB);
++
++    /* DDR memory controller */
++    create_unimplemented_device("zynq.ddrc", 0xF8006000, 4 * KiB);
++
++    /* AXI_HP Interface (AFI) */
++    create_unimplemented_device("zynq.axi_hp0", 0xF8008000, 0x28);
++    create_unimplemented_device("zynq.axi_hp1", 0xF8009000, 0x28);
++    create_unimplemented_device("zynq.axi_hp2", 0xF800A000, 0x28);
++    create_unimplemented_device("zynq.axi_hp3", 0xF800B000, 0x28);
++
++    create_unimplemented_device("zynq.efuse", 0xF800d000, 0x20);
++
++    /* Embedded Trace Buffer */
++    create_unimplemented_device("zynq.etb", 0xF8801000, 4 * KiB);
++
++    /* Cross Trigger Interface, ETB and TPIU */
++    create_unimplemented_device("zynq.cti_etb_tpiu", 0xF8802000, 4 * KiB);
++
++    /* Trace Port Interface Unit */
++    create_unimplemented_device("zynq.tpiu", 0xF8803000, 4 * KiB);
++
++    /* CoreSight Trace Funnel */
++    create_unimplemented_device("zynq.funnel", 0xF8804000, 4 * KiB);
++
++    /* Instrumentation Trace Macrocell */
++    create_unimplemented_device("zynq.itm", 0xF8805000, 4 * KiB);
++
++    /* Cross Trigger Interface, FTM */
++    create_unimplemented_device("zynq.cti_ftm", 0xF8809000, 4 * KiB);
++
++    /* Fabric Trace Macrocell */
++    create_unimplemented_device("zynq.ftm", 0xF880B000, 4 * KiB);
++
++    /* Cortex A9 Performance Monitoring Unit, CPU */
++    create_unimplemented_device("cortex-a9.pmu0", 0xF8891000, 4 * KiB);
++    create_unimplemented_device("cortex-a9.pmu1", 0xF8893000, 4 * KiB);
++
++    /* Cross Trigger Interface, CPU */
++    create_unimplemented_device("zynq.cpu_cti0", 0xF8898000, 4 * KiB);
++    create_unimplemented_device("zynq.cpu_cti1", 0xF8899000, 4 * KiB);
++
++    /* CoreSight PTM-A9, CPU */
++    create_unimplemented_device("cortex-a9.ptm0", 0xF889c000, 4 * KiB);
++    create_unimplemented_device("cortex-a9.ptm1", 0xF889d000, 4 * KiB);
++
++    /* AMBA NIC301 TrustZone */
++    create_unimplemented_device("zynq.trustZone", 0xF8900000, 0x20);
++
++    /* AMBA Network Interconnect Advanced Quality of Service (QoS-301) */
++    create_unimplemented_device("zynq.qos301_cpu", 0xF8946000, 0x130);
++    create_unimplemented_device("zynq.qos301_dmac", 0xF8947000, 0x130);
++    create_unimplemented_device("zynq.qos301_iou", 0xF8948000, 0x130);
++
++    beckhoff_cx7200_binfo.ram_size = machine->ram_size;
++    beckhoff_cx7200_binfo.board_id = 0xd32;
++    beckhoff_cx7200_binfo.loader_start = 0;
++    beckhoff_cx7200_binfo.board_setup_addr = BOARD_SETUP_ADDR;
++    beckhoff_cx7200_binfo.write_board_setup = beckhoff_cx7200_write_board_setup;
++
++    arm_load_kernel(cx7200_machine->cpu[0], machine, &beckhoff_cx7200_binfo);
 +}
 +
-+static void beckhoff_ccat_realize(DeviceState *dev, Error **errp)
++static void beckhoff_cx7200_machine_class_init(ObjectClass *oc, void *data)
 +{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(dev);
-+    BlockBackend *blk;
-+
-+    blk = blk_by_name("ccat-eeprom");
-+
-+    if (blk) {
-+        uint64_t blk_size = blk_getlength(blk);
-+        if (!is_power_of_2(blk_size)) {
-+            error_report("Blockend size is not a power of two.");
-+        }
-+
-+        if (blk_size < 512) {
-+            error_report("Blockend size is too small. Using backup.");
-+            s->eeprom_size = EEPROM_MEMORY_SIZE;
-+            s->eeprom_storage = blk_blockalign(NULL, s->eeprom_size);
-+            memset(s->eeprom_storage, 0x00, s->eeprom_size);
-+        } else {
-+            DB_PRINT("EEPROM block backend found\n");
-+            blk_set_perm(blk, BLK_PERM_WRITE, BLK_PERM_ALL, errp);
-+
-+            s->eeprom_size = blk_size;
-+            s->eeprom_blk = blk;
-+            s->eeprom_storage = blk_blockalign(s->eeprom_blk, s->eeprom_size);
-+
-+            if (!blk_check_size_and_read_all(s->eeprom_blk, DEVICE(s),
-+                                             s->eeprom_storage, s->eeprom_size,
-+                                             errp)) {
-+                exit(1);
-+            }
-+        }
-+    } else {
-+        s->eeprom_size = EEPROM_MEMORY_SIZE;
-+        s->eeprom_storage = blk_blockalign(NULL, s->eeprom_size);
-+        memset(s->eeprom_storage, 0x00, s->eeprom_size);
-+    }
-+
-+    beckhoff_ccat_reset(dev);
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-a9"),
++        NULL
++    };
++    MachineClass *mc = MACHINE_CLASS(oc);
++    ObjectProperty *prop;
++    mc->desc = "Xilinx Zynq Platform Baseboard for Cortex-A9";
++    mc->init = beckhoff_cx7200_init;
++    mc->max_cpus = ZYNQ_MAX_CPUS;
++    mc->no_sdcard = 1;
++    mc->ignore_memory_transaction_failures = true;
++    mc->valid_cpu_types = valid_cpu_types;
++    mc->default_ram_id = "zynq.ext_ram";
++    prop = object_class_property_add_str(oc, "boot-mode", NULL,
++                                         beckhoff_cx7200_set_boot_mode);
++    object_class_property_set_description(oc, "boot-mode",
++                                          "Supported boot modes:"
++                                          " jtag qspi sd nor");
++    object_property_set_default_str(prop, "qspi");
 +}
 +
-+static void beckhoff_ccat_init(Object *obj)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &beckhoff_ccat_ops, s,
-+                          TYPE_BECKHOFF_CCAT, CCAT_MEM_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static void beckhoff_ccat_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = beckhoff_ccat_realize;
-+}
-+
-+static const TypeInfo beckhoff_ccat_info = {
-+ .name = TYPE_BECKHOFF_CCAT,
-+ .parent = TYPE_SYS_BUS_DEVICE,
-+ .instance_size = sizeof(BeckhoffCcat),
-+ .class_init = beckhoff_ccat_class_init,
-+ .instance_init = beckhoff_ccat_init,
++static const TypeInfo beckhoff_cx7200_machine_type = {
++    .name = TYPE_CX7200_MACHINE,
++    .parent = TYPE_MACHINE,
++    .class_init = beckhoff_cx7200_machine_class_init,
++    .instance_size = sizeof(CX7200MachineState),
 +};
 +
-+static void beckhoff_ccat_register_types(void)
++static void beckhoff_cx7200_machine_register_types(void)
 +{
-+    type_register_static(&beckhoff_ccat_info);
++    type_register_static(&beckhoff_cx7200_machine_type);
 +}
 +
-+type_init(beckhoff_ccat_register_types)
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 8d4c4279c4..ca0b261715 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -14,6 +14,7 @@ system_ss.add(when: 'CONFIG_PL310', if_true: files('arm_l2x0.c'))
- system_ss.add(when: 'CONFIG_INTEGRATOR_DEBUG', if_true: files('arm_integrator_debug.c'))
- system_ss.add(when: 'CONFIG_A9SCU', if_true: files('a9scu.c'))
- system_ss.add(when: 'CONFIG_ARM11SCU', if_true: files('arm11scu.c'))
-+system_ss.add(when: 'CONFIG_BECKHOFF_CCAT', if_true: files('beckhoff_ccat.c'))
++type_init(beckhoff_cx7200_machine_register_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index ac473ce7cd..c862e9c88e 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -18,6 +18,7 @@ arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
+ arm_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
+ arm_ss.add(when: 'CONFIG_STM32VLDISCOVERY', if_true: files('stm32vldiscovery.c'))
+ arm_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xilinx_zynq.c'))
++arm_ss.add(when: 'CONFIG_BECK_CX7200', if_true: files('beckhoff_CX7200.c'))
+ arm_ss.add(when: 'CONFIG_SABRELITE', if_true: files('sabrelite.c'))
  
- system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_ras.c'))
- 
+ arm_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m.c'))
 -- 
 2.49.0
 
