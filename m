@@ -4,56 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C3EC35FF3
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E86C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tueFd-0004PU-Ud; Tue, 18 Mar 2025 17:13:30 -0400
+	id 1tueKT-00060w-92; Tue, 18 Mar 2025 17:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1tueFT-0004Oe-TF
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:13:22 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1tueKR-00060P-8N
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:18:27 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1tueFS-0002gD-9C
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:13:19 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52IHs3hJ014861;
- Tue, 18 Mar 2025 21:13:14 GMT
+ id 1tueKP-00047g-8U
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:18:26 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52ICeBgT029895;
+ Tue, 18 Mar 2025 21:18:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=aQrStNSkmZQFsZ3LaSXs/3
- DaPMjgbCHs0GNigt3DWO0=; b=D1J6b05HHFywK7pOTSuUnGQuc64il93+jRQLMq
- Th29FzshGZv2zqQyEr8RN1gyCMT0asmcOpnnsoHuGXBvrj7OKse/04ZnC93gDY/W
- JJpxsRpBBhr2zvspYicDDXqERw26wu8eXFD0orVFvJT0gzNbgXuL+xYeuXC2KC9X
- 4BVaAuBE5TLMA4dgzkkhmluOdAd9L6aK8tjagBqPjCrsGG+HMcg6L+AKdF1liB82
- O3IT1tpIY3OxYrKh2qH1insO93h1z8WpppZZUJ0Dbej1jtASmZivr9ow7asINdrw
- m1BQ4pj3UnU/kCkxCXn2HZ+VVRSuqzJGVDfJfjq9bpz+rDfQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ RGBiRA12lqCHiwgjV7qPWEMXjl7XkiEmUew4c5T2mmQ=; b=G+TS2eT02rMOaugG
+ iMRYQo3vJURQl8phNRBjaCwIqyK6DBl56THCpvmkB7H35bB4fNi3YmteaG0nulHK
+ 89SWp41CFMBqD1rX1rGwIUrQg2AxFflA4q2m64p55mNCH9YJ5fEUWNxl6DFLzfNL
+ DXnbOP4+zRaoPSeJEZePS1+CTF198IbIq6yoIzmGikNMYIj6rLMSe8zit3jPUs2y
+ Bi8Ua1srlL7y+Vd6oExzv60AufqAiI5PUKVQOwFWW2Lz18HFajX9RkAe1Yd3OVQk
+ c4dTGcYcfGvfkmjZrgvd9irrrI4FpNqnHPAU/+tG1cq+IUM9onZIqovC7bon+6Ri
+ Hrl3Cg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45fdmwre64-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45f91t1c8n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Mar 2025 21:13:14 +0000 (GMT)
+ Tue, 18 Mar 2025 21:18:22 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
  [10.47.209.196])
- by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52ILDDHc011860
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52ILIL1w001224
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Mar 2025 21:13:13 GMT
+ Tue, 18 Mar 2025 21:18:21 GMT
 Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 18 Mar 2025 14:13:13 -0700
+ 15.2.1544.9; Tue, 18 Mar 2025 14:18:21 -0700
 From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <ovoshcha@redhat.com>, <farosas@suse.de>, <philmd@redhat.com>,
- <thuth@redhat.com>, <bcain@quicinc.com>, <quic_mliebel@quicinc.com>
-Subject: [PATCH] Add files: a
-Date: Tue, 18 Mar 2025 14:13:03 -0700
-Message-ID: <85909195b99964081ae01d9999384cc3b7a3fada.1742331648.git.quic_mathbern@quicinc.com>
+To: <quic_mathbern@quicinc.com>
+CC: <qemu-devel@nongnu.org>, <ovoshcha@redhat.com>, <farosas@suse.de>,
+ <philmd@redhat.com>, <thuth@redhat.com>, <bcain@quicinc.com>,
+ <quic_mliebel@quicinc.com>
+Subject: test_migration.py not working with netcat-traditional
+Date: Tue, 18 Mar 2025 14:17:58 -0700
+Message-ID: <20250318211758.814275-1-quic_mathbern@quicinc.com>
 X-Mailer: git-send-email 2.37.2
+In-Reply-To: <85909195b99964081ae01d9999384cc3b7a3fada.1742331648.git.quic_mathbern@quicinc.com>
+References: <85909195b99964081ae01d9999384cc3b7a3fada.1742331648.git.quic_mathbern@quicinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -63,23 +67,25 @@ X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-ORIG-GUID: 5UvNKvr3Z5zgUpgw26LpoUVdDZZc_Zyb
-X-Authority-Analysis: v=2.4 cv=ReKQC0tv c=1 sm=1 tr=0 ts=67d9e1ea cx=c_pps
+X-Proofpoint-GUID: spGOM-b06iqeRTC-TFQqOzEBs_P5tdYu
+X-Authority-Analysis: v=2.4 cv=Xrz6OUF9 c=1 sm=1 tr=0 ts=67d9e31e cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=3H110R4YSZwA:10 a=Vs1iUdzkB0EA:10 a=8NOlEqnmxsVMj69GXnwA:9
-X-Proofpoint-GUID: 5UvNKvr3Z5zgUpgw26LpoUVdDZZc_Zyb
+ a=3H110R4YSZwA:10 a=Vs1iUdzkB0EA:10 a=COk6AnOGAAAA:8 a=_HV7dUTn6gDNUvmDq2YA:9
+ a=x22-d2SVbb4A:10 a=QYH75iMubAgA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: spGOM-b06iqeRTC-TFQqOzEBs_P5tdYu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-18_09,2025-03-17_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0
- phishscore=0 suspectscore=0 impostorscore=0 clxscore=1011 mlxscore=0
- malwarescore=0 mlxlogscore=890 priorityscore=1501 adultscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ lowpriorityscore=0
+ bulkscore=0 impostorscore=0 mlxlogscore=554 clxscore=1011 mlxscore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 adultscore=0 spamscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503180153
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+ definitions=main-2503180154
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -103,37 +109,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Tue, 18 Mar 2025 14:13:03 -0700 Matheus Tavares Bernardino <quic_mathbern@quicinc.com> wrote:
+>
+> [...]
+> 
+> Thanks,
+> Matheus
 
-tests/functional/test_migration.py says "The test works for both
-netcat-traditional and netcat-openbsd packages." But when I run it for
-qemu-system-aarch64 on an Ubuntu 22.04 container with netcat-traditional
-installed, I get the following error:
-
-TAP version 13
-Traceback (most recent call last):
-  File "/pwd/tests/functional/test_migration.py", line 97, in test_migration_with_exec
-    self.do_migrate(dest_uri, src_uri)
-  File "/pwd/tests/functional/test_migration.py", line 72, in do_migrate
-    self.assert_migration(source_vm, dest_vm)
-  File "/pwd/tests/functional/test_migration.py", line 40, in assert_migration
-    self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-AssertionError: 'failed' != 'completed'
-- failed
-+ completed
-
-
-not ok 1 test_migration.MigrationTest.test_migration_with_exec
-ok 2 test_migration.MigrationTest.test_migration_with_tcp_localhost
-ok 3 test_migration.MigrationTest.test_migration_with_unix
-1..3
-
-With netcat-openbsd (the default), it runs fine. Perhaps the test is no
-longer compatible with netcat-traditional?
-
-QEMU was configured and built with:
-../configure --without-default-features --target-list=aarch64-softmmu
-
-Thanks,
-Matheus
+Sorry for the original title, I had some placeholder thrash in my buffer and that
+ended up going as the subject :facepalm:
 
