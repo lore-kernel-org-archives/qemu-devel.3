@@ -4,90 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90354C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF371C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuW7S-0007mN-Bk; Tue, 18 Mar 2025 08:32:30 -0400
+	id 1tuW9y-0000Ou-9o; Tue, 18 Mar 2025 08:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tuW7M-0007le-Hi
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:32:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tuW7J-0005Hl-Mm
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:32:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742301140;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1tuW9v-0000Mc-L3
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:35:03 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1tuW9s-0005z0-Qx
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:35:02 -0400
+Received: from hawking.nue2.suse.org (unknown
+ [IPv6:2a07:de40:a101:3:92b1:1cff:fe69:ddc])
+ by smtp-out1.suse.de (Postfix) with ESMTP id EDE3F21C6B;
+ Tue, 18 Mar 2025 12:34:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1742301298; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wr+7gBaDG/z6sgTpTjO57+x4a/PzpfCmmpK5TKwcUMc=;
- b=ZJUEb1FppPdLJkBITfNM75UpRA7Q2uyOLk7xQrOX0ExaCdWGCT6I+ndPAZSF4G73rXPOPf
- 6m3ym39b7Hd2ipEdM1VTXdzC7EwnqHOcftIwjXgLlqHcFAkGpXx+09+juUIr7ihHXbhVG/
- Jx/j+BXaXoNtov8ajjg39HnV7yl3YTg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-dvFQ1JpJOpObfwdJhxAq8w-1; Tue, 18 Mar 2025 08:32:17 -0400
-X-MC-Unique: dvFQ1JpJOpObfwdJhxAq8w-1
-X-Mimecast-MFC-AGG-ID: dvFQ1JpJOpObfwdJhxAq8w_1742301136
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3912fe32a30so2510960f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 05:32:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742301136; x=1742905936;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wr+7gBaDG/z6sgTpTjO57+x4a/PzpfCmmpK5TKwcUMc=;
- b=bFiV5kGAwQrxtGT+idNLVfMqPfoWhJRxPRkjZCVjniSsGUIWJqYq2OyTlwN62Tew6A
- VUziICJ8GdhCZYShQUbDYS3qENY34t/vz+qkwTWv3YXRZ5byL1XhDziP3YTJ7OKw5Fcj
- 4bp8ha5lFDPTqyRWllWZyVg0zWIouyByo0SUSae43ZDvX9XGnLCGObFai3M64DYAbPXi
- KzoQW0uZV+mp7hDpfAuPI45EhACZILtu3edSzJBaca9CODlefv1sQx8u4hegFl2gZWTP
- FBtcAifA5YBjeD7Gn/JqS0P75AF8AiKQHcuGwlfozIxwsw2q8DFUyxX8LO7qzRND3U/m
- wyKg==
-X-Gm-Message-State: AOJu0YzG3oYqpIRgzsf/ZRSDVzmWXKJ1pFsJ0HKmKrKWsppAvIvmEI03
- vQcu0Z2+0EtuMSqtyuXI6xMtqUrNV9yNAS2Irqn9wzn1YHe+5BqjAMwFx5Gbxm/65h3Itcp3sIK
- +gYEvKPhdDkJAcueiGo1mwAF/f9xpei1R93TVw3sWJIXbjbBEjkzGBzVKQBSGastH08sG1h1T3Z
- u9/JN2by5fNd2pNJ1iSR4aG383QV4=
-X-Gm-Gg: ASbGncvgzwmki0ITUvz9FbnyYZWpn+pBdjcJCyBuDc8tgsDtDkPCWQF/uK4VVmIwvEC
- ccgU8VVt7CrrFLiHXI1IW3FJIRggIQmR4Fmx8HWYqLs76EKwWKItzolNek8LXdSFk+VbswJKjzA
- ==
-X-Received: by 2002:a05:6000:4020:b0:390:f902:f973 with SMTP id
- ffacd0b85a97d-3971d13629bmr16007032f8f.8.1742301136017; 
- Tue, 18 Mar 2025 05:32:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+lt3Xh8xB2MNrwzyaE71GNLRqL3ssF0SNufQeH5RY0P6ebktVJJj1NPyGeHsY7Hf05GAkUk9aKmuTPcqx4bs=
-X-Received: by 2002:a05:6000:4020:b0:390:f902:f973 with SMTP id
- ffacd0b85a97d-3971d13629bmr16007009f8f.8.1742301135714; Tue, 18 Mar 2025
- 05:32:15 -0700 (PDT)
+ bh=3gX5tV2h9AeeYUMvUvHUuJnAAol65fuiWYm/RGUYWE8=;
+ b=vAPrZDdc1HkbCyYcJh4WYXoiNUUpavkfFl5cRh5yejiHMIGvFClWimhzgGm9UO8Hc8sUzo
+ lNls6gCeXEpShSDW14ehOyu4InjQDHps58G7ZLIXjuFy/A/r/KbtyqoqQncoq8BfW5DvuA
+ cgvhm9qdMgFZfs8kmJHJ5AR0GjBIF8I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1742301298;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3gX5tV2h9AeeYUMvUvHUuJnAAol65fuiWYm/RGUYWE8=;
+ b=xmpD9D7sM8hFPuWQ+j2e82oRvVsD+DIcofMXTnYrHgxa3BuI/GBW4kMBysTY3kmKfqYbtY
+ tV0xvhB5MLEF9EDw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SzQejDmO;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=egLyXCCi
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1742301297; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3gX5tV2h9AeeYUMvUvHUuJnAAol65fuiWYm/RGUYWE8=;
+ b=SzQejDmOMj3lET8X5RY+W+YkU0OD+t1ZzcdDWR/h9pV6Yi41SkfJj1xGK8Fo6GO6OUv7tX
+ a0/ro9moWJ3PibXn9CpVzMSkDjHp80kROCV2WaZ2f4QfVNvVxMJJu6b5yJcBvH5VnjcruM
+ twK6zw38uSm3xkgPiML3Nf4AuHdrNes=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1742301297;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3gX5tV2h9AeeYUMvUvHUuJnAAol65fuiWYm/RGUYWE8=;
+ b=egLyXCCiMiwjT8z6InQATTpaDlFSy/SBoTuLnVMa9XtCJDbK0ocimGHBIm7GRyMhMHGBJu
+ K0I24yXdj0dOvABQ==
+Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
+ id CDE104A0561; Tue, 18 Mar 2025 13:34:57 +0100 (CET)
+From: Andreas Schwab <schwab@suse.de>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  Helge Deller <deller@gmx.de>,
+ qemu-devel@nongnu.org
+Subject: Re: Generic way to detect qemu linux-user emulation
+In-Reply-To: <Z9lf7lniMWzoy6uS@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 18 Mar 2025 11:58:38 +0000")
+References: <mvm1puuiqvu.fsf@suse.de>
+ <ff0cde0c-67d7-4fc3-8996-ad0e8645deed@gmx.de>
+ <CAFEAcA_-fODgkxLLCNf3XHBU=EvGgKx4qcE_PqNt8-4jwqnqVw@mail.gmail.com>
+ <Z9lf7lniMWzoy6uS@redhat.com>
+Date: Tue, 18 Mar 2025 13:34:57 +0100
+Message-ID: <mvmmsdih5zi.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250318083248.1402990-1-zhao1.liu@intel.com>
- <20250318083248.1402990-11-zhao1.liu@intel.com>
- <9e8743b8-99b2-4aab-84de-7630edcc7e10@redhat.com> <Z9llqtHLLTJIju/j@intel.com>
-In-Reply-To: <Z9llqtHLLTJIju/j@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 18 Mar 2025 13:32:03 +0100
-X-Gm-Features: AQ5f1JqHD_LxYAa0Aa1NpQQA_Dm7HePd9y2vbWi0LriGt5pOesEPQmTR0qBI-QQ
-Message-ID: <CABgObfY1x1s_NOmjeNUjNCz5WggARCH_AUzxC81d+smq=jBf=g@mail.gmail.com>
-Subject: Re: [PATCH v2 10/14] rust/vmstate: Support vmstate_validate
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004959ba06309d184a"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [2.60 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+ HFILTER_HOSTNAME_UNKNOWN(2.50)[]; RDNS_NONE(2.00)[];
+ ONCE_RECEIVED(1.20)[];
+ HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.988]; RCVD_NO_TLS_LAST(0.10)[];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)]; ARC_NA(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_ENVRCPT(0.00)[gmx.de];
+ FREEMAIL_CC(0.00)[linaro.org,gmx.de,nongnu.org];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_ONE(0.00)[1]; DKIM_TRACE(0.00)[suse.de:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid]
+X-Spamd-Bar: ++
+X-Rspamd-Queue-Id: EDE3F21C6B
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=schwab@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,95 +129,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004959ba06309d184a
-Content-Type: text/plain; charset="UTF-8"
+On Mär 18 2025, Daniel P. Berrangé wrote:
 
-Il mar 18 mar 2025, 13:03 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+> Whereever practical, it is preferrable to check a discrete feature
+> or behaviour in a functional way, rather than matching on "is it QEMU"
 
-> >  /// This macro can be used (by just passing it a type) to forward the
-> `VMState`
-> > @@ -572,9 +548,9 @@ const fn phantom__<T>(_: &T) ->
-> ::core::marker::PhantomData<T> {
-> >                  }
-> >                  Some(test_cb_builder__::<$struct_name,
-> _>(phantom__(&$test_fn)))
-> >              },
->
-> I want to keep the comment here as C version did, because there's an array
-> flag
->
+Do you know a way to detect support for CLONE_VFORK that isn't too
+expensive?
 
-Ok, let's add it. No need to send v3 since it's just a single patch and
-with no changes further down.
-
-Paolo
-
-// Though VMS_ARRAY is set, the num is 0: no data, only run test_fn callback
->
-> > +            flags: VMStateFlags(VMStateFlags::VMS_MUST_EXIST.0 |
-> VMStateFlags::VMS_ARRAY.0),
-> >              ..$crate::zeroable::Zeroable::ZERO
-> >          }
-> > -        .with_validate_flag()
-> >      };
-> >  }
-> >
-> > Otherwise the series looks great, thanks!
->
-> Let me refresh the v3. :-)
->
-> Thanks,
-> Zhao
->
->
-
---0000000000004959ba06309d184a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 18 mar 2025, 13:03 Zhao L=
-iu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; h=
-a scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
-px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&gt;=
-=C2=A0 /// This macro can be used (by just passing it a type) to forward th=
-e `VMState`<br>
-&gt; @@ -572,9 +548,9 @@ const fn phantom__&lt;T&gt;(_: &amp;T) -&gt; ::cor=
-e::marker::PhantomData&lt;T&gt; {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Some(tes=
-t_cb_builder__::&lt;$struct_name, _&gt;(phantom__(&amp;$test_fn)))<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
-<br>
-I want to keep the comment here as C version did, because there&#39;s an ar=
-ray flag<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Ok, let&#39;s add it. No need to send v3 since it&#39;s just a si=
-ngle patch and with no changes further down.</div><div dir=3D"auto"><br></d=
-iv><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-// Though VMS_ARRAY is set, the num is 0: no data, only run test_fn callbac=
-k<br>
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 flags: VMStateFlags(VMState=
-Flags::VMS_MUST_EXIST.0 | VMStateFlags::VMS_ARRAY.0),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ..$crate::zeroable::Ze=
-roable::ZERO<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 .with_validate_flag()<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 };<br>
-&gt;=C2=A0 }<br>
-&gt; <br>
-&gt; Otherwise the series looks great, thanks!<br>
-<br>
-Let me refresh the v3. :-)<br>
-<br>
-Thanks,<br>
-Zhao<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000004959ba06309d184a--
-
+-- 
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
 
