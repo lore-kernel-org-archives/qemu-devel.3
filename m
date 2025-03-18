@@ -4,153 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E875C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 10:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F0EC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 10:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuTmG-0007ia-Bn; Tue, 18 Mar 2025 06:02:28 -0400
+	id 1tuTuk-0003l9-8a; Tue, 18 Mar 2025 06:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTmC-0007el-W5
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:02:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tuTui-0003kn-S6
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:11:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTmB-0003Go-8x
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:02:24 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tuTuh-0006b4-18
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:11:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742292140;
+ s=mimecast20190719; t=1742292667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AY+W9AtPUIlt8TSzbYVK2cOvaZnOLIYmVW0xz7DXKwI=;
- b=N+PJ0+VX030oRk5WPdJsgYxVnRBhuIyWDS0YIv41ofhp577p2oGXJUYRdHSJueedIuTHvW
- lSIbd73uAG+dud8lEB1bAinv8kksaXJgVKoXhgzAgelup1qq2OQY8yz5GyA+q1Ewhe0r/J
- R7GxQoB3TyFfwGUvTG+j9cGAkJpz1Go=
+ bh=/nDQZGo1WQMqsPQxU3R1T7Imxx0FEII62+ElBw7z1as=;
+ b=fzzYDK6Id514WJ3WGGjWu77HXIv4xx/O6sg4rrfOOoPyA1EobcbYCJEk33iCUA/dPRSFAj
+ ew9LL7mw0ssw/nttFZQxrrWuMd5tY/rnf/gHKUX+OFZ0YJliQF4aKcce4mj5mjF79F3RbJ
+ EUPSOtoHKbZL6x9dK4VydRHHCXoIoR8=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-LieyN3OkOkOVKNtAm0Tiug-1; Tue, 18 Mar 2025 06:02:19 -0400
-X-MC-Unique: LieyN3OkOkOVKNtAm0Tiug-1
-X-Mimecast-MFC-AGG-ID: LieyN3OkOkOVKNtAm0Tiug_1742292138
+ us-mta-379-FGDtEzTeNXSlj0a2qKwg5A-1; Tue, 18 Mar 2025 06:11:06 -0400
+X-MC-Unique: FGDtEzTeNXSlj0a2qKwg5A-1
+X-Mimecast-MFC-AGG-ID: FGDtEzTeNXSlj0a2qKwg5A_1742292665
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d025a52c2so21816475e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 03:02:19 -0700 (PDT)
+ 5b1f17b1804b1-43d025a52c2so21898325e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 03:11:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742292138; x=1742896938;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AY+W9AtPUIlt8TSzbYVK2cOvaZnOLIYmVW0xz7DXKwI=;
- b=LBLG4Kc4SeWuSoPLcLHBs2mxWePR+Mw/EUoLxPam+UukD6XmLyyov9L5mPXPld3Au7
- 2zy6neBCDzKaJSilc2o0aZNuagKDpRnocUXjR3Q11SGLYSUOF61VlKBowoLxd8gw698/
- NLfQ+R2yDjesLx5nr2yfW6ga4f6JmzaxSpn7JFV4fkM5rLiWP++wTjXHqBsTFmHxvzeS
- jkFadFOcHLU9opEfQmj0T3rKozPTmmfWv0Y8F6dW6Oh08vlAGctg15WCqp7AY9mavQmt
- SrynVnrvLhOp4A8Bk0RPj6H0dWc7K+W2jBzijVcKnQGdxRUTPBmUNxs3Wx0q/2gMIhsM
- hEdQ==
-X-Gm-Message-State: AOJu0YwVLj5ImBXOZryZU3wK4VngYzzgy5mcUazg1HLJ87EczX/rfkn9
- fuCU2Tfv28QmW71gJ3t7xwP2e/2dYZq8rBQC8GeRFQEPuHlGBO2sx8wnYYMccm4JT9LSXa65pKp
- AI1HVE6Lz/7TpqCQnsUcKRs3XQ8De4NGQvOq0KG+nw6UCHF1DD0Eg
-X-Gm-Gg: ASbGncufg8g5ZQ0XwNE15501+YZ0EldTqgS49nEcyl3YBWYg6yH3bSOc036dLkdnzDC
- Y4tgIwOWKVqaZp1OU9ZXY3JFA0sTPTbJIOek8vrDA/D36fV6EiYD9id9DIZH40DZ3jHCzkcjGBA
- mNKO5F59SCy4ymBU1hZQhrIpUxAbLCO0mJPDDCoSXUqBUb7WJarUFg4n5W+CyDw3WKE2mug9Etb
- 6d8xQG225NFMagDdSeE7FSBC+e+48N6fNSy6zqByJmRDIoZM7Ygvm6Bc6Vhyj3o6MSHEXu5jYyk
- TKDPwie5ZdMZhwv2aUEv3+kXhq/t1ApCKmpZEK4NFR4s6QoliSTHxA==
-X-Received: by 2002:a05:600c:c8f:b0:43d:934:ea97 with SMTP id
- 5b1f17b1804b1-43d3b9ce6d9mr11664315e9.27.1742292138231; 
- Tue, 18 Mar 2025 03:02:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHD0LpL+f6v9r+BAeX8V2WP0qxa8gVWnikxv+8bLRKG+rRZI310+obcj1f5H+oH3TiuZD2P5g==
-X-Received: by 2002:a05:600c:c8f:b0:43d:934:ea97 with SMTP id
- 5b1f17b1804b1-43d3b9ce6d9mr11663975e9.27.1742292137838; 
- Tue, 18 Mar 2025 03:02:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3974d771160sm13918361f8f.19.2025.03.18.03.02.16
+ d=1e100.net; s=20230601; t=1742292665; x=1742897465;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/nDQZGo1WQMqsPQxU3R1T7Imxx0FEII62+ElBw7z1as=;
+ b=PX1Qw9aTDGtOt+ghD1QVjGo/WQfO9DieVjHuBprdwGbvjtvioT0RDPCwaF2XGIvEdM
+ m9S1uYzbKnpXI0z7rgFaLXcfp+efdps9pQvGBTDJFy1/BD6DRo0jlpDkZZqx4VPSqLM0
+ s1ZaV6vYWmcjUqPzec1n2GxiPG4Nz98OsbbmiVf1dVnkSab5cGGMcB3NXlvNDG61wHnK
+ Oitbl8itY4JN/rH2UO/EHTrP+KfEsrEtAuVXgYm/TZzu8xtDncsSyGSXniSY3FhdNRu6
+ KVGKZz60vPNJLNppl/G/SdhN1S92KcUFDjAL0pcggJiLigpl1FLzs1cunIotQh2kW+w6
+ 9vvA==
+X-Gm-Message-State: AOJu0YziO1DT9FAg9aO4/cC+ES/2qdndjEc16of11IjvxLWP3N2xplra
+ Y1q9cbb3HLwEjjlf6X0kDreLI4xjpXa42hlzHj4Tqr39ZaieMk+exPWu78zNlMTFDOWgaY0m+v/
+ R0lBaLcCBfoBwKJEp5AxSyND0Jjow5dbSVMvq/mLPEI59MJMcs9pm
+X-Gm-Gg: ASbGncs4JFsFESw0DrfCkkNv9L607U5ol2NrfSfJHHUAAA4Y7554tewWW7b004utbT4
+ 5CYpxNJrVn0eBoHCHDcI5EsAPmDNyJVMgMV3k4Pet80FUTqIR7Ev5OvJo2sLqYM0bbs7WwW7VFr
+ VQY8kmPhM/1+WbZ5L7FiNAgztCc+mRP6APSIaeE+N9c6R5TXySTVPrrg9BqeUFMxYCza4K5Y6+J
+ zZP8VMDqfXTAjLf375RZVmNRFxrK8YcGI3hN4zEMjjddTghgCMh6OwOksy3CycDXm30qz0C7kmt
+ 2Tp0WErtDOwepg2WUKQR
+X-Received: by 2002:a05:600c:3d0e:b0:43c:fded:9654 with SMTP id
+ 5b1f17b1804b1-43d3b9c1106mr12751735e9.19.1742292665173; 
+ Tue, 18 Mar 2025 03:11:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQd7CPauUoeI1J+3pjDnrPVWH4Qa9az+4jT6lV9G9cbQ+/EZWH7Qn0dI3toBHe0WRag9re3A==
+X-Received: by 2002:a05:600c:3d0e:b0:43c:fded:9654 with SMTP id
+ 5b1f17b1804b1-43d3b9c1106mr12751445e9.19.1742292664695; 
+ Tue, 18 Mar 2025 03:11:04 -0700 (PDT)
+Received: from [192.168.10.81] ([151.49.194.153])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-43d3bb35d98sm9464885e9.0.2025.03.18.03.11.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 03:02:17 -0700 (PDT)
-Message-ID: <7dd34008-e0f1-4eed-a77e-55b1f68fbe69@redhat.com>
-Date: Tue, 18 Mar 2025 11:02:16 +0100
+ Tue, 18 Mar 2025 03:11:03 -0700 (PDT)
+Message-ID: <9e8743b8-99b2-4aab-84de-7630edcc7e10@redhat.com>
+Date: Tue, 18 Mar 2025 11:11:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/28] vfio-user client
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Halil Pasic <pasic@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Steven Sistare <steven.sistare@oracle.com>
-References: <20250219144858.266455-1-john.levon@nutanix.com>
- <5910cf36-ca6f-489b-a7f6-b720733f16e1@redhat.com> <Z9RHndy/dxGentRq@lent>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <Z9RHndy/dxGentRq@lent>
+Subject: Re: [PATCH v2 10/14] rust/vmstate: Support vmstate_validate
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250318083248.1402990-1-zhao1.liu@intel.com>
+ <20250318083248.1402990-11-zhao1.liu@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250318083248.1402990-11-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,54 +146,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/14/25 16:13, John Levon wrote:
-> On Fri, Mar 14, 2025 at 03:25:53PM +0100, Cédric Le Goater wrote:
+On 3/18/25 09:32, Zhao Liu wrote:
+> In C version, VMSTATE_VALIDATE accepts the function pointer, which is
+> used to check if some conditions of structure could meet, although the
+> C version macro doesn't accept any structure as the opaque type.
 > 
->>> This is the 8th revision of the vfio-user client implementation. The vfio-user
->>> protocol allows for implementing (PCI) devices in another userspace process;
->>> SPDK is one example, which includes a virtual NVMe implementation.
->>
->> This series is going in the right direction. Thanks for all the
->> changes. However, I will postpone my review for the reasons below.
->>
->> VFIO initial commit in 2012 was a single file adding support for a
->> "vfio-pci" device. Since, the subsystem has changed a lot and it grew
->> to +16K line of code. Over the years, we've had numerous additions,
->> VFIO platform devices, s390x VFIO AP and CCW devices, migration
->> support with dirty tracking, support for different host IOMMU backend
->> devices, multifd, etc. All these additions never took the opportunity
->> to introduce a VFIO interface for external usage and PPC, s390x,
->> migration, backends subsystems happily and randomly peek and poke into
->> it. The subsystem is now a happy jumble of disparate functions, with
->> weak organization and names. The vfio-common.h header file is
->> good example of the result.
+> But it's hard to integrate VMSTATE_VALIDAE into vmstate_struct, a new
+> macro has to be introduced to specifically handle the case corresponding
+> to VMSTATE_VALIDATE.
 > 
-> Right, I certainly agree!
+> One of the difficulties is inferring the type of a callback by its name
+> `test_fn`. We can't directly use `test_fn` as a parameter of
+> test_cb_builder__() to get its type "F", because in this way, Rust
+> compiler will be too conservative on drop check and complain "the
+> destructor for this type cannot be evaluated in constant functions".
 > 
->> It's time for a global code reshuffling. I'll take care of it (and
->> I've already started) and this means nothing new (fixes are OK) will
->> be merged before this is done. I hope I have made enough progress
->> before the start of the QEMU 10.1 cycle. There won't be any functional
->> changes, but there will be new files and new function names, so it's
->> probably a real earthquake for your series.
+> Fortunately, PhantomData<T> could help in this case, because it is
+> considered to never have a destructor, no matter its field type [*].
 > 
-> It's had a couple of earthquakes already, very happy to bear the pain for a
-> better end result! I will try to look out for your series and review where I can
-> as well.
-
-Here it is  :
-
-   https://lore.kernel.org/qemu-devel/20250318095415.670319-1-clg@redhat.com/
-
-Now is the time to prepare ground for your needs.
-
-Thanks,
-
-C.
-
-
-> thanks
-> john
+> The `phantom__()` in the `call_func_with_field` macro provides a good
+> example of using PhantomData to infer type. So copy this idea and apply
+> it to the `vmstate_validate` macro.
 > 
+> Additionally, add a `with_exist_check()` method to help add callback
+> in future.
+
+I think for now, until it can be const, we can remove it and clean up
+things a bit:
+
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 62a0308014e..2786e8ae709 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -294,30 +294,6 @@ pub const fn with_varray_multiply(mut self, num: u32) -> VMStateField {
+          self.num = num as i32;
+          self
+      }
+-
+-    #[must_use]
+-    pub const fn with_validate_flag(mut self) -> Self {
+-        assert!(self.flags.0 == 0);
+-        self.flags = VMStateFlags(VMStateFlags::VMS_MUST_EXIST.0 | VMStateFlags::VMS_ARRAY.0);
+-        self.num = 0; // 0 elements: no data, only run test_fn callback
+-        self
+-    }
+-
+-    // FIXME: Unfortunately, this non-const fn cannot currently be called in a
+-    // static context. Also, it can't be const because the compiler complains
+-    // about "constant functions cannot evaluate destructors" for `F`. Add it
+-    // for future vmstate builder.
+-    #[must_use]
+-    pub fn with_exist_check<T, F>(mut self, _cb: F) -> Self
+-    where
+-        F: for<'a> FnCall<(&'a T, u8), bool>,
+-    {
+-        assert!(self.field_exists.is_none());
+-        let _: () = F::ASSERT_IS_SOME;
+-
+-        self.field_exists = Some(rust_vms_test_field_exists::<T, F>);
+-        self
+-    }
+  }
+  
+  /// This macro can be used (by just passing it a type) to forward the `VMState`
+@@ -572,9 +548,9 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
+                  }
+                  Some(test_cb_builder__::<$struct_name, _>(phantom__(&$test_fn)))
+              },
++            flags: VMStateFlags(VMStateFlags::VMS_MUST_EXIST.0 | VMStateFlags::VMS_ARRAY.0),
+              ..$crate::zeroable::Zeroable::ZERO
+          }
+-        .with_validate_flag()
+      };
+  }
+  
+
+Otherwise the series looks great, thanks!
+
+Paolo
 
 
