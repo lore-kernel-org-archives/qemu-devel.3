@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D61C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 04:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF7EC35FF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 04:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuOx3-0001xo-TN; Tue, 18 Mar 2025 00:53:19 -0400
+	id 1tuOw8-0001Q9-FS; Tue, 18 Mar 2025 00:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuOvb-0001Es-9t
+ id 1tuOvc-0001F7-98
  for qemu-devel@nongnu.org; Tue, 18 Mar 2025 00:51:50 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuOvX-0008TT-6A
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 00:51:46 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-225477548e1so89195245ad.0
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 21:51:39 -0700 (PDT)
+ id 1tuOvY-0008UK-H1
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 00:51:48 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2ff80290debso4298039a91.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 21:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742273499; x=1742878299; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742273501; x=1742878301; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FSHS1XcppE5ZPP6nkhpeNl/9mIWtetza6WviZOkY9i8=;
- b=X9VkslHAv5ETXYPuKPXk/N2vU7upsoRkNAoC9EykVv44DanNuOHy8NwG9ukf+JMC3f
- dVxlSoVrlelk/s2AUrP0ATbz9FspP+WPdSaAOSu/B393myIuYZS8/r57/UoDSaSnBSGg
- QIAmR7tUpUpvIu2rOFwiT9y7bLZiloPTIc2FhnVwWvyhDJq++SBiRj8vthmUI4TTQDXI
- GwZH40wkxT0V5+w/oZx9MgBNIXMwiywvYZbBs4Q0AAFRivLgo1ubxaffMk0geKVefVWR
- hzzETPrEzDr7607lPnyHFh2lFGOCzQiUnofjN3COtPhR3InIOqCRdocKo+nII/FM4MHJ
- J9JA==
+ bh=Ovyvu8DCxOT3MJqFMX/qU9iZeR9dz9+LihTzZn+g4uA=;
+ b=Yq8uBL1ERJ/7pLAmla1mjnM3RA3M9xCBXKDRAG54M6W85t3R79Jh2vjeKSoATK9DWT
+ /YwMmSR/jraAkkkWMlmmCvXipqgiAjkCnjcW1EBjSlt/Ymue3yHsCW7xjqIkaICnUE1F
+ WFbahzb4HpIznavmUy7ewpmBZwxTImlNbey6jI5emHajmhM6YRHo2Lxl2DFIM9k5ek5S
+ Zk/knVt1UHZD/unprhKLb8uxb1nBXj5ZKXkm5+uEvS5QtFEJuBQRDrXKgPPPPS51DsZ5
+ As25X74r+zYhD9p+5Ngs3z3GGiKncPr9ww2QYmE0zeqXFBoXQ216FKzlPqDvKr7pE53x
+ FfMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742273499; x=1742878299;
+ d=1e100.net; s=20230601; t=1742273501; x=1742878301;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FSHS1XcppE5ZPP6nkhpeNl/9mIWtetza6WviZOkY9i8=;
- b=nWBvMGMaOcJn4hnEzHgi9F+vlvFWNBfCRr1P7jKBZEGcnRQgHoWbHyjcsRbkbJr5aM
- 6uKt9w5OrT4L/S7btTHFS0Gd/PcxQeMvHzzIMeFo9wgIMIqJfM92vK+AYTutGN79tKiY
- EWWnZYSuRlS1fd6cfC+NkJuB7fAm0KdjwMCT8Zt4SJoV1jh+BfaASrSfsguH96fgJ296
- Ge1brwPX1K0kW8SVZOM07NiFXKv4LMRKzlzYBbXKGtB6IMPNGKMOf1gP86FMylb3rr8I
- L+gGVFpHB8figecWEEn/JfJw+0z1ihidrYpgZzqoDc+dmWb+22MbyPltFld2mUVSqQ5v
- lViA==
-X-Gm-Message-State: AOJu0Yy3OD+wQZIYf9pk94MKmm3kh7bArz8Lz/ssOORZEFPj6TYGJabe
- 6nbpCrAAy8yaKOUyaFvjMay/K7HdzA7SLXEagaD02wDegIYcFkrdpnHL6xreVLpDeUr9eu3qKa3
- r
-X-Gm-Gg: ASbGncunEg2STYc6brwSx3lGGMzgcEWXv+f640hmoKGw4dWjxFXnWX0K/Pwb4ffEuJj
- wnL6mHsqxa86w7UoOin/IvtpRkAwygj1fJEEqRErhx4tCaxkRQF4DIn/Kxi6ypwGouw2Bgphttt
- 92un5SURyMKdQ8xG6VA7wCdoGiAnyZZfsj3QKQjXP2Yxihox/KwFgkXGEPvZPAP6hIeyTUGFVxp
- ZVlstp0e095ryp8jWzTYD3VGc1c2L49EH4GYfbsVg7Rqn8o20BghdhdXJrwiqDrpeQBvodNWC3I
- LBRWyAA4IxeqnCsMAfzTrOKZ15KpEsbBiPATH2spB1+k
-X-Google-Smtp-Source: AGHT+IGLHGqHmqYs4ezZCOm2c2SvTDjQRRs33WUEidalhqMBp81xlxxvFOnPgr1sAs0uuf26mtAqeA==
-X-Received: by 2002:a05:6a00:4649:b0:728:e2cc:bfd6 with SMTP id
- d2e1a72fcca58-7372240beeemr19161977b3a.18.1742273498760; 
- Mon, 17 Mar 2025 21:51:38 -0700 (PDT)
+ bh=Ovyvu8DCxOT3MJqFMX/qU9iZeR9dz9+LihTzZn+g4uA=;
+ b=UYiYnOW1Yo4EYqXD65AJ9gLHWV4fo0/PoUFPr4095v5RGbdkFxuighO6XEpQ0dq9mW
+ 4CxKi4XwzEhgktoHX28Zad0ZGhxk0nVD0cp3BN+OY/lVmAL7T2RCtjYUYPqD2KbbExb/
+ kJ/xdK87JgGkTJLc74M9W04JYqmBpBNpfXZuqUjf1cZmABf9LIqcpzrNdYRtkr9LJjdU
+ KReZOAWlzMxW3XKvxC6sTQSNXTVgvpVz3FNmg9+QrbIK4h/FchPtxhTWpgwj/UAnrOO2
+ 6kdXB9rtmahHCkn5y6Rgf0owvCI3aQv7rlOoIEZbE5lPjhLTgkSH5oH8jjOvBYZiH42N
+ uIUQ==
+X-Gm-Message-State: AOJu0YyaDs1e98nZQgToEb1NewiPN9WdBAJSdet7A/0WGGQUbltimWZX
+ L7hx3l2PKOQWCsw5hGoFRHZ4tKUUsil48/mrvL7kkDsWz27f3y2FKO9nrXyREEM9uWp4BOTAeAd
+ H
+X-Gm-Gg: ASbGnctp0l3CuR5FzWbZJU9puf4OX9KEaJI7JFO5TcZ8QCuoqod9rX78A7pFXNjKhq+
+ IeeRm3yDDucDSTDuZmZb5Pah9dkeDNUG/A/0Rg9GW8DBam3cmjXz/NtSaLtZr61fPVgxF6Zj85t
+ PghKvxD6eESDEocoBoqRLH5eI8tT15QhsATDWOzgJDwCC6pfzYlL1VlXh9A3SOUIdrbP2cyH05E
+ f0eMagDSF3qtK4Tft/qs8Kutlvq4l1vVmSgiK9oMb3zz3OOlqejq39l9pR8L2zHLYXSMek4QMJW
+ NbnzTm/1qI1ik2OlA2Rr02dKBxR7e1h19MK7FfGNFh3o
+X-Google-Smtp-Source: AGHT+IGpoy0HiXaK4W5rGsoIV6EB7nMCBdVrRX+IRN9Qga4zDbHRqASR/8vpI124f9RU9cNmPTSLpw==
+X-Received: by 2002:a05:6a21:164a:b0:1f5:72eb:8b62 with SMTP id
+ adf61e73a8af0-1f5c118eb0bmr21535312637.20.1742273501600; 
+ Mon, 17 Mar 2025 21:51:41 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711694b2csm8519195b3a.129.2025.03.17.21.51.37
+ d2e1a72fcca58-73711694b2csm8519195b3a.129.2025.03.17.21.51.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 21:51:38 -0700 (PDT)
+ Mon, 17 Mar 2025 21:51:41 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -73,23 +73,24 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 06/13] exec/poison: KVM_HAVE_MCE_INJECTION can now be poisoned
-Date: Mon, 17 Mar 2025 21:51:18 -0700
-Message-Id: <20250318045125.759259-7-pierrick.bouvier@linaro.org>
+Subject: [PATCH 09/13] target/arm/cpu: define ARM_MAX_VQ once for aarch32 and
+ aarch64
+Date: Mon, 17 Mar 2025 21:51:21 -0700
+Message-Id: <20250318045125.759259-10-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
 References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,24 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We prevent common code to use this define by mistake.
+This will affect zregs field for aarch32.
+This field is used for MVE and SVE implementations. MVE implementation
+is clipping index value to 0 or 1 for zregs[*].d[],
+so we should not touch the rest of data in this case anyway.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/exec/poison.h | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/cpu.h | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index 8ed04b31083..816f6f99d16 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -67,4 +67,6 @@
- #pragma GCC poison CONFIG_WHPX
- #pragma GCC poison CONFIG_XEN
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 27a0d4550f2..00f78d64bd8 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -169,11 +169,7 @@ typedef struct ARMGenericTimer {
+  * Align the data for use with TCG host vector operations.
+  */
  
-+#pragma GCC poison KVM_HAVE_MCE_INJECTION
-+
- #endif
+-#ifdef TARGET_AARCH64
+-# define ARM_MAX_VQ    16
+-#else
+-# define ARM_MAX_VQ    1
+-#endif
++#define ARM_MAX_VQ    16
+ 
+ typedef struct ARMVectorReg {
+     uint64_t d[2 * ARM_MAX_VQ] QEMU_ALIGNED(16);
 -- 
 2.39.5
 
