@@ -4,104 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C52C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 22:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A54C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 23:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tufl6-0008Kj-OR; Tue, 18 Mar 2025 18:50:04 -0400
+	id 1tuftX-00029K-T2; Tue, 18 Mar 2025 18:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1tufl3-0008JN-5q
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:50:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1tufl0-00039C-IS
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:50:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742338194;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AF4rmIYLEyBVPVsLZ3qMtdPqeFbNY2HOyi12QD0TGEM=;
- b=OAh2jO8toUPCb1DxB6DhSUqs8nNewArEoJ3iyAuDUTkLccn4/+DFWFZ2JXQkk4A1rv0Im4
- a/ME2Fa9Gcr376hoR/qZ6hFb/ntX4lRD9gWo4k6xqrpJDvhUKTjbEblY/bq//vOjlQ9gsa
- 67Yo8Fey455Q/bjIu70x77QuY61oOZ8=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-487-VqcfTiNPON-zHf1X3a0zgg-1; Tue, 18 Mar 2025 18:49:51 -0400
-X-MC-Unique: VqcfTiNPON-zHf1X3a0zgg-1
-X-Mimecast-MFC-AGG-ID: VqcfTiNPON-zHf1X3a0zgg_1742338190
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-85b5a7981ccso583244039f.2
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 15:49:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tuftS-00026O-Il
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:58:42 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tuftP-0007a0-OA
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:58:42 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-224341bbc1dso119049655ad.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 15:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742338715; x=1742943515; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W93rpVZsHi97qPuHO/U/FnMIMFGbqK6KiMYoGPhb3pA=;
+ b=m0bSxVXMSafamky8N/ERHvnX0vuONIWivbo/+znDQ90tsrQFqsnPK/59Liprbg4H5l
+ LuO+Fb+ls+ngD8d9xKPATrYqpvY/9qmKAugGyrPMpBWTHsrJJCfohqgTaQwW8jNZju7k
+ hmNmotTi3VBNZXTaJXBZPWUL2okbM0bZSmZavtiH5rJRrtpXV81GR5S6i6nUdVMFwalM
+ QJ7Nf3O7tMBSMW9DRdsiJVoHbxgnIRyNyBRGFCGFl+TAXufSePqrciWcMGYo55VWs9cS
+ nrBIPvbJ2/U8bub8RQ3I0sLfMk/4UdIWnJWR4MMGkK47ehFl6yHWYV1W6oPq8+EV0PqZ
+ y55Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742338190; x=1742942990;
+ d=1e100.net; s=20230601; t=1742338715; x=1742943515;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AF4rmIYLEyBVPVsLZ3qMtdPqeFbNY2HOyi12QD0TGEM=;
- b=dp2NR5VStIZvvJGp3JxOJAV85xIvQFOKZRMvRm5vFrTWIto62/Dyq8LfKRBHyYbnrK
- Hhmfz6Y4z4ibyqp8HqPTiR9qusOLSKPPYU55KEObNA7snfFcyB4OcxPYrzmkjnkxgffx
- ZeOY+5rD0a+k26ylTvVw2beLyt6k3E94Nq4lKP0vNo21RFEabF8/Ew92htRFxkLtNGju
- JNrfeh/hqoXGRo2h7WUsruwjITlQYn5PoURlze+yVxYs2AUw33K7TFK0Z876ToXNuO0z
- q50H51vIgAbHyX2IkS6yDSjiDtXrI5+g2po6ji8Irne7bSGPkFxD8Vr+nwpLI+0bCQ+I
- f5xQ==
+ bh=W93rpVZsHi97qPuHO/U/FnMIMFGbqK6KiMYoGPhb3pA=;
+ b=B+LBvASsPZg8gmnclI1yw4AUUilnpEhDtl1X1YKJUwiq1XSYIwR5a2FMWjVW19LMEi
+ JAGIN+BVAbaAQ57ZZB8L4QtTFIiqCBUContGmpAvf7JTfuZ65m4jNPzsR3oB7gJ6xoa+
+ 7Vfg3hSL3KBsaJURS3KmUH3VPXZQOKFgQYEeaODukki+h7gxqkp0ADPHtJmW7wRDHI0L
+ JvevyH87as6sVRysmWd+x71D5J6v+VKy5cAKsccMcTDmWe9c50pjMBq5/t5hOSdlyRuu
+ Ymvyi7/QtRBm9K0LaYrmNtrSgyngos6G80reXfVXYw/BRwX/GmZkQgI6I3QbUU/jkLWs
+ iQfg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVo2LtovM+X5q4mogvQZnXRmnwdf6kRVSnKV8fD1aWR23GBZNscckq0Ll6HI63otHppx6oBF9+x4p0y@nongnu.org
-X-Gm-Message-State: AOJu0YwVttUY8C32WyBbrLsGGSH9rtTDiCNX0mvOLeCJ0s/c5b9/WCIW
- duyA5wPl1AOkKTJ5KOjYYxXMG2QxaRMNBbxo6iLObg4kmg4m7E2GPGBf8RsVIRL1umz4T3TnLxA
- sRPNWq7vej2szQF2nrju2liJHr0bvh78u18qs8IWb03nRJ/f/BTsH
-X-Gm-Gg: ASbGncsbMtVzflfCdlapKTwHURxvq4Gu4mlNX04DLsqgfFvQu9anBxUeIgqy0OXZALW
- PTsFstwGSWIkUzw2HCnEazrdZDn9V50I+oQZT2cM4CxYxPgwqjp8Svj/M9hFKmlPIAWOL7MFgIy
- /M5JHQ6l0r5GKFVO3/YVkzunvvItKeE9NtTN4PcORfE/BVe9V/5z5jq4XBa/wC0trATQ054ugje
- qplZo2l4FwWgUmq3z45gETEzNKVABgPPhkFsn+NajuubWP+4JLTAB3/eE5bWaGGXPW5aL1riX1k
- 3kwbfr7pojoOnot2
-X-Received: by 2002:a05:6602:378d:b0:85b:601d:dfb3 with SMTP id
- ca18e2360f4ac-85e137c0ce7mr77479639f.5.1742338190249; 
- Tue, 18 Mar 2025 15:49:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGW1T5ZMxD9VXZFPFR5ZQYih7H157mVo+2tYsvoS9rn0CBUqEwfnLzcX0kegA8owJeTR4nFXA==
-X-Received: by 2002:a05:6602:378d:b0:85b:601d:dfb3 with SMTP id
- ca18e2360f4ac-85e137c0ce7mr77476339f.5.1742338189949; 
- Tue, 18 Mar 2025 15:49:49 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
+ AJvYcCV4Zbj6T65jgal1X8zbAM/7IizWN1RkEnWiYKfltAC6sIPwSz0CGznaEbbgplj1wL2ncrdoWoiEoHcY@nongnu.org
+X-Gm-Message-State: AOJu0Yx579hSz9ug3EGgJZHbL0w2ZQIzD+ctWGcp0SLJrU7CnMUSLUtC
+ LZUeT75m8JjiCZuS7mWeLcSlHjIRmdvsVw9ZhflssEvUHAGh3yv8gb02leprock=
+X-Gm-Gg: ASbGncvZex1AQHfC+dUROirDH63W/DXe4FO6l6vPtxeF+E8yohVi6Dt/z2TKpW0IzAG
+ md+lG0aY+AbG1jdOANwrrin9tOs1XPrtiYclzSekfrdGxkZ8YlWYX5v/OeBU5tq/JPb+giVHVsw
+ Ac9rlvsCzUCUWyxzv0G2SSiQAuvlugRM4iS9J0ZuoK8E72YXhyYmjcyBgqmd3+yDhiCZQR3SZvW
+ k+gNmt0zx18ZvLqNHVwfqf5Qhe9tEUnMMgBKPU6uKBgOAhpb/T7jujB91UBX/4aWYRMWB2Kxrg3
+ N3H3fK9DbS2XMUy8HrZo5r9l6omkwTm7tn7AnV5Toc2l8IGpOtdV5ZYJbQ==
+X-Google-Smtp-Source: AGHT+IGgATHzA5mk2h2ZORMhsVXPw1HXuieiJoAjLgmzG5rkU4wbf2UiZAhgaj9NQ6le0L1eNMvUqw==
+X-Received: by 2002:a05:6a20:1605:b0:1f3:388b:3b4b with SMTP id
+ adf61e73a8af0-1fbeb4ab598mr756431637.15.1742338715563; 
+ Tue, 18 Mar 2025 15:58:35 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f263719a69sm2936084173.52.2025.03.18.15.49.48
+ 41be03b00d2f7-af56e9fed33sm9684412a12.37.2025.03.18.15.58.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 15:49:49 -0700 (PDT)
-Message-ID: <82e44777-8f14-428c-9614-c521e4836fce@redhat.com>
-Date: Tue, 18 Mar 2025 18:49:47 -0400
+ Tue, 18 Mar 2025 15:58:35 -0700 (PDT)
+Message-ID: <b107adfe-83fa-4e56-a26d-3c8a7eb3ac49@linaro.org>
+Date: Tue, 18 Mar 2025 15:58:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 04/20] hw/arm/virt: Add support for smmuv3-accel
+Subject: Re: [PATCH 04/13] exec/cpu-all: allow to include specific cpu
 Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
- nicolinc@nvidia.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-5-shameerali.kolothum.thodi@huawei.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250311141045.66620-5-shameerali.kolothum.thodi@huawei.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
+ <20250318045125.759259-5-pierrick.bouvier@linaro.org>
+ <35c90e78-2c2c-4bbb-9996-4031c9eef08a@linaro.org>
+ <7202c9e9-1002-4cdc-9ce4-64785aac5de4@linaro.org>
+ <0c6f23d5-d220-4fa7-957e-8721f1aa732f@linaro.org>
+ <172a10d0-f479-4d6c-9555-a9060bdf744e@linaro.org>
+ <ac79c5f1-d7ea-4079-b042-3805063fddba@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <ac79c5f1-d7ea-4079-b042-3805063fddba@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,87 +113,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-Doesn't this commit become moot, if accel becomes an smmuv3 option vs separate device object altogether,
-dynamically added if a pdev is attached to a host SMMUv3 that has accel feature(s)?
-
-Blocking w/virtio-iommu falls under the same situation mentioned in 03/20 wrt mixing emulated & physical devices on the same smmuv3.
-
-- Don
-
-On 3/11/25 10:10 AM, Shameer Kolothum wrote:
-> Allow cold-plug smmuv3-accel to virt If the machine wide smmuv3
-> is not specified.
-> 
-> No FDT support is added for now.
-> 
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->   hw/arm/virt.c         | 12 ++++++++++++
->   hw/core/sysbus-fdt.c  |  1 +
->   include/hw/arm/virt.h |  1 +
->   3 files changed, 14 insertions(+)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 4a5a9666e9..84a323da55 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -73,6 +73,7 @@
->   #include "qobject/qlist.h"
->   #include "standard-headers/linux/input.h"
->   #include "hw/arm/smmuv3.h"
-> +#include "hw/arm/smmuv3-accel.h"
->   #include "hw/acpi/acpi.h"
->   #include "target/arm/cpu-qom.h"
->   #include "target/arm/internals.h"
-> @@ -2911,6 +2912,16 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
->               platform_bus_link_device(PLATFORM_BUS_DEVICE(vms->platform_bus_dev),
->                                        SYS_BUS_DEVICE(dev));
->           }
-> +        if (object_dynamic_cast(OBJECT(dev), TYPE_ARM_SMMUV3_ACCEL)) {
-> +            if (vms->iommu == VIRT_IOMMU_SMMUV3) {
-> +                error_setg(errp,
-> +                           "iommu=smmuv3 is already specified. can't create smmuv3-accel dev");
-> +                return;
-> +            }
-> +            if (vms->iommu != VIRT_IOMMU_SMMUV3_ACCEL) {
-> +                vms->iommu = VIRT_IOMMU_SMMUV3_ACCEL;
-> +            }
-> +        }
->       }
->   
->       if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
-> @@ -3120,6 +3131,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_AMD_XGBE);
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_PLATFORM);
-> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3_ACCEL);
->   #ifdef CONFIG_TPM
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
->   #endif
-> diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-> index 774c0aed41..c8502ad830 100644
-> --- a/hw/core/sysbus-fdt.c
-> +++ b/hw/core/sysbus-fdt.c
-> @@ -489,6 +489,7 @@ static const BindingEntry bindings[] = {
->   #ifdef CONFIG_LINUX
->       TYPE_BINDING(TYPE_VFIO_CALXEDA_XGMAC, add_calxeda_midway_xgmac_fdt_node),
->       TYPE_BINDING(TYPE_VFIO_AMD_XGBE, add_amd_xgbe_fdt_node),
-> +    TYPE_BINDING("arm-smmuv3-accel", no_fdt_node),
->       VFIO_PLATFORM_BINDING("amd,xgbe-seattle-v1a", add_amd_xgbe_fdt_node),
->   #endif
->   #ifdef CONFIG_TPM
-> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> index c8e94e6aed..849d1cd5b5 100644
-> --- a/include/hw/arm/virt.h
-> +++ b/include/hw/arm/virt.h
-> @@ -92,6 +92,7 @@ enum {
->   typedef enum VirtIOMMUType {
->       VIRT_IOMMU_NONE,
->       VIRT_IOMMU_SMMUV3,
-> +    VIRT_IOMMU_SMMUV3_ACCEL,
->       VIRT_IOMMU_VIRTIO,
->   } VirtIOMMUType;
->   
-
+T24gMy8xOC8yNSAxNTozNiwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDMvMTgv
+MjUgMTU6MjUsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBPbiAzLzE4LzI1IDE1OjIx
+LCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90ZToNCj4+PiBPbiAzLzE4LzI1IDE1OjE2LCBQaWVy
+cmljayBCb3V2aWVyIHdyb3RlOg0KPj4+Pj4gVGhpcyBkb2Vzbid0IG1ha2UgYW55IHNlbnNl
+IHRvIG1lLsKgIENQVV9JTkNMVURFIGlzIGRlZmluZWQgd2l0aGluIHRoZSB2ZXJ5IGZpbGUg
+dGhhdA0KPj4+Pj4geW91J3JlIHRyeWluZyB0byBpbmNsdWRlIGJ5IGF2b2lkaW5nICJjcHUu
+aCIuDQo+Pj4+Pg0KPj4+Pg0KPj4+PiBFdmVyeSB0YXJnZXQvWC9jcHUuaCBpbmNsdWRlcyBj
+cHUtYWxsLmgsIHdoaWNoIGluY2x1ZGVzICJjcHUuaCIgaXRzZWxmLCByZWx5aW5nIG9uIHBl
+cg0KPj4+PiB0YXJnZXQgaW5jbHVkZSBwYXRoIHNldCBieSBidWlsZCBzeXN0ZW0uDQo+Pj4N
+Cj4+PiBTbywgYW5vdGhlciBzb2x1dGlvbiB3b3VsZCBiZSB0byBmaXggdGhlIHNpbGx5IGlu
+Y2x1ZGUgbG9vcD8NCj4+Pg0KPj4NCj4+IElmIHlvdSdyZSBvayB3aXRoIGl0LCBJJ20gd2ls
+bGluZyB0byByZW1vdmUgY3B1LWFsbC5oIGNvbXBsZXRlbHkgKG1vdmluZyB0bGIgZmxhZ3Mg
+Yml0cyBpbg0KPj4gYSBuZXcgaGVhZGVyKSwgYW5kIGZpeGluZyBtaXNzaW5nIGluY2x1ZGVz
+IGV2ZXJ5d2hlcmUuDQo+Pg0KPj4gSSBqdXN0IHdhbnRlZCB0byBtYWtlIHN1cmUgaXQncyBh
+biBhY2NlcHRhYmxlIHBhdGggYmVmb3JlIHNwZW5kaW5nIHRvbyBtdWNoIHRpbWUgb24gaXQu
+DQo+IA0KPiBJIHdvdWxkIHZlcnkgbXVjaCBsaWtlIGNwdS1hbGwuaCB0byBnbyBhd2F5Lg0K
+PiANCg0KRGVhbCwgSSB3aWxsIGNvbXBsZXRlIHRoZSB3b3JrLCB3aGlsZSBiZWluZyBiYXNl
+ZCBvbiB5b3VyIGN1cnJlbnQgc2VyaWVzIA0KKHYyKS4NCg0KPiBJdCBsb29rcyBsaWtlIHdl
+IGhhdmUsIG9uIHRjZy1uZXh0Og0KPiANCj4gKDEpIGNwdV9jb3B5IGlzIGxpbnV4LXVzZXIg
+b25seSwgYW5kIHNob3VsZCBnbyBpbiBsaW51eC11c2VyL3FlbXUuaC4NCj4gDQo+ICgyKSB0
+aGUgVExCIGZsYWdzIGNlcnRhaW5seSBkZXNlcnZlIHRoZWlyIG93biBoZWFkZXIuDQo+IA0K
+PiAoMykgVGhlIFFFTVVfQlVJTERfQlVHX09OIGFzc2VydGlvbnMgbmVlZCBub3QgYmUgZG9u
+ZSBpbiBhIGhlYWRlciwNCj4gICAgICAgc28gbG9uZyBhcyB0aGVyZSBpcyAqc29tZSogZmls
+ZSB0aGF0IHdvbid0IGJ1aWxkIGlmIHRoZSBhc3NlcnRpb25zIGZhaWwuDQo+ICAgICAgIFBl
+cmhhcHMgY3B1LXRhcmdldC5jIGlzIGFzIGdvb2QgYXMgYW55Lg0KPiANCg0KWWVzLCBJIG5v
+dGljZWQgaXQsIGFuZCBjaG9zZSAjaWZkZWYgQ09NUElMSU5HX1BFUl9UQVJHRVQgd29ya2Fy
+b3VuZCB0byANCm5vdCBtYWtlIGEgY2hvaWNlIG9mIHdoZXJlIHRvIG1vdmUgaXQuDQoNCj4g
+DQo+IHJ+DQoNCg==
 
