@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF7FC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 09:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87ABDC28B28
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 09:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuTf4-00046R-3r; Tue, 18 Mar 2025 05:55:02 -0400
+	id 1tuTfB-0004Ba-Ny; Tue, 18 Mar 2025 05:55:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTf2-00045a-5y
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTfA-0004AD-Ay
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTez-0001nI-Hq
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:54:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTf8-00025m-JM
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742291696;
+ s=mimecast20190719; t=1742291703;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yRTSqycXw34ARvlYQlGTXFhzg1OIW6jRPhuFPPr8BH8=;
- b=ELnXQMw4E5sL9B/nyaaGO0kDNtBBYWaDU6oWPcxvK8NmFka+5d/4dvE26xrJw01iUjpCHi
- 1+UZROWbVwqVKH1YlXymfCj6vfOBwzwNZK6QkadSLzUwLgT+uXrYreSY4MIAWTOqN4hbzL
- Jf0yx5Nv55wtXTSYirgLPYUdlIIF4rc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=L9+aL4fLro+fcAXvn2lUJ/cbXtwhrEIWIAOGeohLzow=;
+ b=fSTlwvwehZDYjig/BcrhAkg8S6jQBx9TZSyw+GF4CNH/VnuNAWJspTUV7mgI9rr0RGEg9d
+ kJlChgU0mHa2M6sItYwT3zLKZDH87F80wo1ZyxySyzGiFhbKg76OsMv+lwh72ba+qgP2iN
+ eJ8KKaC7Nr7mECZeDpmKGbQcnpd52aI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-90-NsxCM8JZPkSwB4KGIiVhrw-1; Tue,
- 18 Mar 2025 05:54:54 -0400
-X-MC-Unique: NsxCM8JZPkSwB4KGIiVhrw-1
-X-Mimecast-MFC-AGG-ID: NsxCM8JZPkSwB4KGIiVhrw_1742291693
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-vpbrSl0vM9291ezYRzIGMg-1; Tue,
+ 18 Mar 2025 05:54:57 -0400
+X-MC-Unique: vpbrSl0vM9291ezYRzIGMg-1
+X-Mimecast-MFC-AGG-ID: vpbrSl0vM9291ezYRzIGMg_1742291696
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3207F18007E1; Tue, 18 Mar 2025 09:54:53 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D10A6180049D; Tue, 18 Mar 2025 09:54:55 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.25])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1495A18001EF; Tue, 18 Mar 2025 09:54:49 +0000 (UTC)
+ id AF3BC18001EF; Tue, 18 Mar 2025 09:54:53 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
 Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH for-10.1 01/32] vfio: Move vfio_mig_active() into migration.c
-Date: Tue, 18 Mar 2025 10:53:44 +0100
-Message-ID: <20250318095415.670319-2-clg@redhat.com>
+Subject: [PATCH for-10.1 02/32] vfio: Rename vfio_reset_bytes_transferred()
+Date: Tue, 18 Mar 2025 10:53:45 +0100
+Message-ID: <20250318095415.670319-3-clg@redhat.com>
 In-Reply-To: <20250318095415.670319-1-clg@redhat.com>
 References: <20250318095415.670319-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,69 +85,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vfio_mig_active() is part of the VFIO migration API. Move the
-definitions where VFIO migration is implemented.
+Enforce a 'vfio_mig_' prefix for the VFIO migration API to better
+reflect the namespace these routines belong to.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/common.c    | 16 ----------------
- hw/vfio/migration.c | 16 ++++++++++++++++
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ include/hw/vfio/vfio-common.h | 2 +-
+ hw/vfio/migration.c           | 2 +-
+ migration/target.c            | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 1a0d9290f88c9774a98f65087a36b86922b21a73..4205f4f7ec87e1a2a5e4110eabc8fde835d39c7f 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -66,22 +66,6 @@ int vfio_kvm_device_fd = -1;
-  * Device state interfaces
-  */
- 
--bool vfio_mig_active(void)
--{
--    VFIODevice *vbasedev;
--
--    if (QLIST_EMPTY(&vfio_device_list)) {
--        return false;
--    }
--
--    QLIST_FOREACH(vbasedev, &vfio_device_list, global_next) {
--        if (vbasedev->migration_blocker) {
--            return false;
--        }
--    }
--    return true;
--}
--
- static Error *multiple_devices_migration_blocker;
- 
- /*
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 04b123a6c929a8f47d740fc5433b54dadd32f731..9cfb3fb6931e71395ef1d67b0a743d8bc1433fdc 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -295,7 +295,7 @@ int vfio_block_multiple_devices_migration(VFIODevice *vbasedev, Error **errp);
+ void vfio_unblock_multiple_devices_migration(void);
+ bool vfio_viommu_preset(VFIODevice *vbasedev);
+ int64_t vfio_mig_bytes_transferred(void);
+-void vfio_reset_bytes_transferred(void);
++void vfio_mig_reset_bytes_transferred(void);
+ void vfio_mig_add_bytes_transferred(unsigned long val);
+ bool vfio_device_state_is_running(VFIODevice *vbasedev);
+ bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
 diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index fbff46cfc35e0ee69e9599c9f8efc7437bbe3370..b5fb0d218808d010d8210612d3182dde8f33514b 100644
+index b5fb0d218808d010d8210612d3182dde8f33514b..8bf65b8e11094b8363692dba3084b762362c7dd6 100644
 --- a/hw/vfio/migration.c
 +++ b/hw/vfio/migration.c
-@@ -1062,6 +1062,22 @@ void vfio_mig_add_bytes_transferred(unsigned long val)
-     qatomic_add(&bytes_transferred, val);
+@@ -1052,7 +1052,7 @@ int64_t vfio_mig_bytes_transferred(void)
+     return MIN(qatomic_read(&bytes_transferred), INT64_MAX);
  }
  
-+bool vfio_mig_active(void)
-+{
-+    VFIODevice *vbasedev;
-+
-+    if (QLIST_EMPTY(&vfio_device_list)) {
-+        return false;
-+    }
-+
-+    QLIST_FOREACH(vbasedev, &vfio_device_list, global_next) {
-+        if (vbasedev->migration_blocker) {
-+            return false;
-+        }
-+    }
-+    return true;
-+}
-+
- /*
-  * Return true when either migration initialized or blocker registered.
-  * Currently only return false when adding blocker fails which will
+-void vfio_reset_bytes_transferred(void)
++void vfio_mig_reset_bytes_transferred(void)
+ {
+     qatomic_set(&bytes_transferred, 0);
+ }
+diff --git a/migration/target.c b/migration/target.c
+index a6ffa9a5ce312d1e64157b650827aa726eb4d364..f5d8cfe7c2a3473f4bd3f5068145598c60973c58 100644
+--- a/migration/target.c
++++ b/migration/target.c
+@@ -25,7 +25,7 @@ void migration_populate_vfio_info(MigrationInfo *info)
+ 
+ void migration_reset_vfio_bytes_transferred(void)
+ {
+-    vfio_reset_bytes_transferred();
++    vfio_mig_reset_bytes_transferred();
+ }
+ #else
+ void migration_populate_vfio_info(MigrationInfo *info)
 -- 
 2.48.1
 
