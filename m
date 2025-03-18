@@ -4,90 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CE7C28B28
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 11:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44818C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 11:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuUr6-0007dn-5q; Tue, 18 Mar 2025 07:11:32 -0400
+	id 1tuUx1-0001q1-MO; Tue, 18 Mar 2025 07:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tuUqt-0007a2-4p
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 07:11:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tuUqq-0007wc-0B
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 07:11:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742296273;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YwrA/oknCvCRiptFq7YnS3GiFeYbfrZc82tnmsqSe4w=;
- b=gstuun5OZUzXB/X0NkpQ/X96Hyw9CWTFjOfyMb2OsaqwWC04gMPZ6o8C3sGv705IMBH4Or
- 4N8DLKJhwhjfo3J1nF84u1bsudLVAiGW6OxhUNkZHBIsiBTEjnalWHeZD1Lyt0rhnzAAyT
- U+vvbJXGggzhR6LDqq+Vnd3eINlWZ0U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-VM27ncwzPcmMydmbB4L7Vw-1; Tue,
- 18 Mar 2025 07:11:08 -0400
-X-MC-Unique: VM27ncwzPcmMydmbB4L7Vw-1
-X-Mimecast-MFC-AGG-ID: VM27ncwzPcmMydmbB4L7Vw_1742296266
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE73A180025A; Tue, 18 Mar 2025 11:11:05 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.45.224.38])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B17961955BE4; Tue, 18 Mar 2025 11:11:04 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 2260F18000AF; Tue, 18 Mar 2025 12:11:02 +0100 (CET)
-Date: Tue, 18 Mar 2025 12:11:02 +0100
-From: Gerd Hoffman <kraxel@redhat.com>
-To: Alexander Graf <graf@amazon.com>
-Cc: Ani Sinha <anisinha@redhat.com>, 
- =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-Message-ID: <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
-References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
- <Z9LeILiEU5GfEHrl@8bytes.org>
- <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
- <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
- <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
- <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
- <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
- <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
- <6684f169-29d6-4f46-b274-1efd4c191b21@amazon.com>
- <ok6u7exmwmh7qsahp5o3udnbbzbsr2km22kpqod37t6mdsywcs@yhk2whhakl63>
+ (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
+ id 1tuUwy-0001or-JL; Tue, 18 Mar 2025 07:17:36 -0400
+Received: from smtpnm6-06.21cn.com ([182.42.144.170] helo=chinatelecom.cn)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tugy@chinatelecom.cn>)
+ id 1tuUwt-0000Jc-QW; Tue, 18 Mar 2025 07:17:36 -0400
+HMM_SOURCE_IP: 192.168.137.232:0.860077192
+HMM_ATTACHE_NUM: 0000
+HMM_SOURCE_TYPE: SMTP
+Received: from clientip-36.111.64.85 (unknown [192.168.137.232])
+ by chinatelecom.cn (HERMES) with SMTP id 6B4F4E34B1;
+ Tue, 18 Mar 2025 19:17:11 +0800 (CST)
+X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
+Received: from  ([36.111.64.85])
+ by gateway-ssl-dep-84dfd8c7d7-bsrdr with ESMTP id
+ fb0601d888284e4691184db18ff4ba12 for eblake@redhat.com; 
+ Tue, 18 Mar 2025 19:17:15 CST
+X-Transaction-ID: fb0601d888284e4691184db18ff4ba12
+X-Real-From: tugy@chinatelecom.cn
+X-Receive-IP: 36.111.64.85
+X-MEDUSA-Status: 0
+Message-ID: <2a3489a1-3955-4fd3-9133-f8dcd0e57416@chinatelecom.cn>
+Date: Tue, 18 Mar 2025 19:17:09 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ok6u7exmwmh7qsahp5o3udnbbzbsr2km22kpqod37t6mdsywcs@yhk2whhakl63>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Cc: tugy@chinatelecom.cn, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 0/2] support block encryption/decryption in parallel
+To: eblake@redhat.com, armbru@redhat.com, kwolf@redhat.com,
+ hreitz@redhat.com, berrange@redhat.com, qemu-block@nongnu.org
+References: <cover.1737384527.git.tugy@chinatelecom.cn>
+Content-Language: en-US
+From: Guoyi Tu <tugy@chinatelecom.cn>
+In-Reply-To: <cover.1737384527.git.tugy@chinatelecom.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=182.42.144.170; envelope-from=tugy@chinatelecom.cn;
+ helo=chinatelecom.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,99 +70,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+Hi there,
 
-> Maybe not from the user's point of view, but surely for the vmfwupdate
-> interface design and for the launch measurement calculations.
+Would you have any feedback on this patch? Any suggestions would be 
+greatly appreciated.”
+
+--
+Guoyi
+
+On 2025/1/20 22:58, tugy@chinatelecom.cn wrote:
+> From: Guoyi Tu <tugy@chinatelecom.cn>
 > 
-> When using igvm parameters for the kernel hashes we need to pass on (at
-> least) two items via vmfwupdate API:  The igvm image itself and the
-> kernel hashes, so the VMM can fill the parameters for launch.
+> Currently, disk I/O encryption and decryption operations are performed sequentially
+> in the main thread or IOthread. When the number of I/O requests increases,
+> this becomes a performance bottleneck.
 > 
-> I tend to think it makes sense to keep the region list, so we can
-> actually pass on multiple items if needed, and simply add region flags
-> to declare that a region is an IGVM image.
-
-Went over the interface spec today, here it is.  Changes:
-
- - Moved descriptions into source code comments.
- - Added leftovers noticed in recent discussions, such as cpuid page.
- - Added capability flags and region flags for IGVM.
-
-Open questions:
-
- - Does the idea to use igvm parameters for the kernel hashes makes
-   sense?  Are parameters part of the launch measurement?
- - Do we want actually keep the complete interface (and the functional
-   overlap with igvm)?
-
-take care,
-  Gerd
-
-------------------------- cut here ---------------------------------
-
-/*
- * Mar 2025 vmfwupdate interface rewrite
- */
-
-struct vmfwupdate {
-    // VMM capabilities, see VMFWUPDATE_CAP_*, read-only.
-    uint64_t capabilities;
-    // firmware storage size (below 4G on x86), read-only.
-    uint64_t firmware_size;
-
-    // address of opaque blob, the guest can use this to pass on information,
-    // for example which memory region the linux kernel has been loaded to.
-    // writable, will be kept intact on firmware update.
-    uint64_t opaque_addr;
-
-    // regions (see vmfwupdate_regions struct), memory location and length of
-    // the list.  writable, will be cleared on firmware update and reset.
-    uint64_t regions_addr;
-    uint16_t regions_count;
-
-    // control bits, see VMFWUPDATE_CTL_*
-    // - disable bit can be set by the guest.
-    // - disable bit can only be cleared by reset.
-    uint16_t control;
-};
-
-// --- 'capabilities' field bits ---
-// vmm supports resizing of firmware memory
-#define VMFWUPDATE_CAP_BIOS_RESIZE    (1 << 0)
-// vmm supports loading igvm images
-#define VMFWUPDATE_CAP_IGVM_IMAGES    (2 << 0)
-
-// --- 'control' field bits ---
-// disable vmfwupdate interface
-#define VMFWUPDATE_CTL_DISABLE        (1 << 0)
-
-// 'regions_addr' field points to an array of this structure
-struct vmfwupdate_regions {
-    uint64_t size;           // size of the region
-    uint64_t src_addr;       // source address (before update)
-    uint64_t dst_addr;       // destination address (after update)
-    uint64_t flags;          // control bits
-};
-
-// --- 'flags' field bits ---
-// data must be copied
-#define VMFWUPDATE_REGION_FLAG_COPY          (1 << 0)
-// dest must be filled with zeros (src is not used)
-#define VMFWUPDATE_REGION_FLAG_ZERO          (1 << 1)
-// region must be measured
-#define VMFWUPDATE_REGION_FLAG_MEASURE       (1 << 2)
-// region must be (pre-)validated
-#define VMFWUPDATE_REGION_FLAG_VALIDATE      (1 << 3)
-
-// region contains igvm image
-#define VMFWUPDATE_REGION_FLAG_IGVM_IMAGE    (1 << 8)
-// region contains igvm parameters (TODO: details)
-#define VMFWUPDATE_REGION_FLAG_IGVM_PARAM    (1 << 9)
-
-// region is sev cpuid page
-#define VMFWUPDATE_REGION_FLAG_SEV_CPUID     (1 << 16)
-// region is sev secrets page
-#define VMFWUPDATE_REGION_FLAG_SEV_SECRETS   (1 << 17)
+> To address this issue, this patch use thread pool to perform I/O encryption
+> and decryption in parallel, improving overall efficiency.
+> 
+> Test results show that enabling the thread pool for encryption and decryption
+> significantly improve the performance of virtual machine storage devices.
+> 
+> 
+> Test Case1: Disk read/write performance using fio in a virtual machine
+> 
+> Virtual Machine： 8c16g, with a disk backing by a LUKS storage device and
+>                    Ceph as storage backend.
+> Test Method:
+> fio -direct=1 -iodepth=32 -rw=xx -ioengine=libaio -bs=4k -size=10G -numjobs=x \
+> -runtime=1000 -group_reporting -filename=/dev/vdb -name=xxx
+> 
+> Runing the VM on the Intel Xeon 5218 server, The test results are as follows:
+> 
+> |                        |  Serial encryption  | Thread pool encryption|
+> |                        |  and decryption     | and decryption      |
+> |        fio             |-----------|---------|-----------|---------|
+> |                        | BW(MiB/s) | IOPS(K) | BW(MiB/s) | IOPS(K) |
+> |------------------------|-----------|---------|-----------|---------|
+> | rw=read numjobs=2      | 499       | 128     | 605       | 155     |
+> | rw=read numjobs=4      | 529       | 136     | 632       | 162     |
+> | rw=write numjobs=2     | 493       | 126     | 617       | 158     |
+> | rw=write numjobs=4     | 534       | 137     | 743       | 190     |
+> 
+> 
+> Runing the VM on the HiSilicon Kunpeng-920 server, The test results are as follows:
+> 
+> |                        |  Serial encryption  | Thread pool encryption|
+> |                        |  and decryption     | and decryption      |
+> |        fio             |-----------|---------|-----------|---------|
+> |                        | BW(MiB/s) | IOPS(K) | BW(MiB/s) | IOPS(K) |
+> |------------------------|-----------|---------|-----------|---------|
+> | rw=read numjobs=2      | 73.2      | 18.8    | 128       | 39.2    |
+> | rw=read numjobs=4      | 77.9      | 19.9    | 246       | 62.9    |
+> | rw=write numjobs=2     | 78        | 19      | 140       | 35.8    |
+> | rw=write numjobs=4     | 78        | 20.2    | 270       | 69.1    |
+> 
+> 
+> Test Case 2：
+> In addition, performance comparisons were also conducted on the HiSilicon Kunpeng-920
+> server, testing the conversion of a qcow2 image to a LUKS image using qemu-img convert.
+> The results show that using thread pool to encryption and decryption all significantly
+> improve the performance.
+> 
+> Test Method: Create a 40GB qcow2 image and fill it with data, then convert it to a LUKS
+>               image using qemu-img
+> 
+> * Serial encryption and decryption：
+> time qemu-img convert -p -m 16 -W --image-opts file.filename=/home/tgy/data.qcow2 \
+> --object secret,id=sec,data=password -n \
+> --target-image-opts driver=luks,key-secret=sec,file.filename=/home/tgy/data.luks
+> 
+>      real    7m53.681s
+>      user    7m52.595s
+>      sys     0m11.248s
+> 
+> 
+> * Thread pool encryption and decryption：
+> time qemu-img convert -p -m 16 -W --image-opts file.filename=/home/tgy/data.qcow2 \
+> --object secret,id=sec,data=password -n --target-image-opts \
+> driver=luks,key-secret=sec,enable-parallel-crypto=on,file.filename=/home/tgy/data.luks
+> 
+>      real    1m43.101s
+>      user    10m30.239s
+>      sys     13m13.758s
+> 
+> v2: change parameter name from "encrypt-in-parallel" to "enable-parallel-crypto"
+> 
+> Guoyi Tu (2):
+>    crpyto: support encryt and decrypt parallelly using thread pool
+>    qapi/crypto: support enable encryption/decryption in parallel
+> 
+>   block/crypto.c       | 113 ++++++++++++++++++++++++++++++++++++++++---
+>   block/crypto.h       |   9 ++++
+>   qapi/block-core.json |   6 ++-
+>   qapi/crypto.json     |   6 ++-
+>   4 files changed, 126 insertions(+), 8 deletions(-)
+> 
 
 
