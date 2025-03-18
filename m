@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66C2DC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 13:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89D9C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 13:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWev-0004Mp-Ud; Tue, 18 Mar 2025 09:07:06 -0400
+	id 1tuWg5-0004mg-9D; Tue, 18 Mar 2025 09:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWdy-0003os-Oj; Tue, 18 Mar 2025 09:06:12 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuWeQ-00047L-N9
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 09:06:38 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1tuWdw-0002hh-KF; Tue, 18 Mar 2025 09:06:06 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-ac345bd8e13so505780566b.0; 
- Tue, 18 Mar 2025 06:06:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuWeM-0002od-Gs
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 09:06:34 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e63fd2b482fso3027603276.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 06:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742303161; x=1742907961; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=g0yzrsHOZw8jJRUdrnkye8+q3BRXaAEp0577L+ULu0o=;
- b=alU9cK6Z3VMAM+ep0n7QHpZvXQt4FK9gzNXvvZKdMytodjVth9QDeK3gF0cvzRbbJN
- dw1L3JB50jNeGW+WePkerSOxwW3k0o6JxPmo+P2lauymFutQIegXvhEqAKD6hTk/qJ/t
- nW78My0CVFAGDZEjS8915PbKmCkxPazBNcYNIHtEkpWwFs6IRzkFs70H2GfLNjjTf6U7
- Qu2tWLIMdNaTvK1Em5lqeYgl1tFa8cpYHLJmai0NHIiUYXfqrs9kFrn8iQhNTMQIq4rE
- 4dXWtVsO8da8uQ45p1a55KG7AVf1+4VTiZg8VGqXQJZTyrIALwWKk4qnN4YptRb3+UMQ
- fFOQ==
+ d=linaro.org; s=google; t=1742303189; x=1742907989; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eGksSTVfy7WjzZQYLzF7BMNJCa7dIK/nHc2HlgEHelw=;
+ b=ESFcLDrUiowDnpj+cAd7NW5Os3bRml311R0qKEMt9zo/X/jkQWJ1g6CpGAfzSrHjm4
+ dkhAKyaGepFZI3EWvKZ3zsEzrt+9/dnv8DAi/gCr2ZFIzp9RXmVA2dN9gqSlKKdPR0Ye
+ Zp648WULF0qYdacQy4eCSojp/K3WsyUOQCQOLuyolSHMlrhU6uULbAy2ESrK41dFXGhu
+ Q737ngA2S8slJeFZHmgwNnIA/fbIMAaQT0oPptzkNhzuLzKCmd1yT5ZuZElRP3GN8cuJ
+ B28FJy4koPMfH8MBNfAkSFfG2MCf4+Rq3b6dhxiYRfVFxycvT86EcAuf+Tjvx+G/xbtE
+ iVsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742303161; x=1742907961;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g0yzrsHOZw8jJRUdrnkye8+q3BRXaAEp0577L+ULu0o=;
- b=YATC5JLo7XEgId58B+iTKyZWsTQebc8WPmN0qDoB6f72JKFhHm5xy2qxh2CnKBv1OZ
- CZWg+sPyXUYTD2wV85TJ5+1CN9X0rtI1Sf6kvSKN+zg2SQB+XHZWZ6NAnJVOpfhtIq5U
- qLIps1zFbvi4i2eUWf52UM0rnX7SJt/JwBOwjeBkzVO/o8t/EqSJ5uZ6EmaiRlWTaV8G
- f4XGpdvH9Zw1InP9FgH38ciHqPUC7wiA29mLQszh+8H13xv1hJo7waqwSLmi6vn0Fagn
- aVqXSXGAtFNfAmQTG4gPVpUQKfBLsjP8xVmpwouokS7A09kFobJWsg9ASub0CB3vmkDX
- Ha0A==
+ d=1e100.net; s=20230601; t=1742303189; x=1742907989;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eGksSTVfy7WjzZQYLzF7BMNJCa7dIK/nHc2HlgEHelw=;
+ b=KVrO1tz88Jzp/d7ANSMe9LXzQix6agKEki9TWEmUU0X1QxTIliEWIMyJFSQZQ8ey/e
+ PRSYd2a/DAAlLtTvIT1IfQgUl3zA3T2bUg3nqAHCgdy/2vAamvc+qHBCqj5KMdkeq27o
+ 8K7SWAL48J9+kDWFanHS1bDt/NM+xpQc5RPjTzsgCieHqbmzmGPJPvGC/XvXbvOVqYhz
+ AU3byMjkvQPC4TVX6jS4pUn0paei9quGaXIMlL+c4dWsTatd9uR+DuP0PNM8rUgmb0eA
+ Yyx2+IVmbL4VHLFCES8vrkcKKlWJpjUNCwqPUAKOmcBVIVJkdbNVNVVFpMV0lP1oCgpR
+ DkaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxd2GBDLeBNriSILR8WJ30GGFxW9Xsx2TfgprNG5singN0RdP1jDROHHTCaXyQSA8+IxYdYoQaAQ==@nongnu.org
-X-Gm-Message-State: AOJu0YyoA/RFmWOPbTYis8ldXDNxz85a/1GnfnVA7kOB+zn95Zqbrd4N
- LNAuPumyztoDRYTvo1tWcyDiWhE0AjQXhwdvo7ntk5XljMh9cGdf9Vq5WCoz
-X-Gm-Gg: ASbGncuHclwjpDySNtpqtWwDXY+K9lK0Hms5wvnKb1sbQAPS1BpHpe35K+vaO6SplCh
- TkmkfDu/qziItk/ahKsVHjmbIf/tOwOzjas1qEhsQ9uFN1fnSWusN17sgGB5xjCWGczYbl5jBZ/
- W6keJgjlCSZmuNfgLrT0qmFK0eDg6i/L3iG672fc61sNaVQCJS03vTEKtUyPaUlIVA7xr/4GWKP
- G6IrkiD0fXOvNd/DLIooulTg1dOeE3apNBdcW/AnxvsAP4OC2YB5s8EHkyNvDP0tjUi2ZjkdLmS
- 3ZNerPasVLyMzzwSp0xqHuEA4NFBbaTlio2w8r7oN97PM2NrYL57yzgIobNDK2+jYK0=
-X-Google-Smtp-Source: AGHT+IFtfs5HIDedcu9USdaNt2xbz0ODpqrJy81rM4gGCMUlbs1Z8XLtbg23AP8M4kYPLur//6H5aw==
-X-Received: by 2002:a17:907:748:b0:ac2:a1fd:551e with SMTP id
- a640c23a62f3a-ac38d8d2e1dmr356340466b.55.1742303149478; 
- Tue, 18 Mar 2025 06:05:49 -0700 (PDT)
-Received: from corvink-nb.beckhoff.com ([195.226.174.194])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3149cfbbesm846984266b.100.2025.03.18.06.05.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 06:05:28 -0700 (PDT)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-To: qemu-devel@nongnu.org,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH 00/21] Hi,
-Date: Tue, 18 Mar 2025 14:05:00 +0100
-Message-ID: <20250318130526.116026-1-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.49.0
+ AJvYcCXaXIUNWOTYcqofI3XZ+k74K0sUnWdMvmxS+JKJ2oFK1Mhr9rOoMiLmdFaO6j3DG8sh1jthCdKnHOqL@nongnu.org
+X-Gm-Message-State: AOJu0YwDBL/LmNXZFBXOJwwEjNFOEwRpRbFtBoOCGOSL+TgUOKxyz6tw
+ k+fRnzPkOU4pJg7ATTFqWqTVGprYj5qVwK2Q7nc1rNrKl7z+8WVBCuPZMJ6jYDHIrGAeE5ZRRQv
+ az64sYDYGEupBhnVbLPyYYnlg1IAKcs+fNXop3A==
+X-Gm-Gg: ASbGnctXUajiWUAdOHmo/5R+7MqSQTfDLAdATh0b0KT/pKvD997C7widWsrAXxSfiyS
+ juqPRHkbcIX35Id0QxBRRnP+Pd2BS38yUUIHgGetIa5cuzavy8TAIlAnvY1IxjRdm8iABA7C3Ab
+ IsHMSOYGxiKdQHPNYVeFAKTgJ6JJE=
+X-Google-Smtp-Source: AGHT+IH7jrUQ5Gb1Os1rJ69sZ7iZZPI55m4Q4NrNNbXnWP40kyZCtn8BX7qg+8anhLeC/GLWL3QzRPVVzO2CXd2BtYY=
+X-Received: by 2002:a05:6902:2602:b0:e58:3209:bdb6 with SMTP id
+ 3f1490d57ef6-e63f64f7c69mr19518519276.16.1742303189277; Tue, 18 Mar 2025
+ 06:06:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x636.google.com
+References: <mvm1puuiqvu.fsf@suse.de>
+ <ff0cde0c-67d7-4fc3-8996-ad0e8645deed@gmx.de>
+ <CAFEAcA_-fODgkxLLCNf3XHBU=EvGgKx4qcE_PqNt8-4jwqnqVw@mail.gmail.com>
+ <Z9lf7lniMWzoy6uS@redhat.com> <mvmmsdih5zi.fsf@suse.de>
+ <Z9lqcQGdIsjUHeVJ@redhat.com>
+In-Reply-To: <Z9lqcQGdIsjUHeVJ@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 18 Mar 2025 13:06:17 +0000
+X-Gm-Features: AQ5f1Jp_WIYvjcjhL-opQ7B_nxADRvUnindXZMVM_ZeZ1kLCcyhFTRaLA32yAJ0
+Message-ID: <CAFEAcA9r0GKWG2_w20HxbXz+MhdsraxCa=RvzaVYO+gd2DEY4Q@mail.gmail.com>
+Subject: Re: Generic way to detect qemu linux-user emulation
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Andreas Schwab <schwab@suse.de>, Helge Deller <deller@gmx.de>,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,70 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Corvin Köhne <c.koehne@beckhoff.com>
+On Tue, 18 Mar 2025 at 12:43, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Tue, Mar 18, 2025 at 01:34:57PM +0100, Andreas Schwab wrote:
+> > On M=C3=A4r 18 2025, Daniel P. Berrang=C3=A9 wrote:
+> >
+> > > Whereever practical, it is preferrable to check a discrete feature
+> > > or behaviour in a functional way, rather than matching on "is it QEMU=
+"
+> >
+> > Do you know a way to detect support for CLONE_VFORK that isn't too
+> > expensive?
+>
+> No, but I feel like the right thing in this particular case is to look
+> at improving our vfork impl. The current impl is incredibly crude and
+> acknowledged by the original author
+>
+>   commit 436d124b7d538b1fd9cf72edf17770664c309856
+>   Author: Andrzej Zaborowski <balrogg@gmail.com>
+>   Date:   Sun Sep 21 02:39:45 2008 +0000
+>
+>     Band-aid vfork() emulation (Kirill Shutemov).
+>
+> I can see why they did it that way, but I'm feeling like it ought to
+> be possible to do a better special case vfork impl ni QEMU instead of
+> overloading the fork() impl.
 
-Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
-platform. This commit series adds the Beckhoff CX7200 as new board variant to
-QEMU.
+The difficulty with vfork() (and, more generally, with various of
+the clone() syscall flag combinations) is that because we use the
+host libc we are restricted to the thread/process creation options
+that that libc permits: which is only fork() and pthread_create().
+vfork() wants "create a new process like fork with its own file
+descriptors, signal handlers, etc, but share all the memory space with
+the parent", and the host libc just doesn't provide us with the tools
+to do that. (We can't call the host vfork() because we wouldn't be
+abiding by the rules it imposes, like "don't return from the function
+that called vfork".)
 
-The emulation is able to successfully boot an CX7200 image. The image includes
-some self tests executed on every boot. Only the cache self test fails due to
-QEMU emulating the cache as always being coherent. The self tests include f.e.:
+If we were implemented as a usermode emulator that sat on the raw
+kernel syscalls, we could directly call the clone syscall and
+use that to provide at least a wider range of the possible clone
+flag options; but our dependency on libc means we have to avoid
+doing things that would confuse it.
 
-* Network
-* Flash
-* CCAT DMA + EEPROM [1]
-* TwinCAT (Beckhoff's automation control software [2])
+For vfork in particular, we could I guess do something like:
+ * use real fork() to create child process
+ * parent process arranges to wait until child process exits
+   (via waitpid or equivalent) or it tells us it's about to exec
+ * we make all the guest memory be mapped read-only in the child
+   process, so we can trap writes and tell the parent about them
+   so it can update its copy of the memory.
+   (Sadly since we can't guaranteedly get control on termination
+   events for the child before it really terminates, we can't
+   do this memory-transfer in bulk at the end; otherwise we'd
+   behave wrongly for the "child process gets SIGKILLed" case.)
 
-[1] https://github.com/beckhoff/ccat
-[2] https://www.beckhoff.com/en-us/products/automation/
+Historically we've preferred to go for "assume that guests
+will only want the looser POSIX semantics of vfork(), not the
+tighter ones of the actual Linux syscall", but unfortunately
+glibc has gone for the latter.
 
-Corvin Köhne (1):
-  MAINTAINERS: add myself as reviewer for Beckhoff devices
-
-YannickV (20):
-  hw/timer: Make frequency configurable
-  hw/timer: Make PERIPHCLK period configurable
-  hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
-  hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
-  hw/dma/zynq: Notify devcfg on FPGA reset via SLCR control
-  hw/dma/zynq-devcfg: Simulate dummy PL reset
-  hw/dma/zynq-devcfg: Indicate power-up status of PL
-  hw/dma/zynq-devcfg: Fix register memory
-  hw/misc: Add dummy ZYNQ DDR controller
-  hw/misc/zynq_slcr: Add logic for DCI configuration
-  hw/misc: Add Beckhoff CCAT device
-  hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
-  hw/arm/beckhoff_CX7200: Remove second SD controller
-  hw/arm/beckhoff_CX7200: Remove second GEM
-  hw/arm/beckhoff_CX7200: Adjust Flashes and Busses
-  hw/arm/beckhoff_CX7200: Remove usb interfaces
-  hw/arm/beckhoff_CX7200: Remove unimplemented devices
-  hw/arm/beckhoff_CX7200: Set CPU frequency and PERIPHCLK period
-  hw/arm/beckhoff_CX7200: Add CCAT to CX7200
-  hw/arm/beckhoff_CX7200: Add dummy DDR CTRL to CX7200
-
- MAINTAINERS                       |   7 +
- hw/arm/Kconfig                    |  18 ++
- hw/arm/beckhoff_CX7200.c          | 440 ++++++++++++++++++++++++++++++
- hw/arm/meson.build                |   1 +
- hw/dma/xlnx-zynq-devcfg.c         |  36 ++-
- hw/misc/Kconfig                   |   6 +
- hw/misc/beckhoff_ccat.c           | 365 +++++++++++++++++++++++++
- hw/misc/meson.build               |   2 +
- hw/misc/zynq_ddr-ctrl.c           | 331 ++++++++++++++++++++++
- hw/misc/zynq_slcr.c               |  47 ++++
- hw/timer/a9gtimer.c               |  25 +-
- hw/timer/arm_mptimer.c            |  33 ++-
- include/hw/dma/xlnx-zynq-devcfg.h |   3 +
- include/hw/timer/a9gtimer.h       |   2 +
- include/hw/timer/arm_mptimer.h    |   4 +
- 15 files changed, 1309 insertions(+), 11 deletions(-)
- create mode 100644 hw/arm/beckhoff_CX7200.c
- create mode 100644 hw/misc/beckhoff_ccat.c
- create mode 100644 hw/misc/zynq_ddr-ctrl.c
-
--- 
-2.49.0
-
+thanks
+-- PMM
 
