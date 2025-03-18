@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CDEC282EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98544C35FF8
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 09:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuTfU-0004KE-B9; Tue, 18 Mar 2025 05:55:28 -0400
+	id 1tuTgG-0005cQ-Uo; Tue, 18 Mar 2025 05:56:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTfS-0004Jf-Rb
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:26 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTg0-00052D-6u
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:56:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTfR-0002Jx-1D
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:26 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTfy-0002P0-H3
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742291724;
+ s=mimecast20190719; t=1742291757;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sq7J9lZOSYcZOmZD1s38MNKANQ+oJ7pbEHeCxpv7WWs=;
- b=aSBAlmkaeQp+cay3JMdiECg2TcwxmLl9bvWWCYseYjojTDsoVQOXXTALpFhGQdxApiw2hq
- 3nW/UVptrcOwrz2bSP3sIc9oxf/kOVgRqdAXblCxjpJ/pyyT9f1HIiWXLkhFEsxsNmqAt6
- tcQ/Z5vLYjkE2QpZWjqiNEgwqgHaIpE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=KcjNSdYrsX2unMbrTpIjPfJUfBjPQbzf6Ack58NSSIs=;
+ b=egGVMcrxsIrXbyo0EWWUV85if9qOdkbIqBOUFaioO23/OFoZi5daBS1Sec/rBZR9jCfEx0
+ jrBI915xoWyjXN9iujO6lLYy+uEIm+QhmJ4X0YX3JLonykXCLLcq4RmUy4+/kqbXxEcjrN
+ BRRVCH2syuDjXi8hXSVeMjANNXgiV5k=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-KNbibfl_MAq-gfzQiyz-kg-1; Tue,
- 18 Mar 2025 05:55:21 -0400
-X-MC-Unique: KNbibfl_MAq-gfzQiyz-kg-1
-X-Mimecast-MFC-AGG-ID: KNbibfl_MAq-gfzQiyz-kg_1742291721
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-440-lfwt9TXkOcedLKCaomP54A-1; Tue,
+ 18 Mar 2025 05:55:54 -0400
+X-MC-Unique: lfwt9TXkOcedLKCaomP54A-1
+X-Mimecast-MFC-AGG-ID: lfwt9TXkOcedLKCaomP54A_1742291753
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E63CD1801A06; Tue, 18 Mar 2025 09:55:20 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6BFB19560BB; Tue, 18 Mar 2025 09:55:53 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.25])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A96451828A83; Tue, 18 Mar 2025 09:55:18 +0000 (UTC)
+ id 97FA51828A80; Tue, 18 Mar 2025 09:55:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
 Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH for-10.1 11/32] vfio: Introduce a new header file for
- VFIOcontainer declarations
-Date: Tue, 18 Mar 2025 10:53:54 +0100
-Message-ID: <20250318095415.670319-12-clg@redhat.com>
+Subject: [PATCH for-10.1 23/32] vfio: Move vfio_de/attach_device() into
+ device.c
+Date: Tue, 18 Mar 2025 10:54:06 +0100
+Message-ID: <20250318095415.670319-24-clg@redhat.com>
 In-Reply-To: <20250318095415.670319-1-clg@redhat.com>
 References: <20250318095415.670319-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,149 +86,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gather all VFIOcontainer related declarations into "container.h" to
-reduce exposure of VFIO internals in "hw/vfio/vfio-common.h".
-
-These declarations are made available externally for PPC and s390x.
+These routines are VFIODevice related. Move their definitions into
+"device.c".
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h    | 19 -----------------
- include/hw/vfio/vfio-container.h | 35 ++++++++++++++++++++++++++++++++
- hw/ppc/spapr_pci_vfio.c          |  1 +
- hw/s390x/s390-pci-vfio.c         |  2 +-
- hw/vfio/container.c              |  1 +
- hw/vfio/spapr.c                  |  1 +
- 6 files changed, 39 insertions(+), 20 deletions(-)
- create mode 100644 include/hw/vfio/vfio-container.h
+ hw/vfio/common.c | 37 -------------------------------------
+ hw/vfio/device.c | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 37 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 3d470d79325526e0508683c445a7635c78a57e34..aebce091088f5027c31c7782a1683e763bd766ec 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -39,16 +39,6 @@ enum {
-     VFIO_DEVICE_TYPE_CCW = 2,
-     VFIO_DEVICE_TYPE_AP = 3,
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index df9585d1a471f893da072068f6056bbc6731d448..ed2f2ed8839caaf40fabb0cbbcaa1df2c5b70d67 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1287,40 +1287,3 @@ const MemoryListener vfio_memory_listener = {
+     .log_global_stop = vfio_listener_log_global_stop,
+     .log_sync = vfio_listener_log_sync,
  };
--struct VFIOGroup;
 -
--typedef struct VFIOContainer {
--    VFIOContainerBase bcontainer;
--    int fd; /* /dev/vfio/vfio, empowered by the attached groups */
--    unsigned iommu_type;
--    QLIST_HEAD(, VFIOGroup) group_list;
--} VFIOContainer;
+-bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+-                        AddressSpace *as, Error **errp)
+-{
+-    const VFIOIOMMUClass *ops =
+-        VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+-    HostIOMMUDevice *hiod = NULL;
 -
--OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
- 
- typedef struct VFIODeviceOps VFIODeviceOps;
- typedef struct VFIOMigration VFIOMigration;
-@@ -125,15 +115,6 @@ struct VFIODeviceOps {
-     int (*vfio_load_config)(VFIODevice *vdev, QEMUFile *f);
- };
- 
--typedef struct VFIOGroup {
--    int fd;
--    int groupid;
--    VFIOContainer *container;
--    QLIST_HEAD(, VFIODevice) device_list;
--    QLIST_ENTRY(VFIOGroup) next;
--    QLIST_ENTRY(VFIOGroup) container_next;
--    bool ram_block_discard_allowed;
--} VFIOGroup;
- 
- #define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO \
-diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..fe1a849f884968c47a6ea876fc37b2842cb025da
---- /dev/null
-+++ b/include/hw/vfio/vfio-container.h
-@@ -0,0 +1,35 @@
-+/*
-+ * VFIO container
-+ *
-+ * Copyright Red Hat, Inc. 2025
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+-    if (vbasedev->iommufd) {
+-        ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+-    }
+-
+-    assert(ops);
+-
+-
+-    if (!vbasedev->mdev) {
+-        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+-        vbasedev->hiod = hiod;
+-    }
+-
+-    if (!ops->attach_device(name, vbasedev, as, errp)) {
+-        object_unref(hiod);
+-        vbasedev->hiod = NULL;
+-        return false;
+-    }
+-
+-    return true;
+-}
+-
+-void vfio_detach_device(VFIODevice *vbasedev)
+-{
+-    if (!vbasedev->bcontainer) {
+-        return;
+-    }
+-    object_unref(vbasedev->hiod);
+-    VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
+-}
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 2e0ddec942690514e692b2380a909f15ece430f5..e6a1bbcda2297f9e6272fff9b1c228b6772457ce 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -332,3 +332,40 @@ VFIODevice *vfio_get_vfio_device(Object *obj)
+         return NULL;
+     }
+ }
 +
-+#ifndef HW_VFIO_CONTAINER_H
-+#define HW_VFIO_CONTAINER_H
++bool vfio_attach_device(char *name, VFIODevice *vbasedev,
++                        AddressSpace *as, Error **errp)
++{
++    const VFIOIOMMUClass *ops =
++        VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
++    HostIOMMUDevice *hiod = NULL;
 +
-+#include "hw/vfio/vfio-container-base.h"
++    if (vbasedev->iommufd) {
++        ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
++    }
 +
-+typedef struct VFIOContainer VFIOContainer;
++    assert(ops);
 +
-+typedef struct VFIOGroup {
-+    int fd;
-+    int groupid;
-+    VFIOContainer *container;
-+    QLIST_HEAD(, VFIODevice) device_list;
-+    QLIST_ENTRY(VFIOGroup) next;
-+    QLIST_ENTRY(VFIOGroup) container_next;
-+    bool ram_block_discard_allowed;
-+} VFIOGroup;
 +
-+typedef struct VFIOContainer {
-+    VFIOContainerBase bcontainer;
-+    int fd; /* /dev/vfio/vfio, empowered by the attached groups */
-+    unsigned iommu_type;
-+    QLIST_HEAD(, VFIOGroup) group_list;
-+} VFIOContainer;
++    if (!vbasedev->mdev) {
++        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
++        vbasedev->hiod = hiod;
++    }
 +
-+OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
++    if (!ops->attach_device(name, vbasedev, as, errp)) {
++        object_unref(hiod);
++        vbasedev->hiod = NULL;
++        return false;
++    }
 +
-+#endif /* HW_VFIO_CONTAINER_H */
-diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio.c
-index 76b2a3487b5d6f21528e9c301341eb27bc8fec1d..1722a5bfa3983d42baac558f22410e36eed375f5 100644
---- a/hw/ppc/spapr_pci_vfio.c
-+++ b/hw/ppc/spapr_pci_vfio.c
-@@ -25,6 +25,7 @@
- #include "hw/pci/msix.h"
- #include "hw/pci/pci_device.h"
- #include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/vfio-container.h"
- #include "qemu/error-report.h"
- #include CONFIG_DEVICES /* CONFIG_VFIO_PCI */
- 
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 6236ac7f1e686c9774ade172bf57a1e526b59939..88d4c5b3ecc617c5b93ca53cba0850666db3a67b 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -20,7 +20,7 @@
- #include "hw/s390x/s390-pci-clp.h"
- #include "hw/s390x/s390-pci-vfio.h"
- #include "hw/vfio/pci.h"
--#include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/vfio-container.h"
- 
- /*
-  * Get the current DMA available count from vfio.  Returns true if vfio is
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 7c57bdd27b72731db5cf4f9446d954e143b4747e..75b5ebf4716c55d8c32a845c875981cef8fb5610 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -32,6 +32,7 @@
- #include "trace.h"
- #include "qapi/error.h"
- #include "pci.h"
-+#include "hw/vfio/vfio-container.h"
- 
- VFIOGroupList vfio_group_list =
-     QLIST_HEAD_INITIALIZER(vfio_group_list);
-diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index 021cdedbfa483f0599ad3c858a77fc6570f1ace8..4adfd50967313d1a5c3c4033a57c37eeb3a779a7 100644
---- a/hw/vfio/spapr.c
-+++ b/hw/vfio/spapr.c
-@@ -16,6 +16,7 @@
- #include "exec/address-spaces.h"
- 
- #include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/vfio-container.h"
- #include "hw/hw.h"
- #include "exec/ram_addr.h"
- #include "qemu/error-report.h"
++    return true;
++}
++
++void vfio_detach_device(VFIODevice *vbasedev)
++{
++    if (!vbasedev->bcontainer) {
++        return;
++    }
++    object_unref(vbasedev->hiod);
++    VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
++}
 -- 
 2.48.1
 
