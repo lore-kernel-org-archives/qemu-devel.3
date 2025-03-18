@@ -4,84 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8947EC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 10:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB8AC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 10:20:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuU2M-0005ok-EF; Tue, 18 Mar 2025 06:19:06 -0400
+	id 1tuU3V-0006HZ-4x; Tue, 18 Mar 2025 06:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1tuU1h-0005eq-IK
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:18:33 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1tuU1c-0007wt-IA
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:18:23 -0400
-Received: from hawking.nue2.suse.org (unknown [10.168.4.11])
- by smtp-out1.suse.de (Postfix) with ESMTP id 8BF9121A1F
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 10:18:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742293093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type;
- bh=SxUJkUqRknIe0+svXO5oIru+3Vn7Y3Sds4rDQzm6iuE=;
- b=BHnA5wrmtl0UY6YWsvNjPR7dJwHADVrE2f/Rk3MYBBuCV/wkoaXo5MGctXkinhvsUCfJLb
- lz99qg0iZx14MavI8+3CLNbQCbielaOojlhVvbzkrjyrcV7F2CgAMxPm/Zbb9g6EM6pinC
- p2gqP5kKendu+mK9e7kShMSMmn5P7bc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742293093;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type;
- bh=SxUJkUqRknIe0+svXO5oIru+3Vn7Y3Sds4rDQzm6iuE=;
- b=+Fe/Ey9g6upAq7Nba6jn7Tjavge+a1NoVdZIL3ZlNDG+luZ8tNoprUd77xtQaIlyNWIi3l
- dpy1dCu3EyrZWGCg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742293093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type;
- bh=SxUJkUqRknIe0+svXO5oIru+3Vn7Y3Sds4rDQzm6iuE=;
- b=BHnA5wrmtl0UY6YWsvNjPR7dJwHADVrE2f/Rk3MYBBuCV/wkoaXo5MGctXkinhvsUCfJLb
- lz99qg0iZx14MavI8+3CLNbQCbielaOojlhVvbzkrjyrcV7F2CgAMxPm/Zbb9g6EM6pinC
- p2gqP5kKendu+mK9e7kShMSMmn5P7bc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742293093;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type;
- bh=SxUJkUqRknIe0+svXO5oIru+3Vn7Y3Sds4rDQzm6iuE=;
- b=+Fe/Ey9g6upAq7Nba6jn7Tjavge+a1NoVdZIL3ZlNDG+luZ8tNoprUd77xtQaIlyNWIi3l
- dpy1dCu3EyrZWGCg==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id 7BC6C4A0561; Tue, 18 Mar 2025 11:18:13 +0100 (CET)
-From: Andreas Schwab <schwab@suse.de>
-To: qemu-devel@nongnu.org
-Subject: Generic way to detect qemu linux-user emulation
-Date: Tue, 18 Mar 2025 11:18:13 +0100
-Message-ID: <mvm1puuiqvu.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
+ id 1tuU2y-00064S-02
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:19:44 -0400
+Received: from air.basealt.ru ([193.43.8.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
+ id 1tuU2v-000862-TE
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:19:43 -0400
+Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
+ [217.15.195.17]) (Authenticated sender: rastyoginds)
+ by air.basealt.ru (Postfix) with ESMTPSA id D77B420004;
+ Tue, 18 Mar 2025 13:19:36 +0300 (MSK)
+From: gerben@altlinux.org
+To: qemu-devel@nongnu.org,
+	kwolf@redhat.com,
+	hreitz@redhat.com
+Cc: sdl.qemu@linuxtesting.org,
+	Denis Rastyogin <gerben@altlinux.org>
+Subject: [PATCH] qemu-img: fix division by zero in bench_cb() for zero-sized
+ images
+Date: Tue, 18 Mar 2025 13:19:00 +0300
+Message-ID: <20250318101933.255617-1-gerben@altlinux.org>
+X-Mailer: git-send-email 2.42.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.20 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
- RCVD_NO_TLS_LAST(0.10)[]; ARC_NA(0.00)[];
- RCPT_COUNT_ONE(0.00)[1]; MIME_TRACE(0.00)[0:+];
- RCVD_COUNT_ONE(0.00)[1]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_NONE(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=schwab@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=193.43.8.18; envelope-from=gerben@altlinux.org;
+ helo=air.basealt.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,17 +60,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Is there a generic way for a program to detect that is it being run
-inside the linux-user emulation?
+From: Denis Rastyogin <gerben@altlinux.org>
 
-The purpose for that would be to work around limitations of the
-emulation, like CLONE_VFORK being unsupported.  For example, python >=
-3.13 needs to avoid using posix_spawn in that case, because the
-emulation of CLONE_VFORK as a true fork makes it impossible for it to
-report errors back to the parent process.
+This error was discovered by fuzzing qemu-img.
 
+This commit fixes a division by zero error in the bench_cb() function
+that occurs when using the bench command with a zero-sized image.
+
+The issue arises because b->image_size can be zero, leading to a
+division by zero in the modulo operation (b->offset %= b->image_size).
+This patch adds a check for b->image_size == 0 and resets b->offset
+to 0 in such cases, preventing the error.
+
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+---
+ qemu-img.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/qemu-img.c b/qemu-img.c
+index 89c93c1eb5..2044c22a4c 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -4488,7 +4488,11 @@ static void bench_cb(void *opaque, int ret)
+          */
+         b->in_flight++;
+         b->offset += b->step;
+-        b->offset %= b->image_size;
++        if (b->image_size == 0) {
++            b->offset = 0;
++        } else {
++            b->offset %= b->image_size;
++        }
+         if (b->write) {
+             acb = blk_aio_pwritev(b->blk, offset, b->qiov, 0, bench_cb, b);
+         } else {
 -- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
+2.42.2
+
 
