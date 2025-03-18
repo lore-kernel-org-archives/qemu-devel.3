@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34437C35FF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 09:56:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE33DC35FF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 09:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuTfF-0004FE-6s; Tue, 18 Mar 2025 05:55:13 -0400
+	id 1tuTgQ-0006KU-IY; Tue, 18 Mar 2025 05:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTfB-0004Ce-TR
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTgM-00067t-CW
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:56:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTf9-0002GS-IO
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:55:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuTgG-0002Tb-1g
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742291706;
+ s=mimecast20190719; t=1742291775;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=anPOZEtxH3/bwuKaG3fK/Wl1RN/CiNJW+uU5lmN8zIg=;
- b=S9Ukzn+Pt/1E9x/4GDRsb4IT/Dlhy1uT5nbP/Tw7GwClk7SanXD0cm1YoealRzHLoj2vHx
- E9tarTK8peRHDvZWEqVp5o6yB5OzxxHZurC15VuhJPvZwkAIxaDRslQoAZ7nBsQuvjogHq
- BMEYVzO5Rti9zvSUUgr+onUNbThUl38=
+ bh=jnIlQFepylUsw+IYBb0BbibYTMjn3Fr9vOmoUD/CAeY=;
+ b=g7b8MH+k6Wt02P0KKl6nOjv33I0PUV+tdEtSbpj8IDUgLQPvoj9JZV5iH+sMNxEji/qgk/
+ ekJy+6Nwgbw15Rjw1O3csu+R+fOFGXFYQBViauaHpkZfb0Fyki2DRzapO4vtKnjN55uyn+
+ q6WLeQgvJOetNkL50Exct7B77xrNLkk=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-XVI97yw-OD-atEZDYSPhEw-1; Tue,
- 18 Mar 2025 05:55:04 -0400
-X-MC-Unique: XVI97yw-OD-atEZDYSPhEw-1
-X-Mimecast-MFC-AGG-ID: XVI97yw-OD-atEZDYSPhEw_1742291704
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-uXwkVyx6NLucB6iVKhTWLQ-1; Tue,
+ 18 Mar 2025 05:56:11 -0400
+X-MC-Unique: uXwkVyx6NLucB6iVKhTWLQ-1
+X-Mimecast-MFC-AGG-ID: uXwkVyx6NLucB6iVKhTWLQ_1742291770
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE33519560AE; Tue, 18 Mar 2025 09:55:03 +0000 (UTC)
+ id 54E4B1956076; Tue, 18 Mar 2025 09:56:10 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.25])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BD6C21828A83; Tue, 18 Mar 2025 09:55:01 +0000 (UTC)
+ id BF2731828AAB; Tue, 18 Mar 2025 09:56:07 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
 Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH for-10.1 05/32] vfio: Make vfio_viommu_preset() static
-Date: Tue, 18 Mar 2025 10:53:48 +0100
-Message-ID: <20250318095415.670319-6-clg@redhat.com>
+Subject: [PATCH for-10.1 28/32] vfio: Make vfio_devices_query_dirty_bitmap()
+ static
+Date: Tue, 18 Mar 2025 10:54:11 +0100
+Message-ID: <20250318095415.670319-29-clg@redhat.com>
 In-Reply-To: <20250318095415.670319-1-clg@redhat.com>
 References: <20250318095415.670319-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,60 +86,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This routine is only used in file "migration.c". Move it there.
+vfio_devices_query_dirty_bitmap() is only used in "dirty-tracking.c".
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h | 1 -
- hw/vfio/common.c              | 6 ------
- hw/vfio/migration.c           | 5 +++++
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ hw/vfio/dirty-tracking.h | 3 ---
+ hw/vfio/dirty-tracking.c | 2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 5f082e5a321d97e90066d48cd3c1eaad56912ccb..0aae88131cffda1a90b8ccd0224387133c0fa83a 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -290,7 +290,6 @@ extern VFIODeviceList vfio_device_list;
- extern const MemoryListener vfio_memory_listener;
- extern int vfio_kvm_device_fd;
+diff --git a/hw/vfio/dirty-tracking.h b/hw/vfio/dirty-tracking.h
+index 4b83dc54ab50dabfff040d7cc3db27b80bfe2d3a..322af30b0d5370600719594d4aed4c407f7d2295 100644
+--- a/hw/vfio/dirty-tracking.h
++++ b/hw/vfio/dirty-tracking.h
+@@ -13,9 +13,6 @@ extern const MemoryListener vfio_memory_listener;
  
--bool vfio_viommu_preset(VFIODevice *vbasedev);
- bool vfio_device_state_is_running(VFIODevice *vbasedev);
- bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
+ bool vfio_devices_all_dirty_tracking_started(const VFIOContainerBase *bcontainer);
+ bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
+-int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+-                                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size,
+-                                    Error **errp);
+ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+                           uint64_t size, ram_addr_t ram_addr, Error **errp);
  
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index ace7a4403bd49f35cf85009015b3ba315f80cd30..0b9b071cd0490867bb6aa4ceb261350ccd6e1125 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -65,12 +65,6 @@ int vfio_kvm_device_fd = -1;
-  * Device state interfaces
-  */
- 
--
--bool vfio_viommu_preset(VFIODevice *vbasedev)
--{
--    return vbasedev->bcontainer->space->as != &address_space_memory;
--}
--
- static void vfio_set_migration_error(int ret)
- {
-     if (migration_is_running()) {
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 951e073a20287c46ca199b1648782b59415d0d2a..a1ba993ce549fce0d2a9a60ba07d4782c87c0c09 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -1141,6 +1141,11 @@ bool vfio_mig_active(void)
-     return true;
+diff --git a/hw/vfio/dirty-tracking.c b/hw/vfio/dirty-tracking.c
+index 143cc5cf62b0165565e91f8a2ca166026f16b1eb..9b20668a6d0df93a2cfde12d9a5cd7c223ae3ca1 100644
+--- a/hw/vfio/dirty-tracking.c
++++ b/hw/vfio/dirty-tracking.c
+@@ -1016,7 +1016,7 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
+     return 0;
  }
  
-+static bool vfio_viommu_preset(VFIODevice *vbasedev)
-+{
-+    return vbasedev->bcontainer->space->as != &address_space_memory;
-+}
-+
- /*
-  * Return true when either migration initialized or blocker registered.
-  * Currently only return false when adding blocker fails which will
+-int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
++static int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                  VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
+ {
+     VFIODevice *vbasedev;
 -- 
 2.48.1
 
