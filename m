@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FCEC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 06:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B268FC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 06:16:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuQDs-0002eq-2U; Tue, 18 Mar 2025 02:14:44 -0400
+	id 1tuQFe-0004D0-D2; Tue, 18 Mar 2025 02:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuQDp-0002dZ-H3
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 02:14:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tuQFa-0004AO-BJ; Tue, 18 Mar 2025 02:16:30 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuQDj-0002oz-K7
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 02:14:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742278471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=g4IlVi8Kd9FpdmuECV5xmTf5TXrxvHsvm/wM2NRvvsU=;
- b=bPdgLMiOqpcAxcQtKlujR5tfgVfvR4r8BamyvRaGdQ+PCyk7VanNP2dqaLKvqcADMLGG6c
- j31+bOCzV536cUfd0cpZMDRcjdrhOEIAQOVeIlFELPmVqVT946zs295Al4LuouqSm9/Yxg
- kpWz1wn6nLHpQ8y++WljLxR3z9toKMU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-_1-WI3NxPM6Nwa0oONP44A-1; Tue,
- 18 Mar 2025 02:14:26 -0400
-X-MC-Unique: _1-WI3NxPM6Nwa0oONP44A-1
-X-Mimecast-MFC-AGG-ID: _1-WI3NxPM6Nwa0oONP44A_1742278465
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FAAA180035E; Tue, 18 Mar 2025 06:14:24 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.69])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EF5A41828A80; Tue, 18 Mar 2025 06:14:21 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Niek Linnenbank <nieklinnenbank@gmail.com>
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH] docs/system/arm: Use "functional tests" instead of
- "integration tests"
-Date: Tue, 18 Mar 2025 07:14:20 +0100
-Message-ID: <20250318061420.20378-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tuQFX-0003Z8-EG; Tue, 18 Mar 2025 02:16:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1742278588; x=1773814588;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=fOECzhny/oA7GZROn9Pky9w6OPheaR0WCegJEIidTKI=;
+ b=MDuvNl2lgBKGobfr7bR516lkmsIHHHSoyGJIAUDP9SCgGamErWanhDwJ
+ FVhRizWDBTYP4swVMni+ae/wHl1mjmNM7dP0hTFsWCslxy5pG2olUzaQk
+ 78JCY7Ijr4vEp5u1exLzGPu0N0PqC9NgiLg1cKk+LOMLgs6D0aMW7Fmsc
+ BdKEEBMqj6HvWMs422r2Am2WWTqnHZF2TqtRQbUyqLOrlcEeOgNHF4+Ki
+ cbsybzIE5O77Sl61uFAt8eQjT3ADH+uPu8R1xa/tcTWbA/P28zQXpPWRF
+ YGKP6Q5tmYBEE6/Wdl1zmnNX7hTcAMxV0u0ck0keKyAaMKojXc/TganMt g==;
+X-CSE-ConnectionGUID: pEiKP1hWQB+GMuqoLYtXEA==
+X-CSE-MsgGUID: 9KQx9SajRU22/ahld3Ip3w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="54776627"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="54776627"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2025 23:16:24 -0700
+X-CSE-ConnectionGUID: /4Tq/5tkTkSWxh7EGC7vmw==
+X-CSE-MsgGUID: a151oO44Sea+hAskit1wFQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="122176472"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 17 Mar 2025 23:16:22 -0700
+Date: Tue, 18 Mar 2025 14:36:36 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 13/17] rust/vmstate: Support vmstate_validate
+Message-ID: <Z9kUdJUP0JrkcKMJ@intel.com>
+References: <20250317151236.536673-1-zhao1.liu@intel.com>
+ <20250317151236.536673-14-zhao1.liu@intel.com>
+ <CABgObfauvyAbmt7GewurAEw9d+HanhjvDa1tT=S_4Oo9Huty0g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfauvyAbmt7GewurAEw9d+HanhjvDa1tT=S_4Oo9Huty0g@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01,
- WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,55 +82,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+> > +#[doc(alias = "VMSTATE_VALIDATE")]
+> > +#[macro_export]
+> > +macro_rules! vmstate_validate {
+> > +    ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
+> > +        $crate::bindings::VMStateField {
+> > +            name: ::std::ffi::CStr::as_ptr($test_name),
+> > +            // TODO: Use safe callback.
+> 
+> Why is the TODO still there?
 
-We don't use the term "integration tests" for these kind of tests
-anymore, it's "functional tests" nowadays.
+I forgot to delete this comment...
 
-Suggested-by: Niek Linnenbank <nieklinnenbank@gmail.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- docs/system/arm/bananapi_m2u.rst | 6 +++---
- docs/system/arm/orangepi.rst     | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+> > +            field_exists: {
+> > +                const fn test_cb_builder__<
+> > +                    T,
+> > +                    F: for<'a> $crate::callbacks::FnCall<(&'a T, u8), bool>,
+> > +                >(
+> > +                    _phantom: ::core::marker::PhantomData<F>,
+> > +                ) -> $crate::vmstate::VMSFieldExistCb {
+> > +                    let _: () = F::ASSERT_IS_SOME;
+> > +                    $crate::vmstate::rust_vms_test_field_exists::<T, F>
+> > +                }
+> > +
+> > +                const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
+> > +                    ::core::marker::PhantomData
+> > +                }
+> > +                Some(test_cb_builder__::<$struct_name, _>(phantom__(&$test_fn)))
+> > +            },
+> > +            ..$crate::zeroable::Zeroable::ZERO
+> > +        }
+> > +        .with_exist_check()
+> > +    };
+> 
+> Would it be possible, or make sense, to move most of the code for
+> field_exists inside .with_exist_check()?
+> 
 
-diff --git a/docs/system/arm/bananapi_m2u.rst b/docs/system/arm/bananapi_m2u.rst
-index 6efa222c16f..03cc5618c38 100644
---- a/docs/system/arm/bananapi_m2u.rst
-+++ b/docs/system/arm/bananapi_m2u.rst
-@@ -125,10 +125,10 @@ And then boot it.
- 
-   $ qemu-system-arm -M bpim2u -nographic -sd sd.img
- 
--Banana Pi M2U integration tests
--"""""""""""""""""""""""""""""""
-+Banana Pi M2U functional tests
-+""""""""""""""""""""""""""""""
- 
--The Banana Pi M2U machine has several integration tests included.
-+The Banana Pi M2U machine has several functional tests included.
- To run the whole set of tests, build QEMU from source and simply
- provide the following command:
- 
-diff --git a/docs/system/arm/orangepi.rst b/docs/system/arm/orangepi.rst
-index 716062fca9c..d81f6c3bfd2 100644
---- a/docs/system/arm/orangepi.rst
-+++ b/docs/system/arm/orangepi.rst
-@@ -252,10 +252,10 @@ and set the following environment variables before booting:
- Optionally you may save the environment variables to SD card with 'saveenv'.
- To continue booting simply give the 'boot' command and NetBSD boots.
- 
--Orange Pi PC integration tests
--""""""""""""""""""""""""""""""
-+Orange Pi PC functional tests
-+"""""""""""""""""""""""""""""
- 
--The Orange Pi PC machine has several integration tests included.
-+The Orange Pi PC machine has several functional tests included.
- To run the whole set of tests, build QEMU from source and simply
- provide the following command from the build directory:
- 
--- 
-2.48.1
+If so, the method would be like:
+
+    pub fn with_exist_check<T, F>(
+         mut self,
+         _cb: F
+     ) -> Self
+     where
+         F: for<'a> FnCall<(&'a T, u8), bool>,
+
+Then the use case could be like:
+
+    vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER,
+BqlRefCell<HPETTimer>).with_exist_check<HPETState, _>(foo_field_check),
+
+Here we need to specify the structure type in with_exist_check, though it's
+already specified in vmstate_struct as the first field.
+
+In this way, I understand with_exist_check() doesn't need phantom__()
+trick.
+
+Instead, (after I dropped the few patches you mentioned,) now vmstate_of
+& vmstate_struct could accept the optional "test_fn" field (luckily, at
+least test_fn can still be parsed!), then the example would be:
+
+    vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER,
+BqlRefCell<HPETTimer>, foo_field_check)
+
+And in this way, phantom__() is necessary.
+
+So I think the main issue is the format, which do you prefer?
+
+Thanks,
+Zhao
 
 
