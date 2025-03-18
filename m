@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE7DC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81240C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:35:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tueYA-0001MN-Sv; Tue, 18 Mar 2025 17:32:39 -0400
+	id 1tueZM-0002ii-FN; Tue, 18 Mar 2025 17:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueXt-0001F0-1d
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:21 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tueY6-0001LB-06
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:34 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueXp-0000jw-Uy
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:20 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22438c356c8so107497765ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:32:17 -0700 (PDT)
+ id 1tueY4-0000p6-7x
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:33 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22403cbb47fso116514275ad.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742333536; x=1742938336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742333550; x=1742938350; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zeri+twoEW7Zt/DU9oQuJ6uk1NkyW5mEGlj/nPXa6pY=;
- b=yR9yQ2+amvHN4t/azJqK4tdgz+bOL+y8PRsCX3yqNT05+FQRXhg4GpuuMy6abj9eFo
- vAwidFc697Jhn8KG8M3EnhK3mztKjUZ28tmPqxDUsO77VB8gNQXfblbSm3rSC9Oj41r5
- WQ+US8Xa/Nv+qc01NPt59fNsdLzST8mUzNYHW5zXVoitoJxyGJaRHPeh3Quk+4C5C3eE
- Frss5lrv0LHkAwGgs0RDP+MRZknlLbE2Ui6CmENqd89rqhWhv0f6Xw+CgQUkJOUKl74z
- lO2Zd8hlEYbJ0lJdRCvEY6WKTJ6XR3idfBIrr9P404Iob/KBNO/lIAFFw7REDQDMDIpx
- ntcg==
+ bh=bcMlC8YA6iYsSudLw9pQkFBFmlvqHQzrCYvrc7Y0wec=;
+ b=svJGE8bmdnWGUHctXYnW7T014qBCIIbBcgeiQTg/O+mCEYnndE5oAxQCp2S5K7wD85
+ TEtuGtLLGyR6DCiVfZ9GWRiRkw+xoQdgQyN1F/kEKhVqW6nWeEirpjkwdrolA4dJj6DU
+ EbBdLbHVmm6dE/QkDGyMYjGmfkjBgE2Zr7cIdgqOlMZjxdZA6NzOicEuIqBCF7ZuQvxQ
+ lwxWxlImFxIdIPZ4XSRCKKNjF93s/L+nEQ1xPCv0qaj0qWDxHAcLXHXtIoj/fMjdZwdx
+ 9za+cjkNx9WbMDmf3mVx4u/UE7Wryrv2UgvmoMF0pNCUCWsDQoNpmPFFOndKHZhwgRLl
+ s/rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742333536; x=1742938336;
+ d=1e100.net; s=20230601; t=1742333550; x=1742938350;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zeri+twoEW7Zt/DU9oQuJ6uk1NkyW5mEGlj/nPXa6pY=;
- b=FWLv2n+jXfcq9WpWWpEFw05itBJUWSN6pe66W48BMxjCTJC1xQ97N8PtMbV4Oat/XF
- n41VYCIYRN4aBqYTylwAcIgK/s1JaXHbpvx34aFtkyF8fjVRm1j3pb4P8pjGVY2TQozG
- VZBkTGVnHmiB02E2uXUJCoM0qjP8gDNWTTL8tDSJ+l8hrMs+lz8Q54UjQzwTbg6VA2lY
- nO4mgbbqnnYnwgyq3CJUuKXVIXGFsSP9yuTxOW5+P483029hNZP+TSZ89DDWLOqoi5zW
- kwQpfLN4HSIFTAGYriKET3b9+wjCO+KenZ2xfunNEES4rCHqF94QtPdylCg+WlTaVlcF
- 0mgQ==
-X-Gm-Message-State: AOJu0YxjLq0JiccbOpAC8YUWal5lXZjNsjsWXiwtwmiEUKSWZ1f6iX21
- eQ5kuRGn+fXF+2zWQwawID2wfRv56u7g1wyMyUoKJRgZxVdzSLG7FAlRxv8dX6Li/pKFqWJpLKV
- X
-X-Gm-Gg: ASbGncsze507JB0pB96mQ392ogdyI2UGk8yoGyFkqDd3uxX2wlVwmkQyXkkQIRBAGJz
- +QRsYHfARA1t0IPm/E7NH5/WWXACGTDgsCIT4ebex8S40R1GQ/wxrSLEbE0+rWnrh76H/uNsvEG
- VSb8B40o/ty8MYLE9Gr2xflvTXLMT5NUtKeevpuUDw2KehajmHFi1xlLV8m54fiQvRr2OLImL3k
- iO9NAJakF7z08J8AQqt4vrV6dw3GzYno/rPV94Zqqt621wxcOmG20KxZZpeNb5bdibGl5dckpBH
- RvGq8eP+zuDF2a7a0YMw/HXU6MQoIr4jixHIDM65aNV6+KBtQihMUpkPCJp+byaKQFwqv4zPPp/
- Mj2fINzgSE/s=
-X-Google-Smtp-Source: AGHT+IFK/rup+kGR5eGCv03w0Hi+eluDYKQokxrPz82Mvhice5R4DFoHqFP6cUKK0fZkasI+HJcQIw==
-X-Received: by 2002:a05:6a20:2583:b0:1f5:5b77:3818 with SMTP id
- adf61e73a8af0-1fbece406bbmr296479637.27.1742333536305; 
- Tue, 18 Mar 2025 14:32:16 -0700 (PDT)
+ bh=bcMlC8YA6iYsSudLw9pQkFBFmlvqHQzrCYvrc7Y0wec=;
+ b=NDJrPJaWe0501P7StwqxM+nNqIKS7jWs26cBi4ueoKdVy3P2vrIRNoFb79dA/43BLQ
+ a/BWHdfgH6Dz7IcECWy9rLRGZnh8F/FkzWdfXhhAo9PJK9pUuQbQV2JG00yLID+jszBl
+ wkDp4l8ZZk53H1Kl54aXgcNjQ88/jZWmdYBEw/pvuByoYPKFt6C/TTSrHYrEZUa7Vojv
+ fmHkgmNWKaU+whokbvOFY7pR0rimby407zXsYmA9/GibjT0oECsiem64dMtIlZFTPLdQ
+ CgpuJDdsqhBTLhLKL3eNCnpz4+N9/BZia6gviLp7NvDRyhqedMe+2EnZJcYPtCWJRZsx
+ h4uQ==
+X-Gm-Message-State: AOJu0YwHIWBpc444M0J5voFY2Ubn6+jnQkjbiDFb3mnSB7rtymRSwqAh
+ fPSNp6UuFHIbFJNwxF2W/a2VwhScpgVWth2asO9MozNAXa4in+XxUfCmQsZr1xtfxKK3JfF0vAQ
+ a
+X-Gm-Gg: ASbGncsq9GcZcuXbKoWoOPBPg6mLiGD6Pf2iWRMvYlazgPdwTV+Mq114Tye0pvyzwP6
+ XFOTQepFQEcFW9E+jxYasCyNoc7ISNykqR0ZqrA+U4gApK2UuLlAjGXTh1jlOZnMYoDGSElYxqY
+ OkKiOauJ7WLOybYNQVIAfG437RVN0aXNKd8BqQtXmC3y45geaYIi/8ZCuUst4x2M5S63oi+4hT9
+ bwdAvq8P1gUunRvbR+nBhctFdW5Y/8inZTwfXLI58JoG19o6WaJg7wNP3AiN1k5VFav08aV9KGV
+ KLwQNRKZ3qMyb0lbW6jGhNSkGI5MaNcYecWb+Zg0KJSkuGUoXfvYmqoO0HheLWIrHZXWAizu1+l
+ VGmXVs/Fr6Fg=
+X-Google-Smtp-Source: AGHT+IGGiZ3l00xu2Sjl97BvYp5imG0ES47q4shwsvMdwY+09w0DDEbLT3JHV86O7zvC5q4MZP3g0w==
+X-Received: by 2002:a05:6a20:9151:b0:1f5:8e96:e75f with SMTP id
+ adf61e73a8af0-1fbeba91ffamr305861637.18.1742333550465; 
+ Tue, 18 Mar 2025 14:32:30 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.15
+ 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 14:32:15 -0700 (PDT)
+ Tue, 18 Mar 2025 14:32:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH v2 08/42] include/exec: Inline *_data_ra memory operations
-Date: Tue, 18 Mar 2025 14:31:33 -0700
-Message-ID: <20250318213209.2579218-9-richard.henderson@linaro.org>
+Subject: [PATCH v2 28/42] target/xtensa: Restrict semihosting tests to system
+ mode
+Date: Tue, 18 Mar 2025 14:31:53 -0700
+Message-ID: <20250318213209.2579218-29-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250318213209.2579218-1-richard.henderson@linaro.org>
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,304 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These need to be per-target for 'abi_ptr'.  Expand inline to
-the *_mmuidx_ra api with a lookup of the target's cpu_mmu_index().
+We do not set CONFIG_SEMIHOSTING in
+configs/targets/xtensa*-linux-user.mak.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Do not raise SIGILL for user-only unconditionally.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/cpu_ldst.h     | 144 +++++++++++++++++++++++++++++-------
- accel/tcg/ldst_common.c.inc | 108 ---------------------------
- 2 files changed, 118 insertions(+), 134 deletions(-)
+ target/xtensa/translate.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 4149f04368..a2a90c7554 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -85,17 +85,6 @@ int cpu_ldsw_le_data(CPUArchState *env, abi_ptr ptr);
- uint32_t cpu_ldl_le_data(CPUArchState *env, abi_ptr ptr);
- uint64_t cpu_ldq_le_data(CPUArchState *env, abi_ptr ptr);
- 
--uint32_t cpu_ldub_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--int cpu_ldsb_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--uint32_t cpu_lduw_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--int cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--uint32_t cpu_ldl_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--uint64_t cpu_ldq_be_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--uint32_t cpu_lduw_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--int cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--uint32_t cpu_ldl_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
--uint64_t cpu_ldq_le_data_ra(CPUArchState *env, abi_ptr ptr, uintptr_t ra);
+diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+index 4f02cefde3..cb817b3119 100644
+--- a/target/xtensa/translate.c
++++ b/target/xtensa/translate.c
+@@ -35,14 +35,14 @@
+ #include "tcg/tcg-op.h"
+ #include "qemu/log.h"
+ #include "qemu/qemu-print.h"
+-#include "semihosting/semihost.h"
+ #include "exec/translator.h"
+ #include "exec/translation-block.h"
 -
- void cpu_stb_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
- void cpu_stw_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
- void cpu_stl_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
-@@ -104,21 +93,6 @@ void cpu_stw_le_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
- void cpu_stl_le_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
- void cpu_stq_le_data(CPUArchState *env, abi_ptr ptr, uint64_t val);
- 
--void cpu_stb_data_ra(CPUArchState *env, abi_ptr ptr,
--                     uint32_t val, uintptr_t ra);
--void cpu_stw_be_data_ra(CPUArchState *env, abi_ptr ptr,
--                        uint32_t val, uintptr_t ra);
--void cpu_stl_be_data_ra(CPUArchState *env, abi_ptr ptr,
--                        uint32_t val, uintptr_t ra);
--void cpu_stq_be_data_ra(CPUArchState *env, abi_ptr ptr,
--                        uint64_t val, uintptr_t ra);
--void cpu_stw_le_data_ra(CPUArchState *env, abi_ptr ptr,
--                        uint32_t val, uintptr_t ra);
--void cpu_stl_le_data_ra(CPUArchState *env, abi_ptr ptr,
--                        uint32_t val, uintptr_t ra);
--void cpu_stq_le_data_ra(CPUArchState *env, abi_ptr ptr,
--                        uint64_t val, uintptr_t ra);
+ #include "exec/helper-proto.h"
+ #include "exec/helper-gen.h"
 -
- static inline uint32_t
- cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr_t ra)
+ #include "exec/log.h"
++#ifndef CONFIG_USER_ONLY
++#include "semihosting/semihost.h"
++#endif
+ 
+ #define HELPER_H "helper.h"
+ #include "exec/helper-info.c.inc"
+@@ -2241,17 +2241,15 @@ static uint32_t test_exceptions_simcall(DisasContext *dc,
+                                         const OpcodeArg arg[],
+                                         const uint32_t par[])
  {
-@@ -250,6 +224,124 @@ cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint64_t val,
-     cpu_stq_mmu(env, addr, val, oi, ra);
+-    bool is_semi = semihosting_enabled(dc->cring != 0);
+-#ifdef CONFIG_USER_ONLY
+-    bool ill = true;
+-#else
+-    /* Between RE.2 and RE.3 simcall opcode's become nop for the hardware. */
+-    bool ill = dc->config->hw_version <= 250002 && !is_semi;
+-#endif
+-    if (ill || !is_semi) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "SIMCALL but semihosting is disabled\n");
++#ifndef CONFIG_USER_ONLY
++    if (semihosting_enabled(dc->cring != 0)) {
++        return 0;
+     }
+-    return ill ? XTENSA_OP_ILL : 0;
++#endif
++    qemu_log_mask(LOG_GUEST_ERROR, "SIMCALL but semihosting is disabled\n");
++
++    /* Between RE.2 and RE.3 simcall opcode's become nop for the hardware. */
++    return dc->config->hw_version <= 250002 ? XTENSA_OP_ILL : 0;
  }
  
-+/*--------------------------*/
-+
-+static inline uint32_t
-+cpu_ldub_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldub_mmuidx_ra(env, addr, mmu_index, ra);
-+}
-+
-+static inline int
-+cpu_ldsb_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    return (int8_t)cpu_ldub_data_ra(env, addr, ra);
-+}
-+
-+static inline uint32_t
-+cpu_lduw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_lduw_be_mmuidx_ra(env, addr, mmu_index, ra);
-+}
-+
-+static inline int
-+cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    return (int16_t)cpu_lduw_be_data_ra(env, addr, ra);
-+}
-+
-+static inline uint32_t
-+cpu_ldl_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldl_be_mmuidx_ra(env, addr, mmu_index, ra);
-+}
-+
-+static inline uint64_t
-+cpu_ldq_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldq_be_mmuidx_ra(env, addr, mmu_index, ra);
-+}
-+
-+static inline uint32_t
-+cpu_lduw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_lduw_le_mmuidx_ra(env, addr, mmu_index, ra);
-+}
-+
-+static inline int
-+cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    return (int16_t)cpu_lduw_le_data_ra(env, addr, ra);
-+}
-+
-+static inline uint32_t
-+cpu_ldl_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldl_le_mmuidx_ra(env, addr, mmu_index, ra);
-+}
-+
-+static inline uint64_t
-+cpu_ldq_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldq_le_mmuidx_ra(env, addr, mmu_index, ra);
-+}
-+
-+static inline void
-+cpu_stb_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stb_mmuidx_ra(env, addr, val, mmu_index, ra);
-+}
-+
-+static inline void
-+cpu_stw_be_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stw_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-+}
-+
-+static inline void
-+cpu_stl_be_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stl_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-+}
-+
-+static inline void
-+cpu_stq_be_data_ra(CPUArchState *env, abi_ptr addr, uint64_t val, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stq_be_mmuidx_ra(env, addr, val, mmu_index, ra);
-+}
-+
-+static inline void
-+cpu_stw_le_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stw_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-+}
-+
-+static inline void
-+cpu_stl_le_data_ra(CPUArchState *env, abi_ptr addr, uint32_t val, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stl_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-+}
-+
-+static inline void
-+cpu_stq_le_data_ra(CPUArchState *env, abi_ptr addr, uint64_t val, uintptr_t ra)
-+{
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stq_le_mmuidx_ra(env, addr, val, mmu_index, ra);
-+}
-+
- #if TARGET_BIG_ENDIAN
- # define cpu_lduw_data        cpu_lduw_be_data
- # define cpu_ldsw_data        cpu_ldsw_be_data
-diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
-index 99a56df3fb..2f203290db 100644
---- a/accel/tcg/ldst_common.c.inc
-+++ b/accel/tcg/ldst_common.c.inc
-@@ -248,114 +248,6 @@ void cpu_st16_mmu(CPUArchState *env, vaddr addr, Int128 val,
-  * Wrappers of the above
-  */
- 
--uint32_t cpu_ldub_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    return cpu_ldub_mmuidx_ra(env, addr, mmu_index, ra);
--}
--
--int cpu_ldsb_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    return (int8_t)cpu_ldub_data_ra(env, addr, ra);
--}
--
--uint32_t cpu_lduw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    return cpu_lduw_be_mmuidx_ra(env, addr, mmu_index, ra);
--}
--
--int cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    return (int16_t)cpu_lduw_be_data_ra(env, addr, ra);
--}
--
--uint32_t cpu_ldl_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    return cpu_ldl_be_mmuidx_ra(env, addr, mmu_index, ra);
--}
--
--uint64_t cpu_ldq_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    return cpu_ldq_be_mmuidx_ra(env, addr, mmu_index, ra);
--}
--
--uint32_t cpu_lduw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    return cpu_lduw_le_mmuidx_ra(env, addr, mmu_index, ra);
--}
--
--int cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    return (int16_t)cpu_lduw_le_data_ra(env, addr, ra);
--}
--
--uint32_t cpu_ldl_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    return cpu_ldl_le_mmuidx_ra(env, addr, mmu_index, ra);
--}
--
--uint64_t cpu_ldq_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    return cpu_ldq_le_mmuidx_ra(env, addr, mmu_index, ra);
--}
--
--void cpu_stb_data_ra(CPUArchState *env, abi_ptr addr,
--                     uint32_t val, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    cpu_stb_mmuidx_ra(env, addr, val, mmu_index, ra);
--}
--
--void cpu_stw_be_data_ra(CPUArchState *env, abi_ptr addr,
--                        uint32_t val, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    cpu_stw_be_mmuidx_ra(env, addr, val, mmu_index, ra);
--}
--
--void cpu_stl_be_data_ra(CPUArchState *env, abi_ptr addr,
--                        uint32_t val, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    cpu_stl_be_mmuidx_ra(env, addr, val, mmu_index, ra);
--}
--
--void cpu_stq_be_data_ra(CPUArchState *env, abi_ptr addr,
--                        uint64_t val, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    cpu_stq_be_mmuidx_ra(env, addr, val, mmu_index, ra);
--}
--
--void cpu_stw_le_data_ra(CPUArchState *env, abi_ptr addr,
--                        uint32_t val, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    cpu_stw_le_mmuidx_ra(env, addr, val, mmu_index, ra);
--}
--
--void cpu_stl_le_data_ra(CPUArchState *env, abi_ptr addr,
--                        uint32_t val, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    cpu_stl_le_mmuidx_ra(env, addr, val, mmu_index, ra);
--}
--
--void cpu_stq_le_data_ra(CPUArchState *env, abi_ptr addr,
--                        uint64_t val, uintptr_t ra)
--{
--    int mmu_index = cpu_mmu_index(env_cpu(env), false);
--    cpu_stq_le_mmuidx_ra(env, addr, val, mmu_index, ra);
--}
--
--/*--------------------------*/
--
- uint32_t cpu_ldub_data(CPUArchState *env, abi_ptr addr)
- {
-     return cpu_ldub_data_ra(env, addr, 0);
+ static void translate_simcall(DisasContext *dc, const OpcodeArg arg[],
 -- 
 2.43.0
 
