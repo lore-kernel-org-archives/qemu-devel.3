@@ -4,73 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B5EC28B28
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 16:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D0FC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 16:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tua1i-00026k-H1; Tue, 18 Mar 2025 12:42:50 -0400
+	id 1tua3t-0003Si-7F; Tue, 18 Mar 2025 12:45:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tua1d-00025r-Sf
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 12:42:45 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ id 1tua3l-0003Na-BG
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 12:44:58 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tua1S-0007tf-6v
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 12:42:45 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e6582542952so864397276.3
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 09:42:30 -0700 (PDT)
+ id 1tua3i-0008AB-Q9
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 12:44:57 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e637669ef11so4693298276.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 09:44:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742316150; x=1742920950; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=S+u1fpDV2HCsOzvClPbiSBrO0B9TKgb3d0wC6KYgsHI=;
- b=grG88Y9l3JfgFFUcpztqnQl5Ccb7UYqKreNvj4ZorBGEB9rg6Pp4vLf4OhZdW+tMMU
- 9u7XM05cH0DRDU7YsJCLIkYXwT2iEnAbmF7blvgAsxz+MkyDYugoVsnOXhuBjjW25Q+k
- +GBv1WzbS/rNTmQym7bSw3HtV9n1gaFWyamHvTuZdXDQzRdpDNf2qX2XO6yplsHrwTWQ
- glNdNzdnHw+Bbxm+zMtfA3ra7eb5U8u8//AED36H+QzI9iJXDbKHNv7sKZM+arYSMk38
- cFBXli2kSNuG3wXpZre4urEYDW2S+8Fnh1jv6vfRLN9Cl/8KZ4wiSNC1T9DtGWsTlKsE
- ZIVA==
+ d=linaro.org; s=google; t=1742316293; x=1742921093; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DxymLJOtCZRQU9k/3n/xUwbsWZOIVp57KGBRdzEeaYk=;
+ b=ug1jV8fOCmJHWfvTmQLMbLXzluorxZp0nhFQqss5mucD1tKcaLYC0hqEYDZ7TlZ/iO
+ 11Xt+okR8U5SYv2FNm9TpuIy/h5aYKb1egAYwmMV+mNJYxVzuf6HbrapLWzZzllqV6ta
+ +aILQ90Ar7qIEaZNDHOgU1aIuMG1T7delWlvtOFEo++inhdzVkh1XKLqGHS1Etcbualg
+ uqh+M5uzZ5+kWjk8wY6XW00GBLoCSP3PfxDb3PKKk2xWP9DrQ99gw0z6F4I9BwWEJ+bx
+ qRELoWb6QmrKTS7BTKZWEEcj5hcoZvNZkMXzy/IK8rWxDBtGBRQ+8kX2B8RvVPJjqwDH
+ MK1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742316150; x=1742920950;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=S+u1fpDV2HCsOzvClPbiSBrO0B9TKgb3d0wC6KYgsHI=;
- b=eEBhcSchQZwwpyuFbxdJsuj6j+SWIUMTWzs2OdZnxh9JGAjnLWyBv9IlKIvDIxjiPl
- QbDI2IsnYqGOqgE0oq1bbY4XrglETKiTrKvMlxjSTK3RUxb+qX6wznLo5qINahGHiQ9N
- AhAGe21BWbsN9Y96uoJg9c019OlXukqS4X7d0hGPjq6Q8VYGaneDCWzCZjQHw0ccnPN+
- 1AkioS9kDgC2HYy+MRthKRbduRNF3qjRhEjMhDm74ih66LqdIZ5Z0ZPV0zVax/5/tWxC
- NpsPsgbj18cMaBeKL3P06fiJ/pWuxVQ67FEQMTFnZq0fzOiiSBEc1hiSKxPc7lM3kcN+
- /4MA==
-X-Gm-Message-State: AOJu0YxS+/C0ntCK19NsRcYcDcsBuVOxS/7N7D2AL0fl8WBmv+wh7fSx
- iKiuUKDOh7/D2x0hSUVOU2L7ujZice0a1P8RSE8cN7yeALWo/WRq8q4hBJrRD/If0Sp2/ABzYhM
- QLk8aqny+wc+d3AlNRksx0ja29d535bqvEwEppXiy4unyT+qq
-X-Gm-Gg: ASbGncsm0x64pmto+gDOB//d09yGTzzfsIHxsD1KV0frS8r35sRh1djYtb63GrN1GCM
- hhMbOdvxD7QCd2aNLtl2ioxFAnzfk0kkrT+rbSgKr3rhXRxi5tJL67c5Qtgzh5KfUN0gNeWfEG0
- BMyq0HaI7KE2Nix+Fx2R/93WzLia0=
-X-Google-Smtp-Source: AGHT+IHQZuUB7IrHcPiqkDUGxyEcQ9ZbmTmaaf+dHK62z/Y77V27zvq9OmEqfihu//b6N+m44CWVWn+H5eICHl5njDM=
-X-Received: by 2002:a05:6902:1890:b0:e5b:3ad3:4010 with SMTP id
- 3f1490d57ef6-e64c0e1accfmr6588944276.31.1742316149742; Tue, 18 Mar 2025
- 09:42:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742316293; x=1742921093;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DxymLJOtCZRQU9k/3n/xUwbsWZOIVp57KGBRdzEeaYk=;
+ b=WVYG5GfcPq3KU3Ol6UldsqhrSZ2lGf7qK9SfQXBi1AQh/XfsWC2ZiBrS5+yF1ec02h
+ z8x8gk3hjjvZ9sCDeIJutWDPmNecGezd2PMUznEe0LVEeemc0XJfl9jiiEXg9jEJELg2
+ jq2i7FfLkauGxqOda7kTJz6n15YdyTHykTYK0yF5fzG1Zd44Z2g0RiyzuThipMseI3as
+ lCAGazO6SLExhBzuMt/sQTKBscrYqysu3Qb56rB2Mp//YNAF8kNH4xJdFzMeIMaxt7Ru
+ JMKNT+kYGA38Nn2a8cua/s/Z0cItAyAtuXF1XQCR/R9PokR0FXo2FadAA+TeRJM4zvY2
+ jI7w==
+X-Gm-Message-State: AOJu0YwTC4xSxq3BW4AW4Bakc2IL1PQHiKXSbhMqw3kFujyH+vGfQnxR
+ iLXPy95X4ORCbwGbFCHPPqF6Yb/ldAi+fHjiKZLAa7PsaHLw0cVkEKvo4elYp4JcuEtsWtoiAaw
+ ynVTWFmIMJv1ymbKf7jlCa5l81LiHsZYnVng0pQ==
+X-Gm-Gg: ASbGncvG2cWvhMPKPJHuETWtvr39PPuEjvnWiFDx5YGOjU0/+HT+Z5iSAMCmeB674hs
+ m2aM0x6OIDaYkLESVetAlix9wobWSuuNtXE3v0dPZGtyzwFYmWPol9/TUDVOjDC64WYMrxAIZ2T
+ DI+Rawkw22AWNiFx2xfAdBK48PVhk=
+X-Google-Smtp-Source: AGHT+IFidgrF62xu/KhYGUfEuhYnyfJ5OB82z04KbQKXl+tPGeEMRcC0hdJWr/UZaMzGgow+3V/qNBuTu1Fx6lRYJek=
+X-Received: by 2002:a05:6902:2686:b0:e60:af56:73ea with SMTP id
+ 3f1490d57ef6-e64af11e781mr6429815276.11.1742316293166; Tue, 18 Mar 2025
+ 09:44:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250307124602.1905754-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250307124602.1905754-1-dbarboza@ventanamicro.com>
+References: <20240909141635.1459701-1-berrange@redhat.com>
+ <20240909141635.1459701-11-berrange@redhat.com>
+In-Reply-To: <20240909141635.1459701-11-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 18 Mar 2025 16:42:18 +0000
-X-Gm-Features: AQ5f1Jrza_7dRzLh17j1N3Ui7uyjHS06_ZSu-pcc89B7uvkRBwiNIAeA5y4WGBA
-Message-ID: <CAFEAcA_P3XbJ-H9O=K-U7HtBAU9c=0TngEfV8fpQxcH0JRuGVA@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv/csr.c: fix OVERFLOW_BEFORE_WIDEN in
- rmw_sctrdepth()
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+Date: Tue, 18 Mar 2025 16:44:41 +0000
+X-Gm-Features: AQ5f1JqYldacM9PDtx-DkZq7TGfoD4R0hghMdu2nfo8CYg0SKPdWX2yfpch70PQ
+Message-ID: <CAFEAcA_xCa4NjyDt6M+n6KdXTUWRfdSkymW-AqupXRQC97DKcQ@mail.gmail.com>
+Subject: Re: [PULL 10/10] crypto: Introduce x509 utils
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,44 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 7 Mar 2025 at 12:46, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Mon, 9 Sept 2024 at 15:21, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> Coverity found the following issue:
+> From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 >
->   >>>     CID 1593156:  Integer handling issues  (OVERFLOW_BEFORE_WIDEN)
->   >>>     Potentially overflowing expression "0x10 << depth" with type
->   "int" (32 bits, signed) is evaluated using 32-bit arithmetic, and then
->   used in a context that expects an expression of type "uint64_t" (64
->   bits, unsigned).
->   4299             depth = 16 << depth;
->
-> Fix it by forcing the expression to be 64 bits wide by using '16ULL'.
->
-> Resolves: Coverity CID 1593156
-> Fixes: c48bd18eae ("target/riscv: Add support for Control Transfer Records extension CSRs.")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/csr.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 0ebcca4597..e832ff3ca9 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -4296,7 +4296,7 @@ static RISCVException rmw_sctrdepth(CPURISCVState *env, int csrno,
->          }
->
->          /* Update sctrstatus.WRPTR with a legal value */
-> -        depth = 16 << depth;
-> +        depth = 16ULL << depth;
->          env->sctrstatus =
->              env->sctrstatus & (~SCTRSTATUS_WRPTR_MASK | (depth - 1));
->      }
+> An utility function for getting fingerprint from X.509 certificate
+> has been introduced. Implementation only provided using gnutls.
 
-This is a clear false-positive from Coverity, by the way: we just
-checked and enforced that depth is at most SCTRDEPTH_MAX, i.e. 4,
-and 16 << 4 cannot possibly overflow anything.
+Hi; recent changes in the codebase mean that one of Coverity's
+"maybe this needs an error check" heuristics is now triggering
+for this code (CID 1593155):
 
+> +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+> +                                      QCryptoHashAlgorithm alg,
+> +                                      uint8_t *result,
+> +                                      size_t *resultlen,
+> +                                      Error **errp)
+> +{
+> +    int ret =3D -1;
+> +    int hlen;
+> +    gnutls_x509_crt_t crt;
+> +    gnutls_datum_t datum =3D {.data =3D cert, .size =3D size};
+> +
+> +    if (alg >=3D G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
+> +        error_setg(errp, "Unknown hash algorithm");
+> +        return -1;
+> +    }
+> +
+> +    if (result =3D=3D NULL) {
+> +        error_setg(errp, "No valid buffer given");
+> +        return -1;
+> +    }
+> +
+> +    gnutls_x509_crt_init(&crt);
+
+gnutls_x509_crt_init() can fail and return a negative value
+on error -- should we be checking for and handling this
+error case ?
+
+thanks
 -- PMM
 
