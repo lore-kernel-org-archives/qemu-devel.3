@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB712C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 04:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D61C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 04:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuOx6-000284-Nh; Tue, 18 Mar 2025 00:53:21 -0400
+	id 1tuOx3-0001xo-TN; Tue, 18 Mar 2025 00:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuOvd-0001FC-0A
+ id 1tuOvb-0001Es-9t
  for qemu-devel@nongnu.org; Tue, 18 Mar 2025 00:51:50 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuOvZ-0008Vo-Sz
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 00:51:48 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22423adf751so86810155ad.2
- for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 21:51:45 -0700 (PDT)
+ id 1tuOvX-0008TT-6A
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 00:51:46 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-225477548e1so89195245ad.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Mar 2025 21:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742273504; x=1742878304; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742273499; x=1742878299; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ek8XPpj4hrtyNGDcqo+uXNBksQzSJC0Hy5Yo4DqMKUU=;
- b=TkMeUbTbWVSTVfGDQStjx7cusWg7+O7d4xjQH6x4Sq/6Lj3Ap9SWyUXOlshSXGOpTB
- Szs2Ld1Eb2nfh5YnYBcFQ6agheZyX7MtPM7cdSpx4VmXWcpsaUqQvPXQz+CC1AnmxHEN
- SSlUnS0RTcfQWIMdTfKaFzYm6GLxoLYNzOpFKdqgS+NA4rtsPSF80q4IXQn8CVSTh5eH
- 6EA1z00ggWuZtG2PC/2OCW0ZpPYneMu8/LOIfLN7gTUp8mhwUuZqtk/Z7qJzQEUebV9V
- RI8gK2HGBDLWm409+AjHYQYNXZcixJV1Z1ePd125Gn9xqWHtC3KaxdJc5+Uegp5jlWyE
- J7UQ==
+ bh=FSHS1XcppE5ZPP6nkhpeNl/9mIWtetza6WviZOkY9i8=;
+ b=X9VkslHAv5ETXYPuKPXk/N2vU7upsoRkNAoC9EykVv44DanNuOHy8NwG9ukf+JMC3f
+ dVxlSoVrlelk/s2AUrP0ATbz9FspP+WPdSaAOSu/B393myIuYZS8/r57/UoDSaSnBSGg
+ QIAmR7tUpUpvIu2rOFwiT9y7bLZiloPTIc2FhnVwWvyhDJq++SBiRj8vthmUI4TTQDXI
+ GwZH40wkxT0V5+w/oZx9MgBNIXMwiywvYZbBs4Q0AAFRivLgo1ubxaffMk0geKVefVWR
+ hzzETPrEzDr7607lPnyHFh2lFGOCzQiUnofjN3COtPhR3InIOqCRdocKo+nII/FM4MHJ
+ J9JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742273504; x=1742878304;
+ d=1e100.net; s=20230601; t=1742273499; x=1742878299;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ek8XPpj4hrtyNGDcqo+uXNBksQzSJC0Hy5Yo4DqMKUU=;
- b=dUCd+n36sMloXXruuhE2ZzbYJ4D5Y6BqP1Rolo8MV3W/VH7iih2kFh9DwwEA4eE7Tm
- NDC/2ApXyFh7R8sWeqRkd6Y1vwjdJdbyRJfAI8xkLG5QxKdvuwIYlNLxaz/t3VZvxwJY
- HdT/0KAJnIR3yBYLmxg6FYx2d6dA0ioX0zlfYWJjUm7lceCztYZ1yzQyWP7yG258q4L9
- zELK/evb5VYbKEIQbHZE1GsBN2N7GIQuzi07MDNaNl99LKqRKLP3mAgJ80bg2MoAZRxp
- iQwIbAVdXVdrX3dB+NUUeoQyHi9HKick0JLyXouULQuOVJZ9x7PmuWE+b6ejk+Tk6dij
- 9Evg==
-X-Gm-Message-State: AOJu0YxEQph7TwNFBlhodaoWt/UC+MB8n6d7to+fZn0N86MLsD4LUUcZ
- 9F9yx3+gECK9oHlNtzbE7k6QzIB1PBW/ioexNHFtnQD/kBh1NQE+msgRMG45KATRBsehUwWs/vv
- w
-X-Gm-Gg: ASbGncuX2rN05Ad7qwspxs0Ly7xl/6R8e+FJTryUi3YVxB4KwEAWzCLZC4c+r/Q94c2
- 3XSEsHkZ0nLCjgQvtfXvKjIWpQxXtUHHJfU5YZ8tT/97cXja1ePdglaT5LHmqCvOnxtMUG3ixa2
- xw/3ylBbTIV6w5ySrX8BTUXRVEfZvyTPlum21PTxWtXlNimOGoaWu4oHPbm9gdnfpAxB9AKahP4
- 2YSvK8NOr3Qv1B9koGu+Yy9DT2TXxrC+IAjC4uwLXj6G7ebhZIF05zVOVZ0G5vS/sGdNFnc79Z+
- CIGxGG0zep3LGuXmK46t3hot3Nup9AhvRWcuK9/3G6F1
-X-Google-Smtp-Source: AGHT+IGT3hRB7cgRAOTfF6ymEpowIUFgQzMXE5GAC2ISpsBZy5NX8Js4RVALQRBZLAuQQLxc3QHe/w==
-X-Received: by 2002:a05:6a21:68e:b0:1f5:82ae:69d1 with SMTP id
- adf61e73a8af0-1f5c12098fcmr21810295637.20.1742273504481; 
- Mon, 17 Mar 2025 21:51:44 -0700 (PDT)
+ bh=FSHS1XcppE5ZPP6nkhpeNl/9mIWtetza6WviZOkY9i8=;
+ b=nWBvMGMaOcJn4hnEzHgi9F+vlvFWNBfCRr1P7jKBZEGcnRQgHoWbHyjcsRbkbJr5aM
+ 6uKt9w5OrT4L/S7btTHFS0Gd/PcxQeMvHzzIMeFo9wgIMIqJfM92vK+AYTutGN79tKiY
+ EWWnZYSuRlS1fd6cfC+NkJuB7fAm0KdjwMCT8Zt4SJoV1jh+BfaASrSfsguH96fgJ296
+ Ge1brwPX1K0kW8SVZOM07NiFXKv4LMRKzlzYBbXKGtB6IMPNGKMOf1gP86FMylb3rr8I
+ L+gGVFpHB8figecWEEn/JfJw+0z1ihidrYpgZzqoDc+dmWb+22MbyPltFld2mUVSqQ5v
+ lViA==
+X-Gm-Message-State: AOJu0Yy3OD+wQZIYf9pk94MKmm3kh7bArz8Lz/ssOORZEFPj6TYGJabe
+ 6nbpCrAAy8yaKOUyaFvjMay/K7HdzA7SLXEagaD02wDegIYcFkrdpnHL6xreVLpDeUr9eu3qKa3
+ r
+X-Gm-Gg: ASbGncunEg2STYc6brwSx3lGGMzgcEWXv+f640hmoKGw4dWjxFXnWX0K/Pwb4ffEuJj
+ wnL6mHsqxa86w7UoOin/IvtpRkAwygj1fJEEqRErhx4tCaxkRQF4DIn/Kxi6ypwGouw2Bgphttt
+ 92un5SURyMKdQ8xG6VA7wCdoGiAnyZZfsj3QKQjXP2Yxihox/KwFgkXGEPvZPAP6hIeyTUGFVxp
+ ZVlstp0e095ryp8jWzTYD3VGc1c2L49EH4GYfbsVg7Rqn8o20BghdhdXJrwiqDrpeQBvodNWC3I
+ LBRWyAA4IxeqnCsMAfzTrOKZ15KpEsbBiPATH2spB1+k
+X-Google-Smtp-Source: AGHT+IGLHGqHmqYs4ezZCOm2c2SvTDjQRRs33WUEidalhqMBp81xlxxvFOnPgr1sAs0uuf26mtAqeA==
+X-Received: by 2002:a05:6a00:4649:b0:728:e2cc:bfd6 with SMTP id
+ d2e1a72fcca58-7372240beeemr19161977b3a.18.1742273498760; 
+ Mon, 17 Mar 2025 21:51:38 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711694b2csm8519195b3a.129.2025.03.17.21.51.43
+ d2e1a72fcca58-73711694b2csm8519195b3a.129.2025.03.17.21.51.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Mar 2025 21:51:44 -0700 (PDT)
+ Mon, 17 Mar 2025 21:51:38 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -73,16 +73,16 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 12/13] meson: add common hw files
-Date: Mon, 17 Mar 2025 21:51:24 -0700
-Message-Id: <20250318045125.759259-13-pierrick.bouvier@linaro.org>
+Subject: [PATCH 06/13] exec/poison: KVM_HAVE_MCE_INJECTION can now be poisoned
+Date: Mon, 17 Mar 2025 21:51:18 -0700
+Message-Id: <20250318045125.759259-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
 References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,85 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those files will be compiled once per base architecture ("arm" in this
-case), instead of being compiled for every variant/bitness of
-architecture.
-
-We make sure to not include target cpu definitions (exec/cpu-defs.h) by
-defining header guard directly. This way, a given compilation unit can
-access a specific cpu definition, but not access to compile time defines
-associated.
-
-Previous commits took care to clean up some headers to not rely on
-cpu-defs.h content.
+We prevent common code to use this define by mistake.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ include/exec/poison.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 672a0f79d11..0dec7d9750e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3689,6 +3689,7 @@ hw_arch = {}
- target_arch = {}
- target_system_arch = {}
- target_user_arch = {}
-+hw_common_arch = {}
+diff --git a/include/exec/poison.h b/include/exec/poison.h
+index 8ed04b31083..816f6f99d16 100644
+--- a/include/exec/poison.h
++++ b/include/exec/poison.h
+@@ -67,4 +67,6 @@
+ #pragma GCC poison CONFIG_WHPX
+ #pragma GCC poison CONFIG_XEN
  
- # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
- # that is filled in by qapi/.
-@@ -4065,6 +4066,33 @@ common_all = static_library('common',
-                             implicit_include_directories: false,
-                             dependencies: common_ss.all_dependencies())
- 
-+# construct common libraries per base architecture
-+hw_common_arch_libs = {}
-+foreach target : target_dirs
-+  config_target = config_target_mak[target]
-+  target_base_arch = config_target['TARGET_BASE_ARCH']
++#pragma GCC poison KVM_HAVE_MCE_INJECTION
 +
-+  # check if already generated
-+  if target_base_arch in hw_common_arch_libs
-+    continue
-+  endif
-+
-+  if target_base_arch in hw_common_arch
-+    src = hw_common_arch[target_base_arch]
-+    lib = static_library(
-+      'hw_' + target_base_arch,
-+      build_by_default: false,
-+      sources: src.all_sources() + genh,
-+      include_directories: common_user_inc,
-+      implicit_include_directories: false,
-+      # prevent common code to access cpu compile time
-+      # definition, but still allow access to cpu.h
-+      c_args: ['-DCPU_DEFS_H', '-DCONFIG_SOFTMMU'],
-+      dependencies: src.all_dependencies())
-+    hw_common_arch_libs += {target_base_arch: lib}
-+  endif
-+endforeach
-+
- if have_rust
-   # We would like to use --generate-cstr, but it is only available
-   # starting with bindgen 0.66.0.  The oldest supported versions
-@@ -4230,8 +4258,14 @@ foreach target : target_dirs
-   arch_deps += t.dependencies()
- 
-   target_common = common_ss.apply(config_target, strict: false)
--  objects = common_all.extract_objects(target_common.sources())
-+  objects = [common_all.extract_objects(target_common.sources())]
-   arch_deps += target_common.dependencies()
-+  if target_type == 'system' and target_base_arch in hw_common_arch_libs
-+    src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
-+    lib = hw_common_arch_libs[target_base_arch]
-+    objects += lib.extract_objects(src.sources())
-+    arch_deps += src.dependencies()
-+  endif
- 
-   target_specific = specific_ss.apply(config_target, strict: false)
-   arch_srcs += target_specific.sources()
+ #endif
 -- 
 2.39.5
 
