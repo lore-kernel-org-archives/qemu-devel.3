@@ -4,56 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC225C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 15:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADC5AC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 16:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuZJ7-00038G-U2; Tue, 18 Mar 2025 11:56:46 -0400
+	id 1tuZjx-00033x-Nd; Tue, 18 Mar 2025 12:24:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tuZJ5-00036Z-Qg
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 11:56:43 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tuZJ2-0002ZA-Dj
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 11:56:43 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZHGY63HnJz6H6m1;
- Tue, 18 Mar 2025 23:51:38 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 42A54140933;
- Tue, 18 Mar 2025 23:56:26 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 18 Mar
- 2025 16:56:25 +0100
-Date: Tue, 18 Mar 2025 15:56:24 +0000
-To: <anisa.su887@gmail.com>
-CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <linux-cxl@vger.kernel.org>, Anisa Su <anisa.su@samsung.com>
-Subject: Re: [PATCH 2/9] cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
-Message-ID: <20250318155624.00006410@huawei.com>
-In-Reply-To: <20250317164204.2299371-3-anisa.su887@gmail.com>
-References: <20250317164204.2299371-1-anisa.su887@gmail.com>
- <20250317164204.2299371-3-anisa.su887@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuZjY-0002vM-8P
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 12:24:08 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuZjW-0001aC-2c
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 12:24:03 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e5ad75ca787so5058331276.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 09:23:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742315038; x=1742919838; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UppjjWlWSTLKDWRjdyvOdEUFM+09Ar8wGDH4QMQJtJg=;
+ b=FgBY2ZrbmPmFLhl6EDMTOcHFbjuQ9Ncci+Jj2C70wWePLzgrWzavvuAgDjiVEjtvcT
+ vAnauGsKMkT6p6/EpCkeUl/arIQlO/dMRVMWrEnDVRTmXfY03yr0fOzBKdI0We2rLnUN
+ 5gcuZ+vM32cyX5IGzS44M7ZncIAVskKD0H/PGwiP8ijCnIG07Rj6FZoZ68wUfQJ1uWiQ
+ 55WigwEgbiEQfIrjUWn4n5XGrzwcvpgvZBz1aAOa8J8z40dZYHGPbDJZ0vFAstVKb/00
+ n9blIX33fobAQfq03cnfeI7l7PqSX3bRg1k9LvHGLuwOsasXFSH940Koyv0UcSpjloom
+ LJjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742315038; x=1742919838;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UppjjWlWSTLKDWRjdyvOdEUFM+09Ar8wGDH4QMQJtJg=;
+ b=KqHj8FGgpyeH0Jzy7eMqAh4LEtdncn3v7EWUVdzA9PlXTBnc3ulsruqGifRcfiAJrk
+ fBDrPJ0rqRBYR6Bsr7Z29fGItXLnQvshc2uT+AXSY4rQ3iwfYkuBgB1Uiu3eLlyMMM0F
+ aqDn97W5HPNoUPefPpAxSurpeRItwVyjzee1bEpi/vV4ts0jofwb1kWUYNE3jALTr1Kz
+ J0YqXWFRsaWLooYkHOCf8sl4gUaQQanpowSNkiC6tVWmc64vsxDmfSwyG4fbMxadjOUQ
+ aodqPVFsNhKKWv9Czqs/RY9OB1s8Ylp6rs1YNt5F3v92GlrgCvr6HKuB78z79LqSSj7i
+ SxJA==
+X-Gm-Message-State: AOJu0Yz+DhGV2WNMoKqmykmLS/L/hl5A1yREg7bALDiv/95h2gdXY5FK
+ NY+8LJJGeoqkwVjkU2xqfKxfJhyGFRaBrsN3UxPmb/eFYigF6o6BfRqQ4vkdFHhwq/TA7kGwptJ
+ PIn6Duz2Yy+ehxn3WkfslxY7ZYv0DXtyG9VEexA==
+X-Gm-Gg: ASbGnctkCLIh+MFKYgvqHaFWoXPbO799GFxMzfzWfmBKGUvxT8GiiclIkZaKmsSBHiT
+ 9n1U8wzVzR899GaLrmyHH3FyfDVqtgJdpI6SQ8R75Afq22aK/sjwHycv/9ww6J7LB+PLt+kn7x4
+ Ca8cFprjN+UKL3KmwqzJ3Tom98e87SV5UzYJSw0w==
+X-Google-Smtp-Source: AGHT+IHhFxRAmLC45GEZDWj8bbxNM/R/ZALB27ky2WP4bZ7IUeeDZe55PscTAcrFUCHxRgUYyxeCH5XviUTrsKGSEyc=
+X-Received: by 2002:a05:6902:1ac2:b0:e5e:18bc:f17 with SMTP id
+ 3f1490d57ef6-e65118f92c3mr5198769276.1.1742315037885; Tue, 18 Mar 2025
+ 09:23:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250307021934.1080115-1-gaosong@loongson.cn>
+ <20250307021934.1080115-3-gaosong@loongson.cn>
+In-Reply-To: <20250307021934.1080115-3-gaosong@loongson.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 18 Mar 2025 16:23:46 +0000
+X-Gm-Features: AQ5f1Jr02re6pAX0dhbhBXV57quliRglQB0QndJaf1hfrSVQXty9tyy3EtvKA_o
+Message-ID: <CAFEAcA_7x4Ee5gj=CP_XbR+bcZJdXJfqjJ6c6ix8OVvAmxKs3A@mail.gmail.com>
+Subject: Re: [PULL 2/2] target/loongarch: check tlb_ps
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, stefanha@gmail.com, maobibo@loongson.cn
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,180 +89,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Mar 2025 16:31:29 +0000
-anisa.su887@gmail.com wrote:
+On Fri, 7 Mar 2025 at 02:42, Song Gao <gaosong@loongson.cn> wrote:
+>
+> For LoongArch th min tlb_ps is 12(4KB), for TLB code,
+> the tlb_ps may be 0,this may case UndefinedBehavior
+> Add a check-tlb_ps fuction to check tlb_ps,
+> to make sure the tlb_ps is avalablie. we check tlb_ps
+> when get the tlb_ps from tlb->misc or CSR bits.
+> 1. cpu reset
+>    set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits a default value
+>    from CSR_PRCFG2;
+> 2. tlb instructions.
+>    some tlb instructions get  the tlb_ps from tlb->misc but the
+>    value may  has been initialized to 0. we need just check the tlb_ps
+>    skip the function and write a guest log.
+> 3. csrwr instructions.
+>    to make sure CSR_PWCL.PTBASE and CSR_STLBPS.PS bits are avalable,
+>    cheke theses bits and set a default value from CSR_PRCFG2.
+>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+> Message-Id: <20250305063311.830674-3-gaosong@loongson.cn>
 
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Section 7.6.7.6.1
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 67 ++++++++++++++++++++++++++++++++++++++
->  hw/cxl/i2c_mctp_cxl.c      |  6 +++-
->  2 files changed, 72 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 1b62d36101..e9991fd1a7 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -122,6 +122,8 @@ enum {
->          #define MANAGEMENT_COMMAND     0x0
->      MHD = 0x55,
->          #define GET_MHD_INFO 0x0
-> +    FMAPI_DCD_MGMT = 0x56,
-> +        #define GET_DCD_INFO 0x0
->  };
->  
->  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> @@ -3341,6 +3343,62 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +/*
-> + * CXL r3.2 section 7.6.7.6.1: Get DCD Info (Opcode 5600h)
-> + */
+Hi; Coverity points out what looks like an error in this commit
+(CID 1593475):
 
-Single line comment should be fine here.
-
-> +static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
-> +                                      uint8_t *payload_in,
-> +                                      size_t len_in,
-> +                                      uint8_t *payload_out,
-> +                                      size_t *len_out,
-> +                                      CXLCCI *cci)
+> +bool check_ps(CPULoongArchState *env, int tlb_ps)
 > +{
-> +    struct {
-> +        uint8_t num_hosts;
-> +        uint8_t num_regions_supported;
-> +        uint8_t rsvd1[2];
-> +        uint16_t add_select_policy_bitmask;
-> +        uint8_t rsvd2[2];
-> +        uint16_t release_select_policy_bitmask;
-> +        uint8_t sanitize_on_release_bitmask;
-> +        uint8_t rsvd3;
-> +        uint64_t total_dynamic_capacity;
-> +        uint64_t region_blk_size_bitmasks[8];
-> +    } QEMU_PACKED *out;
-    } QEMU_PACKED *out = (void *)payload_out;
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    CXLDCRegion region;
-> +    int i;
-> +
-> +    if (ct3d->dc.num_regions == 0) {
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
-> +    out = (void *)payload_out;
-Why not just do this at declaration above?
-It is harmless to set it then even if we exit earlier
-I think.
+> +     if (tlb_ps > 64) {
+> +         return false;
+> +     }
+> +     return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
 
-> +
-> +    /* TODO: num hosts set to 1 for now */
+BIT_ULL(64) isn't valid, as it would be off the end of a
+64-bit value. Should the check be for "tlb_ps >= 64" ?
 
-Unless this changes later in the set, no need for a todo here.
-This simply denotes what we are emulating. Maybe we will make
-it more flexible in future, maybe not.
-
-> +    out->num_hosts = 1;
-> +    out->num_regions_supported = ct3d->dc.num_regions;
-> +    /* TODO: only prescriptive supported for now */
-
-Likewise, not a todo that needs comment. Just a current setting.
-As long as we never make it nor support this we are fine for
-compatibility etc.  The CXL stuff doesn't support migration anyway
-so not problems there.
-
-> +    stw_le_p(&out->add_select_policy_bitmask,
-> +             CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE);
-> +    stw_le_p(&out->release_select_policy_bitmask,
-> +             CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE);
-> +    /* TODO: sanitize on release bitmask cleared for now */
-
-As with above, not really a todo, more of a choice made for now.
-
-> +    out->sanitize_on_release_bitmask = 0;
-> +
-> +    stq_le_p(&out->total_dynamic_capacity,
-> +             ct3d->dc.total_capacity / CXL_CAPACITY_MULTIPLIER);
-> +
-> +    for (i = 0; i < ct3d->dc.num_regions; i++) {
-> +        region = ct3d->dc.regions[i];
-> +        memcpy(&out->region_blk_size_bitmasks[i],
-> +                &region.supported_blk_size_bitmask, 8);
-
-sizeof(out->region_blk_size_bitmasks[i]) 
-
-> +    }
-> +
-> +    *len_out = sizeof(*out);
-> +    return CXL_MBOX_SUCCESS;
 > +}
-> +
->  static const struct cxl_cmd cxl_cmd_set[256][256] = {
->      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
->          cmd_infostat_bg_op_abort, 0, 0 },
-> @@ -3462,6 +3520,11 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
->                                       cmd_tunnel_management_cmd, ~0, 0 },
->  };
->  
-> +static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-> +    [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
-> +        cmd_fm_get_dcd_info, 0, 0},
-> +};
-> +
->  /*
->   * While the command is executing in the background, the device should
->   * update the percentage complete in the Background Command Status Register
-> @@ -3764,7 +3827,11 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
->                                             DeviceState *intf,
->                                             size_t payload_max)
->  {
-> +    CXLType3Dev *ct3d = CXL_TYPE3(d);
->      cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
-> +    if (ct3d->dc.num_regions) {
-> +        cxl_copy_cci_commands(cci, cxl_cmd_set_fm_dcd);
-> +    }
->      cci->d = d;
->      cci->intf = intf;
->      cxl_init_cci(cci, payload_max);
-> diff --git a/hw/cxl/i2c_mctp_cxl.c b/hw/cxl/i2c_mctp_cxl.c
-> index 7d2cbc3b75..df95182925 100644
-> --- a/hw/cxl/i2c_mctp_cxl.c
-> +++ b/hw/cxl/i2c_mctp_cxl.c
-> @@ -46,6 +46,9 @@
->  /* Implementation choice - may make this configurable */
->  #define MCTP_CXL_MAILBOX_BYTES 512
->  
-> +/* Supported FMAPI Cmds */
-> +#define FMAPI_CMD_MAX_OPCODE 0x57
-> +
->  typedef struct CXLMCTPMessage {
->      /*
->       * DSP0236 (MCTP Base) Integrity Check + Message Type
-> @@ -200,7 +203,8 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
->          if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
->                msg->command_set < 0x51) &&
->              !(msg->message_type == MCTP_MT_CXL_FMAPI &&
-> -              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
-> +              msg->command_set >= 0x51 &&
-> +              msg->command_set < FMAPI_CMD_MAX_OPCODE)) {
 
-Hmm. There is a visibility problem here we should address but probably not
-by introducing a new define.  Maybe we should move the enum from
-cxl-mailbox-utils.c in a precursor patch.
-
-Jonathan
-
-
->              buf->rc = CXL_MBOX_UNSUPPORTED;
->              st24_le_p(buf->pl_length, len_out);
->              s->len = s->pos;
-
+thanks
+-- PMM
 
