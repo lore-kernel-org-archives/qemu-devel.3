@@ -4,72 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F41C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 05:55:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1107C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 05:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuPu5-0005lW-Mf; Tue, 18 Mar 2025 01:54:17 -0400
+	id 1tuPuH-0005ni-GZ; Tue, 18 Mar 2025 01:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuPu3-0005l7-Eo; Tue, 18 Mar 2025 01:54:15 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuPuF-0005nE-QP
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 01:54:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuPu1-00044I-3H; Tue, 18 Mar 2025 01:54:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742277253; x=1773813253;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=3FUKmWqPadsvW1DWS0qkDnePuwSiF6jWsMrSqBHhyPI=;
- b=iOkbRmpnrf0OWINnB4uv4t7LwSXdGc7noPF7HQshusyWmoCA7Ao+T3B0
- tuwVyJ2+jFMmZIfFyA1G7ddHhDR/vmxt2Y+uLpYcxYv2t1Uh3o6mVVtwV
- h6PFg6XMCtnizt1dq+iX4z43wb7LrWekl4Ais4CHrN4Agj9fCX3mB4eqO
- dvBDDLaXO+UIscAKZZKDo8E2kRUCZqx/0mhpAoMIVdxUc5NdRVdiwfyYs
- EaOZxi1zMdKSndTNlZAgm1W9ks4l74D2QvE/0RlKe8MGtTQqNRK6f97ya
- vHl2KHJ0oD1FRHgeTgIcL+ZYPW9xLFLUAQTgAv1ygEk1gLv9QZAho73XW A==;
-X-CSE-ConnectionGUID: bo//OZeOQ1yQ37oGSLuu6g==
-X-CSE-MsgGUID: 9YG/PDclSRiMvQCvgQi+Ag==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="42646553"
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="42646553"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2025 22:54:10 -0700
-X-CSE-ConnectionGUID: 502+ZFhOSE64cR7ZL9UF7Q==
-X-CSE-MsgGUID: Blk3jvdzQ8WkA6WHDGQYZg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="121985675"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 17 Mar 2025 22:54:08 -0700
-Date: Tue, 18 Mar 2025 14:14:22 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 04/17] rust/vmstate: Use ident instead of expr to parse
- vmsd in vmstate_struct macro
-Message-ID: <Z9kPPiJ0EEW+C3uR@intel.com>
-References: <20250317151236.536673-1-zhao1.liu@intel.com>
- <20250317151236.536673-5-zhao1.liu@intel.com>
- <CABgObfbroGQS+Kcay_4m6Bd-Ka_84La_7JBjyyp-HZfp+rpN-A@mail.gmail.com>
- <Z9ject7Ip7Iaqhhe@intel.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuPuE-0004B1-3N
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 01:54:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742277264;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CE259BpaNvuidCqDkrVqSHZvjw0om3Zlq8id+yeozUQ=;
+ b=QnhxzKoph978sSJdyvtCycfuBZdP8v6+1g2gpSOzlnkqUgCxCNKIgKVr9xGwj7gPHGLrTD
+ pl4yTyXxxWqnW0EKhnX2sQrwk6AKgFe5m2WI5XpybqG33ryKkphuLSbkUKrCtxg0IshYLf
+ LKlEx9rcI9VSyZFnpJvfo92Z4VuaKtA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-O0-sr1KmM8eJDcjUDJO5dw-1; Tue,
+ 18 Mar 2025 01:54:22 -0400
+X-MC-Unique: O0-sr1KmM8eJDcjUDJO5dw-1
+X-Mimecast-MFC-AGG-ID: O0-sr1KmM8eJDcjUDJO5dw_1742277261
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD9C5195609F; Tue, 18 Mar 2025 05:54:20 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.69])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2940C1956095; Tue, 18 Mar 2025 05:54:16 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Niek Linnenbank <nieklinnenbank@gmail.com>
+Cc: qemu-arm@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+Subject: [PATCH] docs/system: Use the meson binary from the pyvenv
+Date: Tue, 18 Mar 2025 06:54:15 +0100
+Message-ID: <20250318055415.16501-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z9ject7Ip7Iaqhhe@intel.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,52 +80,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 10:46:10AM +0800, Zhao Liu wrote:
-> Date: Tue, 18 Mar 2025 10:46:10 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: Re: [PATCH 04/17] rust/vmstate: Use ident instead of expr to parse
->  vmsd in vmstate_struct macro
-> 
-> On Mon, Mar 17, 2025 at 06:17:07PM +0100, Paolo Bonzini wrote:
-> > Date: Mon, 17 Mar 2025 18:17:07 +0100
-> > From: Paolo Bonzini <pbonzini@redhat.com>
-> > Subject: Re: [PATCH 04/17] rust/vmstate: Use ident instead of expr to parse
-> >  vmsd in vmstate_struct macro
-> > 
-> > On Mon, Mar 17, 2025 at 3:52 PM Zhao Liu <zhao1.liu@intel.com> wrote:
-> > >
-> > > When specify an array field in vmstate_struct macro, there will be an
-> > > error:
-> > >
-> > > > local ambiguity when calling macro `vmstate_struct`: multiple parsing
-> > > > options: built-in NTs expr ('vmsd') or 1 other option.
-> > >
-> > > This is because "expr" can't recognize the "vmsd" field correctly, so
-> > > that it gets confused with the previous array field.
-> > >
-> > > To fix the above issue, use "ident" for "vmsd" field, and explicitly
-> > > refer to it in the macro.
-> > 
-> > I think this is not needed if the varray case is left as is, and other
-> > cases use .with_...() instead of arguments?
-> > 
-> 
-> Yes! With a[0..num], the `vmsd` could be parsed correctly. I'll drop this
-> patch as well and refresh unit tests.
-> 
+From: Thomas Huth <thuth@redhat.com>
 
-Additionally, at present, IMO it is not suitable to replace the vmsd argument
-with .with_vmsd() method because VMS_STRUCT requires a vmsd field, and
-.with_vmsd() is optional.
+To avoid problems with the meson installation from the host
+system, we should always use the meson from our venv instead.
+Thus use this in the documentation, too.
 
-There is no way to ensure that vmsd is not omitted... unless VMS_STRUCT is
-also set within .with_vmsd(). This would be akin to merging vmstate_struct
-and vmstate_of, but I suppose that would be a long way as for now.
+While we're at it, also mention that it has to be run from
+the build folder (in the igb.rst file; the other two files
+were already fine).
 
-So I prefer vmsd argument at the moment :-)
+Suggested-by: Niek Linnenbank <nieklinnenbank@gmail.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ docs/system/arm/bananapi_m2u.rst | 2 +-
+ docs/system/arm/orangepi.rst     | 2 +-
+ docs/system/devices/igb.rst      | 5 +++--
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-Thanks,
-Zhao
-
+diff --git a/docs/system/arm/bananapi_m2u.rst b/docs/system/arm/bananapi_m2u.rst
+index d30db8d04c3..6efa222c16f 100644
+--- a/docs/system/arm/bananapi_m2u.rst
++++ b/docs/system/arm/bananapi_m2u.rst
+@@ -136,4 +136,4 @@ provide the following command:
+ 
+   $ cd qemu-build-dir
+   $ QEMU_TEST_ALLOW_LARGE_STORAGE=1 \
+-    meson test --suite thorough func-arm-arm_bpim2u
++    pyvenv/bin/meson test --suite thorough func-arm-arm_bpim2u
+diff --git a/docs/system/arm/orangepi.rst b/docs/system/arm/orangepi.rst
+index 8b9448ca7b0..716062fca9c 100644
+--- a/docs/system/arm/orangepi.rst
++++ b/docs/system/arm/orangepi.rst
+@@ -262,4 +262,4 @@ provide the following command from the build directory:
+ .. code-block:: bash
+ 
+   $ QEMU_TEST_ALLOW_LARGE_STORAGE=1 \
+-    meson test --suite thorough func-arm-arm_orangepi
++    pyvenv/bin/meson test --suite thorough func-arm-arm_orangepi
+diff --git a/docs/system/devices/igb.rst b/docs/system/devices/igb.rst
+index 9145af5c757..71f31cb1160 100644
+--- a/docs/system/devices/igb.rst
++++ b/docs/system/devices/igb.rst
+@@ -57,11 +57,12 @@ directory:
+   meson test qtest-x86_64/qos-test
+ 
+ ethtool can test register accesses, interrupts, etc. It is automated as an
+-functional test and can be ran with the following command:
++functional test and can be run from the build directory with the following
++command:
+ 
+ .. code:: shell
+ 
+-  meson test --suite thorough func-x86_64-netdev_ethtool
++  pyvenv/bin/meson test --suite thorough func-x86_64-netdev_ethtool
+ 
+ References
+ ==========
+-- 
+2.48.1
 
 
