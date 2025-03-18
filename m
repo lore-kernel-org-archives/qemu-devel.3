@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061EEC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD223C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:42:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWEX-00038T-Kk; Tue, 18 Mar 2025 08:39:49 -0400
+	id 1tuWHI-0007vM-4a; Tue, 18 Mar 2025 08:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tuWE1-0002QR-Cd
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:39:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tuWH2-0007pK-OB; Tue, 18 Mar 2025 08:42:27 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tuWDx-0007Kr-CD
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:39:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742301552;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sMSs1AHIZSRqdKg/kg4Cc10x0NxpoPBnKMn3+G8D0aw=;
- b=e4cSL3WQ1AOyVrO5fefDheooT5fmj10d/uMp+bNXhUln49e1lWHHjJhPq1gbKA3fe8iIef
- YSKq3nY2QmjQUfyGT1WgT4b2jaKafMQqtuk/w3nt0hb2VMuDmarjPUhNhHdc3pA94peJ6b
- pHBhvQZSTvtvcF3wjzQ126eAQ0eQ5EE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-pWcMo-mINCCNnCBXS9fXWQ-1; Tue,
- 18 Mar 2025 08:39:09 -0400
-X-MC-Unique: pWcMo-mINCCNnCBXS9fXWQ-1
-X-Mimecast-MFC-AGG-ID: pWcMo-mINCCNnCBXS9fXWQ_1742301548
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C5FDD180034D; Tue, 18 Mar 2025 12:39:08 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.74.16.234])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E0BC3180094A; Tue, 18 Mar 2025 12:39:04 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v8 2/7] migration: Refactor channel discovery mechanism
-Date: Tue, 18 Mar 2025 18:08:41 +0530
-Message-ID: <20250318123846.1370312-3-ppandit@redhat.com>
-In-Reply-To: <20250318123846.1370312-1-ppandit@redhat.com>
-References: <20250318123846.1370312-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tuWH0-0002wy-RJ; Tue, 18 Mar 2025 08:42:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1742301743; x=1773837743;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=sxgX16JKNTG+AY3C+How4ZUdjbZC9zSiCisbiIfnClo=;
+ b=QbwP7DZcTKeIPrszzHj0Vd1+Gs5n2BW2oZ2D9OHOgTfv3itt04XgAFjY
+ 6MVPhefbvcvfvo2meVvhEqi3BFvJijjtHcgDXHEl9776hbcPZs/S/cGM5
+ WLyjfgy+Dd6F1p51O5/zJrpHhNkcP9kTPDGQdYlf9jgo2ch2YRMYqRFTB
+ uW1tUH14MuxC+Zb6YVAepnilGEFawkzHrcxreF5BB63HzD4M5/7BjHbPJ
+ 6x0b5eJwmNMEIPOXpHrkj2i9kdWOrq9xnT02PXiQCeFmOB1dBms1axdC4
+ 2VY0Ov9AkcG/jrr1H1cpYxHQcsYiht/bz1UgQKlUNWeqZRdNXX84Av+ie w==;
+X-CSE-ConnectionGUID: auwceXN8R06Gz3jELn1NIw==
+X-CSE-MsgGUID: UpFtt8/VTkqUur+cxsop/g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11377"; a="54824570"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="54824570"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Mar 2025 05:42:16 -0700
+X-CSE-ConnectionGUID: D5k2mmKBTD+IsPgN09dfpQ==
+X-CSE-MsgGUID: KgOkQz0NQEyvs7j7XDzTMQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="121980441"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa009.jf.intel.com with ESMTP; 18 Mar 2025 05:42:14 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v3 05/15] rust/vmstate: Fix type check for varray in
+ vmstate_struct
+Date: Tue, 18 Mar 2025 21:02:09 +0800
+Message-Id: <20250318130219.1799170-6-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250318130219.1799170-1-zhao1.liu@intel.com>
+References: <20250318130219.1799170-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,224 +80,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+When pass a varray to vmstate_struct, the `type` parameter should be the
+type of the element in the varray, for example:
 
-The various logical migration channels don't have a
-standardized way of advertising themselves and their
-connections may be seen out of order by the migration
-destination. When a new connection arrives, the incoming
-migration currently make use of heuristics to determine
-which channel it belongs to.
+vmstate_struct!(HPETState, timers, [0 .. num_timers], VMSTATE_HPET_TIMER,
+		BqlRefCell<HPETTimer>).with_version_id(0)
 
-The next few patches will need to change how the multifd
-and postcopy capabilities interact and that affects the
-channel discovery heuristic.
+But this breaks current type check, because it checks the type of
+`field`, which is an array type (for the above example, type of timers
+is [BqlRefCell<HPETTimer>; 32], not BqlRefCell<HPETTimer>).
 
-Refactor the channel discovery heuristic to make it less
-opaque and simplify the subsequent patches.
+But the current assert_field_type() can no longer be extended to include
+new arguments, so a variant of it (a second macro containing the
+`num = $num:ident` parameter) had to be added to handle array cases.
 
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+In this new macro, it not only checks the type of element, but also
+checks whether the `num` (number of elements in varray) is out of range.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- migration/migration.c | 124 +++++++++++++++++++++++-------------------
- 1 file changed, 69 insertions(+), 55 deletions(-)
+ rust/qemu-api/src/assertions.rs | 15 +++++++++++++++
+ rust/qemu-api/src/vmstate.rs    |  2 +-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-v8:
- - Separate this patch out from earlier patch-2
-
-v7:
-- https://lore.kernel.org/qemu-devel/20250228121749.553184-1-ppandit@redhat.com/T/#t
-
-diff --git a/migration/migration.c b/migration/migration.c
-index d46e776e24..f97bb2777f 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -95,6 +95,9 @@ enum mig_rp_message_type {
-     MIG_RP_MSG_MAX
- };
- 
-+/* Migration channel types */
-+enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
+diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
+index 104dec39774e..176060e32acd 100644
+--- a/rust/qemu-api/src/assertions.rs
++++ b/rust/qemu-api/src/assertions.rs
+@@ -91,6 +91,21 @@ fn types_must_be_equal<T, U>(_: T)
+             }
+         };
+     };
 +
- /* When we add fault tolerance, we could have several
-    migrations at once.  For now we don't need to add
-    dynamic creation of migration */
-@@ -985,28 +988,19 @@ void migration_fd_process_incoming(QEMUFile *f)
-     migration_incoming_process();
- }
- 
--/*
-- * Returns true when we want to start a new incoming migration process,
-- * false otherwise.
-- */
--static bool migration_should_start_incoming(bool main_channel)
-+static bool migration_has_main_and_multifd_channels(void)
- {
--    /* Multifd doesn't start unless all channels are established */
--    if (migrate_multifd()) {
--        return migration_has_all_channels();
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    if (!mis->from_src_file) {
-+        /* main channel not established */
-+        return false;
-     }
- 
--    /* Preempt channel only starts when the main channel is created */
--    if (migrate_postcopy_preempt()) {
--        return main_channel;
-+    if (migrate_multifd() && !multifd_recv_all_channels_created()) {
-+        return false;
-     }
- 
--    /*
--     * For all the rest types of migration, we should only reach here when
--     * it's the main channel that's being created, and we should always
--     * proceed with this channel.
--     */
--    assert(main_channel);
-+    /* main and all multifd channels are established */
-     return true;
- }
- 
-@@ -1015,59 +1009,84 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-     MigrationIncomingState *mis = migration_incoming_get_current();
-     Error *local_err = NULL;
-     QEMUFile *f;
--    bool default_channel = true;
-+    uint8_t channel;
-     uint32_t channel_magic = 0;
-     int ret = 0;
- 
--    if (migrate_multifd() && !migrate_mapped_ram() &&
--        !migrate_postcopy_ram() &&
--        qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
--        /*
--         * With multiple channels, it is possible that we receive channels
--         * out of order on destination side, causing incorrect mapping of
--         * source channels on destination side. Check channel MAGIC to
--         * decide type of channel. Please note this is best effort, postcopy
--         * preempt channel does not send any magic number so avoid it for
--         * postcopy live migration. Also tls live migration already does
--         * tls handshake while initializing main channel so with tls this
--         * issue is not possible.
--         */
--        ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
--                                          sizeof(channel_magic), errp);
-+    if (!migration_has_main_and_multifd_channels()) {
-+        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
-+            /*
-+             * With multiple channels, it is possible that we receive channels
-+             * out of order on destination side, causing incorrect mapping of
-+             * source channels on destination side. Check channel MAGIC to
-+             * decide type of channel. Please note this is best effort,
-+             * postcopy preempt channel does not send any magic number so
-+             * avoid it for postcopy live migration. Also tls live migration
-+             * already does tls handshake while initializing main channel so
-+             * with tls this issue is not possible.
-+             */
-+            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
-+                                              sizeof(channel_magic), errp);
-+            if (ret != 0) {
-+                return;
++    ($t:ty, $i:tt, $ti:ty, num = $num:ident) => {
++        const _: () = {
++            #[allow(unused)]
++            fn assert_field_type(v: $t) {
++                fn types_must_be_equal<T, U>(_: T)
++                where
++                    T: $crate::assertions::EqType<Itself = U>,
++                {
++                }
++                let index: usize = v.$num.try_into().unwrap();
++                types_must_be_equal::<_, &$ti>(&v.$i[index]);
 +            }
- 
--        if (ret != 0) {
-+            channel_magic = be32_to_cpu(channel_magic);
-+            if (channel_magic == QEMU_VM_FILE_MAGIC) {
-+                channel = CH_MAIN;
-+            } else if (channel_magic == MULTIFD_MAGIC) {
-+                channel = CH_MULTIFD;
-+            } else if (!mis->from_src_file &&
-+                        mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-+                /* reconnect main channel for postcopy recovery */
-+                channel = CH_MAIN;
-+            } else {
-+                error_setg(errp, "unknown channel magic: %u", channel_magic);
-+                return;
-+            }
-+        } else if (mis->from_src_file && migrate_multifd()) {
-+            /*
-+             * Non-peekable channels like tls/file are processed as
-+             * multifd channels when multifd is enabled.
-+             */
-+            channel = CH_MULTIFD;
-+        } else if (!mis->from_src_file) {
-+            channel = CH_MAIN;
-+        } else {
-+            error_setg(errp, "non-peekable channel used without multifd");
-             return;
-         }
--
--        default_channel = (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC));
-+    } else if (mis->from_src_file) {
-+        channel = CH_POSTCOPY;
-     } else {
--        default_channel = !mis->from_src_file;
-+        channel = CH_MAIN;
-     }
- 
-     if (multifd_recv_setup(errp) != 0) {
-         return;
-     }
- 
--    if (default_channel) {
-+    if (channel == CH_MAIN) {
-         f = qemu_file_new_input(ioc);
-         migration_incoming_setup(f);
--    } else {
-+    } else if (channel == CH_MULTIFD) {
-         /* Multiple connections */
--        assert(migration_needs_multiple_sockets());
-         if (migrate_multifd()) {
-             multifd_recv_new_channel(ioc, &local_err);
--        } else {
--            assert(migrate_postcopy_preempt());
--            f = qemu_file_new_input(ioc);
--            postcopy_preempt_new_channel(mis, f);
-         }
-         if (local_err) {
-             error_propagate(errp, local_err);
-             return;
-         }
-+    } else if (channel == CH_POSTCOPY) {
-+        assert(migrate_postcopy_preempt());
-+        assert(!mis->postcopy_qemufile_dst);
-+        f = qemu_file_new_input(ioc);
-+        postcopy_preempt_new_channel(mis, f);
-+        return;
-     }
- 
--    if (migration_should_start_incoming(default_channel)) {
-+    if (migration_has_main_and_multifd_channels()) {
-         /* If it's a recovery, we're done */
-         if (postcopy_try_recover()) {
-             return;
-@@ -1084,20 +1103,15 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-  */
- bool migration_has_all_channels(void)
- {
-+    if (!migration_has_main_and_multifd_channels()) {
-+        return false;
-+    }
-+
-     MigrationIncomingState *mis = migration_incoming_get_current();
--
--    if (!mis->from_src_file) {
-+    if (migrate_postcopy_preempt() && !mis->postcopy_qemufile_dst) {
-         return false;
-     }
- 
--    if (migrate_multifd()) {
--        return multifd_recv_all_channels_created();
--    }
--
--    if (migrate_postcopy_preempt()) {
--        return mis->postcopy_qemufile_dst != NULL;
--    }
--
-     return true;
++        };
++    };
  }
  
+ /// Assert that an expression matches a pattern.  This can also be
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index e2a1f7a97aae..9d9cdda993ce 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -447,7 +447,7 @@ macro_rules! vmstate_struct {
+                 .as_ptr() as *const ::std::os::raw::c_char,
+             $(num_offset: $crate::offset_of!($struct_name, $num),)?
+             offset: {
+-                $crate::assert_field_type!($struct_name, $field_name, $type);
++                $crate::assert_field_type!($struct_name, $field_name, $type $(, num = $num)?);
+                 $crate::offset_of!($struct_name, $field_name)
+             },
+             size: ::core::mem::size_of::<$type>(),
 -- 
-2.48.1
+2.34.1
 
 
