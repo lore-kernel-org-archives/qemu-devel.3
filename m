@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE7FC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 10:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C245C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 10:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuUIv-0003sJ-Oi; Tue, 18 Mar 2025 06:36:13 -0400
+	id 1tuUSA-00074V-1T; Tue, 18 Mar 2025 06:45:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tuUIt-0003rL-OP
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:36:12 -0400
-Received: from mout.gmx.net ([212.227.17.21])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tuUS7-00073Q-Oo
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:45:43 -0400
+Received: from mout.gmx.net ([212.227.17.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tuUIp-0005eR-2V
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:36:11 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1tuUS6-0008H3-0Y
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:45:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1742294164; x=1742898964; i=deller@gmx.de;
- bh=7D7qNXxZCh96d0fkV3uxzb/K6O9UBQFIJ0u1tNQVD50=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=kfGU6TaB2S+NOYHMLvR5WURX+wLiXc3cm2lcqxTFcd4o85M0wtw1YWPFYZNUtRmy
- 1TqIGNo72SyEQnpr2cbLf4RK/oGZsRcIUdd/XiwcpPjpQjh+HgC07DDw3DZkV6DlH
- fDGoG66/zmB3mYj0oeUTIoAH295hDNYHKB2El9IK6Cbv6iTaZLJ0CyHH2ueXDSdVN
- edsVdvAAdnbY0cfwL9LIRpVDlNCGVlcY4S9SFGW1SBM2Mx8SMhLhV5G9x03Yivj8j
- oHRefCX0PhMiqnHjjBgtwyCfc3wRwZwbnrbwKXU0eK4sGzAdOYsXdK1hm+Zj8d7R7
- WaP0slxngmcDde/DtA==
+ s=s31663417; t=1742294737; x=1742899537; i=deller@gmx.de;
+ bh=KrLNurgbaArcwczlNDm3KkVXMX/ZA32oyNwl/gb1jcI=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+ References:In-Reply-To:Content-Type:Content-Transfer-Encoding:cc:
+ content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=AWs6ZcevXP4k+1wJti5A+g1oQGsgbg5Hpaw7O8AOUjvhoO0sRiqZlYZ5GoCM6qXG
+ x0i7rNQHlO2k2Yeqvz6bt4G21IqiRM70TzJ2xkAyzw0Nco5Lk9Ndnd0JYsrUHBR/i
+ JgnmA/8SVNbik1U2CgJ2u1/T4EjcFT0P76Bl6jyVI8XxIazZw3Yode5ziD5iHnxLg
+ Tj8KqPfHEVu7yCYLOrDYOYB2qr57DTaN5P7SKUfRRmFLxKHU5/SZOuVOsgeV8aJfV
+ rpPGT3Nz7AXmOKefhrTYWQtKpQDfkoPG3XRNODOu5r54IRdnqZ5z9vQ82BjPe7HQ+
+ O0pmmmck0LM/eRfHeQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.173] ([109.250.63.121]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M6ll8-1tpXor3WmM-00E3hJ; Tue, 18
- Mar 2025 11:36:03 +0100
-Message-ID: <ff0cde0c-67d7-4fc3-8996-ad0e8645deed@gmx.de>
-Date: Tue, 18 Mar 2025 11:36:03 +0100
+Received: from [192.168.20.173] ([109.250.63.121]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9yc-1tdN0V27Tm-00WytN; Tue, 18
+ Mar 2025 11:45:37 +0100
+Message-ID: <8d9a17e3-c3b5-4b19-a253-6bde604d7d80@gmx.de>
+Date: Tue, 18 Mar 2025 11:45:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Generic way to detect qemu linux-user emulation
+From: Helge Deller <deller@gmx.de>
 To: Andreas Schwab <schwab@suse.de>, qemu-devel@nongnu.org
 References: <mvm1puuiqvu.fsf@suse.de>
+ <ff0cde0c-67d7-4fc3-8996-ad0e8645deed@gmx.de>
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
  xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
  HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
@@ -88,36 +88,36 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <mvm1puuiqvu.fsf@suse.de>
+In-Reply-To: <ff0cde0c-67d7-4fc3-8996-ad0e8645deed@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:k+p/468A+kClM0rNLq9CAXnNrHq9lMyl3x+upXPUQEeLqyUcxhv
- d2VMhEHfVBEm0ZZRwtrtDLck+kZTKSetjseyOblhl/TGt8nKo00pVKYrSpKNdb78ti0ViaP
- u/hq4JgmKfxmpL7eIp+WpDYRem0MGNSwKMacHYZcFZq5LOL0yCv1GgUy6Yp3F9VxN64siSQ
- I5SfLNFYZv3HL8utE520g==
-UI-OutboundReport: notjunk:1;M01:P0:Opum/f79SZA=;cLw185jjl+wBFbOL+utZARRT0J7
- jekO6548hOlDJ6Wx8xSmsJCIJimuRcG7m6/BzGdPk7I2b9MdBRCo4enIM4oFwUmoJTDoyAevh
- BBzK1U8QOJ6cRUQ1a4qFn7h7W/3dVvZqYG9w0h9Drzque80mF7Jbl8pe/n0RNEDy3J+2Q1JSG
- fOnXc3+kkSvomLHGOZPBdAU7SK4pLOEgr1uKmH6B2S7fqYqm+DBAG08cjUcxHm1gMO6yT+DXI
- oKU5rmozOh3oMa5rdav4rxsIJKdz09iLZhMgFXwOxeBpOHmQ4CUI711s56fVoPM5Dl0ZXy13Q
- 2ReKu5gI3GA4jR7lEFXVDvupBxjY4oWF2WcaOgpZWuQn59wyfPw/Zb4QTZq/uvJve1Ewt1fge
- 3mNIfohYKfwZd6Vrt6Z5HrPe1/xq3pYWVWUP01LGJGRnMa8yfg55Ws9ArHl7wLluXMNHNZWOi
- yUq+gberYjCQt7txPYdF2w8aYm17q/wlWZ6SwPiGu/BzlmFTX8VQGgpdXxCdsdzbuuyXgO9qa
- eLwRmK6+4z0G5YDYSLC1NLXcYDBAZeksJlpSJ3RFnXWizp4DSpsknECW8/y2KDXJATrt1Obaj
- WB2ncJab3ZaVf+6lwOd1ziZ9rzQOZrSmx+4QZQ/W1AS2uJD4leakCOGBrC1l3uLMZ6t9SGkQ9
- UuIkh0HedyzyA0bELsO6lTVDZW7btCeA2krkUKxKNeGtrAd/s1j6IIIyo+ZjCn5hsDbxzQNm4
- P9F1B1UrA4L+1BwtPNl22Cq713uZ4uVjD9/EeT9u1tAsfg0ctXU/yOKanGN5If1tC0FnxFmlU
- Vcwl6h8jILbXJpc1V6l4gLKqwcMSWkK4V4fzo2Z+k0UsqVJ9ozGwK+Rd7MBe/89nP4yw6aYUG
- tkqw9/6wk0xsQ7W5AWadGYxAz3BHl3cgTF0VZDLPO1DoJPCkGIZCBfe+q6EygwLDRKGs8D/xa
- GzygfuJuxdZyt8GyXbCHmRCNCChCRTgIba50jpw4Kx7VzO6ABt3O6XQ9PBeayBGjEDD32oWOl
- /0IdAULDAtFRhRwk+qWDzN8kkwpsq80tndK84zAmHPUHEvUzJ25n8HLAzh+6sIAPjeGGd+Hyo
- QUNl4DMusgRmR81BuTPhkm8fgEWu276qgTkRx7AAS0Q2iqLPYYKUU6k5SKdoRHIXnQPiST/nj
- VNz8iLq3acLBz+2uMR2XDRuCE54ihLqYj3vW0gXsPFKaTh69OH3r/aUllAI6VzGaDw7S62O9F
- 24oEqNnXcRbrBazLclaMS194jypOuLYykjnBq6HGljLvzWts4wQhI/rUeYfZiGFflB7jy8rbs
- MSuXTOMPC0pwHXR7wA+QmmFd2Ai/xDD2RwFZDoyx0zAUx0YMSOe1eXhkez8oyc1V/93E450Pj
- G+KYTuyxsCawste9NvaxH4GSX3yyOBAk3CznAY22kS6JjYgUUh3cf7aC6dufaXPfEOwwNxVMK
- zmuxtlRDFhnZQl/Mb+S5ZVR/ZEr8cm0xeOTtsRn+1RWvNDRnS
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:6ZhaBIBlsRhmQuQglvwX/pRNetoMii5OR2N1amm1a+wIf6hKQ9F
+ WGeaMWUCGiAiX60ZFMU52MmaPFqT4PuPdGDqXEY+8cAlPBSP7qxiZ1lFQfAYnCptMVO5IRD
+ ExPRRdWiLWqeptZUEj8zNvG5L955zo94Mvc6r6TnNQuATV1HSfnBbkkvxXvG0aIvSBqWlCq
+ RLu2Hnt5vzoGU80vWTY9A==
+UI-OutboundReport: notjunk:1;M01:P0:Cj2h1duEsAE=;IZ5sb+svY6UYTyi4umHP6MOpiNy
+ h+9zCzNIJZ8x6SH47xBB1XzQH0314w6WHiSKG4R5h5wb5XZj0ZZzNrVuRNU0nTbClqNIXtRhE
+ xfsYelNoutwavKHqFRinkWPFg8IWyHPdNr9dB19wZOwaqAkROD0V3IjNj+IjLcYQxtaqhHJXN
+ +TujQF0sWWoVo/Y8tYjd+6GCYH63RAPenia49/BHA+0tXHuAre1CloAqiUC4EtadknPj7MNt5
+ RskvDHPmCpzdzLMoiQ45cf8ujOgrPblT0mZmBcGxPldLFN6DlcGuyRsGiFPJDvJHfM1lBJ/0H
+ brGELS9xnVhwBozvI1cEKMH358/fmNYu0a+XfuXlM76WQcKzGqN8U+CHJDAEB85KcUqxt6FVe
+ 9h/bebmfbeKX28hKUDTIR15rPwic7T48E4jzpCJYXw+iL3Lq8zxWvEbZY+D9US+0NY+4lkkyw
+ YW4CygW43mCMQ34uyBhhxydXW5L6ibj/8pmqAfhS+hUExuifXW4Th87fqSt5p773w/bAO39RH
+ SV7usYipjWE5BfUCJp4hvfkwYxbvyplCnqO6DTwPp27lnikJ9b2evOz3PElA08BQZlUg36GcL
+ 4MdgQ9EQ2eDyB6U++lTS3pSgO/9RCuYCRfjywSt+QMe1l8EFghHE1SPVCqIfi4imLd+Kbh5mS
+ i8SBvdj5XxLpLDYeNI2resOqKcVHR8N2ZaNJKSSD7/DdUCPE3SrxiGtr4JcgkDrtcQ2LUE8pn
+ wJdLP/Gyyh6QPfuGA+O+jkMGMDl+qwZp7LH/8kJWAEPgJBgCn++g/pWjy/+DqJiyQeSuyzkrO
+ jBENuRvmFqRpvWgfapj72VKuvb9AuUjy7xAkjlfsDNA3QBe6mZiWKu+RFhTmHicAEHxFAMb13
+ BNUUtfPPHZlaQyY4wj0hIXqDTLEPHOKzi0oSzrRrTZxJZa2XtGxZ1gCN48Y6xNwaUlLuup75K
+ bJV6QwjySayUWAxfGBHPyLgIT2/+0kUX7kiirVvcKbX2ZeGIbpjNQY8RMenAowadzr1jMLy5M
+ aCirXRhh5EIYCfXqQ23rg8ucS+b2VWHiabqo/HpyFTjoCkz6OrVWs3vLc2NlGx1bY1CoQ0pYd
+ h41npiyjNgTqnA8dP81S/69ApHmF0GNtZBs1C9MFsr3uR6yEymtWlWeYhBLcpR/rBTsOqPiKT
+ vUfvjBIfwX7bqr+L0noWB/WyDN53xjOyeWVQSnbSNXIo235lyC2nvD09iEBOcDpio8ZQe9ADe
+ WkeBeRTZ+M5/3mKMCrgBRfPI3+EQAbOwt1zNYBsaL+E7Yjox3qIuI7kWzYTTTpc+9OcsxIfTm
+ AANFNyh5yozkKcr0AdGv+WoietPzV3ls0qhXQ2f868CLkWeBXQYvDXXwq52zl9vTnYRNomfDl
+ /2VFuOj3eO3PV+E6gddS1+QmJmQ6eSsv7eIpjxdSyYkYLjMHYr3Is/KUSyisO67SjeY7ICWj6
+ jQFHgPAwkgukoBesuy7PkGRXJ7Vo=
+Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -142,34 +142,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/25 11:18, Andreas Schwab wrote:
-> Is there a generic way for a program to detect that is it being run
-> inside the linux-user emulation?
+On 3/18/25 11:36, Helge Deller wrote:
+> On 3/18/25 11:18, Andreas Schwab wrote:
+>> Is there a generic way for a program to detect that is it being run
+>> inside the linux-user emulation?
+>
+> Yes, having a reliable way to detect it would be good.
 
-Yes, having a reliable way to detect it would be good.
+In qemu-user emulation we could change the return values of
+"uname --processor" and/or "uname --hardware-platform".
+Currently both always return "unknown", but in qemu we could
+return the arch of the host.
 
-My current (unreliable) way to detect it is using uname.
-The kernel string and arch name don't match:
+Another possibility is to extend prctl(), but I think uname is
+easier to handle in scripts and such...
 
-(sid_hppa)root@paq:/# uname -a
-Linux paq 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-02-=
-07) parisc GNU/Linux
 
-(sid_hppa)root@paq:/# uname -r
-6.1.0-31-amd64
+> My current (unreliable) way to detect it is using uname.
+> The kernel string and arch name don't match:
+>
+> (sid_hppa)root@paq:/# uname -a
+> Linux paq 6.1.0-31-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.128-1 (2025-0=
+2-07) parisc GNU/Linux
+>
+> (sid_hppa)root@paq:/# uname -r
+> 6.1.0-31-amd64
+>
+> (sid_hppa)root@paq:/# uname -m
+> parisc
+>
+> This is a qemu-linux-user parisc(hppa) emulation running on x86-64.
+>
+>> The purpose for that would be to work around limitations of the
+>> emulation, like CLONE_VFORK being unsupported.
+>
+> yes, and robust futexes aren't supported either.
+>
+>> =C2=A0For example, python >=3D
+>> 3.13 needs to avoid using posix_spawn in that case, because the
+>> emulation of CLONE_VFORK as a true fork makes it impossible for it to
+>> report errors back to the parent process.
 
-(sid_hppa)root@paq:/# uname -m
-parisc
-
-This is a qemu-linux-user parisc(hppa) emulation running on x86-64.
-
-> The purpose for that would be to work around limitations of the
-> emulation, like CLONE_VFORK being unsupported.
-
-yes, and robust futexes aren't supported either.
-
->  For example, python >=3D
-> 3.13 needs to avoid using posix_spawn in that case, because the
-> emulation of CLONE_VFORK as a true fork makes it impossible for it to
-> report errors back to the parent process.
 
