@@ -4,100 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9B3C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 844E1C28B28
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWDZ-0002EW-Qn; Tue, 18 Mar 2025 08:38:49 -0400
+	id 1tuWER-0002ha-TW; Tue, 18 Mar 2025 08:39:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7qUH=WF=kaod.org=clg@ozlabs.org>)
- id 1tuWDX-0002Dd-JQ; Tue, 18 Mar 2025 08:38:47 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tuWDx-0002Pg-JQ
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:39:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7qUH=WF=kaod.org=clg@ozlabs.org>)
- id 1tuWDU-0006UO-R7; Tue, 18 Mar 2025 08:38:47 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZHBGQ2Z7nz4xM3;
- Tue, 18 Mar 2025 23:38:38 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tuWDu-0007Eg-6v
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:39:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742301549;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lbfxP3jjC8UrxJyTZ+GaVBR0Y8K+IXepORN0PpIWmOo=;
+ b=acv93UHf4cV+oQqvghrZ/70aDLP4YGega6z1eSbQy4iQiLXeEbEfz4a9Ihg44HtTJKJBWn
+ xZ8o2YKS0sIJN35+SCP5p8TKyGOkaANy6U8Lnp4nnwi94lCyIn9VD9UCOYtIMwBLq/OMMu
+ YCKzxRynfncTiUbkxNvWDteGFKoxDFU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-YkgTfX2iNBCIDj5vucJW1g-1; Tue,
+ 18 Mar 2025 08:39:05 -0400
+X-MC-Unique: YkgTfX2iNBCIDj5vucJW1g-1
+X-Mimecast-MFC-AGG-ID: YkgTfX2iNBCIDj5vucJW1g_1742301544
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZHBGL4FZrz4x8p;
- Tue, 18 Mar 2025 23:38:34 +1100 (AEDT)
-Message-ID: <fdd14fbe-57c9-4c8a-be90-4492dfe1ab02@kaod.org>
-Date: Tue, 18 Mar 2025 13:38:32 +0100
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCFC919560AF; Tue, 18 Mar 2025 12:39:03 +0000 (UTC)
+Received: from kaapi.redhat.com (unknown [10.74.16.234])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40F001801764; Tue, 18 Mar 2025 12:38:57 +0000 (UTC)
+From: Prasad Pandit <ppandit@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v8 1/7] migration/multifd: move macros to multifd header
+Date: Tue, 18 Mar 2025 18:08:40 +0530
+Message-ID: <20250318123846.1370312-2-ppandit@redhat.com>
+In-Reply-To: <20250318123846.1370312-1-ppandit@redhat.com>
+References: <20250318123846.1370312-1-ppandit@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/arm: ast27x0: Wire up EHCI controllers
-To: Troy Lee <troy_lee@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: yunlin.tang@aspeedtech.com
-References: <20250317065938.1902272-1-troy_lee@aspeedtech.com>
- <20250317065938.1902272-2-troy_lee@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250317065938.1902272-2-troy_lee@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=7qUH=WF=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,167 +84,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/25 07:59, Troy Lee wrote:
-> AST27x0 has 4 EHCI controllers, where each CPU and I/O die has 2
-> instances. This patch use existing TYPE_PLATFORM_EHCI. After wiring up
-> the EHCI controller, the ast2700a1-evb can find up to 4 USB EHCI
-> interfaces.
-> 
-> ehci-platform 12061000.usb: EHCI Host Controller
-> ehci-platform 12061000.usb: new USB bus registered, assigned bus number 2
-> ehci-platform 12063000.usb: EHCI Host Controller
-> ehci-platform 12063000.usb: new USB bus registered, assigned bus number 3
-> ehci-platform 12061000.usb: irq 88, io mem 0x12061000
-> ehci-platform 12063000.usb: irq 90, io mem 0x12063000
-> ehci-platform 14121000.usb: EHCI Host Controller
-> ehci-platform 14123000.usb: EHCI Host Controller
-> ehci-platform 12061000.usb: USB 2.0 started, EHCI 1.00
-> ehci-platform 14121000.usb: new USB bus registered, assigned bus number 5
-> ehci-platform 14123000.usb: new USB bus registered, assigned bus number 6
-> ehci-platform 14121000.usb: irq 91, io mem 0x14121000
-> ehci-platform 14123000.usb: irq 92, io mem 0x14123000
-> ehci-platform 12063000.usb: USB 2.0 started, EHCI 1.00
-> usb usb2: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
-> usb usb3: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
-> ehci-platform 14121000.usb: USB 2.0 started, EHCI 1.00
-> usb usb5: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
-> ehci-platform 14123000.usb: USB 2.0 started, EHCI 1.00
-> usb usb6: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-This is a custom image ? and not the SDK v09.05.
-  
-> Note that, AST27x0A0 only has 2 EHCI controllers due to hw issue.
->
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Move MULTIFD_ macros to the header file so that
+they are accessible from other source files.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+---
+ migration/multifd.c | 5 -----
+ migration/multifd.h | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-Thanks,
+v7: no change
+- https://lore.kernel.org/qemu-devel/20250228121749.553184-1-ppandit@redhat.com/T/#t
 
-C.
-
-
-> ---
->   hw/arm/aspeed_ast27x0.c     | 28 ++++++++++++++++++++++++++++
->   include/hw/arm/aspeed_soc.h |  4 +++-
->   2 files changed, 31 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index dce7255a2c..4ff4462ec1 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -25,6 +25,8 @@
->   
->   static const hwaddr aspeed_soc_ast2700_memmap[] = {
->       [ASPEED_DEV_SRAM]      =  0x10000000,
-> +    [ASPEED_DEV_EHCI1]     =  0x12061000,
-> +    [ASPEED_DEV_EHCI2]     =  0x12063000,
->       [ASPEED_DEV_HACE]      =  0x12070000,
->       [ASPEED_DEV_EMMC]      =  0x12090000,
->       [ASPEED_DEV_INTC]      =  0x12100000,
-> @@ -47,6 +49,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
->       [ASPEED_DEV_ETH2]      =  0x14060000,
->       [ASPEED_DEV_ETH3]      =  0x14070000,
->       [ASPEED_DEV_SDHCI]     =  0x14080000,
-> +    [ASPEED_DEV_EHCI3]     =  0x14121000,
-> +    [ASPEED_DEV_EHCI4]     =  0x14123000,
->       [ASPEED_DEV_ADC]       =  0x14C00000,
->       [ASPEED_DEV_SCUIO]     =  0x14C02000,
->       [ASPEED_DEV_GPIO]      =  0x14C0B000,
-> @@ -91,6 +95,8 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
->       [ASPEED_DEV_TIMER7]    = 22,
->       [ASPEED_DEV_TIMER8]    = 23,
->       [ASPEED_DEV_DP]        = 28,
-> +    [ASPEED_DEV_EHCI1]     = 33,
-> +    [ASPEED_DEV_EHCI2]     = 37,
->       [ASPEED_DEV_LPC]       = 128,
->       [ASPEED_DEV_IBT]       = 128,
->       [ASPEED_DEV_KCS]       = 128,
-> @@ -137,6 +143,8 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
->       [ASPEED_DEV_TIMER7]    = 22,
->       [ASPEED_DEV_TIMER8]    = 23,
->       [ASPEED_DEV_DP]        = 28,
-> +    [ASPEED_DEV_EHCI1]     = 33,
-> +    [ASPEED_DEV_EHCI2]     = 37,
->       [ASPEED_DEV_LPC]       = 192,
->       [ASPEED_DEV_IBT]       = 192,
->       [ASPEED_DEV_KCS]       = 192,
-> @@ -212,6 +220,8 @@ static const int ast2700_gic132_gic196_intcmap[] = {
->       [ASPEED_DEV_UART10]    = 16,
->       [ASPEED_DEV_UART11]    = 17,
->       [ASPEED_DEV_UART12]    = 18,
-> +    [ASPEED_DEV_EHCI3]     = 28,
-> +    [ASPEED_DEV_EHCI4]     = 29,
->   };
->   
->   /* GICINT 133 */
-> @@ -434,6 +444,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
->           object_initialize_child(obj, "spi[*]", &s->spi[i], typename);
->       }
->   
-> +    for (i = 0; i < sc->ehcis_num; i++) {
-> +        object_initialize_child(obj, "ehci[*]", &s->ehci[i],
-> +                                TYPE_PLATFORM_EHCI);
-> +    }
-> +
->       snprintf(typename, sizeof(typename), "aspeed.sdmc-%s", socname);
->       object_initialize_child(obj, "sdmc", &s->sdmc, typename);
->       object_property_add_alias(obj, "ram-size", OBJECT(&s->sdmc),
-> @@ -709,6 +724,17 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->                           ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
->       }
->   
-> +    /* EHCI */
-> +    for (i = 0; i < sc->ehcis_num; i++) {
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
-> +            return;
-> +        }
-> +        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ehci[i]), 0,
-> +                        sc->memmap[ASPEED_DEV_EHCI1 + i]);
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[i]), 0,
-> +                           aspeed_soc_get_irq(s, ASPEED_DEV_EHCI1 + i));
-> +    }
-> +
->       /*
->        * SDMC - SDRAM Memory Controller
->        * The SDMC controller is unlocked at SPL stage.
-> @@ -900,6 +926,7 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
->       sc->silicon_rev  = AST2700_A0_SILICON_REV;
->       sc->sram_size    = 0x20000;
->       sc->spis_num     = 3;
-> +    sc->ehcis_num    = 2;
->       sc->wdts_num     = 8;
->       sc->macs_num     = 1;
->       sc->uarts_num    = 13;
-> @@ -927,6 +954,7 @@ static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, void *data)
->       sc->silicon_rev  = AST2700_A1_SILICON_REV;
->       sc->sram_size    = 0x20000;
->       sc->spis_num     = 3;
-> +    sc->ehcis_num    = 4;
->       sc->wdts_num     = 8;
->       sc->macs_num     = 3;
->       sc->uarts_num    = 13;
-> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index f069d17d16..c1e80c8908 100644
-> --- a/include/hw/arm/aspeed_soc.h
-> +++ b/include/hw/arm/aspeed_soc.h
-> @@ -43,7 +43,7 @@
->   #include "hw/intc/arm_gicv3.h"
->   
->   #define ASPEED_SPIS_NUM  3
-> -#define ASPEED_EHCIS_NUM 2
-> +#define ASPEED_EHCIS_NUM 4
->   #define ASPEED_WDTS_NUM  8
->   #define ASPEED_CPUS_NUM  4
->   #define ASPEED_MACS_NUM  4
-> @@ -192,6 +192,8 @@ enum {
->       ASPEED_DEV_SPI2,
->       ASPEED_DEV_EHCI1,
->       ASPEED_DEV_EHCI2,
-> +    ASPEED_DEV_EHCI3,
-> +    ASPEED_DEV_EHCI4,
->       ASPEED_DEV_VIC,
->       ASPEED_DEV_INTC,
->       ASPEED_DEV_INTCIO,
+diff --git a/migration/multifd.c b/migration/multifd.c
+index dfb5189f0e..6139cabe44 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -36,11 +36,6 @@
+ #include "io/channel-socket.h"
+ #include "yank_functions.h"
+ 
+-/* Multiple fd's */
+-
+-#define MULTIFD_MAGIC 0x11223344U
+-#define MULTIFD_VERSION 1
+-
+ typedef struct {
+     uint32_t magic;
+     uint32_t version;
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 2d337e7b3b..9b6d81e7ed 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -49,6 +49,11 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
+ bool multifd_recv(void);
+ MultiFDRecvData *multifd_get_recv_data(void);
+ 
++/* Multiple fd's */
++
++#define MULTIFD_MAGIC 0x11223344U
++#define MULTIFD_VERSION 1
++
+ /* Multifd Compression flags */
+ #define MULTIFD_FLAG_SYNC (1 << 0)
+ 
+-- 
+2.48.1
 
 
