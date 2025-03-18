@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB7DC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 18:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CA12C35FF3
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 18:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tubZG-0004d3-TS; Tue, 18 Mar 2025 14:21:34 -0400
+	id 1tubbU-0005QJ-MR; Tue, 18 Mar 2025 14:23:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tubZ6-0004cG-Vu
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:21:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tubZ5-0003Jg-BA
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:21:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742322080;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Us4nk3fF8koMbxF8G+Cw7Ne2OQGvH4wm6Au3I7C6iwg=;
- b=g6Yp4G0n/SzcnOGwtMLt1/hg+/GtIG4s93UqHU3UT5kPaAIAP3p1i8ldiwk4TbbIB1xJHK
- QFb0LWfuP1QP5H+l744NgDXN4hwxIfA/EqLSxk1oM5EYgPohnybSRdgEdZIOX/73tpprQN
- lEuY/YsCLXY3OCYw99J34M5KmR/H7eA=
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-359-ghuLe7JxN_61fVX00EkYcw-1; Tue, 18 Mar 2025 14:21:17 -0400
-X-MC-Unique: ghuLe7JxN_61fVX00EkYcw-1
-X-Mimecast-MFC-AGG-ID: ghuLe7JxN_61fVX00EkYcw_1742322077
-Received: by mail-il1-f200.google.com with SMTP id
- e9e14a558f8ab-3d585d76b7bso107575ab.2
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 11:21:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tubbO-0005PA-F5
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:23:46 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tubbM-0003gt-2A
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:23:46 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2254e0b4b79so12494045ad.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 11:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742322222; x=1742927022; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zhdlHNWmjY0/U0RTVbqd1beK1I5dVapYlQeofi/XGMw=;
+ b=cTisoaLGcU95jFZQzOUAz2P5y+ni+DO7pNmFnsW50TWWXhbVq5xr+n1gjhsretFYSk
+ cN8/uXsjKAvFrMdBAn89Sn0N0umaR2cGA5K0cIa156/rWLtG/VNr1UG8Vk4Qg+T0A4DG
+ A7LhlgxtCOnxYhbWJtHLATAogu6Erca3MtCWyi3bdd85cwUfDZdlIt+jbAqQFDUBPUB6
+ 0YWXV6+wPWIi1q2Lmc/jsUFv1g83Gc0YK2Mplg7d/+W5VRjoM3naC8EoxdnoV2CDaDTi
+ fHlnlYKCDMUD07kOcmVwJojRSSMRYHh5ZErRyqPOvVEM4UiB2r9pDhP06ERcS897+Wss
+ 2Vxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742322077; x=1742926877;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Us4nk3fF8koMbxF8G+Cw7Ne2OQGvH4wm6Au3I7C6iwg=;
- b=Xc8zqB/Rz+/t6Fpc3h4IoZm7rq0FtGBL8rqhVQks2ejdHy2hWYVbkGCQ4TIhnAG/id
- KARd8EgbEzlt7IiK8bdAHMwhJDpG8ut0g2NCYjxPFToA1MiSGQsm+jc/oDH7WpVy+USo
- nmBoo9yBLfF2r0l4CK69LFhxFjEdPozLJEGPFLjGgtXpkaegBDLPbkv2P18MQGJBYqSl
- tYtr1F9HG6wU24Rdg2/LnfFLBldeEpttXd5agG0HTXxBQ7N+k4Z8aM1PmYZp1D9Q3B00
- /pwCccmIWZNoTyH7HMCdpozxyBtkzJC+i1K4e+YHOiBUUEUqa5rOPCIT1qqb2DCgwXP3
- x3Kw==
+ d=1e100.net; s=20230601; t=1742322222; x=1742927022;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zhdlHNWmjY0/U0RTVbqd1beK1I5dVapYlQeofi/XGMw=;
+ b=r20oU11lNpmsVUu9vd72a/3fsjSgxaCtlC8trMrwLe8H0YW1EuyIH2m54V7ZZSqcrs
+ jZDuWRgjpS7o791OjD2Y6zFYeDcuI3E77iazR1snjEJYbn/4u3GFHbq1SMutoh3yDtFN
+ kyjCtmrd1noO2kHeRyeIMhmNS109gZ530pyDnayWcMNj+/WQ7i8QYUfuTY8MCdvnhgtV
+ TB9s1TpyV3XuIXqf0RMgMWIbwKvjhJOodKPIavrSdvGMrh9m9ZQoD6hKq6x0IqFNVOLI
+ pVEwM8lk+SgKXgGO/M3iQmIiw3+2b4UUwc7oMIzGXxQlnYFNYuuRCV0vGz7XvAUQKi98
+ cU4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7OmhAXFuRFgbjLxUObkgXPhqBa9/Uv66ANlI6Ee6EExwWtoa3Stoye9VLsXBRPIXosz5L8ftZh5Y6@nongnu.org
-X-Gm-Message-State: AOJu0YzRsu7WL18rqY0W3noirDxSfb5AOi6BCivtB+mWVT4NkUQXGfjK
- rOfG+uhfNgnbuNCQOUvcq4h2YG1XqbVKaAxF1SgoUO+BbQLbDBXyttHU9SK4txqdSzyViYmrZFF
- dS+3CAQTMon4p3lzuGBWwleAZV5LS4vdwgu9WTvjpZwzhm6W1hCn1
-X-Gm-Gg: ASbGncsue4CkPKYNfIj5zmOfE88O2Lk9HG7w0/qQSHEogHX0Mzu3RGOAbMjjcTjuaK9
- r4PprR0U8Nzd1e7LNLTTvgNuiGotqqG9ECqpN05dRTlpV4ns7mJ6ADOAAxhMNH+JMXfWxNnjJ4e
- iKbcoB2kBysRVwNSAeihCWfzl+UxMd1Vf8VNL6/4tiX+Iejv+R8qJWZRuRQZYpbWIg3y/orfOPT
- H2Zcs86Qb4Ag03bqI+CLMk46/VNilx121NRze9x9defVlpZj9LVWM5Cby16qcCVZhtcChRiiptc
- Z36W/lyyEk91BKiN8VM=
-X-Received: by 2002:a05:6602:1553:b0:85a:fdcc:571d with SMTP id
- ca18e2360f4ac-85dc4b35bf4mr640668939f.4.1742322076957; 
- Tue, 18 Mar 2025 11:21:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJu8DxKjI7RM0XeTYSeU5RgAEhHxGW9NeQ3JNEZ9L5UQw/KYPFv7cj8tPFk6ZUxIkatvhjfg==
-X-Received: by 2002:a05:6602:1553:b0:85a:fdcc:571d with SMTP id
- ca18e2360f4ac-85dc4b35bf4mr640668139f.4.1742322076503; 
- Tue, 18 Mar 2025 11:21:16 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f2637196besm2839553173.43.2025.03.18.11.21.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 11:21:15 -0700 (PDT)
-Date: Tue, 18 Mar 2025 12:21:14 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Cc: clg@redhat.com, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
- vaibhav@linux.ibm.com, npiggin@gmail.com, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2] vfio: pci: Check INTx availability before enabling them
-Message-ID: <20250318122114.5e8fad2f.alex.williamson@redhat.com>
-In-Reply-To: <174232032506.3739.465958546360660842.stgit@linux.ibm.com>
-References: <174232032506.3739.465958546360660842.stgit@linux.ibm.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCWs+bLE3ei6X7JAkQ2PjNEZ41DqB+yRbm5nwJ3qjZGAjDmFnU2eT9M6r3Do7pogc77Q0UTQ+FfrpbOP@nongnu.org
+X-Gm-Message-State: AOJu0YzmmhH8RDvnu77ErVgeXgusMlrvLk2URqPxW/s4p0o2DJtZcz8Y
+ f5rsQ13Br9sDhEDalYIZGApWsH+x5gNGZH/zxMjqYLDe4pEASpk2g3diIUnxoN0=
+X-Gm-Gg: ASbGncvm7phhzS+j1cOwll2nPzMJsQoIatqmuzgyecFkPWsr8Pb3cQ28KOsiWeK6gZZ
+ WcP+X7N52sphkJCAJWu7x13KDG3cuvgQajzLkMM+poG2pvkUFVxCt36Rz0BjE7gT+YgJfGqFG50
+ jTYSCtC9ZPFW+6u8AJfvvGtjJvDTUptd46S+hbUBnK9APWca2Cac0HTGIsEyfT2bg/iHEGgWP7g
+ quUnDjf8gFbySa6+VYn0SS+o9eRR01lsqKBTy+5EcZu2giq7oxx7g7qBEGWwWCJOgytuuImzYGv
+ oCIB1Mtit9lBN+zSeLP6+vfDT+XbYl+lwlcTqXyEzyRJL8PfE4QeUNJ+sA==
+X-Google-Smtp-Source: AGHT+IF2LvaZ3PEnsxaSBKWmFbnLT1gdeU7gnXTv95cW5ygVp8xR52qeX2fRpo9WNGk6os/wtQpMKA==
+X-Received: by 2002:aa7:888a:0:b0:736:baa0:2acd with SMTP id
+ d2e1a72fcca58-73722460be6mr24957668b3a.20.1742322222270; 
+ Tue, 18 Mar 2025 11:23:42 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7371157369bsm9893539b3a.75.2025.03.18.11.23.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Mar 2025 11:23:41 -0700 (PDT)
+Message-ID: <ab9b15c1-4f59-4fce-88fd-028fd21875c3@linaro.org>
+Date: Tue, 18 Mar 2025 11:23:41 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/13] target/arm/cpu: always define kvm related registers
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
+ <20250318045125.759259-8-pierrick.bouvier@linaro.org>
+ <fa3c4676-f78c-42af-b572-559640c0e4f7@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <fa3c4676-f78c-42af-b572-559640c0e4f7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,92 +110,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Mar 2025 17:52:53 +0000
-Shivaprasad G Bhat <sbhat@linux.ibm.com> wrote:
-
-> Currently, the PCI_INTERRUPT_PIN alone is checked before enabling
-> the INTx. It is also necessary to have the IRQ Lines assigned for
-> the INTx to work.
-> 
-> The problem was observed on Power10 systems which primarily use
-> MSI-X, and LSI lines are not connected on all devices under a
-> PCIe switch. In this configuration where the PIN is non-zero
-> but the LINE was 0xff, the VFIO_DEVICE_SET_IRQS was failing as
-> it was trying to map the irqfd for the LSI of the device.
-> 
-> So the patch queries the INTx availability with
-> VFIO_DEVICE_GET_IRQ_INFO ioctl, and enables only if available.
-
-The kernel should just virtualize the PIN register to report INTx isn't
-supported, as we already do when INTx is broken, or for platforms that
-don't support INTx, and as proposed for INTx set to IRQ_NOTCONNECTED.
-No QEMU changes necessary.  Thanks,
-
-Alex
-
-> 
-> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-> ---
-> Changelog:
-> v1: https://lore.kernel.org/qemu-devel/173834353589.1880.3587671276264097972.stgit@linux.ibm.com/
-> - Split the fix into two parts as suggested. Kernel part posted here [1]
-> - Changed to use the irq_info for checking the intx availability.
-> 
-> [1]: https://lore.kernel.org/all/174231895238.2295.12586708771396482526.stgit@linux.ibm.com/
-> 
->  hw/vfio/pci.c |   24 +++++++++++++++++++++---
->  1 file changed, 21 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 7f1532fbed..54de6e72f8 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -261,6 +261,25 @@ static void vfio_irqchip_change(Notifier *notify, void *data)
->      vfio_intx_update(vdev, &vdev->intx.route);
->  }
-> 
-> +static bool vfio_check_intx_available(VFIOPCIDevice *vdev)
-> +{
-> +    uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-> +    struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info),
-> +                                      .index = VFIO_PCI_INTX_IRQ_INDEX};
-> +
-> +    if (!pin) {
-> +        return false;
-> +    }
-> +
-> +    if (ioctl(vdev->vbasedev.fd,
-> +              VFIO_DEVICE_GET_IRQ_INFO, &irq_info) < 0) {
-> +        warn_report("VFIO_DEVICE_GET_IRQ_INFO failed to query INTx");
-> +        return false;
-> +    }
-> +
-> +    return (irq_info.count != 0);
-> +}
-> +
->  static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
->  {
->      uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-> @@ -268,8 +287,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
->      int32_t fd;
->      int ret;
-> 
-> -
-> -    if (!pin) {
-> +    if (!vfio_check_intx_available(vdev)) {
->          return true;
->      }
-> 
-> @@ -3151,7 +3169,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->                 vdev->msi_cap_size);
->      }
-> 
-> -    if (vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1)) {
-> +    if (vfio_check_intx_available(vdev)) {
->          vdev->intx.mmap_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
->                                                    vfio_intx_mmap_enable, vdev);
->          pci_device_set_intx_routing_notifier(&vdev->pdev,
-> 
-> 
-
+T24gMy8xOC8yNSAxMToxNCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
+IDE4LzMvMjUgMDU6NTEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBUaGlzIGRvZXMg
+bm90IGh1cnQsIGV2ZW4gaWYgdGhleSBhcmUgbm90IHVzZWQuDQo+IA0KPiBJJ20gbm90IGNv
+bnZpbmNlZCBieSB0aGUgcmF0aW9uYWxlLg0KPiANCj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBQ
+aWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+PiAtLS0N
+Cj4+ICAgIHRhcmdldC9hcm0vY3B1LmggfCAyIC0tDQo+PiAgICAxIGZpbGUgY2hhbmdlZCwg
+MiBkZWxldGlvbnMoLSkNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L2FybS9jcHUuaCBi
+L3RhcmdldC9hcm0vY3B1LmgNCj4+IGluZGV4IDIzYzIyOTNmN2QxLi45NmY3ODAxYTIzOSAx
+MDA2NDQNCj4+IC0tLSBhL3RhcmdldC9hcm0vY3B1LmgNCj4+ICsrKyBiL3RhcmdldC9hcm0v
+Y3B1LmgNCj4+IEBAIC05NzEsNyArOTcxLDYgQEAgc3RydWN0IEFyY2hDUFUgew0KPj4gICAg
+ICAgICAqLw0KPj4gICAgICAgIHVpbnQzMl90IGt2bV90YXJnZXQ7DQo+PiAgICANCj4+IC0j
+aWZkZWYgQ09ORklHX0tWTQ0KPj4gICAgICAgIC8qIEtWTSBpbml0IGZlYXR1cmVzIGZvciB0
+aGlzIENQVSAqLw0KPj4gICAgICAgIHVpbnQzMl90IGt2bV9pbml0X2ZlYXR1cmVzWzddOw0K
+Pj4gICAgDQo+PiBAQCAtOTg0LDcgKzk4Myw2IEBAIHN0cnVjdCBBcmNoQ1BVIHsNCj4+ICAg
+IA0KPj4gICAgICAgIC8qIEtWTSBzdGVhbCB0aW1lICovDQo+PiAgICAgICAgT25PZmZBdXRv
+IGt2bV9zdGVhbF90aW1lOw0KPj4gLSNlbmRpZiAvKiBDT05GSUdfS1ZNICovDQo+IA0KPiBN
+YXliZSB3ZSBuZWVkIGFuIG9wYXF1ZSBBcmNoQWNjZWxDcHVTdGF0ZSBzdHJ1Y3R1cmUuLi4N
+Cj4gDQoNCkl0J3Mgc2ltaWxhciB0byB0aGUgaW50ZXJlc3RpbmcgcXVlc3Rpb24gb2YgaG93
+IHRvIGV4cG9zZSBzb21lIHJlZ2lzdGVycyANCmNvbmRpdGlvbm5hbGx5Lg0KDQpXZSBjb3Vs
+ZCBwdXQgdGhpcyBpbiBhbm90aGVyIHN0cnVjdCwgYWxsb2NhdGUgaWYgb25seSBpZiBuZWVk
+ZWQgDQooa3ZtX2VuYWJsZWQoKSksIG9yIGp1c3QgbGV0IGl0IGJlIHByZXNlbnQgYW55dGlt
+ZSBsaWtlIGl0IGlzIGRvbmUgd2l0aCANCnRoaXMgcGF0Y2guDQoNCkkgZG9uJ3QgaGF2ZSBh
+IHN0cm9uZyBvcGluaW9uLCBidXQgaGF2aW5nIGNvbmRpdGlvbmFsIHByZXNlbmNlIGhlcmUg
+aXMgDQpqdXN0IG1ha2luZyB0aGluZ3MgY29tcGxpY2F0ZWQgd2l0aG91dCBpbnRyb2R1Y2lu
+ZyBhbnkgYmVuZWZpdC4gSXQgZG9lcyANCm5vdCBwcmV2ZW50ICJ1bmF1dGhvcml6ZWQiIGFj
+Y2VzcyB0byBpdC4NCg0KTm93LCBpZiB3ZSBzdGFydCB0byBoYXZlIHNvbWV0aGluZyBtb3Jl
+IGNsZWFuLCBpbXBsZW1lbnRlZCBpbiBhbm90aGVyIA0KY29tcGlsYXRpb24gdW5pdHMsIG9u
+bHkgcmVsYXRlZCB0byBrdm0sIHdlbGwsIHRoYXQgY291bGQgYmUgdXNlZnVsLiBCdXQgDQp3
+ZSBoYXZlIHRvIGRlZmluZSB0aGUgaW50ZXJmYWNlIGZvciB0aGF0LCBhZGQgaXQgdG8gb3Ro
+ZXIgYXJjaGl0ZWN0dXJlcywgDQphbmQgcHJvYmFibHkgc3BlbmQgYSBmZXcgbW9udGhzIGlu
+IHRoZSBtaWRkbGUgd2hlcmUgdGhpbmdzIGFyZSBzdHVjayBoZXJlLg0KDQo+PiAgICANCj4+
+ICAgICAgICAvKiBVbmlwcm9jZXNzb3Igc3lzdGVtIHdpdGggTVAgZXh0ZW5zaW9ucyAqLw0K
+Pj4gICAgICAgIGJvb2wgbXBfaXNfdXA7DQo+IA0KDQo=
 
