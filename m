@@ -4,67 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0C40C28B28
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E812C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 12:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuWHK-00081I-AF; Tue, 18 Mar 2025 08:42:42 -0400
+	id 1tuWNA-0006As-Dv; Tue, 18 Mar 2025 08:48:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuWH6-0007qs-Ss; Tue, 18 Mar 2025 08:42:30 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuWH3-0002wy-Pa; Tue, 18 Mar 2025 08:42:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742301746; x=1773837746;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=oNTyY42WX481d5bX9cw8tiiWl2PH6jRFnI6SscTNaEc=;
- b=AIaA5GY83o4exiiIhAtV9LisoP0wBsrFNv5HE607+8VdFA1DVMrhlun2
- vJaUPF0U66XofNgyWG8UNxj3DNe/UYp+k5Jrim1hAgz2n9VKEHjK/QeR8
- UawNVk+c8amVjePDiutsmqIlA7LkgyzzCkj5+PcnIHy5vCLnoaGhGRHlx
- iBmLCglkZHV/fQaV4aME4VF5XV8KY4OxZx7HEDfWCYHJ0qNLh/bsSnz1N
- tZIrERiEfVEAYbp/XjIHELB+eR0ZT+/eIhFw0DHeY3iZZ7qq7StVXZh5D
- XAJ24y83h084o1zrIAMddRGyiZP+ACA18LwM0woFePuXjEqWnOovscCZM A==;
-X-CSE-ConnectionGUID: d6tzlCFsT5mY9gtyOuVbsg==
-X-CSE-MsgGUID: 8JnZrBrLSvKM7ahibIedgQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11377"; a="54824584"
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="54824584"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2025 05:42:19 -0700
-X-CSE-ConnectionGUID: MxO89FBxSF+F28I9Fjsxzw==
-X-CSE-MsgGUID: aZPq6sY1SG+E1q2LVeJNug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="121980453"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 18 Mar 2025 05:42:17 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 07/15] rust/vmstate: Fix unnecessary VMState bound of
- with_varray_flag()
-Date: Tue, 18 Mar 2025 21:02:11 +0800
-Message-Id: <20250318130219.1799170-8-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250318130219.1799170-1-zhao1.liu@intel.com>
-References: <20250318130219.1799170-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuWMZ-0005J3-7r
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:48:07 -0400
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuWMV-0003jH-Jj
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 08:48:06 -0400
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e643f235a34so1000089276.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 05:48:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742302081; x=1742906881; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8slg3rOHyYBzQ/7Yb912beQ4u4EfQcKUFPIw0EirfLs=;
+ b=zlrMrKsmoQnySdkHLVyFswf/VFTBFoT6Jx7saQjFNUP2l2Yves/BOXhepQbJ1+g1ur
+ 21XXRaPSyD90MUWs4aDTiSMF9XvN14E69sSV7GrsycXb1eAyaJuHwecqvZdTRaX/d0J/
+ b/42LfN7Jp7Qqa9RYHgxwSXY1CfQbSciG+neqp3Yp9F1yju3dgbRVHzgbKPa8ilE2wS9
+ NpMlgPw/GoacxeIp6vn08NOR4A+aipoCqTWekrCstDRy+DdOY7Y7DXMx1zdBcOCLanZq
+ i2TqAUEXdu5mp+delLLMps+iksQVt3QUlEV/MkyEsAKkvhavPZg+sJjgtud59qvgaMzr
+ zjzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742302081; x=1742906881;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8slg3rOHyYBzQ/7Yb912beQ4u4EfQcKUFPIw0EirfLs=;
+ b=sbo0R2bkWNeOZ76fZXuW6MsmAezMQuNzGikXg+U2gOZFDuAeMbGHY1yde1Wvtyby8e
+ fOHRrclTefP7QCz17u50Au3U9zPukrkwrxkXl1THnQcALh0+S0a+Taw7WYadYcylX/b+
+ Lc4obr8/lapSISFkBWenidzyU43Q50nrZrVuc9xJMyueC+ZAFqTDTLsAof+hP3si+UGz
+ oJmBOaqtd9ZxQ+/C7dgo5YH45aOgibRla9u2Nsxyjfzo5tr3q5NEd0osfTjBXw+tuBrx
+ mmMWWlhVRcHDC+/DzMyTe5m6g6apvQ9c4ZsFBm4ka//dlneGRWVKSCCgWTi61P5iMb2c
+ 34fA==
+X-Gm-Message-State: AOJu0YzToyOh0kGTEiEpB54jOtvHzGD5LzlXvkLWO85MKvdhFuEnn0os
+ 52z5lv7XZ5IE+uHbPvf1viGN8xI3mE466it6NJcN3IDmqSMc1ylxbbzH2qcCbN5k9D/e35mm2vP
+ KEnVt3F7EatyAXKsA1mz4EmX6tro1FaJnn7cptg==
+X-Gm-Gg: ASbGncvswx5ewMSnCaPsSd481k00sns+u06oEsahafTzJi07ugM9GdyrgH2vyEy3V+2
+ 2c8qMimht8RYkvmFbDfWT4HdB57Q5Mk9bRyQb3zkWzvQoGgudZIxpRRfsMW3oM5X6tOVVLG8tbg
+ M9qgA+sHUkdjj8mMOJg4zeoRXnfuA=
+X-Google-Smtp-Source: AGHT+IEQwuhuln8+CACHXRg23nE9E4Ir3EzobpQ+E8vKgc3O8ZXsfqoDMfvU4WLRzflGkyV5v0UK1wwFgXnbwrFjNqI=
+X-Received: by 2002:a05:6902:2d41:b0:e64:60c:54ce with SMTP id
+ 3f1490d57ef6-e64060c55fcmr11870366276.2.1742302081114; Tue, 18 Mar 2025
+ 05:48:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250317-raw-v1-0-09e2dfff0e90@daynix.com>
+ <CAFEAcA9Cy_870gxNmPFykzTjXOfi0raotmA1NRpZEQKfFfB=0g@mail.gmail.com>
+In-Reply-To: <CAFEAcA9Cy_870gxNmPFykzTjXOfi0raotmA1NRpZEQKfFfB=0g@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 18 Mar 2025 12:47:49 +0000
+X-Gm-Features: AQ5f1JotXtyRSF-yg8G2NNirSk_YOR4QVWN85v7N2eTx2d23zF47r3yjGjF1iRw
+Message-ID: <CAFEAcA_DzikGAsKC=zMc7OVcinTj3PnO+3WACGOQxwpTHKzSCg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] target/arm: Flag PMCNTENCLR with ARM_CP_NO_RAW
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,41 +92,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VMState type bound is not used in with_varray_flag().
+On Mon, 17 Mar 2025 at 11:53, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Mon, 17 Mar 2025 at 11:16, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+> >
+> > Supersedes: <20250314-clr-v2-1-7c7220c177c9@daynix.com>
+> > ("[PATCH v2] target/arm: Define raw write for PMU CLR registers")
+> >
+> > A normal write to PMCNTENCLR clears written bits so it is not
+> > appropriate for writing a raw value. This kind of situation is usually
+> > handled by setting a raw write function, but flag the register with
+> > ARM_CP_NO_RAW instead to workaround a problem with KVM.
+>
+> I'm not sure there's a "problem with KVM" here -- it implements the
+> write to PMCNTENCLR to have the semantics the architecture specifies.
 
-And for vmstate_struct, Rust cannot infer the type of `num` from the
-call_func_with_field(), so this causes the compiling error because it
-complains "cannot satisfy `_: VMState`" in with_varray_flag().
+I checked with the KVM developers on this one, and you are correct
+that this is a KVM issue, so I was wrong here; sorry about that.
+There is a fix queued:
 
-Note Rust can infer the type in vmstate_of macro so that
-with_varray_flag() can work at there. It is possible that the different
-initialization ways in the two macros cause differences in Rust's
-type inference.
+https://web.git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git/commit/?h=next&id=f2aeb7bbd5745fbcf7f0769e29a184e24924b9a9
 
-But in fact, the VMState type bound is not used in with_varray_flag()
-and vmstate_varray_flag() has already checked the VMState type, it's
-safe to drop VMState bound of with_varray_flag(), which can fix the
-above compiling error.
+which will restore the "just writes the value" semantics. This
+is apparently the intended semantics for KVM_SET_ONE_REG for
+all cases: the write is supposed to do "sets register to the
+specified value", not "behaves as if the guest vCPU had done
+the register write insn, with attendant side effects".
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/qemu-api/src/vmstate.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 3be3a7260fe9..792a74fdfc08 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -275,7 +275,7 @@ pub const fn with_pointer_flag(mut self) -> Self {
-     }
- 
-     #[must_use]
--    pub const fn with_varray_flag<T: VMState>(mut self, flag: VMStateFlags) -> VMStateField {
-+    pub const fn with_varray_flag(mut self, flag: VMStateFlags) -> VMStateField {
-         assert!((self.flags.0 & VMStateFlags::VMS_ARRAY.0) != 0);
-         self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_ARRAY.0);
-         self.flags = VMStateFlags(self.flags.0 | flag.0);
--- 
-2.34.1
-
+thanks
+-- PMM
 
