@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8BAC28B2F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 17:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F64FC28B2F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 17:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuaIM-00005N-IG; Tue, 18 Mar 2025 13:00:02 -0400
+	id 1tuaKF-00010N-RO; Tue, 18 Mar 2025 13:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuaIJ-0008VH-VX
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 13:00:00 -0400
-Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tuaKD-0000z6-Dq; Tue, 18 Mar 2025 13:01:57 -0400
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tuaIE-0003Z9-RP
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 12:59:59 -0400
-Received: by mail-yb1-xb2f.google.com with SMTP id
- 3f1490d57ef6-e60aef2711fso4314243276.2
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 09:59:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tuaKB-0003zB-Mt; Tue, 18 Mar 2025 13:01:57 -0400
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-7c0155af484so793156185a.0; 
+ Tue, 18 Mar 2025 10:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742317193; x=1742921993; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sMT6Jk50mVoND0FsUtikB0YOobI1KlGFSg+zmDyEN4Q=;
- b=O32zzG2Yn9X2Y6hnamg1Znp+NfgpJVpHBHzjXaIwN85wVWunI6wDpQPZdZY3fsxqKE
- bB18giVOP2xaHxVaSSXZchERdpVVt/lB5EIdK8BjXBGI0YP5W2+FyU5mMKC2ARaNXJVI
- nSTNQe6Kp4a2jQy8qhlRXamoTY4cTGBqHMGazIq6iBS1bvvbUIuzXBygqO8tCNe3VAKV
- flVq1bEaQuHCnlqGU/lEGNNdLUfmeoIgwhflrp/tQm/XUdKA8wyPHdyxHTyt8U2U8gGe
- i9g/IGsFZiGApwRT37gvbu9U/A1x69Upj7B9itUb3QNRW3fFfMNJd0TQp72EkxRkJYiU
- Guxg==
+ d=gmail.com; s=20230601; t=1742317313; x=1742922113; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iEYQR2alxfh8aOatpsc1zDDjo+LyU5e/r56fCvXVwgM=;
+ b=SniDYv0wgouPnZMguHJe/BYpG7caO6yrFBt+p7wnz7Dee+Vg/VWmF/3g1lAMBzQ9O7
+ h7nhHfpH2iMMIi2+kPt3aWm0juBWtSFwsdiEQk3Lh+lXquNeBs1YzhwdZIyj+zBEADBv
+ hh5F/Kl1CJXeMibnsfiFXQcdqstsUMXtcLOK1KSqW7rkxfZ29iSd7hcOF7N6Xcw8EWJc
+ 0Xit4KXllLQq1L6R+DGRbBVUxvrPDDRZncNS+oerDQukdeOwMfLqdqtT9181JXF5yzRR
+ dVrKkoJ4Lhz29MMow8L95XbbaizAFniDdSdnbRp0NjqmDWB3MyxgpukvJOQWGihQbrQ/
+ 7Ojw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742317193; x=1742921993;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sMT6Jk50mVoND0FsUtikB0YOobI1KlGFSg+zmDyEN4Q=;
- b=BKjTV+E5kONgFAn4qNufMxG/uxu1T2zQWCArinaBnQSJUsbWjCHl+tg3PJN70FxQ53
- vhr2/6XuFc1OATBqkeX/sC8taFiRXWN9OsMDaDOLHCZlmW3Vh2QsaT6GLmBoluYsrcSe
- 7TOABkGwx8gZJxU2gewHxtg2NWV2JUOZTL1anJiZJn8yvJJSujBO0qK7cB9HdSd6OLMF
- 0672sDza0IsnZ53UxOMxg98pWDK1C6DpMS3Z31adX3bqw8pxCO0hxgdnEJeuYaPmSjYU
- DYdzOfSGwMMs0wgNB1BKtnDW9+DFyOZ9yjWZhEg+t7zGR/kOzoHICHclMU4nP+oH/BsP
- hYVg==
+ d=1e100.net; s=20230601; t=1742317313; x=1742922113;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iEYQR2alxfh8aOatpsc1zDDjo+LyU5e/r56fCvXVwgM=;
+ b=TUXDKGiyMXestxdjQtg1YUakPMLelF5KOExiMfZuehzLcLAHMpbP1MD7GDGslKEyfk
+ tm3eN6Q79cAEGBUXKndTbzumsyRDrNLapmrRWrCnV4WewFn2FjuKACLl78U+nuLnvp5O
+ SzuDEw8YWJQ7AiJ7b6dV6d1DVGIvbJ6kzOOYx0sXcKpWiaUyyf1ezS8sy+uTt+LkYWHA
+ ab4seTyPDp1KM4mULCsGWJ9xzVIBNy+OGKot+ItvAINxezQeDRZyzgJcjXtogZv8OcP7
+ b5cQHBz79pHjEKg3C/DHgznnMhEt2QFDclozhd15TrpjI0w2DyTst7AQrXnB31wjbW8U
+ DIKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXozJpqHcmH0AKni0ABuKFTBCOVPS4kYN5MEpT4l6bSRTWeUSyg6YXnoV5is9PTRcKvOnyJl4sGEeIl@nongnu.org
-X-Gm-Message-State: AOJu0YwpOLuNGAT6iuEvEwDhTUsIOOY0cNGwakE2+yT/N1LQR5QOPEUR
- z4fOyqSIfQOjeBGxUWK3DcMJ8QInqz8G3Rsr1lMq3tXIhdWiTNlhbK9otqVzGYTuJghhuxvxGN2
- zDoiqWtSQtRt34tLX4jPcmxmuzvmxK6pX+wJp6A==
-X-Gm-Gg: ASbGnctHbWu5dSlUZVPnR1bvnOHzJpq5tO5dosdRf1DW0mBgWu9CaU3HPoMSpZ0R1X0
- cyozHL0OgFYSKErxBObMBCHpRtP51KQOTJiKPL9lLZyDTORxC6pDKDkY78cyt2Rlb+hX0Wb2llW
- 2QedFDpUBbq6dvHH/lGaLLjvqG894=
-X-Google-Smtp-Source: AGHT+IHmZ6Fa8BhEnxz3plYwFJ91IY+A6RMunH10g44sgNSAmhYNMuyIfK/u/Av8WFTqghoPz+VU2BfJI7RkjyksJXQ=
-X-Received: by 2002:a05:6902:723:b0:e5b:420b:8dc2 with SMTP id
- 3f1490d57ef6-e63f64ec939mr23149287276.18.1742317193635; Tue, 18 Mar 2025
- 09:59:53 -0700 (PDT)
+ AJvYcCVspF2dH6NK6yPs3OCZF1w+DS9ABh+mPzxXkPeL4y8B3Sj6IhyEF3VlMMYWdSaFJRSnadhnBTv0aCjGRQ==@nongnu.org,
+ AJvYcCWP+wqRxcZnZNiydAlkiebkOD+xBs0PIJ5EUKhBXGtG5jEUUGrosnnQjZA0j6FZRs18lHYFfO2ZSfJJHnc=@nongnu.org,
+ AJvYcCXS9mVjhj88oNN5wj8clSp6+d64KoWMcQtR7PVr53zUy8bLF3tWUCNrNYaArLRkWLNblWqY+Kgn/559@nongnu.org
+X-Gm-Message-State: AOJu0YxqAGn17EmDN7NP1XIj2mrvghwwiwX8KVP5o8eQQGg7/4jf6nlx
+ 3IppUx+jKjg5FDnGPD5uVUUjSHa8Ehd9r2HkNhK9tGkD+2EYU33s1PNQdrzjUuaXxR1jd5z26cA
+ M/sZnB5QGkzQUg7TTOQd0Xv4R4To=
+X-Gm-Gg: ASbGncv8+upM/C0WJOczXrqtD3Xo5NeprTJk0UmpRuZxQwTtZtZISoWMvzYf7Tx4wte
+ knZ/t2hc4Zy5Fq5ZB20XSqpzbBBaK2slHmfovXz3C2FQd/k5oazfEz7qDwPapMr4xSIn0i62Owi
+ zuf9Btz2v22qATf6a0/yrdzvrk9zY=
+X-Google-Smtp-Source: AGHT+IFZQudw2+iPK01zte8tKWK/sHddZHEx6/UTRWUL3IPrr3hh75eoPLto0HP3LYNW5HuSKYZsvgkJiLp4UGV2WqM=
+X-Received: by 2002:a05:620a:45ac:b0:7c5:5883:8fb3 with SMTP id
+ af79cd13be357-7c57c79bb70mr3145781285a.8.1742317312631; Tue, 18 Mar 2025
+ 10:01:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250315142050.3642741-1-linux@roeck-us.net>
-In-Reply-To: <20250315142050.3642741-1-linux@roeck-us.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 18 Mar 2025 16:59:41 +0000
-X-Gm-Features: AQ5f1JqIlD8ykM5M9CeqTV_4wmI9kZyi6aqmFVrhnLJr9HTlxu13djKw47PEY5E
-Message-ID: <CAFEAcA-zPwJrq3oQk3MRp9ZCyTzDOg2-Je00v20pVzrKe8he6w@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>
+References: <20240909141635.1459701-1-berrange@redhat.com>
+ <20240909141635.1459701-11-berrange@redhat.com>
+ <CAFEAcA_xCa4NjyDt6M+n6KdXTUWRfdSkymW-AqupXRQC97DKcQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_xCa4NjyDt6M+n6KdXTUWRfdSkymW-AqupXRQC97DKcQ@mail.gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Tue, 18 Mar 2025 23:01:40 +0600
+X-Gm-Features: AQ5f1JqHUDkYFqBvIfDFveYVb2zzFGsnTbc_VxJYN2URzn9W45KU4V1Dbohw9-w
+Message-ID: <CAFfO_h6ANSUP_Y3UTFOf3RPGk0s5VPiqoFpy47sDrCnJgrwvfA@mail.gmail.com>
+Subject: Re: [PULL 10/10] crypto: Introduce x509 utils
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-qk1-x735.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,35 +106,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 15 Mar 2025 at 14:20, Guenter Roeck <linux@roeck-us.net> wrote:
+On Tue, Mar 18, 2025 at 10:44=E2=80=AFPM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
 >
-> Without psci_conduit, the Linux kernel crashes almost immediately.
+> On Mon, 9 Sept 2024 at 15:21, Daniel P. Berrang=C3=A9 <berrange@redhat.co=
+m> wrote:
+> >
+> > From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> >
+> > An utility function for getting fingerprint from X.509 certificate
+> > has been introduced. Implementation only provided using gnutls.
 >
->     psci: probing for conduit method from DT.
->     Internal error: Oops - Undefined instruction: 0000000002000000 [#1] PREEMPT SMP
+> Hi; recent changes in the codebase mean that one of Coverity's
+> "maybe this needs an error check" heuristics is now triggering
+> for this code (CID 1593155):
 >
-> Fixes: ae0c4d1a1290 ("hw/arm: Add NPCM8XX SoC")
-> Cc: Hao Wu <wuhaotsh@google.com>
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> ---
->  hw/arm/npcm8xx.c | 1 +
->  1 file changed, 1 insertion(+)
+> > +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+> > +                                      QCryptoHashAlgorithm alg,
+> > +                                      uint8_t *result,
+> > +                                      size_t *resultlen,
+> > +                                      Error **errp)
+> > +{
+> > +    int ret =3D -1;
+> > +    int hlen;
+> > +    gnutls_x509_crt_t crt;
+> > +    gnutls_datum_t datum =3D {.data =3D cert, .size =3D size};
+> > +
+> > +    if (alg >=3D G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
+> > +        error_setg(errp, "Unknown hash algorithm");
+> > +        return -1;
+> > +    }
+> > +
+> > +    if (result =3D=3D NULL) {
+> > +        error_setg(errp, "No valid buffer given");
+> > +        return -1;
+> > +    }
+> > +
+> > +    gnutls_x509_crt_init(&crt);
 >
-> diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
-> index f182accc47..e5a1929ed7 100644
-> --- a/hw/arm/npcm8xx.c
-> +++ b/hw/arm/npcm8xx.c
-> @@ -346,6 +346,7 @@ static struct arm_boot_info npcm8xx_binfo = {
->      .secure_boot            = false,
->      .board_id               = -1,
->      .board_setup_addr       = NPCM8XX_BOARD_SETUP_ADDR,
-> +    .psci_conduit           = QEMU_PSCI_CONDUIT_SMC,
->  };
+> gnutls_x509_crt_init() can fail and return a negative value
+> on error -- should we be checking for and handling this
+> error case ?
+>
 
-Why do we need this for npcm8xx when we don't need it
-for npcm7xx? Or is it also broken on 7xx?
+Yes, I think so. It should be probably something like below:
 
-thanks
--- PMM
+if (gnutls_x509_crt_init(&crt) < 0) {
+    error_setg(errp, "Failed to initialize certificate");
+    return -1;
+}
+
+
+Regards,
+Dorjoy
 
