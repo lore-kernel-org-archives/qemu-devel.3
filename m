@@ -4,66 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C57F0C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 09:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A7B9C28B28
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 09:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuT85-00026u-UX; Tue, 18 Mar 2025 05:20:58 -0400
+	id 1tuTAN-0003Aa-Az; Tue, 18 Mar 2025 05:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuT7v-00025b-Uo
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:20:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tuTAL-0003AC-C4
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:23:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuT7i-00080S-Hz
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:20:47 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tuTAJ-0008Fz-Hm
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 05:23:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742289630;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=K3SzfxSCZgpmLJDnc88j36vDbZA6TbFCNXok+V4j/qg=;
- b=Fm0WiCBqedj1q3C7NBmTJsD9/ZrC5rmkLanIrT61FbFmsViApsZ1/f3rsFn20NpG9kao9N
- SvzqRojLharSp7Qa2XixGu8pOWNqGSKxDlCT0B1gv/PqvYo4cf3S5oh7StP0IGICsyJLlA
- Aao3huMuS/jzJWX6hroXAyBgBQK9iBY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ s=mimecast20190719; t=1742289793;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tjB+XsU+m65FpneTke8dHwtLWo1UNuH84xUNTFcMPFI=;
+ b=dDlksN2nzdsUOlhxFZPImkVx1OVEsYMcIhTKtXCV7yuFNH9GpOy1Kypbup4rKyw6nd3H10
+ DihQ/YagBNFt+XIUBtegMZ/mZ1+kt/Xx0tDSNl+t4/OaA+8JhypBr73VLAxV2qzxakUear
+ +BuIgncXCEh9rNE2Uoq6YIYJMBeMDcI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-aEsAvPSmPaydmwHiELmdlw-1; Tue,
- 18 Mar 2025 05:20:26 -0400
-X-MC-Unique: aEsAvPSmPaydmwHiELmdlw-1
-X-Mimecast-MFC-AGG-ID: aEsAvPSmPaydmwHiELmdlw_1742289625
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-C8E9REoxPZu43rSJmED_tg-1; Tue,
+ 18 Mar 2025 05:23:09 -0400
+X-MC-Unique: C8E9REoxPZu43rSJmED_tg-1
+X-Mimecast-MFC-AGG-ID: C8E9REoxPZu43rSJmED_tg_1742289788
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 894051800257; Tue, 18 Mar 2025 09:20:25 +0000 (UTC)
-Received: from thuth-p1g4.str.redhat.com (dhcp-192-228.str.redhat.com
- [10.33.192.228])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2ABF8180174E; Tue, 18 Mar 2025 09:20:23 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 434E019560AE; Tue, 18 Mar 2025 09:23:07 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.167])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 321E61956094; Tue, 18 Mar 2025 09:23:04 +0000 (UTC)
+Date: Tue, 18 Mar 2025 09:23:01 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aditya Gupta <adityag@linux.ibm.com>
-Subject: [PATCH] docs/devel/testing/functional: Add a section about logging
-Date: Tue, 18 Mar 2025 10:20:21 +0100
-Message-ID: <20250318092021.53719-1-thuth@redhat.com>
+Subject: Re: [PATCH] docs/devel/testing/functional: Add a section about logging
+Message-ID: <Z9k7dXT63vnsOjM2@redhat.com>
+References: <20250318092021.53719-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <20250318092021.53719-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -78,55 +86,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Tue, Mar 18, 2025 at 10:20:21AM +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> We should tell the users where to find the log file.
+> While we're at it, also rename the "Overview" heading to a
+> more accurate "Introduction to writing tests" instead.
+> 
+> Reported-by: Aditya Gupta <adityag@linux.ibm.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  docs/devel/testing/functional.rst | 22 ++++++++++++++++++++--
+>  1 file changed, 20 insertions(+), 2 deletions(-)
 
-We should tell the users where to find the log file.
-While we're at it, also rename the "Overview" heading to a
-more accurate "Introduction to writing tests" instead.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Reported-by: Aditya Gupta <adityag@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- docs/devel/testing/functional.rst | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index a9fa45eac1f..9bc973392aa 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -72,8 +72,26 @@ files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
- variable.  Any preserved files will be deleted the next time the test is run
- without this variable set.
- 
--Overview
----------
-+Logging
-+-------
-+
-+The framework collects log files for each test in the build directory
-+in the following subfolder::
-+
-+ <builddir>/tests/functional/<arch>/<fileid>.<classid>.<testname>/
-+
-+There are usually three log files:
-+
-+* ``base.log`` contains the generic logging information that is written
-+  by the calls to the logging functions in the test code (e.g. by calling
-+  the ``self.log.info()`` or ``self.log.debug()`` functions).
-+* ``console.log`` contains the output of the serial console of the guest.
-+* ``default.log`` contains the output of QEMU. This file could be named
-+  differently if the test chooses to use a different identifier for
-+  the guest VM (e.g. when the test spins up multiple VMs).
-+
-+Introduction to writing tests
-+-----------------------------
- 
- The ``tests/functional/qemu_test`` directory provides the ``qemu_test``
- Python module, containing the ``qemu_test.QemuSystemTest`` class.
+With regards,
+Daniel
 -- 
-2.48.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
