@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC70C35FFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12880C35FF3
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuebE-0008BC-Mp; Tue, 18 Mar 2025 17:35:49 -0400
+	id 1tueZS-00030F-SV; Tue, 18 Mar 2025 17:34:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueb9-0007nJ-2u
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:35:43 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1tueY9-0001MP-SH
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:38 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueb7-0001PO-9o
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:35:42 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-30155bbbed9so4945865a91.1
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:35:40 -0700 (PDT)
+ id 1tueY8-0000qx-AR
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:37 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2241053582dso22093805ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:32:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742333739; x=1742938539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742333555; x=1742938355; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZHfKPAV4txpIA6DabBRkgaflv6NwjVJFAo4bciu0CZ4=;
- b=YmSOZCcaXjSShsG9AglN95SH+gOrjcFx0tXi+SXjt1GuNtIFKJ1A/oAqJYgSyjzOKI
- 5q4SYfkT3ypVon9RFpooxLLE3SZr99HwLVBywRR3rsQ3Yhy1vRiG4/pnuHt0XUmt4Uio
- og5My7b+AMNCO8zXKLmerLIQmhWtita/iDWHkJa8x0hzMy9dyTuK3uXk88OMKIh9b0XO
- wczaPWGa1/+KOsifuReYeetv4UpZ5DotouDMKYc/8kvgBloPaq+E0muWgOW2neV3BzPB
- APKYijLloaad0RVJx1hjDRHDKIex0hZS9bq7oQcykcHLO5DbrxMnhBAJCoIUa1uVtgaa
- 24nA==
+ bh=IeHYr04W0m2zNJjTvbQgJtgjfEjOKbLo8D+48jtu/vU=;
+ b=Thjj7smfIybFRLhDcJUVzvjGF1VhHJyNtuT1AjeilrFEYw4dZceuQt2uycqo7S455A
+ 1vGIX+g4a4uqsUVCxoowzPrXGwT+Y0wC5wBsAoDKthVcJZUjF4js+HjnAJWtaBapoFTj
+ gOAPzwgwnJC26tsKyn3pRuPrH6Zg4q9mtBSbKKhhf/VCFDxrYiP8pkhEjBF0mVK31UQu
+ cqMvxfiRwt1ff+JFDJUdE3kaA6Ztz4M6zDh0byGWzmlnVRkTwT7VS5Kld484XWWrKx2p
+ 61GHew1FbTDmo+axMvFaxbEv12/2QvSJmX5GnR4MDWwo4qegzg1SCdgTBPRUML2dnYZN
+ O9tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742333739; x=1742938539;
+ d=1e100.net; s=20230601; t=1742333555; x=1742938355;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZHfKPAV4txpIA6DabBRkgaflv6NwjVJFAo4bciu0CZ4=;
- b=kVzWi5zxG0Eg0QUWJQ4+A0DGP2gJphIWFDJWfbtfYvpnAA4NOBS52pffP0SWCX/iN7
- 4oEIvARveRBDO8wup8mpiWYE0bObfEeyA/r/+iSkvZiQjJb7zdGDEibQQVXF2NWOsHR6
- OEatTSCyT/ywBmG8d9f0laforGdBp57ZFHL52CxyuV4tlf7D3HfFXFRQ2a1il2yU2mro
- sS+vD+YA0dyfA+95QfIdATsYJ8P2TBdFrbHbzlCE4WgGooYhdevoVCtxN1Hw/RJiNB+P
- OUDCENwr5OXtWvmLfoAWvIvE0g4+8Bm09/yDzBDVmAc3gN7mcYzzcLntXO9at1PTv3Ca
- F1LA==
-X-Gm-Message-State: AOJu0Yycq6IDKmZQLrIdp6+70BUKQ7gPYOTpe/ue+cNvWJARFI1NuhSk
- BJo418h5LcksLh445NxocGhhNGfYx5T1F1svjGTggTslttfQ3NPiiUDmztP6u31Hu1/SeJHmlHo
- Q
-X-Gm-Gg: ASbGnctUKo3z59T78CNRZKpGof1MTNmLO0CPBTGLhpa2eMEhpeozDG/yGnwMkjOKO6r
- jEE0LxU4rx0WbfDe4xz+ymolwu0BU8bQcHIVpOp6cDM9QoOPNji2BYFtcWflUjbdUoCPnqJp/wp
- lPYXoxzNqMeT1ZsBWsYLiqOPgCz6THSnP9eWn+FedY2RYV0ESBZ8O3oQc4SFUeeHI+WXgAGQlPN
- rvXXLIk6PO+9/h6XWWz1TjHCpb+yIe2Buxyf38HeI/iOBySKfN4kQf5B4yMFlaoPZ9oUIrh+xxx
- fODmMvgOToSTvVULm9PGZn+YeGcXtl1+xK63SN5OZpzfkcMgFrwpddZOKjtvl43cnD3xvhsbp6m
- b
-X-Google-Smtp-Source: AGHT+IEVKxLbLLwy5CmQZpK7HWsOk1ho2oSI8ebcRvyODL5/RkAJ1ky7mfk6eKTesWFhPaYOScOUUg==
-X-Received: by 2002:a17:90b:2f84:b0:2fe:afa7:eaf8 with SMTP id
- 98e67ed59e1d1-301bde5b0damr352211a91.13.1742333739651; 
- Tue, 18 Mar 2025 14:35:39 -0700 (PDT)
+ bh=IeHYr04W0m2zNJjTvbQgJtgjfEjOKbLo8D+48jtu/vU=;
+ b=fKNTcC0BSoILifVZ33t/rmj/+8EYGB7zR1bnO1Bs9MwEYUIMcp10Go2rX7rrYeC3/a
+ /pO5m4XYAolgxvWoytrGq1MDLA6ddWND9IhR8WqrdevWKCs3kindakv0++atU3mT+d/8
+ cj0hNY+1iBXDwb5W82OQ1s9Mxl2W2o25Jny0JLKkFXTD9Mh3TYiw3TQ1jTtIRbYXAlVU
+ c5dTmm14haoXfbWVrRDQFQaOe0NzF+YA6xnwgE1t3MTBdwt75rm+7Aiv7lc4pDwgFnyH
+ 6QhBsgb5jCPwE0ep+etkDdzJukL3wvFGBb53khL6GUfuU2B4h+XXWaSJnvOnibhtwpuu
+ 3uGw==
+X-Gm-Message-State: AOJu0Yx5LJIuBk9l7XlTDYX/g0tHVRjs1TPWROIIk9uSYQch4gX6JH/R
+ btGoDpNvUVZchApMTWGNW1pkfjwCnRHSdv+So6c+MncSJICiFKm9uDEDHT2PBk5qdI86OZ74HEl
+ 0
+X-Gm-Gg: ASbGncs+tBbuTPZXY3jlTQD2ZlzjB37LuAvDRPMXMmDWCWZxQbgYiozx+KcmMmVIgOT
+ Z6H5z1j454Zm6URwwjRFuQ8WPy7GnJx1ZOf+CFAu80ftTRyViP9wAaubJ9NV45kLrwBsK+cQvHD
+ l4GlUw+Be1H+72Xafh79cGVVRz/9F9hfK3IfbYpXzLgmw5OXhSiatyNShiFUAFZG74TIyCaZJur
+ XTQeUUMtwRekzhsRPhwz7U1I9Vy1zxvxAR9tviaeELFNKxUc7qs8e5Wq0s+wDOlARnHYQR7PxYP
+ VWsV+LWZd4sO8O7RL/URsHv38CXs7X/qLKyuTpetZ8sS4J/s0DhD28mZBjdrphffmTV01i4RwQU
+ W
+X-Google-Smtp-Source: AGHT+IEU5X6Hp9CxAqBbUK/LRBm59SVQ1RBZtj1MoDWdySuzw+MfgdnorCm3O5mQhTMfZQlsO6nexA==
+X-Received: by 2002:a05:6a20:9c89:b0:1f5:8e54:9f10 with SMTP id
+ adf61e73a8af0-1fbecd48b02mr364618637.34.1742333555077; 
+ Tue, 18 Mar 2025 14:32:35 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-301539e9ab7sm8678072a91.11.2025.03.18.14.35.39
+ 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 14:35:39 -0700 (PDT)
+ Tue, 18 Mar 2025 14:32:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH v2 41/42] target/riscv: Remove ifndef CONFIG_USER_ONLY from
- cpu_cfg.h
-Date: Tue, 18 Mar 2025 14:32:06 -0700
-Message-ID: <20250318213209.2579218-42-richard.henderson@linaro.org>
+Subject: [PATCH v2 35/42] include/hw/intc: Remove ifndef CONFIG_USER_ONLY from
+ armv7m_nvic.h
+Date: Tue, 18 Mar 2025 14:32:00 -0700
+Message-ID: <20250318213209.2579218-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250318213209.2579218-1-richard.henderson@linaro.org>
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,30 +102,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While RISCVCPUConfig.satp_mode is unused for user-only,
-this header is used from disas/riscv.h, whose users are
-only built once.  The savings of 4 bytes isn't worth it.
+We were hiding a number of declarations from user-only,
+although it hurts nothing to allow them.  The inlines
+for user-only are unused.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu_cfg.h | 2 --
- 1 file changed, 2 deletions(-)
+ include/hw/intc/armv7m_nvic.h | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 8a843482cc..cfe371b829 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -196,9 +196,7 @@ struct RISCVCPUConfig {
- 
-     bool short_isa_string;
- 
+diff --git a/include/hw/intc/armv7m_nvic.h b/include/hw/intc/armv7m_nvic.h
+index 89fe8aedaa..7b9964fe7e 100644
+--- a/include/hw/intc/armv7m_nvic.h
++++ b/include/hw/intc/armv7m_nvic.h
+@@ -189,21 +189,7 @@ int armv7m_nvic_raw_execution_priority(NVICState *s);
+  * @secure: the security state to test
+  * This corresponds to the pseudocode IsReqExecPriNeg().
+  */
 -#ifndef CONFIG_USER_ONLY
-     RISCVSATPMap satp_mode;
+ bool armv7m_nvic_neg_prio_requested(NVICState *s, bool secure);
+-#else
+-static inline bool armv7m_nvic_neg_prio_requested(NVICState *s, bool secure)
+-{
+-    return false;
+-}
 -#endif
- };
+-#ifndef CONFIG_USER_ONLY
+ bool armv7m_nvic_can_take_pending_exception(NVICState *s);
+-#else
+-static inline bool armv7m_nvic_can_take_pending_exception(NVICState *s)
+-{
+-    return true;
+-}
+-#endif
  
- typedef struct RISCVCPUConfig RISCVCPUConfig;
+ #endif
 -- 
 2.43.0
 
