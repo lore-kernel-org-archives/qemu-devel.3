@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A9E8C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 20:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C3EC35FF3
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tue0W-0007LA-Fr; Tue, 18 Mar 2025 16:57:52 -0400
+	id 1tueFd-0004PU-Ud; Tue, 18 Mar 2025 17:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tue04-0007ID-2z; Tue, 18 Mar 2025 16:57:27 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tue02-0005mN-DF; Tue, 18 Mar 2025 16:57:23 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-ac345bd8e13so584534466b.0; 
- Tue, 18 Mar 2025 13:57:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742331440; x=1742936240; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IOrNiTqjVFTUhCSRr6mCNcgoHeGlKxIWCFhVKGQ+JvA=;
- b=cHSu2QtDIqG3l+vFC+aH/YSxTbPJtjI8V+hWX8Zb5hfrdPltylEFZpxe1LPm8B5+ol
- UzNCH8qHHxWsJ+vnFTuxOYxaipWpK84jDRrR+VJimfl997IK/r78RaizgY6t84NF26wQ
- Il7ncpt7k7+tAil7//+VWZwrGN0bH+Bhq+t0DkIrQCkWAstcE4M6qlX5aCmp/n+YXatB
- N13IkG399JkKyNRZxNZRR2e8i2ReL0ipHcEuq/R7zmg0MJjYy01gcKJtJMakZXvjbspc
- LN1Qk7sqFQXOo4gmOk5/cg5jLA3+wqps1NWTq2nzE5Ox2Y+bR36cQ1vIL7aeyxUTba0t
- 3A6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742331440; x=1742936240;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IOrNiTqjVFTUhCSRr6mCNcgoHeGlKxIWCFhVKGQ+JvA=;
- b=UqcqiUl0aBRoGwwrVq74+TmIhoTxlD4ScdCSrQQL3piCTEaC0gJ/jKuxCZN52p1hfH
- hGNOsWqaCqu4zxxc0/iCNw3miugBJYZ/bmIFYdFhFuDrE0+wN3Sb+12CdqZgw301fvkt
- Vk+3Nx2qkHxC/tC2thGtu58SkgF+ipQT+9ThSZcLqJ+dWTg7b3y1Z+pjHu4ZYTVKoPOW
- YzJGIRy6sUzxivCBrEZ6GHC8SypZC6vZAEkcNsfDnJcP1304blgL0DkS/727utqCNmW9
- sHkHf3PGAVzqQ7yzkhOrEy8MIDl5Zg6TMfOmKESWEbGTSbJjOFzG/u8fsnKkl4tlweWT
- gd5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWI9Q75W0pcbiXuLGU4vClbQcYyPjGZhXSCqLaHHQrovyJcKJeBU9OUJxWoZmsYE+hRJBlAo/82Ug==@nongnu.org
-X-Gm-Message-State: AOJu0YwX9YDVrGc85XUPMR4wvvD0DzvJ5GmkEFEuJIVzms6Nm7P5uC5t
- EMnh6HEGxam5btVW0MFLbIzcO5cEf4gMlcOPHXRtmjnI3D2LVgIP33BkKg==
-X-Gm-Gg: ASbGncvJGdMQkXrGfZj6D0IieOU9bukwelecDMSIjEtB04F3lALvOQ7v+LPMfFk6s2X
- VVwEdLQV746zvUAB5I3p6vlxZ77wGls2k3S2iARXUVm7GGvTiPcA5xZU6GPNShal0CnUhRgeXe6
- Bvtyqv2183OjA9dQLkqqnHKmDOg9q3KUl/BmslzfV+rM72iSR0rTlwPmVwpaJjTrorZgmiA/xi4
- mGTC/D4dvmaYuEWJoQx1VkDU/BpfUFpXYJklJO9L1+9BScF4EW1klnPucTTVZKyMqfCbLqI0+eW
- sw5/Df7kgneUAnm6bXxzEuUtWM8XSJe7lmYUz54u+Gr8v8tF0ptfchgQ17RST2d1hiXS9mY9POM
- kAklUkD3czv9zavAlZ6EYG7fThooBtLqPpIUNkiR2Z10FHAhrhQWTFxnxBTUsJhg=
-X-Google-Smtp-Source: AGHT+IH49vvidLTAnEJQav8tz1+H3ZztnkmkQqcDG3uq5ymAV5UcXB7sxG+i0PDCqO8aDPAwn4lEmQ==
-X-Received: by 2002:a17:907:6d07:b0:abf:7406:a5c3 with SMTP id
- a640c23a62f3a-ac3b7f275camr8228266b.51.1742331439783; 
- Tue, 18 Mar 2025 13:57:19 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-19c6-0d00-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:19c6:d00:219:99ff:feb2:2458])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3146aed4fsm895944266b.26.2025.03.18.13.57.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 13:57:19 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 3/3] hw/arm/fsl-imx8mp: Remove unused define
-Date: Tue, 18 Mar 2025 21:57:09 +0100
-Message-ID: <20250318205709.28862-4-shentey@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250318205709.28862-1-shentey@gmail.com>
-References: <20250318205709.28862-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1tueFT-0004Oe-TF
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:13:22 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1tueFS-0002gD-9C
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:13:19 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52IHs3hJ014861;
+ Tue, 18 Mar 2025 21:13:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=aQrStNSkmZQFsZ3LaSXs/3
+ DaPMjgbCHs0GNigt3DWO0=; b=D1J6b05HHFywK7pOTSuUnGQuc64il93+jRQLMq
+ Th29FzshGZv2zqQyEr8RN1gyCMT0asmcOpnnsoHuGXBvrj7OKse/04ZnC93gDY/W
+ JJpxsRpBBhr2zvspYicDDXqERw26wu8eXFD0orVFvJT0gzNbgXuL+xYeuXC2KC9X
+ 4BVaAuBE5TLMA4dgzkkhmluOdAd9L6aK8tjagBqPjCrsGG+HMcg6L+AKdF1liB82
+ O3IT1tpIY3OxYrKh2qH1insO93h1z8WpppZZUJ0Dbej1jtASmZivr9ow7asINdrw
+ m1BQ4pj3UnU/kCkxCXn2HZ+VVRSuqzJGVDfJfjq9bpz+rDfQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45fdmwre64-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Mar 2025 21:13:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52ILDDHc011860
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Mar 2025 21:13:13 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 18 Mar 2025 14:13:13 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <ovoshcha@redhat.com>, <farosas@suse.de>, <philmd@redhat.com>,
+ <thuth@redhat.com>, <bcain@quicinc.com>, <quic_mliebel@quicinc.com>
+Subject: [PATCH] Add files: a
+Date: Tue, 18 Mar 2025 14:13:03 -0700
+Message-ID: <85909195b99964081ae01d9999384cc3b7a3fada.1742331648.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: 5UvNKvr3Z5zgUpgw26LpoUVdDZZc_Zyb
+X-Authority-Analysis: v=2.4 cv=ReKQC0tv c=1 sm=1 tr=0 ts=67d9e1ea cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=3H110R4YSZwA:10 a=Vs1iUdzkB0EA:10 a=8NOlEqnmxsVMj69GXnwA:9
+X-Proofpoint-GUID: 5UvNKvr3Z5zgUpgw26LpoUVdDZZc_Zyb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-18_09,2025-03-17_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 impostorscore=0 clxscore=1011 mlxscore=0
+ malwarescore=0 mlxlogscore=890 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503180153
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,29 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SoC has three SPI controllers, not four. Remove the extra define of an SPI
-IRQ.
+Hi,
 
-Fixes: 06908a84f036 "hw/arm/fsl-imx8mp: Add SPI controllers"
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- include/hw/arm/fsl-imx8mp.h | 1 -
- 1 file changed, 1 deletion(-)
+tests/functional/test_migration.py says "The test works for both
+netcat-traditional and netcat-openbsd packages." But when I run it for
+qemu-system-aarch64 on an Ubuntu 22.04 container with netcat-traditional
+installed, I get the following error:
 
-diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
-index 22fdc0d67c..d016f7d337 100644
---- a/include/hw/arm/fsl-imx8mp.h
-+++ b/include/hw/arm/fsl-imx8mp.h
-@@ -238,7 +238,6 @@ enum FslImx8mpIrqs {
-     FSL_IMX8MP_ECSPI1_IRQ   = 31,
-     FSL_IMX8MP_ECSPI2_IRQ   = 32,
-     FSL_IMX8MP_ECSPI3_IRQ   = 33,
--    FSL_IMX8MP_ECSPI4_IRQ   = 34,
- 
-     FSL_IMX8MP_I2C1_IRQ     = 35,
-     FSL_IMX8MP_I2C2_IRQ     = 36,
--- 
-2.49.0
+TAP version 13
+Traceback (most recent call last):
+  File "/pwd/tests/functional/test_migration.py", line 97, in test_migration_with_exec
+    self.do_migrate(dest_uri, src_uri)
+  File "/pwd/tests/functional/test_migration.py", line 72, in do_migrate
+    self.assert_migration(source_vm, dest_vm)
+  File "/pwd/tests/functional/test_migration.py", line 40, in assert_migration
+    self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
+AssertionError: 'failed' != 'completed'
+- failed
++ completed
 
+
+not ok 1 test_migration.MigrationTest.test_migration_with_exec
+ok 2 test_migration.MigrationTest.test_migration_with_tcp_localhost
+ok 3 test_migration.MigrationTest.test_migration_with_unix
+1..3
+
+With netcat-openbsd (the default), it runs fine. Perhaps the test is no
+longer compatible with netcat-traditional?
+
+QEMU was configured and built with:
+../configure --without-default-features --target-list=aarch64-softmmu
+
+Thanks,
+Matheus
 
