@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F177C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AA5C35FF3
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tueZm-0004At-Gi; Tue, 18 Mar 2025 17:34:19 -0400
+	id 1tueZz-0004hE-If; Tue, 18 Mar 2025 17:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueYC-0001OB-5z
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:40 -0400
+ id 1tueYD-0001ON-3W
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:41 -0400
 Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueYA-0000ri-OF
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:39 -0400
+ id 1tueYB-0000rp-4m
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:40 -0400
 Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-224100e9a5cso119674255ad.2
+ d9443c01a7336-2232aead377so139696325ad.0
  for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:32:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742333557; x=1742938357; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742333558; x=1742938358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/uK/6e74nn8Fot5LvCS7tmplWHujswrlAKxdO1vG4SM=;
- b=xa/cjMSU2Xcl+2CAfqBE+Lt7LYZWGlHNdMjmqPg+PUHoX80orjL+blAtMnkZbazkg7
- Dc2psVAg38yYMEyVQOFK3t0TVR7NPESRJC/5v9mQl7nfIjt1NWCVtxhnu4So2NOG6bXz
- aeiYl4VeII4tCyBy0YA7Qs45ZJQi3N4SHK5PShHGD2c8h8jiAL6SiRwsTnYEqgjyC7zU
- 2vsku/Po2wcbiPUvqa02EjaR1CyOkXeGWHCp0q5eIa1Kt2xKn+RItrDsEKBY7OnqWxaB
- fnw02WM3NiLA/Vb10ZR1+C17NloRXyqHYx3bKR5TA4g4IKQle7XxREYke/B0LiJneugz
- 3bPQ==
+ bh=HfhMo6u4WSJa0m+zVQXeBrRktRhGKRYmsVkZ31uEjlo=;
+ b=Is/Q9T7/eWSK3g8Lmin6RHCHW9AmKEBU4nPveWeGf7+83DWXnRsU/4eRz80s6YCCqJ
+ l3Pse57RzREtVvEUms9TCbs8X/rsOihgSfnm4uYa2HHDA7Hgeyglmw7JQkmbcMqUYIA+
+ htYaOQV6AsCRgL8h2wutuw+8KMu8CSr9L3DO+9NWbNagf2sEJjIBcDQhFjrk2chevhio
+ rp//PIyQEnAolXrsmoGaCtoQvl2prVam3j63r1zU+A1OxWIjr2Bg2r63NEHTIk2f/Ak/
+ dAzkr50gsYTt/jGzIbW/mUQnK5njxJ3qhjvewOgxUM0Zn96JETEnpzHSCpGRYnhhebYy
+ mw3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742333557; x=1742938357;
+ d=1e100.net; s=20230601; t=1742333558; x=1742938358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/uK/6e74nn8Fot5LvCS7tmplWHujswrlAKxdO1vG4SM=;
- b=m+UPQN8qGKXiKsCruRChEZsgmGrZXhRQ8GkHsGQXFjDmy5AUglKwj4R46l85QSf3sO
- 5pKXPlOcTPfb+3P9G8hZ3d4LgI/wBPKO5ilduRjJf85eqkwu7TvFDVC6CwoxwB7/tS0F
- 4ydjMTFsz8k8UA4HAxSu2E7kRYk6esIHQTeCDS3MXOh8f9Sz32qFfHtw7z0BMOQuv+T4
- yxtlmG3N5qsR8a1LrDl1yhbVIvYDj0vlc504FJTNu3zrURgiAw/KBkDFXYridWlBnIR7
- p+2VLkCinH+4WXL3HLX0a4dsEVQPmHW0ldb3URlsSWTvar9HkWJM6PuSV0mNtHivl39/
- Yg3A==
-X-Gm-Message-State: AOJu0YypNw4rJLLXDuOnWwYdXrDsNnY671NZn+O88vK9Npr4LlkhhiIG
- eiyADdNPswM+hz0dVeOmKWWw5L3mhtzks6XgWnqmrdACTO5v2NbdwsjMMar/tDI8qK1GnJAIxDb
- 7
-X-Gm-Gg: ASbGncvBuDwmAZu9fT1CJm2jtvp0XoA0HUibsOCpETpbbdI8lurlYDScf7fkbBt4uXX
- RJGEmf3ZqdIVlR/H6Q9zTt+bNONGYsoT1/G+fc1jgug+3EVFbBmNKMA9uRNJNGukKr5xVbehYBL
- A4dYy3FOms5MJrf2QdG0Ea3ul+JQ8D9cepDvINgaRsza7F+p0ZrdKRYbXRzLWKRoexsafEupSo3
- o8QzSzhxN/2v1vBB1HsxOJS8m/eWn3SyoRzN98oX5vc+jl/Qr17Mdm7xZQGWnaS+cKL7h7+bQZC
- W5BasYO3DonLbJ/xpjNoaJ2t85oiWOd3TjnhrDU2CT4EnRnk5xDgaEYUGCePL3nSnmDaPWbjdE0
- S
-X-Google-Smtp-Source: AGHT+IGLk6kINfllSdAHKNN+UsO+luLQuBs+oLn23QxLdRJ/KNvETd/xgnOq+pyTt8OWlWfYX0+q4Q==
-X-Received: by 2002:a05:6a21:7316:b0:1f5:75a9:526c with SMTP id
- adf61e73a8af0-1fbeb896816mr347704637.13.1742333557321; 
+ bh=HfhMo6u4WSJa0m+zVQXeBrRktRhGKRYmsVkZ31uEjlo=;
+ b=eRDcHczVEla/1QDFLxmRu7HD7S5FfxCaFUVsXLueIYn2IetT1Cz0auUvY0/CK+sf9T
+ VStcDnt16SQvwEOjOWqYjWfE43G26pvKnpDiFx7FBNVPXwGw2+J11yOcfWXaHTG6fOtB
+ 7cidH5rdsuCU2Sm+zHhtLEG7UlmkM6jqD3jcJBxjogc73UIgtaL9c/wCTZyCSDnuHyou
+ y1ZdvTpJ3e0b9DVmjJiOBSb/UhDU4x9/TJJ+fY+N7EYHftghcx+sRZEjG0kuWur0jTtf
+ k+2+DQ6OJmUG6wTxbHDsRepjul+Qz4no0iFv3myQMKE3/qFALvJVHtep7lSAQLmb/SoC
+ 8t5Q==
+X-Gm-Message-State: AOJu0Ywmp5GzcQyrZWbyIA+co9ZYJrm3gNyJD6RiEnhj3FiyU9cafpVw
+ 6s2WXckjW6lc5/SqHTbRvlpHHuRFe8+yXVCHPAgYxhASDt7WRuHHTCHOH+dQyRrrpgs6PLtFb5C
+ T
+X-Gm-Gg: ASbGncu8X5HiNeuGhl7zjggLt9n7NBA2ttOpkRrsvj0nDKrH9V03VZVbq1q/NSWGz8x
+ LABMoixIVDLsZLUaCiN9kFOr6sCQrlAVYkaneABeaAfSElrUUzdPwVrVynf4taZJswiGQMg7+YO
+ moFapwP8StiGwykYLJBtecxoBMTy550Wpz56L2vow7O7NElAUkYr+BLd9U34fuK4scEWbSsJj6l
+ twp8vxLX88Wu607OBrhZKtKHqDoruC7OnXWNT2DxLa/I3Dhh8ME6FqPqd0wj6ACBsfYJAQQlLdN
+ ZlgujUEJEYCsw3CFifrcrh64TcC8M/CGxXexAEweEN7aEfOm3UuU65a6AIzekpm8yW0dkMX2kdr
+ v
+X-Google-Smtp-Source: AGHT+IEURdfnn4qlEekPba8oAMlbNpRDwYfNkgzEINCJAuhpAjBtzq4zgm9AMVwKXyZYyoGXE/VHbw==
+X-Received: by 2002:a05:6a20:549c:b0:1f5:84c8:5d03 with SMTP id
+ adf61e73a8af0-1fbeaf9381emr377145637.3.1742333557892; 
  Tue, 18 Mar 2025 14:32:37 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.36
+ 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 18 Mar 2025 14:32:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH v2 38/42] include/exec: Protect icount_enabled from poisoned
- symbols
-Date: Tue, 18 Mar 2025 14:32:03 -0700
-Message-ID: <20250318213209.2579218-39-richard.henderson@linaro.org>
+Subject: [PATCH v2 39/42] include/system: Remove ifndef CONFIG_USER_ONLY in
+ qtest.h
+Date: Tue, 18 Mar 2025 14:32:04 -0700
+Message-ID: <20250318213209.2579218-40-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250318213209.2579218-1-richard.henderson@linaro.org>
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
@@ -102,38 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is include/system, so CONFIG_USER_ONLY will never be true.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/icount.h | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/system/qtest.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/include/exec/icount.h b/include/exec/icount.h
-index 4964987ae4..7a26b40084 100644
---- a/include/exec/icount.h
-+++ b/include/exec/icount.h
-@@ -22,13 +22,21 @@ typedef enum {
-     ICOUNT_ADAPTATIVE,
- } ICountMode;
+diff --git a/include/system/qtest.h b/include/system/qtest.h
+index 6ddddc501b..84b1f8c6ee 100644
+--- a/include/system/qtest.h
++++ b/include/system/qtest.h
+@@ -23,7 +23,6 @@ static inline bool qtest_enabled(void)
+     return qtest_allowed;
+ }
  
--#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-+#ifdef CONFIG_TCG
- extern ICountMode use_icount;
- #define icount_enabled() (use_icount)
- #else
- #define icount_enabled() ICOUNT_DISABLED
+-#ifndef CONFIG_USER_ONLY
+ void G_GNUC_PRINTF(2, 3) qtest_sendf(CharBackend *chr, const char *fmt, ...);
+ void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words));
+ bool qtest_driver(void);
+@@ -33,6 +32,5 @@ void qtest_server_init(const char *qtest_chrdev, const char *qtest_log, Error **
+ void qtest_server_set_send_handler(void (*send)(void *, const char *),
+                                  void *opaque);
+ void qtest_server_inproc_recv(void *opaque, const char *buf);
+-#endif
+ 
  #endif
- 
-+/* Protect the CONFIG_USER_ONLY test vs poisoning. */
-+#if defined(COMPILING_PER_TARGET) || defined(COMPILING_SYSTEM_VS_USER)
-+# ifdef CONFIG_USER_ONLY
-+#  undef  icount_enabled
-+#  define icount_enabled() ICOUNT_DISABLED
-+# endif
-+#endif
-+
- /*
-  * Update the icount with the executed instructions. Called by
-  * cpus-tcg vCPU thread so the main-loop can see time has moved forward.
 -- 
 2.43.0
 
