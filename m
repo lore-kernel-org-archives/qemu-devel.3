@@ -4,88 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D78C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D297C35FF3
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tueZZ-0003OS-In; Tue, 18 Mar 2025 17:34:05 -0400
+	id 1tuegs-00080U-Sd; Tue, 18 Mar 2025 17:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueY3-0001JY-JC
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:31 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tuegq-0007xf-9d
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:41:36 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueY1-0000nB-If
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:31 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-223fd89d036so123813175ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:32:28 -0700 (PDT)
+ id 1tuego-0002Qb-0c
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:41:35 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-225e3002dffso69046385ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:41:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742333548; x=1742938348; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ijlmz6/bRJsdkPdqsV+cz0ErI9CNddyOzeS8owSZGCU=;
- b=mEGl4lUubWV+UkXvoxvF+isLcKd3fBOr0OOHmlbzcNVhsehjMGX2eoYSLw+ozgiLPA
- WBSFbdV8pMF6OGMWIdH7Qx6RAT1vSbVs3B8E7EoNcgAu2wexoKnBmWtMJXx2ZHI177S9
- 7jc5+ZNzckxp+9B+otiJVBGSnblBdLNRT4P+7k+gqTtawUCbsN560Z0Fk88a0J9c0ZnY
- loT4A2ZeMFdKVaJM3cY9h9m/+Wa2bO3bnobejEySJswwgYWM/5Kr6tkkxio76uu7fDva
- Nl9VM8MLs1grxlpC0ZYcx5jnvxAcJ6ZTQMlX7yK1aS4/JvRYgd1shJwosI56GHMwmCDv
- JwSA==
+ d=linaro.org; s=google; t=1742334092; x=1742938892; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=STjGlaJoL8peYNcrAd1LJeFiqwC5QN4avED5wEwNQ90=;
+ b=gF680vBH6Cb3qzaZgt59iEOmcnAyf0A0zbKIgG1Q//yta0yxd+R3s7O3F8I0pgDEsV
+ 0Fe2fGK6weo7c8GzRsPkzo30yNYkw2GO2ZtCs1t9cHqWG+9oDnOUhqL09JTuQ70oUH2z
+ tFKyp9DhgE2/4zbiTM6l7Yl+rSvw6nZzkRB+nNr4zChF4WKIh6BF4W7yRqLmFayu8hpP
+ njnAK8BIPDU6RsccBruRUydpcYA8Up1TDAiD/Cshgq5MyKpWqZEZ48DIkIHV5gX/it6w
+ CqKjx2vFYl6rGJkaHzUFT9L8vs6Rw2RFW7woytY+OwGrnborwtpjXl/H7zHhk6pYiXT0
+ tZUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742333548; x=1742938348;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ijlmz6/bRJsdkPdqsV+cz0ErI9CNddyOzeS8owSZGCU=;
- b=P+qkNOOD9K6xLhYOiOYLiFE3TVJMQWWpHyePIevml+U2HXWJHEKlNFe5hxTRo0LlHW
- HV8yBkrClbaeGlxsdkJVcBSf3F8rR8f+D2QCeOa935AnGZsXoH5hQzVVJFnJ9CQTeaMC
- mlNS150ihMGvLGsCVFkGR0qEQZeH+n5nO7GGG4ZMQFZpif/DDz/9Dvz+b/ZQnUERb2EV
- pl7aBCeicHqv4T6x9NHVyrD/dvXJ3Temkhbnq0xPj0lGGOD2reaIqkHsKGj4K4Bwfwtx
- dI22B8u1WNkP7laA6QcprHue2cjqh5NUxAgyPRirwB0fmTFYm5Jkw3Y//Ivm2S7LRypf
- BheA==
-X-Gm-Message-State: AOJu0YyVCOKTc1Uzl6hzeWlINYczPqzOt6hm00iyNCg8VILbXXDIppXb
- SJdoZCa3GRj8u5rNEfcFyVvCdGrX0vKi15WJlyo0odwPVftuLvBpOYcpog/yoALQLAIU2PE4May
- /
-X-Gm-Gg: ASbGncs/v8GouhyvtLoMybARNQCmi21bOX2tFFP7yotCkcExwMYiFAxa5jjRAnnoVKT
- 9JQ6hBRHpxe4FPnih83GW8TE/9x/J2RIUfdnUhyODjI4EFjT5lquk4ET5lPe76LSjRPfQhJ7Lp4
- bFsh4wUnK1nKakI1cuqILnMVKrA0Zm9t7nSgI4pHFBK+9I3qA7rUwcUcGBwUihrj3r8TtAHMcSq
- sR4xL7vpTLt+ePoouqcVkgn1hMyuh23bHUaO/ygmIRKYSxTYYUOoq7HiImO7KYN2ZPnBPLNO6uk
- AteqK1c1PdF6QOAuJPMmbB50S803pyefUH00yMQX5vj+qFr/UQSpqAtaxK49jWp99adB05F0cry
- W
-X-Google-Smtp-Source: AGHT+IFcBUWFL2YUfR5SZa8Gvy1HKBNjPn4LzA/nkJRXKcdG0X5o1CtaErCyV3+c+yOMxcthUSK6Og==
-X-Received: by 2002:a05:6a20:12d5:b0:1f5:a3e8:64dd with SMTP id
- adf61e73a8af0-1fbe852bd0bmr445597637.0.1742333547926; 
- Tue, 18 Mar 2025 14:32:27 -0700 (PDT)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ d=1e100.net; s=20230601; t=1742334092; x=1742938892;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=STjGlaJoL8peYNcrAd1LJeFiqwC5QN4avED5wEwNQ90=;
+ b=AIsBPOP/O8cxqnQon+3viIClzfamfauVaHlZ3D7tb9Wj40Kk0HgK+eVrz7ZsL/TNwr
+ F0Oxlb4LmKBgE6iOi2V6els6ib5dqJkZF1FkEYkLJdMQe6M+IyCZ4Kdf+jKj98UMSA3T
+ mTdagEHf58hWOlRxlntIij8a01YXC5WUJMOEdNxf1KXh+Np8g0IXTY2kNat3oHG5fND/
+ z+yLAdQJw5urjE7m+ofnfpcsZunfA5CccHVvt5ocEzvtR6xtvfzHNUOgt+bqdJEAvPdn
+ 0vvdQOApqgiEuXfr8lAfUtTY/I9slDxbCOHTwz85xRgwozU/OUUFUzNkUXq8aqMzjCo9
+ U5/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8hxf4g+kX5U0H1KCHW6Uw0K8dQAKQ0GNHi9wujhWuDeOtufO2t+NvwsETK1NmpS72ioDGuYQv9OcX@nongnu.org
+X-Gm-Message-State: AOJu0YznLzVx9zmN4PelGdarn0XZez87pzOPzFoRe+FiG0ohWnZ02fvz
+ vaKQiTpbH+O90fXvrcpg4CZWy4Vj+IwulEpiBmeFaD1kY/8dJozjvOUW0GWfwYw=
+X-Gm-Gg: ASbGncuRkHTgZZ4y+7Q5izz8wqjfkjxa/DMSXTkWM+nNO9hnpovd+ahtRs5xb0hOdHo
+ h97nzjRpFBwIpugQFYGcyBf0dbbqRmSlBW0iVo5JCGLYb0ei1pQL71rcii8x8daJTlKOaVRQz96
+ SA8UasitwT5Q+CyCU0JXt+c6aOwR2aIlgtQL6DIHA+YuK480lqAQ5KAzKm8yKEU0gCKeAPJnFQs
+ tdNPh0lUDD2Q9foktRScG+VMHaFYqeKhkLxgPk2eIRZd9m48CYZDDFoA3aGUAQ6RnfnZOW1+Ifo
+ mag5DTfMCPLAcXEd/XYmDVXEe1RtgcyESfvJvLXc/JErwl3288zExxkcae2uIqq9XQDPAzAS0po
+ JgZl8T8V2
+X-Google-Smtp-Source: AGHT+IEvjE74CFsm4MscUePIeChNuRGSVzaxg4KMJo3HjCDFURh6xUnSaRyz1CmLeVtwy7Y/lOF0tw==
+X-Received: by 2002:a05:6a21:6d85:b0:1f5:64a4:aeac with SMTP id
+ adf61e73a8af0-1fbed313382mr312364637.33.1742334092205; 
+ Tue, 18 Mar 2025 14:41:32 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 14:32:27 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org,
-	philmd@linaro.org
-Subject: [PATCH v2 24/42] gdbstub: Move syscalls.c out of common_ss
-Date: Tue, 18 Mar 2025 14:31:49 -0700
-Message-ID: <20250318213209.2579218-25-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250318213209.2579218-1-richard.henderson@linaro.org>
-References: <20250318213209.2579218-1-richard.henderson@linaro.org>
+ d2e1a72fcca58-737116944easm10408525b3a.134.2025.03.18.14.41.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Mar 2025 14:41:31 -0700 (PDT)
+Message-ID: <2766725c-9287-4ba6-9e14-e84616d5fd17@linaro.org>
+Date: Tue, 18 Mar 2025 14:41:30 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] exec/cpu-all: restrict BSWAP_NEEDED to target
+ specific code
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
+ <20250318045125.759259-2-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250318045125.759259-2-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +110,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Copy to libuser_ss and libsystem_ss.
-This file uses semihosting/semihost.h, which has separate
-implementations with and without CONFIG_USER_ONLY.
+On 3/17/25 21:51, Pierrick Bouvier wrote:
+> This identifier is already poisoned, so it can't be used from common
+> code anyway.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/exec/cpu-all.h | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- gdbstub/meson.build | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I'll give you a
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-index 0e8099ae9c..b25db86767 100644
---- a/gdbstub/meson.build
-+++ b/gdbstub/meson.build
-@@ -7,15 +7,15 @@
- # We build two versions of gdbstub, one for each mode
- libuser_ss.add(files(
-   'gdbstub.c',
-+  'syscalls.c',
-   'user.c'
- ))
- 
- libsystem_ss.add(files(
-   'gdbstub.c',
-+  'syscalls.c',
-   'system.c'
- ))
- 
--common_ss.add(files('syscalls.c'))
--
- # The user-target is specialised by the guest
- specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-target.c'))
--- 
-2.43.0
+because it's quick and correct.  However, there are only 8 actual uses within the entire 
+tree (discounting comments), and all could be replaced by
 
+> +# if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
+
+
+r~
 
