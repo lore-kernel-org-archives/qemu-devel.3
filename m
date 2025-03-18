@@ -4,43 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D6FC28B28
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 11:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0676C28B28
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 11:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuUfZ-0003ou-GO; Tue, 18 Mar 2025 06:59:37 -0400
+	id 1tuUhn-0004l8-RN; Tue, 18 Mar 2025 07:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1tuUfU-0003oa-Vz
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:59:33 -0400
-Received: from air.basealt.ru ([193.43.8.18])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tuUhm-0004ku-KM
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 07:01:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1tuUfT-0003rv-4e
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 06:59:32 -0400
-Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
- [217.15.195.17]) (Authenticated sender: rastyoginds)
- by air.basealt.ru (Postfix) with ESMTPSA id 20F11233C0;
- Tue, 18 Mar 2025 13:59:27 +0300 (MSK)
-From: gerben@altlinux.org
-To: qemu-devel@nongnu.org,
-	kwolf@redhat.com,
-	hreitz@redhat.com
-Cc: sdl.qemu@linuxtesting.org
-Subject: [PATCH] qcow2: fix null pointer dereference in crypto block
-Date: Tue, 18 Mar 2025 13:58:58 +0300
-Message-ID: <20250318105924.258014-1-gerben@altlinux.org>
-X-Mailer: git-send-email 2.42.2
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tuUhk-0004LB-Fg
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 07:01:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742295711;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=eZU1qsGhOOMZ8vd7zu3XmluEq1ph/JK79TkDQlyxnyI=;
+ b=BrvguyvSTmXE9nd7WRTkRv7PPCqMP/SGKMu7Jxbikv440iIpmb2du+2z9nm8qEmcMINMvc
+ H6nq0hbuoNtjYZLz7Wq4cXgrSb/6wc0CYOCZI9KHytNhdiVCJj5blX4dukkyl4qeUmNMbj
+ ld6Rd6eZb+e1wMsNe7U7uAWyQUmO2a8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-180-p_D5znLhM1qiyckV65Irhg-1; Tue, 18 Mar 2025 07:01:48 -0400
+X-MC-Unique: p_D5znLhM1qiyckV65Irhg-1
+X-Mimecast-MFC-AGG-ID: p_D5znLhM1qiyckV65Irhg_1742295707
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cf3168b87so17219575e9.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 04:01:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742295707; x=1742900507;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eZU1qsGhOOMZ8vd7zu3XmluEq1ph/JK79TkDQlyxnyI=;
+ b=BQdEUDhFv4EELJssA5qsCJc3ZyzGxX8KpUkLpjTZihriDjYhpBEO+dLy12TienQfn7
+ S+cWTMgTV1WCk9sdrKZmbqkCEOpG5XwO/UM2s0wpNmuR/MjjPmr6AxYbsv97RGfGwzar
+ Hh4ig90Bfgv5cpqAHhoyx6/lOb/55CfnT92RguC4KolgcAH1F6C9huzqhx/MJkylkyWe
+ Z8CIdu4lf5sss+KFnEcVuT5jkIbKK8yP2WEoiG45o8KqG2ujWNCzmYpDtLRZQkMWqTZF
+ RWrNp+x2ehpa+9sAJnjzEqUP5I+7R6b8ZNmR1oibbEPsd4Tyi5dXtUhdaby9VUhYwcLU
+ u5Fg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWooqyUrCFt8Umj0DnNKB2gRAim6ICr7+BkMzBMdJlsFbjS4PWztzRjcoaPst9U8jEYolqkCWu1GNrZ@nongnu.org
+X-Gm-Message-State: AOJu0YxWc5luYON65flcwvI+K6V6fr3h/DQMYXdWSzXM+aoRcYFYmAdX
+ mJ1oB2FMc6ihVPI1zCtNIFK/Nl/WHGqyxw+PceBXMA7dOeTbCP4RW6zKOiGjcmebfTWTNSrlxYg
+ GZ95/f8SPQBE9NzyqZoOuQPRF1wCa7f2tA8nXNYzvHcghD6fKQSRE
+X-Gm-Gg: ASbGnctAsw8FGNWgqnrjrZiR3j8mYFOVBNRDdwT2cA1IQA4J1aTbiFe+IqKgCFN6fXe
+ GxcUQF3gKgqD+KQaIIxRCwNeaIdQ9LwsMLARZMktATnMXoRDBFyxwzc/hT5wTCnNtfzMAU6MPmH
+ vnNmcAblILMVij6e9liXYvtNCHEEV0DqJcewT1pWBhEgkxAxzBasmLvUPmydiUhcII9J3CuKuJw
+ gyg3jMT/blWf4ipk7kDFxk7w3WjkqhHad6H8sN9gqh1svymCSpJbKY0n1r9B00mJct1yio9+at4
+ iJ/Hilkduk5L2FpOpi+I
+X-Received: by 2002:a5d:584d:0:b0:391:6fd:bb65 with SMTP id
+ ffacd0b85a97d-3971d2344a5mr12624359f8f.9.1742295706668; 
+ Tue, 18 Mar 2025 04:01:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEq9zaRVeiU3vlSPNXWPCmuw1xAOPTtkE7iw6x07ibQcIrzmzJyvjLPuOYL+SoqUZfhxJX9fw==
+X-Received: by 2002:a5d:584d:0:b0:391:6fd:bb65 with SMTP id
+ ffacd0b85a97d-3971d2344a5mr12624330f8f.9.1742295706292; 
+ Tue, 18 Mar 2025 04:01:46 -0700 (PDT)
+Received: from [192.168.10.81] ([151.49.194.153])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-395c7df33d7sm18315308f8f.17.2025.03.18.04.01.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Mar 2025 04:01:45 -0700 (PDT)
+Message-ID: <004396c0-8370-4015-b746-3c800f45984f@redhat.com>
+Date: Tue, 18 Mar 2025 12:01:44 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=193.43.8.18; envelope-from=gerben@altlinux.org;
- helo=air.basealt.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] microvm: do not use the lastest cpu version
+To: Ani Sinha <anisinha@redhat.com>, Sergio Lopez <slp@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: imammedo@redhat.com, qemu-devel@nongnu.org
+References: <20250220065326.312596-1-anisinha@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250220065326.312596-1-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.335,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -58,36 +151,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis Rastyogin <gerben@altlinux.org>
+On 2/20/25 07:53, Ani Sinha wrote:
+> commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
+> introduced 'default_cpu_version' for PCMachineClass. This created three
+> categories of CPU models:
+>   - Most unversioned CPU models would use version 1 by default.
+>   - For machines 4.0.1 and older that do not support cpu model aliases, a
+>     special default_cpu_version value of CPU_VERSION_LEGACY is used.
+>   - It was thought that future machines would use the latest value of cpu
+>     versions corresponding to default_cpu_version value of
+>     CPU_VERSION_LATEST [1].
+> 
+> All pc machines still use the default cpu version of 1 for
+> unversioned cpu models. CPU_VERSION_LATEST is a moving target and
+> changes with time.
 
-This error was discovered by fuzzing qemu-img.
+Personally I believe this is a problem and I'd rather use 
+CPU_VERSION_LATEST for the unversioned pc and q35 models, just like 
+microvm does.
 
-The qcow2_refresh_limits() is missing a check
-for the s->crypto pointer, which can lead to
-a null pointer dereference. This commit adds the necessary check.
+Unversioned models change the hardware properties and there's no reason 
+for CPU properties to be treated differently.  Unversioned models are 
+exactly for when you are okay with a moving target.
 
-Reported-by: Leonid Reviakin <L.reviakin@fobos-nt.ru>
-Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
----
- block/qcow2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+And independent of this, microvm could start having versioned variants, 
+so that pc and q35 work the same way.
 
-diff --git a/block/qcow2.c b/block/qcow2.c
-index dd6bcafbd8..55861a285a 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -1978,6 +1978,10 @@ static void qcow2_refresh_limits(BlockDriverState *bs, Error **errp)
- 
-     if (bs->encrypted) {
-         /* Encryption works on a sector granularity */
-+        if (!s->crypto) {
-+            error_setg(errp, "Encryption context is missing");
-+            return;
-+        }
-         bs->bl.request_alignment = qcrypto_block_get_sector_size(s->crypto);
-     }
-     bs->bl.pwrite_zeroes_alignment = s->subcluster_size;
--- 
-2.42.2
+Paolo
+
 
 
