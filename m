@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB946C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 22:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2DC9C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 22:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tufXW-0000sI-Lb; Tue, 18 Mar 2025 18:36:04 -0400
+	id 1tufYd-0001Bf-KB; Tue, 18 Mar 2025 18:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tufXQ-0000rF-KG
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:35:57 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tufYG-00012c-OR
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:36:49 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tufXJ-0000fH-Br
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:35:55 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22423adf751so109368895ad.2
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 15:35:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tufY9-0000jl-QN
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:36:48 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22359001f1aso6154695ad.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 15:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742337345; x=1742942145; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1742337397; x=1742942197; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OcpXmFjMO3sTuEr069JPwJK2tK4LKUaxYfppJkr+u58=;
- b=Tr4wjUiF5u196NwEWF8wYixgf+7Zux21OziwgEGj52j/BNGUZHUtk+Q5d5gjVL9HKm
- LaOpmM9y0Edwdo5RP8D1nDJsGxtqUufzJ1RUy771RjaYYDIu3FMAin6SjffL6JZJZBfC
- jWSMWTmZ19HXFO7BMmHnkbeZEcsTwjhgTTTCV+omdZt2kp7rysZl0a3SfGCnT4IoRLGQ
- abrG5ZVS2Ir9t0ZXGM5wfzvkPHuCL5lg7vsJ6mllQb8eWXykn7k5QKiGo5ehe2svS0ge
- nkQKaBo0RYF1WSo1y0eVSNGG+Z05A02/08RcxLM3DmIbr2mc12Lqv9F03FC+iM/GxiNx
- MQcw==
+ bh=UUhi9h0Ky4Lwg2yhKJLazGJR+aageMiVJ0t5ECQWEPk=;
+ b=GGtiG7Uc9LwD0oAqRA0H+b3GNA1agy5aJLQrH+8OEbNb0Z5RtvWFNXuZKBUIW0kTiR
+ eVyGnw+jlJTl/3TCCD0qivsBd7XoxKVj5AqibUpYubQWieXxRd3tYgB9neWqR89WmeNk
+ 5V7aPolK4LYaTPy0Nt/DvmTAX0NBmJ1BxwR9d3Z8Rf5KOqSCiHqH9iTxS7Eg3U5I4N9Q
+ njgSHZU0aXTs83vTK/RhSiDdqyHT+x+9WjY6uNdo3SOyFoLkMLyLpIYCEG9jRk15FTON
+ tiFOuT1Vc1mOvguepv11CbRl6jyh3OD5m0aDvRHhm/m5xK5+WAac84BAXvVaSDsdJiwk
+ 2wLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742337345; x=1742942145;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1742337397; x=1742942197;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OcpXmFjMO3sTuEr069JPwJK2tK4LKUaxYfppJkr+u58=;
- b=Aaef9Wg1GjFieGh8r5rSXb8eOyB3ZYFf+Ml5oufkujB8a6pyqueJRV8jnV4xI3M+7p
- Q+ONqzrFkWVTnmnY2sZmygtfPepF7A98GqZkH5pXbeIGjFvw/jg0oByXtb6BAGnqJrF/
- aCiPK1AEP+Pp3MpNsY/x6HFCoFCu3Nz0ceFJuQOf0iuiV4AvOKT7vvXG0VjmEtkAEY5/
- OJRhy561fbgmXNi2w1q5cpASjGaAGuhepKybg8zPv/T1NeRBKnTLZrIEpx+ccZsuGSX0
- RH6bw3CZgTM2gaXDwz1XVb1iw5DVcZI0d/t8z4JqiDm3sDOYS58viEkpZic+Yp5Dy7R5
- +ZhQ==
+ bh=UUhi9h0Ky4Lwg2yhKJLazGJR+aageMiVJ0t5ECQWEPk=;
+ b=HUnxOdt5/NNReWv5+s1G7GxpI0/MisCVR3FoVCzGsIcST5FYPiX30VtY5TiGOs9Ae4
+ Z7gMq38L/vXCQY3Fmhx0cTLo9dzXY3s8t2ZxQjTGk11ChWxUyfYPjbNyprcZg7Aanx/X
+ 7w85aWV4dQ0IU4D2Lk5ayfIc6GePQQBfgsBc0uoHVx8bW5j7HJh1Vz7t8hkHxOdlxyti
+ q6kl0IHXAUHKplu1hhuk6vFMdSAtj79XoHSODYIqCeUKOTeZFvomrw+kwoK3Y0G1GVbA
+ RyxAMy+TIw4zyIsoXV2hGxce8Cymi8igMnf+EW4WHLJYI90X2FLBDiRngyvn9POPypEz
+ GJtw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIEvv2EUskaNNwaS0JkTBuhHtpqHGk8Xgxlss5on7BWSmb1vkRc8hvRXvEaqSloS4gw9EDSPcnyD/L@nongnu.org
-X-Gm-Message-State: AOJu0YwSonxS3K8sXHTMoKgvjxV1Us+BMsg1LzjGs4d2pRoLgzyxLj1y
- XRBW5qqT8ceVxtddCEG6zOw7F3YnMOEQ7/+TXF7uBum1G/G5niXEYRGtYvdvHnE=
-X-Gm-Gg: ASbGncuw4J97ac1eiGfDUKIk12vsEoyGWOtLpb/xrI+g/9X0+FD10ULIobYYbktpG2s
- 9kz/zjGbyGuWibv/5BaB0lzlz1mqChLZDhYSMrVCYzizsqTbH9UGizft6us4CZ68/Vro528N+Yd
- QwKg7/CYaCktkPFh2kXPIBAG+bzkTiknh7nISTP6glu4iWmbgHWiYZRU7X0nGOhQIvl4ZA/wuye
- Le80vO83VGQxKMgdL/HkOklfswJGwqhS9JGrly6zsVlGku4a42zdcqZXnOJ1Z/mVvYgYwkCXzYI
- yev9I8r6oV6NPb7IlXIhDYp/QxvrfNgHXHK4ZQyx6UqSPsBUs+3epv/PwQ==
-X-Google-Smtp-Source: AGHT+IEt60b/xkcu869FuAeLSGYbURqATeqh+waGHDsaBv/jurzyPKhT+Oye2N3wcUB3foD5o0iT/g==
-X-Received: by 2002:a17:90a:e70f:b0:2ff:6ac2:c5a6 with SMTP id
- 98e67ed59e1d1-301be205cd8mr503863a91.31.1742337345425; 
- Tue, 18 Mar 2025 15:35:45 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ AJvYcCWF9ZxmRaAi4RPNLsLS/v0L5BwQ80tjDgFuYrsJhJAXXBUkr0VdgswQtMECjAAOidTVcqKTRAAzzFjQ@nongnu.org
+X-Gm-Message-State: AOJu0YwSZCKbOS+GCPuKTdQdBOmb4ucE2J0pWZtYd4Z7I0fkiF8WGbRx
+ P9P0W9zzwSHvbFeRMbzOhCWpCasosaLDj9Jl1Efcy4x5awVwJmpTlUk57bITmME=
+X-Gm-Gg: ASbGnctbaDTGYiKBKIfrkY4RUO2pBJ7Oj8cDMGgS451PzB/HX6+cXUQfE3zW9V4hWhh
+ 2f8In4VialyQ7vKHwy8v+HxzvFIR0hJM5jFvj1O/xpKq8LfI/DSkBk1QXXRKJyBQATSaig//0Su
+ WXIs+CcCAJU+1lytNK9TJ5DkP7cjbwaKa+DWATF6lJmRGZA+w5//fvSFYKBSvSVEbW0Uu+zIA11
+ +/29hVuKoVIu97k2zZScWb0BaKrJ6l8seOHk15scqlVTp6jlkQs8/paAOBqrep2sk0L2LoPA93/
+ 9j/vgzfWNu2dDduvfz2Q+ZtU4tPNyMiTFt2OS/ev5vjTrd87EODkx34kMsSWfGRaWZE5jhsGbfD
+ P+fCWIB9f
+X-Google-Smtp-Source: AGHT+IF/EP9tvkxdUM+YtdNjRtxjdctiECzFem2hCJcdLxuxEimfX8lMgON8I3Z9Cbv3sCS9h/91yw==
+X-Received: by 2002:a17:90b:4a11:b0:2fe:b174:31fe with SMTP id
+ 98e67ed59e1d1-301bde51a32mr547250a91.2.1742337396781; 
+ Tue, 18 Mar 2025 15:36:36 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6ba6a08sm100286865ad.154.2025.03.18.15.35.44
+ 98e67ed59e1d1-301bf589bccsm37460a91.11.2025.03.18.15.36.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 15:35:45 -0700 (PDT)
-Message-ID: <30e72d8d-a4cb-45af-b57e-a0910bbe06a5@linaro.org>
-Date: Tue, 18 Mar 2025 15:35:44 -0700
+ Tue, 18 Mar 2025 15:36:36 -0700 (PDT)
+Message-ID: <ac79c5f1-d7ea-4079-b042-3805063fddba@linaro.org>
+Date: Tue, 18 Mar 2025 15:36:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] exec/cpu-all: restrict BSWAP_NEEDED to target
- specific code
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 04/13] exec/cpu-all: allow to include specific cpu
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-arm@nongnu.org, alex.bennee@linaro.org,
  Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
@@ -80,14 +79,18 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
- <20250318045125.759259-2-pierrick.bouvier@linaro.org>
- <2766725c-9287-4ba6-9e14-e84616d5fd17@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <2766725c-9287-4ba6-9e14-e84616d5fd17@linaro.org>
+ <20250318045125.759259-5-pierrick.bouvier@linaro.org>
+ <35c90e78-2c2c-4bbb-9996-4031c9eef08a@linaro.org>
+ <7202c9e9-1002-4cdc-9ce4-64785aac5de4@linaro.org>
+ <0c6f23d5-d220-4fa7-957e-8721f1aa732f@linaro.org>
+ <172a10d0-f479-4d6c-9555-a9060bdf744e@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <172a10d0-f479-4d6c-9555-a9060bdf744e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,29 +113,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/25 14:41, Richard Henderson wrote:
-> On 3/17/25 21:51, Pierrick Bouvier wrote:
->> This identifier is already poisoned, so it can't be used from common
->> code anyway.
+On 3/18/25 15:25, Pierrick Bouvier wrote:
+> On 3/18/25 15:21, Richard Henderson wrote:
+>> On 3/18/25 15:16, Pierrick Bouvier wrote:
+>>>> This doesn't make any sense to me.  CPU_INCLUDE is defined within the very file that
+>>>> you're trying to include by avoiding "cpu.h".
+>>>>
+>>>
+>>> Every target/X/cpu.h includes cpu-all.h, which includes "cpu.h" itself, relying on per
+>>> target include path set by build system.
 >>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    include/exec/cpu-all.h | 6 ++++--
->>    1 file changed, 4 insertions(+), 2 deletions(-)
+>> So, another solution would be to fix the silly include loop?
+>>
 > 
-> I'll give you a
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> If you're ok with it, I'm willing to remove cpu-all.h completely (moving tlb flags bits in 
+> a new header), and fixing missing includes everywhere.
 > 
-> because it's quick and correct.  However, there are only 8 actual uses within the entire
-> tree (discounting comments), and all could be replaced by
-> 
+> I just wanted to make sure it's an acceptable path before spending too much time on it.
 
-I hesitated to do it and get rid of BSWAP_NEEDED completely, so I'll do 
-the replace.
+I would very much like cpu-all.h to go away.
 
->> +# if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
-> 
-> 
-> r~
+It looks like we have, on tcg-next:
 
+(1) cpu_copy is linux-user only, and should go in linux-user/qemu.h.
+
+(2) the TLB flags certainly deserve their own header.
+
+(3) The QEMU_BUILD_BUG_ON assertions need not be done in a header,
+     so long as there is *some* file that won't build if the assertions fail.
+     Perhaps cpu-target.c is as good as any.
+
+
+r~
 
