@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389CCC35FF3
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 22:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882FFC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 22:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tufAt-0000A9-GW; Tue, 18 Mar 2025 18:12:39 -0400
+	id 1tufFA-0002OF-2C; Tue, 18 Mar 2025 18:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1tufAo-000057-RV
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:12:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1tufAm-0002SZ-JU
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:12:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742335950;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZEhrFKgP48Gy7fx3ihbzsQSbAPz2a8Wl63jdqBT7ISE=;
- b=EoelEsXNjSuEfvZ449GzDgtwGKztIVeND/mV862n6ElNC2XWFs/Q1xTfTZ7/CmZgmlQdF1
- IOCTq3/eaXMK0vn6VOgaRZUBTvjZ7tU+RLtalbCwN51q9fYW6oVUB4C4SKhnwMgHqjW3CC
- b+ZuPvNOIO4hh+72D4x+oydh71rfKHY=
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-td0Ki9bnNjCKTKgjtUhnLw-1; Tue, 18 Mar 2025 18:12:28 -0400
-X-MC-Unique: td0Ki9bnNjCKTKgjtUhnLw-1
-X-Mimecast-MFC-AGG-ID: td0Ki9bnNjCKTKgjtUhnLw_1742335948
-Received: by mail-il1-f197.google.com with SMTP id
- e9e14a558f8ab-3d44dc8a9b4so67444775ab.3
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 15:12:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tufEy-0002Iy-OD
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:16:55 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tufEv-0003Ou-FX
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 18:16:52 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-300f92661fcso6284316a91.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 15:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742336206; x=1742941006; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Rlhpsl5tgVQ8zMRpowh4yQuosLc3O2JMgDZISfiZ5hM=;
+ b=hpdgZSYB+G566dFcDUwBIH+pd6p/54PM9I0EzS5WbGkFzT8/piEIQg6y8mKqxwm0bw
+ VB5aSt1VIHSfULMIuR2u1BQPyykJwoHhe36M7Twv4NjclQKzuWRw1oO2wlzsFleoi27l
+ tyMHy/+aCUWctJZeC/d+b/0DP7cwL0QGPpxtrXkFkQG6HcGHZ0uFwn6SD3owRR4D260S
+ UajxBHDa34/bxadcB0vZp3LBEph21eTXU2pPYye4hW6qOs9nmi1qF/RFCWdvqPaPF3tx
+ 1nbRRilfrzPJ8hIfyHaJavEllox4nFLrmy0ElCj+6QTsgVeMwDVKuwAAycJ2NYv8+FNw
+ 75sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742335948; x=1742940748;
+ d=1e100.net; s=20230601; t=1742336206; x=1742941006;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZEhrFKgP48Gy7fx3ihbzsQSbAPz2a8Wl63jdqBT7ISE=;
- b=ug1IljnKh8JaPEdpy7kzIT43ep2fMEx2Ff3NFMsjm08RD0SPHRZsyaOeZ+8dvLOPYx
- PxyMt48M6gAWfUvcLBCBdQVOzeVt2lhqr7lgCMJ94GKqsCbGwSnEPXXFrGrLeqk8+mKo
- y6SXce4+qlFFFhAm6+e5auMQDOC4hkA2rvyGI5yTF00Dt3GXUmSpl5Gp1AQQqP27m81p
- HxK9btaoX/C5kLLFCaom4+GLGC4UO7U5js0R4n5219yh4hFvzaX2lxvmCi9MhEmmOXpM
- rIe13aQaXDPIp7O5+v9ISpSFn7o6YWNrfQDxb+Qwcs6//MhxDI4b4GSNpUnKZAdVygop
- xNDg==
+ bh=Rlhpsl5tgVQ8zMRpowh4yQuosLc3O2JMgDZISfiZ5hM=;
+ b=IaGFNho4pKfx9rlUqJB5JkTb/IAiknYGyEEtXe2gpbxArUv9WzttqpFLKWUtN4TyKB
+ ENYbxpu0k5NJXJtXRrKrAXsH/F0ygjA1ZbuyMBoAnvMhkggNu4eT3GBY4lGLZt8vLWc/
+ L9hzQcZ8TMNWqyI1nzQPEAbSG4zzJh3iG5QjvPkxzHKsXU35aRAESbizkSZ+u8Au0hsB
+ K0AvfBeeh8NYp2VBGXtH8C2YnfISfa4D2OjdRzubU1nlYyxqH7AXO13N+Dnsn8lbCE+7
+ gD5QewP9yA6V/WCx+aWu155uwwwuyqkIvRj7vPMoRfDdE2pPewxfNku6NcyLYxZLAFud
+ cIFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfZT7ABWhwfVpe5oaQvyjYGLior2A0s6unWp8AyPlJnnHbKAlUM9AL9w4XiKIjZs/4lSf/rpSHcsS9@nongnu.org
-X-Gm-Message-State: AOJu0Yzo/fpbiqWeCSPwd4ca5QyE7pjFrofopH9jBg1FRWtGkn/XLyBH
- 0cwcZ7sPxlZFTZZGlji2MoX1rvL691O2Hzbg7yaeHMRzEVWTbqAMOHkQR24xN+rKbb9kvojnpGe
- bywKfDk0CX3EgIeyBrNCFEE8873GNpFgfdIb+GeD25z8Fx0XbjzAq
-X-Gm-Gg: ASbGncv2h+1QjlFaRCWciFgwIR4hwEQXbl6+ypP1cJ60zz2lUNcS3IxNJ1vTwHYaOYn
- le8b1uD20ttDchQZuDk5XbwPaIIa3y2Rw9uxrkdpex1phF/h2JKHanmGAlg3tojEAGQsHMOwnRy
- CcSxjnmrKoptGEF0I5YSiRWKbdDj4TUlcgIDYpakS24czqwAJ8AJ8EEOm+I2Pwj1Pp17enKC6No
- 52JYQlv6WcsnQ1Qa11Sri0fhI+D7oNQRCMj8c3psNDlkQFIwUmyPDoc3mGTuUtJjf0HpArdheI8
- CpbHxCuzsP9v9CGW
-X-Received: by 2002:a05:6e02:1707:b0:3d4:6dd2:3989 with SMTP id
- e9e14a558f8ab-3d586bf08d9mr5041715ab.20.1742335948188; 
- Tue, 18 Mar 2025 15:12:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE5GnTwif262ir3qT8G/KIxogaymACwUvx1dZohNklQhH0OU+KT12y1GLyn7j1HmQssViLjmg==
-X-Received: by 2002:a05:6e02:1707:b0:3d4:6dd2:3989 with SMTP id
- e9e14a558f8ab-3d586bf08d9mr5041455ab.20.1742335947833; 
- Tue, 18 Mar 2025 15:12:27 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
+ AJvYcCWrlQ2Q/9oBPlOTmPk6VMZdJheGmccpnv8qVRy6RlmyjbDAWYcouYNeb8cqORBKOjA8QkaZxRqrUjNp@nongnu.org
+X-Gm-Message-State: AOJu0Yw/PfJ9CtVcob2tXKgFUt5HODsxwodg2oRieOeuQqmAa7b5K/wF
+ 8dNUUPAtNhHs16hgYSUbIa/z+0o59bB6KenK8lvxcmzAzog/8DrlCK3ooF8qJqKeCEZ2JB+M7sL
+ m
+X-Gm-Gg: ASbGnctdSYgwhPCpMZcd49ZbMOM1OhqEvgA4NW+fzc2wCxaqbdHFIj6S9YL8Jpk4HNs
+ kOqKXMcIHYZzkSVEXl16uiEglnTnMBnOEwfX1xvvd0WZNYK5vdxRcvnjaHCMzOVepiDt3HhdIYi
+ PB2MEu45YjuBvqqPXVQL4yAAGkPCNvGsXW4hqyKyk4+IpmNEOy88qq6oHGCMqSKq5662U0YSgbK
+ JvWCC52AiHQTgJa4z2xDqCkzyEuSIp3usJsARwNI6eaXGwWpXxgNQAUctXNlHOmsV3YlHrc749C
+ LwF6jF7jG4NV8DwEAxDUI4bcrBe4Wb/RPRig6VpezM6h/iADOkjK/ZuvHA==
+X-Google-Smtp-Source: AGHT+IF0Ndckq3b583mtKOlY3MX+DN60sgn8v5grOSR3pSkEnnl/CZ8U2ZVgWTXR0oI67omvJr7PSg==
+X-Received: by 2002:a17:90b:4d05:b0:2ff:5ed8:83d0 with SMTP id
+ 98e67ed59e1d1-301be08e808mr471081a91.16.1742336205845; 
+ Tue, 18 Mar 2025 15:16:45 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f263701cebsm2920594173.27.2025.03.18.15.12.26
+ 98e67ed59e1d1-301bf61b34dsm10012a91.30.2025.03.18.15.16.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 15:12:27 -0700 (PDT)
-Message-ID: <b3a4ce7f-41a9-4da9-a8ca-54848b9e9cf1@redhat.com>
-Date: Tue, 18 Mar 2025 18:12:25 -0400
+ Tue, 18 Mar 2025 15:16:45 -0700 (PDT)
+Message-ID: <7202c9e9-1002-4cdc-9ce4-64785aac5de4@linaro.org>
+Date: Tue, 18 Mar 2025 15:16:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-pcie bus
+Subject: Re: [PATCH 04/13] exec/cpu-all: allow to include specific cpu
 Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
- nicolinc@nvidia.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-6-shameerali.kolothum.thodi@huawei.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250311141045.66620-6-shameerali.kolothum.thodi@huawei.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
+ <20250318045125.759259-5-pierrick.bouvier@linaro.org>
+ <35c90e78-2c2c-4bbb-9996-4031c9eef08a@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <35c90e78-2c2c-4bbb-9996-4031c9eef08a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,72 +110,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shameer,
-
-Hi!
-
-On 3/11/25 10:10 AM, Shameer Kolothum wrote:
-> User must associate a pxb-pcie root bus to smmuv3-accel
-> and that is set as the primary-bus for the smmu dev.
+On 3/18/25 15:11, Richard Henderson wrote:
+> On 3/17/25 21:51, Pierrick Bouvier wrote:
+>> Including "cpu.h" from code that is not compiled per target is ambiguous
+>> by definition. Thus we introduce a conditional include, to allow every
+>> architecture to set this, to point to the correct definition.
+>>
+>> hw/X or target/X will now include directly "target/X/cpu.h", and
+>> "target/X/cpu.h" will define CPU_INCLUDE to itself.
+>> We already do this change for arm cpu as part of this commit.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    include/exec/cpu-all.h | 4 ++++
+>>    target/arm/cpu.h       | 2 ++
+>>    2 files changed, 6 insertions(+)
+>>
+>> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+>> index 7c6c47c43ed..1a756c0cfb3 100644
+>> --- a/include/exec/cpu-all.h
+>> +++ b/include/exec/cpu-all.h
+>> @@ -46,7 +46,11 @@
+>>    
+>>    CPUArchState *cpu_copy(CPUArchState *env);
+>>    
+>> +#ifdef CPU_INCLUDE
+>> +#include CPU_INCLUDE
+>> +#else
+>>    #include "cpu.h"
+>> +#endif
+>>    
+>>    #ifdef CONFIG_USER_ONLY
+>>    
+>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>> index a8177c6c2e8..7aeb012428c 100644
+>> --- a/target/arm/cpu.h
+>> +++ b/target/arm/cpu.h
+>> @@ -31,6 +31,8 @@
+>>    #include "target/arm/multiprocessing.h"
+>>    #include "target/arm/gtimer.h"
+>>    
+>> +#define CPU_INCLUDE "target/arm/cpu.h"
+>> +
+>>    #ifdef TARGET_AARCH64
+>>    #define KVM_HAVE_MCE_INJECTION 1
+>>    #endif
 > 
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->   hw/arm/smmuv3-accel.c | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
+> This doesn't make any sense to me.  CPU_INCLUDE is defined within the very file that
+> you're trying to include by avoiding "cpu.h".
 > 
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index c327661636..1471b65374 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -9,6 +9,21 @@
->   #include "qemu/osdep.h"
->   
->   #include "hw/arm/smmuv3-accel.h"
-> +#include "hw/pci/pci_bridge.h"
-> +
-> +static int smmuv3_accel_pxb_pcie_bus(Object *obj, void *opaque)
-> +{
-> +    DeviceState *d = opaque;
-> +
-> +    if (object_dynamic_cast(obj, "pxb-pcie-bus")) {
-> +        PCIBus *bus = PCI_HOST_BRIDGE(obj->parent)->bus;
-> +        if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus->name)) {
-> +            object_property_set_link(OBJECT(d), "primary-bus", OBJECT(bus),
-> +                                     &error_abort);
-> +        }
-> +    }
-> +    return 0;
-> +}
->   
->   static void smmu_accel_realize(DeviceState *d, Error **errp)
->   {
-> @@ -17,6 +32,9 @@ static void smmu_accel_realize(DeviceState *d, Error **errp)
->       SysBusDevice *dev = SYS_BUS_DEVICE(d);
->       Error *local_err = NULL;
->   
-> +    object_child_foreach_recursive(object_get_root(),
-> +                                   smmuv3_accel_pxb_pcie_bus, d);
-> +
->       object_property_set_bool(OBJECT(dev), "accel", true, &error_abort);
->       c->parent_realize(d, &local_err);
->       if (local_err) {
-> @@ -33,6 +51,7 @@ static void smmuv3_accel_class_init(ObjectClass *klass, void *data)
->       device_class_set_parent_realize(dc, smmu_accel_realize,
->                                       &c->parent_realize);
->       dc->hotpluggable = false;
-> +    dc->bus_type = TYPE_PCIE_BUS;
->   }
->   
->   static const TypeInfo smmuv3_accel_type_info = {
 
-I am not seeing the need for a pxb-pcie bus(switch) introduced for each 'accel'.
-Isn't the IORT able to define different SMMUs for different RIDs?   if so, itsn't that sufficient
-to associate (define) an SMMU<->RID association without introducing a pxb-pcie?
-and again, I'm not sure how that improves/enables the device<->SMMU associativity?
+Every target/X/cpu.h includes cpu-all.h, which includes "cpu.h" itself, 
+relying on per target include path set by build system. Now we have 
+common code, there is no "per target include path".
 
-Feel free to enlighten me where I may have mis-read/interpreted the IORT & SMMUv3 specs.
+The other solutions are:
+- build hw common libraries with per target include path, but I thought 
+it was a good way to cleanup this, and not rely on this hidden 
+dependency on the build system
+- remove cpu.h inclusion from cpu-all.h, but it requires more 
+modifications in other places.
 
-Thanks,
-- Don
+I'm not sure which is the more desirable, compare to having this weird 
+CPU_INCLUDE trick.
+
+> 
+> r~
 
 
