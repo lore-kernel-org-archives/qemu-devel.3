@@ -4,57 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44818C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 11:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF84C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 11:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuUx1-0001q1-MO; Tue, 18 Mar 2025 07:17:39 -0400
+	id 1tuVFD-0006or-MH; Tue, 18 Mar 2025 07:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
- id 1tuUwy-0001or-JL; Tue, 18 Mar 2025 07:17:36 -0400
-Received: from smtpnm6-06.21cn.com ([182.42.144.170] helo=chinatelecom.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tugy@chinatelecom.cn>)
- id 1tuUwt-0000Jc-QW; Tue, 18 Mar 2025 07:17:36 -0400
-HMM_SOURCE_IP: 192.168.137.232:0.860077192
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-36.111.64.85 (unknown [192.168.137.232])
- by chinatelecom.cn (HERMES) with SMTP id 6B4F4E34B1;
- Tue, 18 Mar 2025 19:17:11 +0800 (CST)
-X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
-Received: from  ([36.111.64.85])
- by gateway-ssl-dep-84dfd8c7d7-bsrdr with ESMTP id
- fb0601d888284e4691184db18ff4ba12 for eblake@redhat.com; 
- Tue, 18 Mar 2025 19:17:15 CST
-X-Transaction-ID: fb0601d888284e4691184db18ff4ba12
-X-Real-From: tugy@chinatelecom.cn
-X-Receive-IP: 36.111.64.85
-X-MEDUSA-Status: 0
-Message-ID: <2a3489a1-3955-4fd3-9133-f8dcd0e57416@chinatelecom.cn>
-Date: Tue, 18 Mar 2025 19:17:09 +0800
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuVEy-0006na-Og
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 07:36:13 -0400
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuVEw-00070s-Uj
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 07:36:12 -0400
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e60aef2711fso4017309276.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 04:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742297769; x=1742902569; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=pwqCGFnK7/S7tx2iHXLyhZnit+YTNBb9Ye/At1RT/ks=;
+ b=GbL9OS/k2vbLDiWGINLSLsHH8oKJlLaFNDoLNVOb4UHnDLATMedN+oLq2f96T75J1O
+ h+DS3uV7TSin/ggtl/z2DNRwX8nsDlKDMKdoef3OqFjbtsabd9xWqDZBHjvxlpV5+AIR
+ Qh/0V5asug+tg73HDixBctBlrr8IYpbj6nfygx/Xljdtw2F+XHxhsHvtThJbvLmhy9tw
+ kNzGCx1KHFEs4ek2xFrb0f5QNim5L+CktQxtVeyhiweOAusz4SGWzIOBU/s2/RttSTlx
+ G17HxWQEaLFL4444nLVAGfSCA2y8Q5tkcjIkQpv0JAt+vFGFN3/+wUEX2cgsRZ0PBWCp
+ XPUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742297769; x=1742902569;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pwqCGFnK7/S7tx2iHXLyhZnit+YTNBb9Ye/At1RT/ks=;
+ b=LsMhukCnXjdb/jDw36UBVV6woRbOb6Xi3yE4v5fNkxhRwt0slEyBesrsRViz8wPHLo
+ xRQYUp0ROWAdS/3V/Wdvis1rMTtRDS0XS+saW394hvG4G7R/KCR63Ya5R9GJm6/yivPC
+ pAiAIi/g7vck0P8uyBOGJ9BPgPRM0b3mn+3bTNpnEfnIs6g0eb/8aj6Kk4H4sSvbxCS9
+ WBZ34eV7jg1zt8mbQuPEzKh66Wiri2xeaNF4o5IR22s1DM74SpXRKHiK+lLJu0DuLlYa
+ JbfqH8WjxfswK2tdL0T63F2Gx2j8Ucn8ydfxe5Xja604wtf0W3dYWl+7nW4V6uXvWzub
+ 6U9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnbkKoirdScjR4DsX44YxQ1WrBMCc52m2Pk92mdD8EoEnwBreo6yIEXl6d6a+NMMe0lSSftXlfk9PP@nongnu.org
+X-Gm-Message-State: AOJu0YyYIySpAWejVMwivNOaxvk9xLUZxIQtN+uPibrQfI9n6UFeeCmf
+ iCarV/u01GjFEMCdxVqoqkcjGRxoVnKi4qGW89sx/w8GzYodGymxs/BU2ZBvMXwb2CTNlYf58p5
+ /NLMszVWqIB9oIeh2YcIu//tWZKjsmt7S7ocnQA==
+X-Gm-Gg: ASbGnctH85iSob1wxKaQ9a32XM+H7wtMl4kph0dCoHZPQ+9xPV9z+rGFMKJVHx2FIzw
+ NFrTfo1GPpzGpkGZszhSBN9MtlWn2qwengVHxEubaEQXuieKLGNYNCEi+vVwghB7V8707qVHc09
+ Ho91Ep7dp7gkD0Gm+tbLWrR+iMIpu/RFxCYPMFRw==
+X-Google-Smtp-Source: AGHT+IFcZ1/Ij+TVt8JjRY29oA9MQ4CENiRmO/G720qg7wKLllzEcXbzknxRbfwbRRvNG4aCLEbLNFFb8ly3ATsudZU=
+X-Received: by 2002:a05:6902:2586:b0:e64:6988:fdd2 with SMTP id
+ 3f1490d57ef6-e646989019cmr4818848276.23.1742297769400; Tue, 18 Mar 2025
+ 04:36:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: tugy@chinatelecom.cn, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 0/2] support block encryption/decryption in parallel
-To: eblake@redhat.com, armbru@redhat.com, kwolf@redhat.com,
- hreitz@redhat.com, berrange@redhat.com, qemu-block@nongnu.org
-References: <cover.1737384527.git.tugy@chinatelecom.cn>
-Content-Language: en-US
-From: Guoyi Tu <tugy@chinatelecom.cn>
-In-Reply-To: <cover.1737384527.git.tugy@chinatelecom.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=182.42.144.170; envelope-from=tugy@chinatelecom.cn;
- helo=chinatelecom.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAFEAcA8RjNTZsuhShFwFUHa+YP5VKBUw2RneUPwAJ9eOVAL5Vw@mail.gmail.com>
+ <20250318113013.578865-1-aleksandar.rakic@htecgroup.com>
+In-Reply-To: <20250318113013.578865-1-aleksandar.rakic@htecgroup.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 18 Mar 2025 11:35:57 +0000
+X-Gm-Features: AQ5f1Jo9k_D0b7UtTBIdDE1_VZ3rYLbcAzgJDatPyI6_9VqbT_enHuEg2ppNxpc
+Message-ID: <CAFEAcA84kcMBKzs+5r4Th8jZ+UJf96B+QVW-J=emZw-tpSC75w@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] Skip NaN mode check for soft-float
+To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, 
+ "arikalo@gmail.com" <arikalo@gmail.com>, "cfu@mips.com" <cfu@mips.com>, 
+ "fshahbazker@wavecomp.com" <fshahbazker@wavecomp.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,101 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi there,
+On Tue, 18 Mar 2025 at 11:31, Aleksandar Rakic
+<aleksandar.rakic@htecgroup.com> wrote:
+>
+> Hi,
+>
+> If ieee754 equals EMULATED, then the variables mips_use_nan_2008 and
+> mips_use_nan_legacy are set to true
+> ( https://elixir.bootlin.com/linux/v6.13.6/source/arch/mips/kernel/fpu-probe.c#L208 )
+> and any binaries are accepted regardless of whether supported by the FPU
+> ( https://elixir.bootlin.com/linux/v6.13.6/source/arch/mips/kernel/elf.c#L154 )
 
-Would you have any feedback on this patch? Any suggestions would be 
-greatly appreciated.”
+I presume from the name of that setting that in that case a
+real kernel is doing trap-and-emulate for binaries of the
+wrong FPU type (which must perform appallingly badly...)  ?
 
---
-Guoyi
+Does QEMU set up the CPU for linux-user mode so that it
+effectively does emulation as-if both NaN modes were supported?
+I can't see that happening from a quick grep.
 
-On 2025/1/20 22:58, tugy@chinatelecom.cn wrote:
-> From: Guoyi Tu <tugy@chinatelecom.cn>
-> 
-> Currently, disk I/O encryption and decryption operations are performed sequentially
-> in the main thread or IOthread. When the number of I/O requests increases,
-> this becomes a performance bottleneck.
-> 
-> To address this issue, this patch use thread pool to perform I/O encryption
-> and decryption in parallel, improving overall efficiency.
-> 
-> Test results show that enabling the thread pool for encryption and decryption
-> significantly improve the performance of virtual machine storage devices.
-> 
-> 
-> Test Case1: Disk read/write performance using fio in a virtual machine
-> 
-> Virtual Machine： 8c16g, with a disk backing by a LUKS storage device and
->                    Ceph as storage backend.
-> Test Method:
-> fio -direct=1 -iodepth=32 -rw=xx -ioengine=libaio -bs=4k -size=10G -numjobs=x \
-> -runtime=1000 -group_reporting -filename=/dev/vdb -name=xxx
-> 
-> Runing the VM on the Intel Xeon 5218 server, The test results are as follows:
-> 
-> |                        |  Serial encryption  | Thread pool encryption|
-> |                        |  and decryption     | and decryption      |
-> |        fio             |-----------|---------|-----------|---------|
-> |                        | BW(MiB/s) | IOPS(K) | BW(MiB/s) | IOPS(K) |
-> |------------------------|-----------|---------|-----------|---------|
-> | rw=read numjobs=2      | 499       | 128     | 605       | 155     |
-> | rw=read numjobs=4      | 529       | 136     | 632       | 162     |
-> | rw=write numjobs=2     | 493       | 126     | 617       | 158     |
-> | rw=write numjobs=4     | 534       | 137     | 743       | 190     |
-> 
-> 
-> Runing the VM on the HiSilicon Kunpeng-920 server, The test results are as follows:
-> 
-> |                        |  Serial encryption  | Thread pool encryption|
-> |                        |  and decryption     | and decryption      |
-> |        fio             |-----------|---------|-----------|---------|
-> |                        | BW(MiB/s) | IOPS(K) | BW(MiB/s) | IOPS(K) |
-> |------------------------|-----------|---------|-----------|---------|
-> | rw=read numjobs=2      | 73.2      | 18.8    | 128       | 39.2    |
-> | rw=read numjobs=4      | 77.9      | 19.9    | 246       | 62.9    |
-> | rw=write numjobs=2     | 78        | 19      | 140       | 35.8    |
-> | rw=write numjobs=4     | 78        | 20.2    | 270       | 69.1    |
-> 
-> 
-> Test Case 2：
-> In addition, performance comparisons were also conducted on the HiSilicon Kunpeng-920
-> server, testing the conversion of a qcow2 image to a LUKS image using qemu-img convert.
-> The results show that using thread pool to encryption and decryption all significantly
-> improve the performance.
-> 
-> Test Method: Create a 40GB qcow2 image and fill it with data, then convert it to a LUKS
->               image using qemu-img
-> 
-> * Serial encryption and decryption：
-> time qemu-img convert -p -m 16 -W --image-opts file.filename=/home/tgy/data.qcow2 \
-> --object secret,id=sec,data=password -n \
-> --target-image-opts driver=luks,key-secret=sec,file.filename=/home/tgy/data.luks
-> 
->      real    7m53.681s
->      user    7m52.595s
->      sys     0m11.248s
-> 
-> 
-> * Thread pool encryption and decryption：
-> time qemu-img convert -p -m 16 -W --image-opts file.filename=/home/tgy/data.qcow2 \
-> --object secret,id=sec,data=password -n --target-image-opts \
-> driver=luks,key-secret=sec,enable-parallel-crypto=on,file.filename=/home/tgy/data.luks
-> 
->      real    1m43.101s
->      user    10m30.239s
->      sys     13m13.758s
-> 
-> v2: change parameter name from "encrypt-in-parallel" to "enable-parallel-crypto"
-> 
-> Guoyi Tu (2):
->    crpyto: support encryt and decrypt parallelly using thread pool
->    qapi/crypto: support enable encryption/decryption in parallel
-> 
->   block/crypto.c       | 113 ++++++++++++++++++++++++++++++++++++++++---
->   block/crypto.h       |   9 ++++
->   qapi/block-core.json |   6 ++-
->   qapi/crypto.json     |   6 ++-
->   4 files changed, 126 insertions(+), 8 deletions(-)
-> 
+Also, this doesn't seem to be related to the ABI_FP_SOFT setting.
 
+thanks
+-- PMM
 
