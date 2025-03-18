@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE26C28B28
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F3D4C35FF8
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 08:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuS5B-0002yN-V0; Tue, 18 Mar 2025 04:13:53 -0400
+	id 1tuS58-0002u1-S3; Tue, 18 Mar 2025 04:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuS4G-0002it-FF; Tue, 18 Mar 2025 04:13:00 -0400
+ id 1tuS4K-0002jR-B0; Tue, 18 Mar 2025 04:13:03 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuS4D-0001JW-M2; Tue, 18 Mar 2025 04:12:56 -0400
+ id 1tuS4I-0001KN-3i; Tue, 18 Mar 2025 04:12:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742285574; x=1773821574;
+ t=1742285578; x=1773821578;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qhOop17qvvDdvVOFBqEwZ6YZDR32LRhdetUWxZsO20Y=;
- b=Qxtc//rdMgKIWaaA8NGwNneZeE0Bag3VdIsc0TrZJVfJvg+WJFRA1Rkq
- iwoKGBqIWsFHMX20teYz4QM+OvhBLqr0Dxp5lUeuexPBxe4pOsBo++5nJ
- 6AloY5wWkyETkwA7TmgW2sudBa9berusbK7vKlvHv2ylxO1BNo1ZNvUfy
- +IJmhEoIc/qFn5lH8tR4TN+1SYGWYVL6OyKvZxqXmx3bwm8CERc9aeP02
- o5f4E36079xoJnNopsrRDRB3jYZVki+GRaxHKG+FNe+j/gxagMIltXrud
- G7P95NBNaHmClVQ99lEeJ3HFKFRG5hiCunOVyOckRU4k95dxPC2AleChy w==;
-X-CSE-ConnectionGUID: QKYCeIUPRFukPSnUWVjYDA==
-X-CSE-MsgGUID: lJbeaS0uRA60wsyAo5WNAA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="53621564"
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="53621564"
+ bh=AJ9pLJabRD2fMSQ7De1Zod0j1WnZ3dKpbCNMa8ACBf8=;
+ b=nztAzNHDpOQ2y+fhjncFCot1B+xEu/gyT2xQwIGkt+SJzG2nPpERtvBs
+ 7OOSBhQ5f4GPSsxKd1ggCGOzrnQSkwY9zT7+a52nA0l8IkSWn9Mf9Ifa6
+ ZJaIQQt4of/hJeBKZPFKa+Z8TkvxVVvPMNwEfTGcjw5B6VDM94wvv2Stl
+ /PGSlv4ncZB3aEgewgAEzjSLBDS5g/AAQZbdO+0E0WaPDp/2aZVXvjVjn
+ OS5dtsgZz4yyg/2HA3TlkM1/GqLw6SVZerGbRF52Aur3igy8HDw1uyuG7
+ FK/NDNXqhQ4/pPE4whBqTIoNF2BjHPEuC1A4wLGFth3Jxp0tIo7yCeMj6 A==;
+X-CSE-ConnectionGUID: od9aS6LQSz2GsDO7Q9OjOg==
+X-CSE-MsgGUID: pYUHM/wYSAy0QOB17KIoUQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="53621574"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="53621574"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2025 01:12:50 -0700
-X-CSE-ConnectionGUID: /KoGosO0QhKRqNcMhDgV7g==
-X-CSE-MsgGUID: kGi+cZyNRqamdRQFp/XD/w==
+ 18 Mar 2025 01:12:53 -0700
+X-CSE-ConnectionGUID: T8W8bXsCTPmdA6eghVd8JQ==
+X-CSE-MsgGUID: 03dyGbpqTKORauPejgK25A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="127363203"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="127363222"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 18 Mar 2025 01:12:48 -0700
+ by orviesa005.jf.intel.com with ESMTP; 18 Mar 2025 01:12:51 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 04/14] rust/vmstate: Fix size field of VMStateField with
- VMS_ARRAY_OF_POINTER flag
-Date: Tue, 18 Mar 2025 16:32:38 +0800
-Message-Id: <20250318083248.1402990-5-zhao1.liu@intel.com>
+Subject: [PATCH v2 06/14] rust/vmstate: Fix "cannot infer type" error in
+ vmstate_struct
+Date: Tue, 18 Mar 2025 16:32:40 +0800
+Message-Id: <20250318083248.1402990-7-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250318083248.1402990-1-zhao1.liu@intel.com>
 References: <20250318083248.1402990-1-zhao1.liu@intel.com>
@@ -80,37 +80,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The `size` field of the VMStateField with VMS_ARRAY_OF_POINTER flag
-should stores the size of pointer, which depends on platform.
+Rust cannot infer the type (it should be VMStateField) after
+Zeroable::ZERO, which cause the compiling error.
 
-Currently, `*const`, `*mut`, `NonNull`, `Box<>` and their wrapper are
-supported, and they have the same size as `usize`.
-
-Store the size (of `usize`) when VMS_ARRAY_OF_POINTER flag is set.
-
-The size may be changed when more smart pointers are supported, but now
-the size of "usize" is enough.
+To fix this error, call with_varray_flag() after VMStateField's
+initialization.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/qemu-api/src/vmstate.rs | 4 ++++
- 1 file changed, 4 insertions(+)
+ rust/qemu-api/src/vmstate.rs | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index e3233303f204..e2a1f7a97aae 100644
+index 9d9cdda993ce..3be3a7260fe9 100644
 --- a/rust/qemu-api/src/vmstate.rs
 +++ b/rust/qemu-api/src/vmstate.rs
-@@ -256,6 +256,10 @@ pub const fn with_array_flag(mut self, num: usize) -> Self {
-         if (self.flags.0 & VMStateFlags::VMS_POINTER.0) != 0 {
-             self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_POINTER.0);
-             self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0);
-+            // VMS_ARRAY_OF_POINTER flag stores the size of pointer.
-+            // FIXME: *const, *mut, NonNull and Box<> have the same size as usize.
-+            //        Resize if more smart pointers are supported.
-+            self.size = std::mem::size_of::<usize>();
-         }
-         self.flags = VMStateFlags(self.flags.0 & !VMStateFlags::VMS_SINGLE.0);
-         self.flags = VMStateFlags(self.flags.0 | VMStateFlags::VMS_ARRAY.0);
+@@ -453,13 +453,15 @@ macro_rules! vmstate_struct {
+             size: ::core::mem::size_of::<$type>(),
+             flags: $crate::bindings::VMStateFlags::VMS_STRUCT,
+             vmsd: $vmsd,
+-            ..$crate::zeroable::Zeroable::ZERO $(
+-                .with_varray_flag($crate::call_func_with_field!(
+-                    $crate::vmstate::vmstate_varray_flag,
+-                    $struct_name,
+-                    $num))
+-               $(.with_varray_multiply($factor))?)?
+-        }
++            ..$crate::zeroable::Zeroable::ZERO
++         } $(.with_varray_flag(
++                  $crate::call_func_with_field!(
++                      $crate::vmstate::vmstate_varray_flag,
++                      $struct_name,
++                      $num
++                  )
++              )
++           $(.with_varray_multiply($factor))?)?
+     };
+ }
+ 
 -- 
 2.34.1
 
