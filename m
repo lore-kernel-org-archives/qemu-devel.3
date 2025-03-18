@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1588C35FF3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE51BC282EC
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 21:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tueZ0-0001qx-13; Tue, 18 Mar 2025 17:33:32 -0400
+	id 1tueZp-0004TV-UI; Tue, 18 Mar 2025 17:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueY2-0001IQ-1u
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:30 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tueYC-0001OD-Do
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:40 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tueXy-0000mQ-3X
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:28 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-223fd89d036so123812635ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:32:25 -0700 (PDT)
+ id 1tueY9-0000rW-TZ
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 17:32:40 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-225477548e1so109203605ad.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 14:32:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742333545; x=1742938345; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742333557; x=1742938357; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PGIsJ49PlQz0cO++UliO79dMkBrOAt4xODayzQ//uqA=;
- b=ljFzHrQXYlNh1481KTWkSjDoSbdhGHGRkPn8Hku/mLcHGF2JMlYZ+z/YPFlaZh/9Dl
- 2YAg8rjZmUSLoMz1oA5JVlSw2gq12aLEjlr0L/nlWsUdEEqHDRoOdGkZkGiNNn0pi6Ef
- t2XVlBv2LCfGGaKUEwIyOpkqqvW3iL08Ti/liLY/JTvmCuin72qWkobS/qalSXPgTemw
- 0bX578swp9pYkHnada5nlqyn3pmRqOhWFPhX3TaA4ztC5mEhSNKZd72aUwlh3Tw918lO
- AHmu8kixQ66IMAPNmHNo88IJUDBwDiGDFVEzywrDkKiZSDny0u3QFgM21q+BzQSgzpvQ
- qHaA==
+ bh=qAJhBvKK2tjocHW8D3nM54DyABQcyAL39T963Zv3mLo=;
+ b=Kk4KVl6ZemDq3FNHC6cppUeyncPufqCrtJYyZ7ANQtA5+vIYljCGaEiggb4HrlxQGX
+ sLY5qtkNO8036gu2jCwEd41XttC0l7+O+qHBl6HWELof0XRL2dU74hfSdgde3Jeerqy9
+ 8OG0oBcfaXRh/6sp61l0BEyfNOpE2AhiDSWaweNfjbAqWH1MLzvMdoGalERvOKN5KzsB
+ GKw0x9jJ85b/ewBMUvJz1twpyJgsI6PdP8iKjZLsPGBQECYZpCR9OT4Nljd8R/ULgq/Y
+ SOI1OJw4i7+ylB6f5IkLuDXk3Rq2OtTm1C4qIMs3A+PBjGUxpwCjsLd0or3ok4cPCYp9
+ /9yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742333545; x=1742938345;
+ d=1e100.net; s=20230601; t=1742333557; x=1742938357;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PGIsJ49PlQz0cO++UliO79dMkBrOAt4xODayzQ//uqA=;
- b=H2vMn2ci0Sl2EGvZL0zAZsnrxbQh/RETzw6c1eyJaSaLvRFK2DHK4S3P9SGE2IGLZH
- tNNEOvWR2ReRTOAa8m0ZU5z53VVhkO7HKhqWfgFKThcHCuWc3KrDTPfs5L6aHUG939+j
- 9F9ZBYtbPCFqVW21r9q8rd1HC1DnbXLdx0o6Kui/dqVlJPqACH3RrYWNmuYwUg8MHvYQ
- Q643otr5vQRXKGraCyj5dOnd8NS4Q0jDciiVcArdXpk4Jalr39/LlSvRxx9a+DbgkuJB
- vENgNE9ql87L/1OmdZ8JkerGkQqtF9lsBvSaieMc9AovGoV8WYAUsZuCoZvOhZuDQgns
- HNIA==
-X-Gm-Message-State: AOJu0YwzetksgeVT8S9wUPXgt3QGDh21Q567Bqvcr5kXtLzGaSfpYh3Y
- +AfCQCbEsY0wnzE9de5cespYymP12vTz5rR9DQTH6alY9/3v6zTkzeHYuWzJokoNFtKiWpnIMBC
- R
-X-Gm-Gg: ASbGnctmjcRByu8BZc20a6ZE3PRscGLei0RLaym7mHzSPrLlOFICOGhUq408LFNsagD
- fCmtOcUDiGSCd8r3YgJGOiuOKc0F6Njm+TIanMEXFTaKCtGca9rFwMT88EUVO0y8ZHfv7N+mvqg
- 4nJsdhSM1vtWoy+uv4r4aYVIim9yPo1yKcKKWyhGnSQ9iuOZIjilBjmvFHQwJAr+FoV5reFBfY/
- AYqRfpV7gtHTuaBUUJPBcj3czjOCMDvpPkUKtPF56SHwVP9ntOoCC6vL3gBIFvGxFEeoTgm1Dvf
- ldNEi5OO+2kDf5W/Gymq0gu7xWNpSEt0XIWHeLL2ZxNSZb6CR093ScuEEo7EPPpAu6s5GE0roGB
- K
-X-Google-Smtp-Source: AGHT+IFWUuJSqm5j/4nXXs0FpLCg5YF++jVafSje9b07oejV6dcyo/4EBjeD8ra2W5nQN7q0A/YAZA==
-X-Received: by 2002:a05:6a21:6e49:b0:1f5:75a9:5255 with SMTP id
- adf61e73a8af0-1fbed40cbe6mr281728637.39.1742333544594; 
- Tue, 18 Mar 2025 14:32:24 -0700 (PDT)
+ bh=qAJhBvKK2tjocHW8D3nM54DyABQcyAL39T963Zv3mLo=;
+ b=QDoqbLU5fA2/R7vIRd5n4j12LIUuaO5hagVip4wIryEbpc4V2qoQ0A3p29sBxXPyZW
+ ckMxJVex8tqOkX/ECZNx/R1ycJxZHZrYIVZomA16gIHQ5s9trIcY5hMwKrNLbtR7Tgpm
+ e7LChJYCkRGr5/7XKWX8RYfHj92rXuKB7rcYUTWaH7ihqeHYwf4g0aSNnk6e4E5UuCBf
+ 6X4qLuzGdqh6K46orONWHN7OnUbHknsyZUsGDx07DraALSy9mkGe3oMXYRZtUp+lOVPI
+ JjckxGc4CkKTgPLUooKhrL3ejUURpi880+63dUANKgXYVagOcRoovT4hMhg+bxcEONKy
+ eJmg==
+X-Gm-Message-State: AOJu0YyxAY9kOH2b+IWbawZRVv8Tsyj7yacSuiQ3OMra14y2Eb4O7fLi
+ DVqlL/ascZh0xSspmQOq75ZnAAluGDZ4JR/qJae1+Y0WzKnE/q0TBw09QQadpdnFX0xq01LJXr2
+ V
+X-Gm-Gg: ASbGnctx5iB7XJsPNIQFgLleXq6SAvUlMI7OC76t7/hw4JCdtxVu/lUFuNmxKqgcQD+
+ dOaNT+7UH4FNhNE5hZF04AB+6o3TMBEwo1rZLQ6cEvoBBpmnY6+h8SmYqQ+w2x7WNoPOptcvdI7
+ A95+UfrroS3PQDqZaMasas70b9mrNkT/TzJUdlIx/UcIuAwPBdI65CN8uc7V1hoUFMmzltoD0wB
+ TOjT/jt654AOkfhJB1GaUdaJvjVgotHqbCrvb9HVRy7wrjDOtEsrgfk0O5qVZx/dkuFp7vwbjRK
+ 5zOSCiSDGqs3HW/O7L4GQNmsRL8j0zgUCeAkcqT4t0qLyi0e4ch5g/qD91jvknudvDVAg1M2EW7
+ I
+X-Google-Smtp-Source: AGHT+IFIMQAgBTGofx4WZX3HM3690fDdzNswM0m0mv6GEiqtGEowHTvHYTNv5EFkyk/Sch9ljND9LA==
+X-Received: by 2002:a05:6a21:3286:b0:1f5:8678:182a with SMTP id
+ adf61e73a8af0-1fbeb7a1da1mr303795637.12.1742333556532; 
+ Tue, 18 Mar 2025 14:32:36 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.23
+ 41be03b00d2f7-af56e9ddf4fsm9473854a12.21.2025.03.18.14.32.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Mar 2025 14:32:23 -0700 (PDT)
+ Tue, 18 Mar 2025 14:32:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH v2 19/42] include/system: Move exec/ram_addr.h to
- system/ram_addr.h
-Date: Tue, 18 Mar 2025 14:31:44 -0700
-Message-ID: <20250318213209.2579218-20-richard.henderson@linaro.org>
+Subject: [PATCH v2 37/42] include/exec: Split out icount.h
+Date: Tue, 18 Mar 2025 14:32:02 -0700
+Message-ID: <20250318213209.2579218-38-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250318213209.2579218-1-richard.henderson@linaro.org>
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,351 +101,488 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the existing includes with sed.
+Split icount stuff from system/cpu-timers.h.
+There are 17 files which only require icount.h, 7 that only
+require cpu-timers.h, and 7 that require both.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/{exec => system}/ram_addr.h | 7 +++----
- accel/kvm/kvm-all.c                 | 2 +-
- accel/tcg/cputlb.c                  | 2 +-
- accel/tcg/translate-all.c           | 2 +-
- hw/ppc/spapr.c                      | 2 +-
- hw/ppc/spapr_caps.c                 | 2 +-
- hw/ppc/spapr_pci.c                  | 2 +-
- hw/remote/memory.c                  | 2 +-
- hw/remote/proxy-memory-listener.c   | 2 +-
- hw/s390x/s390-stattrib-kvm.c        | 2 +-
- hw/s390x/s390-stattrib.c            | 2 +-
- hw/s390x/s390-virtio-ccw.c          | 2 +-
- hw/vfio/common.c                    | 3 +--
- hw/vfio/container.c                 | 2 +-
- hw/vfio/spapr.c                     | 2 +-
- hw/virtio/virtio-mem.c              | 2 +-
- migration/ram.c                     | 2 +-
- system/memory.c                     | 2 +-
- system/physmem.c                    | 2 +-
- target/arm/tcg/mte_helper.c         | 2 +-
- target/ppc/kvm.c                    | 2 +-
- target/s390x/kvm/kvm.c              | 2 +-
- MAINTAINERS                         | 2 +-
- 23 files changed, 25 insertions(+), 27 deletions(-)
- rename include/{exec => system}/ram_addr.h (99%)
+ include/exec/icount.h            | 68 ++++++++++++++++++++++++++++++++
+ include/system/cpu-timers.h      | 58 ---------------------------
+ accel/tcg/cpu-exec.c             |  2 +-
+ accel/tcg/icount-common.c        |  2 +-
+ accel/tcg/monitor.c              |  1 +
+ accel/tcg/tcg-accel-ops-icount.c |  2 +-
+ accel/tcg/tcg-accel-ops-mttcg.c  |  2 +-
+ accel/tcg/tcg-accel-ops-rr.c     |  2 +-
+ accel/tcg/tcg-accel-ops.c        |  2 +-
+ accel/tcg/tcg-all.c              |  2 +-
+ accel/tcg/translate-all.c        |  2 +-
+ hw/core/ptimer.c                 |  2 +-
+ replay/replay.c                  |  2 +-
+ stubs/icount.c                   |  2 +-
+ system/cpu-timers.c              |  1 +
+ system/dma-helpers.c             |  2 +-
+ system/vl.c                      |  1 +
+ target/arm/helper.c              |  1 +
+ target/riscv/cpu_helper.c        |  2 +-
+ target/riscv/csr.c               |  2 +-
+ target/riscv/debug.c             |  1 +
+ target/riscv/machine.c           |  2 +-
+ target/riscv/pmu.c               |  2 +-
+ util/async.c                     |  2 +-
+ util/main-loop.c                 |  1 +
+ util/qemu-timer.c                |  1 +
+ 26 files changed, 92 insertions(+), 75 deletions(-)
+ create mode 100644 include/exec/icount.h
 
-diff --git a/include/exec/ram_addr.h b/include/system/ram_addr.h
-similarity index 99%
-rename from include/exec/ram_addr.h
-rename to include/system/ram_addr.h
-index 8677761af5..3b81c3091f 100644
---- a/include/exec/ram_addr.h
-+++ b/include/system/ram_addr.h
-@@ -16,10 +16,9 @@
-  * The functions declared here will be removed soon.
-  */
- 
--#ifndef RAM_ADDR_H
--#define RAM_ADDR_H
-+#ifndef SYSTEM_RAM_ADDR_H
-+#define SYSTEM_RAM_ADDR_H
- 
--#ifndef CONFIG_USER_ONLY
- #include "system/xen.h"
- #include "system/tcg.h"
- #include "exec/cputlb.h"
-@@ -559,5 +558,5 @@ uint64_t cpu_physical_memory_sync_dirty_bitmap(RAMBlock *rb,
- 
-     return num_dirty;
- }
--#endif
+diff --git a/include/exec/icount.h b/include/exec/icount.h
+new file mode 100644
+index 0000000000..4964987ae4
+--- /dev/null
++++ b/include/exec/icount.h
+@@ -0,0 +1,68 @@
++/*
++ * icount - Instruction Counter API
++ * CPU timers state API
++ *
++ * Copyright 2020 SUSE LLC
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- #endif
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0d47bb0d9b..0723a3933b 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -34,7 +34,7 @@
- #include "system/accel-blocker.h"
- #include "qemu/bswap.h"
- #include "system/memory.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "qemu/event_notifier.h"
++#ifndef EXEC_ICOUNT_H
++#define EXEC_ICOUNT_H
++
++/**
++ * ICountMode: icount enablement state:
++ *
++ * @ICOUNT_DISABLED: Disabled - Do not count executed instructions.
++ * @ICOUNT_PRECISE: Enabled - Fixed conversion of insn to ns via "shift" option
++ * @ICOUNT_ADAPTATIVE: Enabled - Runtime adaptive algorithm to compute shift
++ */
++typedef enum {
++    ICOUNT_DISABLED = 0,
++    ICOUNT_PRECISE,
++    ICOUNT_ADAPTATIVE,
++} ICountMode;
++
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
++extern ICountMode use_icount;
++#define icount_enabled() (use_icount)
++#else
++#define icount_enabled() ICOUNT_DISABLED
++#endif
++
++/*
++ * Update the icount with the executed instructions. Called by
++ * cpus-tcg vCPU thread so the main-loop can see time has moved forward.
++ */
++void icount_update(CPUState *cpu);
++
++/* get raw icount value */
++int64_t icount_get_raw(void);
++
++/* return the virtual CPU time in ns, based on the instruction counter. */
++int64_t icount_get(void);
++/*
++ * convert an instruction counter value to ns, based on the icount shift.
++ * This shift is set as a fixed value with the icount "shift" option
++ * (precise mode), or it is constantly approximated and corrected at
++ * runtime in adaptive mode.
++ */
++int64_t icount_to_ns(int64_t icount);
++
++/**
++ * icount_configure: configure the icount options, including "shift"
++ * @opts: Options to parse
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Return: true on success, else false setting @errp with error
++ */
++bool icount_configure(QemuOpts *opts, Error **errp);
++
++/* used by tcg vcpu thread to calc icount budget */
++int64_t icount_round(int64_t count);
++
++/* if the CPUs are idle, start accounting real time to virtual clock. */
++void icount_start_warp_timer(void);
++void icount_account_warp_timer(void);
++void icount_notify_exit(void);
++
++#endif /* EXEC_ICOUNT_H */
+diff --git a/include/system/cpu-timers.h b/include/system/cpu-timers.h
+index 64ae54f6d6..a1abed0d7a 100644
+--- a/include/system/cpu-timers.h
++++ b/include/system/cpu-timers.h
+@@ -15,64 +15,6 @@
+ /* init the whole cpu timers API, including icount, ticks, and cpu_throttle */
+ void cpu_timers_init(void);
+ 
+-/* icount - Instruction Counter API */
+-
+-/**
+- * ICountMode: icount enablement state:
+- *
+- * @ICOUNT_DISABLED: Disabled - Do not count executed instructions.
+- * @ICOUNT_PRECISE: Enabled - Fixed conversion of insn to ns via "shift" option
+- * @ICOUNT_ADAPTATIVE: Enabled - Runtime adaptive algorithm to compute shift
+- */
+-typedef enum {
+-    ICOUNT_DISABLED = 0,
+-    ICOUNT_PRECISE,
+-    ICOUNT_ADAPTATIVE,
+-} ICountMode;
+-
+-#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+-extern ICountMode use_icount;
+-#define icount_enabled() (use_icount)
+-#else
+-#define icount_enabled() ICOUNT_DISABLED
+-#endif
+-
+-/*
+- * Update the icount with the executed instructions. Called by
+- * cpus-tcg vCPU thread so the main-loop can see time has moved forward.
+- */
+-void icount_update(CPUState *cpu);
+-
+-/* get raw icount value */
+-int64_t icount_get_raw(void);
+-
+-/* return the virtual CPU time in ns, based on the instruction counter. */
+-int64_t icount_get(void);
+-/*
+- * convert an instruction counter value to ns, based on the icount shift.
+- * This shift is set as a fixed value with the icount "shift" option
+- * (precise mode), or it is constantly approximated and corrected at
+- * runtime in adaptive mode.
+- */
+-int64_t icount_to_ns(int64_t icount);
+-
+-/**
+- * icount_configure: configure the icount options, including "shift"
+- * @opts: Options to parse
+- * @errp: pointer to a NULL-initialized error object
+- *
+- * Return: true on success, else false setting @errp with error
+- */
+-bool icount_configure(QemuOpts *opts, Error **errp);
+-
+-/* used by tcg vcpu thread to calc icount budget */
+-int64_t icount_round(int64_t count);
+-
+-/* if the CPUs are idle, start accounting real time to virtual clock. */
+-void icount_start_warp_timer(void);
+-void icount_account_warp_timer(void);
+-void icount_notify_exit(void);
+-
+ /*
+  * CPU Ticks and Clock
+  */
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 372b876604..034c2ded6b 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -35,7 +35,7 @@
+ #include "exec/log.h"
  #include "qemu/main-loop.h"
- #include "trace.h"
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 6f0ea9067b..134e523cab 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
+ #include "exec/cpu-all.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "exec/replay-core.h"
+ #include "system/tcg.h"
+ #include "exec/helper-proto-common.h"
+diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
+index 402d3e3f4e..d6471174a3 100644
+--- a/accel/tcg/icount-common.c
++++ b/accel/tcg/icount-common.c
+@@ -35,7 +35,7 @@
+ #include "system/replay.h"
+ #include "system/runstate.h"
+ #include "hw/core/cpu.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "system/cpu-timers-internal.h"
+ 
+ /*
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index eeb38a4d9c..1c182b6bfb 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -14,6 +14,7 @@
+ #include "qapi/qapi-commands-machine.h"
+ #include "monitor/monitor.h"
+ #include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "system/tcg.h"
+ #include "tcg/tcg.h"
+ #include "internal-common.h"
+diff --git a/accel/tcg/tcg-accel-ops-icount.c b/accel/tcg/tcg-accel-ops-icount.c
+index 27cf1044c7..d0f7b410fa 100644
+--- a/accel/tcg/tcg-accel-ops-icount.c
++++ b/accel/tcg/tcg-accel-ops-icount.c
+@@ -25,7 +25,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "system/replay.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/guest-random.h"
+ #include "hw/core/cpu.h"
+diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
+index bdcc385ae9..dfcee30947 100644
+--- a/accel/tcg/tcg-accel-ops-mttcg.c
++++ b/accel/tcg/tcg-accel-ops-mttcg.c
+@@ -26,7 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/notify.h"
+ #include "qemu/guest-random.h"
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index f62cf24e1d..6eec5c9eee 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
 @@ -27,7 +27,7 @@
- #include "exec/cputlb.h"
- #include "exec/tb-flush.h"
- #include "exec/memory-internal.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "exec/mmu-access-type.h"
- #include "exec/tlb-common.h"
- #include "exec/vaddr.h"
+ #include "qemu/lockable.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/notify.h"
+ #include "qemu/guest-random.h"
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 5c88056157..ccdb781eef 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -29,7 +29,7 @@
+ #include "system/accel-ops.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/guest-random.h"
+ #include "qemu/timer.h"
+diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+index c1a30b0121..7a5b810b88 100644
+--- a/accel/tcg/tcg-all.c
++++ b/accel/tcg/tcg-all.c
+@@ -26,7 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "system/tcg.h"
+ #include "exec/replay-core.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "tcg/startup.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
 diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 16e5043597..167535bcb1 100644
+index 167535bcb1..bb161ae61a 100644
 --- a/accel/tcg/translate-all.c
 +++ b/accel/tcg/translate-all.c
-@@ -40,7 +40,7 @@
- #endif
- #endif
- #else
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #endif
- 
- #include "exec/cputlb.h"
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index a415e51d07..7ae7122093 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -77,7 +77,7 @@
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/vhost-scsi-common.h"
- 
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "system/confidential-guest-support.h"
- #include "hw/usb.h"
- #include "qemu/config-file.h"
-diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-index 815c94ed2f..f2f5722d8a 100644
---- a/hw/ppc/spapr_caps.c
-+++ b/hw/ppc/spapr_caps.c
-@@ -27,7 +27,7 @@
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "system/hw_accel.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "target/ppc/cpu.h"
- #include "target/ppc/mmu-hash64.h"
- #include "cpu-models.h"
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index e0a9d50edc..384269b831 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -34,7 +34,7 @@
- #include "hw/pci/pci_host.h"
- #include "hw/ppc/spapr.h"
- #include "hw/pci-host/spapr.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include <libfdt.h>
- #include "trace.h"
- #include "qemu/error-report.h"
-diff --git a/hw/remote/memory.c b/hw/remote/memory.c
-index 6d60da91e0..00193a552f 100644
---- a/hw/remote/memory.c
-+++ b/hw/remote/memory.c
-@@ -11,7 +11,7 @@
- #include "qemu/osdep.h"
- 
- #include "hw/remote/memory.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "qapi/error.h"
- 
- static void remote_sysmem_reset(void)
-diff --git a/hw/remote/proxy-memory-listener.c b/hw/remote/proxy-memory-listener.c
-index ce7f5b9bfb..30ac74961d 100644
---- a/hw/remote/proxy-memory-listener.c
-+++ b/hw/remote/proxy-memory-listener.c
-@@ -12,7 +12,7 @@
- #include "qemu/range.h"
- #include "system/memory.h"
- #include "exec/cpu-common.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/remote/mpqemu-link.h"
-diff --git a/hw/s390x/s390-stattrib-kvm.c b/hw/s390x/s390-stattrib-kvm.c
-index 2a8e31718b..f5695b0e53 100644
---- a/hw/s390x/s390-stattrib-kvm.c
-+++ b/hw/s390x/s390-stattrib-kvm.c
-@@ -16,7 +16,7 @@
- #include "qemu/error-report.h"
- #include "system/kvm.h"
- #include "system/memory_mapping.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "kvm/kvm_s390x.h"
- #include "qapi/error.h"
- 
-diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
-index be07c28c6e..d95b58a8a8 100644
---- a/hw/s390x/s390-stattrib.c
-+++ b/hw/s390x/s390-stattrib.c
-@@ -16,7 +16,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/s390x/storage-attributes.h"
- #include "qemu/error-report.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "qapi/error.h"
- #include "qobject/qdict.h"
- #include "cpu.h"
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 75b32182eb..81e570905e 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -13,7 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "system/confidential-guest-support.h"
- #include "hw/boards.h"
- #include "hw/s390x/sclp.h"
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 98832af88d..bae0633c3d 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -29,8 +29,7 @@
- #include "hw/vfio/pci.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
--#include "exec/ram_addr.h"
--#include "exec/target_page.h"
-+#include "system/ram_addr.h"
- #include "hw/hw.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 2e993c7e73..812d5edbcf 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -25,7 +25,7 @@
- #include "hw/vfio/vfio-common.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "qemu/error-report.h"
- #include "qemu/range.h"
- #include "system/reset.h"
-diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index c9a7dd8d68..66a2d2bb0d 100644
---- a/hw/vfio/spapr.c
-+++ b/hw/vfio/spapr.c
-@@ -17,7 +17,7 @@
- 
- #include "hw/vfio/vfio-common.h"
- #include "hw/hw.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "trace.h"
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 5f57eccbb6..c7968ee0c6 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -24,7 +24,7 @@
- #include "hw/virtio/virtio-mem.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "migration/misc.h"
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
-diff --git a/migration/ram.c b/migration/ram.c
-index 424df6d9f1..6295f675df 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -48,7 +48,7 @@
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qmp/qerror.h"
- #include "trace.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "exec/target_page.h"
- #include "qemu/rcu_queue.h"
- #include "migration/colo.h"
-diff --git a/system/memory.c b/system/memory.c
-index a4185ea353..6a5d853071 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -26,7 +26,7 @@
- #include "trace.h"
- 
- #include "exec/memory-internal.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
+@@ -55,7 +55,7 @@
+ #include "qemu/cacheinfo.h"
+ #include "qemu/timer.h"
+ #include "exec/log.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
  #include "system/tcg.h"
-diff --git a/system/physmem.c b/system/physmem.c
-index 2850e14780..765d195cb0 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -67,7 +67,7 @@
+ #include "qapi/error.h"
+ #include "accel/tcg/cpu-ops.h"
+diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
+index 7f63d17ca1..0aeb10fb53 100644
+--- a/hw/core/ptimer.c
++++ b/hw/core/ptimer.c
+@@ -11,7 +11,7 @@
+ #include "migration/vmstate.h"
+ #include "qemu/host-utils.h"
+ #include "exec/replay-core.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "system/qtest.h"
+ #include "block/aio.h"
+ #include "hw/clock.h"
+diff --git a/replay/replay.c b/replay/replay.c
+index 3adc387b3d..a3e24c967a 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -11,7 +11,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
  #include "system/replay.h"
- 
- #include "exec/memory-internal.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- 
- #include "qemu/pmem.h"
- 
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index 5d6d8a17ae..80164a8050 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -27,7 +27,7 @@
- #include "user/cpu_loop.h"
- #include "user/page-protection.h"
- #else
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #endif
- #include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 992356cb75..8b12b8e7d2 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -41,7 +41,7 @@
- #include "trace.h"
- #include "gdbstub/enums.h"
- #include "exec/memattrs.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
- #include "system/hostmem.h"
- #include "qemu/cutils.h"
- #include "qemu/main-loop.h"
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 4d56e653dd..b9f1422197 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -41,7 +41,7 @@
  #include "system/runstate.h"
- #include "system/device_tree.h"
- #include "gdbstub/enums.h"
--#include "exec/ram_addr.h"
-+#include "system/ram_addr.h"
+ #include "replay-internal.h"
+diff --git a/stubs/icount.c b/stubs/icount.c
+index edbf60cbfa..ceb73b4fc2 100644
+--- a/stubs/icount.c
++++ b/stubs/icount.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ 
+ /* icount - Instruction Counter API */
+ 
+diff --git a/system/cpu-timers.c b/system/cpu-timers.c
+index 23dd82b465..cb35fa62b8 100644
+--- a/system/cpu-timers.c
++++ b/system/cpu-timers.c
+@@ -36,6 +36,7 @@
+ #include "hw/core/cpu.h"
+ #include "system/cpu-timers.h"
+ #include "system/cpu-timers-internal.h"
++#include "exec/icount.h"
+ 
+ /* clock and ticks */
+ 
+diff --git a/system/dma-helpers.c b/system/dma-helpers.c
+index 6bad75876f..0d592f6468 100644
+--- a/system/dma-helpers.c
++++ b/system/dma-helpers.c
+@@ -13,7 +13,7 @@
  #include "trace.h"
- #include "hw/s390x/s390-pci-inst.h"
- #include "hw/s390x/s390-pci-bus.h"
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9a702ff636..3e1af7e1b2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3107,7 +3107,7 @@ S: Supported
- F: include/system/ioport.h
- F: include/exec/memop.h
- F: include/system/memory.h
--F: include/exec/ram_addr.h
-+F: include/system/ram_addr.h
- F: include/exec/ramblock.h
- F: include/system/memory_mapping.h
- F: system/dma-helpers.c
+ #include "qemu/thread.h"
+ #include "qemu/main-loop.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "qemu/range.h"
+ 
+ /* #define DEBUG_IOMMU */
+diff --git a/system/vl.c b/system/vl.c
+index ec93988a03..c17945c493 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -89,6 +89,7 @@
+ #include "audio/audio.h"
+ #include "system/cpus.h"
+ #include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "migration/colo.h"
+ #include "migration/postcopy-ram.h"
+ #include "system/kvm.h"
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0454b06a6c..becbbbd0d8 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/translation-block.h"
+ #include "hw/irq.h"
+ #include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "system/kvm.h"
+ #include "system/tcg.h"
+ #include "qapi/error.h"
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 6c4391d96b..0dd8645994 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -31,7 +31,7 @@
+ #include "accel/tcg/cpu-ops.h"
+ #include "trace.h"
+ #include "semihosting/common-semi.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "cpu_bits.h"
+ #include "debug.h"
+ #include "pmp.h"
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 49566d3c08..be4aebb9b2 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -27,7 +27,7 @@
+ #include "exec/exec-all.h"
+ #include "exec/cputlb.h"
+ #include "exec/tb-flush.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "qemu/guest-random.h"
+ #include "qapi/error.h"
+ #include <stdbool.h>
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index fea989afe9..7fc9e121e1 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -32,6 +32,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/watchpoint.h"
+ #include "system/cpu-timers.h"
++#include "exec/icount.h"
+ 
+ /*
+  * The following M-mode trigger CSRs are implemented:
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 889e2b6570..a1f70cc955 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -21,7 +21,7 @@
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
+ #include "migration/cpu.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "debug.h"
+ 
+ static bool pmp_needed(void *opaque)
+diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+index 0408f96e6a..a68809eef3 100644
+--- a/target/riscv/pmu.c
++++ b/target/riscv/pmu.c
+@@ -22,7 +22,7 @@
+ #include "qemu/timer.h"
+ #include "cpu.h"
+ #include "pmu.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "system/device_tree.h"
+ 
+ #define RISCV_TIMEBASE_FREQ 1000000000 /* 1Ghz */
+diff --git a/util/async.c b/util/async.c
+index 863416dee9..2719c629ae 100644
+--- a/util/async.c
++++ b/util/async.c
+@@ -35,7 +35,7 @@
+ #include "block/raw-aio.h"
+ #include "qemu/coroutine_int.h"
+ #include "qemu/coroutine-tls.h"
+-#include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "trace.h"
+ 
+ /***********************************************************/
+diff --git a/util/main-loop.c b/util/main-loop.c
+index acad8c2e6c..42bd75c193 100644
+--- a/util/main-loop.c
++++ b/util/main-loop.c
+@@ -27,6 +27,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/timer.h"
+ #include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "system/replay.h"
+ #include "qemu/main-loop.h"
+ #include "block/aio.h"
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 788466fe22..1fb48be281 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -27,6 +27,7 @@
+ #include "qemu/timer.h"
+ #include "qemu/lockable.h"
+ #include "system/cpu-timers.h"
++#include "exec/icount.h"
+ #include "system/replay.h"
+ #include "system/cpus.h"
+ 
 -- 
 2.43.0
 
