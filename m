@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB075C282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 18:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DADC282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 18:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tubvq-0002Ze-4u; Tue, 18 Mar 2025 14:44:54 -0400
+	id 1tuc1f-0004So-4f; Tue, 18 Mar 2025 14:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tubvm-0002YQ-C4
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:44:50 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuc1S-0004Qg-0o
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:50:49 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tubvi-0000VB-O2
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:44:49 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cec5cd73bso25020305e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 11:44:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuc1Q-0002ls-24
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 14:50:41 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so25325455e9.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 11:50:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742323485; x=1742928285; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742323838; x=1742928638; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/74e6taWSnZdXHpVWs74ehYusOf6mHllaULzT1w5Bx8=;
- b=kPc+c+8hGMEdWmSHZpt6gzqFZp0kLOkeLcwoHLSZHKw8QGHXYGxweomway/nH03hER
- qBBWC59CsNngLftQ15NppL+0fpyirvdR9Bg0a1vmmWntcbrXsX/icSlsPaz045GpwUKl
- E3MAK2084dopl4w4+mNThH4tl/q2U/d/XyvjdOgZJi+odQw6FFFkd+GpCRBhyp8oWKMX
- TSSBj6ORjcDjP8SdEnXh3bgD7hH7+nwQR3Zp52D7XFj+CSdh8boUPwohnZ/UTnniHh9K
- UsEyFtdyMVT5KDkMeTjJl/IkPtAosirjFNaMUVturOiASocs1S+y1S3c0VULgVE80cUH
- ix9g==
+ bh=Pb8edXtU/tnxak4C/Cgcr8vuawSDN9htQBMBeu74gNA=;
+ b=KKZz1562T0Hn9USNiEdT6Cq4h1tOaLVUqhqITYP3ke/K03+TmHXyz8HQnvTQQugt/+
+ lH72BaHukX3iWVwuIuaJ2CD7RmK+zdnkkHt8axhcI/nOfcz+DynrA8l6yLEIPHWII3eA
+ 7tRAdDMIRFRac6rVxvHhwhlxhDLn2FKouLXM24GQR9roKr07ePnfniFzxJYHIAutV+uE
+ ItjO431DBODXMI2mgJQM0Mga11mnKAWhS+W3rpJ5A52gPWDfnT+LPQ4ya0rIdySURIj+
+ 9k6vKfcy56f/jeQ4DCi5PFuPXu6ww1dSybtPuoVCcSMQrnHwkfK36NNdpbTsb/tgwFr4
+ w0ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742323485; x=1742928285;
+ d=1e100.net; s=20230601; t=1742323838; x=1742928638;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/74e6taWSnZdXHpVWs74ehYusOf6mHllaULzT1w5Bx8=;
- b=nf6xlQlm/rC/XF1bSakOJV/89tXrsnI8c1UvpAJkDIvS0wUyZG9XmHlG3NuX5Xyl4Q
- TvGbJEjl0K6CsRoBJNOgVtkHjw9y2/fSSsbofU9mNFiMrNILEmqJGlq+P3wnqWUdDQD2
- OJLW4/9luxHoSBTUtjdOjY/zpvT+0hGWPoOjb4Lj7sLbLGHI7XtfmTrXNgwbtGQ+ikEK
- zGz5EZwStYgS8S3P1fkwf5sYINMiEUH4Sdv8JtkiOX3z9xboreAjJLwln4HZ4OuwZyMP
- kQbqzF6eNljbM3/MqoO35jEMlK3XqDLwjFDW988kXwsTWQO4sJ3AVnNRuefPRbnGOKT9
- lmiw==
+ bh=Pb8edXtU/tnxak4C/Cgcr8vuawSDN9htQBMBeu74gNA=;
+ b=QsvL0oCsxTnaPWYl6ufmaW+uzKj23Oklt9H2Khpr0eYk1wlkY07DO0j/aN6f3LeXT1
+ epD9awrrM4wd58699rlknn2fytyE2cBNUZ41/kHtFylPgEBbI49wvgz/uk1KVY6eS4TE
+ JRHzjM0wLlSFiK7YwRmzgqGuR9s2VCvMAoZMQKvHnqariYrSo4gAubMIAN6YPfYIZw5J
+ aW5IBYhQs0pZNfMX1qUNKPqagyIoX5Y+8SLr7DtkHAptnCMrx2nHHQpSpU9Gw7QOdPeR
+ GZUYTMke9hY96XVyj1dFu8nx1ozRvU3ZbS703volqfIbJqx4qLpEFfqjwxnhNTmFCgUN
+ CckQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzRVaxLEZdnWs1OTTvV+ONip57SVgLBT7/E1b4oNEM31+vbYxR++9OfgrlBX52M7rzKwNS5OHBGOpc@nongnu.org
-X-Gm-Message-State: AOJu0Yy5WzwcVn5e8ujpz0EiKD0ogr6D5jmJRrF2LB9qkX2lQXmavVcQ
- 4w5PalLU9/sh79essu+3juwDyVRtnrGFbF7mHb9hyA4diauI7DfsdIPtBcHHwGo=
-X-Gm-Gg: ASbGncuNQSMblzWc9giERqTmLQ6XOBPHmy3NxFi1BWK6wgcfpCT0FoQzpqbVzur29j5
- I7SZ6wf7Ggv8o+Umq64nOXCXIhpRJUJy0DfNVleoY/Z7F+YnJr/rcdIFr1MT7DRyOdkcupFqQNf
- 2t+GCDKff4pW5JGA/yhQdYaHipcxIveizmVZZ+1rhRZUxXFe4rC/rYVKUaXdXzd0S8RZkTkn/83
- 93uclghbz/hKstR5yQOZx8yrKdKcIkq5t1QSu7Lnv0wJFWUxb9JSXeztsgGbNSdsY+WmNk8kjXr
- A9RN6y6/9ReZW1brH367VhuUhTP8tzZRF+riMkW9YNcAsCJC9K+tTpj3LHeuuMqlD1Dc8jrX858
- lF/1IdLbK4rBZ1j+oOvGNED8=
-X-Google-Smtp-Source: AGHT+IFkVGOmrvcSxc0T/uu8x/A0usu2Brk5uUuQYT3z4kvfwm+YufQaBC7XAgOvjeShp7rhcc8jAQ==
-X-Received: by 2002:a5d:598d:0:b0:391:1139:2653 with SMTP id
- ffacd0b85a97d-3996b4a1e1dmr2951613f8f.52.1742323484762; 
- Tue, 18 Mar 2025 11:44:44 -0700 (PDT)
+ AJvYcCXQrPoo1eU41doVWXtc/0nnPNN6kVok/1kY5Sb5uMLJab8CiFblw+Fmgd+hRxXz5kR/8Smaf4m5wThh@nongnu.org
+X-Gm-Message-State: AOJu0Yx2sHN5xh66xp+j9D28LGs1L5Nf5T9R6OGjkeQ18YOsF/D0Eu1t
+ 17UY1IAm9QuWOk0Wl3Z03Z8lhFVe/l0GVZJksruZuRqIjlT5+eobiiP5fFhLaqk=
+X-Gm-Gg: ASbGncvX1Un+ZRn4dyznCugGGC/qb+ZRCiIup5qLb8FGMPgpPIVA22Hg0IjcHc0PqXz
+ Vw5QybXB6kmWfBb2Szg94f8uk4LK4yuLCbyHyLN5iG6/kEQyIw6+moGFJsKBhDZCN7wmNUV5njB
+ d1OQ04yANxZRzTtziXF0WnPt0HTnYQNTR3h9UBwO4T9b14rDk/ljYKXV7Thwx1BZco+ZCnqkXoV
+ R7aFVbQfEY5+H4aLvMwMHS5uiV4HSjyJU7beOaBdhF5RWN4Xk1jHhCxmWFKMlKx+ums/HGG0BmA
+ BWtF+OAJO1zf4wF4vaQBfHEfLN053pKbmtIzxTRx30fC+tjqU6VCwnxR1Q+oi+mUJ5Lu4OYHqk1
+ FrI2TTAG7zfE1
+X-Google-Smtp-Source: AGHT+IHc6bB1TMekdEnRg8WWvTC5IvU6RseA1FLMd6Is9WRWqk3FY+zcYaKlvS8rTcAwam40KfJI/A==
+X-Received: by 2002:a05:600c:138c:b0:43c:eec7:eabb with SMTP id
+ 5b1f17b1804b1-43d3b97f061mr32907705e9.8.1742323838301; 
+ Tue, 18 Mar 2025 11:50:38 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb318aa1sm19381585f8f.64.2025.03.18.11.44.43
+ 5b1f17b1804b1-43d1fe524ccsm142287535e9.0.2025.03.18.11.50.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 11:44:44 -0700 (PDT)
-Message-ID: <45ded580-5593-469e-bffd-01fab1962b5a@linaro.org>
-Date: Tue, 18 Mar 2025 19:44:43 +0100
+ Tue, 18 Mar 2025 11:50:37 -0700 (PDT)
+Message-ID: <a88f54cb-73be-4947-b3be-aa12b120f07e@linaro.org>
+Date: Tue, 18 Mar 2025 19:50:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/13] target/arm/cpu: remove inline stubs for aarch32
- emulation
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-arm@nongnu.org, alex.bennee@linaro.org, kvm@vger.kernel.org,
+Subject: Re: [PATCH 09/13] target/arm/cpu: define ARM_MAX_VQ once for aarch32
+ and aarch64
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-arm@nongnu.org, alex.bennee@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
- <20250318045125.759259-12-pierrick.bouvier@linaro.org>
- <8a24a29c-9d2a-47c9-a183-c92242c82bd9@linaro.org>
- <CAFEAcA--jw3GmS70NTwviAEhdWeJ1UXE+ucNSkR60BXk6G8B6g@mail.gmail.com>
+ <20250318045125.759259-10-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA--jw3GmS70NTwviAEhdWeJ1UXE+ucNSkR60BXk6G8B6g@mail.gmail.com>
+In-Reply-To: <20250318045125.759259-10-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,78 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/3/25 18:50, Peter Maydell wrote:
-> On Tue, 18 Mar 2025 at 17:42, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 18/3/25 05:51, Pierrick Bouvier wrote:
->>> Directly condition associated calls in target/arm/helper.c for now.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>    target/arm/cpu.h    | 8 --------
->>>    target/arm/helper.c | 6 ++++++
->>>    2 files changed, 6 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->>> index 51b6428cfec..9205cbdec43 100644
->>> --- a/target/arm/cpu.h
->>> +++ b/target/arm/cpu.h
->>> @@ -1222,7 +1222,6 @@ int arm_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
->>>     */
->>>    void arm_emulate_firmware_reset(CPUState *cpustate, int target_el);
->>>
->>> -#ifdef TARGET_AARCH64
->>>    int aarch64_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
->>>    int aarch64_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
->>>    void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq);
->>> @@ -1254,13 +1253,6 @@ static inline uint64_t *sve_bswap64(uint64_t *dst, uint64_t *src, int nr)
->>>    #endif
->>>    }
->>>
->>> -#else
->>> -static inline void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq) { }
->>> -static inline void aarch64_sve_change_el(CPUARMState *env, int o,
->>> -                                         int n, bool a)
->>> -{ }
->>> -#endif
->>> -
->>>    void aarch64_sync_32_to_64(CPUARMState *env);
->>>    void aarch64_sync_64_to_32(CPUARMState *env);
->>>
->>> diff --git a/target/arm/helper.c b/target/arm/helper.c
->>> index b46b2bffcf3..774e1ee0245 100644
->>> --- a/target/arm/helper.c
->>> +++ b/target/arm/helper.c
->>> @@ -6562,7 +6562,9 @@ static void zcr_write(CPUARMState *env, const ARMCPRegInfo *ri,
->>>         */
->>>        new_len = sve_vqm1_for_el(env, cur_el);
->>>        if (new_len < old_len) {
->>> +#ifdef TARGET_AARCH64
->>
->> What about using runtime check instead?
->>
->>    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64) && new_len < old_len) {
->>
+On 18/3/25 05:51, Pierrick Bouvier wrote:
+> This will affect zregs field for aarch32.
+> This field is used for MVE and SVE implementations. MVE implementation
+> is clipping index value to 0 or 1 for zregs[*].d[],
+> so we should not touch the rest of data in this case anyway.
+
+We should describe why it is safe for migration.
+
+I.e. vmstate_za depends on za_needed() -> SME, not included in 32-bit
+cpus, etc.
+
+Should we update target/arm/machine.c in this same patch, or a
+preliminary one?
+
 > 
-> That would be a dead check: it is not possible to get here
-> unless ARM_FEATURE_AARCH64 is set.
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   target/arm/cpu.h | 6 +-----
+>   1 file changed, 1 insertion(+), 5 deletions(-)
+> 
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 27a0d4550f2..00f78d64bd8 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -169,11 +169,7 @@ typedef struct ARMGenericTimer {
+>    * Align the data for use with TCG host vector operations.
+>    */
+>   
+> -#ifdef TARGET_AARCH64
+> -# define ARM_MAX_VQ    16
+> -#else
+> -# define ARM_MAX_VQ    1
+> -#endif
+> +#define ARM_MAX_VQ    16
+>   
+>   typedef struct ARMVectorReg {
+>       uint64_t d[2 * ARM_MAX_VQ] QEMU_ALIGNED(16);
 
-So checks in callees such:
-
--- >8 --
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index bb445e30cd1..8377eb0e710 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -11547,5 +11547,7 @@ void aarch64_sve_narrow_vq(CPUARMState *env, 
-unsigned vq)
-      uint64_t pmask;
-+    ARMCPU *cpu = env_archcpu(env);
-
-+    assert(cpu_isar_feature(aa64_sve, cpu));
-      assert(vq >= 1 && vq <= ARM_MAX_VQ);
--    assert(vq <= env_archcpu(env)->sve_max_vq);
-+    assert(vq <= cpu->sve_max_vq);
-
----
 
