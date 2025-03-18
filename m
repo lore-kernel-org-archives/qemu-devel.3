@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8563AC282EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 08:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CE3C282EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Mar 2025 08:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuS59-0002uD-Sg; Tue, 18 Mar 2025 04:13:51 -0400
+	id 1tuS5G-00033i-IK; Tue, 18 Mar 2025 04:13:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuS4H-0002j2-TY; Tue, 18 Mar 2025 04:13:00 -0400
+ id 1tuS4p-0002q7-Rh; Tue, 18 Mar 2025 04:13:39 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tuS4D-0001Jr-Ta; Tue, 18 Mar 2025 04:12:56 -0400
+ id 1tuS4j-0001JW-3R; Tue, 18 Mar 2025 04:13:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742285574; x=1773821574;
+ t=1742285605; x=1773821605;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=sxgX16JKNTG+AY3C+How4ZUdjbZC9zSiCisbiIfnClo=;
- b=Q0SWh4Syp1luzDExjiykx9DeIh3bB0yp5vR6/uf+2SsEE32EMjjYCH3o
- iWPcTjvlbXWdSDYfyUw/vMdyphtgOF6agdk8zf/cloK7Jb1CVGqppusoF
- 00HTTNp7FOOC5rw0h3vm0zhIys3/DOKLj83GPc4mrX7BNJsCe6MuBy69s
- umly9nkKqxBwm4c6vHiDaEq2HdwgSVgl4Y0N7KEn1De0LkCMTM/ycRT7p
- mGlHpxbJRPAEsOyt29f9qffplwyJK/NIoLNkYZmNWPKflwE53kiGiF2g8
- QjhTIGYbeUTcrrypPq2+3dr6oHR/qZSGpBZrg2ak1fHrSz3Bivq+DdWaA w==;
-X-CSE-ConnectionGUID: rAdmMQDhQu6M15sTif90aA==
-X-CSE-MsgGUID: fA+n3lgTTCKu/lRAI4KTqw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="53621568"
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="53621568"
+ bh=WRV9q3I4BxY6pISOntlXgPbEbz688/th6OA3C2ous9s=;
+ b=h7dNLyanEvlm/E0QPYoBonRV37obMtMcExCuigEfeBFjEYHb2EK2D4wQ
+ 29e4jFGUwmph98ZsZQoxP1sA/MkxZykBxn1wobtG8ZYA7DqkMd3emewyR
+ 7I+alrXrHlzm6hgqj2m49g1Ybsnabsmms2ykMyYfFfZ0p7S839aoY9E8e
+ onIuRUEd2Wl2QNmXruNWD0DVGrzLHZ1C/bsMQSvJJYCERrsyYBaae69gt
+ sFFUiR4B54NojXB16CWi351cJ8lqQAn05gA7jBEI0KtpFPt2rXRCr7W+c
+ lu3b10AEbr8Kuue3cXlRuIHtUkx+jroUouXfPrLiIIFxq2nrmbG0BB4QC w==;
+X-CSE-ConnectionGUID: oabX3jhDTgmmS4Y3ctM/kw==
+X-CSE-MsgGUID: N5XxMpBsSu+Hvm988elt1Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="53621610"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="53621610"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2025 01:12:51 -0700
-X-CSE-ConnectionGUID: Ch+rjFDGReKtAhtkPxWGSQ==
-X-CSE-MsgGUID: 3GawUv1TSvOogrrwhuXerw==
+ 18 Mar 2025 01:13:03 -0700
+X-CSE-ConnectionGUID: BMPsBdZTTb6ueLpgwFFFxA==
+X-CSE-MsgGUID: P+V6M/v8TvGs9izez2tagw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="127363217"
+X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; d="scan'208";a="127363294"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 18 Mar 2025 01:12:50 -0700
+ by orviesa005.jf.intel.com with ESMTP; 18 Mar 2025 01:13:02 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 05/14] rust/vmstate: Fix type check for varray in
- vmstate_struct
-Date: Tue, 18 Mar 2025 16:32:39 +0800
-Message-Id: <20250318083248.1402990-6-zhao1.liu@intel.com>
+Subject: [PATCH v2 13/14] rust/vmstate: Add unit test for pointer case
+Date: Tue, 18 Mar 2025 16:32:47 +0800
+Message-Id: <20250318083248.1402990-14-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250318083248.1402990-1-zhao1.liu@intel.com>
 References: <20250318083248.1402990-1-zhao1.liu@intel.com>
@@ -80,68 +79,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When pass a varray to vmstate_struct, the `type` parameter should be the
-type of the element in the varray, for example:
+Add a unit test to cover some patterns accepted by vmstate_of macro,
+which correspond to the following C version macros:
+ * VMSTATE_POINTER
+ * VMSTATE_ARRAY_OF_POINTER
 
-vmstate_struct!(HPETState, timers, [0 .. num_timers], VMSTATE_HPET_TIMER,
-		BqlRefCell<HPETTimer>).with_version_id(0)
-
-But this breaks current type check, because it checks the type of
-`field`, which is an array type (for the above example, type of timers
-is [BqlRefCell<HPETTimer>; 32], not BqlRefCell<HPETTimer>).
-
-But the current assert_field_type() can no longer be extended to include
-new arguments, so a variant of it (a second macro containing the
-`num = $num:ident` parameter) had to be added to handle array cases.
-
-In this new macro, it not only checks the type of element, but also
-checks whether the `num` (number of elements in varray) is out of range.
+Note: Currently, vmstate_struct can't handle the pointer to structure
+case. Leave this case as a FIXME and use vmstate_unused as a place
+holder.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/qemu-api/src/assertions.rs | 15 +++++++++++++++
- rust/qemu-api/src/vmstate.rs    |  2 +-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ rust/qemu-api/tests/vmstate_tests.rs | 115 ++++++++++++++++++++++++++-
+ 1 file changed, 111 insertions(+), 4 deletions(-)
 
-diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
-index 104dec39774e..176060e32acd 100644
---- a/rust/qemu-api/src/assertions.rs
-+++ b/rust/qemu-api/src/assertions.rs
-@@ -91,6 +91,21 @@ fn types_must_be_equal<T, U>(_: T)
-             }
-         };
-     };
-+
-+    ($t:ty, $i:tt, $ti:ty, num = $num:ident) => {
-+        const _: () = {
-+            #[allow(unused)]
-+            fn assert_field_type(v: $t) {
-+                fn types_must_be_equal<T, U>(_: T)
-+                where
-+                    T: $crate::assertions::EqType<Itself = U>,
-+                {
-+                }
-+                let index: usize = v.$num.try_into().unwrap();
-+                types_must_be_equal::<_, &$ti>(&v.$i[index]);
-+            }
-+        };
-+    };
- }
+diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
+index fbdc3ee955e4..9fcaad6a01ac 100644
+--- a/rust/qemu-api/tests/vmstate_tests.rs
++++ b/rust/qemu-api/tests/vmstate_tests.rs
+@@ -2,15 +2,16 @@
+ // Author(s): Zhao Liu <zhai1.liu@intel.com>
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
- /// Assert that an expression matches a pattern.  This can also be
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index e2a1f7a97aae..9d9cdda993ce 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -447,7 +447,7 @@ macro_rules! vmstate_struct {
-                 .as_ptr() as *const ::std::os::raw::c_char,
-             $(num_offset: $crate::offset_of!($struct_name, $num),)?
-             offset: {
--                $crate::assert_field_type!($struct_name, $field_name, $type);
-+                $crate::assert_field_type!($struct_name, $field_name, $type $(, num = $num)?);
-                 $crate::offset_of!($struct_name, $field_name)
-             },
-             size: ::core::mem::size_of::<$type>(),
+-use std::{ffi::CStr, mem::size_of, slice};
++use std::{ffi::CStr, mem::size_of, ptr::NonNull, slice};
+ 
+ use qemu_api::{
+     bindings::{
+-        vmstate_info_bool, vmstate_info_int64, vmstate_info_int8, vmstate_info_uint64,
+-        vmstate_info_uint8, vmstate_info_unused_buffer, VMStateFlags,
++        vmstate_info_bool, vmstate_info_int32, vmstate_info_int64, vmstate_info_int8,
++        vmstate_info_uint64, vmstate_info_uint8, vmstate_info_unused_buffer, VMStateFlags,
+     },
+     c_str,
+-    cell::BqlCell,
++    cell::{BqlCell, Opaque},
++    impl_vmstate_forward,
+     vmstate::{VMStateDescription, VMStateField},
+     vmstate_fields, vmstate_of, vmstate_struct, vmstate_unused,
+     zeroable::Zeroable,
+@@ -251,3 +252,109 @@ fn test_vmstate_macro_foob() {
+     // The last VMStateField in VMSTATE_FOOB.
+     assert_eq!(foo_fields[5].flags, VMStateFlags::VMS_END);
+ }
++
++// =========================== Test VMSTATE_FOOC ===========================
++// Test the use cases of the vmstate macro, corresponding to the following C
++// macro variants:
++//   * VMSTATE_FOOC:
++//     - VMSTATE_POINTER
++//     - VMSTATE_ARRAY_OF_POINTER
++struct FooCWrapper([Opaque<*mut u8>; FOO_ARRAY_MAX]); // Though Opaque<> array is almost impossible.
++
++impl_vmstate_forward!(FooCWrapper);
++
++#[repr(C)]
++#[derive(qemu_api_macros::offsets)]
++struct FooC {
++    ptr: *const i32,
++    ptr_a: NonNull<FooA>,
++    arr_ptr: [Box<u8>; FOO_ARRAY_MAX],
++    arr_ptr_wrap: FooCWrapper,
++}
++
++static VMSTATE_FOOC: VMStateDescription = VMStateDescription {
++    name: c_str!("foo_c").as_ptr(),
++    version_id: 3,
++    minimum_version_id: 1,
++    fields: vmstate_fields! {
++        vmstate_of!(FooC, ptr).with_version_id(2),
++        // FIXME: Currently vmstate_struct doesn't support the pointer to structure.
++        // VMSTATE_STRUCT_POINTER: vmstate_struct!(FooC, ptr_a, VMSTATE_FOOA, NonNull<FooA>)
++        vmstate_unused!(size_of::<NonNull<FooA>>()),
++        vmstate_of!(FooC, arr_ptr),
++        vmstate_of!(FooC, arr_ptr_wrap),
++    },
++    ..Zeroable::ZERO
++};
++
++#[test]
++fn test_vmstate_macro_fooc() {
++    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOC.fields, 6) };
++
++    // 1st VMStateField ("ptr") in VMSTATE_FOOC (corresponding to VMSTATE_POINTER)
++    assert_eq!(
++        unsafe { CStr::from_ptr(foo_fields[0].name) }.to_bytes_with_nul(),
++        b"ptr\0"
++    );
++    assert_eq!(foo_fields[0].offset, 0);
++    assert_eq!(foo_fields[0].num_offset, 0);
++    assert_eq!(foo_fields[0].info, unsafe { &vmstate_info_int32 });
++    assert_eq!(foo_fields[0].version_id, 2);
++    assert_eq!(foo_fields[0].size, 4);
++    assert_eq!(foo_fields[0].num, 0);
++    assert_eq!(
++        foo_fields[0].flags.0,
++        VMStateFlags::VMS_SINGLE.0 | VMStateFlags::VMS_POINTER.0
++    );
++    assert_eq!(foo_fields[0].vmsd.is_null(), true);
++    assert_eq!(foo_fields[0].field_exists.is_none(), true);
++
++    // 2nd VMStateField ("unused") in VMSTATE_FOOC
++    let mut offset = size_of::<*const i32>();
++    let size_ptr_a = size_of::<NonNull<FooA>>();
++
++    // 3rd VMStateField ("arr_ptr") in VMSTATE_FOOC (corresponding to
++    // VMSTATE_ARRAY_OF_POINTER)
++    offset = offset + size_ptr_a;
++    let size_arr_ptr = size_of::<Box<[FooB; FOO_ARRAY_MAX]>>();
++    assert_eq!(
++        unsafe { CStr::from_ptr(foo_fields[2].name) }.to_bytes_with_nul(),
++        b"arr_ptr\0"
++    );
++    assert_eq!(foo_fields[2].offset, offset);
++    assert_eq!(foo_fields[2].num_offset, 0);
++    assert_eq!(foo_fields[2].info, unsafe { &vmstate_info_uint8 });
++    assert_eq!(foo_fields[2].version_id, 0);
++    assert_eq!(foo_fields[2].size, size_arr_ptr);
++    assert_eq!(foo_fields[2].num, FOO_ARRAY_MAX as i32);
++    assert_eq!(
++        foo_fields[2].flags.0,
++        VMStateFlags::VMS_ARRAY.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0
++    );
++    assert_eq!(foo_fields[2].vmsd.is_null(), true);
++    assert_eq!(foo_fields[2].field_exists.is_none(), true);
++
++    // 4th VMStateField ("arr_ptr_wrap") in VMSTATE_FOOC (corresponding to
++    // VMSTATE_ARRAY_OF_POINTER)
++    offset = offset + size_of::<Box<u8>>() * FOO_ARRAY_MAX;
++    let size_arr_ptr_wrap = size_of::<Opaque<*mut u8>>();
++    assert_eq!(
++        unsafe { CStr::from_ptr(foo_fields[3].name) }.to_bytes_with_nul(),
++        b"arr_ptr_wrap\0"
++    );
++    assert_eq!(foo_fields[3].offset, offset);
++    assert_eq!(foo_fields[3].num_offset, 0);
++    assert_eq!(foo_fields[2].info, unsafe { &vmstate_info_uint8 });
++    assert_eq!(foo_fields[3].version_id, 0);
++    assert_eq!(foo_fields[3].size, size_arr_ptr_wrap);
++    assert_eq!(foo_fields[3].num, FOO_ARRAY_MAX as i32);
++    assert_eq!(
++        foo_fields[2].flags.0,
++        VMStateFlags::VMS_ARRAY.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0
++    );
++    assert_eq!(foo_fields[3].vmsd.is_null(), true);
++    assert_eq!(foo_fields[3].field_exists.is_none(), true);
++
++    // The last VMStateField in VMSTATE_FOOC.
++    assert_eq!(foo_fields[4].flags, VMStateFlags::VMS_END);
++}
 -- 
 2.34.1
 
