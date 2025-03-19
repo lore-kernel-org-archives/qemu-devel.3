@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8529C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F6FFC35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:25:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuy4N-0000Gv-2Y; Wed, 19 Mar 2025 14:23:11 -0400
+	id 1tuy4W-0000Wq-0L; Wed, 19 Mar 2025 14:23:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4F-0008V3-0r
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:03 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1tuy4J-0000CD-SI
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:08 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4B-0006MT-GM
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:02 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3997205e43eso1331747f8f.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:22:58 -0700 (PDT)
+ id 1tuy4C-0006NZ-O2
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:07 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cebe06e9eso35678475e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742408577; x=1743013377; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742408579; x=1743013379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NDUb7w8GKKpDywt4UPFksGcZt0JQXrqn/MAMj7YlIms=;
- b=yQ8JpidZIIZxZf8nSYJI3GvCoz3wJsyF6ww/heRXiMCHBlKOP2WA6uZq6sO5PIGmGG
- En7zsMOR+kMJoXQTHTqOlp9H1Jrmf2UuOg712L+2OuKzMdL4P2vBOZSmB469b2wIGigK
- etZpYH+R5ozM7OT4hyLlMvG+2Lkt4gnKir9YMXomyYy1UZQDgB6BTX6sAU/vco9ydGSu
- T+CyMjs/D7oJsEXjEd6RpCHLc7Ngno6eoB6oJV8jOEd3LXimlOfJGcRHd0PJqQOaJvv0
- JDf6CQd6N6hqdShdeOcPwvjpJH9XBzqLdIEVwNyDuLrMsk8jTadfBDqDYyNXMZS3ePTr
- UhcA==
+ bh=zvIsd2CCJGYlL6Tz2JnzQnPO9EyaGwyyQWzqTQSHt28=;
+ b=ieddKccu1SGZXg1Xd+vV2zoynMWTlMSTh/Q7/U8GbFATO9eRX4c3wy4amLk7twar6v
+ euY9hPnE0Y+M8VJiK+qQmsLJyMf2YuAKitQfAwQ5tS2j0e7Sq8keDa4koCHmmFDyYjab
+ bYY9gEvNhP7MlM3/EqlPGw1EpY852jeX4U0rMXsGhSpuJH8ArkKbqESOPnCxRipI8PWh
+ 4jQ0juurqvH1jcJrMFDaS6hyKLo4t7ZER0dq+LnXqXVhtEn+Fm5ncbsYHiW7toidalC5
+ aOza6tBnO1mAnXBzxYQMTeFiipH2fSYV2ZBhoB8vvGMCB1ck1SDMHsvKgerAbr8VhCFA
+ ZmiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742408577; x=1743013377;
+ d=1e100.net; s=20230601; t=1742408579; x=1743013379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NDUb7w8GKKpDywt4UPFksGcZt0JQXrqn/MAMj7YlIms=;
- b=tr2eEcBLkH+aUMTdrrkO4WdQ/MN1L7UYNWS8DZflPZ3H8xjD2HvHhAd5AobPPnrFIw
- IjxMQecl5pgVHtadiFcdJc3D9AucgUNBwUUWqJj8AUfCfL8Xd3K1S5heQGyc5et7hNob
- xurWhnoq+JI4dwZAj4urXzVxCI29h7GXvp3PGm+S8l7kxnwkEoh7LWDuvw+7ainUEWaI
- ulyVfShOvGLbl02Fx/QkU5zh63AkS7xz235s+mEPy9f2/BPXOEX7tLXT58CxIjD1rKYW
- hP4pyF4dUumq5vydocRCuRAp4J7o7x7d/nwBBQN5xoLbnlSJMuPN0oVKZHjV1TtorH2P
- KQsw==
-X-Gm-Message-State: AOJu0Yxo4PqDvjyMhUYBDfBSevOo6NFEZssy2FdM8K4d+EmZ9vPbbTAP
- T/FKikQziqhxZ9nQWNYaA42W235aA4LGftKR/q/MfU6QUivyZPK/01XyI+aDY6Y=
-X-Gm-Gg: ASbGncsAChtTa+7qeOsIlN3CdF6NnC/CTt+xkMmcMbfCmEAeMGp4TXagxRziYgXcuxM
- pKst44Z0LOccPeqY8lwsKFgSfvtb1cAAx2qKZ7LS9rVmDdYyJDU3KtwvjBg5IA4zfSyViz0Hyr9
- 2+c5a+oydIDrd8p6qlPiUhQ7q2XowyrCPl5E9rQ2MTtD1B4WoxC2fX+sO86szyKz+qTWBqHViTI
- yr9QXP6uSm0uRDLT8GUseL1h2TsBOMiYAQmmM8LJ2CT8ATlXxF9iPxnJJITofdXq9yXU8JTGN8b
- oGU2bUzXNCP0gvmNq2CKokgOtpQWMLvjWNWXU67IVkFE6zE=
-X-Google-Smtp-Source: AGHT+IF8ov831vSEErLM+GNa70tGIkWTOO4IfBYBqQH3lC1weVVD9w6iBzholBos1ABfwh1o3q9Cow==
-X-Received: by 2002:a05:6000:1787:b0:390:de33:b0ef with SMTP id
- ffacd0b85a97d-399739d3dbcmr2798743f8f.30.1742408576770; 
- Wed, 19 Mar 2025 11:22:56 -0700 (PDT)
+ bh=zvIsd2CCJGYlL6Tz2JnzQnPO9EyaGwyyQWzqTQSHt28=;
+ b=j1T1Yv8PzuqPg5vHf0u348ldehGmWjRyiyIC9wUX0mZy0nsuERRUfJOpjN0QTEXdSN
+ H+yrleULuAG9IUxrKNYXUBY9s0UYBf3DyroPKiDml4Nlk9tg88+MaYiCdUJjlWiN34M7
+ Drsc8QKnF5lm/KqkEoSEBkRLFoU872ZLx+QrwumiwZ3AecfxHhKrU67Dbbil9IjJCOF4
+ CycsLgZRlt2HujZnzAZ89Aode7FMuUPxwYhkqobVJpyt4oZIGzr5xzY/KsY8d0gXKVTm
+ RzsFLPJxB16GwwnWmzVgUMxyylIEYq9/JyJKdNg/UQABGnT5qmWs+6z0xJ7q3yWYBs2n
+ Ts5g==
+X-Gm-Message-State: AOJu0YzYeKEUd2PXA8VVNX+S6EZkE/eqWuI7z/ewiVMB6/HxosFjyQlR
+ XK+lyVaLoZwostfI94i/6IaEcFZFT+1/2Kon2Us5fpXhXjfU4Iu0vrTWUzP1jgA=
+X-Gm-Gg: ASbGnctDkpHcPqzGKXYis4VSib9yK+QOt1W8pq9aO3OFDPBdDxNmmZzjayiE/yPMEAO
+ X/Tl8FlLY1UlrpJmyekBZzobGifr2FcgEWsevNf63CPFvTQ6ERRay//ISGYlcOxwiGqg8kgKqyE
+ oA5nOuR+L0s+8oh2nBHhNPS91O6q/ggNS5WdFNFd5msSCcp4S4c+MvzmFOqzj3t1MM36Ha3GmPm
+ Pi5kzbrHC7ixBXb2uXIyVFHLrSOZqlcWJ0bLXDo/BVOzcdZOyNTNc2J6ZTJ9eXwh1/ULYeqX5Oz
+ TGB5b4dpxrfq1nTGnuAxbe8E3+Jrl6mQINpgpfmQDl/f3Mk=
+X-Google-Smtp-Source: AGHT+IG0gF8fcXSnhClP9lCb5acJhqy6teT+AjvdBrpNNKvem1uebyFWkMxGRrAHCfem2rNSwbfO0A==
+X-Received: by 2002:a05:600c:154a:b0:43d:649:4e50 with SMTP id
+ 5b1f17b1804b1-43d437a19c6mr34437695e9.13.1742408579030; 
+ Wed, 19 Mar 2025 11:22:59 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c83b6a27sm21877226f8f.31.2025.03.19.11.22.55
+ 5b1f17b1804b1-43d43f85917sm25733145e9.35.2025.03.19.11.22.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 11:22:56 -0700 (PDT)
+ Wed, 19 Mar 2025 11:22:58 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4D41E5F954;
+ by draig.lan (Postfix) with ESMTP id A6B99602A5;
  Wed, 19 Mar 2025 18:22:55 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -84,17 +84,18 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH 01/10] include/gdbstub: fix include guard in commands.h
-Date: Wed, 19 Mar 2025 18:22:46 +0000
-Message-Id: <20250319182255.3096731-2-alex.bennee@linaro.org>
+Subject: [PATCH 05/10] target/ppc: expand comment on FP/VMX/VSX access
+ functions
+Date: Wed, 19 Mar 2025 18:22:50 +0000
+Message-Id: <20250319182255.3096731-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250319182255.3096731-1-alex.bennee@linaro.org>
 References: <20250319182255.3096731-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,22 +118,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Mainly as an aid to myself getting confused too many bswaps deep into
+the code.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/gdbstub/commands.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/ppc/cpu.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index 40f0514fe9..bff3674872 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -1,5 +1,5 @@
- #ifndef GDBSTUB_COMMANDS_H
--#define GDBSTUB
-+#define GDBSTUB_COMMANDS_H
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index efab54a068..1e833ade04 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -2906,7 +2906,12 @@ static inline bool lsw_reg_in_range(int start, int nregs, int rx)
+            (start + nregs > 32 && (rx >= start || rx < start + nregs - 32));
+ }
  
- typedef void (*GdbCmdHandler)(GArray *params, void *user_ctx);
- 
+-/* Accessors for FP, VMX and VSX registers */
++/*
++ * Access functions for FP, VMX and VSX registers
++ *
++ * The register is stored as a 128 bit host endian value so we need to
++ * take that into account when accessing smaller parts of it.
++ */
+ #if HOST_BIG_ENDIAN
+ #define VsrB(i) u8[i]
+ #define VsrSB(i) s8[i]
 -- 
 2.39.5
 
