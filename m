@@ -4,146 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037CAC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75DF6C35FFC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuwRV-0005IJ-B1; Wed, 19 Mar 2025 12:38:57 -0400
+	id 1tuwRj-0005yO-Fy; Wed, 19 Mar 2025 12:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuwRS-00056T-CS
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:38:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuwRO-0007AZ-Ae
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:38:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742402326;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2Lpkew5Erp2e2H9mO4Icmytgr7jnJBlYMXErmI2Tq8Y=;
- b=BvAT0FKf5f9BYQKjUOrV+R3cytXzm3Z2MEm6kOPYYgmrFeG/6EOYjAonvZrqpugySgtEkT
- RLOe9Hc18P8kWG2AjbkrM0cCPo4LYcDNQNblwEhAx/Pz1m1U9IfFjIf6q5va1pBfijg2tR
- 03fNSxURrRps6DExISVl5G78/3U9f1U=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-264-nlWRGuFcNKWecuRfQo2QHg-1; Wed, 19 Mar 2025 12:38:43 -0400
-X-MC-Unique: nlWRGuFcNKWecuRfQo2QHg-1
-X-Mimecast-MFC-AGG-ID: nlWRGuFcNKWecuRfQo2QHg_1742402322
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3913d8d7c3eso3997238f8f.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:38:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuwRg-0005oB-Q6
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:39:08 -0400
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuwRe-0007Br-DE
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:39:08 -0400
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-7c3bf231660so71572285a.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742402345; x=1743007145; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pOlVG3QVuWvTYgxjVrtWxOjNs/Z/NX2fcq5F1+B1IEs=;
+ b=h+df8Qx06/0DZL1hYzTE+pY6OWHCEIOh47uoLzEzSv+4M9CvxCISxyX96OlZTjct9G
+ KbQ574t7bN+t/6zWJkIfdMMIws/bTHEu9SZ+d8RySKVivEcIOl+6BLO51odRkFCNpfch
+ wvr+JNKB8fI45vv3u2+JDA+3SACpQLJKaHLkxIAaiJGnXV5bx1Z7fm6kMNwRtwNEs1ex
+ RNbSuqac5aGrEranN/Wyq28OmymuFnUmMLHJNvf6ieNPAHpNTDsaXVoJjeMChTPLGA/J
+ yDoEahI0XutC6niKO03MzyhJsPv85+AbDMhfSvNm+ccpodCK5Fp1i73d7D9GF8lqpm0O
+ zimw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742402322; x=1743007122;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2Lpkew5Erp2e2H9mO4Icmytgr7jnJBlYMXErmI2Tq8Y=;
- b=T/7CN9b57TXKkif/mybaaATDC0nMt4vQGn8q+beenrTpF2QzJG27ZVHoXFIFQlc2MQ
- /wgIEfix4QAbt1zqoVD+YevNyyQGDyvvmA+5ZZ1s7LRPpy4A4Q/bOHOti6BXhyi6x7ey
- 2mPr+g7+3SzM8QP6biYmnIhzbXorRyWQCZGMBFdwEMmbD7xAp+MRXFM5HR421EEw1FVb
- bkxvhLDwRLnqM8TMRApOOGB7ccq1Z02ujLVyFKPUBkj2CoHYBtbT8nPThIgWAtvASE6q
- l5TO7qVcr+2mVvVwqzhW5O/ygUNFMF6E0ShsJsTrBOo0S+m6kSa+JzSFIS8oaZ6bDTeG
- Oh/w==
+ d=1e100.net; s=20230601; t=1742402345; x=1743007145;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pOlVG3QVuWvTYgxjVrtWxOjNs/Z/NX2fcq5F1+B1IEs=;
+ b=ny1rYSu2x4vcuxal61R+92Z7Isd5q69uXMn9zvAFC22A/eTVHSfHlqJEFwJn4dOr+E
+ PKFdLBt6IAqjTxvDhrHvjdQsrRhyy4HEwlSBrMaYl/GBLu4uI2PA4v++EZbrTZlLwF5H
+ B9YB5BUcx0PCh6Ssw2gQqprxDrehb5xP306kCR1rO2UgheNYhrcv9JJcwpYKybJFt87m
+ s4kwFA2CZt310V32+fLffT3hgLwd4hQPdAzONZkxON5x+MZTS9ovC7i2FKtrHcCkTINB
+ 5SuUHCWU6oo9H2J5yTfmx2XzQUgG9duAURqkX9ILWdJscBUpTMOxjK5pnfrEYJTUgWBF
+ PZ9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2UbtxKoH1sxXx9PCqh3VMBN61V0DllGOpcVBIPng/OvhQaNfFbpmoiQcumD6O2iOjFU+gEgPHZmxm@nongnu.org
-X-Gm-Message-State: AOJu0YyHqIeLX5y6ARyHGhmjGbU1K9lhqHJcRjX3hs/hPndrDnXbdXoz
- dB/0gcsHf0pFSyFg+nKU1aSnuEyqeGnz5bXo7TdhEF6VsK/7rJgSNL5Z/n5sPbLt4q4Ksdv87Ri
- 1OPlk7baZF/tMfTSfU+vpqZYynw9m/a1BtTgfXSYUNJDtiZ/u4x5t
-X-Gm-Gg: ASbGncv+N3Z8RCPmmbAQMly5sk3l8Ewo/s1r5Om89u9MCFGY9MYP4D94YOJ3uem/BNa
- GHdEMIAeqJnBhhVYkCUCp+zUTsvS82g2xVjhJroByfDtEtQErb4eb4FGMK0BiOGqzC/mWxWZ+hr
- PPy1ExTjXjt6QUYmaDTu/zZbT0e837x8c66wQT1sbY46WEZTLswtfvXSZbfN/6ehmZp+8ss3X6N
- GSv6uP+Jc7AqzZf4wDHRul5EVd+30KDMjiJazTRLEHz5pqMSp//BcWbpdtcTauGwAGhJ1aocy4N
- GL8j+Vy6G2xZExZwxaUVPyresy50rJHFwK9uWsggmhDLyTDEGUfnZw==
-X-Received: by 2002:a05:6000:156f:b0:391:3fa7:bf77 with SMTP id
- ffacd0b85a97d-399795c3fefmr181808f8f.31.1742402321786; 
- Wed, 19 Mar 2025 09:38:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyN/6j0sl7TBx6/LGRxIQf6uiIbYeVTbIT+4SfCKEJDkllCxyqwYeQevWOZH6gzNRVpU1FgA==
-X-Received: by 2002:a05:6000:156f:b0:391:3fa7:bf77 with SMTP id
- ffacd0b85a97d-399795c3fefmr181787f8f.31.1742402321361; 
- Wed, 19 Mar 2025 09:38:41 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCXc85eimK/VgKfLQOiF5WWSxQeeJbJztdhsJjo1mwrySA54IgBJzISLkpPbzxfdHFYdwgOZbsqMlJTv@nongnu.org
+X-Gm-Message-State: AOJu0YxJnXRIBTsJXgPYKvV+9fKZRqhuEXyqLbz40ZBFhItWgA9B24X/
+ JjhvALlaBKySiH76yp9uMrUoel33A8eW1GB3AagzksxoJ2KHYgTc
+X-Gm-Gg: ASbGncslhTvla+fclwwBFYCvw2qrvC7a+wqBfYn12FmYadw8rkVTY1d+Dz85fAco2AQ
+ Ow+naxGVqi1bgUg5Ws93kn/5btvc16K0bCR4+KFwJEtt3SHuQ+19AxS8XwJEjInRUjp89xYuLLj
+ 15v8Kj66YidZOwGK3m+o+7UDJBshYl9qIl49INj19qfkgkG0Q3O7JiPYXD9z7k2SRb1BmhyCK5E
+ 5ABb2HjMAL0m/kjz3DvlcHsB0BhKMEkgm3U+N2pgOWOXnU9icAqK4ymzu4ejVvnOujhmz+cSvy5
+ w1doXsHwCxjiX3vtukKEnvVcglsm9H16m9KynL2yoenH1XgaW+WkSmylMgHOIw==
+X-Google-Smtp-Source: AGHT+IHatgoVrq15aWGkHCCD9YojcxroLuOd+7uWEPokjVCNBnhJpd8VX+V0ItQoiBKMkflafwvAGw==
+X-Received: by 2002:a05:620a:19a5:b0:7c5:674c:eec9 with SMTP id
+ af79cd13be357-7c5a83ca85bmr355055185a.28.1742402345010; 
+ Wed, 19 Mar 2025 09:39:05 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:992d:4509:eca7:6f8])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f58ab6sm23371555e9.23.2025.03.19.09.38.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 09:38:40 -0700 (PDT)
-Message-ID: <2d1d3dfe-2d66-4bf8-995c-a0e5eaf0f738@redhat.com>
-Date: Wed, 19 Mar 2025 17:38:40 +0100
+ af79cd13be357-7c573c518d9sm877398685a.24.2025.03.19.09.39.03
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 19 Mar 2025 09:39:04 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+ "'Sid Manning'" <sidneym@quicinc.com>, <qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ "'Matheus Bernardino \(QUIC\)'" <quic_mathbern@quicinc.com>, <ale@rev.ng>,
+ <anjo@rev.ng>, "'Marco Liebel \(QUIC\)'" <quic_mliebel@quicinc.com>,
+ <alex.bennee@linaro.org>,
+ "'Mark Burton \(QUIC\)'" <quic_mburton@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
+ <20250301052845.1012069-6-brian.cain@oss.qualcomm.com>
+ <017101db9763$41ae4ca0$c50ae5e0$@gmail.com>
+ <IA0PR02MB94862E1C5171AC300C64DA1CBEDE2@IA0PR02MB9486.namprd02.prod.outlook.com>
+ <026201db9839$f4bb6040$de3220c0$@gmail.com>
+ <2712e0cb-72a3-4c39-82a4-4b5f6d4914b0@oss.qualcomm.com>
+In-Reply-To: <2712e0cb-72a3-4c39-82a4-4b5f6d4914b0@oss.qualcomm.com>
+Subject: RE: [PATCH 05/39] target/hexagon: Implement modify SSR
+Date: Wed, 19 Mar 2025 11:39:02 -0500
+Message-ID: <02ae01db98ed$6d15add0$47410970$@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 01/32] vfio: Move vfio_mig_active() into
- migration.c
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20250318095415.670319-1-clg@redhat.com>
- <20250318095415.670319-2-clg@redhat.com>
- <c676f3b7-97cf-4436-a4cd-3a9f0d0dfb99@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <c676f3b7-97cf-4436-a4cd-3a9f0d0dfb99@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQH/in6LAfNOq9wCQ290DAHwX4r+AkaHTwOysb9PYA==
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250319-0, 3/18/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x736.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,98 +117,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/25 12:54, Avihai Horon wrote:
-> 
-> On 18/03/2025 11:53, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> vfio_mig_active() is part of the VFIO migration API. Move the
->> definitions where VFIO migration is implemented.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> 
-> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-> 
-> One nit below though.
-> 
->> ---
->>   hw/vfio/common.c    | 16 ----------------
->>   hw/vfio/migration.c | 16 ++++++++++++++++
->>   2 files changed, 16 insertions(+), 16 deletions(-)
->>
->> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->> index 1a0d9290f88c9774a98f65087a36b86922b21a73..4205f4f7ec87e1a2a5e4110eabc8fde835d39c7f 100644
->> --- a/hw/vfio/common.c
->> +++ b/hw/vfio/common.c
->> @@ -66,22 +66,6 @@ int vfio_kvm_device_fd = -1;
->>    * Device state interfaces
->>    */
->>
->> -bool vfio_mig_active(void)
->> -{
->> -    VFIODevice *vbasedev;
->> -
->> -    if (QLIST_EMPTY(&vfio_device_list)) {
->> -        return false;
->> -    }
->> -
->> -    QLIST_FOREACH(vbasedev, &vfio_device_list, global_next) {
->> -        if (vbasedev->migration_blocker) {
->> -            return false;
->> -        }
->> -    }
->> -    return true;
->> -}
->> -
->>   static Error *multiple_devices_migration_blocker;
->>
->>   /*
->> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index fbff46cfc35e0ee69e9599c9f8efc7437bbe3370..b5fb0d218808d010d8210612d3182dde8f33514b 100644
->> --- a/hw/vfio/migration.c
->> +++ b/hw/vfio/migration.c
->> @@ -1062,6 +1062,22 @@ void vfio_mig_add_bytes_transferred(unsigned long val)
->>       qatomic_add(&bytes_transferred, val);
->>   }
->>
->> +bool vfio_mig_active(void)
-> 
-> We already have vfio_migration_* prefix in this file.
-> I'd say let's use it and rename to vfio_migration_is_active?
 
-yeah. I've been lazy there. I will change vfio_mig_ to vfio_migration_.
+
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Tuesday, March 18, 2025 6:47 PM
+> To: ltaylorsimpson@gmail.com; 'Sid Manning' <sidneym@quicinc.com>;
+> qemu-devel@nongnu.org
+> Cc: richard.henderson@linaro.org; philmd@linaro.org; 'Matheus =
+Bernardino
+> (QUIC)' <quic_mathbern@quicinc.com>; ale@rev.ng; anjo@rev.ng; 'Marco
+> Liebel (QUIC)' <quic_mliebel@quicinc.com>; alex.bennee@linaro.org; =
+'Mark
+> Burton (QUIC)' <quic_mburton@quicinc.com>; 'Brian Cain'
+> <bcain@quicinc.com>
+> Subject: Re: [PATCH 05/39] target/hexagon: Implement modify SSR
+>=20
+>=20
+> On 3/18/2025 2:14 PM, ltaylorsimpson@gmail.com wrote:
+> >
+> >> -----Original Message-----
+> >> From: Sid Manning <sidneym@quicinc.com>
+> >> Sent: Tuesday, March 18, 2025 1:34 PM
+> >> To: ltaylorsimpson@gmail.com; 'Brian Cain'
+> >> <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
+> >> Cc: richard.henderson@linaro.org; philmd@linaro.org; Matheus
+> >> Bernardino
+> >> (QUIC) <quic_mathbern@quicinc.com>; ale@rev.ng; anjo@rev.ng; Marco
+> >> Liebel (QUIC) <quic_mliebel@quicinc.com>; alex.bennee@linaro.org;
+> >> Mark Burton (QUIC) <quic_mburton@quicinc.com>; Brian Cain
+> >> <bcain@quicinc.com>
+> >> Subject: RE: [PATCH 05/39] target/hexagon: Implement modify SSR
+> >>
+> >>
+> >>
+> >>> -----Original Message-----
+> >>> From: ltaylorsimpson@gmail.com <ltaylorsimpson@gmail.com>
+> >>> Sent: Monday, March 17, 2025 12:37 PM
+> >>> To: 'Brian Cain' <brian.cain@oss.qualcomm.com>; qemu-
+> >> devel@nongnu.org
+> >>> Cc: richard.henderson@linaro.org; philmd@linaro.org; Matheus
+> >>> Bernardino
+> >>> (QUIC) <quic_mathbern@quicinc.com>; ale@rev.ng; anjo@rev.ng;
+> Marco
+> >>> Liebel (QUIC) <quic_mliebel@quicinc.com>; alex.bennee@linaro.org;
+> >>> Mark Burton (QUIC) <quic_mburton@quicinc.com>; Sid Manning
+> >>> <sidneym@quicinc.com>; Brian Cain <bcain@quicinc.com>
+> >>> Subject: RE: [PATCH 05/39] target/hexagon: Implement modify SSR
+> >>>
+> >>>> -----Original Message-----
+> >>>> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> >>>> Sent: Friday, February 28, 2025 11:28 PM
+> >>>> To: qemu-devel@nongnu.org
+> >>>> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> >>>> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng;
+> >>> anjo@rev.ng;
+> >>>> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> >>>> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> >>> sidneym@quicinc.com;
+> >>>> Brian Cain <bcain@quicinc.com>
+> >>>> Subject: [PATCH 05/39] target/hexagon: Implement modify SSR
+> >>>>
+> >>>> From: Brian Cain <bcain@quicinc.com>
+> >>>>
+> >>>> The per-vCPU System Status Register controls many modal behaviors
+> >>>> of the system architecture.  When the SSR is updated, we trigger
+> >>>> the necessary effects for interrupts, privilege/MMU, and HVX
+> >>>> context
+> >>> mapping.
+> >>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> >>>> ---
+> >>> What does SSR_XE indicate?
+> >> [Sid Manning]
+> >> If SSR:XE isn't set this thread doesn't have the coproc enabled so
+> >> discard additional checking.  Any coproc insn issued when ssr:xe is =
+0
+> >> will trigger a, "Illegal execution of coprocessor instruction." =
+error.
+> >
+> >
+> >>>> +    if (old_XA !=3D new_XA) {
+> >>>> +        int old_unit =3D parse_context_idx(env, old_XA);
+> >>>> +        int new_unit =3D parse_context_idx(env, new_XA);
+> >>> Check that old_unit !=3D new_unit.  Per the table above, different =
+XA
+> >>> values can point to the same unit.  For example, if
+> >>> cpu->hvx_contexts is 2, the
+> >> XA=3D0
+> >>> and XA=3D2 both point to context 0.
+> >>>
+> >>>> +
+> >>>> +        /* Ownership exchange */
+> >>>> +        memcpy(VRegs[old_unit], env->VRegs, sizeof(env->VRegs));
+> >>>> +        memcpy(QRegs[old_unit], env->QRegs, sizeof(env->QRegs));
+> >>>> +        memcpy(env->VRegs, VRegs[new_unit], sizeof(env->VRegs));
+> >>>> +        memcpy(env->QRegs, QRegs[new_unit], sizeof(env->QRegs));
+> >>> What does the hardware do?  Does it clear the context, or is that
+> >>> the OS'es job?
+> >> Nothing would keep a single htid from taking hvx unit 0, doing some =
+hvx-
+> ops
+> >> , swapping to hvx unit 1 doing some more hvx-ops and so on.   We =
+are
+> doing
+> >> this because each thread has a private copy of the hvx register
+> >> state.  Since HVX units and threads are independent if one thread
+> >> changes its ownership from HVX context 0 to HVX context 1 we have =
+to
+> >> do this copy.  Instead of memcpy should create a new object that
+> >> represents the HVX units available and change env->VRegs/QRegs to
+> point to the one currently owned.
+> >>
+> >> Refactoring this will be an improvement.
+> >>
+> >>
+> >>> If the hardware leaves the context alone, the above should be
+> >>> 1) Copy env->{VQ}Regs to old_unit
+> >>> 2) Copy new_unit to env->{VQ}Regs
+> >>>
+> >>> Should you check SSR_EX before doing these copies?
+> >>>
+> >>> Do you need to do anything when SSR_EX changes?
+> >> I think you mean SSR:XE before doing the copies.  I think we have =
+to
+> >> do the copy here regardless of ssr:xe since a thread could swap
+> >> ownership, update ssr:xa, without explicitly having ssr:xe set.
+> >> Maybe the OS disables SSR:XE while changing hvx unit ownership?
+> > Correct.  I meant SSR:XE.
+> >
+> > Some refactoring is in order but need to understand the HW behavior =
+more
+> specifically.
+> > - What will the HW do if more than one thread claims ownership of =
+the
+> same HVX context?
+> > - What happens if a thread claims ownership without setting SSR:XE =
+and
+> then sets SSR:XE later?
+> > - What about this example?
+> >      1) Thread 0 claims context 1 and sets SSR:XE
+> >      2) Thread 0 does some HVX computation
+> >      3) Thread 0 is done with HVX for now so clears SSR:XE
+> >      4) Thread 1 claims context 1 and sets SSR:XE, does some work, =
+then
+> clears SSR:XE
+> >      5) Thread 0 wants to do more HVX, so it sets SSR:XE (still
+> > pointing to HVX context 1)
+> >
+> > We should keep the copies for the contexts and local copies inside
+> CPUHexagonState.  This makes TCG generation easier as well as having
+> common code between system mode and linux-user mode.
+>=20
+> Good point that linux-user will need their own exclusive HVX context. =
+But it
+> doesn't sound right to me to have CPU state store both the system =
+contexts
+> *and* a local context for system emulation.  Our current design under
+> review is better than that IMO.  Once we have some experience modeling
+> the system registers as an independent QEMU Object, I think we'll be =
+better
+> prepared to model the HVX contexts similarly.  Ideally we can remap =
+these
+> via something along the lines of "object_property_set_link()" when the
+> contexts change, without requiring any copies.  And ideally the =
+existing TCG
+> should work as-is, despite the remappable register files.
+>=20
+> "What happens when ... " - multiple threads picking the same context =
+is
+> almost certainly explicitly or implicitly undefined architectural =
+behavior, so
+> whatever QEMU does should be appropriate.  However, we'll talk to the
+> architecture team and get a definitive answer.
+
+I caution against putting a level of indirection into CPUHexagonState =
+for the HVX registers.  The HVX TCG implementation relies on an offset =
+from the start of CPUHexagonState to identify the operands.  This would =
+be a very significant rewrite if it's even possible.  I don't know if =
+TCG's gvec code generation can handle random pointers or a level of =
+indirection.
+
+If the behavior is undefined, we can avoid the copies.  Then we just =
+need some bookkeeping to check if multiple threads try to claim the same =
+context (if that behavior is defined).  If copies are needed, we could =
+keep the  hardware contexts as shared a shared resource.  Another =
+alternative would be to track the current owner of a context and copy =
+from the previous owner's {VQ}Regs to the new owners {VQ}Regs.
 
 Thanks,
+Taylor
 
-C.
 
-
-  
-> 
-> Thanks.
-> 
->> +{
->> +    VFIODevice *vbasedev;
->> +
->> +    if (QLIST_EMPTY(&vfio_device_list)) {
->> +        return false;
->> +    }
->> +
->> +    QLIST_FOREACH(vbasedev, &vfio_device_list, global_next) {
->> +        if (vbasedev->migration_blocker) {
->> +            return false;
->> +        }
->> +    }
->> +    return true;
->> +}
->> +
->>   /*
->>    * Return true when either migration initialized or blocker registered.
->>    * Currently only return false when adding blocker fails which will
->> -- 
->> 2.48.1
->>
-> 
 
 
