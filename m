@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1A5C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68F7CC35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuy4Q-0000O7-Ji; Wed, 19 Mar 2025 14:23:15 -0400
+	id 1tuy4e-0000uk-QU; Wed, 19 Mar 2025 14:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4G-000084-Fo
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:05 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1tuy4P-0000Mv-Fx
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:14 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4B-0006Mc-Hx
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:04 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cebe06e9eso35678285e9.3
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:22:59 -0700 (PDT)
+ id 1tuy4G-0006Pe-2W
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:13 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-399744f74e9so818341f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742408577; x=1743013377; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742408582; x=1743013382; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8cJ0n2MLq0D1KATXMYewHUR1inYzbGMB0GndiKaR2hw=;
- b=khprakExbS8SXKI34/bXH/3axN1yKvJH2FAYWnvaTEa91Tn9vObavxuH1BwNcp7QUH
- 4/ktB2nX9mf0G529PFOIkDdCMPYBCcGnCvyzeZzzSAZQ+OMsVk3+IRif+42q5T+fU3T1
- yG9Q+egWsik4m2kqXxCbmXvUpTkjN5YBYiHda/HEin/dXFqfgL+aqdwoCaMyjcC60NXW
- SoOz3lMmmelw3XhecWcqX/UAXturisqeDJO7uxKetAMAQmXXibMz+nW/j8LAX0ZEo/km
- kWXzMrt0YKYI7+gXwuEnDAFaEqhSSFVC5BYO6maZeZ4kVPWaWIpVy1MGqZGNq3TVqouN
- YZOg==
+ bh=8piUF4u9JTaJPSgck8BDagdzEdVPzEIS0aH/3c6C7T0=;
+ b=ErSpOQrcmezizWvjeFUcZWCl5AWwjwwp7kQ/PDFqe0A6FxSNzQfDpqXClj4q+zgV2c
+ +VUN2/fklcDq5RWYLSqDwkK/K1xAc6cpbNncgEGXNW09Wo45fYcUnOWwksGMmUEJEsgu
+ Ikw6aEjlM7AGweyYs+cpwkAsUrqla7COvswLStWMDtT4DwKmk96CWWtasVCG9XT2+c/J
+ Yn5k03osVPNdwm0wf1gWI1DT6X+gosTJZmrfhCq9nhetukda/KMEIxlotPJbx+v1H822
+ WwUZAu5hS5m99WHEUcGZtPSYD8cQiTQQF4Ip9HKgnRww+TeQQtQ77XkR7VA4FfbOm77L
+ g4/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742408577; x=1743013377;
+ d=1e100.net; s=20230601; t=1742408582; x=1743013382;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8cJ0n2MLq0D1KATXMYewHUR1inYzbGMB0GndiKaR2hw=;
- b=oghYtOJfizYvhIi2Kx+LSi3bvlRbVZyoxIGVIV6hznJJwVFu3/hhGdRNO92DqoIkwQ
- Q7QRnGWh8d6DNZ4LyOtDYUbq9743BF7gJeFcoyRzTmNLn9PW7aDa9cqhKqFXQp9OXpv7
- I3W8CxirPq7x8SSbIzefsgMLyjymzUI+6lDmxdFe1EDZ1su7/uRTljV0oVsELE2incFc
- A5q4lMW8sZX+iKWjrAC2XYXWbGi2jEVd69zKu45oVvCYEHzUkVgntpFgC+/flOuSzXHQ
- 4OM+wJWHkQwVuIcf/GpHiEERE9M9kLbRfwIqrWvp4iCgWI3ntFfK+wXsc/CrT17K93yt
- aKNw==
-X-Gm-Message-State: AOJu0YySpdMcCNrDksSFNHia2pdGXg3+oyRZxwXsJCTk3yvhzRXBSB7Y
- SpSr+uwPg5bpiR5p7wUWjqXoN360HK9jkTZamdqOTV+xSjVp2wyfGLi0P/j+2lY=
-X-Gm-Gg: ASbGnctZHlB3Mdto1aUIj7mR49V8rfkgtKIwVHYExCF+TYxmAfwZ9/Zify19jO6Zf92
- 02eqdsHxfOXzekxw2g72EQDe7s5NvN7MZfOxHkSf/VhKznz5X3oI/xwJlVPAE1Fx7L+UODlk/pM
- CWWWgaCFBSkr6RvOf4SjYnzatS8fnZ5bUXj2LEmrYPUuQCDulb3+nEF8+v2+4vYttSTLqx33wV7
- JO4sMKdcfbJqiGriks6vFKIDT+giJyWHTLR234V4SnC6TFtFMJ2ef9PcBf3omklLatdVOdCkggE
- BqTulOPPdNXDB6ExNztsZ3YI6tTX1tkADA9IA7FhTxQHXi4=
-X-Google-Smtp-Source: AGHT+IFADQT79Ns8ByjAii8aVa4W9/RS096Ut1etVHHbqn8c/WBDbGY+JTgtbCFltpJdE1I+PHeetA==
-X-Received: by 2002:a05:6000:1a8e:b0:391:3b11:d604 with SMTP id
- ffacd0b85a97d-39973b360afmr2727868f8f.54.1742408577117; 
- Wed, 19 Mar 2025 11:22:57 -0700 (PDT)
+ bh=8piUF4u9JTaJPSgck8BDagdzEdVPzEIS0aH/3c6C7T0=;
+ b=uWWSp3u9C7GYjolEO14hMxHqzsMzkX4k4My7kFY0wZA7IbNNek4Zip78DrJHJy8ymE
+ ADQY8aA1Cnf24mJVEjb4o6p1URpxS94C5rLQVRvqhA2MlYSR+K13ECGY9iJQ4eznInHn
+ IigKurBlTC/dLZ6Yj8E50lVZ6hQ6lL/bsxC2/QHy3dKd7AMEVlKc07OZxyhAHbRuNaAI
+ YuJIOhQLdt/ykjiSwGW02BOJyCygR5BUQM3CEgVX0vJc10UV2GHlMIMuR4AJIcc8doLB
+ jTR1vTWYDeb0La86kxqyDDtBZLKrXfnpqvfjfznAxmKTAKtJ466+zM0ndlo8c2/mqNv3
+ PjIg==
+X-Gm-Message-State: AOJu0YxqQ8v4FrdDWWuSd0SQj1EUOUtbxvixCKTUEibq4pCWz+5w9Cb7
+ v0FTF3mkYlZ99TRd5NVM/ShXZ+g5qrs4LsgDk1tP7wu2B7T47RDyRUSGQpXcKug=
+X-Gm-Gg: ASbGncsS51zvm0GNXByOVCFhnn+8dEADtQa5eixZC2H42un3K3oYg52H6ts5uRbyQLD
+ ODX4HuukWlzr7SOXPlM2Ty7aUZLPDfAqKyeLogE55i3mOG9ITdoi7A0bfoVsqW0t82y2EXrFXCy
+ NnUN15DosC0tW6Q0Jj6dhwTjkOu/30U7r5vlfJmO/DeYcIrlu9eaUr+wu7Mi79Q6pd6FSPO57bI
+ TT/8xR45rxqEGXjf2tVkdZG2M9RlQMW4lLi02jcZ86PnrI6+QveDxEOfqi0fsiJLtZ/L9BQBTCj
+ wOp2rUvlVZHFuDIkNr9Fe2Phb5OCqnQGBLRU1Y1SQv8TRVc=
+X-Google-Smtp-Source: AGHT+IGF+nxh3CNGN04Hc1HlIN0cR9k37/dKbiPvCRwR44lUbGx9cLg5LkgpA9neGSvFaBCczlQTYQ==
+X-Received: by 2002:a05:6000:2712:b0:391:4889:503e with SMTP id
+ ffacd0b85a97d-399739de5f2mr3218843f8f.33.1742408582335; 
+ Wed, 19 Mar 2025 11:23:02 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39972df9b9esm3027838f8f.18.2025.03.19.11.22.55
+ 5b1f17b1804b1-43d3ae04a94sm28486135e9.0.2025.03.19.11.22.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 11:22:56 -0700 (PDT)
+ Wed, 19 Mar 2025 11:22:58 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7B7E45FAA0;
+ by draig.lan (Postfix) with ESMTP id 64E795FA87;
  Wed, 19 Mar 2025 18:22:55 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -84,17 +84,18 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH 03/10] target/arm: convert 32 bit gdbstub to new helper
-Date: Wed, 19 Mar 2025 18:22:48 +0000
-Message-Id: <20250319182255.3096731-4-alex.bennee@linaro.org>
+Subject: [PATCH 02/10] gdbstub: introduce target independent gdb register
+ helper
+Date: Wed, 19 Mar 2025 18:22:47 +0000
+Message-Id: <20250319182255.3096731-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250319182255.3096731-1-alex.bennee@linaro.org>
 References: <20250319182255.3096731-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,161 +118,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For some of the helpers we need a temporary variable to copy from
-although we could add some helpers to return pointers into env in
-those cases if we wanted to.
+The current helper.h functions rely on hard coded assumptions about
+target endianess to use the tswap macros. We also end up double
+swapping a bunch of values if the target can run in multiple endianess
+modes. Avoid this by getting the target to pass the endianess and size
+via a MemOp and fixing up appropriately.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/gdbstub.c | 57 ++++++++++++++++++++++++++++----------------
- 1 file changed, 36 insertions(+), 21 deletions(-)
+ include/gdbstub/registers.h | 30 ++++++++++++++++++++++++++++++
+ gdbstub/gdbstub.c           | 22 ++++++++++++++++++++++
+ 2 files changed, 52 insertions(+)
+ create mode 100644 include/gdbstub/registers.h
 
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index 30068c2262..14d931b0bf 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -20,7 +20,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "exec/gdbstub.h"
--#include "gdbstub/helpers.h"
-+#include "gdbstub/registers.h"
- #include "gdbstub/commands.h"
- #include "system/tcg.h"
- #include "internals.h"
-@@ -33,12 +33,16 @@ typedef struct RegisterSysregFeatureParam {
-     int n;
- } RegisterSysregFeatureParam;
- 
--/* Old gdb always expect FPA registers.  Newer (xml-aware) gdb only expect
--   whatever the target description contains.  Due to a historical mishap
--   the FPA registers appear in between core integer regs and the CPSR.
--   We hack round this by giving the FPA regs zero size when talking to a
--   newer gdb.  */
--
+diff --git a/include/gdbstub/registers.h b/include/gdbstub/registers.h
+new file mode 100644
+index 0000000000..4abc7a6ae7
+--- /dev/null
++++ b/include/gdbstub/registers.h
+@@ -0,0 +1,30 @@
 +/*
-+ * Old gdb always expect FPA registers. Newer (xml-aware) gdb only
-+ * expect whatever the target description contains. Due to a
-+ * historical mishap the FPA registers appear in between core integer
-+ * regs and the CPSR. We hack round this by giving the FPA regs zero
-+ * size when talking to a newer gdb.
++ * GDB Common Register Helpers
 + *
-+ * While gdb cares about the memory endianess of the target all
-+ * registers are passed in little-endian mode.
++ * Copyright (c) 2025 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
- int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
-     ARMCPU *cpu = ARM_CPU(cs);
-@@ -46,15 +50,17 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
++
++#ifndef GDB_REGISTERS_H
++#define GDB_REGISTERS_H
++
++#include "exec/memop.h"
++
++/**
++ * gdb_get_register_value() - get register value for gdb
++ * mo: size and endian MemOp
++ * buf: GByteArray to store in target order
++ * val: pointer to value in host order
++ *
++ * This replaces the previous legacy read functions with a single
++ * function to handle all sizes. Passing @mo allows the target mode to
++ * be taken into account and avoids using hard coded tswap() macros.
++ *
++ * Returns the number of bytes written to the array.
++ */
++int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val);
++
++#endif /* GDB_REGISTERS_H */
++
++
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 282e13e163..3d7b1028e4 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -32,6 +32,7 @@
+ #include "exec/gdbstub.h"
+ #include "gdbstub/commands.h"
+ #include "gdbstub/syscalls.h"
++#include "gdbstub/registers.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "accel/tcg/vcpu-state.h"
+ #include "gdbstub/user.h"
+@@ -45,6 +46,7 @@
+ #include "system/runstate.h"
+ #include "exec/replay-core.h"
+ #include "exec/hwaddr.h"
++#include "exec/memop.h"
  
-     if (n < 16) {
-         /* Core integer register.  */
--        return gdb_get_reg32(mem_buf, env->regs[n]);
-+        return gdb_get_register_value(MO_TEUL, mem_buf, (uint8_t *) &env->regs[n]);
-     }
-     if (n == 25) {
-         /* CPSR, or XPSR for M-profile */
-+        uint32_t reg;
-         if (arm_feature(env, ARM_FEATURE_M)) {
--            return gdb_get_reg32(mem_buf, xpsr_read(env));
-+            reg = xpsr_read(env);
-         } else {
--            return gdb_get_reg32(mem_buf, cpsr_read(env));
-+            reg = cpsr_read(env);
-         }
-+        return gdb_get_register_value(MO_TEUL, mem_buf, (uint8_t *) &reg);
-     }
-     /* Unknown register.  */
-     return 0;
-@@ -115,19 +121,22 @@ static int vfp_gdb_get_reg(CPUState *cs, GByteArray *buf, int reg)
+ #include "internals.h"
  
-     /* VFP data registers are always little-endian.  */
-     if (reg < nregs) {
--        return gdb_get_reg64(buf, *aa32_vfp_dreg(env, reg));
-+        return gdb_get_register_value(MO_TEUQ, buf,
-+                                      (uint8_t *) aa32_vfp_dreg(env, reg));
-     }
-     if (arm_feature(env, ARM_FEATURE_NEON)) {
-         /* Aliases for Q regs.  */
-         nregs += 16;
-         if (reg < nregs) {
-             uint64_t *q = aa32_vfp_qreg(env, reg - 32);
--            return gdb_get_reg128(buf, q[0], q[1]);
-+            return gdb_get_register_value(MO_TEUO, buf, (uint8_t *) q);
-         }
-     }
-     switch (reg - nregs) {
-+        uint32_t fpcr;
-     case 0:
--        return gdb_get_reg32(buf, vfp_get_fpscr(env));
-+        fpcr = vfp_get_fpscr(env);
-+        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &fpcr);
-     }
+@@ -551,6 +553,26 @@ static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
      return 0;
  }
-@@ -166,9 +175,11 @@ static int vfp_gdb_get_sysreg(CPUState *cs, GByteArray *buf, int reg)
  
-     switch (reg) {
-     case 0:
--        return gdb_get_reg32(buf, env->vfp.xregs[ARM_VFP_FPSID]);
-+        return gdb_get_register_value(MO_TEUL, buf,
-+                                      (uint8_t *) &env->vfp.xregs[ARM_VFP_FPSID]);
-     case 1:
--        return gdb_get_reg32(buf, env->vfp.xregs[ARM_VFP_FPEXC]);
-+        return gdb_get_register_value(MO_TEUL, buf,
-+                                      (uint8_t *) &env->vfp.xregs[ARM_VFP_FPEXC]);
-     }
-     return 0;
- }
-@@ -196,7 +207,8 @@ static int mve_gdb_get_reg(CPUState *cs, GByteArray *buf, int reg)
- 
-     switch (reg) {
-     case 0:
--        return gdb_get_reg32(buf, env->v7m.vpr);
-+        return gdb_get_register_value(MO_TEUL, buf,
-+                                      (uint8_t *) &env->v7m.vpr);
-     default:
-         return 0;
-     }
-@@ -236,9 +248,11 @@ static int arm_gdb_get_sysreg(CPUState *cs, GByteArray *buf, int reg)
-     ri = get_arm_cp_reginfo(cpu->cp_regs, key);
-     if (ri) {
-         if (cpreg_field_is_64bit(ri)) {
--            return gdb_get_reg64(buf, (uint64_t)read_raw_cp_reg(env, ri));
-+            uint64_t cpreg = read_raw_cp_reg(env, ri);
-+            return gdb_get_register_value(MO_TEUQ, buf, (uint8_t *) &cpreg);
-         } else {
--            return gdb_get_reg32(buf, (uint32_t)read_raw_cp_reg(env, ri));
-+            uint32_t cpreg = (uint32_t) read_raw_cp_reg(env, ri);
-+            return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &cpreg);
-         }
-     }
-     return 0;
-@@ -375,12 +389,12 @@ static uint32_t *m_sysreg_ptr(CPUARMState *env, MProfileSysreg reg, bool sec)
- static int m_sysreg_get(CPUARMState *env, GByteArray *buf,
-                         MProfileSysreg reg, bool secure)
- {
--    uint32_t *ptr = m_sysreg_ptr(env, reg, secure);
-+    uint8_t *ptr = (uint8_t *) m_sysreg_ptr(env, reg, secure);
- 
-     if (ptr == NULL) {
-         return 0;
-     }
--    return gdb_get_reg32(buf, *ptr);
-+    return gdb_get_register_value(MO_TEUL, buf, ptr);
- }
- 
- static int arm_gdb_get_m_systemreg(CPUState *cs, GByteArray *buf, int reg)
-@@ -393,7 +407,8 @@ static int arm_gdb_get_m_systemreg(CPUState *cs, GByteArray *buf, int reg)
-      * banked and non-banked bits.
-      */
-     if (reg == M_SYSREG_CONTROL) {
--        return gdb_get_reg32(buf, arm_v7m_mrs_control(env, env->v7m.secure));
-+        uint32_t reg32 = arm_v7m_mrs_control(env, env->v7m.secure);
-+        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &reg32);
-     }
-     return m_sysreg_get(env, buf, reg, env->v7m.secure);
- }
++/*
++ * Target helper function to read value into GByteArray, target
++ * supplies the size and target endianess via the MemOp.
++ */
++int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val)
++{
++    size_t bytes = memop_size(op);
++
++    if (op & MO_BSWAP) {
++        for ( int i = bytes ; i > 0; i--) {
++            g_byte_array_append(buf, &val[i - 1], 1);
++        };
++    } else {
++        g_byte_array_append(buf, val, bytes);
++    }
++
++    return bytes;
++}
++
++
+ static void gdb_register_feature(CPUState *cpu, int base_reg,
+                                  gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+                                  const GDBFeature *feature)
 -- 
 2.39.5
 
