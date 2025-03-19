@@ -4,89 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A615C35FFC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 14:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75CA8C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 15:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuurs-0000JF-Gl; Wed, 19 Mar 2025 10:58:04 -0400
+	id 1tuuwZ-0002Tz-MA; Wed, 19 Mar 2025 11:02:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1tuurg-0000FD-7w
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 10:57:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tuuwT-0002SE-Fk
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:02:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1tuura-0006xC-NB
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 10:57:50 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tuuwP-0007zc-06
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:02:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742396260;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1742396561;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N6tjw1mSWSMquwZmm+qtuXAh2X25FxYPkTS8DkXIrWE=;
- b=SJRUAqfLoiCw1O1RQeQ6NQ95SsYJdQCTGSMrfwk7rVo1plQlBj2VM0YacAMTLJXCbcMQ9q
- 2Vdq/h/EwwlUSqOHenr41NWR0Ojh358ODaeRghnYhvD8hqeoqVbWsMMScraW1qB2SirQFr
- Bc/z/fdfGuOvZChypXLGqYA2CkpDmnA=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-381-pNlrkEZrNQ-dtX1QDnsqNQ-1; Wed, 19 Mar 2025 10:57:36 -0400
-X-MC-Unique: pNlrkEZrNQ-dtX1QDnsqNQ-1
-X-Mimecast-MFC-AGG-ID: pNlrkEZrNQ-dtX1QDnsqNQ_1742396256
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-6f2737d115eso90486747b3.2
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 07:57:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742396256; x=1743001056;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N6tjw1mSWSMquwZmm+qtuXAh2X25FxYPkTS8DkXIrWE=;
- b=M0p94V+29cJ4XUIF2Or0jmAa0SOManrGhHeN9txbL4VbEDaPBk6wu7xtWPw2Psh9Rw
- cSfMEnxv3E7wj5wfqtWZtM/NYP0gNJzKEBVXhtS2BLowJyndVRVLUkQtMpsQIXIL9qZD
- csQIx5RRiiXqnKrjn9fR603B2/fr7Z8M9VNdirPI1gvYCPxrfI7V5i0oDC6uJJA8WT/A
- egHhqdAIlyFQVEEpYe1RI1s26nayJGuMWRz06oBNyJG4aXJLa8wJCufMmL/p/bj4bl/g
- iORbH7ni4l1g46n1i56RE5XW/JnTECv1LiS6XcPeA/5Ta4yWx6GhdmXBL5kidnLpeAFM
- h6dQ==
-X-Gm-Message-State: AOJu0YyUy8aF8E65oakmUCYRfHBK50o/qrIQyZg7FSCW4COw0uaqR6lC
- CviuYRLJRRbKWUhXkg+6mVahZ/7WVyjt4jcj/G3onsn+j/wy5igkQ1sPfItcGMene9FAu9jrPC6
- HFnA11N8bVlX/PsikBmgfrb1AUof8UC+zVpavh8vXQG9UwxlOPJtiEQbpKIKSnox2uFBmdoyQ1R
- /5h9XjFBwWSG6EE6GVjRokFYRac7s=
-X-Gm-Gg: ASbGncuu3IGRE8lvmAE7soDy41EKHTD1T0hClqBYYbjw7uMnQFyZmB12MvyePd1hP9J
- 6nDFTkr/019fEmsiFdVCQJ0JqY8+TZDkZ0uQTYNrnURT8n5levtZpUH9GnFMkYQjKIimNzeQ=
-X-Received: by 2002:a05:6902:478f:b0:e63:cfbe:5d57 with SMTP id
- 3f1490d57ef6-e667b435c9emr3598318276.38.1742396255888; 
- Wed, 19 Mar 2025 07:57:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMkPltfMYNFvh9X6D3XkZlY7VwIsEZZn7B6RGK5mY/Oxx+v0UBc716gCdDNk5s0VaRU18kAbyHWvf5zAXp+5E=
-X-Received: by 2002:a05:6902:478f:b0:e63:cfbe:5d57 with SMTP id
- 3f1490d57ef6-e667b435c9emr3598296276.38.1742396255540; Wed, 19 Mar 2025
- 07:57:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250314113847.109460-1-kkostiuk@redhat.com>
-In-Reply-To: <20250314113847.109460-1-kkostiuk@redhat.com>
-From: Yan Vugenfirer <yvugenfi@redhat.com>
-Date: Wed, 19 Mar 2025 16:57:24 +0200
-X-Gm-Features: AQ5f1Jp4b70D06oNJRULhanRx_7HYwFw1d920TghMYCJ5jicoNpkLDDzZjkV9dA
-Message-ID: <CAGoVJZxAEXsiuC+B1uA0m-FJJwVbR=9pP9wDrHNkgE52gbqp2A@mail.gmail.com>
-Subject: Re: [PATCH 0/2] qga: Add 'guest-get-load' command
+ bh=038ivSDMMEc0w+/oUjQqUJ5o5StTirMIcJWEwt7XGaw=;
+ b=StJijdim/QdxAxQ+2QonipW4LOJwZs5cQZuSC+Hb3r5esg9yDe0YSxA1Ghq/76T+W3j52Y
+ 0St9QPlK16lgTbmlj6qvb32l+5JGG+SwfTU3vNpe8Q12+5edE1FSJBEQAR4StDq7/a3nEw
+ nOWBzfB0cFTBJh7g/lCWlk/0GywK9uE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-p9HPN8hWOVKxpFyUDY5x1g-1; Wed,
+ 19 Mar 2025 11:02:38 -0400
+X-MC-Unique: p9HPN8hWOVKxpFyUDY5x1g-1
+X-Mimecast-MFC-AGG-ID: p9HPN8hWOVKxpFyUDY5x1g_1742396557
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9916519560B7; Wed, 19 Mar 2025 15:02:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.112])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECB9F1800268; Wed, 19 Mar 2025 15:02:34 +0000 (UTC)
+Date: Wed, 19 Mar 2025 15:02:31 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Konstantin Kostiuk <kkostiuk@redhat.com>
 Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  Michael Roth <michael.roth@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=yvugenfi@redhat.com;
+Subject: Re: [PATCH 1/2] qga-win: implement a 'guest-get-load' command
+Message-ID: <Z9rchyQO5vNcrfmN@redhat.com>
+References: <20250314113847.109460-1-kkostiuk@redhat.com>
+ <20250314113847.109460-2-kkostiuk@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250314113847.109460-2-kkostiuk@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,30 +87,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
-
-
-On Fri, Mar 14, 2025 at 1:40=E2=80=AFPM Konstantin Kostiuk <kkostiuk@redhat=
-.com> wrote:
->
-> Konstantin Kostiuk (2):
->   qga-win: implement a 'guest-get-load' command
->   qga: Add tests for guest-get-load command
->
+On Fri, Mar 14, 2025 at 01:38:46PM +0200, Konstantin Kostiuk wrote:
+> Windows has no native equivalent API, but it would be possible to
+> simulate it as illustrated here (BSD-3-Clause):
+> 
+>   https://github.com/giampaolo/psutil/pull/1485
+> 
+> Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+> ---
 >  qga/commands-win32.c   | 140 +++++++++++++++++++++++++++++++++++++++++
 >  qga/guest-agent-core.h |  10 +++
 >  qga/main.c             |  39 ++++++++++++
 >  qga/meson.build        |   2 +-
 >  qga/qapi-schema.json   |   4 +-
->  tests/unit/test-qga.c  |  17 +++++
->  6 files changed, 209 insertions(+), 3 deletions(-)
->
-> --
-> 2.48.1
->
->
+>  5 files changed, 192 insertions(+), 3 deletions(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+> +GuestLoadAverage *qmp_guest_get_load(Error **errp)
+> +{
+> +    if (ga_get_load_avg_pdh_query(ga_state) == NULL) {
+> +        /* set initial values */
+> +        load_avg_1m = 0;
+> +        load_avg_5m = 0;
+> +        load_avg_15m = 0;
+> +
+> +        if (init_load_avg_counter(errp) == false) {
+> +            return NULL;
+> +        }
+> +    }
+
+Nice idea. So we avoid running the load average logic
+until such time as a mgmt app actually asks for it.
+
+The load avg won't be very accurate initially, but
+assuming any interested mgmt app will ask for this
+repeatedly over the entire life of the VM, this looks
+like a good mitigation.
+
+Perhaps worth a commenting explaining why we're doing
+this.
+
+
+> +
+> +    GuestLoadAverage *ret = NULL;
+> +
+> +    ret = g_new0(GuestLoadAverage, 1);
+> +    ret->load1m = load_avg_1m;
+> +    ret->load5m = load_avg_5m;
+> +    ret->load15m = load_avg_15m;
+> +    return ret;
+> +}
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
