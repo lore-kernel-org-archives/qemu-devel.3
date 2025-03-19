@@ -4,45 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DF2C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 15:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70805C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 15:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuvM3-0005fT-Eb; Wed, 19 Mar 2025 11:29:15 -0400
+	id 1tuvO5-0006Z0-Uv; Wed, 19 Mar 2025 11:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1tuvM0-0005f9-WC
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:29:13 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tuvO2-0006Yf-VR
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:31:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1tuvLv-0003fL-Vg
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:29:12 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 1BAC245088;
- Wed, 19 Mar 2025 16:28:57 +0100 (CET)
-Message-ID: <8183674f-a9cc-4727-bb52-fe3d3e44804b@proxmox.com>
-Date: Wed, 19 Mar 2025 16:28:48 +0100
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tuvNy-0004tU-Gw
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:31:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742398270;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=u0h8SwIl8Hb9cvElXPhLALKGX6X/b72ls3prZ+smJfw=;
+ b=anLWmbuFdOqA64qvYi/MHrT7SKOXzQr54w0qDv7lr9dJdyXfc0ahm4+ljvbTGDZvJB0xIf
+ TiJhdSSqwbSdQ3Qwck6VnxNnjvA+uVYYrWr1AySFGUHV7+99oQE25mJmuyX3cF2MCem6ZU
+ pPUxkhVrPztplmAM4CuXzRYOhPSNzO8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-sVAWZ1ugMnWfmhDBk3apxQ-1; Wed, 19 Mar 2025 11:31:09 -0400
+X-MC-Unique: sVAWZ1ugMnWfmhDBk3apxQ-1
+X-Mimecast-MFC-AGG-ID: sVAWZ1ugMnWfmhDBk3apxQ_1742398268
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d08915f61so26641645e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 08:31:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742398267; x=1743003067;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=u0h8SwIl8Hb9cvElXPhLALKGX6X/b72ls3prZ+smJfw=;
+ b=o9b9cQ3KLleS6WtfkakEEA5PpxZVZuOm6rWY1eSfSFc4/OAgPeMqCWao4wyXbOR+Ti
+ LiOcduGs0Ne2g3P7d01zYO/KL/u0yhv/x6ImIUGCJbFkiPdeIra1HV3IFugkmS3JVpEv
+ VIi6WfdDUi+i3swGtpyvVK2QLQHx3M8roY1HWTcZmrWTOtFNGePXEuNP8kMDmtUylFID
+ p/WmUMrXjGs5F+SeN71pGhhr6uPXHMotFoeKmhoCYcSora5Jl6C6G3oVd32Nsr4VwHpu
+ 44KgX0WuKE+X0rkxydYLZnez/VeArkHDBJx2z36nvpKTpVHr+HSnifFxkVSALQqwgJka
+ wUgg==
+X-Gm-Message-State: AOJu0Ywq5mrTbJYvB+6wTxq3EQk9Tm5SXpfIvKUIwIcnzFywjCDZ2gn4
+ 05pSKTI4tQYB20A6YBUHAbPTY2y4ATeIw/5AZ34uGr//3bsAYnljTQKZ1tb//KPsX0Z6iZV0rfe
+ 6iurbVI8mt9jB2/eyJglC5bV58jIPfhklm7RJITLDkZMKcZ3XqL3HvCxoNf3QuCOJLcjkIPX0SQ
+ 1Vx9UpXI3qC4m/klDT9l2yrboou7Y=
+X-Gm-Gg: ASbGnctwZdTcUnPpnWX6fH/BK2NsR3HuL8t3M8stO/VrqUVrPnCvZadxMf6/zZMVMXE
+ C9fURU7Lw6OjsCBkjx7CaOQrAiOincs1Yg9kXbhb0y8wZios0B2XCCYEZGXB/ERHbAl1ZBVmxdQ
+ ==
+X-Received: by 2002:a05:6000:1faa:b0:38f:2856:7d96 with SMTP id
+ ffacd0b85a97d-399739de3f9mr3425345f8f.1.1742398267547; 
+ Wed, 19 Mar 2025 08:31:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE80KApdR/zh01TFGtYjlO9O1430u8L0eIa/V13dH31Fvn3k74msfKYw8+bm/3Sf01Ize3N9yZ2grIC6go1WpY=
+X-Received: by 2002:a05:6000:1faa:b0:38f:2856:7d96 with SMTP id
+ ffacd0b85a97d-399739de3f9mr3425297f8f.1.1742398267061; Wed, 19 Mar 2025
+ 08:31:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 05/11] hpet: fix and cleanup persistence of interrupt status
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240723141529.551737-1-pbonzini@redhat.com>
  <20240723141529.551737-6-pbonzini@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>
-In-Reply-To: <20240723141529.551737-6-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ <8183674f-a9cc-4727-bb52-fe3d3e44804b@proxmox.com>
+In-Reply-To: <8183674f-a9cc-4727-bb52-fe3d3e44804b@proxmox.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 19 Mar 2025 16:30:55 +0100
+X-Gm-Features: AQ5f1JqSJqgKHZUi1QSX-_ckitpufkAC3FADYSJgHuDQjbvQTuFy5cD4pbKknHQ
+Message-ID: <CABgObfaKJ5NFVKmYLFmu4C0iZZLJJtcWksLCzyA0tBoz0koZ4A@mail.gmail.com>
+Subject: Re: [PULL 05/11] hpet: fix and cleanup persistence of interrupt status
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -60,45 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Wed, Mar 19, 2025 at 4:29=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
+rote:
+>
+> Hi,
+> If necessary, our management layer downstream could disable the hpet
+> timer by default and make users explicitly enable it if
+> desired/required. I just wanted to ask if the issue is known and if
+> there are any other suggestions? Thanks!
 
-Am 23.07.24 um 16:15 schrieb Paolo Bonzini:
-> There are several bugs in the handling of the ISR register:
-> 
-> - switching level->edge was not lowering the interrupt and
->   clearing ISR
-> 
-> - switching on the enable bit was not raising a level-triggered
->   interrupt if the timer had fired
-> 
-> - the timer must be kept running even if not enabled, in
->   order to set the ISR flag, so writes to HPET_TN_CFG must
->   not call hpet_del_timer()
+We can try to skip the timer if the interrupt would have no change -
+similar to how the RTC works, it's more complex but very effective in
+reducing CPU usage.
 
-we've been getting user reports about increased CPU usage for QEMU
-processes on the host after they updated from QEMU 9.0 to QEMU 9.2.
-Bisecting points to this change, and users confirmed that adding the
-machine option hpet=off reduces the CPU usage again. Some quick
-experimentation suggests that in particular the last part here, i.e.
-"timer must be kept running even if not enabled" is the reason for this.
+That said, if you can disable the HPET timer by default without
+problems with e.g. live migration I strongly suggest you do. And in
+the mean time you can also revert these patches, they were actually
+reported as bugs but it's not clear what guest OS was affected.
 
-I reproduced the issue with a Debian 12.10 guest with kernel 6.1. It
-enables and then immediately disables the HPET timer again during boot
-(i.e. the HPET_TN_ENABLE bit).
-
-I also installed 6.13.7 in the guest for comparison, but that just made
-the issue worse, because it uses a higher frequency for the timer.
-
-Is this something Linux should/could handle differently? I suppose there
-is nothing that can be done on the QEMU side to avoid this while aiming
-to keep the implementation correct?
-
-If necessary, our management layer downstream could disable the hpet
-timer by default and make users explicitly enable it if
-desired/required. I just wanted to ask if the issue is known and if
-there are any other suggestions? Thanks!
-
-Best Regards,
-Fiona
+Paolo
 
 
