@@ -4,44 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FBBAC282EC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 02:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE44C282EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 02:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuitH-0002Na-Ux; Tue, 18 Mar 2025 22:10:44 -0400
+	id 1tuitP-0002mA-GU; Tue, 18 Mar 2025 22:10:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tuirq-0001rg-1k
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:09:14 -0400
+ id 1tuirp-0001rZ-0P
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:09:13 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tuirh-0002F2-V1
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:09:13 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1tuirh-0002Ey-UL
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:09:08 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxHHIzJ9pne4KcAA--.2855S3;
- Wed, 19 Mar 2025 10:08:51 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxYa8wJ9pnb4KcAA--.26933S3;
+ Wed, 19 Mar 2025 10:08:48 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxb8cwJ9pn2NpSAA--.42124S5;
- Wed, 19 Mar 2025 10:08:51 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxb8cwJ9pn2NpSAA--.42124S2;
+ Wed, 19 Mar 2025 10:08:48 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
 	Markus Armbruster <armbru@redhat.com>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 3/4] target/loongarch: Remove unnecessary temporary
- variable assignment
-Date: Wed, 19 Mar 2025 10:08:46 +0800
-Message-Id: <20250319020847.1511759-4-maobibo@loongson.cn>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v4 0/4] target/loongarch: Solve some issues reported from
+ coccinelle
+Date: Wed, 19 Mar 2025 10:08:43 +0800
+Message-Id: <20250319020847.1511759-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250319020847.1511759-1-maobibo@loongson.cn>
-References: <20250319020847.1511759-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8cwJ9pn2NpSAA--.42124S5
+X-CM-TRANSID: qMiowMBxb8cwJ9pn2NpSAA--.42124S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -69,39 +66,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Temporary variable ret is assigned at last line and return, it can
-be removed and return directly.
+This patch set solves errors reported by coccinelle tool with commands:
+  spatch --sp-file scripts/coccinelle/*.cocci --dir target/loongarch/
+  spatch --sp-file scripts/coccinelle/*.cocci --dir hw/loongarch/
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The main problem is that qemu should fail to run when feature is forced
+to enabled however KVM does not support it, rather than report error and
+continue to run.
+
 ---
- target/loongarch/tcg/tlb_helper.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+  v3 ... v4:
+    1. Add missed this cleanup with error and remove some local error
+       object.
+    2. Replace local error object with error_abort object in
+       virt_cpu_irq_init(), since its return value is not checked.
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 646dbf59de..182881a237 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -543,7 +543,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-                           target_ulong level, uint32_t mem_idx)
- {
-     CPUState *cs = env_cpu(env);
--    target_ulong badvaddr, index, phys, ret;
-+    target_ulong badvaddr, index, phys;
-     uint64_t dir_base, dir_width;
- 
-     if (unlikely((level == 0) || (level > 4))) {
-@@ -571,8 +571,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     get_dir_base_width(env, &dir_base, &dir_width, level);
-     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
-     phys = base | index << 3;
--    ret = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
--    return ret;
-+    return ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
- }
- 
- void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+  v2 ... v3:
+    1. Add missing modification replacing error_propagate() + error_setg()
+      with error_setg().
+    2. Some enhancement about error handling, handling error
+       symmetrically in many places
+
+  v1 ... v2:
+    1. Add fixes tag and change title with fix prefix in patch 1.
+    2. Replace error_propagate() with error_setg(), and return directly
+       for any error.
+---
+Bibo Mao (4):
+  target/loongarch: Fix error handling of KVM feature checks
+  hw/loongarch/virt: Remove unnecessary NULL pointer
+  target/loongarch: Remove unnecessary temporary variable assignment
+  target/loongarch: Set dest error with error_abort in virt_cpu_irq_init
+
+ hw/loongarch/virt.c               | 40 +++++++++++++------------------
+ target/loongarch/kvm/kvm.c        |  8 +++++--
+ target/loongarch/tcg/tlb_helper.c |  5 ++--
+ 3 files changed, 24 insertions(+), 29 deletions(-)
+
+
+base-commit: 1dae461a913f9da88df05de6e2020d3134356f2e
 -- 
 2.39.3
 
