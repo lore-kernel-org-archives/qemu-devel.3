@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035C3C36000
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 08:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E810C36000
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 08:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuoOv-00081K-CU; Wed, 19 Mar 2025 04:03:49 -0400
+	id 1tuoOl-000819-UN; Wed, 19 Mar 2025 04:03:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tuoOg-0007zp-Gr
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:31 -0400
+ id 1tuoOZ-0007yV-2e
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:26 -0400
 Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tuoOe-0004PA-OW
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:30 -0400
+ id 1tuoOW-0004Nw-HQ
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:22 -0400
 Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2241053582dso29945645ad.1
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 01:03:27 -0700 (PDT)
+ d9443c01a7336-225477548e1so115047185ad.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 01:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742371407; x=1742976207; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rknrmfA7CmFKA8NZIq2TcdDuCQaG1etacbJiGQO7Y4w=;
- b=IcF+yDQBetWU18Kk9Hf1dv7HgfZX50Itk66rdjms29h3kGjJ8o6PBzutJkDf41pqQw
- AirLxTfoR/LLeoRo4nMtkJSQGfmJC2eM9FAFy3UDJkWCBpXBEXw5V4BOG3YKydcAVjGu
- MTs65iX8eNLDtU+dlFAQ7sfw1WzlLYP5EiLrSlhaPkrAKdpuRlUyMM7vvh/TVpHz0YXY
- nPWHCqRJfxalsD+STL1Z3eRsx9FvPBzymq2WhGSjfhsa98+fOUsx9s93nSq/dLAdD0fV
- EgvuBOrAkFYiE2gwJxnCMbDlp3/H3NGDd/CCxn8ajHNtxoyDkjWQbDXgP/si3hZPsl6z
- Bfcg==
+ d=gmail.com; s=20230601; t=1742371397; x=1742976197; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=d97oawvz8CwDMw6pfcxqX05lgcbKJXMjocbN9tIklM8=;
+ b=JGkHbzfYM/rgM3secDpzIeSkHKM499F6uZYk6/89ouCTac007vtuJl3eU3j6sCpD5l
+ XMX6LheqIV7usNiEGgao0MCWhGe7JDpfSDjoShkycGNiUZFzQbTikZzMUgmR53is1Azg
+ zCSGmDnik5eT8OLq0KuCcAHbX1H7f8X+9e0nfujg1JNkI6ImwQTkZ6sdTwGAhQUc8Rsu
+ 7Nddiiy7UC3KaPIdux+K8QQdjCi2qs++GmQx1/FXVc3GtG8x3z2VTkCOGpmo6Q7dGweF
+ 2Gs0HTTsDrn8VY6NTt+zyrBYmpLxi6Ca/D/1z58aT2YBr6R2Lw9c9x8qSBnyJOs2vDEK
+ i/Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742371407; x=1742976207;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rknrmfA7CmFKA8NZIq2TcdDuCQaG1etacbJiGQO7Y4w=;
- b=Bs8OENIWMQfW3ay7D2WJKhe3pEzZBwKl70iZEAXEpgUTOJ0/Rmyr+K++YC2Wzp69/Y
- RytVFQ6rK9xQqzmN9ofeRRLsnb+LvrtDud0JJ0tbU5U0zS98gwLJLlp9CjgJWEZ32m3Z
- 39KHnm3yqznTWdr+kz32WT3wriuHDK7P/dCFlBnfSLaFGToI8JQTdmY1mk8/yxgCzjeA
- QSvJVatiRWHjrA534VimEW/jgnefqQ6cJ4HewkW5fcJj2mBUEa0Nj2IYe3s5JQbSzptR
- Bldcn+X6UN4aHRFX8R4w6vj4StOuz8FOKKMu5tDKC2SmS6ZZRXNeQvdH9WNxk+czmYz1
- n3lg==
-X-Gm-Message-State: AOJu0Yy7S5T39O5vj3qtv9lPVmk6hUns1nDmFAwIOla3N42PzO94rCSC
- +CPjZqJYq5sbn6plOdDQUCOveBwQU0N3BlhA2xGnUEtFGdA0csFXGm0cKQ==
-X-Gm-Gg: ASbGncvb5u4rfAoMKjdviRfn4uuUrwH1sqDO6tywZzLw1RQCLSVy9NVphNDVkbVg1yC
- 7lvvD0727zWRB8dUiwSEA3R6bPJJ6MsqsmkYUIj9fhP0sNgjPBm2IBXYM5+9LC0Bg2fcfufpEFE
- BV4NePWEmveeqfMRPJBSL5Z7P3tO5GUAdkdpOpfYrsU0bVR9CCTHFsr5fU9/v9vctnxjcFYdMz+
- EAZr1Nv09GdueNWjvHirc2D8oqkQaILTd1Zq7dsl2K05SdHqwxj4BhgStjxgOyQtj9AFZAOc0OG
- w3XgjkqkM5r89eUC1RvKayTG0LDQ0B3wrWOjL0pgpGx5NfZshBqSurYy7I41Xd69gsHcwDUzQtb
- oVPuH+fC0sfCN3ic0M6p7VdEX/im2XeMBIiFSWx2fByX2Ntv2VzIB3c/TgL4=
-X-Google-Smtp-Source: AGHT+IGgYO4dctU62JIu13COw8OVTjcOhwwZfRYQDpNNPTAW5FyoMxYyOTTpREIIM57LGfh3sEemyw==
-X-Received: by 2002:a17:902:c949:b0:224:2667:8115 with SMTP id
- d9443c01a7336-22649a8108fmr29640925ad.48.1742371406762; 
- Wed, 19 Mar 2025 01:03:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742371397; x=1742976197;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d97oawvz8CwDMw6pfcxqX05lgcbKJXMjocbN9tIklM8=;
+ b=Xln1lp/LOZa01kThQoGKxuxoCqw/oj7n+E2eQTPS0Z06xUMGIsecE7RmDJVLCe9OHp
+ 5NMYtInB8NbOuZw5uGQSPMhPhC5/cUFTKDvJohROJtWFBto4nAbbAxdzbDrofgpJPvmI
+ /kMA0D6KbZWYsBthd47YsEvXqYnOUn7Zh9eORMKWLnuIqmXuuIgjEV6i+n+zzLXqYEA+
+ +lPAi4fBKynmbIUKXQJ8GKC1KCMT2Q+LEHF5HSmTSmtlL7OCHfxeNYUpqnI/ygUUbt+F
+ BjOVyNja5jaOSXbnYQAtP9RHd5ucWubvWedRLUair/2rbvvahlMw9LPNqrMKXlNkJ/AH
+ 5QKw==
+X-Gm-Message-State: AOJu0YyNIn5bfqhncFxnb5CHLFkIWWIkT0LdM+K5zfNg7joN4vDihmWa
+ zufkB4Jc2KeMEwB+YLRTgpHJU0I2QrseeQT1I6nobVmU7RU/owVbGsycJg==
+X-Gm-Gg: ASbGncu5hkXv82oZn88ggYdlKJk56mfZStk5L/nFso/MkVH+y7bsxyUZhvvwMaG7JZg
+ SUsuPH8T9FBhI8Ydi4AzdOWIj01AtPMmZNpzgstBWwRJsXoaYg3CXn25FYnmoDQSzWgqhnS7/hh
+ 7A4+ZWq3PXg/brqqejLfR1Odv11FGJyxSNJtvVoMr5b9L0mXexq2dbyUuKKiSXrzRloeZoCdgqh
+ K5BZiL7Wx7YKboWmb8ANGPjocd9H5/NN8Errs/Tr38sE8HsZ7acxLu8Gp/ZGvPXomNmHJyaSkgY
+ 9Mf7ZvUx0dRtbLmZ5VpA5z5RttwVPdJipdvtN6jlns2EbATzg2v8w8LM0A5urH3aW4nGiqrIuL5
+ +pejsIeiJf1xei3O66Z8YZMqNc9qWGkmX2SCzw+XCebi94012
+X-Google-Smtp-Source: AGHT+IEAV8fFfRpyJBGZ3hXjffYhIQ6BSkYoeqeyvus7oYLrOOFvD61SiP0a6fmT9V77zcmHq9AzDA==
+X-Received: by 2002:a17:902:f68e:b0:224:2a6d:55ae with SMTP id
+ d9443c01a7336-22649a6a8f8mr31076955ad.48.1742371396651; 
+ Wed, 19 Mar 2025 01:03:16 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6ba6c8dsm107725255ad.156.2025.03.19.01.03.23
+ d9443c01a7336-225c6ba6c8dsm107725255ad.156.2025.03.19.01.03.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 01:03:26 -0700 (PDT)
+ Wed, 19 Mar 2025 01:03:15 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Deepak Gupta <debug@rivosinc.com>,
- Adam Zabrocki <azabrocki@nvidia.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 03/10] target/riscv: fix access permission checks for CSR_SSP
-Date: Wed, 19 Mar 2025 18:03:01 +1000
-Message-ID: <20250319080308.609520-4-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+	Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 00/10] riscv-to-apply queue
+Date: Wed, 19 Mar 2025 18:02:58 +1000
+Message-ID: <20250319080308.609520-1-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250319080308.609520-1-alistair.francis@wdc.com>
-References: <20250319080308.609520-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
@@ -105,43 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Deepak Gupta <debug@rivosinc.com>
+The following changes since commit 1dae461a913f9da88df05de6e2020d3134356f2e:
 
-Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
-zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
-to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
-rather rules clearly specified in section "22.2.1. Shadow Stack Pointer
-(ssp) CSR access contr" in the priv spec.
+  Update version for v10.0.0-rc0 release (2025-03-18 10:18:14 -0400)
 
-Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls
-for zicfiss". Thanks to Adam Zabrocki for bringing this to attention.
+are available in the Git repository at:
 
-Reported-by: Adam Zabrocki <azabrocki@nvidia.com>
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250306064636.452396-1-debug@rivosinc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/csr.c | 5 +++++
- 1 file changed, 5 insertions(+)
+  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20250319
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 49566d3c08..8225e9bb4b 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -192,6 +192,11 @@ static RISCVException cfi_ss(CPURISCVState *env, int csrno)
-         return RISCV_EXCP_ILLEGAL_INST;
-     }
- 
-+    /* If ext implemented, M-mode always have access to SSP CSR */
-+    if (env->priv == PRV_M) {
-+        return RISCV_EXCP_NONE;
-+    }
-+
-     /* if bcfi not active for current env, access to csr is illegal */
-     if (!cpu_get_bcfien(env)) {
- #if !defined(CONFIG_USER_ONLY)
--- 
-2.48.1
+for you to fetch changes up to ffe4db11f8aed79c7ec7d3ebd92674a1cfab4fe7:
 
+  target/riscv: Add check for 16-bit aligned PC for different priv versions. (2025-03-19 17:11:46 +1000)
+
+----------------------------------------------------------------
+Fourth RISC-V PR for 10.0
+
+* Fix broken emulation link
+* Optimize the memory probing for vector fault-only-first loads
+* Fix access permission checks for CSR_SSP
+* Fixes a bug against `ssamoswap` behavior in M-mode
+* Fix IOMMU process directory table walk
+* Fix OVERFLOW_BEFORE_WIDEN in rmw_sctrdepth()
+* Enhance VSTART and VL checks for vector instructions
+* Fix handling of cpu mask in riscv_hwprobe syscall
+* Add check for 16-bit aligned PC for different priv versions
+
+----------------------------------------------------------------
+Chao Liu (2):
+      target/riscv: refactor VSTART_CHECK_EARLY_EXIT() to accept vl as a parameter
+      target/riscv: fix handling of nop for vstart >= vl in some vector instruction
+
+Daniel Henrique Barboza (1):
+      target/riscv/csr.c: fix OVERFLOW_BEFORE_WIDEN in rmw_sctrdepth()
+
+Deepak Gupta (2):
+      target/riscv: fix access permission checks for CSR_SSP
+      target/riscv: fixes a bug against `ssamoswap` behavior in M-mode
+
+Jason Chien (1):
+      hw/riscv/riscv-iommu: Fix process directory table walk
+
+Paolo Savini (1):
+      optimize the memory probing for vector fault-only-first loads.
+
+Richard Henderson (1):
+      linux-user/riscv: Fix handling of cpu mask in riscv_hwprobe syscall
+
+Santiago Monserrat Campanello (1):
+      docs/about/emulation: Fix broken link
+
+Yu-Ming Chang (1):
+      target/riscv: Add check for 16-bit aligned PC for different priv versions.
+
+ docs/about/emulation.rst                      |   2 +-
+ hw/riscv/riscv-iommu-bits.h                   |   6 +-
+ target/riscv/cpu.h                            |  12 ++
+ target/riscv/vector_internals.h               |  12 +-
+ hw/riscv/riscv-iommu.c                        |   4 +-
+ linux-user/syscall.c                          |  55 ++++----
+ target/riscv/csr.c                            |   7 +-
+ target/riscv/op_helper.c                      |   8 +-
+ target/riscv/translate.c                      |   4 +-
+ target/riscv/vcrypto_helper.c                 |  32 ++---
+ target/riscv/vector_helper.c                  | 186 ++++++++++++++------------
+ target/riscv/vector_internals.c               |   4 +-
+ target/riscv/insn_trans/trans_rvi.c.inc       |   8 +-
+ target/riscv/insn_trans/trans_rvzicfiss.c.inc |  17 +++
+ 14 files changed, 214 insertions(+), 143 deletions(-)
 
