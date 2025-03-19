@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298C9C35FFC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 15:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C1A3C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 15:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuvFQ-0001Ax-Lo; Wed, 19 Mar 2025 11:22:24 -0400
+	id 1tuvFP-0001AM-6x; Wed, 19 Mar 2025 11:22:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tuvEr-00011X-4f
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:21:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tuvF0-00012j-EM
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:22:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tuvEj-0001OK-MB
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:21:48 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tuvEo-0001Ot-Re
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:21:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742397698;
+ s=mimecast20190719; t=1742397702;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SGu2ytFgg3fuowhy4PeseUC0DJrGePKjMbacA7Q0MQ0=;
- b=iECIq0UQsingPSR+6FS4cPuqSNoh5zCKZ8ojlckcygTKBVWAzLruBpDec5URDehWio8Dzq
- 9Cp/ft5U6cgIQylwIY1VWkybpjbIbUYI6ItmYpi+8URMpr7H7BhAvEgW6ZRq4KGHWo6bM5
- aRZbpUZVH4NoTJHWlK/NdimMm3STu+k=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=c0Yjsbxi/w8KB3MdOmcRW0OmBToLvNJ/OnnTC6+wNhs=;
+ b=haROm4R7clMgnLfq0QRoqnv4fto9maSxWp/qOgOxkUBbt8TPwK8hxwyD7FxXI/aicadNZ4
+ M8o/llmA68xpzlYbGJePRIE1ZB4zL/xCzFSKVQvNxb2i9LaNwZiAy2DVSE3nHdOpzAip2b
+ tznOeHUQk7zDk2L2Jfv7TYt3/I8PVsI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-czKc3wzPPni6UlajI0h4Sw-1; Wed,
- 19 Mar 2025 11:21:35 -0400
-X-MC-Unique: czKc3wzPPni6UlajI0h4Sw-1
-X-Mimecast-MFC-AGG-ID: czKc3wzPPni6UlajI0h4Sw_1742397694
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-N0LFcn0QOtGuvC1Rb1L3vQ-1; Wed,
+ 19 Mar 2025 11:21:38 -0400
+X-MC-Unique: N0LFcn0QOtGuvC1Rb1L3vQ-1
+X-Mimecast-MFC-AGG-ID: N0LFcn0QOtGuvC1Rb1L3vQ_1742397697
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F309519560B6
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 15:21:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 66657180AF5E
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 15:21:37 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BE9A1800268
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 15:21:30 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A2041800370
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 15:21:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2CD6021E6682; Wed, 19 Mar 2025 16:21:26 +0100 (CET)
+ id 2831B21E66C6; Wed, 19 Mar 2025 16:21:26 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 2/3] cleanup: Drop pointless return at end of function
-Date: Wed, 19 Mar 2025 16:21:25 +0100
-Message-ID: <20250319152126.3472290-3-armbru@redhat.com>
+Subject: [PATCH 1/3] cleanup: Re-run return_directly.cocci
+Date: Wed, 19 Mar 2025 16:21:24 +0100
+Message-ID: <20250319152126.3472290-2-armbru@redhat.com>
 In-Reply-To: <20250319152126.3472290-1-armbru@redhat.com>
 References: <20250319152126.3472290-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,1812 +84,7973 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few functions now end with a label.  The next commit will clean them
-up.
+Coccinelle's indentation of virt_create_plic() results in a long line.
+Avoid that by mimicking the old indentation manually.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/system/os-win32.h           |  1 -
- target/ppc/kvm_ppc.h                |  3 ---
- accel/tcg/cpu-exec.c                |  1 -
- block/gluster.c                     |  4 ----
- block/rbd.c                         |  1 -
- block/replication.c                 |  1 -
- block/throttle-groups.c             |  1 -
- bsd-user/signal.c                   |  1 -
- dump/win_dump.c                     |  2 --
- event-loop-base.c                   |  2 --
- hw/acpi/acpi-cpu-hotplug-stub.c     |  8 --------
- hw/acpi/acpi-mem-hotplug-stub.c     |  5 -----
- hw/acpi/acpi-nvdimm-stub.c          |  1 -
- hw/acpi/acpi-pci-hotplug-stub.c     |  6 ------
- hw/arm/exynos4210.c                 |  1 -
- hw/arm/smmu-common.c                |  1 -
- hw/arm/xen-stubs.c                  |  1 -
- hw/audio/asc.c                      |  1 -
- hw/core/qdev-properties-system.c    |  1 -
- hw/cxl/cxl-host.c                   |  2 --
- hw/display/macfb.c                  |  1 -
- hw/display/tcx.c                    |  1 -
- hw/display/virtio-gpu-base.c        |  1 -
- hw/dma/sifive_pdma.c                |  1 -
- hw/gpio/aspeed_gpio.c               |  5 -----
- hw/gpio/bcm2838_gpio.c              |  1 -
- hw/gpio/imx_gpio.c                  |  2 --
- hw/gpio/pl061.c                     |  1 -
- hw/hyperv/vmbus.c                   |  1 -
- hw/i2c/pm_smbus.c                   |  1 -
- hw/i386/intel_iommu.c               |  2 --
- hw/i386/nitro_enclave.c             |  1 -
- hw/i386/xen/xen-hvm.c               |  2 --
- hw/input/virtio-input-host.c        |  1 -
- hw/intc/arm_gicv3_cpuif.c           |  1 -
- hw/intc/aspeed_intc.c               |  4 ----
- hw/intc/mips_gic.c                  |  1 -
- hw/ipmi/ipmi_bmc_extern.c           |  2 --
- hw/ipmi/ipmi_bmc_sim.c              |  2 --
- hw/ipmi/ipmi_bt.c                   |  1 -
- hw/ipmi/ipmi_kcs.c                  |  1 -
- hw/loongarch/virt.c                 |  3 ---
- hw/m68k/next-cube.c                 |  1 -
- hw/m68k/q800.c                      |  2 --
- hw/mem/cxl_type3.c                  |  4 ----
- hw/mem/sparse-mem.c                 |  1 -
- hw/misc/i2c-echo.c                  |  2 --
- hw/misc/ivshmem-flat.c              |  2 --
- hw/misc/mips_cpc.c                  |  2 --
- hw/net/can/ctucan_core.c            |  2 --
- hw/net/can/xlnx-versal-canfd.c      |  2 --
- hw/net/imx_fec.c                    |  1 -
- hw/net/vmxnet3.c                    |  1 -
- hw/nvram/xlnx-versal-efuse-ctrl.c   |  1 -
- hw/ppc/mac_newworld.c               |  2 --
- hw/ppc/pnv_occ.c                    |  1 -
- hw/ppc/spapr_hcall.c                |  1 -
- hw/ppc/spapr_nested.c               |  1 -
- hw/ppc/spapr_nvdimm.c               |  2 --
- hw/s390x/s390-pci-bus.c             |  1 -
- hw/s390x/s390-pci-vfio.c            |  2 --
- hw/scsi/megasas.c                   |  1 -
- hw/scsi/vhost-scsi.c                |  1 -
- hw/ssi/ibex_spi_host.c              |  1 -
- hw/ssi/pnv_spi.c                    |  2 --
- hw/tpm/tpm_tis_i2c.c                |  4 ----
- hw/usb/dev-mtp.c                    |  2 --
- hw/usb/dev-serial.c                 |  2 --
- hw/usb/dev-smartcard-reader.c       |  1 -
- hw/usb/dev-uas.c                    |  1 -
- hw/vfio/display.c                   |  1 -
- hw/vfio/pci.c                       |  1 -
- hw/vfio/platform.c                  |  1 -
- hw/virtio/vhost-user-fs.c           |  1 -
- hw/virtio/vhost-user-scmi.c         |  2 --
- hw/virtio/vhost-user-vsock.c        |  1 -
- hw/virtio/vhost-user.c              |  2 --
- hw/virtio/vhost-vdpa.c              |  2 --
- hw/virtio/vhost.c                   |  1 -
- hw/virtio/virtio-nsm.c              |  1 -
- hw/virtio/virtio.c                  |  2 --
- hw/watchdog/sbsa_gwdt.c             |  1 -
- hw/watchdog/wdt_aspeed.c            |  1 -
- linux-user/xtensa/signal.c          |  1 -
- migration/multifd-nocomp.c          |  1 -
- migration/qemu-file.c               |  2 --
- migration/ram.c                     |  2 --
- net/colo-compare.c                  |  2 --
- qemu-keymap.c                       |  1 -
- qga/commands-win32.c                |  4 ----
- system/dirtylimit.c                 |  2 --
- target/arm/tcg/helper-a64.c         |  2 --
- target/i386/kvm/vmsr_energy.c       |  1 -
- target/i386/tcg/translate.c         |  1 -
- target/i386/whpx/whpx-all.c         | 11 -----------
- target/m68k/helper.c                |  1 -
- target/mips/tcg/system/mips-semi.c  |  1 -
- target/ppc/kvm.c                    |  1 -
- target/ppc/translate.c              |  1 -
- target/riscv/debug.c                |  6 ------
- target/s390x/cpu_models.c           |  1 -
- target/sh4/translate.c              |  1 -
- tests/qtest/ahci-test.c             |  1 -
- tests/qtest/fuzz/generic_fuzz.c     |  1 -
- tests/qtest/libqos/libqos-malloc.c  |  1 -
- tests/qtest/libqtest.c              |  1 -
- tests/qtest/test-x86-cpuid-compat.c |  1 -
- tests/unit/socket-helpers.c         |  1 -
- tests/unit/test-qgraph.c            |  1 -
- ui/input-linux.c                    |  1 -
- ui/vnc.c                            |  2 --
- util/main-loop.c                    |  1 -
- util/qht.c                          |  1 -
- 113 files changed, 197 deletions(-)
+ hw/gpio/pca9554.c                             |  5 +---
+ hw/i386/kvm/xen_xenstore.c                    |  4 +--
+ hw/riscv/virt.c                               | 25 ++++++++-----------
+ hw/scsi/esp.c                                 |  5 +---
+ hw/vfio/common.c                              |  7 ++----
+ plugins/api.c                                 |  4 +--
+ target/loongarch/tcg/tlb_helper.c             |  5 ++--
+ tests/qtest/cmsdk-apb-watchdog-test.c         |  6 +----
+ tests/qtest/pnv-host-i2c-test.c               |  4 +--
+ tests/qtest/stm32l4x5_usart-test.c            |  6 +----
+ .../user/ase/msa/bit-count/test_msa_nloc_b.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_nloc_d.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_nloc_h.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_nloc_w.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_nlzc_b.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_nlzc_d.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_nlzc_h.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_nlzc_w.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_pcnt_b.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_pcnt_d.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_pcnt_h.c  |  9 +++----
+ .../user/ase/msa/bit-count/test_msa_pcnt_w.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsl_b.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsl_d.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsl_h.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsl_w.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsr_b.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsr_d.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsr_h.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_binsr_w.c  |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_bmnz_v.c   |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_bmz_v.c    |  9 +++----
+ .../user/ase/msa/bit-move/test_msa_bsel_v.c   |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bclr_b.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bclr_d.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bclr_h.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bclr_w.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bneg_b.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bneg_d.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bneg_h.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bneg_w.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bset_b.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bset_d.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bset_h.c    |  9 +++----
+ .../user/ase/msa/bit-set/test_msa_bset_w.c    |  9 +++----
+ .../msa/fixed-multiply/test_msa_madd_q_h.c    |  9 +++----
+ .../msa/fixed-multiply/test_msa_madd_q_w.c    |  9 +++----
+ .../msa/fixed-multiply/test_msa_maddr_q_h.c   |  9 +++----
+ .../msa/fixed-multiply/test_msa_maddr_q_w.c   |  9 +++----
+ .../msa/fixed-multiply/test_msa_msub_q_h.c    |  9 +++----
+ .../msa/fixed-multiply/test_msa_msub_q_w.c    |  9 +++----
+ .../msa/fixed-multiply/test_msa_msubr_q_h.c   |  9 +++----
+ .../msa/fixed-multiply/test_msa_msubr_q_w.c   |  9 +++----
+ .../ase/msa/fixed-multiply/test_msa_mul_q_h.c |  9 +++----
+ .../ase/msa/fixed-multiply/test_msa_mul_q_w.c |  9 +++----
+ .../msa/fixed-multiply/test_msa_mulr_q_h.c    |  9 +++----
+ .../msa/fixed-multiply/test_msa_mulr_q_w.c    |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmax_a_d.c |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmax_a_w.c |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmax_d.c   |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmax_w.c   |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmin_a_d.c |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmin_a_w.c |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmin_d.c   |  9 +++----
+ .../ase/msa/float-max-min/test_msa_fmin_w.c   |  9 +++----
+ .../user/ase/msa/int-add/test_msa_add_a_b.c   |  9 +++----
+ .../user/ase/msa/int-add/test_msa_add_a_d.c   |  9 +++----
+ .../user/ase/msa/int-add/test_msa_add_a_h.c   |  9 +++----
+ .../user/ase/msa/int-add/test_msa_add_a_w.c   |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_a_b.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_a_d.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_a_h.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_a_w.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_s_b.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_s_d.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_s_h.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_s_w.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_u_b.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_u_d.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_u_h.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_adds_u_w.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_addv_b.c    |  9 +++----
+ .../user/ase/msa/int-add/test_msa_addv_d.c    |  9 +++----
+ .../user/ase/msa/int-add/test_msa_addv_h.c    |  9 +++----
+ .../user/ase/msa/int-add/test_msa_addv_w.c    |  9 +++----
+ .../user/ase/msa/int-add/test_msa_hadd_s_d.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_hadd_s_h.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_hadd_s_w.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_hadd_u_d.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_hadd_u_h.c  |  9 +++----
+ .../user/ase/msa/int-add/test_msa_hadd_u_w.c  |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_s_b.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_s_d.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_s_h.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_s_w.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_u_b.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_u_d.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_u_h.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_ave_u_w.c    |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_s_b.c   |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_s_d.c   |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_s_h.c   |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_s_w.c   |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_u_b.c   |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_u_d.c   |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_u_h.c   |  9 +++----
+ .../ase/msa/int-average/test_msa_aver_u_w.c   |  9 +++----
+ .../user/ase/msa/int-compare/test_msa_ceq_b.c |  9 +++----
+ .../user/ase/msa/int-compare/test_msa_ceq_d.c |  9 +++----
+ .../user/ase/msa/int-compare/test_msa_ceq_h.c |  9 +++----
+ .../user/ase/msa/int-compare/test_msa_ceq_w.c |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_s_b.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_s_d.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_s_h.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_s_w.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_u_b.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_u_d.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_u_h.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_cle_u_w.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_s_b.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_s_d.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_s_h.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_s_w.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_u_b.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_u_d.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_u_h.c    |  9 +++----
+ .../ase/msa/int-compare/test_msa_clt_u_w.c    |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_s_b.c     |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_s_d.c     |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_s_h.c     |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_s_w.c     |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_u_b.c     |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_u_d.c     |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_u_h.c     |  9 +++----
+ .../ase/msa/int-divide/test_msa_div_u_w.c     |  9 +++----
+ .../msa/int-dot-product/test_msa_dotp_s_d.c   |  9 +++----
+ .../msa/int-dot-product/test_msa_dotp_s_h.c   |  9 +++----
+ .../msa/int-dot-product/test_msa_dotp_s_w.c   |  9 +++----
+ .../msa/int-dot-product/test_msa_dotp_u_d.c   |  9 +++----
+ .../msa/int-dot-product/test_msa_dotp_u_h.c   |  9 +++----
+ .../msa/int-dot-product/test_msa_dotp_u_w.c   |  9 +++----
+ .../msa/int-dot-product/test_msa_dpadd_s_d.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpadd_s_h.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpadd_s_w.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpadd_u_d.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpadd_u_h.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpadd_u_w.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpsub_s_d.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpsub_s_h.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpsub_s_w.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpsub_u_d.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpsub_u_h.c  |  9 +++----
+ .../msa/int-dot-product/test_msa_dpsub_u_w.c  |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_a_b.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_a_d.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_a_h.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_a_w.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_s_b.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_s_d.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_s_h.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_s_w.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_u_b.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_u_d.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_u_h.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_max_u_w.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_a_b.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_a_d.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_a_h.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_a_w.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_s_b.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_s_d.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_s_h.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_s_w.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_u_b.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_u_d.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_u_h.c    |  9 +++----
+ .../ase/msa/int-max-min/test_msa_min_u_w.c    |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_s_b.c     |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_s_d.c     |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_s_h.c     |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_s_w.c     |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_u_b.c     |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_u_d.c     |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_u_h.c     |  9 +++----
+ .../ase/msa/int-modulo/test_msa_mod_u_w.c     |  9 +++----
+ .../ase/msa/int-multiply/test_msa_maddv_b.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_maddv_d.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_maddv_h.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_maddv_w.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_msubv_b.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_msubv_d.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_msubv_h.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_msubv_w.c   |  9 +++----
+ .../ase/msa/int-multiply/test_msa_mulv_b.c    |  9 +++----
+ .../ase/msa/int-multiply/test_msa_mulv_d.c    |  9 +++----
+ .../ase/msa/int-multiply/test_msa_mulv_h.c    |  9 +++----
+ .../ase/msa/int-multiply/test_msa_mulv_w.c    |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_s_b.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_s_d.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_s_h.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_s_w.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_u_b.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_u_d.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_u_h.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_asub_u_w.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_hsub_s_d.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_hsub_s_h.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_hsub_s_w.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_hsub_u_d.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_hsub_u_h.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_hsub_u_w.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_s_b.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_s_d.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_s_h.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_s_w.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_u_b.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_u_d.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_u_h.c  |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subs_u_w.c  |  9 +++----
+ .../msa/int-subtract/test_msa_subsus_u_b.c    |  9 +++----
+ .../msa/int-subtract/test_msa_subsus_u_d.c    |  9 +++----
+ .../msa/int-subtract/test_msa_subsus_u_h.c    |  9 +++----
+ .../msa/int-subtract/test_msa_subsus_u_w.c    |  9 +++----
+ .../msa/int-subtract/test_msa_subsuu_s_b.c    |  9 +++----
+ .../msa/int-subtract/test_msa_subsuu_s_d.c    |  9 +++----
+ .../msa/int-subtract/test_msa_subsuu_s_h.c    |  9 +++----
+ .../msa/int-subtract/test_msa_subsuu_s_w.c    |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subv_b.c    |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subv_d.c    |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subv_h.c    |  9 +++----
+ .../ase/msa/int-subtract/test_msa_subv_w.c    |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvev_b.c     |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvev_d.c     |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvev_h.c     |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvev_w.c     |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvl_b.c |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvl_d.c |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvl_h.c |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvl_w.c |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvod_b.c     |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvod_d.c     |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvod_h.c     |  9 +++----
+ .../ase/msa/interleave/test_msa_ilvod_w.c     |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvr_b.c |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvr_d.c |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvr_h.c |  9 +++----
+ .../user/ase/msa/interleave/test_msa_ilvr_w.c |  9 +++----
+ .../mips/user/ase/msa/logic/test_msa_and_v.c  |  9 +++----
+ .../mips/user/ase/msa/logic/test_msa_nor_v.c  |  9 +++----
+ .../mips/user/ase/msa/logic/test_msa_or_v.c   |  9 +++----
+ .../mips/user/ase/msa/logic/test_msa_xor_v.c  |  9 +++----
+ .../mips/user/ase/msa/move/test_msa_move_v.c  |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckev_b.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckev_d.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckev_h.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckev_w.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckod_b.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckod_d.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckod_h.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_pckod_w.c |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_vshf_b.c  |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_vshf_d.c  |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_vshf_h.c  |  9 +++----
+ .../mips/user/ase/msa/pack/test_msa_vshf_w.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sll_b.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sll_d.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sll_h.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sll_w.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sra_b.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sra_d.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sra_h.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_sra_w.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srar_b.c |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srar_d.c |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srar_h.c |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srar_w.c |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srl_b.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srl_d.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srl_h.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srl_w.c  |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srlr_b.c |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srlr_d.c |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srlr_h.c |  9 +++----
+ .../mips/user/ase/msa/shift/test_msa_srlr_w.c |  9 +++----
+ .../mips64r6/bit-count/test_mips64r6_clo.c    |  7 ++----
+ .../mips64r6/bit-count/test_mips64r6_clz.c    |  7 ++----
+ .../mips64r6/bit-count/test_mips64r6_dclo.c   |  7 ++----
+ .../mips64r6/bit-count/test_mips64r6_dclz.c   |  7 ++----
+ .../mips64r6/bit-swap/test_mips64r6_bitswap.c |  7 ++----
+ .../bit-swap/test_mips64r6_dbitswap.c         |  7 ++----
+ .../int-multiply/test_mips64r6_dmuh.c         |  7 ++----
+ .../int-multiply/test_mips64r6_dmuhu.c        |  7 ++----
+ .../int-multiply/test_mips64r6_dmul.c         |  7 ++----
+ .../int-multiply/test_mips64r6_dmulu.c        |  7 ++----
+ .../mips64r6/int-multiply/test_mips64r6_muh.c |  7 ++----
+ .../int-multiply/test_mips64r6_muhu.c         |  7 ++----
+ .../mips64r6/int-multiply/test_mips64r6_mul.c |  7 ++----
+ .../int-multiply/test_mips64r6_mulu.c         |  7 ++----
+ .../isa/mips64r6/logic/test_mips64r6_and.c    |  7 ++----
+ .../isa/mips64r6/logic/test_mips64r6_nor.c    |  7 ++----
+ .../isa/mips64r6/logic/test_mips64r6_or.c     |  7 ++----
+ .../isa/mips64r6/logic/test_mips64r6_xor.c    |  7 ++----
+ .../isa/mips64r6/shift/test_mips64r6_dsllv.c  |  7 ++----
+ .../isa/mips64r6/shift/test_mips64r6_dsrav.c  |  7 ++----
+ .../isa/mips64r6/shift/test_mips64r6_dsrlv.c  |  7 ++----
+ .../isa/mips64r6/shift/test_mips64r6_sllv.c   |  7 ++----
+ .../isa/mips64r6/shift/test_mips64r6_srav.c   |  7 ++----
+ .../isa/mips64r6/shift/test_mips64r6_srlv.c   |  7 ++----
+ tools/i386/qemu-vmsr-helper.c                 |  5 +---
+ 309 files changed, 892 insertions(+), 1818 deletions(-)
 
-diff --git a/include/system/os-win32.h b/include/system/os-win32.h
-index bc623061d8..3aa6cee4c2 100644
---- a/include/system/os-win32.h
-+++ b/include/system/os-win32.h
-@@ -130,7 +130,6 @@ static inline int os_mlock(bool on_fault G_GNUC_UNUSED)
- 
- static inline void os_setup_limits(void)
+diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+index fe03bb4b5e..7301fce934 100644
+--- a/hw/gpio/pca9554.c
++++ b/hw/gpio/pca9554.c
+@@ -118,11 +118,8 @@ static void pca9554_write(PCA9554State *s, uint8_t reg, uint8_t data)
+ static uint8_t pca9554_recv(I2CSlave *i2c)
  {
--    return;
- }
+     PCA9554State *s = PCA9554(i2c);
+-    uint8_t ret;
  
- #define fsync _commit
-diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
-index a8768c1dfd..a1d9ce9f9a 100644
---- a/target/ppc/kvm_ppc.h
-+++ b/target/ppc/kvm_ppc.h
-@@ -221,7 +221,6 @@ static inline int kvmppc_smt_threads(void)
- 
- static inline void kvmppc_error_append_smt_possible_hint(Error *const *errp)
- {
--    return;
- }
- 
- static inline int kvmppc_set_smt_threads(int smt)
-@@ -259,7 +258,6 @@ static inline target_ulong kvmppc_configure_v3_mmu(PowerPCCPU *cpu,
- static inline void kvmppc_set_reg_ppc_online(PowerPCCPU *cpu,
-                                              unsigned int online)
- {
--    return;
- }
- 
- static inline void kvmppc_set_reg_tb_offset(PowerPCCPU *cpu, int64_t tb_offset)
-@@ -456,7 +454,6 @@ static inline PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
- 
- static inline void kvmppc_check_papr_resize_hpt(Error **errp)
- {
--    return;
- }
- 
- static inline int kvmppc_resize_hpt_prepare(PowerPCCPU *cpu,
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index ef3d967e3a..8e28136392 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -665,7 +665,6 @@ static inline void tb_add_jump(TranslationBlock *tb, int n,
- 
-  out_unlock_next:
-     qemu_spin_unlock(&tb_next->jmp_lock);
--    return;
- }
- 
- static inline bool cpu_handle_halt(CPUState *cpu)
-diff --git a/block/gluster.c b/block/gluster.c
-index c6d25ae733..8712aa606a 100644
---- a/block/gluster.c
-+++ b/block/gluster.c
-@@ -972,8 +972,6 @@ static void qemu_gluster_reopen_commit(BDRVReopenState *state)
- 
-     g_free(state->opaque);
-     state->opaque = NULL;
+-    ret = pca9554_read(s, s->pointer & 0x3);
 -
--    return;
+-    return ret;
++    return pca9554_read(s, s->pointer & 0x3);
  }
  
+ static int pca9554_send(I2CSlave *i2c, uint8_t data)
+diff --git a/hw/i386/kvm/xen_xenstore.c b/hw/i386/kvm/xen_xenstore.c
+index 17802aa33d..227ad7ace3 100644
+--- a/hw/i386/kvm/xen_xenstore.c
++++ b/hw/i386/kvm/xen_xenstore.c
+@@ -209,7 +209,6 @@ static int xen_xenstore_post_load(void *opaque, int ver)
+ {
+     XenXenstoreState *s = opaque;
+     GByteArray *save;
+-    int ret;
  
-@@ -993,8 +991,6 @@ static void qemu_gluster_reopen_abort(BDRVReopenState *state)
+     /*
+      * As qemu/dom0, rebind to the guest's port. The Windows drivers may
+@@ -231,8 +230,7 @@ static int xen_xenstore_post_load(void *opaque, int ver)
+     s->impl_state = NULL;
+     s->impl_state_size = 0;
  
-     g_free(state->opaque);
-     state->opaque = NULL;
+-    ret = xs_impl_deserialize(s->impl, save, xen_domid, fire_watch_cb, s);
+-    return ret;
++    return xs_impl_deserialize(s->impl, save, xen_domid, fire_watch_cb, s);
+ }
+ 
+ static const VMStateDescription xen_xenstore_vmstate = {
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index dae46f4733..4281f3083e 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1275,27 +1275,22 @@ static FWCfgState *create_fw_cfg(const MachineState *ms)
+ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
+                                      int base_hartid, int hart_count)
+ {
+-    DeviceState *ret;
+     g_autofree char *plic_hart_config = NULL;
+ 
+     /* Per-socket PLIC hart topology configuration string */
+     plic_hart_config = riscv_plic_hart_config_string(hart_count);
+ 
+     /* Per-socket PLIC */
+-    ret = sifive_plic_create(
+-            memmap[VIRT_PLIC].base + socket * memmap[VIRT_PLIC].size,
+-            plic_hart_config, hart_count, base_hartid,
+-            VIRT_IRQCHIP_NUM_SOURCES,
+-            ((1U << VIRT_IRQCHIP_NUM_PRIO_BITS) - 1),
+-            VIRT_PLIC_PRIORITY_BASE,
+-            VIRT_PLIC_PENDING_BASE,
+-            VIRT_PLIC_ENABLE_BASE,
+-            VIRT_PLIC_ENABLE_STRIDE,
+-            VIRT_PLIC_CONTEXT_BASE,
+-            VIRT_PLIC_CONTEXT_STRIDE,
+-            memmap[VIRT_PLIC].size);
 -
--    return;
+-    return ret;
++    return sifive_plic_create(
++             memmap[VIRT_PLIC].base + socket * memmap[VIRT_PLIC].size,
++             plic_hart_config, hart_count, base_hartid,
++             VIRT_IRQCHIP_NUM_SOURCES,
++             ((1U << VIRT_IRQCHIP_NUM_PRIO_BITS) - 1),
++             VIRT_PLIC_PRIORITY_BASE, VIRT_PLIC_PENDING_BASE,
++             VIRT_PLIC_ENABLE_BASE, VIRT_PLIC_ENABLE_STRIDE,
++             VIRT_PLIC_CONTEXT_BASE,
++             VIRT_PLIC_CONTEXT_STRIDE,
++             memmap[VIRT_PLIC].size);
  }
  
- #ifdef CONFIG_GLUSTERFS_ZEROFILL
-diff --git a/block/rbd.c b/block/rbd.c
-index af984fb7db..7446e66659 100644
---- a/block/rbd.c
-+++ b/block/rbd.c
-@@ -254,7 +254,6 @@ static void qemu_rbd_parse_filename(const char *filename, QDict *options,
- done:
-     g_free(buf);
-     qobject_unref(keypairs);
--    return;
- }
+ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
+diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+index ac841dc32e..01bdfe2701 100644
+--- a/hw/scsi/esp.c
++++ b/hw/scsi/esp.c
+@@ -242,10 +242,7 @@ static uint32_t esp_get_stc(ESPState *s)
  
- static int qemu_rbd_set_auth(rados_t cluster, BlockdevOptionsRbd *opts,
-diff --git a/block/replication.c b/block/replication.c
-index 0020f33843..d6625c51fe 100644
---- a/block/replication.c
-+++ b/block/replication.c
-@@ -176,7 +176,6 @@ static void replication_child_perm(BlockDriverState *bs, BdrvChild *c,
-     *nshared = BLK_PERM_CONSISTENT_READ
-                | BLK_PERM_WRITE
-                | BLK_PERM_WRITE_UNCHANGED;
--    return;
- }
- 
- static int64_t coroutine_fn GRAPH_RDLOCK
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 32553b39e3..9f4d252c74 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -908,7 +908,6 @@ unlock:
-     qemu_mutex_unlock(&tg->lock);
-     qapi_free_ThrottleLimits(argp);
-     error_propagate(errp, local_err);
--    return;
- }
- 
- static void throttle_group_get_limits(Object *obj, Visitor *v,
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index a8cfcca130..1aa0fd79d6 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -441,7 +441,6 @@ void queue_signal(CPUArchState *env, int sig, int si_type,
-     ts->sync_signal.pending = sig;
-     /* Signal that a new signal is pending. */
-     qatomic_set(&ts->signal_pending, 1);
--    return;
- }
- 
- static int fatal_signal(int sig)
-diff --git a/dump/win_dump.c b/dump/win_dump.c
-index 2c2576672a..3162e8bd48 100644
---- a/dump/win_dump.c
-+++ b/dump/win_dump.c
-@@ -476,8 +476,6 @@ out_free:
-     g_free(saved_ctx);
- out_cr3:
-     first_x86_cpu->env.cr[3] = saved_cr3;
+ static uint8_t esp_pdma_read(ESPState *s)
+ {
+-    uint8_t val;
 -
--    return;
+-    val = esp_fifo_pop(s);
+-    return val;
++    return esp_fifo_pop(s);
  }
  
- #else /* !TARGET_X86_64 */
-diff --git a/event-loop-base.c b/event-loop-base.c
-index 0cfb1c9496..ddf8400a6b 100644
---- a/event-loop-base.c
-+++ b/event-loop-base.c
-@@ -73,8 +73,6 @@ static void event_loop_base_set_param(Object *obj, Visitor *v,
-     if (bc->update_params) {
-         bc->update_params(base, errp);
-     }
+ static void esp_pdma_write(ESPState *s, uint8_t val)
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 1a0d9290f8..d8aad4e1ce 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -110,8 +110,6 @@ static bool vfio_multiple_devices_migration_is_supported(void)
+ 
+ int vfio_block_multiple_devices_migration(VFIODevice *vbasedev, Error **errp)
+ {
+-    int ret;
 -
--    return;
- }
- 
- static void event_loop_base_complete(UserCreatable *uc, Error **errp)
-diff --git a/hw/acpi/acpi-cpu-hotplug-stub.c b/hw/acpi/acpi-cpu-hotplug-stub.c
-index c6c61bb9cd..9872dd55e4 100644
---- a/hw/acpi/acpi-cpu-hotplug-stub.c
-+++ b/hw/acpi/acpi-cpu-hotplug-stub.c
-@@ -10,47 +10,39 @@ void acpi_switch_to_modern_cphp(AcpiCpuHotplug *gpe_cpu,
-                                 CPUHotplugState *cpuhp_state,
-                                 uint16_t io_port)
- {
--    return;
- }
- 
- void legacy_acpi_cpu_hotplug_init(MemoryRegion *parent, Object *owner,
-                                   AcpiCpuHotplug *gpe_cpu, uint16_t base)
- {
--    return;
- }
- 
- void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
-                          CPUHotplugState *state, hwaddr base_addr)
- {
--    return;
- }
- 
- void acpi_cpu_ospm_status(CPUHotplugState *cpu_st, ACPIOSTInfoList ***list)
- {
--    return;
- }
- 
- void acpi_cpu_plug_cb(HotplugHandler *hotplug_dev,
-                       CPUHotplugState *cpu_st, DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void legacy_acpi_cpu_plug_cb(HotplugHandler *hotplug_dev,
-                              AcpiCpuHotplug *g, DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void acpi_cpu_unplug_cb(CPUHotplugState *cpu_st,
-                         DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void acpi_cpu_unplug_request_cb(HotplugHandler *hotplug_dev,
-                                 CPUHotplugState *cpu_st,
-                                 DeviceState *dev, Error **errp)
- {
--    return;
- }
-diff --git a/hw/acpi/acpi-mem-hotplug-stub.c b/hw/acpi/acpi-mem-hotplug-stub.c
-index 73a076a265..7ad0fdcdf2 100644
---- a/hw/acpi/acpi-mem-hotplug-stub.c
-+++ b/hw/acpi/acpi-mem-hotplug-stub.c
-@@ -7,29 +7,24 @@ const VMStateDescription vmstate_memory_hotplug;
- void acpi_memory_hotplug_init(MemoryRegion *as, Object *owner,
-                               MemHotplugState *state, hwaddr io_base)
- {
--    return;
- }
- 
- void acpi_memory_ospm_status(MemHotplugState *mem_st, ACPIOSTInfoList ***list)
- {
--    return;
- }
- 
- void acpi_memory_plug_cb(HotplugHandler *hotplug_dev, MemHotplugState *mem_st,
-                          DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void acpi_memory_unplug_cb(MemHotplugState *mem_st,
-                            DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void acpi_memory_unplug_request_cb(HotplugHandler *hotplug_dev,
-                                    MemHotplugState *mem_st,
-                                    DeviceState *dev, Error **errp)
- {
--    return;
- }
-diff --git a/hw/acpi/acpi-nvdimm-stub.c b/hw/acpi/acpi-nvdimm-stub.c
-index 8baff9be6f..65f491d653 100644
---- a/hw/acpi/acpi-nvdimm-stub.c
-+++ b/hw/acpi/acpi-nvdimm-stub.c
-@@ -4,5 +4,4 @@
- 
- void nvdimm_acpi_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev)
- {
--    return;
- }
-diff --git a/hw/acpi/acpi-pci-hotplug-stub.c b/hw/acpi/acpi-pci-hotplug-stub.c
-index dcee3ad7a1..b67b4a92da 100644
---- a/hw/acpi/acpi-pci-hotplug-stub.c
-+++ b/hw/acpi/acpi-pci-hotplug-stub.c
-@@ -7,37 +7,31 @@ const VMStateDescription vmstate_acpi_pcihp_pci_status;
- void acpi_pcihp_init(Object *owner, AcpiPciHpState *s, PCIBus *root_bus,
-                      MemoryRegion *address_space_io, uint16_t io_base)
- {
--    return;
- }
- 
- void acpi_pcihp_device_plug_cb(HotplugHandler *hotplug_dev, AcpiPciHpState *s,
-                                DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void acpi_pcihp_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-                                    DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void acpi_pcihp_device_unplug_cb(HotplugHandler *hotplug_dev, AcpiPciHpState *s,
-                                  DeviceState *dev, Error **errp)
- {
--    return;
- }
- 
- void acpi_pcihp_device_unplug_request_cb(HotplugHandler *hotplug_dev,
-                                          AcpiPciHpState *s, DeviceState *dev,
-                                          Error **errp)
- {
--    return;
- }
- 
- void acpi_pcihp_reset(AcpiPciHpState *s)
- {
--    return;
- }
- 
- bool acpi_pcihp_is_hotpluggbale_bus(AcpiPciHpState *s, BusState *bus)
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index b452470598..0c27588116 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -462,7 +462,6 @@ static uint64_t exynos4210_chipid_and_omr_read(void *opaque, hwaddr offset,
- static void exynos4210_chipid_and_omr_write(void *opaque, hwaddr offset,
-                                             uint64_t value, unsigned size)
- {
--    return;
- }
- 
- static const MemoryRegionOps exynos4210_chipid_and_omr_ops = {
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 6e720e1b9a..1aa2eabfbd 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -712,7 +712,6 @@ static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
-     tlbe->entry.iova = iova & ~tlbe->entry.addr_mask;
-     /* parent_perm has s2 perm while perm keeps s1 perm. */
-     tlbe->parent_perm = tlbe_s2->entry.perm;
--    return;
- }
- 
- /**
-diff --git a/hw/arm/xen-stubs.c b/hw/arm/xen-stubs.c
-index 5551584dc2..6a83043553 100644
---- a/hw/arm/xen-stubs.c
-+++ b/hw/arm/xen-stubs.c
-@@ -14,7 +14,6 @@
- void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
- {
-     hw_error("Invalid ioreq type 0x%x\n", req->type);
--    return;
- }
- 
- void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
-diff --git a/hw/audio/asc.c b/hw/audio/asc.c
-index cc205bf063..cea7a1c053 100644
---- a/hw/audio/asc.c
-+++ b/hw/audio/asc.c
-@@ -406,7 +406,6 @@ static void asc_fifo_write(void *opaque, hwaddr addr, uint64_t value,
-     } else {
-         fs->fifo[addr] = value;
+     if (vfio_multiple_devices_migration_is_supported()) {
+         return 0;
      }
--    return;
- }
- 
- static const MemoryRegionOps asc_fifo_ops = {
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index a7dde73c29..8e11e6388b 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -793,7 +793,6 @@ separator_error:
-     error_setg(errp, "reserved region fields must be separated with ':'");
- out:
-     g_free(str);
--    return;
- }
- 
- const PropertyInfo qdev_prop_reserved_region = {
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index 2c6b43cd0d..e010163174 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -67,8 +67,6 @@ static void cxl_fixed_memory_window_config(CXLState *cxl_state,
- 
-     cxl_state->fixed_windows = g_list_append(cxl_state->fixed_windows,
-                                              g_steal_pointer(&fw));
+@@ -129,9 +127,8 @@ int vfio_block_multiple_devices_migration(VFIODevice *vbasedev, Error **errp)
+     error_setg(&multiple_devices_migration_blocker,
+                "Multiple VFIO devices migration is supported only if all of "
+                "them support P2P migration");
+-    ret = migrate_add_blocker_normal(&multiple_devices_migration_blocker, errp);
 -
--    return;
+-    return ret;
++    return migrate_add_blocker_normal(&multiple_devices_migration_blocker,
++                                      errp);
  }
  
- void cxl_fmws_link_targets(CXLState *cxl_state, Error **errp)
-diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-index e83fc863be..b08eb06cbd 100644
---- a/hw/display/macfb.c
-+++ b/hw/display/macfb.c
-@@ -383,7 +383,6 @@ static void macfb_sense_write(MacfbState *s, uint32_t val)
-     s->regs[DAFB_MODE_SENSE >> 2] = val;
- 
-     trace_macfb_sense_write(val);
--    return;
- }
- 
- static void macfb_update_mode(MacfbState *s)
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index 2cfc1e8f01..5968d33e48 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -729,7 +729,6 @@ static uint64_t tcx_dummy_readl(void *opaque, hwaddr addr,
- static void tcx_dummy_writel(void *opaque, hwaddr addr,
-                          uint64_t val, unsigned size)
+ void vfio_unblock_multiple_devices_migration(void)
+diff --git a/plugins/api.c b/plugins/api.c
+index 604ce06802..3c9d4832e9 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -237,12 +237,10 @@ uint64_t qemu_plugin_tb_vaddr(const struct qemu_plugin_tb *tb)
+ struct qemu_plugin_insn *
+ qemu_plugin_tb_get_insn(const struct qemu_plugin_tb *tb, size_t idx)
  {
--    return;
- }
- 
- static const MemoryRegionOps tcx_dummy_ops = {
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 7827536ac4..321a6f4998 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -110,7 +110,6 @@ static void virtio_gpu_ui_info(void *opaque, uint32_t idx, QemuUIInfo *info)
- 
-     /* send event to guest */
-     virtio_gpu_notify_event(g, VIRTIO_GPU_EVENT_DISPLAY);
--    return;
- }
- 
- static void
-diff --git a/hw/dma/sifive_pdma.c b/hw/dma/sifive_pdma.c
-index 25b3d6a155..a115af8d60 100644
---- a/hw/dma/sifive_pdma.c
-+++ b/hw/dma/sifive_pdma.c
-@@ -152,7 +152,6 @@ done:
- error:
-     s->chan[ch].state = DMA_CHAN_STATE_ERROR;
-     s->chan[ch].control |= CONTROL_ERR;
--    return;
- }
- 
- static inline void sifive_pdma_update_irq(SiFivePDMAState *s, int ch)
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index a5b3f454e8..aedaf5238b 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -800,7 +800,6 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-         return;
+-    struct qemu_plugin_insn *insn;
+     if (unlikely(idx >= tb->n)) {
+         return NULL;
      }
-     aspeed_gpio_update(s, set, set->data_value, UINT32_MAX);
--    return;
+-    insn = g_ptr_array_index(tb->insns, idx);
+-    return insn;
++    return g_ptr_array_index(tb->insns, idx);
  }
  
- static void aspeed_gpio_write(void *opaque, hwaddr offset, uint64_t data,
-@@ -928,7 +927,6 @@ static void aspeed_gpio_write(void *opaque, hwaddr offset, uint64_t data,
-         return;
-     }
-     aspeed_gpio_update(s, set, set->data_value, UINT32_MAX);
--    return;
- }
- 
- static int get_set_idx(AspeedGPIOState *s, const char *group, int *group_idx)
-@@ -1183,7 +1181,6 @@ static void aspeed_gpio_2700_write_control_reg(AspeedGPIOState *s,
-     }
- 
-     aspeed_gpio_update(s, set, set->data_value, UINT32_MAX);
--    return;
- }
- 
- static uint64_t aspeed_gpio_2700_read(void *opaque, hwaddr offset,
-@@ -1308,8 +1305,6 @@ static void aspeed_gpio_2700_write(void *opaque, hwaddr offset,
-                       PRIx64"\n", __func__, offset);
-         break;
-     }
--
--    return;
- }
- 
- /* Setup functions */
-diff --git a/hw/gpio/bcm2838_gpio.c b/hw/gpio/bcm2838_gpio.c
-index 0a1739fc46..53be8f2d23 100644
---- a/hw/gpio/bcm2838_gpio.c
-+++ b/hw/gpio/bcm2838_gpio.c
-@@ -293,7 +293,6 @@ static void bcm2838_gpio_write(void *opaque, hwaddr offset, uint64_t value,
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: %s: bad offset %"HWADDR_PRIx"\n",
-                   TYPE_BCM2838_GPIO, __func__, offset);
-     }
--    return;
- }
- 
- static void bcm2838_gpio_reset(DeviceState *dev)
-diff --git a/hw/gpio/imx_gpio.c b/hw/gpio/imx_gpio.c
-index 549a281ed7..8c8299c4c4 100644
---- a/hw/gpio/imx_gpio.c
-+++ b/hw/gpio/imx_gpio.c
-@@ -257,8 +257,6 @@ static void imx_gpio_write(void *opaque, hwaddr offset, uint64_t value,
-                       HWADDR_PRIx "\n", TYPE_IMX_GPIO, __func__, offset);
-         break;
-     }
--
--    return;
- }
- 
- static const MemoryRegionOps imx_gpio_ops = {
-diff --git a/hw/gpio/pl061.c b/hw/gpio/pl061.c
-index 60ce4a7f62..2e69785f2a 100644
---- a/hw/gpio/pl061.c
-+++ b/hw/gpio/pl061.c
-@@ -443,7 +443,6 @@ static void pl061_write(void *opaque, hwaddr offset,
-         return;
-     }
-     pl061_update(s);
--    return;
- }
- 
- static void pl061_enter_reset(Object *obj, ResetType type)
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index 12a7dc4312..f195e56c83 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -2073,7 +2073,6 @@ static void send_unload(VMBus *vmbus)
-     qemu_mutex_unlock(&vmbus->rx_queue_lock);
- 
-     post_msg(vmbus, &msg, sizeof(msg));
--    return;
- }
- 
- static bool complete_unload(VMBus *vmbus)
-diff --git a/hw/i2c/pm_smbus.c b/hw/i2c/pm_smbus.c
-index 3eed8110b9..4e685fd26e 100644
---- a/hw/i2c/pm_smbus.c
-+++ b/hw/i2c/pm_smbus.c
-@@ -205,7 +205,6 @@ out:
- 
- error:
-     s->smb_stat |= STS_DEV_ERR;
--    return;
- }
- 
- static void smb_transaction_start(PMSMBus *s)
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index dffd7ee885..0608aec8c5 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4515,8 +4515,6 @@ static void vtd_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
-         trace_vtd_replay_ce_invalid(bus_n, PCI_SLOT(vtd_as->devfn),
-                                     PCI_FUNC(vtd_as->devfn));
-     }
--
--    return;
- }
- 
- static void vtd_cap_init(IntelIOMMUState *s)
-diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
-index a058608afc..4b69f265cc 100644
---- a/hw/i386/nitro_enclave.c
-+++ b/hw/i386/nitro_enclave.c
-@@ -203,7 +203,6 @@ static void x86_load_eif(X86MachineState *x86ms, FWCfgState *fw_cfg,
- 
-     unlink(machine->kernel_filename);
-     unlink(machine->initrd_filename);
--    return;
- }
- 
- static bool create_memfd_backend(MachineState *ms, const char *path,
-diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-index d4516acec6..ceb2242aa7 100644
---- a/hw/i386/xen/xen-hvm.c
-+++ b/hw/i386/xen/xen-hvm.c
-@@ -758,6 +758,4 @@ void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
-     default:
-         hw_error("Invalid ioreq type 0x%x\n", req->type);
-     }
--
--    return;
- }
-diff --git a/hw/input/virtio-input-host.c b/hw/input/virtio-input-host.c
-index 8bfb17f3c4..b21a79046e 100644
---- a/hw/input/virtio-input-host.c
-+++ b/hw/input/virtio-input-host.c
-@@ -178,7 +178,6 @@ static void virtio_input_host_realize(DeviceState *dev, Error **errp)
- err_close:
-     close(vih->fd);
-     vih->fd = -1;
--    return;
- }
- 
- static void virtio_input_host_unrealize(DeviceState *dev)
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index de37465bc8..4b4cf09157 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -584,7 +584,6 @@ static void icv_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     }
- 
-     gicv3_cpuif_virt_irq_fiq_update(cs);
--    return;
- }
- 
- static uint64_t icv_bpr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 3fd417084f..9d2e33226d 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -448,8 +448,6 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-         s->regs[reg] = data;
-         break;
-     }
--
--    return;
- }
- 
- static uint64_t aspeed_intcio_read(void *opaque, hwaddr offset,
-@@ -496,8 +494,6 @@ static void aspeed_intcio_write(void *opaque, hwaddr offset, uint64_t data,
-         s->regs[reg] = data;
-         break;
-     }
--
--    return;
- }
- 
- 
-diff --git a/hw/intc/mips_gic.c b/hw/intc/mips_gic.c
-index 5e3cbeabec..bd1dedd4b9 100644
---- a/hw/intc/mips_gic.c
-+++ b/hw/intc/mips_gic.c
-@@ -255,7 +255,6 @@ static void gic_write_vp(MIPSGICState *gic, uint32_t vp_index, hwaddr addr,
-     return;
- bad_offset:
-     qemu_log_mask(LOG_GUEST_ERROR, "Wrong GIC offset at 0x%" PRIx64 "\n", addr);
--    return;
- }
- 
- static void gic_write(void *opaque, hwaddr addr, uint64_t data, unsigned size)
-diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
-index d015500254..73b249fb60 100644
---- a/hw/ipmi/ipmi_bmc_extern.c
-+++ b/hw/ipmi/ipmi_bmc_extern.c
-@@ -142,7 +142,6 @@ static void continue_send(IPMIBmcExtern *ibe)
-                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 4000000000ULL);
-         }
-     }
--    return;
- }
- 
- static void extern_timeout(void *opaque)
-@@ -231,7 +230,6 @@ static void ipmi_bmc_extern_handle_command(IPMIBmc *b,
-     continue_send(ibe);
- 
-  out:
--    return;
- }
- 
- static void handle_hw_op(IPMIBmcExtern *ibe, unsigned char hw_op)
-diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-index 6157ac7120..faec6fefb3 100644
---- a/hw/ipmi/ipmi_bmc_sim.c
-+++ b/hw/ipmi/ipmi_bmc_sim.c
-@@ -470,7 +470,6 @@ void ipmi_bmc_gen_event(IPMIBmc *b, uint8_t *evt, bool log)
-     ibs->msg_flags |= IPMI_BMC_MSG_FLAG_EVT_BUF_FULL;
-     k->set_atn(s, 1, attn_irq_enabled(ibs));
-  out:
--    return;
- }
- static void gen_event(IPMIBmcSim *ibs, unsigned int sens_num, uint8_t deassert,
-                       uint8_t evd1, uint8_t evd2, uint8_t evd3)
-@@ -997,7 +996,6 @@ static void get_msg(IPMIBmcSim *ibs,
-     }
- 
- out:
--    return;
- }
- 
- static unsigned char
-diff --git a/hw/ipmi/ipmi_bt.c b/hw/ipmi/ipmi_bt.c
-index 583fc64730..3ef1f435e7 100644
---- a/hw/ipmi/ipmi_bt.c
-+++ b/hw/ipmi/ipmi_bt.c
-@@ -146,7 +146,6 @@ static void ipmi_bt_handle_event(IPMIInterface *ii)
-                            sizeof(ib->inmsg), ib->waiting_rsp);
-     }
-  out:
--    return;
- }
- 
- static void ipmi_bt_handle_rsp(IPMIInterface *ii, uint8_t msg_id,
-diff --git a/hw/ipmi/ipmi_kcs.c b/hw/ipmi/ipmi_kcs.c
-index c15977cab4..f4f1523d6b 100644
---- a/hw/ipmi/ipmi_kcs.c
-+++ b/hw/ipmi/ipmi_kcs.c
-@@ -198,7 +198,6 @@ static void ipmi_kcs_handle_event(IPMIInterface *ii)
-     ik->data_in_reg = -1;
-     IPMI_KCS_SET_IBF(ik->status_reg, 0);
-  out_noibf:
--    return;
- }
- 
- static void ipmi_kcs_handle_rsp(IPMIInterface *ii, uint8_t msg_id,
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a5840ff968..91c851bd54 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -970,7 +970,6 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
- 
-     cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-     cpu_slot->cpu = NULL;
--    return;
- }
- 
- static void virt_cpu_plug(HotplugHandler *hotplug_dev,
-@@ -1005,8 +1004,6 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
-             error_propagate(errp, err);
-         }
-     }
--
--    return;
- }
- 
- static bool memhp_type_supported(DeviceState *dev)
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 0570e4a76f..7ea7e91032 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -899,7 +899,6 @@ static void next_dummy_en_write(void *opaque, hwaddr addr, uint64_t val,
-                                 unsigned size)
+ /*
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 646dbf59de..182881a237 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -543,7 +543,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+                           target_ulong level, uint32_t mem_idx)
  {
-     /* Do nothing */
--    return;
+     CPUState *cs = env_cpu(env);
+-    target_ulong badvaddr, index, phys, ret;
++    target_ulong badvaddr, index, phys;
+     uint64_t dir_base, dir_width;
+ 
+     if (unlikely((level == 0) || (level > 4))) {
+@@ -571,8 +571,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << 3;
+-    ret = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+-    return ret;
++    return ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
  }
  
- static uint64_t next_dummy_en_read(void *opaque, hwaddr addr, unsigned size)
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index aeed4c8ddb..1e5b0e21df 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -210,7 +210,6 @@ static uint64_t machine_id_read(void *opaque, hwaddr addr, unsigned size)
- static void machine_id_write(void *opaque, hwaddr addr, uint64_t val,
-                              unsigned size)
+ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+diff --git a/tests/qtest/cmsdk-apb-watchdog-test.c b/tests/qtest/cmsdk-apb-watchdog-test.c
+index 53538f98c9..cd0c602361 100644
+--- a/tests/qtest/cmsdk-apb-watchdog-test.c
++++ b/tests/qtest/cmsdk-apb-watchdog-test.c
+@@ -364,8 +364,6 @@ static void test_watchdog_inten_luminary(const void *ptr)
+ 
+ int main(int argc, char **argv)
  {
--    return;
- }
+-    int r;
+-
+     g_test_init(&argc, &argv, NULL);
+     g_test_set_nonfatal_assertions();
  
- static const MemoryRegionOps machine_id_ops = {
-@@ -231,7 +230,6 @@ static uint64_t ramio_read(void *opaque, hwaddr addr, unsigned size)
- static void ramio_write(void *opaque, hwaddr addr, uint64_t val,
-                         unsigned size)
+@@ -393,7 +391,5 @@ int main(int argc, char **argv)
+                             test_watchdog_inten);
+     }
+ 
+-    r = g_test_run();
+-
+-    return r;
++    return g_test_run();
+ }
+diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
+index 7f64d597ac..51e613ebdc 100644
+--- a/tests/qtest/pnv-host-i2c-test.c
++++ b/tests/qtest/pnv-host-i2c-test.c
+@@ -191,12 +191,10 @@ static uint8_t pnv_i2c_pca9554_read_pins(PnvI2cDev *dev)
  {
--    return;
+     uint8_t send_buf[1];
+     uint8_t recv_buf[1];
+-    uint8_t inputs;
+     send_buf[0] = PCA9554_INPUT;
+     pnv_i2c_send(dev, send_buf, 1);
+     pnv_i2c_recv(dev, recv_buf, 1);
+-    inputs = recv_buf[0];
+-    return inputs;
++    return recv_buf[0];
  }
  
- static const MemoryRegionOps ramio_ops = {
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 6fffa21ead..43aa02ab2a 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -957,7 +957,6 @@ err_free_special_ops:
-     if (ct3d->hostvmem) {
-         address_space_destroy(&ct3d->hostvmem_as);
-     }
--    return;
- }
+ static void pnv_i2c_pca9554_flip_polarity(PnvI2cDev *dev)
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+index 927bab6361..98a7472307 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -360,8 +360,6 @@ static void test_clock_enable(void)
  
- static void ct3_exit(PCIDevice *pci_dev)
-@@ -1511,8 +1510,6 @@ void qmp_cxl_inject_uncorrectable_errors(const char *path,
- 
-     stl_le_p(reg_state + R_CXL_RAS_UNC_ERR_STATUS, unc_err);
-     pcie_aer_inject_error(PCI_DEVICE(obj), &err);
--
--    return;
- }
- 
- void qmp_cxl_inject_correctable_error(const char *path, CxlCorErrorType type,
-@@ -1788,7 +1785,6 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
-     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&dram)) {
-         cxl_event_irq_assert(ct3d);
-     }
--    return;
- }
- 
- void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-diff --git a/hw/mem/sparse-mem.c b/hw/mem/sparse-mem.c
-index 6a9a591370..8bed5dbe16 100644
---- a/hw/mem/sparse-mem.c
-+++ b/hw/mem/sparse-mem.c
-@@ -82,7 +82,6 @@ static void sparse_mem_enter_reset(Object *obj, ResetType type)
+ int main(int argc, char **argv)
  {
-     SparseMemState *s = SPARSE_MEM(obj);
-     g_hash_table_remove_all(s->mapped);
--    return;
- }
- 
- static const MemoryRegionOps sparse_mem_ops = {
-diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
-index 65d10029dc..fcd407dfc6 100644
---- a/hw/misc/i2c-echo.c
-+++ b/hw/misc/i2c-echo.c
-@@ -143,8 +143,6 @@ static void i2c_echo_realize(DeviceState *dev, Error **errp)
- 
-     state->bus = I2C_BUS(bus);
-     state->bh = qemu_bh_new(i2c_echo_bh, state);
+-    int ret;
 -
--    return;
- }
+     g_test_init(&argc, &argv, NULL);
+     g_test_set_nonfatal_assertions();
  
- static void i2c_echo_class_init(ObjectClass *oc, void *data)
-diff --git a/hw/misc/ivshmem-flat.c b/hw/misc/ivshmem-flat.c
-index 40309a8ff3..a0ac7543a2 100644
---- a/hw/misc/ivshmem-flat.c
-+++ b/hw/misc/ivshmem-flat.c
-@@ -289,8 +289,6 @@ static void ivshmem_flat_iomem_write(void *opaque, hwaddr offset,
-         trace_ivshmem_flat_read_write_mmr_invalid(offset);
-         break;
-     }
+@@ -372,8 +370,6 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
+     qtest_add_func("stm32l4x5/usart/ack", test_ack);
+     qtest_add_func("stm32l4x5/usart/clock_enable", test_clock_enable);
+-    ret = g_test_run();
 -
--    return;
+-    return ret;
++    return g_test_run();
  }
  
- static const MemoryRegionOps ivshmem_flat_ops = {
-diff --git a/hw/misc/mips_cpc.c b/hw/misc/mips_cpc.c
-index 772b8c0017..b7a13d1afb 100644
---- a/hw/misc/mips_cpc.c
-+++ b/hw/misc/mips_cpc.c
-@@ -92,8 +92,6 @@ static void cpc_write(void *opaque, hwaddr offset, uint64_t data,
-                       "%s: Bad offset 0x%x\n",  __func__, (int)offset);
-         break;
-     }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_b.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_b.c
+index 6ceb5aab20..492df6069d 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_b.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLOC.B";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
 -
--    return;
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
  }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_d.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_d.c
+index 897e90fbbc..52ade86b52 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_d.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLOC.D";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
  
- static uint64_t cpc_read(void *opaque, hwaddr offset, unsigned size)
-diff --git a/hw/net/can/ctucan_core.c b/hw/net/can/ctucan_core.c
-index 4402d4cb1f..17131a4e18 100644
---- a/hw/net/can/ctucan_core.c
-+++ b/hw/net/can/ctucan_core.c
-@@ -400,8 +400,6 @@ void ctucan_mem_write(CtuCanCoreState *s, hwaddr addr, uint64_t val,
- 
-         ctucan_update_irq(s);
-     }
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
 -
--    return;
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
  }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_h.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_h.c
+index 85cf3e6f70..51a96e25a2 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_h.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLOC.H";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
  
- uint64_t ctucan_mem_read(CtuCanCoreState *s, hwaddr addr, unsigned size)
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index dc242e9215..b5a4a4af7e 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -1298,8 +1298,6 @@ static void free_list(GSList *list)
-     }
- 
-     g_slist_free(list);
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
 -
--    return;
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
  }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_w.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_w.c
+index 7ed97be2b4..c2729eb084 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nloc_w.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLOC.W";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
  
- static GSList *prepare_tx_data(XlnxVersalCANFDState *s)
-diff --git a/hw/net/imx_fec.c b/hw/net/imx_fec.c
-index 0f0afda58a..b7c9ee0b9a 100644
---- a/hw/net/imx_fec.c
-+++ b/hw/net/imx_fec.c
-@@ -668,7 +668,6 @@ static void imx_default_write(IMXFECState *s, uint32_t index, uint32_t value)
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_b.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_b.c
+index 2103d5fbfe..09909912f0 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_b.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLZC.B";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_d.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_d.c
+index b1ca3d44aa..7bf8193066 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_d.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLZC.D";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_h.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_h.c
+index 6531c67a86..34a7e3a8ae 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_h.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLZC.H";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_w.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_w.c
+index 71db53c9fe..2a6b066009 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_nlzc_w.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "NLZC.W";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_b.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_b.c
+index 184f7f4a49..cdd9b17dbb 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_b.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "PCNT.B";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_d.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_d.c
+index 3cc0d851b2..ebb982bf6a 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_d.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "PCNT.D";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_h.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_h.c
+index f1052b3c26..9d6007793d 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_h.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "PCNT.H";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_w.c b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_w.c
+index 625ef29406..417cffbe41 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-count/test_msa_pcnt_w.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Count";
+     char *instruction_name =  "PCNT.W";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_b.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_b.c
+index 4a34f69953..6c85b60241 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSL.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_d.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_d.c
+index 0fc44fa195..9a60711b6e 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSL.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_h.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_h.c
+index cc2db04a2d..a8521f5e34 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSL.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_w.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_w.c
+index 21d6eec4db..164a8d8ba3 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsl_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSL.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_b.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_b.c
+index b1927c5c34..da64a04470 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSR.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_d.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_d.c
+index 6499415daa..02b360c0ec 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSR.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_h.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_h.c
+index 2dc3dbe89b..c0fdc8225d 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSR.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_w.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_w.c
+index 5073187340..33f36cb8ec 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_binsr_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BINSR.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmnz_v.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmnz_v.c
+index ba1c635087..2704a563bc 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmnz_v.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmnz_v.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BMNZ.V";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmz_v.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmz_v.c
+index b38ddc2c12..91ba1a58ce 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmz_v.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bmz_v.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BMZ.V";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bsel_v.c b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bsel_v.c
+index 062e5a2fa0..c1572dada4 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bsel_v.c
++++ b/tests/tcg/mips/user/ase/msa/bit-move/test_msa_bsel_v.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Move";
+     char *instruction_name =  "BSEL.V";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_b.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_b.c
+index 56fdee3f31..32135a49ad 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BCLR.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_d.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_d.c
+index 0accccf093..e33b8c0cb8 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BCLR.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_h.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_h.c
+index 474e5297b8..a4bec519f9 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BCLR.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_w.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_w.c
+index 818b12ff0a..0eccfb43b0 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bclr_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BCLR.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_b.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_b.c
+index 78ba32f360..82acdaf934 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BNEG.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_d.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_d.c
+index 44cd608688..20f25d9ed4 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BNEG.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_h.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_h.c
+index 5d17ceeba3..9fa1589889 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BNEG.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_w.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_w.c
+index 90d21f453d..4a34674e1d 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bneg_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BNEG.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_b.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_b.c
+index 8aabf4bb88..c00df3b27c 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_b.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BSET.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_d.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_d.c
+index e3f9a7e4ca..2e144a4f7f 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_d.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BSET.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_h.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_h.c
+index cf9f608180..9e65c920cc 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_h.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BSET.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_w.c b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_w.c
+index 77478116f2..0fc8c01975 100644
+--- a/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_w.c
++++ b/tests/tcg/mips/user/ase/msa/bit-set/test_msa_bset_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Bit Set";
+     char *instruction_name =  "BSET.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_h.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_h.c
+index 29a2990011..1b7240bce6 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_h.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MADD_Q.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_w.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_w.c
+index 529d60d1e9..098d17658e 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_w.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_madd_q_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MADD_Q.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_h.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_h.c
+index a4713f2321..9bee226fe6 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_h.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MADDR_Q.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_w.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_w.c
+index 19eccbf5ba..6d34e88056 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_w.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_maddr_q_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MADDR_Q.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_h.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_h.c
+index b584736ed1..2ae0f52b5a 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_h.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MSUB_Q.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_w.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_w.c
+index 56191924a1..a5af34f407 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_w.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msub_q_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MSUB_Q.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_h.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_h.c
+index 0be6d51418..385d4492cd 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_h.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MSUBR_Q.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_w.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_w.c
+index 7d57cb500a..e879df5ade 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_w.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_msubr_q_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MSUBR_Q.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -208,9 +207,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_h.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_h.c
+index cce7e9e8ac..31533f138d 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_h.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MUL_Q.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_w.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_w.c
+index 81d2635d7d..9e34d4d912 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_w.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mul_q_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MUL_Q.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_h.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_h.c
+index d5b00f1eb0..34a456673c 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_h.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MULR_Q.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_w.c b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_w.c
+index 78c9e22394..3d2f0ec8bd 100644
+--- a/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_w.c
++++ b/tests/tcg/mips/user/ase/msa/fixed-multiply/test_msa_mulr_q_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Fixed Multiply";
+     char *instruction_name =  "MULR_Q.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_d.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_d.c
+index d9b49cea8c..f24092c1bb 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_d.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMAX_A.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_w.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_w.c
+index f64276f2f1..7fa5fbc565 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_w.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_a_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMAX_A.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_d.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_d.c
+index ba548e4882..b356cff346 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_d.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMAX.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_w.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_w.c
+index f9aa24d62b..4efc663dda 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_w.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmax_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMAX.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_d.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_d.c
+index 555aa133ae..b58c18a394 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_d.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMIN_A.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_w.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_w.c
+index 9a81f1c6c5..e1071a9b9b 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_w.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_a_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMIN_A.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_d.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_d.c
+index 97123c8c0b..30de267f46 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_d.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMIN.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_w.c b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_w.c
+index 1e91136441..e28994a32f 100644
+--- a/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_w.c
++++ b/tests/tcg/mips/user/ase/msa/float-max-min/test_msa_fmin_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Float Max Min";
+     char *instruction_name =  "FMIN.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_b.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_b.c
+index c0a07b5552..fe5f21ec9d 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADD_A.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_d.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_d.c
+index 0771cdbdfe..9ad0d6ad10 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADD_A.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_h.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_h.c
+index 7956960d0f..4ccb7c150e 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADD_A.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_w.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_w.c
+index 590f440406..c97b1a157f 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_add_a_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADD_A.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_b.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_b.c
+index 42dd260726..d33e88d528 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_A.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_d.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_d.c
+index 3e4e6f7f99..3817ba5013 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_A.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_h.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_h.c
+index 2901a8174b..3cabc9695b 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_A.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_w.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_w.c
+index 9e483e0754..41a88abaa0 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_a_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_A.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_b.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_b.c
+index 955815bf45..b8d92f263d 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_d.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_d.c
+index 0795f7e2c5..5738c255be 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_h.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_h.c
+index 793c5afb8c..8237be9712 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_w.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_w.c
+index 1c72c84669..aef671f171 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_b.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_b.c
+index f20340799e..7714a3d755 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_d.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_d.c
+index 30249edca0..b033651560 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_h.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_h.c
+index 1bd8aa9d20..f1c43d8382 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_w.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_w.c
+index a91c69f624..d8a9a54af3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_adds_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDS_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_b.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_b.c
+index 2f11c76aa3..366174aa26 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDV.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_d.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_d.c
+index 4ed0b97876..c0697e1864 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDV.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_h.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_h.c
+index ca6ddd4b54..62c407032b 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDV.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_w.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_w.c
+index dff0f70a07..7d8e9a1d4c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_addv_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "ADDV.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_d.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_d.c
+index c50a9dde87..2c9ec9a18f 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "HADD_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_h.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_h.c
+index 586ef923cc..2da7cca0bb 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "HADD_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_w.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_w.c
+index 3589c33940..0b87815964 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "HADD_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_d.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_d.c
+index 35b2021347..2431eb0e46 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "HADD_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_h.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_h.c
+index 3b38f9bb33..7cca3e32f0 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "HADD_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_w.c b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_w.c
+index fd420cb8de..de29d8d4d9 100644
+--- a/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-add/test_msa_hadd_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Add";
+     char *instruction_name =  "HADD_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_b.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_b.c
+index 14ee4ab4db..34a9fc88c3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_d.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_d.c
+index ae7b3c8b89..6fb7c8d084 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_h.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_h.c
+index d0d327e80f..e36b8a7d18 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_w.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_w.c
+index 77010209fb..e0a0a845df 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_b.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_b.c
+index c9e834e74d..379a362335 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_d.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_d.c
+index 5462ffac0f..78607536df 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_h.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_h.c
+index 10d57e5741..34e205d209 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_w.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_w.c
+index 53106dee74..764b316976 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_ave_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVE_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_b.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_b.c
+index 465f54fc13..94c32c6039 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_d.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_d.c
+index 391cb85ff0..5ca476e607 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_h.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_h.c
+index 352b57d786..302b2dc4ca 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_w.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_w.c
+index cfba37b0ae..eeabddf1f9 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_b.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_b.c
+index 91f227b830..3dcdcd9c29 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_d.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_d.c
+index fde57a2a5c..3874b61e45 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_h.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_h.c
+index b9ec39a3de..54b0b0bd11 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_w.c b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_w.c
+index dc3c2e432e..b8c39cad6a 100644
+--- a/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-average/test_msa_aver_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Average";
+     char *instruction_name =  "AVER_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_b.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_b.c
+index c9a9ee227d..24ee133e09 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CEQ.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_d.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_d.c
+index 542c460f2f..90e8ebba27 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CEQ.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_h.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_h.c
+index 3ebe59550c..5f578092be 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CEQ.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_w.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_w.c
+index 003acf1544..18ce27752b 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_ceq_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CEQ.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_b.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_b.c
+index ff20f0ea0e..c2705bf374 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_d.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_d.c
+index 3dc18bd661..6f4b6842cf 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_h.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_h.c
+index 00c48d657b..7d51c2617f 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_w.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_w.c
+index 16f84a13e7..0c90e79113 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_b.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_b.c
+index 24574dc30d..a434b5382e 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_d.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_d.c
+index e3f571545d..f355352093 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_h.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_h.c
+index 8938d31c59..d443e41f3c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_w.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_w.c
+index 078a0c1815..bbc96d3ee6 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_cle_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLE_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_b.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_b.c
+index 02c3dfa09e..2066c25e94 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_d.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_d.c
+index 40637e2761..7a49f490b3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_h.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_h.c
+index ee3cd628fc..287d5d122a 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_w.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_w.c
+index bde4d95350..dad15b19fa 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_b.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_b.c
+index 147bf484b7..28f1d20d7e 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_d.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_d.c
+index 5daf716726..55f6295cfa 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_h.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_h.c
+index 8d51c2cc3c..425004a010 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_w.c b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_w.c
+index 5403af8688..9da360a493 100644
+--- a/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-compare/test_msa_clt_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Compare";
+     char *instruction_name =  "CLT_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_b.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_b.c
+index f263201e72..b21b527609 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_d.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_d.c
+index 0458f933f6..04d61827c7 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_h.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_h.c
+index fffe7be072..e26fd8651b 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_w.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_w.c
+index 22fa184d80..e2188aabf1 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_b.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_b.c
+index 8097d6c864..fbb1465804 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_d.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_d.c
+index 54d6fda1f2..26dfa27937 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_h.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_h.c
+index 5a729906ac..f018e37f7c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_w.c b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_w.c
+index e9e2da4718..73928c83e3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-divide/test_msa_div_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Divide";
+     char *instruction_name =  "DIV_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_d.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_d.c
+index cb13ff3e75..d6df83c3c8 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DOTP_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_h.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_h.c
+index 19451ee57d..094ff32f55 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DOTP_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_w.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_w.c
+index e635888e6c..fcaead98e6 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DOTP_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_d.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_d.c
+index af4337d02c..c7771ac9a9 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DOTP_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_h.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_h.c
+index a87b72b121..09598a3b56 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DOTP_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_w.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_w.c
+index 05df4cb583..6dec27f839 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dotp_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DOTP_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_d.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_d.c
+index d039e1a785..eb234cea13 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPADD_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_h.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_h.c
+index bcaafe3b71..d0441d0fa9 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPADD_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_w.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_w.c
+index 90562ab8a5..90c629802b 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_s_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPADD_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_d.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_d.c
+index 106dc73d1f..a4662d9b19 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPADD_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_h.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_h.c
+index 5fae97e907..4227b45d53 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPADD_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_w.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_w.c
+index 2bea9f669b..89760c500c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpadd_u_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPADD_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_d.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_d.c
+index 560e29a248..0e300688a3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPSUB_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_h.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_h.c
+index 3fb88ab5c2..e1592a8dd3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPSUB_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_w.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_w.c
+index b95878b67b..06fbd05866 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_s_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPSUB_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_d.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_d.c
+index fc6c4e61dc..ea541f986d 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPSUB_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_h.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_h.c
+index 741c887bbd..3213d2d6a6 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPSUB_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_w.c b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_w.c
+index 3e1b711b61..9239d6bea1 100644
+--- a/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-dot-product/test_msa_dpsub_u_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Dot Product";
+     char *instruction_name =  "DPSUB_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_b.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_b.c
+index 7e984a786e..a6b0344da5 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_A.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_d.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_d.c
+index 3dfdb482f4..289fb857cf 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_A.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_h.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_h.c
+index e1d65f98dc..cace99353f 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_A.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_w.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_w.c
+index 600f60af56..4d06125989 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_a_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_A.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_b.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_b.c
+index ab4161f20c..5edd33d0b7 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_d.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_d.c
+index 54a78ae56a..bf0d4d91be 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_h.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_h.c
+index 79b1e0adfd..727776bc79 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_w.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_w.c
+index 32e32456eb..61ded97163 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_b.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_b.c
+index a63d226279..eeccb68469 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_d.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_d.c
+index 815a9ef497..acedbec408 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_h.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_h.c
+index b668b39507..41e319f98b 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_w.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_w.c
+index 3329455f92..82858d9f13 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_max_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MAX_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_b.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_b.c
+index 8fdbfc3bd3..a9b7c59866 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_A.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_d.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_d.c
+index 6a9f6bf10e..faaed4b822 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_A.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_h.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_h.c
+index 67a40b96f3..4c05f96ce7 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_A.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_w.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_w.c
+index d08cb9cea8..05d869e05f 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_a_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_A.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_b.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_b.c
+index 048233bbab..d060b576ab 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_d.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_d.c
+index 04e18ebdbf..40daff1839 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_h.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_h.c
+index 3bf32d487a..ec852b2521 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_w.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_w.c
+index eeb2ec9359..99034cb1e0 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_b.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_b.c
+index bdebf68a49..9c7c6e0ba3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_d.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_d.c
+index fcd90167ed..4d21696208 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_h.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_h.c
+index 16f54b79e1..80d09eb3c5 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_w.c b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_w.c
+index 574c169d03..13169c7f28 100644
+--- a/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-max-min/test_msa_min_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Max Min";
+     char *instruction_name =  "MIN_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_b.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_b.c
+index 1533790cae..d1ae9dbd5e 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_d.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_d.c
+index a8237f4244..c693f9bea3 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_h.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_h.c
+index 5d6e4d63f8..85fc2546c5 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_w.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_w.c
+index 1b068f28f5..fd8b276b16 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_b.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_b.c
+index 0d9ddf5907..d6c5a69d70 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_d.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_d.c
+index 1c3aa2bb36..b1efdd4d0a 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_h.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_h.c
+index a17a69f1f3..a8a1fd8341 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_w.c b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_w.c
+index ac0f704b18..60bce8dba8 100644
+--- a/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-modulo/test_msa_mod_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Modulo";
+     char *instruction_name =  "MOD_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_b.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_b.c
+index d543e1af28..6dcadca833 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MADDV.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_d.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_d.c
+index fda35f757b..81aae83587 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MADDV.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_h.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_h.c
+index a9ee9b328a..4012d3d20e 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MADDV.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_w.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_w.c
+index bc3f5d246e..7b898fea7a 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_maddv_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MADDV.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_b.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_b.c
+index 808c49d050..4ae7113079 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MSUBV.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_d.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_d.c
+index 9722dbd99f..372ef096bd 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MSUBV.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_h.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_h.c
+index 6c059c779c..1bef77d351 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MSUBV.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_w.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_w.c
+index 0a83db4787..87d3be6969 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_msubv_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MSUBV.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_b.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_b.c
+index de1046820c..936f1caf78 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MULV.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_d.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_d.c
+index ae2ebef559..225a974b71 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MULV.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_h.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_h.c
+index 27479a82c5..40a3e8d27a 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MULV.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_w.c b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_w.c
+index adeb1bfa98..3f811481fb 100644
+--- a/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-multiply/test_msa_mulv_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Multiply";
+     char *instruction_name =  "MULV.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_b.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_b.c
+index a3ab83b76c..e749711b0c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_d.c
+index ee46ffadf1..c87e94fc61 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_h.c
+index 3262365907..f91b190289 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_w.c
+index 51f9a69413..1957573f33 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_b.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_b.c
+index e086214ef8..9078ad87c4 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_d.c
+index 5640b65007..04197a9dc9 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_h.c
+index a5bf2d2054..8aa2dd967b 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_w.c
+index 772e90eedb..f1284cbda4 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_asub_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "ASUB_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_d.c
+index 66137f5856..eb299784aa 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "HSUB_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_h.c
+index e66261b821..cf3e08102f 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "HSUB_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_w.c
+index 6d97abfe3c..5196a7194c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "HSUB_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_d.c
+index 8f39a4525b..834f2326ff 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "HSUB_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_h.c
+index 6cc82fce29..5eca52dcfc 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "HSUB_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_w.c
+index b427e87a3a..a6bb5ccb36 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_hsub_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "HSUB_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_b.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_b.c
+index 5c1f810d66..3c103d8466 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_d.c
+index 546c24c5c2..bd252173a6 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_h.c
+index 24ddc826c3..bd11db11f2 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_w.c
+index f6109a5331..7565933288 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_b.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_b.c
+index f170912348..7d5539c31d 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_d.c
+index bf647db221..36d90810e8 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_h.c
+index c4616be3e9..97be4e046a 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_w.c
+index 61052672ca..74affbcc1c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subs_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBS_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_b.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_b.c
+index 71ea14fa2d..694878288d 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUS_U.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_d.c
+index 070c457c44..7ae1bb1120 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUS_U.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_h.c
+index f98d010436..80f7ceb0a9 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUS_U.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_w.c
+index d325c19217..0172cf2a06 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsus_u_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUS_U.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_b.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_b.c
+index 66012b5894..741681f9d2 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUU_S.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_d.c
+index 344a373055..d5b1dc7072 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUU_S.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_h.c
+index 1cacb26395..4a488974cf 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUU_S.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_w.c
+index 42f3ee56f6..3b62ef65af 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subsuu_s_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBSUU_S.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_b.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_b.c
+index b8bd085516..3095c78132 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_b.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_b.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBV.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_d.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_d.c
+index f532e4a69d..1d1b50d2ae 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_d.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_d.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBV.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_h.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_h.c
+index ac7f8ee6b5..b147a7ed7c 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_h.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_h.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBV.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_w.c b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_w.c
+index 93eeaecc7c..44b10d1145 100644
+--- a/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_w.c
++++ b/tests/tcg/mips/user/ase/msa/int-subtract/test_msa_subv_w.c
+@@ -38,7 +38,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Int Subtract";
+     char *instruction_name =  "SUBV.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -152,9 +151,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_b.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_b.c
+index 3506202cd9..ebbc530a45 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_b.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVEV.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_d.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_d.c
+index 896b11dce0..94eb1d20c0 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_d.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVEV.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_h.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_h.c
+index a68fea643f..2f8cc7ec5a 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_h.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVEV.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_w.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_w.c
+index 6e168c701e..dd47b84b2b 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_w.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvev_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVEV.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_b.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_b.c
+index 11cfbf398a..e6ae48ebbf 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_b.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVL.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_d.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_d.c
+index 35581ee7ea..1a0b56af2e 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_d.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVL.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_h.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_h.c
+index 0d89d95edd..13dbfbd3e7 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_h.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVL.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_w.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_w.c
+index ce044889c3..84c13af6d2 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_w.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvl_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVL.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_b.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_b.c
+index f7dd1d22b0..eb34133dfd 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_b.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVOD.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_d.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_d.c
+index bef28d8ded..38bd1c2ed1 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_d.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVOD.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_h.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_h.c
+index d2355c6676..36f0bc8574 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_h.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVOD.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_w.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_w.c
+index 636a62d056..728a0b626c 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_w.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvod_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVOD.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_b.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_b.c
+index 75bc9de9f9..4a6c78e9de 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_b.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVR.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_d.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_d.c
+index a80aa446f8..1fc2877957 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_d.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVR.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_h.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_h.c
+index caa00224fd..b828558cd9 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_h.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVR.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_w.c b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_w.c
+index 65c89a3712..558546f4aa 100644
+--- a/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_w.c
++++ b/tests/tcg/mips/user/ase/msa/interleave/test_msa_ilvr_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Interleave";
+     char *instruction_name =  "ILVR.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/logic/test_msa_and_v.c b/tests/tcg/mips/user/ase/msa/logic/test_msa_and_v.c
+index 22d1f9cc0f..79f56cc6f5 100644
+--- a/tests/tcg/mips/user/ase/msa/logic/test_msa_and_v.c
++++ b/tests/tcg/mips/user/ase/msa/logic/test_msa_and_v.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Logic";
+     char *instruction_name =  "AND.V";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/logic/test_msa_nor_v.c b/tests/tcg/mips/user/ase/msa/logic/test_msa_nor_v.c
+index 3b9e481582..7fc327e3df 100644
+--- a/tests/tcg/mips/user/ase/msa/logic/test_msa_nor_v.c
++++ b/tests/tcg/mips/user/ase/msa/logic/test_msa_nor_v.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Logic";
+     char *instruction_name =  "NOR.V";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/logic/test_msa_or_v.c b/tests/tcg/mips/user/ase/msa/logic/test_msa_or_v.c
+index e6e5da4efb..683bcb0962 100644
+--- a/tests/tcg/mips/user/ase/msa/logic/test_msa_or_v.c
++++ b/tests/tcg/mips/user/ase/msa/logic/test_msa_or_v.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Logic";
+     char *instruction_name =  "OR.V";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/logic/test_msa_xor_v.c b/tests/tcg/mips/user/ase/msa/logic/test_msa_xor_v.c
+index 1b699b5ca4..a2b9e8e2f8 100644
+--- a/tests/tcg/mips/user/ase/msa/logic/test_msa_xor_v.c
++++ b/tests/tcg/mips/user/ase/msa/logic/test_msa_xor_v.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Logic";
+     char *instruction_name =  "XOR.V";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/move/test_msa_move_v.c b/tests/tcg/mips/user/ase/msa/move/test_msa_move_v.c
+index ef2aa6dbdd..30b8ce10d5 100644
+--- a/tests/tcg/mips/user/ase/msa/move/test_msa_move_v.c
++++ b/tests/tcg/mips/user/ase/msa/move/test_msa_move_v.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Move";
+     char *instruction_name =  "MOVE.V";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -141,9 +140,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_b.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_b.c
+index 2f4ffd9195..7527240888 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_b.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKEV.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_d.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_d.c
+index 3f0bd47ffd..b390c17a8f 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_d.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKEV.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_h.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_h.c
+index 2eae01fa75..e351f62275 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_h.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKEV.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_w.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_w.c
+index f7215d0e43..07c52042fa 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_w.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckev_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKEV.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_b.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_b.c
+index 6355338332..23da0644c7 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_b.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKOD.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_d.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_d.c
+index ac75526fda..55809f5ebe 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_d.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKOD.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_h.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_h.c
+index 12c1fa1ea5..935d6127b3 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_h.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKOD.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_w.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_w.c
+index b8979c3f43..8073d518e1 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_w.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_pckod_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "PCKOD.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_b.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_b.c
+index 1839a26ca7..f97f0ef142 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_b.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "VSHF.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_d.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_d.c
+index ebc198feb8..cdfcac31e0 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_d.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "VSHF.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_h.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_h.c
+index a7240134d7..a83f19439b 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_h.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "VSHF.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_w.c b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_w.c
+index 607ac4fb53..b5df87c4fb 100644
+--- a/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_w.c
++++ b/tests/tcg/mips/user/ase/msa/pack/test_msa_vshf_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Pack";
+     char *instruction_name =  "VSHF.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -206,9 +205,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_b.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_b.c
+index 649e67b6a1..99c5ab5573 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_b.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SLL.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_d.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_d.c
+index 1d6fe54207..089f6d3499 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_d.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SLL.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_h.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_h.c
+index 1e6c27bfe7..39186a3e76 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_h.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SLL.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_w.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_w.c
+index 8bfbaca6fc..2c85fd8131 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_w.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sll_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SLL.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_b.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_b.c
+index a5dcee3a72..90dc2830d6 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_b.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRA.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_d.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_d.c
+index 95a13620b9..69b63b3cb6 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_d.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRA.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_h.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_h.c
+index f00003d51c..0b7f5bc1b6 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_h.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRA.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_w.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_w.c
+index f00da6d3d9..f4d8bb6747 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_w.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_sra_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRA.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_b.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_b.c
+index dcda9c2c95..6927e3359d 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_b.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRAR.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_d.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_d.c
+index 478098acd9..1f04aa93e7 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_d.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRAR.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_h.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_h.c
+index a30025548c..ec039c2127 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_h.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRAR.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_w.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_w.c
+index 027d4ce565..2483750f50 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_w.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srar_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRAR.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_b.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_b.c
+index 0e7c453cec..b134e8b5ad 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_b.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRL.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_d.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_d.c
+index f6351f875a..eff665db63 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_d.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRL.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_h.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_h.c
+index 93394ef47a..5bed8f79c0 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_h.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRL.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_w.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_w.c
+index c18cd9892a..d36d56a58f 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_w.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srl_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRL.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_b.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_b.c
+index d173d8fa9c..9c6c1665c4 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_b.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_b.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRLR.B";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_d.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_d.c
+index ecd7bd0c22..d5bae01f2d 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_d.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_d.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRLR.D";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_h.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_h.c
+index ca7fd75342..f8352ed75d 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_h.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_h.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRLR.H";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_w.c b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_w.c
+index ccbe6c0c84..af85949a48 100644
+--- a/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_w.c
++++ b/tests/tcg/mips/user/ase/msa/shift/test_msa_srlr_w.c
+@@ -36,7 +36,6 @@ int32_t main(void)
+     char *isa_ase_name = "MSA";
+     char *group_name = "Shift";
+     char *instruction_name =  "SRLR.W";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -150,9 +149,7 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_128(isa_ase_name, group_name, instruction_name,
+-                            TEST_COUNT_TOTAL, elapsed_time,
+-                            &b128_result[0][0], &b128_expect[0][0]);
+-
+-    return ret;
++    return check_results_128(isa_ase_name, group_name, instruction_name,
++                             TEST_COUNT_TOTAL, elapsed_time,
++                             &b128_result[0][0], &b128_expect[0][0]);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c
+index e7ecdc5910..02c4582f07 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c
++++ b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Bit Count";
+     char *instruction_name =   "CLO";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -139,8 +138,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c
+index a77a8e4eb5..0575feae23 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c
++++ b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Bit Count";
+     char *instruction_name =   "CLZ";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -139,8 +138,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c
+index eb41fbdfdf..562c21ac3b 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c
++++ b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Bit Count";
+     char *instruction_name =   "DCLO";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -139,8 +138,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c
+index be393ac199..c987b1f899 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c
++++ b/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Bit Count";
+     char *instruction_name =   "DCLZ";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -139,8 +138,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c b/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c
+index df3d1b11f6..78484b2d1f 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c
++++ b/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Bit Swap";
+     char *instruction_name =   "BITSWAP";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -139,8 +138,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c b/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c
+index 377835940d..d15950bb40 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c
++++ b/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Bit Swap";
+     char *instruction_name =   "DBITSWAP";
+-    int32_t ret;
+     uint32_t i;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -139,8 +138,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c
+index eb21615f95..425f33486a 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "DMUH";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c
+index 7316d79e2a..565fd39cab 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "DMUHU";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c
+index 3ac1965cca..212bb92f21 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "DMUL";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c
+index 0862780e3d..6482d0b94e 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "DMULU";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c
+index ff1ae6fd9c..dcfccfa2ce 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "MUH";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c
+index cb2752767a..ccb960b931 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "MUHU";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c
+index 5cdc4d5632..8c8903400b 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "MUL";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c
+index ccb3bdc1ac..f75b05046f 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c
++++ b/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Int Multiply";
+     char *instruction_name =   "MULU";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c
+index 4d6cf2e1f1..9bdba589f6 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c
++++ b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Logic";
+     char *instruction_name =   "AND";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c
+index 21005ddc53..007310679d 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c
++++ b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Logic";
+     char *instruction_name =   "NOR";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c
+index 345b4544fe..500446a422 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c
++++ b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Logic";
+     char *instruction_name =   "OR";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c
+index 7e36fee517..f906d9a9ae 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c
++++ b/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Logic";
+     char *instruction_name =   "XOR";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c
+index 4f719efda1..c853afada1 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c
++++ b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Shift";
+     char *instruction_name =   "DSLLV";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c
+index 024d508ca8..459e2c2e4f 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c
++++ b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Shift";
+     char *instruction_name =   "DSRAV";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c
+index fd1c398ffd..aee5cfae52 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c
++++ b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Shift";
+     char *instruction_name =   "DSRLV";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c
+index a5fa72b727..6c7d2fcdee 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c
++++ b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Shift";
+     char *instruction_name =   "SLLV";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c
+index 79e1a047eb..fccb200942 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c
++++ b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Shift";
+     char *instruction_name =   "SRAV";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c
+index 1f8c45d8cc..77b92d4810 100644
+--- a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c
++++ b/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c
+@@ -34,7 +34,6 @@ int32_t main(void)
+     char *isa_ase_name = "mips64r6";
+     char *group_name = "Shift";
+     char *instruction_name =   "SRLV";
+-    int32_t ret;
+     uint32_t i, j;
+     struct timeval start, end;
+     double elapsed_time;
+@@ -146,8 +145,6 @@ int32_t main(void)
+     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+ 
+-    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
++                            b64_result, b64_expect);
+ }
+diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
+index a35dcb88a3..5f19a48cbd 100644
+--- a/tools/i386/qemu-vmsr-helper.c
++++ b/tools/i386/qemu-vmsr-helper.c
+@@ -71,7 +71,6 @@ static void compute_default_paths(void)
+ 
+ static int is_intel_processor(void)
  {
-     qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad address at offset 0x%"
-                   PRIx32 "\n", TYPE_IMX_FEC, __func__, index * 4);
--    return;
- }
+-    int result;
+     int ebx, ecx, edx;
  
- static void imx_fec_write(IMXFECState *s, uint32_t index, uint32_t value)
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 7abed66469..f370d4a2ec 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -932,7 +932,6 @@ static void vmxnet3_rx_update_descr(struct NetRxPkt *pkt,
- 
- nocsum:
-     rxcd->cnc = 1;
--    return;
- }
- 
- static void
-diff --git a/hw/nvram/xlnx-versal-efuse-ctrl.c b/hw/nvram/xlnx-versal-efuse-ctrl.c
-index 3246eb3ca6..ff4d544ad6 100644
---- a/hw/nvram/xlnx-versal-efuse-ctrl.c
-+++ b/hw/nvram/xlnx-versal-efuse-ctrl.c
-@@ -494,7 +494,6 @@ static void efuse_rd_addr_postw(RegisterInfo *reg, uint64_t val64)
- 
-     ARRAY_FIELD_DP32(s->regs, EFUSE_ISR, RD_DONE, 1);
-     efuse_imr_update_irq(s);
--    return;
- }
- 
- static uint64_t efuse_cache_load_prew(RegisterInfo *reg, uint64_t val64)
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index cb3dc3ab48..1c41012887 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -635,8 +635,6 @@ static void core99_instance_init(Object *obj)
-     object_property_set_description(obj, "via",
-                                     "Set VIA configuration. "
-                                     "Valid values are cuda, pmu and pmu-adb");
--
--    return;
- }
- 
- static const TypeInfo core99_machine_info = {
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index bda6b23ad3..c25a8f7258 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -150,7 +150,6 @@ static void pnv_occ_common_area_write(void *opaque, hwaddr addr,
-                                              uint64_t val, unsigned width)
- {
-     /* callback function defined to occ common area write */
--    return;
- }
- 
- static const MemoryRegionOps pnv_occ_power8_xscom_ops = {
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 406aea4ecb..29453a880e 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -981,7 +981,6 @@ static void spapr_check_setup_free_hpt(SpaprMachineState *spapr,
-         /* RADIX->HASH || NOTHING->HASH : Allocate HPT */
-         spapr_setup_hpt(spapr);
-     }
--    return;
- }
- 
- #define FLAGS_MASK              0x01FULL
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index 201f629203..3797220a29 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -1735,7 +1735,6 @@ static void exit_process_output_buffer(SpaprMachineState *spapr,
-     getset_state(spapr, guest, vcpuid, &gsr);
- 
-     address_space_unmap(CPU(cpu)->as, gsb, len, true, len);
--    return;
- }
- 
- static
-diff --git a/hw/ppc/spapr_nvdimm.c b/hw/ppc/spapr_nvdimm.c
-index 6f875d73b2..6e93ff9b33 100644
---- a/hw/ppc/spapr_nvdimm.c
-+++ b/hw/ppc/spapr_nvdimm.c
-@@ -235,8 +235,6 @@ void spapr_dt_persistent_memory(SpaprMachineState *spapr, void *fdt)
-         spapr_dt_nvdimm(spapr, fdt, offset, nvdimm);
-     }
-     g_slist_free(nvdimms);
--
--    return;
- }
- 
- static target_ulong h_scm_read_metadata(PowerPCCPU *cpu,
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 2591ee49c1..d96819f1a4 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -597,7 +597,6 @@ static void s390_pci_iommu_replay(IOMMUMemoryRegion *iommu,
-      * zpci device" construct. But when we support migration of vfio-pci
-      * devices in future, we need to revisit this.
+     /* Execute CPUID instruction with eax=0 (basic identification) */
+@@ -87,9 +86,7 @@ static int is_intel_processor(void)
+      *  0x49656e69 = "ineI"
+      *  0x6c65746e = "ntel"
       */
--    return;
- }
- 
- static S390PCIIOMMU *s390_pci_get_iommu(S390pciState *s, PCIBus *bus,
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 6236ac7f1e..db152a6252 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -367,6 +367,4 @@ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
-     s390_pci_read_group(pbdev, info);
-     s390_pci_read_util(pbdev, info);
-     s390_pci_read_pfip(pbdev, info);
+-    result = (ebx == 0x756e6547) && (edx == 0x49656e69) && (ecx == 0x6c65746e);
 -
--    return;
+-    return result;
++    return (ebx == 0x756e6547) && (edx == 0x49656e69) && (ecx == 0x6c65746e);
  }
-diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
-index 9f3b30e6ce..d56bfc711d 100644
---- a/hw/scsi/megasas.c
-+++ b/hw/scsi/megasas.c
-@@ -2226,7 +2226,6 @@ static uint64_t megasas_queue_read(void *opaque, hwaddr addr,
- static void megasas_queue_write(void *opaque, hwaddr addr,
-                                uint64_t val, unsigned size)
- {
--    return;
- }
- 
- static const MemoryRegionOps megasas_queue_ops = {
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 8039d13fd9..66e0c21c22 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -314,7 +314,6 @@ static void vhost_scsi_realize(DeviceState *dev, Error **errp)
-     if (vhostfd >= 0) {
-         close(vhostfd);
-     }
--    return;
- }
- 
- static void vhost_scsi_unrealize(DeviceState *dev)
-diff --git a/hw/ssi/ibex_spi_host.c b/hw/ssi/ibex_spi_host.c
-index 46c7b633c2..6b28cda200 100644
---- a/hw/ssi/ibex_spi_host.c
-+++ b/hw/ssi/ibex_spi_host.c
-@@ -154,7 +154,6 @@ static void ibex_spi_host_reset(DeviceState *dev)
-     ibex_spi_txfifo_reset(s);
- 
-     s->init_status = true;
--    return;
- }
- 
- /*
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 126070393e..367a2ff3bb 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -996,7 +996,6 @@ static void operation_sequencer(PnvSpi *s)
-     } /* end of while */
-     /* Update sequencer index field in status.*/
-     s->status = SETFIELD(SPI_STS_SEQ_INDEX, s->status, seq_index);
--    return;
- } /* end of operation_sequencer() */
- 
- /*
-@@ -1142,7 +1141,6 @@ static void pnv_spi_xscom_write(void *opaque, hwaddr addr,
-         qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi_regs: Invalid xscom "
-                  "write at 0x%" PRIx32 "\n", reg);
-     }
--    return;
- }
- 
- static const MemoryRegionOps pnv_spi_xscom_ops = {
-diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
-index 504328e3b0..92d3de1ea3 100644
---- a/hw/tpm/tpm_tis_i2c.c
-+++ b/hw/tpm/tpm_tis_i2c.c
-@@ -211,8 +211,6 @@ static inline void tpm_tis_i2c_clear_data(TPMStateI2C *i2cst)
-     i2cst->tis_addr = 0xffffffff;
-     i2cst->reg_name = NULL;
-     memset(i2cst->data, 0, sizeof(i2cst->data));
--
--    return;
- }
- 
- /* Send data to TPM */
-@@ -281,8 +279,6 @@ static inline void tpm_tis_i2c_tpm_send(TPMStateI2C *i2cst)
- 
-         tpm_tis_i2c_clear_data(i2cst);
-     }
--
--    return;
- }
- 
- /* Callback from TPM to indicate that response is copied */
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 326c92a43d..4cd14c3df4 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -1234,8 +1234,6 @@ static void usb_mtp_object_delete(MTPState *s, uint32_t handle,
-     default:
-         g_assert_not_reached();
-     }
--
--    return;
- }
- 
- static void usb_mtp_command(MTPState *s, MTPControl *c)
-diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
-index aa50a92e26..31f6cf5b31 100644
---- a/hw/usb/dev-serial.c
-+++ b/hw/usb/dev-serial.c
-@@ -472,8 +472,6 @@ static void usb_serial_token_in(USBSerialState *s, USBPacket *p)
-         s->recv_ptr = (s->recv_ptr + len) % RECV_BUF;
-         packet_len -= len + 2;
-     }
--
--    return;
- }
- 
- static void usb_serial_handle_data(USBDevice *dev, USBPacket *p)
-diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 73deb3ce83..84ca8c48e2 100644
---- a/hw/usb/dev-smartcard-reader.c
-+++ b/hw/usb/dev-smartcard-reader.c
-@@ -1069,7 +1069,6 @@ static void ccid_handle_bulk_out(USBCCIDState *s, USBPacket *p)
- err:
-     p->status = USB_RET_STALL;
-     s->bulk_out_pos = 0;
--    return;
- }
- 
- static void ccid_bulk_in_copy_to_guest(USBCCIDState *s, USBPacket *p,
-diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
-index 44e30013d7..b1d6b6ecc3 100644
---- a/hw/usb/dev-uas.c
-+++ b/hw/usb/dev-uas.c
-@@ -914,7 +914,6 @@ static void usb_uas_handle_data(USBDevice *dev, USBPacket *p)
- err_stream:
-     error_report("%s: invalid stream %d", __func__, p->stream);
-     p->status = USB_RET_STALL;
--    return;
- }
- 
- static void usb_uas_unrealize(USBDevice *dev)
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index ea87830fe0..4fdcef505d 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -104,7 +104,6 @@ static void vfio_display_edid_update(VFIOPCIDevice *vdev, bool enabled,
- 
- err:
-     trace_vfio_display_edid_write_error();
--    return;
- }
- 
- static void vfio_display_edid_ui_info(void *opaque, uint32_t idx,
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 7f1532fbed..f87f3ccbe1 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2383,7 +2383,6 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
-     }
- 
-     g_free(config);
--    return;
- }
- 
- static bool vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index 67bc57409c..7b4e100e27 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -418,7 +418,6 @@ fail_vfio:
-     abort();
- fail_irqfd:
-     vfio_start_eventfd_injection(sbdev, irq);
--    return;
- }
- 
- /* VFIO skeleton */
-diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-index 3f00d79ed0..0e8d4b3823 100644
---- a/hw/virtio/vhost-user-fs.c
-+++ b/hw/virtio/vhost-user-fs.c
-@@ -267,7 +267,6 @@ err_virtio:
-     g_free(fs->req_vqs);
-     virtio_cleanup(vdev);
-     g_free(fs->vhost_dev.vqs);
--    return;
- }
- 
- static void vuf_device_unrealize(DeviceState *dev)
-diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
-index 410a936ca7..04cd36dd2e 100644
---- a/hw/virtio/vhost-user-scmi.c
-+++ b/hw/virtio/vhost-user-scmi.c
-@@ -258,8 +258,6 @@ static void vu_scmi_device_realize(DeviceState *dev, Error **errp)
- 
-     qemu_chr_fe_set_handlers(&scmi->chardev, NULL, NULL, vu_scmi_event, NULL,
-                              dev, NULL, true);
--
--    return;
- }
- 
- static void vu_scmi_device_unrealize(DeviceState *dev)
-diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
-index 293273080b..d21cd4b516 100644
---- a/hw/virtio/vhost-user-vsock.c
-+++ b/hw/virtio/vhost-user-vsock.c
-@@ -128,7 +128,6 @@ err_vhost_dev:
- err_virtio:
-     vhost_vsock_common_unrealize(vdev);
-     vhost_user_cleanup(&vsock->vhost_user);
--    return;
- }
- 
- static void vuv_device_unrealize(DeviceState *dev)
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 267b612587..fdc01ab99e 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -654,8 +654,6 @@ static void scrub_shadow_regions(struct vhost_dev *dev,
-     }
-     *nr_rem_reg = rm_idx;
-     *nr_add_reg = add_idx;
--
--    return;
- }
- 
- static int send_remove_regions(struct vhost_dev *dev,
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 7efbde3d4c..8b45756ae7 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -288,8 +288,6 @@ static void vhost_vdpa_iommu_region_add(MemoryListener *listener,
- 
-     QLIST_INSERT_HEAD(&s->iommu_list, iommu, iommu_next);
-     memory_region_iommu_replay(iommu->iommu_mr, &iommu->n);
--
--    return;
- }
- 
- static void vhost_vdpa_iommu_region_del(MemoryListener *listener,
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6aa72fd434..4cae7c1664 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -732,7 +732,6 @@ out:
-         memory_region_unref(old_sections[n_old_sections].mr);
-     }
-     g_free(old_sections);
--    return;
- }
- 
- /* Adds the section data to the tmp_section structure.
-diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
-index b22aa74e34..accf7334e3 100644
---- a/hw/virtio/virtio-nsm.c
-+++ b/hw/virtio/virtio-nsm.c
-@@ -1609,7 +1609,6 @@ static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
-     if (in_elem) {
-         virtqueue_detach_element(vq, in_elem, 0);
-     }
--    return;
- }
- 
- static uint64_t get_features(VirtIODevice *vdev, uint64_t f, Error **errp)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 85110bce37..ffc12635ae 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3648,7 +3648,6 @@ static void virtio_queue_packed_restore_last_avail_idx(VirtIODevice *vdev,
-                                                        int n)
- {
-     /* We don't have a reference like avail idx in shared memory */
--    return;
- }
- 
- static void virtio_queue_split_restore_last_avail_idx(VirtIODevice *vdev,
-@@ -3673,7 +3672,6 @@ void virtio_queue_restore_last_avail_idx(VirtIODevice *vdev, int n)
- static void virtio_queue_packed_update_used_idx(VirtIODevice *vdev, int n)
- {
-     /* used idx was updated through set_last_avail_idx() */
--    return;
- }
- 
- static void virtio_queue_split_update_used_idx(VirtIODevice *vdev, int n)
-diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-index 65ac42a187..1dd21392a9 100644
---- a/hw/watchdog/sbsa_gwdt.c
-+++ b/hw/watchdog/sbsa_gwdt.c
-@@ -174,7 +174,6 @@ static void sbsa_gwdt_write(void *opaque, hwaddr offset, uint64_t data,
-         qemu_log_mask(LOG_GUEST_ERROR, "bad address in control frame write :"
-                 " 0x%x\n", (int)offset);
-     }
--    return;
- }
- 
- static void wdt_sbsa_gwdt_reset(DeviceState *dev)
-diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c
-index d94b83c109..a503b2aea7 100644
---- a/hw/watchdog/wdt_aspeed.c
-+++ b/hw/watchdog/wdt_aspeed.c
-@@ -225,7 +225,6 @@ static void aspeed_wdt_write(void *opaque, hwaddr offset, uint64_t data,
-                       "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-                       __func__, offset);
-     }
--    return;
- }
- 
- static const VMStateDescription vmstate_aspeed_wdt = {
-diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
-index 6514b8dd57..ef8b0c3a27 100644
---- a/linux-user/xtensa/signal.c
-+++ b/linux-user/xtensa/signal.c
-@@ -241,7 +241,6 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
- 
- give_sigsegv:
-     force_sigsegv(sig);
--    return;
- }
- 
- static void restore_sigcontext(CPUXtensaState *env,
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index ffe75256c9..d0f38b410c 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -82,7 +82,6 @@ static void multifd_nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
- {
-     g_free(p->iov);
-     p->iov = NULL;
--    return;
- }
- 
- static void multifd_ram_prepare_header(MultiFDSendParams *p)
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index 1303a5bf58..b6ac190034 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -561,8 +561,6 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-     }
- 
-     stat64_add(&mig_stats.qemu_file_transferred, buflen);
--
--    return;
- }
- 
- 
-diff --git a/migration/ram.c b/migration/ram.c
-index 424df6d9f1..dc909f5eef 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3963,8 +3963,6 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
- 
-     /* Skip pages array */
-     qemu_set_offset(f, block->pages_offset + length, SEEK_SET);
--
--    return;
- }
- 
- static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index 165610bfe2..893beed528 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -1328,8 +1328,6 @@ static void colo_compare_complete(UserCreatable *uc, Error **errp)
-     }
-     QTAILQ_INSERT_TAIL(&net_compares, s, next);
-     qemu_mutex_unlock(&colo_compare_mutex);
--
--    return;
- }
- 
- static void colo_flush_packets(void *opaque, void *user_data)
-diff --git a/qemu-keymap.c b/qemu-keymap.c
-index 6707067fea..1c081db287 100644
---- a/qemu-keymap.c
-+++ b/qemu-keymap.c
-@@ -116,7 +116,6 @@ static void walk_map(struct xkb_keymap *map, xkb_keycode_t code, void *data)
-     if (kshift != kaltgrshift && kaltgr != kaltgrshift) {
-         print_sym(kaltgrshift, qcode, " shift altgr");
-     }
--    return;
- }
- 
- static void usage(FILE *out)
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index 749fdf8895..d4482538ec 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -826,8 +826,6 @@ static void get_disk_properties(HANDLE vol_h, GuestDiskAddress *disk,
-     }
- out_free:
-     g_free(dev_desc);
--
--    return;
- }
- 
- static void get_single_disk_info(int disk_number,
-@@ -891,7 +889,6 @@ static void get_single_disk_info(int disk_number,
- 
- err_close:
-     CloseHandle(disk_h);
--    return;
- }
- 
- /* VSS provider works with volumes, thus there is no difference if
-@@ -2117,7 +2114,6 @@ static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **errp)
- 
-     rtl_get_version_t rtl_get_version = (rtl_get_version_t)fun;
-     rtl_get_version(info);
--    return;
- }
- 
- static char *ga_get_win_name(const OSVERSIONINFOEXW *os_version, bool id)
-diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-index 7dedef8dd4..1626fa5617 100644
---- a/system/dirtylimit.c
-+++ b/system/dirtylimit.c
-@@ -337,8 +337,6 @@ static void dirtylimit_adjust_throttle(CPUState *cpu)
-     if (!dirtylimit_done(quota, current)) {
-         dirtylimit_set_throttle(cpu, quota, current);
-     }
--
--    return;
- }
- 
- void dirtylimit_process(void)
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 9244848efe..ad3c4f38a1 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -1147,7 +1147,6 @@ static void do_setp(CPUARMState *env, uint32_t syndrome, uint32_t mtedesc,
-     env->ZF = 1; /* our env->ZF encoding is inverted */
-     env->CF = 0;
-     env->VF = 0;
--    return;
- }
- 
- void HELPER(setp)(CPUARMState *env, uint32_t syndrome, uint32_t mtedesc)
-@@ -1547,7 +1546,6 @@ static void do_cpyp(CPUARMState *env, uint32_t syndrome, uint32_t wdesc,
-     env->ZF = 1; /* our env->ZF encoding is inverted */
-     env->CF = 0;
-     env->VF = 0;
--    return;
- }
- 
- void HELPER(cpyp)(CPUARMState *env, uint32_t syndrome, uint32_t wdesc,
-diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
-index 31508d4e77..4cd2dcfcf0 100644
---- a/target/i386/kvm/vmsr_energy.c
-+++ b/target/i386/kvm/vmsr_energy.c
-@@ -285,7 +285,6 @@ void vmsr_read_thread_stat(pid_t pid,
-     }
- 
-     fclose(file);
--    return;
- }
- 
- /* Read QEMU stat task folder to retrieve all QEMU threads ID */
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index a8935f487a..c777629a9d 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -3601,7 +3601,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-     return;
-  illegal_op:
-     gen_illegal_opcode(s);
--    return;
- }
- 
- #include "decode-new.c.inc"
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 41fb8c5a4e..e44d044ecb 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -549,8 +549,6 @@ static void whpx_set_registers(CPUState *cpu, int level)
-         error_report("WHPX: Failed to set virtual processor context, hr=%08lx",
-                      hr);
-     }
--
--    return;
- }
- 
- static int whpx_get_tsc(CPUState *cpu)
-@@ -771,8 +769,6 @@ static void whpx_get_registers(CPUState *cpu)
-     }
- 
-     x86_update_hflags(env);
--
--    return;
- }
- 
- static HRESULT CALLBACK whpx_emu_ioport_callback(
-@@ -1570,8 +1566,6 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
-                          " hr=%08lx", hr);
-         }
-     }
--
--    return;
- }
- 
- static void whpx_vcpu_post_run(CPUState *cpu)
-@@ -1595,8 +1589,6 @@ static void whpx_vcpu_post_run(CPUState *cpu)
- 
-     vcpu->interruptable =
-         !vcpu->exit_ctx.VpContext.ExecutionState.InterruptShadow;
--
--    return;
- }
- 
- static void whpx_vcpu_process_async_events(CPUState *cpu)
-@@ -1634,8 +1626,6 @@ static void whpx_vcpu_process_async_events(CPUState *cpu)
-         apic_handle_tpr_access_report(x86_cpu->apic_state, env->eip,
-                                       env->tpr_access_type);
-     }
--
--    return;
- }
- 
- static int whpx_vcpu_run(CPUState *cpu)
-@@ -2280,7 +2270,6 @@ void whpx_destroy_vcpu(CPUState *cpu)
-     whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
-     whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
-     g_free(cpu->accel);
--    return;
- }
- 
- void whpx_vcpu_kick(CPUState *cpu)
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 0bf574830f..a37d3f6a96 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -290,7 +290,6 @@ void HELPER(m68k_movec_to)(CPUM68KState *env, uint32_t reg, uint32_t val)
- 
-     /* Invalid control registers will generate an exception. */
-     raise_exception_ra(env, EXCP_ILLEGAL, 0);
--    return;
- }
- 
- uint32_t HELPER(m68k_movec_from)(CPUM68KState *env, uint32_t reg)
-diff --git a/target/mips/tcg/system/mips-semi.c b/target/mips/tcg/system/mips-semi.c
-index df0c3256d9..e822a42614 100644
---- a/target/mips/tcg/system/mips-semi.c
-+++ b/target/mips/tcg/system/mips-semi.c
-@@ -374,5 +374,4 @@ void mips_semihosting(CPUMIPSState *env)
-         error_report("Unknown UHI operation %d", op);
-         abort();
-     }
--    return;
- }
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 992356cb75..80f6c185bc 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -1332,7 +1332,6 @@ int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level)
- 
- void kvm_arch_pre_run(CPUState *cs, struct kvm_run *run)
- {
--    return;
- }
- 
- MemTxAttrs kvm_arch_post_run(CPUState *cs, struct kvm_run *run)
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index a52cbc869a..a9ff5020a2 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -3627,7 +3627,6 @@ static void pmu_count_insns(DisasContext *ctx)
- #else
- static void pmu_count_insns(DisasContext *ctx)
- {
--    return;
- }
- #endif /* #if defined(TARGET_PPC64) */
- 
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 9db4048523..198d051521 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -551,8 +551,6 @@ static void type2_reg_write(CPURISCVState *env, target_ulong index,
-     default:
-         g_assert_not_reached();
-     }
--
--    return;
- }
- 
- /* type 6 trigger */
-@@ -667,8 +665,6 @@ static void type6_reg_write(CPURISCVState *env, target_ulong index,
-     default:
-         g_assert_not_reached();
-     }
--
--    return;
- }
- 
- /* icount trigger type */
-@@ -849,8 +845,6 @@ static void itrigger_reg_write(CPURISCVState *env, target_ulong index,
-     default:
-         g_assert_not_reached();
-     }
--
--    return;
- }
- 
- static int itrigger_get_adjust_count(CPURISCVState *env)
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index 93a05e43d7..8e0b01dc65 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -578,7 +578,6 @@ static void check_compat_model_failed(Error **errp,
-     error_setg(errp, "%s. Maximum supported model in the current configuration: \'%s\'",
-                msg, max_model->def->name);
-     error_append_hint(errp, "Consider a different accelerator, try \"-accel help\"\n");
--    return;
- }
- 
- static bool check_compatibility(const S390CPUModel *max_model,
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index bcdd558818..57b972e14f 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -1792,7 +1792,6 @@ static void _decode_opc(DisasContext * ctx)
-         gen_helper_raise_fpu_disable(tcg_env);
-     }
-     ctx->base.is_jmp = DISAS_NORETURN;
--    return;
- }
- 
- static void decode_opc(DisasContext * ctx)
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 88ac6c66ce..e8aabfc13f 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1881,7 +1881,6 @@ static void test_io_interface(gconstpointer opaque)
-     sector = offset_sector(opts->offset, opts->address_type, bufsize);
-     test_io_rw_interface(opts->address_type, opts->io_type, bufsize, sector);
-     g_free(opts);
--    return;
- }
- 
- static void create_ahci_io_test(enum IOMode type, enum AddrMode addr,
-diff --git a/tests/qtest/fuzz/generic_fuzz.c b/tests/qtest/fuzz/generic_fuzz.c
-index d107a496da..b42473d1ce 100644
---- a/tests/qtest/fuzz/generic_fuzz.c
-+++ b/tests/qtest/fuzz/generic_fuzz.c
-@@ -572,7 +572,6 @@ static void op_add_dma_pattern(QTestState *s,
-     pattern p = {a.index, a.stride, len - sizeof(a), data + sizeof(a)};
-     p.index = a.index % p.len;
-     g_array_append_val(dma_patterns, p);
--    return;
- }
- 
- static void op_clear_dma_patterns(QTestState *s,
-diff --git a/tests/qtest/libqos/libqos-malloc.c b/tests/qtest/libqos/libqos-malloc.c
-index d7566972c4..c90f8f03f4 100644
---- a/tests/qtest/libqos/libqos-malloc.c
-+++ b/tests/qtest/libqos/libqos-malloc.c
-@@ -342,5 +342,4 @@ void migrate_allocator(QGuestAllocator *src,
-     QTAILQ_INIT(src->free);
-     node = mlist_new(src->start, src->end - src->start);
-     QTAILQ_INSERT_HEAD(src->free, node, MLIST_ENTNAME);
--    return;
- }
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 2750067861..155250b8a2 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -2021,7 +2021,6 @@ void qtest_client_inproc_recv(void *opaque, const char *str)
-         qts->rx = g_string_new(NULL);
-     }
-     g_string_append(qts->rx, str);
--    return;
- }
- 
- void qtest_qom_set_bool(QTestState *s, const char *path, const char *property,
-diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-index b9603d46fa..c9de47bb26 100644
---- a/tests/qtest/test-x86-cpuid-compat.c
-+++ b/tests/qtest/test-x86-cpuid-compat.c
-@@ -193,7 +193,6 @@ static void add_feature_test(const char *name, const char *cpu,
-     args->bitnr = bitnr;
-     args->expected_value = expected_value;
-     qtest_add_data_func(name, args, test_feature_flag);
--    return;
- }
- 
- static void test_plus_minus_subprocess(void)
-diff --git a/tests/unit/socket-helpers.c b/tests/unit/socket-helpers.c
-index f3439cc4e5..37db24f72a 100644
---- a/tests/unit/socket-helpers.c
-+++ b/tests/unit/socket-helpers.c
-@@ -170,5 +170,4 @@ void socket_check_afunix_support(bool *has_afunix)
-     if (*has_afunix) {
-         close(fd);
-     }
--    return;
- }
-diff --git a/tests/unit/test-qgraph.c b/tests/unit/test-qgraph.c
-index 334c76c8e7..ca1d60fc18 100644
---- a/tests/unit/test-qgraph.c
-+++ b/tests/unit/test-qgraph.c
-@@ -44,7 +44,6 @@ static void *driverfunct(void *obj, QGuestAllocator *machine, void *arg)
- 
- static void testfunct(void *obj, void *arg, QGuestAllocator *alloc)
- {
--    return;
- }
- 
- static void check_interface(const char *interface)
-diff --git a/ui/input-linux.c b/ui/input-linux.c
-index 381148ea99..203e264212 100644
---- a/ui/input-linux.c
-+++ b/ui/input-linux.c
-@@ -412,7 +412,6 @@ err_read_event_bits:
- 
- err_close:
-     close(il->fd);
--    return;
- }
- 
- static void input_linux_instance_finalize(Object *obj)
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 9241caaad9..9e097dc4b4 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -146,8 +146,6 @@ static void vnc_init_basic_info(SocketAddress *addr,
-     default:
-         abort();
-     }
--
--    return;
- }
- 
- static void vnc_init_basic_info_from_server_addr(QIOChannelSocket *ioc,
-diff --git a/util/main-loop.c b/util/main-loop.c
-index acad8c2e6c..979db51a1f 100644
---- a/util/main-loop.c
-+++ b/util/main-loop.c
-@@ -212,7 +212,6 @@ static void main_loop_init(EventLoopBase *base, Error **errp)
-     main_loop_update_params(base, errp);
- 
-     mloop = m;
--    return;
- }
- 
- static bool main_loop_can_be_deleted(EventLoopBase *base)
-diff --git a/util/qht.c b/util/qht.c
-index 92c6b78759..208c2f4b32 100644
---- a/util/qht.c
-+++ b/util/qht.c
-@@ -367,7 +367,6 @@ void qht_map_lock_buckets__no_stale(struct qht *ht, struct qht_map **pmap)
-     qht_map_lock_buckets(map);
-     qht_unlock(ht);
-     *pmap = map;
--    return;
- }
  
- /*
+ static int is_rapl_enabled(void)
 -- 
 2.48.1
 
