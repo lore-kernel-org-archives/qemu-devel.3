@@ -4,146 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F20CC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A434EC35FFC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuwbY-0006ya-Q4; Wed, 19 Mar 2025 12:49:20 -0400
+	id 1tuwbh-0007A3-4i; Wed, 19 Mar 2025 12:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuwbW-0006y3-RA
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:49:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tuwbb-0006zU-9c; Wed, 19 Mar 2025 12:49:23 -0400
+Received: from mail-co1nam11on2061e.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::61e]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tuwbU-0003Hw-5u
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:49:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742402953;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rAsv3bc3CfBx05pYqwNvWA3mVWumgJk7v/S1S21076o=;
- b=dEwtbN/AadH3vGE83A8sQZYabPXMW2bNgl8ql4NA/u/Gp7+G3yyOvZHlVorVPmDpVHVu6/
- 1ISdDArQTyRpOtqGbqHRg5LYY4aV2Pjlfy760mwrcOkd89SI6tvXdUbiPiwomDNbfuOFXv
- 1JzMhBOgBIPOp2HmeWXShVjXWoAw9tU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-mYJaORP-Mf-lrmCvQBvpBA-1; Wed, 19 Mar 2025 12:49:11 -0400
-X-MC-Unique: mYJaORP-Mf-lrmCvQBvpBA-1
-X-Mimecast-MFC-AGG-ID: mYJaORP-Mf-lrmCvQBvpBA_1742402950
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-394bbefc98cso4502831f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:49:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742402950; x=1743007750;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rAsv3bc3CfBx05pYqwNvWA3mVWumgJk7v/S1S21076o=;
- b=bpCsoSmRM9RXVHws0PjX/aUeIaDiXXrBDqaxlFc3U1R7t6H2zHfQuaWWkTTh7QN9W1
- TDArvMCIrsTr8Wt6TdhRh9MSlEC2jqu8xbrnZ55p6GPZ/gVEypmAHe84eRNOWx+GUEhG
- LyL47ssxtW0oTpKFoDbT2Qt54TT7o5losF1R6/wTU1e0KKCCBXyUTwD0Qc+xbc8EqBAe
- 2NtQ+uSAwKzZJTr7oJ4ieYJ5bFTh9hj3Sq1H3cc7R5EGgnyAT0baVaPzjn+Nya7UfIjR
- zry0Ck5ERx/X3B7SGpA7myI1BT3tIDtFS0lDTeu9pQfx+Do2/cHcH0G/sNG0ur0UfuXY
- BWXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8Ja4xwp3HrPFipe702RnB2pN26/ZLIVeKtPwhm2K2A9VGLk3hXWkvX0/VgxJFQBI3NW2wSs00E7Ij@nongnu.org
-X-Gm-Message-State: AOJu0YzhD2zJ11fvFVkO50Wpj9fBkdUFG3DRqCXmUKTJT42pp+RuRbuc
- NGJIUzPMoNGYgz4JdL5tvoE9/zb3XLh7NUj0s/wI0Fo+i3pGHHgrjUzagBkJa0cImaEBq4gMLCj
- nhKi5D/ZW9TvTZJlLQamIQI3TTbE1P7x8kiDoniTNmBf2pjnlMYW7
-X-Gm-Gg: ASbGncsZO77whssU6HLj1IlNJFr7zZZGLN084Eg2RGngZbJi1MXLA3tF+PVCBcbmu43
- 4MCN+RZHM1pi25PR2kw4pCnJMJwoKbiD9HgCVjJ3ymv2GCdJQZ78o1HJjbnce/twZsoNVx0YZFf
- 5GT35Ozv/aLefN3/w4wWcTpL82B1V39GYJocHxlcVZAErRcc830ZFaBs5YZchhUVX9qct1bPUOT
- Dge9Ol7lDRAMGGkHeTPuFuqcI46TyE0EFqZu3VmPWL187PJ/37Xxt7uGpo5cmsuLd0FmbtMyQJ/
- FEb6vUKChVef0hQRxR1rmyC/4dfz+//QOkRl4Va5Pw+o+dHv2Gl3iw==
-X-Received: by 2002:a05:6000:188b:b0:391:4940:45c3 with SMTP id
- ffacd0b85a97d-39973b2b8e0mr3347490f8f.54.1742402950041; 
- Wed, 19 Mar 2025 09:49:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9MwSKgGXTfjnaefLDJrAfv6q7NoQA4Z7m5cOIAhcToBZkjY0i5dasj/yEDKrItNNCtIXC8A==
-X-Received: by 2002:a05:6000:188b:b0:391:4940:45c3 with SMTP id
- ffacd0b85a97d-39973b2b8e0mr3347464f8f.54.1742402949550; 
- Wed, 19 Mar 2025 09:49:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c8975b90sm21866392f8f.53.2025.03.19.09.49.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 09:49:09 -0700 (PDT)
-Message-ID: <686dd11d-7018-4b91-8d68-7ea9f4f4d508@redhat.com>
-Date: Wed, 19 Mar 2025 17:49:08 +0100
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tuwbY-0003IP-Qa; Wed, 19 Mar 2025 12:49:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gK9itKkWKmWeu2dBk7HHFQ7aYqBQ5FW5ptM5gzNT8kVZ7bFSNA8tCA1WeV636Q+0oTuIUZUZ0vIrF7Dp1Ec55CWoEGIuyV87d/6r99ptesZxSv9mKw8TyFfNSkk8I7KU0wHWRyd0icdkH7zP8wWW7B8J6QESgfRjFhIfQvYVqpoaP3Zw4GeVkxlw69GE5ObCbPgemIVv1UTQh+kkTEG2tpR7yGrm9aRTyeJYX+7D0RTXG4V3xgBk2WKUfttEJOF6sJEor7atT1m1a5MJn9t+7gN/nep4FAbQC46j58ybq2cm8nYG8i3p3SxdijaGmJ6U3IexNQ+70czo1NNoNJC6ug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bZrHM1FdzzN0lCOvDvdYIhcTaDVaPpt2rTPVKt8yzMg=;
+ b=oMIRiYbfQ5aTKzUxDsmHMJ9YCXytIK60ZZvTfqkb6Hary31IZjO5Vbi7eWfi7PBiCkOyH6IN3+A5mASH/KVKtN91cTvGl2I8NcP/nH8B2SRI9C9k/tkO+jvyF5bqjtioPRrKZKWlpWwMYKnfdVPQFEQcK/aseOHa7t7jsuxCUaPETmPH4twv4wAZtT/Cz/8a8UnrUXCwzzl+0asUkcMbs9OFdIDrvfEw+HbXu91LI10s10+kG1HskKOl2omVTYg/sEoQqKGZRm0Pe6aKDGXBscihRy+kCVYa15EmSmZQSnGuzkQxXG5a4KXiyd6qLn3mjGojXpYGawqV8rNUPfDjuA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bZrHM1FdzzN0lCOvDvdYIhcTaDVaPpt2rTPVKt8yzMg=;
+ b=humA3glSCiLnkJBQ2gU9IVDQ5vK8wJej3kG2UgNU3bDHvSAYzHjNQ8qeQGFwT7bvUiEPAdSKhs5XWo++MXUlTFu8Iy7ASjk5PiRWnqDQHe6tb3Dw9xvF0QXW1ZE003Gd343JkwN6Bv0GIANQ7zpvLCYC2HN2qSBDW9ipCCRmlbTUovUjN3D6CHvJElu258JABh5VKzMSsK7uTwjKOD2v6Y2ji8Z0ZZsirGFFMSg/MLnFMCIWhXpUxRQBpcooAnz1TghGRpZyWo1rsdEtTobkQ1sdyNKJHwGVoIJhDaMHExRVxn9OmzLVnck9bvfoYewHt1kVyUS2A0u0usI4SK22dA==
+Received: from BY5PR16CA0032.namprd16.prod.outlook.com (2603:10b6:a03:1a0::45)
+ by SA1PR12MB7152.namprd12.prod.outlook.com (2603:10b6:806:2b2::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.33; Wed, 19 Mar
+ 2025 16:49:14 +0000
+Received: from BY1PEPF0001AE1B.namprd04.prod.outlook.com
+ (2603:10b6:a03:1a0:cafe::5d) by BY5PR16CA0032.outlook.office365.com
+ (2603:10b6:a03:1a0::45) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.34 via Frontend Transport; Wed,
+ 19 Mar 2025 16:49:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BY1PEPF0001AE1B.mail.protection.outlook.com (10.167.242.103) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8534.20 via Frontend Transport; Wed, 19 Mar 2025 16:49:13 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 19 Mar
+ 2025 09:48:57 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Wed, 19 Mar 2025 09:48:57 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 19 Mar 2025 09:48:56 -0700
+Date: Wed, 19 Mar 2025 09:48:54 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Donald Dutile <ddutile@redhat.com>
+CC: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "nathanc@nvidia.com" <nathanc@nvidia.com>, "mochs@nvidia.com"
+ <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>, Linuxarm
+ <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: Re: [RFC PATCH v2 13/20] hw/arm/smmuv3-accel: Introduce helpers to
+ batch and issue cache invalidations
+Message-ID: <Z9r1dsYyMNnElpbG@Asurada-Nvidia>
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-14-shameerali.kolothum.thodi@huawei.com>
+ <28452954-7be2-4114-8d37-a208250b6f83@redhat.com>
+ <42f9953fc7dd40d9bcd4919914530b89@huawei.com>
+ <16998464-b8d8-459b-80c4-69da2cafa477@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 03/32] vfio: Introduce a new header file for
- external migration services
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20250318095415.670319-1-clg@redhat.com>
- <20250318095415.670319-4-clg@redhat.com>
- <df484075-f6a0-41b5-9c7f-c4817c160489@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <df484075-f6a0-41b5-9c7f-c4817c160489@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <16998464-b8d8-459b-80c4-69da2cafa477@redhat.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE1B:EE_|SA1PR12MB7152:EE_
+X-MS-Office365-Filtering-Correlation-Id: c5208a53-e5fb-473c-e1df-08dd6705faf9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|376014|82310400026|7416014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?3qH16RUqPti5EALVOjNRlmsbk6MgHYns+5a0yWaSOOjjvBcZ9OpR/WiViJXB?=
+ =?us-ascii?Q?6jZNYp6mN6Plcv/HtshXi6Hh9vMOVOeKLUCaEQiD2j/BXviKXVWDhvR4f8Y+?=
+ =?us-ascii?Q?wXxWMZRJFSnR8ZP0W43ebvdlEduR2NkL7M9VEVTg6BjzHAkxY/gJsFMwpFAT?=
+ =?us-ascii?Q?r19pP7g3ziLGBUfQo0BB3Vm74d7WQTBmwLy6N3HkjgtyLWOJgeO6RKUxcQRS?=
+ =?us-ascii?Q?i+ZLyzOz2N0YVUKJuZw/5pPu0+pZ/KOF6ojHHu9+haUUmIsX0LqGdVL+4nhk?=
+ =?us-ascii?Q?LchC1K99aQNq9PDTa+YrkMzVH1eCq3HNmzsSKQl9EaU1e1upv6xAsFrPp8YO?=
+ =?us-ascii?Q?r/UJUsFYD2vUuUTqq84BlmArbs5WCXNaF0D77TTJXaZK2Kew/kSTjneGXQ7G?=
+ =?us-ascii?Q?cLt6NaD+NpDXcqKzcLWk1nKqgteu83U3c97lH9iLTRAX/XjcALUoyUn8XcCb?=
+ =?us-ascii?Q?9yyB4FhrygSKJENWmqKoo8HbNuion6+HQTR7Hjz3GOskZCZO4bpLNxR8QHKZ?=
+ =?us-ascii?Q?ETvdzUXACtm1SX6BF33Yvf0DFn9ZRGNoCAdaOijUJR7qRs/PXCrnpmu9aSHa?=
+ =?us-ascii?Q?Rqh6ckuAXzKIXXH9egsrT6iD9yHjrAR7CicSQp017AcTMc5ZBmlbZnTM2o5C?=
+ =?us-ascii?Q?jpL0wckfpQbeeZfGxAnT9Aq0ad/kwN/ii4KK827oKakx3NZ6I2ylDiJTIxa+?=
+ =?us-ascii?Q?Snw1UKP6i3N3I3aAKeyHWlNtA/DXaB8wizGCAuLXtR9c5gxa8DLPahxpu75J?=
+ =?us-ascii?Q?+A6UP6xedF0eet/Lch+/UEr7QMturKJBKY13t1Jhd1TxNlrENoAr90Yav7cT?=
+ =?us-ascii?Q?EqE7Clq8/61bDbJs5CdQ2zVWXBUQekqTyoRWtKxpe+OX4SZWjMcXugTfSl68?=
+ =?us-ascii?Q?SggYaysb5bWwgERfUzhxVkVPssu4Hw1rWDKgh4yGrWqVQ7rWh+VAnkN8+Hfc?=
+ =?us-ascii?Q?2gp/yTCNw7pImoK7l8E7EjxA9S+/yv7RrVcKeKRU7oMdWjSCVD42GihMECtR?=
+ =?us-ascii?Q?xhUznAKrXfL8HOvuuKkPGrS2G8uIz+rgLzsdkAVzSo9nFXY1JmOa/wK98Azx?=
+ =?us-ascii?Q?EQGS8qas6ia1xXN6r2GMm6ufVyd4AVFyhp8zw31JGcQ94nhi4S2sp2/QgIXE?=
+ =?us-ascii?Q?TfT84bpFATgwOGON9h8RWteGAqtskFIQDdWIvFLNitfwRFK71TWYLNsu0qRy?=
+ =?us-ascii?Q?LSPmHp4uQBXODTVlUNcEswn2VftqKnc9xX2okMIaRKwZ5b+y5hQj9UNPRujT?=
+ =?us-ascii?Q?+uHnj2s2ISi5BbQ7296RJ8QCplJsop2t6mlT3HNWNRf4DWp6hQSYXLOaqe4b?=
+ =?us-ascii?Q?ccXUT8RcMnNzcwXSpuqcqlUauUDi77yKKAdbM/D6Zqi+rFQsdk4CYl8nixiz?=
+ =?us-ascii?Q?groEyYRm270iy7vKwrhZPZOi2AiY/m7UVA88l81H4uxRXxAuofH0RelHr1yq?=
+ =?us-ascii?Q?6mA7WBpQ9K8AIAK0+uE5AwBZwZdjdxK0tHhXCNNN49niR0CXR4ZdyoWD8XT3?=
+ =?us-ascii?Q?Dl9RJGH+y76506k=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026)(7416014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2025 16:49:13.9343 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c5208a53-e5fb-473c-e1df-08dd6705faf9
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF0001AE1B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7152
+Received-SPF: permerror client-ip=2a01:111:f403:2416::61e;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,124 +167,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/25 13:37, Avihai Horon wrote:
-> 
-> On 18/03/2025 11:53, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> The migration core subsytem makes uses of the VFIO migration API to
->> collect statistics on the number of bytes transferred. These services
->> are declared in "hw/vfio/vfio-common.h" which also contains VFIO
->> internal declarations. Move the migration declarations into a new
->> header file "hw/vfio/vfio-migration.h" to reduce the exposure of VFIO
->> internals.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   include/hw/vfio/vfio-common.h    |  4 ----
->>   include/hw/vfio/vfio-migration.h | 17 +++++++++++++++++
->>   hw/vfio/migration-multifd.c      |  1 +
->>   hw/vfio/migration.c              |  1 +
->>   migration/target.c               |  2 +-
->>   5 files changed, 20 insertions(+), 5 deletions(-)
->>   create mode 100644 include/hw/vfio/vfio-migration.h
->>
->> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->> index 9cfb3fb6931e71395ef1d67b0a743d8bc1433fdc..5fc7ee76573375bc8464baee29ab88974fac3d3b 100644
->> --- a/include/hw/vfio/vfio-common.h
->> +++ b/include/hw/vfio/vfio-common.h
->> @@ -290,13 +290,9 @@ extern VFIODeviceList vfio_device_list;
->>   extern const MemoryListener vfio_memory_listener;
->>   extern int vfio_kvm_device_fd;
->>
->> -bool vfio_mig_active(void);
->>   int vfio_block_multiple_devices_migration(VFIODevice *vbasedev, Error **errp);
->>   void vfio_unblock_multiple_devices_migration(void);
->>   bool vfio_viommu_preset(VFIODevice *vbasedev);
->> -int64_t vfio_mig_bytes_transferred(void);
->> -void vfio_mig_reset_bytes_transferred(void);
->> -void vfio_mig_add_bytes_transferred(unsigned long val);
->>   bool vfio_device_state_is_running(VFIODevice *vbasedev);
->>   bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
->>
->> diff --git a/include/hw/vfio/vfio-migration.h b/include/hw/vfio/vfio-migration.h
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..259c532f64bdd002d512375df3140f291a0ade85
->> --- /dev/null
->> +++ b/include/hw/vfio/vfio-migration.h
->> @@ -0,0 +1,17 @@
->> +/*
->> + * VFIO migration interface
->> + *
->> + * Copyright Red Hat, Inc. 2025
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef HW_VFIO_VFIO_MIGRATION_H
->> +#define HW_VFIO_VFIO_MIGRATION_H
->> +
->> +bool vfio_mig_active(void);
->> +int64_t vfio_mig_bytes_transferred(void);
->> +void vfio_mig_reset_bytes_transferred(void);
->> +void vfio_mig_add_bytes_transferred(unsigned long val);
-> 
-> IIUC, vfio_mig_add_bytes_transferred is not used externally. Maybe move it to the internal migration header?
+On Wed, Mar 19, 2025 at 12:24:32PM -0400, Donald Dutile wrote:
+> > > On 3/11/25 10:10 AM, Shameer Kolothum wrote:
+> > > > From: Nicolin Chen <nicolinc@nvidia.com>
+> > > > 
+> > > > Inroduce an SMMUCommandBatch and some helpers to batch and issue
+> > > the
+> > >     ^^^^^^^^ Introduce
+> > > > commands.  Currently separate out TLBI commands and device cache
+> > > > commands to avoid some errata on certain versions of SMMUs. Later it
+> > > > should check IIDR register to detect if underlying SMMU hw has such an
+> > > erratum.
+> > > Where is all this info about 'certain versions of SMMUs' and 'check IIDR
+> > > register' has something to do with 'underlying SMMU hw such an erratum',
+> > > -- which IIDR (& bits)? or are we talking about rsvd SMMU_IDR<> registers?
+> > 
+> > I guess the batching has constraints on some platforms, IIRC, this was discussed
+> > somewhere in a kernel thread.
+> > 
+> > Nicolin, could you please provide some background on this.
+> > 
+> A lore link if it's discussed upstream, thanks.
 
-sure. let's do that.
+https://lore.kernel.org/all/696da78d32bb4491f898f11b0bb4d850a8aa7c6a.1683731256.git.robin.murphy@arm.com/
 
-Thanks,
+IIRC, some of them forbid command issuing like mixing leaf TLBI
+commands with non-leaf TLBI commands or mixing device commands
+with TLBI commands.
 
-C.
+Currently, kernel masks away the ARM_SMMU_FEAT_NESTING from the
+affected SMMU versions/subversions. So, I think we are fine for
+now, though probably doesn't hurt to check IIDR?
 
-
-
-> 
-> Thanks.
-> 
->> +
->> +#endif /* HW_VFIO_VFIO_MIGRATION_H */
->> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->> index 378f6f3bf01f6a4155fb424f8028cb5380f27f02..fe84735ec2c7bd085820d25c06be558761fbe0d5 100644
->> --- a/hw/vfio/migration-multifd.c
->> +++ b/hw/vfio/migration-multifd.c
->> @@ -11,6 +11,7 @@
->>
->>   #include "qemu/osdep.h"
->>   #include "hw/vfio/vfio-common.h"
->> +#include "hw/vfio/vfio-migration.h"
->>   #include "migration/misc.h"
->>   #include "qapi/error.h"
->>   #include "qemu/bswap.h"
->> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index 8bf65b8e11094b8363692dba3084b762362c7dd6..75096377ffecf62b3bab91102a00d723827ea4c7 100644
->> --- a/hw/vfio/migration.c
->> +++ b/hw/vfio/migration.c
->> @@ -17,6 +17,7 @@
->>
->>   #include "system/runstate.h"
->>   #include "hw/vfio/vfio-common.h"
->> +#include "hw/vfio/vfio-migration.h"
->>   #include "migration/misc.h"
->>   #include "migration/savevm.h"
->>   #include "migration/vmstate.h"
->> diff --git a/migration/target.c b/migration/target.c
->> index f5d8cfe7c2a3473f4bd3f5068145598c60973c58..e1eacd1db7a471cba51b4e257a834eb7581f9671 100644
->> --- a/migration/target.c
->> +++ b/migration/target.c
->> @@ -11,7 +11,7 @@
->>   #include CONFIG_DEVICES
->>
->>   #ifdef CONFIG_VFIO
->> -#include "hw/vfio/vfio-common.h"
->> +#include "hw/vfio/vfio-migration.h"
->>   #endif
->>
->>   #ifdef CONFIG_VFIO
->> -- 
->> 2.48.1
->>
-> 
-
+Thanks
+Nicolin
 
