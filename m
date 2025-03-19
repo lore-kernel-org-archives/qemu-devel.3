@@ -4,70 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB99C282EC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 03:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86BBDC35FF1
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 04:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tujmd-00008A-4H; Tue, 18 Mar 2025 23:07:55 -0400
+	id 1tukiP-0003C6-Fz; Wed, 19 Mar 2025 00:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1tujmb-00007O-Lg
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 23:07:53 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1tujmZ-0003qq-OX
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 23:07:53 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxquADNdpnII+cAA--.26059S3;
- Wed, 19 Mar 2025 11:07:47 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMAxzMQDNdpnm+1SAA--.41516S3;
- Wed, 19 Mar 2025 11:07:47 +0800 (CST)
-Subject: Re: [PATCH 3/5] hw/intc/loongarch_extioi: Replace legacy reset
- callback with new api
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20250307071346.2260062-1-maobibo@loongson.cn>
- <20250307071346.2260062-4-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <695e88ca-ad86-0e70-9942-4421910b8347@loongson.cn>
-Date: Wed, 19 Mar 2025 11:10:12 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tukiK-0003Be-1C; Wed, 19 Mar 2025 00:07:32 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tukiH-0001JJ-8K; Wed, 19 Mar 2025 00:07:30 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-86dddba7e0eso668088241.1; 
+ Tue, 18 Mar 2025 21:07:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742357247; x=1742962047; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QH7bSln7EqB6Dd63YdQvEooVgoD3ND8jMqVR9XYkyXE=;
+ b=PKfkDHqMU1eouEHhemOYOf/zl8T2NFvJSuStfNDiezb9UVd6tRhwv1r7LvFVGcNhSG
+ am/S0tbkmm1yyww1mlWQDe49iLyOY7UzmQEkq0/8z+VMLbGahtZAq0Qb7wQ69Vi32EWh
+ pKCSdryxGkxiFZ+wJeSZ788IpjpGbQM3KCdBoMwQHFGsNiDkGbsezGZ39EDTeIhEEQAc
+ XmyijKnUSS+3JsdmF4GSDMERaurkI1eRrL4Osis4gY4ReGhIWivcqRvTruFefrwYrIpj
+ edOhyGhTe9sECneFb9k1SNuPLufqf0gEa0BdW0VVlrB36namQIprurkieWO8yki9axXq
+ VBDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742357247; x=1742962047;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QH7bSln7EqB6Dd63YdQvEooVgoD3ND8jMqVR9XYkyXE=;
+ b=lQ7Yd3OrGk0KfDDTaU8NKCyFpjgxMEN5ORPOCNtFCOIeR4L6iwj9OD224TsapTvwGZ
+ Zha8jk9F774P5y5fpvpX4VmZjBt2BtL8gfe6RDf8Js+cOFwgm93il1mHdm4y2vtXiW5p
+ vzHaZhrpCn9MKyEl7xgHpDbKM2a9Pc/QlzQpS65TDaoWhiTgA09e5oIVjJymwet7t+/i
+ cr6s3h5Ad/yHZH/VcTnm2V4PAdQoTUAoQDD61zRwhP2rlut99lmYfYQOPOuQ1r54Rzqr
+ ndjMX7JYPEt5GoNJqdgR4Izi7x1KRhRqFASNE9uu6p+txHDQszyUuS9ohtAFQKIxRQqg
+ 5EIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUKXETkugHqBLgZw6o/6Bz/FHfIan31I1RaY42qon2vn/HOD4MI+S/d2calijmPbSdAhyily4i2YdDs@nongnu.org
+X-Gm-Message-State: AOJu0YxkF3xw/ueBkUEBWpaRSS0b0GGd1UdWif7I9E1P+rc2B4qXIaj6
+ 9tussRXVLcFFV+ze56I9wLVCMM2RuZr1C7jBemhwVPxUm6ZYoA9RFmOX69CXNAAdc7QeWJTdwhy
+ FrnYTTauneWr7f6BcQdEgH8D+6Bs=
+X-Gm-Gg: ASbGncuOdym8yNArkUgRvaAlJPgIj8rjFIxLnBOiCQogmqS6aI7Kh7BqkB/3K7IL1Ao
+ xWcldaSIZOM4JzUa8mJIvZkv+tr8ktYE/GCCHVb6fTMOZVrFMfrljAM71XUNKBUYmryAE4op2fo
+ nIYwfOZ/gv0DLcFcn2CwSloWkGXO+IvvlB6a4smBYAfThDJoA1YzRRd6I=
+X-Google-Smtp-Source: AGHT+IHNI3hjGuvdltk5lrhRewpVYQNKXBzIQjN0WtGgaJe7li2DWqdDPEq3fxWCGJxEKv85vGZcFq8biSPlsIgv3Ak=
+X-Received: by 2002:a05:6102:549f:b0:4c1:8b8e:e9f7 with SMTP id
+ ada2fe7eead31-4c4ec63a201mr864882137.8.1742357247307; Tue, 18 Mar 2025
+ 21:07:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20250307071346.2260062-4-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMAxzMQDNdpnm+1SAA--.41516S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxXr48tr4ftFW5uw4fZF1xtFc_yoW5Gry3pr
- yUZF15GrWUZw4DJrsrKa4DWryUXrsagF12qF1rKa4rCan8Jry0g34vqr9xXF1UG395A34j
- q3s3tw15ZFnFy3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7MmhUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -9
-X-Spam_score: -1.0
+References: <174184718265.10540.10120024221661781046-0@git.sr.ht>
+In-Reply-To: <174184718265.10540.10120024221661781046-0@git.sr.ht>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 19 Mar 2025 14:07:01 +1000
+X-Gm-Features: AQ5f1JpNRUyY0OV_2H0lidP1DDVBIxJbbRJNcbTSApaNiKlEsz9PoLsq9T0A4Hk
+Message-ID: <CAKmqyKN_NosmyOJG2jiH8uCCOk4+Lz+3+bLGD16hOpmypbeBLg@mail.gmail.com>
+Subject: Re: [PATCH qemu] target/riscv: Add check for 16-bit aligned PC for
+ different priv versions.
+To: "~yuming" <yumin686@andestech.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.526, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,68 +100,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2025/3/7 ÏÂÎç3:13, Bibo Mao Ð´µÀ:
-> Replace legacy reset callback register device_class_set_legacy_reset()
-> with new function resettable_class_set_parent_phases(). With new API,
-> it will call reset callback of parent object and then itself.
+On Thu, Mar 13, 2025 at 4:27=E2=80=AFPM ~yuming <yuming@git.sr.ht> wrote:
 >
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> From: Yu-Ming Chang <yumin686@andestech.com>
+>
+> For privilege version 1.12 or newer, C always implies Zca. We can only
+> check ext_zca to allow 16-bit aligned PC addresses. For older privilege
+> versions, we only check C.
+>
+> Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
+
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
 > ---
->   hw/intc/loongarch_extioi.c         | 12 ++++++++----
->   include/hw/intc/loongarch_extioi.h |  1 +
->   2 files changed, 9 insertions(+), 4 deletions(-)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-
-thanks.
-Song Gao
-> diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-> index a51a215e6e..0fecc62a09 100644
-> --- a/hw/intc/loongarch_extioi.c
-> +++ b/hw/intc/loongarch_extioi.c
-> @@ -377,11 +377,13 @@ static void loongarch_extioi_unrealize(DeviceState *dev)
->       g_free(s->cpu);
->   }
->   
-> -static void loongarch_extioi_reset(DeviceState *d)
-> +static void loongarch_extioi_reset_hold(Object *obj, ResetType type)
->   {
-> -    LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(d);
-> +    LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_GET_CLASS(obj);
->   
-> -    s->status = 0;
-> +    if (lec->parent_phases.hold) {
-> +        lec->parent_phases.hold(obj, type);
+>  target/riscv/cpu.h                      | 12 ++++++++++++
+>  target/riscv/insn_trans/trans_rvi.c.inc |  8 ++++++--
+>  target/riscv/op_helper.c                |  8 ++++++--
+>  target/riscv/translate.c                |  4 +++-
+>  4 files changed, 27 insertions(+), 5 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 7de19b4183..51e49e03de 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -765,6 +765,18 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *=
+env)
+>  }
+>  #endif
+>
+> +static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
+> +                                              target_long priv_ver,
+> +                                              uint32_t misa_ext)
+> +{
+> +    /* In priv spec version 1.12 or newer, C always implies Zca */
+> +    if (priv_ver >=3D PRIV_VERSION_1_12_0) {
+> +        return cfg->ext_zca;
+> +    } else {
+> +        return misa_ext & RVC;
 > +    }
->   }
->   
->   static int vmstate_extioi_post_load(void *opaque, int version_id)
-> @@ -406,12 +408,14 @@ static void loongarch_extioi_class_init(ObjectClass *klass, void *data)
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_CLASS(klass);
->       LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_CLASS(klass);
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
->   
->       device_class_set_parent_realize(dc, loongarch_extioi_realize,
->                                       &lec->parent_realize);
->       device_class_set_parent_unrealize(dc, loongarch_extioi_unrealize,
->                                         &lec->parent_unrealize);
-> -    device_class_set_legacy_reset(dc, loongarch_extioi_reset);
-> +    resettable_class_set_parent_phases(rc, NULL, loongarch_extioi_reset_hold,
-> +                                       NULL, &lec->parent_phases);
->       lecc->post_load = vmstate_extioi_post_load;
->   }
->   
-> diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
-> index 351f18afcf..4a6ae903e9 100644
-> --- a/include/hw/intc/loongarch_extioi.h
-> +++ b/include/hw/intc/loongarch_extioi.h
-> @@ -22,6 +22,7 @@ struct LoongArchExtIOIClass {
->   
->       DeviceRealize parent_realize;
->       DeviceUnrealize parent_unrealize;
-> +    ResettablePhases parent_phases;
->   };
->   
->   #endif /* LOONGARCH_EXTIOI_H */
-
+> +}
+> +
+>  /*
+>   * Encode LMUL to lmul as follows:
+>   *     LMUL    vlmul    lmul
+> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
+trans/trans_rvi.c.inc
+> index b55f56a5eb..b9c7160468 100644
+> --- a/target/riscv/insn_trans/trans_rvi.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
+> @@ -151,7 +151,9 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a=
+)
+>          tcg_gen_ext32s_tl(target_pc, target_pc);
+>      }
+>
+> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
+> +    if (!riscv_cpu_allow_16bit_insn(ctx->cfg_ptr,
+> +                                    ctx->priv_ver,
+> +                                    ctx->misa_ext)) {
+>          TCGv t0 =3D tcg_temp_new();
+>
+>          misaligned =3D gen_new_label();
+> @@ -300,7 +302,9 @@ static bool gen_branch(DisasContext *ctx, arg_b *a, T=
+CGCond cond)
+>
+>      gen_set_label(l); /* branch taken */
+>
+> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca &&
+> +    if (!riscv_cpu_allow_16bit_insn(ctx->cfg_ptr,
+> +                                    ctx->priv_ver,
+> +                                    ctx->misa_ext) &&
+>          (a->imm & 0x3)) {
+>          /* misaligned */
+>          TCGv target_pc =3D tcg_temp_new();
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index 0d4220ba93..72dc48e58d 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -279,7 +279,9 @@ target_ulong helper_sret(CPURISCVState *env)
+>      }
+>
+>      target_ulong retpc =3D env->sepc;
+> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
+> +    if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
+> +                                    env->priv_ver,
+> +                                    env->misa_ext) && (retpc & 0x3)) {
+>          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
+>      }
+>
+> @@ -357,7 +359,9 @@ static void check_ret_from_m_mode(CPURISCVState *env,=
+ target_ulong retpc,
+>          riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+>      }
+>
+> -    if (!riscv_has_ext(env, RVC) && (retpc & 0x3)) {
+> +    if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
+> +                                    env->priv_ver,
+> +                                    env->misa_ext) && (retpc & 0x3)) {
+>          riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
+>      }
+>
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index eaa5d86eae..d6651f244f 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -606,7 +606,9 @@ static void gen_jal(DisasContext *ctx, int rd, target=
+_ulong imm)
+>      TCGv succ_pc =3D dest_gpr(ctx, rd);
+>
+>      /* check misaligned: */
+> -    if (!has_ext(ctx, RVC) && !ctx->cfg_ptr->ext_zca) {
+> +    if (!riscv_cpu_allow_16bit_insn(ctx->cfg_ptr,
+> +                                    ctx->priv_ver,
+> +                                    ctx->misa_ext)) {
+>          if ((imm & 0x3) !=3D 0) {
+>              TCGv target_pc =3D tcg_temp_new();
+>              gen_pc_plus_diff(target_pc, ctx, imm);
+> --
+> 2.45.3
+>
 
