@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A3DC282EC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 00:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ED1CC28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 00:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuhGi-0008F8-IE; Tue, 18 Mar 2025 20:26:53 -0400
+	id 1tuhH4-0008LM-O5; Tue, 18 Mar 2025 20:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuhG2-00082e-Ld
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:26:08 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tuhGQ-0008BV-OV
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:26:33 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuhG0-0000lc-EF
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:26:06 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22548a28d0cso18730485ad.3
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 17:26:03 -0700 (PDT)
+ id 1tuhGP-0000nS-5l
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:26:30 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22622ddcc35so7301775ad.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 17:26:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742343962; x=1742948762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742343988; x=1742948788; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=E0aqZzlpYBLlNsxwaTLq9zvwCnBZAH6RrCI4a138V2c=;
- b=eqm17toyEzJASS1BIOWsAQqjq8/vSxwlB2d51e7ZSEqNGz1lfBnVfCopxQKkXV4bQa
- aDz/dfMs3sj09I8Z9x7Qj53+GL2EADd7dfPls69Gq5hlyhuehRJH+hp/1B+o/6ZK2T0D
- JKBzQq8iuy1oCl17mpxO1nq+vfntiPl5E48OX0rXqPnhdQEgEvEOEouEzZ8GzgxAPa9c
- eVrnXp0zo4F6VM9Ho79D/gKV0jCh1aTB7nRewyISqPwCw7Lb5ooNT2aMmEpH+/lsOgGJ
- wMm7lsPPc0CfrkX4muQb++XiB+45wE1NBELwLxChxfpqpaoPbtXuOBp13Gs/uUOCr4RB
- +Y6A==
+ bh=qq1YeTc9ZNM3CII830y4P3g/MlTvOBGSEWkG+5cSj5M=;
+ b=RiwOPIKkEgPNwLLXh92IFzjqO51gcly4eXqRHVSqkVHnekJBr4GF4HF5v7CTCvBtjo
+ 7zdJGSHTfhRe4WVqkKpnus97Jw0LYOQagVqXIexFsEo23plB/5ZKOy2yed8Ck/ZsXGUB
+ 9i+Gna8bLuRnP4zBEg22MLCY10KYV24cIaxY7z+S9BBmQQw3ylQ3LQlO8Tqi+zMByX1G
+ aDbt2GWAVl5fE+kYdHeDlWKR9cVp9MhZ2YacTpasahDoVn8G/8HnkubYF3cYxhcx6Jts
+ QoKgSlxequDmpMsDvxeCYjfm8RKWUh9uZVlIRm1Jf+eedXwC3Ey6axuosg/LbaSqqpPI
+ ptCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742343962; x=1742948762;
+ d=1e100.net; s=20230601; t=1742343988; x=1742948788;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E0aqZzlpYBLlNsxwaTLq9zvwCnBZAH6RrCI4a138V2c=;
- b=RD+SaKMnQS/M35e/XIOPvEXHBqutUaLq6gcg2wVphPb4ve3WGJp/aLSgqTRZVvscoO
- 8ET+UNQVl4CIw/oswrjk1GruAIvl8o3R2JEzwSR3Ecc2mFqibvEOWTmrDJDGk4jxAPhw
- wy9GIAE26Dam+Dyh+Q649UtDY89PkGyMvxoJ7lHQZwuh64Qr+iOskW425wen8itsAHLc
- krnORrmHICrmQ23xWl99BM9xtlAZEVFnrO5/0ZsscJ8l3l9Nxq1sg3nQEuyvWNb6kdwK
- hkSSUgjX0MMzrT7OEcOSFPp9WjQzFZqT1Hj6PrMRzfWfev0WMMDLyQXpJlR9Mm1viLc8
- MV2A==
+ bh=qq1YeTc9ZNM3CII830y4P3g/MlTvOBGSEWkG+5cSj5M=;
+ b=Je9o79e1W7ALURFe59KUdMAjCgx2FkKkNgO5IFaWeRzIF2bqHgz+wHvnC0Y+VQ4OuB
+ zdz+vy3+ffwRhsJxtahHxuuPNJlf32ZDMyh5URbdBIZSo8kED2hmRZvIXQ5TEkSlaBv8
+ /0XY6LBlxNr1dKFkPvsL9t/6Tm40C0Ydp4RPkiZeD3MvFNk+htCOzVemEXl5VkDW+K64
+ xBP3R1XkOqTNV0gpP4Ehz+yjEoaqd/WQNeZOcBQmPQr5L2ZKgmJ/7wzb6JwtsbmOx/BR
+ buGR1zZPPlK0teyPSQmcENaWYqIWbPJHZbWF0DRf26Pi6onvy/Vo8ksMmPAb/Wlzc+ru
+ DMUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZ1mmjgul1q16scC5LSTNCcvy1cTaNdjDA6G+bh1WelKKt3yl5ODCGih8ksbVy+npkhzsQkf/J/vMH@nongnu.org
-X-Gm-Message-State: AOJu0Yz+sZi0C6g4oUd+UwdxbWFPWyDoxf+Ld3qolOmQ9VYO/tSzR0iO
- TLtsZqC1wqMPaf6srHM7UieWjYazPbgNqWxzBGWelUkltvF0DfLMHx+msAHnqeA=
-X-Gm-Gg: ASbGnct/GnFzqhbh/VVi2/2/TS+PcAzh2dtaj+b2aE6XCCJ+EL8MQUeVw9jyQSbauPa
- 3IYf44dlgqROti+LuFYH2VP1fpmtM/jWQJz2qjZp9UmXKu2vjU2AKtYYKMxRwQ/SDzchd8aiBzB
- uY9q870B7wJi99en2Rj6j3kGdZ5/E57R7DeVT4jID/b1QIqZkIis4lhvKq25Y20DzgTOg9p+Drn
- Z+PDcn2BaFRUTMhlRyZCjMZBnMRw6psBzV8RyrzaB9cLyeh+CqxG3tFaXcfW9QFVsBcBthpCe2y
- +hRrxDaVdk6OQn67eBo6EvR//a1Z05rwCcses5Tzng31gjnQa/bYIwL6kg==
-X-Google-Smtp-Source: AGHT+IGwyqkKUe1ETJBzyG35DRrjFt4mKp1Q9+dOwcbQkK1RqlVxHD+cE3uiM3Z73pwDOoDKPt8dAA==
-X-Received: by 2002:a17:902:e888:b0:223:5a6e:b16 with SMTP id
- d9443c01a7336-2264982b2famr8304565ad.5.1742343962291; 
- Tue, 18 Mar 2025 17:26:02 -0700 (PDT)
+ AJvYcCUy4u646WCFR5OI4BwBOLQwqM8PI1kd5O/aw/wUfon/WgXq8sufblzAYr+rSj6yAtRyHx4nG9ubI5pB@nongnu.org
+X-Gm-Message-State: AOJu0Yz5gzXsh6+BqCSaNJ+7lW1nC8sjqU/HOV1Zz10Tsmsct2/El5RV
+ 9Vd76GR4lQd5DbpyOFEOZ3pk0rFKdxZ38Fi+aiMwy75OjBr1voM4uLCgD2ntGeo=
+X-Gm-Gg: ASbGncsly4xMPBa6Vqc2W3sIIbJKH6n1ezvHKLOqbwu5/M5ySlhVf1PBTBtKlhRiVBJ
+ jgUoaYgks0zoSCzQF2Att1BTEtAYjUSdSOC+/WxzEhYwyqQnOf6pReAubhKuIFDSyv2+fEvQ8Yf
+ megTj21SmYhIxidxf2Ehc5Kx45swJD8nCVXtkqAXphUpjDMH1dHsWaen391BwcPZSa9kjniB/5s
+ VAotxSwNAhbl2MrP5xqfMkabJ/9d4fSajLIKSUMtmIkOe1BJJP1UpK4CJH90opWd+hbfQ0r2qGO
+ P+6JvspBkldnFHK4Ja+fGMsa+iLWbejOlhZ5ah1L0+2L95uMczb95PU3uQ==
+X-Google-Smtp-Source: AGHT+IGxgu/kDapEk/9c8K6CmWrP9PtCgV59Bu+v4Vh3bOPnvVG1rnwh/zrYkQVtbAjTPgwEtg4zGg==
+X-Received: by 2002:a17:902:ccca:b0:21f:1549:a55a with SMTP id
+ d9443c01a7336-226498280c2mr11113585ad.1.1742343987772; 
+ Tue, 18 Mar 2025 17:26:27 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6bbe7b6sm101468525ad.177.2025.03.18.17.26.01
+ d9443c01a7336-225c6888414sm101072325ad.21.2025.03.18.17.26.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 17:26:01 -0700 (PDT)
-Message-ID: <c548e44d-cd1b-4d00-9d2e-43732d81602d@linaro.org>
-Date: Tue, 18 Mar 2025 17:26:01 -0700
+ Tue, 18 Mar 2025 17:26:27 -0700 (PDT)
+Message-ID: <d3aecfb8-f555-4320-ac89-fc3410af90e7@linaro.org>
+Date: Tue, 18 Mar 2025 17:26:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 26/42] semihosting: Move user-only implementation
- out-of-line
+Subject: Re: [PATCH v2 27/42] target/mips: Restrict semihosting tests to
+ system mode
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
- <20250318213209.2579218-27-richard.henderson@linaro.org>
+ <20250318213209.2579218-28-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250318213209.2579218-27-richard.henderson@linaro.org>
+In-Reply-To: <20250318213209.2579218-28-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,107 +105,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/18/25 14:31, Richard Henderson wrote:
-> Avoid testing CONFIG_USER_ONLY in semihost.h.
-> The only function that's required is semihosting_enabled.
+> We do not set CONFIG_SEMIHOSTING in
+> configs/targets/mips*-linux-user.mak.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/semihosting/semihost.h | 29 ++---------------------------
->   semihosting/user.c             | 15 +++++++++++++++
->   semihosting/meson.build        |  2 ++
->   3 files changed, 19 insertions(+), 27 deletions(-)
->   create mode 100644 semihosting/user.c
+>   target/mips/cpu.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 > 
-> diff --git a/include/semihosting/semihost.h b/include/semihosting/semihost.h
-> index 97d2a2ba99..b03e637578 100644
-> --- a/include/semihosting/semihost.h
-> +++ b/include/semihosting/semihost.h
-> @@ -26,32 +26,6 @@ typedef enum SemihostingTarget {
->       SEMIHOSTING_TARGET_GDB
->   } SemihostingTarget;
->   
-> -#ifdef CONFIG_USER_ONLY
-> -static inline bool semihosting_enabled(bool is_user)
-> -{
-> -    return true;
-> -}
-> -
-> -static inline SemihostingTarget semihosting_get_target(void)
-> -{
-> -    return SEMIHOSTING_TARGET_AUTO;
-> -}
-> -
-> -static inline const char *semihosting_get_arg(int i)
-> -{
-> -    return NULL;
-> -}
-> -
-> -static inline int semihosting_get_argc(void)
-> -{
-> -    return 0;
-> -}
-> -
-> -static inline const char *semihosting_get_cmdline(void)
-> -{
-> -    return NULL;
-> -}
-> -#else /* !CONFIG_USER_ONLY */
->   /**
->    * semihosting_enabled:
->    * @is_user: true if guest code is in usermode (i.e. not privileged)
-> @@ -59,17 +33,18 @@ static inline const char *semihosting_get_cmdline(void)
->    * Return true if guest code is allowed to make semihosting calls.
->    */
->   bool semihosting_enabled(bool is_user);
-> +
->   SemihostingTarget semihosting_get_target(void);
->   const char *semihosting_get_arg(int i);
->   int semihosting_get_argc(void);
->   const char *semihosting_get_cmdline(void);
->   void semihosting_arg_fallback(const char *file, const char *cmd);
-> +
->   /* for vl.c hooks */
->   void qemu_semihosting_enable(void);
->   int qemu_semihosting_config_options(const char *optstr);
->   void qemu_semihosting_chardev_init(void);
->   void qemu_semihosting_console_init(Chardev *);
-> -#endif /* CONFIG_USER_ONLY */
->   void qemu_semihosting_guestfd_init(void);
->   
->   #endif /* SEMIHOST_H */
-> diff --git a/semihosting/user.c b/semihosting/user.c
-> new file mode 100644
-> index 0000000000..9473729beb
-> --- /dev/null
-> +++ b/semihosting/user.c
-> @@ -0,0 +1,15 @@
-> +/*
-> + * Semihosting for user emulation
-> + *
-> + * Copyright (c) 2019 Linaro Ltd
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
+> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+> index b207106dd7..47df563e12 100644
+> --- a/target/mips/cpu.c
+> +++ b/target/mips/cpu.c
+> @@ -32,8 +32,10 @@
+>   #include "exec/exec-all.h"
+>   #include "hw/qdev-properties.h"
+>   #include "hw/qdev-clock.h"
+> -#include "semihosting/semihost.h"
+>   #include "fpu_helper.h"
+> +#ifndef CONFIG_USER_ONLY
 > +#include "semihosting/semihost.h"
-> +
-> +bool semihosting_enabled(bool is_user)
-> +{
-> +    return true;
-> +}
-> diff --git a/semihosting/meson.build b/semihosting/meson.build
-> index 86f5004bed..ab67f87e4f 100644
-> --- a/semihosting/meson.build
-> +++ b/semihosting/meson.build
-> @@ -15,5 +15,7 @@ system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
->     'stubs-system.c',
->   ))
+> +#endif
 >   
-> +user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('user.c'))
-> +
->   specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
->   		if_true: files('arm-compat-semi.c'))
+>   const char regnames[32][3] = {
+>       "r0", "at", "v0", "v1", "a0", "a1", "a2", "a3",
+> @@ -415,12 +417,11 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
+>       restore_pamask(env);
+>       cs->exception_index = EXCP_NONE;
+>   
+> +#ifndef CONFIG_USER_ONLY
+>       if (semihosting_get_argc()) {
+>           /* UHI interface can be used to obtain argc and argv */
+>           env->active_tc.gpr[4] = -1;
+>       }
+> -
+> -#ifndef CONFIG_USER_ONLY
+>       if (kvm_enabled()) {
+>           kvm_mips_reset_vcpu(cpu);
+>       }
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
