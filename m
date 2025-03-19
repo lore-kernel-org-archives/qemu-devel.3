@@ -4,170 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3222BC35FF3
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 01:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1D7C282EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 01:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuiDz-0004QZ-H4; Tue, 18 Mar 2025 21:28:03 -0400
+	id 1tuiHg-0006lQ-O7; Tue, 18 Mar 2025 21:31:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <troy_lee@aspeedtech.com>)
- id 1tuiDP-0003y4-Q3; Tue, 18 Mar 2025 21:27:31 -0400
-Received: from mail-tyzapc01on20723.outbound.protection.outlook.com
- ([2a01:111:f403:2011::723]
- helo=APC01-TYZ-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tuiHP-0006kJ-9j
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:31:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <troy_lee@aspeedtech.com>)
- id 1tuiDL-0003ht-6j; Tue, 18 Mar 2025 21:27:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ub93ElWC9M3oTgy/rMHFPlRDQazSFUsWXdSSwZglH13WO9Utm1/3gghhnSiQ6FBOt3r6CsVjSCYMgXirzSNoR3z/f8xL4h2EfLc2oAJrm6Eby2O5Dd1Hl6EeUdVtKciq2L6DRWNfpj/YKrCpFjv18Py4S833sAOAz2bO2pPnmEGhDg34206AJKWmsLxwWxgN/vqT3wM6hJHtAm5n8qGMJLwPzY++HvZtiuVo7Flv9v7C+u4a55ZUbRqMIded27oJXwuRHPckfDdp2Ch5Yv+x3/eCNzNexgZS8ir+JM5wbyZpf9ZJlvl90AdS/ChJyYK0o8XDTtfGRWdobzbtwVqkOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i/JzkUeDNyo4ddJ28sMG+2+otJkWAD30lCdV09JFUhc=;
- b=qkDKrnKFvUxWHATtOb4zqTCQQw8BeL7SLV0IKj+7pRwweaSbp2JeFN8ACFXOsNhHTRPCwqfKyvyVEYRACWwVZ2u6yHgP1fnrOCkTGrT/TYUZUJUGjtvBUg24z4UFaAfHCauY0sDxtiRqPx82wWB9LyuY6DTHlPzWNTKddjkxzPBprRegialjKHXQBemsxugmOEYIZMgBIM6r7s8gDqhbloOA28W0jfoEJdgph06QYT7z/kdfHkXgn7x7GVa8lsh51W/QGA4jjGi86tpeTx4/F4+OF7cM2WdoNiPxowsMRislewO1PqN8mYid7nlUpUcUvmq3NpVud/MYGXOTaNVoBg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i/JzkUeDNyo4ddJ28sMG+2+otJkWAD30lCdV09JFUhc=;
- b=WDj0m9qT7munndxYen72NJb/03nPRgxsHIbnM0Xo+5OGy1s1F0H8amuPlq6/7q9mod6vNgn7oYUDslADo1zZvozuyf2L+rq24ZV3zBrUVmFTWLOI8WZon9l5J6abfBrnz9GZ+ynwO6/11GUyjE7+JPfktvYcInwOiXqDxExZRssAu1cc+QcSMSJNQxMpz1zZIDKB1p50eIilszgbL9GSbjJUg8lMd8UR/julXZd+VXRxCve7Lp7ufBMV2nATvVsatFxC4X0uiUfM5R/9liJSXGAV1/ZO2wOFfkE3kXQRg4/ZMZcRUUc9oxJYCUrtOm2UX42ly3pNmevWuELMBIacdQ==
-Received: from TYUPR06MB6100.apcprd06.prod.outlook.com (2603:1096:400:357::10)
- by KL1PR06MB6790.apcprd06.prod.outlook.com (2603:1096:820:ff::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.33; Wed, 19 Mar
- 2025 01:26:58 +0000
-Received: from TYUPR06MB6100.apcprd06.prod.outlook.com
- ([fe80::87dd:d836:cded:5412]) by TYUPR06MB6100.apcprd06.prod.outlook.com
- ([fe80::87dd:d836:cded:5412%4]) with mapi id 15.20.8534.031; Wed, 19 Mar 2025
- 01:26:58 +0000
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Yunlin Tang <yunlin.tang@aspeedtech.com>
-Subject: RE: [PATCH 2/2] hw/arm: ast27x0: Wire up EHCI controllers
-Thread-Topic: [PATCH 2/2] hw/arm: ast27x0: Wire up EHCI controllers
-Thread-Index: AQHblwsVj4eZgx1c9k+8N4NVrwJMxbN41zoAgADVasA=
-Date: Wed, 19 Mar 2025 01:26:58 +0000
-Message-ID: <TYUPR06MB6100A2734B61EAD832E5104F8AD92@TYUPR06MB6100.apcprd06.prod.outlook.com>
-References: <20250317065938.1902272-1-troy_lee@aspeedtech.com>
- <20250317065938.1902272-2-troy_lee@aspeedtech.com>
- <fdd14fbe-57c9-4c8a-be90-4492dfe1ab02@kaod.org>
-In-Reply-To: <fdd14fbe-57c9-4c8a-be90-4492dfe1ab02@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYUPR06MB6100:EE_|KL1PR06MB6790:EE_
-x-ms-office365-filtering-correlation-id: 1c2d3bab-3896-44db-84cb-08dd66852444
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?MUtnSnAyR0RLUUQraW5TcndWa3c3Y0pFSnNLNVpSeldQemp4UlQ0WGNJaGZv?=
- =?utf-8?B?OW15N016eTlUYUxoMy9sS0U2eHhPdmpteGZHWitUcWxTOTRTUkdUQ3lDUFN6?=
- =?utf-8?B?QXpINkhxTW1MY0FuUmlqUVU4aS9XOTFiMW9COGFzclZqUGQ5NHY4MlFSd2Q5?=
- =?utf-8?B?TjBvQjQ4cG5mZHZaNGI1cTZtcnA0R1VuNWxxN0xHQzgrZjl4RmhGY0VUS1Va?=
- =?utf-8?B?ZzlxMlVqTm40S2tCYy8xOEc5MVk4RFRrd2JmeCs2RWdFZ2lhWE5UY0ZyN3dw?=
- =?utf-8?B?S2VMcnVZcWk0QUZWSGY4aXM1VjVZa1ZuVEpWUjNydUNlS24ydVByQ1R4ZXRO?=
- =?utf-8?B?T2ZJR1lDVExuRUkyTGhMZHVyMHZjeGhzZ3JRNmZhclQwM1FCeXFBQ1dhVFBj?=
- =?utf-8?B?OURMMHFMTW5Ga1YyaXdBT3hySEtia3dWQUJUY1pmREV2S2thMkhyaDJMelox?=
- =?utf-8?B?VTBxOEFBY2trVkM2NFpGUVJ2SGNoRTN6Sjg0T1N6WHluRUlJcEgyaTkwNk5l?=
- =?utf-8?B?Uk5qUmNsYkVwUzQ3dUNMV2w3Wm1RdTU4Rm9uOUxmenZFam9OMWFqNy9qQ1RO?=
- =?utf-8?B?OW5zOEhjdnBocmZ2OXhRQlMrRmt3WDhiejNNdTR0WUFsUy8xRFh4WXIzdCti?=
- =?utf-8?B?Mmp5WGpvODVQanE5V0FjNzlBUFBHWS9nbWlLREdOcDZDS0NlUllxcEFkNktV?=
- =?utf-8?B?bDBOTG9ScDRibm9pa3EvZmxENEdtdlhTUkF6Y0tEVWZNMTlSY0YwOCtmTlZM?=
- =?utf-8?B?NjhEZVZ0U3o5MWRUUndOeW1uUlNVSTViVklXQUVYdmFOdTFkMG9yTXNQSUVM?=
- =?utf-8?B?RkRBQ0Z1WFo2SmdUa09tbGhwQTRINnZrbzBYM0dWV2pGR3NDOVY0dTc0c2Rq?=
- =?utf-8?B?QnVJY3VOVUFla1dOL0lQVktHR0gyNURta2M2dDdtRGptRlorVXE1MllCdjEy?=
- =?utf-8?B?S0FYZTU5M2V0M3hJandBMEZOd0ZnY1FuSnJLdmNzYmZZMzJyVXp3WUxPR3hJ?=
- =?utf-8?B?OEMrKzRhdWlVYVpjVGcvM3RmSlBZWm5IWHZ5em4yMlY2WUl4M0FoK1pkSE9M?=
- =?utf-8?B?K0kra0hQSWM4SUdncHJXYkJ4WFRGWDdERGxjUGRXTlJQTExHRC8vQnRzM2p3?=
- =?utf-8?B?T251MzAwdmZQbm1CUC9mTS92c25WeVBmZlh5U1VDakh6WXB6bUxLUGVSWnNS?=
- =?utf-8?B?UW8xN0xYdU9tY0tqNG9aUUwxUFVxVTJDWldFQ3FqSnJBVzk2dCs5UGgyYTlm?=
- =?utf-8?B?L2RySzlXOG1CZjBRdjk5c0NlZVJUYlo1bmc0UW1GWWpjR2p2Qk9XTEZieVhS?=
- =?utf-8?B?d1U5ajhxNmFrd0pUMGJaeThhK2M2NExDUkNUdjRqSWFLcnJPZnJMeGM0eFVX?=
- =?utf-8?B?UDVlLzJCZm5TKzhJd2lnemF6UHFSTnptMG9pWDBxSXFIMG5IWGlzMmxvTU1D?=
- =?utf-8?B?dGRPZldZSFEwUjUybGJqb3NQc1NuUjFoU2g1U0l3VEJjeEhaTnEraUEzdi9k?=
- =?utf-8?B?bFh4UXR3T3BuVDB3UlhxMFU4L2FHbzl3eDRkLzQzL1FsalFyL2hnWVJNczhI?=
- =?utf-8?B?cEk0cmV4R2svU2YrdFZ3N0g2UGpucSsyV3I5dHR6VEt4UHZZZ1ZrbENtR1JZ?=
- =?utf-8?B?b2pmK2oxcFdqMEpyRlZrdmVWUVlabjdUODY4YzB4eTVQMlFZSUFPQXp0TUtJ?=
- =?utf-8?B?R0MyakJLeFpyOFY5VVVXQ1VQTUxtMitrbXY0NThqSE9DTERxcytoclBwS2lP?=
- =?utf-8?B?UHlDTUtSVlBscG4vMEJQdlhSUmhyeWVNMXNleXVwNml4WCtqU0ZPTW1rcDFp?=
- =?utf-8?B?SHcrODdnZW1oT0ZabCt0ek1YS0xZNm1CQ0hKUVlFS0c2cXVDcUU2ank2eW8x?=
- =?utf-8?B?RlJZaDhub0JsWjV2dE1wdXJNU29Tb1BSSXg5bldlSXRMS2MrNVpQbHpEckRF?=
- =?utf-8?Q?E/sE9rkfdEVC1Qzj3C8LBuIrM9b29y75?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYUPR06MB6100.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ck1TT05kdlhvNDFkTEJSeDlyN1RFYzdEbS9VZXRDYUUvMDlzbDQvQStJQ0xJ?=
- =?utf-8?B?dDJqaWdWdHNDUUZxTWxUT09JbVA5UlBpeEpMWVZ3YmpVeWxXZFA3MkZqb0Zy?=
- =?utf-8?B?aDRkb2pWTnhDU0NzSjRyUmMzZGNzOGQ4TDdsWE5XMXJBbTIyQkR5d2k2cmZl?=
- =?utf-8?B?ZlFqQ0p3ZlUrbktTejZrMVIyRTZLaUc0TWNoeHc2N3VTZFRiNVdXdFVzQkZI?=
- =?utf-8?B?L3JZU2xJRlhmY2RNSlkrem80dUNweTRGRDFRc0JDTC9YQitnTThmUGNFYVJU?=
- =?utf-8?B?ekdjZDZ2b0dRdnoyL0hxZlVUYXR1QUwvNGxaZmtpak52YlVVNFp6OFo0dVdy?=
- =?utf-8?B?MTlYTytZWGowTWxPYXlmbFFaM1BDT1ZDNzR0bE1kT0tSbEpXQlFDUUNiSVZK?=
- =?utf-8?B?UUw0eWtZZnJocGVueGJoWTFIc21IZ0wzcVV5cnZjdVdJSFFDTUhlaDdiQ1NH?=
- =?utf-8?B?SGVhTDJHRkpXUUlCRjg1SElUVjNpa0ZDZUtpTXRiMGdWKzl1MGgwSHh2b2FU?=
- =?utf-8?B?RlBORlF4YnBzdGY1K1oyOG5ocTBtL0FGOHNCVFFKeVoxZE1CTzVsNzBrTkF6?=
- =?utf-8?B?elkvSWpDZE8vUlJHcS8rK29uWjJCSm9YSE92ZTZybzZhMk82dEJhZE5xVGZX?=
- =?utf-8?B?VU55QXk0OXE4dlJWWWkrMjhDcGNUZWduMHRnMXg4L3pVZWcydTEzUVpSZExK?=
- =?utf-8?B?ZnhtMnBaWmtiWUZCZy9YTmp2OVIwZVZ5U3crM0d2K2FnY2wra2xTcVZhUWJK?=
- =?utf-8?B?QnFxdFBnN3RXckcrTU1uRlRSbSsreWlWWnNyTVBnM0R0clF4MzVqVS96NXBX?=
- =?utf-8?B?dU1vNHZMYUNzak4vbTZRVG1DeTVpRUF6ZXl4T242VDEySmkwY2dXRkh4Z1RV?=
- =?utf-8?B?eVNZSFVTT1lDcEVrQnZxamh4UHh4U3Jqek0wemdoOWhLQVNpT1c3aUZyb1F5?=
- =?utf-8?B?N3JIREJuMGgwaTlaUHFVL1JOVFpKQVV2NlEwcEV4UDIreDIxQlNsOW5SK3RC?=
- =?utf-8?B?QUc0VkV0SXI2cUFqUmtGdnZoeW1RMDVHaW9QRTdjQWpLWFMvNzFZS2haZTlP?=
- =?utf-8?B?SkJvMkN6YXZubjZ5QjM4bWJ2TXhzcmNwa3QxRWFhMWZ2Z2Y3NktIMDhsR0Fm?=
- =?utf-8?B?UkU2REl4WitXSGoxM1dZTnMzZVdETWtEQnM3Q2dlcTNPYjdaanRVRldxYmNl?=
- =?utf-8?B?ZmNza0RsMkdwRzBOYVFzKzkydEI2dmxHWFd6ZllQOHlZN2Z6TlZ1ejFZU1Nw?=
- =?utf-8?B?Y3BuYVZkOVZJSjZUQURYakRCb05peWFGWlo4QlpzdWVtUVpKdktDWVkwcThO?=
- =?utf-8?B?bVhqZ25UcGhKa3BVb3Q4U1BBeGZvMTBoMk9mLzBqNEx6K1M4N0ZINUhaZkVO?=
- =?utf-8?B?N3BQU01iRVNlckJ5RkM0WnZTd2QxZ1RkNnRSc2xSMVl5cXZTODdCVWlldXFB?=
- =?utf-8?B?aXJaTXlLdWpveXN5ZUtqSkxCcTlUWWpXSWRxcWRSbk12b254ZUxyN2JaSHVE?=
- =?utf-8?B?UGxPK2NqUzl4ZzVJNmppRHhwZXpzUUVzb3pqQmx0dHZNcU9kRWRsQWNpWDdh?=
- =?utf-8?B?WGpBQ2VBSk1MbldzSEJLRytBb2M1OHJsU0ZNM0h0YzQySU96RFRqRHNGUzFM?=
- =?utf-8?B?UkQwNDVUYmdrQUEvNG9ld2V0VGQ5Q0EyYUcrd3VMbkFidVhKWThhMjg1MGov?=
- =?utf-8?B?RXZqR0lodlF6VmhUOElXZ2ExRTdsN0NRTzRvS1lQZDlndmhzdnZZclA2KzdC?=
- =?utf-8?B?ZHFEU0tzV2pHNmMzMmo3aUgyZHNSSTBnYmU5WVF3OXZhVkJaQ0JqTDl2OXFH?=
- =?utf-8?B?M2JBUWtRSHgzdGlNZ1p1Q2VZZy9XUVRyZmtialRnL28rZVYwbExsbUthR1p0?=
- =?utf-8?B?emJUbmRBUzRobm02eTFPQldzR25iMER4MDRkeXZQZWpmaTdYVUxIcCtDYndm?=
- =?utf-8?B?UXpUSDNScnk0WlN3TkpncldJK1BNM2ZwZitZc1REOVRvTjZteWRQT3RqeW1j?=
- =?utf-8?B?QnhUTG9PNDdPUXJxNmlNTVlhVGtEdGpzYy9ja2gvejlseW8yNzI1MmJHSCtV?=
- =?utf-8?B?dWFqR05UK3E1aTN0ZmNiNURDdGUzVm1CYndza2o5Yzl3Q3BuWERiWnJBRzZX?=
- =?utf-8?Q?21uV3FG0BaGvXdefhtDcGAQMw?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tuiHJ-0006uF-Q8
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:31:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742347888;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vFNC5DCk5BvDTzKW4gazY23seiRM0V7bofGKfYEmvBc=;
+ b=JQWRh8fVvq81LQkG1vFErBK5TNyzq11EV1EK0/tWWvFQ2u5DmEWlGSTrxUi9VXiZRf2F9X
+ 7FAJkhrK0TcdeeOVXIPGry9EjuXrGkg86AYfOEGSscCftklI0EVKsimZgKRUAeMlgQtbWD
+ S19iwYvV07/uARYUHBdvFAkDmSITuYg=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-H5MKtfqAMaGi32cTc-fthw-1; Tue, 18 Mar 2025 21:31:24 -0400
+X-MC-Unique: H5MKtfqAMaGi32cTc-fthw-1
+X-Mimecast-MFC-AGG-ID: H5MKtfqAMaGi32cTc-fthw_1742347884
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-85da19887ebso1297435939f.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 18:31:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742347884; x=1742952684;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vFNC5DCk5BvDTzKW4gazY23seiRM0V7bofGKfYEmvBc=;
+ b=eLwDJB7LiHeOsdXP3TpXtS0FNuKSydOYyJVWiDRMhTBJbarQPg6fHe/HVbG2qQdhSd
+ zfBwBQh4j33TiCT3D+y4qSTrQj020e0t1eLIqMIM/5CC2pRFngb+qaYkm2t+7Kn0p7H6
+ kn7fWYWaebWXox7f2v8x/rmbeGL1TjckV/kQlPD8Qvn7CYax1n+mXbTw3MuO8LqHBPDv
+ qyL5kuv3R+yej+m3PofrZUDyPSaZJA4shVFk+J9RnDFj5V4jBuLLMmg+YwJhsZ4Y7C+d
+ yeIH4vVvmLFciUf9i1pHhkoQiclkxmZjUILBxC+kaZ92tQ141tw8/YivL/xcW43Ms4xx
+ 1YIg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUuBA/cAvR6Grzk583SMZtRrwGQDdVNv1zKOCpfGV4zxocwYwtp/KjNCpSWlX7tcLUf6K+xeT4r/f9@nongnu.org
+X-Gm-Message-State: AOJu0YylX4gGeGpNS798E8XbHJndqb/j7YGx4wHSszDHRiLUjvPpOZDI
+ wIuR1cpCdkL8s1uGOjndVdyXgrA46GERcsrfVvS/UcxGCGugwQq8h4P/MtdfwO7q1llp2OLvUcP
+ dL/QMtSS6tqdXk5Dtm+XyKOJrD9+PfaM/EmnvH7iMq35P0P1vRB8i
+X-Gm-Gg: ASbGncuNdGYGYQeBKy3DGDXXlR24sKDP8Vi83WIEqxSCsxUpNWi37Vhy99NZLtnOlaf
+ RMw24VlyIt6RyjZkTgWqSTEqAbpEiPoovynNGQlJFAF4vqO6xziuB3dW+5UCK0nfcoFLEhBVRAU
+ E9H8dhyZyq2+fmXQI4ynk6lsVVNO9t1+jBqOoV+WELrJCpA+RsV+uBVzKDcsFDV7cCgsRRKVc07
+ C5bcDfhdwzICWW1DSecWKPUsIuYoouA4h7/kli1ADfzImPhzsDp+darir66a1XICcqq9azHmmKH
+ +JcQZ+8qMI/KahP5
+X-Received: by 2002:a05:6602:6a46:b0:85b:3b30:9aa6 with SMTP id
+ ca18e2360f4ac-85e1377d824mr117538039f.2.1742347883954; 
+ Tue, 18 Mar 2025 18:31:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqR5NXzIUiJCqmeJfVnzBT7xKUP+DsmHVKhMP2bAkQXJn/szfPyQoXjCtWizQrg48srycaAQ==
+X-Received: by 2002:a05:6602:6a46:b0:85b:3b30:9aa6 with SMTP id
+ ca18e2360f4ac-85e1377d824mr117535639f.2.1742347883615; 
+ Tue, 18 Mar 2025 18:31:23 -0700 (PDT)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4f263701f6dsm2996059173.26.2025.03.18.18.31.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Mar 2025 18:31:23 -0700 (PDT)
+Message-ID: <28452954-7be2-4114-8d37-a208250b6f83@redhat.com>
+Date: Tue, 18 Mar 2025 21:31:20 -0400
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYUPR06MB6100.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1c2d3bab-3896-44db-84cb-08dd66852444
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Mar 2025 01:26:58.1245 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: USndCWr6vYJlw6+oqnPKqwHk8OwTFR4W6CQ3aMZUilgdfjLWIOPqrTvpvuHNGNEXOHFT2c9LPDwvkFoeR6DJtQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6790
-Received-SPF: pass client-ip=2a01:111:f403:2011::723;
- envelope-from=troy_lee@aspeedtech.com;
- helo=APC01-TYZ-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 13/20] hw/arm/smmuv3-accel: Introduce helpers to
+ batch and issue cache invalidations
+Content-Language: en-US
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
+ nicolinc@nvidia.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-14-shameerali.kolothum.thodi@huawei.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <20250311141045.66620-14-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -183,141 +118,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lkcmljIExlIEdvYXRlciA8
-Y2xnQGthb2Qub3JnPg0KPiBTZW50OiBUdWVzZGF5LCBNYXJjaCAxOCwgMjAyNSA4OjM5IFBNDQo+
-IFRvOiBUcm95IExlZSA8dHJveV9sZWVAYXNwZWVkdGVjaC5jb20+OyBQZXRlciBNYXlkZWxsDQo+
-IDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+OyBTdGV2ZW4gTGVlIDxzdGV2ZW5fbGVlQGFzcGVl
-ZHRlY2guY29tPjsgVHJveQ0KPiBMZWUgPGxlZXRyb3lAZ21haWwuY29tPjsgSmFtaW4gTGluIDxq
-YW1pbl9saW5AYXNwZWVkdGVjaC5jb20+OyBBbmRyZXcNCj4gSmVmZmVyeSA8YW5kcmV3QGNvZGVj
-b25zdHJ1Y3QuY29tLmF1PjsgSm9lbCBTdGFubGV5IDxqb2VsQGptcy5pZC5hdT47DQo+IG9wZW4g
-bGlzdDpBU1BFRUQgQk1DcyA8cWVtdS1hcm1Abm9uZ251Lm9yZz47IG9wZW4gbGlzdDpBbGwgcGF0
-Y2hlcyBDQw0KPiBoZXJlIDxxZW11LWRldmVsQG5vbmdudS5vcmc+DQo+IENjOiBZdW5saW4gVGFu
-ZyA8eXVubGluLnRhbmdAYXNwZWVkdGVjaC5jb20+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggMi8y
-XSBody9hcm06IGFzdDI3eDA6IFdpcmUgdXAgRUhDSSBjb250cm9sbGVycw0KPiANCj4gT24gMy8x
-Ny8yNSAwNzo1OSwgVHJveSBMZWUgd3JvdGU6DQo+ID4gQVNUMjd4MCBoYXMgNCBFSENJIGNvbnRy
-b2xsZXJzLCB3aGVyZSBlYWNoIENQVSBhbmQgSS9PIGRpZSBoYXMgMg0KPiA+IGluc3RhbmNlcy4g
-VGhpcyBwYXRjaCB1c2UgZXhpc3RpbmcgVFlQRV9QTEFURk9STV9FSENJLiBBZnRlciB3aXJpbmcg
-dXANCj4gPiB0aGUgRUhDSSBjb250cm9sbGVyLCB0aGUgYXN0MjcwMGExLWV2YiBjYW4gZmluZCB1
-cCB0byA0IFVTQiBFSENJDQo+ID4gaW50ZXJmYWNlcy4NCj4gPg0KPiA+IGVoY2ktcGxhdGZvcm0g
-MTIwNjEwMDAudXNiOiBFSENJIEhvc3QgQ29udHJvbGxlciBlaGNpLXBsYXRmb3JtDQo+ID4gMTIw
-NjEwMDAudXNiOiBuZXcgVVNCIGJ1cyByZWdpc3RlcmVkLCBhc3NpZ25lZCBidXMgbnVtYmVyIDIN
-Cj4gPiBlaGNpLXBsYXRmb3JtIDEyMDYzMDAwLnVzYjogRUhDSSBIb3N0IENvbnRyb2xsZXIgZWhj
-aS1wbGF0Zm9ybQ0KPiA+IDEyMDYzMDAwLnVzYjogbmV3IFVTQiBidXMgcmVnaXN0ZXJlZCwgYXNz
-aWduZWQgYnVzIG51bWJlciAzDQo+ID4gZWhjaS1wbGF0Zm9ybSAxMjA2MTAwMC51c2I6IGlycSA4
-OCwgaW8gbWVtIDB4MTIwNjEwMDAgZWhjaS1wbGF0Zm9ybQ0KPiA+IDEyMDYzMDAwLnVzYjogaXJx
-IDkwLCBpbyBtZW0gMHgxMjA2MzAwMCBlaGNpLXBsYXRmb3JtIDE0MTIxMDAwLnVzYjoNCj4gPiBF
-SENJIEhvc3QgQ29udHJvbGxlciBlaGNpLXBsYXRmb3JtIDE0MTIzMDAwLnVzYjogRUhDSSBIb3N0
-IENvbnRyb2xsZXINCj4gPiBlaGNpLXBsYXRmb3JtIDEyMDYxMDAwLnVzYjogVVNCIDIuMCBzdGFy
-dGVkLCBFSENJIDEuMDAgZWhjaS1wbGF0Zm9ybQ0KPiA+IDE0MTIxMDAwLnVzYjogbmV3IFVTQiBi
-dXMgcmVnaXN0ZXJlZCwgYXNzaWduZWQgYnVzIG51bWJlciA1DQo+ID4gZWhjaS1wbGF0Zm9ybSAx
-NDEyMzAwMC51c2I6IG5ldyBVU0IgYnVzIHJlZ2lzdGVyZWQsIGFzc2lnbmVkIGJ1cw0KPiA+IG51
-bWJlciA2IGVoY2ktcGxhdGZvcm0gMTQxMjEwMDAudXNiOiBpcnEgOTEsIGlvIG1lbSAweDE0MTIx
-MDAwDQo+ID4gZWhjaS1wbGF0Zm9ybSAxNDEyMzAwMC51c2I6IGlycSA5MiwgaW8gbWVtIDB4MTQx
-MjMwMDAgZWhjaS1wbGF0Zm9ybQ0KPiA+IDEyMDYzMDAwLnVzYjogVVNCIDIuMCBzdGFydGVkLCBF
-SENJIDEuMDAgdXNiIHVzYjI6IE1hbnVmYWN0dXJlcjogTGludXgNCj4gPiA2LjYuNzgtZGlydHkt
-YmFmZDI4MzBjMTdjLWdiYWZkMjgzMGMxN2MtZGlydHkgZWhjaV9oY2QgdXNiIHVzYjM6DQo+ID4g
-TWFudWZhY3R1cmVyOiBMaW51eCA2LjYuNzgtZGlydHktYmFmZDI4MzBjMTdjLWdiYWZkMjgzMGMx
-N2MtZGlydHkNCj4gPiBlaGNpX2hjZCBlaGNpLXBsYXRmb3JtIDE0MTIxMDAwLnVzYjogVVNCIDIu
-MCBzdGFydGVkLCBFSENJIDEuMDAgdXNiDQo+ID4gdXNiNTogTWFudWZhY3R1cmVyOiBMaW51eA0K
-PiA+IDYuNi43OC1kaXJ0eS1iYWZkMjgzMGMxN2MtZ2JhZmQyODMwYzE3Yy1kaXJ0eSBlaGNpX2hj
-ZCBlaGNpLXBsYXRmb3JtDQo+ID4gMTQxMjMwMDAudXNiOiBVU0IgMi4wIHN0YXJ0ZWQsIEVIQ0kg
-MS4wMCB1c2IgdXNiNjogTWFudWZhY3R1cmVyOiBMaW51eA0KPiA+IDYuNi43OC1kaXJ0eS1iYWZk
-MjgzMGMxN2MtZ2JhZmQyODMwYzE3Yy1kaXJ0eSBlaGNpX2hjZA0KPiANCj4gVGhpcyBpcyBhIGN1
-c3RvbSBpbWFnZSA/IGFuZCBub3QgdGhlIFNESyB2MDkuMDUuDQo+IA0KDQpZZXMsIHRoaXMgaXMg
-YSBjdXN0b21pemVkIHYwOS4wNSBpbWFnZSBieSBlbmFibGluZyBlaGNpMH5laGNpMyBub2RlDQpp
-biBLZXJuZWwgZGV2aWNlIHRyZWUuDQoNClRoYW5rcyBmb3IgcmV2aWV3aW5nLg0KDQo+ID4gTm90
-ZSB0aGF0LCBBU1QyN3gwQTAgb25seSBoYXMgMiBFSENJIGNvbnRyb2xsZXJzIGR1ZSB0byBodyBp
-c3N1ZS4NCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IFRyb3kgTGVlIDx0cm95X2xlZUBhc3BlZWR0
-ZWNoLmNvbT4NCj4gDQo+IFJldmlld2VkLWJ5OiBDw6lkcmljIExlIEdvYXRlciA8Y2xnQHJlZGhh
-dC5jb20+DQo+IA0KPiBUaGFua3MsDQo+IA0KPiBDLg0KPiANCj4gDQo+ID4gLS0tDQo+ID4gICBo
-dy9hcm0vYXNwZWVkX2FzdDI3eDAuYyAgICAgfCAyOCArKysrKysrKysrKysrKysrKysrKysrKysr
-KysrDQo+ID4gICBpbmNsdWRlL2h3L2FybS9hc3BlZWRfc29jLmggfCAgNCArKystDQo+ID4gICAy
-IGZpbGVzIGNoYW5nZWQsIDMxIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gPg0KPiA+
-IGRpZmYgLS1naXQgYS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYyBiL2h3L2FybS9hc3BlZWRfYXN0
-Mjd4MC5jIGluZGV4DQo+ID4gZGNlNzI1NWEyYy4uNGZmNDQ2MmVjMSAxMDA2NDQNCj4gPiAtLS0g
-YS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYw0KPiA+ICsrKyBiL2h3L2FybS9hc3BlZWRfYXN0Mjd4
-MC5jDQo+ID4gQEAgLTI1LDYgKzI1LDggQEANCj4gPg0KPiA+ICAgc3RhdGljIGNvbnN0IGh3YWRk
-ciBhc3BlZWRfc29jX2FzdDI3MDBfbWVtbWFwW10gPSB7DQo+ID4gICAgICAgW0FTUEVFRF9ERVZf
-U1JBTV0gICAgICA9ICAweDEwMDAwMDAwLA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfRUhDSTFdICAg
-ICA9ICAweDEyMDYxMDAwLA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfRUhDSTJdICAgICA9ICAweDEy
-MDYzMDAwLA0KPiA+ICAgICAgIFtBU1BFRURfREVWX0hBQ0VdICAgICAgPSAgMHgxMjA3MDAwMCwN
-Cj4gPiAgICAgICBbQVNQRUVEX0RFVl9FTU1DXSAgICAgID0gIDB4MTIwOTAwMDAsDQo+ID4gICAg
-ICAgW0FTUEVFRF9ERVZfSU5UQ10gICAgICA9ICAweDEyMTAwMDAwLA0KPiA+IEBAIC00Nyw2ICs0
-OSw4IEBAIHN0YXRpYyBjb25zdCBod2FkZHIgYXNwZWVkX3NvY19hc3QyNzAwX21lbW1hcFtdDQo+
-ID0gew0KPiA+ICAgICAgIFtBU1BFRURfREVWX0VUSDJdICAgICAgPSAgMHgxNDA2MDAwMCwNCj4g
-PiAgICAgICBbQVNQRUVEX0RFVl9FVEgzXSAgICAgID0gIDB4MTQwNzAwMDAsDQo+ID4gICAgICAg
-W0FTUEVFRF9ERVZfU0RIQ0ldICAgICA9ICAweDE0MDgwMDAwLA0KPiA+ICsgICAgW0FTUEVFRF9E
-RVZfRUhDSTNdICAgICA9ICAweDE0MTIxMDAwLA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfRUhDSTRd
-ICAgICA9ICAweDE0MTIzMDAwLA0KPiA+ICAgICAgIFtBU1BFRURfREVWX0FEQ10gICAgICAgPSAg
-MHgxNEMwMDAwMCwNCj4gPiAgICAgICBbQVNQRUVEX0RFVl9TQ1VJT10gICAgID0gIDB4MTRDMDIw
-MDAsDQo+ID4gICAgICAgW0FTUEVFRF9ERVZfR1BJT10gICAgICA9ICAweDE0QzBCMDAwLA0KPiA+
-IEBAIC05MSw2ICs5NSw4IEBAIHN0YXRpYyBjb25zdCBpbnQgYXNwZWVkX3NvY19hc3QyNzAwYTBf
-aXJxbWFwW10gPSB7DQo+ID4gICAgICAgW0FTUEVFRF9ERVZfVElNRVI3XSAgICA9IDIyLA0KPiA+
-ICAgICAgIFtBU1BFRURfREVWX1RJTUVSOF0gICAgPSAyMywNCj4gPiAgICAgICBbQVNQRUVEX0RF
-Vl9EUF0gICAgICAgID0gMjgsDQo+ID4gKyAgICBbQVNQRUVEX0RFVl9FSENJMV0gICAgID0gMzMs
-DQo+ID4gKyAgICBbQVNQRUVEX0RFVl9FSENJMl0gICAgID0gMzcsDQo+ID4gICAgICAgW0FTUEVF
-RF9ERVZfTFBDXSAgICAgICA9IDEyOCwNCj4gPiAgICAgICBbQVNQRUVEX0RFVl9JQlRdICAgICAg
-ID0gMTI4LA0KPiA+ICAgICAgIFtBU1BFRURfREVWX0tDU10gICAgICAgPSAxMjgsDQo+ID4gQEAg
-LTEzNyw2ICsxNDMsOCBAQCBzdGF0aWMgY29uc3QgaW50IGFzcGVlZF9zb2NfYXN0MjcwMGExX2ly
-cW1hcFtdID0gew0KPiA+ICAgICAgIFtBU1BFRURfREVWX1RJTUVSN10gICAgPSAyMiwNCj4gPiAg
-ICAgICBbQVNQRUVEX0RFVl9USU1FUjhdICAgID0gMjMsDQo+ID4gICAgICAgW0FTUEVFRF9ERVZf
-RFBdICAgICAgICA9IDI4LA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfRUhDSTFdICAgICA9IDMzLA0K
-PiA+ICsgICAgW0FTUEVFRF9ERVZfRUhDSTJdICAgICA9IDM3LA0KPiA+ICAgICAgIFtBU1BFRURf
-REVWX0xQQ10gICAgICAgPSAxOTIsDQo+ID4gICAgICAgW0FTUEVFRF9ERVZfSUJUXSAgICAgICA9
-IDE5MiwNCj4gPiAgICAgICBbQVNQRUVEX0RFVl9LQ1NdICAgICAgID0gMTkyLA0KPiA+IEBAIC0y
-MTIsNiArMjIwLDggQEAgc3RhdGljIGNvbnN0IGludCBhc3QyNzAwX2dpYzEzMl9naWMxOTZfaW50
-Y21hcFtdID0NCj4gew0KPiA+ICAgICAgIFtBU1BFRURfREVWX1VBUlQxMF0gICAgPSAxNiwNCj4g
-PiAgICAgICBbQVNQRUVEX0RFVl9VQVJUMTFdICAgID0gMTcsDQo+ID4gICAgICAgW0FTUEVFRF9E
-RVZfVUFSVDEyXSAgICA9IDE4LA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfRUhDSTNdICAgICA9IDI4
-LA0KPiA+ICsgICAgW0FTUEVFRF9ERVZfRUhDSTRdICAgICA9IDI5LA0KPiA+ICAgfTsNCj4gPg0K
-PiA+ICAgLyogR0lDSU5UIDEzMyAqLw0KPiA+IEBAIC00MzQsNiArNDQ0LDExIEBAIHN0YXRpYyB2
-b2lkIGFzcGVlZF9zb2NfYXN0MjcwMF9pbml0KE9iamVjdCAqb2JqKQ0KPiA+ICAgICAgICAgICBv
-YmplY3RfaW5pdGlhbGl6ZV9jaGlsZChvYmosICJzcGlbKl0iLCAmcy0+c3BpW2ldLCB0eXBlbmFt
-ZSk7DQo+ID4gICAgICAgfQ0KPiA+DQo+ID4gKyAgICBmb3IgKGkgPSAwOyBpIDwgc2MtPmVoY2lz
-X251bTsgaSsrKSB7DQo+ID4gKyAgICAgICAgb2JqZWN0X2luaXRpYWxpemVfY2hpbGQob2JqLCAi
-ZWhjaVsqXSIsICZzLT5laGNpW2ldLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIFRZUEVfUExBVEZPUk1fRUhDSSk7DQo+ID4gKyAgICB9DQo+ID4gKw0KPiA+ICAgICAgIHNu
-cHJpbnRmKHR5cGVuYW1lLCBzaXplb2YodHlwZW5hbWUpLCAiYXNwZWVkLnNkbWMtJXMiLCBzb2Nu
-YW1lKTsNCj4gPiAgICAgICBvYmplY3RfaW5pdGlhbGl6ZV9jaGlsZChvYmosICJzZG1jIiwgJnMt
-PnNkbWMsIHR5cGVuYW1lKTsNCj4gPiAgICAgICBvYmplY3RfcHJvcGVydHlfYWRkX2FsaWFzKG9i
-aiwgInJhbS1zaXplIiwgT0JKRUNUKCZzLT5zZG1jKSwgQEANCj4gPiAtNzA5LDYgKzcyNCwxNyBA
-QCBzdGF0aWMgdm9pZCBhc3BlZWRfc29jX2FzdDI3MDBfcmVhbGl6ZShEZXZpY2VTdGF0ZQ0KPiAq
-ZGV2LCBFcnJvciAqKmVycnApDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICBBU1BFRURf
-U01DX0dFVF9DTEFTUygmcy0+c3BpW2ldKS0+Zmxhc2hfd2luZG93X2Jhc2UpOw0KPiA+ICAgICAg
-IH0NCj4gPg0KPiA+ICsgICAgLyogRUhDSSAqLw0KPiA+ICsgICAgZm9yIChpID0gMDsgaSA8IHNj
-LT5laGNpc19udW07IGkrKykgew0KPiA+ICsgICAgICAgIGlmICghc3lzYnVzX3JlYWxpemUoU1lT
-X0JVU19ERVZJQ0UoJnMtPmVoY2lbaV0pLCBlcnJwKSkgew0KPiA+ICsgICAgICAgICAgICByZXR1
-cm47DQo+ID4gKyAgICAgICAgfQ0KPiA+ICsgICAgICAgIGFzcGVlZF9tbWlvX21hcChzLCBTWVNf
-QlVTX0RFVklDRSgmcy0+ZWhjaVtpXSksIDAsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAg
-IHNjLT5tZW1tYXBbQVNQRUVEX0RFVl9FSENJMSArIGldKTsNCj4gPiArICAgICAgICBzeXNidXNf
-Y29ubmVjdF9pcnEoU1lTX0JVU19ERVZJQ0UoJnMtPmVoY2lbaV0pLCAwLA0KPiA+ICsgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBhc3BlZWRfc29jX2dldF9pcnEocywgQVNQRUVEX0RFVl9FSENJ
-MSArIGkpKTsNCj4gPiArICAgIH0NCj4gPiArDQo+ID4gICAgICAgLyoNCj4gPiAgICAgICAgKiBT
-RE1DIC0gU0RSQU0gTWVtb3J5IENvbnRyb2xsZXINCj4gPiAgICAgICAgKiBUaGUgU0RNQyBjb250
-cm9sbGVyIGlzIHVubG9ja2VkIGF0IFNQTCBzdGFnZS4NCj4gPiBAQCAtOTAwLDYgKzkyNiw3IEBA
-IHN0YXRpYyB2b2lkDQo+IGFzcGVlZF9zb2NfYXN0MjcwMGEwX2NsYXNzX2luaXQoT2JqZWN0Q2xh
-c3MgKm9jLCB2b2lkICpkYXRhKQ0KPiA+ICAgICAgIHNjLT5zaWxpY29uX3JldiAgPSBBU1QyNzAw
-X0EwX1NJTElDT05fUkVWOw0KPiA+ICAgICAgIHNjLT5zcmFtX3NpemUgICAgPSAweDIwMDAwOw0K
-PiA+ICAgICAgIHNjLT5zcGlzX251bSAgICAgPSAzOw0KPiA+ICsgICAgc2MtPmVoY2lzX251bSAg
-ICA9IDI7DQo+ID4gICAgICAgc2MtPndkdHNfbnVtICAgICA9IDg7DQo+ID4gICAgICAgc2MtPm1h
-Y3NfbnVtICAgICA9IDE7DQo+ID4gICAgICAgc2MtPnVhcnRzX251bSAgICA9IDEzOw0KPiA+IEBA
-IC05MjcsNiArOTU0LDcgQEAgc3RhdGljIHZvaWQNCj4gYXNwZWVkX3NvY19hc3QyNzAwYTFfY2xh
-c3NfaW5pdChPYmplY3RDbGFzcyAqb2MsIHZvaWQgKmRhdGEpDQo+ID4gICAgICAgc2MtPnNpbGlj
-b25fcmV2ICA9IEFTVDI3MDBfQTFfU0lMSUNPTl9SRVY7DQo+ID4gICAgICAgc2MtPnNyYW1fc2l6
-ZSAgICA9IDB4MjAwMDA7DQo+ID4gICAgICAgc2MtPnNwaXNfbnVtICAgICA9IDM7DQo+ID4gKyAg
-ICBzYy0+ZWhjaXNfbnVtICAgID0gNDsNCj4gPiAgICAgICBzYy0+d2R0c19udW0gICAgID0gODsN
-Cj4gPiAgICAgICBzYy0+bWFjc19udW0gICAgID0gMzsNCj4gPiAgICAgICBzYy0+dWFydHNfbnVt
-ICAgID0gMTM7DQo+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvaHcvYXJtL2FzcGVlZF9zb2MuaCBi
-L2luY2x1ZGUvaHcvYXJtL2FzcGVlZF9zb2MuaA0KPiA+IGluZGV4IGYwNjlkMTdkMTYuLmMxZTgw
-Yzg5MDggMTAwNjQ0DQo+ID4gLS0tIGEvaW5jbHVkZS9ody9hcm0vYXNwZWVkX3NvYy5oDQo+ID4g
-KysrIGIvaW5jbHVkZS9ody9hcm0vYXNwZWVkX3NvYy5oDQo+ID4gQEAgLTQzLDcgKzQzLDcgQEAN
-Cj4gPiAgICNpbmNsdWRlICJody9pbnRjL2FybV9naWN2My5oIg0KPiA+DQo+ID4gICAjZGVmaW5l
-IEFTUEVFRF9TUElTX05VTSAgMw0KPiA+IC0jZGVmaW5lIEFTUEVFRF9FSENJU19OVU0gMg0KPiA+
-ICsjZGVmaW5lIEFTUEVFRF9FSENJU19OVU0gNA0KPiA+ICAgI2RlZmluZSBBU1BFRURfV0RUU19O
-VU0gIDgNCj4gPiAgICNkZWZpbmUgQVNQRUVEX0NQVVNfTlVNICA0DQo+ID4gICAjZGVmaW5lIEFT
-UEVFRF9NQUNTX05VTSAgNA0KPiA+IEBAIC0xOTIsNiArMTkyLDggQEAgZW51bSB7DQo+ID4gICAg
-ICAgQVNQRUVEX0RFVl9TUEkyLA0KPiA+ICAgICAgIEFTUEVFRF9ERVZfRUhDSTEsDQo+ID4gICAg
-ICAgQVNQRUVEX0RFVl9FSENJMiwNCj4gPiArICAgIEFTUEVFRF9ERVZfRUhDSTMsDQo+ID4gKyAg
-ICBBU1BFRURfREVWX0VIQ0k0LA0KPiA+ICAgICAgIEFTUEVFRF9ERVZfVklDLA0KPiA+ICAgICAg
-IEFTUEVFRF9ERVZfSU5UQywNCj4gPiAgICAgICBBU1BFRURfREVWX0lOVENJTywNCg0K
+Shameer,
+
+Hi,
+
+
+On 3/11/25 10:10 AM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> 
+> Inroduce an SMMUCommandBatch and some helpers to batch and issue the
+   ^^^^^^^^ Introduce
+> commands.  Currently separate out TLBI commands and device cache commands
+> to avoid some errata on certain versions of SMMUs. Later it should check
+> IIDR register to detect if underlying SMMU hw has such an erratum.
+Where is all this info about 'certain versions of SMMUs' and
+'check IIDR register' has something to do with 'underlying SMMU hw such an erratum',
+-- which IIDR (& bits)? or are we talking about rsvd SMMU_IDR<> registers?
+
+
+And can't these helpers be used for emulated smmuv3 as well as accelerated?
+
+Thanks,
+- Don
+> 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>   hw/arm/smmuv3-accel.c    | 69 ++++++++++++++++++++++++++++++++++++++++
+>   hw/arm/smmuv3-internal.h | 29 +++++++++++++++++
+>   2 files changed, 98 insertions(+)
+> 
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 76134d106a..09be838d22 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -160,6 +160,75 @@ void smmuv3_accel_install_nested_ste(SMMUDevice *sdev, int sid)
+>                                             nested_data.ste[0]);
+>   }
+>   
+> +/* Update batch->ncmds to the number of execute cmds */
+> +int smmuv3_accel_issue_cmd_batch(SMMUState *bs, SMMUCommandBatch *batch)
+> +{
+> +    SMMUv3AccelState *s_accel = ARM_SMMUV3_ACCEL(bs);
+> +    uint32_t total = batch->ncmds;
+> +    IOMMUFDViommu *viommu_core;
+> +    int ret;
+> +
+> +    if (!bs->accel) {
+> +        return 0;
+> +    }
+> +
+> +    if (!s_accel->viommu) {
+> +        return 0;
+> +    }
+> +    viommu_core = &s_accel->viommu->core;
+> +    ret = iommufd_backend_invalidate_cache(viommu_core->iommufd,
+> +                                           viommu_core->viommu_id,
+> +                                           IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3,
+> +                                           sizeof(Cmd), &batch->ncmds,
+> +                                           batch->cmds);
+> +    if (total != batch->ncmds) {
+> +        error_report("%s failed: ret=%d, total=%d, done=%d",
+> +                      __func__, ret, total, batch->ncmds);
+> +        return ret;
+> +    }
+> +
+> +    batch->ncmds = 0;
+> +    batch->dev_cache = false;
+> +    return ret;
+> +}
+> +
+> +int smmuv3_accel_batch_cmds(SMMUState *bs, SMMUDevice *sdev,
+> +                            SMMUCommandBatch *batch, Cmd *cmd,
+> +                            uint32_t *cons, bool dev_cache)
+> +{
+> +    int ret;
+> +
+> +    if (!bs->accel) {
+> +        return 0;
+> +    }
+> +
+> +    if (sdev) {
+> +        SMMUv3AccelDevice *accel_dev;
+> +        accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
+> +        if (!accel_dev->s1_hwpt) {
+> +            return 0;
+> +        }
+> +    }
+> +
+> +    /*
+> +     * Currently separate out dev_cache and hwpt for safety, which might
+> +     * not be necessary if underlying HW SMMU does not have the errata.
+> +     *
+> +     * TODO check IIDR register values read from hw_info.
+> +     */
+> +    if (batch->ncmds && (dev_cache != batch->dev_cache)) {
+> +        ret = smmuv3_accel_issue_cmd_batch(bs, batch);
+> +        if (ret) {
+> +            *cons = batch->cons[batch->ncmds];
+> +            return ret;
+> +        }
+> +    }
+> +    batch->dev_cache = dev_cache;
+> +    batch->cmds[batch->ncmds] = *cmd;
+> +    batch->cons[batch->ncmds++] = *cons;
+> +    return 0;
+> +}
+> +
+>   static bool
+>   smmuv3_accel_dev_attach_viommu(SMMUv3AccelDevice *accel_dev,
+>                                  HostIOMMUDeviceIOMMUFD *idev, Error **errp)
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index 46c8bcae14..4602ae6728 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -549,13 +549,42 @@ typedef struct CD {
+>       uint32_t word[16];
+>   } CD;
+>   
+> +/**
+> + * SMMUCommandBatch - batch of invalidation commands for smmuv3-accel
+> + * @cmds: Pointer to list of commands
+> + * @cons: Pointer to list of CONS corresponding to the commands
+> + * @ncmds: Total ncmds in the batch
+> + * @dev_cache: Issue to a device cache
+> + */
+> +typedef struct SMMUCommandBatch {
+> +    Cmd *cmds;
+> +    uint32_t *cons;
+> +    uint32_t ncmds;
+> +    bool dev_cache;
+> +} SMMUCommandBatch;
+> +
+>   int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
+>                     SMMUEventInfo *event);
+>   void smmuv3_flush_config(SMMUDevice *sdev);
+>   
+>   #if defined(CONFIG_ARM_SMMUV3_ACCEL) && defined(CONFIG_IOMMUFD)
+> +int smmuv3_accel_issue_cmd_batch(SMMUState *bs, SMMUCommandBatch *batch);
+> +int smmuv3_accel_batch_cmds(SMMUState *bs, SMMUDevice *sdev,
+> +                            SMMUCommandBatch *batch, Cmd *cmd,
+> +                            uint32_t *cons, bool dev_cache);
+>   void smmuv3_accel_install_nested_ste(SMMUDevice *sdev, int sid);
+>   #else
+> +static inline int smmuv3_accel_issue_cmd_batch(SMMUState *bs,
+> +                                               SMMUCommandBatch *batch)
+> +{
+> +    return 0;
+> +}
+> +static inline int smmuv3_accel_batch_cmds(SMMUState *bs, SMMUDevice *sdev,
+> +                                          SMMUCommandBatch *batch, Cmd *cmd,
+> +                                          uint32_t *cons, bool dev_cache)
+> +{
+> +    return 0;
+> +}
+>   static inline void smmuv3_accel_install_nested_ste(SMMUDevice *sdev, int sid)
+>   {
+>   }
+
 
