@@ -4,91 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 352B8C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 07:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E233C28B28
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 07:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tunvo-0004wz-VK; Wed, 19 Mar 2025 03:33:41 -0400
+	id 1tuoBm-0002Tb-Eb; Wed, 19 Mar 2025 03:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tunvV-0004tx-OM
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:33:27 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tunvS-00008s-Le
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:33:21 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cfe574976so26495875e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 00:33:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742369595; x=1742974395; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jv4XS6tF1yc4+XNcQOQTnGjMyCrjcIFdra27Mvgizbw=;
- b=sLEttq3CZmAMST5O8qp7VZXkYvHTw+ich5OUHqtjU8UP4RR0YeeumTaIjCizN06vgE
- d2yU7xeyxlGs5lWzY9anHSvXLhNfi8jJZodMhpeDusUDLKJzir6sWqTGKWgAcagsLa6/
- 7jlSZv0fG36b6aJSDXTQynCsoe5wTFwPyeoqL9fPkssh7IoYryur4liccqN7PjSW8fvy
- t8Ysr9KehVoGVv9eWZFq+LN1OuvKWqKwOV5I+GLPCcw+97YZIPvASJUP4MKFxvcO5c9C
- Vcc/YnUrm9Zrp4Vtg8f73kBkWtYrwQkrvE6riY5THJrE1fwGsLc2HetY1Sg0ET8RSX/z
- cZSg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuoBk-0002RY-4Y
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:50:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tuoBf-0007Th-6X
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:50:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742370599;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=FAWe/b5zwgPR1XGZx2zULtlehaK55yPwIgjjxhxauKs=;
+ b=XyFMYvIvlsQPiFzE/GhV96ERtAqjnyk+qjVB5j61Xhro7iRakvP262PoS+4sqyhrV9dhCu
+ StuQ3LaG88Iasv+QZUx45mUvxKisVKFeWv58S2BixWOa0RQ/JEkpC/+GOOEvfPKWmvqEQD
+ Ilvh+cUc1pK+HZl8Lun0IoncsSfQDdY=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-159-MyoJ-csaMm2NmsyjvCgOag-1; Wed, 19 Mar 2025 03:49:57 -0400
+X-MC-Unique: MyoJ-csaMm2NmsyjvCgOag-1
+X-Mimecast-MFC-AGG-ID: MyoJ-csaMm2NmsyjvCgOag_1742370597
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ac2815aba51so486627566b.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 00:49:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742369595; x=1742974395;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jv4XS6tF1yc4+XNcQOQTnGjMyCrjcIFdra27Mvgizbw=;
- b=dbD/L5oJAnrn8wl9nWuGLHiSSivLNC6m6MvuPS0KehjfSgFAtSPmnO690JV0fAYoW3
- /kbU1kzVq0Ahdkvq0O2aoIc9t3bnHqg9auRJWp4GWDukRJp4NASA+j+2IO9moQXtKFtq
- 2MTQhstHGXeFMKQQ8uFPy2wa5FRZUT7bgbZOqPw5026eY8n9L6hCo9rVeXYnOQz4rPLt
- zZbKoFo4n19Ug/dN8frLuuwoWaLePOPtIrsQYc0r4CYyWF5jm2Rg5fdKssYyAeTcb6uN
- qjN6G256LcGmE0ietmbkMwzquPvOOi0DF4rlVh4Z/Ii1K8KScOeILiYL57Bt4O+RZoG1
- gRQA==
+ d=1e100.net; s=20230601; t=1742370596; x=1742975396;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FAWe/b5zwgPR1XGZx2zULtlehaK55yPwIgjjxhxauKs=;
+ b=tZtAXYam9AmRqAm47X6kHOFUvFHCRnUQRrN/Ltox441GIBVLD+A4Url+/1iRJUGsG6
+ vFA9XqAkBOaRAX0CHTeG9SypXxluXqHXSuZ/T36bs7BggYh/ZjXXnhBOvM5oHJDTwesS
+ v56aEGU4Iou5OqhBqcI49yzEdfSZkdPnHIS0oDFejG3UcZJ5NCttCJAxEDtIb/gjzWZD
+ 8LnnpeErcNSb4lgx23EwqStqrySdoMP30vt/7YgsrRp0gG24Dj/VwKtY+DKXFOLFcmlP
+ i3LMEJGwvqqWprRcZktI8l5IJY5swXYt2Osmr8Q7NF2bxgabCx1ssgfk3K21JTwJ7sVc
+ fOtA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIe/pbVrQNu9Gjmsy7GLFt1/mBQdpMiMPx+yvpwkT07F0tW228lwSO7BSC+v0Csp0PdjBTr3OKBydY@nongnu.org
-X-Gm-Message-State: AOJu0YzBGs1/grv74GcYAab45utC5m+I2ufmGREATfli+ExY1C/lk0xe
- Zd8lcjBYerEZ8deY8ls3m2d65GZMUdItVyyE3808aWCP2oomdiwtH0Pf2DWYZSE=
-X-Gm-Gg: ASbGncsIcNw6GzLGZO8o5oGzZpGIr6lTUNRomQVijvFE20EO763up42sGt8665NfPm8
- rRNyk4HZ1duIxN18WW5m9f+LvfCA9efFZ+0cZV2IRP7TVVwHnFkdGI37xWel0hBfAAf0/lXLrqj
- 4BM7gu1IM4jGDOFNGqwC+6D3Oj+HKu4w/T+g2JMi6PckLfPTR4MF3OXISK4U8kNI1H4YTjQdeBD
- wIKKJGT4OTQPssFaHs/ESv0ocbIBPF06Lp77yFYp5o5hf1Kahf8SbwQdnKzbqN91DAwc6gQRvbq
- rAg0uYdM4R6+cHi2g2SIIT5zjWFrEcP3pbD6pRYjaVbUbGkPoAa2Pu7VYXMpPnxC7LYYbwiNyrp
- 0KEWT2iDrJZD4
-X-Google-Smtp-Source: AGHT+IHX3aLrAT5oRL0MrR4G8Z4AbOrj4Vf3kBB/LA70RnWpOhbcFuLvG0lQLn7xq+PoMjxNyrKRBA==
-X-Received: by 2002:a05:600c:4252:b0:43c:fe90:1282 with SMTP id
- 5b1f17b1804b1-43d4454adc7mr7300775e9.7.1742369594866; 
- Wed, 19 Mar 2025 00:33:14 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f556a4sm10321875e9.22.2025.03.19.00.33.13
+ AJvYcCW43WrLKCscLsIeXitL4kT4eEUkRV6z+Kjq80SW2GD3OgvhhfemlsVlJo5GhWeBm99fPE42db4MQvuM@nongnu.org
+X-Gm-Message-State: AOJu0Yy5vk5CPkxbSQrHxITCK1wHJArGQZNG6TgLnlKQvbxXdT1/w6Pj
+ HnwFjp43K/lmdWIXnit7pjcHpPnRCr9mLEZnQAv+2iX45HA4+gN3vI8Uyyv82ItUvxFmAPs4dD/
+ jXth/usqBx7pf8tV+HFmDAbHlNRMr3FTdzf8rLf112KvhVFpwX8r3
+X-Gm-Gg: ASbGncvC/7Df3/RMadpXKdu3fXF1tappr/RLkb5uayza/hK9S9Q+F4HwsMTMzmn8Gl9
+ Cm4ts24N4UC0lI6cWJy/5FiQNiyJu30K05iniLfe3dhPgFcihlht76Q0jtuE3dLrRici35xI/1X
+ FGYTszM+1ZK5N4+VlA0QW1tsAqW9aFEDRdXeTbHh5xLgARCvqz4K6qo59LglmBQZWts8yQCvJ0U
+ 7Q5D/a2S4tLOh28IG9dgODbAWIv8ckTPSwlyf8uZhwX1ljHeFCjBhiCNCTgAqcok+2tkievAsvE
+ 3hrr26vwHjgkpODEvmGq/+ymi45CrYwdggAkIiq5wA==
+X-Received: by 2002:a17:907:d2dc:b0:ac3:a7bb:1c2f with SMTP id
+ a640c23a62f3a-ac3b7a97f9cmr174572766b.7.1742370596477; 
+ Wed, 19 Mar 2025 00:49:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGaWyYco99bSLVyk8JUgyK1kQ2K7NSC//Wiqc3ELEHjq/j2pSZw/gvwcxMOVLX6u+o2fwfD9Q==
+X-Received: by 2002:a17:907:d2dc:b0:ac3:a7bb:1c2f with SMTP id
+ a640c23a62f3a-ac3b7a97f9cmr174569866b.7.1742370596001; 
+ Wed, 19 Mar 2025 00:49:56 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-50-2.web.vodafone.de. [109.42.50.2])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac314858edcsm957470966b.85.2025.03.19.00.49.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 00:33:14 -0700 (PDT)
-Message-ID: <0b77231d-19bd-4cc5-adef-e7677a94b874@linaro.org>
-Date: Wed, 19 Mar 2025 08:33:13 +0100
+ Wed, 19 Mar 2025 00:49:55 -0700 (PDT)
+Message-ID: <8b749710-a5bf-4da9-a6af-160ccb0bbcc5@redhat.com>
+Date: Wed, 19 Mar 2025 08:49:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 02/32] vfio: Rename vfio_reset_bytes_transferred()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20250318095415.670319-1-clg@redhat.com>
- <20250318095415.670319-3-clg@redhat.com>
+Subject: test_migration.py not working with netcat-traditional
+To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
+ qemu-devel@nongnu.org
+Cc: ovoshcha@redhat.com, farosas@suse.de, philmd@redhat.com,
+ bcain@quicinc.com, quic_mliebel@quicinc.com,
+ "Daniel P. Berrange" <berrange@redhat.com>
+References: <85909195b99964081ae01d9999384cc3b7a3fada.1742331648.git.quic_mathbern@quicinc.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250318095415.670319-3-clg@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <85909195b99964081ae01d9999384cc3b7a3fada.1742331648.git.quic_mathbern@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,17 +155,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/3/25 10:53, Cédric Le Goater wrote:
-> Enforce a 'vfio_mig_' prefix for the VFIO migration API to better
-> reflect the namespace these routines belong to.
+On 18/03/2025 22.13, Matheus Tavares Bernardino wrote:
+> Hi,
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   include/hw/vfio/vfio-common.h | 2 +-
->   hw/vfio/migration.c           | 2 +-
->   migration/target.c            | 2 +-
->   3 files changed, 3 insertions(+), 3 deletions(-)
+> tests/functional/test_migration.py says "The test works for both
+> netcat-traditional and netcat-openbsd packages." But when I run it for
+> qemu-system-aarch64 on an Ubuntu 22.04 container with netcat-traditional
+> installed, I get the following error:
+> 
+> TAP version 13
+> Traceback (most recent call last):
+>    File "/pwd/tests/functional/test_migration.py", line 97, in test_migration_with_exec
+>      self.do_migrate(dest_uri, src_uri)
+>    File "/pwd/tests/functional/test_migration.py", line 72, in do_migrate
+>      self.assert_migration(source_vm, dest_vm)
+>    File "/pwd/tests/functional/test_migration.py", line 40, in assert_migration
+>      self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
+> AssertionError: 'failed' != 'completed'
+> - failed
+> + completed
+> 
+> not ok 1 test_migration.MigrationTest.test_migration_with_exec
+> ok 2 test_migration.MigrationTest.test_migration_with_tcp_localhost
+> ok 3 test_migration.MigrationTest.test_migration_with_unix
+> 1..3
+> 
+> With netcat-openbsd (the default), it runs fine. Perhaps the test is no
+> longer compatible with netcat-traditional?
+> 
+> QEMU was configured and built with:
+> ../configure --without-default-features --target-list=aarch64-softmmu
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+For me it works with both flavors of "nc", the ncat and the netcat one... 
+but I'm also running on Fedora. So no clue, could you maybe check whether 
+there is some additional information in one of the logfiles in 
+tests/functional/aarch64/test_migration.MigrationTest.test_migration_with_exec/ 
+?
+
+  Thomas
 
 
