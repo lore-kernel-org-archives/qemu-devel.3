@@ -4,93 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B1BC28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 07:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 713E4C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 08:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuoEu-0003lf-E3; Wed, 19 Mar 2025 03:53:24 -0400
+	id 1tuoKx-0006iO-9A; Wed, 19 Mar 2025 03:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuoEs-0003lQ-PG
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:53:23 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tuoEp-0002Z2-GP
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:53:22 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4394345e4d5so29202685e9.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 00:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742370796; x=1742975596; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dPKBO+pX1GvSQ6t8gQtNdQofWuJ8ObBgPLfneDkaTFc=;
- b=iIIjkawMqWlnJ+lFsWWwIVuu/HkjBvhUUy3cdVG/JOeM7YNHE96MAjb5herufopQzy
- 3aaSjR4cxBW0Aquby9/O2he2a/j3SfwkHdaIKGxVQrPyJwayqaFKfHRyPf4SjLHzjFjA
- rD58/f/P9t/DjD0eX3D7fkB7Tt07Pd480dEq/1YkDhMgqrUkwWFBRKoyAZKW+ZS+0lLk
- kf2meNOZvNrEoWS7SyipCxsJaNCKiEQkcPwqkURLT2JSr/xPaHq7p7hC+bLDQ9oRnZmK
- zGhtUJEBOpVrttjZDn4GYVSIsY2z1HJjpmX0WCIkOOsYAPe02NCelmyQuEErGc0hHJzs
- 3ncw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742370796; x=1742975596;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dPKBO+pX1GvSQ6t8gQtNdQofWuJ8ObBgPLfneDkaTFc=;
- b=SH2pxDTOFJlTnZV+hRZH+C2QKX83LaE3Yyx8qXaGF2oAFz/xvVnra5DFda9dZaP7uQ
- Vk9uUeHbFqwq+Tq+EZ/p86lLPItM6nwlwX79n6gHmU+K4f0B6DHxUvgebuJ6VG96UvEa
- mx5Kz9hLHs69FizQkfQbWHU0qv04E2xtEowpP2y2TAO4ynIdQO3JII9YD6VwQ+lTlkpn
- OII8ty7IrIFz77F8E2T0StdPta6dqXEbDkMjYmO71pqs9zlQ5rR1iFvFc5HsUlA70cQO
- 7D5Rne976xiNT1BbmrAqOy+z1vx+3/zMC53s+bgQ9ItSd2G43NI2Ihet8ZIhWrr2RIEJ
- ju3w==
-X-Gm-Message-State: AOJu0Yysc6udGiEwD6Gnx7nCjMf5U5iEUjwWBSbFsDrfj17I9YZKJrhT
- +LA+JNKdjsZ0RBmVjJCJ6jnGNEhInQYrXYF9SzFlJJ987S818wESIfBADWhI9q9yRPP205j3XXN
- G
-X-Gm-Gg: ASbGnctoWB7DlpsfceiD65yCahqxzk29vfnJftGzEzA2vQkXFpajPJjaG2I8KM+1pLc
- 5y7P0siDgvB62J1GSgrwAfmaDwTXnzzyv+Bdg+HWpKhNGWGbZUu1JGHNA4U859Kfck60X8r3V66
- der69DCYPCuZ7O7052bHQlhDV2Z8XmQAlCm88WqnPNZ2FZ/iN37PqF/ZuTYwZDBaumJOHjN0tfu
- Np0gCykevP5+gcwPqvia1h0PsPYd0uGIz3XnQNo9ZdQnXJJ6IZGlI0anLxLwarO6x53Sa8zBL09
- NmGDpaSou8+Fav3fvpHRGMyjq5B+Q59cOVG2J/qbiW4kX0DiB66Wk7IhJF3GS8ZuhDCQ0Ej4Z1R
- MIuyIg8PtZDn6z5/JjbGDGL8=
-X-Google-Smtp-Source: AGHT+IFn8bEEbhvYUF9BcuJmpglFLp+voGgkViY/cOfm36hPsa2cnGp8gzZhHlVohShNi6o8ppqtPw==
-X-Received: by 2002:a05:600c:1f14:b0:43c:f5e4:895e with SMTP id
- 5b1f17b1804b1-43d43781539mr11253555e9.1.1742370796184; 
- Wed, 19 Mar 2025 00:53:16 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d3ae040f9sm33435795e9.0.2025.03.19.00.53.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 00:53:15 -0700 (PDT)
-Message-ID: <9a0a5864-1660-474b-b4b7-70e846889de9@linaro.org>
-Date: Wed, 19 Mar 2025 08:53:14 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tuoKq-0006hq-JE
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:59:33 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tuoKl-0003oV-Nr
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 03:59:32 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxaeBXedpng86cAA--.4429S3;
+ Wed, 19 Mar 2025 15:59:19 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxHcVUedpn90dTAA--.42143S3;
+ Wed, 19 Mar 2025 15:59:18 +0800 (CST)
+Subject: Re: [PATCH v4 4/4] target/loongarch: Set dest error with error_abort
+ in virt_cpu_irq_init
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250319020847.1511759-1-maobibo@loongson.cn>
+ <20250319020847.1511759-5-maobibo@loongson.cn> <877c4l4km1.fsf@pond.sub.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <3d9c1bff-c1a5-5e87-e912-7246c2c8f512@loongson.cn>
+Date: Wed, 19 Mar 2025 15:58:37 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] accel/tcg: Remove cpu_unwind_state_data() unused
- CPUState argument
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20241115152053.66442-1-philmd@linaro.org>
- <20241115152053.66442-7-philmd@linaro.org>
- <9796cc60-5efb-4a2d-9437-4832a6c43edf@linaro.org>
- <CAFEAcA95k0yX+jns13qx0j+u0aJUjYpaqyDX-y-Cd8xQ4Z9kUA@mail.gmail.com>
+In-Reply-To: <877c4l4km1.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA95k0yX+jns13qx0j+u0aJUjYpaqyDX-y-Cd8xQ4Z9kUA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMBxHcVUedpn90dTAA--.42143S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7KryrXw1kGw1xCw45Gw4rJFc_yoW5JFyrpr
+ Waya1v9F1DAa4Duws2gryUXF1jyrs3Kry7Xa9Ykr4Ykwn8Xr1FqFW7Cwn09FW8Cw4rXa95
+ Xrs5GFs3WFn8AagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.526,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,59 +84,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Pierrick & Anton
 
-On 15/11/24 18:33, Peter Maydell wrote:
-> On Fri, 15 Nov 2024 at 17:24, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
+
+On 2025/3/19 下午2:09, Markus Armbruster wrote:
+> Bibo Mao <maobibo@loongson.cn> writes:
+> 
+>> In function virt_cpu_irq_init(), there is notification with ipi and extioi
+>> interrupt controller for cpu creation. Local variable with error type is
+>> used, however there is no check with its return value.
+> 
+> Good catch.
+> 
+> When the first call fails, we pass non-null @err to the second call,
+> which is wrong.  If that one also fails, it'll likely trip
+> error_setv()'s assertion.
+> 
+>> Here set dest error object with error_abort, rather than local variable, so
+>> application will abort to run if there is error.
+> 
+> Why is failure impossible there?
+In plug hanlder of extioi/ipi, there is only warn_report() if object is 
+not TYPE_LOONGARCH_CPU, parameter errp is not changed.
+
+With caller funciton virt_cpu_irq_init(), DEVICE(cs) is object with type 
+TYPE_LOONGARCH_CPU always, so failure is impossible here.
+
+> 
+> If failure is impossible, the code before the patch is harmlessly wrong.
+yes, it is harmlessly wrong.
+
+Regards
+Bibo Mao
+> 
+> If failure is possible, the code before the patch has a crash bug, and
+> the patch makes it crash harder, i.e. when either call fails instead of
+> when both fail.
+> 
+>> Fixes: 50ebc3fc47fe (hw/intc/loongarch_ipi: Notify ipi object when cpu is plugged)
+>> Fixes: 087a23a87c57 (hw/intc/loongarch_extioi: Use cpu plug notification)
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c | 7 ++++---
+>>   1 file changed, 4 insertions(+), 3 deletions(-)
 >>
->> On 11/15/24 07:20, Philippe Mathieu-Daudé wrote:
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>    include/exec/translate-all.h | 3 +--
->>>    accel/tcg/translate-all.c    | 2 +-
->>>    target/i386/helper.c         | 3 ++-
->>>    target/openrisc/sys_helper.c | 7 +++----
->>>    4 files changed, 7 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/include/exec/translate-all.h b/include/exec/translate-all.h
->>> index f06cfedd52..9303318953 100644
->>> --- a/include/exec/translate-all.h
->>> +++ b/include/exec/translate-all.h
->>> @@ -23,7 +23,6 @@
->>>
->>>    /**
->>>     * cpu_unwind_state_data:
->>> - * @cpu: the cpu context
->>>     * @host_pc: the host pc within the translation
->>>     * @data: output data
->>>     *
->>> @@ -32,7 +31,7 @@
->>>     * function returns false; otherwise @data is loaded.
->>>     * This is the same unwind info as given to restore_state_to_opc.
->>>     */
->>> -bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
->>> +bool cpu_unwind_state_data(uintptr_t host_pc, uint64_t *data);
->>
->> Hmm.  I wonder if it should be called "cpu_*" at all then?
->> Worth renaming to "tcg_*" or something?
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index a9fab39dd8..f10a4704ab 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -327,7 +327,6 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
+>>       MachineClass *mc = MACHINE_GET_CLASS(ms);
+>>       const CPUArchIdList *possible_cpus;
+>>       CPUState *cs;
+>> -    Error *err = NULL;
+>>   
+>>       /* cpu nodes */
+>>       possible_cpus = mc->possible_cpu_arch_ids(ms);
+>> @@ -337,8 +336,10 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
+>>               continue;
+>>           }
+>>   
+>> -        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), DEVICE(cs), &err);
+>> -        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), DEVICE(cs), &err);
+>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), DEVICE(cs),
+>> +                             &error_abort);
+>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), DEVICE(cs),
+>> +                             &error_abort);
+>>       }
+>>   }
 > 
-> Yes, it's odd, isn't it?
-> 
-> What's the plan for this function in a multi-target
-> emulation world? At the moment it (or functions it
-> calls) uses TARGET_INSN_START_WORDS which is a
-> target-CPU-type-specific value. If in the future we're
-> going to want it instead to look that up as e.g. some
-> property of the CPU class then maybe we should keep
-> passing it the CPU pointer? Or would we instead say
-> that we'll define TARGET_INSN_START_WORDS as the worst
-> case for any target, since it's always between 1 and 3,
-> so it doesn't waste that much space if we have a couple
-> of extra sleb128 zero values for targets that don't need
-> all 3 words?
-> 
-> thanks
-> -- PMM
 
 
