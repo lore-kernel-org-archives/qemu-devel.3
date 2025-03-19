@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC20C282EC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 02:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FB4C282EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 02:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuim4-0000RS-Fc; Tue, 18 Mar 2025 22:03:16 -0400
+	id 1tuirx-0001sh-Ok; Tue, 18 Mar 2025 22:09:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1tuily-0000P2-CE
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:03:11 -0400
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tuirp-0001rY-3J
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:09:13 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1tuilu-0006Tr-UG
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:03:09 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx12nRJdpnKYGcAA--.2283S3;
- Wed, 19 Mar 2025 10:02:57 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XQJdpnvNhSAA--.43097S2;
- Wed, 19 Mar 2025 10:02:56 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Cc: richard.henderson@linaro.org,
-	stefanha@gmail.com,
-	maobibo@loongson.cn
-Subject: [PATCH 1/1] target/loongarch: fix bad shift in check_ps()
-Date: Wed, 19 Mar 2025 09:41:15 +0800
-Message-Id: <20250319014115.431439-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (envelope-from <maobibo@loongson.cn>) id 1tuirg-0002F5-MG
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:09:07 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxNHAzJ9pnd4KcAA--.2208S3;
+ Wed, 19 Mar 2025 10:08:51 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMBxb8cwJ9pn2NpSAA--.42124S4;
+ Wed, 19 Mar 2025 10:08:50 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+	Markus Armbruster <armbru@redhat.com>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v4 2/4] hw/loongarch/virt: Remove unnecessary NULL pointer
+Date: Wed, 19 Mar 2025 10:08:45 +0800
+Message-Id: <20250319020847.1511759-3-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250319020847.1511759-1-maobibo@loongson.cn>
+References: <20250319020847.1511759-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XQJdpnvNhSAA--.43097S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-CM-TRANSID: qMiowMBxb8cwJ9pn2NpSAA--.42124S4
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
  nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -65,38 +66,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- In expression 1ULL << tlb_ps, left shifting by more than 63 bits has undefined behavior.
-The shift amount, tlb_ps, is as much as 64. check "tlb_ps >=64" to fix.
+There is NULL pointer checking function error_propagate() already,
+it is not necessary to add checking for function parameter. Here remove
+NULL pointer checking with function parameter.
 
-Resolves: Coverity CID 1593475
+Since function will return directly when there is error report, this
+patch removes combination about error_setg() and error_propagate(),
+error_setg() with dest error object is used directly such as:
 
-Fixes: d882c284a3 ("target/loongarch: check tlb_ps")
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
+  error_setg(err);                 -------->      error_setg(errp);
+  error_propagate(errp, err);                     return;
+  return;
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/tcg/tlb_helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/loongarch/virt.c | 33 ++++++++++++---------------------
+ 1 file changed, 12 insertions(+), 21 deletions(-)
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 646dbf59de..e960adad4d 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -21,10 +21,10 @@
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index a5840ff968..a9fab39dd8 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -859,30 +859,29 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
+     CPUState *cs = CPU(dev);
+     CPUArchId *cpu_slot;
+-    Error *err = NULL;
+     LoongArchCPUTopo topo;
+     int arch_id;
  
- bool check_ps(CPULoongArchState *env, int tlb_ps)
- {
--     if (tlb_ps > 64) {
--         return false;
--     }
--     return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
-+    if (tlb_ps >= 64) {
-+        return false;
-+    }
-+    return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
+     if (lvms->acpi_ged) {
+         if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
+-            error_setg(&err,
++            error_setg(errp,
+                        "Invalid thread-id %u specified, must be in range 1:%u",
+                        cpu->thread_id, ms->smp.threads - 1);
+-            goto out;
++            return;
+         }
+ 
+         if ((cpu->core_id < 0) || (cpu->core_id >= ms->smp.cores)) {
+-            error_setg(&err,
++            error_setg(errp,
+                        "Invalid core-id %u specified, must be in range 1:%u",
+                        cpu->core_id, ms->smp.cores - 1);
+-            goto out;
++            return;
+         }
+ 
+         if ((cpu->socket_id < 0) || (cpu->socket_id >= ms->smp.sockets)) {
+-            error_setg(&err,
++            error_setg(errp,
+                        "Invalid socket-id %u specified, must be in range 1:%u",
+                        cpu->socket_id, ms->smp.sockets - 1);
+-            goto out;
++            return;
+         }
+ 
+         topo.socket_id = cpu->socket_id;
+@@ -891,11 +890,11 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+         arch_id =  virt_get_arch_id_from_topo(ms, &topo);
+         cpu_slot = virt_find_cpu_slot(ms, arch_id);
+         if (CPU(cpu_slot->cpu)) {
+-            error_setg(&err,
++            error_setg(errp,
+                        "cpu(id%d=%d:%d:%d) with arch-id %" PRIu64 " exists",
+                        cs->cpu_index, cpu->socket_id, cpu->core_id,
+                        cpu->thread_id, cpu_slot->arch_id);
+-            goto out;
++            return;
+         }
+     } else {
+         /* For cold-add cpu, find empty cpu slot */
+@@ -911,33 +910,24 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
+     cpu->env.address_space_iocsr = &lvms->as_iocsr;
+     cpu->phy_id = cpu_slot->arch_id;
+     cs->cpu_index = cpu_slot - ms->possible_cpus->cpus;
+-    numa_cpu_pre_plug(cpu_slot, dev, &err);
+-out:
+-    if (err) {
+-        error_propagate(errp, err);
+-    }
++    numa_cpu_pre_plug(cpu_slot, dev, errp);
  }
  
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+ static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
+                                     DeviceState *dev, Error **errp)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
+-    Error *err = NULL;
+     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
+     CPUState *cs = CPU(dev);
+ 
+     if (cs->cpu_index == 0) {
+-        error_setg(&err, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
++        error_setg(errp, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
+                    cs->cpu_index, cpu->socket_id,
+                    cpu->core_id, cpu->thread_id);
+-        error_propagate(errp, err);
+         return;
+     }
+ 
+-    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
+-    if (err) {
+-        error_propagate(errp, err);
+-    }
++    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, errp);
+ }
+ 
+ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+@@ -1003,6 +993,7 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
+         if (err) {
+             error_propagate(errp, err);
++            return;
+         }
+     }
+ 
 -- 
-2.34.1
+2.39.3
 
 
