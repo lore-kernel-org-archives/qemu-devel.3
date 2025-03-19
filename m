@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3696EC35FF3
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 01:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60208C28B2F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 01:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuiPf-0002UG-E0; Tue, 18 Mar 2025 21:40:07 -0400
+	id 1tuiR3-0003nB-A4; Tue, 18 Mar 2025 21:41:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tuiPa-0002Tb-JI; Tue, 18 Mar 2025 21:40:03 -0400
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tuiR1-0003lN-70
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:41:31 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tuiPY-0008Ny-Od; Tue, 18 Mar 2025 21:40:02 -0400
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-86d5a786c7cso2687469241.2; 
- Tue, 18 Mar 2025 18:40:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tuiQy-0002LI-SH
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:41:30 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-223fd89d036so126381795ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 18:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742348399; x=1742953199; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kAsJkiLQoQFhjttu7+q7JwiD2QqI6oNCU+LxD4twIdw=;
- b=BTYvLqN5rtOkUNtxndK3eO6nD2mqEDIJdSp3GcyPs90tpoXDiRr2OkECqQN2nzoa+F
- HKmnUQdBGUUIiun5MZfX7W3emRho8PintbiamFfxVwlJVL8IBWB545OJ+SGnPjumQmbe
- /mp2D7MxCr/FiFvjCuE7Liwch5HNANnvf1oGDvVBeRMBFydZebXLb4vwKI16mf+BngDy
- MtSdeUHcTlIuP+8EU72wvyVT+K9s+cT0uo/riOvoHfHduvTb0XQH4OjwWXdiFoJ10wuV
- V2ZBYEOCcO3oNdMfmV7O10YYqmqXH/r1nzSnbAfkIM/F747kc3xgV0PZSnnqI2hvg5hk
- vebw==
+ d=linaro.org; s=google; t=1742348487; x=1742953287; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iZuSnWAMdl/GsH5qLj1Qduy+VEy21B8hbPR+FnX+Lf0=;
+ b=ozDkiVU2MFOm9vegRLGUUVMiPob5ofbY+HnGQrVyrtDIACbCCoS4SmebKJnk2qnZoz
+ NyPacPIkSsvexTdGXiKwrEVxcZsbA6qARVyh5ZswQNK3CaGBtdmwfBf4wYCTg8oOK/P1
+ /Ls61n7jcXXm3+78VnbeJuB/nAFOOSP/SkxH/LBNXINR56kGbR/4WYJhyE7hDw2GUI8D
+ yrHKctu8UZj07DPMNRW8R30tCHjnOV6Szkc1c5NMMOPzUGwkMHSh5SMM4Q5Q+qElx0Yx
+ 82DOgAzf27PXw45DRiToYI5ZCp6dD7AXCyvJ0Gj3yi0dmqgYKHyUXjCe3k05CpaRBC0s
+ T2Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742348399; x=1742953199;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kAsJkiLQoQFhjttu7+q7JwiD2QqI6oNCU+LxD4twIdw=;
- b=DPzJr61jsu6DOicy0CWp5/HqPTcB7QtfhkyI1bua1YUEVH1atXRzK1ureAIZEAe4wd
- qMLIk2H1rK9+Ra524anMp4pu9n3Ji27CQT0uK3UozkQf612G8UdH2S8750UFt6m0ZwRQ
- ZRrpcPtBD1TKv+uCxzhwPBYrbNqPQpgh8F1XmgXLm0IpTeOBl6ZM5HVHz93DEp1uUp/o
- NXexg8aI1LRgayJhOizOtkmMG/4gGgl6/hitt9uHolpudP/7pyFsP8X7xm5tFOC1KpNY
- lcb9CSFqHm4EpuxjbaQIzoQ62LLSS2jdo18ZWroegVraMlG5m4NJgN3YmIXpKfn3KepE
- ltXA==
+ d=1e100.net; s=20230601; t=1742348487; x=1742953287;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iZuSnWAMdl/GsH5qLj1Qduy+VEy21B8hbPR+FnX+Lf0=;
+ b=QqJyRmh7fKrtXXwLQxeEP+VfQJ6a5eHgwyZTuArVmjy/uzTkretq2EDVMuWhpOfc+M
+ n4Mpx1qA7R5ZV4tvEkWhPJFZJDqVH4RugW9ZmanVtd8yMrz+8QGfDRVvefuva9j01jWO
+ JabVyyb8EnsJHAh6kY6YNFR2r7evAmdqB6XWezbl5Cmw/YBtDRO34ibV3ejG8qdF8m5f
+ KMi8rGNwZ6grT3Alr9HBgW6syIHFBYUmwJn/XjSVQWsYt7c8YqNNFXVsBLqq7xJ5A10A
+ NjXz9yQom2EmKqsbQwZS/PJ30b4Ap3O8yhAe6jSPAJrF5dt/NEqTDs93wJus6oIUARzU
+ p7CQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULXRtbbyEP+OJLP79wCVx99W563cm4cPdAuis3RVN/5o3DjOSueCMSYnDB/z2DPKWNwMCtFBg9NVDl@nongnu.org
-X-Gm-Message-State: AOJu0Yx3rqwXw20XT9XzFa7RDi+NzIm9tsRggqCUGAIYxKjOUu50Oj7O
- oWDO1px2/c5PoeByNSYO/WlmIUKrTNGX43/TZls/6FXlaOYWF9RlSi0RBIJbRCq/OfQKYWkTKN9
- BYmzEYE6V3wNnd28OOstUwpvP9Uw=
-X-Gm-Gg: ASbGncsDfj2f4LeGCj0uUJiCGV6J8PN5Eiy6uEBSJ8WeQzxRLPW6pBXBonRnoFXpwoZ
- o1veogvvSPpPOPbKMrIgDBxqj8PeXCl243EGodaIBNfo5lVfpGgr7f67tQZKGAUCDVlZIyrus26
- cqtKwTMFU7u5HoT64bKNFQTB+ek8mCLzLJvB9gr1u12IX8xvD1SpCTYUQ=
-X-Google-Smtp-Source: AGHT+IEjNHp7VlhhFI8vWGw013Hngf/+rr4Ok+NIzwT5sF0Q1y2cylVy9SkWiv45n4Re7oxURvjIgg1NUHnR8NKhR5M=
-X-Received: by 2002:a05:6102:50aa:b0:4bb:d394:46ce with SMTP id
- ada2fe7eead31-4c4ec61480amr588959137.3.1742348399244; Tue, 18 Mar 2025
- 18:39:59 -0700 (PDT)
+ AJvYcCUdRfZB9BCzU0Y/aPpuOd7i7dXzQtjOIZc8tChyKrtOwcjGuUExamyz/x0q2M5GY+RwPWdx+wmw3CV7@nongnu.org
+X-Gm-Message-State: AOJu0Yza+BMWxr6UCdtNW/SmN1hYl4OGKs+e7x1orzw8io4F6Z871Qf7
+ MCk4OwDtC5I34iBggDCiaOJWy+NaOyyx+SrJ6iKh95smc1M8n8Y2lq8og2/9Io4=
+X-Gm-Gg: ASbGncsmqoaTi+u7Yr3ZBPEHbcpCOwBhiCNC0bGQRMBGH8+EJmFlfAQaxoBQthp5wYg
+ nEeYNS0axWt9HVfVLOoof6PDvi7OgXx0rHJ6nDUxnPg7bGbJq4EUNdqNk/NthOYgHnMkdneYzpu
+ o8hTX3zxUgiy8O4kPk//HW5TxQzAHtav+K8s5alG2OESMBH21rg/oCrE37rDrbCebjsUAgauqph
+ kBxceARhQ2PI9EeUL/yDT+Pp7qUc3EDmmezqq3xtggULfHznKhJbj8xqwNwMqOZNSa3/dO4c/PV
+ u+CmK1yzY1twsKLYxB9Ua0j2nmAPl2IFwCP235h/uKNUTXai5/pHfjTGfiRRKngLuTcXwGa2s7i
+ c7DVPZJ81fjepfqRb2mc=
+X-Google-Smtp-Source: AGHT+IG5Uu18R7gtEbdCUyyfi4OwVs1UoH5yrEYlVCbcOPE0G54/zehGCGBbYWCb167Xh5KEuXI/sw==
+X-Received: by 2002:a17:903:228f:b0:215:8d49:e2a7 with SMTP id
+ d9443c01a7336-22649cbf86cmr9590845ad.50.1742348487007; 
+ Tue, 18 Mar 2025 18:41:27 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-225c6bbfe22sm102245005ad.206.2025.03.18.18.41.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Mar 2025 18:41:26 -0700 (PDT)
+Message-ID: <16c05b26-ab38-4834-b2bf-c8e30798baed@linaro.org>
+Date: Tue, 18 Mar 2025 18:41:25 -0700
 MIME-Version: 1.0
-References: <20250312192215.318565-1-paolo.savini@embecosm.com>
-In-Reply-To: <20250312192215.318565-1-paolo.savini@embecosm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 19 Mar 2025 11:39:33 +1000
-X-Gm-Features: AQ5f1JrLOGsxraeKqxNhm_9SlBLjTG4AXSlRAxM93pw5Gkh31fNTpl4WJHSUzgU
-Message-ID: <CAKmqyKNTnPfbZzZd=iC9hAtJvGDrJRABsd1FD-z1xDaxq64LkA@mail.gmail.com>
-Subject: Re: [PATCH 0/1 v3] [RISC-V/RVV] optimize the memory probing for
- vector fault-only-first loads.
-To: Paolo Savini <paolo.savini@embecosm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, 
- Nathan Egge <negge@google.com>, Max Chou <max.chou@sifive.com>, 
- Jeremy Bennett <jeremy.bennett@embecosm.com>, 
- Craig Blackmore <craig.blackmore@embecosm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 38/42] include/exec: Protect icount_enabled from
+ poisoned symbols
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20250318213209.2579218-1-richard.henderson@linaro.org>
+ <20250318213209.2579218-39-richard.henderson@linaro.org>
+ <81230881-d918-4cf7-bf35-03e54e5e88d8@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <81230881-d918-4cf7-bf35-03e54e5e88d8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,46 +106,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 13, 2025 at 5:23=E2=80=AFAM Paolo Savini <paolo.savini@embecosm=
-.com> wrote:
->
-> Adding reviewer information to the patch and rebasing on top of master.
->
-> Previous versions:
->
-> - v1: https://lore.kernel.org/all/20250129144435.82451-1-paolo.savini@emb=
-ecosm.com/
-> - v2: https://lore.kernel.org/all/20250221155320.59159-1-paolo.savini@emb=
-ecosm.com/
+On 3/18/25 17:42, Pierrick Bouvier wrote:
+> On 3/18/25 14:32, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/exec/icount.h | 10 +++++++++-
+>>   1 file changed, 9 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/exec/icount.h b/include/exec/icount.h
+>> index 4964987ae4..7a26b40084 100644
+>> --- a/include/exec/icount.h
+>> +++ b/include/exec/icount.h
+>> @@ -22,13 +22,21 @@ typedef enum {
+>>       ICOUNT_ADAPTATIVE,
+>>   } ICountMode;
+>> -#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>> +#ifdef CONFIG_TCG
+>>   extern ICountMode use_icount;
+>>   #define icount_enabled() (use_icount)
+>>   #else
+>>   #define icount_enabled() ICOUNT_DISABLED
+>>   #endif
+>> +/* Protect the CONFIG_USER_ONLY test vs poisoning. */
+>> +#if defined(COMPILING_PER_TARGET) || defined(COMPILING_SYSTEM_VS_USER)
+>> +# ifdef CONFIG_USER_ONLY
+>> +#  undef  icount_enabled
+>> +#  define icount_enabled() ICOUNT_DISABLED
+>> +# endif
+>> +#endif
+>> +
+>>   /*
+>>    * Update the icount with the executed instructions. Called by
+>>    * cpus-tcg vCPU thread so the main-loop can see time has moved forward.
+> 
+> I understand the shortcut taken here, but I'm not sure we want to start having specifics 
+> for COMPILING_SYSTEM_VS_USER, out of the poison file.
+> 
+> In this case, we can change icount_enabled() to a function, implement it in accel/tcg/ 
+> icount-common.c (which is system only), and add a stub for user mode in accel/tcg/icount- 
+> user.c (or common-user/icount.c), returning ICOUNT_DISABLED, or 0, more simply.
 
-This is already in the RISC-V tree, you don't need to resend it
+(1) If I were to do anything it would not be adding a function, but
+     making use_icount a universal variable.
 
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+(2) There are a few uses where if (!icount_enabled()) needs to
+     evaluate to false for user-mode, so that dead code elimination happens.
+     Otherwise we then have to introduce extra stubs, etc, etc, etc.
 
-Alistair
 
->
-> Cc: Richard Handerson <richard.henderson@linaro.org>
-> Cc: Palmer Dabbelt <palmer@dabbelt.com>
-> Cc: Alistair Francis <alistair.francis@wdc.com>
-> Cc: Bin Meng <bmeng.cn@gmail.com>
-> Cc: Weiwei Li <liwei1518@gmail.com>
-> Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Cc: Helene Chelin <helene.chelin@embecosm.com>
-> Cc: Nathan Egge <negge@google.com>
-> Cc: Max Chou <max.chou@sifive.com>
-> Cc: Jeremy Bennett <jeremy.bennett@embecosm.com>
-> Cc: Craig Blackmore <craig.blackmore@embecosm.com>
->
-> Paolo Savini (1):
->   target/riscv: optimize the memory probing for vector fault-only-first
->     loads.
->
->  target/riscv/vector_helper.c | 103 ++++++++++++++++++++---------------
->  1 file changed, 58 insertions(+), 45 deletions(-)
->
-> --
-> 2.34.1
->
+r~
 
