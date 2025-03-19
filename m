@@ -4,97 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00714C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF24C35FFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:53:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuyTq-0007Ew-C9; Wed, 19 Mar 2025 14:49:30 -0400
+	id 1tuyXU-0008NM-Oc; Wed, 19 Mar 2025 14:53:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuyTo-0007Ed-Tk
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:49:28 -0400
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1tuyTm-0007na-Nh
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:49:28 -0400
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-46fcbb96ba9so403911cf.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742410166; x=1743014966; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=8vjIRVfqJ2k7Fi207AjW2JPxOJvBgu46Cytq1enZvR4=;
- b=AvTC5S97YxRoKWfHq6Z5JuOWpoir+8j9GS5KUHOr4PrY9esLvwyzNtnTO5IUO08tOn
- wLkls+e+qa3m8bD2IyBkbJyVNS+pOmTokMcfOGl/KeMYYwhAw4pTpCrzph6uIRvpZ7/a
- /Rf1l+gU7eScuX0SCq29XpNZvH47pPhW/NkDblkP4W4uQBXCDCioHjQO/Q4blap7maRB
- kVXzTBPsE5qWOPOtrRfQ2kxqiQbbn1YwOqbSTOyPI2AnW0tDE7yu8to1fSzKyrk3LSnw
- QeKr4h4skWPIMdAfl1LIAy5Qs8CaSca1ZUPDIh+4tfv2Uvyk9vX2Lk8D9tQ2wLqFeoyb
- IvoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742410166; x=1743014966;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8vjIRVfqJ2k7Fi207AjW2JPxOJvBgu46Cytq1enZvR4=;
- b=QqqJgcZrfRX5haxQ9pm5isIbV9/Kff6J6uW/ns457voxfmSVDqZ2JQVQbI3R9MIkUp
- hkcg8E4DjzFsoCv3C8Z/EHZ/VLh1WGaqZR+VXRfQ8Aq/p+YOvSPENvyjiPTf8tE7NA4z
- LbIvrLUXG7IhOiu7vb6OnDANmPD88E/TGdM5LpCvYfqX8avzuyleYaswPupECmjAwhgl
- SsyOQWEBROVg8gOgtDF3sjLhEXVh59owcnv0BvLi1T1UGeFxAlLEZvBzzbo2cL+aUG28
- 9K3VPkTjObX6QZaYeX/91QahK1IsjuJCVLy+9L0B8XPKU2VWj/DgTAYasgGNHiwLPkLU
- 837g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUaww+iYSaJvVDfDr6Abbj0H341SUZRx4oV7ef5b3JrebyAKIjlfnliXUck7BIgBPdFZIr2qw6igRE8@nongnu.org
-X-Gm-Message-State: AOJu0Yz3sTEezNRkr+GoqypiPKt5++wrorNHeyzhUp+OtG7Yc/hQkUvc
- O7Wgpa1LM+3kiGlLMbLvkw3NiuNymOW50xq0N9Khy3QRelA6UEVU
-X-Gm-Gg: ASbGncuIaKpaNPBm6/Iw/KAi0z5papwq0glWGUbElUACQIvc5PfMQb09Jpyb8IOO7Vs
- EKgjeCa55N1DO+8e/t67YeMo10JWpFGFLY7SjBIwI6YTGGnK9W5BHMSb9ayoAjP7N6vqIedB5F/
- aV7HxbFUcJVI335lmL4xr/S6stqwDNpu/KifERS0lB0A3YMhvhT4GDHe0Sw0RAs2H/AOQOJBoE9
- mLZT13+NiMH8Gu5w4oqxeAL3feKbD43pRB/HjVi7n2AF0NYZ9qr0OAjdiXT7F5/K9N7rt9dlApR
- TVvu0ZSnjf7/9egEzi+DX1PbEfGVrIuuuOFNsvj1xogWCuN8L/8faUMCN7F2yMvWQWzigs9m
-X-Google-Smtp-Source: AGHT+IE4vNguIcCuWp+n2rQpgUXEczE0EvuPlS/ypMuzntZ0+PDCTebAZdJCY2/MGcoPNdWuo2zsUw==
-X-Received: by 2002:a05:6214:c6a:b0:6d8:850a:4d6a with SMTP id
- 6a1803df08f44-6eb29284aadmr49104926d6.1.1742410165696; 
- Wed, 19 Mar 2025 11:49:25 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:992d:4509:eca7:6f8])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6eade254502sm83477696d6.59.2025.03.19.11.49.24
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 19 Mar 2025 11:49:25 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
-References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-40-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301052845.1012069-40-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 39/39] target/hexagon: Add pcycle setting functionality
-Date: Wed, 19 Mar 2025 13:49:23 -0500
-Message-ID: <02cd01db98ff$a295cb90$e7c162b0$@gmail.com>
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tuyXL-0008Ml-Kq
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:53:09 -0400
+Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tuyXI-0008Nd-Gh
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:53:07 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.108.9.151])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4ZHyWm5XRdzyXZ;
+ Wed, 19 Mar 2025 18:52:52 +0000 (UTC)
+Received: from kaod.org (37.59.142.96) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Wed, 19 Mar
+ 2025 19:52:52 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-96R001613e9932-9758-4b2d-ac7b-7c7014d4023d,
+ F33E89BC3153CD473BC01823D7E7D50DAC700E32) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Wed, 19 Mar 2025 19:52:51 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] 9pfs: fix 'total_open_fd' decrementation
+Message-ID: <20250319195251.10cd431d@bahia>
+In-Reply-To: <1820249.RkjqyYWvsj@silver>
+References: <E1tuqQb-004R61-AZ@kylie.crudebyte.com> <1820249.RkjqyYWvsj@silver>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQKFqcs0svEo52A=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250319-0, 3/18/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x82d.google.com
+X-Originating-IP: [37.59.142.96]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 8e8a671e-217e-47ab-b984-0d268f1aca1c
+X-Ovh-Tracer-Id: 1334191390722857370
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeeiuddtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrleeipdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedvpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhoheegkegmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=iYJiybmu5tEwAOXkYlmcLKHgkdTMoQrYKF6nu9NVoJA=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1742410373; v=1;
+ b=C6MDFeNq3r7xf3xUJ6oyp+gCbm75N6F0YuL9wL27Ja2ZKtDu9iwyZyuayn04R/rsCg6Aj0OT
+ 6x2M/HYRAkAs6zvhbCfXe58V5TvBGavS7UU+mhcLbWGUqi6q5/WsJQUd6sPF1JRkui7zHQ6lrjM
+ Sci3t5lKr8YQNzcM4WdwL3YDQ9uh5zMbptqZqUTX8RzX7d9WouRImWaRbVXyvZvpInV9y4/CwVe
+ R7YzHo38S5S27nP7ucc69sqTp7Lqpb9EWt0diq/KvCS7OYsTvg37+FvRSCVKsQbpDXOdhqgvUFv
+ kXnayts3rTX5cuwR1XkDDG1xZNVOV5dFuaECUPtmLPb6g==
+Received-SPF: pass client-ip=188.165.42.229; envelope-from=groug@kaod.org;
+ helo=4.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,100 +82,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 19 Mar 2025 13:14:27 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Friday, February 28, 2025 11:29 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
-> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com
-> Subject: [PATCH 39/39] target/hexagon: Add pcycle setting functionality
+> On Wednesday, March 19, 2025 11:08:58 AM CET Christian Schoenebeck wrote:
+> > According to 'man 2 close' errors returned by close() should only be used
+> > for either diagnostic purposes or for catching data loss due to a previous
+> > write error, as an error result of close() usually indicates a deferred
+> > error of a previous write operation.
+> > 
+> > Therefore not decrementing 'total_open_fd' on a close() error is wrong
+> > and would yield in a higher open file descriptor count than actually the
+> > case, leading to 9p server reclaiming open file descriptors too soon.
+> > 
+> > Based-on: <20250312152933.383967-7-groug@kaod.org>
+> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > ---
+> >  hw/9pfs/9p.c     | 14 ++++++++------
+> >  hw/9pfs/codir.c  |  3 ++-
+> >  hw/9pfs/cofile.c |  3 ++-
+> >  3 files changed, 12 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> > index b22df3aa2b..f4ca8e4db5 100644
+> > --- a/hw/9pfs/9p.c
+> > +++ b/hw/9pfs/9p.c
+> > @@ -434,7 +434,6 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+> >      V9fsFidState *f;
+> >      GHashTableIter iter;
+> >      gpointer fid;
+> > -    int err;
+> >      int nclosed = 0;
+> >  
+> >      /* prevent multiple coroutines running this function simultaniously */
+> > @@ -507,13 +506,16 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+> >       */
+> >      v9fs_co_run_in_worker({
+> >          QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
+> > -            err = (f->fid_type == P9_FID_DIR) ?
+> > +            /*
+> > +             * 'man 2 close' suggests to ignore close() errors except of EBADF,
+> > +             * not checking for EBADF here either as FIDs were picked above by
+> > +             * having a valid file descriptor
+> > +             */
+> > +            (f->fid_type == P9_FID_DIR) ?
+> >                  s->ops->closedir(&s->ctx, &f->fs_reclaim) :
+> >                  s->ops->close(&s->ctx, &f->fs_reclaim);
+> > -            if (!err) {
+> > -                /* total_open_fd must only be mutated on main thread */
+> > -                nclosed++;
+> > -            }
+> > +            /* total_open_fd must only be mutated on main thread */
+> > +            nclosed++;
+> >          }
+> >      });
+> >      total_open_fd -= nclosed;
+> > diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+> > index 2068a4779d..f1fd97c8a7 100644
+> > --- a/hw/9pfs/codir.c
+> > +++ b/hw/9pfs/codir.c
+> > @@ -353,7 +353,8 @@ int coroutine_fn v9fs_co_closedir(V9fsPDU *pdu, V9fsFidOpenState *fs)
+> >                  err = -errno;
+> >              }
+> >          });
+> > -    if (!err) {
+> > +    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
+> > +    if (!err || errno != EBADF) {
+> >          total_open_fd--;
+> >      }
+> >      return err;
 > 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> ---
->  target/hexagon/cpu.c        | 10 +++++++---
->  target/hexagon/cpu_helper.c | 17 ++++++++++++++---
->  2 files changed, 21 insertions(+), 6 deletions(-)
+> Or, as EBADF is somewhat unexpected here (assuming v9fs_co_closedir() was
+> called by checking for a valid file handle), maybe it would make sense to log
+> this?
 > 
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
-> 80f5e23794..4ca6add834 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -440,19 +440,23 @@ static void hexagon_cpu_realize(DeviceState *dev,
-> Error **errp)  #endif
+
+Getting EBADF could be the result of some unrelated code that closed
+the fd from another thread or the 9p code using some stale fid structure
+or some other serious bug. I'd personally g_assert().
+
+>     if (unlikely(err && errno == EBADF)) {
+>         error_report("v9fs_co_closedir() failed with EBADF");  
+>     } else {
+>         total_open_fd--;
+>     }
 > 
->      qemu_init_vcpu(cs);
-> -#ifndef CONFIG_USER_ONLY
->      CPUHexagonState *env = cpu_env(cs);
-> +#ifndef CONFIG_USER_ONLY
->      hex_mmu_realize(env);
->      if (cs->cpu_index == 0) {
->          env->g_sreg = g_new0(target_ulong, NUM_SREGS);
-> -        env->g_pcycle_base = g_malloc0(sizeof(*env->g_pcycle_base));
->      } else {
->          CPUState *cpu0 = qemu_get_cpu(0);
->          CPUHexagonState *env0 = cpu_env(cpu0);
->          env->g_sreg = env0->g_sreg;
-> -        env->g_pcycle_base = env0->g_pcycle_base;
->      }
->  #endif
-> +    if (cs->cpu_index == 0) {
-> +        env->g_pcycle_base = g_malloc0(sizeof(*env->g_pcycle_base));
-
-Another shared resource ...
-
-> +    } else {
-> +        CPUState *cpu0 = qemu_get_cpu(0);
-> +        env->g_pcycle_base = cpu_env(cpu0)->g_pcycle_base;
-> +    }
+> In the sense, if EBADF happens here, it's an indication for a bug in 9p
+> server.
 > 
->      mcc->parent_realize(dev, errp);
->  }
-> diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
-> index 9c44cb7950..08c749e9fa 100644
-> --- a/target/hexagon/cpu_helper.c
-> +++ b/target/hexagon/cpu_helper.c
-> @@ -70,18 +70,29 @@ uint32_t
-> hexagon_get_sys_pcycle_count_low(CPUHexagonState *env)  void
-> hexagon_set_sys_pcycle_count_high(CPUHexagonState *env,
->          uint32_t cycles_hi)
->  {
-> -    g_assert_not_reached();
-> +    uint64_t cur_cycles = hexagon_get_sys_pcycle_count(env);
-> +    uint64_t cycles =
-> +        ((uint64_t)cycles_hi << 32) | extract64(cur_cycles, 0, 32);
-> +    hexagon_set_sys_pcycle_count(env, cycles);
->  }
+> > diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
+> > index 71174c3e4a..1e9f6da42a 100644
+> > --- a/hw/9pfs/cofile.c
+> > +++ b/hw/9pfs/cofile.c
+> > @@ -197,7 +197,8 @@ int coroutine_fn v9fs_co_close(V9fsPDU *pdu, V9fsFidOpenState *fs)
+> >                  err = -errno;
+> >              }
+> >          });
+> > -    if (!err) {
+> > +    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
+> > +    if (!err || errno != EBADF) {
+> >          total_open_fd--;
+> >      }
+> >      return err;
 > 
->  void hexagon_set_sys_pcycle_count_low(CPUHexagonState *env,
->          uint32_t cycles_lo)
->  {
-> -    g_assert_not_reached();
-> +    uint64_t cur_cycles = hexagon_get_sys_pcycle_count(env);
-> +    uint64_t cycles = extract64(cur_cycles, 32, 32) | cycles_lo;
-> +    hexagon_set_sys_pcycle_count(env, cycles);
->  }
+> Same here then.
 > 
->  void hexagon_set_sys_pcycle_count(CPUHexagonState *env, uint64_t
-> cycles)  {
-> -    g_assert_not_reached();
+> /Christian
+> 
+> 
 
-Do we need a lock here?
-
-> +    *(env->g_pcycle_base) = cycles;
-> +
-> +    CPUState *cs;
-> +    CPU_FOREACH(cs) {
-> +        CPUHexagonState *env_ = cpu_env(cs);
-
-This underscore is easy to miss.  Just
-    cpu_env(cs)->t_cycle_count = 0;
-
-
-
+-- 
+Greg
 
