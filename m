@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12C5C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8529C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuy50-0000wo-Mv; Wed, 19 Mar 2025 14:23:53 -0400
+	id 1tuy4N-0000Gv-2Y; Wed, 19 Mar 2025 14:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4N-0000Il-Qs
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:11 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1tuy4F-0008V3-0r
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:03 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4F-0006P5-EH
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:11 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cf034d4abso52117185e9.3
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:23:02 -0700 (PDT)
+ id 1tuy4B-0006MT-GM
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:02 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3997205e43eso1331747f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742408582; x=1743013382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742408577; x=1743013377; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QJ83uXoZhI6xrj/GFa6jaX+FdXqwSbl+PFyWsW6Q49c=;
- b=SBBtDHfnHBUgCAW65l8bC4JXayScaO41zq06oW8USRmH3gsE+M9+Ls8K9X+nsNH49+
- 1O912l2uxXglXW0W39UZ33LbF7+Zw7SYWhOOj5Q4qLgI02fukFnIAF507OORDuV2Y8Yr
- kyF14RjnqK0/lEDJkUO1m//0TsHrAjD5Ym2dGYdiHMZEufeXBe2E0GrZPVcO/9sUrfD2
- rzK453D1PHtEEIvsr60FmsIOPakQPEqsiGOF1d1cdb2Hwq+bfjUOX9HcctX1KF8yG7za
- Fa5xfl0VbfLkAj8YPtd0qGHqkoIY/nFf9hbNRrNULVISWdXAojE7+3H9HB3qA+bBCJV0
- ipeQ==
+ bh=NDUb7w8GKKpDywt4UPFksGcZt0JQXrqn/MAMj7YlIms=;
+ b=yQ8JpidZIIZxZf8nSYJI3GvCoz3wJsyF6ww/heRXiMCHBlKOP2WA6uZq6sO5PIGmGG
+ En7zsMOR+kMJoXQTHTqOlp9H1Jrmf2UuOg712L+2OuKzMdL4P2vBOZSmB469b2wIGigK
+ etZpYH+R5ozM7OT4hyLlMvG+2Lkt4gnKir9YMXomyYy1UZQDgB6BTX6sAU/vco9ydGSu
+ T+CyMjs/D7oJsEXjEd6RpCHLc7Ngno6eoB6oJV8jOEd3LXimlOfJGcRHd0PJqQOaJvv0
+ JDf6CQd6N6hqdShdeOcPwvjpJH9XBzqLdIEVwNyDuLrMsk8jTadfBDqDYyNXMZS3ePTr
+ UhcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742408582; x=1743013382;
+ d=1e100.net; s=20230601; t=1742408577; x=1743013377;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QJ83uXoZhI6xrj/GFa6jaX+FdXqwSbl+PFyWsW6Q49c=;
- b=uovUqBXEUUOFr2/RJQp857yiEicdJUjTRl6K//bx3JDKF4ZdCymp23WYEbcRVVpLvs
- svJc0JIieW7ILgGcUNqrh8gbXU5TW7L6nAuK0lbtEIoCYso1oPBPfFLzqS2smUBEpHRE
- BNJYuuUZMH4VV6w2Sj+tZKHOx2KYkB7OS4SVxy+MTCce8vc4V9ID6U8UuF3axj/iccx9
- qQMLIrCKOB5qZktkTTYr139q22am7hBkegXlBZBQMIDZJlDOh5pa/y344IWsX5koY4P+
- GcmAFK9REiFTI+LY65JOyPTSl2ZxkfmHFL8VULsmJauB32mq9WQ6K9V9FIaPa8JcD+7t
- m8tA==
-X-Gm-Message-State: AOJu0YyPNw05J3ZA1JmvUO/EF90VC/eTgOSB6LInVUKUdVyL0+yJ5QgC
- wkbpzXFMaI77h3ZwjpOStTYYobSM/d/7gbaF8Ka43xXbjT5diAL646LdjvZTj4s=
-X-Gm-Gg: ASbGncv7kiQfrL7DTwXwO47Bmu4vWp8adhO/hQCi64VbpQc3v+VHsq8oIj9u6jBkNtA
- aXrwij5eL7WlCJneHm8VSfJTp7xgTFdsHL3GZ88KiDsIDVVmK5FD7N01nCPHuHReblrVgzIoIwq
- KXgs89jrHDWEyXfbYK1mwP9CTRBQ1qkeK4KKpWlllBArTuuvIKOsLYD7kn0MvzKdxzolDBBvZhY
- Xn9LYTVDsF+VznFRCF84Pl5OUjEB3EfAKihO/cPUWBsBPwdwTbyC1+stGAapH+xm3pxdUW5X3zW
- QiYh2NJU05k1HO0IbHR/XsMiXEXtfwVi/lZ8OwEJ0w7gAlo=
-X-Google-Smtp-Source: AGHT+IHCXoxgAWOy4Rm1AajpPx+hsUvXObOFncd3EukhGfK1fHOKOMY3YnlS2UH3CGqXRhK1UsQG/g==
-X-Received: by 2002:a05:600c:358c:b0:43d:7a:471f with SMTP id
- 5b1f17b1804b1-43d437c1881mr37941765e9.18.1742408581639; 
- Wed, 19 Mar 2025 11:23:01 -0700 (PDT)
+ bh=NDUb7w8GKKpDywt4UPFksGcZt0JQXrqn/MAMj7YlIms=;
+ b=tr2eEcBLkH+aUMTdrrkO4WdQ/MN1L7UYNWS8DZflPZ3H8xjD2HvHhAd5AobPPnrFIw
+ IjxMQecl5pgVHtadiFcdJc3D9AucgUNBwUUWqJj8AUfCfL8Xd3K1S5heQGyc5et7hNob
+ xurWhnoq+JI4dwZAj4urXzVxCI29h7GXvp3PGm+S8l7kxnwkEoh7LWDuvw+7ainUEWaI
+ ulyVfShOvGLbl02Fx/QkU5zh63AkS7xz235s+mEPy9f2/BPXOEX7tLXT58CxIjD1rKYW
+ hP4pyF4dUumq5vydocRCuRAp4J7o7x7d/nwBBQN5xoLbnlSJMuPN0oVKZHjV1TtorH2P
+ KQsw==
+X-Gm-Message-State: AOJu0Yxo4PqDvjyMhUYBDfBSevOo6NFEZssy2FdM8K4d+EmZ9vPbbTAP
+ T/FKikQziqhxZ9nQWNYaA42W235aA4LGftKR/q/MfU6QUivyZPK/01XyI+aDY6Y=
+X-Gm-Gg: ASbGncsAChtTa+7qeOsIlN3CdF6NnC/CTt+xkMmcMbfCmEAeMGp4TXagxRziYgXcuxM
+ pKst44Z0LOccPeqY8lwsKFgSfvtb1cAAx2qKZ7LS9rVmDdYyJDU3KtwvjBg5IA4zfSyViz0Hyr9
+ 2+c5a+oydIDrd8p6qlPiUhQ7q2XowyrCPl5E9rQ2MTtD1B4WoxC2fX+sO86szyKz+qTWBqHViTI
+ yr9QXP6uSm0uRDLT8GUseL1h2TsBOMiYAQmmM8LJ2CT8ATlXxF9iPxnJJITofdXq9yXU8JTGN8b
+ oGU2bUzXNCP0gvmNq2CKokgOtpQWMLvjWNWXU67IVkFE6zE=
+X-Google-Smtp-Source: AGHT+IF8ov831vSEErLM+GNa70tGIkWTOO4IfBYBqQH3lC1weVVD9w6iBzholBos1ABfwh1o3q9Cow==
+X-Received: by 2002:a05:6000:1787:b0:390:de33:b0ef with SMTP id
+ ffacd0b85a97d-399739d3dbcmr2798743f8f.30.1742408576770; 
+ Wed, 19 Mar 2025 11:22:56 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d4453227dsm25979735e9.40.2025.03.19.11.22.58
+ ffacd0b85a97d-395c83b6a27sm21877226f8f.31.2025.03.19.11.22.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 11:22:58 -0700 (PDT)
+ Wed, 19 Mar 2025 11:22:56 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 220CA6046F;
- Wed, 19 Mar 2025 18:22:56 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 4D41E5F954;
+ Wed, 19 Mar 2025 18:22:55 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -84,24 +84,24 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH 10/10] target/microblaze: convert gdbstub to new helper
-Date: Wed, 19 Mar 2025 18:22:55 +0000
-Message-Id: <20250319182255.3096731-11-alex.bennee@linaro.org>
+Subject: [PATCH 01/10] include/gdbstub: fix include guard in commands.h
+Date: Wed, 19 Mar 2025 18:22:46 +0000
+Message-Id: <20250319182255.3096731-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250319182255.3096731-1-alex.bennee@linaro.org>
 References: <20250319182255.3096731-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,106 +117,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a pretty simple conversion which will be trivial to update
-once TARGET_BIGENDIAN is replaced with a helper function.
-
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/microblaze/gdbstub.c | 44 ++++++++++++++-----------------------
- 1 file changed, 17 insertions(+), 27 deletions(-)
+ include/gdbstub/commands.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/microblaze/gdbstub.c b/target/microblaze/gdbstub.c
-index d493681d38..106d6efbab 100644
---- a/target/microblaze/gdbstub.c
-+++ b/target/microblaze/gdbstub.c
-@@ -19,7 +19,7 @@
-  */
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "gdbstub/helpers.h"
-+#include "gdbstub/registers.h"
+diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
+index 40f0514fe9..bff3674872 100644
+--- a/include/gdbstub/commands.h
++++ b/include/gdbstub/commands.h
+@@ -1,5 +1,5 @@
+ #ifndef GDBSTUB_COMMANDS_H
+-#define GDBSTUB
++#define GDBSTUB_COMMANDS_H
  
- /*
-  * GDB expects SREGs in the following order:
-@@ -50,62 +50,52 @@ int mb_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
-     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-     CPUMBState *env = &cpu->env;
--    uint32_t val;
-+    MemOp mo = TARGET_BIG_ENDIAN ? MO_BEUL : MO_LEUL;
+ typedef void (*GdbCmdHandler)(GArray *params, void *user_ctx);
  
-     switch (n) {
-     case 1 ... 31:
--        val = env->regs[n];
--        break;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->regs[n]);
-     case GDB_PC:
--        val = env->pc;
--        break;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->pc);
-     case GDB_MSR:
--        val = mb_cpu_read_msr(env);
--        break;
-+        uint32_t msr = mb_cpu_read_msr(env);
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &msr);
-     case GDB_EAR:
--        val = env->ear;
--        break;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->ear);
-     case GDB_ESR:
--        val = env->esr;
--        break;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->esr);
-     case GDB_FSR:
--        val = env->fsr;
--        break;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->fsr);
-     case GDB_BTR:
--        val = env->btr;
--        break;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->btr);
-     case GDB_PVR0 ... GDB_PVR11:
-         /* PVR12 is intentionally skipped */
--        val = cpu->cfg.pvr_regs[n - GDB_PVR0];
--        break;
-+        return gdb_get_register_value(mo, mem_buf,
-+                                      (uint8_t *) &cpu->cfg.pvr_regs[n - GDB_PVR0]);
-     case GDB_EDR:
--        val = env->edr;
--        break;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->edr);
-     default:
-         /* Other SRegs aren't modeled, so report a value of 0 */
--        val = 0;
--        break;
-+        return 0;
-     }
--    return gdb_get_reg32(mem_buf, val);
- }
- 
- int mb_cpu_gdb_read_stack_protect(CPUState *cs, GByteArray *mem_buf, int n)
- {
-     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-     CPUMBState *env = &cpu->env;
--    uint32_t val;
-+    MemOp mo = TARGET_BIG_ENDIAN ? MO_BEUL : MO_LEUL;
- 
-     switch (n) {
-     case GDB_SP_SHL:
--        val = env->slr;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->slr);
-         break;
-     case GDB_SP_SHR:
--        val = env->shr;
-+        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->shr);
-         break;
-     default:
-         return 0;
-     }
--    return gdb_get_reg32(mem_buf, val);
- }
- 
- int mb_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
 -- 
 2.39.5
 
