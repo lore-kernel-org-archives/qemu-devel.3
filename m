@@ -4,117 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B227CC35FFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439A5C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuy3Q-00088C-Ty; Wed, 19 Mar 2025 14:22:13 -0400
+	id 1tuy4K-0000Be-4l; Wed, 19 Mar 2025 14:23:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tuy3M-00086e-2S
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:22:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tuy3J-0006JK-UG
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:22:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742408523;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=okPMf6cCHQbe28vUxCLh9bHn7x3G8lNwSs6TkpJtphc=;
- b=IgHLO7An80TyO85J8PbddyMfkj4gyl9oXkxvEZEcYMDAvEgNr0ebuhrQqZphXDDGMdebwr
- bVBOFjr0FXKcL9SAJIdHhKVNu+imwLuKknYELnFTqt+tN5Vrh2pmYoSJa1lJm6wZ5AG188
- ocbc5+28KE5Pcq6JzjoJ86kQkuVG7kw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-393-9aTRnCjGPm6M8ZSRWJloHA-1; Wed, 19 Mar 2025 14:22:01 -0400
-X-MC-Unique: 9aTRnCjGPm6M8ZSRWJloHA-1
-X-Mimecast-MFC-AGG-ID: 9aTRnCjGPm6M8ZSRWJloHA_1742408520
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912e4e2033so2867401f8f.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:22:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tuy4E-0008Uq-U3
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:03 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tuy4B-0006Mg-9V
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:02 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43d04dc73b7so49877005e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742408578; x=1743013378; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xItThavxbz79L7NOidpyzs2tzBWqOmj6JZGfASxb4os=;
+ b=SscHJqBTBFWXdkeJwyb7PRP4rUqBd6duBxNtZQpSAT20TqQa4bRUCeJG7lliHPeYo9
+ J0kq8FU9jV0zPAg7GrqlqDGfiKnN69bh0db5772F2Noeb0JckM9sHHWE57sa69JyOdg7
+ EmMo3aDdliIyiXfxgIn6fdlOEtAepuZFKdJJlhKUNS1ayJ/PSfBZHV2k7DsUe1kBZ03q
+ xzARHUJoOK9kDg7cv2YA0E6eVnpWH9xAB4NBFz52NEINHU+dsTP/Rgf0lf1XHlVW8yX0
+ uLZLAoa92pXn05sx7rz0PGeDmS9YUlydBGEz36Pjd84DgO998xxTsyZNPNf6jdch3CYD
+ LHzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742408520; x=1743013320;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1742408578; x=1743013378;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=okPMf6cCHQbe28vUxCLh9bHn7x3G8lNwSs6TkpJtphc=;
- b=owU375M8tZNeIAPbCB6wvoeGmBK4OF88ePkEH6cC9F9B3CNGtZmgBXpLDZbsqgCYWw
- WpVPhMZyGtwuhuDxZodgWe9oCJqSaPqEd6yW3m60/EWqhvE3gpG2R04DcpdmKmXZnQRw
- TzJa32L8HRumbjt7RwNoeheLEJvCRR6+BbyuBZMUSld1iR7gZPhTD7cbKf2y2D2Rcih+
- ldcYW/SaWKf9BLGqgdpCTgksBRVad8+spZ8432z7xbyUxXE6SYeZdbIhpdvktsDm/PQL
- euLA+OR5gaDntvxs2mRkeucbsSiOz5KYPZpU6Ia2ih0QVArjoMcjCqxmQFRQlx0o3I/H
- 11Wg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHJqDwF9zokNVVRrUDTJHXOn5xBNGG9LPzlXzESwSoruv1tpW2EqiTvs5gidB4DFOttKV3x0fdjBuO@nongnu.org
-X-Gm-Message-State: AOJu0YyNV6evJTYjF/+wTEADmQMJGe2KoiCyTtb3a8/0gfRyBhVD676c
- Ou96J/8tunl5Rb1JpLx9dIWD7bWSmhYHPVpxOINKGHGokaqd3ueQi3d9WvXYaTr7n6wPyLd+tkD
- AexSqohSZO4qUzsc7OCpWr34CEL+jIFoUvC8x2wtKeIae4hl+bov0
-X-Gm-Gg: ASbGnct5GGfhxFo1ptcIWRz8CI8OuqoOdv/gtLE+b4ke4yp0IqeT/vO09co/z0MAD6R
- p4rSFibL/V3IfckoIV4h7z6Ge3/vKnEhnQ6FxRxyJttVINpjkVjbmpXa7fLGW+HWXZhoDzLayts
- WarbxCMbVu0Ptk7LSfsnzCzdV9NL2w1v6p6eswWQlkkprUQ7h17HBoUx4vwT4Jg+fPNYHvG/gSY
- bSbh9pFm0/P+yq9x9KyVaRuLFdydUYpsMo13B8rNqN7yRVzBRObWTHTtYGyAI1Bz6k3JBbPr2ao
- Xd+PmWcZmwMP9QeY6/9EHceqBEG1y5+2GFyUOtB37Yq4vh89iyZL5mRFAlgMj5s=
-X-Received: by 2002:a05:6000:400b:b0:38d:e401:fd61 with SMTP id
- ffacd0b85a97d-39973b0474cmr2631846f8f.49.1742408520465; 
- Wed, 19 Mar 2025 11:22:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDlWbpZvkb9usbrHbka7b/CabiUmdmrFYJvsv1+jxDLZL541bI/RywrEQgFi4onNy8hmYGTw==
-X-Received: by 2002:a05:6000:400b:b0:38d:e401:fd61 with SMTP id
- ffacd0b85a97d-39973b0474cmr2631828f8f.49.1742408520002; 
- Wed, 19 Mar 2025 11:22:00 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb7ebaa5sm21525608f8f.87.2025.03.19.11.21.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 11:21:59 -0700 (PDT)
-Message-ID: <44ed64f0-8e8b-4a87-9a85-074b9d283bc8@redhat.com>
-Date: Wed, 19 Mar 2025 19:21:57 +0100
+ bh=xItThavxbz79L7NOidpyzs2tzBWqOmj6JZGfASxb4os=;
+ b=G/NLdvYztYdvpaUhXbo0f2xNe4+PDqBiTJEOBmIH9+wq2wY/MAT+QOff2myxc48fAs
+ OaZGaL6hf4YWwSRTa3pdUQqV5IBZzqW1vYkoAG+p3IzX5sTCzb4sLJKf6mm10ApLGQYN
+ uR4vdNiw3sybLHGyu746iSE/3EA4Ed63K/MtWjIDSLkAb0IV+S3K3dvcV0hTBTCCyd8U
+ IuZsS0lMTvMw2YB864B/bZDBTQu3qxevuOrY7My1XJIxU7/JKMJQw5tU2d6Ctxsfy8la
+ a/ZnrYEATW48KDGNa+1n7C9FQINprycMt9XovrWV+wxNfQHym5lryQrVQGlequn35mI4
+ WEmg==
+X-Gm-Message-State: AOJu0YwkvutOnOlkI4mUPOx+qvQyiZaIfmCji3Hf/zl0NgoB3XZZRvO8
+ nm0/x0Qg8Kx0Zod2+2JvWLbaGZZtlhOV7Q2ggvGroX3NLcphm+BIcgWBmx/GXUY=
+X-Gm-Gg: ASbGnctqeH/1c9iusDpMU0gAHlgrL6qQ9oqrVUNugWUYbM1FRDNNkAKdYQzHeXUSIIZ
+ tsIS7qXENTURDZCJ1jbyt7ofbDrbDYEWyiCMobE86bNSq8QWrjAFjyvLyamtZHLfNhbBVt8IOfy
+ u31pOj8oxMnDCIgG2EW2m+ckn0bYmyvEbirmKeYhpK8+jx2r6gG8+W8ryvdHtaGfekFbFwLUYK4
+ GNAGHTFMY/il1eDddUSqxM3BC9pLfJ4N6iSjVe6FG/cjhYH/nY37U4Z0HiYNVqSaFqNm7Ro9Ssz
+ TQr5/9ijKsSVkZkw5/GZ98hpVFNIx5UNeQdT6QQjiHe8LQg=
+X-Google-Smtp-Source: AGHT+IHrirMGLJOsTvn3TyaLhG6Us97Zd0BeQXlzpZv0ZprWPbnGw2yk2OkIryEbStosDw7BQgNApA==
+X-Received: by 2002:a05:600c:1906:b0:43d:2313:7b54 with SMTP id
+ 5b1f17b1804b1-43d4950e273mr1767245e9.3.1742408577496; 
+ Wed, 19 Mar 2025 11:22:57 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d43f32fcdsm26234845e9.7.2025.03.19.11.22.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Mar 2025 11:22:56 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 356E55F93F;
+ Wed, 19 Mar 2025 18:22:55 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ qemu-ppc@nongnu.org, David Gibson <david@gibson.dropbear.id.au>,
+ qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
+ Greg Kurz <groug@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH 00/10] gdbstub: conversion to runtime endianess helpers
+Date: Wed, 19 Mar 2025 18:22:45 +0000
+Message-Id: <20250319182255.3096731-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-pcie bus
-Content-Language: en-US
-To: Donald Dutile <ddutile@redhat.com>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>,
- "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-6-shameerali.kolothum.thodi@huawei.com>
- <b3a4ce7f-41a9-4da9-a8ca-54848b9e9cf1@redhat.com>
- <3d1312b411f04121a3be90879a915982@huawei.com>
- <1c603ab2-4fbb-4838-a544-d88bc2608506@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <1c603ab2-4fbb-4838-a544-d88bc2608506@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,185 +111,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Don,
+The aim of this work is to get rid of the endian aware helpers in
+gdbstub/helpers.h which due to their use of tswap() mean target
+gdbstubs need to be built multiple times. While this series doesn't
+actually build each stub once it introduces a new helper -
+gdb_get_register_value() which takes a MemOp which can describe the
+current endian state of the system. This will be a lot easier to
+dynamically feed from a helper function.
 
+The most complex example is PPC which has a helper called
+ppc_maybe_bswap_register() which was doing this.
 
-On 3/19/25 5:21 PM, Donald Dutile wrote:
->
->
-> On 3/19/25 5:26 AM, Shameerali Kolothum Thodi wrote:
->> Hi Don,
->>
-> Hey!
->
->>> -----Original Message-----
->>> From: Donald Dutile <ddutile@redhat.com>
->>> Sent: Tuesday, March 18, 2025 10:12 PM
->>> To: Shameerali Kolothum Thodi
->>> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
->>> qemu-devel@nongnu.org
->>> Cc: eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
->>> nicolinc@nvidia.com; berrange@redhat.com; nathanc@nvidia.com;
->>> mochs@nvidia.com; smostafa@google.com; Linuxarm
->>> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
->>> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
->>> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
->>> Subject: Re: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-
->>> pcie bus
->>>
->>> Shameer,
->>>
->>> Hi!
->>>
->>> On 3/11/25 10:10 AM, Shameer Kolothum wrote:
->>>> User must associate a pxb-pcie root bus to smmuv3-accel
->>>> and that is set as the primary-bus for the smmu dev.
->>>>
->>>> Signed-off-by: Shameer Kolothum
->>> <shameerali.kolothum.thodi@huawei.com>
->>>> ---
->>>>    hw/arm/smmuv3-accel.c | 19 +++++++++++++++++++
->>>>    1 file changed, 19 insertions(+)
->>>>
->>>> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->>>> index c327661636..1471b65374 100644
->>>> --- a/hw/arm/smmuv3-accel.c
->>>> +++ b/hw/arm/smmuv3-accel.c
->>>> @@ -9,6 +9,21 @@
->>>>    #include "qemu/osdep.h"
->>>>
->>>>    #include "hw/arm/smmuv3-accel.h"
->>>> +#include "hw/pci/pci_bridge.h"
->>>> +
->>>> +static int smmuv3_accel_pxb_pcie_bus(Object *obj, void *opaque)
->>>> +{
->>>> +    DeviceState *d = opaque;
->>>> +
->>>> +    if (object_dynamic_cast(obj, "pxb-pcie-bus")) {
->>>> +        PCIBus *bus = PCI_HOST_BRIDGE(obj->parent)->bus;
->>>> +        if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus-
->>>> name)) {
->>>> +            object_property_set_link(OBJECT(d), "primary-bus",
->>>> OBJECT(bus),
->>>> +                                     &error_abort);
->>>> +        }
->>>> +    }
->>>> +    return 0;
->>>> +}
->>>>
->>>>    static void smmu_accel_realize(DeviceState *d, Error **errp)
->>>>    {
->>>> @@ -17,6 +32,9 @@ static void smmu_accel_realize(DeviceState *d, Error
->>> **errp)
->>>>        SysBusDevice *dev = SYS_BUS_DEVICE(d);
->>>>        Error *local_err = NULL;
->>>>
->>>> +    object_child_foreach_recursive(object_get_root(),
->>>> +                                   smmuv3_accel_pxb_pcie_bus, d);
->>>> +
->>>>        object_property_set_bool(OBJECT(dev), "accel", true,
->>>> &error_abort);
->>>>        c->parent_realize(d, &local_err);
->>>>        if (local_err) {
->>>> @@ -33,6 +51,7 @@ static void smmuv3_accel_class_init(ObjectClass
->>> *klass, void *data)
->>>>        device_class_set_parent_realize(dc, smmu_accel_realize,
->>>>                                        &c->parent_realize);
->>>>        dc->hotpluggable = false;
->>>> +    dc->bus_type = TYPE_PCIE_BUS;
->>>>    }
->>>>
->>>>    static const TypeInfo smmuv3_accel_type_info = {
->>>
->>> I am not seeing the need for a pxb-pcie bus(switch) introduced for each
->>> 'accel'.
->>> Isn't the IORT able to define different SMMUs for different RIDs?  
->>> if so,
->>> itsn't that sufficient
->>> to associate (define) an SMMU<->RID association without introducing a
->>> pxb-pcie?
->>> and again, I'm not sure how that improves/enables the device<->SMMU
->>> associativity?
->>
->> Thanks for taking a look at the series. As discussed elsewhere in
->> this thread(with
->> Eric), normally in physical world (or atleast in the most common
->> cases) SMMUv3
->> is attached to PCIe Root Complex and if you take a look at the IORT
->> spec, it describes
->> association of ID mappings between a RC node and SMMUV3 node.
->>
->> And if my understanding is correct, in Qemu, only pxb-pcie allows you
->> to add
->> extra root complexes even though it is still plugged to
->> parent(pcie.0). ie, for all
->> devices downstream it acts as a root complex but still plugged into a
->> parent pcie.0.
->> This allows us to add/describe multiple "smmuv3-accel" each
->> associated with a RC.
->>
-> I find the qemu statements a bit unclear here as well.
-> I looked at the hot plug statement(s) in docs/pcie.txt, as I figured
-> that's where dynamic
-> IORT changes would be needed as well.  There, it says you can hot-add
-> PCIe devices to RPs,
-> one has to define/add RP's to the machine model for that plug-in.
->
-> Using libvirt, it could auto-add the needed RPs to do dynmaic smmuv3
-> additions,
-I am not sure I understand your statement here. we don't want "dynamic"
-SMMUv3 instantiation. SMMUv3 is a platform device which is supposed to
-be coldplugged on a pre-existing PCIe hierarchy. The SMMUv3 device is
-not something that is meant to be hotplugged or hotunplugged.
-To me we hijack the bus= property to provide information about the IORT
-IDMAP
+This is still an RFC so I'm interested in feedback:
 
-Thanks
+  - is the API sane
+  - can we avoid lots of (uint8_t *) casting?
+  - should we have a reverse helper for setting registers
 
-Eric
-> if I understand how libvirt does that today for pcie devices now (/me
-> looks at danpb for feedback).
->
->> Having said that,  current code only allows pxb-pcie root complexes
->> avoiding
->> the pcie.0. The idea behind this was, user can use pcie.0 with a non
->> accel SMMUv3
->> for any emulated devices avoiding the performance bottlenecks we are
->> discussing for emulated dev+smmuv3-accel cases. But based on the
->> feedback from
->> Eric and Daniel I will relax that restriction and will allow
->> association with pcie.0.
->>
-> So, I think this isn't a restriction that this smmuv3 feature should
-> enforce;
-> lack of a proper RP or pxb-pcie will yield an invalid config
-> issue/error, and
-> the machine definition will be modified to meet the needs for IORT.
->
->> Thanks,
->> Shameer
->>
->>
->>
->>
->>
->>
->>
->>
->>  
->>>>> to root complexes.
->>> Feel free to enlighten me where I may have mis-read/interpreted the
->>> IORT
->>> & SMMUv3 specs.
->>>
->>> Thanks,
->>> - Don
->>>
->>
->
+If this seems like the right approach I can have a go at more of the
+frontends later.
+
+There are a few other misc clean-ups I did on the way which might be
+worth cherry picking for 10.0 but I'll leave that up to maintainers.
+
+Alex.
+
+Alex Bennée (10):
+  include/gdbstub: fix include guard in commands.h
+  gdbstub: introduce target independent gdb register helper
+  target/arm: convert 32 bit gdbstub to new helper
+  target/arm: convert 64 bit gdbstub to new helper
+  target/ppc: expand comment on FP/VMX/VSX access functions
+  target/ppc: make ppc_maybe_bswap_register static
+  target/ppc: convert gdbstub to new helper (!hacky)
+  gdbstub: assert earlier in handle_read_all_regs
+  include/exec: fix assert in size_memop
+  target/microblaze: convert gdbstub to new helper
+
+ include/exec/memop.h        |   4 +-
+ include/gdbstub/commands.h  |   2 +-
+ include/gdbstub/registers.h |  30 ++++++
+ target/ppc/cpu.h            |   8 +-
+ gdbstub/gdbstub.c           |  24 ++++-
+ target/arm/gdbstub.c        |  57 +++++++----
+ target/arm/gdbstub64.c      |  53 ++++++----
+ target/microblaze/gdbstub.c |  44 ++++----
+ target/ppc/gdbstub.c        | 194 ++++++++++++++++++++----------------
+ 9 files changed, 257 insertions(+), 159 deletions(-)
+ create mode 100644 include/gdbstub/registers.h
+
+-- 
+2.39.5
 
 
