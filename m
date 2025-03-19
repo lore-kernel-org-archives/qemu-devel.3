@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3FAC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F431C36000
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuwPs-0003J7-GE; Wed, 19 Mar 2025 12:37:16 -0400
+	id 1tuwQ8-0003MB-Gj; Wed, 19 Mar 2025 12:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tuwPq-0003IS-Tl
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:37:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tuwQ4-0003Lj-4t
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:37:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1tuwPl-00073s-AP
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:37:14 -0400
+ id 1tuwQ2-00074z-0j
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:37:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742402226;
+ s=mimecast20190719; t=1742402244;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=yZHkmkNAHuohVI34NA/9mV2k28scu5LmStb+lgD1InY=;
- b=EO+HeTb9+wGPBHYJig6J+w2yp/7B7MYagY/N4hAmEv7fDmnvqBk0tpRzXse/5f+Y8QWK4X
- LVn9fAaefbqRN2Ld89rEOQIk1XW91wL7q47f3VHm/PrU1iy2y0c9qnOxm7kUCtvbdmxYK0
- B2y1OrHRYgpmEwTnVu84aoPSNJ1Fcas=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=X2sunzIviv4HaQQb3X0yTUOV4nmX52tcxBKEXC5RH8E=;
+ b=VfOUl6h8fVc+Z5oKWXsCi/6QmM0+Cr228ZqWG2zkAVUIb6rH2/sxrlBRS9WRI92YWCJfuT
+ Fkipvmt6vqHRWzCPWQN1Kud7aR+bHxCGmPP4B2kgQ8nBjazFZ1L7V7nLnyCUS60viskCS7
+ uY8MEIBSIFI58IO3wMEYINNNgztXUE8=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-76Ei0wzRMvyumDVjjEgNRA-1; Wed,
- 19 Mar 2025 12:37:05 -0400
-X-MC-Unique: 76Ei0wzRMvyumDVjjEgNRA-1
-X-Mimecast-MFC-AGG-ID: 76Ei0wzRMvyumDVjjEgNRA_1742402224
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-ATKPov9GN6qD4rdFZRr3vQ-1; Wed,
+ 19 Mar 2025 12:37:23 -0400
+X-MC-Unique: ATKPov9GN6qD4rdFZRr3vQ-1
+X-Mimecast-MFC-AGG-ID: ATKPov9GN6qD4rdFZRr3vQ_1742402242
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C6FD1801A12; Wed, 19 Mar 2025 16:37:04 +0000 (UTC)
+ id 5C671180AF53; Wed, 19 Mar 2025 16:37:22 +0000 (UTC)
 Received: from rh-jmarcin.redhat.com (unknown [10.45.225.145])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3F201955BEE; Wed, 19 Mar 2025 16:37:01 +0000 (UTC)
+ id 4D9781955BEE; Wed, 19 Mar 2025 16:37:19 +0000 (UTC)
 From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 0/2] util/qemu-sockets: Introduce configurable TCP
- keep-alive idle period
-Date: Wed, 19 Mar 2025 17:36:18 +0100
-Message-ID: <20250319163638.456417-1-jmarcin@redhat.com>
+Subject: [PATCH v2 2/2] utils/qemu-sockets: Introduce keep-alive-idle-period
+ inet socket option
+Date: Wed, 19 Mar 2025 17:36:20 +0100
+Message-ID: <20250319163638.456417-3-jmarcin@redhat.com>
+In-Reply-To: <20250319163638.456417-1-jmarcin@redhat.com>
+References: <20250319163638.456417-1-jmarcin@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,41 +86,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series extends the work introduced by commit aec21d3175 ("qapi: Add
-InetSocketAddress member keep-alive") [1]
+From: Juraj Marcin <jmarcin@redhat.com>
 
-First, it allows the use of the keep-alive flag for server-side sockets.
-Then it introduces a new keep-alive-idle-period setting, which changes
-the TCP_KEEPIDLE socket option on platforms that support it (this option
-is found in Linux, BSD, and Win32 documentations).
+The default idle period for TCP connection could be even 2 hours.
+However, in some cases, the application needs to be aware of a
+connection issue much sooner.
 
-By default, the value of keep-alive-idle-period is 0, which means no
-custom socket option value is set.
+This is the case, for example, for postcopy live migration. If there is
+no traffic from the migration destination guest (server-side) to the
+migration source guest (client-side), the destination keeps waiting for
+pages indefinitely and does not switch to the postcopy-paused state.
+This can happen, for example, if the destination QEMU instance is
+started with '-S' command line option and the machine is not started yet
+or if the machine is idle and produces no new page faults for
+not-yet-migrated pages.
 
-This is useful, for example, for live migration. In case there is no
-traffic from the destination to the source machine during postcopy, the
-destination cannot detect a failed connection due to a lack of
-non-acknowledged packets and stays in the postcopy-active state until
-paused by the management of the QEMU instance.
+This patch introduces a new inet socket parameter on platforms where
+TCP_KEEPIDLE is defined and passes the configured value to the
+TCP_KEEPIDLE socket option when a client-side or server-side socket is
+created.
 
-[1]: https://lore.kernel.org/all/20190725094937.32454-1-vsementsov@virtuozzo.com/
+The default value is 0, which means system configuration is used, and no
+custom value is set.
 
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
 ---
-V2:
-- moved socket options setting into a common function for both server
-  and client sockets (suggested by Vladimir)
-
-Juraj Marcin (2):
-  util/qemu-sockets: Add support for keep-alive flag to passive sockets
-  utils/qemu-sockets: Introduce keep-alive-idle-period inet socket
-    option
-
- io/dns-resolver.c   |  6 ++++
+ io/dns-resolver.c   |  4 ++++
  meson.build         |  2 ++
- qapi/sockets.json   |  9 +++--
- util/qemu-sockets.c | 81 ++++++++++++++++++++++++++++++++-------------
- 4 files changed, 73 insertions(+), 25 deletions(-)
+ qapi/sockets.json   |  5 +++++
+ util/qemu-sockets.c | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 40 insertions(+)
 
+diff --git a/io/dns-resolver.c b/io/dns-resolver.c
+index ee7403b65b..03c59673f0 100644
+--- a/io/dns-resolver.c
++++ b/io/dns-resolver.c
+@@ -128,6 +128,10 @@ static int qio_dns_resolver_lookup_sync_inet(QIODNSResolver *resolver,
+ #endif
+             .has_keep_alive = iaddr->has_keep_alive,
+             .keep_alive = iaddr->keep_alive,
++#ifdef HAVE_TCP_KEEPIDLE
++            .has_keep_alive_idle_period = iaddr->has_keep_alive_idle_period,
++            .keep_alive_idle_period = iaddr->keep_alive_idle_period,
++#endif
+         };
+ 
+         (*addrs)[i] = newaddr;
+diff --git a/meson.build b/meson.build
+index 41f68d3806..e3440b09c8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2734,6 +2734,8 @@ if linux_io_uring.found()
+   config_host_data.set('HAVE_IO_URING_PREP_WRITEV2',
+                        cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
+ endif
++config_host_data.set('HAVE_TCP_KEEPIDLE',
++                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPIDLE'))
+ 
+ # has_member
+ config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index eb50f64e3a..ddd82b1e66 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -59,6 +59,10 @@
+ # @keep-alive: enable keep-alive when connecting to/listening on this socket.
+ #     (Since 4.2, not supported for listening sockets until 10.0)
+ #
++# @keep-alive-idle-period: time in seconds the connection needs to be idle
++#     before sending a keepalive packet.  Only supported for TCP sockets on
++#     systems where TCP_KEEPIDLE socket option is defined.  (Since 10.0)
++#
+ # @mptcp: enable multi-path TCP.  (Since 6.1)
+ #
+ # Since: 1.3
+@@ -71,6 +75,7 @@
+     '*ipv4': 'bool',
+     '*ipv6': 'bool',
+     '*keep-alive': 'bool',
++    '*keep-alive-idle-period': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPIDLE' },
+     '*mptcp': { 'type': 'bool', 'if': 'HAVE_IPPROTO_MPTCP' } } }
+ 
+ ##
+diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+index 99357a4435..23c8a6cc2b 100644
+--- a/util/qemu-sockets.c
++++ b/util/qemu-sockets.c
+@@ -217,6 +217,19 @@ static int inet_set_sockopts(int sock, InetSocketAddress *saddr, Error **errp)
+                              "Unable to set keep-alive option on socket");
+             return -1;
+         }
++#ifdef HAVE_TCP_KEEPIDLE
++        if (saddr->has_keep_alive_idle_period &&
++            saddr->keep_alive_idle_period) {
++            int keep_idle = saddr->has_keep_alive_idle_period;
++            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &keep_idle,
++                             sizeof(keep_idle));
++            if (ret < 0) {
++                error_setg_errno(errp, errno,
++                                 "Unable to set TCP keep-alive idle option on socket");
++                return -1;
++            }
++        }
++#endif
+     }
+     return 0;
+ }
+@@ -697,6 +710,22 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
+         }
+         addr->has_keep_alive = true;
+     }
++#ifdef HAVE_TCP_KEEPIDLE
++    begin = strstr(optstr, ",keep-alive-idle-period=");
++    if (begin) {
++        begin += strlen(",keep-alive-idle-period=");
++        if (sscanf(begin, "%" PRIu32 "%n", &addr->keep_alive_idle_period, &pos) != 1 ||
++            (begin[pos] != '\0' && begin[pos] != ',')) {
++            error_setg(errp, "error parsing keep-alive-idle-period argument");
++            return -1;
++        }
++        if (addr->keep_alive_idle_period > INT_MAX) {
++            error_setg(errp, "keep-alive-idle-period value is too large");
++            return -1;
++        }
++        addr->has_keep_alive_idle_period = true;
++    }
++#endif
+ #ifdef HAVE_IPPROTO_MPTCP
+     begin = strstr(optstr, ",mptcp");
+     if (begin) {
 -- 
 2.48.1
 
