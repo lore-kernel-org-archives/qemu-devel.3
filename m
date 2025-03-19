@@ -4,69 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF24C35FFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC25C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 19:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuyXU-0008NM-Oc; Wed, 19 Mar 2025 14:53:16 -0400
+	id 1tuydW-0001Dh-Dv; Wed, 19 Mar 2025 14:59:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tuyXL-0008Ml-Kq
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:53:09 -0400
-Received: from 4.mo548.mail-out.ovh.net ([188.165.42.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tuyXI-0008Nd-Gh
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:53:07 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.108.9.151])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4ZHyWm5XRdzyXZ;
- Wed, 19 Mar 2025 18:52:52 +0000 (UTC)
-Received: from kaod.org (37.59.142.96) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Wed, 19 Mar
- 2025 19:52:52 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-96R001613e9932-9758-4b2d-ac7b-7c7014d4023d,
- F33E89BC3153CD473BC01823D7E7D50DAC700E32) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Wed, 19 Mar 2025 19:52:51 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] 9pfs: fix 'total_open_fd' decrementation
-Message-ID: <20250319195251.10cd431d@bahia>
-In-Reply-To: <1820249.RkjqyYWvsj@silver>
-References: <E1tuqQb-004R61-AZ@kylie.crudebyte.com> <1820249.RkjqyYWvsj@silver>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tuydT-0001D9-GW
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:59:27 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tuydP-0003G4-VX
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:59:27 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-54991d85f99so1209607e87.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:59:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1742410761; x=1743015561;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fHCPlvZKPdE/9xejrtzVoDSTQ6BH+cVINV9nEm2c3+E=;
+ b=u2++i+/isl0vfSnWnws4bbazP6ZfmsMp12UmfOwT2b4fzcs3F/JYJL8rMz8ULa2/8U
+ /AkjpzA7nIWbSo97mp9ZCoEF6+sNK3m3QoF87NGA5kScQxU71j0VvaTvYeB5sNIWVplm
+ vhcLsHBnbSWDJXyCsiPpIe38dIIjcX1U1087hTl0XJFpni4zTm2RQsCK7GwRhT6fRPMr
+ AMijA6peF5X841NMWQR971HtMw3oj1s5kc3b3gElI0apPOYwfksYG+iikl6dLrfz55cp
+ SImpYm363aGVyS+B25umZdHbtqrTxglfXpZa+6PTXJmW/Mi9OYYe13OOKAzg5ZVZ9N/3
+ m2wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742410761; x=1743015561;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fHCPlvZKPdE/9xejrtzVoDSTQ6BH+cVINV9nEm2c3+E=;
+ b=oImiwEQyzhFRC4AXpDniWCjheWapCdlmpBleB50sZphowbtmrvzOiQ8ONS37Mdny7Z
+ 7x+/CVdQNfwpBOeYCnQImZuX54AXEOsyxY+I1utVQjIfsQQbZUu7Cz4L8fVe5Ki2nCgW
+ CfX3/hZRQL8yPlc1rX0m/7/QbukVptBI3YZvX71iO4ef/uUgmOL+1CZ3Ay78hoLQuoBP
+ U+VFi7PjTf2utV10rHnm2Mc8oVCzcpHkMxGJjKCe2JcNObp8mjJA7rVBWMNDE9J5wQ+F
+ mtadz2F657FGV4qMLCkq+xLIZDGlr0umDLdd3XLMaRbUy9sknB/55QPFSE7pJk9bOffw
+ qoLw==
+X-Gm-Message-State: AOJu0YwGcoE1mDL9VM9dLZnVhskEAHrU+/vzJAQ+ARXWZPzN618FzxE9
+ RoC6o2dSztXlqCWa6w39mw3q2DMnTr/MX8MAMMkYTnppUZY6b6Gwk6iG96KJsQuMxhtG+Kg9Ob5
+ QPYeo0klcf3UCOwppDwT8EFQFC2/O6Kn5YnB9yw==
+X-Gm-Gg: ASbGnctgM6l4za5jmNpetjYHSeW3yqXaItLtnYvZ0S5Ua2X9tNkqxoj8bWhTAIcYuX3
+ PkNhro86LyW2IfKtR0FJKNUETp7ZvGblVKJa1HljivRUMaHP7dIWFJ5T/jlulpSivd25/SktipB
+ L11s2pNw295SbfvK4lkeJ2EPLHaUu6feohmXM/PQtwKTtFRSU01wAwUA0H
+X-Google-Smtp-Source: AGHT+IGN9aDrOWiM/NdaFjgPweKQmWdwTw4hvVdt7WvTjMxgiBjydi3nowf3J3E6RHMe6LrB6oFRLp+1aV+nWbhOx/Y=
+X-Received: by 2002:a05:6512:3e17:b0:549:4cb0:4d74 with SMTP id
+ 2adb3069b0e04-54acfa9429amr229517e87.8.1742410760512; Wed, 19 Mar 2025
+ 11:59:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.96]
-X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 8e8a671e-217e-47ab-b984-0d268f1aca1c
-X-Ovh-Tracer-Id: 1334191390722857370
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeeiuddtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddrleeipdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedvpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhoheegkegmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=iYJiybmu5tEwAOXkYlmcLKHgkdTMoQrYKF6nu9NVoJA=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1742410373; v=1;
- b=C6MDFeNq3r7xf3xUJ6oyp+gCbm75N6F0YuL9wL27Ja2ZKtDu9iwyZyuayn04R/rsCg6Aj0OT
- 6x2M/HYRAkAs6zvhbCfXe58V5TvBGavS7UU+mhcLbWGUqi6q5/WsJQUd6sPF1JRkui7zHQ6lrjM
- Sci3t5lKr8YQNzcM4WdwL3YDQ9uh5zMbptqZqUTX8RzX7d9WouRImWaRbVXyvZvpInV9y4/CwVe
- R7YzHo38S5S27nP7ucc69sqTp7Lqpb9EWt0diq/KvCS7OYsTvg37+FvRSCVKsQbpDXOdhqgvUFv
- kXnayts3rTX5cuwR1XkDDG1xZNVOV5dFuaECUPtmLPb6g==
-Received-SPF: pass client-ip=188.165.42.229; envelope-from=groug@kaod.org;
- helo=4.mo548.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250319152126.3472290-1-armbru@redhat.com>
+ <20250319152126.3472290-4-armbru@redhat.com>
+In-Reply-To: <20250319152126.3472290-4-armbru@redhat.com>
+From: Corey Minyard <corey@minyard.net>
+Date: Wed, 19 Mar 2025 13:59:09 -0500
+X-Gm-Features: AQ5f1Jr83fTdnSUkP438BPf6qoqG4htEoGOoaMp32-8e5JqzXxBrC0l49SHWO3g
+Message-ID: <CAB9gMfrxe7NWk_1GkudEeWby-ZHaH1xTWD5n7WfK7iz4qKsL6g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] cleanup: Drop pointless label at end of function
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: none client-ip=2a00:1450:4864:20::133;
+ envelope-from=corey@minyard.net; helo=mail-lf1-x133.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,115 +92,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Mar 2025 13:14:27 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+Is this official coding style?  I'm not a big fan of having return
+statements in the middle of functions, I generally only put them at
+the beginning or the end.
 
-> On Wednesday, March 19, 2025 11:08:58 AM CET Christian Schoenebeck wrote:
-> > According to 'man 2 close' errors returned by close() should only be used
-> > for either diagnostic purposes or for catching data loss due to a previous
-> > write error, as an error result of close() usually indicates a deferred
-> > error of a previous write operation.
-> > 
-> > Therefore not decrementing 'total_open_fd' on a close() error is wrong
-> > and would yield in a higher open file descriptor count than actually the
-> > case, leading to 9p server reclaiming open file descriptors too soon.
-> > 
-> > Based-on: <20250312152933.383967-7-groug@kaod.org>
-> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > ---
-> >  hw/9pfs/9p.c     | 14 ++++++++------
-> >  hw/9pfs/codir.c  |  3 ++-
-> >  hw/9pfs/cofile.c |  3 ++-
-> >  3 files changed, 12 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> > index b22df3aa2b..f4ca8e4db5 100644
-> > --- a/hw/9pfs/9p.c
-> > +++ b/hw/9pfs/9p.c
-> > @@ -434,7 +434,6 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-> >      V9fsFidState *f;
-> >      GHashTableIter iter;
-> >      gpointer fid;
-> > -    int err;
-> >      int nclosed = 0;
-> >  
-> >      /* prevent multiple coroutines running this function simultaniously */
-> > @@ -507,13 +506,16 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-> >       */
-> >      v9fs_co_run_in_worker({
-> >          QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
-> > -            err = (f->fid_type == P9_FID_DIR) ?
-> > +            /*
-> > +             * 'man 2 close' suggests to ignore close() errors except of EBADF,
-> > +             * not checking for EBADF here either as FIDs were picked above by
-> > +             * having a valid file descriptor
-> > +             */
-> > +            (f->fid_type == P9_FID_DIR) ?
-> >                  s->ops->closedir(&s->ctx, &f->fs_reclaim) :
-> >                  s->ops->close(&s->ctx, &f->fs_reclaim);
-> > -            if (!err) {
-> > -                /* total_open_fd must only be mutated on main thread */
-> > -                nclosed++;
-> > -            }
-> > +            /* total_open_fd must only be mutated on main thread */
-> > +            nclosed++;
-> >          }
-> >      });
-> >      total_open_fd -= nclosed;
-> > diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
-> > index 2068a4779d..f1fd97c8a7 100644
-> > --- a/hw/9pfs/codir.c
-> > +++ b/hw/9pfs/codir.c
-> > @@ -353,7 +353,8 @@ int coroutine_fn v9fs_co_closedir(V9fsPDU *pdu, V9fsFidOpenState *fs)
-> >                  err = -errno;
-> >              }
-> >          });
-> > -    if (!err) {
-> > +    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
-> > +    if (!err || errno != EBADF) {
-> >          total_open_fd--;
-> >      }
-> >      return err;
-> 
-> Or, as EBADF is somewhat unexpected here (assuming v9fs_co_closedir() was
-> called by checking for a valid file handle), maybe it would make sense to log
-> this?
-> 
+-corey
 
-Getting EBADF could be the result of some unrelated code that closed
-the fd from another thread or the 9p code using some stale fid structure
-or some other serious bug. I'd personally g_assert().
-
->     if (unlikely(err && errno == EBADF)) {
->         error_report("v9fs_co_closedir() failed with EBADF");  
->     } else {
->         total_open_fd--;
->     }
-> 
-> In the sense, if EBADF happens here, it's an indication for a bug in 9p
-> server.
-> 
-> > diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
-> > index 71174c3e4a..1e9f6da42a 100644
-> > --- a/hw/9pfs/cofile.c
-> > +++ b/hw/9pfs/cofile.c
-> > @@ -197,7 +197,8 @@ int coroutine_fn v9fs_co_close(V9fsPDU *pdu, V9fsFidOpenState *fs)
-> >                  err = -errno;
-> >              }
-> >          });
-> > -    if (!err) {
-> > +    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
-> > +    if (!err || errno != EBADF) {
-> >          total_open_fd--;
-> >      }
-> >      return err;
-> 
-> Same here then.
-> 
-> /Christian
-> 
-> 
-
--- 
-Greg
+On Wed, Mar 19, 2025 at 10:26=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  hw/ipmi/ipmi_bmc_extern.c | 4 +---
+>  hw/ipmi/ipmi_bmc_sim.c    | 7 ++-----
+>  hw/ipmi/ipmi_bt.c         | 7 +++----
+>  hw/ipmi/ipmi_kcs.c        | 3 +--
+>  4 files changed, 7 insertions(+), 14 deletions(-)
+>
+> diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
+> index 73b249fb60..ab9b66274d 100644
+> --- a/hw/ipmi/ipmi_bmc_extern.c
+> +++ b/hw/ipmi/ipmi_bmc_extern.c
+> @@ -213,7 +213,7 @@ static void ipmi_bmc_extern_handle_command(IPMIBmc *b=
+,
+>          rsp[2] =3D err;
+>          ibe->waiting_rsp =3D false;
+>          k->handle_rsp(s, msg_id, rsp, 3);
+> -        goto out;
+> +        return;
+>      }
+>
+>      addchar(ibe, msg_id);
+> @@ -228,8 +228,6 @@ static void ipmi_bmc_extern_handle_command(IPMIBmc *b=
+,
+>
+>      /* Start the transmit */
+>      continue_send(ibe);
+> -
+> - out:
+>  }
+>
+>  static void handle_hw_op(IPMIBmcExtern *ibe, unsigned char hw_op)
+> diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+> index faec6fefb3..f4336946ce 100644
+> --- a/hw/ipmi/ipmi_bmc_sim.c
+> +++ b/hw/ipmi/ipmi_bmc_sim.c
+> @@ -463,13 +463,12 @@ void ipmi_bmc_gen_event(IPMIBmc *b, uint8_t *evt, b=
+ool log)
+>      }
+>
+>      if (ibs->msg_flags & IPMI_BMC_MSG_FLAG_EVT_BUF_FULL) {
+> -        goto out;
+> +        return;
+>      }
+>
+>      memcpy(ibs->evtbuf, evt, 16);
+>      ibs->msg_flags |=3D IPMI_BMC_MSG_FLAG_EVT_BUF_FULL;
+>      k->set_atn(s, 1, attn_irq_enabled(ibs));
+> - out:
+>  }
+>  static void gen_event(IPMIBmcSim *ibs, unsigned int sens_num, uint8_t de=
+assert,
+>                        uint8_t evd1, uint8_t evd2, uint8_t evd3)
+> @@ -979,7 +978,7 @@ static void get_msg(IPMIBmcSim *ibs,
+>
+>      if (QTAILQ_EMPTY(&ibs->rcvbufs)) {
+>          rsp_buffer_set_error(rsp, 0x80); /* Queue empty */
+> -        goto out;
+> +        return;
+>      }
+>      rsp_buffer_push(rsp, 0); /* Channel 0 */
+>      msg =3D QTAILQ_FIRST(&ibs->rcvbufs);
+> @@ -994,8 +993,6 @@ static void get_msg(IPMIBmcSim *ibs,
+>          ibs->msg_flags &=3D ~IPMI_BMC_MSG_FLAG_RCV_MSG_QUEUE;
+>          k->set_atn(s, attn_set(ibs), attn_irq_enabled(ibs));
+>      }
+> -
+> -out:
+>  }
+>
+>  static unsigned char
+> diff --git a/hw/ipmi/ipmi_bt.c b/hw/ipmi/ipmi_bt.c
+> index 3ef1f435e7..f769cfa243 100644
+> --- a/hw/ipmi/ipmi_bt.c
+> +++ b/hw/ipmi/ipmi_bt.c
+> @@ -98,14 +98,14 @@ static void ipmi_bt_handle_event(IPMIInterface *ii)
+>      IPMIBT *ib =3D iic->get_backend_data(ii);
+>
+>      if (ib->inlen < 4) {
+> -        goto out;
+> +        return;
+>      }
+>      /* Note that overruns are handled by handle_command */
+>      if (ib->inmsg[0] !=3D (ib->inlen - 1)) {
+>          /* Length mismatch, just ignore. */
+>          IPMI_BT_SET_BBUSY(ib->control_reg, 1);
+>          ib->inlen =3D 0;
+> -        goto out;
+> +        return;
+>      }
+>      if ((ib->inmsg[1] =3D=3D (IPMI_NETFN_APP << 2)) &&
+>                          (ib->inmsg[3] =3D=3D IPMI_CMD_GET_BT_INTF_CAP)) =
+{
+> @@ -136,7 +136,7 @@ static void ipmi_bt_handle_event(IPMIInterface *ii)
+>              IPMI_BT_SET_B2H_IRQ(ib->mask_reg, 1);
+>              ipmi_bt_raise_irq(ib);
+>          }
+> -        goto out;
+> +        return;
+>      }
+>      ib->waiting_seq =3D ib->inmsg[2];
+>      ib->inmsg[2] =3D ib->inmsg[1];
+> @@ -145,7 +145,6 @@ static void ipmi_bt_handle_event(IPMIInterface *ii)
+>          bk->handle_command(ib->bmc, ib->inmsg + 2, ib->inlen - 2,
+>                             sizeof(ib->inmsg), ib->waiting_rsp);
+>      }
+> - out:
+>  }
+>
+>  static void ipmi_bt_handle_rsp(IPMIInterface *ii, uint8_t msg_id,
+> diff --git a/hw/ipmi/ipmi_kcs.c b/hw/ipmi/ipmi_kcs.c
+> index f4f1523d6b..5bfc34676f 100644
+> --- a/hw/ipmi/ipmi_kcs.c
+> +++ b/hw/ipmi/ipmi_kcs.c
+> @@ -168,7 +168,7 @@ static void ipmi_kcs_handle_event(IPMIInterface *ii)
+>              ik->outpos =3D 0;
+>              bk->handle_command(ik->bmc, ik->inmsg, ik->inlen, sizeof(ik-=
+>inmsg),
+>                                 ik->waiting_rsp);
+> -            goto out_noibf;
+> +            return;
+>          } else if (ik->cmd_reg =3D=3D IPMI_KCS_WRITE_END_CMD) {
+>              ik->cmd_reg =3D -1;
+>              ik->write_end =3D 1;
+> @@ -197,7 +197,6 @@ static void ipmi_kcs_handle_event(IPMIInterface *ii)
+>      ik->cmd_reg =3D -1;
+>      ik->data_in_reg =3D -1;
+>      IPMI_KCS_SET_IBF(ik->status_reg, 0);
+> - out_noibf:
+>  }
+>
+>  static void ipmi_kcs_handle_rsp(IPMIInterface *ii, uint8_t msg_id,
+> --
+> 2.48.1
+>
+>
 
