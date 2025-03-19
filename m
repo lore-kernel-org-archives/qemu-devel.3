@@ -4,77 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51CB8C35FFC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D17C35FFC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuwfU-0004Mb-2I; Wed, 19 Mar 2025 12:53:24 -0400
+	id 1tuwfg-0004Q9-Um; Wed, 19 Mar 2025 12:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tuwfQ-0004I5-1I; Wed, 19 Mar 2025 12:53:20 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tuwfN-00051t-7e; Wed, 19 Mar 2025 12:53:19 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZHvpL2934z67GVD;
- Thu, 20 Mar 2025 00:50:18 +0800 (CST)
-Received: from frapeml100007.china.huawei.com (unknown [7.182.85.133])
- by mail.maildlp.com (Postfix) with ESMTPS id D3CBE1404FC;
- Thu, 20 Mar 2025 00:53:13 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100007.china.huawei.com (7.182.85.133) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 19 Mar 2025 17:53:13 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Wed, 19 Mar 2025 17:53:13 +0100
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, Nicolin Chen
- <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
- "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
- <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
- Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
- infrastructure for smmuv3-accel device
-Thread-Topic: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
- infrastructure for smmuv3-accel device
-Thread-Index: AQHbkpt/2E04sj23iE6hCb84oIWO4LNvjRwAgAgITACAAAOdAIAAEXKAgAL8TYCAABHEMA==
-Date: Wed, 19 Mar 2025 16:53:13 +0000
-Message-ID: <a1a62689da8c43ca98a4379773db241c@huawei.com>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
- <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
- <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
- <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
- <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
- <11895c78-d6ab-40c8-a500-4abed1565234@redhat.com>
-In-Reply-To: <11895c78-d6ab-40c8-a500-4abed1565234@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuwfe-0004PG-Kb
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:53:34 -0400
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuwfd-00053Q-2E
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:53:34 -0400
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-476a57a9379so51668871cf.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:53:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742403211; x=1743008011; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=waSsS/j5VDDN8ocva8IGqDPUr4RAn4apsQ06isLSx/I=;
+ b=ibqAzTRILcFbG1OlI3TqQ+2j5OwT7rGFJCcL3a2IIcIrebVBlDQaJhdWebqI7vXuaM
+ dKlz1U5us+HOLXpUBHi8wWEXLiuUQ6P96sbVgHpbY/f5QJKJI2+XbWTjlFfx+X+rKYoQ
+ tZfUzaXt8/aqYjjH0j5RNssFFqDDcRtXw3VFc2lae1Pqko/fhF8NrW0qxUcjpssqHGb6
+ K9NF+vW7Pb/edMQ9TU3avT0fuLsHUqk2guXxQ4tnTfomBD+ywgwxU/iJTrY77BLkgyvb
+ ZQRqvsAtV3r5LSSI+4+6Y/7YaTSXvP9P01+HMc9pYYN6qIo1tnHSi57dGr63/APTwI9Z
+ oNNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742403211; x=1743008011;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=waSsS/j5VDDN8ocva8IGqDPUr4RAn4apsQ06isLSx/I=;
+ b=VSILC8Qsj9zT89IwuRMd+yvoFxHo4NGS7DUnkRPv6gWTqUl3RxFMP43cQT0mZwfoVY
+ UOEMftt0Ap0fvIlnbxkBCFAKlGwmikB0yjvSoP+Vw6azLz1DBCIIoHZMYifdVjQnXjC8
+ hDlanWi8ZEG7z9xobrrzzVa6QaeKDR64tPcjeqgu4r/eRwW24uR2sePsyX6+akYzjNbn
+ 5BgX+gyWuEMAwYWF4qyD6wWCpzLgSD6PjI/tv2qv1cAqpRSsOF8ilqk63QTOKw1uJVCx
+ OpG8eUYnG/j7xVfOH6Y2OCjrPYmIAWALsjitOAdt19ICb2CrTTZ0kFQEe6z2vvUBVEd5
+ NGQg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWH9HbiVHzBZUZJAwVLqymLFU46vacQsEZ2htsCb2SnABt1W6oorZLGCHl+JunDOqWsQfun9CJzbQHG@nongnu.org
+X-Gm-Message-State: AOJu0YxOXw7X2FSdtsOHs9xa1vptsABn5FBDoDXdkkZoyFAXFcX58ZXI
+ NuPup50dJrPvrKBvCiia31yfP5b+2PHSPgSK/aIOPYCGdxA717SQ
+X-Gm-Gg: ASbGncvngt5MQ6XKafEqlnZWPgHC+lp227mfhlwB3BQo4WZs/Fi9hhkErS0H9uu7Ry3
+ MFUqyMYlZ1hYfEVfUy8enkLiXcAvcVI6g5NIFqPF1ZhXxnox3NWh9ZGljXxx5ga2LN80vaF4Fh2
+ f5jHYTt+bWF1a1/fxn3emhM7wnF3Q+2o9i5NyEi92C6/uHSZJNIdFYaCdjRFuaGnP6qHG0ON6ys
+ gkuz2HzwFaDmnU3bx9XCFJRWcL8VBQpwJ38FWu2gHqVsOSXPOqUuS1wXVALxFK1MzbI52lA5AAN
+ 3w2j65LxwX6YCj+ZLSv8Spdi7lw4C2ZnLdgR9KpZTmr7Pky2rU88WqJimlZ9KA==
+X-Google-Smtp-Source: AGHT+IHATgaGdpYK8FGYXYh5VCLaB2tglNj090FXyWeQ0HC6rHlG3op8ceAyYLbSso0VPKtYeYP7pg==
+X-Received: by 2002:a05:622a:5145:b0:476:838c:b0d6 with SMTP id
+ d75a77b69052e-477082e21f2mr55031831cf.2.1742403211500; 
+ Wed, 19 Mar 2025 09:53:31 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:992d:4509:eca7:6f8])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-47705dab421sm14333821cf.36.2025.03.19.09.53.30
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 19 Mar 2025 09:53:31 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
+ <20250301052845.1012069-34-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052845.1012069-34-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 33/39] target/hexagon: initialize sys/guest reg TCGvs
+Date: Wed, 19 Mar 2025 11:53:28 -0500
+Message-ID: <02bf01db98ef$71ab2990$55017cb0$@gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQIRWHkNsvSuBzA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250319-0, 3/18/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x835.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,55 +109,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
-Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiBXZWRuZXNkYXksIE1hcmNoIDE5LCAyMDI1IDQ6
-NDYgUE0NCj4gVG86IE5pY29saW4gQ2hlbiA8bmljb2xpbmNAbnZpZGlhLmNvbT4NCj4gQ2M6IFNo
-YW1lZXJhbGkgS29sb3RodW0gVGhvZGkNCj4gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVh
-d2VpLmNvbT47IHFlbXUtYXJtQG5vbmdudS5vcmc7DQo+IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsg
-cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnOyBqZ2dAbnZpZGlhLmNvbTsNCj4gZGR1dGlsZUByZWRo
-YXQuY29tOyBiZXJyYW5nZUByZWRoYXQuY29tOyBuYXRoYW5jQG52aWRpYS5jb207DQo+IG1vY2hz
-QG52aWRpYS5jb207IHNtb3N0YWZhQGdvb2dsZS5jb207IExpbnV4YXJtDQo+IDxsaW51eGFybUBo
-dWF3ZWkuY29tPjsgV2FuZ3pob3UgKEIpIDx3YW5nemhvdTFAaGlzaWxpY29uLmNvbT47DQo+IGpp
-YW5na3Vua3VuIDxqaWFuZ2t1bmt1bkBodWF3ZWkuY29tPjsgSm9uYXRoYW4gQ2FtZXJvbg0KPiA8
-am9uYXRoYW4uY2FtZXJvbkBodWF3ZWkuY29tPjsgemhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4g
-U3ViamVjdDogUmU6IFtSRkMgUEFUQ0ggdjIgMDMvMjBdIGh3L2FybS9zbW11djMtYWNjZWw6IEFk
-ZCBpbml0aWFsDQo+IGluZnJhc3RydWN0dXJlIGZvciBzbW11djMtYWNjZWwgZGV2aWNlDQo+ID4+
-PiBJcyB0aGVyZSBhbnkgYmVuZWZpdCBmcm9tIGVtdWxhdGVkIGRldmljZXMgd29ya2luZyBpbiB0
-aGUgSFctDQo+ID4+PiBhY2NlbGVyYXRlZCBuZXN0ZWQgdHJhbnNsYXRpb24gbW9kZT8NCj4gPj4g
-Tm90IHJlYWxseSBidXQgZG8gd2UgaGF2ZSBhbnkganVzdGlmaWNhdGlvbiBmb3IgdXNpbmcgZGlm
-ZmVyZW50IGRldmljZQ0KPiA+PiBuYW1lIGluIGFjY2VsIG1vZGU/IEkgYW0gbm90IGV2ZW4gc3Vy
-ZSB0aGF0IGFjY2VsIG9wdGlvbiBpcyByZWFsbHkNCj4gPj4gbmVlZGVkLiBJZGVhbGx5IHRoZSBx
-ZW11IGRldmljZSBzaG91bGQgYmUgYWJsZSB0byBkZXRlY3QgaXQgaXMNCj4gPj4gcHJvdGVjdGlu
-ZyBhIFZGSU8gZGV2aWNlLCBpbiB3aGljaCBjYXNlIGl0IHNoYWxsIGNoZWNrIHdoZXRoZXIgbmVz
-dGVkIGlzDQo+ID4+IHN1cHBvcnRlZCBieSBob3N0IFNNTVUgYW5kIHRoZW4gYXV0b21hdGljYWxs
-eSB0dXJuIGFjY2VsIG1vZGU/DQo+ID4+DQo+ID4+IEkgZ2F2ZSB0aGUgZXhhbXBsZSBvZiB0aGUg
-dmZpbyBkZXZpY2Ugd2hpY2ggaGFzIGRpZmZlcmVudCBjbGFzcw0KPiA+PiBpbXBsZW1lbnRyYXRp
-b24gZGVwZW5kaW5nIG9uIHRoZSBpb21tdWZkIG9wdGlvbiBiZWluZyBzZXQgb3Igbm90Lg0KPiA+
-IERvIHlvdSBtZWFuIHRoYXQgd2Ugc2hvdWxkIGp1c3QgY3JlYXRlIGEgcmVndWxhciBzbW11djMg
-ZGV2aWNlIGFuZA0KPiA+IGxldCBhIFZGSU8gZGV2aWNlIHRvIHR1cm4gb24gdGhpcyBzbW11djMn
-cyBhY2NlbCBtb2RlIGRlcGVuZGluZyBvbg0KPiA+IGl0cyBMRUdBQ1kvSU9NTVVGRCBjbGFzcz8N
-Cj4gDQo+IG5vIHRoaXMgaXMgbm90IHdoYXQgSSBtZWFudC4gSSBnYXZlIGFuIGV4YW1wbGUgd2hl
-cmUgZGVwZW5kaW5nIG9uIGFuDQo+IG9wdGlvbiBwYXNzZWQgdG8gdGh5ZSBWRklPIGRldmljZSB5
-b3UgY2hvb3NlIG9uZSBjbGFzcyBpbXBsZW1lbnQgb3IgdGhlDQo+IG90aGVyLg0KPiA+DQo+ID4g
-QW5vdGhlciBxdWVzdGlvbjogaG93IGRvZXMgYW4gZW11bGF0ZWQgZGV2aWNlIHdvcmsgd2l0aCBh
-IHZTTU1VdjM/DQo+IEkgZG9uJ3QgZ2V0IHlvdXIgcXVlc3Rpb24uIHZTTU1VdjMgY3VycmVudGx5
-IG9ubHkgd29ya3Mgd2l0aCBlbXVsYXRlZA0KPiBkZXZpY2VzLiBEaWQgeW91IG1lYW4gYWNjZWxl
-cmF0ZWQgU01NVXYzPw0KPiA+IEkgY291bGQgaW1hZ2luZSB0aGF0IGFsbCB0aGUgYWNjZWwgc3Rl
-cHMgd291bGQgYmUgYnlwYXNzZWQgc2luY2UNCj4gPiAhc2Rldi0+aWRldi4gWWV0LCB0aGUgZW11
-bGF0ZWQgaW90bGIgc2hvdWxkIGNhY2hlIGl0cyB0cmFuc2xhdGlvbg0KPiA+IHNvIHdlIHdpbGwg
-bmVlZCB0byBmbHVzaCB0aGUgaW90bGIsIHdoaWNoIHdpbGwgaW5jcmVhc2UgY29tcGxleGl0eQ0K
-PiA+IGFzIHRoZSBUTEJJIGNvbW1hbmQgZGlzcGF0Y2hpbmcgZnVuY3Rpb24gd2lsbCBuZWVkIHRv
-IGJlIGF3YXJlIHdoYXQNCj4gPiBBU0lEIGlzIGZvciBlbXVsYXRlZCBkZXZpY2UgYW5kIHdoYXQg
-aXMgZm9yIHZmaW8gZGV2aWNlLi4NCj4gSSBkb24ndCBnZXQgdGhlIGlzc3VlLiBGb3IgZW11bGF0
-ZWQgZGV2aWNlIHlvdSBnbyB0aHJvdWdoIHRoZSB1c3VhbA0KPiB0cmFuc2xhdGUgcGF0aCB3aGlj
-aCBpbmRlZWQgY2FjaGVzIGNvbmZpZ3MgYW5kIHRyYW5zbGF0aW9ucy4gSW4gY2FzZSB0aGUNCj4g
-Z3Vlc3QgaW52YWxpZGF0ZXMgc29tZXRoaW5nLCB5b3Uga25vdyB0aGUgU0lEIGFuZCB5b3UgZmlu
-ZCB0aGUgZW50cmllcw0KPiBpbiB0aGUgY2FjaGUgdGhhdCBhcmUgdGFnZ2VkIGJ5IHRoaXMgU0lE
-Lg0KDQpOb3QgYWx3YXlzIHlvdSBnZXQgc2lkLCBlZzogQ01EX1RMQklfTkhfQVNJRA0KDQpUaGFu
-a3MsDQpTaGFtZWVyDQo=
+
+
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Friday, February 28, 2025 11:29 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
+> Subject: [PATCH 33/39] target/hexagon: initialize sys/guest reg TCGvs
+> 
+> From: Brian Cain <bcain@quicinc.com>
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/translate.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c index
+> ff881d1060..248ed60f29 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -1295,6 +1295,26 @@ void hexagon_translate_init(void)
+> 
+>      opcode_init();
+> 
+> +#ifndef CONFIG_USER_ONLY
+> +    for (i = 0; i < NUM_GREGS; i++) {
+> +            hex_greg[i] = tcg_global_mem_new(tcg_env,
+> +                offsetof(CPUHexagonState, greg[i]),
+> +                hexagon_gregnames[i]);
+> +    }
+> +    hex_g_sreg_ptr = tcg_global_mem_new_ptr(tcg_env,
+> +            offsetof(CPUHexagonState, g_sreg), "hex_g_sreg_ptr");
+> +    for (i = 0; i < NUM_SREGS; i++) {
+> +        if (i < HEX_SREG_GLB_START) {
+> +            hex_t_sreg[i] = tcg_global_mem_new(tcg_env,
+> +                offsetof(CPUHexagonState, t_sreg[i]),
+> +                hexagon_sregnames[i]);
+> +        } else {
+> +            hex_g_sreg[i] = tcg_global_mem_new(hex_g_sreg_ptr,
+> +                i * sizeof(target_ulong),
+> +                hexagon_sregnames[i]);
+
+I assume this will be changed with the redo of global resource handling
+
+> +        }
+> +    }
+> +#endif
+>      for (i = 0; i < TOTAL_PER_THREAD_REGS; i++) {
+>          hex_gpr[i] = tcg_global_mem_new(tcg_env,
+>              offsetof(CPUHexagonState, gpr[i]),
+> --
+> 2.34.1
+
+
 
