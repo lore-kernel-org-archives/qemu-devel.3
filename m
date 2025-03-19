@@ -4,115 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F26C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 12:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E93C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 12:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tusB1-0000Tw-Ff; Wed, 19 Mar 2025 08:05:39 -0400
+	id 1tusD4-0001AI-1n; Wed, 19 Mar 2025 08:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tusAo-0000RP-7V
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 08:05:31 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tusCM-00017a-4c
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 08:07:03 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tusAa-0002z3-JI
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 08:05:20 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tusCH-0005eq-4S
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 08:07:01 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E5E1B1FD4A;
- Wed, 19 Mar 2025 12:05:04 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AB68921A2F;
+ Wed, 19 Mar 2025 12:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742385906; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1742386014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ctUpYH9JJgM5jE4xPuapyEMkyJxASCx5HOulJnx+NpM=;
- b=cZqr894ZTJnU8T0Ki2CtLQcNXBPZrpu5ODfSLQIXsC/x0rrPJiaKJzACZZvn4l/r/oW1pu
- y73p4mFgq15oH6We4lx22vWqn4pBo0659sBikdFiLOVneh4x62iJ/KSPWZlKR591EKi+uq
- 4gg9/jmc+OBI6lf+ke5X9K92ieVahHI=
+ bh=jWM7YfEqLmzE9x5pq+ouP5CaRuA3coi99kshrhr3x8I=;
+ b=qhGOexx2Nt/Uj9ex5da/tRCWBgYKc7HCr8n561woE4T1eO+EtVlwTee57j9kaDKPC0wfwl
+ v2vzDBd74Uh6caYHNJrDqK1gqLxKOvULN63fH0ed5RzQX3PAnTF+wIdbDXbj9zU+W9J+Zm
+ jPFiq3jwUctFPUH8QdrADFPdW8dH2c0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742385906;
+ s=susede2_ed25519; t=1742386014;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ctUpYH9JJgM5jE4xPuapyEMkyJxASCx5HOulJnx+NpM=;
- b=3wDsf68+T+arMHfq8WVDVG0lHS/KOTTCYBAjFPOydFS+MtksSg8jLfJesMonL7oLhbubXd
- MrbEORR2odSM0vDA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SqniWEXI;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=U4pdjp17
+ bh=jWM7YfEqLmzE9x5pq+ouP5CaRuA3coi99kshrhr3x8I=;
+ b=1RLGf9KetkCj7lgoolHjoFAm8ZEa1iAmwuJOEwtfqDuaf1ZWYzZ5D490zGivXuf/q6btaQ
+ Y6GUxpTJWApCE1DA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qhGOexx2;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1RLGf9Ke
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742385904; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1742386014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ctUpYH9JJgM5jE4xPuapyEMkyJxASCx5HOulJnx+NpM=;
- b=SqniWEXIqMju6w2Wg9N4rmsXiaXl0menfEBjNg/zd5sjWvZORsFYGoGYBV6AmpP3PGGmkq
- N0IS9nsm41MS8NVdJhXCj2NnI+z8F020NqMAEc9nh8OE92mFpuX4LH0WHwWHNeaZGkP8Z+
- 7WEZOwqwIwavh1VYvm6tueGbn+6kxOE=
+ bh=jWM7YfEqLmzE9x5pq+ouP5CaRuA3coi99kshrhr3x8I=;
+ b=qhGOexx2Nt/Uj9ex5da/tRCWBgYKc7HCr8n561woE4T1eO+EtVlwTee57j9kaDKPC0wfwl
+ v2vzDBd74Uh6caYHNJrDqK1gqLxKOvULN63fH0ed5RzQX3PAnTF+wIdbDXbj9zU+W9J+Zm
+ jPFiq3jwUctFPUH8QdrADFPdW8dH2c0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742385904;
+ s=susede2_ed25519; t=1742386014;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ctUpYH9JJgM5jE4xPuapyEMkyJxASCx5HOulJnx+NpM=;
- b=U4pdjp17cb7H9RpBpkuwxmOnhNyC2P3GRSlvTjBUWxjW1IUSQl3unBcFeb3xhlpZKpbv2M
- EZONfoUZl+dZcGCg==
+ bh=jWM7YfEqLmzE9x5pq+ouP5CaRuA3coi99kshrhr3x8I=;
+ b=1RLGf9KetkCj7lgoolHjoFAm8ZEa1iAmwuJOEwtfqDuaf1ZWYzZ5D490zGivXuf/q6btaQ
+ Y6GUxpTJWApCE1DA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6397713726;
- Wed, 19 Mar 2025 12:05:04 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2672F13726;
+ Wed, 19 Mar 2025 12:06:53 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id lMGQCfCy2mccAwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 19 Mar 2025 12:05:04 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id tb7TNF2z2mejAwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 19 Mar 2025 12:06:53 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>, Peter Xu
- <peterx@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH] tests/functional/test_migration: Use "ncat" instead of
- "nc" in the exec test
-In-Reply-To: <20250319105617.133191-1-thuth@redhat.com>
-References: <20250319105617.133191-1-thuth@redhat.com>
-Date: Wed, 19 Mar 2025 09:05:01 -0300
-Message-ID: <875xk5b502.fsf@suse.de>
+To: Bibo Mao <maobibo@loongson.cn>, Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 6/6] tests/qtest: Enable bios-tables-test for LoongArch
+In-Reply-To: <20250228092729.543097-7-maobibo@loongson.cn>
+References: <20250228092729.543097-1-maobibo@loongson.cn>
+ <20250228092729.543097-7-maobibo@loongson.cn>
+Date: Wed, 19 Mar 2025 09:06:51 -0300
+Message-ID: <8734f9b4x0.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: E5E1B1FD4A
-X-Spamd-Result: default: False [-4.39 / 50.00]; BAYES_HAM(-2.88)[99.47%];
+X-Rspamd-Queue-Id: AB68921A2F
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
- quicinc.com:email, imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+ MID_RHS_MATCH_FROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,22 +128,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Bibo Mao <maobibo@loongson.cn> writes:
 
-> From: Thomas Huth <thuth@redhat.com>
+> Enable bios-tables-test for LoongArch virt machine, it passes to run
+> with command "make check-qtest-loongarch64".
 >
-> "nc" can either bei GNU netcat, OpenBSD netcat or NMap ncat. At
-> least GNU netcat currently does not work with this test anymore,
-> though the comment in the test says otherwise. GNU netcat seems
-> to be quite unmaintained nowadays, according to its website
-> (https://netcat.sourceforge.net/), the last public release is from
-> 2004, so we should rather avoid that binary.
-> In our CI, we are only using "ncat" in the containers (it's the only
-> flavor that lcitool supports), thus to avoid silent regressions with
-> the other netcats, let's limit this test to "ncat" only now.
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>  tests/qtest/meson.build | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> Reported-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 8a6243382a..8628eebfbc 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -149,7 +149,8 @@ qtests_hppa = \
+>  
+>  qtests_loongarch64 = qtests_filter + \
+>    (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+> -  ['boot-serial-test']
+> +  ['boot-serial-test'] + \
+> +  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
+>  
+>  qtests_m68k = ['boot-serial-test'] + \
+>    qtests_filter
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
