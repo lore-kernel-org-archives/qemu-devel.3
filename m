@@ -4,70 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECA7C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 20:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD438C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 20:26:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuzB4-0006r6-VZ; Wed, 19 Mar 2025 15:34:11 -0400
+	id 1tuz8M-0004Ue-TQ; Wed, 19 Mar 2025 15:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tuzAz-0006q5-8l
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:34:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tuzAx-0006So-8I
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:34:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742412842;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PnOSaBwmTwh8vZR0PUXGEXmK/pnR4DZEjshuFF/1Rmw=;
- b=E8CoPCbTWquP1OyS0dOQFw8JNSNG6Mb91QiMCiOtf1bTbecoWnSV+zuL9k+VP3Pvl6ZTTd
- QIwUqMbkYdtUnjta2CZNkRmCplSVjZs8KXJ/FIQgPWjyLxaahAPA99Vd7BgncyacIlRtUL
- nGuMo6Ra6KALqm7C0JQNFpvSn9XYTJ8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-K3LCYd3aMxyWVKA-ggRkwQ-1; Wed,
- 19 Mar 2025 15:33:57 -0400
-X-MC-Unique: K3LCYd3aMxyWVKA-ggRkwQ-1
-X-Mimecast-MFC-AGG-ID: K3LCYd3aMxyWVKA-ggRkwQ_1742412836
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C30A1180AF68; Wed, 19 Mar 2025 19:33:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.17.1])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61A7C1956094; Wed, 19 Mar 2025 19:33:53 +0000 (UTC)
-Date: Wed, 19 Mar 2025 14:33:50 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, gerben@altlinux.org, qemu-stable@nongnu.org, 
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] block: Zero block driver state before reopening
-Message-ID: <nn5b6oyyuaxguho6ex7bal3y67olzrvwsgpa4wvjbrutsrehhl@g4h5kll24uvt>
-References: <20250310104858.28221-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuz8L-0004UK-Ir
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:31:21 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuz8F-0005OV-LX
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:31:21 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-399744f74e9so859305f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 12:31:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742412674; x=1743017474; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=S/wfhBIu9lXn5l5lkjHux+TggfIePCVAh+mYui/7+3Q=;
+ b=vCUH6sJwGzqP51+X/rHyBnAGi01mKAm2Ja5u9dmiGIWJU1FwvgPGBHIEUkiw52r1OT
+ BfOnhV2VZUUVc+5rui/p5XCyNZ5WyisF8rjROHARJJmvfN9TvDgZB407VMqNdm/gNwTZ
+ SEltCZMPPXfsmMQCinUDZOd3DkO8dr3EAmLz616zyNdKKXVCTwhFVqO2nnN5ddbtPq0X
+ 6wnzR+l4HqMcH+QsuHlghsNZKblPxGJsg8z8Bqh6/x7EIiJFdiVlgwBvLOCkspOEUsIU
+ 9LWdM5TnFUtu8EbvXF73sH3Z+NyvmrsM8yNPCRkrXzylgYMpC02s2lsYiW9gidY7DtcU
+ Xamg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742412674; x=1743017474;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=S/wfhBIu9lXn5l5lkjHux+TggfIePCVAh+mYui/7+3Q=;
+ b=UO12t1cCI5Bm2wtqoTUszkGiepj8UU6a/iKGjZ+ejqndRsalvk0JPomZRbpRt2rXG1
+ dre3EOzprlksdcbVM1WBbc/Ga7YJZn+Jkur6Fd086d5y38UGAUzrtJLMWjHyguATH2EU
+ pe1onXzxRzK6oxaaNJWmBmLttQyv26QawmHR5WH/1Hfr8Ren1Kw8JRRGXN3SVit7S3nK
+ eIVkHXqh7LRz1xyDRCKhqpFF4EToJMeAT03YEAcW8HCLJk0ztNzTuwfEbRkoxdcfGU/l
+ MmbwRPhA148pWBIEBO+KwPxdVq5q/GzJ3OQn8gjNLxySCj/tPwZWPNbwvCV2+lzXU0Gp
+ oEow==
+X-Gm-Message-State: AOJu0Yz28gtirgrXldfaJNdFsbVBMHIvGDsvk25RtV49NDTVVrgTsswW
+ SQpdKCRSsY3XoKRhU9n3aJcqfBTWeF9HmK5k60vIl6vpdLggmCOt94qhcSomIEjiix2L/akDXmZ
+ p
+X-Gm-Gg: ASbGnctENIu0td7b4UqL3xWUCnzTCioULix5udpUpQGgZvzja2oDhXw5vItLwuiSJwe
+ sqCUC36jnGYpTtWmoWoBJBbzXVW6nJxVhjGMKzSMj5nngLpcMs3kl6rWeCJ3TMkTZhKryhi6kXB
+ xb1lpllheE4YEZxP32taF7Zl5w76rqyR+N6U3zeI/S5paMwch9ZoT29jwvFgJwAn1A7WdEXfFw6
+ JFaue2bmbmw1t5nI/KM0DU7vLfsGGOmdVAb1l/bfo4HnG3lbCZIIdErAx+zwPndZzDAoM0EFBhR
+ C76ld2nvBbCMuDqeZ493PhPAKIcLnqkjJlD6Lq/2sjE/Qe1+3PY=
+X-Google-Smtp-Source: AGHT+IG25yxS/Ktv+VOl9w0rYr45RYr9A4ZX2d6JO+jSFn0sEy3dVs5EyaRoWqjKC/rb30R2vkYBVA==
+X-Received: by 2002:a5d:47a8:0:b0:391:43ff:8ca8 with SMTP id
+ ffacd0b85a97d-399739c8e78mr3356984f8f.26.1742412673716; 
+ Wed, 19 Mar 2025 12:31:13 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d43f47196sm26790495e9.16.2025.03.19.12.31.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Mar 2025 12:31:12 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Tanish Desai <tanishdesai37@gmail.com>
+Subject: [PATCH 0/2] rust: Kconfig: factor out Rust vs C impl choice
+Date: Wed, 19 Mar 2025 19:31:08 +0000
+Message-ID: <20250319193110.1565578-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250310104858.28221-1-kwolf@redhat.com>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,50 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 10, 2025 at 11:48:58AM +0100, Kevin Wolf wrote:
-> Block drivers assume in their .bdrv_open() implementation that their
-> state in bs->opaque has been zeroed; it is initially allocated with
-> g_malloc0() in bdrv_open_driver().
-> 
-> bdrv_snapshot_goto() needs to make sure that it is zeroed again before
-> calling drv->bdrv_open() to avoid that block drivers use stale values.
-> 
-> One symptom of this bug is VMDK running into a double free when the user
-> tries to apply an internal snapshot like 'qemu-img snapshot -a test
-> test.vmdk'. This should be a graceful error because VMDK doesn't support
-> internal snapshots.
-> 
-> ==25507== Invalid free() / delete / delete[] / realloc()
-> ==25507==    at 0x484B347: realloc (vg_replace_malloc.c:1801)
-> ==25507==    by 0x54B592A: g_realloc (gmem.c:171)
-> ==25507==    by 0x1B221D: vmdk_add_extent (../block/vmdk.c:570)
-> ==25507==    by 0x1B1084: vmdk_open_sparse (../block/vmdk.c:1059)
-> ==25507==    by 0x1AF3D8: vmdk_open (../block/vmdk.c:1371)
-> ==25507==    by 0x1A2AE0: bdrv_snapshot_goto (../block/snapshot.c:299)
-> ==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-> ==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
-> ==25507==  Address 0x832f3e0 is 0 bytes inside a block of size 272 free'd
-> ==25507==    at 0x4846B83: free (vg_replace_malloc.c:989)
-> ==25507==    by 0x54AEAC4: g_free (gmem.c:208)
-> ==25507==    by 0x1AF629: vmdk_close (../block/vmdk.c:2889)
-> ==25507==    by 0x1A2A9C: bdrv_snapshot_goto (../block/snapshot.c:290)
-> ==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
-> ==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
-> 
-> This error was discovered by fuzzing qemu-img.
-> 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Denis Rastyogin <gerben@altlinux.org>
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  block/snapshot.c | 1 +
->  1 file changed, 1 insertion(+)
+This patchset fixes a compilation failure if CONFIG_VMAPPLE is
+enabled in a Rust build, which happens because hw/vmapple/Kconfig
+didn't have the "pick the Rust PL011 if Rust is enabled" logic in it.
+Rather than just adding that to yet another PL011-using board
+model, this patchset refactors how we handle devices which have
+both a Rust and C implementation in Kconfig:
+ * CONFIG_PL011 is "do we have/want a PL011 of some kind"
+ * CONFIG_PL011_C is the C impl
+ * CONFIG_X_PL011_RUST is the rust impl
+ * selecting CONFIG_PL011 pulls in one impl or the other
+   depending on whether the build has Rust enabled or not
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+For the PL011, this lets us drop a lot of duplicate logic
+in Kconfig files for boards; for HPET this simplifies
+places in code that have ifdefs for "do we have an HPET?".
+
+NB: I think this should be OK but haven't been able to do
+complete testing because currently in head-of-git
+"make check-functional" doesn't pass for arm with Rust
+enabled due to a different issue.
+
+thanks
+-- PMM
+
+Peter Maydell (2):
+  rust: Kconfig: Factor out whether PL011 is Rust or C
+  rust: Kconfig: Factor out whether HPET is Rust or C
+
+ configs/devices/i386-softmmu/default.mak |  1 -
+ hw/i386/fw_cfg.c                         |  2 +-
+ hw/i386/pc.c                             |  2 +-
+ hw/arm/Kconfig                           | 30 ++++++++----------------
+ hw/char/Kconfig                          |  6 +++++
+ hw/char/meson.build                      |  2 +-
+ hw/timer/Kconfig                         |  8 ++++++-
+ hw/timer/meson.build                     |  2 +-
+ rust/hw/timer/Kconfig                    |  1 -
+ tests/qtest/meson.build                  |  3 +--
+ 10 files changed, 28 insertions(+), 29 deletions(-)
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.43.0
 
 
