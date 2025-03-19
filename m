@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E24CC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 08:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035C3C36000
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 08:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuoOt-00081J-8p; Wed, 19 Mar 2025 04:03:44 -0400
+	id 1tuoOv-00081K-CU; Wed, 19 Mar 2025 04:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tuoOd-0007zR-JJ
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:28 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1tuoOg-0007zp-Gr
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:31 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tuoOY-0004OG-5m
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:27 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-300f92661fcso6881304a91.3
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 01:03:21 -0700 (PDT)
+ id 1tuoOe-0004PA-OW
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 04:03:30 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2241053582dso29945645ad.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 01:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742371400; x=1742976200; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742371407; x=1742976207; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dry9IOvdEb4K5cPkJgeCnD2yv/gA9ubaGhE0+QsIwXs=;
- b=lAK23FisE2Y7HeOtHgqOGgR+NVAtnmonXrkSeMGil9M1Xi2L/MBaPl5dZl+ebrh6k5
- qQlC2fGnsMoENoyVmXOrz1O8/v13ZF3kYFjafm8Dim91gqgG2PvZj3lFD2wpttOUndR+
- XcAy0FJNNrMjwUGBZxyu7qsmOM7+pZL+qqvbRJHXxl/cAN9frvdEdqo0Xns+8qh9i27h
- a3ygqGufbBJqpgKyOrRM8DPfi0omutF2yNu1g7A5DiPdPzLz3xlQeQ0R8JoocVp+qyYU
- K8DAl2vyBQ4acJIZWcLLpdyhobh9u/MirmKK5BhBnPkXUgjKKlxHwkefqOVlD+twQrEs
- Xyag==
+ bh=rknrmfA7CmFKA8NZIq2TcdDuCQaG1etacbJiGQO7Y4w=;
+ b=IcF+yDQBetWU18Kk9Hf1dv7HgfZX50Itk66rdjms29h3kGjJ8o6PBzutJkDf41pqQw
+ AirLxTfoR/LLeoRo4nMtkJSQGfmJC2eM9FAFy3UDJkWCBpXBEXw5V4BOG3YKydcAVjGu
+ MTs65iX8eNLDtU+dlFAQ7sfw1WzlLYP5EiLrSlhaPkrAKdpuRlUyMM7vvh/TVpHz0YXY
+ nPWHCqRJfxalsD+STL1Z3eRsx9FvPBzymq2WhGSjfhsa98+fOUsx9s93nSq/dLAdD0fV
+ EgvuBOrAkFYiE2gwJxnCMbDlp3/H3NGDd/CCxn8ajHNtxoyDkjWQbDXgP/si3hZPsl6z
+ Bfcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742371400; x=1742976200;
+ d=1e100.net; s=20230601; t=1742371407; x=1742976207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dry9IOvdEb4K5cPkJgeCnD2yv/gA9ubaGhE0+QsIwXs=;
- b=eyY2lihf6IooDbr6b0lpCw23G39qMxu+f3SybGRf1ER77VyuKxjuU5MVCav+xFf5eX
- 9w3ugD7uB4UEGnMgtP/M8GSTbbzJPzKFFUzHttgtRFbCRYfITPH3phTOkCzePVnL3Pp+
- iSnDohe/4KiWzjCTXUsK+hx9O3KI5ktyHBMrSDs7yjp5xZd3isArldYlu0B+aZJcGMMO
- 4wbwkrbzd68HsaUsq46C5pNniBcvooQ3O9a37Z3LJj/RG49xn5PebGzakI+2M8l0pLNh
- a0rCumWZyIN27otPNi0fndNecRBjHO3SeCgm0Xu/l7RQFCo6nGx+cSHMbRDLkqkpJxTC
- 2xVw==
-X-Gm-Message-State: AOJu0YzMt+hjrwAakx+B9ATLoM9sQLo1U+K8Ez7y8XcvuiSgIdd7x9fT
- D8CtgWXyEA3Gp2x0AvMWz1EwjSIorUCbzkWdVyh6MWOcI4r3kaULA7iFqA==
-X-Gm-Gg: ASbGncsPeCmdL4+J3YsSUyarvvL9Yl421W43n0H+ciYbmCt2pz79BtRoXlG1mts0WhS
- 99ZWKlBuD3okSLAcg3gh1t7wRxkmx184tH5HQ+IRcvZf0rjIhWURlJ9GgJeeKYkr/6ZCcIMPkCx
- /w1EgoBHcH5xsXeY+fjdcxPBK7xL2ip8BOAJbGgtNga3OKxdmaQJ2pcQfYmJSfLGrIK0kvap9X4
- jC+oAvT939ff54HFPC8eiCDu3oJzHZIajgETa0CzRLhBbEJKHZ48N8yBgvBTHUmnkS8TequQEhp
- vIzdnSRXdd/b3k/qoRbtXdrrGfg66CJftrNRS0JyYPXOgH0a3tDhlAkLYY3+9jnhJVVP495kBZB
- QD+tqJBBwCTxGWPhhZOMWC0OlnurlMdvcH+gTe27bspBY6rjYLrju02lQvdI=
-X-Google-Smtp-Source: AGHT+IEVEe/tidaXnTInfC24/j4+6jGOqUddwCz0+EZzxjw2cYORkRfjH7m06ny4Ik//kHswkPyyKQ==
-X-Received: by 2002:a17:90b:55cc:b0:2ff:698d:ef74 with SMTP id
- 98e67ed59e1d1-301be205905mr2563738a91.26.1742371399887; 
- Wed, 19 Mar 2025 01:03:19 -0700 (PDT)
+ bh=rknrmfA7CmFKA8NZIq2TcdDuCQaG1etacbJiGQO7Y4w=;
+ b=Bs8OENIWMQfW3ay7D2WJKhe3pEzZBwKl70iZEAXEpgUTOJ0/Rmyr+K++YC2Wzp69/Y
+ RytVFQ6rK9xQqzmN9ofeRRLsnb+LvrtDud0JJ0tbU5U0zS98gwLJLlp9CjgJWEZ32m3Z
+ 39KHnm3yqznTWdr+kz32WT3wriuHDK7P/dCFlBnfSLaFGToI8JQTdmY1mk8/yxgCzjeA
+ QSvJVatiRWHjrA534VimEW/jgnefqQ6cJ4HewkW5fcJj2mBUEa0Nj2IYe3s5JQbSzptR
+ Bldcn+X6UN4aHRFX8R4w6vj4StOuz8FOKKMu5tDKC2SmS6ZZRXNeQvdH9WNxk+czmYz1
+ n3lg==
+X-Gm-Message-State: AOJu0Yy7S5T39O5vj3qtv9lPVmk6hUns1nDmFAwIOla3N42PzO94rCSC
+ +CPjZqJYq5sbn6plOdDQUCOveBwQU0N3BlhA2xGnUEtFGdA0csFXGm0cKQ==
+X-Gm-Gg: ASbGncvb5u4rfAoMKjdviRfn4uuUrwH1sqDO6tywZzLw1RQCLSVy9NVphNDVkbVg1yC
+ 7lvvD0727zWRB8dUiwSEA3R6bPJJ6MsqsmkYUIj9fhP0sNgjPBm2IBXYM5+9LC0Bg2fcfufpEFE
+ BV4NePWEmveeqfMRPJBSL5Z7P3tO5GUAdkdpOpfYrsU0bVR9CCTHFsr5fU9/v9vctnxjcFYdMz+
+ EAZr1Nv09GdueNWjvHirc2D8oqkQaILTd1Zq7dsl2K05SdHqwxj4BhgStjxgOyQtj9AFZAOc0OG
+ w3XgjkqkM5r89eUC1RvKayTG0LDQ0B3wrWOjL0pgpGx5NfZshBqSurYy7I41Xd69gsHcwDUzQtb
+ oVPuH+fC0sfCN3ic0M6p7VdEX/im2XeMBIiFSWx2fByX2Ntv2VzIB3c/TgL4=
+X-Google-Smtp-Source: AGHT+IGgYO4dctU62JIu13COw8OVTjcOhwwZfRYQDpNNPTAW5FyoMxYyOTTpREIIM57LGfh3sEemyw==
+X-Received: by 2002:a17:902:c949:b0:224:2667:8115 with SMTP id
+ d9443c01a7336-22649a8108fmr29640925ad.48.1742371406762; 
+ Wed, 19 Mar 2025 01:03:26 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c6ba6c8dsm107725255ad.156.2025.03.19.01.03.17
+ d9443c01a7336-225c6ba6c8dsm107725255ad.156.2025.03.19.01.03.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 01:03:19 -0700 (PDT)
+ Wed, 19 Mar 2025 01:03:26 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- Santiago Monserrat Campanello <santimonserr@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 01/10] docs/about/emulation: Fix broken link
-Date: Wed, 19 Mar 2025 18:02:59 +1000
-Message-ID: <20250319080308.609520-2-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Deepak Gupta <debug@rivosinc.com>,
+ Adam Zabrocki <azabrocki@nvidia.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 03/10] target/riscv: fix access permission checks for CSR_SSP
+Date: Wed, 19 Mar 2025 18:03:01 +1000
+Message-ID: <20250319080308.609520-4-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250319080308.609520-1-alistair.francis@wdc.com>
 References: <20250319080308.609520-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,33 +105,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Santiago Monserrat Campanello <santimonserr@gmail.com>
+From: Deepak Gupta <debug@rivosinc.com>
 
-semihosting link to risc-v changed
+Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
+zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
+to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
+rather rules clearly specified in section "22.2.1. Shadow Stack Pointer
+(ssp) CSR access contr" in the priv spec.
 
-Signed-off-by: Santiago Monserrat Campanello <santimonserr@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2717
+Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls
+for zicfiss". Thanks to Adam Zabrocki for bringing this to attention.
+
+Reported-by: Adam Zabrocki <azabrocki@nvidia.com>
+Signed-off-by: Deepak Gupta <debug@rivosinc.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250305102632.91376-1-santimonserr@gmail.com>
+Message-ID: <20250306064636.452396-1-debug@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/about/emulation.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/csr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 3bc3579434..a72591ee4d 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -171,7 +171,7 @@ for that architecture.
-     - Unified Hosting Interface (MD01069)
-   * - RISC-V
-     - System and User-mode
--    - https://github.com/riscv/riscv-semihosting-spec/blob/main/riscv-semihosting-spec.adoc
-+    - https://github.com/riscv-non-isa/riscv-semihosting/blob/main/riscv-semihosting.adoc
-   * - Xtensa
-     - System
-     - Tensilica ISS SIMCALL
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 49566d3c08..8225e9bb4b 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -192,6 +192,11 @@ static RISCVException cfi_ss(CPURISCVState *env, int csrno)
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
+ 
++    /* If ext implemented, M-mode always have access to SSP CSR */
++    if (env->priv == PRV_M) {
++        return RISCV_EXCP_NONE;
++    }
++
+     /* if bcfi not active for current env, access to csr is illegal */
+     if (!cpu_get_bcfien(env)) {
+ #if !defined(CONFIG_USER_ONLY)
 -- 
 2.48.1
 
