@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B6EEC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 19:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4709C35FFB
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 19:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuyzh-0007Oq-Nd; Wed, 19 Mar 2025 15:22:25 -0400
+	id 1tuzJH-0000iG-UC; Wed, 19 Mar 2025 15:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1tuyzd-0007Ni-4O
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:22:21 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tuzJB-0000ha-Na
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:42:34 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1tuyza-0002Cn-TM
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:22:20 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2239c066347so162645915ad.2
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 12:22:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tuzJ8-0001nS-Ls
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:42:32 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3fea67e64caso403b6e.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 12:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1742412137; x=1743016937; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=jtptQpawWvWvvPo7p+5ePzZbn/0qrX0uFQnRGLb5OR8=;
- b=Zkug5YZc8bbt/ncdJ3W9/o8AB+S4cv2n1xns/oUBXE1edBRpPJ6Dklkz9uSfutk8sr
- 8QTAuU0kalBumShWsOgkAdohP4hN/PUER0kvkst0cSfnYWIE23gP+PdXoFmzCRw7OTnf
- OiV/U9yEshrdzY10UJlIUlgORKeecX6ZRL4CVFRiyxbyosZ6tT0efIeE1yA4hkI7NwHJ
- 96yvzDnsygQuP57ymyJF+oQNvSxlpYrgxtX+fYx6ntbU8glRFjSpAwm0h4QA+WXliQki
- WFY3df0spa7RDHKkltYXF2kVn0wNwxfwC06hJeL0OeuVNEcxfyF3CvEPASlXaE15VmWZ
- st0Q==
+ d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1742413349; x=1743018149;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vMLAFjMhZ4JY7cw6US5xBTrT3XyKZJJMx+r+cPzoszg=;
+ b=aXvga1aJxkG9dnO9WvKfumjyu41p6/yg9N1UL7/DY6+ks8YSLvC0Qebd/kh0dIravS
+ tnTHOba1p4S9kPJp207BRBDgyQOCdCREKes6xdz8/VK9wyzmM7ow/1uZQfUr3xVWjYjQ
+ McH6Xt1AP2WxMj+5+B7sYXgAUjz0QSMZZN8BI6h9WFftek6b18+cgNPyAEkUHYKwI9/E
+ 3rQ4BhOEyivwVxECKI4G+XF9wjYfMFer/Mior9SzSx+y6XS1e6v9olm/xSfgpjYmBpT/
+ Ejndnj2YxvYykZmcN5+1cN1ywoZwej674gQFKkvRHTs/X4OHL+uPwVtf6oIwTphJe+jx
+ mpmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742412137; x=1743016937;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jtptQpawWvWvvPo7p+5ePzZbn/0qrX0uFQnRGLb5OR8=;
- b=FiVaCFGJogygfC2nNtyld/pf+dVPGMx16mI2xT6LTJrfvHuoApVpKPD+6gt3CztVx6
- JguH1P5sCMMSgh8SXE/rFO4OnYfj9kGtY3XU5Oyu2QEOyJuZH5O7UlPCv7gtN/BHxxhp
- r+hLZQwjyRm2J3kRwcxjDWHJ3bLK47M8HyMf9ttzs/476mjuph155afs5eJtems0RArg
- fKZ3Lj6pJbxs9+Z2m3B6/DqlJfmxFvwLtTBUrtfdAADnq1GRvA3HP59P9NUmzlcVS31f
- 90p37++ddqcjZt/uDPPO+W9ulcRXlyRilmgwqMivewG0DrmlzkNjGdQ/WlJkrikDkMNk
- HI7g==
-X-Gm-Message-State: AOJu0YywCIl3hlEBJ1VajPe++8R3ZlpyIB8HXvqkZ6UH+SPOZqAVVdiI
- x6aCZVcBDVx/bP7GpaKzTsMUJ2oRQxhJ2nPhGaf0E6pofG63H4j3IaCbbVz7GxOw78Ctd58KK8v
- +5+8u0DVUSc14dZLgvKj0AJp4hG4PxMHtm9mxuph+VROkaAMoGLMWVTN2U8x/Cn7arOVG27l4zu
- kxmrplbU/ks9tbf1hCrLaBV/sEOxkZtDaxVg==
-X-Gm-Gg: ASbGncu4GllaamtmCJvwWwZ0V3CqGuX4k3rq4Nk3DvTRmWxOaekOR9xzqAE961X/Ed+
- InqEDXwZmf/Ky+7aWOiuHJHnjfNsTlX0vzFPWtluo1hAQ6tfVe+6/J2unI/AaPiLMBqczhfC4wz
- +YUb9SAKpgC7zX1tXZS3lw33v3WVD4TQ13uo+Kg6ASz+hG+bsD67nhCjlTdDs8GgJv3c2DK9jKB
- r7iUT3igkqvC9ZKNGZ51Ettg9He+IurWg/c0x7399jrA55AnotUg0j3707WEoMTl+bfaMTvZlVD
- frgov0WzTCSKW97twbNiuhQttWBpK511gPK/7sl3h99UAg3Vm9iskegnIE3B8HF0mZ8=
-X-Google-Smtp-Source: AGHT+IGb80ZN540wcGAg63HcRJ/3dRkHokXskLkNnkc7mEboWtJIlDoyAxzX5p7HEECTnvoHIXOkCA==
-X-Received: by 2002:a05:6a21:3989:b0:1f5:619a:8f73 with SMTP id
- adf61e73a8af0-1fbecd41923mr6058469637.26.1742412136668; 
- Wed, 19 Mar 2025 12:22:16 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
+ d=1e100.net; s=20230601; t=1742413349; x=1743018149;
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vMLAFjMhZ4JY7cw6US5xBTrT3XyKZJJMx+r+cPzoszg=;
+ b=WMCw2jqtDl0R9TLxZN1ea+CAPfxPHviksET+wgkHzSvbrq06kqYben5kolwM/uTANO
+ sWmuw6Px/iOBxrRsomkyxMiWXoJytvFg8FPa7nR0iIHlYExBGVPcBMZ6W7aF5p3XAOZs
+ ESsbxaEe6i0RVIoXhxxVpxp0u0N28wy9VBsxgfrJiGoOYzXlfWSlBDA3l7Ba2UAe9Peu
+ H1eWkQtrPrZSyCnE/HaFWBWlPUkPchINVYS/23cXfJLAo3QHAVcmQWKMbZm/XsN5YS/g
+ /YmTa28EgE5Y51xrlr/WlJcLFh239UAR/Mm7aTjxFkWF3qtyY7hA6beb3R8Og8NJR2mn
+ KEMw==
+X-Gm-Message-State: AOJu0Yx7y71c3+klOlD6zZtF/lzZ38GMPHCDWB2EbVf3c0PxrZn2txTZ
+ 5oJ2gGn/kgsYpG4ZdRbmUm/lwYvYdCDLp7P6Taytv3b3XC03GHzbYNDFdkxRDIs=
+X-Gm-Gg: ASbGnctVEc+xy2axnxJJlSjLNY3TjVoMjcxfLsvL6XI6NjS5Y8HhpkG0tLOtSZtAGDe
+ TUaKVrLQOqmXtbHx1MTiALlTsDq5JXutbLYLgBtq7Upn/U+jAKkKe7LfKwz7jYZGpdLA72Bc/QK
+ M9PfF8hPuHe7JvIxQWD5eoAR1nEK27d4thld5uvV7XtGWyrvitbX7SXGvQZ5CUsrwsRrrE5omaO
+ h1fNcBD/jecN4dDYaXgS9utH6+9jJQt+8P1dK8moyuHevsD/J/U0NoThTxoEHtC19M9aZ8fdqaI
+ BMd77+aV8UTqUXyEY9jXmqxeHvdUSR2Py36NGwFXAyouY3W1
+X-Google-Smtp-Source: AGHT+IEWuDf3QXDqMWM83lzTFGPh9LARhmOrmxdzcjsVvgS6kr5Y+t/n+6YbYuqC50VWZx6mXYmG1w==
+X-Received: by 2002:a05:6808:1822:b0:3f7:d16c:e293 with SMTP id
+ 5614622812f47-3feb4844a81mr471739b6e.2.1742413348952; 
+ Wed, 19 Mar 2025 12:42:28 -0700 (PDT)
+Received: from mail.minyard.net ([2001:470:b8f6:1b:1864:2d48:765f:cbbc])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56ea947a4sm11432175a12.70.2025.03.19.12.22.14
+ 5614622812f47-3fcd60e743esm2750339b6e.46.2025.03.19.12.42.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 12:22:16 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH 3/4] target/riscv: Fix VSTIP bit in sstc extension.
-Date: Thu, 20 Mar 2025 03:21:52 +0800
-Message-Id: <20250319192153.28549-4-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250319192153.28549-1-jim.shu@sifive.com>
-References: <20250319192153.28549-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ Wed, 19 Mar 2025 12:42:27 -0700 (PDT)
+Date: Wed, 19 Mar 2025 14:42:21 -0500
+From: Corey Minyard <corey@minyard.net>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/3] cleanup: Drop pointless label at end of function
+Message-ID: <Z9seHbw1IepwkppI@mail.minyard.net>
+References: <20250319152126.3472290-1-armbru@redhat.com>
+ <20250319152126.3472290-4-armbru@redhat.com>
+ <CAB9gMfrxe7NWk_1GkudEeWby-ZHaH1xTWD5n7WfK7iz4qKsL6g@mail.gmail.com>
+ <87o6xwkerz.fsf@pond.sub.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87o6xwkerz.fsf@pond.sub.org>
+Received-SPF: none client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=corey@minyard.net; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,38 +96,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VSTIP is only writable when both [mh]envcfg.STCE is enabled, or it will
-revert it's defined behavior as if sstc extension is not implemented.
+On Wed, Mar 19, 2025 at 08:21:20PM +0100, Markus Armbruster wrote:
+> Corey Minyard <corey@minyard.net> writes:
+> 
+> > Is this official coding style?  I'm not a big fan of having return
+> > statements in the middle of functions, I generally only put them at
+> > the beginning or the end.
+> 
+> There's nothing in docs/devel/style.rst.
+> 
+> I count more than 42,000 return statements with indentation > 4.  These
+> are either within some block, or incorrectly indented.  I'd bet my own
+> money that it's the former for pretty much all of them.
+> 
+> I count less than 130 labels right before a return statement at end of a
+> function.
+> 
+> Based on that, I'd say return in the middle of function is
+> overwhelmingly common in our code.
+> 
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
----
- target/riscv/csr.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Ok.  It's not a huge deal to me.  I think it's more dangerous to
+have returns in the middle; they are easy to miss and an "out:" at the
+end make it more clear there are returns in the middle.  But that's
+just my opinion.  To make wholesale changes like this I would prefer
+it be in the style guide.  But, I don't want to start a holy war,
+either.  Sigh.
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 49566d3c08..ba026dfc8e 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3630,7 +3630,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-     if (riscv_cpu_cfg(env)->ext_sstc && (env->priv == PRV_M) &&
-         get_field(env->menvcfg, MENVCFG_STCE)) {
-         /* sstc extension forbids STIP & VSTIP to be writeable in mip */
--        mask = mask & ~(MIP_STIP | MIP_VSTIP);
-+
-+        /* STIP is not writable when menvcfg.STCE is enabled. */
-+        mask = mask & ~MIP_STIP;
-+
-+        /* VSTIP is not writable when both [mh]envcfg.STCE are enabled. */
-+        if (get_field(env->henvcfg, HENVCFG_STCE)) {
-+            mask = mask & ~MIP_VSTIP;
-+        }
-     }
- 
-     if (mask) {
--- 
-2.17.1
+I mean, just a "return;" at the end of a function, yes, that's a
+no-brainer, get rid of it.  But that's not what the ones in the IPMI
+device are.
 
+Thanks,
+
+-corey
 
