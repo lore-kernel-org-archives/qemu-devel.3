@@ -4,103 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4258DC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 20:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECA7C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 20:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuzpP-0000NJ-QF; Wed, 19 Mar 2025 16:15:51 -0400
+	id 1tuzB4-0006r6-VZ; Wed, 19 Mar 2025 15:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuzp4-0000Hn-QX
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 16:15:31 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuzp2-0005Gp-Nh
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 16:15:30 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-3011737dda0so87775a91.1
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 13:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742415326; x=1743020126; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jjJvlOnU49s+Zbb8733WbLiCItr7uaYdoO51OudCE6k=;
- b=R5qyguWcw7hqySeqyIZQXEWWynSM9cZSI+98CQqoN5mEiru0PSsSrsdTwKMnHD0mmw
- R/UdpYrWDJPxt+Dd20sLYM2ryFAQUUKw3wZ6Vh2hahKPppn1o/Aw/YFcFirLoyF0F5zQ
- 8cjNXf3MFY6tpo1oiFBDD0s9He1OmDclJ7Dni0vRICLhnDvw3MRCA3XWBzM7a/5M4qU5
- /t5QMXqUMLAK2j/6gaZOxK81e7n3vzC98AcQeRItQcyg4n4CTMlB5cGChdnBN1Ttzylv
- gKpen0LnlK5T7KS/H2CukF9L1MAfAHnvHXxNAz9VODSYDhwKDFsG6IDjPhLIxNNH0nmW
- jTGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742415326; x=1743020126;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jjJvlOnU49s+Zbb8733WbLiCItr7uaYdoO51OudCE6k=;
- b=NM7sVs3HtjiCZGptvXBQPROwUJXhdcE+eTO6qAmsNo6mQEmfCdCCTEwe1ovJYzlRlh
- 0jJoGQId1Kx6ye7wM5AcsqQNyAc7b1QuULsLb42tLdhsKBMfsnvsm1fBJelMVthf8Pw/
- d4SigdQNM4BEZZIonF1wa5Ng+rnccqUyavWEWK7SRNQJXa4otEpt4bxooCn92lJiyzY8
- iborNdZq3NkaACgiciqzWTpz/1txzKn6IJcEYdQZtiBSIaIQCg8o2OpDa32qsh8lmX8M
- Cp7iw14KQRjXxszRRcErYZy/HQZYsD/EYxYEDULD9Hjd0XJt5AA5t5ecn515DuQElATl
- t2YQ==
-X-Gm-Message-State: AOJu0YyGgE2EkZVEMcHkl0N05dzSCWpZqD83T1fyAdhfz2xHaL2ANj50
- aB1+uypEpyDJASC0XCoVC9lG1T7rVzjqTxeEpbRKW8N6VprVSkP8jCq5JCaT5WY=
-X-Gm-Gg: ASbGncsABQKZVLMn22nXANvSBrXQBQ21VH8WOq0ll6pdUJpvTwEpJ4BbKeEc8Hu3Cqd
- LoUd9FbEiP6inSNS6E7EWht3gzDy03qGAeILDWseJjptEmSjBNyv2YtosRIOUgXZLFngroGlNLh
- 2vLh4VMdEtVooIhvIv38RRzVfri0s9Un1KJyh1Xrq7ZQwrPHsMHoPm213l26b8ZfnltgoSneEWM
- QZ/PsGcYiZfLGc+SxvyAkysqL7zErueVXWlNB7BuzEu9AvHCZ3uM3XA6DtIXMpsAu6T16IYUTNI
- 1IJH5ZB2pRu3Si90SzREA9jjjMpU8nOOIg4SpdIui0zW/RqSrZSnWoO4/A==
-X-Google-Smtp-Source: AGHT+IG/qfPdy626hThIYa/RsoZd8+ixXNZ5S+14ncTQSUR3/THRotw28A4RHNR31RiMxmmch69q8w==
-X-Received: by 2002:a17:90b:1a88:b0:2ff:7331:18bc with SMTP id
- 98e67ed59e1d1-301be202b7fmr5479737a91.26.1742415325934; 
- Wed, 19 Mar 2025 13:15:25 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-301bf5b80b5sm2116351a91.38.2025.03.19.13.15.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 13:15:25 -0700 (PDT)
-Message-ID: <9c48029e-1921-447e-8b38-4b171dce1210@linaro.org>
-Date: Wed, 19 Mar 2025 13:15:24 -0700
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tuzAz-0006q5-8l
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:34:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tuzAx-0006So-8I
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 15:34:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742412842;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PnOSaBwmTwh8vZR0PUXGEXmK/pnR4DZEjshuFF/1Rmw=;
+ b=E8CoPCbTWquP1OyS0dOQFw8JNSNG6Mb91QiMCiOtf1bTbecoWnSV+zuL9k+VP3Pvl6ZTTd
+ QIwUqMbkYdtUnjta2CZNkRmCplSVjZs8KXJ/FIQgPWjyLxaahAPA99Vd7BgncyacIlRtUL
+ nGuMo6Ra6KALqm7C0JQNFpvSn9XYTJ8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-K3LCYd3aMxyWVKA-ggRkwQ-1; Wed,
+ 19 Mar 2025 15:33:57 -0400
+X-MC-Unique: K3LCYd3aMxyWVKA-ggRkwQ-1
+X-Mimecast-MFC-AGG-ID: K3LCYd3aMxyWVKA-ggRkwQ_1742412836
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C30A1180AF68; Wed, 19 Mar 2025 19:33:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.17.1])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 61A7C1956094; Wed, 19 Mar 2025 19:33:53 +0000 (UTC)
+Date: Wed, 19 Mar 2025 14:33:50 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, gerben@altlinux.org, qemu-stable@nongnu.org, 
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] block: Zero block driver state before reopening
+Message-ID: <nn5b6oyyuaxguho6ex7bal3y67olzrvwsgpa4wvjbrutsrehhl@g4h5kll24uvt>
+References: <20250310104858.28221-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 13/18] system/xen: remove inline stubs
-Content-Language: en-US
-To: Anthony PERARD <anthony.perard@vates.tech>
-Cc: qemu-devel@nongnu.org, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org, David Hildenbrand <david@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-riscv@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, alex.bennee@linaro.org,
- manos.pitsidianakis@linaro.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>, kvm@vger.kernel.org,
- Palmer Dabbelt <palmer@dabbelt.com>, Peter Xu <peterx@redhat.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Nicholas Piggin <npiggin@gmail.com>
-References: <20250317183417.285700-1-pierrick.bouvier@linaro.org>
- <20250317183417.285700-14-pierrick.bouvier@linaro.org> <Z9rNBFsWR39czUGQ@l14>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <Z9rNBFsWR39czUGQ@l14>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250310104858.28221-1-kwolf@redhat.com>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,11 +83,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xOS8yNSAwNjo1NiwgQW50aG9ueSBQRVJBUkQgd3JvdGU6DQo+IE9uIE1vbiwgTWFy
-IDE3LCAyMDI1IGF0IDExOjM0OjEyQU0gLTA3MDAsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6
-DQo+PiBSZXZpZXdlZC1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5h
-cm8ub3JnPg0KPj4gU2lnbmVkLW9mZi1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2su
-Ym91dmllckBsaW5hcm8ub3JnPg0KPiANCg0KVGhpcyB3YXMgYSBiYWQgY29weS1wYXN0ZSwg
-dGhhbmtzLg0KDQo+IFJldmlld2VkLWJ5OiBBbnRob255IFBFUkFSRCA8YW50aG9ueS5wZXJh
-cmRAdmF0ZXMudGVjaD4NCj4gDQo+IFRoYW5rcywNCj4gDQoNCg==
+On Mon, Mar 10, 2025 at 11:48:58AM +0100, Kevin Wolf wrote:
+> Block drivers assume in their .bdrv_open() implementation that their
+> state in bs->opaque has been zeroed; it is initially allocated with
+> g_malloc0() in bdrv_open_driver().
+> 
+> bdrv_snapshot_goto() needs to make sure that it is zeroed again before
+> calling drv->bdrv_open() to avoid that block drivers use stale values.
+> 
+> One symptom of this bug is VMDK running into a double free when the user
+> tries to apply an internal snapshot like 'qemu-img snapshot -a test
+> test.vmdk'. This should be a graceful error because VMDK doesn't support
+> internal snapshots.
+> 
+> ==25507== Invalid free() / delete / delete[] / realloc()
+> ==25507==    at 0x484B347: realloc (vg_replace_malloc.c:1801)
+> ==25507==    by 0x54B592A: g_realloc (gmem.c:171)
+> ==25507==    by 0x1B221D: vmdk_add_extent (../block/vmdk.c:570)
+> ==25507==    by 0x1B1084: vmdk_open_sparse (../block/vmdk.c:1059)
+> ==25507==    by 0x1AF3D8: vmdk_open (../block/vmdk.c:1371)
+> ==25507==    by 0x1A2AE0: bdrv_snapshot_goto (../block/snapshot.c:299)
+> ==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
+> ==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
+> ==25507==  Address 0x832f3e0 is 0 bytes inside a block of size 272 free'd
+> ==25507==    at 0x4846B83: free (vg_replace_malloc.c:989)
+> ==25507==    by 0x54AEAC4: g_free (gmem.c:208)
+> ==25507==    by 0x1AF629: vmdk_close (../block/vmdk.c:2889)
+> ==25507==    by 0x1A2A9C: bdrv_snapshot_goto (../block/snapshot.c:290)
+> ==25507==    by 0x205C77: img_snapshot (../qemu-img.c:3500)
+> ==25507==    by 0x58FA087: (below main) (libc_start_call_main.h:58)
+> 
+> This error was discovered by fuzzing qemu-img.
+> 
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Denis Rastyogin <gerben@altlinux.org>
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  block/snapshot.c | 1 +
+>  1 file changed, 1 insertion(+)
+
+Reviewed-by: Eric Blake <eblake@redhat.com>
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
