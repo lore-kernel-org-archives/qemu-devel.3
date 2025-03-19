@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B695AC28B2F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 01:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6836C282EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 01:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuhwO-0005am-0b; Tue, 18 Mar 2025 21:09:52 -0400
+	id 1tui3H-0007fg-2K; Tue, 18 Mar 2025 21:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuhwE-0005WR-Aw
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:09:42 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tui2t-0007YM-Fq
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:16:39 -0400
 Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuhwB-00078t-RQ
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:09:41 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tui2r-0000lY-Cv
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 21:16:35 -0400
 Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-225477548e1so111140945ad.0
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 18:09:39 -0700 (PDT)
+ d9443c01a7336-225e3002dffso70692755ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 18:16:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742346578; x=1742951378; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1742346990; x=1742951790; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pYnPy2zTdaIbEK//lejqruKbRa6GxXboBVf1q8oVBHU=;
- b=sHp2sDnwFc4o6Om5HNzIrEEDoZNvAkWkw79D3mjX03sdJPmR3mvt4yYjsXorkBGTLC
- eE9oVcn+j0dueUvo01MBZFFHI1vfF43UNtoc7b3Jov+EHuPu7So2DWd0pqSu5HO1G4hR
- +bF7xHjfpfYQp6roghqQ2oPLM0T1Bq7a+yKrMBiaMMWD5XdskDnoayh71wYSJMfR90bG
- 9ELCViw1Tlq5RrltgSCYERUWy0Eh8k5ueySDVdETB9UEFm7G35KxogJGSb8E2Prx1ClA
- zip/GEN2dS2OYIGPAg2law+9rlSVwgQVHLhASRju5Al1iA3IPDpXL8uGdnbtDlZPeBMT
- IsBQ==
+ bh=Ac/EPeLpivdewdCOr1s6nOgo38GWkws/nd7TB5d+KUs=;
+ b=g3nAGOim/hboCq8j8YWODtKrnf17Vjvop7zGl5ogbD6SlKJry/hrYH16juVA2C0SHY
+ tyIcfQqSG/aRksMrZtUd7n49Soqh4gORExYYesSGRJoWBNnpTY2IWdKFhVkG6tLmOkgW
+ u1/dNvUuS2UJ2fbgaD79MJIG5xxjz/faE4S2GgvsLXjSBcGBNu/E24rFVFN7LPksAfws
+ vq6ZLTmDZGUq4FxjLTnzkIxIVxnR4Z7ffc7Q9cNTh3NVpcw3nG0N3xuNdvK5LlAPFN1B
+ 56WDTHNbs0oUNXagWqeFcxUQt1LtlsaR95TsKTpKtvupYtP90wPDpoRSeU+ADmPELXqV
+ QtEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742346578; x=1742951378;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1742346990; x=1742951790;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pYnPy2zTdaIbEK//lejqruKbRa6GxXboBVf1q8oVBHU=;
- b=QnqzQERi65I+SE3iOq5ei/VFaivrC+Bd2oSeSOafRB35cpqdE5nWQeoAY5o6XagEeK
- RIpk922ehBouPGaDdknsjrkNSqKod0lhWiau4GgzhGRRpFRvDk0BQq2CNdlWDLS5rhuw
- jzcoBZ52ri8nVNfzyUtzfnB8CnZuoGW4WtZcVM5bhzXN+WARGGJjslKQj9d5NgWzVTDJ
- yIVfSG8w1Mjlx29EnRodDjUQFKnbxGdBt6uRHtnXEv3fqVIXw9zomyr0RzZ0DbQdCQ1W
- ER/2woQbJkQs5AgUQ4LpLQ6lCWn8A33v8VJ0PbHHoR1XjgP+PAfRDKIiXemUX4CuOeD0
- sGVA==
+ bh=Ac/EPeLpivdewdCOr1s6nOgo38GWkws/nd7TB5d+KUs=;
+ b=h+29IPOenooYxzBY/yTYckbDhl6K9RGGMiVlhR57+QJFlWligMJXjjqq5IDoHZcy0c
+ gEcAhm1dFcJRNN3t/NB/pbH4oXFoNvJXvL67dZOjrrM+ptMKksVnIc3XyBk1HoN1Aauf
+ gS/Epzjyxmp3gvyxMhYWIkyXDugXsLMWTNpCfBGNlfI7QWAMWm8YNOv3VNrm9y8QFRDu
+ KDuxNV4aIXC3jwJnQfaTa5r1CFaQW0SBl3s3yBJ6Zo55g/G+/fHY/MTgvu6OGVgKjqfW
+ lcDCCbbFfpgEdhAF2wabJstWf4Y3P2sqEE6TS3+hJlWyQTqJk4Erj+1WOsDdROXK8kEi
+ nlPg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuukj/MZlypHdrgixjU6Br5iwD6cRrl9x8D6cBHP1iagyPAeLomU8v6k/1tOVVEmQVxxwHldeHOK35@nongnu.org
-X-Gm-Message-State: AOJu0YxJO2a5opMjxHzHnXg1NRbG/IwO+1OCebOYHMprFQ5gQMLtj/cS
- REBdfvuuzTX0Itlc1AIRBiqfatChn4pfLlZjbGJQKLbBfQpQZeJZDiMbBHvT01tTm9PCjZ8PPho
- O
-X-Gm-Gg: ASbGncshD49TSKRgym3PX22yQ4wq2VA5eEs7NmHTHGH23gz1vmNRZ2iwP700OTPxpQB
- qzbpAZ9tnJwfXtBCDD/dDv5DPkDNSYXOKaOurmWvEWf7cyIuFl4yAKpH5NXP6+wMOhdDZ6A+oL7
- v6uy0ZAkIe5V57mToBri97U2sEIssoN2aNaqb5KNGsoEUxuPSG2GBR6thIS4lE/b2COpZnderU5
- gOwea3C3cxNhfhUqBERqDYjdEDz+szIpYjRt/vp1oxqMoAsq1pRQXtIk6H1w6reSmSeAjpqG8Ky
- dsgZVcQNfBSFUAwa6tH8RFZXfSKUm0FT+mq80jlDP4xhUzxMocCJPE2Lww==
-X-Google-Smtp-Source: AGHT+IHgHfwBnki3vcoaFbaukCI63+DviHk6tNqkRaha0fxVJQBdR+lIA6PnGItziQTaXKTmr9Josg==
-X-Received: by 2002:a05:6a21:3286:b0:1f5:8678:182a with SMTP id
- adf61e73a8af0-1fbeb7a1da1mr1176639637.12.1742346578387; 
- Tue, 18 Mar 2025 18:09:38 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ AJvYcCURVNOb/3fheJ/GviFj4IiQRnjRghKg0j+uPMC5FajREr01r15q9BdIDCurZvtDGDsLs7mCWWrAPV6R@nongnu.org
+X-Gm-Message-State: AOJu0Yx+fdcmMT3U/tC6/QesHPjNTUCACFJhHIAQOokyaXlqv609sI7U
+ 01fuG79gUwyMTCnxya1FO9WBmxDChspQBUDrrJoZQjyyyFE4CsPVGROSMVU5vHo=
+X-Gm-Gg: ASbGncvokrAik+lwBqWd3bPI+/VPyC2IuCdf0FWIKCkoSDUJv7nBDHA0nESg/2ovI6I
+ jech38T3aPlDYN/ydirZtTaaHpDlt+Nq7/aSBYfYy3l5zITqqA+btfe5DqAjN1E2hnWMCJwBxQB
+ rxDirD4monpRwQ/pFE59VQCuwyl2mPNbVBuOG+NlTCOe2xXMVuYVunFb6Dho/aFRqmywj6wg0cA
+ YMJDLuvn7VJi03OEHuq/9sUb1CO+PMR/kFDGbb3vHJ/kxGvkhPGJrU/aA4UkRiJsixk3H0gO1Ui
+ AkSzdIcsxH7tMY6ATIx5qxwFMgbsj+BOivIDlbvPZSCpuPmo4SjPl3JsMRvri1gdoFMGdIilV6c
+ K3HB9OR4m
+X-Google-Smtp-Source: AGHT+IFZtoLbibdwQYGfdO5vr5SNBFUsRWGP78hA2I2Wn2KvNZstYNVgfWzdqDfuEFqjSJYBwBaa1Q==
+X-Received: by 2002:a17:902:f60f:b0:220:c4e8:3b9f with SMTP id
+ d9443c01a7336-22649573a26mr13968425ad.0.1742346990088; 
+ Tue, 18 Mar 2025 18:16:30 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-737115592c2sm10653593b3a.66.2025.03.18.18.09.37
+ d9443c01a7336-225c6ba6d5dsm102026685ad.153.2025.03.18.18.16.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 18:09:37 -0700 (PDT)
-Message-ID: <92981c19-8d0c-4dd7-aa2d-414bebdc9a83@linaro.org>
-Date: Tue, 18 Mar 2025 18:09:37 -0700
+ Tue, 18 Mar 2025 18:16:29 -0700 (PDT)
+Message-ID: <b039499c-4c0a-4eb1-ae74-ce1fe5386f20@linaro.org>
+Date: Tue, 18 Mar 2025 18:16:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/42] accel/tcg: Fix cpu_ld*_code_mmu for user mode
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 06/42] include/exec: Split out cpu-mmu-index.h
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
- <20250318213209.2579218-4-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250318213209.2579218-4-richard.henderson@linaro.org>
+ <20250318213209.2579218-7-richard.henderson@linaro.org>
+ <c76d7019-7087-4522-9b49-bc99fa71436f@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <c76d7019-7087-4522-9b49-bc99fa71436f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,93 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/25 14:31, Richard Henderson wrote:
-> These routines are buggy in multiple ways:
->    - Use of target-endian loads, then a bswap that
->      depends on the host endiannness.
->    - A non-unwinding code load must set_helper_retaddr 1,
->      which is magic within adjust_signal_pc.
->    - cpu_ldq_code_mmu used MMU_DATA_LOAD
+On 3/18/25 17:02, Pierrick Bouvier wrote:
+> On 3/18/25 14:31, Richard Henderson wrote:
+>> The implementation of cpu_mmu_index was split between cpu-common.h
+>> and cpu-all.h, depending on CONFIG_USER_ONLY.  We already have the
+>> plumbing common to user and system mode.  Using MMU_USER_IDX
+>> requires the cpu.h for a specific target, and so is restricted to
+>> when we're compiling per-target.
+>>
 > 
-> The bugs are hidden because all current uses of cpu_ld*_code_mmu
-> are from system mode.
-> 
-> Fixes: 2899062614a ("accel/tcg: Add cpu_ld*_code_mmu")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/user-exec.c | 41 ++++-------------------------------------
->   1 file changed, 4 insertions(+), 37 deletions(-)
-> 
-> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-> index 2322181b15..629a1c9ce6 100644
-> --- a/accel/tcg/user-exec.c
-> +++ b/accel/tcg/user-exec.c
-> @@ -1257,58 +1257,25 @@ uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr ptr)
->   uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
->                            MemOpIdx oi, uintptr_t ra)
->   {
-> -    void *haddr;
-> -    uint8_t ret;
-> -
-> -    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_INST_FETCH);
-> -    ret = ldub_p(haddr);
-> -    clear_helper_retaddr();
-> -    return ret;
-> +    return do_ld1_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
->   }
->   
->   uint16_t cpu_ldw_code_mmu(CPUArchState *env, abi_ptr addr,
->                             MemOpIdx oi, uintptr_t ra)
->   {
-> -    void *haddr;
-> -    uint16_t ret;
-> -
-> -    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_INST_FETCH);
-> -    ret = lduw_p(haddr);
-> -    clear_helper_retaddr();
-> -    if (get_memop(oi) & MO_BSWAP) {
-> -        ret = bswap16(ret);
-> -    }
-> -    return ret;
-> +    return do_ld2_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
->   }
->   
->   uint32_t cpu_ldl_code_mmu(CPUArchState *env, abi_ptr addr,
->                             MemOpIdx oi, uintptr_t ra)
->   {
-> -    void *haddr;
-> -    uint32_t ret;
-> -
-> -    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_INST_FETCH);
-> -    ret = ldl_p(haddr);
-> -    clear_helper_retaddr();
-> -    if (get_memop(oi) & MO_BSWAP) {
-> -        ret = bswap32(ret);
-> -    }
-> -    return ret;
-> +    return do_ld4_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
->   }
->   
->   uint64_t cpu_ldq_code_mmu(CPUArchState *env, abi_ptr addr,
->                             MemOpIdx oi, uintptr_t ra)
->   {
-> -    void *haddr;
-> -    uint64_t ret;
-> -
-> -    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
-> -    ret = ldq_p(haddr);
-> -    clear_helper_retaddr();
-> -    if (get_memop(oi) & MO_BSWAP) {
-> -        ret = bswap64(ret);
-> -    }
-> -    return ret;
-> +    return do_ld8_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
->   }
->   
->   #include "ldst_common.c.inc"
+> A side question: Why is MMU_USER_IDX different depending on architecture?
+> I'm trying to understand why (and by what) previous indexes are reserved when MMU_USER_IDX 
+> is not zero.
 
-Already given with my first question, but more clear to repeat it here:
+Depends on the translator, but often: cpu_mmu_index may be encoded into tb_flags, and the 
+translator *also* uses this encoding to determine the priv state.  So if, in user-only 
+mode, we fail to encode MMU_USER_IDX into tb_flags, we'll get incorrect priv checks in the 
+translator and fail to raise SIGILL for privledged operations.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Depending on the target, the mmu_index space may be quite complicated, with various 
+meanings assigned to various bits.  Thus "0" may not be reasonable for MMU_USER_IDX.
 
+See, for instance, enum ARMMMUIdx or ppc hreg_compute_hflags_value().
+(Both of which, amusingly, use MMU_USER_IDX 0; neither here nor there.)
+
+
+r~
 
