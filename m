@@ -4,89 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07467C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F54C36005
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txD0a-0002ml-4Q; Tue, 25 Mar 2025 18:44:32 -0400
+	id 1txCzO-0000WM-C1; Tue, 25 Mar 2025 18:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0H-0001WR-1c
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:13 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0E-00073P-DL
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:12 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-224171d6826so54962655ad.3
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942649; x=1743547449; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NysG+klqlTH+Cqa+DgVibFr5yz9FYb8KE+rqeZdAsXI=;
- b=xXd+J4u0wAnLpQTlhReTB0DFbDDZsVBJ5ZEkhf+wUbVSzKcR7VhrMr9rnomow17lAF
- 7+M2tlLZp/07FtqXYk0xVFaQ3S+tfuGLWZEBltESmgU69EbNgWJ68lv/ooJORPSMLDiX
- t9qeTQQRcv9ComCT/JMm7aScY44W/WhB4u2qV1g6lwlQk4V1qc+PPPNZ/BC256VLOzMP
- P8sqRlZag77eVprQIm6BL00yVJewZWXdckuagca4cqwiXRFMPsKWt9Woobts8/XKpciC
- mfnYBfCUq06Mg1b3r13o6PtH/S3ARsSGJcCJzBGzeCD3bTsQsVOzP2IiLu2gwZdgWRV8
- Sjog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942649; x=1743547449;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NysG+klqlTH+Cqa+DgVibFr5yz9FYb8KE+rqeZdAsXI=;
- b=ifU2H3HX/P15rSbtMiaCKY/n1dfGeRFNcBRmxJcAcJVrqsgCRhJ3erH6oahhN0k1S8
- 0TzmjTLXZOWPbd6tbuwNYEPLqlpOfVub2tcMJL9/PZrYPT1hEsUFOVeasqzd/XpaO8YU
- SBYmm2Yj1IxO7+CGBNxfxz1U7VOgRF+5gxQeu5Ty2H0/iNtAJEBhLEij15oPekbv1zUJ
- 45qmXzdz8tpTrFy2usMIQeyK1mb/QixZQFRk1wZlnCFe/04lhneAscBV3E2shibJTGQm
- 1D56aW/DBdaSocA7vcLuNPCDfUF0m9Bh1Nup7qRCEOtF4Tou5OilnpYO1oXvfpx8Ng/2
- fxfA==
-X-Gm-Message-State: AOJu0YyJPmGvfvRizSBUFJ5vAVRPYIcMEZHOkAdAm2C5IF2iqsCfx/lA
- Ufrwst8+OF1AhhjWmRChgH9lPzYbg5w6ytXk6nN+TeqMnzRUTr5JHlkL53xrY+SNtL2EKdwBNkj
- X
-X-Gm-Gg: ASbGnctuQXQm5cJdebh4ZoF5IsQqD8VhLft/g+l0pb1eC4Gvsjy2gw2ue0RUH3no42e
- 5PSpsLHP+TqA+wQooY4zjjQdG5UYDJx2kelW3wBKDaSN9yyG64TLfCXmnrs7rQD8T0OS2Iktq+3
- Jh1iFRwiFV1x7D+CHqrmnNAfpql9oDVBa0BHR8E2GhItgnl9R/y4VvlitUkD2T1yCgHzzmrXa6u
- Yv3t2ue7WNX1P+cocW/8joi2Jpatoiog+pSCzn+mIn44QNODa2kCM4o3pld2GKiRKXOl37P8Xpy
- Fc15YbUJxufrRwHe3S/adiNBFz2HOQWnHo49VcwOM7VvHvC+TD1Y/Y7sPqoXbZ3OVjet9gh7tcC
- g
-X-Google-Smtp-Source: AGHT+IEZ6cu7oXzjvNlHCM4jz5Ez5N8kIDllVgrKO1EMwgmRJ0X9Y8IwI7+SbpaC9eWf1Xa8i5qsZw==
-X-Received: by 2002:a17:903:32c8:b0:224:1609:a74a with SMTP id
- d9443c01a7336-22780e14a50mr322363575ad.34.1742942649052; 
- Tue, 25 Mar 2025 15:44:09 -0700 (PDT)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Mar 2025 15:44:08 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mrolnik@gmail.com,
-	philmd@linaro.org,
-	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 06/11] target/avr: Add defines for i/o port registers
-Date: Tue, 25 Mar 2025 15:43:58 -0700
-Message-ID: <20250325224403.4011975-7-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
-References: <20250325224403.4011975-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1txCzM-0000Vm-Uz
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:16 -0400
+Received: from mail-bn8nam12on2055.outbound.protection.outlook.com
+ ([40.107.237.55] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1txCzK-0006sr-Q5
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=m+UTuQocK3Z+X6ayAui/cNsyC/aQnv92qJ6xJn/FqfEBsi1PhdphUDTvb+IZ4Tivhkds9lkZL1lz/4RtY6nnRf6xZqxhklJVxi8BsTc1QZbV6kpDGYiPqNdjEa6/id5TipzdQC58EzXmAkvcUTtOAiehU0lpzylN9u3I+dDLt3OL5D6M30ndRgBUyiSwBAubJku5wGwnZW9VQrRVR2WRe74a57vMHhRG5Lk+983KnYdqpDRd8+ha7X5jHCGJ6gRBBXgvgmJY/kncC+KNcEyURt87ciyJYWO94LMEoAteJdao3ZSmDIqrnM0Hg9v+ZpQrozE2k8gd8QCDZcy226snEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VdAmo88igy6IkK4/zTp0s+JA+J+eGwkGwEMeaREeflI=;
+ b=YamNbIuK4qF+mmLg7/GsnD179ovvIF3IQL/xbvxXjsdvN1sNJrri7avijbaMU0glV6mRIrcmbIA4yI6STlDdts5yjrbOKYzQa6KOpLlflBzC4SeEOFYKHXLqH5KMA2FVT1qRYcSvNZFc4LjZfqPBgx/041+qPwpcB2scokoccislLV31esndxeVuk+HF4p3BVPy5/zQG2oxFhKeT++yV2FeS5WDrt3t5ooSpyRUPKGtOMDli5yeW8hKn5Ja3Q2Acz9V8gPAUdpdYKuz8lGs89plKSYO8nkWRAEwpOLH3ki0AC/JVyqgBidTiLl4q8c8eoS3FkYOiv1FAu4KbRHxrfg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VdAmo88igy6IkK4/zTp0s+JA+J+eGwkGwEMeaREeflI=;
+ b=hUau+8500103qXuqWRjCI7OuYobt51KmYSboWLy+bhsU7RJoPocn5TDDZkeQObwGBPdtuR9X2GVFtQpT2EE39qn1Bkz9W4m/oUO7Ovn8zM5bgSL/DtG02kaWgOXhelDwX1xV45P+D/DgKOOdlDKefNUev2RGpHQIXbW5q4IrdiM=
+Received: from BN9PR03CA0717.namprd03.prod.outlook.com (2603:10b6:408:ef::32)
+ by SJ2PR12MB8112.namprd12.prod.outlook.com (2603:10b6:a03:4f8::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Tue, 25 Mar
+ 2025 22:38:08 +0000
+Received: from BN3PEPF0000B06F.namprd21.prod.outlook.com
+ (2603:10b6:408:ef:cafe::3a) by BN9PR03CA0717.outlook.office365.com
+ (2603:10b6:408:ef::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.43 via Frontend Transport; Tue,
+ 25 Mar 2025 22:38:08 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN3PEPF0000B06F.mail.protection.outlook.com (10.167.243.74) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8606.2 via Frontend Transport; Tue, 25 Mar 2025 22:38:08 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 25 Mar
+ 2025 17:38:07 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 10.0.0-rc0 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+Date: Wed, 19 Mar 2025 07:08:40 -0500
+Message-ID: <174238612063.1594466.4005439602392444073@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06F:EE_|SJ2PR12MB8112:EE_
+X-MS-Office365-Filtering-Correlation-Id: 805c23ca-5f76-4286-878e-08dd6bedb73e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700013|1800799024|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?c1Y3VXZCS0pDdUN4dnVDZkQxc2U4QnVDblBwRXZ4bVR3STlWKzVBYTRYVGQ1?=
+ =?utf-8?B?aTd5ellzY0t2Y0I4bklaQlNWRFBQZjJtd3hCOE1tYm1Gcm52UFZUUnFHeU1p?=
+ =?utf-8?B?SE5zL3JWaTlOZ3oybk94UzY2NDltVkFybExyL0dOd2lqZjhUODM0RGxCMUZa?=
+ =?utf-8?B?a2Fvd0Z0dmhCUHpMK3BBc0RoSG8zRTg0bE9nQVl6eDVUSUdVSDczZDNWSXJG?=
+ =?utf-8?B?OGRaek9sdHVJVzh2eThCa05RSVZGUEJOdTRoc2lFMC9TT05FaHc4a1V1NG9Q?=
+ =?utf-8?B?Z1BsUEo3NVpJYURSMFB2clE0Zys3YXZIOE1MTThCTzdNVDR4WStWUktzUVky?=
+ =?utf-8?B?Q09jTEkvVnJySWpXSi9TSHJKVDR6VGFib250RERhbXJ6VEhCOVpnMHdYZlBC?=
+ =?utf-8?B?bWI0dll6QWhjSVRrVktSV3lvVlBSaTdkZjZtYmNRT0RySy92eC96TkFvNDJL?=
+ =?utf-8?B?UmZKM2JyL0FWQ1dOYlhMSjBDMzRKcjlLUFhFN0lJZUNodkkzSC9sd0R3MHFK?=
+ =?utf-8?B?UGdGZ1ZBOEJXWUREbTErTmpHOGtCQmFpS1hrTk5UQWdCMkdhSm5uWmN1VkZr?=
+ =?utf-8?B?aFpHR1RRQW5CWHNsdEF2OVdaVURPTElLc0t6TFd2QmhKVzhtbWhsRC9HQ0c5?=
+ =?utf-8?B?VjVJN0dXV2hsak90Vmw2TFpUL0tLUzJNUTBLK3J5NkFjNFkzR2xaS1JsQW9F?=
+ =?utf-8?B?R1M4ZU4xaEFkTkNabjdVdWpUZ2MyMnJNNVRrSXNxTlV2WTRpMS91aFh0aFVU?=
+ =?utf-8?B?YmF3YmpjemRSaW1uUXpJSXdwc2ZrYXpNMExGcE4wcXFTQmFBcnB4RC9wcWlx?=
+ =?utf-8?B?T3lDNEZKcXhneXpaU21IcFdoem1HZStiaGRZWWN0Tm1iWDl5Y29SVFhoSVlt?=
+ =?utf-8?B?QWloVitYR3puWkZ3QnFEeXdSTXRSZXJhK1FVTzljZDhmMG1MOStLbmRGVEt3?=
+ =?utf-8?B?WnNuSTZzNVJBQ3hGZkVRUlpNamhJUEhUNEFiL3ZqRGp5elZZdmFZZEYzMEM2?=
+ =?utf-8?B?ZEhEYSt3NHZObnZ1NVZkcnAwZ05QNjR3QXRlTThzcWFzQXlKbXhYTk91bTRY?=
+ =?utf-8?B?and3TzNqQU5QVnZjQWVtWEVVRVNycjFnU0U5d3NiZ3ptT2lUSlJlM2ptTGE5?=
+ =?utf-8?B?WStuK0krRkZtbkN0TXd6Z0tVZlhSTHQ0c0t4V1ZVclU1Y284aEkzbFhQM1Zw?=
+ =?utf-8?B?eUdJbitCL3h3ZjMrUksxczBvejlrVWU2VWptUko0ODJ5Tk5iclVieTA4b3lv?=
+ =?utf-8?B?b3hmYlhSZUhLNDdzeVo3YWh5S28zZUtIZGxSL0J4a0N3VGUxa0J1dm55SmJv?=
+ =?utf-8?B?dEpzU0tmR2xwa0lMT25LRDRoQXdrVTlnSjNCVDZDbDV3bysyNzE3emc4N0pL?=
+ =?utf-8?B?NXZQdVFVTkw5akVwd0VJTzJNWkoyQ0Z1TkRsMlU4dmNwVFYwckdGQWZrV1Fj?=
+ =?utf-8?B?cjBxc3NyRmc3dTBzQ0o4emc1dmJEV3hubEUzTnI2alZVWUZmWE03OGxVbTc3?=
+ =?utf-8?B?ME5vcUxYNUZqTmJZbUhOMHRpNGQ1Tmt2ejNmTHB4bjJpQ1MwQUVkdjZ1OE11?=
+ =?utf-8?B?dldDeXVkelBBQjR3cWc2L1JZQk44dGpKTDNiK0xEVVJhQWJrOGhLOTk1VmV4?=
+ =?utf-8?B?d2I2bVpLWGJOdTZXQkZZTXJUbERDL1ZCaE14QXo1T2Z4bm1WelQ3cDFSRXpq?=
+ =?utf-8?B?alczRElTNHdKeVVmcGN0WWkyL0RTYUZvMzlwRE1IUnJVdHpEWFJjWlpndjVN?=
+ =?utf-8?B?alNGYlliamxsVlQrRXVlWVFFcU8zYnpRdFZlOXh1UHByUEE3Um1Za2cwejli?=
+ =?utf-8?B?Rjh0b3ZXSFFaZFdweHV3a3h5ZEpvQVZtTTBqanBkTCt0SU84NzM1QTdCQXZq?=
+ =?utf-8?B?R05QRFh0MDFMUG1OUlFBcUJrSlQranFlUzF1KzBiWVI4cit1OEl6UHArOWdq?=
+ =?utf-8?Q?a0rvw9/ZOI3ie6o3hofDKFiLZnwTrUKP?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700013)(1800799024)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2025 22:38:08.1794 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 805c23ca-5f76-4286-878e-08dd6bedb73e
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B06F.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8112
+Received-SPF: permerror client-ip=40.107.237.55;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: 13
+X-Spam_score: 1.3
+X-Spam_bar: +
+X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,126 +154,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/avr/cpu.h    | 10 ++++++++++
- target/avr/helper.c | 36 ++++++++++++++++++------------------
- 2 files changed, 28 insertions(+), 18 deletions(-)
+Hello,
 
-diff --git a/target/avr/cpu.h b/target/avr/cpu.h
-index b49e7a7056..ebcdda20ac 100644
---- a/target/avr/cpu.h
-+++ b/target/avr/cpu.h
-@@ -45,6 +45,16 @@
- /* Number of CPU registers */
- #define NUMBER_OF_CPU_REGISTERS 32
- 
-+/* CPU registers mapped into i/o ports 0x38-0x3f. */
-+#define REG_38_RAMPD  0
-+#define REG_38_RAMPX  1
-+#define REG_38_RAMPY  2
-+#define REG_38_RAMPZ  3
-+#define REG_38_EIDN   4
-+#define REG_38_SPL    5
-+#define REG_38_SPH    6
-+#define REG_38_SREG   7
-+
- /*
-  * Offsets of AVR memory regions in host memory space.
-  *
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index e5bf16c6b7..f8ada8b106 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -216,29 +216,29 @@ target_ulong helper_inb(CPUAVRState *env, uint32_t port)
- {
-     target_ulong data = 0;
- 
--    switch (port) {
--    case 0x38: /* RAMPD */
-+    switch (port - 0x38) {
-+    case REG_38_RAMPD:
-         data = 0xff & (env->rampD >> 16);
-         break;
--    case 0x39: /* RAMPX */
-+    case REG_38_RAMPX:
-         data = 0xff & (env->rampX >> 16);
-         break;
--    case 0x3a: /* RAMPY */
-+    case REG_38_RAMPY:
-         data = 0xff & (env->rampY >> 16);
-         break;
--    case 0x3b: /* RAMPZ */
-+    case REG_38_RAMPZ:
-         data = 0xff & (env->rampZ >> 16);
-         break;
--    case 0x3c: /* EIND */
-+    case REG_38_EIDN:
-         data = 0xff & (env->eind >> 16);
-         break;
--    case 0x3d: /* SPL */
-+    case REG_38_SPL:
-         data = env->sp & 0x00ff;
-         break;
--    case 0x3e: /* SPH */
-+    case REG_38_SPH:
-         data = env->sp >> 8;
-         break;
--    case 0x3f: /* SREG */
-+    case REG_38_SREG:
-         data = cpu_get_sreg(env);
-         break;
-     default:
-@@ -265,39 +265,39 @@ void helper_outb(CPUAVRState *env, uint32_t port, uint32_t data)
- {
-     data &= 0x000000ff;
- 
--    switch (port) {
--    case 0x38: /* RAMPD */
-+    switch (port - 0x38) {
-+    case REG_38_RAMPD:
-         if (avr_feature(env, AVR_FEATURE_RAMPD)) {
-             env->rampD = (data & 0xff) << 16;
-         }
-         break;
--    case 0x39: /* RAMPX */
-+    case REG_38_RAMPX:
-         if (avr_feature(env, AVR_FEATURE_RAMPX)) {
-             env->rampX = (data & 0xff) << 16;
-         }
-         break;
--    case 0x3a: /* RAMPY */
-+    case REG_38_RAMPY:
-         if (avr_feature(env, AVR_FEATURE_RAMPY)) {
-             env->rampY = (data & 0xff) << 16;
-         }
-         break;
--    case 0x3b: /* RAMPZ */
-+    case REG_38_RAMPZ:
-         if (avr_feature(env, AVR_FEATURE_RAMPZ)) {
-             env->rampZ = (data & 0xff) << 16;
-         }
-         break;
--    case 0x3c: /* EIDN */
-+    case REG_38_EIDN:
-         env->eind = (data & 0xff) << 16;
-         break;
--    case 0x3d: /* SPL */
-+    case REG_38_SPL:
-         env->sp = (env->sp & 0xff00) | (data);
-         break;
--    case 0x3e: /* SPH */
-+    case REG_38_SPH:
-         if (avr_feature(env, AVR_FEATURE_2_BYTE_SP)) {
-             env->sp = (env->sp & 0x00ff) | (data << 8);
-         }
-         break;
--    case 0x3f: /* SREG */
-+    case REG_38_SREG:
-         cpu_set_sreg(env, data);
-         break;
-     default:
--- 
-2.43.0
+On behalf of the QEMU Team, I'd like to announce the availability of the
+first release candidate for the QEMU 10.0 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
+  http://download.qemu.org/qemu-10.0.0-rc0.tar.xz
+  http://download.qemu.org/qemu-10.0.0-rc0.tar.xz.sig
+
+You can help improve the quality of the QEMU 10.0 release by testing this
+release and reporting bugs using our GitLab issue tracker:
+
+  https://gitlab.com/qemu-project/qemu/-/milestones/15
+
+The release plan, as well a documented known issues for release
+candidates, are available at:
+
+  http://wiki.qemu.org/Planning/10.0
+
+Please add entries to the ChangeLog for the 10.0 release below:
+
+  http://wiki.qemu.org/ChangeLog/10.0
+
+Thank you to everyone involved!
 
