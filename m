@@ -4,104 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4023FC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B227CC35FFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuxrY-00055W-CZ; Wed, 19 Mar 2025 14:10:00 -0400
+	id 1tuy3Q-00088C-Ty; Wed, 19 Mar 2025 14:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tuxrL-00053q-Hl
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:09:44 -0400
+ id 1tuy3M-00086e-2S
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:22:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tuxrJ-0001XM-76
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:09:43 -0400
+ id 1tuy3J-0006JK-UG
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:22:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742407778;
+ s=mimecast20190719; t=1742408523;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6hAllg4QpmIzJrn9u+m+lN6INt3fA4J1LErAC6oV2wY=;
- b=hz4qrSSLjzKMeE7p7jTXGukyw61I6ihb3GZJJZU7J64IluhKjVS2nAbLc81puAcv5RSC4z
- X2ZKDTL5+eSjahmnotmjdzqIn3dReu6NZt4OlZYU03XoQtcjzzDPxq9gs6YFdpR1rfgGEd
- OCYh/npKiOpGxLH3enmOWips06jqjmE=
+ bh=okPMf6cCHQbe28vUxCLh9bHn7x3G8lNwSs6TkpJtphc=;
+ b=IgHLO7An80TyO85J8PbddyMfkj4gyl9oXkxvEZEcYMDAvEgNr0ebuhrQqZphXDDGMdebwr
+ bVBOFjr0FXKcL9SAJIdHhKVNu+imwLuKknYELnFTqt+tN5Vrh2pmYoSJa1lJm6wZ5AG188
+ ocbc5+28KE5Pcq6JzjoJ86kQkuVG7kw=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-3EMCgSX2Oa6kpLM00sQhNA-1; Wed, 19 Mar 2025 14:09:37 -0400
-X-MC-Unique: 3EMCgSX2Oa6kpLM00sQhNA-1
-X-Mimecast-MFC-AGG-ID: 3EMCgSX2Oa6kpLM00sQhNA_1742407776
+ us-mta-393-9aTRnCjGPm6M8ZSRWJloHA-1; Wed, 19 Mar 2025 14:22:01 -0400
+X-MC-Unique: 9aTRnCjGPm6M8ZSRWJloHA-1
+X-Mimecast-MFC-AGG-ID: 9aTRnCjGPm6M8ZSRWJloHA_1742408520
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39126c3469fso3291299f8f.3
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:09:37 -0700 (PDT)
+ ffacd0b85a97d-3912e4e2033so2867401f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:22:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742407776; x=1743012576;
+ d=1e100.net; s=20230601; t=1742408520; x=1743013320;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6hAllg4QpmIzJrn9u+m+lN6INt3fA4J1LErAC6oV2wY=;
- b=xLE5g7oA85pPTVVgkxH4O6QBDDsCaNNvUO6M0Q4Yss5PAjT+Zaseuyl7uAU2yNPrP0
- LI9/cgknvL96Plnk+2bdLZ2YWP/zMec3XdrMExIHu0OY/7GSllxWxAfZP49ueQzzN4bf
- 1ioO1F5TF02viqDtXmKQweippGJdcOO0Yk4cbbAB/0OEIVvpw8XNVdEKENPY4mBfMccq
- YYemsH2gmacbKBEaUpjwctn+zJATaW8TaWNChMgvRtTHgJ+ch8IkRgjG7awhoXOdHz8i
- NR69pLl6i5mCiLY1DQ+ZvQng5dtEMSE7KSpY8abQ1g/HLckimDVbjS4k6G9dSAgIKSYM
- h8yw==
+ bh=okPMf6cCHQbe28vUxCLh9bHn7x3G8lNwSs6TkpJtphc=;
+ b=owU375M8tZNeIAPbCB6wvoeGmBK4OF88ePkEH6cC9F9B3CNGtZmgBXpLDZbsqgCYWw
+ WpVPhMZyGtwuhuDxZodgWe9oCJqSaPqEd6yW3m60/EWqhvE3gpG2R04DcpdmKmXZnQRw
+ TzJa32L8HRumbjt7RwNoeheLEJvCRR6+BbyuBZMUSld1iR7gZPhTD7cbKf2y2D2Rcih+
+ ldcYW/SaWKf9BLGqgdpCTgksBRVad8+spZ8432z7xbyUxXE6SYeZdbIhpdvktsDm/PQL
+ euLA+OR5gaDntvxs2mRkeucbsSiOz5KYPZpU6Ia2ih0QVArjoMcjCqxmQFRQlx0o3I/H
+ 11Wg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTU47RsNjvj/soyxuVCYkVoTIYeePCVEvK8JSegJ0oV7pqfnV2uB+zqWMaUbbYstfJTR47VRTpJWE5@nongnu.org
-X-Gm-Message-State: AOJu0YxLTSZMGij0znJ3xzNRQIr9SFfTw6vDqN0Cr9dHa27eLZGQjZbl
- xKc2C3LO9p2Qz2GfR/LBjUVUYplakkdQPJ9+/WnF7ze3XxgjeTm3LSYI09gyWIODZoVQfFYQwVa
- k5b9vfHNsxTAGFDE0Gj/7Z3qx3SMFA5BrEvpxiPZ3h4p49QcQsytd
-X-Gm-Gg: ASbGncvphTT1U3kloQLIyDQ07IqKIbXawKu/fA9MfmqqMsK6s2VviIq7Q4GDiuKrlPZ
- ncfKm7w+RWcfsEp+yuxNgMveaD42LOMwMavVfdEN9+yaP84We6gVxuy0qBMV55vteP6FCdt1g0+
- 9gAY0zeV21p10kKjzC9w7wl31IaVCKNqw0Iy+APKHPI2UJLm+PAmlFflvvxlxQJpcWRNjCed/gD
- 7ZrdYv6pmx2j8AtrxyNKcvq6gjrE8mfUowjpG+M22O7J9L0p6gjUrETWvgeRz4+FqVIe7XHLZls
- rpx9HDfAPmdD7MtnTiAZVK68oVccJD5ibhaTEs9jbq5GFe/IoRBrjiUXOBwX0QI=
-X-Received: by 2002:a05:6000:2c2:b0:391:3aaf:1d5d with SMTP id
- ffacd0b85a97d-399739c916cmr3350530f8f.27.1742407776145; 
- Wed, 19 Mar 2025 11:09:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4ZwgZRh1cnWFSsweXrghI+asFoRbHq9J+Zs2CbD0sa+5PSWSPHnRMAC52dSAuhZJCaZof4g==
-X-Received: by 2002:a05:6000:2c2:b0:391:3aaf:1d5d with SMTP id
- ffacd0b85a97d-399739c916cmr3350502f8f.27.1742407775684; 
- Wed, 19 Mar 2025 11:09:35 -0700 (PDT)
+ AJvYcCUHJqDwF9zokNVVRrUDTJHXOn5xBNGG9LPzlXzESwSoruv1tpW2EqiTvs5gidB4DFOttKV3x0fdjBuO@nongnu.org
+X-Gm-Message-State: AOJu0YyNV6evJTYjF/+wTEADmQMJGe2KoiCyTtb3a8/0gfRyBhVD676c
+ Ou96J/8tunl5Rb1JpLx9dIWD7bWSmhYHPVpxOINKGHGokaqd3ueQi3d9WvXYaTr7n6wPyLd+tkD
+ AexSqohSZO4qUzsc7OCpWr34CEL+jIFoUvC8x2wtKeIae4hl+bov0
+X-Gm-Gg: ASbGnct5GGfhxFo1ptcIWRz8CI8OuqoOdv/gtLE+b4ke4yp0IqeT/vO09co/z0MAD6R
+ p4rSFibL/V3IfckoIV4h7z6Ge3/vKnEhnQ6FxRxyJttVINpjkVjbmpXa7fLGW+HWXZhoDzLayts
+ WarbxCMbVu0Ptk7LSfsnzCzdV9NL2w1v6p6eswWQlkkprUQ7h17HBoUx4vwT4Jg+fPNYHvG/gSY
+ bSbh9pFm0/P+yq9x9KyVaRuLFdydUYpsMo13B8rNqN7yRVzBRObWTHTtYGyAI1Bz6k3JBbPr2ao
+ Xd+PmWcZmwMP9QeY6/9EHceqBEG1y5+2GFyUOtB37Yq4vh89iyZL5mRFAlgMj5s=
+X-Received: by 2002:a05:6000:400b:b0:38d:e401:fd61 with SMTP id
+ ffacd0b85a97d-39973b0474cmr2631846f8f.49.1742408520465; 
+ Wed, 19 Mar 2025 11:22:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFDlWbpZvkb9usbrHbka7b/CabiUmdmrFYJvsv1+jxDLZL541bI/RywrEQgFi4onNy8hmYGTw==
+X-Received: by 2002:a05:6000:400b:b0:38d:e401:fd61 with SMTP id
+ ffacd0b85a97d-39973b0474cmr2631828f8f.49.1742408520002; 
+ Wed, 19 Mar 2025 11:22:00 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb7eb92csm22125436f8f.91.2025.03.19.11.09.34
+ ffacd0b85a97d-395cb7ebaa5sm21525608f8f.87.2025.03.19.11.21.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 11:09:35 -0700 (PDT)
-Message-ID: <c70fdb0c-ef56-4a52-8591-31df51ff0eec@redhat.com>
-Date: Wed, 19 Mar 2025 19:09:33 +0100
+ Wed, 19 Mar 2025 11:21:59 -0700 (PDT)
+Message-ID: <44ed64f0-8e8b-4a87-9a85-074b9d283bc8@redhat.com>
+Date: Wed, 19 Mar 2025 19:21:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
- infrastructure for smmuv3-accel device
+Subject: Re: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-pcie bus
 Content-Language: en-US
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
- jgg@nvidia.com, ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+To: Donald Dutile <ddutile@redhat.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
 References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
- <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
- <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
- <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
- <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
- <11895c78-d6ab-40c8-a500-4abed1565234@redhat.com>
- <Z9r7dT/5E+YToqc9@Asurada-Nvidia>
+ <20250311141045.66620-6-shameerali.kolothum.thodi@huawei.com>
+ <b3a4ce7f-41a9-4da9-a8ca-54848b9e9cf1@redhat.com>
+ <3d1312b411f04121a3be90879a915982@huawei.com>
+ <1c603ab2-4fbb-4838-a544-d88bc2608506@redhat.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <Z9r7dT/5E+YToqc9@Asurada-Nvidia>
+In-Reply-To: <1c603ab2-4fbb-4838-a544-d88bc2608506@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -128,116 +131,181 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nicolin,
+Hi Don,
 
 
-On 3/19/25 6:14 PM, Nicolin Chen wrote:
-> On Wed, Mar 19, 2025 at 05:45:51PM +0100, Eric Auger wrote:
+On 3/19/25 5:21 PM, Donald Dutile wrote:
+>
+>
+> On 3/19/25 5:26 AM, Shameerali Kolothum Thodi wrote:
+>> Hi Don,
 >>
->>
->> On 3/17/25 8:10 PM, Nicolin Chen wrote:
->>> On Mon, Mar 17, 2025 at 07:07:52PM +0100, Eric Auger wrote:
->>>> On 3/17/25 6:54 PM, Nicolin Chen wrote:
->>>>> On Wed, Mar 12, 2025 at 04:15:10PM +0100, Eric Auger wrote:
->>>>>> On 3/11/25 3:10 PM, Shameer Kolothum wrote:
->>>>>>> Based on SMMUv3 as a parent device, add a user-creatable smmuv3-accel
->>>>>>> device. In order to support vfio-pci dev assignment with a Guest
->>>>>> guest
->>>>>>> SMMUv3, the physical SMMUv3 has to be configured in nested(S1+s2)
->>>>>> nested (s1+s2)
->>>>>>> mode, with Guest owning the S1 page tables. Subsequent patches will
->>>>>> the guest
->>>>>>> add support for smmuv3-accel to provide this.
->>>>>> Can't this -accel smmu also works with emulated devices? Do we want an
->>>>>> exclusive usage?
->>>>> Is there any benefit from emulated devices working in the HW-
->>>>> accelerated nested translation mode?
->>>> Not really but do we have any justification for using different device
->>>> name in accel mode? I am not even sure that accel option is really
->>>> needed. Ideally the qemu device should be able to detect it is
->>>> protecting a VFIO device, in which case it shall check whether nested is
->>>> supported by host SMMU and then automatically turn accel mode?
+> Hey!
+>
+>>> -----Original Message-----
+>>> From: Donald Dutile <ddutile@redhat.com>
+>>> Sent: Tuesday, March 18, 2025 10:12 PM
+>>> To: Shameerali Kolothum Thodi
+>>> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
+>>> qemu-devel@nongnu.org
+>>> Cc: eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+>>> nicolinc@nvidia.com; berrange@redhat.com; nathanc@nvidia.com;
+>>> mochs@nvidia.com; smostafa@google.com; Linuxarm
+>>> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
+>>> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
+>>> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+>>> Subject: Re: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-
+>>> pcie bus
+>>>
+>>> Shameer,
+>>>
+>>> Hi!
+>>>
+>>> On 3/11/25 10:10 AM, Shameer Kolothum wrote:
+>>>> User must associate a pxb-pcie root bus to smmuv3-accel
+>>>> and that is set as the primary-bus for the smmu dev.
 >>>>
->>>> I gave the example of the vfio device which has different class
->>>> implementration depending on the iommufd option being set or not.
->>> Do you mean that we should just create a regular smmuv3 device and
->>> let a VFIO device to turn on this smmuv3's accel mode depending on
->>> its LEGACY/IOMMUFD class?
->> no this is not what I meant. I gave an example where depending on an
->> option passed to thye VFIO device you choose one class implement or the
->> other.
-> Option means something like this:
-> 	-device smmuv3,accel=on
-> instead of
-> 	-device "smmuv3-accel"
-> ?
->
-> Yea, I think that's good.
-Yeah actually that's a big debate for not much. From an implementation
-pov that shall not change much. The only doubt I have is if we need to
-conditionnaly expose the MSI RESV regions it is easier to do if we
-detect we have a smmuv3-accel. what the option allows is the auto mode.
->
->>> Another question: how does an emulated device work with a vSMMUv3?
->> I don't get your question. vSMMUv3 currently only works with emulated
->> devices. Did you mean accelerated SMMUv3?
-> Yea. If "accel=on", how does an emulated device work with that?
->
->>> I could imagine that all the accel steps would be bypassed since
->>> !sdev->idev. Yet, the emulated iotlb should cache its translation
->>> so we will need to flush the iotlb, which will increase complexity
->>> as the TLBI command dispatching function will need to be aware what
->>> ASID is for emulated device and what is for vfio device..
->> I don't get the issue. For emulated device you go through the usual
->> translate path which indeed caches configs and translations. In case the
->> guest invalidates something, you know the SID and you find the entries
->> in the cache that are tagged by this SID.
+>>>> Signed-off-by: Shameer Kolothum
+>>> <shameerali.kolothum.thodi@huawei.com>
+>>>> ---
+>>>>    hw/arm/smmuv3-accel.c | 19 +++++++++++++++++++
+>>>>    1 file changed, 19 insertions(+)
+>>>>
+>>>> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+>>>> index c327661636..1471b65374 100644
+>>>> --- a/hw/arm/smmuv3-accel.c
+>>>> +++ b/hw/arm/smmuv3-accel.c
+>>>> @@ -9,6 +9,21 @@
+>>>>    #include "qemu/osdep.h"
+>>>>
+>>>>    #include "hw/arm/smmuv3-accel.h"
+>>>> +#include "hw/pci/pci_bridge.h"
+>>>> +
+>>>> +static int smmuv3_accel_pxb_pcie_bus(Object *obj, void *opaque)
+>>>> +{
+>>>> +    DeviceState *d = opaque;
+>>>> +
+>>>> +    if (object_dynamic_cast(obj, "pxb-pcie-bus")) {
+>>>> +        PCIBus *bus = PCI_HOST_BRIDGE(obj->parent)->bus;
+>>>> +        if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus-
+>>>> name)) {
+>>>> +            object_property_set_link(OBJECT(d), "primary-bus",
+>>>> OBJECT(bus),
+>>>> +                                     &error_abort);
+>>>> +        }
+>>>> +    }
+>>>> +    return 0;
+>>>> +}
+>>>>
+>>>>    static void smmu_accel_realize(DeviceState *d, Error **errp)
+>>>>    {
+>>>> @@ -17,6 +32,9 @@ static void smmu_accel_realize(DeviceState *d, Error
+>>> **errp)
+>>>>        SysBusDevice *dev = SYS_BUS_DEVICE(d);
+>>>>        Error *local_err = NULL;
+>>>>
+>>>> +    object_child_foreach_recursive(object_get_root(),
+>>>> +                                   smmuv3_accel_pxb_pcie_bus, d);
+>>>> +
+>>>>        object_property_set_bool(OBJECT(dev), "accel", true,
+>>>> &error_abort);
+>>>>        c->parent_realize(d, &local_err);
+>>>>        if (local_err) {
+>>>> @@ -33,6 +51,7 @@ static void smmuv3_accel_class_init(ObjectClass
+>>> *klass, void *data)
+>>>>        device_class_set_parent_realize(dc, smmu_accel_realize,
+>>>>                                        &c->parent_realize);
+>>>>        dc->hotpluggable = false;
+>>>> +    dc->bus_type = TYPE_PCIE_BUS;
+>>>>    }
+>>>>
+>>>>    static const TypeInfo smmuv3_accel_type_info = {
+>>>
+>>> I am not seeing the need for a pxb-pcie bus(switch) introduced for each
+>>> 'accel'.
+>>> Isn't the IORT able to define different SMMUs for different RIDs?  
+>>> if so,
+>>> itsn't that sufficient
+>>> to associate (define) an SMMU<->RID association without introducing a
+>>> pxb-pcie?
+>>> and again, I'm not sure how that improves/enables the device<->SMMU
+>>> associativity?
 >>
->> In case you have an accelerated device (indeed if sdev->idev) you don't
->> exercise that path. On invalidation you detect the SID matches a VFIO
->> devoce, propagate the invalidations to the host instead. on the
->> invalidation you should be able to detect pretty easily if you need to
->> flush the emulated caches or propagate the invalidations. Do I miss some
->> extra problematic?
+>> Thanks for taking a look at the series. As discussed elsewhere in
+>> this thread(with
+>> Eric), normally in physical world (or atleast in the most common
+>> cases) SMMUv3
+>> is attached to PCIe Root Complex and if you take a look at the IORT
+>> spec, it describes
+>> association of ID mappings between a RC node and SMMUV3 node.
 >>
->> I do not say we should support emulated devices and VFIO devices in the
->> same guest iommu group. But I don't see why we couldn't easily plug the
->> accelerated logic in the current logical for emulation/vhost and do not
->> require a different qemu device.
-> Hmm, feels like I fundamentally misunderstood your point.
->  a) We implement the device model with the same piece of code but
->     only provide an option "accel=on/off" to switch mode. And both
->     passthrough devices and emulated devices can attach to the same
->     "accel=on" device.
-I think we all agree we don't want that use case in general. However
-effectively I was questioning why it couldn't work maybe at the expense
-of some perf degration.
->  b) We implement the device model with the same piece of code but
->     only provide an option "accel=on/off" to switch mode. Then, an
->     passthrough device can attach to an "accel=on" device, but an
->     emulated device can only attach to an "accel=off" SMMU device.
+>> And if my understanding is correct, in Qemu, only pxb-pcie allows you
+>> to add
+>> extra root complexes even though it is still plugged to
+>> parent(pcie.0). ie, for all
+>> devices downstream it acts as a root complex but still plugged into a
+>> parent pcie.0.
+>> This allows us to add/describe multiple "smmuv3-accel" each
+>> associated with a RC.
+>>
+> I find the qemu statements a bit unclear here as well.
+> I looked at the hot plug statement(s) in docs/pcie.txt, as I figured
+> that's where dynamic
+> IORT changes would be needed as well.  There, it says you can hot-add
+> PCIe devices to RPs,
+> one has to define/add RP's to the machine model for that plug-in.
 >
-> I was thinking that you want case (a). But actually you were just
-> talking about case (b)? I think (b) is totally fine.
->
-> We certainly can't do case (a): not all TLBI commands gives an "SID"
-> field (so would have to broadcast, i.e. underlying SMMU HW would run
-> commands that were supposed for emulated devices only); in case of
-> vCMDQ, commands for emulated devices would be issued to real HW and
-I am still confused about that. For instance if the guest sends an
-NH_ASID, NH_VA invalidation and it happens both the emulated device and
-VFIO-device share the same cd.asid (same guest iommu domain, which
-practically should not happen) why shouldn't we propagate the
-invalidation to the host. Does the problem come from the usage of vCMDQ
-or would you foresee the same problem with a generic physical SMMU?
+> Using libvirt, it could auto-add the needed RPs to do dynmaic smmuv3
+> additions,
+I am not sure I understand your statement here. we don't want "dynamic"
+SMMUv3 instantiation. SMMUv3 is a platform device which is supposed to
+be coldplugged on a pre-existing PCIe hierarchy. The SMMUv3 device is
+not something that is meant to be hotplugged or hotunplugged.
+To me we hijack the bus= property to provide information about the IORT
+IDMAP
 
 Thanks
 
 Eric
-> trigger HW errors.
+> if I understand how libvirt does that today for pcie devices now (/me
+> looks at danpb for feedback).
 >
-> Thanks
-> Nicolin
+>> Having said that,  current code only allows pxb-pcie root complexes
+>> avoiding
+>> the pcie.0. The idea behind this was, user can use pcie.0 with a non
+>> accel SMMUv3
+>> for any emulated devices avoiding the performance bottlenecks we are
+>> discussing for emulated dev+smmuv3-accel cases. But based on the
+>> feedback from
+>> Eric and Daniel I will relax that restriction and will allow
+>> association with pcie.0.
+>>
+> So, I think this isn't a restriction that this smmuv3 feature should
+> enforce;
+> lack of a proper RP or pxb-pcie will yield an invalid config
+> issue/error, and
+> the machine definition will be modified to meet the needs for IORT.
+>
+>> Thanks,
+>> Shameer
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>  
+>>>>> to root complexes.
+>>> Feel free to enlighten me where I may have mis-read/interpreted the
+>>> IORT
+>>> & SMMUv3 specs.
+>>>
+>>> Thanks,
+>>> - Don
+>>>
+>>
 >
 
 
