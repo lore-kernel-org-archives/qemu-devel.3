@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DAB1C28B28
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 00:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A3DC282EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 00:27:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuhDt-0006Xg-Bf; Tue, 18 Mar 2025 20:23:54 -0400
+	id 1tuhGi-0008F8-IE; Tue, 18 Mar 2025 20:26:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuhDl-0006VO-W4
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:23:47 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tuhG2-00082e-Ld
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:26:08 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tuhDi-0000EW-UK
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:23:45 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22423adf751so110512615ad.2
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 17:23:38 -0700 (PDT)
+ id 1tuhG0-0000lc-EF
+ for qemu-devel@nongnu.org; Tue, 18 Mar 2025 20:26:06 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22548a28d0cso18730485ad.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 17:26:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742343817; x=1742948617; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742343962; x=1742948762; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ivYpHRfJWLr9rshD8LTIAqr3W5R3RkI/xacMbSyBw10=;
- b=R8/cFkYvAz32swHHUCuUI7EztpFYAWPPBHeFpPMvdMG7cdzwIHHO1ThYLgnwZH/e8a
- lZ0XoHU4MKTchEDunCKJSlaZh3ti+DU9y2tpuM5qOjUMKg4/w8Qi3QjvlPK+W/4SsgZD
- k8K7tyBYgW1gsNRKXDxewaNLkfmZxhF/AmgRUSmViH8VwjBEWX5XRVAtzA8BtSh8ItQX
- AWmiIlavVgjUWXs3hda33CWhel6s194mWp5gMsUkTSB994iDi5QSqo/C4LKpRKr4Yq7V
- Iz7iM9D8W4LQqaT2UsyCOejduqjm38v9kTEFFX6mZvs3nhDv4icYpYvXNTSrenSm4T4E
- RJOg==
+ bh=E0aqZzlpYBLlNsxwaTLq9zvwCnBZAH6RrCI4a138V2c=;
+ b=eqm17toyEzJASS1BIOWsAQqjq8/vSxwlB2d51e7ZSEqNGz1lfBnVfCopxQKkXV4bQa
+ aDz/dfMs3sj09I8Z9x7Qj53+GL2EADd7dfPls69Gq5hlyhuehRJH+hp/1B+o/6ZK2T0D
+ JKBzQq8iuy1oCl17mpxO1nq+vfntiPl5E48OX0rXqPnhdQEgEvEOEouEzZ8GzgxAPa9c
+ eVrnXp0zo4F6VM9Ho79D/gKV0jCh1aTB7nRewyISqPwCw7Lb5ooNT2aMmEpH+/lsOgGJ
+ wMm7lsPPc0CfrkX4muQb++XiB+45wE1NBELwLxChxfpqpaoPbtXuOBp13Gs/uUOCr4RB
+ +Y6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742343817; x=1742948617;
+ d=1e100.net; s=20230601; t=1742343962; x=1742948762;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ivYpHRfJWLr9rshD8LTIAqr3W5R3RkI/xacMbSyBw10=;
- b=VM5eYh9DjVKx5g3VI7p29HUOn/Qlqst/4cLZhOG8DBPm5dPoqYkVbVmUaS16DBljGb
- KyKOsqdXEiNu5lobResiuOQET6pbpsXlcNmcwAr2z3fqHnGr8INBGeJ4e595xIa4ZeHV
- VfYi/C2FYfOGIrUbyoUbMzoRsBi7BCl2RByjJNsFLZ90kHmdWqmpG6czbdvpfYl1w79S
- J5F4vJzBcZvIzojL8+C1sncMf8JWB2x9zBWV1OBowsCrNeJCHFk9wqKpaknSJFjhCtar
- 99LMqlbswUxabpKMlMBHkLYD/bNJb4FFwyMUgzwmRh1EtOthFi0ga4V+p/lPU6uPMhr+
- RorQ==
+ bh=E0aqZzlpYBLlNsxwaTLq9zvwCnBZAH6RrCI4a138V2c=;
+ b=RD+SaKMnQS/M35e/XIOPvEXHBqutUaLq6gcg2wVphPb4ve3WGJp/aLSgqTRZVvscoO
+ 8ET+UNQVl4CIw/oswrjk1GruAIvl8o3R2JEzwSR3Ecc2mFqibvEOWTmrDJDGk4jxAPhw
+ wy9GIAE26Dam+Dyh+Q649UtDY89PkGyMvxoJ7lHQZwuh64Qr+iOskW425wen8itsAHLc
+ krnORrmHICrmQ23xWl99BM9xtlAZEVFnrO5/0ZsscJ8l3l9Nxq1sg3nQEuyvWNb6kdwK
+ hkSSUgjX0MMzrT7OEcOSFPp9WjQzFZqT1Hj6PrMRzfWfev0WMMDLyQXpJlR9Mm1viLc8
+ MV2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXfvlmVR3RqgJGJWnH4mw0d8RnIJwTP4uXTXBghHdubmv1ozhbZigBSYlfT8kEpDYF0pV6CmewJRyLL@nongnu.org
-X-Gm-Message-State: AOJu0Yw7FLKXsr0hyTnUazPuepBdW8W8u2qXo5GsmTjpQcNL9+FqkMn+
- f14wsksZSkEL+aP2YpuYipPbSpnAuqE7HZLgRFZGa+E4jXPKyVcJIZYINLMW8pw=
-X-Gm-Gg: ASbGnctsWo5n+YNIAi8DFti0b2ipSPBxUoqPJeoJZecPRglpAZosAIEDZBroCWRWYM5
- xq3X8+oEoM/57iJufZr2uXb98jMk97uyEQ+l42CaJGwcgu4XaJzyaFt3jsFbkQCSiIlDxDkgzKX
- rKhXgfB5KzzsRkn/zD43YP6jZpTwhnjZNQBSHyItGkLw6i+uah05SeZrJcyglJSW7UEP3ifceGn
- i75GlZJwLRX5qTNvg30zhqqQoFz5W455zAz26AN4/3CMF34zJqGr1jIUM+bP4Gxn4Ca7k/G+qJ+
- JhYOnL449CPT91VPEXluecxjPqnrqoQM1V8p+ZKG+eLQhDmBeDkTINF6j/F9S3h+jthF
-X-Google-Smtp-Source: AGHT+IFQw2BwftxCBJqQnAOKQRZRg2gU2v0+cc3tnKGmz8Bki6PnG6U1vroV2QalCdLE5TWqWJ08tg==
-X-Received: by 2002:a05:6a00:18a9:b0:736:5e28:cfba with SMTP id
- d2e1a72fcca58-7376d6ce4afmr1280269b3a.18.1742343817507; 
- Tue, 18 Mar 2025 17:23:37 -0700 (PDT)
+ AJvYcCVZ1mmjgul1q16scC5LSTNCcvy1cTaNdjDA6G+bh1WelKKt3yl5ODCGih8ksbVy+npkhzsQkf/J/vMH@nongnu.org
+X-Gm-Message-State: AOJu0Yz+sZi0C6g4oUd+UwdxbWFPWyDoxf+Ld3qolOmQ9VYO/tSzR0iO
+ TLtsZqC1wqMPaf6srHM7UieWjYazPbgNqWxzBGWelUkltvF0DfLMHx+msAHnqeA=
+X-Gm-Gg: ASbGnct/GnFzqhbh/VVi2/2/TS+PcAzh2dtaj+b2aE6XCCJ+EL8MQUeVw9jyQSbauPa
+ 3IYf44dlgqROti+LuFYH2VP1fpmtM/jWQJz2qjZp9UmXKu2vjU2AKtYYKMxRwQ/SDzchd8aiBzB
+ uY9q870B7wJi99en2Rj6j3kGdZ5/E57R7DeVT4jID/b1QIqZkIis4lhvKq25Y20DzgTOg9p+Drn
+ Z+PDcn2BaFRUTMhlRyZCjMZBnMRw6psBzV8RyrzaB9cLyeh+CqxG3tFaXcfW9QFVsBcBthpCe2y
+ +hRrxDaVdk6OQn67eBo6EvR//a1Z05rwCcses5Tzng31gjnQa/bYIwL6kg==
+X-Google-Smtp-Source: AGHT+IGwyqkKUe1ETJBzyG35DRrjFt4mKp1Q9+dOwcbQkK1RqlVxHD+cE3uiM3Z73pwDOoDKPt8dAA==
+X-Received: by 2002:a17:902:e888:b0:223:5a6e:b16 with SMTP id
+ d9443c01a7336-2264982b2famr8304565ad.5.1742343962291; 
+ Tue, 18 Mar 2025 17:26:02 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371152958csm10271355b3a.26.2025.03.18.17.23.36
+ d9443c01a7336-225c6bbe7b6sm101468525ad.177.2025.03.18.17.26.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Mar 2025 17:23:37 -0700 (PDT)
-Message-ID: <f3b98848-70b7-4ece-8ba2-43f0e07302ac@linaro.org>
-Date: Tue, 18 Mar 2025 17:23:36 -0700
+ Tue, 18 Mar 2025 17:26:01 -0700 (PDT)
+Message-ID: <c548e44d-cd1b-4d00-9d2e-43732d81602d@linaro.org>
+Date: Tue, 18 Mar 2025 17:26:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/42] accel/tcg: Use cpu_ld*_code_mmu in translator.c
+Subject: Re: [PATCH v2 26/42] semihosting: Move user-only implementation
+ out-of-line
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
- <20250318213209.2579218-13-richard.henderson@linaro.org>
+ <20250318213209.2579218-27-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250318213209.2579218-13-richard.henderson@linaro.org>
+In-Reply-To: <20250318213209.2579218-27-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,137 +105,108 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/18/25 14:31, Richard Henderson wrote:
-> Cache the mmu index in DisasContextBase.
-> Perform the read on host endianness, which lets us
-> share code with the translator_ld fast path.
+> Avoid testing CONFIG_USER_ONLY in semihost.h.
+> The only function that's required is semihosting_enabled.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/translator.h |  1 +
->   accel/tcg/translator.c    | 58 ++++++++++++++++++---------------------
->   2 files changed, 28 insertions(+), 31 deletions(-)
+>   include/semihosting/semihost.h | 29 ++---------------------------
+>   semihosting/user.c             | 15 +++++++++++++++
+>   semihosting/meson.build        |  2 ++
+>   3 files changed, 19 insertions(+), 27 deletions(-)
+>   create mode 100644 semihosting/user.c
 > 
-> diff --git a/include/exec/translator.h b/include/exec/translator.h
-> index d70942a10f..205dd85bba 100644
-> --- a/include/exec/translator.h
-> +++ b/include/exec/translator.h
-> @@ -73,6 +73,7 @@ struct DisasContextBase {
->       int max_insns;
->       bool plugin_enabled;
->       bool fake_insn;
-> +    uint8_t code_mmuidx;
->       struct TCGOp *insn_start;
->       void *host_addr[2];
+> diff --git a/include/semihosting/semihost.h b/include/semihosting/semihost.h
+> index 97d2a2ba99..b03e637578 100644
+> --- a/include/semihosting/semihost.h
+> +++ b/include/semihosting/semihost.h
+> @@ -26,32 +26,6 @@ typedef enum SemihostingTarget {
+>       SEMIHOSTING_TARGET_GDB
+>   } SemihostingTarget;
 >   
-> diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-> index 157be33bf6..6fd9237298 100644
-> --- a/accel/tcg/translator.c
-> +++ b/accel/tcg/translator.c
-> @@ -11,10 +11,10 @@
->   #include "qemu/log.h"
->   #include "qemu/error-report.h"
->   #include "exec/exec-all.h"
-> +#include "exec/cpu-ldst-common.h"
-> +#include "exec/cpu-mmu-index.h"
->   #include "exec/translator.h"
-> -#include "exec/cpu_ldst.h"
->   #include "exec/plugin-gen.h"
-> -#include "exec/cpu_ldst.h"
->   #include "exec/tswap.h"
->   #include "tcg/tcg-op-common.h"
->   #include "internal-target.h"
-> @@ -142,6 +142,7 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
->       db->host_addr[1] = NULL;
->       db->record_start = 0;
->       db->record_len = 0;
-> +    db->code_mmuidx = cpu_mmu_index(cpu, true);
+> -#ifdef CONFIG_USER_ONLY
+> -static inline bool semihosting_enabled(bool is_user)
+> -{
+> -    return true;
+> -}
+> -
+> -static inline SemihostingTarget semihosting_get_target(void)
+> -{
+> -    return SEMIHOSTING_TARGET_AUTO;
+> -}
+> -
+> -static inline const char *semihosting_get_arg(int i)
+> -{
+> -    return NULL;
+> -}
+> -
+> -static inline int semihosting_get_argc(void)
+> -{
+> -    return 0;
+> -}
+> -
+> -static inline const char *semihosting_get_cmdline(void)
+> -{
+> -    return NULL;
+> -}
+> -#else /* !CONFIG_USER_ONLY */
+>   /**
+>    * semihosting_enabled:
+>    * @is_user: true if guest code is in usermode (i.e. not privileged)
+> @@ -59,17 +33,18 @@ static inline const char *semihosting_get_cmdline(void)
+>    * Return true if guest code is allowed to make semihosting calls.
+>    */
+>   bool semihosting_enabled(bool is_user);
+> +
+>   SemihostingTarget semihosting_get_target(void);
+>   const char *semihosting_get_arg(int i);
+>   int semihosting_get_argc(void);
+>   const char *semihosting_get_cmdline(void);
+>   void semihosting_arg_fallback(const char *file, const char *cmd);
+> +
+>   /* for vl.c hooks */
+>   void qemu_semihosting_enable(void);
+>   int qemu_semihosting_config_options(const char *optstr);
+>   void qemu_semihosting_chardev_init(void);
+>   void qemu_semihosting_console_init(Chardev *);
+> -#endif /* CONFIG_USER_ONLY */
+>   void qemu_semihosting_guestfd_init(void);
 >   
->       ops->init_disas_context(db, cpu);
->       tcg_debug_assert(db->is_jmp == DISAS_NEXT);  /* no early exit */
-> @@ -457,55 +458,50 @@ bool translator_st(const DisasContextBase *db, void *dest,
+>   #endif /* SEMIHOST_H */
+> diff --git a/semihosting/user.c b/semihosting/user.c
+> new file mode 100644
+> index 0000000000..9473729beb
+> --- /dev/null
+> +++ b/semihosting/user.c
+> @@ -0,0 +1,15 @@
+> +/*
+> + * Semihosting for user emulation
+> + *
+> + * Copyright (c) 2019 Linaro Ltd
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "semihosting/semihost.h"
+> +
+> +bool semihosting_enabled(bool is_user)
+> +{
+> +    return true;
+> +}
+> diff --git a/semihosting/meson.build b/semihosting/meson.build
+> index 86f5004bed..ab67f87e4f 100644
+> --- a/semihosting/meson.build
+> +++ b/semihosting/meson.build
+> @@ -15,5 +15,7 @@ system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_true: files(
+>     'stubs-system.c',
+>   ))
 >   
->   uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc)
->   {
-> -    uint8_t raw;
-> +    uint8_t val;
->   
-> -    if (!translator_ld(env, db, &raw, pc, sizeof(raw))) {
-> -        raw = cpu_ldub_code(env, pc);
-> -        record_save(db, pc, &raw, sizeof(raw));
-> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
-> +        MemOpIdx oi = make_memop_idx(MO_UB, db->code_mmuidx);
-> +        val = cpu_ldb_code_mmu(env, pc, oi, 0);
-> +        record_save(db, pc, &val, sizeof(val));
->       }
-> -    return raw;
-> +    return val;
->   }
->   
->   uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
->   {
-> -    uint16_t raw, tgt;
-> +    uint16_t val;
->   
-> -    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
-> -        tgt = tswap16(raw);
-> -    } else {
-> -        tgt = cpu_lduw_code(env, pc);
-> -        raw = tswap16(tgt);
-> -        record_save(db, pc, &raw, sizeof(raw));
-> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
-> +        MemOpIdx oi = make_memop_idx(MO_UW, db->code_mmuidx);
-> +        val = cpu_ldw_code_mmu(env, pc, oi, 0);
-> +        record_save(db, pc, &val, sizeof(val));
->       }
-> -    return tgt;
-> +    return tswap16(val);
->   }
->   
->   uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
->   {
-> -    uint32_t raw, tgt;
-> +    uint32_t val;
->   
-> -    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
-> -        tgt = tswap32(raw);
-> -    } else {
-> -        tgt = cpu_ldl_code(env, pc);
-> -        raw = tswap32(tgt);
-> -        record_save(db, pc, &raw, sizeof(raw));
-> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
-> +        MemOpIdx oi = make_memop_idx(MO_UL, db->code_mmuidx);
-> +        val = cpu_ldl_code_mmu(env, pc, oi, 0);
-> +        record_save(db, pc, &val, sizeof(val));
->       }
-> -    return tgt;
-> +    return tswap32(val);
->   }
->   
->   uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
->   {
-> -    uint64_t raw, tgt;
-> +    uint64_t val;
->   
-> -    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
-> -        tgt = tswap64(raw);
-> -    } else {
-> -        tgt = cpu_ldq_code(env, pc);
-> -        raw = tswap64(tgt);
-> -        record_save(db, pc, &raw, sizeof(raw));
-> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
-> +        MemOpIdx oi = make_memop_idx(MO_UQ, db->code_mmuidx);
-> +        val = cpu_ldq_code_mmu(env, pc, oi, 0);
-> +        record_save(db, pc, &val, sizeof(val));
->       }
-> -    return tgt;
-> +    return tswap64(val);
->   }
->   
->   void translator_fake_ld(DisasContextBase *db, const void *data, size_t len)
+> +user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('user.c'))
+> +
+>   specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
+>   		if_true: files('arm-compat-semi.c'))
 
-If I understand correctly, cpu_ldq_code_mmu performs the tswap call we 
-used to before. However, we now call it again when returning the final 
-value, leading to tswap(tswap(val)).
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Is that expected?
 
