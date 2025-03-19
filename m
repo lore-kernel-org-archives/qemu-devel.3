@@ -4,77 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75CA8C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 15:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3922C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 15:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuuwZ-0002Tz-MA; Wed, 19 Mar 2025 11:02:55 -0400
+	id 1tuuyM-0003DA-AJ; Wed, 19 Mar 2025 11:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tuuwT-0002SE-Fk
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:02:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tuuwP-0007zc-06
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:02:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742396561;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=038ivSDMMEc0w+/oUjQqUJ5o5StTirMIcJWEwt7XGaw=;
- b=StJijdim/QdxAxQ+2QonipW4LOJwZs5cQZuSC+Hb3r5esg9yDe0YSxA1Ghq/76T+W3j52Y
- 0St9QPlK16lgTbmlj6qvb32l+5JGG+SwfTU3vNpe8Q12+5edE1FSJBEQAR4StDq7/a3nEw
- nOWBzfB0cFTBJh7g/lCWlk/0GywK9uE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-p9HPN8hWOVKxpFyUDY5x1g-1; Wed,
- 19 Mar 2025 11:02:38 -0400
-X-MC-Unique: p9HPN8hWOVKxpFyUDY5x1g-1
-X-Mimecast-MFC-AGG-ID: p9HPN8hWOVKxpFyUDY5x1g_1742396557
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9916519560B7; Wed, 19 Mar 2025 15:02:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.112])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECB9F1800268; Wed, 19 Mar 2025 15:02:34 +0000 (UTC)
-Date: Wed, 19 Mar 2025 15:02:31 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 1/2] qga-win: implement a 'guest-get-load' command
-Message-ID: <Z9rchyQO5vNcrfmN@redhat.com>
-References: <20250314113847.109460-1-kkostiuk@redhat.com>
- <20250314113847.109460-2-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tuuy4-0003AQ-9Y
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:04:28 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tuuxw-0000Bl-N0
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 11:04:25 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3018e2d042bso4548504a91.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 08:04:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1742396657; x=1743001457; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=P6SR2DZxoKbkuCDWrwn/UiRFCMww89FlVIVgP8rvAnU=;
+ b=bh2eImTpbQFd192pjF3Zf6o000DpXKTNA7A78Bl24kXxUvt385Ba5PdG6yLWU2as6i
+ DTBYd1jBYYFChHhsVApxkAZkrJxBCoMSrmO0kYpe42HndDWeZNWMLKLBHcUaVX9OmLdo
+ KR5PM5ANwx8GKHcvsr7rXEK9HxSNy4u9+zHVaUv2/V4PUfOuzkjFctFDeNeUdUM/C4E6
+ Wi8aW8drGUm+A5saK+Q5GZf3o9+yg7f3zo5FE26KT5bjJEHpnKFUHJ39QhZc+XG5geXw
+ KUuIh3Ac0g4ClxvqKRxXMoUpTwBW/FVKsY+ICfv+yhlFKaHrHYIjeMiHAiLgemR0o1x3
+ trFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742396657; x=1743001457;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=P6SR2DZxoKbkuCDWrwn/UiRFCMww89FlVIVgP8rvAnU=;
+ b=Qp5zdsBNT853Qyl5ERq7rLOYEmKaX4ND4CIRPWOhTAhgBbp7dZDX5dvizUv6QUfC2J
+ EaggzVWttnhG6JFvQNnDE1BUhXUig5+E/gjTiny5VdwwnCe8TdaP2rP8sdMqpUaV5qSY
+ zoPXKbzohV/uWbrUY/sqYJeSwqsLpb687qO/Epyn+IkI22hjlV9uGGJ5cT7DcHd8mItw
+ a/m8NPUQ0YIM+UCQGYitEWdNu81jXpah/4WKiVkHpTtj/2DzyeQhqKW7lsjcEUKSuo5b
+ TP1aS0ZScHpna388bw/ES5UcSo1iyDlAMKrr1B9/Hz6LytcR5rtnPfYCEZOT7nogDYvE
+ Mzrg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU03TiCMvxRIIvpFWEZYi0S79kjHarxz4XiolWfblJhzZhPqO2dhJnOGWuY+53kKLv3HEcno3ednju7@nongnu.org
+X-Gm-Message-State: AOJu0Yyeu2cMH2rsI0p4cBSyqwMwI9E5twT8dLNyGOZMDUK7cqeKbWBw
+ Ec7ZrRvr5c8SkCTVCkw7avCEIF30sKfhNLMwyMLa2Y0pLJpdN0zR6Wz9vcKybto=
+X-Gm-Gg: ASbGnctDYQB4MdUwoXK6JwIcPAacnPCQanCC8I9cCPwyrDB6L3Y44IPcq+XPCJolSoj
+ 6lWUmTWVSNLRklIUPp95eggFTLey/t2SK9MOlGBvXf/36GaOPTbKWA4LsA9ANOeMbOKW/DMvw9C
+ xVSCBc4ofrqarmNxJf4wqIQQWEDq7Nd7WI0dByrXKFFfqJWXCXIWwZlf2sTxa6oCYlI+/fUZJX5
+ ReZLmIlRAvxyN5jLpfktH+g/lvELsif76eKZ24vNTGDKCtTnY0Fogx5jHKAOtDiCztlkFNe9/mR
+ RO9kZOT6KvzpegEg8lm36FKZrw0HGb2w7iVdNdcuKx2D1iB8+BZ8wecxc88=
+X-Google-Smtp-Source: AGHT+IFom6ww010xi6iwaZFX8PcNbPd8AlcrdD+abDzMsanCtLhGqSZ+ALguQ4cDLruZTtWQFfEEmw==
+X-Received: by 2002:a17:90b:538c:b0:2fe:b470:dde4 with SMTP id
+ 98e67ed59e1d1-301bde59c52mr6585992a91.12.1742396657024; 
+ Wed, 19 Mar 2025 08:04:17 -0700 (PDT)
+Received: from [192.168.68.110] ([177.170.117.79])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-301bf5b7cdcsm1841076a91.34.2025.03.19.08.04.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Mar 2025 08:04:16 -0700 (PDT)
+Message-ID: <9bc5f892-889d-4fdd-9c33-4734851babc3@ventanamicro.com>
+Date: Wed, 19 Mar 2025 12:04:10 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250314113847.109460-2-kkostiuk@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/6] hw/uefi-vars-sysbus: allow for riscv virt
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>, Kashyap Chamarthy <kchamart@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-riscv@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
+References: <20250319141159.1461621-1-kraxel@redhat.com>
+ <20250319141159.1461621-5-kraxel@redhat.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250319141159.1461621-5-kraxel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,68 +107,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 14, 2025 at 01:38:46PM +0200, Konstantin Kostiuk wrote:
-> Windows has no native equivalent API, but it would be possible to
-> simulate it as illustrated here (BSD-3-Clause):
+
+
+On 3/19/25 11:11 AM, Gerd Hoffmann wrote:
+> Allow the device being added to riscv virt VMs.
 > 
->   https://github.com/giampaolo/psutil/pull/1485
-> 
-> Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->  qga/commands-win32.c   | 140 +++++++++++++++++++++++++++++++++++++++++
->  qga/guest-agent-core.h |  10 +++
->  qga/main.c             |  39 ++++++++++++
->  qga/meson.build        |   2 +-
->  qga/qapi-schema.json   |   4 +-
->  5 files changed, 192 insertions(+), 3 deletions(-)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-
-> +GuestLoadAverage *qmp_guest_get_load(Error **errp)
-> +{
-> +    if (ga_get_load_avg_pdh_query(ga_state) == NULL) {
-> +        /* set initial values */
-> +        load_avg_1m = 0;
-> +        load_avg_5m = 0;
-> +        load_avg_15m = 0;
-> +
-> +        if (init_load_avg_counter(errp) == false) {
-> +            return NULL;
-> +        }
-> +    }
-
-Nice idea. So we avoid running the load average logic
-until such time as a mgmt app actually asks for it.
-
-The load avg won't be very accurate initially, but
-assuming any interested mgmt app will ask for this
-repeatedly over the entire life of the VM, this looks
-like a good mitigation.
-
-Perhaps worth a commenting explaining why we're doing
-this.
-
-
-> +
-> +    GuestLoadAverage *ret = NULL;
-> +
-> +    ret = g_new0(GuestLoadAverage, 1);
-> +    ret->load1m = load_avg_1m;
-> +    ret->load5m = load_avg_5m;
-> +    ret->load15m = load_avg_15m;
-> +    return ret;
-> +}
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>   hw/riscv/virt.c | 2 ++
+>   hw/uefi/Kconfig | 2 +-
+>   2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index dae46f4733cd..e517002fdfc7 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -57,6 +57,7 @@
+>   #include "hw/acpi/aml-build.h"
+>   #include "qapi/qapi-visit-common.h"
+>   #include "hw/virtio/virtio-iommu.h"
+> +#include "hw/uefi/var-service-api.h"
+>   
+>   /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+>   static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+> @@ -1935,6 +1936,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+>       hc->plug = virt_machine_device_plug_cb;
+>   
+>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+>   #ifdef CONFIG_TPM
+>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+>   #endif
+> diff --git a/hw/uefi/Kconfig b/hw/uefi/Kconfig
+> index ca6c2bc46a96..f139008b632b 100644
+> --- a/hw/uefi/Kconfig
+> +++ b/hw/uefi/Kconfig
+> @@ -1,3 +1,3 @@
+>   config UEFI_VARS
+>   	bool
+> -        default y if X86_64 || AARCH64
+> +        default y if X86_64 || AARCH64 || RISCV64
 
 
