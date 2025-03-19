@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 106FBC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 12:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7082AC35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 12:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tusrd-0000KI-E0; Wed, 19 Mar 2025 08:49:41 -0400
+	id 1tusrf-0000Pw-RE; Wed, 19 Mar 2025 08:49:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1tujCn-0001OY-0m
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:30:53 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1tujCl-0000qd-4x
- for qemu-devel@nongnu.org; Tue, 18 Mar 2025 22:30:52 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-225a28a511eso108399805ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Mar 2025 19:30:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742351446; x=1742956246; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1Gh4ZIghkWg/wQzaqUUKT6KEkn1st8k6xmiH7pRpD0w=;
- b=cESCf9RIBs/Ad2q7O1/pLqrvRkvEYk1+HxR8zbwJqAouwSSL6YZg7wnG7mVAPI/SG3
- f6pvY0yOD2496BmPD2d51m+eepNHTts0eXWHXgpVwUV7Pht13nIehA7RWc8WjPzWC7O6
- wusmb29oLnAns3lwG0viQqy8tFwa9vwMTk4SS7DtcVq0X8GPhgXCGne9WO1uzRQ3I+qm
- C6u1gn26ur4wp7Tc4elvefApL9max62vMgouVSrle5CH0GyPvlN001EIcUKGrgk+iJHB
- trmP5FzrY1BnXTMLC1HyW0+KVxFw7X4+/EqgULdg7YBHhGPdMLaK5anud6IPGxLC1pfu
- Zwzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742351446; x=1742956246;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1Gh4ZIghkWg/wQzaqUUKT6KEkn1st8k6xmiH7pRpD0w=;
- b=unlRM7ffJHHBx9fr0YLfe41OyA36bnZHZTl6c/kkX32B2GIRY/zMl66az+a18QOuUi
- 8BilQrEWiOAA1yM9vh8cgFg0K+zNmsUroSd2sYiDk4nud+zoGMLkNXLSYo8ssggVNwl2
- FxpE8DQpvtEVknnEnGrI5vCghTfclS9bYWlrpgpTR47TM8VAWZhsX7V0hHnWSbti42GN
- cZwhQ+7FnUzbpsEsnaN5ID7f5hzGLpCIj9r/Dzvh/jvbKM1UNlFdvvL3xwLi0l5m0Zd1
- xoGAVVTvpWhJLc97a9/gGdWPwv1hFX3eAMePCZa6DbO/RCPSEns4MUQs3wS4XGb+zhZT
- gWBw==
-X-Gm-Message-State: AOJu0YzsTHJDtPrtoL1RBeqeCNpyFsyyczpMGrKix9JfFq0U5PpIJXjl
- FZdrz/iKjgZQHN+vN8vrjGHHKP7ZH5h1pqvNkoMMXuRBwdGcMOqP3hWh0XM1
-X-Gm-Gg: ASbGnct4AvqQsonigx0Uh5xdmymfdu4Dv1bNkWq0WQuXQ2vb9CHCx4wB7LzP23TbbIg
- NENerWkMCPPW/Y0DQ2k83EeE3t2ejqztB3DNz4wcecUyey3+8mqw/tLwIdGOvXLjK1k3BBLyx5w
- B/Fv3cnVfL4Gxi/aKFyU9Us6tqIWhFdwnTIdhXMD3IEPDpcpKORFwP56381Hq35SPyoh7m9gRtQ
- VZrldeXuVcphvYLi1gV23kRkdLJUzco8fFMgyBXDY+B8Va7aHVVnnhdssFTTkjzrOhevi/Rmia9
- cn2glv3nQJdnKGH1vNygJYPWahV4qZh1QSIqppTXrsQWDH0/7Rd8Ow+ZWt2rS3JaUqVNVNNWMw=
- =
-X-Google-Smtp-Source: AGHT+IGKDgB9auNTjteDQ9/WHstCw6ywbSUihElbcrtnjd5KwoQvmf6rlO9RgnvyxcL3swc20h2GFg==
-X-Received: by 2002:a05:6a00:c8b:b0:736:491b:536d with SMTP id
- d2e1a72fcca58-7376d6fa36bmr1751175b3a.20.1742351446354; 
- Tue, 18 Mar 2025 19:30:46 -0700 (PDT)
-Received: from localhost.localdomain ([103.210.49.131])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167d764sm10712578b3a.98.2025.03.18.19.30.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Mar 2025 19:30:45 -0700 (PDT)
-From: Tanish Desai <tanishdesai37@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Tanish Desai <tanishdesai37@gmail.com>
-Subject: [PATCH] Fix duplicate symbol error on MacOS build
-Date: Wed, 19 Mar 2025 08:00:36 +0530
-Message-ID: <20250319023036.71493-1-tanishdesai37@gmail.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <devnull+n.shubin.yadro.com@kernel.org>)
+ id 1tuoJT-0006G2-Sb; Wed, 19 Mar 2025 03:58:08 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <devnull+n.shubin.yadro.com@kernel.org>)
+ id 1tuoJQ-0003df-Bw; Wed, 19 Mar 2025 03:58:07 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id C2486A48FE1;
+ Wed, 19 Mar 2025 07:52:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CBBA9C4CEF6;
+ Wed, 19 Mar 2025 07:57:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1742371074;
+ bh=/FXbuVk2kxneP1NDtfBB0y/MWnfDsP3dDD2KxydWs9E=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+ b=ASjpQQU8NZQ54aoHigkVzhqQwLHZzgh5/W9Yfa+9+Pd+jpmKqUW0D7TD6BlQY+7BN
+ u2wPdVNOmB3KeYdiqS//dY9qDN7rL/ZyX3WWL0XZSI1lM+yJmP2hVlogV2NZL2otKG
+ uM9WtyyeHRcO6hVsT7YMjWHtRrBb/rseT4075OKfEub9LtMKi88sGIstZmG621PZDr
+ M6+aHuEoFYZR5JEywwiFaejmVIat87fBasovE7sDFKDDJUFQGmd3KHQtQBKKZOU8Wo
+ pwn+kWc5Gnzrh39f4C9CkiCxejfWRc15IRlM5jPKXBIZC2C/AT5IUU6qnAxp8oBqWA
+ ePLfzV7W28zgg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
+ (localhost.localdomain [127.0.0.1])
+ by smtp.lore.kernel.org (Postfix) with ESMTP id BC5E4C35FFA;
+ Wed, 19 Mar 2025 07:57:54 +0000 (UTC)
+From: Nikita Shubin via B4 Relay <devnull+n.shubin.yadro.com@kernel.org>
+Date: Wed, 19 Mar 2025 10:57:55 +0300
+Subject: [PATCH PoC 5/7] hw/gpio/aspeed: Add gpiodev support
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=tanishdesai37@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250319-gpiodev-v1-5-76da4e5800a1@yadro.com>
+References: <20250319-gpiodev-v1-0-76da4e5800a1@yadro.com>
+In-Reply-To: <20250319-gpiodev-v1-0-76da4e5800a1@yadro.com>
+To: qemu-devel@nongnu.org
+Cc: Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, 
+ "Enrico Weigelt, metux IT consult" <info@metux.net>, 
+ Viresh Kumar <vireshk@kernel.org>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ qemu-arm@nongnu.org, Nikita Shubin <nikita.shubin@maquefel.me>, 
+ Nikita Shubin <n.shubin@yadro.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742371072; l=9057;
+ i=n.shubin@yadro.com; s=20230718; h=from:subject:message-id;
+ bh=LCxwVdVyHaytyw7TlHjgwh2ubyN+clkLCBd91HD+W6s=;
+ b=QY/eH0K/w+TXRSupwDbLRlk8MNe53AnT+V9sWX4EEshbkn/JpR8nRJRRsJ7onmtw1mKnV0NPj
+ /slWcVxjxBNDDCSgSIZCjkWz8kTwTdGE+mMjMqeXGuDuqvQhaTvi5lp
+X-Developer-Key: i=n.shubin@yadro.com; a=ed25519;
+ pk=vqf5YIUJ7BJv3EJFaNNxWZgGuMgDH6rwufTLflwU9ac=
+X-Endpoint-Received: by B4 Relay for n.shubin@yadro.com/20230718 with
+ auth_id=161
+X-Original-From: Nikita Shubin <n.shubin@yadro.com>
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=devnull+n.shubin.yadro.com@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 19 Mar 2025 08:49:26 -0400
+X-Mailman-Approved-At: Wed, 19 Mar 2025 08:49:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,49 +98,262 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: n.shubin@yadro.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The issue started after commit https://github.com/qemu/qemu/commit/59f4d65584bd3372070e2484876436c8d02505e4
+From: Nikita Shubin <n.shubin@yadro.com>
 
-Reproduction:
-  1. In the build directory on MacOS (haven't tried on other OS), run:
-       ../configure --enable-rust --target-list=aarch64-softmmu
-  2. Then run either:
-       ninja -C .
-       OR
-       make
-  3. At the end, you will encounter the error:
-       duplicate symbol '_pl011_create' in:
-           /Users/tanishdesai37/Downloads/qemu-master/build/libcommon.a.p/hw_char_pl011.c.o
-           librust_aarch64_softmmu.a[5](pl011.pl011.390d424367e209af-cgu.1.rcgu.o)
-       ld: 1 duplicate symbols
+Add gpiodev support for:
 
-Root cause:
-  Both CONFIG_PL011 and X_PL011_RUST are selected, causing C++ and Rust to produce the same object.
-  This is due to the commit above where 'select PL011' forces a true condition instead of checking if HAVE_RUST is true.
-  If HAVE_RUST is true, X_PL011_RUST should be selected instead of CONFIG_PL011.
+- getting line info
+- getting/setting lines
+- monitoring line events
+- monitoting config events
 
-Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+Binding is done via id, i.e.:
+
+... -gpiodev chardev,id=aspeed-gpio0
+
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
 ---
- hw/vmapple/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/gpio/aspeed_gpio.c         | 127 ++++++++++++++++++++++++++++++++++++++++++
+ include/hw/gpio/aspeed_gpio.h |   3 +
+ 2 files changed, 130 insertions(+)
 
-diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-index 2382b297672..01bcbf40e00 100644
---- a/hw/vmapple/Kconfig
-+++ b/hw/vmapple/Kconfig
-@@ -22,7 +22,8 @@ config VMAPPLE
-     select PLATFORM_BUS
-     select PCI_EXPRESS
-     select PCI_EXPRESS_GENERIC_BRIDGE
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL031 # RTC
-     select PL061 # GPIO
-     select GPIO_PWR
+diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
+index a5b3f454e800dc9440600562b6295b069cb536fb..0c8b27c9a0cbef313254405dde3f1e1910f9bf57 100644
+--- a/hw/gpio/aspeed_gpio.c
++++ b/hw/gpio/aspeed_gpio.c
+@@ -291,6 +291,8 @@ static int aspeed_evaluate_irq(GPIOSets *regs, int gpio_prev_high, int gpio)
+     return 0;
+ }
+ 
++static void aspeed_gpio_line_event(AspeedGPIOState *s, uint32_t set_idx, uint32_t pin_idx);
++
+ #define nested_struct_index(ta, pa, m, tb, pb) \
+         (pb - ((tb *)(((char *)pa) + offsetof(ta, m))))
+ 
+@@ -337,6 +339,9 @@ static void aspeed_gpio_update(AspeedGPIOState *s, GPIOSets *regs,
+                 /* ...trigger the line-state IRQ */
+                 ptrdiff_t set = aspeed_gpio_set_idx(s, regs);
+                 qemu_set_irq(s->gpios[set][gpio], !!(new & mask));
++
++                /* ...notify gpio backend if any */
++                aspeed_gpio_line_event(s, set, gpio);
+             } else {
+                 /* ...otherwise if we meet the line's current IRQ policy... */
+                 if (aspeed_evaluate_irq(regs, old & mask, gpio)) {
+@@ -360,6 +365,18 @@ static bool aspeed_gpio_get_pin_level(AspeedGPIOState *s, uint32_t set_idx,
+     return !!(reg_val & pin_mask);
+ }
+ 
++static void aspeed_gpio_line_event(AspeedGPIOState *s, uint32_t set_idx, uint32_t pin_idx)
++{
++    uint32_t offset = set_idx * ASPEED_GPIOS_PER_SET + pin_idx;
++    QEMUGpioLineEvent event = GPIO_EVENT_FALLING_EDGE;
++
++    if (aspeed_gpio_get_pin_level(s, set_idx, pin_idx)) {
++        event = GPIO_EVENT_RISING_EDGE;
++    }
++
++    qemu_gpio_fe_line_event(&s->gpiodev, offset, event);
++}
++
+ static void aspeed_gpio_set_pin_level(AspeedGPIOState *s, uint32_t set_idx,
+                                       uint32_t pin, bool level)
+ {
+@@ -659,6 +676,13 @@ static uint64_t aspeed_gpio_read(void *opaque, hwaddr offset, uint32_t size)
+     return value;
+ }
+ 
++static void aspeed_gpio_config_event(AspeedGPIOState *s, uint32_t set_idx, uint32_t pin_idx)
++{
++    uint32_t offset = set_idx * ASPEED_GPIOS_PER_SET + pin_idx;
++
++    qemu_gpio_fe_config_event(&s->gpiodev, offset, GPIO_LINE_CHANGED_CONFIG);
++}
++
+ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
+                                                 uint64_t data, uint32_t size)
+ {
+@@ -674,6 +698,7 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
+     uint32_t group_idx = pin_idx / GPIOS_PER_GROUP;
+     uint32_t reg_value = 0;
+     uint32_t pending = 0;
++    uint32_t old_direction;
+ 
+     set = &s->sets[set_idx];
+     props = &agc->props[set_idx];
+@@ -711,8 +736,12 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
+          *  data = ( data | ~input) & output;
+          */
+         reg_value = (reg_value | ~props->input) & props->output;
++        old_direction = set->direction;
+         set->direction = update_value_control_source(set, set->direction,
+                                                      reg_value);
++        if (set->direction != old_direction) {
++            aspeed_gpio_config_event(s, set_idx, pin_idx);
++        }
+         break;
+     case gpio_reg_idx_interrupt:
+         reg_value = set->int_enable;
+@@ -813,6 +842,7 @@ static void aspeed_gpio_write(void *opaque, hwaddr offset, uint64_t data,
+     const AspeedGPIOReg *reg;
+     GPIOSets *set;
+     uint32_t cleared;
++    uint32_t old_direction;
+ 
+     trace_aspeed_gpio_write(offset, data);
+ 
+@@ -867,7 +897,17 @@ static void aspeed_gpio_write(void *opaque, hwaddr offset, uint64_t data,
+          *  data = ( data | ~input) & output;
+          */
+         data = (data | ~props->input) & props->output;
++        old_direction = set->direction;
+         set->direction = update_value_control_source(set, set->direction, data);
++        qemu_log("gpio_reg_direction: 0x%x 0x%x\n", set->direction, old_direction);
++        if (set->direction != old_direction) {
++            unsigned long changed = set->direction ^ old_direction;
++            int idx = find_first_bit(&changed, ASPEED_GPIOS_PER_SET);
++            while (idx < ASPEED_GPIOS_PER_SET) {
++                aspeed_gpio_config_event(s, reg->set_idx, idx);
++                idx = find_next_bit(&changed, ASPEED_GPIOS_PER_SET, idx + 1);
++            }
++        }
+         break;
+     case gpio_reg_int_enable:
+         set->int_enable = update_value_control_source(set, set->int_enable,
+@@ -1392,11 +1432,85 @@ static void aspeed_gpio_reset(DeviceState *dev)
+     memset(s->sets, 0, sizeof(s->sets));
+ }
+ 
++static void aspeed_gpio_line_info(void *opaque, gpio_line_info *info)
++{
++    AspeedGPIOState *s = ASPEED_GPIO(opaque);
++    AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
++    uint32_t group_idx = 0, pin_idx = 0, idx = 0;
++    uint32_t offset = info->offset;
++    const GPIOSetProperties *props;
++    bool direction;
++    const char *group;
++    int i, set_idx, grp_idx, pin;
++
++    for (i = 0; i < ASPEED_GPIO_MAX_NR_SETS; i++) {
++        props = &agc->props[i];
++        uint32_t skip = ~(props->input | props->output);
++        for (int j = 0; j < ASPEED_GPIOS_PER_SET; j++) {
++            if (skip >> j & 1) {
++                continue;
++            }
++
++            group_idx = j / GPIOS_PER_GROUP;
++            pin_idx = j % GPIOS_PER_GROUP;
++            if (idx == offset) {
++                goto found;
++            }
++
++            idx++;
++        }
++    }
++
++    return;
++
++found:
++    group = &props->group_label[group_idx][0];
++    set_idx = get_set_idx(s, group, &grp_idx);
++    snprintf(info->name, sizeof(info->name), "gpio%s%d", group, pin_idx);
++    pin =  pin_idx + group_idx * GPIOS_PER_GROUP;
++    direction = !!(s->sets[set_idx].direction & BIT_ULL(pin));
++
++    if (direction) {
++        info->flags |= GPIO_LINE_FLAG_OUTPUT;
++    } else {
++        info->flags |= GPIO_LINE_FLAG_INPUT;
++    }
++
++    qemu_log("%u: %s: set_idx=%d, grp_idx=%d, group_idx=%u, pin_idx=%u\n", offset, info->name, set_idx, grp_idx, group_idx, pin_idx);
++}
++
++static int aspeed_gpio_get_line(void *opaque, uint32_t offset)
++{
++    AspeedGPIOState *s = ASPEED_GPIO(opaque);
++    int set_idx, pin_idx;
++
++    set_idx = offset / ASPEED_GPIOS_PER_SET;
++    pin_idx = offset % ASPEED_GPIOS_PER_SET;
++
++    return aspeed_gpio_get_pin_level(s, set_idx, pin_idx);
++}
++
++static int aspeed_gpio_set_line(void *opaque, uint32_t offset, uint8_t value)
++{
++    AspeedGPIOState *s = ASPEED_GPIO(opaque);
++    int set_idx, pin_idx;
++
++    set_idx = offset / ASPEED_GPIOS_PER_SET;
++    pin_idx = offset % ASPEED_GPIOS_PER_SET;
++
++    aspeed_gpio_set_pin_level(s, set_idx, pin_idx, value);
++
++    return 0;
++}
++
+ static void aspeed_gpio_realize(DeviceState *dev, Error **errp)
+ {
+     AspeedGPIOState *s = ASPEED_GPIO(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+     AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
++    DeviceState *d = DEVICE(s);
++    Object *backend;
++    Gpiodev *gpio;
+ 
+     /* Interrupt parent line */
+     sysbus_init_irq(sbd, &s->irq);
+@@ -1417,6 +1531,19 @@ static void aspeed_gpio_realize(DeviceState *dev, Error **errp)
+                           TYPE_ASPEED_GPIO, agc->mem_size);
+ 
+     sysbus_init_mmio(sbd, &s->iomem);
++
++    /* NOTE: or we can create one per set */
++    if (d->id) {
++        backend = object_resolve_path_type(d->id, TYPE_GPIODEV, NULL);
++        if (backend) {
++            gpio = GPIODEV(backend);
++            qemu_gpio_fe_init(&s->gpiodev, gpio, agc->nr_gpio_pins, d->id,
++                              "ASPEED GPIO", NULL);
++            qemu_gpio_fe_set_handlers(&s->gpiodev, aspeed_gpio_line_info,
++                                      aspeed_gpio_get_line,
++                                      aspeed_gpio_set_line, s);
++        }
++    }
+ }
+ 
+ static void aspeed_gpio_init(Object *obj)
+diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
+index e1e6c543339ef9ddff99124d7a267e9c8544c556..f0a1207b24421f4129182fbcbb88650604313a6c 100644
+--- a/include/hw/gpio/aspeed_gpio.h
++++ b/include/hw/gpio/aspeed_gpio.h
+@@ -12,6 +12,8 @@
+ 
+ #include "hw/sysbus.h"
+ #include "qom/object.h"
++#include "gpiodev/gpio.h"
++#include "gpiodev/gpio-fe.h"
+ 
+ #define TYPE_ASPEED_GPIO "aspeed.gpio"
+ OBJECT_DECLARE_TYPE(AspeedGPIOState, AspeedGPIOClass, ASPEED_GPIO)
+@@ -85,6 +87,7 @@ struct AspeedGPIOState {
+     SysBusDevice parent;
+ 
+     /*< public >*/
++    GpioBackend gpiodev;
+     MemoryRegion iomem;
+     int pending;
+     qemu_irq irq;
+
 -- 
-2.48.1
+2.45.2
+
 
 
