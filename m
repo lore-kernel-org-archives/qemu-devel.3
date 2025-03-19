@@ -4,154 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B5BC35FFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C55F0C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:37:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuyG5-0003Zv-Dd; Wed, 19 Mar 2025 14:35:17 -0400
+	id 1tuyHh-0004IN-EM; Wed, 19 Mar 2025 14:36:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tuyG2-0003XQ-Oc; Wed, 19 Mar 2025 14:35:14 -0400
-Received: from mail-bn8nam12on2062d.outbound.protection.outlook.com
- ([2a01:111:f403:2418::62d]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tuyG0-0002Jj-Ku; Wed, 19 Mar 2025 14:35:14 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=c2nj3IlMlODbma8zxW51y2dg2CEOJKsPxoS8BWCMrpfhLrDd6EPUJP15cLom2qA8zbNUCQjugcvtp0cQIC5C1o1kHskMSFaBjs+jlT+wWEi4WlhPXKJ8Q9JEdnK28+cDtFzirpLlT7yw8dB3pxd7jDS04RTV8VZJPMPvpCiOkojMaeUFRcKXncA1tl2XMySfgDG18UwEHHdigA6JanJHXudlIsHQILHDawO3rNBxlP6Ekrh7a/bAmV86vu4fYfsPSQBUf6c1c1A5unL3aXeeRca6qD0RFiJRt2hdtIReIN8OM/VVR4Hu/8/gdY3Z4iS/1uEZ3KJQkI1RedQaODnS2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o6tPua0UaT0rjbiysElGV/niITZEVHu3kji1sGWLB9A=;
- b=cjbdgJLp6LuZbxa2tjvjbWABSMwqjkulrHaNPZfbYi1Ci0fA/Qu7WpNLbvkSAH++DVemYZ3UD5oSaTaiqSEoGbUjgArfF/Shyw5OELmCPyf/IL57l1VqThIqshEb4UgHfBJ90BwpEnXysGcgPbD0SaTK4Vaf0qBus+oX/RBoyu4Jj+PcTA0nJGutmebK1GHFUYBLoUZcTEvQD2Jc2231rjY8+CJUX1axtuwymsMwaVPuXlhcyTi9RiBJr24jzqjzSmHKQwCpYapVPvpEz1oSlG4tqxPxBDmzz4kpVUj9qOvAubrAURvGTk67pEVvkJMi6yomOTdhObKBNRTHAGn3qA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o6tPua0UaT0rjbiysElGV/niITZEVHu3kji1sGWLB9A=;
- b=rRuMyA+hxcXVrHx4NLfQtyAjZ5ysVt1sj1wcGx2FtsHtOG1P0d80d/LUAw4OLd3UoBpLD6wIgeC8EcPvh4Y9wwn/eM6kwyg0McKGOMyANlIZKyrP0rA0Fh6NwPFsl4+DfQoP+WHk4M0ws2TuriJ+7KtkZUtWNzpVpb6I39Z3KQDqFVbMEgihtJwNWJCREsIxO5hKB+GpDAxpnXd73q8atEYDHdKciiMg7jeWFtVzCZak41PP2o4oBinVaxGzhEY+bv+9cNXHuL8nPCU3zSSksFjKwZ9WityLt1ZVqAOaoPsL82FFKG7K5AoSmJsqULQkia/jmBjm58zop9jsxLCCeA==
-Received: from BL1P223CA0011.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:2c4::16)
- by IA0PR12MB8280.namprd12.prod.outlook.com (2603:10b6:208:3df::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.34; Wed, 19 Mar
- 2025 18:35:03 +0000
-Received: from BL02EPF0001A104.namprd05.prod.outlook.com
- (2603:10b6:208:2c4:cafe::41) by BL1P223CA0011.outlook.office365.com
- (2603:10b6:208:2c4::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.31 via Frontend Transport; Wed,
- 19 Mar 2025 18:35:03 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL02EPF0001A104.mail.protection.outlook.com (10.167.241.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8534.20 via Frontend Transport; Wed, 19 Mar 2025 18:35:03 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 19 Mar
- 2025 11:34:50 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 19 Mar
- 2025 11:34:50 -0700
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Wed, 19 Mar 2025 11:34:49 -0700
-Date: Wed, 19 Mar 2025 11:34:47 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
- <jgg@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
- infrastructure for smmuv3-accel device
-Message-ID: <Z9sORySxEEL0VXMq@Asurada-Nvidia>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
- <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
- <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
- <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
- <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
- <11895c78-d6ab-40c8-a500-4abed1565234@redhat.com>
- <Z9r7dT/5E+YToqc9@Asurada-Nvidia>
- <c70fdb0c-ef56-4a52-8591-31df51ff0eec@redhat.com>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuyHf-0004Fh-HD
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:36:55 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tuyHc-0003SA-SG
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:36:55 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-476964b2c1dso60014371cf.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:36:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742409411; x=1743014211; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=F+wdgFR2lyJBz+be5VZCFuKNaezmyDjlKGbxvVD7ZSg=;
+ b=T7+W9BwXq7RsNIZX7WnlpJWZClCMZK/qskei18OcYEEph4EMmWKcMX9qcEBJHkvAy5
+ GviKkIZbJoeyjnWrkxcsEBG2VY9KWpLjlk/b10VmfCSavaAaDzV7Ln48v6QkqE3aAIhL
+ 9oJ2zTjqDuo41UwQbxapmLjh7aNerZakJ2NXbNaFDFKbdLPJBgm92hODYpG4fwG7UKPQ
+ S4hhq8CES6kQ4t8jJcK0hd1XoAVJ8i465dD0dnidxWQ773RStXLlbD/w1A+OJVrsjdpy
+ B+tg6IGH+WVzjfR8c/dpVK3ZltLfqNmLKEjbnvlVUBTbaEbpni+rutpN7xAqb/Eth+Ao
+ 2+tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742409411; x=1743014211;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F+wdgFR2lyJBz+be5VZCFuKNaezmyDjlKGbxvVD7ZSg=;
+ b=Z4cuTvEevucX1gcuYy53bijo16np3oisf/uYVrMCywiLUV1B0PQfDOCcJCa4jUjYZ8
+ EQL9K3WbJVOUPER7a4jYzq3P6OUyJe+iIO7xva4xhLcai1x7J7SP2j71np4/OwAhEwSA
+ oKqjV6mPK7F4qfA0Q7xqtZnhnJfjSm1cAPLRd+HepT0kD31rbGOMEBTJja2vplkZxDtQ
+ NHuOEr2p79lVZ0imYL9TuExlPH0huSHxvYQExeV9528GXRU4rIUALjEfWHNCmqYVygfA
+ Rph0BI7SmvvnpTCAH4Azpk3b9s4I9zEQqt/wpN4erU5eRV2eyROD0c9/gZy+2VlI9tu7
+ oZ4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnFba9IJ04y8jcffFdy3fLpgjw3g3nTKPH6UlKIjIjXBqM9cCSET1ok5qzi4+5x8d9kjXy505c62fq@nongnu.org
+X-Gm-Message-State: AOJu0YxLeb+cx9gtsOudLd4AXQfx5FBjCcDBSi1/ueDUYg9ynPxeB6VR
+ kaSm6F9Ws1lbImPUmR+c36fKyANP1ERhux+41Loo5c6GbLV2qCqB
+X-Gm-Gg: ASbGnctoudOsSsjuD9ebUSez6e4dlUqPoSya0SpSdgHwWQm/zVHYvnmxNZFbCNryEl+
+ QGjTm6PVTmUBCluDBgqZzvP+F+B1T0aaGitN2T815lL85/hw9T7Hy43agc6OFkMmZt4KGZKhq0L
+ VeV0w3wE02ic2ncyt5ibBBh2BVGK9H2YDeAiq6PPkSEgIkOxgPEJnbBpFynmrjk58WOuoDKBTjP
+ 4LPSoyryaf0JOcSO1fWLgKMGtJtZjNuHjQNjDEI2EbOWQH2l4SeqLMeP0vdvOM1+iz3Lz/Ot5kk
+ TNB6AkvAhZ0tZBLb7RqO0Nyt8rBctF7SsaOm5bDAXXJO4TasKYZCqvB0k1ZtYA==
+X-Google-Smtp-Source: AGHT+IHA2MzzKNBBHJE/jhoH6NFwSfshWd5PUZSMxPUQ9gkifouQd2kMztZj8f88F8bRL9jGbd2XqA==
+X-Received: by 2002:a05:622a:1ccc:b0:476:a7f2:2736 with SMTP id
+ d75a77b69052e-477084399bcmr71573781cf.44.1742409410990; 
+ Wed, 19 Mar 2025 11:36:50 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:992d:4509:eca7:6f8])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-476bb7f4a9csm82882561cf.58.2025.03.19.11.36.49
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 19 Mar 2025 11:36:49 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
+References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
+ <20250301052845.1012069-39-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052845.1012069-39-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 38/39] target/hexagon: Add guest reg reading functionality
+Date: Wed, 19 Mar 2025 13:36:48 -0500
+Message-ID: <02cb01db98fd$e067d2d0$a1377870$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <c70fdb0c-ef56-4a52-8591-31df51ff0eec@redhat.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A104:EE_|IA0PR12MB8280:EE_
-X-MS-Office365-Filtering-Correlation-Id: e968d721-ce70-42e4-0018-08dd6714c3c2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|7416014|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Dtq4qdz+MMFXTuHJf+x3HiN4bZJ21YZ03hvCW0QYDXZe2J2/Ai67EaLEzQz9?=
- =?us-ascii?Q?H86zdP9y7aJx/dCHpKjmdTD3KVIbkBmKXmlsYbkEPnokJfg/K9lTKigiFZ7m?=
- =?us-ascii?Q?veWeJSOvac6dDnwDdEGmsFCmvqf4qkTyIeF+sn8wz1zQNgcyWYN2uRj6NB0W?=
- =?us-ascii?Q?8F239Yy5Qr+QEJvKErXm7IqulYzqZ0iy1M/NJEifUcl57Qp1u+H8MkYmsR7Z?=
- =?us-ascii?Q?XydZy7VP9B0r5mV+u3Ow+OPrMsmhWMoCGKthqGdz98rcgLVlHQqxXawaGIV6?=
- =?us-ascii?Q?73Wmtb69ps/kluGx1xI1EztTu8byhDNrfIfvtC4PhZg39WjtBO6tWZa1/a4q?=
- =?us-ascii?Q?PymxfcxQE29phh0/v2QIHv6pWwNLEzZapft2tDNYtDpncJ+CU329AFIV/JWk?=
- =?us-ascii?Q?a9jQPo9MDcXqdhhd92nNn0mrEOqiyojx/CnNVrcIEuqdtkWpzNnKd29wXgKK?=
- =?us-ascii?Q?DBHZqnfAo9uoLeoUABcovX2vr533X14wpdll0iCABavdhiiv5oUDi9z+jryR?=
- =?us-ascii?Q?2pUMvgZMo/WTnWsrOstNOlBwu1I8YlZN+MsXnlDnMs22AuZ01q0XpCcMoQ8n?=
- =?us-ascii?Q?lEysAvE4ggLzGk8ORnd4GThfW0GTZMVEVSD2gfz/GjNxaaBlDmovmVjiZeLU?=
- =?us-ascii?Q?32/GEvk23Q9MKo9nuYH8SV6Hb26jDzuQPODHPgFD/bmltOKeXYBr4qBgEm7k?=
- =?us-ascii?Q?L/ruh8IBx8cAPvpkdYMc87tdHyN97dbgMHr1KaFjt8pbAoD9ou6t6lXAmVcl?=
- =?us-ascii?Q?vVIdpNFHFExrnObcgHvr6hhXi5v9oIcS5myaYxdjo0VuwR4JgQ/c78H/qRPq?=
- =?us-ascii?Q?aMzwgweRmKtgGFkJyqYSryqdhxG4jvExTfYBj136Rb4e8xTLD3l72BSmz7cI?=
- =?us-ascii?Q?Dw7o1euK1q4vasHB0SxbU/ROMFnuBHi3X4XaNs+t5tu1JT2P19q3ZzibnlrD?=
- =?us-ascii?Q?cVdL4xVP+vZ2pvk6ojfHO8KBZbeKG5+7ee9/7TJ0ZXxW961HFgsHeBby1vgP?=
- =?us-ascii?Q?K3EattJFD7e2JH3LH5xNAiUvTrmj+P9skwJdewAbGnEIAJXMsoBMiErQ6A4f?=
- =?us-ascii?Q?Jgrg8Zz4CEAJtoP53CIA+hP4ew8l6yN6DFvkNwzQLAdKJsV3vZrsBEPE2LKV?=
- =?us-ascii?Q?UJwOt3UAKTuZo7CdIRdDXYO7oP7e5UjZg9h+CudWOcTpTBjOBet4cKmnGNc7?=
- =?us-ascii?Q?DVtPmJroIdjtyUUHMUz1JCS0JGSxKyPM2+UTrsUJAA4rxFLQuIVpFZBWpaCb?=
- =?us-ascii?Q?g+GHxedFFNJ8dET5OLzaNJs26RnrX62C6191y23mMzLXteKurc/Ng2bK363v?=
- =?us-ascii?Q?gUjltuXu1qgRrvjXWS12vLumCUCzBBdU1yOuCEUDqhTG/4cAmudK8dSgg5qp?=
- =?us-ascii?Q?MTamJ42VtTdxj0T/k62WzXlIdN0VUBgRePJB73nQrhEZwr1fEAfmRkYYAoWE?=
- =?us-ascii?Q?tAZxP7haRsb8gCoAEqluPtAldZ9AMGObg+D50S6L5lsFNC8PHpjjiPp0MBQP?=
- =?us-ascii?Q?o+e0LauyCFh59mw=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(7416014)(376014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2025 18:35:03.6037 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e968d721-ce70-42e4-0018-08dd6714c3c2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A104.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8280
-Received-SPF: permerror client-ip=2a01:111:f403:2418::62d;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQEe7aUlsvxasbA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250319-0, 3/18/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x82c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,46 +111,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 19, 2025 at 07:09:33PM +0100, Eric Auger wrote:
-> > Option means something like this:
-> > 	-device smmuv3,accel=on
-> > instead of
-> > 	-device "smmuv3-accel"
-> > ?
-> >
-> > Yea, I think that's good.
 
-> Yeah actually that's a big debate for not much. From an implementation
-> pov that shall not change much. The only doubt I have is if we need to
-> conditionnaly expose the MSI RESV regions it is easier to do if we
-> detect we have a smmuv3-accel. what the option allows is the auto mode.
 
-Mind elaborating your doubt about the MSI RESV region?
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Friday, February 28, 2025 11:29 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com
+> Subject: [PATCH 38/39] target/hexagon: Add guest reg reading functionality
+> 
+> From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> 
+> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> ---
+>  target/hexagon/cpu.c       | 19 ++++++++++++++++++-
+>  target/hexagon/op_helper.c | 19 +++++++++++++++++--
+>  2 files changed, 35 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
+> 3c4776232e..80f5e23794 100644
+> --- a/target/hexagon/cpu.c
+> +++ b/target/hexagon/cpu.c
+> @@ -739,7 +739,24 @@ static void hexagon_cpu_class_init(ObjectClass *c,
+> void *data)  #ifndef CONFIG_USER_ONLY  uint32_t
+> hexagon_greg_read(CPUHexagonState *env, uint32_t reg)  {
+> -    g_assert_not_reached();
+> +    target_ulong ssr = arch_get_system_reg(env, HEX_SREG_SSR);
+> +    int ssr_ce = GET_SSR_FIELD(SSR_CE, ssr);
 
-Do you mean how VMS code should tag "accel=on" option and generate
-RMR nodes in the IORT table?
+Consider moving this check into hexagon_get_sys_pcycle_count*
 
-> > We certainly can't do case (a): not all TLBI commands gives an "SID"
-> > field (so would have to broadcast, i.e. underlying SMMU HW would run
-> > commands that were supposed for emulated devices only); in case of
-> > vCMDQ, commands for emulated devices would be issued to real HW and
+Otherwise
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-> I am still confused about that. For instance if the guest sends an
-> NH_ASID, NH_VA invalidation and it happens both the emulated device and
-> VFIO-device share the same cd.asid (same guest iommu domain, which
-> practically should not happen) why shouldn't we propagate the
-> invalidation to the host. Does the problem come from the usage of vCMDQ
-> or would you foresee the same problem with a generic physical SMMU?
 
-Host (HW) would end up with executing commands that were issued for
-emulated devices, which impacts performance.
-
-With vCMDQ, QEMU cannot trap command queue because all invalidation
-commands will be issued to HW directly from the guest kernel driver.
-This includes TLBI and ATC_INV commands. It's probably okay to run
-TLBI commands with vCMDQ (again perf impact), while ATC_INV commands
-would result in "unkonwn SID" errors or directly ATC_INV timeouts.
-
-Thanks
-Nicolin
 
