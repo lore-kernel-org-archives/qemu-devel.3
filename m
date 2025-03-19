@@ -4,97 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C777C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 12:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4843C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 12:51:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tusjT-0004U6-UE; Wed, 19 Mar 2025 08:41:15 -0400
+	id 1tusrz-000144-MC; Wed, 19 Mar 2025 08:50:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tusiu-0004AL-QM
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 08:40:41 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tusio-0001Zv-Rg
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 08:40:40 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2235189adaeso12071875ad.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 05:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1742388033; x=1742992833; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sqSQ/XuVmaLcJkKs0Nq8S7WYVPfAp4PUej/1bKuIozQ=;
- b=QtgKAsmFZGG5BXwkEevvlrIPTsynX9gFoLDZ5WxLTwixc9KhsuhQGoy502dEdILTgD
- luzIeHevIuqSut/0DFpP+G89FYuIJhBLIlg9VKDeh/oFxteLVaMrFxVLOnNECSiFzO6n
- CFM97Hqxj/alJh/Gpcjv6f02xOX3Op3I4Frsby0I63OW9qCHFmkYmmCan8b4QNRvmTSH
- 1ZcNfwU6XALGeb7RJYg+zTFpo31wKk5tczWm5lvcZanm8H4Rop8lYdJ0iFIhVlXEpUqz
- E6O21WyBuvFqVZPwy1nd6BhuW2LKi8K4IDnWCU8W8EWFo0/f6NKNMvpUnufVJWjx1UTd
- KrwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742388033; x=1742992833;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sqSQ/XuVmaLcJkKs0Nq8S7WYVPfAp4PUej/1bKuIozQ=;
- b=aeXB0qaWTONnShJycpk4gPkQ8y9tJNCkM3LwXhlLlC6Mi5mdGzowkuI6vThIVJKQHz
- EBBvpXO08X++/kTadsVyx6mnoslBG3I7Y6Uu277BZkxOF0GX56vcYohmjfPT1uT5Ownl
- gFdUAZtIBCRNsE6rHPZLlSwyPjalBTGSk4vXqYFaE+w12gtFs7I+RP2f/dRVSImC19Xa
- 2KRKh2PZP+gK/JvGUdmZ2HAI83wjDntSDEZLtU5KDbu1WJmK4jXtmbh0x5w6MIAm176M
- I8o826aOIT7hwTqJ/S7uomHI4uFTDcR7y13OGBLKIqmSseDRnY6EtCadNUrBwHUf8xsH
- c53Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2qwa4nn34N8HT4aUEfQ6mdm/ckUa4v9cghBMMDb6akplyMSmy9p41gm7xvrTM7vNbWQjbIhO0uXDC@nongnu.org
-X-Gm-Message-State: AOJu0YxJGBWp4HupsRi86AEE+UsCWebHmJ3TygRsCebbRkHw3XijJMJh
- 6ckE0LbLkxTmSCkoETCHA5zFNgl87cOgdviJHQanLC9zUzRuN+WdIR1qIM3DZBDcbRENjIb+Gxf
- r
-X-Gm-Gg: ASbGncsKCEoE7njbXDqgoreiRd4BBT8t9/YvB45/Kozjp8wycl036RON9Fsye+s6qoS
- uHAs653JDwKRILgPwTwK0L1CSCvtP3kYH5KCLQhMIJ9SXAQ2PZON+HsxqGAt43At7ZKb8ElTk4W
- phVmOLHMmigeH0LVvhuF3ncSy5prqW7vz5bbAhvIkeJ7o9cHHeV9/YSZlUYNkg2CqWkojxIfrMl
- tjUqFIlJdDqI6ZNzC7fuzl7bw14lIM3TG2fj03ca7k35VVJYgrpYJfwjmGoL3UUmAaIqwfYfMVk
- OjdYSKpthcoF61x+duT2U6r6lW2wiyABQbzaKEyraLAlQq3lBwqJ16UZEUk=
-X-Google-Smtp-Source: AGHT+IHVoD3COLZ2/0h+im3NBDG7iJUpUpDGJr4OkOB7AxF6DxiBnB2wNautCMSNkm2VLaRwv8XGsA==
-X-Received: by 2002:a17:903:228c:b0:226:194f:48ef with SMTP id
- d9443c01a7336-2262c9d26d4mr120081645ad.13.1742388033193; 
- Wed, 19 Mar 2025 05:40:33 -0700 (PDT)
-Received: from [192.168.68.110] ([177.170.117.79])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711578ceasm11501501b3a.84.2025.03.19.05.40.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 05:40:32 -0700 (PDT)
-Message-ID: <06ed94a2-8b7e-4022-8ba9-36b62e8f59e2@ventanamicro.com>
-Date: Wed, 19 Mar 2025 09:40:26 -0300
+ (Exim 4.90_1) (envelope-from <devnull+n.shubin.yadro.com@kernel.org>)
+ id 1tuoJW-0006Hy-Iz; Wed, 19 Mar 2025 03:58:10 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <devnull+n.shubin.yadro.com@kernel.org>)
+ id 1tuoJQ-0003dp-Cr; Wed, 19 Mar 2025 03:58:10 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 2AC2C61578;
+ Wed, 19 Mar 2025 07:57:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 108AFC4CEF5;
+ Wed, 19 Mar 2025 07:57:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1742371075;
+ bh=f4uF4jHe9b4+XSpkKfroBla+dWWoxruj2mXX8ewLBAU=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+ b=VSAkBZJ14KunM0IoYSBpDtRmX17dNO+83f4XAE3uaCI8uBXSjm6AvXIxMtVRshIhA
+ eu3EZx+nuSocwWokGdhBloiXF50LGRNBH0NeNu7Y+NIc1vBRPSBdZm3iINresMFHhH
+ mjOINV6IWtBmqy7syHV/C5sl2d6GJ9pzxFdq60RaLADJxWmyhRrqWYlOMcWl2rCFSZ
+ S+biCMfVudg61h9yocnPemWBcIq8qxQeS00hrUQwZnZeqOpEXvHSO1cxF6zrwTfvG6
+ 7OJ8iFYgSMekV5v00tnUNMIjKWw46BCGq/mzktMJ1+TsMYQnx1ZcZUamWrcI9Wg5v3
+ B8YBf5gcuS+wg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
+ (localhost.localdomain [127.0.0.1])
+ by smtp.lore.kernel.org (Postfix) with ESMTP id 01DB0C35FFA;
+ Wed, 19 Mar 2025 07:57:55 +0000 (UTC)
+From: Nikita Shubin via B4 Relay <devnull+n.shubin.yadro.com@kernel.org>
+Date: Wed, 19 Mar 2025 10:57:57 +0300
+Subject: [PATCH PoC 7/7] gpiodev: Add gpiobackend over GUSE
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/riscv/virt-acpi-build: Add support for RIMT
-To: Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>, Anup Patel
- <apatel@ventanamicro.com>, Atish Patra <atishp@rivosinc.com>
-References: <20250314051527.1892488-1-sunilvl@ventanamicro.com>
- <20250314051527.1892488-3-sunilvl@ventanamicro.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250314051527.1892488-3-sunilvl@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Message-Id: <20250319-gpiodev-v1-7-76da4e5800a1@yadro.com>
+References: <20250319-gpiodev-v1-0-76da4e5800a1@yadro.com>
+In-Reply-To: <20250319-gpiodev-v1-0-76da4e5800a1@yadro.com>
+To: qemu-devel@nongnu.org
+Cc: Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, 
+ "Enrico Weigelt, metux IT consult" <info@metux.net>, 
+ Viresh Kumar <vireshk@kernel.org>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ qemu-arm@nongnu.org, Nikita Shubin <nikita.shubin@maquefel.me>, 
+ Nikita Shubin <n.shubin@yadro.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1742371072; l=25956;
+ i=n.shubin@yadro.com; s=20230718; h=from:subject:message-id;
+ bh=cNBgCGBMLxXgwvJD8kFv/hNFULw4AM2bNKWA3qo9Ik0=;
+ b=da/v3MMHqbf3iyZmB9TJpfufqJeB1STsA8hGs9bqbbyHrwgvkALZVqcpMMVYp6kDLHyQHhCSG
+ c/2q74IEYPjBQwh+RLjfAOQccPcADl9KIqXQlBPDccX4ULYyCqoqzg4
+X-Developer-Key: i=n.shubin@yadro.com; a=ed25519;
+ pk=vqf5YIUJ7BJv3EJFaNNxWZgGuMgDH6rwufTLflwU9ac=
+X-Endpoint-Received: by B4 Relay for n.shubin@yadro.com/20230718 with
+ auth_id=161
+X-Original-From: Nikita Shubin <n.shubin@yadro.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=devnull+n.shubin.yadro.com@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 19 Mar 2025 08:49:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,284 +97,878 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: n.shubin@yadro.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Nikita Shubin <n.shubin@yadro.com>
 
+Add GUSE (FUSE based kernel module similiar to CUSE) based backend.
 
-On 3/14/25 2:15 AM, Sunil V L wrote:
-> RISC-V IO Mapping Table (RIMT) is a new static ACPI table used to
-> communicate IOMMU information to the OS. Add support for creating this
-> table when the IOMMU is present. The specification is frozen and
-> available at [1].
-> 
-> [1] - https://github.com/riscv-non-isa/riscv-acpi-rimt/releases/download/v0.99/rimt-spec.pdf
-> 
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> ---
->   hw/riscv/virt-acpi-build.c | 215 +++++++++++++++++++++++++++++++++++++
->   1 file changed, 215 insertions(+)
-> 
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 1ad6800508..2b4f5b2cea 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -198,6 +198,32 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
->       aml_append(scope, dev);
->   }
->   
-> +/*
-> + * Add DSDT entry for the IOMMU platform device.
-> + * ACPI ID for IOMMU is defined in the section 6.2 of RISC-V BRS spec.
-> + * https://github.com/riscv-non-isa/riscv-brs/releases/download/v0.8/riscv-brs-spec.pdf
-> + */
-> +static void acpi_dsdt_add_iommu_sys(Aml *scope, const MemMapEntry *iommu_memmap,
-> +                                    uint32_t iommu_irq)
-> +{
-> +    uint32_t i;
-> +
-> +    Aml *dev = aml_device("IMU0");
-> +    aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0004")));
-> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-> +
-> +    Aml *crs = aml_resource_template();
-> +    aml_append(crs, aml_memory32_fixed(iommu_memmap->base,
-> +                                       iommu_memmap->size, AML_READ_WRITE));
-> +    for (i = iommu_irq; i < iommu_irq + 4; i++) {
-> +        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_EDGE, AML_ACTIVE_LOW,
-> +                                      AML_EXCLUSIVE, &i, 1));
-> +    }
-> +
-> +    aml_append(dev, aml_name_decl("_CRS", crs));
-> +    aml_append(scope, dev);
-> +}
-> +
->   /*
->    * Serial Port Console Redirection Table (SPCR)
->    * Rev: 1.10
-> @@ -450,6 +476,9 @@ static void build_dsdt(GArray *table_data,
->       }
->   
->       acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-> +    if (virt_is_iommu_sys_enabled(s)) {
-> +        acpi_dsdt_add_iommu_sys(scope, &memmap[VIRT_IOMMU_SYS], IOMMU_SYS_IRQ);
-> +    }
->   
->       if (socket_count == 1) {
->           virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
-> @@ -602,6 +631,187 @@ static void build_madt(GArray *table_data,
->       acpi_table_end(linker, &table);
->   }
->   
-> +#define ID_MAPPING_ENTRY_SIZE        20
-> +#define IOMMU_ENTRY_SIZE             40
-> +#define RISCV_INTERRUPT_WIRE_OFFSSET 40
-> +#define ROOT_COMPLEX_ENTRY_SIZE      20
-> +#define RIMT_NODE_OFFSET             48
-> +
-> +/*
-> + * ID Mapping Structure
-> + */
-> +static void build_rimt_id_mapping(GArray *table_data, uint32_t source_id_base,
-> +                                  uint32_t num_ids, uint32_t dest_id_base)
-> +{
-> +    /* Source ID Base */
-> +    build_append_int_noprefix(table_data, source_id_base, 4);
-> +    /* Number of IDs */
-> +    build_append_int_noprefix(table_data, num_ids, 4);
-> +    /* Destination Device ID Base */
-> +    build_append_int_noprefix(table_data, source_id_base, 4);
-> +    /* Destination IOMMU Offset */
-> +    build_append_int_noprefix(table_data, dest_id_base, 4);
-> +    /* Flags */
-> +    build_append_int_noprefix(table_data, 0, 4);
-> +}
-> +
-> +struct AcpiRimtIdMapping {
-> +    uint32_t source_id_base;
-> +    uint32_t num_ids;
-> +};
-> +typedef struct AcpiRimtIdMapping AcpiRimtIdMapping;
-> +
-> +/* Build the rimt ID mapping to IOMMU for a given PCI host bridge */
-> +static int rimt_host_bridges(Object *obj, void *opaque)
-> +{
-> +    GArray *idmap_blob = opaque;
-> +
-> +    if (object_dynamic_cast(obj, TYPE_PCI_HOST_BRIDGE)) {
-> +        PCIBus *bus = PCI_HOST_BRIDGE(obj)->bus;
-> +
-> +        if (bus && !pci_bus_bypass_iommu(bus)) {
-> +            int min_bus, max_bus;
-> +
-> +            pci_bus_range(bus, &min_bus, &max_bus);
-> +
-> +            AcpiRimtIdMapping idmap = {
-> +                .source_id_base = min_bus << 8,
-> +                .num_ids = (max_bus - min_bus + 1) << 8,
-> +            };
-> +            g_array_append_val(idmap_blob, idmap);
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int rimt_idmap_compare(gconstpointer a, gconstpointer b)
-> +{
-> +    AcpiRimtIdMapping *idmap_a = (AcpiRimtIdMapping *)a;
-> +    AcpiRimtIdMapping *idmap_b = (AcpiRimtIdMapping *)b;
-> +
-> +    return idmap_a->source_id_base - idmap_b->source_id_base;
-> +}
-> +
-> +/*
-> + * RISC-V IO Mapping Table (RIMT)
-> + * https://github.com/riscv-non-isa/riscv-acpi-rimt/releases/download/v0.99/rimt-spec.pdf
-> + */
-> +static void build_rimt(GArray *table_data, BIOSLinker *linker,
-> +                       RISCVVirtState *s)
-> +{
-> +    int i, nb_nodes, rc_mapping_count;
-> +    size_t node_size, iommu_offset = 0;
-> +    uint32_t id = 0;
-> +    GArray *iommu_idmaps = g_array_new(false, true, sizeof(AcpiRimtIdMapping));
+This allows transparent usage of Linux GPIO UAPI based tools like
+in kernel tools/gpio or libgpiod.
 
-I suggest using
+libgpiod requires some modification to allow "/sys/class/guse" in
+gpiod_check_gpiochip_device().
 
+It requires guse module to be loaded and providing DEVICE()->id
+for GPIO module, for example:
 
-g_autoptr(GArray) *iommu_idmaps = g_array_new(false, true, sizeof(AcpiRimtIdMapping));
+```
+DEVICE(&s->gpio)->id = g_strdup("aspeed-gpio0");
+```
 
+The id should be provided to gpiodev with any `devname` that doesn't
+exists in /dev:
 
-And then you can get rid of the g_array_free() in the end.
+```
+-gpiodev guse,id=aspeed-gpio0,devname=gpiochip10
+```
 
+That /dev/gpiochip10 can be used in the same way we usually operate with
+gpiochip's.
 
-With this change:
+Link: http://git.maquefel.me/?p=qemu-gpiodev/libgpiod.git;a=shortlog;h=refs/heads/nshubin/guse-fix
+Link: http://git.maquefel.me/?p=qemu-gpiodev/guse.git;a=summary
+Link: http://git.maquefel.me/?p=qemu-gpiodev/libfuse.git;a=shortlog;h=refs/heads/nshubin/guse
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+---
+ gpiodev/gpio-guse.c    | 747 +++++++++++++++++++++++++++++++++++++++++++++++++
+ gpiodev/meson.build    |   1 +
+ include/gpiodev/gpio.h |   1 +
+ qapi/gpio.json         |  31 +-
+ 4 files changed, 777 insertions(+), 3 deletions(-)
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+diff --git a/gpiodev/gpio-guse.c b/gpiodev/gpio-guse.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..7e94c825653d42aae6e273acb79d5e9f8eec293c
+--- /dev/null
++++ b/gpiodev/gpio-guse.c
+@@ -0,0 +1,747 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * QEMU GPIO GUSE based backend.
++ *
++ * Author: 2025 Nikita Shubin <n.shubin@yadro.com>
++ *
++ */
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "qemu/option.h"
++#include "qemu/log.h"
++#include "qemu/lockable.h"
++#include "qapi/error.h"
++#include "gpiodev/gpio.h"
++#include "chardev/char.h"
++#include "chardev/char-fe.h"
++
++#define FUSE_USE_VERSION            31
++#include <fuse.h>
++#include <fuse_lowlevel.h>
++#include <guse_lowlevel.h>
++#undef FUSE_USE_VERSION
++
++#include <poll.h>
++#include <linux/gpio.h>
++
++#define GUSE_DEVICE_INODE_FLAG      BIT_ULL(63)
++#define GUSE_MAX_WATCH              64
++#define GUSE_MAX_EVENTS             64
++
++typedef struct GusedevLineWatch {
++    uint64_t i_node;
++    struct fuse_pollhandle *ph;
++
++    /* since we can have multiply requests per device we need own masks */
++    struct {
++        unsigned long risen;
++        unsigned long fallen;
++
++        /* special for GPIO_V2_LINE_FLAG_OUTPUT */
++        unsigned long mask;
++    } mask;
++
++    /* required to match mask with actual offsets */
++    uint32_t num_lines;
++    uint32_t offsets[GPIO_V2_LINES_MAX];
++
++    QemuMutex event_lock;
++    uint32_t num_events;
++    struct gpio_v2_line_event events[GUSE_MAX_EVENTS];
++
++    QSIMPLEQ_ENTRY(GusedevLineWatch) next;
++} GusedevLineWatch;
++
++typedef struct GusedevConfigWatch {
++    uint64_t i_node;
++    struct fuse_pollhandle *ph;
++
++    unsigned long *mask;
++
++    uint32_t num_events;
++    struct gpio_v2_line_info_changed events[GUSE_MAX_EVENTS];
++    QSIMPLEQ_ENTRY(GusedevConfigWatch) next;
++} GusedevConfigWatch;
++
++typedef struct GusedevGpiodev {
++    Gpiodev parent;
++
++    char *devname;
++    struct fuse_session *fuse_session;
++    struct fuse_buf fuse_buf;
++
++    QemuMutex linereq_lock;
++    QSIMPLEQ_HEAD(, GusedevLineWatch) linereq;
++
++    QemuMutex configreq_lock;
++    QSIMPLEQ_HEAD(, GusedevConfigWatch) configreq;
++} GusedevGpiodev;
++
++DECLARE_INSTANCE_CHECKER(GusedevGpiodev, GPIODEV_GUSEDEV,
++                         TYPE_GPIODEV_GUSEDEV)
++
++static GusedevLineWatch *gpio_gusedev_find_linereq(GusedevGpiodev *d, uint64_t i_node)
++{
++    GusedevLineWatch *e;
++
++    QSIMPLEQ_FOREACH(e, &d->linereq, next) {
++        if (e->i_node == i_node) {
++            return e;
++        }
++    }
++
++    return NULL;
++}
++
++static GusedevLineWatch *gpio_gusedev_allocate_linereq(GusedevGpiodev *d, uint64_t i_node)
++{
++    GusedevLineWatch *e = g_new0(GusedevLineWatch, 1);
++
++    e->i_node = i_node;
++
++    QSIMPLEQ_INSERT_TAIL(&d->linereq, e, next);
++
++    return e;
++}
++
++static void gpio_gusedev_free_linereq(GusedevGpiodev *d, GusedevLineWatch *w)
++{
++    GusedevLineWatch *entry, *next;
++
++    QSIMPLEQ_FOREACH_SAFE(entry, &d->linereq, next, next) {
++        if (entry->i_node == w->i_node) {
++            QSIMPLEQ_REMOVE(&d->linereq, entry, GusedevLineWatch, next);
++            if (entry->ph) {
++                fuse_pollhandle_destroy(entry->ph);
++            }
++            g_free(entry);
++        }
++    }
++}
++
++static GusedevConfigWatch *gpio_gusedev_find_configreq(GusedevGpiodev *d, uint64_t i_node)
++{
++    GusedevConfigWatch *e;
++
++    QSIMPLEQ_FOREACH(e, &d->configreq, next) {
++        if (e->i_node == i_node) {
++            return e;
++        }
++    }
++
++    return NULL;
++}
++
++static GusedevConfigWatch *gpio_gusedev_allocate_configreq(GusedevGpiodev *d,
++                                                           uint64_t i_node)
++{
++    GusedevConfigWatch *e = g_new0(GusedevConfigWatch, 1);
++
++    e->i_node = i_node;
++    e->mask = bitmap_new(d->parent.lines);
++
++    QSIMPLEQ_INSERT_TAIL(&d->configreq, e, next);
++
++    return e;
++}
++
++static void gpio_gusedev_free_configreq(GusedevGpiodev *d,
++                                        GusedevConfigWatch *w)
++{
++    GusedevConfigWatch *entry, *next;
++
++    QSIMPLEQ_FOREACH_SAFE(entry, &d->configreq, next, next) {
++        if (entry->i_node == w->i_node) {
++            QSIMPLEQ_REMOVE(&d->configreq, entry, GusedevConfigWatch, next);
++            if (entry->ph) {
++                fuse_pollhandle_destroy(entry->ph);
++            }
++            g_free(entry->mask);
++            g_free(entry);
++        }
++    }
++}
++
++static inline uint64_t timespec_to_ns(struct timespec ts)
++{
++    return (uint64_t)ts.tv_nsec + 1000000000ULL * (uint64_t)ts.tv_sec;
++}
++
++static void gpio_gusedev_push_config(GusedevGpiodev *d, uint32_t offset,
++                                     enum gpio_v2_line_changed_type event)
++{
++    GusedevConfigWatch *e;
++    struct timespec ts;
++    uint64_t ts_ns;
++
++    timespec_get(&ts, TIME_UTC);
++    ts_ns = timespec_to_ns(ts);
++
++    QEMU_LOCK_GUARD(&d->configreq_lock);
++    QSIMPLEQ_FOREACH(e, &d->configreq, next) {
++        if (test_bit(offset, e->mask)) {
++            struct gpio_v2_line_info_changed *changed;
++            uint32_t num_events = e->num_events;
++            if (++num_events > GUSE_MAX_EVENTS) {
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: max config events number exeeded\n",
++                          __func__);
++                continue;
++            }
++
++            changed = &e->events[e->num_events];
++            changed->timestamp_ns = ts_ns;
++            changed->event_type = event;
++            changed->info.offset = offset;
++
++            e->num_events = num_events;
++
++            if (e->ph) {
++                fuse_notify_poll(e->ph);
++                fuse_pollhandle_destroy(e->ph);
++                e->ph = NULL;
++            }
++        }
++    }
++}
++
++static void gpio_gusedev_push_event(GusedevGpiodev *d, uint32_t offset,
++                                    enum gpio_v2_line_event_id event)
++{
++    GusedevLineWatch *e;
++    struct timespec ts;
++    uint64_t ts_ns;
++
++    timespec_get(&ts, TIME_UTC);
++    ts_ns = timespec_to_ns(ts);
++
++    QEMU_LOCK_GUARD(&d->linereq_lock);
++    QSIMPLEQ_FOREACH(e, &d->linereq, next) {
++        bool notify = false;
++        if ((event & GPIO_V2_LINE_EVENT_RISING_EDGE)
++            && test_bit(offset, &e->mask.risen)) {
++            notify = true;
++        }
++
++        if ((event & GPIO_V2_LINE_EVENT_FALLING_EDGE)
++            && test_bit(offset, &e->mask.fallen)) {
++            notify = true;
++        }
++
++        if (notify) {
++            struct gpio_v2_line_event *info;
++            uint32_t num_events = e->num_events;
++            if (++num_events > GUSE_MAX_EVENTS) {
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: max config events number exeeded\n",
++                          __func__);
++                continue;
++            }
++
++            info = &e->events[e->num_events];
++            info->timestamp_ns = ts_ns;
++            info->id = event;
++            info->offset = offset;
++
++            e->num_events = num_events;
++
++            if (e->ph) {
++                fuse_notify_poll(e->ph);
++                fuse_pollhandle_destroy(e->ph);
++                e->ph = NULL;
++            }
++        }
++    }
++}
++
++static void gpio_gusedev_line_event(Gpiodev *g, uint32_t offset,
++                                    QEMUGpioLineEvent event)
++{
++    GusedevGpiodev *d = GPIODEV_GUSEDEV(g);
++
++    gpio_gusedev_push_event(d, offset, (enum gpio_v2_line_event_id)event);
++}
++
++static void gpio_gusedev_config_event(Gpiodev *g, uint32_t offset,
++                                      QEMUGpioConfigEvent event)
++{
++    GusedevGpiodev *d = GPIODEV_GUSEDEV(g);
++
++    gpio_gusedev_push_config(d, offset, (enum gpio_v2_line_changed_type)event);
++}
++
++static void gusedev_init(void *userdata, struct fuse_conn_info *conn)
++{
++    (void)userdata;
++
++    /* Disable the receiving and processing of FUSE_INTERRUPT requests */
++    conn->no_interrupt = 1;
++}
++
++static void gusedev_destroy(void *private_data)
++{
++    (void)private_data;
++}
++
++static void gusedev_open(fuse_req_t req, fuse_ino_t ino,
++                         struct fuse_file_info *fi)
++{
++    fuse_reply_open(req, fi);
++}
++
++static void gusedev_release(fuse_req_t req, fuse_ino_t ino,
++                            struct fuse_file_info *fi)
++{
++    GusedevGpiodev *d = fuse_req_userdata(req);
++
++    if (ino & GUSE_DEVICE_INODE_FLAG) {
++        GusedevConfigWatch *e;
++
++        e = gpio_gusedev_find_configreq(d, ino);
++        if (e) {
++            gpio_gusedev_free_configreq(d, e);
++        }
++    } else {
++        GusedevLineWatch *e;
++
++        e = gpio_gusedev_find_linereq(d, ino);
++        if (e) {
++            gpio_gusedev_free_linereq(d, e);
++        }
++    }
++
++    fuse_reply_err(req, 0);
++}
++
++static void gusedev_read(fuse_req_t req, fuse_ino_t ino, size_t size, off_t off,
++                         struct fuse_file_info *fi)
++{
++    GusedevGpiodev *d = fuse_req_userdata(req);
++
++    if (ino & GUSE_DEVICE_INODE_FLAG) {
++        GusedevConfigWatch *e;
++
++        e = gpio_gusedev_find_configreq(d, ino);
++        if (e && e->num_events) {
++            fuse_reply_buf(req, (char *)&e->events, sizeof(e->events[0]) * e->num_events);
++            e->num_events = 0;
++            return;
++        }
++    } else {
++        GusedevLineWatch *e;
++
++        e = gpio_gusedev_find_linereq(d, ino);
++        if (e && e->num_events) {
++            fuse_reply_buf(req, (char *)&e->events, sizeof(e->events[0]) * e->num_events);
++            e->num_events = 0;
++            return;
++        }
++    }
++
++    fuse_reply_buf(req, NULL, 0);
++}
++
++static void gusedev_poll_config(fuse_req_t req, fuse_ino_t ino, struct fuse_file_info *fi,
++                                struct fuse_pollhandle *ph)
++{
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    GusedevConfigWatch *e;
++
++    QEMU_LOCK_GUARD(&d->configreq_lock);
++    e = gpio_gusedev_find_configreq(d, ino);
++    if (!e) {
++        fuse_reply_poll(req, POLLERR);
++        return;
++    }
++
++    if (ph) {
++        if (e->ph) {
++            fuse_pollhandle_destroy(e->ph);
++        }
++
++        e->ph = ph;
++    }
++
++    if (e->num_events) {
++        fuse_reply_poll(req, POLLIN);
++    } else {
++        fuse_reply_poll(req, 0);
++    }
++}
++
++static void gusedev_poll_line(fuse_req_t req, fuse_ino_t ino, struct fuse_file_info *fi,
++                                struct fuse_pollhandle *ph)
++{
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    GusedevLineWatch *e;
++
++    QEMU_LOCK_GUARD(&d->linereq_lock);
++    e = gpio_gusedev_find_linereq(d, ino);
++    if (!e) {
++        fuse_reply_poll(req, POLLERR);
++        return;
++    }
++
++    if (ph) {
++        if (e->ph) {
++            fuse_pollhandle_destroy(e->ph);
++        }
++
++        e->ph = ph;
++    }
++
++    if (e->num_events) {
++        fuse_reply_poll(req, POLLIN);
++    } else {
++        fuse_reply_poll(req, 0);
++    }
++}
++
++static void gusedev_poll(fuse_req_t req, fuse_ino_t ino, struct fuse_file_info *fi,
++                         struct fuse_pollhandle *ph)
++{
++    if (ino & GUSE_DEVICE_INODE_FLAG) {
++        gusedev_poll_config(req, ino, fi, ph);
++    } else {
++        gusedev_poll_line(req, ino, fi, ph);
++    }
++}
++
++static int gusedev_chipinfo(fuse_req_t req)
++{
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    struct gpiochip_info info = { 0 };
++
++    qemu_gpio_chip_info(&d->parent, &info.lines, info.name, info.label);
++
++    return fuse_reply_ioctl(req, 0, &info, sizeof(info));
++}
++
++static int gusedev_lineinfo(fuse_req_t req, const void *in_buf)
++{
++    struct gpio_v2_line_info *in = (struct gpio_v2_line_info *)in_buf;
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    struct gpio_v2_line_info reply = { 0 };
++    uint32_t offset = in->offset;
++    gpio_line_info info = { 0 };
++
++    if (offset > d->parent.lines) {
++        return fuse_reply_err(req, EINVAL);
++    }
++
++    info.offset = offset;
++    qemu_gpio_line_info(&d->parent, &info);
++    g_strlcpy(reply.name, info.name, GPIO_MAX_NAME_SIZE);
++    reply.flags = info.flags;
++
++    return fuse_reply_ioctl(req, 0, &reply, sizeof(reply));
++}
++
++static int gusedev_linerequest(fuse_req_t req, fuse_ino_t ino,
++                               const void *in_buf)
++{
++    struct gpio_v2_line_request *in = (struct gpio_v2_line_request *)in_buf;
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    struct gpio_v2_line_request reply;
++    GusedevLineWatch *watch;
++    int i;
++
++    /* line request not available for device inode */
++    if (ino & GUSE_DEVICE_INODE_FLAG) {
++        return fuse_reply_err(req, EINVAL);
++    }
++
++    watch = gpio_gusedev_allocate_linereq(d, ino);
++    if (!watch) {
++        return fuse_reply_err(req, ENOMEM);
++    }
++
++    for (i = 0; i < in->num_lines; i++) {
++        bool notify = false;
++
++        if (in->config.flags & GPIO_V2_LINE_FLAG_INPUT) {
++            if (in->config.flags & GPIO_V2_LINE_FLAG_EDGE_RISING) {
++                watch->mask.risen |= BIT_ULL(in->offsets[i]);
++                qemu_gpio_add_event_watch(&d->parent, in->offsets[i],
++                                          GPIO_EVENT_RISING_EDGE);
++                notify = true;
++            }
++
++            if (in->config.flags & GPIO_V2_LINE_FLAG_EDGE_FALLING) {
++                watch->mask.fallen |= BIT_ULL(in->offsets[i]);
++                qemu_gpio_add_event_watch(&d->parent, in->offsets[i],
++                                          GPIO_EVENT_FALLING_EDGE);
++                notify = true;
++            }
++        /* TODO: check if lines are input and don't allow to change direction */
++        } else if (in->config.flags & GPIO_V2_LINE_FLAG_OUTPUT) {
++            watch->mask.mask |= BIT_ULL(in->offsets[i]);
++        }
++
++        /* dispatch config change event */
++        if (notify) {
++            gpio_gusedev_push_config(d, in->offsets[i],
++                                     GPIO_V2_LINE_CHANGED_REQUESTED);
++        }
++    }
++
++    memcpy(&reply, in_buf, sizeof(reply));
++
++    return fuse_reply_ioctl(req, 0, &reply, sizeof(reply));
++}
++
++static int gusedev_get_line_values(fuse_req_t req, fuse_ino_t ino,
++                                   const void *in_buf)
++{
++    struct gpio_v2_line_values *values = (struct gpio_v2_line_values *)in_buf;
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    struct gpio_v2_line_values reply = { 0 };
++    GusedevLineWatch *e;
++    int idx;
++
++    e = gpio_gusedev_find_linereq(d, ino);
++    if (!e) {
++        return fuse_reply_err(req, EINVAL);
++    }
++
++    idx = find_first_bit((unsigned long *)values->mask, e->num_lines);
++    while (idx < e->num_lines) {
++        reply.bits |= qemu_gpio_get_line_value(&d->parent, e->offsets[idx]);
++        idx = find_next_bit((unsigned long *)values->mask, e->num_lines, idx + 1);
++    }
++
++    reply.mask = values->mask;
++
++    return fuse_reply_ioctl(req, 0, &reply, sizeof(reply));
++}
++
++/* TODO: merge with gusedev_set_line_values() */
++static int gusedev_set_line_values(fuse_req_t req, fuse_ino_t ino,
++                                   const void *in_buf)
++{
++    struct gpio_v2_line_values *values = (struct gpio_v2_line_values *)in_buf;
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    struct gpio_v2_line_values reply = { 0 };
++    GusedevLineWatch *e;
++    int idx;
++
++    e = gpio_gusedev_find_linereq(d, ino);
++    if (!e) {
++        return fuse_reply_err(req, EINVAL);
++    }
++
++    idx = find_first_bit((unsigned long *)&values->mask, e->num_lines);
++    while (idx < e->num_lines) {
++        uint8_t bit = test_bit(idx, (unsigned long *)&values->bits);
++        qemu_gpio_set_line_value(&d->parent, e->offsets[idx], bit);
++        idx = find_next_bit((unsigned long *)&values->mask, e->num_lines, idx + 1);
++    }
++
++    reply.bits = values->bits;
++    reply.mask = values->mask;
++
++    return fuse_reply_ioctl(req, 0, &reply, sizeof(reply));
++}
++
++static int gusedev_set_line_watch(fuse_req_t req, fuse_ino_t ino,
++                                  const void *in_buf, bool watch)
++{
++    struct gpio_v2_line_info *info = (struct gpio_v2_line_info *)in_buf;
++    GusedevGpiodev *d = fuse_req_userdata(req);
++    struct gpio_v2_line_info reply = { 0 };
++    GusedevConfigWatch *e;
++
++    e = gpio_gusedev_find_configreq(d, ino);
++
++    /*
++     * If not found allocate it, because unlike linereq configreq is added separately
++     * per each line.
++     */
++    if (!e) {
++        e = gpio_gusedev_allocate_configreq(d, ino);
++    }
++
++    if (watch) {
++        qemu_gpio_add_config_watch(&d->parent, info->offset);
++        set_bit(info->offset, e->mask);
++    } else {
++        qemu_gpio_clear_config_watch(&d->parent, info->offset);
++        clear_bit(info->offset, e->mask);
++    }
++
++    memcpy(&reply, info, sizeof(reply));
++
++    return fuse_reply_ioctl(req, 0, &reply, sizeof(reply));
++}
++
++static void gusedev_ioctl(fuse_req_t req, fuse_ino_t ino, unsigned int cmd,
++                          void *arg, struct fuse_file_info *fi, unsigned flags,
++                          const void *in_buf, size_t in_bufsz, size_t out_bufsz)
++{
++    bool add_watch = false;
++    int ret;
++
++    if (flags & FUSE_IOCTL_COMPAT) {
++        fuse_reply_err(req, ENOSYS);
++        return;
++    }
++
++    switch (cmd) {
++    case GPIO_GET_CHIPINFO_IOCTL:
++        ret = gusedev_chipinfo(req);
++        break;
++    case GPIO_V2_GET_LINEINFO_IOCTL:
++        ret = gusedev_lineinfo(req, in_buf);
++        break;
++    /* GPIO_V2_GET_LINE_IOCTL is also processed by guse module. */
++    case GPIO_V2_GET_LINE_IOCTL:
++        ret = gusedev_linerequest(req, ino, in_buf);
++        break;
++    case GPIO_V2_LINE_GET_VALUES_IOCTL:
++        ret = gusedev_get_line_values(req, ino, in_buf);
++        break;
++    case GPIO_V2_LINE_SET_VALUES_IOCTL:
++        ret = gusedev_set_line_values(req, ino, in_buf);
++        break;
++    case GPIO_V2_GET_LINEINFO_WATCH_IOCTL:
++        add_watch = true;
++        /* fallthrough */
++    case GPIO_GET_LINEINFO_UNWATCH_IOCTL:
++        ret = gusedev_set_line_watch(req, ino, in_buf, add_watch);
++        break;
++    case GPIO_V2_LINE_SET_CONFIG_IOCTL:
++    default:
++        ret = fuse_reply_err(req, EINVAL);
++    }
++
++    if (ret) {
++        qemu_log_mask(LOG_GUEST_ERROR, "gusedev_ioctl() failed with %d\n",
++                      ret);
++    }
++}
++
++static const struct guse_cdev_lowlevel_ops gusedev_glop = {
++    .init       = gusedev_init,
++    .destroy    = gusedev_destroy,
++    .open       = gusedev_open,
++    .release    = gusedev_release,
++    .read       = gusedev_read,
++    .poll       = gusedev_poll,
++    .ioctl      = gusedev_ioctl,
++};
++
++static void read_from_fuse_export(void *opaque)
++{
++    GusedevGpiodev *guse = opaque;
++    int ret;
++
++    do {
++        ret = fuse_session_receive_buf(guse->fuse_session, &guse->fuse_buf);
++    } while (ret == -EINTR);
++
++    if (ret < 0) {
++        return;
++    }
++
++    fuse_session_process_buf(guse->fuse_session, &guse->fuse_buf);
++}
++
++static int setup_guse_export(GusedevGpiodev *guse, Error **errp)
++{
++    char dev_name[128] = "DEVNAME=";
++    const char *dev_info_argv[] = { dev_name };
++    char *curdir = get_current_dir_name();
++    struct fuse_session *session = NULL;
++    const char *argv[3];
++    struct guse_info ci;
++    int multithreaded;
++    AioContext *ctx;
++
++    strncat(dev_name, guse->devname, sizeof(dev_name) - sizeof("DEVNAME="));
++
++    argv[0] = ""; /* Dummy program name */
++    argv[1] = "-d";
++    argv[2] = NULL;
++
++    ci.dev_major = 0;
++    ci.dev_minor = 0;
++    ci.dev_info_argc = 1;
++    ci.dev_info_argv = dev_info_argv;
++
++    session = guse_lowlevel_setup(ARRAY_SIZE(argv) - 1, (char **)argv, &ci, &gusedev_glop,
++                                  &multithreaded, guse);
++    if (session == NULL) {
++        error_setg(errp, "guse_lowlevel_setup failed");
++        errno = EINVAL;
++        return -1;
++    }
++
++    /* FIXME: fuse_daemonize() calls chdir("/") */
++    chdir(curdir);
++    g_free(curdir);
++
++    ctx = iohandler_get_aio_context();
++
++    aio_set_fd_handler(ctx, fuse_session_fd(session),
++                       read_from_fuse_export, NULL,
++                       NULL, NULL, guse);
++
++    guse->fuse_session = session;
++
++    return 0;
++}
++
++static void gpio_gusedev_open(Gpiodev *gpio, GpiodevBackend *backend,
++                              Error **errp)
++{
++    GpiodevGusedev *opts = backend->u.gusedev.data;
++    GusedevGpiodev *d = GPIODEV_GUSEDEV(gpio);
++
++    d->devname = g_strdup(opts->devname);
++
++    QSIMPLEQ_INIT(&d->linereq);
++    QSIMPLEQ_INIT(&d->configreq);
++
++    qemu_mutex_init(&d->linereq_lock);
++    qemu_mutex_init(&d->configreq_lock);
++
++    setup_guse_export(d, errp);
++}
++
++static void gpio_gusedev_parse(QemuOpts *opts, GpiodevBackend *backend,
++                               Error **errp)
++{
++    const char *devname = qemu_opt_get(opts, "devname");
++    /* TODO: add bool debug for fuse debug */
++    GpiodevGusedev *ggusedev;
++
++    if (devname == NULL) {
++        error_setg(errp, "gpiodev: gusedev: no devname given");
++        return;
++    }
++
++    backend->type = GPIODEV_BACKEND_KIND_GUSEDEV;
++    ggusedev = backend->u.gusedev.data = g_new0(GpiodevGusedev, 1);
++    ggusedev->devname = g_strdup(devname);
++}
++
++static void gpio_gusedev_class_init(ObjectClass *oc, void *data)
++{
++    GpiodevClass *cc = GPIODEV_CLASS(oc);
++
++    cc->parse = &gpio_gusedev_parse;
++    cc->open = &gpio_gusedev_open;
++    cc->line_event = &gpio_gusedev_line_event;
++    cc->config_event = &gpio_gusedev_config_event;
++}
++
++static const TypeInfo gpio_gusedev_type_info[] = {
++    {
++        .name = TYPE_GPIODEV_GUSEDEV,
++        .parent = TYPE_GPIODEV,
++        .class_init = gpio_gusedev_class_init,
++        .instance_size = sizeof(GusedevGpiodev),
++        /* .instance_finalize = gpio_gusedev_finalize, */
++    },
++};
++
++DEFINE_TYPES(gpio_gusedev_type_info);
++
+diff --git a/gpiodev/meson.build b/gpiodev/meson.build
+index 64d3abb4e3d72cba0c26b665515a0f97e82fb5d9..32eae1c3f8bc856e8b7f4a4bb49d796147f59da7 100644
+--- a/gpiodev/meson.build
++++ b/gpiodev/meson.build
+@@ -4,4 +4,5 @@ gpiodev_ss.add(files(
+   'gpio.c',
+ ))
+ 
++gpiodev_ss.add(when: fuse, if_true: files('gpio-guse.c'))
+ gpiodev_ss = gpiodev_ss.apply({})
+diff --git a/include/gpiodev/gpio.h b/include/gpiodev/gpio.h
+index a34d805ccc0bf5a25986b118dcc0b2cc0a55572c..d3b95410d3a570480d187354ad384f9a23b102e6 100644
+--- a/include/gpiodev/gpio.h
++++ b/include/gpiodev/gpio.h
+@@ -56,6 +56,7 @@ struct Gpiodev {
+ OBJECT_DECLARE_TYPE(Gpiodev, GpiodevClass, GPIODEV)
+ 
+ #define TYPE_GPIODEV_CHARDEV "gpiodev-chardev"
++#define TYPE_GPIODEV_GUSEDEV "gpiodev-guse"
+ 
+ struct GpiodevClass {
+     ObjectClass parent_class;
+diff --git a/qapi/gpio.json b/qapi/gpio.json
+index 1c2b7af36813ff52cbb3a44e64a2e5a5d8658d62..e3cdca793260212622a30947eaea61bd523e98fb 100644
+--- a/qapi/gpio.json
++++ b/qapi/gpio.json
+@@ -21,12 +21,36 @@
+ ##
+ # @GpiodevBackendKind:
+ #
+-# @chardev: chardevs
++# @chardev: Gpio dev over chardev backend
++# @gusedev: Gpio dev over GUSE FUSE module
+ #
+ # Since: 9.2
+ ##
+ { 'enum': 'GpiodevBackendKind',
+-  'data': [ 'chardev' ] }
++  'data': [ 'chardev',
++            { 'name': 'gusedev', 'if': 'CONFIG_LINUX' } ] }
++
++##
++# @GpiodevGusedev:
++#
++# Configuration info for guse gpiodevs.
++#
++# @devname: Name of device created in /dev
++#
++# Since: 9.2
++##
++  { 'struct': 'GpiodevGusedev',
++    'data': { 'devname': 'str' } }
++
++##
++# @GpiodevGusedevWrapper:
++#
++# @data: Configuration info for chardev gpiodevs
++#
++# Since: 9.2
++##
++{ 'struct': 'GpiodevGusedevWrapper',
++  'data': { 'data': 'GpiodevGusedev' } }
+ 
+ ##
+ # @GpiodevChardev:
+@@ -65,4 +89,5 @@
+ { 'union': 'GpiodevBackend',
+   'base': { 'type': 'GpiodevBackendKind' },
+   'discriminator': 'type',
+-  'data': { 'chardev': 'GpiodevChardevWrapper' } }
+\ No newline at end of file
++  'data': { 'chardev': 'GpiodevChardevWrapper',
++            'gusedev': { 'type': 'GpiodevGusedevWrapper', 'if': 'CONFIG_LINUX' } } }
+\ No newline at end of file
 
-> +
-> +    AcpiTable table = { .sig = "RIMT", .rev = 1, .oem_id = s->oem_id,
-> +                        .oem_table_id = s->oem_table_id };
-> +
-> +    acpi_table_begin(&table, table_data);
-> +
-> +    object_child_foreach_recursive(object_get_root(),
-> +                                   rimt_host_bridges, iommu_idmaps);
-> +
-> +    /* Sort the ID mapping  by Source ID Base*/
-> +    g_array_sort(iommu_idmaps, rimt_idmap_compare);
-> +
-> +    nb_nodes = 2; /* RC, IOMMU */
-> +    rc_mapping_count = iommu_idmaps->len;
-> +    /* Number of RIMT Nodes */
-> +    build_append_int_noprefix(table_data, nb_nodes, 4);
-> +
-> +    /* Offset to Array of RIMT Nodes */
-> +    build_append_int_noprefix(table_data, RIMT_NODE_OFFSET, 4);
-> +    build_append_int_noprefix(table_data, 0, 4); /* Reserved */
-> +
-> +    iommu_offset = table_data->len - table.table_offset;
-> +    /*  IOMMU Device Structure */
-> +    build_append_int_noprefix(table_data, 0, 1);         /* Type - IOMMU*/
-> +    build_append_int_noprefix(table_data, 1, 1);         /* Revision */
-> +    node_size =  IOMMU_ENTRY_SIZE;
-> +    build_append_int_noprefix(table_data, node_size, 2); /* Length */
-> +    build_append_int_noprefix(table_data, 0, 2);         /* Reserved */
-> +    build_append_int_noprefix(table_data, id++, 2);      /* ID */
-> +    if (virt_is_iommu_sys_enabled(s)) {
-> +        /* Hardware ID */
-> +        build_append_int_noprefix(table_data, 'R', 1);
-> +        build_append_int_noprefix(table_data, 'S', 1);
-> +        build_append_int_noprefix(table_data, 'C', 1);
-> +        build_append_int_noprefix(table_data, 'V', 1);
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '4', 1);
-> +        /* Base Address */
-> +        build_append_int_noprefix(table_data,
-> +                                  s->memmap[VIRT_IOMMU_SYS].base, 8);
-> +        build_append_int_noprefix(table_data, 0, 4);   /* Flags */
-> +    } else {
-> +        /* Hardware ID */
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '1', 1);
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '0', 1);
-> +        build_append_int_noprefix(table_data, '1', 1);
-> +        build_append_int_noprefix(table_data, '4', 1);
-> +
-> +        build_append_int_noprefix(table_data, 0, 8);   /* Base Address */
-> +        build_append_int_noprefix(table_data, 1, 4);   /* Flags */
-> +    }
-> +
-> +    build_append_int_noprefix(table_data, 0, 4);       /* Proximity Domain */
-> +    build_append_int_noprefix(table_data, 0, 2);       /* PCI Segment number */
-> +    /* PCIe B/D/F */
-> +    if (virt_is_iommu_sys_enabled(s)) {
-> +        build_append_int_noprefix(table_data, 0, 2);
-> +    } else {
-> +        build_append_int_noprefix(table_data, s->pci_iommu_bdf, 2);
-> +    }
-> +    /* Number of interrupt wires */
-> +    build_append_int_noprefix(table_data, 0, 2);
-> +    /* Interrupt wire array offset */
-> +    build_append_int_noprefix(table_data, RISCV_INTERRUPT_WIRE_OFFSSET, 2);
-> +
-> +    /*  PCIe Root Complex Node */
-> +    build_append_int_noprefix(table_data, 1, 1);           /* Type */
-> +    build_append_int_noprefix(table_data, 1, 1);           /* Revision */
-> +    node_size =  ROOT_COMPLEX_ENTRY_SIZE +
-> +                 ID_MAPPING_ENTRY_SIZE * rc_mapping_count;
-> +    build_append_int_noprefix(table_data, node_size, 2);   /* Length */
-> +    build_append_int_noprefix(table_data, 0, 2);           /* Reserved */
-> +    build_append_int_noprefix(table_data, id++, 2);        /* ID */
-> +    build_append_int_noprefix(table_data, 0, 4);           /* Flags */
-> +    build_append_int_noprefix(table_data, 0, 2);           /* Reserved */
-> +    /* PCI Segment number */
-> +    build_append_int_noprefix(table_data, 0, 2);
-> +    /* ID mapping array offset */
-> +    build_append_int_noprefix(table_data, ROOT_COMPLEX_ENTRY_SIZE, 2);
-> +    /* Number of ID mappings */
-> +    build_append_int_noprefix(table_data, rc_mapping_count, 2);
-> +
-> +    /* Output Reference */
-> +    AcpiRimtIdMapping *range;
-> +
-> +    /* ID mapping array */
-> +    for (i = 0; i < iommu_idmaps->len; i++) {
-> +        range = &g_array_index(iommu_idmaps, AcpiRimtIdMapping, i);
-> +        if (virt_is_iommu_sys_enabled(s)) {
-> +            range->source_id_base = 0;
-> +        } else {
-> +            range->source_id_base = s->pci_iommu_bdf + 1;
-> +        }
-> +        range->num_ids = 0xffff - s->pci_iommu_bdf;
-> +        build_rimt_id_mapping(table_data, range->source_id_base,
-> +                              range->num_ids, iommu_offset);
-> +    }
-> +
-> +    acpi_table_end(linker, &table);
-> +    g_array_free(iommu_idmaps, true);
-> +}
-> +
->   /*
->    * ACPI spec, Revision 6.5+
->    * 5.2.16 System Resource Affinity Table (SRAT)
-> @@ -679,6 +889,11 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
->       acpi_add_table(table_offsets, tables_blob);
->       build_rhct(tables_blob, tables->linker, s);
->   
-> +    if (virt_is_iommu_sys_enabled(s) || s->pci_iommu_bdf) {
-> +        acpi_add_table(table_offsets, tables_blob);
-> +        build_rimt(tables_blob, tables->linker, s);
-> +    }
-> +
->       acpi_add_table(table_offsets, tables_blob);
->       spcr_setup(tables_blob, tables->linker, s);
->   
+-- 
+2.45.2
+
 
 
