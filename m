@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4317AC36000
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294B8C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuwdw-0001rD-92; Wed, 19 Mar 2025 12:51:50 -0400
+	id 1tuwdt-0001pN-91; Wed, 19 Mar 2025 12:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tuwdu-0001qj-Nw; Wed, 19 Mar 2025 12:51:46 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1tuwdr-0001oc-Po; Wed, 19 Mar 2025 12:51:43 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tuwdt-0003hg-78; Wed, 19 Mar 2025 12:51:46 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5e56b229d60so1747282a12.0; 
- Wed, 19 Mar 2025 09:51:43 -0700 (PDT)
+ id 1tuwdq-0003hB-3y; Wed, 19 Mar 2025 12:51:43 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ab78e6edb99so1086570966b.2; 
+ Wed, 19 Mar 2025 09:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742403102; x=1743007902; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742403099; x=1743007899; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Lmhjm+fPp5k3VQkAaatIbZ+VRWCMjPQxoTElddp3510=;
- b=bQhOFYYtNYoPsU4KdzYk9YhW9SEIBPiuo9QCDDuRP3Up7MjRwAOP46T5RMji7ej/tf
- E2prDFDtrKTzauXlw083zidA4ReuBs8wvq1Zai7fUmH2aaVi2wARz7XEsGSwivlt/kR6
- mbPv510qVZSiSMXx40t2rETO2RRMKPDhCMfGNt+cYius+7gWnROVGPzFM3bxBkWylJ/B
- yGKLaOuxQqJKaAayQZbdk1ICZhAPaM6w4qd+c3y0eRLi3pgcslYVyAlhbrk7b8G6pK+X
- zwPNkLQ6OdnM4RB01esvj88GJcQMRCQyVJ/MBzxA3AnW/ozBnADj8A/Z9G4ujpBQ17bW
- bT+w==
+ bh=ouZx7qFmj5er/LXPW47ACshYryaCgxL7gy3M/1R3puE=;
+ b=RJcZRQoEo+YGw0CGguSVuxSQ2wj5X/0w4817s+r/WcMOL9IbINAnm4zFkHmvjycHlT
+ uTKPEeYITyefp2vuuXvdJo1MmoJGPCTnWneC6QjOxr7ilK8CfXThMbnHae4ut3oB7GdD
+ 1NyRyMShFOYfnG6rvbUJ2m1VD/Ddwuk0u3jg4XvyeUoHRDj4vL2BkHMGq/Kbn4Xj78mC
+ vgzGZ3R13Vuaqaw232UaU33phNDpiICGbPClrTZgs8JcwqN/POXYMCLNVoS0OMcP+RnF
+ Uksuxh4pfALFCIh4YYpKoYJwJk5gHsPXR0IqGHr74UycA75PeK6iYUINl5ZjdBLWMRHc
+ g56w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742403102; x=1743007902;
+ d=1e100.net; s=20230601; t=1742403099; x=1743007899;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Lmhjm+fPp5k3VQkAaatIbZ+VRWCMjPQxoTElddp3510=;
- b=vmmE8Qs6/3IKH2Ht0pN8LutnlZMcNFu14LwJUn1gHvYbgHqCkZh+1tCinSgt5CTcPH
- skn/4GYUYzd7sA9S5CH6fL5yzBfkow7pQS/6l8e0q6PQxjUSYPbvTX5gwAUDwra6xq7U
- kgjOG9r9Ta4kawdFrxPtkKnO5s2XVShBoW5N7R4+hX8UtZD8yv8+2MkCdtBv87wvQnmP
- M/f9NJkzfTRDVLHoPJgtaE2h/rHqDLtV65cPlLPd/oXgKZ6GAcjlVcgDg5uaObVfSv+x
- QzSz9q4RhS7EXwjB0Egb4fSteONL+zSH5geMRD1sEz5ny0yK3SO0j8jolQ7Zo5fByspx
- rLVQ==
+ bh=ouZx7qFmj5er/LXPW47ACshYryaCgxL7gy3M/1R3puE=;
+ b=NReVIW1lStzCdaO/McqpS1FlnQT4Krk8QsM/X5nkVaVYmIx14RcNoI3kaTNp77uyiX
+ HYq78NCiYmXo0XRrT5mWglmA5rB9FA+L7Oq7Xa3IL4r9OwdPwrh82qnmh5fLM8Lf//Fw
+ k0G4Q9dCTS9FfzRfB7szGP/hTFxwgl2Xz9jwtyeDZZukjQZ/04jBaGH+fpfrH/kijy7p
+ HeaCMNnIhsyRYSvggzxKOerRVxnCz11SBq4rBiuvCLePVDgV6SbFUPRpMn+NQCwxJM1K
+ cYrKpvQyEujWPAp4VKGhAwXSGe35vgKZsaLPBf5LoHINQ23UP8M9L8epLG+k5R+nj8IX
+ 0JCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKhk0JcniXh7GwKRqzZEeeh/qghIYzstUszdorz8ZRc4Vr8s2+E/U640ozrgDgVK3ZWEh4qckkSg==@nongnu.org
-X-Gm-Message-State: AOJu0Yz8O+Uss/ILnneFHU8xRGMWnrOKiHmCGdimR84sMA2ikfzRJDZq
- eBvMsNC6/dzqA6hP1jhb7KBlao0HsQTgos3G6HKdlyRfHyQO6AXVyX2MnA==
-X-Gm-Gg: ASbGncunH2872hIsG4tQIL+KExf7vMi6d+g+f/2ApBbABgIMxsF4yCr8cCk/VBC6/nl
- V0su4W8bZCFakTKNOm27MrRimSt2CsQ+hyI5l/yWcGvFj1U52/7HEtP9LUIfBv2BtSx2jQN/re0
- UY6TqYIEfJApx1DGNKHoCWibeo6R34olgO1PfHnCzTKMaFqzPGyyWqEJdIzhDz/NdrgJCwuTZOh
- 1Ipt1lDBQ9bTkw7Evc9R+wJOFLTEb+XRIiSWkEkGIkdwUL6SZE33/XhvjZ1oFHmFWxKnJKdYv5R
- tBAfkg3fjJilk3tzQ+vF8Lk8PQujL76LNdaq4ts3
-X-Google-Smtp-Source: AGHT+IHEE+1+1Y4FvD18Tu6s8ju7OS/PGvX+SgfsQu/e/kSgzv8HZNQZpHllMhkUktQj206gDD21Ew==
-X-Received: by 2002:a05:6402:2356:b0:5e4:95fc:d748 with SMTP id
- 4fb4d7f45d1cf-5eb9972699cmr216738a12.5.1742403101931; 
- Wed, 19 Mar 2025 09:51:41 -0700 (PDT)
+ AJvYcCWMB6gxSdzjcj0oJkR1UIpDEtPSLgam+gigAacPOlTv16olkEmxrdet7Fi9EPd/iKJMadAbWXE6/w==@nongnu.org
+X-Gm-Message-State: AOJu0Yy86xgNCeakLvVUE1P5CKt9kbE4zrzWiYYzYyd6k8nJqTddX1Z+
+ NGxNHfyHfMeOhR37RN1IWK/xMpDS+K/lysY+ASPVeI/1mMb+PR6B
+X-Gm-Gg: ASbGncuJMmgwJ7+C3EgHTsdf8OMbDb8tYxW86v2XlGtB5446GzZ6ZPo9DXvIl09BDQ+
+ t8ipujAjcGaRaOO63yZdugC2h7X0l3VOBE3lSYYUcVrxyGIRqcWsVc22OrrQXcBmCqspI9QqpE0
+ 5K5WJKh2CqNpPyrND/pUNGhy4YMoMR6yRc4FDS6qBEZVB/8o72wyflGlW7XyaJTHlZEZu8r3T0b
+ lS/sUll+Q8fPJ8UWnPl02UsqEXCznXIvf+6cZOjq+K+Y4c85j4XwO1oDnBhHJqKbnJ4R2GkeYHt
+ ib9V4TgV/ytKtH6pIQzXAqZsamhwhtSFclLwsRVPkc2UWRq0N2g=
+X-Google-Smtp-Source: AGHT+IE8boKLyqy1r0bQG9PwgN1F170AYSjfOO/p852fODCbEV6PKoAe14EOHUNGF2XDoOZ5e18N2w==
+X-Received: by 2002:a17:907:3d89:b0:abe:fdfc:47d6 with SMTP id
+ a640c23a62f3a-ac3cdfbffb3mr26746066b.23.1742403099085; 
+ Wed, 19 Mar 2025 09:51:39 -0700 (PDT)
 Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5e816968aefsm9764015a12.20.2025.03.19.09.51.41
+ a640c23a62f3a-ac3147ef34asm1051331566b.68.2025.03.19.09.51.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 09:51:41 -0700 (PDT)
-Date: Wed, 19 Mar 2025 16:51:41 +0000
+ Wed, 19 Mar 2025 09:51:38 -0700 (PDT)
+Date: Wed, 19 Mar 2025 16:51:38 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-CC: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_1/3=5D_hw/arm/imx8mp-ev?=
- =?US-ASCII?Q?k=3A_Fix_reference_count_of_SoC_object?=
-In-Reply-To: <20250318205709.28862-2-shentey@gmail.com>
-References: <20250318205709.28862-1-shentey@gmail.com>
- <20250318205709.28862-2-shentey@gmail.com>
-Message-ID: <C330829F-02AC-4080-994E-23E48F1146FC@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_1/2=5D_hw/arm/fsl-imx8mp=3A_Derive_?=
+ =?US-ASCII?Q?struct_FslImx8mpState_from_TYPE=5FSYS=5FBUS=5FDEVICE?=
+In-Reply-To: <CAFEAcA-jbRt7x7w-gA5KEBRK8_kHgHRcX4ri+vn-umz2wAsGxA@mail.gmail.com>
+References: <20250314183224.21822-1-shentey@gmail.com>
+ <20250314183224.21822-2-shentey@gmail.com>
+ <CAFEAcA8DPonw1+GsBJ079AfeSyO9=3B93P1yj3uLTBzF4uf0Ug@mail.gmail.com>
+ <CAFEAcA-jbRt7x7w-gA5KEBRK8_kHgHRcX4ri+vn-umz2wAsGxA@mail.gmail.com>
+Message-ID: <10C0F394-2118-4AA6-A815-44B636B5DCEB@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +106,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 18=2E M=C3=A4rz 2025 20:57:07 UTC schrieb Bernhard Beschow <shentey@gma=
-il=2Ecom>:
->TYPE_FSL_IMX8MP is created using object_new(), so must be realized with
->qdev_realize_and_unref() to keep the reference counting intact=2E
+Am 18=2E M=C3=A4rz 2025 15:29:17 UTC schrieb Peter Maydell <peter=2Emaydel=
+l@linaro=2Eorg>:
+>On Tue, 18 Mar 2025 at 15:27, Peter Maydell <peter=2Emaydell@linaro=2Eorg=
+> wrote:
+>>
+>> On Fri, 14 Mar 2025 at 18:32, Bernhard Beschow <shentey@gmail=2Ecom> wr=
+ote:
+>> >
+>> > Deriving from TYPE_SYS_BUS_DEVICE fixes the SoC object to be reset up=
+on machine
+>> > reset=2E It also makes the SoC implementation not user-creatable whic=
+h can trigger
+>> > the following crash:
+>> >
+>> >   $ =2E/qemu-system-aarch64  -M virt -device fsl-imx8mp
+>> >   **
+>> >   ERROR:=2E=2E/=2E=2E/devel/qemu/tcg/tcg=2Ec:1006:tcg_register_thread=
+: assertion failed:
+>> >   (n < tcg_max_ctxs)
+>> >   Bail out! ERROR:=2E=2E/=2E=2E/devel/qemu/tcg/tcg=2Ec:1006:tcg_regis=
+ter_thread:
+>> >   assertion failed: (n < tcg_max_ctxs)
+>> >   Aborted (core dumped)
+>>
+>> > diff --git a/hw/arm/fsl-imx8mp=2Ec b/hw/arm/fsl-imx8mp=2Ec
+>> > index c3f6da6322=2E=2E82edf61082 100644
+>> > --- a/hw/arm/fsl-imx8mp=2Ec
+>> > +++ b/hw/arm/fsl-imx8mp=2Ec
+>> > @@ -702,7 +702,7 @@ static void fsl_imx8mp_class_init(ObjectClass *oc=
+, void *data)
+>> >  static const TypeInfo fsl_imx8mp_types[] =3D {
+>> >      {
+>> >          =2Ename =3D TYPE_FSL_IMX8MP,
+>> > -        =2Eparent =3D TYPE_DEVICE,
+>> > +        =2Eparent =3D TYPE_SYS_BUS_DEVICE,
+>> >          =2Einstance_size =3D sizeof(FslImx8mpState),
+>> >          =2Einstance_init =3D fsl_imx8mp_init,
+>> >          =2Eclass_init =3D fsl_imx8mp_class_init,
+>> > diff --git a/hw/arm/imx8mp-evk=2Ec b/hw/arm/imx8mp-evk=2Ec
+>> > index e1a7892fd7=2E=2Ef17d5db466 100644
+>> > --- a/hw/arm/imx8mp-evk=2Ec
+>> > +++ b/hw/arm/imx8mp-evk=2Ec
+>> > @@ -37,7 +37,7 @@ static void imx8mp_evk_init(MachineState *machine)
+>> >      s =3D FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
+>> >      object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+>> >      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fa=
+tal);
+>> > -    qdev_realize(DEVICE(s), NULL, &error_fatal);
+>> > +    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+>>
+>> You want sysbus_realize() here, not the _and_unref() variant,
+>> because the device was created with object_initialize_child()=2E
 >
+>No, that's wrong, we create it with object_new()=2E So
+>the _and_unref() *is* correct, but this is a separate bug fix
+>from the "should be sysbus, not qdev" bug this patch says
+>it is fixing=2E Can it be in a separate patch, please?
 
-Fixes: a4eefc69b237 "hw/arm: Add i=2EMX 8M Plus EVK board"
+Sure, fixed in v3=2E
 
->Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->---
-> hw/arm/imx8mp-evk=2Ec | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
+Best regards,
+Bernhard
+
 >
->diff --git a/hw/arm/imx8mp-evk=2Ec b/hw/arm/imx8mp-evk=2Ec
->index e1a7892fd7=2E=2Ee1a21e52f9 100644
->--- a/hw/arm/imx8mp-evk=2Ec
->+++ b/hw/arm/imx8mp-evk=2Ec
->@@ -37,7 +37,7 @@ static void imx8mp_evk_init(MachineState *machine)
->     s =3D FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
->     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
->     object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal)=
-;
->-    qdev_realize(DEVICE(s), NULL, &error_fatal);
->+    qdev_realize_and_unref(DEVICE(s), NULL, &error_fatal);
->=20
->     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_STAR=
-T,
->                                 machine->ram);
+>thanks
+>-- PMM
 
