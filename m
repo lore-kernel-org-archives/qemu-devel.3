@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8EDC35FFC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 17:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B05FC35FFC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 17:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tux4E-0000R8-5w; Wed, 19 Mar 2025 13:18:58 -0400
+	id 1tux4w-00023Q-QL; Wed, 19 Mar 2025 13:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tux3s-00006y-Sn
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 13:18:38 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1tux4t-0001yl-UX
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 13:19:40 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tux3q-0006F0-0w
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 13:18:35 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22622ddcc35so32787425ad.2
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 10:18:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1tux4n-0006NF-SA
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 13:19:39 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5cded3e2eso10303840a12.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 10:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742404711; x=1743009511; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OiYC2nqrAzuzOzC+HYX2/T6GF/J1oizDwWj6GKfAsw8=;
- b=qVena2eKB73pK5rN5SSicqAvXpTjo/I57BO4qAP4EcTDaWHuwZxrd5LFccauX7BQyL
- cgf+9/4yn56JqMT/18q9L7TDZli7iDv63l3jmunU9uw5FIz3t7FSfLlEzWROxf65+wqY
- EAQKvEDhUfW81xeq+kxJaxaVw0XwYtW47S0qI1t8QUk4YQqK+/Q1RrvjAMPeQYzD6uIL
- uFyME/+vkXj0ohZqtQOr4S2Pq3kIiYZodDr+u5MiusKaXs92lkcP/C0SoRhRs0GU0bFK
- LN/tc3HvTg6safhbmpAottN3cktkfU7j82xIF31Wm1z/0WRrKS5udPH27o0p6fcw+yXv
- rvHw==
+ d=sifive.com; s=google; t=1742404772; x=1743009572; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9SRSY3jrkOn9x5eeoNPjo/upYoDQHJ3GIjwfWH+DP0s=;
+ b=dTJjnzUKMbEjJDOL/5XVYZb7zwNZUdOLFHtdH17Yfo3efV9R0OAHLkSuYFA3hzwioT
+ EgVw8hgEYWvjdPrqOtP0l5FxvxC6yNECFx0pVfbX4gjKiJHS/Q5nBxYTI9nY9nCr5Y4d
+ w9ET1h0A/W73HmBhNW35n+Elr3uyijOXUkXwiuJKjK1frhCWHew20OX5L+iV7PaPOEIZ
+ thmHCKBPQ0XgMnQdxATtF/+PicOvX5/Zqm53Hu/4tBJi6ADD7tKYcWAJRrPMAyWJmdjT
+ psqg5JGmSnClmf+eh/6Db0j8PkYVeF66TFs2vGeYJ1VEV8WLNLX7gHNahpdqgVZNsomY
+ lzPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742404711; x=1743009511;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OiYC2nqrAzuzOzC+HYX2/T6GF/J1oizDwWj6GKfAsw8=;
- b=Noihc26OBlu8+LpPUZmLykHKQ9YlaOiSW0eRK7DdrAG/JOpgH6whCq0hmLKYHn/wUP
- 6O8Opo15EKj180ya4TXjXgiCliAr3zve/vXRt298SBvZiUjQ5MLFjFLoX9JnbZmaDINW
- U0qwpJF0FTBgEc+qNoKeys4qBiGU9q0jYTB5sgn+3Ec1WisHAylfPTANln8UUA6wjBia
- GKPiROGZxQKoPQRaspMmmxwIlllsLcVlyvCLq0L7G9GHLkEz87f4/fJcWr/PgHNCkuqn
- IwN4/tivZBJUxNY4cen3a5Ria73di1ARkvKAMPoaMMD/NJALybbIIXNoGv3Md1CgIelc
- lv0Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0iIzVmHokoyv86MBFR9KQhbYbs9OEAq6Aq5qojBUHsFoR4/5ZlbJNDRoeSC8by4SSrwX5KDS3Nrih@nongnu.org
-X-Gm-Message-State: AOJu0YzQL4FILIq3Ht6J/it3TZNnVIkaGuGGFq4qFpVDlJEEJV9SLkwa
- lrJjiQK/vHb6w/KD4rSXxyr+Vx/CUKrqgN0IEjgppP2gXnFFRDeylWuYg4JgQgs=
-X-Gm-Gg: ASbGnct7w6hI6ANMRSL8+msxp//gxMi5KxxV2dulrSo68sJvyM19+gdm3j8jE3bBJ9G
- I/L1Z0wecTDPQREv2KmoF04e5M0SZ+wvghhysQ3a0B5b7BgIGl7G3l3fHtR9QIopuR+ErBYERgy
- 4/6k8TJY9HWHx+y1U9Zs0dMrqKVQcTw/7hjKicG4Si44OVzqmRbBS8i3Q/likYv2L4C4QIvxmq3
- q4M+P+pJemXVhKyr9r6a4TGetfVBx4cUc+F2U87yJl3Wv+TjUU71ZpcqLR96qVf1EwAl8pjbjSi
- NxfsoIn2iRONKkrgbY7QRFHon5DFH3qKHgWDhM2dVMKrszfn42xE4HCUzH4hyYyxPN1F
-X-Google-Smtp-Source: AGHT+IEZwjVzEZ775I0nH9F2n2yd1gTfj29L+4jwg65gSwYgxp3hpyVb/XJjPTDz8J8Mj0Bqh2R94g==
-X-Received: by 2002:a05:6a00:b8b:b0:736:3e50:bfec with SMTP id
- d2e1a72fcca58-7376d5f8129mr6512836b3a.8.1742404711483; 
- Wed, 19 Mar 2025 10:18:31 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167dfa2sm12320433b3a.107.2025.03.19.10.18.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 10:18:31 -0700 (PDT)
-Message-ID: <42b115d9-ab63-43f1-9ca8-db7c23d9fa66@linaro.org>
-Date: Wed, 19 Mar 2025 10:18:30 -0700
+ d=1e100.net; s=20230601; t=1742404772; x=1743009572;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9SRSY3jrkOn9x5eeoNPjo/upYoDQHJ3GIjwfWH+DP0s=;
+ b=pXUZfh48FILwmLvogBdxpYk2Kl/4SYaDSSKXQAdcBfobWWggmwpmP9dBEe2lEsvKAk
+ SPJalyRDNTSn65oYq0V5LbLdfmBXU4I8YLPreulFfIzp4uXeLteeXcNz392z4I2Xxvhh
+ Piv84vfjlhIOVrPnZVIuMvUcwyXl6JjXHMJh8CbJbHUJseYq03Snz0ap270u9MOByFLo
+ gAJNlKY9HIATpgsZ50Zi7yo4Sd3dfpA4uwvBQ00xHzhMffRQLSSdc0UW2AjK+v03T1F+
+ 6Fg7dWZXnru/fuxZ5s2bt7OIOhe2QRZOhOSDGM4QTRjVkJv5kfT3gmh7sp8zPeYL4B4u
+ XSig==
+X-Gm-Message-State: AOJu0YxyWXTih+fjoRCRY2kaoMFejNi5Vje6CPIAMCIBNwBO6NSXgbwb
+ S2b2mSn6g4aWBIqqRPheNxqP+IiEadPaIy27pUYOw3lv04E1956MClQMjCEuj3qK6dCvlJXUv6b
+ YaQlrJwiG73zevvgftum8GzlfZcVsya5a/LHl91u4u6rTW+2xrXo=
+X-Gm-Gg: ASbGncsQO3hk2RYEPNTR5eHbSFyq+ZLmatIZTzK1C5J9SaeZM0Mnb0tKEKvbwVFgPue
+ auh2l3vnqiBtG7Ffl4bgGo3Jw/dWYhki3U450vAStcguhvclKJ9jY6MkAJ+Fa4D8CQj5DxC+DyC
+ VilpQzys5h+DMboBIH2Wym+xI=
+X-Google-Smtp-Source: AGHT+IF0AuiGxOMy/h0eJcb4T+DuMx0aJ4k42YEfNE3byNW8+5u9n4tY0OXPrxsmAHQ+wmWfYqtv6B8Im27SFFp8X7A=
+X-Received: by 2002:a05:6402:26d4:b0:5e0:8937:6ef2 with SMTP id
+ 4fb4d7f45d1cf-5eb80d0ef20mr4021495a12.8.1742404771528; Wed, 19 Mar 2025
+ 10:19:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/42] accel/tcg: Perform aligned atomic reads in
- translator_ld
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-References: <20250318213209.2579218-1-richard.henderson@linaro.org>
- <20250318213209.2579218-12-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250318213209.2579218-12-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+References: <20250307203952.13871-1-jason.chien@sifive.com>
+In-Reply-To: <20250307203952.13871-1-jason.chien@sifive.com>
+From: Jason Chien <jason.chien@sifive.com>
+Date: Thu, 20 Mar 2025 01:19:18 +0800
+X-Gm-Features: AQ5f1JqZAlTLGxIqrg1Xli1h2HIPrLWalQEsGwmyMEFt4ifDschwS-jD0ovIUhs
+Message-ID: <CADr__8rgTBJW-KKAr55Y1wHLS7jRDyvQjx=vJCGAj4T1YZhUNA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Integrate IOMMUs with PCI hosts that have ATUs
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:MCIMX7D SABRE / i..." <qemu-arm@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000007667080630b53981"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=jason.chien@sifive.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,84 +100,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/25 14:31, Richard Henderson wrote:
-> Perform aligned atomic reads in translator_ld, if possible.
-> According to
-> 
-> https://lore.kernel.org/qemu-devel/20240607101403.1109-1-jim.shu@sifive.com/
-> 
-> this is required for RISC-V Ziccif.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/translator.c | 42 ++++++++++++++++++++++++++++++++++++++----
->   1 file changed, 38 insertions(+), 4 deletions(-)
-> 
-> diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-> index ef1538b4fc..157be33bf6 100644
-> --- a/accel/tcg/translator.c
-> +++ b/accel/tcg/translator.c
-> @@ -265,12 +265,14 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
->   
->       if (likely(((base ^ last) & TARGET_PAGE_MASK) == 0)) {
->           /* Entire read is from the first page. */
-> -        memcpy(dest, host + (pc - base), len);
-> -        return true;
-> +        goto do_read;
->       }
->   
->       if (unlikely(((base ^ pc) & TARGET_PAGE_MASK) == 0)) {
-> -        /* Read begins on the first page and extends to the second. */
-> +        /*
-> +         * Read begins on the first page and extends to the second.
-> +         * The unaligned read is never atomic.
-> +         */
->           size_t len0 = -(pc | TARGET_PAGE_MASK);
->           memcpy(dest, host + (pc - base), len0);
->           pc += len0;
-> @@ -329,7 +331,39 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
->           host = db->host_addr[1];
->       }
->   
-> -    memcpy(dest, host + (pc - base), len);
-> + do_read:
-> +    /*
-> +     * Assume aligned reads should be atomic, if possible.
-> +     * We're not in a position to jump out with EXCP_ATOMIC.
-> +     */
-> +    host += pc - base;
-> +    switch (len) {
-> +    case 2:
-> +        if (QEMU_IS_ALIGNED(pc, 2)) {
-> +            uint16_t t = qatomic_read((uint16_t *)host);
-> +            stw_he_p(dest, t);
-> +            return true;
-> +        }
-> +        break;
-> +    case 4:
-> +        if (QEMU_IS_ALIGNED(pc, 4)) {
-> +            uint32_t t = qatomic_read((uint32_t *)host);
-> +            stl_he_p(dest, t);
-> +            return true;
-> +        }
-> +        break;
-> +#ifdef CONFIG_ATOMIC64
-> +    case 8:
-> +        if (QEMU_IS_ALIGNED(pc, 8)) {
-> +            uint64_t t = qatomic_read__nocheck((uint64_t *)host);
-> +            stq_he_p(dest, t);
-> +            return true;
-> +        }
-> +        break;
-> +#endif
-> +    }
-> +    /* Unaligned or partial read from the second page is not atomic. */
-> +    memcpy(dest, host, len);
->       return true;
->   }
->   
+--0000000000007667080630b53981
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Ping
 
+Jason Chien <jason.chien@sifive.com> =E6=96=BC 2025=E5=B9=B43=E6=9C=888=E6=
+=97=A5 =E9=80=B1=E5=85=AD =E4=B8=8A=E5=8D=884:40=E5=AF=AB=E9=81=93=EF=BC=9A
 
+> The struct PCIIOMMUOps is designed for use by an IOMMU, but many PCI host=
+s
+> also utilize it to implement their ATUs, preventing coexistence with
+> IOMMUs.
+> Overwriting a PCI host=E2=80=99s PCIIOMMUOps disrupts its translation rul=
+es.
+>
+> This patch series introduces a mechanism to route inbound transactions fr=
+om
+> PCI hosts to the IOMMU, enabling proper integration.
+>
+> The final patch depends on another patch series:
+> https://lists.nongnu.org/archive/html/qemu-riscv/2025-03/msg00003.html
+>
+> Jason Chien (4):
+>   include/hw/pci: Introduce a callback to set the downstream mr of PCI
+>     hosts
+>   hw/pci: Introduce an API to set PCI host downstream mr for IOMMU
+>     integration
+>   hw/pci-host/designware: Implement PCIIOMMUOps.set_downstream_mr()
+>   hw/riscv/riscv-iommu: Connect the IOMMU with PCI hosts that have ATUs
+>
+>  hw/pci-host/designware.c         | 18 +++++++++++++++---
+>  hw/pci/pci.c                     |  8 ++++++++
+>  hw/riscv/riscv-iommu.c           | 15 ++++++++++-----
+>  include/hw/pci-host/designware.h |  2 ++
+>  include/hw/pci/pci.h             | 21 +++++++++++++++++++++
+>  5 files changed, 56 insertions(+), 8 deletions(-)
+>
+> --
+> 2.43.2
+>
+>
+
+--0000000000007667080630b53981
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Ping</div><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Jason Chien &lt;<a href=3D"mailt=
+o:jason.chien@sifive.com">jason.chien@sifive.com</a>&gt; =E6=96=BC 2025=E5=
+=B9=B43=E6=9C=888=E6=97=A5 =E9=80=B1=E5=85=AD =E4=B8=8A=E5=8D=884:40=E5=AF=
+=AB=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
+:1ex">The struct PCIIOMMUOps is designed for use by an IOMMU, but many PCI =
+hosts<br>
+also utilize it to implement their ATUs, preventing coexistence with IOMMUs=
+.<br>
+Overwriting a PCI host=E2=80=99s PCIIOMMUOps disrupts its translation rules=
+.<br>
+<br>
+This patch series introduces a mechanism to route inbound transactions from=
+<br>
+PCI hosts to the IOMMU, enabling proper integration.<br>
+<br>
+The final patch depends on another patch series:<br>
+<a href=3D"https://lists.nongnu.org/archive/html/qemu-riscv/2025-03/msg0000=
+3.html" rel=3D"noreferrer" target=3D"_blank">https://lists.nongnu.org/archi=
+ve/html/qemu-riscv/2025-03/msg00003.html</a><br>
+<br>
+Jason Chien (4):<br>
+=C2=A0 include/hw/pci: Introduce a callback to set the downstream mr of PCI=
+<br>
+=C2=A0 =C2=A0 hosts<br>
+=C2=A0 hw/pci: Introduce an API to set PCI host downstream mr for IOMMU<br>
+=C2=A0 =C2=A0 integration<br>
+=C2=A0 hw/pci-host/designware: Implement PCIIOMMUOps.set_downstream_mr()<br=
+>
+=C2=A0 hw/riscv/riscv-iommu: Connect the IOMMU with PCI hosts that have ATU=
+s<br>
+<br>
+=C2=A0hw/pci-host/designware.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 18 ++++++=
++++++++++---<br>
+=C2=A0hw/pci/pci.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0|=C2=A0 8 ++++++++<br>
+=C2=A0hw/riscv/riscv-iommu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 15 +=
++++++++++-----<br>
+=C2=A0include/hw/pci-host/designware.h |=C2=A0 2 ++<br>
+=C2=A0include/hw/pci/pci.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
+ 21 +++++++++++++++++++++<br>
+=C2=A05 files changed, 56 insertions(+), 8 deletions(-)<br>
+<br>
+-- <br>
+2.43.2<br>
+<br>
+</blockquote></div>
+
+--0000000000007667080630b53981--
 
