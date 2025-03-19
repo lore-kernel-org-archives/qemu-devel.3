@@ -4,94 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C60A1C35FFC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED1FC35FFC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:47:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuwYr-0003Eg-9G; Wed, 19 Mar 2025 12:46:33 -0400
+	id 1tuwYr-0003Ez-B8; Wed, 19 Mar 2025 12:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuwYC-00035w-HC
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:45:57 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuwY9-0002sz-J3
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:45:51 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3996af42857so677950f8f.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:45:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742402748; x=1743007548; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=byYuJ69mZseIS+pMuJcRRCa33X5idTReLqatgayIHc4=;
- b=vPA+CZKwjMrSqIz5412Kh3NuKtE8CdD2K9uZ5Sau9+NCi55ErMZ6iSHCp0hsHPCimp
- xp91mlvZ4Ka9G5NUwMRV9VrXgyAQScUvLEWbCSTpVYbxVz35N0gKQ8ILzuk2wZia5VfW
- XXwK2ePeHTidNywyiA+Ypf8rwPDGCxFt+A8RwBFdqDFfu18n4S5e90/lewN/MRZYRMGQ
- VZG466QYAxxfJGFjWCsd7hamQJ/XoQm9GkX8FgoJiVaIUNrJSvvyttHPflIY7YvUjmBB
- dN3nRwOpkLz06QaoOtX6sF3aY8arFkf60yWFJtgrL/bxYRHcuZL+u+SP6DwIlLlki08e
- Z19w==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tuwYS-00038M-62
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:46:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tuwYL-0002tQ-2m
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:46:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742402758;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ps+r4+jdVyAOh6eJZGhPtJG9C5CqL8QyhJ6P2qBSgco=;
+ b=G40VhJiDq7+chh7DzT450VfdNsMlCUfaSPCZt83OtuuLU8JXDzWBPGbIQWYTuSgG7VLLKZ
+ hubYUPosYTY7dspHYnxf9QFBvoeH5CMkKN/2fnslZdQga8v9iYiSJdNIWP6YEGJe+Gsimt
+ yEEU6KTPJQeMqqmlwg05tGI2RDY/MwQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-657-5831t1AxPwGHGcOp9cYLaw-1; Wed, 19 Mar 2025 12:45:56 -0400
+X-MC-Unique: 5831t1AxPwGHGcOp9cYLaw-1
+X-Mimecast-MFC-AGG-ID: 5831t1AxPwGHGcOp9cYLaw_1742402756
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d08915f61so27195925e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:45:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742402748; x=1743007548;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=byYuJ69mZseIS+pMuJcRRCa33X5idTReLqatgayIHc4=;
- b=hmpigwwdf3gnov0xVrecN9Ci7Rr/b82UEmQ7yax6RvuZVdWIFp5TBIZAaHsPWk3xA2
- eRxeRuW2oLAIJDDus7ukbH5zCPP88CnF/rTHkkTDpQK1MhcChYQrMLlmk7v1EiwbkQlo
- Eu/xEGQvMNyoINpsRgfOwV017SVyApS4oksInwl9pZXyHYzXYU2wEORDmo+yrv8hucQh
- cTsk75tL/NSW6WlPw/l/H0vdVOoqinQ+cRKzeYm/+UE6BVV/wgjYQoeQyFqfVF7Vl1RK
- teqrayprguKHMKjg0XulaR4sdHA9OIXO2AJcFb8GQqZMecMlg+FmpnvgTGDUngCHrpbb
- zxtQ==
-X-Gm-Message-State: AOJu0YxsEolfTcKIGWzcPE/2J8PcZjFPYy3N3Z2gN8stLF9myfFr7j/v
- L3/c2LQvuaXQDOQeRrdKVTyE/BIkCas9Ja6yF8qET66jCzB9Ibd5R/J40Ca3diA=
-X-Gm-Gg: ASbGncurtdWRPSLf5j9VO3NA4UzHQPndw3tIfTfwt0MK0p5DXSAsVNCEuq2pZRC7ZPB
- HwmwEdaYJSBcszAjeyeDDYZxBHKo/esdf7KX0e/MF9eXMJ22xjkQbDibe/JDqJC9Clm5GXIikqi
- 31JEvonxU9DmXiHG7nfpFW3Epi9PY4mlIAw/WPD01iguqDjGNe7eRwNz7FVR/oxosdtvqXEQrKz
- CZ31M4yKRYK2NI/1PqsI4LZ/O01+Bo60xKv+BpD0z+dc/tIpsS/6jMcpg8RYlxUmFaoIx4S+LX4
- d6r1K+iGsVXbmwmRI+v/iQ5od1iB1E0T5NFwGEwVzUFLmVs=
-X-Google-Smtp-Source: AGHT+IHIMPodF8KvrwVr9bHPat7NZO/hvYsMFvCMJj6+Eqkf6lusrIQmo1WKP40/tVy4GEstgWaTVA==
-X-Received: by 2002:a05:6000:4405:b0:391:21e2:ec3b with SMTP id
- ffacd0b85a97d-3997955cc17mr131997f8f.3.1742402747593; 
- Wed, 19 Mar 2025 09:45:47 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c7df3506sm22088677f8f.11.2025.03.19.09.45.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 09:45:47 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0325E5F93F;
- Wed, 19 Mar 2025 16:45:46 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Anton Johansson <anjo@rev.ng>,  Peter
- Maydell <peter.maydell@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH-for-10.1 12/12] tcg: Uninline tcg_gen_insn_start()
-In-Reply-To: <20250319134507.45045-13-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 19 Mar 2025 14:45:06
- +0100")
-References: <20250319134507.45045-1-philmd@linaro.org>
- <20250319134507.45045-13-philmd@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Wed, 19 Mar 2025 16:45:45 +0000
-Message-ID: <878qp1m0jq.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1742402756; x=1743007556;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ps+r4+jdVyAOh6eJZGhPtJG9C5CqL8QyhJ6P2qBSgco=;
+ b=nQCCmnhvaCynpLDxEgE2Wus1GcKNHcub/UiC7UReHNtk8hcFovqepWdlbELyzUstSo
+ 2WJ/uTBY4s8GPzgygEqqhm29cqaAfbsHUFVGOsSG8EXGdsVzuVuNqQDlKdgOuNT99+Ap
+ wMW6Pczd+Q5xLpJhV8geOj6f18fZWu6OGhxFpnCDHV6bNjXeHbAI13VRmFmf/ll7nVKB
+ j5QYMZ4CZoJaNzs1yRInCwZv+YsLhiZo257pIIXgDtCceh+2g8e955ITcpziVogxP5ti
+ YYM9Pozm5LXp4gBrp3u6aysm0o4/vOPdFtAcwSH8HRNl/uQPaWBQXxCSQPDsuSt8gyKV
+ NBLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUD0hJL4pDi1KDmYsb0/ZFV9jbYCIY2kjQN/HjFPEaEG2bT0wghvCtP/vHyssauVUGaZze/4p11LZBT@nongnu.org
+X-Gm-Message-State: AOJu0YwvJmO3Pq5hBl5zgjow5rOsu/6veBrc8YpU1vsOrB2lmsYUwV01
+ Pg8TpmCA/nOAuy7e1B/0Iy55LwG5p95kRVHhvhzhNzR/CKsWnK8PcJzLNiW0PvIRipDz8/9MaRz
+ hLvk0UTjDqbONaeCLughSPqbQtUMiUBTeyS2zZa3fmYVscRRy3VEa
+X-Gm-Gg: ASbGncvNZIa/oFjF1sr2U4u4e/rmo8Zx+cH3uYGZ3HnYiAgacgHXjHIYQfloHLvRzD0
+ dHSH7Z5Oy4E+KUlxeE80DDwYSeLUoYZU+F8ZkyNdMJ98jp9azR0IzdoMP+uBV+2YqCHYSjAheSw
+ kbgbeayV4GlpbkJ70r8c2hokyZp4l4RNKXtulA7S5/tF06KUKqstpJBGQK8GymxVNLB6MBC3vTf
+ 0REGPUNuZIQ+V4gIn4tQ2hzp1d6M6fjNHFrKgQGL8aGB9Z+aZJllTxUxAKIuuM/QCDkI671dhpV
+ 7YC6q9B9umFgs2XnqJup2IECjxwCH775e3fZq/p1FVeki0rhVxSoNabXsK3XBTQ=
+X-Received: by 2002:a05:600c:5488:b0:43c:f70a:2af0 with SMTP id
+ 5b1f17b1804b1-43d437f360dmr40431275e9.16.1742402755619; 
+ Wed, 19 Mar 2025 09:45:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzJ4UzQr+/+12gVLWooxjYS73KvUmJiwbdV/k+0K416wDB5A19HJFSh/gSMA+5bLSOa8ZB8g==
+X-Received: by 2002:a05:600c:5488:b0:43c:f70a:2af0 with SMTP id
+ 5b1f17b1804b1-43d437f360dmr40430885e9.16.1742402755029; 
+ Wed, 19 Mar 2025 09:45:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d4870ee71sm6921655e9.30.2025.03.19.09.45.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Mar 2025 09:45:54 -0700 (PDT)
+Message-ID: <11895c78-d6ab-40c8-a500-4abed1565234@redhat.com>
+Date: Wed, 19 Mar 2025 17:45:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
+ infrastructure for smmuv3-accel device
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ jgg@nvidia.com, ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
+ <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
+ <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
+ <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
+ <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
+Content-Language: en-US
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,69 +122,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> tcg_gen_insn_start() is now common to all TCG frontends.
-> We don't need to keep it inlined, move it to tcg.c.
+
+
+On 3/17/25 8:10 PM, Nicolin Chen wrote:
+> On Mon, Mar 17, 2025 at 07:07:52PM +0100, Eric Auger wrote:
+>> On 3/17/25 6:54 PM, Nicolin Chen wrote:
+>>> On Wed, Mar 12, 2025 at 04:15:10PM +0100, Eric Auger wrote:
+>>>> On 3/11/25 3:10 PM, Shameer Kolothum wrote:
+>>>>> Based on SMMUv3 as a parent device, add a user-creatable smmuv3-accel
+>>>>> device. In order to support vfio-pci dev assignment with a Guest
+>>>> guest
+>>>>> SMMUv3, the physical SMMUv3 has to be configured in nested(S1+s2)
+>>>> nested (s1+s2)
+>>>>> mode, with Guest owning the S1 page tables. Subsequent patches will
+>>>> the guest
+>>>>> add support for smmuv3-accel to provide this.
+>>>> Can't this -accel smmu also works with emulated devices? Do we want an
+>>>> exclusive usage?
+>>> Is there any benefit from emulated devices working in the HW-
+>>> accelerated nested translation mode?
+>> Not really but do we have any justification for using different device
+>> name in accel mode? I am not even sure that accel option is really
+>> needed. Ideally the qemu device should be able to detect it is
+>> protecting a VFIO device, in which case it shall check whether nested is
+>> supported by host SMMU and then automatically turn accel mode?
+>>
+>> I gave the example of the vfio device which has different class
+>> implementration depending on the iommufd option being set or not.
+> Do you mean that we should just create a regular smmuv3 device and
+> let a VFIO device to turn on this smmuv3's accel mode depending on
+> its LEGACY/IOMMUFD class?
+
+no this is not what I meant. I gave an example where depending on an
+option passed to thye VFIO device you choose one class implement or the
+other.
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/tcg/tcg-op.h | 15 ---------------
->  include/tcg/tcg.h    |  2 ++
->  tcg/tcg.c            | 15 +++++++++++++++
->  3 files changed, 17 insertions(+), 15 deletions(-)
+> Another question: how does an emulated device work with a vSMMUv3?
+I don't get your question. vSMMUv3 currently only works with emulated
+devices. Did you mean accelerated SMMUv3?
+> I could imagine that all the accel steps would be bypassed since
+> !sdev->idev. Yet, the emulated iotlb should cache its translation
+> so we will need to flush the iotlb, which will increase complexity
+> as the TLBI command dispatching function will need to be aware what
+> ASID is for emulated device and what is for vfio device..
+I don't get the issue. For emulated device you go through the usual
+translate path which indeed caches configs and translations. In case the
+guest invalidates something, you know the SID and you find the entries
+in the cache that are tagged by this SID.
+
+In case you have an accelerated device (indeed if sdev->idev) you don't
+exercise that path. On invalidation you detect the SID matches a VFIO
+devoce, propagate the invalidations to the host instead. on the
+invalidation you should be able to detect pretty easily if you need to
+flush the emulated caches or propagate the invalidations. Do I miss some
+extra problematic?
+
+I do not say we should support emulated devices and VFIO devices in the
+same guest iommu group. But I don't see why we couldn't easily plug the
+accelerated logic in the current logical for emulation/vhost and do not
+require a different qemu device.
+
+Thanks
+
+Eric
 >
-> diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-> index cf177a1fd3b..470cb46225e 100644
-> --- a/include/tcg/tcg-op.h
-> +++ b/include/tcg/tcg-op.h
-> @@ -22,21 +22,6 @@
->  # error
->  #endif
->=20=20
-> -static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1, uint64_t=
- a2)
-> -{
-> -    unsigned insn_start_words =3D tcg_ctx->insn_start_words;
-> -    TCGOp *op =3D tcg_emit_op(INDEX_op_insn_start,
-> -                            insn_start_words * 64 / TCG_TARGET_REG_BITS);
-> -
-> -    tcg_set_insn_start_param(op, 0, pc);
-> -    if (insn_start_words > 1) {
-> -        tcg_set_insn_start_param(op, 1, a1);
-> -    }
-> -    if (insn_start_words > 2) {
-> -        tcg_set_insn_start_param(op, 2, a2);
-> -    }
-> -}
-> -
->  #if TARGET_LONG_BITS =3D=3D 32
->  typedef TCGv_i32 TCGv;
->  #define tcg_temp_new() tcg_temp_new_i32()
-> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-> index 92a23e10218..d87d900bf81 100644
-> --- a/include/tcg/tcg.h
-> +++ b/include/tcg/tcg.h
-> @@ -609,6 +609,8 @@ static inline void tcg_set_insn_start_param(TCGOp *op=
-, int arg, uint64_t v)
->      }
->  }
->=20=20
-> +void tcg_gen_insn_start(uint64_t pc, uint64_t a1, uint64_t a2);
-> +
+> Thanks
+> Nicolin
+>
 
-Is would be nice to docstring the function to explain what it does and
-note where the additional data is interpreted
-(cpu_restore_state_from_tb?).
-
-Otherwise:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
