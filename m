@@ -4,53 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC491C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 10:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE791C35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 10:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuqQq-0005BK-3v; Wed, 19 Mar 2025 06:13:52 -0400
+	id 1tuqVO-00070Z-Ud; Wed, 19 Mar 2025 06:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <9104f4d885b7dca2e01899b5aeb1d1039165e68c@kylie.crudebyte.com>)
- id 1tuqQm-0005Az-7y
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 06:13:48 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <9104f4d885b7dca2e01899b5aeb1d1039165e68c@kylie.crudebyte.com>)
- id 1tuqQj-0007kw-Gf
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 06:13:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Message-Id:Cc:To:Subject:Date:From:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=nnFQps3WMbhcQF99su3tFiaLjlKCBT1f3oF9ZWcw3Rw=; b=tWGOv
- rqZBLMKl/3sroxTsfuhp1N9iaD1lAZuwQJzujMPbAgk4cZqyXF1UEdQ3n1ytBZ58leKJV4hC7Bbql
- sIyENb28duM6m1FwUHr29iWkr0YDSPGhR2FtOPR8hc4u36IPgYQ8I3iI0KgG3/l2DlLjQQrE8QhpU
- HBmXUgUx8KU4IoPDR0OUI+GBIXg5Wr7IQ8yra40VLb3+OCD0OMmJJivBt40pqAMwLTJl53X3+P3xf
- 44oBkKTkAowJK1/5sULmYPEFs7RnB1zqjEQVcXOtp3BMJzRTVInrpQOmB95epFSzax4l9qBipmo8b
- Pp+AMkMt3e5EBIBuhdCSXEXfAGe/2D/Es29Aeo8le+44ITj2IDs/jODXbeUcH6ut07HfzgYRMxq1I
- 8DZSKoWw9H6GuGSS4tpTlZX9YEI8YAFdXd/G4B1Z7jEu8JYj/lVS8pQFKhVd24TuSzx7fxp7rBE4i
- UL37C3UnAvHVDXHziDD2MPuLrkfeqAaHdLYhqyQFCCbdK12QrB3PlOBsuWBAgpb93bKARZSaeItL8
- JC1ht7r+ifwT322suTORjL2Jxej5vn9Ly9iuLNSzdHKoJCKe4qXr+92uu4jLMEn6vZ1PUDHEe8Sur
- eYbRInUZ3sfQG229WvDqJIy7fH0Sz+Pz/WAbEnLAOoiulBA9gHKVhOmxUlQk3o=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Wed, 19 Mar 2025 11:08:58 +0100
-Subject: [PATCH] 9pfs: fix 'total_open_fd' decrementation
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Message-Id: <E1tuqQb-004R61-AZ@kylie.crudebyte.com>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=9104f4d885b7dca2e01899b5aeb1d1039165e68c@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuqVF-0006wI-13
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 06:18:25 -0400
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuqVD-0003PP-1J
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 06:18:24 -0400
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e64165ae78cso2754187276.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 03:18:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742379500; x=1742984300; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NCh+MqeE19DqyiZ5qyOGqsIvmjuez28QeAt6LJMyB5w=;
+ b=OeNJVLx9Ql3xVL4FIrzQUCfmcLGRF9AeZyopMsA8ZUbGCV1Rj3bvI3mfHoSHnJSlZx
+ 435J8owWdgC/UEuqpDe8FluScLSIRM+AsWrLVjwFqIez/lzBW5ZLqx4w6MWGcSLoTpk/
+ 9Q2TrhUeZ6uRm6QY/49mbxrx+H1P3kTZco0eJRRnKUIF9HaoferaPNA2UZP/1wCqBNok
+ mlhyx3rBiICJeURckZPHWJk0Y9PhPJNiIOoll1upZqB1v85sUwrPxCGW191M6oKp1Do2
+ jQLqrsMtxe0tai7pi3YOtx1aLQGa+j5Ey6eAGbtFtoba8dY6snMUYiqyQ7ggIC/pgXme
+ ef4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742379500; x=1742984300;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NCh+MqeE19DqyiZ5qyOGqsIvmjuez28QeAt6LJMyB5w=;
+ b=EHmUZ45QrbqWpF+6SJQyRPpmKiZoZpegdBYYV5cBU10rJsziucifgn7G81bFwEmd4k
+ P0QenBdE7HCmH8Yay06VntH2fIxyRpojI+Ri1Ovc1kpvyf1v3tZSMM8sgBnWmgb3PAlc
+ FyECHzzPRs8Iw0YbBK0gzxlPOADnVuwUEuuMBbiEeNd9ju1R6IIqnDUKeB+OVcU15ODZ
+ j1d9GJBcKqAvOoDRI9cDZyGEUbjcG+1/m7633sJowYINFiJL3AAWzxZ+kXVeb+RjwZgv
+ CgyY04nGwPNOkr+n1DYLGLezhqbvORYmYXF72yblk4mYi00+9MaF/DllJApXnC0q2xPn
+ uFRA==
+X-Gm-Message-State: AOJu0YxDN7/fiYZt0O8guOdphnykC4LjNExLg/y6tZkMTfZ+fSi3RTz+
+ 0GLTiM7unFEUbgcRsTHPvf9oo86gde+1gpdCarn69Hz8wYROUjrgJztIJdyXz7ZfF2l/Wu98RtA
+ Dj4pck4d6v11FZ+y2ZwVdElCk6kIYDJ8WiqPdQg==
+X-Gm-Gg: ASbGncvSCM8DxWwLe4J1sU9qQpMjn+0Q5hHhJMZsrVWT0vi50V7F0H8NygzZddf7bIg
+ tf8f3BIP3YBtGjyq0twcoXY1k7RcusVetiQt2z907d6vMZl714B4fRIxjGE+ZCxpEs4KM3t/1k8
+ MMUOB0L9ZRYpAxkmJsKGi/i2/dSuw=
+X-Google-Smtp-Source: AGHT+IGEd6J21z2VN2ehqnK6oP7Qz06HjzaKd+QpBgVcktTSfdWo9VttSUvVsnvZ48HEbz5diQZx7oQ6KxEaZdG3jUo=
+X-Received: by 2002:a05:6902:18d0:b0:e60:8e25:f0fb with SMTP id
+ 3f1490d57ef6-e667b3c7ce2mr2552162276.16.1742379499752; Wed, 19 Mar 2025
+ 03:18:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250304124815.591749-1-kraxel@redhat.com>
+ <20250304124815.591749-15-kraxel@redhat.com>
+ <CAFEAcA9_rb321OBOfv9v84ZLO7aw_8t8pTDMUYxj2SNnSBfRmg@mail.gmail.com>
+ <wcpg5idrxwq6fntknc4vubnzaeqqqgqbpo5rdiqhumk745hsu5@tofolnd6v4dt>
+In-Reply-To: <wcpg5idrxwq6fntknc4vubnzaeqqqgqbpo5rdiqhumk745hsu5@tofolnd6v4dt>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 19 Mar 2025 10:18:08 +0000
+X-Gm-Features: AQ5f1JpUf1mnXqZZWg_nCoV1yenUNRYWCpbIRe3JApjYoLdY-gZVJsE_lKV6JmM
+Message-ID: <CAFEAcA_MbaZjv9R0YjfHNuAqqMsHBm3-AeqnVp7w8hTHFMpz5w@mail.gmail.com>
+Subject: Re: [PULL 14/24] hw/uefi: add var-service-json.c + qapi for NV vars.
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, 
+ Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,86 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to 'man 2 close' errors returned by close() should only be used
-for either diagnostic purposes or for catching data loss due to a previous
-write error, as an error result of close() usually indicates a deferred
-error of a previous write operation.
+On Wed, 19 Mar 2025 at 08:29, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>
+>   Hi,
+>
+> > Hi; Coverity points out some problems in this code
+> > (CID 1593154, 1593157):
+>
+> I'll send fixes later today.
+>
+> > Do we absolutely need to be operating on a continuously open
+> > filedescriptor here rather than a filename? If we could make
+> > these functions use uv->jsonfile each time then we could use
+> > the glib functions g_file_get_contents() and
+> > g_file_set_contents(), which get all the pesky details of the
+> > error handling right for you.
+>
+> qemu_create() works only once in case libvirt hands us a
+> file handle instead of a filename.
 
-Therefore not decrementing 'total_open_fd' on a close() error is wrong
-and would yield in a higher open file descriptor count than actually the
-case, leading to 9p server reclaiming open file descriptors too soon.
+If we have to work on a filehandle, we have the problem
+that if the host crashes after the ftruncate() and
+before the write() of the new data then we just lost
+the contents of the var store. Working on filenames
+would let us do "write new file and then rename in to
+position". If you need to try to operate on a filehandle
+in a "don't lose the data for crashes mid-write" that
+gets tricky. Do we care ?
 
-Based-on: <20250312152933.383967-7-groug@kaod.org>
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- hw/9pfs/9p.c     | 14 ++++++++------
- hw/9pfs/codir.c  |  3 ++-
- hw/9pfs/cofile.c |  3 ++-
- 3 files changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index b22df3aa2b..f4ca8e4db5 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -434,7 +434,6 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-     V9fsFidState *f;
-     GHashTableIter iter;
-     gpointer fid;
--    int err;
-     int nclosed = 0;
- 
-     /* prevent multiple coroutines running this function simultaniously */
-@@ -507,13 +506,16 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-      */
-     v9fs_co_run_in_worker({
-         QSLIST_FOREACH(f, &reclaim_list, reclaim_next) {
--            err = (f->fid_type == P9_FID_DIR) ?
-+            /*
-+             * 'man 2 close' suggests to ignore close() errors except of EBADF,
-+             * not checking for EBADF here either as FIDs were picked above by
-+             * having a valid file descriptor
-+             */
-+            (f->fid_type == P9_FID_DIR) ?
-                 s->ops->closedir(&s->ctx, &f->fs_reclaim) :
-                 s->ops->close(&s->ctx, &f->fs_reclaim);
--            if (!err) {
--                /* total_open_fd must only be mutated on main thread */
--                nclosed++;
--            }
-+            /* total_open_fd must only be mutated on main thread */
-+            nclosed++;
-         }
-     });
-     total_open_fd -= nclosed;
-diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
-index 2068a4779d..f1fd97c8a7 100644
---- a/hw/9pfs/codir.c
-+++ b/hw/9pfs/codir.c
-@@ -353,7 +353,8 @@ int coroutine_fn v9fs_co_closedir(V9fsPDU *pdu, V9fsFidOpenState *fs)
-                 err = -errno;
-             }
-         });
--    if (!err) {
-+    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
-+    if (!err || errno != EBADF) {
-         total_open_fd--;
-     }
-     return err;
-diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
-index 71174c3e4a..1e9f6da42a 100644
---- a/hw/9pfs/cofile.c
-+++ b/hw/9pfs/cofile.c
-@@ -197,7 +197,8 @@ int coroutine_fn v9fs_co_close(V9fsPDU *pdu, V9fsFidOpenState *fs)
-                 err = -errno;
-             }
-         });
--    if (!err) {
-+    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
-+    if (!err || errno != EBADF) {
-         total_open_fd--;
-     }
-     return err;
--- 
-2.39.5
-
+-- PMM
 
