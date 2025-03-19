@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD92C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 23:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C00AFC35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 23:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tv2f9-0006ab-G4; Wed, 19 Mar 2025 19:17:27 -0400
+	id 1tv2nN-0008KA-1l; Wed, 19 Mar 2025 19:25:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tv2f8-0006Zl-9K
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 19:17:26 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tv2nH-0008G1-FF
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 19:25:53 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tv2f6-00057o-5v
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 19:17:26 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22423adf751so1558555ad.2
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 16:17:23 -0700 (PDT)
+ id 1tv2nF-0000wZ-Gn
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 19:25:50 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22423adf751so1647085ad.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 16:25:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742426242; x=1743031042; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742426748; x=1743031548; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ttP94RHuaW+AA9Kr1WQ092r9FjI6PwOL8z/bAPk2OEs=;
- b=VSTO3pgzCU2upZDq/nffH87V9atkjle03yeCWTUMjLMSDmoPXC929D2LOWpM8xxQPJ
- F61ZSLs/2fBOk2ULqM2LQ4sgAOFJ4Flqn4kIyrA4KuVzufocK+uhuCSuQxeHxWB9R4bQ
- dJTIH73a86oyqJUwujdt43r+zuQyCCtcoNuoGz6K66lXmjWu1QmESfMUeLR3i+yvhFGn
- Dr5D7VzUqasxXsd6RCFiimYSjuc3khzFm952idBcvxsndPYmTkLIMS1AgRhuldijGkgE
- 25NRc715N9eKkPy3BUpRJNlEGwFPeVgJT+lP9cIm262dKqdMQ1mmBe+ycXhKls/ZxWAv
- F42Q==
+ bh=vjfR9UwecaSn8yWmmPZcnLHVsPnQ7Q3oWoSlhpoapEQ=;
+ b=iI1hZsIywlexJryxBo0pwDqTF5rItXoXOuP0h2oMCGsywyfPkQ1nSdv0j401l+gbtO
+ nzoE0Lw+pdO3TOEFf7RKZNha84mE2+OhbpnQzuW3CHCclZFyD3rDPY5nHYENKJKfhH/u
+ r5Zx+doNr5FT0ZJb17tSnro1ZruxrzvlrIw7Quqygw2R7dURtvBm1+gczG9ZJNd255nM
+ Kf10EfxEQQ0bgzwrR7C6sjdKAdhbsiT8JnbCpgeNL+JTtvAs+s5cDYCWWjrZdOxQ/oqf
+ LWeEoa3NNCzqc3oOXftujaBM5WU7hcLNAmqn1b80IxRHXhIbN5+5YbSyPQGZMrsUCCYr
+ VvLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742426242; x=1743031042;
+ d=1e100.net; s=20230601; t=1742426748; x=1743031548;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ttP94RHuaW+AA9Kr1WQ092r9FjI6PwOL8z/bAPk2OEs=;
- b=wfywckSmWYHeKx0qNHXMNWpRN28nJJaTsR6R7lx1E3Sa1ZaakbgZ9tlvyOo1LLYkZH
- krEHUkb/i0gwPXaziHjCatzNmFygfrK8uUXHxbEl1DUfvcaMcT5lN9o/Ex/CM2R3IJyx
- I24oBsgCOSR4FbVBPGKzF1PSnTM6oWbtqyuSWc0tjSvAqsxXe88xofHCXBlf3ZIShXYR
- v36+BzSkKSIrKod1kFg6CDl/yBykNCcxhBz4aCbXgWrW7BsMOUyR+z+sAxohRcwJmKvv
- YnAa5Q1e2K9FvH4Br5Pp1SD1WzT1ZWyJfaJAR+v+9v9a6I+WA9Nys7C9piDJcAyebxU3
- Ov/g==
+ bh=vjfR9UwecaSn8yWmmPZcnLHVsPnQ7Q3oWoSlhpoapEQ=;
+ b=qz5U+SNpewGqy7g0J4+8mx7pz4UIeyW+tRU1bGX0QjNRnY12FKTJv7RXf1GTsYjWab
+ TZSk/QGRysvP528ZiyXH7vLG97vQ0cgMtXz2UsZQM2hb2FP5N8ZNQXdpIc+x/GxP7dZa
+ YrLtNhfLUvl81SCMBMoBKIvon+D+GE8O8c+EkO1T9J3WkasiSMGxAK8AJ3N+tywUmXYt
+ 0alE/17jJvU8EJZOSAA6eun4RqgaHcpxq1+aDfnaBtkTe9li7Hwce2N2Y4ahEbt2UQYw
+ wAzZW95efK/2oR+bNYGvR5b/inQwmlQE9tZynbB3GC5DV9KWtm6d/m3qLfqtonIe2qmd
+ BCjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVl150HQ7DTEhnJMT8Mtnfo92OQq/nWaaqKZgK6hHvHRTzG5aze9lzMPq68EI/uIfDUZUuFD8rauQo@nongnu.org
-X-Gm-Message-State: AOJu0YytR3C2/qIz02IxYK/q4nOgUSkr6D/lIpBFu4fpFVXIbQhqCiGG
- gQ2zQGwrBsYGh6WOGZBQcnnOeYAUchqD4r5OS8NcwZ+ZdO6eRd30be0Ppklm0/4=
-X-Gm-Gg: ASbGncvTa+dxn8RXPddGaxMZbzqF5HZ1iLo0IuOHjJ1YkjLGDlK9DYF9eytzQjDL44d
- wsS0KuLHV976WC0op3lV2+vdY+AEPwlPJGVuexQCwXH/mhYLa8KJP8AQYkGuFUWKyANdIDDj7WO
- wLz+7q7ThYYJVUzzex1nQjZujnO9MJQ/JzH+V6SotjVUD2e3KdgI9f+ENWKqA9vgGB8AMDlcFPr
- hU1wNPXoqmQfA6XSGSuSEsaHb0CgQGtFtKilTjQrj+xX0RZ7fxTRoTzHg6wafSHs9XFS5q4sU/q
- NKQP65Qjs4fW1EGHEhMitLMuZ7KPSh/yPurTKXujLUZjPFMJXHdTZRo00g==
-X-Google-Smtp-Source: AGHT+IEtBsTb1UciPJqi6Yn3xnP4BzsUVR1YgdarGKsS/r3jPqAR67hjwo2vl8jyIQenMvjoz3v6cg==
-X-Received: by 2002:a05:6a21:99a0:b0:1f3:3804:9740 with SMTP id
- adf61e73a8af0-1fbeb999249mr6978385637.15.1742426242185; 
- Wed, 19 Mar 2025 16:17:22 -0700 (PDT)
+ AJvYcCXoiPMIHwa7UtO5vG6uPnHCZ7LAre43JrPXXoS7CI/1xZ9Ph724tXWmvj9OFCMGMGdU9xLHwVm6Qkwo@nongnu.org
+X-Gm-Message-State: AOJu0Yy+jMNBynYMwgLwxASrR3a0AH4jQmYl+jI9JdjuBYlAr2BNgNvj
+ IzhnpgEDptQKdlGEqxC+AIUIyQJjSpbLtDHCaxnpThZtouuVBtZ6K/IPJ319GZE=
+X-Gm-Gg: ASbGncsEvS/00SRtNFwuJNf+RWk2X69HY0Os7tDhdguNeZHyrCsMgEkkT1EqgyutTNS
+ cVd6rrDynwWv2rCQJIHizFwjgApUKlcxuy2HMq2oKD4GTbeQYdH9Uy9XWwAFUeIF3VFm/xeDFVg
+ nMlvJTIMUWQaNS8F9b/Cv0x5/6A9A3dzwL715s5AdxuslQQI0xjA7WTEm4aIXh5RA+7g84CJNiP
+ IUEAdRbGmi7afx4aac10BCrPHmanZsrseur4D67vAcW4o+jA6FYMKDkgdzPcaMXCSCb1xakvRiX
+ 1i/HrQskTSIU1jBWzfBqpAz6oDN98gBEhM/euTOEl7Wz9oThP+bSWGskKQ==
+X-Google-Smtp-Source: AGHT+IFJSivWE9HxeLEiVE+QiZGXG8QzUS2VqFdO5auKLYIsHhq4jw3PL5s5J4DC4SaIBehnDY63Fw==
+X-Received: by 2002:a17:903:2f8c:b0:220:e9ac:e746 with SMTP id
+ d9443c01a7336-22649cb45b7mr67889955ad.53.1742426747979; 
+ Wed, 19 Mar 2025 16:25:47 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af56e9e0fd8sm11540538a12.26.2025.03.19.16.17.21
+ d9443c01a7336-225c68a80e3sm121661665ad.83.2025.03.19.16.25.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 16:17:21 -0700 (PDT)
-Message-ID: <8ddf1e1e-7570-475c-aae1-fa715f983131@linaro.org>
-Date: Wed, 19 Mar 2025 16:17:21 -0700
+ Wed, 19 Mar 2025 16:25:47 -0700 (PDT)
+Message-ID: <a4830467-1096-4d62-a57c-33f6bc05423f@linaro.org>
+Date: Wed, 19 Mar 2025 16:25:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] target/arm/cpu: flags2 is always uint64_t
+Subject: Re: [PATCH 10/13] target/arm/cpu: define same set of registers for
+ aarch32 and aarch64
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -79,14 +80,14 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250318045125.759259-1-pierrick.bouvier@linaro.org>
- <20250318045125.759259-9-pierrick.bouvier@linaro.org>
- <9556c183-c103-403c-b400-0942d42785d7@linaro.org>
+ <20250318045125.759259-11-pierrick.bouvier@linaro.org>
+ <2b438e13-b377-4b4e-a4ff-0b219d7f3964@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <9556c183-c103-403c-b400-0942d42785d7@linaro.org>
+In-Reply-To: <2b438e13-b377-4b4e-a4ff-0b219d7f3964@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,49 +110,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/25 15:40, Richard Henderson wrote:
+On 3/18/25 15:45, Richard Henderson wrote:
 > On 3/17/25 21:51, Pierrick Bouvier wrote:
->> Do not rely on target dependent type, but use a fixed type instead.
->> Since the original type is unsigned, it should be safe to extend its
->> size without any side effect.
+>> To eliminate TARGET_AARCH64, we need to make various definitions common
+>> between 32 and 64 bit Arm targets.
+>> Added registers are used only by aarch64 code, and the only impact is on
+>> the size of CPUARMState, and added zarray
+>> (ARMVectorReg zarray[ARM_MAX_VQ * 16]) member (+64KB)
+>>
+>> It could be eventually possible to allocate this array only for aarch64
+>> emulation, but I'm not sure it's worth the hassle to save a few KB per
+>> vcpu. Running qemu-system takes already several hundreds of MB of
+>> (resident) memory, and qemu-user takes dozens of MB of (resident) memory
+>> anyway.
 >>
 >> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 >> ---
->>    target/arm/cpu.h        | 2 +-
->>    target/arm/tcg/hflags.c | 4 ++--
->>    2 files changed, 3 insertions(+), 3 deletions(-)
+>>    target/arm/cpu.h | 6 ------
+>>    1 file changed, 6 deletions(-)
 > 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> We can also remove the comment lower down about cs_base being
-> based on target_ulong, since that was changed some time ago:
+> I think this could easily squash with ARM_MAX_VQ, since the
+> rationale is better spelled out here.
 > 
-> exec/translation-block.h:    uint64_t cs_base;
-> 
->
 
-Sure.
-
-I updated the comment to this:
-
-   * We collect these two parts in CPUARMTBFlags where they are named
-   * flags and flags2 respectively.
-   *
-- * The flags that are shared between all execution modes, TBFLAG_ANY,
-- * are stored in flags.  The flags that are specific to a given mode
-- * are stores in flags2.  Since cs_base is sized on the configured
-- * address size, flags2 always has 64-bits for A64, and a minimum of
-- * 32-bits for A32 and M32.
-+ * The flags that are shared between all execution modes, TBFLAG_ANY, 
-are stored
-+ * in flags. The flags that are specific to a given mode are stored in 
-flags2.
-+ * flags2 always has 64-bits, even though only 32-bits are used for A32 
-and M32.
-   *
-   * The bits for 32-bit A-profile and M-profile partially overlap:
-   *
-
+Yes, makes sense. I'll squash it.
 
 > 
 > r~
