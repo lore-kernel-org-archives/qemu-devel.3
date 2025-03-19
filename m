@@ -4,87 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F371EC35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B8FC35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuw8n-0000II-07; Wed, 19 Mar 2025 12:19:37 -0400
+	id 1tuwBd-0001ey-BZ; Wed, 19 Mar 2025 12:22:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tuw8k-0000Cj-0r
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:19:34 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuwBJ-0001ZG-Dt
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:22:19 -0400
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tuw8X-0006rX-6O
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:19:33 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22403cbb47fso135850695ad.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:19:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tuwBH-0007hM-6m
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:22:12 -0400
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e5dc299deb4so6877677276.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742401159; x=1743005959; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kJ9mPrkZ3QgkKl+eBkeiU9nIEsF8S3O9yZhbqtbaD8g=;
- b=a7tUAaRM/UW4dZ04QIvE2UFb8kxvC3+LWhmDrg1SFAal77tQ3Mt7IyGWxNiA6Eu4PS
- DBi/xTGnwtOajiUEzK+ex8mTyhKkqTNTaI/Y1Pi+efuCEmcSu7hloTg8B4v0tWSNLByi
- VDJbol6RYJAW88u9goNKgmqSRl0IlQ3+Zd6ktF0NGHeqN1XY/ZwLx9gjVU5d0ZTz/zoa
- 8EUvjlJ8qsmTcKBRr0Ff8nNSm18X/YND9CdAD4ly05S9SgCcn0pdG2lujFl+Zh7v1AvN
- Zb2jigyufhr6VjsX3nNSEcCrAveVE33q0DDXYlfCBc66IDIElrB2P2TJkpdQrFiL4Npv
- kpXw==
+ d=linaro.org; s=google; t=1742401326; x=1743006126; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mQmzSQTko+/MdeDbKzHhj3JdmzQ+Ck3u+RVZmexLXVI=;
+ b=lIlq5b1xNBPwkipoC4xJfBFak4Nn1GOXQ1WByN8LzGQE22tlhGR4qHXFNKqJ1n1zOY
+ +bXyqCemanSvlk7aWnpsX4aVUh6qzQDpvThBkVEAFgxnlGR4qUKpmbfdwdWm1zQ9YvfY
+ jcJppm4CZChG2xHWgzxe70AKMc/ImMEtOSZnfRO3K7JjNH8Z+PY07gSDBXi3So45UdYE
+ jsldpBd3iT0cw2KcDQkRQGel3mwc9aLzemE2jpKEoF66fUvtDcuu+6bG5ZaJyoxfteIv
+ Nkh7sTyLHGvKX3upVqMGTHyMOnx63AyxzrDd9brux1e0JbN4RoR57NKdwUQmT+IdG4RZ
+ FJng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742401159; x=1743005959;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kJ9mPrkZ3QgkKl+eBkeiU9nIEsF8S3O9yZhbqtbaD8g=;
- b=IlHNOSXn5LTeVMRJ2bv5WfxSclOfdjPZozBEnog93YXZPGmwV4z0VfwkHgz/zeC98V
- IysltfsKRocePTrMT/VvxjAbHi1h+Mu5sLoPBCRJSZuODG17gZCBGv/TPFpwwGiFngDk
- OIhEa52VqpcDLX7nNpqCrq2XmkVgXvRenk2LM8X6PSc3pf1dDrq5uKxF9a4YMKKMRVL1
- /QuknK5bChFBxp7btrGDy61z5XtPVKy6WlPKgaaezFc/BbGdDWVSBwnt3smheH/x231R
- +AlW4fUwGBzRSokm92t/nx5E2V8Wmf7w0OYrVvlApCs23duyLZLSYLEcJM3xIqgLA3hi
- Llmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7EeuW8DlLrlLe/V4LuZYSHZMbYS2FRmhttXuCXethnU4tLeodiORkudYIwLmncMSoWA2xN7Zk0uO+@nongnu.org
-X-Gm-Message-State: AOJu0YwdZOAPa+PlgtTVj0/8Aaeuoj+myb3+q+gCd2ZydJbQ4cYqAWzG
- yaq98xv+JpWMSz0WgreN5QN0toAyxDTLyMuTVCgrnK7+STSCiunMfsLHLBYRaVo=
-X-Gm-Gg: ASbGncteCjfBKcfHOw0t+tH1OaKZZT/QB3zcqxddSRwtWIX8WPsn1p8rWOWh/jmBACo
- SAeKrIiv7cqkV2SQtF1b2A9+oeKUIxZ1Jw+yrNi3Z6+nSYBJPSIEj5qjKHO73ChtFhUhGbzgRmC
- gf+wn0FC+S4kXFzhf0cLLbXewuLVPN8fsLl2ahmrLm152876DfxDpgsVdcD9EOxXpXda+DZ9EqO
- uZagttTo8mdF6ZWC0HmEnLvXScKQYJ4a05wTJtG5k3p1S+9K0XhxZsSGsA8DOAAGVN0Ztgfgb9+
- z2+yzZDV1ZUDG4g3VcAmM5C2mHyo4B05delHbTWLG+uZahy5p7lOgE2xURvc6WJUnUpdbceXlq8
- ZjPSp+Rpw
-X-Google-Smtp-Source: AGHT+IHRhoCEgG0eudmIbwX89KmSqD/W/d9KDtKSrttcVKmam03TNNzm/xBU7wvyQ92Bxhdy8bNjsQ==
-X-Received: by 2002:a05:6a21:a44:b0:1f5:86ce:126a with SMTP id
- adf61e73a8af0-1fbed40eb3cmr6102846637.40.1742401158852; 
- Wed, 19 Mar 2025 09:19:18 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-737116955f1sm12202080b3a.142.2025.03.19.09.19.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 09:19:18 -0700 (PDT)
-Message-ID: <5739e782-be27-4d64-b564-b7e07f5e616e@linaro.org>
-Date: Wed, 19 Mar 2025 09:19:17 -0700
+ d=1e100.net; s=20230601; t=1742401326; x=1743006126;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mQmzSQTko+/MdeDbKzHhj3JdmzQ+Ck3u+RVZmexLXVI=;
+ b=EtmdJ8prI19w/CR+prfz3/8wbj7inoNwvunKwLiL8+LTftmyCsg5tz45zXsde5TPiy
+ xv0HpuAwZhWBHRm1JSOvSMtmtMWW7x0lJQCBjb90KeRV3Pe/FHZkM3oiN34fAfpvPIqH
+ ZPuXYpIz5WSVOLOMXf+We1Ybw9eWohe/NchwgbRVQOQcvaKDbrmDEUA8/R06y0Ijiwr0
+ 2VjRAmpr7XzK7qCudsv4K3sKozw2/EmtUDmZdTYbQdXeh23mWNuF9sLrn5Bu2DRixo4D
+ Wa4g5OSLEOVkSH+O2P6YQSi+S7ekWKJOKA85R59mDsyzVltUenPz9GbMeJQBC8AWKwzh
+ jcfA==
+X-Gm-Message-State: AOJu0YxroG4ovGxPDQ3sqQst2lVDCsEEuQ4T0jP3mm8gdsJ2ZdcXs4sH
+ mOPYcOorlU7zd5gF5GNBZx0Q90ME5FJMMFhqJ6koxLYKUng88B4rBaeBEk95h1EqyYE2oO0Wy5s
+ sVmaWxzpw1br1EGyzMWrdYgRjkTxCS7KcHf5ErDD/CqBuS5vL
+X-Gm-Gg: ASbGnctosA6p9SpHKxBKdDwkCFp1q/45yiYNInjyIEFvRMLQMlU0zg5dsco8fCADvln
+ g7pDXbiCZjgLhSeSOEryU2mmGYvlRMVT70LWv+M1bjXi7WhSlOV1Peg1wFsOWUJjzLBY937mW/3
+ bbler/RDS7XQtnXiysfyDDJHKhpu9U9gVVjYm0Aw==
+X-Google-Smtp-Source: AGHT+IFEmsMAPVcrmngKqiMdg3hf9+hscRS9puj3SQLLIEamQ/naGMConzCekbdzDx1ilwoUVGDsKadq0BnxFrgwCvI=
+X-Received: by 2002:a05:6902:4683:b0:e57:2ff6:945a with SMTP id
+ 3f1490d57ef6-e667b26dcdemr4041074276.0.1742401325867; Wed, 19 Mar 2025
+ 09:22:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 05/12] tcg: Use TCGContext::insn_start_words in
- tcg_gen_insn_start()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250319134507.45045-1-philmd@linaro.org>
- <20250319134507.45045-6-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250319134507.45045-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+References: <20250319152126.3472290-1-armbru@redhat.com>
+In-Reply-To: <20250319152126.3472290-1-armbru@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 19 Mar 2025 16:21:54 +0000
+X-Gm-Features: AQ5f1JrKSFWUV3UPyQCmoD5jS5w34pFiaVeIk1TElkSr5NN3mm-9WD2E-X-xiEQ
+Message-ID: <CAFEAcA9zQ-T2bbJcxFM23TFkNb8-fROx0_bkCWHjZ50_ybS79w@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Cleanups around returns
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Aleksandar Rikalo <arikalo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,65 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/25 06:44, Philippe Mathieu-Daudé wrote:
-> In tb_gen_code() we set TCGContext::insn_start_words to
-> TARGET_INSN_START_WORDS:
-> 
-> 290 TranslationBlock *tb_gen_code(...)
-> 293 {
-> ...
-> 351     tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
-> 
-> This definition is expanded to:
-> 
->   11 # define TARGET_INSN_START_WORDS (1 + TARGET_INSN_START_EXTRA_WORDS)
-> 
-> Directly use the identical tcg_ctx->insn_start_words variable.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/tcg/tcg-op.h | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+On Wed, 19 Mar 2025 at 15:23, Markus Armbruster <armbru@redhat.com> wrote:
+>
+> Markus Armbruster (3):
+>   cleanup: Re-run return_directly.cocci
+>   cleanup: Drop pointless return at end of function
+>   cleanup: Drop pointless label at end of function
+>
 
-Nack.
+>  .../user/ase/msa/bit-count/test_msa_nloc_b.c  |  9 +++----
+>  .../user/ase/msa/bit-count/test_msa_nloc_d.c  |  9 +++----
+>  .../user/ase/msa/bit-count/test_msa_nloc_h.c  |  9 +++----
 
-We are specializing the function signature to the number of arguments.
-There is absolutely no point in reading that number from a variable.
+I notice that most of the files modified here are these
+ones in the MIPS TCG test suite.
 
+Are the files under tests/tcg/mips/user/{ase,isa} ours
+to make style cleanups on, or are they imports of
+third-party code which we should leave as is in the
+expectation that we might be doing further imports
+in future and don't want to drift away from whatever
+the "upstream" for those files is ?
 
-r~
-
-> 
-> diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-> index e0038e70a8d..1f0d3b95304 100644
-> --- a/include/tcg/tcg-op.h
-> +++ b/include/tcg/tcg-op.h
-> @@ -25,7 +25,7 @@
->   #if TARGET_INSN_START_EXTRA_WORDS == 0
->   static inline void tcg_gen_insn_start(uint64_t pc)
->   {
-> -    unsigned insn_start_words = 1;
-> +    unsigned insn_start_words = tcg_ctx->insn_start_words;
->       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->                               insn_start_words * 64 / TCG_TARGET_REG_BITS);
->   
-> @@ -34,7 +34,7 @@ static inline void tcg_gen_insn_start(uint64_t pc)
->   #elif TARGET_INSN_START_EXTRA_WORDS == 1
->   static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
->   {
-> -    unsigned insn_start_words = 1 + TARGET_INSN_START_EXTRA_WORDS;
-> +    unsigned insn_start_words = tcg_ctx->insn_start_words;
->       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->                               insn_start_words * 64 / TCG_TARGET_REG_BITS);
->   
-> @@ -44,7 +44,7 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
->   #elif TARGET_INSN_START_EXTRA_WORDS == 2
->   static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1, uint64_t a2)
->   {
-> -    unsigned insn_start_words = 1 + TARGET_INSN_START_EXTRA_WORDS;
-> +    unsigned insn_start_words = tcg_ctx->insn_start_words;
->       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
->                               insn_start_words * 64 / TCG_TARGET_REG_BITS);
->   
-
+thanks
+-- PMM
 
