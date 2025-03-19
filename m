@@ -4,104 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 467C9C35FFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B5BC35FFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 18:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuy5H-0001vQ-AU; Wed, 19 Mar 2025 14:24:07 -0400
+	id 1tuyG5-0003Zv-Dd; Wed, 19 Mar 2025 14:35:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4Q-0000PY-Uv
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:15 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tuy4G-0006QB-RE
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 14:23:14 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3913fdd003bso633842f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 11:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742408583; x=1743013383; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OU7UFVG34yucEkVj19LxykWHxo5v2TaWVJvCEDbmtCg=;
- b=Mso5OhHx1KA0sj5ehVAX7rooa5Kvx3JcjYa8ih/PHewjY4Sm0iyQcobaVQMpMJugrD
- xlmL+/wRCwEcZBmdvfrmh3oyNWNXusSc4J4gYU4nIvhdOoyhGpV5D9kMxXELGlSYrnfL
- tbrELCk7KqMXHaiZyA+rWiGaK8GmdB++qwf9UmDJjzcfafaNDDsLJYJ/6Q98Dhkvs0/O
- 0OsoMmebaEqBGa5C/JWRceHP9j2qflCgxE3kvY4S0VaiNZvM326TBDjSV/kxHY2aSlft
- G/DIxw6LRTz75s6Mr0MyqlXiJ5h4lcDYjEaYv/dXFIe3p2pRsMykM8zs/4doAR6c3sjz
- XRFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742408583; x=1743013383;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OU7UFVG34yucEkVj19LxykWHxo5v2TaWVJvCEDbmtCg=;
- b=hVPM2AFwHDWk0mJc1QYwxFJlFC7Pyce0B5I5xTCQ2WPIJdawtCNM0N5ITx3DaI4m/A
- 7PbLj5kILgz1kLg0Tm1pBP2ZQgoNwb9EcTRZ7av5k1B9NN29Xf0gbTpZ6okrCM+KxD8T
- GJ2uwpz01vWrERLqSL/UHX1GuLee5gw5eD9OSmXZfWBsED21yxfgfwh9tlJkJmuLuR7X
- x5fzQjgOg1lu9ZMnPz7w7etmfxzbUlY+ZLhCfBJVvOXIRke3qkc252ngaS4U3UI+4B1i
- dR54+/nGSr1jsYukoTsDB4Zaxb2fMnwAEnAVH01UyweCXoJnbeXz6WQ+fNgaKl0IIqw6
- 3r7w==
-X-Gm-Message-State: AOJu0YznpZc1ZLPsZICzrN3vBz1OPlNMHaa5qJZ5xjcvPwZ7wAYwFmpS
- C+T0JKSTTJMh3bkBor5rWPvxh2LCOlJ5RKnhKY0Az6mo7Qjw6JOBpSJ/WyARV+M=
-X-Gm-Gg: ASbGncsqxbhkg0AdmNHJuQpK54t/Ub1CJ0LlnsBg/GtmyxOsTktFjNXHIqMny39o8bb
- zK143LM6JgWWz6u3yFvuw9Uq9V1ePaVCsyldQ2ULoEALAbQc97k/q7hzBU2F0iUIhOJcjnb8+9E
- xY+gVI2r8Pb4Fd1eY1yCyahGs38AL6dkNFXesVWjoFIQbulaaN906pc2gkwvbClCwucJ/0DlYZv
- +AW84OkfA11uPM1KjxfVmIuzg7j7CG9e6/fTlTrvq/d6Iy3x9Zar9mQKXK8X50iOC5JzX/xfY6S
- lO7e/oX+rZSUbbc5NMMRSKS08PvQ+58RuzMFK35tKobQHCE=
-X-Google-Smtp-Source: AGHT+IF9E6JKQPi9tluJ6OUr25qldD3NRwdoH8mAO1y99S6f3XNZ1rtMYosl0B7oAQQXT+UROXeuYw==
-X-Received: by 2002:a5d:6da6:0:b0:38d:d166:d44 with SMTP id
- ffacd0b85a97d-3997959ce47mr437009f8f.23.1742408582915; 
- Wed, 19 Mar 2025 11:23:02 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f47c60sm25386695e9.13.2025.03.19.11.22.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Mar 2025 11:22:58 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D366860357;
- Wed, 19 Mar 2025 18:22:55 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
- qemu-ppc@nongnu.org, David Gibson <david@gibson.dropbear.id.au>,
- qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
- Greg Kurz <groug@kaod.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH 07/10] target/ppc: convert gdbstub to new helper (!hacky)
-Date: Wed, 19 Mar 2025 18:22:52 +0000
-Message-Id: <20250319182255.3096731-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250319182255.3096731-1-alex.bennee@linaro.org>
-References: <20250319182255.3096731-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tuyG2-0003XQ-Oc; Wed, 19 Mar 2025 14:35:14 -0400
+Received: from mail-bn8nam12on2062d.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::62d]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tuyG0-0002Jj-Ku; Wed, 19 Mar 2025 14:35:14 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c2nj3IlMlODbma8zxW51y2dg2CEOJKsPxoS8BWCMrpfhLrDd6EPUJP15cLom2qA8zbNUCQjugcvtp0cQIC5C1o1kHskMSFaBjs+jlT+wWEi4WlhPXKJ8Q9JEdnK28+cDtFzirpLlT7yw8dB3pxd7jDS04RTV8VZJPMPvpCiOkojMaeUFRcKXncA1tl2XMySfgDG18UwEHHdigA6JanJHXudlIsHQILHDawO3rNBxlP6Ekrh7a/bAmV86vu4fYfsPSQBUf6c1c1A5unL3aXeeRca6qD0RFiJRt2hdtIReIN8OM/VVR4Hu/8/gdY3Z4iS/1uEZ3KJQkI1RedQaODnS2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=o6tPua0UaT0rjbiysElGV/niITZEVHu3kji1sGWLB9A=;
+ b=cjbdgJLp6LuZbxa2tjvjbWABSMwqjkulrHaNPZfbYi1Ci0fA/Qu7WpNLbvkSAH++DVemYZ3UD5oSaTaiqSEoGbUjgArfF/Shyw5OELmCPyf/IL57l1VqThIqshEb4UgHfBJ90BwpEnXysGcgPbD0SaTK4Vaf0qBus+oX/RBoyu4Jj+PcTA0nJGutmebK1GHFUYBLoUZcTEvQD2Jc2231rjY8+CJUX1axtuwymsMwaVPuXlhcyTi9RiBJr24jzqjzSmHKQwCpYapVPvpEz1oSlG4tqxPxBDmzz4kpVUj9qOvAubrAURvGTk67pEVvkJMi6yomOTdhObKBNRTHAGn3qA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=o6tPua0UaT0rjbiysElGV/niITZEVHu3kji1sGWLB9A=;
+ b=rRuMyA+hxcXVrHx4NLfQtyAjZ5ysVt1sj1wcGx2FtsHtOG1P0d80d/LUAw4OLd3UoBpLD6wIgeC8EcPvh4Y9wwn/eM6kwyg0McKGOMyANlIZKyrP0rA0Fh6NwPFsl4+DfQoP+WHk4M0ws2TuriJ+7KtkZUtWNzpVpb6I39Z3KQDqFVbMEgihtJwNWJCREsIxO5hKB+GpDAxpnXd73q8atEYDHdKciiMg7jeWFtVzCZak41PP2o4oBinVaxGzhEY+bv+9cNXHuL8nPCU3zSSksFjKwZ9WityLt1ZVqAOaoPsL82FFKG7K5AoSmJsqULQkia/jmBjm58zop9jsxLCCeA==
+Received: from BL1P223CA0011.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:2c4::16)
+ by IA0PR12MB8280.namprd12.prod.outlook.com (2603:10b6:208:3df::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.34; Wed, 19 Mar
+ 2025 18:35:03 +0000
+Received: from BL02EPF0001A104.namprd05.prod.outlook.com
+ (2603:10b6:208:2c4:cafe::41) by BL1P223CA0011.outlook.office365.com
+ (2603:10b6:208:2c4::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.31 via Frontend Transport; Wed,
+ 19 Mar 2025 18:35:03 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BL02EPF0001A104.mail.protection.outlook.com (10.167.241.135) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8534.20 via Frontend Transport; Wed, 19 Mar 2025 18:35:03 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 19 Mar
+ 2025 11:34:50 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 19 Mar
+ 2025 11:34:50 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 19 Mar 2025 11:34:49 -0700
+Date: Wed, 19 Mar 2025 11:34:47 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>
+CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
+ <jgg@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
+ <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
+Subject: Re: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
+ infrastructure for smmuv3-accel device
+Message-ID: <Z9sORySxEEL0VXMq@Asurada-Nvidia>
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
+ <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
+ <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
+ <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
+ <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
+ <11895c78-d6ab-40c8-a500-4abed1565234@redhat.com>
+ <Z9r7dT/5E+YToqc9@Asurada-Nvidia>
+ <c70fdb0c-ef56-4a52-8591-31df51ff0eec@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <c70fdb0c-ef56-4a52-8591-31df51ff0eec@redhat.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A104:EE_|IA0PR12MB8280:EE_
+X-MS-Office365-Filtering-Correlation-Id: e968d721-ce70-42e4-0018-08dd6714c3c2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|7416014|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Dtq4qdz+MMFXTuHJf+x3HiN4bZJ21YZ03hvCW0QYDXZe2J2/Ai67EaLEzQz9?=
+ =?us-ascii?Q?H86zdP9y7aJx/dCHpKjmdTD3KVIbkBmKXmlsYbkEPnokJfg/K9lTKigiFZ7m?=
+ =?us-ascii?Q?veWeJSOvac6dDnwDdEGmsFCmvqf4qkTyIeF+sn8wz1zQNgcyWYN2uRj6NB0W?=
+ =?us-ascii?Q?8F239Yy5Qr+QEJvKErXm7IqulYzqZ0iy1M/NJEifUcl57Qp1u+H8MkYmsR7Z?=
+ =?us-ascii?Q?XydZy7VP9B0r5mV+u3Ow+OPrMsmhWMoCGKthqGdz98rcgLVlHQqxXawaGIV6?=
+ =?us-ascii?Q?73Wmtb69ps/kluGx1xI1EztTu8byhDNrfIfvtC4PhZg39WjtBO6tWZa1/a4q?=
+ =?us-ascii?Q?PymxfcxQE29phh0/v2QIHv6pWwNLEzZapft2tDNYtDpncJ+CU329AFIV/JWk?=
+ =?us-ascii?Q?a9jQPo9MDcXqdhhd92nNn0mrEOqiyojx/CnNVrcIEuqdtkWpzNnKd29wXgKK?=
+ =?us-ascii?Q?DBHZqnfAo9uoLeoUABcovX2vr533X14wpdll0iCABavdhiiv5oUDi9z+jryR?=
+ =?us-ascii?Q?2pUMvgZMo/WTnWsrOstNOlBwu1I8YlZN+MsXnlDnMs22AuZ01q0XpCcMoQ8n?=
+ =?us-ascii?Q?lEysAvE4ggLzGk8ORnd4GThfW0GTZMVEVSD2gfz/GjNxaaBlDmovmVjiZeLU?=
+ =?us-ascii?Q?32/GEvk23Q9MKo9nuYH8SV6Hb26jDzuQPODHPgFD/bmltOKeXYBr4qBgEm7k?=
+ =?us-ascii?Q?L/ruh8IBx8cAPvpkdYMc87tdHyN97dbgMHr1KaFjt8pbAoD9ou6t6lXAmVcl?=
+ =?us-ascii?Q?vVIdpNFHFExrnObcgHvr6hhXi5v9oIcS5myaYxdjo0VuwR4JgQ/c78H/qRPq?=
+ =?us-ascii?Q?aMzwgweRmKtgGFkJyqYSryqdhxG4jvExTfYBj136Rb4e8xTLD3l72BSmz7cI?=
+ =?us-ascii?Q?Dw7o1euK1q4vasHB0SxbU/ROMFnuBHi3X4XaNs+t5tu1JT2P19q3ZzibnlrD?=
+ =?us-ascii?Q?cVdL4xVP+vZ2pvk6ojfHO8KBZbeKG5+7ee9/7TJ0ZXxW961HFgsHeBby1vgP?=
+ =?us-ascii?Q?K3EattJFD7e2JH3LH5xNAiUvTrmj+P9skwJdewAbGnEIAJXMsoBMiErQ6A4f?=
+ =?us-ascii?Q?Jgrg8Zz4CEAJtoP53CIA+hP4ew8l6yN6DFvkNwzQLAdKJsV3vZrsBEPE2LKV?=
+ =?us-ascii?Q?UJwOt3UAKTuZo7CdIRdDXYO7oP7e5UjZg9h+CudWOcTpTBjOBet4cKmnGNc7?=
+ =?us-ascii?Q?DVtPmJroIdjtyUUHMUz1JCS0JGSxKyPM2+UTrsUJAA4rxFLQuIVpFZBWpaCb?=
+ =?us-ascii?Q?g+GHxedFFNJ8dET5OLzaNJs26RnrX62C6191y23mMzLXteKurc/Ng2bK363v?=
+ =?us-ascii?Q?gUjltuXu1qgRrvjXWS12vLumCUCzBBdU1yOuCEUDqhTG/4cAmudK8dSgg5qp?=
+ =?us-ascii?Q?MTamJ42VtTdxj0T/k62WzXlIdN0VUBgRePJB73nQrhEZwr1fEAfmRkYYAoWE?=
+ =?us-ascii?Q?tAZxP7haRsb8gCoAEqluPtAldZ9AMGObg+D50S6L5lsFNC8PHpjjiPp0MBQP?=
+ =?us-ascii?Q?o+e0LauyCFh59mw=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(7416014)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2025 18:35:03.6037 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e968d721-ce70-42e4-0018-08dd6714c3c2
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A104.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8280
+Received-SPF: permerror client-ip=2a01:111:f403:2418::62d;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,376 +167,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By passing the explicit state of LE/BE via the memop we can avoid the
-messing about we do with ppc_maybe_bswap_register() at least for
-supplying register values to gdbstub.
+On Wed, Mar 19, 2025 at 07:09:33PM +0100, Eric Auger wrote:
+> > Option means something like this:
+> > 	-device smmuv3,accel=on
+> > instead of
+> > 	-device "smmuv3-accel"
+> > ?
+> >
+> > Yea, I think that's good.
 
-The fact we still need the helper for setting the values probably
-indicates we could do with a reverse helper, possibly to setting env
-vars directly? This is complicated by aliasing though.
+> Yeah actually that's a big debate for not much. From an implementation
+> pov that shall not change much. The only doubt I have is if we need to
+> conditionnaly expose the MSI RESV regions it is easier to do if we
+> detect we have a smmuv3-accel. what the option allows is the auto mode.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/ppc/gdbstub.c | 192 ++++++++++++++++++++++++-------------------
- 1 file changed, 108 insertions(+), 84 deletions(-)
+Mind elaborating your doubt about the MSI RESV region?
 
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index c09e93abaf..663a97d986 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -20,7 +20,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "exec/gdbstub.h"
--#include "gdbstub/helpers.h"
-+#include "gdbstub/registers.h"
- #include "internal.h"
- 
- static int ppc_gdb_register_len_apple(int n)
-@@ -74,12 +74,12 @@ static int ppc_gdb_register_len(int n)
- }
- 
- /*
-- * We need to present the registers to gdb in the "current" memory
-- * ordering.  For user-only mode we get this for free;
-- * TARGET_BIG_ENDIAN is set to the proper ordering for the
-- * binary, and cannot be changed.  For system mode,
-- * TARGET_BIG_ENDIAN is always set, and we must check the current
-- * mode of the chip to see if we're running in little-endian.
-+ * We need to map the target endian registers from gdb in the
-+ * "current" memory ordering. For user-only mode we get this for free;
-+ * TARGET_BIG_ENDIAN is set to the proper ordering for the binary, and
-+ * cannot be changed. For system mode, TARGET_BIG_ENDIAN is always
-+ * set, and we must check the current mode of the chip to see if we're
-+ * running in little-endian.
-  */
- static void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len)
- {
-@@ -98,6 +98,38 @@ static void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len
- #endif
- }
- 
-+/*
-+ * We need to present the registers to gdb in the "current" memory
-+ * ordering. For user-only mode this is hardwired by TARGET_BIG_ENDIAN
-+ * and cannot be changed. For system mode we must check the current
-+ * mode of the chip to see if we're running in little-endian.
-+ */
-+static MemOp ppc_gdb_memop(CPUPPCState *env, int len)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    MemOp end = FIELD_EX64(env->msr, MSR, LE) ? MO_LE : MO_BE;
-+#else
-+    #ifdef TARGET_BIG_ENDIAN
-+    MemOp end = MO_BE;
-+    #else
-+    MemOp end = MO_LE;
-+    #endif
-+#endif
-+
-+    return size_memop(len) | end;
-+}
-+
-+/*
-+ * Helpers copied from helpers.h just for loading target_ulong values
-+ * from gdbstub's GByteArray
-+ */
-+
-+#if TARGET_LONG_BITS == 64
-+#define ldtul_p(addr) ldq_p(addr)
-+#else
-+#define ldtul_p(addr) ldl_p(addr)
-+#endif
-+
- /*
-  * Old gdb always expects FP registers.  Newer (xml-aware) gdb only
-  * expects whatever the target description contains.  Due to a
-@@ -109,51 +141,50 @@ static void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len
- int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
- {
-     CPUPPCState *env = cpu_env(cs);
--    uint8_t *mem_buf;
-     int r = ppc_gdb_register_len(n);
-+    MemOp mo;
- 
-     if (!r) {
-         return r;
-     }
- 
-+    mo = ppc_gdb_memop(env, r);
-+
-     if (n < 32) {
-         /* gprs */
--        gdb_get_regl(buf, env->gpr[n]);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &env->gpr[n]);
-     } else {
-         switch (n) {
-         case 64:
--            gdb_get_regl(buf, env->nip);
--            break;
-+            return gdb_get_register_value(mo, buf, (uint8_t *) &env->nip);
-         case 65:
--            gdb_get_regl(buf, env->msr);
--            break;
-+            return gdb_get_register_value(mo, buf, (uint8_t *) &env->msr);
-         case 66:
-             {
-                 uint32_t cr = ppc_get_cr(env);
--                gdb_get_reg32(buf, cr);
--                break;
-+                return gdb_get_register_value(ppc_gdb_memop(env, 4), buf, (uint8_t *) &cr);
-             }
-         case 67:
--            gdb_get_regl(buf, env->lr);
-+            return gdb_get_register_value(mo, buf, (uint8_t *) &env->lr);
-             break;
-         case 68:
--            gdb_get_regl(buf, env->ctr);
-+            return gdb_get_register_value(mo, buf, (uint8_t *) &env->ctr);
-             break;
-         case 69:
--            gdb_get_reg32(buf, cpu_read_xer(env));
--            break;
-+            uint32_t val = cpu_read_xer(env);
-+            return gdb_get_register_value(ppc_gdb_memop(env, 4), buf, (uint8_t *) &val);
-         }
-     }
--    mem_buf = buf->data + buf->len - r;
--    ppc_maybe_bswap_register(env, mem_buf, r);
--    return r;
-+
-+    return 0;
- }
- 
- int ppc_cpu_gdb_read_register_apple(CPUState *cs, GByteArray *buf, int n)
- {
-     CPUPPCState *env = cpu_env(cs);
--    uint8_t *mem_buf;
-     int r = ppc_gdb_register_len_apple(n);
-+    MemOp mo = ppc_gdb_memop(env, r);
-+    int actual = 0;
- 
-     if (!r) {
-         return r;
-@@ -161,44 +192,48 @@ int ppc_cpu_gdb_read_register_apple(CPUState *cs, GByteArray *buf, int n)
- 
-     if (n < 32) {
-         /* gprs */
--        gdb_get_reg64(buf, env->gpr[n]);
-+        actual = gdb_get_register_value(mo, buf, (uint8_t *) &env->gpr[n]);
-     } else if (n < 64) {
-         /* fprs */
--        gdb_get_reg64(buf, *cpu_fpr_ptr(env, n - 32));
-+        actual = gdb_get_register_value(mo, buf, (uint8_t *) cpu_fpr_ptr(env, n - 32));
-     } else if (n < 96) {
--        /* Altivec */
--        gdb_get_reg64(buf, n - 64);
--        gdb_get_reg64(buf, 0);
-+        /* Altivec - where are they? ppc_vsr_t vsr[64]? */
-+        uint64_t empty = 0;
-+        actual = gdb_get_register_value(mo, buf, (uint8_t *) &empty);
-+        actual = gdb_get_register_value(mo, buf, (uint8_t *) &empty);
-     } else {
-         switch (n) {
-         case 64 + 32:
--            gdb_get_reg64(buf, env->nip);
-+            actual = gdb_get_register_value(mo, buf, (uint8_t *) &env->nip);
-             break;
-         case 65 + 32:
--            gdb_get_reg64(buf, env->msr);
-+            actual = gdb_get_register_value(mo, buf, (uint8_t *) &env->msr);
-             break;
-         case 66 + 32:
--            {
--                uint32_t cr = ppc_get_cr(env);
--                gdb_get_reg32(buf, cr);
--                break;
--            }
-+        {
-+            uint32_t cr = ppc_get_cr(env);
-+            actual = gdb_get_register_value(mo, buf, (uint8_t *) &cr);
-+            break;
-+        }
-         case 67 + 32:
--            gdb_get_reg64(buf, env->lr);
-+            actual = gdb_get_register_value(mo, buf, (uint8_t *) &env->lr);
-             break;
-         case 68 + 32:
--            gdb_get_reg64(buf, env->ctr);
-+            actual = gdb_get_register_value(mo, buf, (uint8_t *) &env->ctr);
-             break;
-         case 69 + 32:
--            gdb_get_reg32(buf, cpu_read_xer(env));
-+        {
-+            uint32_t xer = cpu_read_xer(env);
-+            actual = gdb_get_register_value(mo, buf, (uint8_t *) &xer);
-             break;
-+        }
-         case 70 + 32:
--            gdb_get_reg64(buf, env->fpscr);
-+            actual = gdb_get_register_value(mo, buf, (uint8_t *) &env->fpscr);
-             break;
-         }
-     }
--    mem_buf = buf->data + buf->len - r;
--    ppc_maybe_bswap_register(env, mem_buf, r);
-+
-+    g_assert(r == actual);
-     return r;
- }
- 
-@@ -210,6 +245,9 @@ int ppc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     if (!r) {
-         return r;
-     }
-+
-+    g_assert(r == n);
-+    
-     ppc_maybe_bswap_register(env, mem_buf, r);
-     if (n < 32) {
-         /* gprs */
-@@ -367,18 +405,16 @@ static int gdb_get_spr_reg(CPUState *cs, GByteArray *buf, int n)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *env = &cpu->env;
-+    MemOp mo = ppc_gdb_memop(env, TARGET_LONG_SIZE);
-+    target_ulong val;
-     int reg;
--    int len;
- 
-     reg = gdb_find_spr_idx(env, n);
-     if (reg < 0) {
-         return 0;
-     }
- 
--    len = TARGET_LONG_SIZE;
--
-     /* Handle those SPRs that are not part of the env->spr[] array */
--    target_ulong val;
-     switch (reg) {
- #if defined(TARGET_PPC64)
-     case SPR_CFAR:
-@@ -400,10 +436,7 @@ static int gdb_get_spr_reg(CPUState *cs, GByteArray *buf, int n)
-     default:
-         val = env->spr[reg];
-     }
--    gdb_get_regl(buf, val);
--
--    ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, len), len);
--    return len;
-+    return gdb_get_register_value(mo, buf, (uint8_t *) &val);
- }
- 
- static int gdb_set_spr_reg(CPUState *cs, uint8_t *mem_buf, int n)
-@@ -441,18 +474,14 @@ static int gdb_get_float_reg(CPUState *cs, GByteArray *buf, int n)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *env = &cpu->env;
--    uint8_t *mem_buf;
-+    MemOp mo;
-     if (n < 32) {
--        gdb_get_reg64(buf, *cpu_fpr_ptr(env, n));
--        mem_buf = gdb_get_reg_ptr(buf, 8);
--        ppc_maybe_bswap_register(env, mem_buf, 8);
--        return 8;
-+        mo = ppc_gdb_memop(env, 8);
-+        return gdb_get_register_value(mo, buf, (uint8_t *)cpu_fpr_ptr(env, n));
-     }
-     if (n == 32) {
--        gdb_get_reg32(buf, env->fpscr);
--        mem_buf = gdb_get_reg_ptr(buf, 4);
--        ppc_maybe_bswap_register(env, mem_buf, 4);
--        return 4;
-+        mo = ppc_gdb_memop(env, 4);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &env->fpscr);
-     }
-     return 0;
- }
-@@ -479,26 +508,21 @@ static int gdb_get_avr_reg(CPUState *cs, GByteArray *buf, int n)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *env = &cpu->env;
--    uint8_t *mem_buf;
-+    MemOp mo;
- 
-     if (n < 32) {
-         ppc_avr_t *avr = cpu_avr_ptr(env, n);
--        gdb_get_reg128(buf, avr->VsrD(0), avr->VsrD(1));
--        mem_buf = gdb_get_reg_ptr(buf, 16);
--        ppc_maybe_bswap_register(env, mem_buf, 16);
--        return 16;
-+        mo = ppc_gdb_memop(env, 16);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) avr);
-     }
-     if (n == 32) {
--        gdb_get_reg32(buf, ppc_get_vscr(env));
--        mem_buf = gdb_get_reg_ptr(buf, 4);
--        ppc_maybe_bswap_register(env, mem_buf, 4);
--        return 4;
-+        uint32_t vscr = ppc_get_vscr(env);
-+        mo = ppc_gdb_memop(env, 4);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &vscr);
-     }
-     if (n == 33) {
--        gdb_get_reg32(buf, (uint32_t)env->spr[SPR_VRSAVE]);
--        mem_buf = gdb_get_reg_ptr(buf, 4);
--        ppc_maybe_bswap_register(env, mem_buf, 4);
--        return 4;
-+        mo = ppc_gdb_memop(env, 4);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &env->spr[SPR_VRSAVE]);
-     }
-     return 0;
- }
-@@ -532,25 +556,25 @@ static int gdb_get_spe_reg(CPUState *cs, GByteArray *buf, int n)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *env = &cpu->env;
-+    MemOp mo;
- 
-     if (n < 32) {
- #if defined(TARGET_PPC64)
--        gdb_get_reg32(buf, env->gpr[n] >> 32);
--        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 4), 4);
-+        uint32_t low = env->gpr[n] >> 32;
-+        mo = ppc_gdb_memop(env, 4);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &low);
- #else
--        gdb_get_reg32(buf, env->gprh[n]);
-+        mo = ppc_gdb_memop(env, 4);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &env->gprh[n]);
- #endif
--        return 4;
-     }
-     if (n == 32) {
--        gdb_get_reg64(buf, env->spe_acc);
--        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 8), 8);
--        return 8;
-+        mo = ppc_gdb_memop(env, 8);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &env->spe_acc);
-     }
-     if (n == 33) {
--        gdb_get_reg32(buf, env->spe_fscr);
--        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 4), 4);
--        return 4;
-+        mo = ppc_gdb_memop(env, 4);
-+        return gdb_get_register_value(mo, buf, (uint8_t *) &env->spe_fscr);
-     }
-     return 0;
- }
-@@ -593,9 +617,9 @@ static int gdb_get_vsx_reg(CPUState *cs, GByteArray *buf, int n)
-     CPUPPCState *env = &cpu->env;
- 
-     if (n < 32) {
--        gdb_get_reg64(buf, *cpu_vsrl_ptr(env, n));
--        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 8), 8);
--        return 8;
-+        return gdb_get_register_value(ppc_gdb_memop(env, 8),
-+                                      buf,
-+                                      (uint8_t *)cpu_vsrl_ptr(env, n));
-     }
-     return 0;
- }
--- 
-2.39.5
+Do you mean how VMS code should tag "accel=on" option and generate
+RMR nodes in the IORT table?
 
+> > We certainly can't do case (a): not all TLBI commands gives an "SID"
+> > field (so would have to broadcast, i.e. underlying SMMU HW would run
+> > commands that were supposed for emulated devices only); in case of
+> > vCMDQ, commands for emulated devices would be issued to real HW and
+
+> I am still confused about that. For instance if the guest sends an
+> NH_ASID, NH_VA invalidation and it happens both the emulated device and
+> VFIO-device share the same cd.asid (same guest iommu domain, which
+> practically should not happen) why shouldn't we propagate the
+> invalidation to the host. Does the problem come from the usage of vCMDQ
+> or would you foresee the same problem with a generic physical SMMU?
+
+Host (HW) would end up with executing commands that were issued for
+emulated devices, which impacts performance.
+
+With vCMDQ, QEMU cannot trap command queue because all invalidation
+commands will be issued to HW directly from the guest kernel driver.
+This includes TLBI and ATC_INV commands. It's probably okay to run
+TLBI commands with vCMDQ (again perf impact), while ATC_INV commands
+would result in "unkonwn SID" errors or directly ATC_INV timeouts.
+
+Thanks
+Nicolin
 
