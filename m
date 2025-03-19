@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69348C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F371EC35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 16:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuw7k-0007ec-73; Wed, 19 Mar 2025 12:18:32 -0400
+	id 1tuw8n-0000II-07; Wed, 19 Mar 2025 12:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tuw7c-0007ZJ-PR
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:18:26 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tuw8k-0000Cj-0r
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:19:34 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tuw7X-0006Y8-4C
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:18:23 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2240b4de12bso50769015ad.2
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:18:16 -0700 (PDT)
+ id 1tuw8X-0006rX-6O
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 12:19:33 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22403cbb47fso135850695ad.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 09:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742401094; x=1743005894; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742401159; x=1743005959; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mmVvwZxPZXPaH+rMioC1tIGm3m1gapEOP4E5AKWCXPg=;
- b=F4zIUR1PBjntoJudVa9Wdc/rZrR2FJGgJFjP1YZkTDmOyDPkR4SSCsQoNDXM+cBqoM
- 6Jn+8AQEH2Ia1AYr/YhYOsizEc14+ZALJQ0aRf/l04ZFoW0kVwV5mk3a9Iq3u/tzUhEK
- 4IaXNXxFGyVZzNqEdUXF9ckgZxUMFt2mUNWtXSPm5R3RLt8zEOemUBzgXIxL7VLmJ/p8
- t/BwdLsVrJ1/ZgXRdgaeTHknDbUvyvYXED94PwrL/8AHXgiSRFAgY5jo7HFbK9Bnd6Hl
- /GU8nvQ9HSkdtmsgWIYPSrX1VQxwUPmyxoSAjxQG+TXv1pZeN3nH1ndFJIc/5qeoXDcq
- /6ig==
+ bh=kJ9mPrkZ3QgkKl+eBkeiU9nIEsF8S3O9yZhbqtbaD8g=;
+ b=a7tUAaRM/UW4dZ04QIvE2UFb8kxvC3+LWhmDrg1SFAal77tQ3Mt7IyGWxNiA6Eu4PS
+ DBi/xTGnwtOajiUEzK+ex8mTyhKkqTNTaI/Y1Pi+efuCEmcSu7hloTg8B4v0tWSNLByi
+ VDJbol6RYJAW88u9goNKgmqSRl0IlQ3+Zd6ktF0NGHeqN1XY/ZwLx9gjVU5d0ZTz/zoa
+ 8EUvjlJ8qsmTcKBRr0Ff8nNSm18X/YND9CdAD4ly05S9SgCcn0pdG2lujFl+Zh7v1AvN
+ Zb2jigyufhr6VjsX3nNSEcCrAveVE33q0DDXYlfCBc66IDIElrB2P2TJkpdQrFiL4Npv
+ kpXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742401094; x=1743005894;
+ d=1e100.net; s=20230601; t=1742401159; x=1743005959;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mmVvwZxPZXPaH+rMioC1tIGm3m1gapEOP4E5AKWCXPg=;
- b=a7LkL9MuKpzNSHeftD4GtmallPaiKYOeyS/WiNfMKT7epVR4+JEHy4nf3YYjYjsMIs
- 3Xlvh8u1Mmgxgl3qAQIvWgAiwBRkzjk83WVeAGOdT/vj/gHDDjxRHVh1QBU1U4qcoXZY
- ORUU6tR8u3W2zo2uTTUQg4kK75B6d6ueLKw7GvomTvv4eYYRkdETAon48GwYBWog/zo7
- SBu9lyKchthk+8UliFJVvbBGh4kwejAWzTPt97q01JarT+jg0npuWVYAB+x2cqmr33zB
- Z1FqGAI35squGNMp9OwRabRwFbNFPZD0N7ZvdKLPt5lJYA76Idlk3JXGVKmNN+lx0UCD
- 37pw==
+ bh=kJ9mPrkZ3QgkKl+eBkeiU9nIEsF8S3O9yZhbqtbaD8g=;
+ b=IlHNOSXn5LTeVMRJ2bv5WfxSclOfdjPZozBEnog93YXZPGmwV4z0VfwkHgz/zeC98V
+ IysltfsKRocePTrMT/VvxjAbHi1h+Mu5sLoPBCRJSZuODG17gZCBGv/TPFpwwGiFngDk
+ OIhEa52VqpcDLX7nNpqCrq2XmkVgXvRenk2LM8X6PSc3pf1dDrq5uKxF9a4YMKKMRVL1
+ /QuknK5bChFBxp7btrGDy61z5XtPVKy6WlPKgaaezFc/BbGdDWVSBwnt3smheH/x231R
+ +AlW4fUwGBzRSokm92t/nx5E2V8Wmf7w0OYrVvlApCs23duyLZLSYLEcJM3xIqgLA3hi
+ Llmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/At7snLGlfhTHI6X+a0YpJQZW+oIlIAi3ly6Ji2SLwcQdlw2zX/hQ5K5VkLnTZJUIr7w7/31m0Kp9@nongnu.org
-X-Gm-Message-State: AOJu0YwFi58opaKI3Z6zNmm9pNr/Mv6oLOOK9xSuDNzm2LaqbdI9264G
- 96E6c2N/P/tUkev+0Au6qcpJzkX6jJhoNTKjQG9/N7K37m3S/87m9YeBt1LsA+8=
-X-Gm-Gg: ASbGncumN6XImcbGH9RYx3M8Xq5STFk+ZCP8C39trGCg6NyB6/XLK3FxqivSRMKxs3N
- u1VOuOJxiuHQ+FQGKxtrF8aWdfuXXrfjwPmmRjimYuqMtlXLFC2V1ZD1iNoKq3yDTDkX34lHSFM
- UGc6u63dT0CVYE4Fgq78IW64ot8wG62NVoDlat3eslYHaE/NSZYkSQaSijbV3DGy5YsbKR1njb5
- Mi4qQv3BtYfEOJ/bnZz9u8CyChROXXPpvM+vAQc35O2sEOkV8tvndyYKirsxX2Eo+2+513ntaO3
- jP8es22Vyq79kQeJphLzyFYmBCW+Ne3edn1gef4GWOiHYNrjlmOP9m1PG3SYTrBSYDtzV02zbW5
- ZKm6xt71j
-X-Google-Smtp-Source: AGHT+IGBMUh0tyfa+/5pZFs/p5idfHTusjMU7/pm0hnKGK0m6iN8VsR40XLMJumX5/Dzl8nU3970BQ==
-X-Received: by 2002:a17:902:eccc:b0:224:c46:d166 with SMTP id
- d9443c01a7336-22649a59b28mr58898375ad.40.1742401094404; 
- Wed, 19 Mar 2025 09:18:14 -0700 (PDT)
+ AJvYcCX7EeuW8DlLrlLe/V4LuZYSHZMbYS2FRmhttXuCXethnU4tLeodiORkudYIwLmncMSoWA2xN7Zk0uO+@nongnu.org
+X-Gm-Message-State: AOJu0YwdZOAPa+PlgtTVj0/8Aaeuoj+myb3+q+gCd2ZydJbQ4cYqAWzG
+ yaq98xv+JpWMSz0WgreN5QN0toAyxDTLyMuTVCgrnK7+STSCiunMfsLHLBYRaVo=
+X-Gm-Gg: ASbGncteCjfBKcfHOw0t+tH1OaKZZT/QB3zcqxddSRwtWIX8WPsn1p8rWOWh/jmBACo
+ SAeKrIiv7cqkV2SQtF1b2A9+oeKUIxZ1Jw+yrNi3Z6+nSYBJPSIEj5qjKHO73ChtFhUhGbzgRmC
+ gf+wn0FC+S4kXFzhf0cLLbXewuLVPN8fsLl2ahmrLm152876DfxDpgsVdcD9EOxXpXda+DZ9EqO
+ uZagttTo8mdF6ZWC0HmEnLvXScKQYJ4a05wTJtG5k3p1S+9K0XhxZsSGsA8DOAAGVN0Ztgfgb9+
+ z2+yzZDV1ZUDG4g3VcAmM5C2mHyo4B05delHbTWLG+uZahy5p7lOgE2xURvc6WJUnUpdbceXlq8
+ ZjPSp+Rpw
+X-Google-Smtp-Source: AGHT+IHRhoCEgG0eudmIbwX89KmSqD/W/d9KDtKSrttcVKmam03TNNzm/xBU7wvyQ92Bxhdy8bNjsQ==
+X-Received: by 2002:a05:6a21:a44:b0:1f5:86ce:126a with SMTP id
+ adf61e73a8af0-1fbed40eb3cmr6102846637.40.1742401158852; 
+ Wed, 19 Mar 2025 09:19:18 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-225c688857esm116747085ad.17.2025.03.19.09.18.13
+ d2e1a72fcca58-737116955f1sm12202080b3a.142.2025.03.19.09.19.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 09:18:14 -0700 (PDT)
-Message-ID: <fc5e61e6-b3fe-49e0-b55a-955acf2496e8@linaro.org>
-Date: Wed, 19 Mar 2025 09:18:12 -0700
+ Wed, 19 Mar 2025 09:19:18 -0700 (PDT)
+Message-ID: <5739e782-be27-4d64-b564-b7e07f5e616e@linaro.org>
+Date: Wed, 19 Mar 2025 09:19:17 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 04/12] tcg: Declare local 'insn_start_words'
- variable in tcg_gen_insn_start()
+Subject: Re: [PATCH-for-10.1 05/12] tcg: Use TCGContext::insn_start_words in
+ tcg_gen_insn_start()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250319134507.45045-1-philmd@linaro.org>
- <20250319134507.45045-5-philmd@linaro.org>
+ <20250319134507.45045-6-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250319134507.45045-5-philmd@linaro.org>
+In-Reply-To: <20250319134507.45045-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,56 +108,64 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/19/25 06:44, Philippe Mathieu-Daudé wrote:
-> In order to keep following commits simple, introduce the
-> 'insn_start_words' local variable in tcg_gen_insn_start().
+> In tb_gen_code() we set TCGContext::insn_start_words to
+> TARGET_INSN_START_WORDS:
+> 
+> 290 TranslationBlock *tb_gen_code(...)
+> 293 {
+> ...
+> 351     tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
+> 
+> This definition is expanded to:
+> 
+>   11 # define TARGET_INSN_START_WORDS (1 + TARGET_INSN_START_EXTRA_WORDS)
+> 
+> Directly use the identical tcg_ctx->insn_start_words variable.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/tcg/tcg-op.h | 15 ++++++++++++---
->   1 file changed, 12 insertions(+), 3 deletions(-)
+>   include/tcg/tcg-op.h | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-I think there's no point in this, or the follow ups vs this block of code.
+Nack.
+
+We are specializing the function signature to the number of arguments.
+There is absolutely no point in reading that number from a variable.
 
 
 r~
 
 > 
 > diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-> index 8938f386599..e0038e70a8d 100644
+> index e0038e70a8d..1f0d3b95304 100644
 > --- a/include/tcg/tcg-op.h
 > +++ b/include/tcg/tcg-op.h
-> @@ -25,20 +25,29 @@
+> @@ -25,7 +25,7 @@
 >   #if TARGET_INSN_START_EXTRA_WORDS == 0
 >   static inline void tcg_gen_insn_start(uint64_t pc)
 >   {
-> -    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, 64 / TCG_TARGET_REG_BITS);
-> +    unsigned insn_start_words = 1;
-> +    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
-> +                            insn_start_words * 64 / TCG_TARGET_REG_BITS);
-> +
->       tcg_set_insn_start_param(op, 0, pc);
->   }
+> -    unsigned insn_start_words = 1;
+> +    unsigned insn_start_words = tcg_ctx->insn_start_words;
+>       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
+>                               insn_start_words * 64 / TCG_TARGET_REG_BITS);
+>   
+> @@ -34,7 +34,7 @@ static inline void tcg_gen_insn_start(uint64_t pc)
 >   #elif TARGET_INSN_START_EXTRA_WORDS == 1
 >   static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
 >   {
-> -    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, 2 * 64 / TCG_TARGET_REG_BITS);
-> +    unsigned insn_start_words = 1 + TARGET_INSN_START_EXTRA_WORDS;
-> +    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
-> +                            insn_start_words * 64 / TCG_TARGET_REG_BITS);
-> +
->       tcg_set_insn_start_param(op, 0, pc);
->       tcg_set_insn_start_param(op, 1, a1);
->   }
+> -    unsigned insn_start_words = 1 + TARGET_INSN_START_EXTRA_WORDS;
+> +    unsigned insn_start_words = tcg_ctx->insn_start_words;
+>       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
+>                               insn_start_words * 64 / TCG_TARGET_REG_BITS);
+>   
+> @@ -44,7 +44,7 @@ static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1)
 >   #elif TARGET_INSN_START_EXTRA_WORDS == 2
 >   static inline void tcg_gen_insn_start(uint64_t pc, uint64_t a1, uint64_t a2)
 >   {
-> -    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, 3 * 64 / TCG_TARGET_REG_BITS);
-> +    unsigned insn_start_words = 1 + TARGET_INSN_START_EXTRA_WORDS;
-> +    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
-> +                            insn_start_words * 64 / TCG_TARGET_REG_BITS);
-> +
->       tcg_set_insn_start_param(op, 0, pc);
->       tcg_set_insn_start_param(op, 1, a1);
->       tcg_set_insn_start_param(op, 2, a2);
+> -    unsigned insn_start_words = 1 + TARGET_INSN_START_EXTRA_WORDS;
+> +    unsigned insn_start_words = tcg_ctx->insn_start_words;
+>       TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
+>                               insn_start_words * 64 / TCG_TARGET_REG_BITS);
+>   
 
 
