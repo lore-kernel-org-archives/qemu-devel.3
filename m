@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34041C35FFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 14:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A0FC35FFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Mar 2025 14:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tuuAX-000239-C8; Wed, 19 Mar 2025 10:13:17 -0400
+	id 1tuuAM-0001qq-O2; Wed, 19 Mar 2025 10:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tuuA9-0001hM-7g
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 10:12:54 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tuu9y-0001eU-SU
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 10:12:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tuuA0-0006ki-IM
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 10:12:50 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tuu9g-0006ix-LO
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 10:12:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742393537;
+ s=mimecast20190719; t=1742393532;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+OMMrBdJVZeaiydw5/kpxjoxLOQi34o3C5q8EbZWnAY=;
- b=em8EmYqcjWFm5qSZkzfaF4gK3fDIiT+H2HAzXCb4fZT9hn6+KgWY6dV8dgKzm4CjoNBT/y
- JMTcaI1494Ynk7aAtphVFeothDnpzP0rbEk1SVuygnjwt/Fd1X9QAOH66zcnafeAqxKdf4
- QpQWqOMZOCVfT9O+bbv5ZemKFzmTwzQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=H58D0LCokzKee+mrCl+03ZvgHbdYJbV6BrXAG8kv6Y4=;
+ b=BgbhGnTQUSsB+IAaikdlpBE4IQrd20uuXE/gJS3PRknkHmpM22q/InxAS/5NIg4mCBjwlb
+ M15AMz3nMniyuziQAxQAn+fm/Sl08yeUgs1yNoDrGcxOQKzCTPbwnMIVL7r+MTlxn44zID
+ BF4NTGaLRtjB77/STxyVolRIPakt0lU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-l-wgJGBVNk6ssKXS3QIZMQ-1; Wed,
- 19 Mar 2025 10:12:12 -0400
-X-MC-Unique: l-wgJGBVNk6ssKXS3QIZMQ-1
-X-Mimecast-MFC-AGG-ID: l-wgJGBVNk6ssKXS3QIZMQ_1742393531
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-p-i3B7xvNlm79HKH7QdANg-1; Wed,
+ 19 Mar 2025 10:12:06 -0400
+X-MC-Unique: p-i3B7xvNlm79HKH7QdANg-1
+X-Mimecast-MFC-AGG-ID: p-i3B7xvNlm79HKH7QdANg_1742393525
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBF331801A00; Wed, 19 Mar 2025 14:12:10 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45D8F1956048; Wed, 19 Mar 2025 14:12:03 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.45.224.38])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A9DF1956094; Wed, 19 Mar 2025 14:12:10 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A52B51800944; Wed, 19 Mar 2025 14:12:01 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7FE1B18003B7; Wed, 19 Mar 2025 15:11:59 +0100 (CET)
+ id 2E0231800391; Wed, 19 Mar 2025 15:11:59 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, Kashyap Chamarthy <kchamart@redhat.com>,
@@ -57,15 +57,16 @@ Cc: Bibo Mao <maobibo@loongson.cn>, Kashyap Chamarthy <kchamart@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v3 5/6] hw/uefi-vars-sysbus: allow for loongarch virt
-Date: Wed, 19 Mar 2025 15:11:57 +0100
-Message-ID: <20250319141159.1461621-6-kraxel@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Peter Krempa <pkrempa@redhat.com>
+Subject: [PATCH v3 1/6] hw/uefi: flush variable store to disk in post load
+Date: Wed, 19 Mar 2025 15:11:53 +0100
+Message-ID: <20250319141159.1461621-2-kraxel@redhat.com>
 In-Reply-To: <20250319141159.1461621-1-kraxel@redhat.com>
 References: <20250319141159.1461621-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -91,44 +92,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow the device being added to loongarch virt VMs.
+Make live migration more robust.  Commit 4c0cfc72b31a ("pflash_cfi01:
+write flash contents to bdrv on incoming migration") elaborates in
+detail on the motivation.
 
+Cc: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Peter Krempa <pkrempa@redhat.com>
 ---
- hw/loongarch/virt.c | 2 ++
- hw/uefi/Kconfig     | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ hw/uefi/var-service-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a5840ff96857..b6f5f6a3b546 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -38,6 +38,7 @@
- #include "hw/mem/nvdimm.h"
- #include "hw/platform-bus.h"
- #include "hw/display/ramfb.h"
-+#include "hw/uefi/var-service-api.h"
- #include "hw/mem/pc-dimm.h"
- #include "system/tpm.h"
- #include "system/block-backend.h"
-@@ -1207,6 +1208,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
-     object_class_property_set_description(oc, "v-eiointc",
-                             "Enable Virt Extend I/O Interrupt Controller.");
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
- #ifdef CONFIG_TPM
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
- #endif
-diff --git a/hw/uefi/Kconfig b/hw/uefi/Kconfig
-index f139008b632b..b55529fca137 100644
---- a/hw/uefi/Kconfig
-+++ b/hw/uefi/Kconfig
-@@ -1,3 +1,3 @@
- config UEFI_VARS
- 	bool
--        default y if X86_64 || AARCH64 || RISCV64
-+        default y if X86_64 || AARCH64 || RISCV64 || LOONGARCH64
-\ No newline at end of file
+diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
+index 8ed8378ab991..4836a0cb8116 100644
+--- a/hw/uefi/var-service-core.c
++++ b/hw/uefi/var-service-core.c
+@@ -29,6 +29,7 @@ static int uefi_vars_post_load(void *opaque, int version_id)
+     uefi_vars_state *uv = opaque;
+ 
+     uefi_vars_update_storage(uv);
++    uefi_vars_json_save(uv);
+     uv->buffer = g_malloc(uv->buf_size);
+     return 0;
+ }
 -- 
 2.48.1
 
