@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2310BC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 19:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E976C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 19:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvL8J-0004Br-QX; Thu, 20 Mar 2025 15:00:47 -0400
+	id 1tvLQa-0000Of-SL; Thu, 20 Mar 2025 15:19:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvL8H-0004BY-8k
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:00:45 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1tvLQG-0000L1-U4
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:19:21 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvL8F-0002UP-CE
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:00:45 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-223fb0f619dso24916095ad.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 12:00:42 -0700 (PDT)
+ id 1tvLQE-0000Bc-P2
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:19:20 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso23569325ad.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 12:19:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742497241; x=1743102041; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1742498357; x=1743103157; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=weHsotjSjln9MgHLKOIKUdAUmOsOwzultrmV4EVkHwc=;
- b=cIOPs2x2UbnmIQgmi9klKIfVECWHu0bctPVVH2ZzGbyO7F32OnHRidqBF44H5lB1Dp
- U1eJNnm7IMWTS5tbu8ukeecDd+oYdMp4GtQtDM3WHjMfuKEWUHZrtUKIBZtu++vz2Jdi
- dVOfL3kNGSEun2ainiXadrtNG5vCyHBlYu4oJfOf5/EFYF+U0hiQZyWXle5y+FUVIDIZ
- Rq7LLYfnyEYxsDwU60LecAnJjexRI9aU+NbEjRlw7NdJHZACbEOycxagHpMlzrfSdCYp
- O67LlGtqSGC/tATGXVDQqxcW9CdMNR8f3p5ovKclMJHO/neZWwlzn5NzzqsTIVvvT3Tk
- 9TUA==
+ bh=tq5F+LFSz7I94wi2CXsI0zOfb8GaJ/jWhQMTyC+MdfY=;
+ b=O9BhWGpQr8Zn9TNXhJlxk3rutFMSRSvyLZiZX0ZcimTl1f1wocjFx8az+ODpYZuK0W
+ eGFzwynqF/9u600OVRe3WzrzSXjMWWP3ypzxYrSv97SCEfyYh+VfGg12tHDSqGB4LQTO
+ I8QX41Ue+sskoVJTUZtvMEznRB9O156L6fES/dl9ZXeOIfCyEChcExNdUx0e3SW8Dimz
+ SXMiYpnslqM0BNgcDwziHQ+41Kwv8h89Zba2/kS/LG1zGFP/8C26V7pkw67w0efzy2ny
+ XigRSM/NEMYq5062qhegUj+Fe1/gJumlRQRuutI2RKDP7pQL9Y8P6HO+HicMChArDyq9
+ 191Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742497241; x=1743102041;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1742498357; x=1743103157;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=weHsotjSjln9MgHLKOIKUdAUmOsOwzultrmV4EVkHwc=;
- b=hZRITQ30/KFlD2ZA+PjPk1OH9nhGBRT6n7f8iDxdb9f/XLIj0kANwtc5WyHOi7+rh2
- 4nv2H0cfoAVWpFvVXxJX38tDjlA2Msd5Tkq/XUVBWvKTmR8zAoZfsPeR6N9KREAm8SVs
- Coi+73YtkJPsRqxV5bUtOpX9TixeC2rcBsSZ2jzogAGyXhTm4/p4APUEhx5OMY+16Xok
- u3bki9IxTWNhfP/QrG55HrIlexkG37u4RX9poanBVEaEw4oMZ9Ix+34QuxUg2DGzkIug
- Yq1vV3EnBo3/0Ux6hhRkoh0J7OfJX+484Ith3tmOZheCgN3UhUlTjtlPtKK+qcSwgRQC
- c4Gw==
-X-Gm-Message-State: AOJu0YzcyF1jaApjwf+74v3hJKXUZnsMywS3XTlSOC+/UrExnu86eKhI
- PwZW+LemdYQJlzDlPeOH4BeyVuwsMPNWXN2M6f+8nl+ycqnENmbw5mI+VgvaFeYX2ZjdMq3MKZg
- T
-X-Gm-Gg: ASbGncvTciCSQVSY5MRnHSX1LT8HnGiFhbSSl6Lte86D/yLNJ90i30yGrgZysYVp26U
- SUvsABg7WxDf43XzBEbm28Ww4jwMFesG4n/z15P2Zp0Sr6oddL0AlOXv6lBD+qywVQ21YBV0r/2
- 2PfiPayxfIs/EtLvLi1kHVCeDYT+A3hp0kfLpgt2FPmtLcyomNhpJQ6EsVLEjzfKffvxKZFPB06
- einl7RmxlcP2X711VLjdpIl3QBjkk3LF6XNtDBndlJrRhFNtP5qeWRSynumyRntlYfJ5MjcHwBG
- kzNyv3m5yf93QtZbLkJyyL7do7n9B7LPIyIwRsYywmtChjykvHmL0N065QvFjdcGq2C5
-X-Google-Smtp-Source: AGHT+IEDts3benM6NmGItX5fga4Aa+CyXqI9YpnoThtJBcl6IK/cPPeYhxJyUZDqG2wUkSMleZOB0A==
-X-Received: by 2002:a17:903:8c4:b0:224:76f:9e4a with SMTP id
- d9443c01a7336-22780c74ad2mr8405635ad.14.1742497241060; 
- Thu, 20 Mar 2025 12:00:41 -0700 (PDT)
+ bh=tq5F+LFSz7I94wi2CXsI0zOfb8GaJ/jWhQMTyC+MdfY=;
+ b=K5BXVJ/sI0q6xj5ZG67RUGtoxxH9eQddkUCwcz3Ho97O8TcrIYef319JPa/13HNrOo
+ xToPwgJExNA7YyPayfh3EAcYP/kRTfULh+0ICt1+uanewuzAUMnHhMDbRUFj/a1Vo6bI
+ ag9OQdXYkhmmOnH5Cj39uo+HaimRWja5dNGYQPsA7ELpDM4pGc6LomBScVqqR8r8Opu6
+ qMmUWtkvI6hmvccGbHDIN+BOdM23ZKLrcQssc+rE6x4VtbDPqeDbx69pB8dzERIdeTnw
+ ORPGNCYS/z+gc7QVkojEtLDWBnbJv8DrfLaKolz71BuUxJyCZumgxy27/Sa0F66OVPVR
+ TgEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgInbDeJ9F23vlOcjprypOWRtwatR5xI0pg3PVCmeXu66zgE/ywVWUB0RqO/lYsjhNibbzA2UMWTd8@nongnu.org
+X-Gm-Message-State: AOJu0YyDWHG3rrDK3U6gmiSawL694V30UkjH0tPpBhFc9cTNB/ATjbcZ
+ Ke78iLkSIKx5putrY9HkRg4uSRA1W2c2nCp8GzsszxhveXIE5bWCGA5usDdZFro=
+X-Gm-Gg: ASbGncvAODOfIkWFPcF1B6VzginNZTvmJjf3cVQUTd1aFDChz9FlLKRyszkZyQ4JqpJ
+ 7AxVpji6DTiPwk/wadTTn3gZz7Q7oLtYNk1oCl25+hG97DyavXhwfhRwz8ZVjZL7zHvtV2NLjPN
+ Tk4FRASebKYskxYQbHg/V6hHs2XAVcR1KxQLnCgYsocLiSLYoIJsNxcAIzk0WA3MUlmBEMxt2F5
+ MpnPLYnDrvTUxWGwXk0kQeRVIMgQndkvHPqrcFd8CFsAShtzGp1YkJSGr6QDcIlXKnRM+BqGOl2
+ CcSvkR+IP/ded01Wf0ZOmXeS4MNEQIA5cJKrvvzZoljXE8ZyetB4Zxpzgw==
+X-Google-Smtp-Source: AGHT+IHnxwSgcecrpXyfAh4nU3RDQ5gC7c6RX8ocuRb2dcZ8am6818rs0+JuCbrRatAoRrsb5qQzlA==
+X-Received: by 2002:a17:902:ebc6:b0:223:39ae:a98 with SMTP id
+ d9443c01a7336-22780d825c4mr10603855ad.22.1742498356861; 
+ Thu, 20 Mar 2025 12:19:16 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f3964bsm1511655ad.32.2025.03.20.12.00.40
+ d9443c01a7336-227811f45a7sm1512305ad.223.2025.03.20.12.19.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 12:00:40 -0700 (PDT)
-Message-ID: <5a97e6c4-72aa-492b-8e7f-c0f874ffaf23@linaro.org>
-Date: Thu, 20 Mar 2025 12:00:39 -0700
+ Thu, 20 Mar 2025 12:19:16 -0700 (PDT)
+Message-ID: <79b3715b-c8e8-4fa9-8bb9-d675a56be7d0@linaro.org>
+Date: Thu, 20 Mar 2025 12:19:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/7] hw/hyperv: remove duplication compilation units
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- kvm@vger.kernel.org, alex.bennee@linaro.org,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- richard.henderson@linaro.org, manos.pitsidianakis@linaro.org
-References: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2] rust: assertions: add static_assert
 Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20250320115521.808019-1-pbonzini@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250307215623.524987-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250320115521.808019-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,48 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 13:56, Pierrick Bouvier wrote:
-> Work towards having a single binary, by removing duplicated object files.
+On 3/20/25 04:55, Paolo Bonzini wrote:
+> Add a new assertion that is similar to "const { assert!(...) }" but can be used
+> outside functions and with older versions of Rust.  A similar macro is found in
+> Linux, whereas the "static_assertions" crate has a const_assert macro that
+> produces worse error messages.
 > 
-> hw/hyperv/hyperv.c was excluded at this time, because it depends on target
-> dependent symbols:
-> - from system/kvm.h
->      - kvm_check_extension
->      - kvm_vm_ioctl
-> - from exec/cpu-all.h | memory_ldst_phys.h.inc
->      - ldq_phys
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Supersedes: <20250320113356.799412-1-pbonzini@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   rust/qemu-api/src/assertions.rs | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
 > 
-> v2
-> - remove osdep from header
-> - use hardcoded buffer size for syndbg, assuming page size is always 4Kb.
-> 
-> v3
-> - fix assert for page size.
-> 
-> v4
-> - use KiB unit
-> 
-> Pierrick Bouvier (7):
->    hw/hyperv/hv-balloon-stub: common compilation unit
->    hw/hyperv/hyperv.h: header cleanup
->    hw/hyperv/vmbus: common compilation unit
->    hw/hyperv/hyperv-proto: move SYNDBG definition from target/i386
->    hw/hyperv/syndbg: common compilation unit
->    hw/hyperv/balloon: common balloon compilation units
->    hw/hyperv/hyperv_testdev: common compilation unit
-> 
->   include/hw/hyperv/hyperv-proto.h | 12 ++++++++
->   include/hw/hyperv/hyperv.h       |  3 +-
->   target/i386/kvm/hyperv-proto.h   | 12 --------
->   hw/hyperv/syndbg.c               | 11 +++++--
->   hw/hyperv/vmbus.c                | 50 ++++++++++++++++----------------
->   hw/hyperv/meson.build            |  9 +++---
->   6 files changed, 52 insertions(+), 45 deletions(-)
-> 
+> diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
+> index 104dec39774..bba38cfda11 100644
+> --- a/rust/qemu-api/src/assertions.rs
+> +++ b/rust/qemu-api/src/assertions.rs
+> @@ -120,3 +120,25 @@ macro_rules! assert_match {
+>           );
+>       };
+>   }
+> +
+> +/// Assert at compile time that an expression is true.  This is similar
+> +/// to `const { assert!(...); }` but it works outside functions, as well as
+> +/// on versions of Rust before 1.79.
+> +///
+> +/// # Examples
+> +///
+> +/// ```
+> +/// # use qemu_api::static_assert;
+> +/// static_assert!("abc".len() == 3);
+> +/// ```
+> +///
+> +/// ```compile_fail
+> +/// # use qemu_api::static_assert;
+> +/// static_assert!("abc".len() == 2); // does not compile
+> +/// ```
+> +#[macro_export]
+> +macro_rules! static_assert {
+> +    ($x:expr) => {
+> +        const _: () = assert!($x);
+> +    };
+> +}
 
-I've been able to address comments and conver last compilation unit 
-missing (hw/hyperv/hyperv.c).
+How about using something already done, and exhaustive for this?
+https://docs.rs/static_assertions/latest/static_assertions/
 
-However, another series is needed to make this compile.
-Thus, I'll wait for this to be merged before sending the v5 here.
+It provides a lot of convenient asserts related to types, traits, and 
+configs, which will probably end up being introduced in QEMU Rust at 
+some point.
 
