@@ -4,106 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6BEC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DD9CC28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tv9PV-0005aD-5n; Thu, 20 Mar 2025 02:29:45 -0400
+	id 1tv9RX-0006RS-2O; Thu, 20 Mar 2025 02:31:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tv9PT-0005Zm-HF
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:29:43 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tv9PQ-0002KM-LT
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:29:43 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22349bb8605so6710335ad.0
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 23:29:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742452179; x=1743056979;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OsKouGqaCLWkulgpWhE+23G53JRGkHyXy93jpLs9qlM=;
- b=ns0V0dsN3pFxzoBelNN5w9yi+1wN75OF24/2j1LHO6VeNJ3FsItLvjYCJbRZi7h2lZ
- T/0kljMb9liFXvxA6v8oqrEARxIss2effZtxnx7RKhvuWxkwVcfxAxKh0uwzz3Jo2+eI
- 7C6szhAhIOrJDegZ+5155d3agnvTpsVqNEDq4QGDHopzrQqRv3K88QBlMd8Anlmg9I4l
- 7xno31G9EFSsxxkrqG0UCjzna1tAuYvvXMRKjPAHZP/iBOC9DTwt5FqC5GjYSMItO9cc
- 4gPi2xrzJ7Q1d9WHRc8p2Wv2HelGuhZed/u3f4K8z0w/NQA+zIq9/XwYRzGo8kcA3i4D
- HauA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742452179; x=1743056979;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OsKouGqaCLWkulgpWhE+23G53JRGkHyXy93jpLs9qlM=;
- b=AzkTYjMNTIDYWVty1OUhHvLf6G47Hu7X5vW4j7K4rVRIum0luCeICioenkMoUX/uln
- sI8W7DcWYohP4X24CNrRZzzbLpiLm1i2Id7zYhACnvCS51fcS8uehqZa85v3+vzdqLrM
- 9KA1HhzXLd40wh7INlu8mTIu1ZNgOyQ0jM0CnQ7dWZZAX9jUExbsaYHuFpccQSH7oM8g
- TllhElsQMQe4ugUmTY7mLcCFOp8oVgdm9jTkZfMUWOeI2qdbo1dodpoVYgiTJzAwDhP4
- oDA+/DGqr8Re1Mp9Pf9MWe/uI4qyx+3HEyy44ML2ng2FE/TBqbUJh5z8ma0rfus3brJy
- j/BA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUymQ6MVTNxUtCIlHkgN4m1slvbGfJ4AqUEwiH+hA5cXD3rwrzjpLDf9ahwenM7BtS8mN/ouA4/8Nqg@nongnu.org
-X-Gm-Message-State: AOJu0YzY/TTY1ppg0nA2gG6YI+Idjcc0v2HngRsDAYb6vRChXwAHgF8O
- eT4j39wRhNwMe1DbeiB1tzdiof6rAK8uzgom539QGW5GRcfHuiMC4O47icDDyXU=
-X-Gm-Gg: ASbGnctRjtv3EwqC2+vttrVlej2btpWJEA1Zkg+ECaMFw6llY6IPLnJ6biSh0vuYsNk
- P0PCZbrz39FFSLlgaG8wLHlln/73/yvxQbial/r98hpA0mXD6yivDKWA9qaIsj30jrZmEtBk7VZ
- 5qNvZxdgIf4ZlvweujAVI0MONmgfIJEg2MX5Bentx9dpz2W8J25G9+7RmX4xD6+hNVDnI86E5T4
- 9Gxp7CchrHYQ019WxXjWGcVq+Y8FliERny74e2WsZpQ7j6swIZBz1lOcDjD2/nUsVAhWNS/6Td/
- 8vU2Y50DipYj1DwCA5DWHP5lm6SRwQN/RgT7ID3XjE03x9+zTQl0fhZx5+5khq7eMfGq
-X-Google-Smtp-Source: AGHT+IGHOX9vNF7XnZZyvY2KJZ20ta6SLhASwDBqJOKzBDqm+LbMa9sJM/BWYcz/0yidLVWwtpI7aw==
-X-Received: by 2002:a05:6a00:2382:b0:730:d5ca:aee with SMTP id
- d2e1a72fcca58-7376d70d09fmr7028809b3a.23.1742452179085; 
- Wed, 19 Mar 2025 23:29:39 -0700 (PDT)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167e02esm13274993b3a.95.2025.03.19.23.29.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 23:29:38 -0700 (PDT)
-Message-ID: <d3688ce0-e2f3-4bee-863f-dac7a394c789@daynix.com>
-Date: Thu, 20 Mar 2025 15:29:32 +0900
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tv9RS-0006RA-Q4
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:31:46 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tv9RP-0002kb-9U
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:31:46 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxOGpEtttnTRmeAA--.6147S3;
+ Thu, 20 Mar 2025 14:31:33 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxj8UztttnOTFVAA--.52487S3;
+ Thu, 20 Mar 2025 14:31:29 +0800 (CST)
+Subject: Re: [PATCH v5 2/6] hw/loongarch/virt: Fix error handling in cpu plug
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250320032158.1762751-1-maobibo@loongson.cn>
+ <20250320032158.1762751-3-maobibo@loongson.cn> <875xk4i5wb.fsf@pond.sub.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <c1e74ed3-f60a-0bd6-9806-b5ec111e466d@loongson.cn>
+Date: Thu, 20 Mar 2025 14:30:35 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] include/exec: fix assert in size_memop
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Juan Quintela <quintela@trasno.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
- David Gibson <david@gibson.dropbear.id.au>, qemu-s390x@nongnu.org,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
- Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Nicholas Piggin <npiggin@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <20250319182255.3096731-10-alex.bennee@linaro.org>
+In-Reply-To: <875xk4i5wb.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250319182255.3096731-10-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowMAxj8UztttnOTFVAA--.52487S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZF4rWw43Ww1DCrW8Kw18tFc_yoW5uFy7pr
+ Wvya1qvF1qkFW2v34Iqry5tw1Fvr4ftrW8XrWvyry5Zwn8Xrn0yFW2ywn8Kr4fCry0va18
+ Zw4rCFs8uFnavFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
+ 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+ KfnxnUUI43ZEXa7IU8oGQDUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -54
+X-Spam_score: -5.5
+X-Spam_bar: -----
+X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.598,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,38 +83,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updating the email address of Juan Quintela according to .mailmap.
 
-On 2025/03/20 3:22, Alex Bennée wrote:
-> We can handle larger sized memops now, expand the range of the assert.
+
+On 2025/3/20 下午2:16, Markus Armbruster wrote:
+> Bibo Mao <maobibo@loongson.cn> writes:
 > 
-> Fixes: 4b473e0c60 (tcg: Expand MO_SIZE to 3 bits)
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   include/exec/memop.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>> In function virt_cpu_plug(), it will send cpu plug message to interrupt
+>> controller extioi and ipi irqchip. If there is problem in this function,
+>> system should continue to run and keep state the same before cpu is
+>> added.
+>>
+>> Object cpuslot::cpu is set at last only when there is no any error.
+>> If there is, send cpu unplug message to extioi and ipi irqchip, and then
+>> return immediately.
+>>
+>> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c | 17 +++++++++++++++--
+>>   1 file changed, 15 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index a5840ff968..5118f01e4b 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -981,8 +981,6 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+>>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
+>>       Error *err = NULL;
+>>   
+>> -    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>> -    cpu_slot->cpu = CPU(dev);
+>>       if (lvms->ipi) {
+>>           hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
+>>           if (err) {
+>> @@ -995,6 +993,10 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+>>           hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
+>>           if (err) {
+>>               error_propagate(errp, err);
+>> +            if (lvms->ipi) {
+>> +                /* Send unplug message to restore, discard error here */
+>> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
+>> +            }
+>>               return;
+>>           }
+>>       }
+>> @@ -1003,9 +1005,20 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+>>           hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
+>>           if (err) {
+>>               error_propagate(errp, err);
+>> +            if (lvms->ipi) {
+>> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
+>> +            }
+>> +
+>> +            if (lvms->extioi) {
+>> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi),
+>> +                                       dev, NULL);
+>> +            }
+>> +            return;
+>>           }
+>>       }
+>>   
+>> +    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>> +    cpu_slot->cpu = CPU(dev);
+>>       return;
+>>   }
 > 
-> diff --git a/include/exec/memop.h b/include/exec/memop.h
-> index 407a47d82c..faed3ff902 100644
-> --- a/include/exec/memop.h
-> +++ b/include/exec/memop.h
-> @@ -162,8 +162,8 @@ static inline unsigned memop_size(MemOp op)
->   static inline MemOp size_memop(unsigned size)
->   {
->   #ifdef CONFIG_DEBUG_TCG
-> -    /* Power of 2 up to 8.  */
-> -    assert((size & (size - 1)) == 0 && size >= 1 && size <= 8);
-> +    /* Power of 2 up to 128.  */
-> +    assert((size & (size - 1)) == 0 && size >= 1 && size <= 128);
+> Hmm.
+> 
+> You're right about the problem: virt_cpu_plug() neglects to revert
+> changes when it fails.
+> 
+> You're probably right to move the assignment to cpu_slot->cpu to the
+> end.  Anything you can delay until success is assured you don't have to
+> revert.  I say "probably" because the code that now runs before the
+> assignment might theoretically "see" the assignment, and I didn't
+> examine it to exclude that.
+> 
+> Where I have doubts is the code to revert changes.
+> 
+> The hotplug_handler_plug() error checkign suggests it can fail.
+> 
+> Can hotplug_handler_unplug() fail, too?  The error checking in
+> virt_cpu_unplug() right above suggests it can.
+Basically from existing code about ipi/extioi hotplug handler, it is
+impossible to there is error, here is only for future use.
 
-This is the minimal change to fix, but perhaps it may be also nice to 
-change it to use MO_SIZE.
+If there is error in function virt_cpu_plug(), undo() such as 
+hotplug_handler_unplug() should be called. However if undo() reports 
+error, I do not know how to handle it, here just discard error in 
+function undo().
 
-Regards,
-Akihiko Odaki
-
->   #endif
->       return (MemOp)ctz32(size);
->   }
+Regards
+Bibo Mao
+> 
+> What happens if it fails in virt_cpu_plug()?
+> 
 
 
