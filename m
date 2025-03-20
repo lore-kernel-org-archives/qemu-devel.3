@@ -4,84 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D846C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 16:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18788C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 16:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvIOH-0006E2-98; Thu, 20 Mar 2025 12:05:07 -0400
+	id 1tvIrE-00005y-8a; Thu, 20 Mar 2025 12:35:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tvIMG-00051Z-HM
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:03:12 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tvIME-0003Ti-2i
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:03:00 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e64165ae78cso733989276.0
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 09:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742486576; x=1743091376; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=E+Sf9DL7K6o+3a/CLwhMlF23h8gEkovuxLF/f3YhuR4=;
- b=SmfDgrFD4TFzEqUOYz/LijT+mdmhUFdbA2t8YY3g/jXUT3mRYomlXrOu2yzmG8y61S
- N/8WOELP0V/7nUHIqB//EttTJeM70zkKOi7nCR56VugPv0fnfth9ufXsVvCxZ4a2tj5J
- Eh8e1m3A8IxbVoaeRaPojYbECGzJ/MNIm79aSCg5CkOZC1WAB1ossYkDguxACgo3fORo
- HSH3ZNaWvq75W4x/i4P0lCqdVScUxESUu5pP6U1/haz/rHaS7j91zb0Kpn0jGBRe0+I4
- O8JYmE3W1KNrcdFYrhxfixCclpj7K1m6ODT+Yxfwxad3f/+fdA0ThzT53VfzunONeNXp
- c4sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742486576; x=1743091376;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=E+Sf9DL7K6o+3a/CLwhMlF23h8gEkovuxLF/f3YhuR4=;
- b=EGFtV8gtb23cxL2bB36Yv+AQnppLoYBW8lVdnk4KJSASxmxZPtQs/TwJ5qdZOVEQsC
- faUUSe/SD+cNEN1YdqN5XJFjQBqvXk1B3co6bWqQUX0HbxQAFG/LKY6hiCb7+G0K69iD
- bbjTUUV613EOXT7NEwxEE9XCIYTrdI6JCZOxGd9ZiqCZRnt11tqYnwKpr0fITyea9aQh
- 7qj3yxC9da5iEIdE98nVMnglFT8q02ER9eNFgHWCTbrACzJGQedBvZ0KbWJgD7agCzFZ
- xT8EbMlxTVeqwBALF+W3NcEk07ByHQWs4aEOR412kI34QATktqEGXdEkaM5UkVeC5Fi+
- TnXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOt0sWmb9cKV687akvQp7pLszMB+gIWgKOGtkDR7bNRabqcGBlIKFZeuyi60dX5e0qT0fkMDPoWczg@nongnu.org
-X-Gm-Message-State: AOJu0YysFc03K14da/JsMdQu2KfXx2ksYdIf661RQVybkXrPxzSnDJGf
- xb4FFY7VsAWRJx8K5eN/fKo5p5tHfM4m8XiDZzrbML+okJ/LXWEXx1cU5/3qp1S88mr99bbtlx3
- RpwZrbqapbabK7ObpDM4Z5uMDphpvIYnDtiGbqw==
-X-Gm-Gg: ASbGncvQzbRUviY02y3aNI17hWcbyroHJeuKvNyIQ6o2X/BbPUA0NywVxdY96MPzSGX
- bJy5WYARypm4XGb4MpA1+/fdKz2Wuudc8NvCFw0jIls2VJlX3v6u7q+aYnCisuT6jd2DVC8/YGF
- 2NkveWCocpA8APEGVqL5De66AVYv4=
-X-Google-Smtp-Source: AGHT+IHOGJxL74hU+ZOWRasmt8OgxZU29Z0iCJhpLbFMOceqkftW1cuXMsXuyvXGaXnAMglHSE9s8x8OySGSm6bHavs=
-X-Received: by 2002:a05:6902:a83:b0:e63:d10e:edae with SMTP id
- 3f1490d57ef6-e6691fcc667mr4844297276.9.1742486550621; Thu, 20 Mar 2025
- 09:02:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250320133248.1679485-1-peter.maydell@linaro.org>
- <20250320133248.1679485-4-peter.maydell@linaro.org>
- <Z9w4Gttv8QeBRKfZ@intel.com>
-In-Reply-To: <Z9w4Gttv8QeBRKfZ@intel.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Mar 2025 16:02:18 +0000
-X-Gm-Features: AQ5f1JosCL3C1qhXgcxEF8zsqSxe893cvDN9OzDYbgh3vZyZOvh4FvKcapkpXjc
-Message-ID: <CAFEAcA_BQOtzugW31ke=sit1mKnvxieGC_GXLOG4=MK_O2mKqw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] rust: pl011: Check size of state struct at compile
- time
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1tvIrB-00005K-JJ
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:34:57 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1tvIr0-0007WQ-Gt
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:34:57 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KCS74I031139
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 16:34:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:reply-to:subject:to; s=pp1; bh=UIndsL9Auh5+YWWWQjK
+ dUv1t4Cc9s0M+FoU8+wO8ab0=; b=YnQHGzclzB8NoQLDBbLVtxMMag0iUw5BHl5
+ yDlPYjciXbhjfGpgniSzGOOYM/2gPel+igr6pkIdqyuJJE95V9LejheNdu6idADM
+ 6wJTz9FULf8ggNEdMtku4Y9mTG1dch0CpB/Xh0gaJIV3LwnrKHEZTBCmb3Apg4Y8
+ 9bSWSZImpRZDyNtCTMELQdJxbJ+QDGBTftjoBIbon0kpc8KoDzbbDGpW4U2SesHJ
+ Yzg3wjO6x294PJ8bL/9QsbfkxFUFxqFQZolQVO1kscB9FB96hH3E3utTMMiE9gAZ
+ rNgBSiJ5euE02UPi63ef6wkJmj1UskVeQ8EOvNHia0Mn0PuHiCg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gk21sdp7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 16:34:41 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52KGNwlJ027900
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 16:34:41 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gk21sdp4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Mar 2025 16:34:41 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52KEUPBg031961;
+ Thu, 20 Mar 2025 16:34:40 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45dkvts72x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Mar 2025 16:34:40 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52KGYdei26608302
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 20 Mar 2025 16:34:39 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8CB8258055;
+ Thu, 20 Mar 2025 16:34:39 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4C0B25804E;
+ Thu, 20 Mar 2025 16:34:39 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 20 Mar 2025 16:34:39 +0000 (GMT)
+Message-ID: <9d87fed729b2697605bcf5b6062669b6239e5c0f.camel@linux.ibm.com>
+Subject: Best practice for issuing blocking calls in response to an event
+From: Miles Glenn <milesg@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com
+Date: Thu, 20 Mar 2025 11:34:38 -0500
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: e77NKd2ffri314GvKeuJTO7k7ntV4Y8Z
+X-Proofpoint-GUID: b3Z4I9pB0RcRVs-OV5tzXTG5XUNV4Dyh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-20_04,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015
+ bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0 mlxlogscore=999
+ malwarescore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503200104
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,58 +111,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Mar 2025 at 15:25, Zhao Liu <zhao1.liu@intel.com> wrote:
->
-> > -use std::{ffi::CStr, ptr::addr_of_mut};
-> > +use std::{ffi::CStr, mem, ptr::addr_of_mut};
->
-> maybe mem::size_of (since there're 2 use cases :-))?
->
-> >
-> >  use qemu_api::{
-> > +    bindings,
-> >      chardev::{CharBackend, Chardev, Event},
-> > +    static_assert,
->
-> This one looks like it breaks the alphabetical ordering (this nit can be
-> checked and fixed by "cargo +nightly fmt" under rust directory, which is
-> like checkpatch.pl).
+Hello,
 
-Yep; I put it here because I started with Paolo's v1 patch
-which called the macro "const_assert", and then when v2
-changed the macro name I forgot to move it later in the use {}.
+I am attempting to simulate a system with multiple CPU
+architectures.  To do this I am starting a unique QEMU process for each
+CPU architecture that is needed. I'm also developing some QEMU code
+that aids in transporting MMIO transactions across the process
+boundaries using sockets.
 
-> >      impl_vmstate_forward,
-> >      irq::{IRQState, InterruptSource},
-> >      memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
-> > @@ -124,6 +126,12 @@ pub struct PL011State {
-> >      pub migrate_clock: bool,
-> >  }
-> >
-> > +// Some C users of this device embed its state struct into their own
-> > +// structs, so the size of the Rust version must not be any larger
-> > +// than the size of the C one. If this assert triggers you need to
-> > +// expand the padding_for_rust[] array in the C PL011State struct.
-> > +static_assert!(mem::size_of::<PL011State>() <= mem::size_of::<bindings::PL011State>());
-> > +
->
-> maybe use qemu_api::bindings::PL011State directly? Because bindings
-> contains native C structures/functions and their use should not be
-> encouraged, I think it's better to 'hide' bindings (not list it at the
-> beginning of the file).
+The design takes MMIO request messages off of a socket, services the
+request by calling address_space_ldq_be(), then sends a response
+message (containing the requested data) over the same
+socket.  Currently, this is all done inside the socket IOReadHandler
+callback function.
 
-Yeah, I wasn't sure what our preferred style approach is here
-regarding what we "use" and what we just directly reference
-(and the same in the other direction for mem::size_of vs
-size_of). Is there a "normal" pattern to follow here ?
+This works as long as the targeted register exists in the same QEMU
+process that received the request.  However, If the register exists in
+another QEMU process, then the call to address_space_ldq_be() results
+in another socket message being sent to that QEMU process, requesting
+the data, and then waiting (blocking) for the response message
+containing the data.  In other words, it ends up blocking inside the
+event handler and even though the QEMU process containing the target
+register was able to receive the request and send the response, the
+originator of the request is unable to receive the response until it
+eventually times out and stops blocking.  Once it times out and stops
+blocking, it does receive the response, but now it is too late.
 
-Speaking of size_of, I noticed that Rust provides both
-core::mem::size_of and std::mem::size_of, and in rust/ at
-the moment we have uses of both. What's the difference?
+Here's a summary of the stack up to where the code blocks:
 
-thanks
--- PMM
+IOReadHandler callback
+  calls address_space_ldq_be()
+    resolves to mmio read op of a remote device
+      sends request over socket and waits (blocks) for response
+
+So, I'm looking for a way to handle the work of calling
+address_space_ldq_be(), which might block when attempting to read a
+register of a remote device, without blocking inside the IOReadHandler
+callback context.
+
+I've done a lot of searches and reading about how to do this on the web
+and in the QEMU code but it's still not really clear to me how this
+should be done in QEMU.  I've seen a lot about using coroutines to
+handle cases like this. Is that what I should be using here?
+
+Thanks,
+
+Glenn Miles
+
 
