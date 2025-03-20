@@ -4,98 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6792C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D782C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvAY7-0002Tz-I0; Thu, 20 Mar 2025 03:42:43 -0400
+	id 1tvAh2-0004hP-Hw; Thu, 20 Mar 2025 03:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAY4-0002Sz-Iw
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:42:40 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAY2-0007rU-Fo
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:42:40 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43cfa7e7f54so2329065e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 00:42:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742456557; x=1743061357; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C+b2Qw+4lRPiTxf1ZtAFqF529wv9cX65d5/a2O1oFhk=;
- b=vh0KVRyF251EWZfyQZOA1q03hyKWFIeWKMgki0WSHPIW6979qCkBDgUY1fkJ0qzNE/
- O5DhZ2TVicXWNIyM1Rx/ZDMxm/LuS6teLZVY4lTp450AxXSZeHVpHsJwcGJAJ2QOreK+
- ly9rqvE8aQq3jvGT//szBRqtyiqeLuEqAa0nSD/zt9fJeMnux4dduuKsQJ/0tuJ98XsF
- s5JXUROYeNW/oWFrN2EX4TBrtPICPzJyWD59Kst3VBEnvZlVEGLJfscy27GR7FK2h5Fd
- tT3hrObWK0oZuhtUfCv7nINmivrIH+pI4AyDBJ1WZMclWM4zDFHBdQwXrCNhrwj8kWIN
- 5/Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742456557; x=1743061357;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C+b2Qw+4lRPiTxf1ZtAFqF529wv9cX65d5/a2O1oFhk=;
- b=AJZJ/FZ89QvF7ytabXpk60So2k+AKK4wGgNYc6ekz/IAQJwEbCpW0QPqTiGgvHxZ6U
- L+l4FAv3maf4Zpm0gbniFMgdBqlyliAQQkOyAHGgvg7u/iwL0sSNQGLNpjTibUujgSum
- mvTYKy4UGiM9PEt20cKLIBcz6eqOpqyK6le9+1I2veMKBxjpQ6yWuE8fI6aux4UtFxJO
- lv9vtu5UtNF/9jPke2dwnC8D7+jGyQHUrsvqtox8pTU1Y77SmolqhzGxVH1NdghQ6p/Q
- d4PLK//zARcV1IW47F2RizHi44d2Xf2L24P56M3UNATFa8oo2lijQGKV3exfVbJVeL21
- ubGg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUI7j5Amqj2uoD/acxn/XUQD3dMCqXlaJCEPLpMIHfN+plJO8Xd/QB93HMvVUNy13Q+uP6TYOfw3+sO@nongnu.org
-X-Gm-Message-State: AOJu0YwL97ceCFep5BxKzLH1s9AJwAXdppUG9mjXfOHubt5PuUSr1+Ch
- pELgyO1Wbs++lvEpmv8vwg+0iwaYfrfSnHPfk92TBcObNcJlABvXli39WOM2vsY=
-X-Gm-Gg: ASbGncttPEnEWSJp1rHEkpq266ROtAaB8QbdbytPUur8HtfeEYBwl8rbvGoDAhfiSSm
- ClGHUHx9/o1XbRPdy/euwRVBPBmUKKu3xvAUayUO4Q4HviNibGHnTJ6R/ugZY6mi3F/3OWtb+ll
- Bdk5FF7dpP+EiJN3cOqCCZEqdDpz3F9rHsCgHm9kiXlWmMrSXaAiWPZHjyPl3fyHnc/iEngsucL
- jorja62in9nFGZN1ZSvdxDnZTce7xaWkd1a2YiyduX09ub1o0YiaohNmW3OSiJqViN1WNIW8wNA
- 8cMPX/RgJRqdCQIZ6GSmF6/mnWsEjx03fqFO9OwGbWqBTkbwb/H4mtHAFlg4HWQr4xQjKguCq+3
- humY3pZWK3gUHD0Er+zBC+IA=
-X-Google-Smtp-Source: AGHT+IHxyRBGPPPVjTCKU+7fTwYg2SB2sEUbhyXEcB+LZIa3EUHTZL6Rfr9CQxzOO7T15MK7i/lJNg==
-X-Received: by 2002:a05:600c:3b04:b0:439:8878:5029 with SMTP id
- 5b1f17b1804b1-43d4916674emr17183375e9.2.1742456556306; 
- Thu, 20 Mar 2025 00:42:36 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43fdab7asm40301195e9.29.2025.03.20.00.42.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 00:42:35 -0700 (PDT)
-Message-ID: <c9820156-501d-4312-abe7-ee976c6cc11d@linaro.org>
-Date: Thu, 20 Mar 2025 08:42:34 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tvAgy-0004gs-Rh
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:51:52 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tvAgv-0002CL-QT
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:51:52 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:4c7:0:640:d178:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1F17E60DC0;
+ Thu, 20 Mar 2025 10:51:40 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:8106::1:23] (unknown
+ [2a02:6b8:b081:8106::1:23])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 5pEix20FbCg0-VFIFAkkp; Thu, 20 Mar 2025 10:51:39 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1742457099;
+ bh=AKzaWEJdxnWO6FUam8gH7Qpa/AdaC0UrUSgn4jp2l6A=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=CVUFT6OZtbIvcDzOx4LwHouKMbO8qDr9mqZ711lM/oYslCml2CT01Wm8T+fZCub+L
+ D3mKdMoub9//t5/rKKpCoBrFYv2/79+TtB5BHAGpWIyO7VmZ4JpxsQj/Ta75kfnMfe
+ wmoQTzeAzHlgsMDoZ7/kYQidxqmbeyzmgCS/FJRk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <0fd9cd18-afd2-4fbc-9833-91e128f73529@yandex-team.ru>
+Date: Thu, 20 Mar 2025 10:51:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 23/24] hw/uefi: add MAINTAINERS entry
-To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org,
- Ard Biesheuvel <ardb@kernel.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, graf@amazon.com,
- Eric Blake <eblake@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250225163031.1409078-1-kraxel@redhat.com>
- <20250225163031.1409078-24-kraxel@redhat.com>
+Subject: Re: [PATCH v2 1/2] util/qemu-sockets: Add support for keep-alive flag
+ to passive sockets
+To: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250319163638.456417-1-jmarcin@redhat.com>
+ <20250319163638.456417-2-jmarcin@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250225163031.1409078-24-kraxel@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250319163638.456417-2-jmarcin@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,28 +80,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/2/25 17:30, Gerd Hoffmann wrote:
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->   MAINTAINERS | 6 ++++++
->   1 file changed, 6 insertions(+)
+On 19.03.25 19:36, Juraj Marcin wrote:
+> From: Juraj Marcin<jmarcin@redhat.com>
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1911949526ce..451fc33306dc 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2807,6 +2807,12 @@ F: hw/misc/ivshmem-flat.c
->   F: include/hw/misc/ivshmem-flat.h
->   F: docs/system/devices/ivshmem-flat.rst
->   
-> +UEFI variable service
-> +M: Gerd Hoffmann <kraxel@redhat.com>
-> +S: Maintained
-> +F: hw/uefi/
-> +F: include/hw/uefi/
+> Commit aec21d3175 (qapi: Add InetSocketAddress member keep-alive)
+> introduces the keep-alive flag, which enables the SO_KEEPALIVE socket
+> option, but only on client-side sockets. However, this option is also
+> useful for server-side sockets, so they can check if a client is still
+> reachable or drop the connection otherwise.
+> 
+> This patch enables the SO_KEEPALIVE socket option on passive server-side
+> sockets if the keep-alive flag is enabled. This socket option is then
+> inherited by active server-side sockets communicating with connected
+> clients.
+> 
+> This patch also fixes an issue in 'qio_dns_resolver_lookup_sync_inet()'
+> where the keep-alive flag is not copied together with other attributes.
+> 
+> Signed-off-by: Juraj Marcin<jmarcin@redhat.com>
 
-Ah, maybe add as last patch including docs/devel/uefi-vars.rst
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+-- 
+Best regards,
+Vladimir
 
 
