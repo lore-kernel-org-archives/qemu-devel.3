@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E976C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 19:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5CF6C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 19:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvLQa-0000Of-SL; Thu, 20 Mar 2025 15:19:40 -0400
+	id 1tvLSN-0001rl-8K; Thu, 20 Mar 2025 15:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvLQG-0000L1-U4
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:19:21 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tvLSB-0001p0-O7
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:21:19 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvLQE-0000Bc-P2
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:19:20 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-224100e9a5cso23569325ad.2
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 12:19:18 -0700 (PDT)
+ id 1tvLS9-0001H9-N6
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:21:19 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-22435603572so23335745ad.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 12:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742498357; x=1743103157; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1742498475; x=1743103275; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tq5F+LFSz7I94wi2CXsI0zOfb8GaJ/jWhQMTyC+MdfY=;
- b=O9BhWGpQr8Zn9TNXhJlxk3rutFMSRSvyLZiZX0ZcimTl1f1wocjFx8az+ODpYZuK0W
- eGFzwynqF/9u600OVRe3WzrzSXjMWWP3ypzxYrSv97SCEfyYh+VfGg12tHDSqGB4LQTO
- I8QX41Ue+sskoVJTUZtvMEznRB9O156L6fES/dl9ZXeOIfCyEChcExNdUx0e3SW8Dimz
- SXMiYpnslqM0BNgcDwziHQ+41Kwv8h89Zba2/kS/LG1zGFP/8C26V7pkw67w0efzy2ny
- XigRSM/NEMYq5062qhegUj+Fe1/gJumlRQRuutI2RKDP7pQL9Y8P6HO+HicMChArDyq9
- 191Q==
+ bh=pOM5Xkw545JAWnMRrgGXXSKNbbIwUj6L8/LN67jxtfA=;
+ b=YuU1vW3lYhc8gDdLVzLLKdDnGvHPQQRzeiQOtVuVG3yhFOwxgE2WtdS2r66k9SAp5N
+ OoPmCcRxPREqnjnBclc5vtJw6v+L19UriAcHMAQWm4bWULMzpo98RPPu+3LSem5B91yd
+ xWNHhqPmucdmOweEruGqXziVXtywRoQkXYq3u+Lg4XDkj0AT+/VT1P5XNe8vpcnQSOqa
+ Z6k85iUScBbwqAP+D4h0m66P6n2vblto8s8Za/xKJbQrLRSu2dDvjrQwBxW8gvknmLuj
+ IMtajG0FN7woul01Nb72GdPT3T+iJQ5bMnwMY/r4CaqkvgH4gFSn2KVDaepV0ZErX7hu
+ q0Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742498357; x=1743103157;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1742498475; x=1743103275;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tq5F+LFSz7I94wi2CXsI0zOfb8GaJ/jWhQMTyC+MdfY=;
- b=K5BXVJ/sI0q6xj5ZG67RUGtoxxH9eQddkUCwcz3Ho97O8TcrIYef319JPa/13HNrOo
- xToPwgJExNA7YyPayfh3EAcYP/kRTfULh+0ICt1+uanewuzAUMnHhMDbRUFj/a1Vo6bI
- ag9OQdXYkhmmOnH5Cj39uo+HaimRWja5dNGYQPsA7ELpDM4pGc6LomBScVqqR8r8Opu6
- qMmUWtkvI6hmvccGbHDIN+BOdM23ZKLrcQssc+rE6x4VtbDPqeDbx69pB8dzERIdeTnw
- ORPGNCYS/z+gc7QVkojEtLDWBnbJv8DrfLaKolz71BuUxJyCZumgxy27/Sa0F66OVPVR
- TgEw==
+ bh=pOM5Xkw545JAWnMRrgGXXSKNbbIwUj6L8/LN67jxtfA=;
+ b=ORq1/dbqvLc/L+xUfACnU0CgAAC+6oxRjDuZO2jskDRs3mb2RQ+0J/rrFg+R49bXNK
+ gvFW7HtqEIAdkJxRPVInuFSjBTEVdjju/tNV1CcFuIAvxBhg6Hyv+xD80WNBlKdD8cKL
+ fBzPGGKRWt1weGyGU8P/Ffw1CgSftOigVUA+bSUO/byAOAs3Ik4PAQ/DV9QPJYoBy2yQ
+ zln7qgaTML9j2u5l97omM2O4lc/7EV6sHlzE+c1Av6Lv++NCT2smlFwM+QgXkFTTULB4
+ Skit92p1v0bVjGECaavymExiW6RkeEg9wgKjH87+WT6ynUYoglheajNhynWvfjRT8YUI
+ P2hw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgInbDeJ9F23vlOcjprypOWRtwatR5xI0pg3PVCmeXu66zgE/ywVWUB0RqO/lYsjhNibbzA2UMWTd8@nongnu.org
-X-Gm-Message-State: AOJu0YyDWHG3rrDK3U6gmiSawL694V30UkjH0tPpBhFc9cTNB/ATjbcZ
- Ke78iLkSIKx5putrY9HkRg4uSRA1W2c2nCp8GzsszxhveXIE5bWCGA5usDdZFro=
-X-Gm-Gg: ASbGncvAODOfIkWFPcF1B6VzginNZTvmJjf3cVQUTd1aFDChz9FlLKRyszkZyQ4JqpJ
- 7AxVpji6DTiPwk/wadTTn3gZz7Q7oLtYNk1oCl25+hG97DyavXhwfhRwz8ZVjZL7zHvtV2NLjPN
- Tk4FRASebKYskxYQbHg/V6hHs2XAVcR1KxQLnCgYsocLiSLYoIJsNxcAIzk0WA3MUlmBEMxt2F5
- MpnPLYnDrvTUxWGwXk0kQeRVIMgQndkvHPqrcFd8CFsAShtzGp1YkJSGr6QDcIlXKnRM+BqGOl2
- CcSvkR+IP/ded01Wf0ZOmXeS4MNEQIA5cJKrvvzZoljXE8ZyetB4Zxpzgw==
-X-Google-Smtp-Source: AGHT+IHnxwSgcecrpXyfAh4nU3RDQ5gC7c6RX8ocuRb2dcZ8am6818rs0+JuCbrRatAoRrsb5qQzlA==
-X-Received: by 2002:a17:902:ebc6:b0:223:39ae:a98 with SMTP id
- d9443c01a7336-22780d825c4mr10603855ad.22.1742498356861; 
- Thu, 20 Mar 2025 12:19:16 -0700 (PDT)
+ AJvYcCWuR5WM9kUFPvwnrKFJTB2BweTW9HvqDzhNvP+PD9UzY1P6QRnU8b1YCSB+53ttU/MfLhlAJxR8PKuB@nongnu.org
+X-Gm-Message-State: AOJu0Yz/etoWG9+iW87vF/qA0mZ12NM7dgqJEDD9NoMJ5OFLXR16bVYO
+ kCU/o0SsKjr6AKXfg4cUauFQ9ezgOQoDiklNbxl7OJ2lZCQu8J0MYO81BIQnRh4=
+X-Gm-Gg: ASbGncuM0izeOdwsz0I9CqAO5w0t5Mi7OORfbCocsjztEcZY+SOFigow/DVnK+kMgja
+ fSH1rj6TZqg6MH5hxyUgONAZg3mwIdNLnxwG5VlYzBi5hYQCwE6eapO3uiiI2iIVuAVBDNPwuqJ
+ MoHOdcfWVDdTlK1mSKHgQfsv3MS+YWncPrMoYCn9WQC2y+GnvJMQsFh1NNk1++piOq6eEqVBfSC
+ vEfN+l+KZn9I7vmmskGVdX5l4NOJp/4Z3pY66+8FT1NSIZWdUc3irxabqhZRvnLNC1KtHo/6oHW
+ CjBwJVISmf14tCTWkGpghIGDHkpqUrDI1/H++rPEI8P0IgU8Fx+gIO7paQ==
+X-Google-Smtp-Source: AGHT+IEu3Ds+SH5scvW981F75tymFZcejGEfd1Hopfregraz7tsKpcxpHTcR+LZjzhBgR1Ka+PlxHA==
+X-Received: by 2002:a05:6a21:7a90:b0:1f5:902e:1e97 with SMTP id
+ adf61e73a8af0-1fe4331934bmr988991637.41.1742498474892; 
+ Thu, 20 Mar 2025 12:21:14 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-227811f45a7sm1512305ad.223.2025.03.20.12.19.16
+ d2e1a72fcca58-73905fd5531sm187029b3a.43.2025.03.20.12.21.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 12:19:16 -0700 (PDT)
-Message-ID: <79b3715b-c8e8-4fa9-8bb9-d675a56be7d0@linaro.org>
-Date: Thu, 20 Mar 2025 12:19:15 -0700
+ Thu, 20 Mar 2025 12:21:14 -0700 (PDT)
+Message-ID: <84b1ace1-e2e4-43be-b398-a397b3303bb7@linaro.org>
+Date: Thu, 20 Mar 2025 12:21:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] rust: assertions: add static_assert
 Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 References: <20250320115521.808019-1-pbonzini@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250320115521.808019-1-pbonzini@redhat.com>
+ <79b3715b-c8e8-4fa9-8bb9-d675a56be7d0@linaro.org>
+In-Reply-To: <79b3715b-c8e8-4fa9-8bb9-d675a56be7d0@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,54 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/20/25 04:55, Paolo Bonzini wrote:
-> Add a new assertion that is similar to "const { assert!(...) }" but can be used
-> outside functions and with older versions of Rust.  A similar macro is found in
-> Linux, whereas the "static_assertions" crate has a const_assert macro that
-> produces worse error messages.
+On 3/20/25 12:19, Pierrick Bouvier wrote:
+> On 3/20/25 04:55, Paolo Bonzini wrote:
+>> Add a new assertion that is similar to "const { assert!(...) }" but can be used
+>> outside functions and with older versions of Rust.  A similar macro is found in
+>> Linux, whereas the "static_assertions" crate has a const_assert macro that
+>> produces worse error messages.
+>>
+>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>> Supersedes: <20250320113356.799412-1-pbonzini@redhat.com>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>    rust/qemu-api/src/assertions.rs | 22 ++++++++++++++++++++++
+>>    1 file changed, 22 insertions(+)
+>>
+>> diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
+>> index 104dec39774..bba38cfda11 100644
+>> --- a/rust/qemu-api/src/assertions.rs
+>> +++ b/rust/qemu-api/src/assertions.rs
+>> @@ -120,3 +120,25 @@ macro_rules! assert_match {
+>>            );
+>>        };
+>>    }
+>> +
+>> +/// Assert at compile time that an expression is true.  This is similar
+>> +/// to `const { assert!(...); }` but it works outside functions, as well as
+>> +/// on versions of Rust before 1.79.
+>> +///
+>> +/// # Examples
+>> +///
+>> +/// ```
+>> +/// # use qemu_api::static_assert;
+>> +/// static_assert!("abc".len() == 3);
+>> +/// ```
+>> +///
+>> +/// ```compile_fail
+>> +/// # use qemu_api::static_assert;
+>> +/// static_assert!("abc".len() == 2); // does not compile
+>> +/// ```
+>> +#[macro_export]
+>> +macro_rules! static_assert {
+>> +    ($x:expr) => {
+>> +        const _: () = assert!($x);
+>> +    };
+>> +}
 > 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Supersedes: <20250320113356.799412-1-pbonzini@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   rust/qemu-api/src/assertions.rs | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
+> How about using something already done, and exhaustive for this?
+> https://docs.rs/static_assertions/latest/static_assertions/
 > 
-> diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
-> index 104dec39774..bba38cfda11 100644
-> --- a/rust/qemu-api/src/assertions.rs
-> +++ b/rust/qemu-api/src/assertions.rs
-> @@ -120,3 +120,25 @@ macro_rules! assert_match {
->           );
->       };
->   }
-> +
-> +/// Assert at compile time that an expression is true.  This is similar
-> +/// to `const { assert!(...); }` but it works outside functions, as well as
-> +/// on versions of Rust before 1.79.
-> +///
-> +/// # Examples
-> +///
-> +/// ```
-> +/// # use qemu_api::static_assert;
-> +/// static_assert!("abc".len() == 3);
-> +/// ```
-> +///
-> +/// ```compile_fail
-> +/// # use qemu_api::static_assert;
-> +/// static_assert!("abc".len() == 2); // does not compile
-> +/// ```
-> +#[macro_export]
-> +macro_rules! static_assert {
-> +    ($x:expr) => {
-> +        const _: () = assert!($x);
-> +    };
-> +}
+> It provides a lot of convenient asserts related to types, traits, and
+> configs, which will probably end up being introduced in QEMU Rust at
+> some point.
 
-How about using something already done, and exhaustive for this?
-https://docs.rs/static_assertions/latest/static_assertions/
-
-It provides a lot of convenient asserts related to types, traits, and 
-configs, which will probably end up being introduced in QEMU Rust at 
-some point.
+Just saw it was mentioned "don't like this crate because of error 
+messages". Well...
 
