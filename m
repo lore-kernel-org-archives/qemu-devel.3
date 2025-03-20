@@ -4,88 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE560C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 08:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F59C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 08:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvBQr-0008Ea-Ga; Thu, 20 Mar 2025 04:39:17 -0400
+	id 1tvBc0-0002VJ-37; Thu, 20 Mar 2025 04:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tvBQp-0008EM-Dy
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 04:39:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tvBQm-0008Nh-TN
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 04:39:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742459951;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kawN8ff0naJMwttcxnyWTAaAivkiN3nTKEWRsU0RLs8=;
- b=LUmLGJ8iq7xjwXFE0JckFgkn3NZ2YcXznEn9URoOzoV1Ji+nahtbPaRw+v/pe0doexH5i0
- LMGRNhb6WplnbpjG/Z71XvvGr51MCAnW/GcUJmRSjezAVvdWOWcGCwHBxB0Z9ggUOyQR/A
- GXgLDPxSO3Cu8To+9oWzxkgd7mi5bTc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-WW8X1qZ_O12dZll8RZRekQ-1; Thu, 20 Mar 2025 04:39:09 -0400
-X-MC-Unique: WW8X1qZ_O12dZll8RZRekQ-1
-X-Mimecast-MFC-AGG-ID: WW8X1qZ_O12dZll8RZRekQ_1742459948
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-438e4e9a53fso2545915e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 01:39:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742459947; x=1743064747;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kawN8ff0naJMwttcxnyWTAaAivkiN3nTKEWRsU0RLs8=;
- b=b+vvwC6AGMJCV3PZDCaIYy+MaXHNmsxRFspm9Hw66NtPbWdlmZn7VN2JwH+IFhVfPQ
- VvVCAEP0UIXq/UncYzuim4YYXWcaVEai3tdGbABcu5gqySD6fcMcpf+1bVKy55vpBDI2
- FimHy0hyGbUezs67QV+dO5zrMiVgbnHd2YXe8HRFYousBvg2LcvTuCwthwOP2JWU5X9R
- LwgSWac8EfBck/cR4FyVJqlsKzafymlRAInf+cMUSvx3fsY56uz7UDk9/02anpyAjvfg
- HsB0AZ0DBeRbTUxfJqVegHOXXABGFxe8EX4Fst2eY3wNRLm4ATnQHLD/kmMUKz5jOMv6
- egMQ==
-X-Gm-Message-State: AOJu0YwNbmnpbqSO2LzsJXWEPfUtvveiQ9E4IuyZs9oWgbz86bGIDAZ1
- xNc6cvawcGgzc3qY2qwhOtWKM+aYVP53Ro/8o0WKNKnQ3VGTHus84rVaiPMGPXV03cANi4x/ZVK
- JigRGTsCSdYNq+/nCEwxIhGLinYvTU0OttjBjMAF7HSPHk+Xri11QtchWJrHhSNlveGL4wpPAqa
- CyyUdKmjdMgFr0Ymx4TkNSy4btByyLlZpNWo0=
-X-Gm-Gg: ASbGncsx9H4g3AkvXEd87KTmqAc9eOR30gFX8xysF1+w1uC4HhrLhRzS7QaDf07irO0
- 9V95uCeIC9ZdYv4B4CMvFy3jbXYyF8hnP0FjX+o2BXVnsfY999BIV+2lC3+OXu21cf8qvZTzdin
- g=
-X-Received: by 2002:a05:6000:188b:b0:390:f9d0:5df with SMTP id
- ffacd0b85a97d-39973b070e6mr5494027f8f.52.1742459947531; 
- Thu, 20 Mar 2025 01:39:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHR8wdJMTb+G82qchZ4T8RrSWsRpQE2XnP7C4Q6dEfkjIO+x0rCbblySGD+ogs/MFEHib5an/Tl8B5J2WC6wp8=
-X-Received: by 2002:a05:6000:188b:b0:390:f9d0:5df with SMTP id
- ffacd0b85a97d-39973b070e6mr5494007f8f.52.1742459947092; Thu, 20 Mar 2025
- 01:39:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tvBbx-0002V5-Vn
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 04:50:45 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tvBbu-0003T0-Vc
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 04:50:45 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Axjmvb1ttnRT2eAA--.4462S3;
+ Thu, 20 Mar 2025 16:50:35 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCx_cbY1ttnuGhVAA--.54058S3;
+ Thu, 20 Mar 2025 16:50:35 +0800 (CST)
+Subject: Re: [PATCH 1/1] target/loongarch: fix bad shift in check_ps()
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org
+Cc: richard.henderson@linaro.org, stefanha@gmail.com
+References: <20250319014115.431439-1-gaosong@loongson.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <82e4b822-90b0-cbde-87ce-a971232bef75@loongson.cn>
+Date: Thu, 20 Mar 2025 16:49:53 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
- <20250311155932.1472092-11-marcandre.lureau@redhat.com>
-In-Reply-To: <20250311155932.1472092-11-marcandre.lureau@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 20 Mar 2025 14:08:50 +0530
-X-Gm-Features: AQ5f1JquoufF5wDxzd3RF6uN1byu0B-AiamQIIpDICV8UVYWVRoib3IOmJ1ZiSs
-Message-ID: <CAE8KmOwiL+GNf3d_4W5Womh33UUP1oM7a6tQstDra6v=4rLTnQ@mail.gmail.com>
-Subject: Re: [PATCH for-10.1 10/10] ui/vdagent: remove migration blocker
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <20250319014115.431439-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCx_cbY1ttnuGhVAA--.54058S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7XryUCrW3Cw13WF47tF45twc_yoW8Jr13pr
+ y7CryUKFWrKrZrAa4IgayYqFnrZr1xCw40va1ft34rAws8Xr1IvrZYqw4qvF18tay5WayI
+ qF4Iyw15ZFW7XacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
+ 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU82-e7UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -54
+X-Spam_score: -5.5
+X-Spam_bar: -----
+X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.598,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,15 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Mar 2025 at 21:44, <marcandre.lureau@redhat.com> wrote:
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Fixes: https://issues.redhat.com/browse/RHEL-81894
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-* No commit message? Same for patch 09/10.
 
----
-  - Prasad
+On 2025/3/19 上午9:41, Song Gao wrote:
+>   In expression 1ULL << tlb_ps, left shifting by more than 63 bits has undefined behavior.
+> The shift amount, tlb_ps, is as much as 64. check "tlb_ps >=64" to fix.
+> 
+> Resolves: Coverity CID 1593475
+> 
+> Fixes: d882c284a3 ("target/loongarch: check tlb_ps")
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/tcg/tlb_helper.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 646dbf59de..e960adad4d 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -21,10 +21,10 @@
+>   
+>   bool check_ps(CPULoongArchState *env, int tlb_ps)
+>   {
+> -     if (tlb_ps > 64) {
+> -         return false;
+> -     }
+> -     return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
+> +    if (tlb_ps >= 64) {
+> +        return false;
+> +    }
+Do we need check (tlb_ps < 0) || (tlb_ps >= 64)? or define parameter 
+tlb_ps as uint type.
+
+Regards
+Bibo Mao
+> +    return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
+>   }
+>   
+>   void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> 
 
 
