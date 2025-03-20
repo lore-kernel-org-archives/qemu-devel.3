@@ -4,106 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9337DC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 19:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40483C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 19:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvLo1-0003tX-Db; Thu, 20 Mar 2025 15:43:54 -0400
+	id 1tvLp6-0005Xy-SC; Thu, 20 Mar 2025 15:45:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvLn2-00035R-GC
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:42:55 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tvLp4-0005XZ-OF
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:44:58 -0400
+Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvLn0-0008Gr-OJ
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:42:52 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-224191d92e4so24774645ad.3
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 12:42:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1tvLp0-0000hy-4x
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 15:44:58 -0400
+Received: by mail-qk1-x72f.google.com with SMTP id
+ af79cd13be357-7c2303a56d6so144144085a.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 12:44:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742499769; x=1743104569; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=G0AEfQRk1HyxDN1rNugcfjkcXy9GNLJe54yuEZAkHSg=;
- b=yoNNgsRe2kdVc7itLqJDy5FFCJFwIcqftNP6Ik+BGY6lyaYoZjFkRu8990gje0G50+
- iJD6EyZTQzD24slVxbxje9ZWFICIl5DPtlF9paVtyMYF8SC1bgbGfNa8WfYIBCyjQpBL
- MeYXCF5ffCAEH2QM9Srk8nq2JnRoC3IXMNQRIg4R4e+fDsihG0nqz+sIXc0wL0E8He5D
- L161mgKiPVFgToCtzwiJbRk3KmHWIVEW0BlIo5e/8uzH4dAcRp2SOHd5ZtNfAbXr6KWb
- QgnaU1N5/z+ugcTaq3kTo2PoVU4tzXdjPA4H9r6MzN561DE8XoBhhg+JxnWKRPOCqy1M
- XduQ==
+ d=gmail.com; s=20230601; t=1742499893; x=1743104693; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gpl8VqK2KQgoYukpGs0vpXGXGjbO8JAQg9pdDjx3Puw=;
+ b=BF4nA1rljYvGiR15W/ySZRqMAebSt/Lw8A0G793wp9gW67A7nJXw6p4vndk+h2SWM2
+ 91Z/0NBCU9tK9MqjV8saTFqkIfR4GMlB7oX/D/Bk75nFeX1XuR8LWUHfBcJVQuuZkpCp
+ yBlg8Jbo1YTBlIwnmmM3Gz7NiH1xBF2nIVFYqvqbTkzV4vHp1qmk80YgJx2miqz9PdTu
+ mjSISp1BQtwKEBBizyV2TaHv+VE3WHYEn2KoqJNJmGwRzMFot4AbJQF0UVV7H+xzIcvE
+ pCmkJKxdmTytLgYbFFc8I5sBjuFYa0KGi/XE3SQU5o7tZTjvyEFx0LrpJ35T9MjYO2B4
+ mobQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742499769; x=1743104569;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G0AEfQRk1HyxDN1rNugcfjkcXy9GNLJe54yuEZAkHSg=;
- b=LRuE3bAVEcC/JimrPdxZ77Wo/qs/IO5Hw1Iw4K2KHSf5I174M9oHG/w+uh9RMIuZak
- UEoLf2J/G8WB0C40vOQG1ZD8Wbt9ukgfo53iPiD9o/gL5noFdSRxyvSTgFanZmWBnGmQ
- i0BNk/JYfw6zUHbekWWS+5lwUgHZ6UVnTlZ0nxrfRDD1tObIeCDyCE3pVwbopeuO2cwe
- 0YcdZdDuQxYTAcQQ88Mzc9wS1rnyLBIopVzoWsuJz4vXR98+C/7YJrgo8JKvyg7f+oWI
- bnD8N9m9vw7MZuNFT5MtMq1ai4FB43Im1y+9xdZ8E6SBy1ks9oLocFn3U2Z7w71XCcI+
- /Tmw==
+ d=1e100.net; s=20230601; t=1742499893; x=1743104693;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gpl8VqK2KQgoYukpGs0vpXGXGjbO8JAQg9pdDjx3Puw=;
+ b=XKEH8RLpXpr7VJtj3J2h2/YTP31Nh4n/5TBzM/2fwrPYDRO35krXf5qAMacjZGzJ1w
+ 0sgychf9B4rqUeS50mMTSnjmSkLW1XLk1mHfSjpWHs+QorhRlQX8JcnFP+ZecrSqTENQ
+ fYR8ohR+Is4kF+Mvrn+/2BlqoZN0vbjcgJ8Qg3LXx5zHo1e8kEYngoOQupRZwEI6Obc8
+ 5V+wszfG2LEkSbuF55zYXooJNSeULMmZqD1TL7YF4g4cWXrBoG3Co5q0i0FrPu7NaC6+
+ /8PAmR6M9DttjDrGN23yWVrKevDTXreQokbso2GL3EotQzIK+XfUffvI0trZyHfDvtCA
+ SClw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwa1YeCS0MofY3aNjp11PrH+OeulYkKfnT66lEw+kmiwVWS0Evrw/Qh6Qs8Io0iBr2FnWdq14QZcMw@nongnu.org
-X-Gm-Message-State: AOJu0YwN3iQYjblL7hXz7ziI+SBVa0kVwNQ3+GONcY0XJ/fuvgsKp0NB
- MXI6aewqmv1A7ZJ6BckEDtvccrSJtFJVt4kwoFnUXP//lNS2BRA85bSSs7ABVIM=
-X-Gm-Gg: ASbGncsnjkSAuJQcnqtKLM9LPYaaH6XJobsL8GpgLWg/wOW0xBZBQYLS65s3ed4jLu7
- Bm/1HoyYcvrUpkB2JHvs3ehQ5p+ONr8247ur8b/Vva91gJCQgK4ObPWFgxzvs3qbaN7uCw0KLsK
- mbPB0Xy+PSXhHMpTIe7kgJeVihkqqfv/wfb34bmTp165VoTHq80PJq7hP7JFyuLaPkBIx8udtWE
- 366GdBkIWyyzypIfixbNuSCGt8y3YATfrWDgI+t1I5hEeF/u/6aYSq73V5r190DEQ8biAshKScq
- OOTSf3zyJ7Uhhvfpur08tuQ4+JTb9sHgZRYdhLWETIUsHdX4kO+Idxlebw==
-X-Google-Smtp-Source: AGHT+IFgJCbMzTGbeWoMX//toeZsQ5JHXO+vw5ladHiYw8vEcgutw76JIuyJHKEsluDQEpheraunHA==
-X-Received: by 2002:a05:6a21:9185:b0:1f5:6e00:14c4 with SMTP id
- adf61e73a8af0-1fe43477c1cmr948910637.42.1742499769410; 
- Thu, 20 Mar 2025 12:42:49 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ AJvYcCWaTGhAZpV1RFfD9NF95xXpP2jka60mghPVUnEJfWKgkyCdPKYqWF6f5SQL9FOyWt5/at0dNlAiYfKV@nongnu.org
+X-Gm-Message-State: AOJu0YyzmZfbozN5d8jIHO2GntFxJ7o+SObOShENGKELXz5IuNpMPx6y
+ cz21aBmXnTY/DsDsCtD8OG8QteottNybIR4OUy7vQ4rJZ7Flm6X2
+X-Gm-Gg: ASbGncsMV0e4/P/Zdl7LcyfxVhfX4sOytJxe57s9gqKy19GGhevS9kXw53dtzQjKPTO
+ 9TZJk1d9d7xzcY/h/Q4oY0HVEQEZFC8nfwtNUfajsiqmuLXfEvw21UmdAbaQh7jjSniEuJN2+8s
+ 3Tfy/S7l3Jujw2JHfk6+WlW3jHh7FnCNCCr38eVW1cC1FzxSwW4h069mYxeT4BYuqFPZzyVnUSN
+ UVJAsvKa/Qo+zi07lnjRNz0nWu6rBsK5daPkGGjS1QYvosH18tSa4m3NMr0gWbnNWcGy91VABjJ
+ tftHHRjwKBhA9tRf1b5eaijLHJ1V0kR1ALp9kboymLjntIvYb6LJ1xlPxY7mAZk=
+X-Google-Smtp-Source: AGHT+IGSMtuO3P+9Hkop0A4VL9XWuXOFC+3bUbbAKMaaEiFORKX90KLOzKSYyoLokatKEZ4JYGNXtA==
+X-Received: by 2002:a05:620a:269b:b0:7c5:96b4:f5e5 with SMTP id
+ af79cd13be357-7c5ba16239fmr61466085a.13.1742499892922; 
+ Thu, 20 Mar 2025 12:44:52 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2603:6000:a500:306:7462:60e4:5895:7c5f])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73905fd6557sm217847b3a.64.2025.03.20.12.42.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 12:42:49 -0700 (PDT)
-Message-ID: <44b007cc-f7ea-4191-a911-c5c3984df99a@linaro.org>
-Date: Thu, 20 Mar 2025 12:42:48 -0700
+ af79cd13be357-7c5b9347bd1sm25610485a.70.2025.03.20.12.44.51
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 20 Mar 2025 12:44:52 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
+ "'Brian Cain'" <bcain@quicinc.com>
+References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
+ <20250301052845.1012069-23-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301052845.1012069-23-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 22/39] target/hexagon: Implement setprio, resched
+Date: Thu, 20 Mar 2025 14:44:51 -0500
+Message-ID: <03a101db99d0$8c67c5e0$a53751a0$@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] target/ppc: make ppc_maybe_bswap_register static
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
- qemu-ppc@nongnu.org, David Gibson <david@gibson.dropbear.id.au>,
- qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
- Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Nicholas Piggin <npiggin@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <20250319182255.3096731-7-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250319182255.3096731-7-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIWUu77rEigiK0ljjjo9ZdCZqs5mQH8eWrXsvcQspA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250320-10, 3/20/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qk1-x72f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,32 +112,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xOS8yNSAxMToyMiwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBJdCdzIG5vdCB1c2Vk
-IG91dHNpZGUgb2YgdGhlIGdkYnN0dWIgY29kZS4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IEFs
-ZXggQmVubsOpZSA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICAgdGFyZ2V0
-L3BwYy9jcHUuaCAgICAgfCAxIC0NCj4gICB0YXJnZXQvcHBjL2dkYnN0dWIuYyB8IDIgKy0N
-Cj4gICAyIGZpbGVzIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAyIGRlbGV0aW9ucygtKQ0K
-PiANCj4gZGlmZiAtLWdpdCBhL3RhcmdldC9wcGMvY3B1LmggYi90YXJnZXQvcHBjL2NwdS5o
-DQo+IGluZGV4IDFlODMzYWRlMDQuLjk1MGJiNmUwNmMgMTAwNjQ0DQo+IC0tLSBhL3Rhcmdl
-dC9wcGMvY3B1LmgNCj4gKysrIGIvdGFyZ2V0L3BwYy9jcHUuaA0KPiBAQCAtMzAxNiw3ICsz
-MDE2LDYgQEAgc3RhdGljIGlubGluZSBib29sIHBwY19pbnRlcnJ1cHRzX2xpdHRsZV9lbmRp
-YW4oUG93ZXJQQ0NQVSAqY3B1LCBib29sIGh2KQ0KPiAgIA0KPiAgIHZvaWQgZHVtcF9tbXUo
-Q1BVUFBDU3RhdGUgKmVudik7DQo+ICAgDQo+IC12b2lkIHBwY19tYXliZV9ic3dhcF9yZWdp
-c3RlcihDUFVQUENTdGF0ZSAqZW52LCB1aW50OF90ICptZW1fYnVmLCBpbnQgbGVuKTsNCj4g
-ICB2b2lkIHBwY19zdG9yZV92c2NyKENQVVBQQ1N0YXRlICplbnYsIHVpbnQzMl90IHZzY3Ip
-Ow0KPiAgIHVpbnQzMl90IHBwY19nZXRfdnNjcihDUFVQUENTdGF0ZSAqZW52KTsNCj4gICB2
-b2lkIHBwY19zZXRfY3IoQ1BVUFBDU3RhdGUgKmVudiwgdWludDY0X3QgY3IpOw0KPiBkaWZm
-IC0tZ2l0IGEvdGFyZ2V0L3BwYy9nZGJzdHViLmMgYi90YXJnZXQvcHBjL2dkYnN0dWIuYw0K
-PiBpbmRleCAzYjI4ZDRlMjFjLi5jMDllOTNhYmFmIDEwMDY0NA0KPiAtLS0gYS90YXJnZXQv
-cHBjL2dkYnN0dWIuYw0KPiArKysgYi90YXJnZXQvcHBjL2dkYnN0dWIuYw0KPiBAQCAtODEs
-NyArODEsNyBAQCBzdGF0aWMgaW50IHBwY19nZGJfcmVnaXN0ZXJfbGVuKGludCBuKQ0KPiAg
-ICAqIFRBUkdFVF9CSUdfRU5ESUFOIGlzIGFsd2F5cyBzZXQsIGFuZCB3ZSBtdXN0IGNoZWNr
-IHRoZSBjdXJyZW50DQo+ICAgICogbW9kZSBvZiB0aGUgY2hpcCB0byBzZWUgaWYgd2UncmUg
-cnVubmluZyBpbiBsaXR0bGUtZW5kaWFuLg0KPiAgICAqLw0KPiAtdm9pZCBwcGNfbWF5YmVf
-YnN3YXBfcmVnaXN0ZXIoQ1BVUFBDU3RhdGUgKmVudiwgdWludDhfdCAqbWVtX2J1ZiwgaW50
-IGxlbikNCj4gK3N0YXRpYyB2b2lkIHBwY19tYXliZV9ic3dhcF9yZWdpc3RlcihDUFVQUENT
-dGF0ZSAqZW52LCB1aW50OF90ICptZW1fYnVmLCBpbnQgbGVuKQ0KPiAgIHsNCj4gICAjaWZu
-ZGVmIENPTkZJR19VU0VSX09OTFkNCj4gICAgICAgaWYgKCFGSUVMRF9FWDY0KGVudi0+bXNy
-LCBNU1IsIExFKSkgew0KDQpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJp
-Y2suYm91dmllckBsaW5hcm8ub3JnPg0KDQo=
+
+
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Friday, February 28, 2025 11:28 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
+> Subject: [PATCH 22/39] target/hexagon: Implement setprio, resched
+>=20
+> From: Brian Cain <bcain@quicinc.com>
+>=20
+> The hardware-assisted scheduler helps manage tasks on the run queue =
+and
+> interrupt steering.
+>=20
+> This instruction is defined in the Qualcomm Hexagon V71 Programmer's
+> Reference Manual - https://docs.qualcomm.com/bundle/publicresource/80-
+> N2040-51_REV_AB_Hexagon_V71_ProgrammerS_Reference_Manual.pdf
+> See =C2=A711.9.2 SYSTEM MONITOR.
+
+See earlier discussion on references to documents.
+
+>=20
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/op_helper.c | 65
+> ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 65 insertions(+)
+>=20
+> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+> index 0dce133d3a..d0dc4afac7 100644
+> --- a/target/hexagon/op_helper.c
+> +++ b/target/hexagon/op_helper.c
+> @@ -1465,6 +1465,57 @@ void HELPER(stop)(CPUHexagonState *env)
+>      hexagon_stop_thread(env);
+>  }
+>=20
+> +static inline QEMU_ALWAYS_INLINE void resched(CPUHexagonState *env)
+> {
+> +    uint32_t schedcfg;
+> +    uint32_t schedcfg_en;
+> +    int int_number;
+> +    CPUState *cs;
+> +    uint32_t lowest_th_prio =3D 0; /* 0 is highest prio */
+> +    uint32_t bestwait_reg;
+> +    uint32_t best_prio;
+> +
+> +    BQL_LOCK_GUARD();
+> +    qemu_log_mask(CPU_LOG_INT, "%s: check resched\n", __func__);
+> +    schedcfg =3D arch_get_system_reg(env, HEX_SREG_SCHEDCFG);
+> +    schedcfg_en =3D GET_FIELD(SCHEDCFG_EN, schedcfg);
+> +    int_number =3D GET_FIELD(SCHEDCFG_INTNO, schedcfg);
+> +
+> +    if (!schedcfg_en) {
+> +        return;
+> +    }
+> +
+> +    CPU_FOREACH(cs) {
+> +        HexagonCPU *thread =3D HEXAGON_CPU(cs);
+> +        CPUHexagonState *thread_env =3D &(thread->env);
+> +        uint32_t th_prio =3D GET_FIELD(
+> +            STID_PRIO, arch_get_system_reg(thread_env, =
+HEX_SREG_STID));
+> +        if (!hexagon_thread_is_enabled(thread_env)) {
+> +            continue;
+> +        }
+> +
+> +        lowest_th_prio =3D (lowest_th_prio > th_prio)
+> +            ? lowest_th_prio
+> +            : th_prio;
+> +    }
+> +
+> +    bestwait_reg =3D arch_get_system_reg(env, HEX_SREG_BESTWAIT);
+> +    best_prio =3D GET_FIELD(BESTWAIT_PRIO, bestwait_reg);
+> +
+> +    /*
+> +     * If the lowest priority thread is lower priority than the
+> +     * value in the BESTWAIT register, we must raise the reschedule
+> +     * interrupt on the lowest priority thread.
+> +     */
+> +    if (lowest_th_prio > best_prio) {
+> +        qemu_log_mask(CPU_LOG_INT,
+> +                "%s: raising resched int %d, cur PC 0x" TARGET_FMT_lx =
+"\n",
+> +                __func__, int_number, arch_get_thread_reg(env, =
+HEX_REG_PC));
+> +        SET_SYSTEM_FIELD(env, HEX_SREG_BESTWAIT, BESTWAIT_PRIO,
+> 0x1ff);
+
+What is the significance of 0x1ff?  The field is 10 bits, so this isn't =
+setting all the bits.
+Should this be lowest_th_prio?
+
+> +        hex_raise_interrupts(env, 1 << int_number, =
+CPU_INTERRUPT_SWI);
+> +    }
+> +}
+> +
+
+
 
