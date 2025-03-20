@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73D2C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34472C36000
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvBqD-0006N5-1V; Thu, 20 Mar 2025 05:05:29 -0400
+	id 1tvC17-0007tp-Oi; Thu, 20 Mar 2025 05:16:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1tvBqB-0006Mv-VJ
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:05:27 -0400
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1tvBqA-0008KJ-7L
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:05:27 -0400
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-4769b16d4fbso2702801cf.2
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 02:05:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742461524; x=1743066324; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dQxqmXO0ndR9mSTUp4d7QyxDZY9EdYvjYU8Tm8AjhpY=;
- b=lTEIV6qf2vfg+plUNjkto0lI0xsQEkvzatCZlYsdynkI0/hLnuDUIEmsr5vuUvpgon
- YDL4EP7lLvG5zuuZGnkxedhtzfIeOwsK/k6Ja5cnP8xD7960eHRJCJTC2ZJNFjNJqi2k
- cpF7Bu/6wYlVCrPVPPF/mpmlvzAIDLwt1F320+6GFmg87n0JS9FN0i0KR5DHvursYUJf
- e6jneKjuby4sNYww9PpKdd7rtGQyvC8mW2qtOB6qpTScBvQX15sNweahtLwdK7Ui+cp3
- 3WzR3Il084XzaoiluuWcMuifgoVem4xatIViOyeZGQ6ccqMu4yOYXuubL74dug5oB524
- XeZw==
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1tvC14-0007tA-3R
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:16:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1tvC10-0002GZ-GT
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:16:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742462196;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=twYLt/D02dbemoVLtHjSrvb+Fz0HaNTLANTZzbqwjtQ=;
+ b=CAvfv0bBYlHmC0sXH/WBCdyPKCVLiY9j56FP48Acc+JjJNCKNrmlF6Vsh6RJB0RoA7HRf/
+ URi3esJhpa31tkKXQAsm7xgq9yL2xyrZZ8SU3HC1bGjmPKWcGKk+IDmncCOp+YJoiNqkCe
+ Q3Md9LQvo8NCXsVHIkUB9I/mxbJD7M4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-421-vtYL-fx2PF2iMYa5sK1PZw-1; Thu, 20 Mar 2025 05:15:25 -0400
+X-MC-Unique: vtYL-fx2PF2iMYa5sK1PZw-1
+X-Mimecast-MFC-AGG-ID: vtYL-fx2PF2iMYa5sK1PZw_1742462124
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac3e0c1336dso18590866b.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 02:15:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742461524; x=1743066324;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dQxqmXO0ndR9mSTUp4d7QyxDZY9EdYvjYU8Tm8AjhpY=;
- b=D7VMoGnnK7rOeM6bTSbferDDKStIo+HMVulSqalhec4D1VogjtLJp1l7gVJvpWndiI
- iJ7pAtY4hUlxAL+QtwHBMSdJoTEWyscFm8jLmZfTOLkHtWSvH4nIAaACcBQzCdnZ4yyN
- /mq8lPDJeWA/a3g4h0xRScV5aNcq/Qd6K0WRzvFGBr5P+GCb16KO1UAlOzz/RsOoxWkq
- pF24mw8tGb0HExmmgdvx02Gg7/qVp47O6+ndrbBc9mKsW+aw3nUz+m7Dje7NIpz22bF+
- FIPBP9IN1m7bCxx5KzBpICBUFtlKbsEOh8x7h9GYUucOqsHN0qkHVHVZw49P+NbPJ0vk
- KzzA==
-X-Gm-Message-State: AOJu0YyfEeEV4ojvSLYMrYeRfNU1di5yqaiTw0LIyboEQTvrhV0sMz0Z
- DV7e0qo0r/8e4bD8zH9HjynBRD1xV4IaDOR9CGqSKzZ2SVAR03ePUw63IyQgHXy1wxLAAvTztUq
- Rx2EGleYdKtC+rmdCPrLEk1JdmxN7lwdKpJw=
-X-Gm-Gg: ASbGncsETz2L66BjQS5GUtBuplVoF90alwSzATFTZvGwkhK/zD9qdI3tzRZAgXra4un
- SiHhVIlk8CSABj3/ybn6YpNmjR1zvgL4z4/EfdRmq9B1H7hJz4c6naVPPhc7ffmiU0m54BUj3G1
- 6BUkSVTKDNK+CfiiklaFoo9u1Rz9iTEWqejpClFDKIsiKf+F5KxVvYhONfAOI=
-X-Google-Smtp-Source: AGHT+IH/xzZQEE5+2kqkkEhM+BWw3zUOAWwUH9v/plH5JL+/6ZdkiKZsQEs4vSuo5AdEoTdN3Gs+VVKzEZ1+4qhp32o=
-X-Received: by 2002:a05:622a:588c:b0:476:903a:b7f1 with SMTP id
- d75a77b69052e-47710c97ec9mr51857511cf.11.1742461524240; Thu, 20 Mar 2025
- 02:05:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742462124; x=1743066924;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=twYLt/D02dbemoVLtHjSrvb+Fz0HaNTLANTZzbqwjtQ=;
+ b=RRalfUQ/sdfemEHPK+cqtxlJ3pV1ntzpDYNNW4/mxxK6Jj/jaYx9GbL6rfIWDm5xyg
+ 2KLeagZl12Aw5vPOjbXIAbpLwwfYBWkgmZxtG/IdUscWlpUSGHZLgppKMw7adFMG/kK0
+ 97UGGT1/Ji6T1nkbD8Jj5R2q9QVIYgArHsZWIVpJpv2S6Jqui/22no3J4dKehvATUeW0
+ iqLk/Qg+y1SV5uPhvp8qhk/c9UHm2ITmlZ4oF7GTYba4UJPW0YQrjZVOgqYxLQGfnLA+
+ BKKG5vxwFCtBnQQK9ZTwp/JXhVQKXuwJzR+BCO9a8RCVc6kMA2NvQV+U15BC1SD8WedM
+ yIuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXzyjPV7qfscp9JC8glc619gSM+a44IcLprw2FJgQ/SBIKgTtFBS9FBSujhxcEQjrrReb7a8nc4o5YQ@nongnu.org
+X-Gm-Message-State: AOJu0Yz3k71J5EBfaaIsNvwjAhN6B9gMPXntjTfjJICSpjvZgblVnO12
+ yT5t1h1SzxXXCIyMtpD4oXEedIsz2uS/tl+wPcH3uRd1ojnI7Xhn9poXPFpP/XZdSU3J5YYzbGr
+ ut++YxCTO8eUaC4XaCus3eIY0prSzktNxNcr3AKR08PAL4FGKZWFhHzFQgzqRSzDs4tQ7JSpk9h
+ kWqh0XnUSjWsw8Xb8N3wCodWkDsjw=
+X-Gm-Gg: ASbGncuqxg2+Y2q5eJ+BS6nVEj3aOJ/f7fhPaOnTEJ6dW2UxdAKW44pHApWCgjty/kM
+ LvEa0UGDnoDrCOry7uGRjz1IWzQFzF+IhE4vdN85p8STvr5TZsMMKtslnhbAPh5kDxDpQ4tm23A
+ ==
+X-Received: by 2002:a17:907:72c1:b0:ac1:fea1:3b68 with SMTP id
+ a640c23a62f3a-ac3b7f1ea26mr624887066b.41.1742462123963; 
+ Thu, 20 Mar 2025 02:15:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFljbhH6wmQZHNXDXz441psO/XiWd3/JQkUC8Eu00V3Zt15AUJWqTVCIciCs02e85q3hkr/SRnP32VYYXKFZ4c=
+X-Received: by 2002:a17:907:72c1:b0:ac1:fea1:3b68 with SMTP id
+ a640c23a62f3a-ac3b7f1ea26mr624884066b.41.1742462123495; Thu, 20 Mar 2025
+ 02:15:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
- <20250311155932.1472092-11-marcandre.lureau@redhat.com>
- <CAE8KmOwiL+GNf3d_4W5Womh33UUP1oM7a6tQstDra6v=4rLTnQ@mail.gmail.com>
-In-Reply-To: <CAE8KmOwiL+GNf3d_4W5Womh33UUP1oM7a6tQstDra6v=4rLTnQ@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 20 Mar 2025 13:05:13 +0400
-X-Gm-Features: AQ5f1Jpvx_Ote_LINGJkoAh7LiseKfCHIu_pLw4rqXZ7uBapeiXFqXrhtnRoQjA
-Message-ID: <CAJ+F1CKE8T=g1Mkp8uJUTJ9aSdp_ooZrQ7h39yEh1Lm3KwY5qQ@mail.gmail.com>
-Subject: Re: [PATCH for-10.1 10/10] ui/vdagent: remove migration blocker
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000002fef360630c27097"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x834.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
+ <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+In-Reply-To: <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+From: Cindy Lu <lulu@redhat.com>
+Date: Thu, 20 Mar 2025 17:14:45 +0800
+X-Gm-Features: AQ5f1JrG2adWEhAyir1b29i7-AoR_l5t72dVOpdxAzu9ZTGyieHpI6NudFdLsso
+Message-ID: <CACLfguW6j30mfDTGTTeZzi7-28EbaKqrx9=KoLUQsh7X=jxTrg@mail.gmail.com>
+Subject: Re: VDPA MAC address problem
+To: Jason Wang <jasowang@redhat.com>
+Cc: Konstantin Shkolnyy <kshk@linux.ibm.com>, qemu-devel@nongnu.org,
+ dtatulea@nvidia.com, eperezma <eperezma@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,63 +104,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002fef360630c27097
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Konstantin
+yes, we have found this kind of issue in this upstream
 
-Well, there isn't much else to say. And there is a Fixes tag. I don't think
-we have strict rules about commit message, but I am fine adding more
-context on each commit.
+So here is a fix for this problem in kernel
+https://lore.kernel.org/kvm/CACLfguUYny6-1cYABsGS+qtdzO+MKp3O09t_gt-bMM4Jgd=
+pZqA@mail.gmail.com/T/
+vdpa: support set mac address from vdpa tool
 
-Le jeu. 20 mars 2025, 12:39, Prasad Pandit <ppandit@redhat.com> a =C3=A9cri=
-t :
+This tool allows the user to change the MAC address before QEMU loads.
+The user should ensure that the VDPA device's MAC address matches the
+MAC address in the QEMU command line.
 
-> On Tue, 11 Mar 2025 at 21:44, <marcandre.lureau@redhat.com> wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On the QEMU side, we plan to add a new parameter to check the MAC
+address. If the MAC address in the QEMU command line does not match
+the device's MAC address, the system will fail to boot.
+https://patchew.org/QEMU/20241109063241.1039433-1-lulu@redhat.com/
+
+but this patch is not merged in upstream yet, I will rebase and send
+it to upstream again
+Thanks
+Cindy
+
+On Thu, Mar 20, 2025 at 8:59=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
+ote:
+>
+> Adding Cindy and Eugenio
+>
+> On Thu, Mar 20, 2025 at 12:34=E2=80=AFAM Konstantin Shkolnyy <kshk@linux.=
+ibm.com> wrote:
 > >
-> > Fixes: https://issues.redhat.com/browse/RHEL-81894
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > I=E2=80=99m observing a problem while testing VDPA with Nvidia ConnectX=
+-6 (mlx5)
+> > on s390.
+> >
+> > Upon start, virtio_net_device_realize() tries to set a new MAC address
+> > by VHOST_VDPA_SET_CONFIG which doesn=E2=80=99t do anything.
+> >
+> > Later, the VM gets started and learns about the old address from
+> > virtio_net_get_config() which returns whatever VHOST_VDPA_GET_CONFIG
+> > returns, unless it's "6 zero bytes", in which case it instead returns
+> > the desired new address (and the problem is avoided).
+> >
+> > Then QEMU again tries to set the new address from vhost_net_start(), no=
+w
+> > by calling vhost_vdpa_net_load_cmd(...,VIRTIO_NET_CTRL_MAC,
+> > VIRTIO_NET_CTRL_MAC_ADDR_SET, ...). This time the new address is
+> > successfully programmed into the NIC, but the VM doesn't know about it.
 >
-> * No commit message? Same for patch 09/10.
+> Have you enabled shadow virtqueue? If yes, does it work if you don't do t=
+hat?
 >
-> ---
->   - Prasad
+> >
+> > As the result, the VM now sends packets with a source address on which
+> > the NIC doesn=E2=80=99t listen.
+> >
+> > Upon reading this forum, I see that VHOST_VDPA_SET_CONFIG is
+> > =E2=80=9Cdeprecated=E2=80=9D, and so VIRTIO_NET_CTRL_MAC_ADDR_SET must =
+be the right
+> > method, but it=E2=80=99s apparently called too late.
 >
+> VHOST_VDPA_SET_CONFIG requires the vDPA parent support which is not
+> necessarily there.
+> VIRTIO_NET_CTRL_MAC_ADDR_SET requires the shadow virtqueue as well as
+> the CTRL_MAC_ADDR support.
 >
+> Neither of them seems robust.
+>
+> > Or maybe
+> > virtio_net_get_config() needs to always return the desired new address
+> > and not the old one from VHOST_VDPA_GET_CONFIG?
+> >
+> > I=E2=80=99m looking for an opinion/direction from someone who knows thi=
+s code.
+> >
+> > As it is, the only VDPA scenario that's working for me is:
+> > 1) Avoid specifying the MAC address in the "vdpa dev add" command (whic=
+h
+> > will create the "6 zero bytes" condition on the first launch).
+> > 2) Keep using the same MAC address for every subsequent VM launch on th=
+e
+> > same NIC "virtual function" (so that the old and new addresses are the
+> > same).
+>
+> This is the way we currently use it. Is there any limitation of this?
+>
+> Thanks
+>
+> >
 >
 
---0000000000002fef360630c27097
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<p dir=3D"ltr">Well, there isn&#39;t much else to say. And there is a Fixes=
- tag. I don&#39;t think we have strict rules about commit message, but I am=
- fine adding more context on each commit.</p>
-<br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
-=3D"gmail_attr">Le jeu. 20 mars 2025, 12:39, Prasad Pandit &lt;<a href=3D"m=
-ailto:ppandit@redhat.com">ppandit@redhat.com</a>&gt; a =C3=A9crit=C2=A0:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
-left:1px #ccc solid;padding-left:1ex">On Tue, 11 Mar 2025 at 21:44, &lt;<a =
-href=3D"mailto:marcandre.lureau@redhat.com" target=3D"_blank" rel=3D"norefe=
-rrer">marcandre.lureau@redhat.com</a>&gt; wrote:<br>
-&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
-dhat.com" target=3D"_blank" rel=3D"noreferrer">marcandre.lureau@redhat.com<=
-/a>&gt;<br>
-&gt;<br>
-&gt; Fixes: <a href=3D"https://issues.redhat.com/browse/RHEL-81894" rel=3D"=
-noreferrer noreferrer" target=3D"_blank">https://issues.redhat.com/browse/R=
-HEL-81894</a><br>
-&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
-lureau@redhat.com" target=3D"_blank" rel=3D"noreferrer">marcandre.lureau@re=
-dhat.com</a>&gt;<br>
-<br>
-* No commit message? Same for patch 09/10.<br>
-<br>
----<br>
-=C2=A0 - Prasad<br>
-<br>
-<br>
-</blockquote></div>
-
---0000000000002fef360630c27097--
 
