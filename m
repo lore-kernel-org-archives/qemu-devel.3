@@ -4,72 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B17DCC36002
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12543C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvAXC-0001I4-Tq; Thu, 20 Mar 2025 03:41:46 -0400
+	id 1tvAXA-0001Hm-Nc; Thu, 20 Mar 2025 03:41:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tvAXA-0001HN-6u
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:41:44 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tvAX7-0006tp-7F
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAX9-0001H7-KR
  for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:41:43 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bxjayvxttnii2eAA--.37793S3;
- Thu, 20 Mar 2025 15:41:35 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBx3MSsxttnoE5VAA--.48926S3;
- Thu, 20 Mar 2025 15:41:35 +0800 (CST)
-Subject: Re: [PATCH v5 2/6] hw/loongarch/virt: Fix error handling in cpu plug
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250320032158.1762751-1-maobibo@loongson.cn>
- <20250320032158.1762751-3-maobibo@loongson.cn> <875xk4i5wb.fsf@pond.sub.org>
- <c1e74ed3-f60a-0bd6-9806-b5ec111e466d@loongson.cn>
- <878qp0go4a.fsf@pond.sub.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <ea2ecfb8-da22-ad8d-7e56-a8b3dabb63e8@loongson.cn>
-Date: Thu, 20 Mar 2025 15:40:53 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAX5-0006ty-Ox
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:41:43 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-39149bccb69so362666f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 00:41:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742456498; x=1743061298; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cXMy2FP8eVpjmuzvVyPyu2ht4al3Gpodl5VUdnLP7kY=;
+ b=EALJQvLAesPIsHWz8cvQc8HmkVF8kybhqedh8QKH6sxslaRnFU+QKtf6EPZwy9Ishh
+ NmZGeEnQT9wbGwG3dhURw4IPpc+dOfuYUWQmUTJmMDQmn/mwG1pBgeA0lIrHt73ozB+O
+ j8Jjhm2aYUMIRboiJJPB4spec6GBtH/2F44Bvjv72fUyWYyoY8P3jiBLiuLggVXHY0pr
+ 5z6sy6MhOw/2ACj97UOz7q/2fdByFmvGuLVkaNLGJNUsWbBT2mcWbeTRZt/8/QZRmNMi
+ bJFsUQE9EA/7znZrfUKDbm5F3cazLCP/F24ZJinJfXilp60UdwptT6COw5+1hCw+ikYL
+ grQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742456498; x=1743061298;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cXMy2FP8eVpjmuzvVyPyu2ht4al3Gpodl5VUdnLP7kY=;
+ b=LkfvtBm4DvyAfnTwb1LEUWoDAw1zA9zek3ewcLe9KtzuTSPkibpdUR1gUPtrzumoiS
+ V3RB5DRQDY3/JGCSmxGO/1COBRVcwuXgxcoJdYWS/QgN0GN0Kp6nEXXxpNuy3fgrKHai
+ nQS17K06oxgPj+LBCPVdYuJUq04gxaUyo89X1cxyT09YHfA/EQMzvoYFpmfcP9shnnDD
+ UuxfJbBgXsUqZClbAgGFDhWw7Aj/4sJzvJ7dpUHN/IyUmHy/WPPmUpwsPUUe1Obu2aKa
+ /WYZiTMFTJzyynb9YUvyYxTo2FF8aR5WlhzcPoKVworJhfvP6P/FHofdXlmhhxGertYj
+ sSFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVpurguFqlwObO0swfSzkgeCZUbt1NoFrGYtnLkcD6S4cSPf/lCu1MC4cEskcQdDwt5g+a15H4g0IK@nongnu.org
+X-Gm-Message-State: AOJu0YxsOlrihehgKN9q0wKJbI5IvhICQIxZCS4JUDAbx50SSxIWcsjF
+ 9O/x2LJLckD4nY+GsbFEwWk9hPCi2yMIMhB7w6OJuQ3apxn0QS9KjvVFX+DyrOw=
+X-Gm-Gg: ASbGncu8Hh93X5/QTI1019hAVUgoQ6qNRGD5ws7pq0p2IzZNjmXm7zngZdZYPY1lNdi
+ gQNE7PVlCHUlqItccnPWU6gOr9ZPRKg6hnM7UEB15bN/I9nI8gpTnrc2OB5xu4Uvz34a3r4WQZl
+ gaB5M//Zc3cLzwnze+8MXK4lB+JB/lIdqoOG3ABu2+q4/nUQ5TafogFgkaFf7wLMS0x49DTqUr/
+ YA1UIou4M4kh4sTmyz4+/gCGocvSy77lyUjKtceQvwa9tPxQYdwi5X47+kzGyS8e//j7o5T01S8
+ YFEy2UYQCZe64dMdUfZiJzxnq0LOZFqQCZ5raMnbXhGGz7V6ikbua6a3AYA9wNH9UdsO1QiTdpt
+ Z7aygBSgGB/at
+X-Google-Smtp-Source: AGHT+IG/1yMP0Q5F7hpd5pKeF0c6t1xisdz2iimzo7eRUY2CNfTFhvC4bHPYkhXMuMQIAOyiEQj0Tg==
+X-Received: by 2002:a05:6000:2c7:b0:391:4835:d888 with SMTP id
+ ffacd0b85a97d-39973af9092mr5073139f8f.42.1742456498039; 
+ Thu, 20 Mar 2025 00:41:38 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-395c83b6a5esm22642398f8f.27.2025.03.20.00.41.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Mar 2025 00:41:37 -0700 (PDT)
+Message-ID: <2c5bc1aa-c8d6-4077-84df-421d59b542c7@linaro.org>
+Date: Thu, 20 Mar 2025 08:41:36 +0100
 MIME-Version: 1.0
-In-Reply-To: <878qp0go4a.fsf@pond.sub.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 24/24] docs: add uefi variable service documentation
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org,
+ Ard Biesheuvel <ardb@kernel.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, graf@amazon.com,
+ Eric Blake <eblake@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250225163031.1409078-1-kraxel@redhat.com>
+ <20250225163031.1409078-25-kraxel@redhat.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MSsxttnoE5VAA--.48926S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZF4rWw4fXr17Cr43CF45urX_yoW5CrWUpr
- W8ta1qkr4ktFWFvws29FyUt34jyrs3Jr95XrZYq343C390q34FqF47t3Wj9rW5uryI9a1j
- qr45tasruFy3ZagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r1q6r43MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
- KfnxnUUI43ZEXa7IU8PCzJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -54
-X-Spam_score: -5.5
-X-Spam_bar: -----
-X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.598,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250225163031.1409078-25-kraxel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,90 +112,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 25/2/25 17:30, Gerd Hoffmann wrote:
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>   docs/devel/index-internals.rst |  1 +
+>   docs/devel/uefi-vars.rst       | 68 ++++++++++++++++++++++++++++++++++
 
+Missing MAINTAINERS update:
 
-On 2025/3/20 下午3:25, Markus Armbruster wrote:
-> bibo mao <maobibo@loongson.cn> writes:
-> 
-> On 2025/3/20 下午2:16, Markus Armbruster wrote:
->>> Bibo Mao <maobibo@loongson.cn> writes:
->>>
->>>> In function virt_cpu_plug(), it will send cpu plug message to interrupt
->>>> controller extioi and ipi irqchip. If there is problem in this function,
->>>> system should continue to run and keep state the same before cpu is
->>>> added.
->>>>
->>>> Object cpuslot::cpu is set at last only when there is no any error.
->>>> If there is, send cpu unplug message to extioi and ipi irqchip, and then
->>>> return immediately.
->>>>
->>>> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
->>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> 
-> [...]
-> 
->>> Hmm.
->>>
->>> You're right about the problem: virt_cpu_plug() neglects to revert
->>> changes when it fails.
->>>
->>> You're probably right to move the assignment to cpu_slot->cpu to the
->>> end.  Anything you can delay until success is assured you don't have to
->>> revert.  I say "probably" because the code that now runs before the
->>> assignment might theoretically "see" the assignment, and I didn't
->>> examine it to exclude that.
->>>
->>> Where I have doubts is the code to revert changes.
->>>
->>> The hotplug_handler_plug() error checkign suggests it can fail.
->>>
->>> Can hotplug_handler_unplug() fail, too?  The error checking in
->>> virt_cpu_unplug() right above suggests it can.
->>
->> Basically from existing code about ipi/extioi hotplug handler, it is
->> impossible to there is error, here is only for future use.
-> 
-> Aha.  More at the end of my reply.
-> 
->> If there is error in function virt_cpu_plug(), undo() such as
->> hotplug_handler_unplug() should be called. However if undo() reports
->> error, I do not know how to handle it, here just discard error in
->> function undo().
-> 
-> Steinbach's Guideline for Systems Programming: Never test for an error
-> condition you don't know how to handle.
-> 
-> This old quip is a funny way to say that errors we don't know how to
-> handle are *bad*, and should be avoided.
-> 
->> Regards
->> Bibo Mao
->>>
->>> What happens if it fails in virt_cpu_plug()?
-> 
-> You assure us this can't happen today.  Because of that, broken error
-> recovery is not an actual problem.
-> 
-> However, if things change some day so it can happen, broken error
-> recovery becomes an actual problem.
-> 
-> so, broken error recovery just "for future use" is actually just for
-> silent future breakage.
-> 
-> But is it broken?  This is what I'm trying to find out with my "what
-> happens if" question.
-> 
-> If it is broken, then passing &error_abort would likely be less bad:
-> crash instead of silent breakage.  Also makes it completely obvious in
-> the code that these errors are not handled, whereas broken error
-> handling looks like it is until you actually think about it.
-> 
-yes, it seems that &error_abort is better than NULL, it is better than 
-slient and do nothing. If error really happens, we had to solve it then.
+   F: docs/devel/uefi-vars.rst
 
-And I will refresh the patch in next version.
-
-Regards
-Bibo Mao
+>   hw/uefi/LIMITATIONS.md         |  7 ++++
+>   3 files changed, 76 insertions(+)
+>   create mode 100644 docs/devel/uefi-vars.rst
+>   create mode 100644 hw/uefi/LIMITATIONS.md
 
 
