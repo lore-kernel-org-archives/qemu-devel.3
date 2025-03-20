@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA15C28B30
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F08C36002
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 20:10:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvMDM-0004oS-02; Thu, 20 Mar 2025 16:10:04 -0400
+	id 1tvMD9-0004lp-VL; Thu, 20 Mar 2025 16:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tvMDJ-0004ng-Jr
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:10:01 -0400
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tvMD7-0004lU-VD
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:09:49 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tvMDH-0001CL-QW
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:10:01 -0400
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e3978c00a5aso1046009276.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 13:09:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tvMD2-0001BA-0Y
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:09:49 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5e8274a74so1924362a12.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 13:09:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742501398; x=1743106198; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742501382; x=1743106182; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Sn6xZJZXCeYfbos5kYHuILiMc+3WeL8xmIB+K8NqT1E=;
- b=PnEmof1iJP67Nh6Q+MfA/A7anKV8Ty2b1IGIkN5P1xL/EkiFK3pQGmYb0RksJvfQVw
- ZoFKnX2i8XrdKgYDDQ3crATPfxvfiFmnfdl8I0px7whqjrCO6BY1lm51Paev34uoIPOq
- Y3EuILXr/ZrO1i71tz2zdcAOD+53OEi1voGrBNPmXxgqgT/knXNtHehIbl6BgkQpdxR0
- WKloNTvpZC5yXfdjdqVUwptpHQSHz8WDm7b7VCDzrfQClhYZvY4MPcH77I2+ME8mtg2h
- nhoYpTPBH7qZJG5J+PJJOcjpA2Qmkc3RjpeqZGbOCHnZquOvYxncJua+T/z+yLP1QYTc
- NZBg==
+ bh=Td7EFuTJ2om+RFEY5HkKdjzsPHCJqWxm4Stka7owgiY=;
+ b=AEiar6ZvzPkMBx7Np2p6qNf4lHBNkDaFY8SXkRimYvBm6qQPj5sW0NWEj2WtmFxFmu
+ 384Xg7kD3GQhIG5ISSCvhyGtLMNw8YDQ5fyNk4L7DV/yJ4tXmJrC99bHXXIrTHklCE74
+ gT1XDTgoGXhStfXpoFBZ/JTa4lca/eVwHUiM4M+Svq2GHTC6qLpL+5LnAfWIYvEjO8pc
+ VtwA1X1Sd4V9j5Rcus727W2uOy6MxanBpe4xbhC2/9OXlgFd06ePCRi9ofZEsf1teNgv
+ U38bm6nPFnPe4yr9SfPE4dVfQoWcKzKgsw3zcjHf9DKhvuChoM3e4Q5EdjMdrpJiYCxa
+ VjaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742501398; x=1743106198;
+ d=1e100.net; s=20230601; t=1742501382; x=1743106182;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Sn6xZJZXCeYfbos5kYHuILiMc+3WeL8xmIB+K8NqT1E=;
- b=uovivdnHd9XbNq/EG00xwIGnZ5Yi7qbB0w9GUz2Mt6YSM0MHKzpEW/vp+7rJbGcsnb
- pqwAy1ht79GNSAX2lBD50rqKwoQ/xqWCibmKqDWUdqB5LZyqPGLMGLOEJLj8TxmMGaOK
- q+4jnzFNM5wlqGBtXzsxzkSz9yySo8tKmukesB9EMMo/loQIXVhA9XKscbzVmu5H/Cjl
- FrJx9mHjFCMOU7rmvzlhSHohtFCpM4EoiTPfgiGYCXlNhl9sMVMm8O2xsqaYkp7vY/Bk
- TKvoOSBi59ysA17/0DY3m076xuwvTQ2uFEiEWWSsddxyBezQaFgAdv8m/tSuRxJxkz5i
- +/Gg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU22aE+wISKNuJpy83xZ/DoELVn2DByd9VriWJC0YpmwBM9EmULn0CflEs4N3J6KhCKN7Z1R8tbJvyk@nongnu.org
-X-Gm-Message-State: AOJu0Yw+6MQdbINYmKCc5z6VdqH4+zFGzF1cp0G5hwvgGaFvXZ+SmccR
- SVIuGJylsnAgzOpFGfUO0JMokK0KntE3Tz4uOf/geI7Y0KOuHhO1IK4++3A9j3RrwzMIiHgb8gf
- mWKe8aVTCI3WvnrTfP8T+kqzf6TgOXe/7J9TUXg==
-X-Gm-Gg: ASbGncve+Q+HMtOSEQHHp+tY5TfKraUHTHlRfh0s352Fsd5OeGS+P/9oRpqLyj/Bgqc
- dvFFr0WCHUtZ6P7GeZckWekxz5NoZ2evo0zXSKzf5ZNGwubbbscJSJeEVi/OvMD7zIGSFUgYotD
- DUBS5K/SA9UWXfGF0owvzFUnFP0mhV9Uczvayq1g==
-X-Google-Smtp-Source: AGHT+IHMROrlKey1WQVGD4/Yrvw5n9hWfAMlb4VVNqh4kXHl9ngfoq7+dNAW0/NFNb4O8njcPEkToIwMWzuEfdxzr3M=
-X-Received: by 2002:a05:6902:2292:b0:e60:9dd3:38c9 with SMTP id
- 3f1490d57ef6-e66a4d2e233mr642489276.7.1742501398177; Thu, 20 Mar 2025
- 13:09:58 -0700 (PDT)
+ bh=Td7EFuTJ2om+RFEY5HkKdjzsPHCJqWxm4Stka7owgiY=;
+ b=RysD23JPNoRTCDrjFEUfE05iN1h6TV1pIhQxEaE+sYumwuNysk/oOwpGkXFbrqhYOZ
+ ws74gsLvUU+PaVYBj2xm1pFRELL1ie7PSQpQp9oyaBdOz2+FgDHp6XrJgsqCbZ/9RfnS
+ EStOSoaUYrq/gQk+SbVvFvB0X4R0oxdTP1m22JGijULFiFFGz1fYG/fD9DG6C412u9X7
+ tbJJ/H6kRoeNooAdu9Ov0vHPDjhl7nHdi52zbfrUfx62WwTRVXafM0MJm4+8c9Ef7G/I
+ r5u9kiz3rJVndBA+O6XDljPsEvj5hGCeGGVI1yPtEWDVxjxNeQByt/zIOdteqo4PJoaz
+ DpDQ==
+X-Gm-Message-State: AOJu0YwibkJMJey22KQSfpMpoiSlGWBQhiO5VEmdGAuaI0e5jwiHONn5
+ LPtcsuUckCwQagJjKVNjfuMoi1SpUxoQZ8hKaXlQSwp2cJgccAtqI4771/W54khwd38s46fUqsi
+ NGL7WOM2EalVvftZFRpGxmGsT5JA=
+X-Gm-Gg: ASbGncuusm5KSQPu18UGRlR0sjiXcIZ8B0Fl4JGe+jmTCpZ2bs1m5X8bK5ip1u5z2NR
+ jmzFUl0Nyn+/NCe5p12lsysz1GQNHSxS+sSuHxsA9zB21u+y9TeWG/+XfZhff8JRtHhiW+8TuGU
+ 6rfReColCn4Tg47X/ORTY43sg5
+X-Google-Smtp-Source: AGHT+IF3vYsrOEO4xxglMQZCM+rd/gbuWcJR87v8vHeaz+XlGE0OYvTvTLyq52krwHnOtNP8nV7/xWEuRTD3P6ug/oc=
+X-Received: by 2002:a05:6402:27c6:b0:5e6:1842:1346 with SMTP id
+ 4fb4d7f45d1cf-5ebcd520333mr603134a12.30.1742501381372; Thu, 20 Mar 2025
+ 13:09:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABsFrshLGcmBEBXCMrOdDv213c1q6GB6pDs4JDLQGKrTzqvkYQ@mail.gmail.com>
- <87ecytm2ru.fsf@draig.linaro.org>
- <4545005.21021813.1742490863752.JavaMail.zimbra@univ-tlse3.fr>
-In-Reply-To: <4545005.21021813.1742490863752.JavaMail.zimbra@univ-tlse3.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Mar 2025 20:09:46 +0000
-X-Gm-Features: AQ5f1JrV5PGf0qwW4jf9VZzeHIVUO9s0ukXcr_C5pDhOmWvJGrptzTQQ9OkLG2s
-Message-ID: <CAFEAcA8rBnTD3pqiraQvgLLyOWMCj=2cftgDkZp5h8N7F8nq6g@mail.gmail.com>
-Subject: Re: Raspberry Pi 3B energy consumption
-To: clement.aldebert@univ-tlse3.fr
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, "millian.poquet" <millian.poquet@univ-tlse3.fr>, 
- laurent polzin <laurent.polzin@univ-tlse3.fr>
+References: <9d87fed729b2697605bcf5b6062669b6239e5c0f.camel@linux.ibm.com>
+In-Reply-To: <9d87fed729b2697605bcf5b6062669b6239e5c0f.camel@linux.ibm.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Thu, 20 Mar 2025 16:09:28 -0400
+X-Gm-Features: AQ5f1Jq1TfDJtoR5_ea50TTMZ9ttzb5_AKh-2U1M5686vcG6zPSMMO6P94-jTFI
+Message-ID: <CAJSP0QXqseVpaHZEfhJv7nZ8N18PGQqpW-tb9LCkGyvOKvW_zQ@mail.gmail.com>
+Subject: Re: Best practice for issuing blocking calls in response to an event
+To: milesg@linux.ibm.com
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,84 +94,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Mar 2025 at 19:30, <clement.aldebert@univ-tlse3.fr> wrote:
-> To clarify, when we refer to energy consumption, we are specifically look=
-ing at CPU core utilization. Our goal is to ensure that when we turn off CP=
-U cores on the emulated Raspberry Pi 3B, the host machine does not keep its=
- corresponding cores running at 100% utilization.
+On Thu, Mar 20, 2025 at 12:34=E2=80=AFPM Miles Glenn <milesg@linux.ibm.com>=
+ wrote:
 >
-> This is particularly relevant for our use case, as our supervisor, M. Poq=
-uet, intends to use this project for teaching operating system development.=
- Students using QEMU to emulate a Raspberry Pi 3B may have different host m=
-achines, so our objective is to implement a general approach that ensures C=
-PU core deactivation works properly regardless of the host system.
+> Hello,
 >
-> So far, our measurements indicate that even after turning off cores in th=
-e emulated system, all CPU cores on the host remain at 100% utilization. We=
- are exploring ways to improve this behavior.
+> I am attempting to simulate a system with multiple CPU
+> architectures.  To do this I am starting a unique QEMU process for each
+> CPU architecture that is needed. I'm also developing some QEMU code
+> that aids in transporting MMIO transactions across the process
+> boundaries using sockets.
+
+I have CCed Phil. He has been working on heterogenous target emulation
+and might be interested.
+
 >
-> We have looked into using -icount, but we would like to find a more viabl=
-e solution, particularly for the Cortex-A53 CPU used in the Raspberry Pi 3B=
-. Ideally, we would like to be able to use -smp 1 without being constrained=
- by QEMU=E2=80=99s limitations and to implement proper CPU core shutdown, s=
-imilar to what is available on x86-64 architectures.
+> The design takes MMIO request messages off of a socket, services the
+> request by calling address_space_ldq_be(), then sends a response
+> message (containing the requested data) over the same
+> socket.  Currently, this is all done inside the socket IOReadHandler
+> callback function.
+
+At a high level this is similar to the vfio-user feature where a PCI
+device is emulated in a separate process. This also involves sending
+messages describing QEMU's MemoryRegion accesses. See the "remote"
+machine type in QEMU to look at the code.
+
 >
-> Would you have any recommendations or insights on achieving better power =
-management in this scenario?
+> This works as long as the targeted register exists in the same QEMU
+> process that received the request.  However, If the register exists in
+> another QEMU process, then the call to address_space_ldq_be() results
+> in another socket message being sent to that QEMU process, requesting
+> the data, and then waiting (blocking) for the response message
+> containing the data.  In other words, it ends up blocking inside the
+> event handler and even though the QEMU process containing the target
+> register was able to receive the request and send the response, the
+> originator of the request is unable to receive the response until it
+> eventually times out and stops blocking.  Once it times out and stops
+> blocking, it does receive the response, but now it is too late.
+>
+> Here's a summary of the stack up to where the code blocks:
+>
+> IOReadHandler callback
+>   calls address_space_ldq_be()
+>     resolves to mmio read op of a remote device
+>       sends request over socket and waits (blocks) for response
+>
+> So, I'm looking for a way to handle the work of calling
+> address_space_ldq_be(), which might block when attempting to read a
+> register of a remote device, without blocking inside the IOReadHandler
+> callback context.
+>
+> I've done a lot of searches and reading about how to do this on the web
+> and in the QEMU code but it's still not really clear to me how this
+> should be done in QEMU.  I've seen a lot about using coroutines to
+> handle cases like this. Is that what I should be using here?
 
-You should check what mechanism you're trying to use to "turn off the cores=
-";
-there are several possibilities, some of which are "this ought to
-work, so if it isn't doing the right thing that's a bug to investigate",
-and some of which are "this is a feature that's not implemented at
-all right now":
+The fundamental problem is that address_space_ldq_be() is synchronous,
+so there is no way to return back to the caller until the response has
+been received.
 
-In the "should work" category:
- * if the CPU executes a WFI instruction we will stop executing code
-   (until the next interrupt)
- * If you are using QEMU's PSCI implementation and you power the CPU
-   down with e.g. PSCI CPU_OFF we should also stop executing code.
-   (NB this is different from if you're running real guest firmware and
-   the firmware is handling PSCI calls)
+vfio-user didn't solve this problem. It simply blocks until the
+response is received, but it does drop the Big QEMU Lock during this
+time so that other vCPU threads can run. For example, see
+hw/remote/proxy.c:send_bar_access_msg() and
+mpqemu_msg_send_and_await_reply().
 
-In the "not implemented" category:
- * If you are trying to stop the CPU with a WFE instruction, we do not
-   stop executing code (we emulate it as a NOP, which is architecturally
-   permitted).
- * If you are trying to stop the CPU with some raspi-SoC-specific power
-   controller, we don't currently have a model of that, I think
+QEMU supports nested event loops, but they come with their own set of
+gotchas. The way a nested event loop might help here is to send the
+request and then call aio_poll() to receive the response in another
+IOReadHandler. This way other event loop processing can take place
+while waiting in address_space_ldq_be().
 
-If you need a working raspi SoC power controller device, the answer
-is that that power controller needs to be modelled so that when the
-guest uses it to turn off a CPU it makes the appropriate calls to
-arm_set_cpu_off() etc.  This should be straightforward assuming that
-you have the appropriate datasheets/specs/etc describing the hardware
-behaviour.
+The second problem is that this approach where QEMU processes send
+requests to each other needs to be implemented carefully to avoid
+deadlocks. For example, devices that do DMA could load/store memory
+belonging to another device handled by another QEMU. Once there is an
+A -> B -> A situation it could deadlock.
 
-If you need WFE to work, that's certainly feasible and something it would
-be nice to see, but potentially quite a bit of work in the guts of QEMU's
-arm emulation. (Basically going to sleep on WFE is easy but then making
-sure that all the events  and situations that need to wake up a WFE is
-tedious. We implement sleep-on-WFI but not sleep-on-WFI because the set
-of WFI-wakeup events is rather smaller than the WFE-wakeup events.) It's
-been in the "we really should implement this but since the only downside
-is the host CPUs spinning, we've never got round to it" bucket for years.
+Both vfio-user and vhost-user have similar issues with their
+bi-directional communication where a device emulation process can send
+a message to QEMU while processing a message from QEMU. Deadlock can
+be avoided if the code is structured so that QEMU is able to receive
+new requests during the time when it is waiting for a response.
 
-(In the cases where we do stop executing code that means that that
-vCPU thread should no longer be doing a lot of work; obviously
-if your system has more vCPUs than host CPUs then the host CPUs
-will still all be busy.)
-
-Your other option here is "stop trying to use the raspberry pi
-machine types". The "virt" board, because it doesn't need to try
-to implement the same behaviour as an exact machine type, has a
-much easier job, and it already supports "you can have just one
-CPU with -smp 1" and "you can have an SMP system where you power
-off some of the CPUs while running". Basically "virt" is actively
-maintained, whereas the raspi machines are in the "Odd Fixes" state,
-which means we'll try to review patches but nobody is actively
-working on trying to make them better.
-
-thanks
--- PMM
+Stefan
 
