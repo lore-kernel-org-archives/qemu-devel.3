@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6002C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 11:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C120C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 11:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvERC-0001Yn-AI; Thu, 20 Mar 2025 07:51:50 -0400
+	id 1tvEUn-0002Mv-A8; Thu, 20 Mar 2025 07:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tvEQz-0001YJ-Ly
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 07:51:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tvEUl-0002MK-Nd
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 07:55:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tvEQu-0006W3-R8
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 07:51:37 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tvEUi-0008TV-64
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 07:55:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742471490;
+ s=mimecast20190719; t=1742471727;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RK+cZDpCpIPJxlVNYq6EAIhf6iOUFut/T9hKAkyRa54=;
- b=Gv1DC9XCGkYS6OPcxiadaqLqqo7WhgCQrZar5K6/92PHxOCHa8yLjseSddvrXjf6vLSLmW
- qEJjx0MlSkJnfRmfKQ3APIaFcU+KqGt2MgftsL7QDz58uwSdgnQ/pca1r1F69zmk53ufrg
- JZHNwpChZAaW7SsT4d/z0UYzYDBwTcI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=QzVg6/xCh+WV9e1uzDmGPvWkxytjcf5d1/QumLRzrjI=;
+ b=USSCjqhnn48vAlTAxYxSa+gGnsUdhIS3HlWeevz+dVderFatnFy68r/3mcuImdzy9r32gU
+ K1RerqR2Vy+ITqpvqbIaB6tjDrZbyOILjSFGLf3+duiAF5ythXK7EVPy93ZuiHf2pBT9Fd
+ zs6VuglAzgx1rUNlvY0h0eD1vY5Gre4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-Ir6FtoQpPFeF81quIy0sXw-1; Thu, 20 Mar 2025 07:51:03 -0400
-X-MC-Unique: Ir6FtoQpPFeF81quIy0sXw-1
-X-Mimecast-MFC-AGG-ID: Ir6FtoQpPFeF81quIy0sXw_1742471462
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43cf172ffe1so4832075e9.3
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 04:51:03 -0700 (PDT)
+ us-mta-306-iPVT_mN9OqW_Y2oU-_NmpA-1; Thu, 20 Mar 2025 07:55:25 -0400
+X-MC-Unique: iPVT_mN9OqW_Y2oU-_NmpA-1
+X-Mimecast-MFC-AGG-ID: iPVT_mN9OqW_Y2oU-_NmpA_1742471725
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3912fe32b08so368636f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 04:55:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742471461; x=1743076261;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1742471723; x=1743076523;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RK+cZDpCpIPJxlVNYq6EAIhf6iOUFut/T9hKAkyRa54=;
- b=QoWnBgb5vNE6P5zQ835epG+SCLpd8rjhiUWljRU08kNoAl0M4XGpO06vrEHBLjDeZx
- gRiHzIK5YHr57U80+DgfoR+8FP88lKiwYthtEdb8TtlSUUzW2i01PBJegidmOxEksBCA
- tnKHzgZS8dQgbHhO/nKqWjI1wqCHrALDlooIZ5oBzVNIkMcz1aiCSl9VZiNHBh5jrYdp
- MCfdRWLZ3ML+ZGPc95HYp0x9MBcBjQvhbA5EMoalQaNqTCxFhjTggnOeDLg5HXmBQYWb
- Rnedi1mNbtfxuZ3N9aMsPCVIlsN4Kktp/h4pmhZ/pccYSKaXYPl5VzsP/d9kTq/uS+55
- Uw5A==
-X-Gm-Message-State: AOJu0YxPaIhZ9tY/fpcYqe5THgPVAlw8vV73SymnHjjQRxArGUriRlh4
- wx7JExwnKZ/XaBGW2MPOOQXk31qVUuysc33lmLnfc9uYh8KhhZT/Q8VCswMa3i8pWTcXrXyUH4s
- 8ybh8KS/IDYeXPdm/CDklQvIkIjLcpvpP5jEw1DdTYzg0pEiVR6luFBY74JHYA4+5dcIui9kNWR
- XT+11CO9cZ81IZCYUS0w+2imAeQmM=
-X-Gm-Gg: ASbGncvajDrgF3gWusjQu1J669v1rhnlhOrTt5BR7dcMidnWaQfed2F9fCtd6Nc7iY6
- BDUNb4WzAXmocPuvOMU+ZMYepaybTd6+OqwS2cuAXRaFpXOi+HpYpn7j6K6hvn8rboM8sjqi7kx
- o=
-X-Received: by 2002:a05:600c:3845:b0:43c:f969:13c0 with SMTP id
- 5b1f17b1804b1-43d438a66afmr64742825e9.29.1742471460589; 
- Thu, 20 Mar 2025 04:51:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFAymTrT51C/JCGMlq3/PEnUEIRWVZtphI8kZOqCFk/tz413MUSxMwuoWqvRTJjdJi3mVgsFgPuky816fqVKMI=
-X-Received: by 2002:a05:600c:3845:b0:43c:f969:13c0 with SMTP id
- 5b1f17b1804b1-43d438a66afmr64742505e9.29.1742471460165; Thu, 20 Mar 2025
- 04:51:00 -0700 (PDT)
+ bh=QzVg6/xCh+WV9e1uzDmGPvWkxytjcf5d1/QumLRzrjI=;
+ b=fySiGVtBvm3V8jgqH9wGmleP85RLjWs19lRr7ghDGTaR7dkO3u90RAThB/XLUg4735
+ J5A4249HxxY1ECS2gzwAK1vHtJIh0cAQVL/jDEhA9DAHUoxcGlWIesYiai6lfmcvmuhf
+ nzKVfk+ZvmN4DxaiI+dUKuvbCS/JL6A00IDSuyDuBPlBpgAHLmfBmCW0ZqX5b5xgtAvd
+ ODlsQdU0IdP4MRIUtuRa7dBKP+asbBk4GTvGJiUTsNcSmZJfVy7otbrdp7ETf6Aql/sj
+ OHbqA1yb8JR03PNbQYT3RPxFvDssFfvhSEboxmp1djPPNfeqepOJ8ffSG0XBhNLBEYG9
+ +2Jg==
+X-Gm-Message-State: AOJu0YwL9vn0blSPjOI7sfLC4VPTo4oxKs+qOTSVK+uk5WLgft4FZhbp
+ 478cz6Jmqy6gqdE34YQKQ7AQI9cy+TMQsav+wrTmc+k3ydWjMi3D6SH4TpHlCltiMmJrYTixFhX
+ znVjDfX7Po+V4A5dWp3P7wGtoy0eSyQqrKZ1PrbF5+K+dkNVeKFbgmiuR2M0HMYXpPU10iO+4w4
+ MoxsnnSemJ2IfNVuD9SYWVxBeD8he3HVHsxO4y
+X-Gm-Gg: ASbGncuX1ESXa/WKyyx3phMU87onPa9JBnbVNWaftRFeA5CoyQnELr3Ni9/haMyAxSq
+ DM57cz4LyU6NulSRn4l8XxDuGP5uvihi6NfwWB5M73YsYlgl/IVIaawrwwVxWHBlUCcJZ9uCDJ3
+ yjIJYc/nR+lVZ2DwRO3Q+JgTjfvkwoeV1RBEnAy/bmwM/Xz24YCb0gyPjJGeI/ET2cH/2Fvlrbt
+ QCuG6A/ww19yjq/s6emQIAifrFkvDVCD5jTA9QJqcjpU46RdpN2veYRo8Ea62kuZ13wNa0t/SfD
+ LPgjOzF2ntXRDFwqmHx1
+X-Received: by 2002:a5d:47c8:0:b0:38a:88ac:f115 with SMTP id
+ ffacd0b85a97d-39973af8e00mr4691863f8f.34.1742471723417; 
+ Thu, 20 Mar 2025 04:55:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHw8ZCql9k9ALY9AvtPhmO+o36CMjDlXCXMtZ2CTWJ4tggQ9XKLV1Yptwys7OE58NfPl1Y0lg==
+X-Received: by 2002:a5d:47c8:0:b0:38a:88ac:f115 with SMTP id
+ ffacd0b85a97d-39973af8e00mr4691843f8f.34.1742471722979; 
+ Thu, 20 Mar 2025 04:55:22 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.194.153])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-395c83b6b2bsm23121239f8f.26.2025.03.20.04.55.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Mar 2025 04:55:22 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2] rust: assertions: add static_assert
+Date: Thu, 20 Mar 2025 12:55:21 +0100
+Message-ID: <20250320115521.808019-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-2-farosas@suse.de>
-In-Reply-To: <20250307134203.29443-2-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 20 Mar 2025 17:20:43 +0530
-X-Gm-Features: AQ5f1JoZjznct9vo44Nz4OUDlyw1JzvWPWAO1bAdY0pHetiv79dPUHkv-aiCa60
-Message-ID: <CAE8KmOx0KQ7OfbyivQ_256JVRugtJ8ekykxtQw-uz91Uiuv-tg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,88 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Fabiano,
+Add a new assertion that is similar to "const { assert!(...) }" but can be used
+outside functions and with older versions of Rust.  A similar macro is found in
+Linux, whereas the "static_assertions" crate has a const_assert macro that
+produces worse error messages.
 
-* First big thank you for starting/writing this document. It is a
-great resource.
-
-On Fri, 7 Mar 2025 at 19:13, Fabiano Rosas <farosas@suse.de> wrote:
-> +++ b/docs/devel/migration/multifd.rst
-> @@ -0,0 +1,254 @@
-> +Multifd
-> +Multifd is the name given for the migration capability that enables
-> +data transfer using multiple threads. Multifd supports all the
-> +transport types currently in use with migration (inet, unix, vsock,
-> +fd, file).
-
-* Multifd is Multiple File Descriptors, right? Ie. Does it work with
-one thread but multiple file descriptors? OR one thread per file
-descriptor is always the case? I have not used/tried 'multifd +
-file://' migration, but I imagined there one thread might be able to
-read/write to multiple file descriptors at a time.
-
-> +Usage
-> +-----
-> +
-> +On both source and destination, enable the ``multifd`` capability:
-> +
-> +    ``migrate_set_capability multifd on``
-> +
-> +Define a number of channels to use (default is 2, but 8 usually
-> +provides best performance).
-> +
-> +    ``migrate_set_parameter multifd-channels 8``
-> +
-
-* I get that this is a QEMU documentation, but for users/reader's
-convenience it'll help to point to libvirt:virsh migrate usage here ->
-https://www.libvirt.org/manpages/virsh.html#migrate , just as an
-alternative. Because doing migration via QMP commands is not as
-straightforward, I wonder who might do that and why.
-
-
-> +Restrictions
-> +------------
-> +
-> +For migration to a file, support is conditional on the presence of the
-> +mapped-ram capability, see `mapped-ram`.
-> +
-> +Snapshots are currently not supported.
-
-* Maybe: Sanpshot using multiple threads (multifd) is not supported.
-
-> +`postcopy` migration is currently not supported.
-
-* Maybe - 'postcopy' migration using multiple threads (multifd) is not
-supported. ie. 'postcopy' uses a single thread to transfer migration
-data.
-
-* Reason for these suggestions: as a writer it is easy to think
-everything written in this page is to be taken with multifd context,
-but readers may not do that, they may take sentences in isolation.
-(just sharing thoughts)
-
-> +Multifd consists of:
-> +
-> +- A client that produces the data on the migration source side and
-> +  consumes it on the destination. Currently the main client code is
-> +  ram.c, which selects the RAM pages for migration;
-
-* So multifd mechanism can be used to transfer non-ram data as well? I
-thought it's only used for RAM migration. Are device/gpu states etc
-bits also transferred via multifd threads?
-
-> +- A packet which is the final result of all the data aggregation
-> +  and/or transformation. The packet contains: a *header* with magic and
-> +  version numbers and flags that inform of special processing needed
-> +  on the destination; a *payload-specific header* with metadata referent
-> +  to the packet's data portion, e.g. page counts; and a variable-size
-> +  *data portion* which contains the actual opaque payload data.
-
-* It'll help to define the exact packet format here. Like they do in RFCs.
-
-Thank you for writing this.
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Supersedes: <20250320113356.799412-1-pbonzini@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
-  - Prasad
+ rust/qemu-api/src/assertions.rs | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
+index 104dec39774..bba38cfda11 100644
+--- a/rust/qemu-api/src/assertions.rs
++++ b/rust/qemu-api/src/assertions.rs
+@@ -120,3 +120,25 @@ macro_rules! assert_match {
+         );
+     };
+ }
++
++/// Assert at compile time that an expression is true.  This is similar
++/// to `const { assert!(...); }` but it works outside functions, as well as
++/// on versions of Rust before 1.79.
++///
++/// # Examples
++///
++/// ```
++/// # use qemu_api::static_assert;
++/// static_assert!("abc".len() == 3);
++/// ```
++///
++/// ```compile_fail
++/// # use qemu_api::static_assert;
++/// static_assert!("abc".len() == 2); // does not compile
++/// ```
++#[macro_export]
++macro_rules! static_assert {
++    ($x:expr) => {
++        const _: () = assert!($x);
++    };
++}
+-- 
+2.48.1
 
 
