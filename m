@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EACDC35FFF
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 15:48:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E96C35FFF
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 15:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvI7p-0003om-C9; Thu, 20 Mar 2025 11:48:05 -0400
+	id 1tvI7w-00041z-7p; Thu, 20 Mar 2025 11:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvI7F-0003QX-68
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 11:47:32 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvI7P-0003Tn-8W
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 11:47:49 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvI7C-0007mI-QT
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 11:47:28 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cebe06e9eso7419045e9.3
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 08:47:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvI7N-0007oG-J3
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 11:47:38 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-399744f74e9so643143f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 08:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742485644; x=1743090444; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dX9rUzkX3sdDr3FQsYg48xqFRgIMTEyFu0OjHzLhXeM=;
- b=jXu21+DYdFcEB/oFDFjTJsjUz2Z02geSnr085tJkJ2JwKhznxsnv2+7NKvZUZsI9Tx
- EoZFv55ECnVpF5aEH+Qdj0oGOsgUXVJmxOmOXNV5jy7hEigJ2e5SHrU4c11/o8VRH6vL
- AOvSod97tkrtE4HY6kjStwZJEiPwgA0XnZjO7KsrHMNrFjBO+3U88BuT/1anHAq7FJnf
- FeHrnYtO5hP36R4ZLrQPLfg7NToDCsNG5pMsd796K0ERhMmnnd3olgtOsXAC41q5touM
- M/2mzqUK8fugbsA2Lsyvy00HFnr7wmNVUS3rM1afv6dIUQxTqYnq4UycBYP5myWZu7yq
- hybg==
+ d=linaro.org; s=google; t=1742485653; x=1743090453; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GC9BJXwZMB68nDcfXgqs95N9vIk0tB0Sm7nNBQ7VN3g=;
+ b=yKpkJ1Eo8LuQmzL6FJedANYlBo6nHsu8C7Hfubf1qpFm7vdYiLKIdCBj+yiev2bmzK
+ xkWo9cWBpjcQ8YS8PAFJ9ducxqOCZPo+OO+m7nRHyYVLp3QlapiGRokTSm/7KHbgJnEs
+ 7Jph4ioiv8xIz/2VfalEWDkORymU/GV0rf3qPNlJlt83EJaOiNd7R7Jgc05NdZkkslXE
+ VGTBEMjNst64mGN71ffGBxjJ11o0ztYRlX756IX/abHQ48rBd0OIE1F0I4xSgDn4KzEm
+ 3naY98FmGlipSrO1woSpIdKUsaPUCePhmRYYbKmscnWW2twNPwVma8P+spsd8T/U4FsA
+ tcMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742485644; x=1743090444;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dX9rUzkX3sdDr3FQsYg48xqFRgIMTEyFu0OjHzLhXeM=;
- b=Hs4PU5WrVTSa/eX5Qybqa2K5oB0mHSfkq5ama2pltScwTpUvK7WeYkb6/X2yNiQaQ+
- JZi4tkJs3fbIpVkdZcKC6UI2CmnPVBqjMHbYX/VEFYtLxYJts0Awt5t+nx7RvMl4CL0J
- SNFlyxuFpdmO4XBmd081tHDKiIUOZK2sse4tCqxDK46dEXwQe7UfFYYhrPUdEGhWhsat
- wB5r0MwCkrEdlEXxmL/X3+1KJep+J2Bm4elRCQkALmMd5sOsM1jjEKsZN4UvWtrSr5Mu
- r3UOTZA2mSnowEj9eKyuOX2MBHyRO4vwE5USC6UxbNXymJEOANx+lsvUsZxUtLpJrDPa
- S8hQ==
-X-Gm-Message-State: AOJu0Yz6K2RC8CtFe8gjB4Bg2tah5EFsMeDQ+Q6hhjjZ4Ms9o5J5ErlU
- ZudYDQWqhbGVfF3TnxzFpeGuWAJ17yw0k7MS8DCkFYaddBXjpyfKH6Od+P7DXA7edYyXQBwmyfP
- 6
-X-Gm-Gg: ASbGncvvaKW+csoX9sedrV2SQMhrpIOZLd9y7GogL31aOAUaRA7ecLIIjL5QcW1CdB3
- 4/00nNYoiLN2sa2MBGavc8GSoPbO29+KDYnd3Ff3sZtdfEm2EfsdwblKQ5HN+0UvE0BM3wOeleo
- 8965vvZKLDMZqYwoQ2aLu7DLRybedwlre8G0RP1GYR+HbRGs+LVEjXugq5pkC3iq0YL4mzTQllB
- x3pBC0roqQGcVz/vFVJxaVTZKODUNltLwpXIldSjE60H3UpjBMLfklx090zHXdP3lsJV4GgVDfR
- 8kMlqt9PM0gZynodPDCqdoDSzdtz59YfWeNvNVdFikwBLvUManopobhRG26fILyEP1Ogrolznmp
- 6Q1G6yvyk1ktvPhzJ+0ZsUJoSN+RvT12z2vg=
-X-Google-Smtp-Source: AGHT+IHKLSBAaGymF10RQgWCYq22PPMV+5kVdDb1E4uxBnBj5Z/ceNqRWTQrFhT1jC14EmvDO/58KA==
-X-Received: by 2002:a05:600c:4fc8:b0:43d:a90:9f1 with SMTP id
- 5b1f17b1804b1-43d4378212cmr58732205e9.6.1742485644017; 
- Thu, 20 Mar 2025 08:47:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742485653; x=1743090453;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GC9BJXwZMB68nDcfXgqs95N9vIk0tB0Sm7nNBQ7VN3g=;
+ b=KzRK2amgE2KvPCS8NRgzrzZbuJxZ1cNWtAXmgHJUvOPA/JMV49xeeZFUSMrK20s4mQ
+ iDtjcyZatNYZYgO0HE84cP06olRAros3dHDcfk+e89jFw4zz+j1gchwS4hhya6wx/xhv
+ Qd9OFxMJQ7twwxs6fJpdJ1LaIm5oIjQclPjeEKyDOTDh6CiKg1uyH9d7PE2PLHmaaOim
+ UKQRE/ZZYqDUHOUYRy3h4nWBJzxj8JRCtdr5KtlMwGwtoJ+QYBLRO86WQDELo+pict0S
+ HXIuWOYIg+3g/ipoeAE8CcC/sgdRRrxk8GoKT1sNebgBfxNXPOHztZ6qouHW/0MQvZ+s
+ g0mw==
+X-Gm-Message-State: AOJu0YxK5WvJLEB6yTekLlu1s0ZAqnabBXGkhaZapywFgikIp4KU9BuA
+ j0E6bm0StxCnEFfdveKCqtJyIxaQbTwzf/6BuPvDa434lZkV6Hvt+cQ2z/gMDLKD1SITM7cj7yH
+ N
+X-Gm-Gg: ASbGnctnh5WB2UbFysvx8R6swGJYPi7APTBDJImeVisCpdu76oWPVo+XklA+gZas8O4
+ KRROStJ9zVGP1Xs54ZqXjRPwO7bNfLfjC55TRg/7xN/VdYfSSAoAKRJfYrPoRVvgipLGfem++ZY
+ H4L72q1W2HKDdvhWF9vADNoP6S9g1dm9HcV3L0nUjMuNfNxVEWgos+JmAuOWESB6rwQgYsbFeWY
+ w11Q/dG6tpN2cXXbztqryOTQwJ/jUCx7jIWYKyqFeC8we8eoXv1Hb/dq9UcVy7ICHHnYduzoavk
+ uxZbx34L295knzUctP4GnTCbIFA+C4ANyiqVfTvHNpQ4Wl7S62D7aVGt7KZFEaLtqI6bmYGPzZk
+ BvTwg+IXhpqMPV1OXV86r+nhj
+X-Google-Smtp-Source: AGHT+IF6djAcd1lLvRp2p/RhIZ/hWfF6UWx0s42BFk2yoq7T2E2/r3C+EtXWa3aVpAGdaiV46louwQ==
+X-Received: by 2002:a5d:598f:0:b0:390:fb37:1ca with SMTP id
+ ffacd0b85a97d-39973b04a9amr8653898f8f.53.1742485653445; 
+ Thu, 20 Mar 2025 08:47:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d440ed5e0sm51715915e9.37.2025.03.20.08.47.23
+ ffacd0b85a97d-395cb40fa30sm24349899f8f.68.2025.03.20.08.47.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Mar 2025 08:47:23 -0700 (PDT)
+ Thu, 20 Mar 2025 08:47:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -69,15 +70,17 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 0/6] qom: Add object_class_implements_type()
-Date: Thu, 20 Mar 2025 16:47:16 +0100
-Message-ID: <20250320154722.27349-1-philmd@linaro.org>
+Subject: [PATCH-for-10.1 2/6] qom: Add object_class_implements_type()
+Date: Thu, 20 Mar 2025 16:47:18 +0100
+Message-ID: <20250320154722.27349-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250320154722.27349-1-philmd@linaro.org>
+References: <20250320154722.27349-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,52 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Add the object_class_implements_type() method to check whether
+a class implement a type, which can be ambiguous for interfaces.
 
-object_class_dynamic_cast() checks whether a class implements
-a type name, and return the class casted appropriately. This
-also works with interfaces, except when an interface is
-implemented multiple times (by intermediate abstract parents /
-interfaces).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qom/object.h | 10 ++++++++++
+ qom/object.c         | 11 +++++++++++
+ 2 files changed, 21 insertions(+)
 
-This series factors object_class_implements_type() out of
-object_class_dynamic_cast() and use it (at least the meaning
-seems clearer to me when reviewing).
-
-I could get it working with object_class_foreach() but for
-some reason fail at writing a proper test. Posting the last
-patch as RFC so we can discuss it on the list.
-
-Regards,
-
-Phil.
-
-Philippe Mathieu-Daudé (6):
-  qom: Factor object_class_dynamic_cast_ambiguous() out
-  qom: Add object_class_implements_type()
-  qom: Test object_class_implements_type()
-  qom: Prefer object_class_implements_type() to check type
-    implementation
-  qom: Use object_class_implements_type() in object_class_foreach()
-  XXX qom: Test object_class_get_list()
-
- include/qom/object.h             | 10 ++++++
- chardev/char.c                   |  2 +-
- hw/arm/xlnx-versal-virt.c        |  2 +-
- hw/core/cpu-common.c             |  2 +-
- hw/core/machine.c                |  4 +--
- hw/i386/xen/xen_platform.c       |  2 +-
- hw/pci/pci.c                     |  6 ++--
- qom/object.c                     | 29 ++++++++++++++---
- qom/object_interfaces.c          |  2 +-
- qom/qom-qmp-cmds.c               |  4 +--
- system/qdev-monitor.c            |  4 +--
- system/tpm.c                     |  2 +-
- target/alpha/cpu.c               |  2 +-
- target/rx/cpu.c                  |  2 +-
- tests/unit/check-qom-interface.c | 56 ++++++++++++++++++++++++++++++++
- 15 files changed, 108 insertions(+), 21 deletions(-)
-
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 9192265db76..fd74d4be89f 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -995,6 +995,16 @@ const char *object_class_get_name(ObjectClass *klass);
+  */
+ bool object_class_is_abstract(ObjectClass *klass);
+ 
++/**
++ * object_class_implements_type:
++ * @klass: The class to check the implementation for.
++ * @typename: The QOM typename of the implementation to check to.
++ *
++ * Returns: %true if @klass implements %typename, %false otherwise.
++ */
++bool object_class_implements_type(ObjectClass *class,
++                                  const char *typename);
++
+ /**
+  * object_class_by_name:
+  * @typename: The QOM typename to obtain the class for.
+diff --git a/qom/object.c b/qom/object.c
+index 1620a87ef44..b9948937935 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -992,6 +992,17 @@ static ObjectClass *object_class_dynamic_cast_ambiguous(ObjectClass *class,
+     return ret;
+ }
+ 
++bool object_class_implements_type(ObjectClass *class,
++                                  const char *typename)
++{
++    ObjectClass *k;
++    bool ambiguous = false;
++
++    k = object_class_dynamic_cast_ambiguous(class, typename, &ambiguous);
++
++    return k || ambiguous;
++}
++
+ ObjectClass *object_class_dynamic_cast(ObjectClass *class,
+                                        const char *typename)
+ {
 -- 
 2.47.1
 
