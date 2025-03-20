@@ -4,109 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CBA1C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 13:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF366C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 13:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvG78-0006Zp-JH; Thu, 20 Mar 2025 09:39:16 -0400
+	id 1tvGLu-00010o-Vf; Thu, 20 Mar 2025 09:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tvG75-0006ZN-7t
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 09:39:12 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tvG6y-0004RX-Rc
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 09:39:09 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4EC7A21CBF;
- Thu, 20 Mar 2025 13:38:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742477930; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAmNtGIdRDlZpkP7X+kwadQFkRWIn0L8T1bDc7wClz4=;
- b=Xm7DzY57cF6+cjzx7MIhabssEN1DZRA5cXmYKTL6UKms4nveSBUp9m1Lw1POu/xcEPhV0A
- w81EBcQCOUxucgv/JMi8tM2rGsw+20DzUFEeSvXBNwB13nADqWE2VuKPdOipySMFRCAroP
- 3Kuxsl96PRcaEDJtcQ6SaQEBXfaAFZk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742477930;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAmNtGIdRDlZpkP7X+kwadQFkRWIn0L8T1bDc7wClz4=;
- b=OTmQrPbIS7OARZKdYl3LnmTucYAkX6ndbSdY72xkoHtIfsYVaQHUSUcVQjQrOIl1oORCaz
- woXxnIFSO6JkpGCw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742477930; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAmNtGIdRDlZpkP7X+kwadQFkRWIn0L8T1bDc7wClz4=;
- b=Xm7DzY57cF6+cjzx7MIhabssEN1DZRA5cXmYKTL6UKms4nveSBUp9m1Lw1POu/xcEPhV0A
- w81EBcQCOUxucgv/JMi8tM2rGsw+20DzUFEeSvXBNwB13nADqWE2VuKPdOipySMFRCAroP
- 3Kuxsl96PRcaEDJtcQ6SaQEBXfaAFZk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742477930;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAmNtGIdRDlZpkP7X+kwadQFkRWIn0L8T1bDc7wClz4=;
- b=OTmQrPbIS7OARZKdYl3LnmTucYAkX6ndbSdY72xkoHtIfsYVaQHUSUcVQjQrOIl1oORCaz
- woXxnIFSO6JkpGCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BF2F313757;
- Thu, 20 Mar 2025 13:38:49 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2BxbH2ka3GceTgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 20 Mar 2025 13:38:49 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, "Maciej S .
- Szmigiero" <mail@maciej.szmigiero.name>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>
-Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
-In-Reply-To: <CAE8KmOwkLoPB=wLuE5WC0HERzmUqAqjP9ZECTvxBELaN31yBVQ@mail.gmail.com>
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-2-farosas@suse.de> <Z8ssc0NETt9KJjTG@x1.local>
- <87tt84u0d2.fsf@suse.de> <Z8tv53G5s9MLYv6f@x1.local>
- <87o6y9t14g.fsf@suse.de> <Z88DmvrNrW5Q1n7y@x1.local>
- <87ecz4adoi.fsf@suse.de>
- <CAE8KmOwkLoPB=wLuE5WC0HERzmUqAqjP9ZECTvxBELaN31yBVQ@mail.gmail.com>
-Date: Thu, 20 Mar 2025 10:38:47 -0300
-Message-ID: <878qozbz4o.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <prvs=1678d28e3=graf@amazon.de>)
+ id 1tvGLg-000106-O5
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 09:54:21 -0400
+Received: from smtp-fw-80006.amazon.com ([99.78.197.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=1678d28e3=graf@amazon.de>)
+ id 1tvGLc-00074v-7d
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 09:54:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1742478852; x=1774014852;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=qSZMBivb2Y9jLImO1fl0gDWje0K57nODnLUNlg4HJz0=;
+ b=UA4el6b+U/PYud562UsHV55Kr9+CICNaCGizfDVpakj/uf2TWX/76Uqz
+ wV8Aklv6Dx+7On4+a89I3IEFe1nS8g7mgcbopWMmRiF8J3RMF/pQGKXF9
+ XPs/pXwB9OzWmCeDc1dbEssPc9t+8u8DdQNfMsJCOsAvlKEPVT2L0JIqi I=;
+X-IronPort-AV: E=Sophos;i="6.14,261,1736812800"; d="scan'208";a="33584194"
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
+ by smtp-border-fw-80006.pdx80.corp.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2025 13:54:06 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [10.0.21.151:22091]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.1.69:2525] with
+ esmtp (Farcaster)
+ id c6c62568-ff34-454d-8fef-87e158876aa9; Thu, 20 Mar 2025 13:54:06 +0000 (UTC)
+X-Farcaster-Flow-ID: c6c62568-ff34-454d-8fef-87e158876aa9
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Thu, 20 Mar 2025 13:54:00 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Thu, 20 Mar 2025
+ 13:53:56 +0000
+Message-ID: <c7f840d5-19ed-493e-8de8-7d64aef38948@amazon.com>
+Date: Thu, 20 Mar 2025 14:53:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Gerd Hoffman <kraxel@redhat.com>
+CC: Ani Sinha <anisinha@redhat.com>, =?UTF-8?B?SsO2cmcgUsO2ZGVs?=
+ <joro@8bytes.org>, Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Igor
+ Mammedov" <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ <qemu-devel@nongnu.org>
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+ <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <6684f169-29d6-4f46-b274-1efd4c191b21@amazon.com>
+ <ok6u7exmwmh7qsahp5o3udnbbzbsr2km22kpqod37t6mdsywcs@yhk2whhakl63>
+ <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D032UWA001.ant.amazon.com (10.13.139.62) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=99.78.197.217;
+ envelope-from=prvs=1678d28e3=graf@amazon.de; helo=smtp-fw-80006.amazon.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,45 +109,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
+Hey Gerd,
 
-> On Tue, 11 Mar 2025 at 00:59, Fabiano Rosas <farosas@suse.de> wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> > To me, this is a fairly important question to ask.  Fundamentally, the very
->> > initial question is why do we need periodic flush and sync at all.  It's
->> > because we want to make sure new version of pages to land later than old
->> > versions.
-> ...
->> > Then v1 and v2 of the page P are ordered.
->> > If without the message on the main channel:
->> > Then I don't see what protects reorder of arrival of messages like:
-> ...
->> That's all fine. As long as the recv part doesn't see them out of
->> order. I'll try to write some code to confirm so I don't waste too much
->> of your time.
+On 18.03.25 12:11, Gerd Hoffman wrote:
+>    Hi,
 >
-> * Relying on this receive order seems like a passive solution. On one
-> side we are saying there is no defined 'requirement' on the network or
-> compute capacity/quality for migration. ie. compute and network can be
-> as bad as possible, yet migration shall always work reliably.
+>> Maybe not from the user's point of view, but surely for the vmfwupdate
+>> interface design and for the launch measurement calculations.
+>>
+>> When using igvm parameters for the kernel hashes we need to pass on (at
+>> least) two items via vmfwupdate API:  The igvm image itself and the
+>> kernel hashes, so the VMM can fill the parameters for launch.
+>>
+>> I tend to think it makes sense to keep the region list, so we can
+>> actually pass on multiple items if needed, and simply add region flags
+>> to declare that a region is an IGVM image.
+> Went over the interface spec today, here it is.  Changes:
 >
-> * When receiving different versions of pages, couldn't multifd_recv
-> check the latest version present in guest RAM and accept the incoming
-> version only if it is fresher than the already present one? ie. if v1
-> arrives later than v2 on the receive side, the receive side
-> could/should discard v1 because v2 is already received.
+>   - Moved descriptions into source code comments.
+>   - Added leftovers noticed in recent discussions, such as cpuid page.
+>   - Added capability flags and region flags for IGVM.
 >
+> Open questions:
+>
+>   - Does the idea to use igvm parameters for the kernel hashes makes
+>     sense?  Are parameters part of the launch measurement?
+>   - Do we want actually keep the complete interface (and the functional
+>     overlap with igvm)?
 
-"in guest RAM" I don't think so, the performance would probably be
-affected. We could have a sequence number that gets bumped per
-iteration, but I'm not sure how much of a improvement that would be.
 
-Without a sync, we'd need some sort of per-page handling*. I have a gut
-feeling this would get costly.
+I think if we want to embrace IGVM, we should embrace it fully and make 
+it replace the region list. At the end of the day, IGVM is effectively a 
+region list plus data.
 
-*- maybe per-iovec depending on how we queue pages to multifd.
+How difficult would it be to put up a prototype that uses only IGVM as 
+vmfwupdate payload? We can definitely assemble that IGVM in ukify.py or 
+as part of the boot stub. Or for the prototype even pre-assemble by hand.
 
-> Thank you.
-> ---
->   - Prasad
+
+Alex
+
 
