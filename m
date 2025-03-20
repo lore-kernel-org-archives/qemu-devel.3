@@ -4,106 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59EE5C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87056C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvAH6-0003Bu-Mr; Thu, 20 Mar 2025 03:25:10 -0400
+	id 1tvAHv-0003PY-51; Thu, 20 Mar 2025 03:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAGz-00037Y-4d
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:25:01 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAGw-0002SR-15
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:25:00 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cf3192f3bso3791865e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 00:24:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742455495; x=1743060295; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OfAuJYtA3gt8CE28/QLl0zbRSj4IcfSgyPCV7JDaP3o=;
- b=T+j91h5OZcTvqN7oBgMDVyzmrOeeenu/28z8XNENrMPa0YvMc+EoCHBSE3qKDAg6wU
- sw/N+RvRi1VRutu+Gzeu/p+38NJElKELohnlOa4XKcjK3XBDghf12flMO5s0eoRspnLR
- dyTlJOgqDkkasRck5bN9Jl9RVjCUNPwiH+ACG+weTUJCVJkv1T5glgcUPydvYwdJy8or
- sp4Hzb7QMYCuJvICmJjyotm1y7H25+WIC5j5mOK2MbC3V4DRYntmR7uIyk7y0lN5zOiM
- a7q9DnV+pb/ynwM3Cim8KEtyV6ZktSInHQ7jKRLCSMGVxjDTADEaFBjilQrXPAXirlTH
- N9pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742455495; x=1743060295;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OfAuJYtA3gt8CE28/QLl0zbRSj4IcfSgyPCV7JDaP3o=;
- b=CVjhw66YYeQJD2P+W+ajkg7F7EaWZMle1XDuGcPgi7NUI3caNZy5arMzTE1x5Sqna/
- DQUAP93IXRNstLdZw6pmI4XK8+NhDUTyxnzVr7iAlahiTGtemBCFwbEDnPGPOcQS0SFF
- u+hwwDS0umuD0YJKix9doGemX5UJr4TEUNNj+nhGVTNt+0PacHNbO/tyjxetOhB4tI6t
- Sj25V2Mh1pFqtzFsF75qyYw5srD9Ibl42zfjqXDVI9z6LMHsXGRThUXaKirHBfsEHl7i
- t0jGbGBZe7u4/oLW+jC1Y8ak7vsarc9gJCmZy0WcXdOlfTJ8HzttPFX3bA7HAO/PDy0s
- rY/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWLXspnrdf6LrHJgmq3rLwboy0fICdDStQSBrACIbjDKXRJuZbYvkty0Bmncqxk/1gYKFaqyiHZoFS@nongnu.org
-X-Gm-Message-State: AOJu0Yw/q9OozQapV583DA/A49uOQEp1GQlrUf5dN5G02qbbkDKYbzV/
- W5TprBRyP0VU2pyWKfUJj1pdAKhoxIoFkLUvlltn2Pk63KXBMnyzCsyrD2shc18=
-X-Gm-Gg: ASbGnct/FPZGFIfeVqXruRKUrKUNLeYlCfl/kkDcY+gRgggTV6AKMzAnHwE9cp2IUxa
- JTd6FlQgx9UAGDVckGNK3v3blCeRlawVDNFMm30qGrQ3w4Nwa7auMcJQ80FMqMuKKr5TV8o/Wrg
- FCAICDIRn1BPV2EDHpVQMzQPYbvDuDgGmTe3oAf/7Gi0UR+vtV2BL+mq8POZoyoDTnQyNMJGyZ3
- GtgquZ14YYt7RIA3RZPi76kj+meNEXOEb3sKkohVgBI+3TI/oVJ5JK486zQSDO6Wx52+AFtesnA
- eGZyJA1CBdkQ7vnGEmIfxQoF+HlSqm4mEKiKy1ch4gzbH1CsW0kF8/en/jVOX/QpC33tzS4kQzv
- sZYHzNxx3ZPwt
-X-Google-Smtp-Source: AGHT+IGllMEfpF+aiZg+sVrY/WHZ+kuxHj2Mg5kkRDq2lm97gIt7Jbowg3G27DoK9OUMMT0oIuc1xA==
-X-Received: by 2002:a5d:47c9:0:b0:391:3f4f:a17f with SMTP id
- ffacd0b85a97d-399795d8a4cmr1817785f8f.42.1742455494923; 
- Thu, 20 Mar 2025 00:24:54 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395cb40cdafsm23136118f8f.62.2025.03.20.00.24.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 00:24:54 -0700 (PDT)
-Message-ID: <e54c91c2-6035-4259-9557-16d99c844ff7@linaro.org>
-Date: Thu, 20 Mar 2025 08:24:53 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvAHg-0003OC-JL
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:25:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvAHc-0002YI-VY
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:25:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742455539;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZO8WXhTrRRpiMePU8N0cVb5WgJI184a2nZrBdFGA7Ho=;
+ b=ApLPhoDOnaPwxNR17kpvhM+cC+b1lyACVeDvT604o8XuZDuP2n3N7RL9FI8pXXUJrKlDZ5
+ 43uu8yoWYBdhn1LQZQZ2HV8ua9xIFuMUJaJm/Nb/b3AV5p+020yYyVWyjtZ86pTbKfXvRH
+ ElSWt+1ZCbkG4k4/kx1dJE5DvmMSP0c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-vqEk_1nZOBOy-S0HyBtGuw-1; Thu,
+ 20 Mar 2025 03:25:32 -0400
+X-MC-Unique: vqEk_1nZOBOy-S0HyBtGuw-1
+X-Mimecast-MFC-AGG-ID: vqEk_1nZOBOy-S0HyBtGuw_1742455531
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5DA21809CA6; Thu, 20 Mar 2025 07:25:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEE39180094A; Thu, 20 Mar 2025 07:25:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CC52821E66C4; Thu, 20 Mar 2025 08:25:25 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: bibo mao <maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v5 2/6] hw/loongarch/virt: Fix error handling in cpu plug
+In-Reply-To: <c1e74ed3-f60a-0bd6-9806-b5ec111e466d@loongson.cn> (bibo mao's
+ message of "Thu, 20 Mar 2025 14:30:35 +0800")
+References: <20250320032158.1762751-1-maobibo@loongson.cn>
+ <20250320032158.1762751-3-maobibo@loongson.cn>
+ <875xk4i5wb.fsf@pond.sub.org>
+ <c1e74ed3-f60a-0bd6-9806-b5ec111e466d@loongson.cn>
+Date: Thu, 20 Mar 2025 08:25:25 +0100
+Message-ID: <878qp0go4a.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] gdbstub: introduce target independent gdb register
- helper
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
- David Gibson <david@gibson.dropbear.id.au>, qemu-s390x@nongnu.org,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
- Greg Kurz <groug@kaod.org>, Nicholas Piggin <npiggin@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <20250319182255.3096731-3-alex.bennee@linaro.org>
- <d3ea5401-866c-40a0-9ccc-6c681b760535@daynix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d3ea5401-866c-40a0-9ccc-6c681b760535@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,97 +90,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/3/25 07:19, Akihiko Odaki wrote:
-> On 2025/03/20 3:22, Alex Bennée wrote:
->> The current helper.h functions rely on hard coded assumptions about
->> target endianess to use the tswap macros. We also end up double
->> swapping a bunch of values if the target can run in multiple endianess
->> modes. Avoid this by getting the target to pass the endianess and size
->> via a MemOp and fixing up appropriately.
->>
->> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> The overall idea looks good to me. I have a few nitpicks:
-> 
->> ---
->>   include/gdbstub/registers.h | 30 ++++++++++++++++++++++++++++++
->>   gdbstub/gdbstub.c           | 22 ++++++++++++++++++++++
->>   2 files changed, 52 insertions(+)
->>   create mode 100644 include/gdbstub/registers.h
->>
->> diff --git a/include/gdbstub/registers.h b/include/gdbstub/registers.h
->> new file mode 100644
->> index 0000000000..4abc7a6ae7
->> --- /dev/null
->> +++ b/include/gdbstub/registers.h
->> @@ -0,0 +1,30 @@
->> +/*
->> + * GDB Common Register Helpers
->> + *
->> + * Copyright (c) 2025 Linaro Ltd
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef GDB_REGISTERS_H
->> +#define GDB_REGISTERS_H
->> +
->> +#include "exec/memop.h"
->> +
->> +/**
->> + * gdb_get_register_value() - get register value for gdb
->> + * mo: size and endian MemOp
->> + * buf: GByteArray to store in target order
->> + * val: pointer to value in host order
->> + *
->> + * This replaces the previous legacy read functions with a single
->> + * function to handle all sizes. Passing @mo allows the target mode to
->> + * be taken into account and avoids using hard coded tswap() macros.
->> + *
->> + * Returns the number of bytes written to the array.
->> + */
->> +int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val);
->> +
->> +#endif /* GDB_REGISTERS_H */
->> +
->> +
->> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
->> index 282e13e163..3d7b1028e4 100644
->> --- a/gdbstub/gdbstub.c
->> +++ b/gdbstub/gdbstub.c
->> @@ -32,6 +32,7 @@
->>   #include "exec/gdbstub.h"
->>   #include "gdbstub/commands.h"
->>   #include "gdbstub/syscalls.h"
->> +#include "gdbstub/registers.h"
->>   #ifdef CONFIG_USER_ONLY
->>   #include "accel/tcg/vcpu-state.h"
->>   #include "gdbstub/user.h"
->> @@ -45,6 +46,7 @@
->>   #include "system/runstate.h"
->>   #include "exec/replay-core.h"
->>   #include "exec/hwaddr.h"
->> +#include "exec/memop.h"
->>   #include "internals.h"
->> @@ -551,6 +553,26 @@ static int gdb_write_register(CPUState *cpu, 
->> uint8_t *mem_buf, int reg)
->>       return 0;
->>   }
->> +/*
->> + * Target helper function to read value into GByteArray, target
->> + * supplies the size and target endianess via the MemOp.
->> + */
->> +int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val)
->> +{
->> +    size_t bytes = memop_size(op);
->> +
->> +    if (op & MO_BSWAP) {
->> +        for ( int i = bytes ; i > 0; i--) {
-> 
-> memop_size() returns unsigned, but bytes is size_t and i is int, and 
-> this function returns int. Let's keep them consistent.
+bibo mao <maobibo@loongson.cn> writes:
 
-I wasn't sure why this method returns any information at all, but
-apparently the next patch shows some uses. Indeed as Akihiko pointed,
-if we return something, let it be unsigned (possibly size_t).
+On 2025/3/20 =E4=B8=8B=E5=8D=882:16, Markus Armbruster wrote:
+>> Bibo Mao <maobibo@loongson.cn> writes:
+>>=20
+>>> In function virt_cpu_plug(), it will send cpu plug message to interrupt
+>>> controller extioi and ipi irqchip. If there is problem in this function,
+>>> system should continue to run and keep state the same before cpu is
+>>> added.
+>>>
+>>> Object cpuslot::cpu is set at last only when there is no any error.
+>>> If there is, send cpu unplug message to extioi and ipi irqchip, and then
+>>> return immediately.
+>>>
+>>> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
+>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+
+[...]
+
+>> Hmm.
+>>=20
+>> You're right about the problem: virt_cpu_plug() neglects to revert
+>> changes when it fails.
+>>=20
+>> You're probably right to move the assignment to cpu_slot->cpu to the
+>> end.  Anything you can delay until success is assured you don't have to
+>> revert.  I say "probably" because the code that now runs before the
+>> assignment might theoretically "see" the assignment, and I didn't
+>> examine it to exclude that.
+>>=20
+>> Where I have doubts is the code to revert changes.
+>>=20
+>> The hotplug_handler_plug() error checkign suggests it can fail.
+>>=20
+>> Can hotplug_handler_unplug() fail, too?  The error checking in
+>> virt_cpu_unplug() right above suggests it can.
+>
+> Basically from existing code about ipi/extioi hotplug handler, it is
+> impossible to there is error, here is only for future use.
+
+Aha.  More at the end of my reply.
+
+> If there is error in function virt_cpu_plug(), undo() such as=20
+> hotplug_handler_unplug() should be called. However if undo() reports=20
+> error, I do not know how to handle it, here just discard error in=20
+> function undo().
+
+Steinbach's Guideline for Systems Programming: Never test for an error
+condition you don't know how to handle.
+
+This old quip is a funny way to say that errors we don't know how to
+handle are *bad*, and should be avoided.
+
+> Regards
+> Bibo Mao
+>>=20
+>> What happens if it fails in virt_cpu_plug()?
+
+You assure us this can't happen today.  Because of that, broken error
+recovery is not an actual problem.
+
+However, if things change some day so it can happen, broken error
+recovery becomes an actual problem.
+
+so, broken error recovery just "for future use" is actually just for
+silent future breakage.
+
+But is it broken?  This is what I'm trying to find out with my "what
+happens if" question.
+
+If it is broken, then passing &error_abort would likely be less bad:
+crash instead of silent breakage.  Also makes it completely obvious in
+the code that these errors are not handled, whereas broken error
+handling looks like it is until you actually think about it.
+
 
