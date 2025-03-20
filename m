@@ -4,88 +4,208 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 975C9C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 20:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38263C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 20:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvMOG-0000sz-Hr; Thu, 20 Mar 2025 16:21:20 -0400
+	id 1tvMSu-0002PE-MT; Thu, 20 Mar 2025 16:26:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tvMOD-0000sa-Pu
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:21:18 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tvMOA-0006iT-DG
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:21:17 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5e5e8274a74so1939269a12.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 13:21:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742502071; x=1743106871; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0HtNq6Er9OBg+aCTJqYT3cnco2Ah8ZEAsHEr6xP5S38=;
- b=OmH396G5xbuFJSUZS1m5B2brkVK70WzvjGV1VGDp+/0SJ7YAo839Fa5iPhLp5Zqjlx
- kgiS0ulf5GpVvSBDjLeFgd02sJFjbX+d+RDL+VypAYxohy7kFVXMA9jcxXQlqzxcKuzs
- IVgUmzSrA1XL9oy0S7RTnJSkrehzLhKb4KGpVtgVP22DqK+JPN6rGD1upepCNDBTNmuw
- S9cLj+goEIOvIy+7Vh+cADDmhi3ImXPEFv/GWltNeejKLPf5rfRXQOiCm01bxScDo2Ub
- UtnDXQboLGFgP61nNs9ai+PEXHK7Zt/BopPtLa7yYa3/rTCMztokwyoTfjua/Kp148az
- /n9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742502071; x=1743106871;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0HtNq6Er9OBg+aCTJqYT3cnco2Ah8ZEAsHEr6xP5S38=;
- b=D9q+jJ3QYLqPSRdMfjqewX4N33cxjB49InT/VFcbSR3YwgFeWk2S0TBghJi/HgYjcX
- 7wxd8BgjqaQztywuyeg600jcZGDABPb7Kv/OaASTbYSyk1CrcXbhy0QEUjTYHHln0Pkk
- jJwEkQ8ElJ6sTJUz7tbeEShyWoh74CrYxFcPosjZ3lIo3OXOUw0vlgVghMpgm7w5DVWs
- Ph9UGuG0CwLKRq4r4xqpzA9x3DcDtpiQGMoeoUNic9qouGUgYclaPl5K69/Bw6U7uewo
- kk1haRiUvzr7ARnDnwOVQqYdqHh++ZGDLoMYPGT1FVg652oQSEEEPheZqniR5HBztQqj
- DDBA==
-X-Gm-Message-State: AOJu0YzzFY4kV2gk9yNpqQXAE45m37FtZUaAbmr2BmOT5f+gliYqMQGP
- XZX/pi9yt4p9BaShge3QJirEh3SKwp+XG8Mu9qbz1iYhlA1yrRfBMUqO3Q==
-X-Gm-Gg: ASbGnctfQvWKW3sd1X4ALWIHuU9ZSoaNY83fVtdJ0pab5GOLQkjW0adzAalK1Jj8rCj
- 3lVlyMkEF6nOgmSnFTwPwqud4wzZ1/4+LjJHScXrYbb28xX75Uh7cJad57D7Weuu0tl8G3ySK8u
- BlQZ2BJCE/OFztBTK8h2UtRAhAPBxUMQLomypdAtSmvGBXLXCRqbbrzj4kQvmYfKRU7ZH4YUGKr
- YG2MUlI1ENbrUuxJ8E3iOO3K1VA/CrjYIM0yDAKvyaLMG37kQosP06Vp74JStjqtbH8NnKf5mGt
- HmS2FuL2cjiHAWjaUQZ+HTh4nUpxYkG7/+nzNdL8tR9ujMJk5R3O4vThk+xPZq6NZAwycbuo6kT
- nF2cDASYSSBvst88t+o/qJ6m7EWL4E67NwT5n6TheizIOyRus1i9f
-X-Google-Smtp-Source: AGHT+IGp6saZClzggLsMjgImc9D7yvy7mGe6CVsDK+7kuQItrltyoWXmbi2k5MiOSVlaNAl9miW2dw==
-X-Received: by 2002:a05:6402:3508:b0:5e5:c0e7:f428 with SMTP id
- 4fb4d7f45d1cf-5ebcd24cebfmr634882a12.0.1742502070982; 
- Thu, 20 Mar 2025 13:21:10 -0700 (PDT)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-1a2e-5200-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
- [2a02:3100:1a2e:5200:69d2:56f6:a5af:50a8])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ebcd0df501sm236894a12.69.2025.03.20.13.21.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 13:21:10 -0700 (PDT)
-Date: Thu, 20 Mar 2025 19:22:35 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Ilya Chichkov <i.chichkov@yadro.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-CC: nikita.shubin@maquefel.me
-Subject: Re: [PATCH v2] hw/rtc: Add RTC PCF8563 module
-In-Reply-To: <20250310113635.349822-1-i.chichkov@yadro.com>
-References: <20250310113635.349822-1-i.chichkov@yadro.com>
-Message-ID: <0F90EED3-5010-4C2F-90F3-9C0C40A5C0ED@gmail.com>
+ (Exim 4.90_1) (envelope-from <sidneym@quicinc.com>)
+ id 1tvMSp-0002OQ-KO
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:26:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sidneym@quicinc.com>)
+ id 1tvMSn-0007Dw-2U
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 16:26:03 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KEYOSZ025394;
+ Thu, 20 Mar 2025 20:25:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 2PxHpB0gGr4x2sYpZ3gEanXaHazV7c8+B5tVEot0Yfk=; b=Xa3ZP8IGtKwW/6Vj
+ bPEj9LQJmQ48Lac7PsecDtQ2yQnC/tkyC44lH3ecCIrdQ5ofLGcZr7wK1AXaHyNM
+ Rskj8+GNOVwG9hPfMNY8Ie2K+o0dfoHwd/rlXJG55xr8/YrLmzxREBG3aiEMIe7j
+ r8ggkwQdJknTvKrUYyX5giQ4nUFBzVXOeqGdVIdVOlvQNxJwCrxZUwrO5LaOTiQz
+ WlPAEFbPNN47Xal3l6RfAGbNy7MvbsHhn7wvXKQCwKiovCknDpMRMTdSVVhuuyaC
+ c9fKQmSF4hF2SoWmVnYxv0AgBI9wyxwOba7F7fJO2SjwQXQ+O2aizLVcnHbEjAHa
+ OY55VA==
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12lp2174.outbound.protection.outlook.com [104.47.59.174])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45g15y49n8-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Mar 2025 20:25:58 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jCpyWaTKPt5otR5duCHiRa5sPLajIhFZSltnJVsNfz+icLaKxRpGphV4cvdvq/WWvbHOOnk6mmLsUSOrAvgcH3XPEZ5By60fWLRdgD0rJvUOq/FTPq6cKVOF11i2tb3OjKC8AyIoYBe0AbZ23ZNWIdADkvj9BhHpFdjqzuz07gjvhnJYGb868SMYZLEPf9Lpwggazdg01+UzM4Eud5m9TXtCtnnP5O4pIo9hmziV5wP4pgOB5s6hTAwkfHsk1DB/U8SV27RlsBuic2wMHdbuCfbcYCP9REf/qKCFdL3MrCg5mVaEMVZ5QlYbMQlbEYmCzm/HTXHSKvgxZZHmf9cLfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2PxHpB0gGr4x2sYpZ3gEanXaHazV7c8+B5tVEot0Yfk=;
+ b=sRu1ZKsMpeBc7FdRMl9j/ok3DR0GYSVN9sVBKk1YglxZ5GPHRL/d9y/NNgmzXQeUQShGsQzHYBsX9wQXU2hHMOOUBgXm+vnLDpxrk0Y3Csx1yK9iocZdUmY/tl5LtVpvFa+msBEFWV+9+LpbELYyccgHFo61aLHOi2r9i2qKekAFej22qCG8J1cbMy5OhODdPNUyJsdseet/I74MT6fUKeTCf+GsnUMGrnqk5p8SCq8x3sZFElT/yCTf/C9+xntgsvFkV5msV/34548VukH4WqoV8HH3BEPXgDQacpQKw9eM/juMmxphBzKtr1418jU2uoQKk2MGicq9qySSC+Kzbw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
+ dkim=pass header.d=quicinc.com; arc=none
+Received: from IA0PR02MB9486.namprd02.prod.outlook.com (2603:10b6:208:403::18)
+ by CYXPR02MB10193.namprd02.prod.outlook.com (2603:10b6:930:dd::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.34; Thu, 20 Mar
+ 2025 20:25:54 +0000
+Received: from IA0PR02MB9486.namprd02.prod.outlook.com
+ ([fe80::ef24:407b:1d69:2891]) by IA0PR02MB9486.namprd02.prod.outlook.com
+ ([fe80::ef24:407b:1d69:2891%5]) with mapi id 15.20.8534.036; Thu, 20 Mar 2025
+ 20:25:54 +0000
+From: Sid Manning <sidneym@quicinc.com>
+To: "ltaylorsimpson@gmail.com" <ltaylorsimpson@gmail.com>, 'Brian Cain'
+ <brian.cain@oss.qualcomm.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "philmd@linaro.org" <philmd@linaro.org>, "Matheus Bernardino (QUIC)"
+ <quic_mathbern@quicinc.com>, "ale@rev.ng" <ale@rev.ng>, "anjo@rev.ng"
+ <anjo@rev.ng>, "Marco Liebel (QUIC)" <quic_mliebel@quicinc.com>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "Mark Burton (QUIC)"
+ <quic_mburton@quicinc.com>, Brian Cain <bcain@quicinc.com>
+Subject: RE: [PATCH 22/39] target/hexagon: Implement setprio, resched
+Thread-Topic: [PATCH 22/39] target/hexagon: Implement setprio, resched
+Thread-Index: AQHbimrlTZH7uCjgI0Gq1ZsMt1lQi7N8jEGAgAAIOwA=
+Date: Thu, 20 Mar 2025 20:25:53 +0000
+Message-ID: <IA0PR02MB9486BDD73D3CBCD3468C367FBED82@IA0PR02MB9486.namprd02.prod.outlook.com>
+References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
+ <20250301052845.1012069-23-brian.cain@oss.qualcomm.com>
+ <03a101db99d0$8c67c5e0$a53751a0$@gmail.com>
+In-Reply-To: <03a101db99d0$8c67c5e0$a53751a0$@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA0PR02MB9486:EE_|CYXPR02MB10193:EE_
+x-ms-office365-filtering-correlation-id: 791c063b-67d9-4572-3dd6-08dd67ed69f8
+x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|38070700018|7053199007; 
+x-microsoft-antispam-message-info: =?utf-8?B?di9xRlNkNmlMWGg5ZUJ0amxhWEtQeko5bmlLMXRpOGJWUzlSb2xscTlQTHk3?=
+ =?utf-8?B?czRXZmVzQURmU0ZDYkRwZDRyYU95U1dVSEg1OW9JMXFRRlp3OTRIV1p2SnZ2?=
+ =?utf-8?B?S242ZUVsaHNDdXhQb2llWmFXSWhkZUNYU1FsR1JWUGRYdHJrMEtGamRSd0dU?=
+ =?utf-8?B?aVVoYzB1bDlvYm1VRDlGWCtnbnZTbEpHWGZ1dGlFMFNFT0llM2lSdjdsQjRs?=
+ =?utf-8?B?cWc3M3ZVTlBxOW9LS2xhZUY3dmFzUmJvTjgyei9rTlRrUStnRm1uNzhPOTU5?=
+ =?utf-8?B?LzJSRXhEbnBxVDBXOGFURHhNckhwcG12WWtjZERQM3doVytGV1c3bUhPQ2pG?=
+ =?utf-8?B?U1MzVjh6cTAyMTVndmQ1QU5KU1RaRytSN0VBczBkQ1lUdit1WkppTWRjbTUz?=
+ =?utf-8?B?enpDQnFwV2dLTHFRc0RaNTI2WTRIcTJUTUJkOUE5WXRLVW10WlE2a3NVVFJO?=
+ =?utf-8?B?a2o0a2MxUVNlNDBoQTFIaTdPVHVDWGRxRnAyeHRENHo1UElOT3ZYUlZ6bWZa?=
+ =?utf-8?B?ZE5kbiszY1A5SWo4REhIZE9Ha1EyQ2w3TCtVN3ZrQTRiWElOZFNXTjFIQjdx?=
+ =?utf-8?B?SW5lL2VtTE9CNXc4MHYvVEFoMDNWNkRlNkZac1REcDVCVXgyNFE1TzZxOGE3?=
+ =?utf-8?B?RVlrQTBBc3VKc3dzQjcwR2dENFFvQW5peDVOQXNFZXZENCt0KzN2MUxxY21h?=
+ =?utf-8?B?M3FTNFFiMjNXODVrQnRhZXBlM1Q3Y2lLZll4bWFjelRKWEZydi9vUXVkRlhU?=
+ =?utf-8?B?YWxOSzQ5dURNbnRsTVhwYkt6RjU0a1QwajRuV0U5RUpyeEJpeVNyM2QxMHZR?=
+ =?utf-8?B?NkhnNm1kcmxSbE1uWnJpMnBLTUMwelRLSWYvcnpSWUpVRVVxeE5ENndHOG5l?=
+ =?utf-8?B?Nk5EamVQYUFubHJvM1ByNE95YTdNVXlSRDhiTkRKZmhZNHhCdXpvWW1MQy9q?=
+ =?utf-8?B?ZFBTc2RibklxckxKNGE5R1NTcWlVSkNZaHRuTVAzWmErb0s0T1h3RDRlN0lw?=
+ =?utf-8?B?OS9QcHpCb3VNS3BDTmpoa3hlbzdjVWJGWG9TaDVDN2lRVURlR1ZqakVuMzBk?=
+ =?utf-8?B?MVEvUGp1L3k3SzI5Z2JzTVo5WjBGU3hMdnpYSS9GTkYxaDI5U21jUWJtOVlG?=
+ =?utf-8?B?ZUZLR0xDZlcrSElCVWNHV3l6dllqbk1teDQwOWFJdTBzeFg4QmJrTUFGUlMy?=
+ =?utf-8?B?WGMvQ05DS2JrMVFGWFFlS05rTERQNEVwWFpVQ0NPSHVMYS9MK1JXYjl6aStr?=
+ =?utf-8?B?elVVdXRoT2pBWTlyakJhQ3lBYlJuUm44ZXpsV2JYc0xDbXBwRzV6YXlHZCtO?=
+ =?utf-8?B?RWZoRWVUOC9Pb2xHQkpOS2o3Q1J3ekR3QTlmRG1ob2thYnYvTnVmVktSYXNI?=
+ =?utf-8?B?OGRONjUwREtZTmxKQ1hkaUZjK2E0MFJEY2twUnJSbmNkVm4ydVMwSWxTUlhO?=
+ =?utf-8?B?bEU3Q2lnVkpWTDgwRU1zZEpnSDNWWUxTUUEzL1dTYXQ2cFpELy9pcjMxRFlN?=
+ =?utf-8?B?UGliQ3RHeGxEd0EvMmI1dUpPVjQwV0JzTXFMWi8wQmJ2KzFhNzc0cHZtTlA0?=
+ =?utf-8?B?emtNNk9hN2pXam51TUQzajhyckpHc21JdTJEMXdLcXRXeFYxKzZhRUxGaW1Q?=
+ =?utf-8?B?cWRuQmxUV2x1V1FuS3VTMUNaeGxhVjBlQ201R055QlpqSTdDbVdNNHRteXkz?=
+ =?utf-8?B?M0t2dnY3Y2ExZkp2V3lkUDFRSXN4TG12OE5OaWFya0c1ZlpJMnJYZ2JZM1hj?=
+ =?utf-8?B?T0FUVUJPcm8yK2tYZmlsdmp2Qlo0UmxIeGlDQ3FRZVh5SGllMnVnSE8wMlJx?=
+ =?utf-8?B?dlZ0Si9PVEhiZ01tVCtGTXhuM01CL1BHWUhEelRaeGdYeXUzb28xUW5lV3pq?=
+ =?utf-8?B?bGNIdjREWWJaaTUrMU5YTHNjOVI0SVJuVjErN1lHdzVBVm9PVkNyd2NsVmRo?=
+ =?utf-8?Q?Wcw6ccq18hugNyjaxE2giAXlGcxV0hbg?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR02MB9486.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018)(7053199007); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SUpkMHpENWkvUGZpZzBFaDNIbGthN0ZVSVhBS3QyQ3IzdW42ZHJib0c2OUx2?=
+ =?utf-8?B?Z0EvMmg5eURaNkNFNGd0YjBvNTd4K2todFZZSExGb2R1ZUxaTW1LVFdDeTZr?=
+ =?utf-8?B?N0dyZDBSMWRoMXdCTjNPenBURU9pdFNmVE45dEJkU0hnWk8vQU4rT0NrNUJa?=
+ =?utf-8?B?Y2JpcjlvdHcxV0NWWjJodURmQm1oYXpGbFkxWXM4Zlp2L1JNYVR4M2lNZGEx?=
+ =?utf-8?B?THZMMnhpdTFIaEMrS0JyQnFza3ZDc0h1ZWEvcU5pVnB5QkxiSnRWZmVHWUcw?=
+ =?utf-8?B?S0JDWDJ1UEhyOHJYR3ZtdGtTNW0yWGJPV245VTljQXRqZFZMQ3A2ZmRPbyt4?=
+ =?utf-8?B?V0h3c254ZzBWekd1bGpWUlRLTVRQdDhHbEozWTBrU3RqdjNvSy8wOXRDTGhG?=
+ =?utf-8?B?STE5VkpNWTU4R3VXamsxT2k5SHppcjFLVmRtNENwWXJPa3FmbGdkTjYzbWNC?=
+ =?utf-8?B?SU5QQ3ZVa2FMUFJmeFI2TnpZaXhwUmhwaDA2dVhJOUNnaDNobXJBOE1KS2Vt?=
+ =?utf-8?B?VWF2RzBXREd4QjJNaFhaeHBVSTV2MUdBVEhxY2VqZXRITW4xTVZ3Z1Bpb3E0?=
+ =?utf-8?B?NFFabzZvZHlPQjNQWUNkWHJ4TEl3N2E2RHkvRmEwc1Bla2MvNWxWQm5lNUtr?=
+ =?utf-8?B?SXVYWVV2TkkwR1UrdHBrcGs2MGl6d2tiZFNxTGFiRDVRSFhPOHQ5Z1lsMFRo?=
+ =?utf-8?B?MExua0g4RjgyT0pwSnJZcVVTUDRTUG9HVkM1NzNNVTRZZkZWOFFydTdDQnU3?=
+ =?utf-8?B?a3A2SkRxWHlyczB0VWpuRnRaQnVOVjExU1lQYVlaZW44c2VFVVlQWngvdlkv?=
+ =?utf-8?B?RDJyZjNOTFZCMFQ5YXlUMnRweWdNczRwNWk5eFJod3JBL3dKTDhvQzR5Q203?=
+ =?utf-8?B?OXpNaG16RTNnbWFkcE1YU1h3RUhrTzNNSWdnTlgxazBOZlZnRmVNbC9FWm9Z?=
+ =?utf-8?B?UjVGRkFrUklOVlZUNUptaVBtL1p2dDUvdHluNE0xc2V5UWt2SHEwbFFYbHJK?=
+ =?utf-8?B?dk9QVGZiYk8xUWQxcmg2VUlrYVczKzRCUEhldFVoeXdWNncvWXd6K25oMDJW?=
+ =?utf-8?B?Y24vTXpkbm1KRm1CU3VJbkZSbFUrUkowd2dnRVdCYlVaSnM3dVh5NG9zZlNT?=
+ =?utf-8?B?Um9aRVhJdVJZek94OWlPSUljeVJDSW9FdWNWWko2ZnNMNmZ0ZzE4Q2pDakxL?=
+ =?utf-8?B?YitDRTYrZWxNZFBWcEtpOVBuS2tYMG01MGg1T1RWS3VWY2ZlZkNHem0yWjRm?=
+ =?utf-8?B?S3BTYy9XQnQvMmdMb1VVVHpGLy9BK1JyMTd1akRnSktUY3ZxR2NoRHNFZzVp?=
+ =?utf-8?B?MThJaDRjdXVrMTFRSUExNGQ0TTdPY096bnBQSkNpRE9UYys4d0dkWG1MNi83?=
+ =?utf-8?B?dE54Uy9nQmpoQzNuNXdzdDlDYm1WMUx0T2dNSVhLWkhpRUs0TXNkbnVoR1hv?=
+ =?utf-8?B?UHN4ZElzSTBMNDhUU3IxUlJMQW1sL1hPQVNPMGhQVi9XaFhrcTdKaTlaS3Fy?=
+ =?utf-8?B?RkZzMjMvMFFma2ppODZtaCs4QnUwM0h3YmVvaW11Z3QrNTlyQWlXKzhoSUEv?=
+ =?utf-8?B?UGpqZ1hJVllRa0RzclpTWWxIZ3BJRWdSdFIxU0xoWVFlMW5uNisrZFUzcHJP?=
+ =?utf-8?B?ejRJajdOc29pZzRON3I0MG84M25rOXQ5S2s2dlBCa0F4Nk9wV2JPei9icU9C?=
+ =?utf-8?B?bUVJSGtIWmtObnV4TXB4ZkxnQ3d5Q1NKVkhNWXBqSFp6aDR3UHZSQzFBVncr?=
+ =?utf-8?B?MDdmK2NSS1dEdkc5SzlSbVEra25nVy9BWWdxS2FLamxIc2RVak5rbWo4dXAz?=
+ =?utf-8?B?bGlsdW54ZjVtSW5hKzFnRjRzeDIyL1E1bHJKTVQ2L01QZ1BMSGpmVnB3WDVQ?=
+ =?utf-8?B?aEYwQVJmUU8zZXBOdEt6VitjRHJJcWJMTnJHVU9IeUNMUkJGU3N0MHJyVkV3?=
+ =?utf-8?B?aFRmYVNJMVI0L3JIK044bHFhVG42MHF1Ymp0RFNadGFsUEgvQktxN1V1TW1m?=
+ =?utf-8?B?SVl3OFlZdFFqcWN3dmFTeXdlRklrT0loUXBxaldPTmRDWlplazhYYmpKZUNT?=
+ =?utf-8?B?QkNiWU5qQWZIVjdFTktzd1U5ZHJuYmlQeFp2VTFIRjlXd2dPK3c4TWZrYzBS?=
+ =?utf-8?Q?INOlrwOmeOhKIdU/3zGaDMnAA?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: cehONJP52pfBkeg4cqiEX+gzh30E3tVSVs4SmbBNtQ+ehnUhWpQP/TNPvgPQdVK3rK00itPlNHSHYvMHsBncFN+fANw7XpsrSK+VTs5KFCwhZXefn0cD3Cx8tcAihPmPuqzfO+m//Xs5Eebw6tLdpWr0CtqMWjCPNnUToDYnnOYjnzAgeJ9R9ealBW80M/rXAPh3WYw6SeKs95cg6AyUqgR6Rv12AoVtxDXt0gLSOIed8E0ZYr6QoFBzkn2ejbq4bFD9SUetFt9H9fnu3YjERnpLNB7b9l7ElhntgHa2zXLSdFo6qnrhHTTvO+6XjgvQYVkpnc+fYe+ltZLg5ziiN+aklzOzcvAA3Zrntx3mV4x0UwWZ2U4oZxiKy+2JEvZXIwDdVheEm7r1eFmiqZwlq9GSMdxitflFHfYph4R/vzep2iKsucl1V6uYBEbCTzK6OnoTVRK4KofyuKVLbAU0G3+eaU9YR79DKaCpFzZxd0LgppGn3t4cVL7zgQFtVH3c7FNmvhKjusYUeojfqVuD95vaugDDP42NJhCdO8QxXLiAjZazKqZD1b0Faf0SoMu7m83xezQibKOZb2NRBXXu5mz4Pfzfuc+BwhkrOv3HI6Ydtm7oGFcTjUoWfgwATQSc
+X-OriginatorOrg: quicinc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR02MB9486.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 791c063b-67d9-4572-3dd6-08dd67ed69f8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Mar 2025 20:25:53.9001 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nPNEWVyMdsnFqWGyKvWSJBghg+UQzIGCqKdHNc8cC2zAfL4+FycnCJwMM4BO+HCnSPwOTaiU8ZUFSswXuAeUiw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR02MB10193
+X-Proofpoint-GUID: mMzzEimwJstyJWw-qAwxaerJJCO3L2Uy
+X-Proofpoint-ORIG-GUID: mMzzEimwJstyJWw-qAwxaerJJCO3L2Uy
+X-Authority-Analysis: v=2.4 cv=VaD3PEp9 c=1 sm=1 tr=0 ts=67dc79d6 cx=c_pps
+ a=pa2+2WWV+ihErLhOOf7pAQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Vs1iUdzkB0EA:10 a=H5OGdu5hBBwA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
+ a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=at0bhs02LLflEQY2P9UA:9
+ a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-20_07,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ bulkscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=965 phishscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 mlxscore=0 malwarescore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503200130
+Received-SPF: pass client-ip=205.220.180.131; envelope-from=sidneym@quicinc.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,878 +222,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Am 10=2E M=C3=A4rz 2025 11:36:34 UTC schrieb Ilya Chichkov <i=2Echichkov@y=
-adro=2Ecom>:
->Add PCF8563 a real-time clock with calendar and I2C interface=2E
->This commit adds support for interfacing with it and implements
->functionality of setting timer, alarm, reading and writing time=2E
->
->Signed-off-by: Ilya Chichkov <i=2Echichkov@yadro=2Ecom>
->---
->v1->v2
->Phil:
->- Add hot reset
->- Fix trace message
->- Add testing coverage with qtest
->
->Bernhard:
->- Move datasheet link to source code top comment section
->- Fix typos
->- Update licence identifier to SPDX
->- Remove unused import libraries
->- Change OBJECT_CHECK to OBJECT_DECLARE_SIMPLE_TYPE
->- Remove outdated comment
->- Rename i2c to parent_obj
->- Moved get_time inside capture_time function that is
->  called only when I2C request starts
->- Add fields inside VMStateDescription
->- Removed pcf8563_realize
->- Change type_init to DEFINE_TYPES
->---
-> hw/rtc/Kconfig       |   5 +
-> hw/rtc/meson=2Ebuild   |   1 +
-> hw/rtc/pcf8563_rtc=2Ec | 740 +++++++++++++++++++++++++++++++++++++++++++
-> hw/rtc/trace-events  |  12 +
-> 4 files changed, 758 insertions(+)
-> create mode 100644 hw/rtc/pcf8563_rtc=2Ec
->
->diff --git a/hw/rtc/Kconfig b/hw/rtc/Kconfig
->index b90c2e510a=2E=2E4e7a1f75ef 100644
->--- a/hw/rtc/Kconfig
->+++ b/hw/rtc/Kconfig
->@@ -27,5 +27,10 @@ config GOLDFISH_RTC
-> config LS7A_RTC
->     bool
->=20
->+config PCF8563_RTC
->+    bool
->+    depends on I2C
->+    default y if I2C_DEVICES
->+
-> config STM32_RTC
->     bool
->\ No newline at end of file
->diff --git a/hw/rtc/meson=2Ebuild b/hw/rtc/meson=2Ebuild
->index b6bb7436c7=2E=2E6180ffc6d9 100644
->--- a/hw/rtc/meson=2Ebuild
->+++ b/hw/rtc/meson=2Ebuild
->@@ -13,4 +13,5 @@ system_ss=2Eadd(when: 'CONFIG_GOLDFISH_RTC', if_true: f=
-iles('goldfish_rtc=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_LS7A_RTC', if_true: files('ls7a_rtc=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-r=
-tc=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_MC146818RTC', if_true: files('mc146818rtc=
-=2Ec'))
->+system_ss=2Eadd(when: 'CONFIG_PCF8563_RTC', if_true: files('pcf8563_rtc=
-=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_STM32_RTC', if_true: files('stm32-rtc=2Ec'=
-))
->diff --git a/hw/rtc/pcf8563_rtc=2Ec b/hw/rtc/pcf8563_rtc=2Ec
->new file mode 100644
->index 0000000000=2E=2E195b697598
->--- /dev/null
->+++ b/hw/rtc/pcf8563_rtc=2Ec
->@@ -0,0 +1,740 @@
->+// SPDX-License-Identifier: GPL-2=2E0-or-later
->+/*
->+ * Real-time clock/calendar PCF8563 with I2C interface=2E
->+ *
->+ * Datasheet: https://www=2Enxp=2Ecom/docs/en/data-sheet/PCF8563=2Epdf
->+ *
->+ * Author (c) 2024 Ilya Chichkov <i=2Echichkov@yadro=2Ecom>
->+ */
->+
->+#include "qemu/osdep=2Eh"
->+#include "hw/sysbus=2Eh"
->+#include "hw/register=2Eh"
->+#include "hw/registerfields=2Eh"
->+#include "hw/irq=2Eh"
->+#include "qemu/bitops=2Eh"
->+#include "hw/qdev-properties=2Eh"
->+#include "qemu/timer=2Eh"
->+#include "hw/i2c/i2c=2Eh"
->+#include "qemu/bcd=2Eh"
->+#include "qom/object=2Eh"
->+#include "sysemu/sysemu=2Eh"
->+#include "sysemu/rtc=2Eh"
->+#include "migration/vmstate=2Eh"
->+#include "qapi/visitor=2Eh"
->+
->+#include "trace=2Eh"
->+
->+#define TYPE_PCF8563 "pcf8563"
->+OBJECT_DECLARE_SIMPLE_TYPE(Pcf8563State, PCF8563)
->+
->+#define  PCF8563_CS1            0x00
->+#define  PCF8563_CS2            0x01
->+#define  PCF8563_VLS            0x02
->+#define  PCF8563_MINUTES        0x03
->+#define  PCF8563_HOURS          0x04
->+#define  PCF8563_DAYS           0x05
->+#define  PCF8563_WEEKDAYS       0x06
->+#define  PCF8563_CENTURY_MONTHS 0x07
->+#define  PCF8563_YEARS          0x08
->+#define  PCF8563_MINUTE_A       0x09
->+#define  PCF8563_HOUR_A         0x0A
->+#define  PCF8563_DAY_A          0x0B
->+#define  PCF8563_WEEKDAY_A      0x0C
->+#define  PCF8563_CLKOUT_CTL     0x0D
->+#define  PCF8563_TIMER_CTL      0x0E
->+#define  PCF8563_TIMER          0x0F
->+
->+#define MINUTES_IN_HOUR 60
->+#define HOURS_IN_DAY 24
->+#define DAYS_IN_MONTH 31
->+#define DAYS_IN_WEEK 7
->+
->+REG8(PCF8563_CS1, 0x00)
->+    FIELD(PCF8563_CS1, RSVD0,  0,  3)
->+    FIELD(PCF8563_CS1, TESTC,  3,  1)
->+    FIELD(PCF8563_CS1, RSVD1,  4,  1)
->+    FIELD(PCF8563_CS1, STOP,   5,  1)
->+    FIELD(PCF8563_CS1, RSVD2,  6,  1)
->+    FIELD(PCF8563_CS1, TEST1,  7,  1)
->+
->+REG8(PCF8563_CS2, 0x01)
->+    FIELD(PCF8563_CS2, TIE,   0,  1)
->+    FIELD(PCF8563_CS2, AIE,   1,  1)
->+    FIELD(PCF8563_CS2, TF,    2,  1)
->+    FIELD(PCF8563_CS2, AF,    3,  1)
->+    FIELD(PCF8563_CS2, TI_TP, 4,  1)
->+    FIELD(PCF8563_CS2, RSVD,  5,  3)
->+
->+REG8(PCF8563_VLS, 0x02)
->+    FIELD(PCF8563_VLS, SECONDS,  0,  7)
->+    FIELD(PCF8563_VLS, VL,       7,  1)
->+
->+REG8(PCF8563_MINUTES, 0x03)
->+    FIELD(PCF8563_MINUTES, MINUTES, 0,  7)
->+    FIELD(PCF8563_MINUTES, RSVD,    7,  1)
->+
->+REG8(PCF8563_HOURS, 0x04)
->+    FIELD(PCF8563_HOURS, HOURS, 0,  6)
->+    FIELD(PCF8563_HOURS, RSVD,  6,  2)
->+
->+REG8(PCF8563_DAYS, 0x05)
->+    FIELD(PCF8563_DAYS, DAYS, 0,  6)
->+    FIELD(PCF8563_DAYS, RSVD, 6,  2)
->+
->+REG8(PCF8563_WEEKDAYS, 0x06)
->+    FIELD(PCF8563_WEEKDAYS, WEEKDAYS, 0,  3)
->+    FIELD(PCF8563_WEEKDAYS, RSVD,     3,  5)
->+
->+REG8(PCF8563_CENTURY_MONTHS, 0x07)
->+    FIELD(PCF8563_CENTURY_MONTHS, MONTHS,  0,  5)
->+    FIELD(PCF8563_CENTURY_MONTHS, RSVD,    5,  2)
->+    FIELD(PCF8563_CENTURY_MONTHS, CENTURY, 7,  1)
->+
->+REG8(PCF8563_YEARS, 0x08)
->+    FIELD(PCF8563_YEARS, YEARS, 0,  8)
->+
->+REG8(PCF8563_MINUTE_A, 0x09)
->+    FIELD(PCF8563_MINUTE_A, MINUTE_A, 0,  7)
->+    FIELD(PCF8563_MINUTE_A, AE_M,     7,  1)
->+
->+REG8(PCF8563_HOUR_A, 0x0A)
->+    FIELD(PCF8563_HOUR_A, HOUR_A, 0,  7)
->+    FIELD(PCF8563_HOUR_A, AE_H,   7,  1)
->+
->+REG8(PCF8563_DAY_A, 0x0B)
->+    FIELD(PCF8563_DAY_A, DAY_A,  0,  7)
->+    FIELD(PCF8563_DAY_A, AE_D,   7,  1)
->+
->+REG8(PCF8563_WEEKDAY_A, 0x0C)
->+    FIELD(PCF8563_WEEKDAY_A, WEEKDAY_A, 0,  3)
->+    FIELD(PCF8563_WEEKDAY_A, RSVD,      3,  4)
->+    FIELD(PCF8563_WEEKDAY_A, AE_W,      7,  1)
->+
->+REG8(PCF8563_CLKOUT_CTL, 0x0D)
->+    FIELD(PCF8563_CLKOUT_CTL, FD,   0,  2)
->+    FIELD(PCF8563_CLKOUT_CTL, RSVD, 2,  5)
->+    FIELD(PCF8563_CLKOUT_CTL, FE,   7,  1)
->+
->+REG8(PCF8563_TIMER_CTL, 0x0E)
->+    FIELD(PCF8563_TIMER_CTL, TD,   0,  2)
->+    FIELD(PCF8563_TIMER_CTL, RSVD, 2,  5)
->+    FIELD(PCF8563_TIMER_CTL, TE,   7,  1)
->+
->+REG8(PCF8563_TIMER, 0x0F)
->+    FIELD(PCF8563_TIMER, TIMER, 0,  8)
->+
->+typedef struct Pcf8563State {
->+    I2CSlave parent_obj;
->+
->+    struct tm current_time;
->+    qemu_irq irq;
->+
->+    uint8_t read_index;
->+    uint8_t write_index;
->+    uint8_t reg_addr;
->+
->+    /* Control and status */
->+    uint8_t cs1;
->+    uint8_t cs2;
->+    /* Counters */
->+    uint8_t vls;
->+    uint8_t minutes;
->+    uint8_t hours;
->+    uint8_t days;
->+    uint8_t weekdays;
->+    uint8_t centure_months;
->+    uint8_t years;
->+    /* Alarm registers */
->+    uint8_t minute_a;
->+    uint8_t hour_a;
->+    uint8_t day_a;
->+    uint8_t weekday_a;
->+    /* Timer control */
->+    uint8_t clkout_ctl;
->+    uint8_t timer_ctl;
->+    uint8_t timer_cnt;
->+
->+    QEMUTimer *alarm_timer;
->+    struct tm tm_alarm;
->+    bool alarm_irq;
->+    QEMUTimer *timer;
->+    time_t time_offset;
->+    time_t stop_time;
->+    QEMUTimer *irq_gen_timer;
->+} Pcf8563State;
->+
->+static uint16_t get_src_freq(Pcf8563State *s, bool *multiply)
->+{
->+    *multiply =3D false;
->+    /* Select source clock frequency (Hz) */
->+    switch (FIELD_EX8(s->timer_ctl, PCF8563_TIMER_CTL, TD)) {
->+    case 0:
->+        return 4096;
->+    case 1:
->+        return 64;
->+    case 2:
->+        return 1;
->+    case 3:
->+        *multiply =3D true;
->+        return 60;
->+    default:
->+        return 0;
->+    }
->+}
->+
->+static uint16_t get_irq_pulse_freq(Pcf8563State *s)
->+{
->+    if (s->timer_cnt > 1) {
->+        switch (FIELD_EX8(s->timer_ctl, PCF8563_TIMER_CTL, TD)) {
->+        case 0:
->+            return 8192;
->+        case 1:
->+            return 128;
->+        case 2:
->+        case 3:
->+            return 64;
->+        default:
->+            return 0;
->+        }
->+    } else {
->+        if (FIELD_EX8(s->timer_ctl, PCF8563_TIMER_CTL, TD) =3D=3D 0) {
->+            return 4096;
->+        }
->+        return 64;
->+    }
->+
->+}
->+
->+static void timer_irq(Pcf8563State *s)
->+{
->+    if (!FIELD_EX8(s->cs2, PCF8563_CS2, TIE)) {
->+        return;
->+    }
->+
->+    if (FIELD_EX8(s->cs2, PCF8563_CS2, TI_TP)) {
->+        qemu_irq_pulse(s->irq);
->+
->+        /* Start IRQ pulse generator */
->+        uint64_t delay =3D s->timer_cnt *
->+                        NANOSECONDS_PER_SECOND *
->+                        get_irq_pulse_freq(s);
->+        timer_mod(s->irq_gen_timer,
->+                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delay);
->+    } else {
->+        qemu_irq_raise(s->irq);
->+    }
->+}
->+
->+static void alarm_irq(Pcf8563State *s)
->+{
->+    if (FIELD_EX8(s->cs2, PCF8563_CS2, AIE)) {
->+        qemu_irq_raise(s->irq);
->+    }
->+}
->+
->+static void set_alarm(Pcf8563State *s)
->+{
->+    uint64_t diff_sec =3D 0;
->+    uint64_t diff_min =3D 0;
->+    uint64_t diff_hour =3D 0;
->+    uint64_t diff_day =3D 0;
->+    uint64_t diff_wday =3D 0;
->+    uint64_t delay =3D 0;
->+    uint64_t now_cl =3D 0;
->+    struct tm now;
->+
->+    bool is_min_en =3D !FIELD_EX8(s->minute_a, PCF8563_MINUTE_A, AE_M);
->+    bool is_hour_en =3D !FIELD_EX8(s->hour_a, PCF8563_HOUR_A, AE_H);
->+    bool is_day_en =3D !FIELD_EX8(s->day_a, PCF8563_DAY_A, AE_D);
->+    bool is_wday_en =3D !FIELD_EX8(s->weekday_a, PCF8563_WEEKDAY_A, AE_W=
-);
->+    if (!is_day_en && !is_wday_en && !is_hour_en && !is_min_en) {
->+        if (s->alarm_timer) {
->+            timer_del(s->alarm_timer);
->+        }
->+        return;
->+    }
->+
->+    qemu_get_timedate(&now, s->time_offset);
->+
->+    if (is_min_en) {
->+        if (s->tm_alarm=2Etm_min > s->current_time=2Etm_min) {
->+            diff_min =3D s->tm_alarm=2Etm_min - s->current_time=2Etm_min=
-;
->+        } else {
->+            diff_min =3D (MINUTES_IN_HOUR -
->+                        s->current_time=2Etm_min + s->tm_alarm=2Etm_min)=
-;
->+        }
->+    }
->+
->+    if (is_hour_en) {
->+        if (s->tm_alarm=2Etm_hour > s->current_time=2Etm_hour) {
->+            diff_hour =3D s->tm_alarm=2Etm_hour - s->current_time=2Etm_h=
-our;
->+        } else {
->+            diff_hour =3D (HOURS_IN_DAY -
->+                         s->current_time=2Etm_hour + s->tm_alarm=2Etm_ho=
-ur);
->+        }
->+    }
->+
->+    if (is_day_en) {
->+        if (s->tm_alarm=2Etm_mday > s->current_time=2Etm_mday) {
->+            diff_day =3D s->tm_alarm=2Etm_mday - s->current_time=2Etm_md=
-ay;
->+        } else {
->+            diff_day =3D (DAYS_IN_MONTH -
->+                        s->current_time=2Etm_mday + s->tm_alarm=2Etm_mda=
-y);
->+        }
->+    }
->+
->+    if (is_wday_en) {
->+        if (s->tm_alarm=2Etm_wday > s->current_time=2Etm_wday) {
->+            diff_wday =3D s->tm_alarm=2Etm_wday - s->current_time=2Etm_w=
-day;
->+        } else {
->+            diff_wday =3D (DAYS_IN_WEEK -
->+                         s->current_time=2Etm_wday + s->tm_alarm=2Etm_wd=
-ay);
->+        }
->+    }
->+
->+    diff_sec =3D (diff_min * 60) +
->+               (diff_hour * 60 * 60) +
->+               (diff_day * 24 * 60 * 60) +
->+               (diff_wday * 24 * 60 * 60);
->+    now_cl =3D muldiv64(qemu_clock_get_ns(rtc_clock), 1, NANOSECONDS_PER=
-_SECOND);
->+    delay =3D muldiv64((now_cl + diff_sec), NANOSECONDS_PER_SECOND, 1);
->+
->+    if (s->alarm_timer) {
->+        timer_del(s->alarm_timer);
->+    }
->+    timer_mod(s->alarm_timer, delay);
->+}
->+
->+static void pcf8563_update_irq(Pcf8563State *s)
->+{
->+    if (FIELD_EX8(s->cs2, PCF8563_CS2, TF)) {
->+        timer_irq(s);
->+    }
->+
->+    if (FIELD_EX8(s->cs2, PCF8563_CS2, AF)) {
->+        alarm_irq(s);
->+    }
->+}
->+
->+static void alarm_timer_cb(void *opaque)
->+{
->+    Pcf8563State *s =3D PCF8563(opaque);
-
-No need for casting from void*, `Pcf8563State *s =3D opaque;` works as wel=
-l and is shorter=2E There are similar cases below=2E
-
->+
->+    set_alarm(s);
->+    s->cs2 =3D FIELD_DP8(s->cs2, PCF8563_CS2, AF, 1);
->+    pcf8563_update_irq(s);
->+}
->+
->+static void timer_cb(void *opaque)
->+{
->+    Pcf8563State *s =3D PCF8563(opaque);
->+
->+    s->timer_cnt =3D 0;
->+    s->cs2 =3D FIELD_DP8(s->cs2, PCF8563_CS2, TF, 1);
->+    pcf8563_update_irq(s);
->+}
->+
->+static void irq_gen_timer_cb(void *opaque)
->+{
->+    Pcf8563State *s =3D PCF8563(opaque);
->+
->+    pcf8563_update_irq(s);
->+}
->+
->+static inline void capture_time(Pcf8563State *s)
->+{
->+    qemu_get_timedate(&s->current_time, s->time_offset);
->+    trace_pcf8563_rtc_capture_time();
->+}
->+
->+static void set_time(Pcf8563State *s, struct tm *tm)
->+{
->+    s->time_offset =3D qemu_timedate_diff(tm);
->+    set_alarm(s);
->+    trace_pcf8563_rtc_set_time();
->+}
->+
->+static void pcf8563_reset(I2CSlave *i2c)
->+{
->+    Pcf8563State *s =3D PCF8563(i2c);
->+
->+    s->read_index =3D 0;
->+    s->write_index =3D 0;
->+    s->reg_addr =3D 0;
->+
->+    s->cs1 =3D 0x8;
->+    s->cs2 =3D 0x0;
->+    s->vls =3D 0x80;
->+    s->minutes =3D 0x0;
->+    s->hours =3D 0x0;
->+    s->days =3D 0x0;
->+    s->weekdays =3D 0x0;
->+    s->centure_months =3D 0x0;
->+    s->years =3D 0x0;
->+    s->minute_a =3D 0x80;
->+    s->hour_a =3D 0x80;
->+    s->day_a =3D 0x80;
->+    s->weekday_a =3D 0x80;
->+    s->clkout_ctl =3D 0x80;
->+    s->timer_ctl =3D 0x3;
->+    s->timer_cnt =3D 0x0;
->+
->+    s->stop_time =3D 0;
->+    s->reg_addr =3D 0;
->+
->+    s->alarm_irq =3D false;
->+    s->time_offset =3D 0;
->+
->+    qemu_irq_lower(s->irq);
->+    qemu_get_timedate(&s->tm_alarm, 0);
->+
->+    timer_del(s->alarm_timer);
->+    timer_del(s->timer);
-
-Not everything gets reset according to table 27 in the datasheet=2E I'd on=
-ly reset the bits that are not marked with 'x' there=2E With this, you may =
-not need to handle the timers, IRQ, etc=2E
-
->+}
->+
->+static void pcf8563_read(Pcf8563State *s, uint8_t *result)
->+{
->+    struct tm *tm =3D &s->current_time;
->+
->+    bool multiply =3D false;
->+    uint16_t src_freq =3D get_src_freq(s, &multiply);
->+
->+    switch (s->reg_addr) {
->+    case PCF8563_CS1:
->+        *result =3D s->cs1;
->+        break;
->+    case PCF8563_CS2:
->+        *result =3D s->cs2;
->+        break;
->+    case PCF8563_VLS:
->+        *result =3D (s->vls & 0x80) | to_bcd(tm->tm_sec);
->+        break;
->+    case PCF8563_MINUTES:
->+        *result =3D to_bcd(tm->tm_min);
->+        break;
->+    case PCF8563_HOURS:
->+        *result =3D to_bcd(tm->tm_hour);
->+        break;
->+    case PCF8563_DAYS:
->+        *result =3D to_bcd(tm->tm_mday);
->+        break;
->+    case PCF8563_WEEKDAYS:
->+        *result =3D to_bcd(tm->tm_wday);
->+        break;
->+    case PCF8563_CENTURY_MONTHS:
->+        *result =3D to_bcd(tm->tm_mon + 1);
->+        break;
->+    case PCF8563_YEARS:
->+        *result =3D to_bcd((tm->tm_year + 1900) % 100);
->+        break;
->+    case PCF8563_MINUTE_A:
->+        *result =3D s->minute_a;
->+        break;
->+    case PCF8563_HOUR_A:
->+        *result =3D s->hour_a;
->+        break;
->+    case PCF8563_DAY_A:
->+        *result =3D s->day_a;
->+        break;
->+    case PCF8563_WEEKDAY_A:
->+        *result =3D s->weekday_a;
->+        break;
->+    case PCF8563_CLKOUT_CTL:
->+        *result =3D s->clkout_ctl;
->+        break;
->+    case PCF8563_TIMER_CTL:
->+        *result =3D s->timer_ctl;
->+        break;
->+    case PCF8563_TIMER:
->+        if (timer_pending(s->timer)) {
->+            uint64_t expire_time_s =3D muldiv64(timer_expire_time_ns(s->=
-timer),
->+                                              1,
->+                                              NANOSECONDS_PER_SECOND);
->+            if (multiply) {
->+                s->timer_cnt =3D muldiv64(expire_time_s, 1, src_freq);
->+            } else {
->+                s->timer_cnt =3D muldiv64(expire_time_s, src_freq, 1);
->+            }
->+        }
->+        *result =3D s->timer_cnt;
->+        break;
->+    }
->+}
->+
->+static void pcf8563_write(Pcf8563State *s, uint8_t val)
->+{
->+    struct tm *tm =3D &s->current_time;
->+    int tmp;
->+
->+    switch (s->reg_addr) {
->+    case PCF8563_CS1:
->+        s->cs1 =3D val & 0xa8;
->+        break;
->+    case PCF8563_CS2:
->+        s->cs2 =3D val & 0x1f;
->+        break;
->+    case PCF8563_VLS:
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_VLS, SECONDS));
->+        if (tmp >=3D 0 && tmp <=3D 59) {
->+            tm->tm_sec =3D tmp;
->+            set_time(s, tm);
->+        }
->+
->+        bool vl =3D FIELD_EX8(val, PCF8563_VLS, VL);
->+
->+        if (vl ^ (s->vls & 0x80)) {
->+            if (vl) {
->+                /* Clock integrity is not guaranteed */
->+                s->stop_time =3D time(NULL);
->+            } else if (s->stop_time !=3D 0) {
->+                s->time_offset +=3D s->stop_time - time(NULL);
->+                s->stop_time =3D 0;
->+            }
->+        }
->+
->+        s->vls =3D vl << 8;
->+        break;
->+    case PCF8563_MINUTES:
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_MINUTES, MINUTES));
->+        if (tmp >=3D 0 && tmp <=3D 59) {
->+            s->minutes =3D val;
->+            tm->tm_min =3D tmp;
->+            set_time(s, tm);
->+        }
->+        break;
->+    case PCF8563_HOURS:
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_HOURS, HOURS));
->+        if (tmp >=3D 0 && tmp <=3D 23) {
->+            s->hours =3D val;
->+            tm->tm_hour =3D tmp;
->+            set_time(s, tm);
->+        }
->+        break;
->+    case PCF8563_DAYS:
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_DAYS, DAYS));
->+        if (tmp >=3D 1 && tmp <=3D 31) {
->+            s->days =3D val;
->+            tm->tm_mday =3D tmp;
->+            set_time(s, tm);
->+        }
->+        break;
->+    case PCF8563_WEEKDAYS:
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_WEEKDAYS, WEEKDAYS));
->+        if (tmp >=3D 0 && tmp <=3D 6) {
->+            s->weekdays =3D val;
->+            tm->tm_wday =3D tmp;
->+            set_time(s, tm);
->+        }
->+        break;
->+    case PCF8563_CENTURY_MONTHS:
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_CENTURY_MONTHS, MONTHS))=
-;
->+        if (tmp >=3D 0 && tmp <=3D 12) {
->+            s->centure_months =3D val;
->+            tm->tm_mon =3D tmp;
->+            set_time(s, tm);
->+        }
->+        break;
->+    case PCF8563_YEARS:
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_YEARS, YEARS));
->+        if (tmp >=3D 0 && tmp <=3D 99) {
->+            s->years =3D val;
->+            tm->tm_year =3D tmp + 100;
->+            set_time(s, tm);
->+        }
->+        break;
->+    case PCF8563_MINUTE_A:
->+        s->minute_a =3D val;
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_MINUTE_A, MINUTE_A));
->+        if (tmp >=3D 0 && tmp <=3D 59) {
->+            s->tm_alarm=2Etm_min =3D tmp;
->+            set_alarm(s);
->+        }
->+        break;
->+    case PCF8563_HOUR_A:
->+        s->hour_a =3D val & 0xbf;
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_HOUR_A, HOUR_A));
->+        if (tmp >=3D 0 && tmp <=3D 23) {
->+            s->tm_alarm=2Etm_hour =3D tmp;
->+            set_alarm(s);
->+        }
->+        break;
->+    case PCF8563_DAY_A:
->+        s->day_a =3D val & 0xbf;
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_DAY_A, DAY_A));
->+        if (tmp >=3D 1 && tmp <=3D 31) {
->+            s->tm_alarm=2Etm_mday =3D tmp;
->+            set_alarm(s);
->+        }
->+        break;
->+    case PCF8563_WEEKDAY_A:
->+        s->weekday_a =3D val & 0x87;
->+        tmp =3D from_bcd(FIELD_EX8(val, PCF8563_WEEKDAY_A, WEEKDAY_A));
->+        if (tmp >=3D 0 && tmp <=3D 6) {
->+            s->tm_alarm=2Etm_wday =3D tmp;
->+            set_alarm(s);
->+        }
->+        break;
->+    case PCF8563_CLKOUT_CTL:
->+        s->clkout_ctl =3D val & 0x83;
->+        break;
->+    case PCF8563_TIMER_CTL:
->+        s->timer_ctl =3D val & 0x83;
->+
->+        if (!FIELD_EX32(s->timer_ctl, PCF8563_TIMER_CTL, TE)) {
->+            if (timer_pending(s->timer)) {
->+                timer_del(s->timer);
->+            }
->+        }
->+        break;
->+    case PCF8563_TIMER:
->+        s->timer_cnt =3D val;
->+        if (FIELD_EX32(s->timer_ctl, PCF8563_TIMER_CTL, TE)) {
->+            bool multiply =3D false;
->+            uint16_t src_freq =3D get_src_freq(s, &multiply);
->+            uint64_t delay =3D 0;
->+
->+            /* Calculate timer's delay in ns based on value and set it u=
-p */
->+            if (multiply) {
->+                delay =3D val * NANOSECONDS_PER_SECOND * src_freq;
->+            } else {
->+                delay =3D val * NANOSECONDS_PER_SECOND / src_freq;
->+            }
->+            timer_mod(s->timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + =
-delay);
->+        }
->+        break;
->+    }
->+}
->+
->+static uint8_t pcf8563_rx(I2CSlave *i2c)
->+{
->+    Pcf8563State *s =3D PCF8563(i2c);
->+    uint8_t result =3D 0xff;
->+
->+    pcf8563_read(s, &result);
->+    /* Auto-increment register address */
->+    s->reg_addr++;
->+
->+    trace_pcf8563_rtc_read(s->read_index, result);
->+    return result;
->+}
->+
->+static int pcf8563_tx(I2CSlave *i2c, uint8_t data)
->+{
->+    Pcf8563State *s =3D PCF8563(i2c);
->+
->+    if (s->write_index =3D=3D 0) {
->+        /* Receive register address */
->+        s->reg_addr =3D data;
->+        s->write_index++;
->+        trace_pcf8563_rtc_write_addr(data);
->+    } else {
->+        /* Receive data to write */
->+        pcf8563_write(s, data);
->+        s->write_index++;
->+        s->reg_addr++;
->+        trace_pcf8563_rtc_write_data(data);
->+    }
->+    return 0;
->+}
->+
->+static int pcf8563_event(I2CSlave *i2c, enum i2c_event event)
->+{
->+    trace_pcf8563_rtc_event(event);
->+    Pcf8563State *s =3D PCF8563(i2c);
->+
->+    switch (event) {
->+    case I2C_START_RECV:
->+        capture_time(s);
->+        break;
->+    case I2C_FINISH:
->+        s->read_index =3D 0;
->+        s->write_index =3D 0;
->+    default:
->+        break;
->+    }
->+    return 0;
->+}
->+
->+static const VMStateDescription vmstate_pcf8563 =3D {
->+    =2Ename =3D "PCF8563",
->+    =2Eversion_id =3D 0,
->+    =2Eminimum_version_id =3D 0,
->+    =2Efields =3D (const VMStateField[]) {
->+        VMSTATE_I2C_SLAVE(parent_obj, Pcf8563State),
->+        VMSTATE_UINT8(read_index, Pcf8563State),
->+        VMSTATE_UINT8(write_index, Pcf8563State),
->+        VMSTATE_UINT8(reg_addr, Pcf8563State),
->+        VMSTATE_UINT8(cs1, Pcf8563State),
->+        VMSTATE_UINT8(cs2, Pcf8563State),
->+        VMSTATE_UINT8(vls, Pcf8563State),
->+        VMSTATE_UINT8(minutes, Pcf8563State),
->+        VMSTATE_UINT8(hours, Pcf8563State),
->+        VMSTATE_UINT8(days, Pcf8563State),
->+        VMSTATE_UINT8(weekdays, Pcf8563State),
->+        VMSTATE_UINT8(centure_months, Pcf8563State),
->+        VMSTATE_UINT8(years, Pcf8563State),
->+        VMSTATE_UINT8(minute_a, Pcf8563State),
->+        VMSTATE_UINT8(hour_a, Pcf8563State),
->+        VMSTATE_UINT8(day_a, Pcf8563State),
->+        VMSTATE_UINT8(weekday_a, Pcf8563State),
->+        VMSTATE_UINT8(clkout_ctl, Pcf8563State),
->+        VMSTATE_UINT8(timer_ctl, Pcf8563State),
->+        VMSTATE_UINT8(timer_cnt, Pcf8563State),
->+        VMSTATE_TIMER_PTR(timer, Pcf8563State),
->+        VMSTATE_TIMER_PTR(irq_gen_timer, Pcf8563State),
->+        VMSTATE_TIMER_PTR(alarm_timer, Pcf8563State),
->+        VMSTATE_END_OF_LIST()
->+    }
->+};
->+
->+static void pcf8563_init(Object *obj)
->+{
->+    I2CSlave *i2c =3D I2C_SLAVE(obj);
->+    Pcf8563State *s =3D PCF8563(obj);
->+
->+    s->alarm_timer =3D timer_new_ns(rtc_clock, &alarm_timer_cb, s);
->+    s->timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL, &timer_cb, s);
->+    s->irq_gen_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL, &irq_gen_timer=
-_cb, s);
->+
->+    qdev_init_gpio_out(DEVICE(s), &s->irq, 1);
->+
->+    pcf8563_reset(i2c);
-
-Not needed=2E Reset is done automatically when QEMU starts=2E
-
->+
->+    trace_pcf8563_rtc_init();
->+
->+    s->reg_addr =3D 0x09;
->+    pcf8563_write(s, 0x81);
->+    set_alarm(s);
->+}
->+
->+static void pcf8563_reset_hold(Object *obj, ResetType type)
->+{
->+    I2CSlave *i2c =3D I2C_SLAVE(obj);
->+    pcf8563_reset(i2c);
-
-Eliminating the above invocation of pcf8563_reset() leaves just this one c=
-allside, so pcf8563_reset() can be inlined here=2E
-
-Other than that the code LGTM=2E
-
-Best regards,
-Bernhard
-
->+}
->+
->+static void pcf8563_class_init(ObjectClass *klass, void *data)
->+{
->+    DeviceClass *dc =3D DEVICE_CLASS(klass);
->+    I2CSlaveClass *k =3D I2C_SLAVE_CLASS(klass);
->+    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
->+
->+    k->event =3D pcf8563_event;
->+    k->recv =3D pcf8563_rx;
->+    k->send =3D pcf8563_tx;
->+    dc->vmsd =3D &vmstate_pcf8563;
->+    rc->phases=2Ehold =3D pcf8563_reset_hold;
->+}
->+
->+static const TypeInfo pcf8563_register_types[] =3D {
->+    {
->+        =2Ename          =3D TYPE_PCF8563,
->+        =2Eparent        =3D TYPE_I2C_SLAVE,
->+        =2Einstance_size =3D sizeof(Pcf8563State),
->+        =2Einstance_init =3D pcf8563_init,
->+        =2Eclass_init    =3D pcf8563_class_init,
->+    },
->+};
->+
->+DEFINE_TYPES(pcf8563_register_types)
->diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
->index 743ff775d4=2E=2E17c524d61d 100644
->--- a/hw/rtc/trace-events
->+++ b/hw/rtc/trace-events
->@@ -43,3 +43,15 @@ stm32_rtc_arm_ointr(uint64_t tocks, uint64_t nsecs) "o=
-verflow interrupt in %" PR
-> stm32_rtc_arm_aintr(uint64_t tocks, uint64_t nsecs) "alarm interrupt in =
-%" PRIu64 " ticks, %" PRIu64" nsecs"
-> stm32_rtc_read(uint64_t addr, uint64_t value, uint32_t size) "addr 0x%02=
-" PRIx64 " value 0x%08" PRIx64" size %u"
-> stm32_rtc_write(uint64_t addr, uint64_t value, uint32_t size) "addr 0x%0=
-2" PRIx64 " value 0x%08" PRIx64" size %u"
->+
->+# pcf8563_rtc=2Ec
->+pcf8563_rtc_write_data(uint8_t data) "data: 0x%x"
->+pcf8563_rtc_write_addr(uint8_t addr) "register address: 0x%x"
->+pcf8563_rtc_read(uint8_t addr, uint8_t data) "addr: 0x%x, data: 0x%x"
->+pcf8563_rtc_event(uint8_t event) "Event: 0x%x"
->+pcf8563_rtc_init(void)
->+pcf8563_rtc_reset(void)
->+pcf8563_rtc_set_time(void)
->+pcf8563_rtc_get_time(void)
->+pcf8563_rtc_set_alarm(void)
->+pcf8563_rtc_capture_time(void)
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogbHRheWxvcnNpbXBzb25A
+Z21haWwuY29tIDxsdGF5bG9yc2ltcHNvbkBnbWFpbC5jb20+DQo+IFNlbnQ6IFRodXJzZGF5LCBN
+YXJjaCAyMCwgMjAyNSAyOjQ1IFBNDQo+IFRvOiAnQnJpYW4gQ2FpbicgPGJyaWFuLmNhaW5Ab3Nz
+LnF1YWxjb21tLmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KPiBDYzogcmljaGFyZC5oZW5k
+ZXJzb25AbGluYXJvLm9yZzsgcGhpbG1kQGxpbmFyby5vcmc7IE1hdGhldXMgQmVybmFyZGlubw0K
+PiAoUVVJQykgPHF1aWNfbWF0aGJlcm5AcXVpY2luYy5jb20+OyBhbGVAcmV2Lm5nOyBhbmpvQHJl
+di5uZzsgTWFyY28NCj4gTGllYmVsIChRVUlDKSA8cXVpY19tbGllYmVsQHF1aWNpbmMuY29tPjsg
+YWxleC5iZW5uZWVAbGluYXJvLm9yZzsgTWFyaw0KPiBCdXJ0b24gKFFVSUMpIDxxdWljX21idXJ0
+b25AcXVpY2luYy5jb20+OyBTaWQgTWFubmluZw0KPiA8c2lkbmV5bUBxdWljaW5jLmNvbT47IEJy
+aWFuIENhaW4gPGJjYWluQHF1aWNpbmMuY29tPg0KPiBTdWJqZWN0OiBSRTogW1BBVENIIDIyLzM5
+XSB0YXJnZXQvaGV4YWdvbjogSW1wbGVtZW50IHNldHByaW8sIHJlc2NoZWQNCj4gDQo+IFdBUk5J
+Tkc6IFRoaXMgZW1haWwgb3JpZ2luYXRlZCBmcm9tIG91dHNpZGUgb2YgUXVhbGNvbW0uIFBsZWFz
+ZSBiZSB3YXJ5DQo+IG9mIGFueSBsaW5rcyBvciBhdHRhY2htZW50cywgYW5kIGRvIG5vdCBlbmFi
+bGUgbWFjcm9zLg0KPiANCj4gPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiA+IEZyb206
+IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4NCj4gPiBTZW50OiBGcmlk
+YXksIEZlYnJ1YXJ5IDI4LCAyMDI1IDExOjI4IFBNDQo+ID4gVG86IHFlbXUtZGV2ZWxAbm9uZ251
+Lm9yZw0KPiA+IENjOiBicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb207IHJpY2hhcmQuaGVuZGVy
+c29uQGxpbmFyby5vcmc7DQo+ID4gcGhpbG1kQGxpbmFyby5vcmc7IHF1aWNfbWF0aGJlcm5AcXVp
+Y2luYy5jb207IGFsZUByZXYubmc7DQo+IGFuam9AcmV2Lm5nOw0KPiA+IHF1aWNfbWxpZWJlbEBx
+dWljaW5jLmNvbTsgbHRheWxvcnNpbXBzb25AZ21haWwuY29tOw0KPiA+IGFsZXguYmVubmVlQGxp
+bmFyby5vcmc7IHF1aWNfbWJ1cnRvbkBxdWljaW5jLmNvbTsNCj4gc2lkbmV5bUBxdWljaW5jLmNv
+bTsNCj4gPiBCcmlhbiBDYWluIDxiY2FpbkBxdWljaW5jLmNvbT4NCj4gPiBTdWJqZWN0OiBbUEFU
+Q0ggMjIvMzldIHRhcmdldC9oZXhhZ29uOiBJbXBsZW1lbnQgc2V0cHJpbywgcmVzY2hlZA0KPiA+
+DQo+ID4gRnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+DQo+ID4NCj4gPiBUaGUg
+aGFyZHdhcmUtYXNzaXN0ZWQgc2NoZWR1bGVyIGhlbHBzIG1hbmFnZSB0YXNrcyBvbiB0aGUgcnVu
+IHF1ZXVlDQo+ID4gYW5kIGludGVycnVwdCBzdGVlcmluZy4NCj4gPg0KPiA+IFRoaXMgaW5zdHJ1
+Y3Rpb24gaXMgZGVmaW5lZCBpbiB0aGUgUXVhbGNvbW0gSGV4YWdvbiBWNzEgUHJvZ3JhbW1lcidz
+DQo+ID4gUmVmZXJlbmNlIE1hbnVhbCAtDQo+IGh0dHBzOi8vZG9jcy5xdWFsY29tbS5jb20vYnVu
+ZGxlL3B1YmxpY3Jlc291cmNlLzgwLQ0KPiA+IE4yMDQwLTUxX1JFVl9BQl9IZXhhZ29uX1Y3MV9Q
+cm9ncmFtbWVyU19SZWZlcmVuY2VfTWFudWFsLnBkZg0KPiA+IFNlZSDCpzExLjkuMiBTWVNURU0g
+TU9OSVRPUi4NCj4gDQo+IFNlZSBlYXJsaWVyIGRpc2N1c3Npb24gb24gcmVmZXJlbmNlcyB0byBk
+b2N1bWVudHMuDQo+IA0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogQnJpYW4gQ2FpbiA8YnJpYW4u
+Y2FpbkBvc3MucXVhbGNvbW0uY29tPg0KPiA+IC0tLQ0KPiA+ICB0YXJnZXQvaGV4YWdvbi9vcF9o
+ZWxwZXIuYyB8IDY1DQo+ID4gKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysN
+Cj4gPiAgMSBmaWxlIGNoYW5nZWQsIDY1IGluc2VydGlvbnMoKykNCj4gPg0KPiA+IGRpZmYgLS1n
+aXQgYS90YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYyBiL3RhcmdldC9oZXhhZ29uL29wX2hlbHBl
+ci5jDQo+ID4gaW5kZXggMGRjZTEzM2QzYS4uZDBkYzRhZmFjNyAxMDA2NDQNCj4gPiAtLS0gYS90
+YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYw0KPiA+ICsrKyBiL3RhcmdldC9oZXhhZ29uL29wX2hl
+bHBlci5jDQo+ID4gQEAgLTE0NjUsNiArMTQ2NSw1NyBAQCB2b2lkIEhFTFBFUihzdG9wKShDUFVI
+ZXhhZ29uU3RhdGUgKmVudikNCj4gPiAgICAgIGhleGFnb25fc3RvcF90aHJlYWQoZW52KTsNCj4g
+PiAgfQ0KPiA+DQo+ID4gK3N0YXRpYyBpbmxpbmUgUUVNVV9BTFdBWVNfSU5MSU5FIHZvaWQgcmVz
+Y2hlZChDUFVIZXhhZ29uU3RhdGUNCj4gKmVudikNCj4gPiB7DQo+ID4gKyAgICB1aW50MzJfdCBz
+Y2hlZGNmZzsNCj4gPiArICAgIHVpbnQzMl90IHNjaGVkY2ZnX2VuOw0KPiA+ICsgICAgaW50IGlu
+dF9udW1iZXI7DQo+ID4gKyAgICBDUFVTdGF0ZSAqY3M7DQo+ID4gKyAgICB1aW50MzJfdCBsb3dl
+c3RfdGhfcHJpbyA9IDA7IC8qIDAgaXMgaGlnaGVzdCBwcmlvICovDQo+ID4gKyAgICB1aW50MzJf
+dCBiZXN0d2FpdF9yZWc7DQo+ID4gKyAgICB1aW50MzJfdCBiZXN0X3ByaW87DQo+ID4gKw0KPiA+
+ICsgICAgQlFMX0xPQ0tfR1VBUkQoKTsNCj4gPiArICAgIHFlbXVfbG9nX21hc2soQ1BVX0xPR19J
+TlQsICIlczogY2hlY2sgcmVzY2hlZFxuIiwgX19mdW5jX18pOw0KPiA+ICsgICAgc2NoZWRjZmcg
+PSBhcmNoX2dldF9zeXN0ZW1fcmVnKGVudiwgSEVYX1NSRUdfU0NIRURDRkcpOw0KPiA+ICsgICAg
+c2NoZWRjZmdfZW4gPSBHRVRfRklFTEQoU0NIRURDRkdfRU4sIHNjaGVkY2ZnKTsNCj4gPiArICAg
+IGludF9udW1iZXIgPSBHRVRfRklFTEQoU0NIRURDRkdfSU5UTk8sIHNjaGVkY2ZnKTsNCj4gPiAr
+DQo+ID4gKyAgICBpZiAoIXNjaGVkY2ZnX2VuKSB7DQo+ID4gKyAgICAgICAgcmV0dXJuOw0KPiA+
+ICsgICAgfQ0KPiA+ICsNCj4gPiArICAgIENQVV9GT1JFQUNIKGNzKSB7DQo+ID4gKyAgICAgICAg
+SGV4YWdvbkNQVSAqdGhyZWFkID0gSEVYQUdPTl9DUFUoY3MpOw0KPiA+ICsgICAgICAgIENQVUhl
+eGFnb25TdGF0ZSAqdGhyZWFkX2VudiA9ICYodGhyZWFkLT5lbnYpOw0KPiA+ICsgICAgICAgIHVp
+bnQzMl90IHRoX3ByaW8gPSBHRVRfRklFTEQoDQo+ID4gKyAgICAgICAgICAgIFNUSURfUFJJTywg
+YXJjaF9nZXRfc3lzdGVtX3JlZyh0aHJlYWRfZW52LCBIRVhfU1JFR19TVElEKSk7DQo+ID4gKyAg
+ICAgICAgaWYgKCFoZXhhZ29uX3RocmVhZF9pc19lbmFibGVkKHRocmVhZF9lbnYpKSB7DQo+ID4g
+KyAgICAgICAgICAgIGNvbnRpbnVlOw0KPiA+ICsgICAgICAgIH0NCj4gPiArDQo+ID4gKyAgICAg
+ICAgbG93ZXN0X3RoX3ByaW8gPSAobG93ZXN0X3RoX3ByaW8gPiB0aF9wcmlvKQ0KPiA+ICsgICAg
+ICAgICAgICA/IGxvd2VzdF90aF9wcmlvDQo+ID4gKyAgICAgICAgICAgIDogdGhfcHJpbzsNCj4g
+PiArICAgIH0NCj4gPiArDQo+ID4gKyAgICBiZXN0d2FpdF9yZWcgPSBhcmNoX2dldF9zeXN0ZW1f
+cmVnKGVudiwgSEVYX1NSRUdfQkVTVFdBSVQpOw0KPiA+ICsgICAgYmVzdF9wcmlvID0gR0VUX0ZJ
+RUxEKEJFU1RXQUlUX1BSSU8sIGJlc3R3YWl0X3JlZyk7DQo+ID4gKw0KPiA+ICsgICAgLyoNCj4g
+PiArICAgICAqIElmIHRoZSBsb3dlc3QgcHJpb3JpdHkgdGhyZWFkIGlzIGxvd2VyIHByaW9yaXR5
+IHRoYW4gdGhlDQo+ID4gKyAgICAgKiB2YWx1ZSBpbiB0aGUgQkVTVFdBSVQgcmVnaXN0ZXIsIHdl
+IG11c3QgcmFpc2UgdGhlIHJlc2NoZWR1bGUNCj4gPiArICAgICAqIGludGVycnVwdCBvbiB0aGUg
+bG93ZXN0IHByaW9yaXR5IHRocmVhZC4NCj4gPiArICAgICAqLw0KPiA+ICsgICAgaWYgKGxvd2Vz
+dF90aF9wcmlvID4gYmVzdF9wcmlvKSB7DQo+ID4gKyAgICAgICAgcWVtdV9sb2dfbWFzayhDUFVf
+TE9HX0lOVCwNCj4gPiArICAgICAgICAgICAgICAgICIlczogcmFpc2luZyByZXNjaGVkIGludCAl
+ZCwgY3VyIFBDIDB4IiBUQVJHRVRfRk1UX2x4ICJcbiIsDQo+ID4gKyAgICAgICAgICAgICAgICBf
+X2Z1bmNfXywgaW50X251bWJlciwgYXJjaF9nZXRfdGhyZWFkX3JlZyhlbnYsDQo+IEhFWF9SRUdf
+UEMpKTsNCj4gPiArICAgICAgICBTRVRfU1lTVEVNX0ZJRUxEKGVudiwgSEVYX1NSRUdfQkVTVFdB
+SVQsIEJFU1RXQUlUX1BSSU8sDQo+ID4gMHgxZmYpOw0KPiANCj4gV2hhdCBpcyB0aGUgc2lnbmlm
+aWNhbmNlIG9mIDB4MWZmPyAgVGhlIGZpZWxkIGlzIDEwIGJpdHMsIHNvIHRoaXMgaXNuJ3Qgc2V0
+dGluZyBhbGwNCj4gdGhlIGJpdHMuDQo+IFNob3VsZCB0aGlzIGJlIGxvd2VzdF90aF9wcmlvPw0K
+W1NpZCBNYW5uaW5nXSANCg0KSGkgVGF5bG9yLA0KDQpUaGUgdmFsdWUgMHgxZmYgaXMgY29ycmVj
+dCBidXQgaXQgZG9lcyBsb29rIGxpa2UgQkVTVFdBSVRfUFJJTyBpcyBub3QsIGl0IHNob3VsZCBi
+ZSA5IG5vdCAxMA0KdGFyZ2V0L2hleGFnb24vcmVnX2ZpZWxkc19kZWYuaC5pbmMNCg0KSXQgbG9v
+a3MgbGlrZSBpdCB3YXMgYWRkZWQgaW4gIlBBVENIIDE5LzM4IHRhcmdldC9oZXhhZ29uOiBEZWZp
+bmUgcmVnaXN0ZXIgZmllbGRzIGZvciBzeXN0ZW0gcmVncyINCkkgd2lsbCBtYWtlIGEgZml4dXAg
+dG8gdGhhdCBwYXRjaCBhbmQgY29ycmVjdCB0aGUgdmFsdWUuDQoNCj4gDQo+ID4gKyAgICAgICAg
+aGV4X3JhaXNlX2ludGVycnVwdHMoZW52LCAxIDw8IGludF9udW1iZXIsIENQVV9JTlRFUlJVUFRf
+U1dJKTsNCj4gPiArICAgIH0NCj4gPiArfQ0KPiA+ICsNCj4gDQoNCg==
 
