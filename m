@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08A05C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 22:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75811C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 22:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvOQw-000488-Oz; Thu, 20 Mar 2025 18:32:17 -0400
+	id 1tvOSI-0006MC-SP; Thu, 20 Mar 2025 18:33:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvOPZ-0002TN-4z
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:30:53 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tvOPr-0002h0-Ab
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:31:12 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvOPN-00079k-Oe
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:30:48 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2235189adaeso25862955ad.0
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 15:30:28 -0700 (PDT)
+ id 1tvOPM-00079v-27
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:31:06 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-225a28a511eso29432595ad.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 15:30:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742509826; x=1743114626; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742509827; x=1743114627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=avokc7PtwidAIhGAXsNkScUiPBrKycg0jtKiMA4KDgs=;
- b=BIboVDtCFddNVzvXZJy68UWvOh5Ano4jGzvYmm7wGMx3Q1C0SBDuY5ha+RV3RdbP2R
- zYKBH73nhY1kZQAfJlLlSZSDFy1qyDZ3cGDhA5M502UyHi7QXljnOVfrIXvMm5XuDMWY
- mEAZlU3S9Al7/ZVLk6qMM0mKNGI3wJpSCj0zCkwTgFmR1HSlqc1zxDKy6qNaOAGuCU+b
- szSYqw2ULdote4TJGoSMVGkAeVdsiUSHaqqFqP7XM9Ij6T1uxaI+Q5QtiNCdWq5JPafZ
- FVul1GWmsAfMwSvJKZqsYZT7vJ0zS3ZONx2vH1mIXAhzuGM9yPIRzDk82x12HYtPGixl
- Nemw==
+ bh=z/4XryTOWm6w/MZRVd6kifOMES+Py2IKRoyOKSLgV8g=;
+ b=UkTYg5KZLxmcGGE5ARi5Wf7dUGBJcy455nKaNv1gL59/O9S6wlLTtzUhsbL6ELYdD6
+ M7/x5hAYJTRHqmtoj3pKZtO7ksnFNAaycNp32mo2joHgsC5PyaXCOz6YqXwIk0UIqfku
+ Wlz1igpSETqrhA7uQK+pi27rWm2O+5aWStBYb+5/Nt9eZl6Z4aZhyJpTXLPChtq2DeLq
+ LgxcLX5pFMjm1HlnzItniXvPj3P0VdTMRUXiRPpU6+yR3zUrrGYR0yoIv0XwI1J0FpMP
+ VG/3LOcAJOoHF7fmGVJhWhHBahiA5E+AC6uEiWrS7T7dc2T6ZiuzqMp4NyWLyO+qdOHG
+ pf1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742509826; x=1743114626;
+ d=1e100.net; s=20230601; t=1742509827; x=1743114627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=avokc7PtwidAIhGAXsNkScUiPBrKycg0jtKiMA4KDgs=;
- b=DoIqO6qJoeOTZka7tnkDkn7WpOQIbwBt7EuKZysLYCftuG5hXgHBtp28fEVGqjzZQe
- yGcC1nphKVawRBwfU7TnfoOL9ahl23Gnx3EgnQZ4Y8GLf65iXz1/4WpVWRRrvWwNYB7O
- EBRsWuSV2kBQ4eAj/pI/fEB8/4Fn0CZA2raXvdZWDUhA3Jd4a38zTOYnyiBofwYnXL76
- GRXEcbEgl/wreC61MHezyoHGJRehyuJkBBUVps+eHMtBPZqNLAZgcWiu+HplBJJChf10
- WlXfYGUsA9t3AG6lIrHLsSlJclzpI4h2PZbRxOmn6b0s5HxPRXkO3/+YvZTUJOxmWtPK
- fewA==
-X-Gm-Message-State: AOJu0YxshOl/2MkeVl50PAgh5jdZ0Toc5EJgJuM7ONDJpoGlp9De5bXT
- hY6V/cctY1RhJyHdj/uf58dB9mdi+UwtmVUZ6PEYtdqxull8smxcCNLJxcBMSGbUv4e8g15gy/n
- F
-X-Gm-Gg: ASbGnctQXiQmg2NQZI2evd7Jf6FHB+NpG9tnTSz2BFeF9LrEfLi25eDa3a2RpKR1v6B
- YF3VFxhvJWw1Zao0tmpOJxzN0mFQkqrd5rA7QVLBtqnCv5eHg2mHvgTGjlH3hqnwmTdBr8K+QzC
- Ss72Cn0AobwVDNj/7/RNJ37KdHF13BUAhc4n06PVk8OD9+gN4LCRdgbGecaRVKr1DX2yvNBZKys
- DFNYjSL7oLIUwlwwl9WUJdJtZRO0FbZTG4GzSeojpRndua/j4NuwoPX+OoGqD0zWlne+rbfM8zU
- osyMTP8fyN3SR+p16TDJE8GDoLPl6MW94lRkN4UuHqpV
-X-Google-Smtp-Source: AGHT+IGEEKE91spkEXTcAVV49R6+3YhJ1RqwkB0C8ZoyykH1H01x06i5gZ0hciM5xTE4CtOtK2OMPw==
-X-Received: by 2002:a17:902:ef4f:b0:21f:1348:10e6 with SMTP id
- d9443c01a7336-227806cfff4mr22432425ad.13.1742509825855; 
- Thu, 20 Mar 2025 15:30:25 -0700 (PDT)
+ bh=z/4XryTOWm6w/MZRVd6kifOMES+Py2IKRoyOKSLgV8g=;
+ b=VT6J0GHytgjbixdYUpUZe2DQvAGa+XpU4wt9Z/dxyc7l9j6JcwaaDyJ80YlOuQMM07
+ vQXNciSsNSLB+rJgiIAo77kEpzu+29y+bV+7xviMR5YVwpZIt6KFbSwZNgFbG8o8+P8m
+ 9Pv6qmRuaYfK4aqNYeDRpUr+hr8bJfG0diLiaG2IbzW6r5lEjuOanq5K2wJsS7pVcgrm
+ jPaZrTVvk+mDl96MDeszkLXBxATCcVY8aNwOfJ+/rIhMaV/MJZ0YB8NJhwjYqIlg/sYa
+ vPIlNugpEL1tobzr3tZVX2D55d9NUNR9WGlnfz/CaXKsFaIRHpmxGVqsQbbY/hcAjKNJ
+ 8Neg==
+X-Gm-Message-State: AOJu0YztRYtF0J365sZ+UFUeAeQpnOP6Gaz5pR54sqoLxRnw3EUrH15a
+ wH0TjuXN7uwJcPFqrY61OtqfDqtgOEHzslWa0YOphrD13hq3c3sSePt67bVVjNI4fvJrEmvXLrz
+ D
+X-Gm-Gg: ASbGncsUUYlSfCWavYX/2u2V314rTxssSlBYPUJvLAPrIW+ezM6GxURtYfePeqW66Na
+ xOdUAQ0XGncvWSgimCY8isNufld2UOU4UsFw/6B8erBtPaxyhXVSpgymttxHCOkyC5lrSknlECk
+ lHC5XQR2w5bB4R7/SkfbrJ6PiA+dQo6oDOFbnhvvpjLJx/Rz4bKEMltiww0X1h34I5L5Tje1873
+ TNsGsHoR1icDi1PD4LW7cV92Jg8yZWgC7ncpMdjBrb3Fn8jRQ2t8sJq5ma8crCJF85UR+tPXA3U
+ iJFxYnFi2aj3kGXR8iMaj5wCcXZI25YWck0EFCnjWLJL
+X-Google-Smtp-Source: AGHT+IEsmAbnRKeqDLb8Obh57hU4D8dne9W2d0POjgz1H5aMyJvN3a79EMmmYiR7WIxM0NHx2HlH/A==
+X-Received: by 2002:a17:903:41c6:b0:215:b1a3:4701 with SMTP id
+ d9443c01a7336-22780c7ab87mr14047555ad.13.1742509826750; 
+ Thu, 20 Mar 2025 15:30:26 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f4581csm3370145ad.59.2025.03.20.15.30.25
+ d9443c01a7336-22780f4581csm3370145ad.59.2025.03.20.15.30.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 15:30:25 -0700 (PDT)
+ Thu, 20 Mar 2025 15:30:26 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
@@ -72,17 +72,16 @@ Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 13/30] accel/tcg: fix missing includes for
- TARGET_HAS_PRECISE_SMC
-Date: Thu, 20 Mar 2025 15:29:45 -0700
-Message-Id: <20250320223002.2915728-14-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 14/30] exec/cpu-all: remove cpu include
+Date: Thu, 20 Mar 2025 15:29:46 -0700
+Message-Id: <20250320223002.2915728-15-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
 References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,55 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We prepare to remove cpu.h from cpu-all.h, which will transitively
-remove it from accel/tcg/tb-internal.h, and thus from most of tcg
-compilation units.
-
-Note: this was caught by a test regression for s390x-softmmu.
+Now we made sure important defines are included using their direct
+path, we can remove cpu.h from cpu-all.h.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/exec/poison.h | 1 +
- accel/tcg/tb-maint.c  | 1 +
- accel/tcg/user-exec.c | 1 +
- 3 files changed, 3 insertions(+)
+ include/exec/cpu-all.h | 2 --
+ accel/tcg/cpu-exec.c   | 1 +
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index 964cbd5081c..c72f56df921 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -38,6 +38,7 @@
- #pragma GCC poison TARGET_SUPPORTS_MTTCG
- #pragma GCC poison TARGET_BIG_ENDIAN
- #pragma GCC poison TCG_GUEST_DEFAULT_MO
-+#pragma GCC poison TARGET_HAS_PRECISE_SMC
- #pragma GCC poison BSWAP_NEEDED
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index d4d05d82315..da8f5dd10c5 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -21,6 +21,4 @@
  
- #pragma GCC poison TARGET_LONG_BITS
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index d5899ad0475..efe90d2d695 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "qemu/interval-tree.h"
- #include "qemu/qtree.h"
-+#include "cpu.h"
- #include "exec/cputlb.h"
+ #include "exec/cpu-common.h"
+ 
+-#include "cpu.h"
+-
+ #endif /* CPU_ALL_H */
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 207416e0212..813113c51ea 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -36,6 +36,7 @@
  #include "exec/log.h"
- #include "exec/exec-all.h"
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 667c5e03543..9d82d22bf40 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "accel/tcg/cpu-ops.h"
- #include "disas/disas.h"
+ #include "qemu/main-loop.h"
+ #include "exec/cpu-all.h"
 +#include "cpu.h"
- #include "exec/vaddr.h"
- #include "exec/exec-all.h"
- #include "exec/tlb-flags.h"
+ #include "exec/icount.h"
+ #include "exec/replay-core.h"
+ #include "system/tcg.h"
 -- 
 2.39.5
 
