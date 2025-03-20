@@ -4,95 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0543FC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 12:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787E9C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 12:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvEfs-0007Rq-Dj; Thu, 20 Mar 2025 08:07:00 -0400
+	id 1tvEqI-00026O-0R; Thu, 20 Mar 2025 08:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tvEfO-0007Kc-EL
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 08:06:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tvEfK-0002Pd-06
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 08:06:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742472383;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uThQc2E8ragqKw6JjO9nyh1Qqr/jhvaLXLndjVDzmtU=;
- b=a/KEs3XlBvwgFdVPZ37J29khqvcgYxyGUaVdVkid/uxKqIgFUJ+isSAJ2U160zMqo3UP5R
- GJm+ZdB21EsW7/mnPCnxby78PoMwX/Ma+DZsiH8h8vKxpyVFsa2ZsQMti5+YHVI8jNVa/b
- 6CyCH8MqMqeFrrYnOdnGTK4sQybArn4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-370-dkgkRUDNOLa-iKVGhphRLg-1; Thu, 20 Mar 2025 08:06:21 -0400
-X-MC-Unique: dkgkRUDNOLa-iKVGhphRLg-1
-X-Mimecast-MFC-AGG-ID: dkgkRUDNOLa-iKVGhphRLg_1742472380
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4394c747c72so4032515e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 05:06:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742472380; x=1743077180;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uThQc2E8ragqKw6JjO9nyh1Qqr/jhvaLXLndjVDzmtU=;
- b=fwnAIimmdexV2JOv4KgAFnGifT6D4t4OD8wyxQSOHjR1fDAXJXVKm6K89qiz2nN/HT
- XXxhpaK0rSnbrtSqNa2EL+9qID5t5lPxfY3QWeowE+vOMpDbG9N8PlXYgDjXaEjNsQ1p
- 6i3Ene+u0fjMc+OqQbfGzzONMPBKU7lB3x04Zfl52JDbFvHn8I7OiYNEyzzAP6iuDp2M
- G45loKtC+1qj4UGiHh16fEDHjo5rCeVmC4Xt+Pb2/IJmun7aOn0lhj0EBhjcU0gJNJYB
- 4TG9UB4uV9eJYzBHE8hpKQSoZYLE9u1P4rXxK25dJ6ZLh0TFj0xOZ7oIX9al9/JNfFlj
- ynzQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOpoCFmOYL9dKx3mcKSawCoT3E5LXF8Z5004A0qHHc2ukgc5CcI73lLJpYALuFRpVm8GoYbZ5KsrPB@nongnu.org
-X-Gm-Message-State: AOJu0YzMD5lqFHM+HSqh2L4rh67FizMfoCauCw23fJTB0vQAmOTGWjLQ
- 28VM669skVj7nlzNOeR6gffIPdAAqreTDn1DJkby06GMB/3IJU+g8steBbHxbmFnrsUhea62J1j
- glLQJ2DHOyc/5dd/DlWL7HQS1HgJRhdVBPCqislARKqU987yH0UruRCReqWPlqhBQFVKskzQVj5
- qP7t1JcLTY/82V4TGN9UUFA+/RRU+QwsQEFR4=
-X-Gm-Gg: ASbGncv9vabIXZc4yaUXv9Z7gQwu0xH+xk7EoU9BEFmF1pcM9s4bTaC9ectZsCUV6Zn
- nuCUdqABU03p/FxJ04EGGg/sq3jbg9N2CtFxQjRsp1Pyy5i0llmO7+zbRTx2J26+/s/0TD5wcIv
- o=
-X-Received: by 2002:a05:600c:cc7:b0:43d:ed:ad07 with SMTP id
- 5b1f17b1804b1-43d4381697cmr70538395e9.29.1742472379754; 
- Thu, 20 Mar 2025 05:06:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+Wv0RCxiziDtrHYCYRBWqDqbk+OD3++qJY3RinUuCK0Ee+vmfMysXVGnG47/p+o0hYbBxn5ac8QXESWmvu3s=
-X-Received: by 2002:a05:600c:cc7:b0:43d:ed:ad07 with SMTP id
- 5b1f17b1804b1-43d4381697cmr70537845e9.29.1742472379326; Thu, 20 Mar 2025
- 05:06:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1tvEqG-00026D-LZ
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 08:17:44 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1tvEqE-0005Rg-Er
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 08:17:44 -0400
+Received: by linux.microsoft.com (Postfix, from userid 1219)
+ id 408402116B34; Thu, 20 Mar 2025 05:17:39 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 408402116B34
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1742473059;
+ bh=wHXdCxm5HCr0q8DbzSLrCpiLNzNr2yDR86+dEqwoIeA=;
+ h=Date:From:To:Cc:Subject:From;
+ b=A+FCMVeTjPKbjlbtDLBismxP3aWcVcuJUbcn50mxLfq6PuYZXOHa13Z3p2YGLziQl
+ x2JHPkI6tmwaeGOLik180kGUFb232qaR+psr83+p/yOg/nhVgu3muZ90ATjgu1ZpW1
+ 4+QeFsaImYKUsLra2pzrxXExT4rzP+RuTn97Xb6E=
+Date: Thu, 20 Mar 2025 05:17:39 -0700
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: magnuskulke@microsoft.com, liuwe@linux.microsoft.com,
+ liuwe@microsoft.com, wei.liu@kernel.org
+Subject: ANN: working on an accelerator for MSHV
+Message-ID: <20250320121739.GA14189@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
 MIME-Version: 1.0
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-2-farosas@suse.de>
- <Z8ssc0NETt9KJjTG@x1.local> <87tt84u0d2.fsf@suse.de>
- <Z8tv53G5s9MLYv6f@x1.local>
- <87o6y9t14g.fsf@suse.de> <Z88DmvrNrW5Q1n7y@x1.local> <87ecz4adoi.fsf@suse.de>
-In-Reply-To: <87ecz4adoi.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 20 Mar 2025 17:36:02 +0530
-X-Gm-Features: AQ5f1JrpZa0UbbiwaPFQ4n7oSLVj5lG97kzG7vr3R7ZlPo9GPKT5opMnj3okYPE
-Message-ID: <CAE8KmOwkLoPB=wLuE5WC0HERzmUqAqjP9ZECTvxBELaN31yBVQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,34 +64,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Mar 2025 at 00:59, Fabiano Rosas <farosas@suse.de> wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> > To me, this is a fairly important question to ask.  Fundamentally, the very
-> > initial question is why do we need periodic flush and sync at all.  It's
-> > because we want to make sure new version of pages to land later than old
-> > versions.
-...
-> > Then v1 and v2 of the page P are ordered.
-> > If without the message on the main channel:
-> > Then I don't see what protects reorder of arrival of messages like:
-...
-> That's all fine. As long as the recv part doesn't see them out of
-> order. I'll try to write some code to confirm so I don't waste too much
-> of your time.
+Hi all, 
 
-* Relying on this receive order seems like a passive solution. On one
-side we are saying there is no defined 'requirement' on the network or
-compute capacity/quality for migration. ie. compute and network can be
-as bad as possible, yet migration shall always work reliably.
+We would like to informally announce an effort we started at Microsoft to
+expose the Microsoft Hypervisor (MSHV) as an alternative accelerator in Qemu on
+Linux hosts. L1 VMs that have been launched on Azure or HyperV will be able to
+use a /dev/mshv device to accelerate the operation of L2 (nested) VMs. The
+support for this device is currently being contributed to the kernel:
 
-* When receiving different versions of pages, couldn't multifd_recv
-check the latest version present in guest RAM and accept the incoming
-version only if it is fresher than the already present one? ie. if v1
-arrives later than v2 on the receive side, the receive side
-could/should discard v1 because v2 is already received.
+https://lore.kernel.org/linux-hyperv/1740611284-27506-1-git-send-email-nunodasneves@linux.microsoft.com/T/#t
 
-Thank you.
----
-  - Prasad
++-------------+ +----------------+ +--------------+
+|             | |                | |              |
+| Azure Host  | | L1 Linux Dom0  | | L2 Guest VM  |
+|             | |                | |              |
+|     OS      | |                | |              |
+|             | | +------------+ | |              |
+|             | | |  Qemu VMM  | | |              |
+|             | | +------------+ | |              |
+|             | | +------------+ | |              |
+|             | | |   Kernel   | | |              |
+|             | | +-----+------+ | |              |
+|             | +-------|--------+ +--------------+
+|             | +-------v-------------------------+
+|             | |    Microsoft Hypervisor (L1)    |
++-------------+ +-------+-------------------------+
+                        |
++-----------------------v-------------------------+
+|            Microsoft Hypervisor (L0)            |
++-------------------------------------------------+
 
++-------------------------------------------------+
+|                                                 |
+|                    Hardware                     |
+|                                                 |
++-------------------------------------------------+
+
+Please find an early snapshot of our work at this location:  
+
+http://github.com/MSRSSP/qemu-mshv/tree/mshv (some build instructions can be
+found in ./accel/mshv/rust/README.md)
+
+Please note, this is a PoC which is outsourcing the majority of logic to
+to a library version of the Cloud-Hypervisor VMM and several MSHV-specific
+rust-vmm crates. This was done as a feasibility study since Cloud-Hypervisor
+already supports MSHV as an accelerator technology (in addition to KVM). As
+such it doesn't tie in with the Rust infrastructure that exists in Qemu today.
+We are currently in the process of porting MSHV-related logic from
+Cloud-Hypervisor to the Qemu code base, which would be what we aim to upstream.
+
+In the mean time, for reference you might still want to look at the provided
+PoC sources. We expect the self-contained Qemu port to be functionally
+equivalent (in the early revision). However, please note that you would need
+the aforementioned kernel patches on the Host if you would want to test the
+accelerator.
+
+We hope to be able to reuse the existing x86 instruction decoder/emulator that
+already exists in the in Qemu's HVF accelerator (porting the emu from
+Cloud-Hypervisor would be redundant). A colleagues has sent a patch that
+attempts to generalize the emulator:
+
+https://mail.gnu.org/archive/html/qemu-devel/2025-03/msg01967.html
+
+We hope to be able to send an early version of our port as a formal RFC patch
+set soon and look forward to feedback!
+
+thx,
+
+Magnus
 
