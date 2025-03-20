@@ -4,104 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC82AC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B17DCC36002
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvAV4-0008Oj-An; Thu, 20 Mar 2025 03:39:34 -0400
+	id 1tvAXC-0001I4-Tq; Thu, 20 Mar 2025 03:41:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAUz-0008KY-IN
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:39:29 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvAUw-0006CW-1R
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:39:29 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43cec5cd73bso2155135e9.3
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 00:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742456364; x=1743061164; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Nf4r+1HHRl9mM0NAlDwdoIGe7010ICXlf3pq30lWtuw=;
- b=Yu22gQQapy3bJx8+S+rQ1IqYL8Kms3td4eRPJKHKN8watuzyRlDceagj1/s/lgHKNb
- Hw7F7HjCAzFwHvTOBdeP3uoHdtJzlTZEWCuhFJ8UWMeOPwxBLdaAcT+iYSc+Ano88qqS
- MlYUgJgAj/snf7rRsd8BlRIpbqb4p7en6aANvc18K3K6hyqUCFZDE1Gi/k+bncdm3MYE
- bDG137Uf/c+YDy9pRO4VLUKtw7gz4WhiVWrLBVdNro1S53hOobtZQx7cdvAzc7gRA5le
- KI8QBwNKU09DIW0l26Xz5Ep+vvuX24jGbjk9Ke7dIWP4T+pEYeuXfeqkBPIs2GXYfPN9
- Y6fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742456364; x=1743061164;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Nf4r+1HHRl9mM0NAlDwdoIGe7010ICXlf3pq30lWtuw=;
- b=GQLZThQEbbA9MAcoeYaV8Evn+0KqOXPe44ntRZ7oOODH4JocmL7zALRe4JqU8eO+qm
- NfDjFQvtQvaLFDqdI7nb8UOq1ZRlhD4eby/feAGij/HTx4khMRn0NEGgGP9HyoPnLdNQ
- WxUlngT9qqHbGQkDtiK5zefOXIovI5Uzake0x0TtiywgwrskMzPiDLwnW8Q5K8nBoV4C
- Zqm/fMGTFwpazc6xg5B0uQyIBivQZDR3qvAzo9xiTtc0ettX4hb5byxOF4aXtJWfr2Au
- e0Fhifce57PEuHhSXXdYN5Xfii87IidM3zyyyzMRWD9NtcLTN33o2pkWyVh8LzOFfZ0U
- uKmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiqTQJxkJGmRlIjpIOak1r1IBK5n/LKJIhqnLgemLpdZ824VtTfQzQZSYJ05lNAqnAxXx92zwuPw0Y@nongnu.org
-X-Gm-Message-State: AOJu0YxTan6is7d2qTiq+Ezd/PAPKiOqVTjGdvdIWLD1wn3W00Rip8o0
- xsYoA4XPBMyi7EaBFeoQov0UjsVPjOLkeS5Rfw83tf3gLKSeZo8x2EWKQ8rPpo0=
-X-Gm-Gg: ASbGncu+kbu0wGRE8V+GwOoQT2eVRQeYvD7dHHy7H9XB7EBgEY5hua7fFChJV5a785e
- uyJGOP4l3c7rgTevhRQYDASyL0YZzd+B/bsCdKCYlxCqt3VYVeB3p9tNCrzQz7/KA1rsw4U47FJ
- UD/Ab05XpQdyGDmG+K2ezHMnV8uAWMZBG++szitWAEzZZ+q+Zil1DT3x9Of2w3X3LRWXkCQEZj2
- 92tsxqkyU05QOPxzPxtKHlkKU0C9U3HEcHjgyGjZ4DMUp6lpK5FuOxkBQDt/cqt7kbzYvh1MKFo
- ouVto+EjmljB4z9svqnS8wz3E1itT3x7P2TfD3DAf5DBURCnWHALCgWjLG41qFaJJQ3SZtfnCL8
- o+tvgRyPDTIe3
-X-Google-Smtp-Source: AGHT+IF5iFIAmvd5x5g0gVj4Ts/bGYTDsScqRgAbWZ9okMeojOdqKjdJg2n01Qc9M0o0MGM7gNRTVw==
-X-Received: by 2002:a05:600c:468f:b0:43c:e7ae:4bcf with SMTP id
- 5b1f17b1804b1-43d436c753fmr52805815e9.0.1742456363779; 
- Thu, 20 Mar 2025 00:39:23 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-395c83b6b37sm23258321f8f.37.2025.03.20.00.39.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 00:39:23 -0700 (PDT)
-Message-ID: <91758d60-7fdf-4df8-9513-b3c0ca1ecc4c@linaro.org>
-Date: Thu, 20 Mar 2025 08:39:22 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tvAXA-0001HN-6u
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:41:44 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tvAX7-0006tp-7F
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:41:43 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bxjayvxttnii2eAA--.37793S3;
+ Thu, 20 Mar 2025 15:41:35 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBx3MSsxttnoE5VAA--.48926S3;
+ Thu, 20 Mar 2025 15:41:35 +0800 (CST)
+Subject: Re: [PATCH v5 2/6] hw/loongarch/virt: Fix error handling in cpu plug
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250320032158.1762751-1-maobibo@loongson.cn>
+ <20250320032158.1762751-3-maobibo@loongson.cn> <875xk4i5wb.fsf@pond.sub.org>
+ <c1e74ed3-f60a-0bd6-9806-b5ec111e466d@loongson.cn>
+ <878qp0go4a.fsf@pond.sub.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <ea2ecfb8-da22-ad8d-7e56-a8b3dabb63e8@loongson.cn>
+Date: Thu, 20 Mar 2025 15:40:53 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] target/arm: convert 64 bit gdbstub to new helper
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
- qemu-ppc@nongnu.org, David Gibson <david@gibson.dropbear.id.au>,
- qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
- Greg Kurz <groug@kaod.org>, Nicholas Piggin <npiggin@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <20250319182255.3096731-5-alex.bennee@linaro.org>
+In-Reply-To: <878qp0go4a.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250319182255.3096731-5-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowMBx3MSsxttnoE5VAA--.48926S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZF4rWw4fXr17Cr43CF45urX_yoW5CrWUpr
+ W8ta1qkr4ktFWFvws29FyUt34jyrs3Jr95XrZYq343C390q34FqF47t3Wj9rW5uryI9a1j
+ qr45tasruFy3ZagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r1q6r43MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+ KfnxnUUI43ZEXa7IU8PCzJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -54
+X-Spam_score: -5.5
+X-Spam_bar: -----
+X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.598,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,188 +85,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/3/25 19:22, Alex Bennée wrote:
-> For some of the helpers we need a temporary variable to copy from
-> although we could add some helpers to return pointers into env in
-> those cases if we wanted to.
+
+
+On 2025/3/20 下午3:25, Markus Armbruster wrote:
+> bibo mao <maobibo@loongson.cn> writes:
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   target/arm/gdbstub64.c | 53 ++++++++++++++++++++++++++----------------
->   1 file changed, 33 insertions(+), 20 deletions(-)
+> On 2025/3/20 下午2:16, Markus Armbruster wrote:
+>>> Bibo Mao <maobibo@loongson.cn> writes:
+>>>
+>>>> In function virt_cpu_plug(), it will send cpu plug message to interrupt
+>>>> controller extioi and ipi irqchip. If there is problem in this function,
+>>>> system should continue to run and keep state the same before cpu is
+>>>> added.
+>>>>
+>>>> Object cpuslot::cpu is set at last only when there is no any error.
+>>>> If there is, send cpu unplug message to extioi and ipi irqchip, and then
+>>>> return immediately.
+>>>>
+>>>> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
+>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > 
-> diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-> index 1a4dbec567..793332af31 100644
-> --- a/target/arm/gdbstub64.c
-> +++ b/target/arm/gdbstub64.c
-> @@ -20,7 +20,7 @@
->   #include "qemu/log.h"
->   #include "cpu.h"
->   #include "internals.h"
-> -#include "gdbstub/helpers.h"
-> +#include "gdbstub/registers.h"
->   #include "gdbstub/commands.h"
->   #include "tcg/mte_helper.h"
->   #if defined(CONFIG_USER_ONLY) && defined(CONFIG_LINUX)
-> @@ -35,15 +35,16 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
->   
->       if (n < 31) {
->           /* Core integer register.  */
-> -        return gdb_get_reg64(mem_buf, env->xregs[n]);
-> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &env->xregs[n]);
+> [...]
+> 
+>>> Hmm.
+>>>
+>>> You're right about the problem: virt_cpu_plug() neglects to revert
+>>> changes when it fails.
+>>>
+>>> You're probably right to move the assignment to cpu_slot->cpu to the
+>>> end.  Anything you can delay until success is assured you don't have to
+>>> revert.  I say "probably" because the code that now runs before the
+>>> assignment might theoretically "see" the assignment, and I didn't
+>>> examine it to exclude that.
+>>>
+>>> Where I have doubts is the code to revert changes.
+>>>
+>>> The hotplug_handler_plug() error checkign suggests it can fail.
+>>>
+>>> Can hotplug_handler_unplug() fail, too?  The error checking in
+>>> virt_cpu_unplug() right above suggests it can.
+>>
+>> Basically from existing code about ipi/extioi hotplug handler, it is
+>> impossible to there is error, here is only for future use.
+> 
+> Aha.  More at the end of my reply.
+> 
+>> If there is error in function virt_cpu_plug(), undo() such as
+>> hotplug_handler_unplug() should be called. However if undo() reports
+>> error, I do not know how to handle it, here just discard error in
+>> function undo().
+> 
+> Steinbach's Guideline for Systems Programming: Never test for an error
+> condition you don't know how to handle.
+> 
+> This old quip is a funny way to say that errors we don't know how to
+> handle are *bad*, and should be avoided.
+> 
+>> Regards
+>> Bibo Mao
+>>>
+>>> What happens if it fails in virt_cpu_plug()?
+> 
+> You assure us this can't happen today.  Because of that, broken error
+> recovery is not an actual problem.
+> 
+> However, if things change some day so it can happen, broken error
+> recovery becomes an actual problem.
+> 
+> so, broken error recovery just "for future use" is actually just for
+> silent future breakage.
+> 
+> But is it broken?  This is what I'm trying to find out with my "what
+> happens if" question.
+> 
+> If it is broken, then passing &error_abort would likely be less bad:
+> crash instead of silent breakage.  Also makes it completely obvious in
+> the code that these errors are not handled, whereas broken error
+> handling looks like it is until you actually think about it.
+> 
+yes, it seems that &error_abort is better than NULL, it is better than 
+slient and do nothing. If error really happens, we had to solve it then.
 
-s/MO_TEUO/MO_TEUQ/
+And I will refresh the patch in next version.
 
-But I think we should get MO_TE from CPUState in prologue.
-
-   MemOp mop = MO_TE; /* FIXME get from CPUState */
-
-   ...
-   return gdb_get_register_value(mop | MO_64, mem_buf, &env->xregs[n]);
-
->       }
->       switch (n) {
->       case 31:
-> -        return gdb_get_reg64(mem_buf, env->xregs[31]);
-> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &env->xregs[31]);
-
-s/MO_TEUO/MO_TEUQ/
-
-But harder to get it wrong using the MO_$bit equivalent:
-
-   return gdb_get_register_value(mop | MO_64, mem_buf, &env->xregs[31]);
-
->       case 32:
-> -        return gdb_get_reg64(mem_buf, env->pc);
-> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &env->pc);
-
-s/MO_TEUO/MO_TEUQ/
-
->       case 33:
-> -        return gdb_get_reg32(mem_buf, pstate_read(env));
-> +        uint32_t pstate = pstate_read(env);
-> +        return gdb_get_register_value(MO_TEUL, mem_buf, (uint8_t *) &pstate);
->       }
->       /* Unknown register.  */
->       return 0;
-> @@ -82,23 +83,27 @@ int aarch64_gdb_get_fpu_reg(CPUState *cs, GByteArray *buf, int reg)
->   {
->       ARMCPU *cpu = ARM_CPU(cs);
->       CPUARMState *env = &cpu->env;
-> +    uint32_t fpr;
->   
->       switch (reg) {
->       case 0 ... 31:
->       {
->           /* 128 bit FP register - quads are in LE order */
->           uint64_t *q = aa64_vfp_qreg(env, reg);
-> -        return gdb_get_reg128(buf, q[1], q[0]);
-> +        return gdb_get_register_value(MO_TEUO, buf, (uint8_t *) q);
->       }
->       case 32:
->           /* FPSR */
-> -        return gdb_get_reg32(buf, vfp_get_fpsr(env));
-> +        fpr = vfp_get_fpsr(env);
-> +        break;
->       case 33:
->           /* FPCR */
-> -        return gdb_get_reg32(buf, vfp_get_fpcr(env));
-> +        fpr = vfp_get_fpcr(env);
-> +        break;
->       default:
->           return 0;
->       }
-> +    return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &fpr);
->   }
->   
->   int aarch64_gdb_set_fpu_reg(CPUState *cs, uint8_t *buf, int reg)
-> @@ -132,30 +137,37 @@ int aarch64_gdb_get_sve_reg(CPUState *cs, GByteArray *buf, int reg)
->   {
->       ARMCPU *cpu = ARM_CPU(cs);
->       CPUARMState *env = &cpu->env;
-> +    uint32_t fpr;
->   
->       switch (reg) {
->       /* The first 32 registers are the zregs */
->       case 0 ... 31:
->       {
->           int vq, len = 0;
-> +        ARMVectorReg *zreg = &env->vfp.zregs[reg];
-> +
->           for (vq = 0; vq < cpu->sve_max_vq; vq++) {
-> -            len += gdb_get_reg128(buf,
-> -                                  env->vfp.zregs[reg].d[vq * 2 + 1],
-> -                                  env->vfp.zregs[reg].d[vq * 2]);
-> +            len += gdb_get_register_value(MO_TEUQ, buf,
-> +                                          (uint8_t *) &zreg->d[vq * 2 + 1]);
-
-s/MO_TEUQ/MO_TEUO/ ?
-
-> +            len += gdb_get_register_value(MO_TEUQ, buf,
-> +                                          (uint8_t *) &zreg->d[vq * 2]);
-
-s/MO_TEUQ/MO_TEUO/ ?
-
->           }
->           return len;
->       }
->       case 32:
-> -        return gdb_get_reg32(buf, vfp_get_fpsr(env));
-> +        fpr = vfp_get_fpsr(env);
-> +        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &fpr);
->       case 33:
-> -        return gdb_get_reg32(buf, vfp_get_fpcr(env));
-> +        fpr = vfp_get_fpcr(env);
-> +        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &fpr);
->       /* then 16 predicates and the ffr */
->       case 34 ... 50:
->       {
->           int preg = reg - 34;
->           int vq, len = 0;
->           for (vq = 0; vq < cpu->sve_max_vq; vq = vq + 4) {
-> -            len += gdb_get_reg64(buf, env->vfp.pregs[preg].p[vq / 4]);
-> +            len += gdb_get_register_value(MO_TEUQ, buf,
-> +                                          (uint8_t *) &env->vfp.pregs[preg].p[vq / 4]);
->           }
->           return len;
->       }
-> @@ -165,8 +177,8 @@ int aarch64_gdb_get_sve_reg(CPUState *cs, GByteArray *buf, int reg)
->            * We report in Vector Granules (VG) which is 64bit in a Z reg
->            * while the ZCR works in Vector Quads (VQ) which is 128bit chunks.
->            */
-> -        int vq = sve_vqm1_for_el(env, arm_current_el(env)) + 1;
-> -        return gdb_get_reg64(buf, vq * 2);
-> +        uint64_t vq = (sve_vqm1_for_el(env, arm_current_el(env)) + 1) * 2;
-> +        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &vq);
-
-s/MO_TEUL/MO_TEUQ/
-
->       }
->       default:
->           /* gdbstub asked for something out our range */
-> @@ -248,10 +260,11 @@ int aarch64_gdb_get_pauth_reg(CPUState *cs, GByteArray *buf, int reg)
->               bool is_data = !(reg & 1);
->               bool is_high = reg & 2;
->               ARMMMUIdx mmu_idx = arm_stage1_mmu_idx(env);
-> -            ARMVAParameters param;
-> +            ARMVAParameters param = aa64_va_parameters(env, -is_high, mmu_idx,
-> +                                                       is_data, false);
-> +            uint64_t pauth_mask = pauth_ptr_mask(param);
->   
-> -            param = aa64_va_parameters(env, -is_high, mmu_idx, is_data, false);
-> -            return gdb_get_reg64(buf, pauth_ptr_mask(param));
-> +            return gdb_get_register_value(MO_TEUQ, buf, (uint8_t *) &pauth_mask);
->           }
->       default:
->           return 0;
-> @@ -399,7 +412,7 @@ int aarch64_gdb_get_tag_ctl_reg(CPUState *cs, GByteArray *buf, int reg)
->   
->       tcf0 = extract64(env->cp15.sctlr_el[1], 38, 2);
->   
-> -    return gdb_get_reg64(buf, tcf0);
-> +    return gdb_get_register_value(MO_TEUQ, buf, (uint8_t *) &tcf0);
->   }
->   
->   int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
+Regards
+Bibo Mao
 
 
