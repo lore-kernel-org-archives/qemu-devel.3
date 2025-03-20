@@ -4,73 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54E5FC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25DC6C35FFF
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tv9Cg-0000x8-UF; Thu, 20 Mar 2025 02:16:30 -0400
+	id 1tv9Fk-0002mr-N8; Thu, 20 Mar 2025 02:19:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tv9CW-0000wA-1Y
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:16:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tv9CT-00048g-G4
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:16:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742451375;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xxIUMfnHHPNfybrEf3xwaSwihvV7/rupdWM1rEhzzmo=;
- b=JNg4f4Se9khEk3qPRIaPfU6hDY7MyzUaWlbQWlqUL55qLpWH5plrR/g5sL/39o8UmOz7Ug
- +6F859/Epvn/PfLwO6T8w6ESy4h6TdHG6Fv2j41RWpVhB1nYmnZLv/kf/x7NWtdFImqbw0
- v42kLHEe2T3zvaGZg8fATlFRRirt6+I=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-HloP13THPCKoqBoBAOSc3A-1; Thu,
- 20 Mar 2025 02:16:11 -0400
-X-MC-Unique: HloP13THPCKoqBoBAOSc3A-1
-X-Mimecast-MFC-AGG-ID: HloP13THPCKoqBoBAOSc3A_1742451370
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02F09180AF4C; Thu, 20 Mar 2025 06:16:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7DD9D1800370; Thu, 20 Mar 2025 06:16:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9564621E66C4; Thu, 20 Mar 2025 07:16:04 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v5 2/6] hw/loongarch/virt: Fix error handling in cpu plug
-In-Reply-To: <20250320032158.1762751-3-maobibo@loongson.cn> (Bibo Mao's
- message of "Thu, 20 Mar 2025 11:21:54 +0800")
-References: <20250320032158.1762751-1-maobibo@loongson.cn>
- <20250320032158.1762751-3-maobibo@loongson.cn>
-Date: Thu, 20 Mar 2025 07:16:04 +0100
-Message-ID: <875xk4i5wb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tv9Fi-0002lt-UO
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:19:38 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1tv9Fg-0006zV-F0
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:19:38 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2ff799d99dcso731707a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 23:19:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742451574; x=1743056374;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x858j5g0cieSBvQvbkhIiqqjyN9UN7MFhpuUm3aytII=;
+ b=gZUEsD7sF2NL8ggEYY3i+l29lUIjUmGgfR2QKAJeoLKKdEHmWW8FAS8fWDG6KVK+4P
+ O8wsoqfX8Kbyxnjpfazme/YzOerNkF/USX4Pk5fxNdLZEkg/nBNudsNMpsYaJkok7Hk7
+ db5w6QNVI9++qL+o5UgiInRB99q1ER0zydwK3RIra+vr4sel5kGz/PkH66AX+GP/6ayQ
+ psgg8Drjg757ICKBlcH8YD8cORoCf6AA0VUos2Ki32HJ8v/+CWB8PmwfKmjFDeplgYMk
+ lPNEm9HbnaSSD9ExLe7J5YmL7dOPLO5OtZeLYCmsEcQSpKr3mRQgFvYoZ8cc34GqjuDN
+ +umw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742451574; x=1743056374;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x858j5g0cieSBvQvbkhIiqqjyN9UN7MFhpuUm3aytII=;
+ b=ZDGJdZhs+HVy7a4hav93FkOd1JPI+srrT6qLDX/3Pz1POaimSVCnAY13HTw0PvQXrd
+ CrnBj+0MbjxGZ2o1X8dPj/usymG7YBeRCrpfyfxFGLcg8cBhf8syhf7E6fim2QSZbYVo
+ 7HjGlBAMOJtpiVMjjq/emzuJNK/Is2jEYP0Dj/XOM4hr9VlvgyHLfHb3cbASwqVfgkpy
+ wq7OkvDiZ8gRpkO2rPkir03cYv1aM/6Vi+bpAuXrUJhKuWDIHYM8xCOX12bIOSYLZcP6
+ zekBLKNfjL3b0q91VaWHUyVzfEtDt+Ga2t7sL6H39nGTF8iwgvjtPBcazZeSixBksoUn
+ 5AxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRF2LejtTYJCmUjMpVNSWEdUWU794UTtoXq3+4isFUv4AxP4/qbNiT2kAv2pCPgzTqA3ilIPIopaj6@nongnu.org
+X-Gm-Message-State: AOJu0Yz/wDl5FuNGSPwuZQY/c7npDSYxjINh/+vkjL9BLH8HzY0oDGME
+ H3IJMdmwdV3grfR1DhElvGi3LR4nVD2aNNgXsaQEoBPWvT8wMXpmsjg2b8S8V1o=
+X-Gm-Gg: ASbGnctzzYWlqPdRflc+zwfQImRYKiu65pv4216uEUH/ilYZpgS5LOP/84xXJOam00L
+ MVhgdn7l0dGoLuq6lUZsAPq4XSH3KJmBE7A6NXdOUHK6XhRg+tEaFyePY4Ep/BCVSbysVRGeORU
+ c66oeVYS0QA89TuDMDnk5+Yb25jwv0aJ80mijKte3+ry14kKkCSIYLUodw918YK4Lg092g940Eg
+ 8iJsTpLOMlZWo5lYm3mwbX596+zhba/kfF/dHLpD5JFWcR0iZWEdBvOaA/Zq1kI47+on9BVh6rH
+ Chmye9lGj2tBGD18rzoQcwbfSjaAqheMcT/fOU6Z5vq1ZloG1Ey5JtTWEQ==
+X-Google-Smtp-Source: AGHT+IEQk63NuG5hPsiG5+penBOpcu/CbuFqNid+xN6gz30e5dmIoSyXSA4JSASxJGx+/dnb6jOZKw==
+X-Received: by 2002:a17:90b:1a89:b0:2ff:5c4e:5acd with SMTP id
+ 98e67ed59e1d1-301d534bdcdmr2802128a91.35.1742451574445; 
+ Wed, 19 Mar 2025 23:19:34 -0700 (PDT)
+Received: from [157.82.207.107] ([157.82.207.107])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-301bf589b07sm2913296a91.11.2025.03.19.23.19.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Mar 2025 23:19:33 -0700 (PDT)
+Message-ID: <d3ea5401-866c-40a0-9ccc-6c681b760535@daynix.com>
+Date: Thu, 20 Mar 2025 15:19:28 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/10] gdbstub: introduce target independent gdb register
+ helper
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
+ David Gibson <david@gibson.dropbear.id.au>, qemu-s390x@nongnu.org,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
+ Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Nicholas Piggin <npiggin@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20250319182255.3096731-1-alex.bennee@linaro.org>
+ <20250319182255.3096731-3-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250319182255.3096731-3-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,86 +120,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bibo Mao <maobibo@loongson.cn> writes:
+On 2025/03/20 3:22, Alex Bennée wrote:
+> The current helper.h functions rely on hard coded assumptions about
+> target endianess to use the tswap macros. We also end up double
+> swapping a bunch of values if the target can run in multiple endianess
+> modes. Avoid this by getting the target to pass the endianess and size
+> via a MemOp and fixing up appropriately.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-> In function virt_cpu_plug(), it will send cpu plug message to interrupt
-> controller extioi and ipi irqchip. If there is problem in this function,
-> system should continue to run and keep state the same before cpu is
-> added.
->
-> Object cpuslot::cpu is set at last only when there is no any error.
-> If there is, send cpu unplug message to extioi and ipi irqchip, and then
-> return immediately.
->
-> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+The overall idea looks good to me. I have a few nitpicks:
+
 > ---
->  hw/loongarch/virt.c | 17 +++++++++++++++--
->  1 file changed, 15 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index a5840ff968..5118f01e4b 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -981,8 +981,6 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->      LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
->      Error *err = NULL;
->  
-> -    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> -    cpu_slot->cpu = CPU(dev);
->      if (lvms->ipi) {
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
->          if (err) {
-> @@ -995,6 +993,10 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
->          if (err) {
->              error_propagate(errp, err);
-> +            if (lvms->ipi) {
-> +                /* Send unplug message to restore, discard error here */
-> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
-> +            }
->              return;
->          }
->      }
-> @@ -1003,9 +1005,20 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
->          if (err) {
->              error_propagate(errp, err);
-> +            if (lvms->ipi) {
-> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
-> +            }
+>   include/gdbstub/registers.h | 30 ++++++++++++++++++++++++++++++
+>   gdbstub/gdbstub.c           | 22 ++++++++++++++++++++++
+>   2 files changed, 52 insertions(+)
+>   create mode 100644 include/gdbstub/registers.h
+> 
+> diff --git a/include/gdbstub/registers.h b/include/gdbstub/registers.h
+> new file mode 100644
+> index 0000000000..4abc7a6ae7
+> --- /dev/null
+> +++ b/include/gdbstub/registers.h
+> @@ -0,0 +1,30 @@
+> +/*
+> + * GDB Common Register Helpers
+> + *
+> + * Copyright (c) 2025 Linaro Ltd
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +            if (lvms->extioi) {
-> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi),
-> +                                       dev, NULL);
-> +            }
-> +            return;
->          }
->      }
->  
-> +    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> +    cpu_slot->cpu = CPU(dev);
->      return;
->  }
+> +#ifndef GDB_REGISTERS_H
+> +#define GDB_REGISTERS_H
+> +
+> +#include "exec/memop.h"
+> +
+> +/**
+> + * gdb_get_register_value() - get register value for gdb
+> + * mo: size and endian MemOp
+> + * buf: GByteArray to store in target order
+> + * val: pointer to value in host order
+> + *
+> + * This replaces the previous legacy read functions with a single
+> + * function to handle all sizes. Passing @mo allows the target mode to
+> + * be taken into account and avoids using hard coded tswap() macros.
+> + *
+> + * Returns the number of bytes written to the array.
+> + */
+> +int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val);
+> +
+> +#endif /* GDB_REGISTERS_H */
+> +
+> +
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index 282e13e163..3d7b1028e4 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -32,6 +32,7 @@
+>   #include "exec/gdbstub.h"
+>   #include "gdbstub/commands.h"
+>   #include "gdbstub/syscalls.h"
+> +#include "gdbstub/registers.h"
+>   #ifdef CONFIG_USER_ONLY
+>   #include "accel/tcg/vcpu-state.h"
+>   #include "gdbstub/user.h"
+> @@ -45,6 +46,7 @@
+>   #include "system/runstate.h"
+>   #include "exec/replay-core.h"
+>   #include "exec/hwaddr.h"
+> +#include "exec/memop.h"
+>   
+>   #include "internals.h"
+>   
+> @@ -551,6 +553,26 @@ static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
+>       return 0;
+>   }
+>   
+> +/*
+> + * Target helper function to read value into GByteArray, target
+> + * supplies the size and target endianess via the MemOp.
+> + */
+> +int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val)
+> +{
+> +    size_t bytes = memop_size(op);
+> +
+> +    if (op & MO_BSWAP) {
+> +        for ( int i = bytes ; i > 0; i--) {
 
-Hmm.
+memop_size() returns unsigned, but bytes is size_t and i is int, and 
+this function returns int. Let's keep them consistent.
 
-You're right about the problem: virt_cpu_plug() neglects to revert
-changes when it fails.
+There is an extra whitespace between "(" and "int".
 
-You're probably right to move the assignment to cpu_slot->cpu to the
-end.  Anything you can delay until success is assured you don't have to
-revert.  I say "probably" because the code that now runs before the
-assignment might theoretically "see" the assignment, and I didn't
-examine it to exclude that.
+Regards,
+Akihiko Odaki
 
-Where I have doubts is the code to revert changes.
-
-The hotplug_handler_plug() error checkign suggests it can fail.
-
-Can hotplug_handler_unplug() fail, too?  The error checking in
-virt_cpu_unplug() right above suggests it can.
-
-What happens if it fails in virt_cpu_plug()?
+> +            g_byte_array_append(buf, &val[i - 1], 1);
+> +        };
+> +    } else {
+> +        g_byte_array_append(buf, val, bytes);
+> +    }
+> +
+> +    return bytes;
+> +}
+> +
+> +
+>   static void gdb_register_feature(CPUState *cpu, int base_reg,
+>                                    gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+>                                    const GDBFeature *feature)
 
 
