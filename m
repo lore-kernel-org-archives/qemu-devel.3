@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68553C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B62C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvCA6-0001iJ-C6; Thu, 20 Mar 2025 05:26:02 -0400
+	id 1tvCA7-0001j0-P9; Thu, 20 Mar 2025 05:26:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1tvCA1-0001fs-S2; Thu, 20 Mar 2025 05:25:58 -0400
+ id 1tvCA4-0001g9-93; Thu, 20 Mar 2025 05:26:00 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1tvC9z-0004k9-Hq; Thu, 20 Mar 2025 05:25:57 -0400
+ id 1tvCA2-0004k9-Pz; Thu, 20 Mar 2025 05:26:00 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 20 Mar
@@ -32,10 +32,12 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH 0/1] hw/intc/aspeed: Fix IRQ handler mask check
-Date: Thu, 20 Mar 2025 17:25:42 +0800
-Message-ID: <20250320092543.4040672-1-steven_lee@aspeedtech.com>
+Subject: [PATCH 1/1] hw/intc/aspeed: Fix IRQ handler mask check
+Date: Thu, 20 Mar 2025 17:25:43 +0800
+Message-ID: <20250320092543.4040672-2-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250320092543.4040672-1-steven_lee@aspeedtech.com>
+References: <20250320092543.4040672-1-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -64,24 +66,33 @@ From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear maintainers,
+Updated the IRQ handler mask check to AND with select variable.
+This ensures that the interrupt service routine is correctly triggered
+for the interrupts within the same irq group.
 
-This patch addresses an issue in the ast27x0 interrupt controller where
-the IRQ handler mask check does not correctly apply the select variable.
-The fix ensures that the interrupt service routine (ISR) is triggered
-appropriately for interrupts within the same IRQ group.
+For example, both `eth0` and the debug UART are handled in `GICINT132`.
+Without this fix, the debug console may hang if the `eth0` ISR is not
+handled.
 
-Please help to review this patch at your convenience.
-
-Best regards,
-Steven Lee
-
-Steven Lee (1):
-  hw/intc/aspeed: Fix IRQ handler mask check
-
+Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+Change-Id: Ic3609eb72218dfd68be6057d78b8953b18828709
+---
  hw/intc/aspeed_intc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 3fd417084f..f17bf43925 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -111,7 +111,7 @@ static void aspeed_intc_set_irq_handler(AspeedINTCState *s,
+     outpin_idx = intc_irq->outpin_idx;
+     inpin_idx = intc_irq->inpin_idx;
+ 
+-    if (s->mask[inpin_idx] || s->regs[status_reg]) {
++    if ((s->mask[inpin_idx] & select) || (s->regs[status_reg] & select)) {
+         /*
+          * a. mask is not 0 means in ISR mode
+          * sources interrupt routine are executing.
 -- 
 2.43.0
 
