@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2611DC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6BEC28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tv9HP-0004P8-L8; Thu, 20 Mar 2025 02:21:23 -0400
+	id 1tv9PV-0005aD-5n; Thu, 20 Mar 2025 02:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tv9HN-0004OC-Hv
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:21:22 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tv9PT-0005Zm-HF
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:29:43 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tv9HJ-0007Qz-3Y
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:21:20 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-22548a28d0cso8694255ad.3
- for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 23:21:16 -0700 (PDT)
+ id 1tv9PQ-0002KM-LT
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:29:43 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-22349bb8605so6710335ad.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 23:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742451675; x=1743056475;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742452179; x=1743056979;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2nNZxDTDESGfSLyL353XFE0BeY1oeJ3+DukZFk8chPQ=;
- b=ZF7Sq1uvS57fky3ydJz7jkFJV377B4UIEbH005Uo3ou0K7/s6QG0RNsfX8MKHQUH2h
- FBAnhxAwmPWT3SlookcWXmlO6Jzi9xjvzSNxhDg1tNVY/pP9Ohk/ZsWsF82o5+XZS419
- 9F7CqWt2JLdn7gu4EBvWH8NCIcZRWpLEQyZzVabc0g58tkqbzAoNQoj9d7khEMQ0vM9T
- aUff8wtg5Q/C+YjoccJWP1rudcAjCjwEzkE5I3cfn7uSfWZNcUSAmgVIv51aZVwYr57o
- t81zz/M1uuah3UH0OS5mJ0Hh7zgOH7ilk2NTJkfq52sjGIfA4eQojrMLshp4jcT8mT+d
- vR/Q==
+ bh=OsKouGqaCLWkulgpWhE+23G53JRGkHyXy93jpLs9qlM=;
+ b=ns0V0dsN3pFxzoBelNN5w9yi+1wN75OF24/2j1LHO6VeNJ3FsItLvjYCJbRZi7h2lZ
+ T/0kljMb9liFXvxA6v8oqrEARxIss2effZtxnx7RKhvuWxkwVcfxAxKh0uwzz3Jo2+eI
+ 7C6szhAhIOrJDegZ+5155d3agnvTpsVqNEDq4QGDHopzrQqRv3K88QBlMd8Anlmg9I4l
+ 7xno31G9EFSsxxkrqG0UCjzna1tAuYvvXMRKjPAHZP/iBOC9DTwt5FqC5GjYSMItO9cc
+ 4gPi2xrzJ7Q1d9WHRc8p2Wv2HelGuhZed/u3f4K8z0w/NQA+zIq9/XwYRzGo8kcA3i4D
+ HauA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742451675; x=1743056475;
+ d=1e100.net; s=20230601; t=1742452179; x=1743056979;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2nNZxDTDESGfSLyL353XFE0BeY1oeJ3+DukZFk8chPQ=;
- b=ZG1znALR5gutc1W4a4L4rQSWunxFk+J9ctbygtK7qcQp0WRBI51/qnAb35FYk4RySJ
- dpPQrq2ntOrc4ewCVWszvc2hel+obRENF3TmCWhYl+3Sf//Bq6SGjnrumm44luzdRdRY
- ybp+PSbtDPaedCV84MrtXLTDq4Qq3Ip2sbwgkBmsjVEszBbIpeSnVZYrlRJ05G6Fcsn2
- 8PwDbX22Z4ntTVLV3t9j1ZqO8M8JpsHW5glFghs8evM0yvniNwtLq5zbfzzsNQ6ZFpXO
- IB8k5ehWa3g+ShRqjLofiwcj6w8cfgCHmBIC7vufD9I6VOl1j0egU9eEk1JVOVs2ZlZV
- IHkg==
+ bh=OsKouGqaCLWkulgpWhE+23G53JRGkHyXy93jpLs9qlM=;
+ b=AzkTYjMNTIDYWVty1OUhHvLf6G47Hu7X5vW4j7K4rVRIum0luCeICioenkMoUX/uln
+ sI8W7DcWYohP4X24CNrRZzzbLpiLm1i2Id7zYhACnvCS51fcS8uehqZa85v3+vzdqLrM
+ 9KA1HhzXLd40wh7INlu8mTIu1ZNgOyQ0jM0CnQ7dWZZAX9jUExbsaYHuFpccQSH7oM8g
+ TllhElsQMQe4ugUmTY7mLcCFOp8oVgdm9jTkZfMUWOeI2qdbo1dodpoVYgiTJzAwDhP4
+ oDA+/DGqr8Re1Mp9Pf9MWe/uI4qyx+3HEyy44ML2ng2FE/TBqbUJh5z8ma0rfus3brJy
+ j/BA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFl/YS0J+gT+uivhEr0BCXQ7mfaiIUPx6hWoZBfSX6uOaE8htxn4UGV/oU50HnE1IgnCCJX+vorTJb@nongnu.org
-X-Gm-Message-State: AOJu0Yx2I/qWXOZGgs98JBawHuoy2AWM1OqXRCrZP0dLjZBSePq9cRCj
- G7ct40BT8CFYGCjODazCFVGrsnda4ipO2bhfkQOsbRWQ7gnybg/vHt8P/7mhaAA=
-X-Gm-Gg: ASbGnctHSUmb0RWLbhP0ZqKgYe/ge6Q8aUh5uuRRdZJGcqBr80J9kJTeK0CpetjyiC4
- LSeW1LAn2G2i7e4iwKp5n0zrZvV+jOAhRWGc+z8HLMofh3dRjot7r0XSso6oj9mTz8pm7bkEFmX
- A+RIm+lTyijI1Y+bRB3BsZOtQM6c+K6/kMJ1W5zI8ibyriZBvZlWMhuoedh9PNvJxB1qDM3FvT0
- RnG7Z+a7P51ShIkXgajf8kbHS0JIfO8xuGkWJ76x9Yz+U2WMC9+Ol2vOvE97qM0/axT36uLyCZH
- 6JdaHsu2ZrNIIGpqeUJNer7rK+kKMCzg3pUVvijnwUC9/EZvVSgHG/r9Xg==
-X-Google-Smtp-Source: AGHT+IH/smRTpReLHOEHZvgsu+gEofJJqbRkx/KIaxyEPBUoQYUD7oEq36t/WdWPIWd243UYcObvgw==
-X-Received: by 2002:a05:6a21:789c:b0:1f5:7280:1cf7 with SMTP id
- adf61e73a8af0-1fd11800f26mr3574987637.16.1742451675449; 
- Wed, 19 Mar 2025 23:21:15 -0700 (PDT)
+ AJvYcCUymQ6MVTNxUtCIlHkgN4m1slvbGfJ4AqUEwiH+hA5cXD3rwrzjpLDf9ahwenM7BtS8mN/ouA4/8Nqg@nongnu.org
+X-Gm-Message-State: AOJu0YzY/TTY1ppg0nA2gG6YI+Idjcc0v2HngRsDAYb6vRChXwAHgF8O
+ eT4j39wRhNwMe1DbeiB1tzdiof6rAK8uzgom539QGW5GRcfHuiMC4O47icDDyXU=
+X-Gm-Gg: ASbGnctRjtv3EwqC2+vttrVlej2btpWJEA1Zkg+ECaMFw6llY6IPLnJ6biSh0vuYsNk
+ P0PCZbrz39FFSLlgaG8wLHlln/73/yvxQbial/r98hpA0mXD6yivDKWA9qaIsj30jrZmEtBk7VZ
+ 5qNvZxdgIf4ZlvweujAVI0MONmgfIJEg2MX5Bentx9dpz2W8J25G9+7RmX4xD6+hNVDnI86E5T4
+ 9Gxp7CchrHYQ019WxXjWGcVq+Y8FliERny74e2WsZpQ7j6swIZBz1lOcDjD2/nUsVAhWNS/6Td/
+ 8vU2Y50DipYj1DwCA5DWHP5lm6SRwQN/RgT7ID3XjE03x9+zTQl0fhZx5+5khq7eMfGq
+X-Google-Smtp-Source: AGHT+IGHOX9vNF7XnZZyvY2KJZ20ta6SLhASwDBqJOKzBDqm+LbMa9sJM/BWYcz/0yidLVWwtpI7aw==
+X-Received: by 2002:a05:6a00:2382:b0:730:d5ca:aee with SMTP id
+ d2e1a72fcca58-7376d70d09fmr7028809b3a.23.1742452179085; 
+ Wed, 19 Mar 2025 23:29:39 -0700 (PDT)
 Received: from [157.82.207.107] ([157.82.207.107])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7371167d764sm13298961b3a.98.2025.03.19.23.21.10
+ d2e1a72fcca58-7371167e02esm13274993b3a.95.2025.03.19.23.29.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Mar 2025 23:21:14 -0700 (PDT)
-Message-ID: <552d5c6f-61ae-43e5-90e5-c94639b40b71@daynix.com>
-Date: Thu, 20 Mar 2025 15:21:09 +0900
+ Wed, 19 Mar 2025 23:29:38 -0700 (PDT)
+Message-ID: <d3688ce0-e2f3-4bee-863f-dac7a394c789@daynix.com>
+Date: Thu, 20 Mar 2025 15:29:32 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] target/arm: convert 32 bit gdbstub to new helper
+Subject: Re: [PATCH 09/10] include/exec: fix assert in size_memop
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Juan Quintela <quintela@trasno.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
  Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
  David Gibson <david@gibson.dropbear.id.au>, qemu-s390x@nongnu.org,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -90,14 +90,14 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <20250319182255.3096731-4-alex.bennee@linaro.org>
+ <20250319182255.3096731-10-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250319182255.3096731-4-alex.bennee@linaro.org>
+In-Reply-To: <20250319182255.3096731-10-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -119,165 +119,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Updating the email address of Juan Quintela according to .mailmap.
+
 On 2025/03/20 3:22, Alex Bennée wrote:
-> For some of the helpers we need a temporary variable to copy from
-> although we could add some helpers to return pointers into env in
-> those cases if we wanted to.
+> We can handle larger sized memops now, expand the range of the assert.
 > 
+> Fixes: 4b473e0c60 (tcg: Expand MO_SIZE to 3 bits)
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/arm/gdbstub.c | 57 ++++++++++++++++++++++++++++----------------
->   1 file changed, 36 insertions(+), 21 deletions(-)
+>   include/exec/memop.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-> index 30068c2262..14d931b0bf 100644
-> --- a/target/arm/gdbstub.c
-> +++ b/target/arm/gdbstub.c
-> @@ -20,7 +20,7 @@
->   #include "qemu/osdep.h"
->   #include "cpu.h"
->   #include "exec/gdbstub.h"
-> -#include "gdbstub/helpers.h"
-> +#include "gdbstub/registers.h"
->   #include "gdbstub/commands.h"
->   #include "system/tcg.h"
->   #include "internals.h"
-> @@ -33,12 +33,16 @@ typedef struct RegisterSysregFeatureParam {
->       int n;
->   } RegisterSysregFeatureParam;
->   
-> -/* Old gdb always expect FPA registers.  Newer (xml-aware) gdb only expect
-> -   whatever the target description contains.  Due to a historical mishap
-> -   the FPA registers appear in between core integer regs and the CPSR.
-> -   We hack round this by giving the FPA regs zero size when talking to a
-> -   newer gdb.  */
-> -
-> +/*
-> + * Old gdb always expect FPA registers. Newer (xml-aware) gdb only
-> + * expect whatever the target description contains. Due to a
-> + * historical mishap the FPA registers appear in between core integer
-> + * regs and the CPSR. We hack round this by giving the FPA regs zero
-> + * size when talking to a newer gdb.
-> + *
-> + * While gdb cares about the memory endianess of the target all
-> + * registers are passed in little-endian mode.
-> + */
->   int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+> diff --git a/include/exec/memop.h b/include/exec/memop.h
+> index 407a47d82c..faed3ff902 100644
+> --- a/include/exec/memop.h
+> +++ b/include/exec/memop.h
+> @@ -162,8 +162,8 @@ static inline unsigned memop_size(MemOp op)
+>   static inline MemOp size_memop(unsigned size)
 >   {
->       ARMCPU *cpu = ARM_CPU(cs);
-> @@ -46,15 +50,17 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
->   
->       if (n < 16) {
->           /* Core integer register.  */
-> -        return gdb_get_reg32(mem_buf, env->regs[n]);
-> +        return gdb_get_register_value(MO_TEUL, mem_buf, (uint8_t *) &env->regs[n]);
+>   #ifdef CONFIG_DEBUG_TCG
+> -    /* Power of 2 up to 8.  */
+> -    assert((size & (size - 1)) == 0 && size >= 1 && size <= 8);
+> +    /* Power of 2 up to 128.  */
+> +    assert((size & (size - 1)) == 0 && size >= 1 && size <= 128);
 
-Having a whitespace between the cast and the later expression is unusual 
-though checkpatch.pl doesn't complain.
+This is the minimal change to fix, but perhaps it may be also nice to 
+change it to use MO_SIZE.
 
->       }
->       if (n == 25) {
->           /* CPSR, or XPSR for M-profile */
-> +        uint32_t reg;
->           if (arm_feature(env, ARM_FEATURE_M)) {
-> -            return gdb_get_reg32(mem_buf, xpsr_read(env));
-> +            reg = xpsr_read(env);
->           } else {
-> -            return gdb_get_reg32(mem_buf, cpsr_read(env));
-> +            reg = cpsr_read(env);
->           }
-> +        return gdb_get_register_value(MO_TEUL, mem_buf, (uint8_t *) &reg);
->       }
->       /* Unknown register.  */
->       return 0;
-> @@ -115,19 +121,22 @@ static int vfp_gdb_get_reg(CPUState *cs, GByteArray *buf, int reg)
->   
->       /* VFP data registers are always little-endian.  */
->       if (reg < nregs) {
-> -        return gdb_get_reg64(buf, *aa32_vfp_dreg(env, reg));
-> +        return gdb_get_register_value(MO_TEUQ, buf,
-> +                                      (uint8_t *) aa32_vfp_dreg(env, reg));
->       }
->       if (arm_feature(env, ARM_FEATURE_NEON)) {
->           /* Aliases for Q regs.  */
->           nregs += 16;
->           if (reg < nregs) {
->               uint64_t *q = aa32_vfp_qreg(env, reg - 32);
-> -            return gdb_get_reg128(buf, q[0], q[1]);
-> +            return gdb_get_register_value(MO_TEUO, buf, (uint8_t *) q);
->           }
->       }
->       switch (reg - nregs) {
-> +        uint32_t fpcr;
->       case 0:
-> -        return gdb_get_reg32(buf, vfp_get_fpscr(env));
-> +        fpcr = vfp_get_fpscr(env);
-> +        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &fpcr);
->       }
->       return 0;
->   }
-> @@ -166,9 +175,11 @@ static int vfp_gdb_get_sysreg(CPUState *cs, GByteArray *buf, int reg)
->   
->       switch (reg) {
->       case 0:
-> -        return gdb_get_reg32(buf, env->vfp.xregs[ARM_VFP_FPSID]);
-> +        return gdb_get_register_value(MO_TEUL, buf,
-> +                                      (uint8_t *) &env->vfp.xregs[ARM_VFP_FPSID]);
->       case 1:
-> -        return gdb_get_reg32(buf, env->vfp.xregs[ARM_VFP_FPEXC]);
-> +        return gdb_get_register_value(MO_TEUL, buf,
-> +                                      (uint8_t *) &env->vfp.xregs[ARM_VFP_FPEXC]);
->       }
->       return 0;
->   }
-> @@ -196,7 +207,8 @@ static int mve_gdb_get_reg(CPUState *cs, GByteArray *buf, int reg)
->   
->       switch (reg) {
->       case 0:
-> -        return gdb_get_reg32(buf, env->v7m.vpr);
-> +        return gdb_get_register_value(MO_TEUL, buf,
-> +                                      (uint8_t *) &env->v7m.vpr);
->       default:
->           return 0;
->       }
-> @@ -236,9 +248,11 @@ static int arm_gdb_get_sysreg(CPUState *cs, GByteArray *buf, int reg)
->       ri = get_arm_cp_reginfo(cpu->cp_regs, key);
->       if (ri) {
->           if (cpreg_field_is_64bit(ri)) {
-> -            return gdb_get_reg64(buf, (uint64_t)read_raw_cp_reg(env, ri));
-> +            uint64_t cpreg = read_raw_cp_reg(env, ri);
-> +            return gdb_get_register_value(MO_TEUQ, buf, (uint8_t *) &cpreg);
->           } else {
-> -            return gdb_get_reg32(buf, (uint32_t)read_raw_cp_reg(env, ri));
-> +            uint32_t cpreg = (uint32_t) read_raw_cp_reg(env, ri);
-> +            return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &cpreg);
->           }
->       }
->       return 0;
-> @@ -375,12 +389,12 @@ static uint32_t *m_sysreg_ptr(CPUARMState *env, MProfileSysreg reg, bool sec)
->   static int m_sysreg_get(CPUARMState *env, GByteArray *buf,
->                           MProfileSysreg reg, bool secure)
->   {
-> -    uint32_t *ptr = m_sysreg_ptr(env, reg, secure);
-> +    uint8_t *ptr = (uint8_t *) m_sysreg_ptr(env, reg, secure);
->   
->       if (ptr == NULL) {
->           return 0;
->       }
-> -    return gdb_get_reg32(buf, *ptr);
-> +    return gdb_get_register_value(MO_TEUL, buf, ptr);
->   }
->   
->   static int arm_gdb_get_m_systemreg(CPUState *cs, GByteArray *buf, int reg)
-> @@ -393,7 +407,8 @@ static int arm_gdb_get_m_systemreg(CPUState *cs, GByteArray *buf, int reg)
->        * banked and non-banked bits.
->        */
->       if (reg == M_SYSREG_CONTROL) {
-> -        return gdb_get_reg32(buf, arm_v7m_mrs_control(env, env->v7m.secure));
-> +        uint32_t reg32 = arm_v7m_mrs_control(env, env->v7m.secure);
-> +        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &reg32);
->       }
->       return m_sysreg_get(env, buf, reg, env->v7m.secure);
+Regards,
+Akihiko Odaki
+
+>   #endif
+>       return (MemOp)ctz32(size);
 >   }
 
 
