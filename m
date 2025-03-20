@@ -4,98 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BA6C35FFF
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 16:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E40C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 16:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvJ18-0002nA-3M; Thu, 20 Mar 2025 12:45:14 -0400
+	id 1tvJBp-0005kv-FN; Thu, 20 Mar 2025 12:56:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tvJ16-0002lu-56
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:45:12 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1tvJBi-0005kE-Qi
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:56:12 -0400
+Received: from out-188.mta1.migadu.com ([2001:41d0:203:375::bc])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tvJ13-0007dS-9L
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:45:11 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KCRs9f030264;
- Thu, 20 Mar 2025 16:45:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=CIjsnZ
- T21re3bV6O2zojO9h0Tja7s11ZCEJt4cul/To=; b=hOQvEOaRAWzzAYGJvWrwz+
- Gv1YphbowXoACrrJHHFkck1Rrn4poZ0o0vqUigVrSuWQ0VMFIpZ1HODzsBggWSoW
- 95GIbINH36qRnuYk0FZimyH7Ou29WemCElbaKFSsDI+rp+cu+uCZoyBU41kzLGKL
- OuJfGr0Bf8jUBWUXTfBXvOr89vvgWwJFLwdfjHcLdnhzWBibV3bIRcgJyDnPa2or
- ACknLGo4tLGyG2jOeTge4v2xLNFxs0e7sJQkya+9VyCp6ypDjp1x0KgIfrE9SGi4
- HDNdgrJG2Qn2LBaneNCU9sgnR26+QcQ3ravDplugDaXkNugABiR9YONfA68EKA9Q
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gk21sfrc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 16:45:04 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52KGSk7S005752;
- Thu, 20 Mar 2025 16:45:03 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45dpk2rmfs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 16:45:03 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52KGj35K20054750
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Mar 2025 16:45:03 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 332175805F;
- Thu, 20 Mar 2025 16:45:03 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF1FF5805D;
- Thu, 20 Mar 2025 16:45:02 +0000 (GMT)
-Received: from [9.41.104.243] (unknown [9.41.104.243])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Mar 2025 16:45:02 +0000 (GMT)
-Message-ID: <fa821773-225f-4e2b-8642-72d269802d96@linux.ibm.com>
-Date: Thu, 20 Mar 2025 11:45:02 -0500
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1tvJBa-0006pP-D4
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:56:08 -0400
+Message-ID: <d9c8d200-4453-48d7-b14a-8e15a7cf6602@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1742489757;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RQoIgeL4fO3BeHKQ5CMQfShjwnJSlNAjtNV/17HZLVM=;
+ b=gJh6FMIPUtWWnXN4rUo1jOtRY9sqKc7myq5/83oy8op2vuT+kMPB2PsGvib7oviNF/64oN
+ iNrc+lUnXbXJ8P8+NDHLS4b0qWbdfndGPObDj94juE0cgYj5vO5BMA5OJl3EuXH/1bvy17
+ HlnvnMIDMnpLZliQyqA+6Ki+ht5Viq4=
+Date: Fri, 21 Mar 2025 00:55:40 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: VDPA MAC address problem
+Subject: Re: [PATCH] hvf: arm: Emulate ICC_RPR_EL1 accesses properly
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, agraf@csgraf.de
+References: <20250315132030.95209-1-zenghui.yu@linux.dev>
+ <CAFEAcA9YUmXA=bA4FERwqSEP86RFUhUKUcLvVVSV64p_QJKnbA@mail.gmail.com>
 Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>,
- eperezma <eperezma@redhat.com>
-References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
- <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-In-Reply-To: <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: qs9aQ0Nvo30VEN2FGgeUevbm6Aj0KUUD
-X-Proofpoint-GUID: qs9aQ0Nvo30VEN2FGgeUevbm6Aj0KUUD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_04,2025-03-20_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015
- bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0 mlxlogscore=800
- malwarescore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503200104
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <CAFEAcA9YUmXA=bA4FERwqSEP86RFUhUKUcLvVVSV64p_QJKnbA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:203:375::bc;
+ envelope-from=zenghui.yu@linux.dev; helo=out-188.mta1.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,20 +69,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/2025 19:58, Jason Wang wrote:
-> On Thu, Mar 20, 2025 at 12:34 AM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
->> Upon reading this forum, I see that VHOST_VDPA_SET_CONFIG is
->> “deprecated”, and so VIRTIO_NET_CTRL_MAC_ADDR_SET must be the right
->> method, but it’s apparently called too late.
+On 2025/3/19 00:56, Peter Maydell wrote:
+> On Sat, 15 Mar 2025 at 13:21, Zenghui Yu <zenghui.yu@linux.dev> wrote:
+> >
+> > Commit a2260983c655 ("hvf: arm: Add support for GICv3") added GICv3 support
+> > by implementing emulation for a few system registers. ICC_RPR_EL1 was
+> > defined but not plugged in the sysreg handlers (for no good reason).
+> >
+> > Fix it.
+> >
+> > Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> > ---
+> >  target/arm/hvf/hvf.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> > index 87e35c1b71..650b7f4256 100644
+> > --- a/target/arm/hvf/hvf.c
+> > +++ b/target/arm/hvf/hvf.c
+> > @@ -1359,6 +1359,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+> >      case SYSREG_ICC_IGRPEN0_EL1:
+> >      case SYSREG_ICC_IGRPEN1_EL1:
+> >      case SYSREG_ICC_PMR_EL1:
+> > +    case SYSREG_ICC_RPR_EL1:
+> >      case SYSREG_ICC_SGI0R_EL1:
+> >      case SYSREG_ICC_SGI1R_EL1:
+> >      case SYSREG_ICC_SRE_EL1:
+> > @@ -1673,6 +1674,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+> >      case SYSREG_ICC_IGRPEN0_EL1:
+> >      case SYSREG_ICC_IGRPEN1_EL1:
+> >      case SYSREG_ICC_PMR_EL1:
+> > +    case SYSREG_ICC_RPR_EL1:
+> >      case SYSREG_ICC_SGI0R_EL1:
+> >      case SYSREG_ICC_SGI1R_EL1:
+> >      case SYSREG_ICC_SRE_EL1:
 > 
-> VHOST_VDPA_SET_CONFIG requires the vDPA parent support which is not
-> necessarily there.
+> ICC_RPR_EL1 is a read-only register.
 
-The mlx5 driver doesn't do anything for VHOST_VDPA_SET_CONFIG. Intel's 
-driver, however, apparently stores the configuration. So, it appears, 
-Intel will avoid the problem... Perhaps mlx5 could do the same so that 
-QEMU can set the address before it starts the VM (QEMU doesn't have to 
-later let the VM change the config). Conceptually, setting the address 
-by QEMU cmdline doesn't look different from setting it by "vdpa dev add".
+Yup! Writes to it should result in an UNDEFINED exception. I completely
+missed that point..
 
+> But hvf_sysreg_read_cp()
+> and hvf_sysreg_write_cp() do not check the .access field of the
+> ARMCPRegInfo to ensure that they forbid writes to registers that
+> are marked with a .access field that says they're read-only
+> (and ditto reads to write-only registers). So either we should
+> not list ICC_RPR_EL1 in this list in hvf_sysreg_write(), or
+> else we should add the .access checks to hvf_sysreg_read_cp()
+> and hvf_sysreg_write_cp().
+> 
+> I would favour the second of those two options, because it's
+> more robust and means we only need to care about the access
+> permissions of a register in one place. Plus we already get
+> this wrong for some registers: for instance ICC_SGI1R_EL1
+> is write-only but we will permit the guest to read it.
+> 
+> So I suggest a 2-patch series:
+>  * patch 1: add the checks on .access to hvf_sysreg_read_cp()
+>    and hvf_sysreg_write_cp(): they need to call
+>    cp_access_ok() to check this
+
+Thanks for your detailed suggestion Peter! I come up with something like
+
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 650b7f4256..a7ca7975e0 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1264,6 +1264,9 @@ static bool hvf_sysreg_read_cp(CPUState *cpu,
+uint32_t reg, uint64_t *val)
+
+     ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+     if (ri) {
++        if (!cp_access_ok(arm_current_el(env), ri, true)) {
++            return false;
++        }
+         if (ri->accessfn) {
+             if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
+                 return false;
+@@ -1545,6 +1548,9 @@ static bool hvf_sysreg_write_cp(CPUState *cpu,
+uint32_t reg, uint64_t val)
+     ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+
+     if (ri) {
++        if (!cp_access_ok(arm_current_el(env), ri, false)) {
++            return false;
++        }
+         if (ri->accessfn) {
+             if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
+                 return false;
+
+I'll do some tests before sending it out.
+
+Thanks,
+Zenghui
 
