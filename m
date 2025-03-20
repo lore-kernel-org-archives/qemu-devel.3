@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0181C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB4AC36001
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 06:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tv9lC-0001h7-6I; Thu, 20 Mar 2025 02:52:10 -0400
+	id 1tv9o3-0002aq-Do; Thu, 20 Mar 2025 02:55:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1tv9lA-0001gs-Av; Thu, 20 Mar 2025 02:52:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tv9nz-0002Xw-MA
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:55:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1tv9l7-0000Bl-2U; Thu, 20 Mar 2025 02:52:07 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52JLHJgX011881;
- Thu, 20 Mar 2025 06:52:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nRwztK
- vl4c9jnndCXnlYG7hDZlaSu5M3rgHzrPviPW4=; b=ZNa6M/uLpKxFu7O8ltYKS5
- D+KLOqpnr5hiUWvHfaFqkqhGe6ONwqQgdLVqKjKSw9qdEEE+cF7eseOtjLEMQe1B
- 83a7uHMOq9eBQYEX/9ueLlmauChIoHFybji5aX/2JjLSuJ82iG+JnHkJqWy0/N2j
- K3ML+lyzO+3kLdvfybCzd67namDDAHPwlZLtwl2yjzG0Nps5LL0AYNjxEidnD4tv
- IUaB1XDzyKMznRRKoZqvYXDKqkywtzm7zR+hp6SLXAylKzsQAMRC+COYVKHe/U23
- UxLnPNEeCMitKl3njxOwkjvg8Zl3jRyjeqGqEsh+TJ6PaSBJcJs2MvKj3L+lIPcA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45fwy259bq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 06:52:01 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52K6q0Al014769;
- Thu, 20 Mar 2025 06:52:00 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45fwy259bn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 06:52:00 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52K50XPX012481;
- Thu, 20 Mar 2025 06:51:59 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45dmvp6gte-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 06:51:59 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52K6pw8e3998246
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Mar 2025 06:51:58 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D7D65803F;
- Thu, 20 Mar 2025 06:51:58 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F77F5804E;
- Thu, 20 Mar 2025 06:51:58 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Mar 2025 06:51:57 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tv9nx-0000u6-TN
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 02:55:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742453700;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tiyJp1V3Lra5raAZE6j4uQP7WLaNyoWFdxglCDOg8fI=;
+ b=WJk5eb/EmqrNpVK3gBWR7L+38CPZVe9rMJSaM78JUByyscdl2FA7J9fYlZYMCm6+20TUI/
+ AYWV0Fkh+CHlzptLZYUyN5ihr7soiXVAJeWSg48zWhDVE4bwbE8WOiyPmfo8aRuvwP9sEM
+ cETInCr4wMJOpjmPTzD+pyhxHaC/hP0=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-329-tkkU-5EcO_GUlrjKVlnNew-1; Thu, 20 Mar 2025 02:54:57 -0400
+X-MC-Unique: tkkU-5EcO_GUlrjKVlnNew-1
+X-Mimecast-MFC-AGG-ID: tkkU-5EcO_GUlrjKVlnNew_1742453696
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2233b764fc8so6153875ad.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Mar 2025 23:54:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742453696; x=1743058496;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tiyJp1V3Lra5raAZE6j4uQP7WLaNyoWFdxglCDOg8fI=;
+ b=jSbfHHetWGgz9CWoohNa+pJlJvDB3Ty7cZQOh9O7nsNtjsoBDwZjooqXiQ3osg5cZ8
+ 3qNhyDreCt+W7iLGA7dgsl7IaWQmYeP9EYTtpgOX4OdlLiAdMzC5Nl5ue/IKE9X4QjUp
+ NCKrCx6Hl+yW/XLhH0DCuGYmOEHRi5B3bZC9IzP2e+Tks9RKTWYIt5Ll8m5bdLFcvmO1
+ 6v5eZLmgq/7+dFwVb0pGMXJJHPVrJpnlh6jje6JB9keb1yijsvVykzsvND3icC1iNk0Z
+ OMttT/P/919TbZALwXY06LPZ5vT9g/OwWdWgMALRLD9/npwAVoDgg9ZDTcJFJ3BwrUj6
+ AwLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgs/OT0e0LGmDswWr+rDXIv2GoqcpLXsp5MME5TR+6gSSF0ppguy6DcjvDYd1xF2Vli391cNm2HS5K@nongnu.org
+X-Gm-Message-State: AOJu0YzNuZQ4bhzaS+RzNrKnMQSkfebdTVDy3e+o0+cvjYTGY790hztQ
+ xfYNqCEX6GbecAx1QV4d2K8UnahF4ASQXp0kI1YLf2ioqDwsw/RTqVhww0Cf4+QgxVXHW/VYq2a
+ GbsW/1K6MAO3tA1l8z4bAryEvn64aQbBb8t7dLqATI7EMjTRLi1pmIaBzGOYhV/PiM5wrOFLnSk
+ Bwhkfjb4tzSrDqXNjpsVBIAJt63AM=
+X-Gm-Gg: ASbGncv5xHsa1/AjQqaim6zfq9CBCU/Ct7VIryPFs3ImfEyi4CVBj1EJ3ufY2nmmHFl
+ gj5tNQVcT4XNSJky+o8ihVNX0vfpOVHFcPBc1e9DDjUTMkOQxRZWDypI/Wr8B/DIrcWPgAyE=
+X-Received: by 2002:a17:902:ea07:b0:223:66bb:8995 with SMTP id
+ d9443c01a7336-22649925b8bmr79086045ad.20.1742453696611; 
+ Wed, 19 Mar 2025 23:54:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG78+XxR5wIqEK3n8j0jym7QSYVQ5+JIevf44SZkhwf8CvWeeSHBA9Zpsu3TLcVxNlYtR5oSoBZbYSYepWUp+4=
+X-Received: by 2002:a17:902:ea07:b0:223:66bb:8995 with SMTP id
+ d9443c01a7336-22649925b8bmr79085935ad.20.1742453696356; Wed, 19 Mar 2025
+ 23:54:56 -0700 (PDT)
 MIME-Version: 1.0
-Date: Thu, 20 Mar 2025 12:21:57 +0530
-From: Misbah Anjum N <misanjum@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] ppc/spapr: Fix RTAS stopped state
-In-Reply-To: <20250320043443.88829-1-npiggin@gmail.com>
-References: <20250320043443.88829-1-npiggin@gmail.com>
-Message-ID: <7da3a2fc359c7e5573bc911642c17a5f@linux.ibm.com>
-X-Sender: misanjum@linux.ibm.com
-Organization: IBM
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: iFwyA881P5Af5nPB7rJKlZnBLhleOleX
-X-Proofpoint-GUID: LtDaxiWMW_0LDDkMold3kGf5F36XSmAt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_02,2025-03-19_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- bulkscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0
- adultscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503200039
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=misanjum@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
+ <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+In-Reply-To: <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 20 Mar 2025 07:54:19 +0100
+X-Gm-Features: AQ5f1Jo6Ml7CfI78vYcvaMEvN5kHoSuMsovVv9E4w841iG6b-_w9dwTM7N1f9zU
+Message-ID: <CAJaqyWd2DspK5ALoPLxAZ-rK-7=ok7ZNkYo=xOubDLuXiq-Vbg@mail.gmail.com>
+Subject: Re: VDPA MAC address problem
+To: Jason Wang <jasowang@redhat.com>
+Cc: Konstantin Shkolnyy <kshk@linux.ibm.com>, qemu-devel@nongnu.org,
+ dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,284 +105,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the quick fix.
-I tested the patch and I am successfully able to boot the KVM guest.
+On Thu, Mar 20, 2025 at 1:59=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
+ote:
+>
+> Adding Cindy and Eugenio
+>
+> On Thu, Mar 20, 2025 at 12:34=E2=80=AFAM Konstantin Shkolnyy <kshk@linux.=
+ibm.com> wrote:
+> >
+> > I=E2=80=99m observing a problem while testing VDPA with Nvidia ConnectX=
+-6 (mlx5)
+> > on s390.
+> >
+> > Upon start, virtio_net_device_realize() tries to set a new MAC address
+> > by VHOST_VDPA_SET_CONFIG which doesn=E2=80=99t do anything.
+> >
+> > Later, the VM gets started and learns about the old address from
+> > virtio_net_get_config() which returns whatever VHOST_VDPA_GET_CONFIG
+> > returns, unless it's "6 zero bytes", in which case it instead returns
+> > the desired new address (and the problem is avoided).
+> >
+> > Then QEMU again tries to set the new address from vhost_net_start(), no=
+w
+> > by calling vhost_vdpa_net_load_cmd(...,VIRTIO_NET_CTRL_MAC,
+> > VIRTIO_NET_CTRL_MAC_ADDR_SET, ...). This time the new address is
+> > successfully programmed into the NIC, but the VM doesn't know about it.
+>
+> Have you enabled shadow virtqueue? If yes, does it work if you don't do t=
+hat?
+>
 
+Either you're using SVQ or not, is cmdline nic mac address the same as
+the provided with the vdpa command?
 
-Console Logs:
-# b4 am 20250320043443.88829-1-npiggin@gmail.com --outdir patches
-Analyzing 1 messages in the thread
-Analyzing 0 code-review messages
-Checking attestation on all messages, may take a moment...
----
-   ✓ [PATCH] ppc/spapr: Fix RTAS stopped state
-   ---
-   ✓ Signed: DKIM/gmail.com
----
-Total patches: 1
----
-  Link: 
-https://lore.kernel.org/qemu-devel/20250320043443.88829-1-npiggin@gmail.com
+> >
+> > As the result, the VM now sends packets with a source address on which
+> > the NIC doesn=E2=80=99t listen.
+> >
+> > Upon reading this forum, I see that VHOST_VDPA_SET_CONFIG is
+> > =E2=80=9Cdeprecated=E2=80=9D, and so VIRTIO_NET_CTRL_MAC_ADDR_SET must =
+be the right
+> > method, but it=E2=80=99s apparently called too late.
+>
+> VHOST_VDPA_SET_CONFIG requires the vDPA parent support which is not
+> necessarily there.
+> VIRTIO_NET_CTRL_MAC_ADDR_SET requires the shadow virtqueue as well as
+> the CTRL_MAC_ADDR support.
+>
 
-# git am patches/*.mbx
-Applying: ppc/spapr: Fix RTAS stopped state
+Nit, VIRTIO_NET_CTRL_MAC_ADDR_SET does not require SVQ. You are not
+able to migrate if SVQ cannot be enabled, for example, because it does
+not support a given feature.
 
-# /usr/bin/qemu-system-ppc64   -name avocado-vt-vm1   -machine 
-pseries,accel=kvm   -m 32768   -smp 32,sockets=1,cores=32,threads=1   
--nographic   -device virtio-scsi-pci,id=scsi   -drive 
-file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,if=none,id=drive0,format=qcow2 
-   -device scsi-hd,drive=drive0,bus=scsi.0   -netdev 
-bridge,id=net0,br=virbr0   -device virtio-net-pci,netdev=net0   -serial 
-pty   -device virtio-balloon-pci   -cpu host
-QEMU 9.2.90 monitor - type 'help' for more information
-char device redirected to /dev/pts/1 (label serial0)
-(qemu)
+> Neither of them seems robust.
+>
+> > Or maybe
+> > virtio_net_get_config() needs to always return the desired new address
+> > and not the old one from VHOST_VDPA_GET_CONFIG?
+> >
+> > I=E2=80=99m looking for an opinion/direction from someone who knows thi=
+s code.
+> >
+> > As it is, the only VDPA scenario that's working for me is:
+> > 1) Avoid specifying the MAC address in the "vdpa dev add" command (whic=
+h
+> > will create the "6 zero bytes" condition on the first launch).
+> > 2) Keep using the same MAC address for every subsequent VM launch on th=
+e
+> > same NIC "virtual function" (so that the old and new addresses are the
+> > same).
+>
+> This is the way we currently use it. Is there any limitation of this?
+>
+> Thanks
+>
+> >
+>
 
-(In another ssh session)
-# screen /dev/pts/1
-Preparing to boot Linux version 6.10.4-200.fc40.ppc64le 
-(mockbuild@c23cc4e677614c34bb22d54eeea4dc1f) (gcc (GCC) 14.2.1 20240801 
-(Red Hat 14.2.1-1), GNU ld version 2.41-37.fc40) #1 SMP Sun Aug 11 
-15:20:17 UTC 2024
-Detected machine type: 0000000000000101
-command line: 
-BOOT_IMAGE=(ieee1275/disk,msdos2)/vmlinuz-6.10.4-200.fc40.ppc64le 
-root=/dev/mapper/fedora-root ro rd.lvm.lv=fedora/root crashkernel=1024M
-Max number of cores passed to firmware: 2048 (NR_CPUS = 2048)
-Calling ibm,client-architecture-support... done
-memory layout at init:
-   memory_limit : 0000000000000000 (16 MB aligned)
-   alloc_bottom : 0000000008200000
-   alloc_top    : 0000000030000000
-   alloc_top_hi : 0000000800000000
-   rmo_top      : 0000000030000000
-   ram_top      : 0000000800000000
-found display   : /pci@800000020000000/vga@0, opening... done
-instantiating rtas at 0x000000002fff0000... done
-prom_hold_cpus: skipped
-copying OF device tree...
-Building dt strings...
-Building dt structure...
-Device tree strings 0x0000000008210000 -> 0x0000000008210c0d
-Device tree struct  0x0000000008220000 -> 0x0000000008230000
-Quiescing Open Firmware ...
-Booting Linux via __start() @ 0x0000000000440000 ...
-[    0.000000] random: crng init done
-[    0.000000] Reserving 1024MB of memory at 512MB for crashkernel 
-(System RAM: 32768MB)
-[    0.000000] radix-mmu: Page sizes from device-tree:
-[    0.000000] radix-mmu: Page size shift = 12 AP=0x0
-[    0.000000] radix-mmu: Page size shift = 16 AP=0x5
-[    0.000000] radix-mmu: Page size shift = 21 AP=0x1
-[    0.000000] radix-mmu: Page size shift = 30 AP=0x2
-[    0.000000] Activating Kernel Userspace Access Prevention
-[    0.000000] Activating Kernel Userspace Execution Prevention
-[    0.000000] radix-mmu: Mapped 0x0000000000000000-0x0000000003950000 
-with 64.0 KiB pages (exec)
-[    0.000000] radix-mmu: Mapped 0x0000000003950000-0x0000000800000000 
-with 64.0 KiB pages
-[    0.000000] lpar: Using radix MMU under hypervisor
-[    0.000000] Linux version 6.10.4-200.fc40.ppc64le 
-(mockbuild@c23cc4e677614c34bb22d54eeea4dc1f) (gcc (GCC) 14.2.1 20240801 
-(Red Hat 14.2.1-1), GNU ld version 2.41-37.fc40) #1 SMP Sun Aug 11 
-15:20:17 UTC 2024
-...
-...
-** Boot Successful
-
-
-Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
-
-Thanks,
-Misbah Anjum N
-
-On 2025-03-20 10:04, Nicholas Piggin wrote:
-> This change takes the CPUPPCState 'quiesced' field added for powernv
-> hardware CPU core controls (used to stop and start cores), and extends
-> it to spapr to model the "RTAS stopped" state. This prevents the
-> schedulers attempting to run stopped CPUs unexpectedly, which can cause
-> hangs and possibly other unexpected behaviour.
-> 
-> The detail of the problematic situation is this:
-> 
-> A KVM spapr guest boots with all secondary CPUs defined to be in the
-> "RTAS stopped" state. In this state, the CPU is only responsive to the
-> start-cpu RTAS call. This behaviour is modeled in QEMU with the
-> start_powered_off feature, which sets ->halted on secondary CPUs at
-> boot. ->halted=true looks like an idle / sleep / power-save state which
-> typically is responsive to asynchronous interrupts, but spapr clears
-> wake-on-interrupt bits in the LPCR SPR. This more-or-less works.
-> 
-> Commit e8291ec16da8 ("target/ppc: fix timebase register reset state")
-> recently caused the decrementer to expire sooner at boot, causing a
-> decrementer exception on secondary CPUs in RTAS stopped state. This
-> was not a problem on TCG, but KVM limits how a guest can modify LPCR, 
-> in
-> particular it prevents the clearing of wake-on-interrupt bits, and so 
-> in
-> the course of CPU register synchronisation, the LPCR as set by spapr to
-> model the RTAS stopped state is overwritten with KVM's LPCR value, and
-> that then causes QEMU's interrupt code to notice the expired 
-> decrementer
-> exception, turn that into an interrupt, and set CPU_INTERRUPT_HARD.
-> 
-> That causes the CPU to be kicked, and the KVM vCPU thread to loop
-> calling kvm_cpu_exec(). kvm_cpu_exec() calls
-> kvm_arch_process_async_events(), which on ppc just returns ->halted.
-> This is still true, so it returns immediately with EXCP_HLT, and the
-> vCPU never goes to sleep because qemu_wait_io_event() sees
-> CPU_INTERRUPT_HARD is set. All this while the vCPU holds the bql.  This
-> causes the boot CPU to eventually lock up when it needs the bql.
-> 
-> So make 'quiesced' represent the "RTAS stopped" state, and have it
-> explicitly not respond to exceptions (interrupt conditions) rather than
-> rely on machine register state to model that state. This matches the
-> powernv quiesced state very well because it essentially turns off the
-> CPU core via a side-band control unit.
-> 
-> There are still issues with QEMU and KVM idea of LPCR diverging and 
-> that
-> is quite ugly and fragile that should be fixed. spapr should 
-> synchronize
-> its LPCR properly with KVM, and not try to use values that KVM does not
-> support.
-> 
-> Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  target/ppc/cpu.h         | 11 +++++++++++
->  hw/ppc/pnv_core.c        |  6 +++++-
->  hw/ppc/spapr_cpu_core.c  |  6 ++++++
->  hw/ppc/spapr_rtas.c      |  5 ++++-
->  target/ppc/excp_helper.c |  4 ++++
->  5 files changed, 30 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index efab54a0683..3ee83517dcd 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1356,6 +1356,17 @@ struct CPUArchState {
->       * special way (such as routing some resume causes to 0x100, i.e. 
-> sreset).
->       */
->      bool resume_as_sreset;
-> +
-> +    /*
-> +     * On powernv, quiesced means the CPU has been stopped using PC 
-> direct
-> +     * control xscom registers.
-> +     *
-> +     * On spapr, quiesced means it is in the "RTAS stopped" state.
-> +     *
-> +     * The core halted/stopped variables aren't sufficient for this, 
-> because
-> +     * they can be changed with various side-band operations like qmp 
-> cont,
-> +     * powersave interrupts, etc.
-> +     */
->      bool quiesced;
->  #endif
-> 
-> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-> index 99d9644ee38..a33977da188 100644
-> --- a/hw/ppc/pnv_core.c
-> +++ b/hw/ppc/pnv_core.c
-> @@ -248,21 +248,25 @@ static void pnv_core_power10_xscom_write(void
-> *opaque, hwaddr addr,
-> 
->              if (val & PPC_BIT(7 + 8 * i)) { /* stop */
->                  val &= ~PPC_BIT(7 + 8 * i);
-> -                cpu_pause(cs);
->                  env->quiesced = true;
-> +                ppc_maybe_interrupt(env);
-> +                cpu_pause(cs);
->              }
->              if (val & PPC_BIT(6 + 8 * i)) { /* start */
->                  val &= ~PPC_BIT(6 + 8 * i);
->                  env->quiesced = false;
-> +                ppc_maybe_interrupt(env);
->                  cpu_resume(cs);
->              }
->              if (val & PPC_BIT(4 + 8 * i)) { /* sreset */
->                  val &= ~PPC_BIT(4 + 8 * i);
->                  env->quiesced = false;
-> +                ppc_maybe_interrupt(env);
->                  pnv_cpu_do_nmi_resume(cs);
->              }
->              if (val & PPC_BIT(3 + 8 * i)) { /* clear maint */
->                  env->quiesced = false;
-> +                ppc_maybe_interrupt(env);
->                  /*
->                   * Hardware has very particular cases for where clear 
-> maint
->                   * must be used and where start must be used to resume 
-> a
-> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-> index 0671d9e44b4..faf9170ba6b 100644
-> --- a/hw/ppc/spapr_cpu_core.c
-> +++ b/hw/ppc/spapr_cpu_core.c
-> @@ -37,6 +37,9 @@ static void spapr_reset_vcpu(PowerPCCPU *cpu)
-> 
->      cpu_reset(cs);
-> 
-> +    env->quiesced = true; /* set "RTAS stopped" state. */
-> +    ppc_maybe_interrupt(env);
-> +
->      /*
->       * "PowerPC Processor binding to IEEE 1275" defines the initial 
-> MSR state
->       * as 32bit (MSR_SF=0) with MSR_ME=1 and MSR_FP=1 in "8.2.1. 
-> Initial
-> @@ -98,6 +101,9 @@ void spapr_cpu_set_entry_state(PowerPCCPU *cpu,
-> target_ulong nip,
->      CPU(cpu)->halted = 0;
->      /* Enable Power-saving mode Exit Cause exceptions */
->      ppc_store_lpcr(cpu, env->spr[SPR_LPCR] | pcc->lpcr_pm);
-> +
-> +    env->quiesced = false; /* clear "RTAS stopped" state. */
-> +    ppc_maybe_interrupt(env);
->  }
-> 
->  /*
-> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-> index 503d441b48e..78309dbb09d 100644
-> --- a/hw/ppc/spapr_rtas.c
-> +++ b/hw/ppc/spapr_rtas.c
-> @@ -110,7 +110,8 @@ static void rtas_query_cpu_stopped_state(PowerPCCPU 
-> *cpu_,
->      id = rtas_ld(args, 0);
->      cpu = spapr_find_cpu(id);
->      if (cpu != NULL) {
-> -        if (CPU(cpu)->halted) {
-> +        CPUPPCState *env = &cpu->env;
-> +        if (env->quiesced) {
->              rtas_st(rets, 1, 0);
->          } else {
->              rtas_st(rets, 1, 2);
-> @@ -215,6 +216,8 @@ static void rtas_stop_self(PowerPCCPU *cpu,
-> SpaprMachineState *spapr,
->       * For the same reason, set PSSCR_EC.
->       */
->      env->spr[SPR_PSSCR] |= PSSCR_EC;
-> +    env->quiesced = true; /* set "RTAS stopped" state. */
-> +    ppc_maybe_interrupt(env);
->      cs->halted = 1;
->      ppc_store_lpcr(cpu, env->spr[SPR_LPCR] & ~pcc->lpcr_pm);
->      kvmppc_set_reg_ppc_online(cpu, 0);
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 44e19aacd8d..c941c89806e 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -1951,6 +1951,10 @@ static int 
-> ppc_next_unmasked_interrupt(CPUPPCState *env)
->      target_ulong lpcr = env->spr[SPR_LPCR];
->      bool async_deliver;
-> 
-> +    if (unlikely(env->quiesced)) {
-> +        return 0;
-> +    }
-> +
->  #ifdef TARGET_PPC64
->      switch (env->excp_model) {
->      case POWERPC_EXCP_POWER7:
 
