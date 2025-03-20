@@ -4,96 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF366C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 13:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811F2C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 14:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvGLu-00010o-Vf; Thu, 20 Mar 2025 09:54:30 -0400
+	id 1tvGRg-0003VE-OD; Thu, 20 Mar 2025 10:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1678d28e3=graf@amazon.de>)
- id 1tvGLg-000106-O5
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 09:54:21 -0400
-Received: from smtp-fw-80006.amazon.com ([99.78.197.217])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tvGRO-0003PF-1e
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:00:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=1678d28e3=graf@amazon.de>)
- id 1tvGLc-00074v-7d
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 09:54:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1742478852; x=1774014852;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=qSZMBivb2Y9jLImO1fl0gDWje0K57nODnLUNlg4HJz0=;
- b=UA4el6b+U/PYud562UsHV55Kr9+CICNaCGizfDVpakj/uf2TWX/76Uqz
- wV8Aklv6Dx+7On4+a89I3IEFe1nS8g7mgcbopWMmRiF8J3RMF/pQGKXF9
- XPs/pXwB9OzWmCeDc1dbEssPc9t+8u8DdQNfMsJCOsAvlKEPVT2L0JIqi I=;
-X-IronPort-AV: E=Sophos;i="6.14,261,1736812800"; d="scan'208";a="33584194"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
- by smtp-border-fw-80006.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2025 13:54:06 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [10.0.21.151:22091]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.1.69:2525] with
- esmtp (Farcaster)
- id c6c62568-ff34-454d-8fef-87e158876aa9; Thu, 20 Mar 2025 13:54:06 +0000 (UTC)
-X-Farcaster-Flow-ID: c6c62568-ff34-454d-8fef-87e158876aa9
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Thu, 20 Mar 2025 13:54:00 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Thu, 20 Mar 2025
- 13:53:56 +0000
-Message-ID: <c7f840d5-19ed-493e-8de8-7d64aef38948@amazon.com>
-Date: Thu, 20 Mar 2025 14:53:54 +0100
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tvGRI-0000l8-LC
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:00:09 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KCpVOk029935;
+ Thu, 20 Mar 2025 14:00:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Xa4bc+
+ B2X9z1c31Doz+el8E0PlRM4PLGhHeNTMAW2xs=; b=OqvMh0ee9FKa0Na2pfWRlG
+ /z86aFFbifnbhFxYskaGFaN+DRHU4OBpZDsh2O9pbOXGEsJK4lgsYqVjyUDFW52m
+ 5J3Ak5ApvCE+OoQWatrlGE/wI77U6oRcdUcP7p99APtaiULGoUoUeJHlySCf6I6G
+ 2v0uSHwOpFz4u6NaR7bWgcmgsarevQwH5oxqFjIxuhOHl7xltWDDcdB/7r8HPcYb
+ HHdPypuLLAA8NcE96pOEhuBYjxtAxSreCddO1/+iQ2jxo8BVA+Y5s6ja2ROsqB12
+ yXH7t6IJY1Uf5R7Gggb5NCkBxcsd78WMsOqDZFSvLOWoAB5v/kBEI4G84LjsUptQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gbd9jvu9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Mar 2025 14:00:01 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52KBBFYp012347;
+ Thu, 20 Mar 2025 14:00:00 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45dmvp8a4a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Mar 2025 14:00:00 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52KDxxgB30802602
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 20 Mar 2025 13:59:59 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 93E3F58043;
+ Thu, 20 Mar 2025 13:59:59 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 74F6D58055;
+ Thu, 20 Mar 2025 13:59:59 +0000 (GMT)
+Received: from [9.41.104.243] (unknown [9.41.104.243])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 20 Mar 2025 13:59:59 +0000 (GMT)
+Message-ID: <8939a177-376a-45e1-8585-bcbaa07f084c@linux.ibm.com>
+Date: Thu, 20 Mar 2025 08:59:59 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Gerd Hoffman <kraxel@redhat.com>
-CC: Ani Sinha <anisinha@redhat.com>, =?UTF-8?B?SsO2cmcgUsO2ZGVs?=
- <joro@8bytes.org>, Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
- <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Igor
- Mammedov" <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- <qemu-devel@nongnu.org>
-References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
- <Z9LeILiEU5GfEHrl@8bytes.org>
- <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
- <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
- <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
- <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
- <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
- <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
- <6684f169-29d6-4f46-b274-1efd4c191b21@amazon.com>
- <ok6u7exmwmh7qsahp5o3udnbbzbsr2km22kpqod37t6mdsywcs@yhk2whhakl63>
- <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
+Subject: Re: VDPA MAC address problem
+To: Eugenio Perez Martin <eperezma@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>
+References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
+ <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+ <CAJaqyWd2DspK5ALoPLxAZ-rK-7=ok7ZNkYo=xOubDLuXiq-Vbg@mail.gmail.com>
 Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D032UWA001.ant.amazon.com (10.13.139.62) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Received-SPF: pass client-ip=99.78.197.217;
- envelope-from=prvs=1678d28e3=graf@amazon.de; helo=smtp-fw-80006.amazon.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <CAJaqyWd2DspK5ALoPLxAZ-rK-7=ok7ZNkYo=xOubDLuXiq-Vbg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: QDwwPXYOeltqcGqttOM8IC6VZNYDKoab
+X-Proofpoint-GUID: QDwwPXYOeltqcGqttOM8IC6VZNYDKoab
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-20_03,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
+ mlxlogscore=999 lowpriorityscore=0 adultscore=0 suspectscore=0
+ clxscore=1011 mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502280000 definitions=main-2503200087
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,44 +113,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Gerd,
-
-On 18.03.25 12:11, Gerd Hoffman wrote:
->    Hi,
->
->> Maybe not from the user's point of view, but surely for the vmfwupdate
->> interface design and for the launch measurement calculations.
+On 3/20/2025 01:54, Eugenio Perez Martin wrote:
+> On Thu, Mar 20, 2025 at 1:59 AM Jason Wang <jasowang@redhat.com> wrote:
 >>
->> When using igvm parameters for the kernel hashes we need to pass on (at
->> least) two items via vmfwupdate API:  The igvm image itself and the
->> kernel hashes, so the VMM can fill the parameters for launch.
+>> Adding Cindy and Eugenio
 >>
->> I tend to think it makes sense to keep the region list, so we can
->> actually pass on multiple items if needed, and simply add region flags
->> to declare that a region is an IGVM image.
-> Went over the interface spec today, here it is.  Changes:
->
->   - Moved descriptions into source code comments.
->   - Added leftovers noticed in recent discussions, such as cpuid page.
->   - Added capability flags and region flags for IGVM.
->
-> Open questions:
->
->   - Does the idea to use igvm parameters for the kernel hashes makes
->     sense?  Are parameters part of the launch measurement?
->   - Do we want actually keep the complete interface (and the functional
->     overlap with igvm)?
+>> On Thu, Mar 20, 2025 at 12:34 AM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
+>>>
+>>> I’m observing a problem while testing VDPA with Nvidia ConnectX-6 (mlx5)
+>>> on s390.
+>>>
+>>> Upon start, virtio_net_device_realize() tries to set a new MAC address
+>>> by VHOST_VDPA_SET_CONFIG which doesn’t do anything.
+>>>
+>>> Later, the VM gets started and learns about the old address from
+>>> virtio_net_get_config() which returns whatever VHOST_VDPA_GET_CONFIG
+>>> returns, unless it's "6 zero bytes", in which case it instead returns
+>>> the desired new address (and the problem is avoided).
+>>>
+>>> Then QEMU again tries to set the new address from vhost_net_start(), now
+>>> by calling vhost_vdpa_net_load_cmd(...,VIRTIO_NET_CTRL_MAC,
+>>> VIRTIO_NET_CTRL_MAC_ADDR_SET, ...). This time the new address is
+>>> successfully programmed into the NIC, but the VM doesn't know about it.
+>>
+>> Have you enabled shadow virtqueue? If yes, does it work if you don't do that?
+>>
+> 
+> Either you're using SVQ or not, is cmdline nic mac address the same as
+> the provided with the vdpa command?
 
+The problem happens when the cmdline address (new) is different from the 
+current one in the VDPA device (old), whether the old one has been set 
+by "vdpa dev add" or by an earlier VM run.
 
-I think if we want to embrace IGVM, we should embrace it fully and make 
-it replace the region list. At the end of the day, IGVM is effectively a 
-region list plus data.
+In other words, it's generally not possible to run a VM with an 
+arbitrary address - it'll have to inherit whatever the VDPA device 
+already has. (Except for the very first run and _only_ if "vdpa dev add" 
+didn't specify the address (leaving it "6 zero bytes"), or specified the 
+same one as the cmdline.)
 
-How difficult would it be to put up a prototype that uses only IGVM as 
-vmfwupdate payload? We can definitely assemble that IGVM in ukify.py or 
-as part of the boot stub. Or for the prototype even pre-assemble by hand.
-
-
-Alex
+Therefore, it's not possible to omit the address in the libvirt XML and 
+let libvirt generate it.
 
 
