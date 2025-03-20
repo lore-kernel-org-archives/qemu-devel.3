@@ -4,77 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87056C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12090C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvAHv-0003PY-51; Thu, 20 Mar 2025 03:25:59 -0400
+	id 1tvALC-0004zG-If; Thu, 20 Mar 2025 03:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvAHg-0003OC-JL
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:25:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <liweishi@kylinos.cn>)
+ id 1tvAKw-0004xc-3z
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:29:08 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvAHc-0002YI-VY
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:25:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742455539;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZO8WXhTrRRpiMePU8N0cVb5WgJI184a2nZrBdFGA7Ho=;
- b=ApLPhoDOnaPwxNR17kpvhM+cC+b1lyACVeDvT604o8XuZDuP2n3N7RL9FI8pXXUJrKlDZ5
- 43uu8yoWYBdhn1LQZQZ2HV8ua9xIFuMUJaJm/Nb/b3AV5p+020yYyVWyjtZ86pTbKfXvRH
- ElSWt+1ZCbkG4k4/kx1dJE5DvmMSP0c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-vqEk_1nZOBOy-S0HyBtGuw-1; Thu,
- 20 Mar 2025 03:25:32 -0400
-X-MC-Unique: vqEk_1nZOBOy-S0HyBtGuw-1
-X-Mimecast-MFC-AGG-ID: vqEk_1nZOBOy-S0HyBtGuw_1742455531
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5DA21809CA6; Thu, 20 Mar 2025 07:25:30 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEE39180094A; Thu, 20 Mar 2025 07:25:29 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CC52821E66C4; Thu, 20 Mar 2025 08:25:25 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: bibo mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v5 2/6] hw/loongarch/virt: Fix error handling in cpu plug
-In-Reply-To: <c1e74ed3-f60a-0bd6-9806-b5ec111e466d@loongson.cn> (bibo mao's
- message of "Thu, 20 Mar 2025 14:30:35 +0800")
-References: <20250320032158.1762751-1-maobibo@loongson.cn>
- <20250320032158.1762751-3-maobibo@loongson.cn>
- <875xk4i5wb.fsf@pond.sub.org>
- <c1e74ed3-f60a-0bd6-9806-b5ec111e466d@loongson.cn>
-Date: Thu, 20 Mar 2025 08:25:25 +0100
-Message-ID: <878qp0go4a.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <liweishi@kylinos.cn>)
+ id 1tvAKt-00038v-2S
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:29:05 -0400
+X-UUID: f7176376055c11f0a216b1d71e6e1362-20250320
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45, REQID:a34754b4-b64a-4f52-b562-818a80989b75, IP:0,
+ U
+ RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+ :release,TS:25
+X-CID-META: VersionHash:6493067, CLOUDID:8356fa7c2c868dbf5c4a8f77e8ab9c89,
+ BulkI
+ D:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0|50,EDM:5,IP:nil,URL
+ :0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SP
+ R:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-UUID: f7176376055c11f0a216b1d71e6e1362-20250320
+Received: from mail.kylinos.cn [(10.44.16.175)] by mailgw.kylinos.cn
+ (envelope-from <liweishi@kylinos.cn>) (Generic MTA)
+ with ESMTP id 1235900969; Thu, 20 Mar 2025 15:28:48 +0800
+Received: from mail.kylinos.cn (localhost [127.0.0.1])
+ by mail.kylinos.cn (NSMail) with SMTP id AC6AFE008903;
+ Thu, 20 Mar 2025 15:28:48 +0800 (CST)
+X-ns-mid: postfix-67DBC3B0-497983691
+Received: from localhost.localdomain (unknown [10.42.12.187])
+ by mail.kylinos.cn (NSMail) with ESMTPA id 429F9E008902;
+ Thu, 20 Mar 2025 15:28:47 +0800 (CST)
+From: liweishi@kylinos.cn
+To: qemu-devel <qemu-devel@nongnu.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Huang Rui <ray.huang@amd.com>,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Weishi Li <liweishi@kylinos.cn>
+Subject: [PATCH] virtio-gpu-virgl: fix a bug in context create
+Date: Thu, 20 Mar 2025 15:28:34 +0800
+Message-Id: <20250320072834.173759-1-liweishi@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.337,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Received-SPF: pass client-ip=124.126.103.232; envelope-from=liweishi@kylinos.cn;
+ helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,79 +82,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bibo mao <maobibo@loongson.cn> writes:
+From: Weishi Li <liweishi@kylinos.cn>
 
-On 2025/3/20 =E4=B8=8B=E5=8D=882:16, Markus Armbruster wrote:
->> Bibo Mao <maobibo@loongson.cn> writes:
->>=20
->>> In function virt_cpu_plug(), it will send cpu plug message to interrupt
->>> controller extioi and ipi irqchip. If there is problem in this function,
->>> system should continue to run and keep state the same before cpu is
->>> added.
->>>
->>> Object cpuslot::cpu is set at last only when there is no any error.
->>> If there is, send cpu unplug message to extioi and ipi irqchip, and then
->>> return immediately.
->>>
->>> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
->>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+When VIRGL_VERSION_MAJOR<1, virtio_gpu_context_init_enabled
+will always return false, causing virgl_cmd_context_create
+to always return error. Therefore, it is necessary to also
+include the virtio_gpu_context_init_enabled segment in the
+VIRGL_VERSION_MAJOR judgment to ensure that context create
+can also succeed when VIRGL_VERSION-MAJOR<1
 
-[...]
+Signed-off-by: Weishi Li <liweishi@kylinos.cn>
+---
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> Hmm.
->>=20
->> You're right about the problem: virt_cpu_plug() neglects to revert
->> changes when it fails.
->>=20
->> You're probably right to move the assignment to cpu_slot->cpu to the
->> end.  Anything you can delay until success is assured you don't have to
->> revert.  I say "probably" because the code that now runs before the
->> assignment might theoretically "see" the assignment, and I didn't
->> examine it to exclude that.
->>=20
->> Where I have doubts is the code to revert changes.
->>=20
->> The hotplug_handler_plug() error checkign suggests it can fail.
->>=20
->> Can hotplug_handler_unplug() fail, too?  The error checking in
->> virt_cpu_unplug() right above suggests it can.
->
-> Basically from existing code about ipi/extioi hotplug handler, it is
-> impossible to there is error, here is only for future use.
-
-Aha.  More at the end of my reply.
-
-> If there is error in function virt_cpu_plug(), undo() such as=20
-> hotplug_handler_unplug() should be called. However if undo() reports=20
-> error, I do not know how to handle it, here just discard error in=20
-> function undo().
-
-Steinbach's Guideline for Systems Programming: Never test for an error
-condition you don't know how to handle.
-
-This old quip is a funny way to say that errors we don't know how to
-handle are *bad*, and should be avoided.
-
-> Regards
-> Bibo Mao
->>=20
->> What happens if it fails in virt_cpu_plug()?
-
-You assure us this can't happen today.  Because of that, broken error
-recovery is not an actual problem.
-
-However, if things change some day so it can happen, broken error
-recovery becomes an actual problem.
-
-so, broken error recovery just "for future use" is actually just for
-silent future breakage.
-
-But is it broken?  This is what I'm trying to find out with my "what
-happens if" question.
-
-If it is broken, then passing &error_abort would likely be less bad:
-crash instead of silent breakage.  Also makes it completely obvious in
-the code that these errors are not handled, whereas broken error
-handling looks like it is until you actually think about it.
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
+c
+index 145a0b3879..48f6121e16 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -338,6 +338,7 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
+                                     cc.debug_name);
+=20
+     if (cc.context_init) {
++#if VIRGL_VERSION_MAJOR >=3D 1
+         if (!virtio_gpu_context_init_enabled(g->parent_obj.conf)) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: context_init disabled",
+                           __func__);
+@@ -345,7 +346,6 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
+             return;
+         }
+=20
+-#if VIRGL_VERSION_MAJOR >=3D 1
+         virgl_renderer_context_create_with_flags(cc.hdr.ctx_id,
+                                                  cc.context_init,
+                                                  cc.nlen,
+--=20
+2.25.1
 
 
