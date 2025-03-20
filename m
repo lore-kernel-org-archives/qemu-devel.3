@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A357C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 10:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C2FC28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 10:40:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvCk8-0004YH-DU; Thu, 20 Mar 2025 06:03:17 -0400
+	id 1tvDJX-0006Ab-8S; Thu, 20 Mar 2025 06:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvCk6-0004Y3-1p; Thu, 20 Mar 2025 06:03:14 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tvDJW-0006AS-0q
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 06:39:50 -0400
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvCk2-00073J-3p; Thu, 20 Mar 2025 06:03:12 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-225b5448519so8153565ad.0; 
- Thu, 20 Mar 2025 03:03:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tvDJU-00016o-4E
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 06:39:49 -0400
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e64405b3b9aso431016276.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 03:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742464988; x=1743069788; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+8+VP5t2Rq5vqO7Skqn/4MvILzGnZrkl8yI6ldF4A3Y=;
- b=YbHLajciDsG6NSl/MuJ4co84WIMLcZ1Kj6D5WLaMJnPBVlfj7TcEIFwsoxsCMRZqDQ
- AAd939oz4Ueu8dx2FMOjxhopsExsIU774gbU71LgHVmUzjWzcQ7T/tVMx0sl4+H2LXN+
- 3KLvezwTReSTohkrfDeb2ptpGhy51peCsii/GfoqeaVj3mjvFMVxagW1jM1Y8PG3Z25n
- MKO/IVJUxj3OsL3aibxqxeS30eZOmMrDxo6D+LIUSSZbPrFSUEi4Mz6GSkxjjUfIFqqN
- YbdKMYT9NWnf0Gn5/mpqU+UzgA/YHxlVQSlg6jZ/WXvrICvCsJHK8s9qGBUwwYMhI+TK
- loCA==
+ d=linaro.org; s=google; t=1742467187; x=1743071987; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ds/ip6uMVbY3W1rFozS0PIZhGwDPVq6bfYjSuk8v2fU=;
+ b=zf3dbh7u3BIXt3By11OAXV625Aq9gNo5LqUi3Yxs7wwhp51I7VAoviT5HCup7v8UUZ
+ p1qIaOiZDJkrRqEQD499gv9VP9AI2omwdKDM/azARHDYYDyAlWYkNQbQP9Dpuh+wbvZD
+ 6GNYLq6EFXCdt6/qIprsITrT2M7vKzphtZWO2cUqDOvX8MXB3gZ89ryiVOO6nh9pDdoI
+ gggPNq8XQ8zsD/j+VrA+8nVsIGp5dlFXkjpP4KadoC9nzN8X2doIEEPanKQC3MnSXFKw
+ QfCmgE+n8Ap6s+8hVs1pNzm+Kh/4pLOR3il5FD1NcCakZ1Q2elNOPMHn6lU5f62TEBxw
+ bUEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742464988; x=1743069788;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=+8+VP5t2Rq5vqO7Skqn/4MvILzGnZrkl8yI6ldF4A3Y=;
- b=YpXLui+lT8Gh3eFD19TfEZ0US5iwpJQAA88Kpq8AOYY3XMhOytAQst+wI7cbTZ2sq4
- zNKZEgRt6csnoAMP0c7Ov9pISG2pfunBflOJKCfLGjJQpRSeG5hh9U8tQCck7VZ1WngY
- pHlLZ16aJZXFjI3IpyP9RF+b4RojHO0OxOA+7nXNu4LNoPcbC00BoYEqms3ZSEBU03U3
- SsV83zdrSbDDRlxDKdlB5SoV35WGRd+ow7KbiAuVzOkP9EVdNt0YBhfqhWahN4I/rxKc
- L+YZAIokLj+TD1tmB/0/2XGDfLl3/dM34cYiwgK7aMz92t4Iv04Mvz9zqX3RKYz7wV1n
- sJfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8xt76M1AUJUFhYNwF0NKlBYmaHMyTkx7h2b/PQ24SiBZYkspU0DeXN6gAduupHr3KIBhDsd7tMA==@nongnu.org
-X-Gm-Message-State: AOJu0YyIlcu+MMhge04FC5cui7KWBm4EwePM2uG9gBF5bJ+VH5DQ9LWh
- zKKxYG7sbhZR++IEEGZz+VIxq8Z0hxfXiIaE0uUrbDZ6/KmI97uP
-X-Gm-Gg: ASbGncs4LIoKXuwhMW6CLdOqTc/6nG+VFCPiN1ojICEYp+rrw1wcT/Av75qeS071ebm
- 3yb20S/6TvtG+1dIHm2s11j4I5FfswD+hEcEp/xAMtck7b999w/eCkajtjCy1lEFGNrwm4mW0k6
- Wgp6Jn3hkQKFgidSo7kYGHrfzEya08bR1awZNRwxMTF7fMrZ3tt6Ad4JabxkG2x7ujEm+1l0R9b
- qMCYX2dNNHtwLRLUUx0eHpJ1Z2DLMhGltCBedYllwmNUQ4DPl0vlkTamSRQGVXnHnrsBZ8GSF5U
- GIQu/Dwq3I1ulTK6IrHototoflESiSO3u09Lf6E=
-X-Google-Smtp-Source: AGHT+IFFZcFM/EbABCm2MKRicJox0httvvLltPrAGNNVEZ2vvvCnuiwkFURqYiQNPGWtzo+QcCvFrw==
-X-Received: by 2002:a05:6a00:3a08:b0:736:57cb:f2b6 with SMTP id
- d2e1a72fcca58-7376d62aac5mr8954965b3a.12.1742464987726; 
- Thu, 20 Mar 2025 03:03:07 -0700 (PDT)
-Received: from localhost ([118.208.135.36]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73711694430sm13244742b3a.122.2025.03.20.03.03.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 03:03:07 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 20 Mar 2025 20:03:02 +1000
-Message-Id: <D8L0AAFJP96T.2NT2MNFPJWKI5@gmail.com>
-Subject: Re: [PATCH] ppc/amigaone: Check blk_pwrite return value
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, =?utf-8?q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250314200140.2DBE74E6069@zero.eik.bme.hu>
- <30852eb7-ef37-4da1-b014-ad4131d74c29@redhat.com>
- <e183986d-6d2c-7fef-ac8b-9388241b32e0@eik.bme.hu>
-In-Reply-To: <e183986d-6d2c-7fef-ac8b-9388241b32e0@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+ d=1e100.net; s=20230601; t=1742467187; x=1743071987;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ds/ip6uMVbY3W1rFozS0PIZhGwDPVq6bfYjSuk8v2fU=;
+ b=IGpFSQG/36vwX/q9dzCHiXAnW0VQ8RLZ6JAZlVM2HDO1JYctcsNn27Kl4MoaAehrIY
+ CVeYxvYKdnTEcBgeasAoXM9lUnx8E6fRCMkWU5+VwcpSGCk93R6nf8wfcKkxsHgoADPS
+ R7U9hvMgQ7oYzccAy5NaaA7RdOPLZYZ9gmoma7gIr7KFut3aeyNAEvaDuzyjHO++qmJY
+ vRfDH0hnv2wwVH4ZeWuajTx10tJ+CiDXNq+nLYdyU7k8rGgiq7EX5AGZSmybFn6EP+e0
+ mWUx2j+PtJW9G67bvJtEA195thSYzT6QzMGoDrKDWlgJKvow2XncOP+UpJ6nYeYF83+0
+ qQPw==
+X-Gm-Message-State: AOJu0YzsD2QhKfDHYeHTugxKwltbl78A15RqW8Le3s2s9TRBJ0C9MOtl
+ yqFLfvceJkQ63mTLvsIRYqb5gORhYwdd1GOQhwR4VBqovOKBFAxRs8VXoj396d9qJNOFVa+ZAZ6
+ FZl9qC3EuiHgZnqdX+x2/mrBnx+cx1HaPu6cwdg==
+X-Gm-Gg: ASbGncvXm4csUCcqBC10aLJfRDb1Y22/jaT2M1BUCk4i1+QP/O3ozSFT21mIqJinfgA
+ 55OgJcN31IFKMimPOtjGP8j55+icE6oKrrfeRJTSIypjOwM6MfrUtsXh6OmjTdAUWAy053CYxdA
+ W38YZ7sm+szhqx4oixnjk+op9cyMg=
+X-Google-Smtp-Source: AGHT+IFhMLr4WuBBLgXRVpuaCu/3NPxDgQK5Ads3ct/q4nME5QUolsHMjNs72nSnKP1NTJ/c/BtqDgOCiAwtunhi7ts=
+X-Received: by 2002:a05:6902:2684:b0:e60:b025:1a9d with SMTP id
+ 3f1490d57ef6-e667b3a1ac0mr7435390276.1.1742467186581; Thu, 20 Mar 2025
+ 03:39:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250309103120.1116448-1-pbonzini@redhat.com>
+ <20250309103120.1116448-20-pbonzini@redhat.com>
+ <CAFEAcA_orQ2Na9+MWnbyScNjQsDQBKB=s3c8D86FUE=q_1Mkaw@mail.gmail.com>
+ <88766804-2004-476f-a437-c161cc04ab2a@redhat.com>
+In-Reply-To: <88766804-2004-476f-a437-c161cc04ab2a@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 20 Mar 2025 10:39:35 +0000
+X-Gm-Features: AQ5f1JrVvQjYwQn0axp_QhVyp2_iSJ4QfcSvgbXtlbtdKZvMrWXWVvQDq5Fi-xY
+Message-ID: <CAFEAcA_kWGe2hxUAFefVvtrXykXFWFgXtXqZP-FjxFShX6ztFA@mail.gmail.com>
+Subject: Re: [PULL 19/25] rust: pl011: switch to safe chardev operation
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,101 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon Mar 17, 2025 at 11:13 PM AEST, BALATON Zoltan wrote:
-> On Mon, 17 Mar 2025, C=C3=A9dric Le Goater wrote:
->> On 3/14/25 21:01, BALATON Zoltan wrote:
->>> Coverity reported that return value of blk_pwrite() maybe should not
->>> be ignored. We can't do much if this happens other than report an
->>> error but let's do that to silence this report.
->>>=20
->>> Resolves: Coverity CID 1593725
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>>   hw/ppc/amigaone.c | 14 ++++++++------
->>>   1 file changed, 8 insertions(+), 6 deletions(-)
->>>=20
->>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
->>> index 483512125f..5d787c3059 100644
->>> --- a/hw/ppc/amigaone.c
->>> +++ b/hw/ppc/amigaone.c
->>> @@ -108,8 +108,8 @@ static void nvram_write(void *opaque, hwaddr addr,=
-=20
->>> uint64_t val,
->>>       uint8_t *p =3D memory_region_get_ram_ptr(&s->mr);
->>
->> why is the nvram never read ?
+On Wed, 19 Mar 2025 at 20:51, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> There's a comment about that. It's a rom_device which maps the memory=20
-> region directly so does not go through the read callback. But I thin ther=
-e=20
-> must be a read callback and cannot be null so we have an empty one.=20
-> Previously I had one that worked in case romd mode is turned off but Nick=
-=20
-> said having dead code is not wanted and better to mark it unreachable.
->
->>>         p[addr] =3D val;
->>> -    if (s->blk) {
->>> -        blk_pwrite(s->blk, addr, 1, &val, 0);
->>> +    if (s->blk && blk_pwrite(s->blk, addr, 1, &val, 0) < 0) {
->>> +        error_report("%s: could not write %s", __func__,=20
->>> blk_name(s->blk));
->>
->> hmm, guest_error maybe ? since this is a runtime error.
->
-> It's not a guest error but some problem on the host with the backing file=
-.
->
->>>       }
->>>   }
->>>   @@ -151,15 +151,17 @@ static void nvram_realize(DeviceState *dev, Err=
-or=20
->>> **errp)
->>>           *c =3D cpu_to_be32(CRC32_DEFAULT_ENV);
->>>           /* Also copies terminating \0 as env is terminated by \0\0 */
->>>           memcpy(p + 4, default_env, sizeof(default_env));
->>> -        if (s->blk) {
->>> -            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p=
-,=20
->>> 0);
->>> +        if (s->blk &&
->>> +            blk_pwrite(s->blk, 0, sizeof(crc) + sizeof(default_env), p=
-, 0)=20
->>> < 0
->>> +           ) {
->>> +            error_report("%s: could not write %s", __func__,=20
->>> blk_name(s->blk));
->>
->> This should use the errp parameter.
->>
->>>           }
->>>           return;
->>>       }
->>>       if (*c =3D=3D 0) {
->>>           *c =3D cpu_to_be32(crc32(0, p + 4, NVRAM_SIZE - 4));
->>> -        if (s->blk) {
->>> -            blk_pwrite(s->blk, 0, 4, p, 0);
->>> +        if (s->blk && blk_pwrite(s->blk, 0, 4, p, 0) < 0) {
->>> +            error_report("%s: could not write %s", __func__,=20
->>> blk_name(s->blk));
->>
->> same here.
->
-> It could but I think it's not needed. It still works without the backing=
-=20
-> file and the guest works, just may not save the NVRAM contents which is a=
-=20
-> problem on the host. So the error is reported but I'm not sure it should=
-=20
-> abort. In practice if there's some fatal error with the backing file the
->
-> blk_set_perm(s->blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
->                       BLK_PERM_ALL, &error_fatal);
->
-> earlier will catch that so it won't even get here.
+> On 3/19/25 20:25, Peter Maydell wrote:
+> > Hi -- this commit seems to have broken use of the PL011 in
+> > boards/SoCs that directly embed it in their state structs, so
+> > "qemu-system-arm -M raspi2b -display none" now asserts on startup.
+> >
+> > The Rust PL011's state struct size is now larger than the
+> > C state struct size, so it trips the assert in the QOM code
+> > that we didn't try to initialize a type into less memory than
+> > it needs.
 
-I'll take it as is since it seems to be an improvement. Some other nvram
-devices with backing files do the same thing with write failures.
+> The reason why it changes is that it switches the imported symbol from
+> bindings::CharBackend (the C struct) to chardev::CharBackend which has
+> two extra values in it (a count and some debugging info to provide
+> better backtraces on error).  It is guaranteed to _start_ with a
+> bindings::CharBackend, which is helpful for the qdev property, but it's
+> bigger.
+>
+> I don't think there's a good fix other than not using an embedded PL011,
+> since you probably would not have that option available when using a
+> device without a Rust equivalent.
 
-Thanks,
-Nick
+(do you mean "without a C equivalent" there?)
+
+Hmm. The embedded-struct approach to devices is extremely common,
+especially in more recent QEMU C code. Generally those users of
+an embedded struct don't actually poke around inside the struct,
+so we don't need to have the Rust code match the C layout, but
+we do at least need the size to be no bigger than the C version.
+(There are some exceptions for some devices, not including the PL011,
+where people do poke around inside the struct of a device they've
+created...)
+
+There has been discussion that we ought to move (back!) to a
+"users of the device just get a pointer to it and the struct
+is opaque to them" design pattern -- command line generation
+and wiring up of machines would also make that a more natural
+approach -- but that's a long term process we'd need to plan
+and go through.
+
+I had some ideas a long time ago for making "code outside the
+C device implementation touched a field in the device struct"
+be a compile error using attribute("deprecated") hidden via macros,
+so we could resurrect that as a way to confirm that nobody is
+trying to do dubious things before we do a C-to-rust conversion
+of a device model.
+
+For the moment, I guess the expedient thing to do would be to add
+an extra 16 bytes of padding to the C PL011State struct ?
+
+thanks
+-- PMM
 
