@@ -4,53 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 567CFC36000
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 12:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F3FC28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 12:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvEyV-00069y-1S; Thu, 20 Mar 2025 08:26:15 -0400
+	id 1tvF0C-00079B-QR; Thu, 20 Mar 2025 08:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <81bcefde27e7450ea4061acf0f63320ac0f8f95d@kylie.crudebyte.com>)
- id 1tvEyT-00069f-GL
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 08:26:13 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <81bcefde27e7450ea4061acf0f63320ac0f8f95d@kylie.crudebyte.com>)
- id 1tvEyQ-0006sR-Kc
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 08:26:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Message-Id:Cc:To:Subject:Date:From:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=U1CJbSQ4ojuRj9btueVTKiBMg7jOOtRxixjKO+xArJc=; b=MLS4O
- nrAwjUi8+yZpQ6bA7C57sFM7QNNG7mmnc5U9DTMb388pU9VFybrYttCZt8kucOZQvMUXjKs0bK2n6
- VoHMe6yVF6hdxm7SWQIXBWTDus9/stAhxw0S+2uXNTKstvegqU3JFfwpLuvmIqvU829y7gsgI74am
- BLzSopwWT1g5P05f4Wfw56Q7f68egwwOVzh+QTeNQZD83UsLLnCID/Kr+ORL1du4iME1WaMH4CO6B
- Lso1AR83pxD4BA0BSCY9YGFzb7TpfniAUZjIszZHXgFRU8Z/6Y6wXWEHFd/6O4BfKjd/mJ/5LwTGD
- RlBgSW43CpzzGDEEyaVihJV7yoLCWANhpIK8U8Pcy6GeWFA8B/O6LdR2GQ9mB3IDeR+bCwlx/UCUX
- QZAeEtiBC9RXj68P47DjWGQRI0vLDdfXRK86WFvNAYqZJyjAfusKSh9YvnrkPhDt5spQbBsljcWvP
- 1ZZ8gJAO3UcdddMFaMjMCWnOgmAC5T0m6Z10O38KP5G7E8Vl49j+RcKcQmPrpvZipVh0aPXIJ0cbP
- f25xLBcZHb9JQlDkzQzlgNfNoyuJDpOmMHpYU25PtPjkNI7jqmU4ZW2K/a4FxOvIHlnSgaGWBqi44
- nak1GE/oEYKc3+tUkk0f95r0WpWVzttjGkI43x9nFegQ8iRZWEJiplMxKHbPWk=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Thu, 20 Mar 2025 13:16:20 +0100
-Subject: [PATCH v2] 9pfs: fix 'total_open_fd' decrementation
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tvF0A-00077c-GN; Thu, 20 Mar 2025 08:27:58 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tvF04-00081K-W2; Thu, 20 Mar 2025 08:27:58 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-223f4c06e9fso10587365ad.1; 
+ Thu, 20 Mar 2025 05:27:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742473668; x=1743078468; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8GIxHSSMgptgJX4WGjpNP3O9KJzROFOMOVwOmjVspaY=;
+ b=BJ+CVqZuylzR6bI+CRqCCkYhSkVUF2O5jGyiETB3XHX5CAUWIRXy/8bTZqYU4nkS8P
+ LJLcbJLSzS9jHbYDVIvWLVQiGF9NSXtoh7GCKi9cXLAu4Tx2pw5HQTx/ASVZYvjxpGIL
+ 8tA0CDqF22nTezkFkMreqj62k5OP1oVz/jdWIrvSvX9VhfADbzeLZ1i8WWeddz2zrJ8i
+ 7eiwpe9o6ERV5ijxLID3RWAizp8JuCqA9Ebd+FE3nWV9W7JOovfCN9ARc70oGspATLIp
+ qclLfw/tg4aqDwgV1CRy5XxFTe4Tzky8YUUsw5oh0RT3mEQDfv3d4liCrze11CClj9OT
+ rnSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742473668; x=1743078468;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8GIxHSSMgptgJX4WGjpNP3O9KJzROFOMOVwOmjVspaY=;
+ b=gnA7ypn9RSUfWuf+JXJTckqMQ34t5QWAyEPJk02Bg+tT5x0hOUxWeOw2/hY4NzM5J0
+ wPyBR8f/TWQzUpdl1xBf8++gy8A2pd1z/JATegONRO3ufDCHnpA9oaGRif+Wa4htYzkm
+ imm//WPzAIgZdGB4yJceBb7Hlm0S6G8pycUzp9T+sRYr3dj1dd+lFY/fjgp0EZ9e/6B+
+ e8Dzwy841lK7furQE7hWKgmqUD8img3JJt3KjVfKu0foEgr0TUZzCAiB4ipWcjkwUFpE
+ zjte9PJB2cf1ekmC/ojkqvkGYPn7VLU0xnLa0jZHVyzq2y9hfKd9APr84fALn6YIFXw8
+ vmYw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6LNl7cyaGvwbg3Cv7G4SuuvvvUBXOHDGhN0JTQ1at1Y2y+Ey0u5p2JW97+6lDYDll8wgWuwsXhQ==@nongnu.org
+X-Gm-Message-State: AOJu0Ywr8jqc9yb806Y9PU8nPY7aF5iLQybdQWpAuz/9NCSE+ypJ/2BT
+ QHl1kcILKYrZmPum3UYTsuAA/you7WRHlH9VdI/GUy/yLvOGRv5l4kcxnQ==
+X-Gm-Gg: ASbGncsgzh/A91/G1DnifFMoFEEeC71zuLcV6TH6ByirexQeFZzu3Umy8uN6CHYC092
+ O5eYw+HvkkGGb/frjoPYqNjKgGTJciVfclzsUj4mVyIN1stqE3/tLuk6MGMCgvbMWU+KyXOtkdU
+ dGauyG62+mZwgKPpgekFqbRUgSAQiznW4keNH6dCtoSVSbs16PQ+bY4bSI5Zz96ljjrNrDx4WPO
+ VwoEKU/uVzR9P81xfhXqekVOs7hvVbNiGcavB+PTIdC8JJe2a5hVXytfaCdQhVIppwiAnNOk/DA
+ M77ECf8ZmXbckBCYz2C9w7QiL61XINy7/r1dU///Mj/Hfq3J4g==
+X-Google-Smtp-Source: AGHT+IHLjlJ1UyzI5n3W9KywKFSZerT8BkEH7oKaRIOqhw2+09EtLtBbMyrJ6otrT9vF1BsKC/Up6g==
+X-Received: by 2002:a17:902:da8c:b0:21f:6dcf:fd2b with SMTP id
+ d9443c01a7336-2265e67f76dmr40015105ad.1.1742473668361; 
+ Thu, 20 Mar 2025 05:27:48 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.135.36])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-225c6bbca45sm133489225ad.166.2025.03.20.05.27.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Mar 2025 05:27:47 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>
-Message-Id: <E1tvEyJ-004dMa-So@kylie.crudebyte.com>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=81bcefde27e7450ea4061acf0f63320ac0f8f95d@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ "Author: Roman Kapl" <rka@sysgo.com>
+Subject: [PATCH] target/ppc: Fix e200 duplicate SPRs
+Date: Thu, 20 Mar 2025 22:27:41 +1000
+Message-ID: <20250320122741.109111-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,97 +96,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to 'man 2 close' errors returned by close() should only be used
-for either diagnostic purposes or for catching data loss due to a previous
-write error, as an error result of close() usually indicates a deferred
-error of a previous write operation.
+DSRR0/1 registers are in the BookE ISA not e200 specific, so
+remove the duplicate e200 register definitions.
 
-Therefore not decrementing 'total_open_fd' on a close() error is wrong
-and would yield in a higher open file descriptor count than actually the
-case, leading to 9p server reclaiming open file descriptors too soon.
-
-Based-on: <20250312152933.383967-7-groug@kaod.org>
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: Author: Roman Kapl <rka@sysgo.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2768
+Fixes: 0e3bf4890906 ("ppc: add DBCR based debugging")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- V2: log a warning message on unexpected close() -> EBADF case
+ target/ppc/cpu_init.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
- hw/9pfs/9p.c     | 10 +++++++++-
- hw/9pfs/codir.c  |  7 ++++++-
- hw/9pfs/cofile.c |  7 ++++++-
- 3 files changed, 21 insertions(+), 3 deletions(-)
-
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index b22df3aa2b..8b001b9112 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -510,7 +510,15 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
-             err = (f->fid_type == P9_FID_DIR) ?
-                 s->ops->closedir(&s->ctx, &f->fs_reclaim) :
-                 s->ops->close(&s->ctx, &f->fs_reclaim);
--            if (!err) {
-+
-+            /* 'man 2 close' suggests to ignore close() errors except of EBADF */
-+            if (unlikely(err && errno == EBADF)) {
-+                /*
-+                 * unexpected case as FIDs were picked above by having a valid
-+                 * file descriptor
-+                 */
-+                error_report("9pfs: v9fs_reclaim_fd() WARNING: close() failed with EBADF");
-+            } else {
-                 /* total_open_fd must only be mutated on main thread */
-                 nclosed++;
-             }
-diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
-index 2068a4779d..bce7dd96e9 100644
---- a/hw/9pfs/codir.c
-+++ b/hw/9pfs/codir.c
-@@ -20,6 +20,7 @@
- #include "fsdev/qemu-fsdev.h"
- #include "qemu/thread.h"
- #include "qemu/main-loop.h"
-+#include "qemu/error-report.h"
- #include "coth.h"
- #include "9p-xattr.h"
- #include "9p-util.h"
-@@ -353,7 +354,11 @@ int coroutine_fn v9fs_co_closedir(V9fsPDU *pdu, V9fsFidOpenState *fs)
-                 err = -errno;
-             }
-         });
--    if (!err) {
-+    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
-+    if (unlikely(err && errno == EBADF)) {
-+        /* unexpected case as we should have checked for a valid file handle */
-+        error_report("9pfs: WARNING: v9fs_co_closedir() failed with EBADF");
-+    } else {
-         total_open_fd--;
-     }
-     return err;
-diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
-index 71174c3e4a..6e775c8e41 100644
---- a/hw/9pfs/cofile.c
-+++ b/hw/9pfs/cofile.c
-@@ -20,6 +20,7 @@
- #include "fsdev/qemu-fsdev.h"
- #include "qemu/thread.h"
- #include "qemu/main-loop.h"
-+#include "qemu/error-report.h"
- #include "coth.h"
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 8b590e7f17c..7decc09aec8 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -2744,14 +2744,6 @@ static void init_proc_e200(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
+                  0x00000000); /* TOFIX */
+-    spr_register(env, SPR_BOOKE_DSRR0, "DSRR0",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_generic,
+-                 0x00000000);
+-    spr_register(env, SPR_BOOKE_DSRR1, "DSRR1",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_generic,
+-                 0x00000000);
  
- int coroutine_fn v9fs_co_st_gen(V9fsPDU *pdu, V9fsPath *path, mode_t st_mode,
-@@ -197,7 +198,11 @@ int coroutine_fn v9fs_co_close(V9fsPDU *pdu, V9fsFidOpenState *fs)
-                 err = -errno;
-             }
-         });
--    if (!err) {
-+    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
-+    if (unlikely(err && errno == EBADF)) {
-+        /* unexpected case as we should have checked for a valid file handle */
-+        error_report("9pfs: WARNING: v9fs_co_close() failed with EBADF");
-+    } else {
-         total_open_fd--;
-     }
-     return err;
+     init_tlbs_emb(env);
+     init_excp_e200(env, 0xFFFF0000UL);
 -- 
-2.39.5
+2.47.1
 
 
