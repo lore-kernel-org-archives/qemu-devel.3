@@ -4,105 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 038ADC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 17:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED936C35FFF
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 17:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvJRx-0003ID-Ka; Thu, 20 Mar 2025 13:13:01 -0400
+	id 1tvJXw-0005RZ-VC; Thu, 20 Mar 2025 13:19:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tvJRk-0003Fj-Cc
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 13:12:46 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvJXt-0005QT-1M
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 13:19:05 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tvJRi-00009E-8y
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 13:12:44 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C2CDC1F7A2;
- Thu, 20 Mar 2025 17:12:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742490759; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PvqLhAEoL888A0TL6P9eqR/giRjDha47y+MELl0W1iQ=;
- b=TRGFgUlsxHGuEZq6noatBlIpO+/i7iIqGDBDyENr8L34ecFiNj1q90aXhKit8jjraOyNWi
- Z+TUEp9qDwCJ5E+F8Ynw4VYTZTJyy/MOBuwrwmCfezCJHT4joXmwoMp9Ecf6EdyaTKxfgF
- esRmDuVQedzoM1D+8iycHWHsK5h5Lyc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742490759;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PvqLhAEoL888A0TL6P9eqR/giRjDha47y+MELl0W1iQ=;
- b=0bkTcNYQxjUtP1APZg+zN2CBMqkVhPcehKjJba8Kj8aS8fwCqtRWI75Lu8HD/futfARlZF
- Q4X8Di/sfl8afKCA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742490758; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PvqLhAEoL888A0TL6P9eqR/giRjDha47y+MELl0W1iQ=;
- b=r5m8UygallbWSvUvKPXWLpoLV7q960O/1G1LqD07LbtQdbWUnCgRtOfQpcW1bmyzhNKKIL
- IyGp8m/rNwTbpxdjjNnouZq99Ii+mlpG6pmRngkgbzCXqPqew/QPc4nDxVlOi4S1UElQuX
- BxA+pP/fheX6cEBMpsT0uv1XAudzc9w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742490758;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PvqLhAEoL888A0TL6P9eqR/giRjDha47y+MELl0W1iQ=;
- b=zbM7Qn99JhdbpO98j76LwqRyu0Gff9R8X0oBA2e7nhKqSltTtZ3rdGp7OwxKYz1qzNUzFw
- 4c6+Wg/jji9IMbAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 40D1F13757;
- Thu, 20 Mar 2025 17:12:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id jp+nAIZM3GcUFwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 20 Mar 2025 17:12:38 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org, "Maciej S .
- Szmigiero" <mail@maciej.szmigiero.name>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>
-Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
-In-Reply-To: <Z9w6s1XkDw6Qpr2v@x1.local>
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-2-farosas@suse.de>
- <CAE8KmOx0KQ7OfbyivQ_256JVRugtJ8ekykxtQw-uz91Uiuv-tg@mail.gmail.com>
- <875xk3bw1i.fsf@suse.de> <Z9w6s1XkDw6Qpr2v@x1.local>
-Date: Thu, 20 Mar 2025 14:12:35 -0300
-Message-ID: <8734f7bp8c.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvJXr-0002ys-DO
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 13:19:04 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43d2d952eb1so8834625e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 10:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742491141; x=1743095941; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=beTK8DxgIUhFcq3agsZj6vIksVFyTpqowsQfErU0rZ0=;
+ b=uWPok88McxybAo7j5G5Mc4QE/PqMM9b/5IeekLMIISiteM8LKYciMWw4nX2WIdGAiV
+ vDm84rAFIH1a9T/tlRCgyS+P/pWFaLbuqARx3k0ZKxcTR6kYeqlnziCjwPvds4MLCKqn
+ Nz4xv/wYAHTlu/lPwmh6HpAycGrv1t2wRp4Mf9WdNNxCn7ql0FBavE0wS96rha69nuh0
+ A9JsF/OKRXRY6/ZCREgSeM+OG2KjPamgJrC7t27WSrrIj16xr4SdxCOsc6D5dmZals+U
+ I5dNx1MjPYyidj3Syfbs/nDTVRH0T6R/UxMgMfe/Pdb4tf7/MB7+peCnzVDSFAActmzQ
+ ET6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742491141; x=1743095941;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=beTK8DxgIUhFcq3agsZj6vIksVFyTpqowsQfErU0rZ0=;
+ b=A52p+Wa5KGdjIEZeH0pNNCCX6VtNDz+8q/G7p2b9Yz1vcQGs9oU2OXtDoVbPbknONY
+ 5IkndqqXEvWctnDKRglQ7N4my2EZNpOfnHxHGtK2j3ZPbkArSCVcigywQ0LHRopnL8wF
+ 5F5OHWsVTQD5FbJjgCxaZ5PmXzdaqwbyYSljvDzSO03qQXFl08KIyijRgwV6rkYat/84
+ OL5muHPeWvIJuFlRDYL7/N6P9n9iutpMaEQjfqXE4s5k8pXrx8LYk/0c9gUEuj3UV0nT
+ yiGh6ahgN1S5tqQrq+YWvfNb73K59WVhuuqDEVkds2ma6b/qPUrrdtpKJF4eZEVPeAqK
+ JkTQ==
+X-Gm-Message-State: AOJu0Yz/NjlhPr1soHJK7AqihItfqZ7aeVM926HSbq3FjayiTtjJKRex
+ PFPdpUAj84Y4qaxIddHGM45ABQ68WoaifQVW+8Selu9+NwHDSgcCa6MTC5aQV3wfwgRjTboy+6c
+ P
+X-Gm-Gg: ASbGncv37ltMT7BN91NKBAVbYpvcGxdg5fgXed1UvefMh8HudiKk+5H0cRt0aQBlNdZ
+ 424DfE7vybXez1+jp79eEPydALujMOu8hWE3cPRTYsR0DZgCHJZU7/KG8p5u9Rqq8vcHIzbwn7Z
+ w2AuiUIKhol+ry+HPMh6h3pgnMhF8+OMSAohFwPova4fwo51V0+eDdou+0DF3NA3VSgjhxc+61x
+ /srAumtJrqEYEQVRcGp4N7KHCGtqRZjjhqil7Ru8mV0l01mzUcqKYPabt+PGSXDAttG2TyHKn1Y
+ JrBypWeGP8UVlrcqAZqZFwI7l7WPe8UrZyY1s2Oub2pFTwlM7wn5SQsx+AtIdENFqWxEw814yyw
+ adXsa4NWpvrbb
+X-Google-Smtp-Source: AGHT+IGybu3iBqYZHlImbQMwMP5ppp9w7Lb48Gut4uSRbK/nKfGOPgIc3156OOtx9Y6XTArafxZ6Tw==
+X-Received: by 2002:a05:600c:1f14:b0:43c:f5e4:895e with SMTP id
+ 5b1f17b1804b1-43d43781539mr67372225e9.1.1742491140623; 
+ Thu, 20 Mar 2025 10:19:00 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d4fd18621sm3717335e9.12.2025.03.20.10.18.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Mar 2025 10:19:00 -0700 (PDT)
+Message-ID: <c46c1134-0057-42d2-a9dd-916bc3ca000d@linaro.org>
+Date: Thu, 20 Mar 2025 18:18:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 0/6] qom: Add object_class_implements_type()
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250320154722.27349-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250320154722.27349-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,55 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 20/3/25 16:47, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> object_class_dynamic_cast() checks whether a class implements
+> a type name, and return the class casted appropriately. This
+> also works with interfaces, except when an interface is
+> implemented multiple times (by intermediate abstract parents /
+> interfaces).
 
-> On Thu, Mar 20, 2025 at 11:45:29AM -0300, Fabiano Rosas wrote:
->> There's a bunch of other issues as well:
->> 
->> - no clear distinction between what should go in the header and what
->>   should go in the packet.
->> 
->> - the header taking up one slot in the iov, which should in theory be
->>   responsibility of the client
->> 
->> - the whole multifd_ops situation which doesn't allow a clear interface
->>   between multifd and client
->> 
->> - the lack of uniformity between send/recv in regards to doing I/O from
->>   multifd code or from client code
->> 
->> - the recv having two different modes of operation, socket and file
->
-> I can't say I know the answer of all of them, but to me the last one is
-> kind of by design - obviously the old multifd was designed to be more or
-> less event driven on dest side, but that doesn't play well on files.
->
+I had a chat with Pierrick where he said diamond graph often leads
+to problems, so it is safer to not allow multiple inheritance that
+way; and returning the casted class is simple enough.
 
-Yes, it's entirely by design. But it does create an extra hurdle in the
-end. The event driven model requires metadata to inform the IO thread
-what to do with the data collected (write to RAM at address X). The
-other model doesn't require that as it has a payload already included,
-so it just populates the fields. The problem is that we tied file
-migration with !packets, but if we want to use iovs all around, we'd
-still want packets (due to magic and version) although it'd be way
-easier to collect the actual data in MultiFDRecvData instead of passing
-information through the header and then doing the work at ->recv().
+I'll see how to do differently, effectively not pursuing this series.
 
-> To be fair, I didn't invent multifd, but IMHO Juan did a great job
-> designing it from scratch, at least it has a bunch of benefits
-> comparing to the old protocol especially on perf side (even though
-> when initially proposed I was not a fan of how the locking was
-> designed.. but it should be much easier to understand after previous
-> refactors).
->
+> 
+> This series factors object_class_implements_type() out of
+> object_class_dynamic_cast() and use it (at least the meaning
+> seems clearer to me when reviewing).
+> 
+> I could get it working with object_class_foreach() but for
+> some reason fail at writing a proper test. Posting the last
+> patch as RFC so we can discuss it on the list.
+> 
+> Regards,
+> 
+> Phil.
 
-Good point. My rant means no demerit at all to the current design, I'm
-just objectively pointing out the parts I think are getting in the way.
-
-> And just to say, we can change the code or protocol in whatever way we want
-> if that could make it better.  So instead of the rant (which is still
-> welcomed whenever you feel like :), we can go for whatever you see fit with
-> compat properties (and if with a handshake, that's even less of a concern).
-
-Point taken (on the HS as well).
 
