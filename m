@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8570C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58822C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvCRX-0006TZ-BP; Thu, 20 Mar 2025 05:44:04 -0400
+	id 1tvCSV-0007TL-4Z; Thu, 20 Mar 2025 05:45:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1tvCRT-0006Q2-5K
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:44:00 -0400
+ id 1tvCSS-0007SN-VD
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:45:00 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1tvCRQ-0002vr-Ta
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:43:58 -0400
+ id 1tvCSR-00030b-Pd
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:45:00 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1tvCRP-001hYu-SK;
- Thu, 20 Mar 2025 09:43:55 +0000
-Date: Thu, 20 Mar 2025 09:43:55 +0000
+ (envelope-from <movement@movementarian.org>) id 1tvCSQ-001hb7-Bd;
+ Thu, 20 Mar 2025 09:44:58 +0000
+Date: Thu, 20 Mar 2025 09:44:58 +0000
 From: John Levon <levon@movementarian.org>
 To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: Re: [PATCH for-10.1 08/32] vfio: Move VFIOHostDMAWindow definition
- into spapr.c
-Message-ID: <Z9vjW0F782rigAIp@movementarian.org>
+Subject: Re: [PATCH for-10.1 21/32] vfio: Move vfio_kvm_device_fd() into
+ helpers.c
+Message-ID: <Z9vjmhbryuclC2gt@movementarian.org>
 References: <20250318095415.670319-1-clg@redhat.com>
- <20250318095415.670319-9-clg@redhat.com>
+ <20250318095415.670319-22-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250318095415.670319-9-clg@redhat.com>
+In-Reply-To: <20250318095415.670319-22-clg@redhat.com>
 X-Url: http://www.movementarian.org/
 Received-SPF: pass client-ip=139.162.205.133;
  envelope-from=movement@movementarian.org; helo=movementarian.org
@@ -63,9 +63,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 10:53:51AM +0100, Cédric Le Goater wrote:
+On Tue, Mar 18, 2025 at 10:54:04AM +0100, Cédric Le Goater wrote:
 
-> VFIOHostDMAWindow is only used in file "spapr.c". Move it there.
+> The vfio_kvm_device_add/del_fd() routines opening the VFIO pseudo
+> device are defined in "helpers.c". Move 'vfio_kvm_device_fd'
+> definition there and its declaration into "helpers.h" to reduce
+> exposure of VFIO internals in "hw/vfio/vfio-common.h".
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 
