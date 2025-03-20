@@ -4,97 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A16CC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 14:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A03C28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 14:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvGq4-0004SO-NS; Thu, 20 Mar 2025 10:25:41 -0400
+	id 1tvGzC-00077F-T4; Thu, 20 Mar 2025 10:35:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1tvGpj-0004RS-PX
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:25:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tvGye-0006uV-M3
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:34:39 -0400
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1tvGph-0000bZ-1Q
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:25:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742480711;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z2OQykFF8cebzqvWKf+PsxH0o9zBbY+/Y9eCVgtY8Rk=;
- b=G2JyRqZqHCjarZ8rB3GbrftkW+nkPfyyWa+wf/VSZfSiJduHowG9vmyQKh9zSWI9FfKNDV
- I3wSqP3W63ec541Zinqz9Jx4Ro5blsMAjTeU+6+0S7ESoNQSvKDiyPg3uHI9jhntFLOPHu
- dUYdlCX26Do5DO2zVtOiSq6kzxXQKYw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-39-nnanglx1MjWEy0czUxKDaw-1; Thu, 20 Mar 2025 10:25:08 -0400
-X-MC-Unique: nnanglx1MjWEy0czUxKDaw-1
-X-Mimecast-MFC-AGG-ID: nnanglx1MjWEy0czUxKDaw_1742480708
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-474f079562dso31088441cf.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 07:25:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742480708; x=1743085508;
- h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
- :mime-version:references:from:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=z2OQykFF8cebzqvWKf+PsxH0o9zBbY+/Y9eCVgtY8Rk=;
- b=bjeC4ZYtdCYqntRZF12F1wZv49kYKEFlAA9B/EfQmvwGJzZBQl8xVZDq5IEdTr4+DJ
- WiFChM3aKbxfcZJs/xhDZKGwasMJ6EsvBX3LBR0rgiNKtZ0Rjbojbw2ctp2ddtOcBOqd
- zllxNm/xIl9f0yju/fv21PuEKCEmKudfB1ZOqNwsZ/R7HAfeM6LJzm+ErmClbW1mbGk6
- RCyliF2LIlzA+pTGqGlfD10Eqxu1rNtTeJoN8JZSkrnd+J23PeuqipIqPcfiHqjs8lV6
- 6bfsq+mgJTMH8ejP/D//2cj8xGfOZxCadXR7eRVvHpIue7o1i4LM1NEkx67BP5iV8QAU
- 7bRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiUKgby+dbyH4xBZlvGAmO1x6FvQ1CBJEmST4nErF6683HNxnEr/hPYCFvFOSdkUj/x4AqyMDF3Qnj@nongnu.org
-X-Gm-Message-State: AOJu0Yxx7C6/H73gljLrcqIFmnJZrRrQWUkuec62hkn1aepr9aeju27B
- VpNcup4n3+ZU4ocx/8gYipNCJYsnkjcH47e9TnQ7CxIZeQ2SP2DVSFbP+fePC45KXEx3fgIHFxH
- 2O9hE2XCnCTAJHrEMMksQ2SgjyYEOZvXLhzI3vEqJlf8+44RWzU6BcS4iZUD+QVCfl0dgyV7Zff
- DqZBt/HLoAjktsscRe+R3EtPQfiQI=
-X-Gm-Gg: ASbGnctJPgkOg3jo1j/QTvbweAb7rsS+ethB4wBG4IuyWK9wYHnL6Rgy3tTEQ/cbx7G
- AVbZqHj6GgZYLIB9sfQIzRXk2jm3FrxbbrYFm9jPaB2jTdmCje+zo/Y04d4+cfEypAuEnAiK+
-X-Received: by 2002:a05:622a:4811:b0:476:8df3:640 with SMTP id
- d75a77b69052e-4770835aca9mr95696671cf.7.1742480708229; 
- Thu, 20 Mar 2025 07:25:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgBazF209Vlts8XuZplmFTdCgYI1Z4MeCy6pYSD0EjyOrHx6Qd48Izs62dCEIGuCgNfZgUuPjzDXpw0xl4dJ8=
-X-Received: by 2002:a05:622a:4811:b0:476:8df3:640 with SMTP id
- d75a77b69052e-4770835aca9mr95696511cf.7.1742480708045; Thu, 20 Mar 2025
- 07:25:08 -0700 (PDT)
-Received: from 744723338238 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Mar 2025 07:25:07 -0700
-Received: from 744723338238 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Mar 2025 07:25:07 -0700
-From: Andrea Bolognani <abologna@redhat.com>
-References: <20250224123120.1644186-1-dbarboza@ventanamicro.com>
- <20250224123120.1644186-4-dbarboza@ventanamicro.com>
- <CAKmqyKNmpRA8kphbWnA-AqTSUSGf+koSbCmuk6VgZEWde2NFBw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tvGyX-0003WQ-Dm
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:34:30 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.176.7])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4ZJSkz5sGlz10Hr;
+ Thu, 20 Mar 2025 14:34:19 +0000 (UTC)
+Received: from kaod.org (37.59.142.114) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Thu, 20 Mar
+ 2025 15:34:19 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-114S0081d61ae98-660f-4e7b-9baf-ff2dbf30c11d,
+ 634753926966D39EDD754D066B00D0F2EFF7B06B) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Thu, 20 Mar 2025 15:34:12 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+CC: <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2] 9pfs: fix 'total_open_fd' decrementation
+Message-ID: <20250320153412.0cfda7c2@bahia>
+In-Reply-To: <E1tvEyJ-004dMa-So@kylie.crudebyte.com>
+References: <E1tvEyJ-004dMa-So@kylie.crudebyte.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <CAKmqyKNmpRA8kphbWnA-AqTSUSGf+koSbCmuk6VgZEWde2NFBw@mail.gmail.com>
-Date: Thu, 20 Mar 2025 07:25:07 -0700
-X-Gm-Features: AQ5f1JpK3Ho0OMGev6NvaU7y-tUnDjpZ4g8bJDkBe1SNjgqbdkUwKBvtVx9fgqQ
-Message-ID: <CABJz62OfUDHYkQ0T3rGHStQprf1c7_E0qBLbLKhfv=+jb0SYAw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] target/riscv/kvm: add missing KVM CSRs
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- alistair.francis@wdc.com, bmeng@tinylab.org, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, ajones@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=abologna@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.114]
+X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 59f8c335-9e5e-4964-8065-6f8f9e0d48dd
+X-Ovh-Tracer-Id: 2840363992157755802
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeekgeeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfgjfhfogggtgfhisehtjeertdertddvnecuhfhrohhmpefirhgvghcumfhurhiiuceoghhrohhugheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeegkeejtdevgeekieelffdvtedvvdegtdduudeigffhhffgvdfhgeejteekheefkeenucfkphepuddvjedrtddrtddruddpfeejrdehledrudegvddruddugedpkeekrddujeelrdelrdduheegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepvddprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdfovfetjfhoshhtpehmohehvdelmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=fcEF2l3r3o1ZWU9cAlbVUaNph6xFRWLAimR2hrID0Sk=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1742481260; v=1;
+ b=sezKNdfsgKXIJfKaLqyA60IMGBNHa3AKIpA3J5PuAcRZs9tsI3a6Hc7PQdQIx20J+GM7+WhA
+ ku1DviGNrCi1MuWZqDgWM/xEawVA5gAWQ0QZESiStyO/JXt2/W03FHQAOVr2XCc6AMcNp3/0J/X
+ +kHF86heDN0Vl85b4nYmKpT25iC5ET4Zve0WGqhBcRn/7IB0XoB85wn+MOHJwtr73XqNjbhbWOQ
+ T/VFHlwqVuB+Zu5UcWZJAmRTFXClWHXjTO10tnqVq4fET/TSb1W0DZM/uf4cM51t7w9oAYcRDzJ
+ u+LAlvPu3w/G102tt+J5z4cJ8HmcIXVyvfn43EK/Q7Ung==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=groug@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,34 +82,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 03, 2025 at 01:46:53PM +1000, Alistair Francis wrote:
-> On Mon, Feb 24, 2025 at 10:32=E2=80=AFPM Daniel Henrique Barboza <dbarboz=
-a@ventanamicro.com> wrote:
-> > We're missing scounteren and senvcfg CSRs, both already present in the
-> > KVM UAPI.
-> >
-> > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
->
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+On Thu, 20 Mar 2025 13:16:20 +0100
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-This patch seems to have broken KVM acceleration for me:
+> According to 'man 2 close' errors returned by close() should only be used
+> for either diagnostic purposes or for catching data loss due to a previous
+> write error, as an error result of close() usually indicates a deferred
+> error of a previous write operation.
+> 
+> Therefore not decrementing 'total_open_fd' on a close() error is wrong
+> and would yield in a higher open file descriptor count than actually the
+> case, leading to 9p server reclaiming open file descriptors too soon.
+> 
+> Based-on: <20250312152933.383967-7-groug@kaod.org>
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  V2: log a warning message on unexpected close() -> EBADF case
+> 
+>  hw/9pfs/9p.c     | 10 +++++++++-
+>  hw/9pfs/codir.c  |  7 ++++++-
+>  hw/9pfs/cofile.c |  7 ++++++-
+>  3 files changed, 21 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> index b22df3aa2b..8b001b9112 100644
+> --- a/hw/9pfs/9p.c
+> +++ b/hw/9pfs/9p.c
+> @@ -510,7 +510,15 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+>              err = (f->fid_type == P9_FID_DIR) ?
+>                  s->ops->closedir(&s->ctx, &f->fs_reclaim) :
+>                  s->ops->close(&s->ctx, &f->fs_reclaim);
+> -            if (!err) {
+> +
+> +            /* 'man 2 close' suggests to ignore close() errors except of EBADF */
+> +            if (unlikely(err && errno == EBADF)) {
+> +                /*
+> +                 * unexpected case as FIDs were picked above by having a valid
+> +                 * file descriptor
+> +                 */
+> +                error_report("9pfs: v9fs_reclaim_fd() WARNING: close() failed with EBADF");
 
-  $ ./build/qemu-system-riscv64 -display none -M virt,accel=3Dkvm -cpu host
-  qemu-system-riscv64: Failed to put registers after init: No such
-file or directory
+Reviewed-by: Greg Kurz <groug@kaod.org>
 
-Reverting it makes QEMU work again.
+I just hope there isn't a way to reach this 100% or we'll end up
+saturating the logs. ;-)
 
-My host is a SiFive HiFive Premier P550 board running Fedora 41. Note
-that, since the upstreaming effort for this SoC has just recently
-started, I'm using the 6.6-based vendor kernel.
+> +            } else {
+>                  /* total_open_fd must only be mutated on main thread */
+>                  nclosed++;
+>              }
+> diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+> index 2068a4779d..bce7dd96e9 100644
+> --- a/hw/9pfs/codir.c
+> +++ b/hw/9pfs/codir.c
+> @@ -20,6 +20,7 @@
+>  #include "fsdev/qemu-fsdev.h"
+>  #include "qemu/thread.h"
+>  #include "qemu/main-loop.h"
+> +#include "qemu/error-report.h"
+>  #include "coth.h"
+>  #include "9p-xattr.h"
+>  #include "9p-util.h"
+> @@ -353,7 +354,11 @@ int coroutine_fn v9fs_co_closedir(V9fsPDU *pdu, V9fsFidOpenState *fs)
+>                  err = -errno;
+>              }
+>          });
+> -    if (!err) {
+> +    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
+> +    if (unlikely(err && errno == EBADF)) {
+> +        /* unexpected case as we should have checked for a valid file handle */
+> +        error_report("9pfs: WARNING: v9fs_co_closedir() failed with EBADF");
+> +    } else {
+>          total_open_fd--;
+>      }
+>      return err;
+> diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
+> index 71174c3e4a..6e775c8e41 100644
+> --- a/hw/9pfs/cofile.c
+> +++ b/hw/9pfs/cofile.c
+> @@ -20,6 +20,7 @@
+>  #include "fsdev/qemu-fsdev.h"
+>  #include "qemu/thread.h"
+>  #include "qemu/main-loop.h"
+> +#include "qemu/error-report.h"
+>  #include "coth.h"
+>  
+>  int coroutine_fn v9fs_co_st_gen(V9fsPDU *pdu, V9fsPath *path, mode_t st_mode,
+> @@ -197,7 +198,11 @@ int coroutine_fn v9fs_co_close(V9fsPDU *pdu, V9fsFidOpenState *fs)
+>                  err = -errno;
+>              }
+>          });
+> -    if (!err) {
+> +    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
+> +    if (unlikely(err && errno == EBADF)) {
+> +        /* unexpected case as we should have checked for a valid file handle */
+> +        error_report("9pfs: WARNING: v9fs_co_close() failed with EBADF");
+> +    } else {
+>          total_open_fd--;
+>      }
+>      return err;
 
-Perhaps the KVM UAPI additions mentioned in the commit message are
-more recent than that, and we need to make QEMU's use of them
-conditional rather than unconditional?
 
---=20
-Andrea Bolognani / Red Hat / Virtualization
 
+-- 
+Greg
 
