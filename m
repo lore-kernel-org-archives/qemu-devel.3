@@ -4,117 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8364DC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 14:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F898C36001
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 14:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvH9m-0002Lb-6K; Thu, 20 Mar 2025 10:46:02 -0400
+	id 1tvH9X-0002Je-Sa; Thu, 20 Mar 2025 10:45:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tvH9X-0002Jy-Ex
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:45:49 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tvH90-0002HM-FW
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:45:16 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tvH9R-00070z-F2
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:45:45 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 152DC21EFC;
- Thu, 20 Mar 2025 14:45:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742481934; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=150bKVbBZus5B9lHcJwLJJ2F03PSZYHl1AMvDIdWnS4=;
- b=ZTIrgnQ9q3BAETT6mpnUfuMtXf4yMGbcycV1PJ1mQ5KVXVH6BwXp/EiINRmBbiJ9opzQWN
- JMH7ntW1Ci7wUVMsMXET7XflmsQGnw5UzwjwrpCQUBWYCTj74XFv0pdaKDKYWhk4PqoGvz
- onhocy07jAZ8xTyUPuYRE/yQ4fXiLd0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742481934;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=150bKVbBZus5B9lHcJwLJJ2F03PSZYHl1AMvDIdWnS4=;
- b=a/zJ2fHddbIonjD9U0HQy9uIzst0cP/U38iXvA+MXTN6hzlrJq8icL8bOemyphnYrpWR7l
- vzMQ1SeQtPeislAg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=rp8EuJpV;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cMPKBx2K
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742481933; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=150bKVbBZus5B9lHcJwLJJ2F03PSZYHl1AMvDIdWnS4=;
- b=rp8EuJpVCeirsHkEaSZ3cq+zuIFx3ecyuoTnWOVx0H0RG0mPEVmy0R6l/BEbnnsXmKaYBG
- RbEj1+Zf/WO0v7GDR0R19HHsutsMOEEldGCY44r5rWdcGS8ajv9Hyutr+yj1SxCBYbjdc+
- LWZb8NMADTzORD9lAsXO6S+/bHaPU+A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742481933;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=150bKVbBZus5B9lHcJwLJJ2F03PSZYHl1AMvDIdWnS4=;
- b=cMPKBx2K5md0Jls7b1G0DCNeF2+K+xaShaornyrFXa7QXLYD30ChRzQAs6CtXi0h+tpHnH
- lPt335Soa0uUrxCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 81F0113757;
- Thu, 20 Mar 2025 14:45:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cp4lEAwq3Gd/ZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 20 Mar 2025 14:45:32 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, "Maciej S .
- Szmigiero" <mail@maciej.szmigiero.name>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>
-Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
-In-Reply-To: <CAE8KmOx0KQ7OfbyivQ_256JVRugtJ8ekykxtQw-uz91Uiuv-tg@mail.gmail.com>
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-2-farosas@suse.de>
- <CAE8KmOx0KQ7OfbyivQ_256JVRugtJ8ekykxtQw-uz91Uiuv-tg@mail.gmail.com>
-Date: Thu, 20 Mar 2025 11:45:29 -0300
-Message-ID: <875xk3bw1i.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tvH8t-0006go-LD
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:45:10 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22403cbb47fso15759715ad.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 07:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1742481903; x=1743086703; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PsuhVBw/8QyJ+S/SJo4G6GOziRnwXF9TFNxIlgDhM/Q=;
+ b=J3SxsMWkIlki14msBX0BaqgDkEs9n8eBq8fkELQdXo50/b2zFreP334+gHG1hEuoa7
+ 4j8qbKsV/m9x2zPG4FPKr7nyHQP6lllaYSB1xeaTtWtbuFj7UfHR1mTzeaRKxHnsqHje
+ ITo6JO2idV4jYXwdIg66On1GK1Ht7jsI0Imdjw1CKTNtwCrneWsHDPt0FfeCt7pQaNOj
+ W74+zGYgsM79AruX/w8HT5QejN1BRn7l0xkqN1QeZxJ3XkBDDshPbt7w0ruuyAtOoyhN
+ rOCoXrAYrQGu4WnRk33anP+Zs64Pm0Ua8JyaFyrJVgqaj/rhDj9B9lfszvRcdMW+qsid
+ dWyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742481903; x=1743086703;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PsuhVBw/8QyJ+S/SJo4G6GOziRnwXF9TFNxIlgDhM/Q=;
+ b=vbT7hvmPGKthufPTBNARsxkt9BIFX6K5+jjKi8u4rZu17ZMV9cSkEv6UcQfyl6xHpv
+ yaowNwIcbN7nee5CVzhJD5t64btd2WkMX3HHw9HW3GQwWI546YAna/wlk5L3tE9uY9d/
+ nN1kHyx4lQFfJNioCkyyAlOlEZmidbjz4JuA2vEz23mHlNT257HaUprHxIJIMWmNHpRO
+ QVYiyQMcAX9hgsMH4q74+IiTL/t+t15P+YeZ+cyRyJebEMTX6qYLPDfOKKKgHdECmIKD
+ 7+btT30gpVVSum6qQdbmybtKS9W8EOSD3PG/93fM1I79HAgmhTqbdt0rAU6G0/Wf1S4X
+ i7BA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUk3+tWROyRL9u/I1MeDnLZIFi3nBPSCl6fjO+UpIseN5MwIBqQBNjgQhTWULl5srEU6Bho1gvQ2qAC@nongnu.org
+X-Gm-Message-State: AOJu0YzgaYUd2orTqqPWQ4fd9mXnJKO6ykkArV3keH62Ulb/PWfqoEER
+ zQguacSMVtEkHgqWlQ/w3wdivcVDa/QzXfQ8eLH9dnGg/jJ15TFDp5vR5bnFnG0=
+X-Gm-Gg: ASbGnculW3+OIO74FkJxPAx+L4AtHn6jd1wS0i+AQoD36GBor1K96ey33AxQC4N0RpN
+ xaWzC2DadlN1U+Qftr21dn976ihrfpnKzekXJeUPjysYhsDMQJPRF862BIbiyAFT9WayPwkSgE8
+ 00XNAMn433YDndxoilHkdy4S2uO1wRPGs8fd36gi/POGmx6aq7px/vpujDLy5cRBgTJhTTGG2X0
+ OpYwshpbh75k7qmlyWgLCM8diyh9VTi1PDuD5U+rz9mNAd00xn7JIxsTpya9NjLi/JyF0l5VUrz
+ ChCIxkztVZ19pgZuFO6227lMuUswfR/JQyF26PAMei4zVwXMv5FF33CeRgiYL9GBc3HUR9f61YE
+ 25LAq38DLCkFkpaOyZi2i
+X-Google-Smtp-Source: AGHT+IG5SQQzqohHtdEsn55E7n7yWHLm5WxOmSEQqZlf4+h4b7UzTHgIppaWnELt05MqYWEfJWQN4A==
+X-Received: by 2002:a17:902:ce07:b0:223:5e54:c521 with SMTP id
+ d9443c01a7336-2265ea35407mr56144505ad.0.1742481903240; 
+ Thu, 20 Mar 2025 07:45:03 -0700 (PDT)
+Received: from [192.168.68.110] (201-69-66-189.dial-up.telesp.net.br.
+ [201.69.66.189]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-225c688da8csm136416005ad.48.2025.03.20.07.45.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Mar 2025 07:45:02 -0700 (PDT)
+Message-ID: <0b237809-80f1-416b-ba50-ea4bd4bbec03@ventanamicro.com>
+Date: Thu, 20 Mar 2025 11:44:59 -0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 152DC21EFC
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns, libvirt.org:url]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] target/riscv/kvm: add missing KVM CSRs
+To: Andrew Jones <ajones@ventanamicro.com>,
+ Andrea Bolognani <abologna@redhat.com>
+Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+References: <20250224123120.1644186-1-dbarboza@ventanamicro.com>
+ <20250224123120.1644186-4-dbarboza@ventanamicro.com>
+ <CAKmqyKNmpRA8kphbWnA-AqTSUSGf+koSbCmuk6VgZEWde2NFBw@mail.gmail.com>
+ <CABJz62OfUDHYkQ0T3rGHStQprf1c7_E0qBLbLKhfv=+jb0SYAw@mail.gmail.com>
+ <20250320-3cb60e99a0abb54e2bb56838@orel>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250320-3cb60e99a0abb54e2bb56838@orel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,149 +110,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
 
-> Hello Fabiano,
->
-> * First big thank you for starting/writing this document. It is a
-> great resource.
->
-> On Fri, 7 Mar 2025 at 19:13, Fabiano Rosas <farosas@suse.de> wrote:
->> +++ b/docs/devel/migration/multifd.rst
->> @@ -0,0 +1,254 @@
->> +Multifd
->> +Multifd is the name given for the migration capability that enables
->> +data transfer using multiple threads. Multifd supports all the
->> +transport types currently in use with migration (inet, unix, vsock,
->> +fd, file).
->
-> * Multifd is Multiple File Descriptors, right? Ie. Does it work with
-> one thread but multiple file descriptors? OR one thread per file
-> descriptor is always the case? I have not used/tried 'multifd +
-> file://' migration, but I imagined there one thread might be able to
-> read/write to multiple file descriptors at a time.
->
 
-Technically both can happen. But that would just be the case of
-file:fdset migration which requires an extra fd for O_DIRECT. So
-"multiple" in the usual sense of "more is better" is only
-fd-per-thread. IOW, using multiple fds is an implementation detail IMO,
-what people really care about is medium saturation, which we can only
-get (with multifd) via parallelization.
+On 3/20/25 11:41 AM, Andrew Jones wrote:
+> On Thu, Mar 20, 2025 at 07:25:07AM -0700, Andrea Bolognani wrote:
+>> On Mon, Mar 03, 2025 at 01:46:53PM +1000, Alistair Francis wrote:
+>>> On Mon, Feb 24, 2025 at 10:32 PM Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
+>>>> We're missing scounteren and senvcfg CSRs, both already present in the
+>>>> KVM UAPI.
+>>>>
+>>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>>> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+>>>
+>>> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+>>
+>> This patch seems to have broken KVM acceleration for me:
+>>
+>>    $ ./build/qemu-system-riscv64 -display none -M virt,accel=kvm -cpu host
+>>    qemu-system-riscv64: Failed to put registers after init: No such
+>> file or directory
+>>
+>> Reverting it makes QEMU work again.
+>>
+>> My host is a SiFive HiFive Premier P550 board running Fedora 41. Note
+>> that, since the upstreaming effort for this SoC has just recently
+>> started, I'm using the 6.6-based vendor kernel.
+> 
+> Ancient :-)
+> 
+>>
+>> Perhaps the KVM UAPI additions mentioned in the commit message are
+>> more recent than that, and we need to make QEMU's use of them
+>> conditional rather than unconditional?
+> 
+> scounteren has been around since the dawn of riscv kvm, but senvcfg has
+> only been there since 6.7 (just missed your ancient cut-off).
+> 
+> The true fix for this is to start using get-reg-list, which should
+> hopefully work with the 6.6 kernel too since get-reg-list support has
+> been around since 6.6.
 
->> +Usage
->> +-----
->> +
->> +On both source and destination, enable the ``multifd`` capability:
->> +
->> +    ``migrate_set_capability multifd on``
->> +
->> +Define a number of channels to use (default is 2, but 8 usually
->> +provides best performance).
->> +
->> +    ``migrate_set_parameter multifd-channels 8``
->> +
->
-> * I get that this is a QEMU documentation, but for users/reader's
-> convenience it'll help to point to libvirt:virsh migrate usage here ->
-> https://www.libvirt.org/manpages/virsh.html#migrate , just as an
-> alternative.
+That's the plan. We need to make the same treatment we're already doing with
+the extensions with these CSRs.
 
-AFAIK, we tend to not do that in QEMU docs.
+> 
+> A quick fix for this is to just drop senvcfg for now since nobody
+> noticed it was missing before (well, I noticed it was missing, but by
+> inspection, not test).
 
-> Because doing migration via QMP commands is not as
-> straightforward, I wonder who might do that and why.
->
+We can do that in case the proper fix turns out to be more complex than
+we've anticipated and we'll miss the cut for the release. I think we have
+time to do it properly, but let's see.
 
-All of QEMU developers, libvirt developers, cloud software developers,
-kernel developers etc.
+Thanks,
 
->
->> +Restrictions
->> +------------
->> +
->> +For migration to a file, support is conditional on the presence of the
->> +mapped-ram capability, see `mapped-ram`.
->> +
->> +Snapshots are currently not supported.
->
-> * Maybe: Sanpshot using multiple threads (multifd) is not supported.
->
->> +`postcopy` migration is currently not supported.
->
-> * Maybe - 'postcopy' migration using multiple threads (multifd) is not
-> supported. ie. 'postcopy' uses a single thread to transfer migration
-> data.
->
-> * Reason for these suggestions: as a writer it is easy to think
-> everything written in this page is to be taken with multifd context,
-> but readers may not do that, they may take sentences in isolation.
-> (just sharing thoughts)
->
+Daniel
 
-Sure, I can expand on those.
+> 
+> Thanks,
+> drew
 
->> +Multifd consists of:
->> +
->> +- A client that produces the data on the migration source side and
->> +  consumes it on the destination. Currently the main client code is
->> +  ram.c, which selects the RAM pages for migration;
->
-> * So multifd mechanism can be used to transfer non-ram data as well? I
-> thought it's only used for RAM migration. Are device/gpu states etc
-> bits also transferred via multifd threads?
->
-
-device state migration with multifd has been merged for 10.0
-
-<rant>
-If it were up to me, we'd have a pool of multifd threads that transmit
-everything migration-related. Unfortunately, that's not so
-straight-forward to implement without rewriting a lot of code, multifd
-requires too much entanglement from the data producer. We're constantly
-dealing with details of data transmission getting in the way of data
-production/consumption (e.g. try to change ram.c to produce multiple
-pages at once and watch everyting explode).
-
-I've been experimenting with a MultiFDIov payload type to allow
-separation between the data type handling details and multifd inner
-workings. However in order for that to be useful we'd need to have a
-sync that doesn't depend on control data on the main migration
-thread. That's why I've been asking about a multifd-only sync with Peter
-in the other thread.
-
-There's a bunch of other issues as well:
-
-- no clear distinction between what should go in the header and what
-  should go in the packet.
-
-- the header taking up one slot in the iov, which should in theory be
-  responsibility of the client
-
-- the whole multifd_ops situation which doesn't allow a clear interface
-  between multifd and client
-
-- the lack of uniformity between send/recv in regards to doing I/O from
-  multifd code or from client code
-
-- the recv having two different modes of operation, socket and file
-
-the list goes on...
-</rant>
-
->> +- A packet which is the final result of all the data aggregation
->> +  and/or transformation. The packet contains: a *header* with magic and
->> +  version numbers and flags that inform of special processing needed
->> +  on the destination; a *payload-specific header* with metadata referent
->> +  to the packet's data portion, e.g. page counts; and a variable-size
->> +  *data portion* which contains the actual opaque payload data.
->
-> * It'll help to define the exact packet format here. Like they do in RFCs.
-
-I'll try to produce some ascii art.
-
->
-> Thank you for writing this.
-> ---
->   - Prasad
 
