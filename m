@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC3EC35FFF
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 14:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A16CC28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 14:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvGjh-000301-RI; Thu, 20 Mar 2025 10:19:05 -0400
+	id 1tvGq4-0004SO-NS; Thu, 20 Mar 2025 10:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tvGje-0002zF-Mc
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:19:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tvGpj-0004RS-PX
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:25:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1tvGjc-0007el-Il
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:19:02 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KCT1iD000712;
- Thu, 20 Mar 2025 14:18:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=sl6kH0
- SSfBAjy4CT8Ll1+kk9x/d6VScYonQDymdO4No=; b=j3BXy24g0DnPW5LvCxkEV4
- PFEC+UFQ3ri2dTRJQ6RzYl0sJt4ij4PWMYUJRbuUYXzrITPnuGyvFZ45Y10F+aCE
- kmUWIDbTpJ3ZW0dMzmHJYqPugLvfXDhxQxoC5lzlyVHxPBV15SX2GTeskCZX4H0H
- X2w5DRBhqhEqM6Xvxnd2BwaGLiGjM5rIOEqtC53EDb8JXYd9LzaWQ2LtF5QFXV+0
- Msh70KP4tx3Jrd94O5nhVXoBtj9fM61KBSlRnQubnNjAjBQEh3XZawKr+MbIDsRq
- jJTTc9IUF68XeRydsnbtRMq+z+L6Fy/27NUSBnPhh9TJ4CPQn1Riw6Hy3A+tFxcw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gk21rk1a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 14:18:58 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52KDombn005631;
- Thu, 20 Mar 2025 14:18:56 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45dm908gvh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 14:18:56 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52KEIuec30278380
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Mar 2025 14:18:56 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 28F9558055;
- Thu, 20 Mar 2025 14:18:56 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EF8E358043;
- Thu, 20 Mar 2025 14:18:55 +0000 (GMT)
-Received: from [9.41.104.243] (unknown [9.41.104.243])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Mar 2025 14:18:55 +0000 (GMT)
-Message-ID: <2aa3381f-cf89-4634-aac8-3ed5491f0ee8@linux.ibm.com>
-Date: Thu, 20 Mar 2025 09:18:55 -0500
+ (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
+ id 1tvGph-0000bZ-1Q
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 10:25:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742480711;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z2OQykFF8cebzqvWKf+PsxH0o9zBbY+/Y9eCVgtY8Rk=;
+ b=G2JyRqZqHCjarZ8rB3GbrftkW+nkPfyyWa+wf/VSZfSiJduHowG9vmyQKh9zSWI9FfKNDV
+ I3wSqP3W63ec541Zinqz9Jx4Ro5blsMAjTeU+6+0S7ESoNQSvKDiyPg3uHI9jhntFLOPHu
+ dUYdlCX26Do5DO2zVtOiSq6kzxXQKYw=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-39-nnanglx1MjWEy0czUxKDaw-1; Thu, 20 Mar 2025 10:25:08 -0400
+X-MC-Unique: nnanglx1MjWEy0czUxKDaw-1
+X-Mimecast-MFC-AGG-ID: nnanglx1MjWEy0czUxKDaw_1742480708
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-474f079562dso31088441cf.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 07:25:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742480708; x=1743085508;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
+ :mime-version:references:from:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=z2OQykFF8cebzqvWKf+PsxH0o9zBbY+/Y9eCVgtY8Rk=;
+ b=bjeC4ZYtdCYqntRZF12F1wZv49kYKEFlAA9B/EfQmvwGJzZBQl8xVZDq5IEdTr4+DJ
+ WiFChM3aKbxfcZJs/xhDZKGwasMJ6EsvBX3LBR0rgiNKtZ0Rjbojbw2ctp2ddtOcBOqd
+ zllxNm/xIl9f0yju/fv21PuEKCEmKudfB1ZOqNwsZ/R7HAfeM6LJzm+ErmClbW1mbGk6
+ RCyliF2LIlzA+pTGqGlfD10Eqxu1rNtTeJoN8JZSkrnd+J23PeuqipIqPcfiHqjs8lV6
+ 6bfsq+mgJTMH8ejP/D//2cj8xGfOZxCadXR7eRVvHpIue7o1i4LM1NEkx67BP5iV8QAU
+ 7bRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUiUKgby+dbyH4xBZlvGAmO1x6FvQ1CBJEmST4nErF6683HNxnEr/hPYCFvFOSdkUj/x4AqyMDF3Qnj@nongnu.org
+X-Gm-Message-State: AOJu0Yxx7C6/H73gljLrcqIFmnJZrRrQWUkuec62hkn1aepr9aeju27B
+ VpNcup4n3+ZU4ocx/8gYipNCJYsnkjcH47e9TnQ7CxIZeQ2SP2DVSFbP+fePC45KXEx3fgIHFxH
+ 2O9hE2XCnCTAJHrEMMksQ2SgjyYEOZvXLhzI3vEqJlf8+44RWzU6BcS4iZUD+QVCfl0dgyV7Zff
+ DqZBt/HLoAjktsscRe+R3EtPQfiQI=
+X-Gm-Gg: ASbGnctJPgkOg3jo1j/QTvbweAb7rsS+ethB4wBG4IuyWK9wYHnL6Rgy3tTEQ/cbx7G
+ AVbZqHj6GgZYLIB9sfQIzRXk2jm3FrxbbrYFm9jPaB2jTdmCje+zo/Y04d4+cfEypAuEnAiK+
+X-Received: by 2002:a05:622a:4811:b0:476:8df3:640 with SMTP id
+ d75a77b69052e-4770835aca9mr95696671cf.7.1742480708229; 
+ Thu, 20 Mar 2025 07:25:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGgBazF209Vlts8XuZplmFTdCgYI1Z4MeCy6pYSD0EjyOrHx6Qd48Izs62dCEIGuCgNfZgUuPjzDXpw0xl4dJ8=
+X-Received: by 2002:a05:622a:4811:b0:476:8df3:640 with SMTP id
+ d75a77b69052e-4770835aca9mr95696511cf.7.1742480708045; Thu, 20 Mar 2025
+ 07:25:08 -0700 (PDT)
+Received: from 744723338238 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 20 Mar 2025 07:25:07 -0700
+Received: from 744723338238 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 20 Mar 2025 07:25:07 -0700
+From: Andrea Bolognani <abologna@redhat.com>
+References: <20250224123120.1644186-1-dbarboza@ventanamicro.com>
+ <20250224123120.1644186-4-dbarboza@ventanamicro.com>
+ <CAKmqyKNmpRA8kphbWnA-AqTSUSGf+koSbCmuk6VgZEWde2NFBw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: VDPA MAC address problem
-Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>,
- eperezma <eperezma@redhat.com>
-References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
- <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-In-Reply-To: <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: VA3i5A_TEUl2Wub35Y8Ibo1Y4SaYer41
-X-Proofpoint-GUID: VA3i5A_TEUl2Wub35Y8Ibo1Y4SaYer41
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_03,2025-03-20_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015
- bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0 mlxlogscore=999
- malwarescore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503200087
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <CAKmqyKNmpRA8kphbWnA-AqTSUSGf+koSbCmuk6VgZEWde2NFBw@mail.gmail.com>
+Date: Thu, 20 Mar 2025 07:25:07 -0700
+X-Gm-Features: AQ5f1JpK3Ho0OMGev6NvaU7y-tUnDjpZ4g8bJDkBe1SNjgqbdkUwKBvtVx9fgqQ
+Message-ID: <CABJz62OfUDHYkQ0T3rGHStQprf1c7_E0qBLbLKhfv=+jb0SYAw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] target/riscv/kvm: add missing KVM CSRs
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ alistair.francis@wdc.com, bmeng@tinylab.org, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=abologna@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,43 +112,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/2025 19:58, Jason Wang wrote:
-> Adding Cindy and Eugenio
-> 
-> On Thu, Mar 20, 2025 at 12:34 AM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
->>
->> I’m observing a problem while testing VDPA with Nvidia ConnectX-6 (mlx5)
->> on s390.
->>
->> Upon start, virtio_net_device_realize() tries to set a new MAC address
->> by VHOST_VDPA_SET_CONFIG which doesn’t do anything.
->>
->> Later, the VM gets started and learns about the old address from
->> virtio_net_get_config() which returns whatever VHOST_VDPA_GET_CONFIG
->> returns, unless it's "6 zero bytes", in which case it instead returns
->> the desired new address (and the problem is avoided).
->>
->> Then QEMU again tries to set the new address from vhost_net_start(), now
->> by calling vhost_vdpa_net_load_cmd(...,VIRTIO_NET_CTRL_MAC,
->> VIRTIO_NET_CTRL_MAC_ADDR_SET, ...). This time the new address is
->> successfully programmed into the NIC, but the VM doesn't know about it.
-> 
-> Have you enabled shadow virtqueue? If yes, does it work if you don't do that?
+On Mon, Mar 03, 2025 at 01:46:53PM +1000, Alistair Francis wrote:
+> On Mon, Feb 24, 2025 at 10:32=E2=80=AFPM Daniel Henrique Barboza <dbarboz=
+a@ventanamicro.com> wrote:
+> > We're missing scounteren and senvcfg CSRs, both already present in the
+> > KVM UAPI.
+> >
+> > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-I only run it in the default configuration, which has SVQ enabled.
+This patch seems to have broken KVM acceleration for me:
 
->> As it is, the only VDPA scenario that's working for me is:
->> 1) Avoid specifying the MAC address in the "vdpa dev add" command (which
->> will create the "6 zero bytes" condition on the first launch).
->> 2) Keep using the same MAC address for every subsequent VM launch on the
->> same NIC "virtual function" (so that the old and new addresses are the
->> same).
-> 
-> This is the way we currently use it. Is there any limitation of this?
+  $ ./build/qemu-system-riscv64 -display none -M virt,accel=3Dkvm -cpu host
+  qemu-system-riscv64: Failed to put registers after init: No such
+file or directory
 
-To be honest, I don't know how severe this limitation is, because I'm 
-not a sysadmin. The problem is that I was searching www for info on how 
-to setup VDPA and ended up hitting this bug and investigating it. 
-Because the found info sources are variable and some show the address 
-specified in "vdpa dev add".
+Reverting it makes QEMU work again.
+
+My host is a SiFive HiFive Premier P550 board running Fedora 41. Note
+that, since the upstreaming effort for this SoC has just recently
+started, I'm using the 6.6-based vendor kernel.
+
+Perhaps the KVM UAPI additions mentioned in the commit message are
+more recent than that, and we need to make QEMU's use of them
+conditional rather than unconditional?
+
+--=20
+Andrea Bolognani / Red Hat / Virtualization
+
 
