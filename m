@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F31AC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 22:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07759C36000
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 22:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvOSI-0006EK-II; Thu, 20 Mar 2025 18:33:38 -0400
+	id 1tvOSU-00074q-Ez; Thu, 20 Mar 2025 18:33:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvOQC-0002uD-NJ
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:31:32 -0400
+ id 1tvOPm-0002ak-HI
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:31:04 -0400
 Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvOPV-0007E7-EU
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:31:27 -0400
+ id 1tvOPN-0007AG-Ol
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:30:57 -0400
 Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-224341bbc1dso26821915ad.3
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 15:30:41 -0700 (PDT)
+ d9443c01a7336-225b5448519so25992425ad.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 15:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742509841; x=1743114641; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742509827; x=1743114627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yn2Xz9RB0NXRkBKqvuaaiEm9yg8jr17YbtEabY7lMZc=;
- b=sqCbKZmQXw9tfwt+yY8fI5+UIysctJ778qi1WmalHlWk3hYYY3LpcDy7XDGrYkpaKM
- 0aZDz+CfDsZEHJWMmECBNmyAbDsBN4KrMBe8fw0P9EAO3z58zCyJf1NjH/PArQEQjIx7
- 4CeZCRCzZl9Zc+lfSzpBJbA2dEqrowqfRtpJ7oBw3nr+fxz8RF3d8UwTUnaO6/L3x8fK
- ychvBJWL/CfjAsOsO14tchAWyA8Ln12AtK1lhGHDOWFp9JmrKZY68wl98Meu79eiPYUr
- GJEOlp4W+7vfMRgFzdQtmRCrmjnZjf9TUXDrRL/38SW5kst4ZG721QLbKI1XltM21DzH
- gIrw==
+ bh=Ue3wMIxDRm9plhH20mUZGft0jOAkf9QSBx1Uwd6s7+c=;
+ b=J6FfkkIbTha4Sg8xfIx3xqPgfV7CJ3XaLVP7QWDPv36vNpS4fdyf9M7K5jDWon318M
+ 8SJKiVSiNT+X5S6+WVI0IGcBP8yL1GwmPpciiv0Y3UUu5k/4v8V22VE4qX0ZMFGZGw6P
+ 5fNn/gQl4l+gqZ1m7m+pos5Ad5WIOKAxn4ZQy4yd1OcQIUoRC/5Nasbo288rXI5PO+H0
+ Z12mQ/aYDSKdYF0WqwfkJKh5NvBF1bLX7fYAzVcyfHd3S0djbCergq2In39uf4+dVGTd
+ ks9dRHz+H+t3T1r4dfgl/8cxw6xs2XRBtMM4JG7ZutZAOc80AJveIgPCQcuZxYLCMalp
+ OGNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742509841; x=1743114641;
+ d=1e100.net; s=20230601; t=1742509827; x=1743114627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yn2Xz9RB0NXRkBKqvuaaiEm9yg8jr17YbtEabY7lMZc=;
- b=A3zqj5yWpndpTrIvYco/sP+w6pa2bvou0LAWYKdOokaxmUCYmsoVseyiJFxDuKnvgn
- pQ6xJEXFIoDEQm/N6jKdxXXKlgJz1raSt8u82qMIHi+wx2SG1OpabiuHfQPOUk7qGAcs
- gGUoPs1MPODnRN7pxy1OjjqXvE+R98gGtU+VQ98Lo9ORehxGg5/ePeD7zgR6dHO1exTu
- f+5CIvf82xSEvGi5z9o0h1hNN//tV4tMALAxUVeOkegnJYqp0WOL+CwPhhYiX4hK5zgQ
- v9z1DuQ2Ays2bUH/utG8jQphSbUTEiYtDYV+Q5EWHoSiuR0sy7oYcVJp436u2fSBoy/J
- dfRA==
-X-Gm-Message-State: AOJu0YygsssxPmRMmEhj6Pf7trKsZdyvFU9oMtDSTvT4QVua/klmKWQ2
- kKlrMvkf1XEdLUwIYPLVnYIwgijcY1+yeikpDhel1cLGAZTQZIinVErMjcpDpZt1E9mTx3UHnVI
- h
-X-Gm-Gg: ASbGncukBG1JLcJUpdZmpcYmoJWkvEReds0bZ96e6WcnlJegnj0at0rxI0aZG+m1s0a
- MPjCPD9nFE0YWVcj9sQhnt2Gj+zA8N3+cgVCfgHs7LMisDy++RzKA0+IfqBUWV0Yzdej4wk+0X8
- RqC5pxQ1dcAtUhxX8SBx8EOMQDy8NAb2M6tN1wMZvR3mTIxRY2zybXt7EtGmH5eh5Eq3zQCBDzY
- 2QNz25nIHjeIRKePtKzHP0HUCQdYlpSgjS/joYXowAzbjPtf78g2vZGGlQehVn20QWbvFfTFVo0
- 9ny964zeAcORVFsUG5yPx021o64ZFNRLsb5S7BXUNzfo
-X-Google-Smtp-Source: AGHT+IEzJbf92WCs5cdn48gdTqOAmHjHUL79CRGln7SjLlFgI+95i4LaCr+ImDqPmlnxNCrWkwC3Xw==
-X-Received: by 2002:a17:902:fc4b:b0:226:38ff:1d6a with SMTP id
- d9443c01a7336-22780c68a1amr17471675ad.7.1742509840610; 
- Thu, 20 Mar 2025 15:30:40 -0700 (PDT)
+ bh=Ue3wMIxDRm9plhH20mUZGft0jOAkf9QSBx1Uwd6s7+c=;
+ b=VYNyrby7GvFCaWRVBdmi+0LpV2bF59zP1knsu5OkkRQmo2RgJwywAPsNI61dZuvDnD
+ nXpJwyMAHoZ3AidPID6QAuCVUjj3Uj7rXzPnkUUIE8YgJDae0PLIy8/hYsrFyIemv+GT
+ zk+AUb0kXdf4Ct0KbjYgrvr56rpjN2DeOjzOw95e/unj2lUnncbPFoECe0tuC5ZcLBFw
+ BpMdqc/uzDf7lL7L/I4vC8QPW0XmVnCxIlHgXlFuGfSY1cKMgOvkCdav8dT56ab2tkUC
+ uXUAslALbaAdIWPbG9H1pz8lGOC070VewXPDgbEbvS42oYvk/rq9WcR2f6jzGwN9TZnQ
+ lx3g==
+X-Gm-Message-State: AOJu0Yw8Fn2OUZiaIOFjvvxjn9n8wXWVmYKXzoiXDcbMd/8gCDbrU+wX
+ 7NCT7ceyVa6+oZ+tFbPRbjTFV/aXo/ZJ9QNnIk1t4zFO48SK32lqC9yqtgxR8+BWQ5s9701WzF5
+ P
+X-Gm-Gg: ASbGnctXACb6rwQJmfAM/JU4CreI1ZOJbAH3yCCJ40z+J/daApLEVxhccQWOmCzr9nI
+ 1T9JG6+3iHZvN0JsTU6BwKaH3ErDAZWARpO7K7ZwixmtuIdIg8ny9OxoKDvRmhHclNHbr/tE6TO
+ U0A2I2ilNUp4Yx/7zLkcK5iWbMOGB6QpqV8GgPNMr8LGJHbLpzhTreFj5qq6NtqfjZFSmDV4YAT
+ QD/VnJQLcz+QB9qcf6NuTXwqtZjLpt2TK+NxqsEZXjWvAlJVaR1QkvfYMRBdNKdqpuQ1YuiDCBL
+ vVEEuPmOy9Mui1CmBtpdLjL2AnFk+MtWWE8tVNmozYbx
+X-Google-Smtp-Source: AGHT+IGbr7eJUBWi5cLi1feYMh8IML173g1e+43Vd3AZzYyfFYPqUOI0pk8pEl7jV3DBBp7qfgr7ow==
+X-Received: by 2002:a17:902:ce82:b0:224:abb:92c with SMTP id
+ d9443c01a7336-22780e35eeamr11909485ad.50.1742509827607; 
+ Thu, 20 Mar 2025 15:30:27 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f4581csm3370145ad.59.2025.03.20.15.30.39
+ d9443c01a7336-22780f4581csm3370145ad.59.2025.03.20.15.30.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 15:30:40 -0700 (PDT)
+ Thu, 20 Mar 2025 15:30:27 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
@@ -72,9 +72,10 @@ Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 30/30] hw/arm: make most of the compilation units common
-Date: Thu, 20 Mar 2025 15:30:02 -0700
-Message-Id: <20250320223002.2915728-31-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 15/30] exec/cpu-all: transfer exec/cpu-common include to
+ cpu.h headers
+Date: Thu, 20 Mar 2025 15:29:47 -0700
+Message-Id: <20250320223002.2915728-16-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
 References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
@@ -86,8 +87,9 @@ X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,147 +107,293 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/meson.build | 112 ++++++++++++++++++++++-----------------------
- 1 file changed, 56 insertions(+), 56 deletions(-)
+ include/exec/cpu-all.h  | 2 --
+ include/exec/cpu_ldst.h | 1 +
+ target/alpha/cpu.h      | 1 +
+ target/arm/cpu.h        | 1 +
+ target/avr/cpu.h        | 1 +
+ target/hexagon/cpu.h    | 1 +
+ target/hppa/cpu.h       | 1 +
+ target/i386/cpu.h       | 1 +
+ target/loongarch/cpu.h  | 1 +
+ target/m68k/cpu.h       | 1 +
+ target/microblaze/cpu.h | 1 +
+ target/mips/cpu.h       | 1 +
+ target/openrisc/cpu.h   | 1 +
+ target/ppc/cpu.h        | 1 +
+ target/riscv/cpu.h      | 1 +
+ target/rx/cpu.h         | 1 +
+ target/s390x/cpu.h      | 1 +
+ target/sh4/cpu.h        | 1 +
+ target/sparc/cpu.h      | 1 +
+ target/tricore/cpu.h    | 1 +
+ target/xtensa/cpu.h     | 1 +
+ cpu-target.c            | 1 +
+ 22 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 9e8c96059eb..09b1cfe5b57 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -2,43 +2,43 @@ arm_ss = ss.source_set()
- arm_common_ss = ss.source_set()
- arm_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
- arm_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
--arm_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
--arm_ss.add(when: 'CONFIG_EMCRAFT_SF2', if_true: files('msf2-som.c'))
--arm_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
--arm_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
--arm_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
--arm_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
--arm_ss.add(when: 'CONFIG_MUSICPAL', if_true: files('musicpal.c'))
--arm_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
--arm_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
--arm_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
--arm_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c', 'npcm8xx_boards.c'))
--arm_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
-+arm_common_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
-+arm_common_ss.add(when: 'CONFIG_EMCRAFT_SF2', if_true: files('msf2-som.c'))
-+arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
-+arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
-+arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
-+arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
-+arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
-+arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
-+arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
-+arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
-+arm_common_ss.add(when: 'CONFIG_NPCM8XX', if_true: files('npcm8xx.c', 'npcm8xx_boards.c'))
-+arm_common_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
- arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
--arm_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
--arm_ss.add(when: 'CONFIG_STM32VLDISCOVERY', if_true: files('stm32vldiscovery.c'))
--arm_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xilinx_zynq.c'))
--arm_ss.add(when: 'CONFIG_SABRELITE', if_true: files('sabrelite.c'))
-+arm_common_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
-+arm_common_ss.add(when: 'CONFIG_STM32VLDISCOVERY', if_true: files('stm32vldiscovery.c'))
-+arm_common_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xilinx_zynq.c'))
-+arm_common_ss.add(when: 'CONFIG_SABRELITE', if_true: files('sabrelite.c'))
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index da8f5dd10c5..b488e6b7c0b 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -19,6 +19,4 @@
+ #ifndef CPU_ALL_H
+ #define CPU_ALL_H
  
--arm_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m.c'))
--arm_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210.c'))
--arm_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic.c'))
--arm_ss.add(when: 'CONFIG_OMAP', if_true: files('omap1.c'))
--arm_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubieboard.c'))
--arm_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
--arm_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
-+arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m.c'))
-+arm_common_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210.c'))
-+arm_common_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic.c'))
-+arm_common_ss.add(when: 'CONFIG_OMAP', if_true: files('omap1.c'))
-+arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubieboard.c'))
-+arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
-+arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
- arm_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2836.c', 'raspi.c'))
--arm_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
--arm_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
--arm_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
--arm_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
--arm_ss.add(when: 'CONFIG_B_L475E_IOT01A', if_true: files('b-l475e-iot01a.c'))
--arm_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_soc.c'))
--arm_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqmp.c', 'xlnx-zcu102.c'))
--arm_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal.c', 'xlnx-versal-virt.c'))
--arm_ss.add(when: 'CONFIG_FSL_IMX25', if_true: files('fsl-imx25.c', 'imx25_pdk.c'))
--arm_ss.add(when: 'CONFIG_FSL_IMX31', if_true: files('fsl-imx31.c', 'kzm.c'))
--arm_ss.add(when: 'CONFIG_FSL_IMX6', if_true: files('fsl-imx6.c'))
-+arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
-+arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
-+arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
-+arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
-+arm_common_ss.add(when: 'CONFIG_B_L475E_IOT01A', if_true: files('b-l475e-iot01a.c'))
-+arm_common_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_soc.c'))
-+arm_common_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqmp.c', 'xlnx-zcu102.c'))
-+arm_common_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal.c', 'xlnx-versal-virt.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX25', if_true: files('fsl-imx25.c', 'imx25_pdk.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX31', if_true: files('fsl-imx31.c', 'kzm.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX6', if_true: files('fsl-imx6.c'))
- arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed.c',
-   'aspeed_soc_common.c',
-@@ -47,33 +47,33 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
-   'fby35.c'))
--arm_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files('aspeed_ast27x0.c'))
--arm_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
--arm_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
--arm_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
--arm_ss.add(when: 'CONFIG_MUSCA', if_true: files('musca.c'))
--arm_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
--arm_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
--arm_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
--arm_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
--arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
--arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
--arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
-+arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files('aspeed_ast27x0.c'))
-+arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
-+arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
-+arm_common_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
-+arm_common_ss.add(when: 'CONFIG_MUSCA', if_true: files('musca.c'))
-+arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
-+arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
-+arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
- arm_ss.add(when: 'CONFIG_XEN', if_true: files(
-   'xen-stubs.c',
-   'xen-pvh.c',
- ))
+-#include "exec/cpu-common.h"
+-
+ #endif /* CPU_ALL_H */
+diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+index 82e67eff682..313100fcda1 100644
+--- a/include/exec/cpu_ldst.h
++++ b/include/exec/cpu_ldst.h
+@@ -66,6 +66,7 @@
+ #error Can only include this header with TCG
+ #endif
  
--system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
--system_ss.add(when: 'CONFIG_COLLIE', if_true: files('collie.c'))
--system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
--system_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
--system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
--system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_peripherals.c'))
--system_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
--system_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
--system_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
--system_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
-+arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
-+arm_common_ss.add(when: 'CONFIG_COLLIE', if_true: files('collie.c'))
-+arm_common_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
-+arm_common_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
-+arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
-+arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_peripherals.c'))
-+arm_common_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
-+arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
-+arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
-+arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
++#include "exec/cpu-common.h"
+ #include "exec/cpu-ldst-common.h"
+ #include "exec/cpu-mmu-index.h"
+ #include "exec/abi_ptr.h"
+diff --git a/target/alpha/cpu.h b/target/alpha/cpu.h
+index 42788a6a0bc..fb1d63527ef 100644
+--- a/target/alpha/cpu.h
++++ b/target/alpha/cpu.h
+@@ -21,6 +21,7 @@
+ #define ALPHA_CPU_H
  
- arm_common_ss.add(fdt, files('boot.c'))
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "qemu/cpu-float.h"
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 958a921490e..ee92476814c 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -24,6 +24,7 @@
+ #include "qemu/cpu-float.h"
+ #include "hw/registerfields.h"
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "exec/gdbstub.h"
+diff --git a/target/avr/cpu.h b/target/avr/cpu.h
+index 714c6821e2f..f56462912b9 100644
+--- a/target/avr/cpu.h
++++ b/target/avr/cpu.h
+@@ -22,6 +22,7 @@
+ #define QEMU_AVR_CPU_H
  
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ 
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index f78c8f9c2a0..e4fc35b112d 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -21,6 +21,7 @@
+ #include "fpu/softfloat-types.h"
+ 
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "hex_regs.h"
+ #include "mmvec/mmvec.h"
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 986dc655fc1..5b6cd2ae7fe 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -21,6 +21,7 @@
+ #define HPPA_CPU_H
+ 
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "system/memory.h"
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 64706bd6e5d..38ec99ee29c 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -23,6 +23,7 @@
+ #include "system/tcg.h"
+ #include "cpu-qom.h"
+ #include "kvm/hyperv-proto.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "exec/memop.h"
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 1dba8ac6a7c..167989ca7fe 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -9,6 +9,7 @@
+ #define LOONGARCH_CPU_H
+ 
+ #include "qemu/int128.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "fpu/softfloat-types.h"
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index 451644a05a3..5347fbe3975 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -21,6 +21,7 @@
+ #ifndef M68K_CPU_H
+ #define M68K_CPU_H
+ 
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "qemu/cpu-float.h"
+diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+index d29681abed4..90d820b90c7 100644
+--- a/target/microblaze/cpu.h
++++ b/target/microblaze/cpu.h
+@@ -21,6 +21,7 @@
+ #define MICROBLAZE_CPU_H
+ 
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "qemu/cpu-float.h"
+ #include "exec/cpu-interrupt.h"
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 29362498ec4..79f8041ced4 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -2,6 +2,7 @@
+ #define MIPS_CPU_H
+ 
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/openrisc/cpu.h b/target/openrisc/cpu.h
+index c153823b629..f16a070ef6c 100644
+--- a/target/openrisc/cpu.h
++++ b/target/openrisc/cpu.h
+@@ -21,6 +21,7 @@
+ #define OPENRISC_CPU_H
+ 
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "fpu/softfloat-types.h"
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index dd339907f1f..c6d52204d71 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -22,6 +22,7 @@
+ 
+ #include "qemu/int128.h"
+ #include "qemu/cpu-float.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "cpu-qom.h"
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index df37198897c..da0d35a19f6 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -23,6 +23,7 @@
+ #include "hw/core/cpu.h"
+ #include "hw/registerfields.h"
+ #include "hw/qdev-properties.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "exec/gdbstub.h"
+diff --git a/target/rx/cpu.h b/target/rx/cpu.h
+index 5f2fcb66563..e2ec78835e4 100644
+--- a/target/rx/cpu.h
++++ b/target/rx/cpu.h
+@@ -23,6 +23,7 @@
+ #include "hw/registerfields.h"
+ #include "cpu-qom.h"
+ 
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "qemu/cpu-float.h"
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index 0a32ad4c613..83d01d5c4e1 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -27,6 +27,7 @@
+ 
+ #include "cpu-qom.h"
+ #include "cpu_models.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "qemu/cpu-float.h"
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index 18557d8c386..7581f5eecb7 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -21,6 +21,7 @@
+ #define SH4_CPU_H
+ 
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "qemu/cpu-float.h"
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 923836f47c8..5dc5dc49475 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -3,6 +3,7 @@
+ 
+ #include "qemu/bswap.h"
+ #include "cpu-qom.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "qemu/cpu-float.h"
+diff --git a/target/tricore/cpu.h b/target/tricore/cpu.h
+index cf9dbc6df8e..abb9cba136d 100644
+--- a/target/tricore/cpu.h
++++ b/target/tricore/cpu.h
+@@ -22,6 +22,7 @@
+ 
+ #include "cpu-qom.h"
+ #include "hw/registerfields.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "qemu/cpu-float.h"
+ #include "tricore-defs.h"
+diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
+index 66846314786..c5d2042de14 100644
+--- a/target/xtensa/cpu.h
++++ b/target/xtensa/cpu.h
+@@ -30,6 +30,7 @@
+ 
+ #include "cpu-qom.h"
+ #include "qemu/cpu-float.h"
++#include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "hw/clock.h"
+diff --git a/cpu-target.c b/cpu-target.c
+index 587f24b34e5..52de33d50b0 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -23,6 +23,7 @@
+ #include "qemu/qemu-print.h"
+ #include "system/accel-ops.h"
+ #include "system/cpus.h"
++#include "exec/cpu-common.h"
+ #include "exec/tswap.h"
+ #include "exec/replay-core.h"
+ #include "exec/log.h"
 -- 
 2.39.5
 
