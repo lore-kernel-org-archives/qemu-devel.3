@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F03C35FFC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 842E6C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 03:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tv6UP-0001Hw-2K; Wed, 19 Mar 2025 23:22:37 -0400
+	id 1tv6UI-0001HW-MZ; Wed, 19 Mar 2025 23:22:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tv6U4-0001GF-MU
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 23:22:18 -0400
+ id 1tv6U2-0001G1-Jh
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 23:22:16 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tv6U0-0004wi-SV
- for qemu-devel@nongnu.org; Wed, 19 Mar 2025 23:22:15 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1tv6Tz-0004wk-29
+ for qemu-devel@nongnu.org; Wed, 19 Mar 2025 23:22:13 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxOGrdidtnJe+dAA--.5921S3;
- Thu, 20 Mar 2025 11:22:05 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxbeLeidtnKe+dAA--.32311S3;
+ Thu, 20 Mar 2025 11:22:06 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDx_MTWidtnEfVUAA--.47322S4;
+ by front1 (Coremail) with SMTP id qMiowMDx_MTWidtnEfVUAA--.47322S5;
  Thu, 20 Mar 2025 11:22:05 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
 	Markus Armbruster <armbru@redhat.com>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v5 2/6] hw/loongarch/virt: Fix error handling in cpu plug
-Date: Thu, 20 Mar 2025 11:21:54 +0800
-Message-Id: <20250320032158.1762751-3-maobibo@loongson.cn>
+Subject: [PATCH v5 3/6] hw/loongarch/virt: Fix error handling in cpu unplug
+Date: Thu, 20 Mar 2025 11:21:55 +0800
+Message-Id: <20250320032158.1762751-4-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250320032158.1762751-1-maobibo@loongson.cn>
 References: <20250320032158.1762751-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDx_MTWidtnEfVUAA--.47322S4
+X-CM-TRANSID: qMiowMDx_MTWidtnEfVUAA--.47322S5
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,66 +66,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In function virt_cpu_plug(), it will send cpu plug message to interrupt
-controller extioi and ipi irqchip. If there is problem in this function,
-system should continue to run and keep state the same before cpu is
-added.
+In function virt_cpu_unplug(), it will send cpu unplug message to
+interrupt controller extioi and ipi irqchip. If there is problem in
+this function, system should continue to run and keep state the same
+before cpu is removed.
 
-Object cpuslot::cpu is set at last only when there is no any error.
-If there is, send cpu unplug message to extioi and ipi irqchip, and then
-return immediately.
+If error happends in cpu unplug stage, send cpu plug message to extioi
+and ipi irqchip to restore to previous stage, and then return immediately.
 
-Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
+Fixes: 2cd6857f6f5b (hw/loongarch/virt: Implement cpu unplug interface)
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/loongarch/virt.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ hw/loongarch/virt.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a5840ff968..5118f01e4b 100644
+index 5118f01e4b..8dd5d88c31 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -981,8 +981,6 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
-     Error *err = NULL;
- 
--    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
--    cpu_slot->cpu = CPU(dev);
-     if (lvms->ipi) {
-         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
-         if (err) {
-@@ -995,6 +993,10 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
-         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
-         if (err) {
-             error_propagate(errp, err);
-+            if (lvms->ipi) {
-+                /* Send unplug message to restore, discard error here */
-+                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
-+            }
-             return;
-         }
-     }
-@@ -1003,9 +1005,20 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
-         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
-         if (err) {
-             error_propagate(errp, err);
-+            if (lvms->ipi) {
-+                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
-+            }
-+
-+            if (lvms->extioi) {
-+                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi),
-+                                       dev, NULL);
-+            }
-+            return;
-         }
+@@ -958,12 +958,16 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
+     if (err) {
+         error_propagate(errp, err);
++        /* Send plug message to restore, discard error here */
++        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
+         return;
      }
  
-+    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-+    cpu_slot->cpu = CPU(dev);
-     return;
- }
- 
+     /* Notify acpi ged CPU removed */
+     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
+     if (err) {
++        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, NULL);
++        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, NULL);
+         error_propagate(errp, err);
+         return;
+     }
 -- 
 2.39.3
 
