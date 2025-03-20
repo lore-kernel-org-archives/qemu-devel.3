@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD4BBC28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 22:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C826EC36000
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 22:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvOSQ-0006vJ-7d; Thu, 20 Mar 2025 18:33:46 -0400
+	id 1tvOSP-0006qr-KI; Thu, 20 Mar 2025 18:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvOPm-0002ah-FO
+ id 1tvOPn-0002cU-Rp
  for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:31:04 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvOPO-0007Bn-Ex
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:30:59 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2239c066347so30586965ad.2
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 15:30:35 -0700 (PDT)
+ id 1tvOPP-0007Cv-0Y
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 18:31:03 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-224019ad9edso32567205ad.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 15:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742509834; x=1743114634; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742509836; x=1743114636; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aUQD3Wdd1LujT1Sus7xanYZ7bZ9IH7iAgdXy0WNcaNg=;
- b=nbFQkTQ09JLbQTDgufOcVphuPbuzX+jiAQGVu2jxUTt3NOvpg0nAOoQRtdSTmH8Ty+
- G/hA+gUg5rnKCHUiZWkJttgTcJ6E5MOK1gJY92JPdsy2pPRPqLpfzlCGX98rf+7nTzu+
- XD53t1Kr70Je+DkWBz/qnXUUSUsfxqYmxqPw0HXDOpT1+lZJ4j94rTxAXvasw+2VFh4I
- SKUOFytbRs8Z0t1/GBKuaC+AOKNBn/cx1K67w1I7/+yRD7XguH2D8Pfx5CsDgV5l4hZ4
- hQxZu4UtDytksEAhFm4jI46bdxZ/KVKpPJIp15nUNg7BKSAgoT1n1ZyRjs+7S5L8KYoa
- 6ugA==
+ bh=fL3ZYVUJJ3Fd0+aNoGxPeRJrA53EVcQamm5mrQ+p0v0=;
+ b=qsxpKgNed01pLLo87NsSOszOC1dEfTVC0PHK+2Tf7K6B4dYgbNf6Ag85+dKBnSg82r
+ jOt/8T2Rp4as1pdrEWH45IkLhHde8hiiftKIAwWcUnXoFmXBYwm5zZMWLfqab8r4gbAd
+ iFO9imUfHJfLi30bu/cPE/xjEDMBVwg6lXbIkpOq3ISZlW1hbHKSjLMFSoiFXU8xkIeV
+ HekX7ofayg9laRFVaF+xb70Z/vYZvaKb1345wJZaWLVd9hrYxuRHJIunPPV4kwBI0SzB
+ atrsMz4cfFb4UjNq128dvy0Xy6UIPYi5PXkKNTsvOSFjjVhDCUIOXXVYbEyAnGYtIJ9X
+ EsBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742509834; x=1743114634;
+ d=1e100.net; s=20230601; t=1742509836; x=1743114636;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aUQD3Wdd1LujT1Sus7xanYZ7bZ9IH7iAgdXy0WNcaNg=;
- b=BF08mP2vhn4yEpH7ZuSiezEjWXutTeueQir7i/zGByqZ1TmzNITG0e7rDRUvM3QxLa
- aMQgRYXn0QeqQZpC1p/POdPFzBNd23v0GD9qeEosLXn1Fp7jaiaz2OXxAOPZNJZLcvJY
- 33Q8QYdjeVxGsxJEOvLyCMXti9Fkp6NNay9wQh5P55JRtElNkqEKHELC4N1KiLonakXx
- zjO+qxq1yM1DHoF6y4LWVt75MpB7ku0mM0noiXzd3AdC22Pq55iSPUe1GH3CtvVO0VcG
- juwqf7zxjvpLYK0Z+B8LRIoz2HuQK4LtAhZXkWnlKcC8ADI83J2G4In5ftr9a69sflmP
- C27g==
-X-Gm-Message-State: AOJu0YxmzXWXHbA3C2I3qZsx61/41j2RTpNYve+AQZ7iR9iXzcPhYv1J
- 0CbNTpt4mpFdiCg63yJk/Y8RmGwbBI76KldlV+5lkhcBznK+bnFaTvHK0IzAcjt0HC3yXsLTnMb
- x
-X-Gm-Gg: ASbGncuHS94pZiIFkyMOdO8nnuBMeOGz05lzc2+RVNijWTJhGhcP7+wqJt25E1JNbnH
- ORYEkXwhUjfwiKPRJBq+srJmLF4cLuMNTNEjOKz0ntdJ50khPjb7tztLq2XRjuR0x89+1SnTKX4
- gqYwr7yFC74ML7xcxWyvhHGOkY7tUDftkwou2A1+KXCi2Qto89VXrbjlQfKVM0H06LA2xoQKcWU
- 21YQUfspJ5Ce5zQ5OOYnYcnswGPew/TZOPam7ETW288zN6Mr0VA3U9fAWfd1ssLuDtW2EKVO+27
- BWcYYCjfRvTuVaKkzwYOzP16Zcf+RYB8WsMnD+HwiOKvvwhZ3u2Y6bI=
-X-Google-Smtp-Source: AGHT+IGlfrWg0bBEua+CzOZalX3WCoH9cy+wc/InKanm94Z9NrDL7g5YrDWENrVtS87EAmZz7TQInQ==
-X-Received: by 2002:a17:903:2284:b0:215:b473:1dc9 with SMTP id
- d9443c01a7336-22780e5ffb1mr15478685ad.46.1742509834560; 
- Thu, 20 Mar 2025 15:30:34 -0700 (PDT)
+ bh=fL3ZYVUJJ3Fd0+aNoGxPeRJrA53EVcQamm5mrQ+p0v0=;
+ b=WtbadwatLwPn5x/GoS6S3fYYa8zYzJ1uQFYkmldjTN0OSKnimGuwetOmzgoy63w/7W
+ izGE/YcG8laIBe0bHrb3cbti+FvxraGe4WUv5hBEf26y1axK9qBVrNrGEzUeydvh0Ira
+ roz2Kb+ijY+yPOpURRydBCwEofnO+5/FFbt7Wyv84IX45Vj6r9U7hPOuHSf1tR7tLCE9
+ ngBN3IVA4YAIuBuS6aldcikrNfMqWk4UmRy9PKf+MHw8qgDy5ftaBlyjXuPcYhI3akr9
+ BxzhXemU4kMYfP2iO63HRcZUteUaJ9FnTLUlyCHEClBnJczyBxXNeyNbPwYPEX0jLa7O
+ 7/IA==
+X-Gm-Message-State: AOJu0YyAA+G/vfjR7T8qC81chHWDihFKqlj3QA6utGVxDwY8rPVSTguS
+ qteOujiB1qNazxPYfAufPeIKcyRHlBaw0GSg3n7AXwMfEB1kOJe5LuBJtKRNBgzW+iZznutL5QA
+ P
+X-Gm-Gg: ASbGncsENRYLCdG1CjVlkK4vFiPQ83NkT0dnX2dd7Ao7n8tcnRIoVPW+l7s47L2qff9
+ nxUHiszdbTU3pxMDKtvEq0uctotfS7hWMDbdVrImLS5EkWXV/3vtS21K6bRhpYDZJfFbIBakJ7l
+ dyF1qs1EXCxktRIqajrhXU8T3uHHjKUCMO5rmiV8kfWsQR08sXZBeKsgScvmgJ32OXcTxaNgRtQ
+ YwdX0bRIE+Y7dQESdt7x41u4mTaZ9aT6SVd6qv/p7W+VYKmITEf3Jq6PJ2SisGJ2Ajmix6uj0NG
+ uOsRNv67XVF4x15HEb+DLHXHjrFQ+HG//UQ43kmx28ft
+X-Google-Smtp-Source: AGHT+IFSTCeT7YVoPbAHuUe991xoUWlgfGrS/bDdF4/Ez/lU2sHP5ScxJ+1FSK8cU5+QipVe/utZzg==
+X-Received: by 2002:a17:903:250:b0:223:635d:3e38 with SMTP id
+ d9443c01a7336-22780c76135mr18937465ad.15.1742509836244; 
+ Thu, 20 Mar 2025 15:30:36 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f4581csm3370145ad.59.2025.03.20.15.30.33
+ d9443c01a7336-22780f4581csm3370145ad.59.2025.03.20.15.30.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 15:30:34 -0700 (PDT)
+ Thu, 20 Mar 2025 15:30:35 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
@@ -72,17 +72,16 @@ Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 23/30] target/arm/cpu: remove inline stubs for aarch32
- emulation
-Date: Thu, 20 Mar 2025 15:29:55 -0700
-Message-Id: <20250320223002.2915728-24-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 25/30] hw/arm/boot: make compilation unit hw common
+Date: Thu, 20 Mar 2025 15:29:57 -0700
+Message-Id: <20250320223002.2915728-26-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
 References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,74 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly condition associated calls in target/arm/helper.c for now.
+Now we eliminated poisoned identifiers from headers, this file can now
+be compiled once for all arm targets.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu.h    | 8 --------
- target/arm/helper.c | 6 ++++++
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ hw/arm/boot.c      | 1 +
+ hw/arm/meson.build | 5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index b1c3e463267..c1a0faed3ad 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1222,7 +1222,6 @@ int arm_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
-  */
- void arm_emulate_firmware_reset(CPUState *cpustate, int target_el);
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index d3811b896fd..f94b940bc31 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -14,6 +14,7 @@
+ #include <libfdt.h>
+ #include "hw/arm/boot.h"
+ #include "hw/arm/linux-boot-if.h"
++#include "cpu.h"
+ #include "exec/target_page.h"
+ #include "system/kvm.h"
+ #include "system/tcg.h"
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index ac473ce7cda..9e8c96059eb 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -1,5 +1,5 @@
+ arm_ss = ss.source_set()
+-arm_ss.add(files('boot.c'))
++arm_common_ss = ss.source_set()
+ arm_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
+ arm_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+ arm_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
+@@ -75,4 +75,7 @@ system_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+ system_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+ system_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
  
--#ifdef TARGET_AARCH64
- int aarch64_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- int aarch64_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
- void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq);
-@@ -1254,13 +1253,6 @@ static inline uint64_t *sve_bswap64(uint64_t *dst, uint64_t *src, int nr)
- #endif
- }
- 
--#else
--static inline void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq) { }
--static inline void aarch64_sve_change_el(CPUARMState *env, int o,
--                                         int n, bool a)
--{ }
--#endif
--
- void aarch64_sync_32_to_64(CPUARMState *env);
- void aarch64_sync_64_to_32(CPUARMState *env);
- 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index fa23e309040..73e98532c03 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6564,7 +6564,9 @@ static void zcr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-      */
-     new_len = sve_vqm1_for_el(env, cur_el);
-     if (new_len < old_len) {
-+#ifdef TARGET_AARCH64
-         aarch64_sve_narrow_vq(env, new_len + 1);
-+#endif
-     }
- }
- 
-@@ -10648,7 +10650,9 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
-          * Note that new_el can never be 0.  If cur_el is 0, then
-          * el0_a64 is is_a64(), else el0_a64 is ignored.
-          */
-+#ifdef TARGET_AARCH64
-         aarch64_sve_change_el(env, cur_el, new_el, is_a64(env));
-+#endif
-     }
- 
-     if (cur_el < new_el) {
-@@ -11665,7 +11669,9 @@ void aarch64_sve_change_el(CPUARMState *env, int old_el,
- 
-     /* When changing vector length, clear inaccessible state.  */
-     if (new_len < old_len) {
-+#ifdef TARGET_AARCH64
-         aarch64_sve_narrow_vq(env, new_len + 1);
-+#endif
-     }
- }
- #endif
++arm_common_ss.add(fdt, files('boot.c'))
++
+ hw_arch += {'arm': arm_ss}
++hw_common_arch += {'arm': arm_common_ss}
 -- 
 2.39.5
 
