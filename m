@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18788C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 16:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BA6C35FFF
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 16:45:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvIrE-00005y-8a; Thu, 20 Mar 2025 12:35:00 -0400
+	id 1tvJ18-0002nA-3M; Thu, 20 Mar 2025 12:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1tvIrB-00005K-JJ
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:34:57 -0400
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tvJ16-0002lu-56
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:45:12 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1tvIr0-0007WQ-Gt
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:34:57 -0400
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tvJ13-0007dS-9L
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 12:45:11 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KCS74I031139
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 16:34:41 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KCRs9f030264;
+ Thu, 20 Mar 2025 16:45:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:reply-to:subject:to; s=pp1; bh=UIndsL9Auh5+YWWWQjK
- dUv1t4Cc9s0M+FoU8+wO8ab0=; b=YnQHGzclzB8NoQLDBbLVtxMMag0iUw5BHl5
- yDlPYjciXbhjfGpgniSzGOOYM/2gPel+igr6pkIdqyuJJE95V9LejheNdu6idADM
- 6wJTz9FULf8ggNEdMtku4Y9mTG1dch0CpB/Xh0gaJIV3LwnrKHEZTBCmb3Apg4Y8
- 9bSWSZImpRZDyNtCTMELQdJxbJ+QDGBTftjoBIbon0kpc8KoDzbbDGpW4U2SesHJ
- Yzg3wjO6x294PJ8bL/9QsbfkxFUFxqFQZolQVO1kscB9FB96hH3E3utTMMiE9gAZ
- rNgBSiJ5euE02UPi63ef6wkJmj1UskVeQ8EOvNHia0Mn0PuHiCg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gk21sdp7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 16:34:41 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52KGNwlJ027900
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 16:34:41 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gk21sdp4-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=CIjsnZ
+ T21re3bV6O2zojO9h0Tja7s11ZCEJt4cul/To=; b=hOQvEOaRAWzzAYGJvWrwz+
+ Gv1YphbowXoACrrJHHFkck1Rrn4poZ0o0vqUigVrSuWQ0VMFIpZ1HODzsBggWSoW
+ 95GIbINH36qRnuYk0FZimyH7Ou29WemCElbaKFSsDI+rp+cu+uCZoyBU41kzLGKL
+ OuJfGr0Bf8jUBWUXTfBXvOr89vvgWwJFLwdfjHcLdnhzWBibV3bIRcgJyDnPa2or
+ ACknLGo4tLGyG2jOeTge4v2xLNFxs0e7sJQkya+9VyCp6ypDjp1x0KgIfrE9SGi4
+ HDNdgrJG2Qn2LBaneNCU9sgnR26+QcQ3ravDplugDaXkNugABiR9YONfA68EKA9Q
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gk21sfrc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 16:34:41 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52KEUPBg031961;
- Thu, 20 Mar 2025 16:34:40 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45dkvts72x-1
+ Thu, 20 Mar 2025 16:45:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52KGSk7S005752;
+ Thu, 20 Mar 2025 16:45:03 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45dpk2rmfs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Mar 2025 16:34:40 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52KGYdei26608302
+ Thu, 20 Mar 2025 16:45:03 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52KGj35K20054750
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Mar 2025 16:34:39 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8CB8258055;
- Thu, 20 Mar 2025 16:34:39 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4C0B25804E;
- Thu, 20 Mar 2025 16:34:39 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Mar 2025 16:34:39 +0000 (GMT)
-Message-ID: <9d87fed729b2697605bcf5b6062669b6239e5c0f.camel@linux.ibm.com>
-Subject: Best practice for issuing blocking calls in response to an event
-From: Miles Glenn <milesg@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com
-Date: Thu, 20 Mar 2025 11:34:38 -0500
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+ Thu, 20 Mar 2025 16:45:03 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 332175805F;
+ Thu, 20 Mar 2025 16:45:03 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CF1FF5805D;
+ Thu, 20 Mar 2025 16:45:02 +0000 (GMT)
+Received: from [9.41.104.243] (unknown [9.41.104.243])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 20 Mar 2025 16:45:02 +0000 (GMT)
+Message-ID: <fa821773-225f-4e2b-8642-72d269802d96@linux.ibm.com>
+Date: Thu, 20 Mar 2025 11:45:02 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: VDPA MAC address problem
+Content-Language: en-US
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>,
+ eperezma <eperezma@redhat.com>
+References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
+ <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: e77NKd2ffri314GvKeuJTO7k7ntV4Y8Z
-X-Proofpoint-GUID: b3Z4I9pB0RcRVs-OV5tzXTG5XUNV4Dyh
+X-Proofpoint-ORIG-GUID: qs9aQ0Nvo30VEN2FGgeUevbm6Aj0KUUD
+X-Proofpoint-GUID: qs9aQ0Nvo30VEN2FGgeUevbm6Aj0KUUD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-20_04,2025-03-20_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  suspectscore=0 clxscore=1015
- bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0 mlxlogscore=999
+ bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0 mlxlogscore=800
  malwarescore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2503200104
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -111,55 +109,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 3/19/2025 19:58, Jason Wang wrote:
+> On Thu, Mar 20, 2025 at 12:34 AM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
+>> Upon reading this forum, I see that VHOST_VDPA_SET_CONFIG is
+>> “deprecated”, and so VIRTIO_NET_CTRL_MAC_ADDR_SET must be the right
+>> method, but it’s apparently called too late.
+> 
+> VHOST_VDPA_SET_CONFIG requires the vDPA parent support which is not
+> necessarily there.
 
-I am attempting to simulate a system with multiple CPU
-architectures.  To do this I am starting a unique QEMU process for each
-CPU architecture that is needed. I'm also developing some QEMU code
-that aids in transporting MMIO transactions across the process
-boundaries using sockets.
-
-The design takes MMIO request messages off of a socket, services the
-request by calling address_space_ldq_be(), then sends a response
-message (containing the requested data) over the same
-socket.  Currently, this is all done inside the socket IOReadHandler
-callback function.
-
-This works as long as the targeted register exists in the same QEMU
-process that received the request.  However, If the register exists in
-another QEMU process, then the call to address_space_ldq_be() results
-in another socket message being sent to that QEMU process, requesting
-the data, and then waiting (blocking) for the response message
-containing the data.  In other words, it ends up blocking inside the
-event handler and even though the QEMU process containing the target
-register was able to receive the request and send the response, the
-originator of the request is unable to receive the response until it
-eventually times out and stops blocking.  Once it times out and stops
-blocking, it does receive the response, but now it is too late.
-
-Here's a summary of the stack up to where the code blocks:
-
-IOReadHandler callback
-  calls address_space_ldq_be()
-    resolves to mmio read op of a remote device
-      sends request over socket and waits (blocks) for response
-
-So, I'm looking for a way to handle the work of calling
-address_space_ldq_be(), which might block when attempting to read a
-register of a remote device, without blocking inside the IOReadHandler
-callback context.
-
-I've done a lot of searches and reading about how to do this on the web
-and in the QEMU code but it's still not really clear to me how this
-should be done in QEMU.  I've seen a lot about using coroutines to
-handle cases like this. Is that what I should be using here?
-
-Thanks,
-
-Glenn Miles
+The mlx5 driver doesn't do anything for VHOST_VDPA_SET_CONFIG. Intel's 
+driver, however, apparently stores the configuration. So, it appears, 
+Intel will avoid the problem... Perhaps mlx5 could do the same so that 
+QEMU can set the address before it starts the VM (QEMU doesn't have to 
+later let the VM change the config). Conceptually, setting the address 
+by QEMU cmdline doesn't look different from setting it by "vdpa dev add".
 
 
