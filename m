@@ -4,71 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F48C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3554EC28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 07:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvA0r-0006zg-Hd; Thu, 20 Mar 2025 03:08:21 -0400
+	id 1tvA1y-0007ic-DB; Thu, 20 Mar 2025 03:09:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tvA0o-0006xY-Ia
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:08:18 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tvA0l-0006Ks-C6
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:08:18 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxWXHYvttnVSOeAA--.5147S3;
- Thu, 20 Mar 2025 15:08:08 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAxj8XVvttnVUBVAA--.52657S3;
- Thu, 20 Mar 2025 15:08:07 +0800 (CST)
-Subject: Re: [PATCH v5 0/6] target/loongarch: Fix some issues reported from
- coccinelle
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250320032158.1762751-1-maobibo@loongson.cn>
- <87plicgp8p.fsf@pond.sub.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <1c6f04f4-dcba-2f43-935f-0b189eb9ace8@loongson.cn>
-Date: Thu, 20 Mar 2025 15:07:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvA1m-0007aS-0q
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:09:20 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvA1k-0006Tw-18
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 03:09:17 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso2219995e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 00:09:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742454554; x=1743059354; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=p0WLjJlFUa5B3XVkqtixZuzuCE3gjB8V9d9wqEIT7mI=;
+ b=wwyFN3JNAPW61TjXhBKXNkJwxAH22KpBm+WV+UL30tiIkmiAGah+ys4xEFY33/m0/C
+ qDcKgTdK6UQ35pIk5aDSisqaM+39amMdvJKl7t+iUpYRuNmS6BZS55MR6rOuAobAtZ7g
+ TAhDx77KP2T0R11PgWfYg+xZBQRRplhO16jW8XXbFm2aCD/0AZ/rqVlrVlHqBX5l032J
+ hgrruCQnp0wC3f3eppH+U6JIdd1vvA6asI7+IiyvpiXoj5pxj39pZv3wfLQKo3S6kz+6
+ dOnwz/Emk/St0YunhoSVdV4TzXezzgEJg1gy5UeypV+jrLZXAl2f0ZdezmOFwYEX6ceg
+ pY/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742454554; x=1743059354;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=p0WLjJlFUa5B3XVkqtixZuzuCE3gjB8V9d9wqEIT7mI=;
+ b=Lxm+ryoVp/ztJ2bjqY+nALtpwurmn4hyNcgCqHcDt59cTjfrQorP5OKIMmVuKM18dG
+ wDPZFZjOng1CmPf2A0SYmlqUb6OWoyL4ctG/ZOtbaKsSiYC+a5qHyojTy2R6oNanWiyB
+ sNNjJzxoi65duLuEdU9yr+XR/q1qPE/X+5Cz7V/qXftIYKe4GMvLkBEP7ORhtpXsPoc1
+ 8pTG/DfXHRydpzs16QMtpee2k3WpMyOYUhmTBbBcNn1G7+VBNU14kIx0XB6RPl2ITWZH
+ /zuvVsnTnBKCds38QpQe5Tu7l6YaTuQFhk4XkK+vqdizrkVjIIIlZygy21S3xw9q9jFb
+ UMDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLFI611vK4QqbSm4K0fZJygN7lZPLHMzysGJefdJresn1BbwIiYntSKvay+tY+sI+Yjb5k775tL8eg@nongnu.org
+X-Gm-Message-State: AOJu0YyBi2TeprGmRkmvksIttKyRDG2l/oF20Fc36MIuDyChFytx7K3T
+ UfWJ0eAklepgJdqoToLessZ5bJC1u7k8MWfXNXWhu+UiPUVoygYkbkm94aCn1dgiQIs0q5n1MIR
+ 2
+X-Gm-Gg: ASbGnct3oJUT7G2C398WZgi4PCEKem4xaxAurtszVesDpAYsx3ouGIzLyWsGwls192T
+ r4JtmF0UwnPgGKu5qBlNSy2a03san4QLFgSDniJeVLhpyad2o3Rzb7Xqj3IoFOJ2D9QY19blPW7
+ Y1W7S6WPtj5/3kFXT5PsHQ5HR95MGXWlgBcyNpmFyH6ycstGLpQ+4HwPcQ3Q7TjRGPLoyxvpBpO
+ CcDeT+gUwbDjrzn2rCEXsv6AgabXkjhYRrLgp2LubL/dYeyIvto+rdyP1RBZRnNblE5xsQsOiLN
+ ATMo7jPMW1UXnmtljYRqgcvqcdpUCxylQ5MPSwC6yWF0mdiPCZid7kPfsTsvT833GM+iKJUp7E9
+ 8oSLK0S02FmcS
+X-Google-Smtp-Source: AGHT+IHsiLcx/k7ZdP9QfOhg5TgNH/YjasQHlID+mpeEdAHUYFcN/8PAgEK0sxi211VRJHaCquHdqw==
+X-Received: by 2002:a05:600c:c16:b0:43c:eeee:b70a with SMTP id
+ 5b1f17b1804b1-43d43815e66mr51154205e9.22.1742454554137; 
+ Thu, 20 Mar 2025 00:09:14 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d43f58a66sm39340265e9.20.2025.03.20.00.09.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Mar 2025 00:09:13 -0700 (PDT)
+Message-ID: <82e16c74-e60c-45b9-b269-a8d35d0b64d8@linaro.org>
+Date: Thu, 20 Mar 2025 08:09:12 +0100
 MIME-Version: 1.0
-In-Reply-To: <87plicgp8p.fsf@pond.sub.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/10] target/microblaze: convert gdbstub to new helper
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ qemu-ppc@nongnu.org, David Gibson <david@gibson.dropbear.id.au>,
+ qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
+ Greg Kurz <groug@kaod.org>, Nicholas Piggin <npiggin@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20250319182255.3096731-1-alex.bennee@linaro.org>
+ <20250319182255.3096731-11-alex.bennee@linaro.org>
 Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250319182255.3096731-11-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxj8XVvttnVUBVAA--.52657S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7JFWktr1fKr15uryrArW8AFc_yoWfCwcE9r
- 1ak3ZagrWDJw4Dta10vF1jvr1Duay7Cay8J3yFgr4fK34xAFs8GF4qvF93uF12qFZ7C3s5
- GFWkWan3Zw1jgosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUb3AYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0
- oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc02F4
- 0EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_
- Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbI
- xvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_
- Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
- AY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
- cVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
- IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
- Ja73UjIFyTuYvjxU20PSUUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -54
-X-Spam_score: -5.5
-X-Spam_bar: -----
-X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.598,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,31 +118,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/3/20 下午3:01, Markus Armbruster wrote:
-> Bibo Mao <maobibo@loongson.cn> writes:
+On 19/3/25 19:22, Alex Bennée wrote:
+> This is a pretty simple conversion which will be trivial to update
+> once TARGET_BIGENDIAN is replaced with a helper function.
 > 
->> This patch set solves errors reported by coccinelle tool with commands:
->>    spatch --sp-file scripts/coccinelle/*.cocci --dir target/loongarch/
->>    spatch --sp-file scripts/coccinelle/*.cocci --dir hw/loongarch/
->>
->> The main problem is that qemu should fail to run when feature is forced
->> to enabled however KVM does not support it, rather than report error and
->> continue to run.
->>
->> Also there is fixup for cpu plug and unplug. If there is error when cpu
->> is plug/unplug at runtime,  system should restore to previous state and
->> continue to run.
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   target/microblaze/gdbstub.c | 44 ++++++++++++++-----------------------
+>   1 file changed, 17 insertions(+), 27 deletions(-)
 > 
-> PACTH 2 and 3 are still being discussed.
-> 
-> Since I already have a few error-handling patches queued up, I'm queuing
-> the remainder of this series for 10.0.  Thanks!
-Sure, that is ok.
-And thanks for taking time to review this.
+> diff --git a/target/microblaze/gdbstub.c b/target/microblaze/gdbstub.c
+> index d493681d38..106d6efbab 100644
+> --- a/target/microblaze/gdbstub.c
+> +++ b/target/microblaze/gdbstub.c
+> @@ -19,7 +19,7 @@
+>    */
+>   #include "qemu/osdep.h"
+>   #include "cpu.h"
+> -#include "gdbstub/helpers.h"
+> +#include "gdbstub/registers.h"
+>   
+>   /*
+>    * GDB expects SREGs in the following order:
+> @@ -50,62 +50,52 @@ int mb_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+>   {
+>       MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+>       CPUMBState *env = &cpu->env;
+> -    uint32_t val;
+> +    MemOp mo = TARGET_BIG_ENDIAN ? MO_BEUL : MO_LEUL;
 
-Regards
-Bibo Mao
+Since commit 415aae543ed TARGET_BIG_ENDIAN isn't doing what you'd
+expect on microblaze, I think you want:
 
+        MemOp mo = mb_cpu_is_big_endian(cs) ? MO_BEUL : MO_LEUL;
+
+>   
+>       switch (n) {
+>       case 1 ... 31:
+> -        val = env->regs[n];
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->regs[n]);
+>       case GDB_PC:
+> -        val = env->pc;
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->pc);
+>       case GDB_MSR:
+> -        val = mb_cpu_read_msr(env);
+> -        break;
+> +        uint32_t msr = mb_cpu_read_msr(env);
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &msr);
+>       case GDB_EAR:
+> -        val = env->ear;
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->ear);
+>       case GDB_ESR:
+> -        val = env->esr;
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->esr);
+>       case GDB_FSR:
+> -        val = env->fsr;
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->fsr);
+>       case GDB_BTR:
+> -        val = env->btr;
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->btr);
+>       case GDB_PVR0 ... GDB_PVR11:
+>           /* PVR12 is intentionally skipped */
+> -        val = cpu->cfg.pvr_regs[n - GDB_PVR0];
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf,
+> +                                      (uint8_t *) &cpu->cfg.pvr_regs[n - GDB_PVR0]);
+>       case GDB_EDR:
+> -        val = env->edr;
+> -        break;
+> +        return gdb_get_register_value(mo, mem_buf, (uint8_t *) &env->edr);
+>       default:
+>           /* Other SRegs aren't modeled, so report a value of 0 */
+> -        val = 0;
+> -        break;
+> +        return 0;
+>       }
+> -    return gdb_get_reg32(mem_buf, val);
+>   }
 
