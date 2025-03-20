@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58822C28B30
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CFEC28B30
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Mar 2025 09:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvCSV-0007TL-4Z; Thu, 20 Mar 2025 05:45:03 -0400
+	id 1tvCUZ-0008PW-5Q; Thu, 20 Mar 2025 05:47:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1tvCSS-0007SN-VD
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:45:00 -0400
+ id 1tvCUI-0008Nk-6m
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:46:57 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1tvCSR-00030b-Pd
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:45:00 -0400
+ id 1tvCUG-0003Ju-Rh
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 05:46:53 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1tvCSQ-001hb7-Bd;
- Thu, 20 Mar 2025 09:44:58 +0000
-Date: Thu, 20 Mar 2025 09:44:58 +0000
+ (envelope-from <movement@movementarian.org>) id 1tvCUE-001heR-HW;
+ Thu, 20 Mar 2025 09:46:50 +0000
+Date: Thu, 20 Mar 2025 09:46:50 +0000
 From: John Levon <levon@movementarian.org>
 To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: Re: [PATCH for-10.1 21/32] vfio: Move vfio_kvm_device_fd() into
- helpers.c
-Message-ID: <Z9vjmhbryuclC2gt@movementarian.org>
+Subject: Re: [PATCH for-10.1 24/32] vfio: Introduce new files for dirty
+ tracking definitions and declarations
+Message-ID: <Z9vkCjASN9y0YPPK@movementarian.org>
 References: <20250318095415.670319-1-clg@redhat.com>
- <20250318095415.670319-22-clg@redhat.com>
+ <20250318095415.670319-25-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250318095415.670319-22-clg@redhat.com>
+In-Reply-To: <20250318095415.670319-25-clg@redhat.com>
 X-Url: http://www.movementarian.org/
 Received-SPF: pass client-ip=139.162.205.133;
  envelope-from=movement@movementarian.org; helo=movementarian.org
@@ -63,16 +63,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 10:54:04AM +0100, Cédric Le Goater wrote:
+On Tue, Mar 18, 2025 at 10:54:07AM +0100, Cédric Le Goater wrote:
 
-> The vfio_kvm_device_add/del_fd() routines opening the VFIO pseudo
-> device are defined in "helpers.c". Move 'vfio_kvm_device_fd'
-> definition there and its declaration into "helpers.h" to reduce
-> exposure of VFIO internals in "hw/vfio/vfio-common.h".
+> File "common.c" has been emptied of most of its definitions by the
+> previous changes and the only definitions left are related to dirty
+> tracking. Rename it to "dirty-tracking.c" and introduce its associated
+> "dirty-tracking.h" header file for the declarations.
+> 
+> Cleanup a little the includes while at it.
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 
-Reviewed-by: John Levon <john.levon@nutanix.com>
+> rename from hw/vfio/common.c
+> rename to hw/vfio/dirty-tracking.c
+> index ed2f2ed8839caaf40fabb0cbbcaa1df2c5b70d67..441f9d9a08c06a88dda44ef143dcee5f0a89a900 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/dirty-tracking.c
+> @@ -20,14 +20,10 @@
+
+I think you might want to update the file comment from "generic functions used
+by VFIO devices".
 
 regards
 john
