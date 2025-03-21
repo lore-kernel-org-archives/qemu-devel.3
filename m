@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27ACCC35FFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E91C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvVrH-0003R6-Ch; Fri, 21 Mar 2025 02:27:57 -0400
+	id 1tvVr2-0002d2-FB; Fri, 21 Mar 2025 02:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoq-0008Us-QM; Fri, 21 Mar 2025 02:25:28 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tvVoq-0008Uu-Rl; Fri, 21 Mar 2025 02:25:28 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoZ-000345-38; Fri, 21 Mar 2025 02:25:11 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22580c9ee0aso32598455ad.2; 
- Thu, 20 Mar 2025 23:25:03 -0700 (PDT)
+ id 1tvVoZ-00033Q-5y; Fri, 21 Mar 2025 02:25:10 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-225d66a4839so43025535ad.1; 
+ Thu, 20 Mar 2025 23:25:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742538302; x=1743143102; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742538299; x=1743143099; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e7DqV4tV/voUsRe6QWgdTDXfFT62jTytrnlFn7HzaIs=;
- b=C8y2CpyjqBCc1vvuKFXBsFD/PJ5ycJXIQ+Jvd2ED9VVM2h9KFphuQnplj+/ref+NyH
- Q2jTOc8f6PxeAswIsnhE8kFn0wUONOH+vvl23n41EZk8SCKhwMNYNRYvoxz+oWIVIdF3
- qGSgHW6N4DZ3I7BZS1IQoxQqQshVfUOMZriQkSkcq7lxtX8lGLpsrqapufZuPj79w+xD
- vcRYozV2/fZ7vCtEi4Z4+2bY1CEk4hCTyPDk6/91CN/MdLxxZGt9xBm8Udoh7s35wonr
- 3wXQ1zhR0UW8rU5F8hpOvZ73C5KrDBIDjQJNs90ObBSA14juPuEgzfPYJvbUq0Cyi9je
- Z6yA==
+ bh=IQz0IzfTSBf1SfVI6stCuKzL/l4PXUG7VWLq5owfvNU=;
+ b=BxghPGQSeskOj1I8Ua/arAYSKgR4cGF66kfmE9QhA0sr0w7PKYBV6yMbt+BqFgof56
+ ZdZfabVqZvPisDwwTnS0useZJBSV2zgS8pKmCaw5ZqqH0zBuv/XBxr2Krs5xSFbZ0bhr
+ gBmdP+GMrgUHZQwBwCLsorDKWSBfZ0/ordcSx67Twpm5xSKnD67S2TnOdIJb9rTDmN/+
+ +Blj/1v/x6gsd5xBkakuIj6mIULA0l1nELlCRuXVhYcaUMWo4+AdytSEd5MZwjxEgqMU
+ xq40g7SQJjK+Tp1eM8HrvsSB1/5ddVLsniTOQlAGR+7H56+oQGMP0v3XeYBbOwjICEE/
+ PVsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742538302; x=1743143102;
+ d=1e100.net; s=20230601; t=1742538299; x=1743143099;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e7DqV4tV/voUsRe6QWgdTDXfFT62jTytrnlFn7HzaIs=;
- b=wVWId6bao/ESWGD7R/flz0qTOnZvi8qvfsi7r5UGWCqJQbi/g9w69wDtGSetoT70Zp
- zqXp+5FGDZWlSi1bN/TMHQtJ4hI1MdVIRRa/CshFp2Io9y1VbUgGWckGV09msmvtgj43
- mQh+MMMxUdDn8MtFdlY9upWnz4Bd8ZjI7gLbnkwBUrQIgLg4KztSK4nfxsEe9Db+4Y4+
- sHiM/3/8qCwe700dM52p9hIQXVrR3ETO3StbVRuJB0Cr/Ur/rjS+Kvtw08ycmZH5cvt6
- XxKTe3ay6z1pokHZVFI+7X7yaUKXB2qlpLpbtZqXDGuFxMcTsypYnYBx3gkMgIGMcjZU
- /1SQ==
+ bh=IQz0IzfTSBf1SfVI6stCuKzL/l4PXUG7VWLq5owfvNU=;
+ b=lUPWl4OaeqE0XQ0gr8tOet+8lw9xEzdzaGFpqYVwCig8Gs2tZbanbSRA2Sbmx7rTAP
+ htivIUdaaWB9KqreKNkmEeiO5C3Eg7o1BbyOp25Ajiep1nbwjoG5DQGNT2h3TXIauv/3
+ nqXl/azEu7qPVtRvhzh5/+VTRIGOCjjtrwAVCDb8gJCGxznKOtbMUHEwJfHCaHnt9Zvq
+ JVIqD4TYXiyQtnN/tYmkr8r6BWRL7sdiyb32IChQrRQH60s0+GJTgl0tM2kVWdan2Y7A
+ 7GHMvNKrRr81ZWTcmJ8HWu4bLscQLGxeiUOM7AgCs1hL0vIWSpzThPojTUgmik5ewru7
+ ZXBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwHpwyclcV9Gy72PBu5ZM+51uewVFjsylY/aUISRUvuLIjkdEM+PMRk1bA4iDg6ZW8UnbyRqtiD/OB7Xg=@nongnu.org,
- AJvYcCWWnogKuNA3ZGmzmz+pfNbNGUIQcJ96s4H8IS6qKWFx1HcAuIh+np73/7fGdyu7wdI3i8nJY5z2YQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxzZaU61zNFaL2rTI7dovVU+ET/HSWmCy8l8bZu+O8XmduMi3u5
- /tpSioNpEBQPZgSd7nliAHEUc0asR4Fp2VMpzd2wY5n24+x3S07xJF1euQ==
-X-Gm-Gg: ASbGncuylApWYLE8VegbRsLy+mHUDFp2v5+KMfBiK4j26ZTu00cezIFMPfqg0jDBjqF
- V08bHcgBEoHjgqSb5CDJYcizCifIJ4ycNw9MjPqH6WXd4jyC+CL/NZrbdXIt07t15i7HVLK8Xiq
- l3FZ/Wr11SPPVBt9Mnz0xOAQ+L2LSIey4ywsUKT1lkBNUqiHISjQISpE+P8VfRwND7hdtEDPgc1
- 3/Y8GoAqW9btrLSFM9qLTCLi4p0njee60hE2MsEa9CRPGF7Dtq8HWuKnyDIomZEyDX6fP9U0gs3
- H8682VK3c6WbWhvJpOUSsab5nQdoWNiBWzk/fcAsdC7wIlJC5g==
-X-Google-Smtp-Source: AGHT+IGdLwwP+v4bVMmXG7zn9pCGOTBGiaziUN/j24uCJ5F1LwW29b5eEDovMAIy5qpW/j/J4JJiWQ==
-X-Received: by 2002:a05:6a21:9214:b0:1f5:8e04:f186 with SMTP id
- adf61e73a8af0-1fe4347d987mr4155579637.35.1742538302414; 
- Thu, 20 Mar 2025 23:25:02 -0700 (PDT)
+ AJvYcCWF+GUMqiSBVxES6w9dg/mDYaFMJywzJ7Cmr5xB29cgZz+vIK/67RhEjdVUeZY8tTJ7BiTAvdhWw43EmhM=@nongnu.org,
+ AJvYcCWvwPmCQy47mQXz+JFPLuhsCQaqC4w8gFCpSK2KDstfmWwZAXdfxXjqpOC6W8X4cGE0ZZbasIbgxw==@nongnu.org
+X-Gm-Message-State: AOJu0YzlpkHO6Df/bXoE5tUxQ99mGckO78awOVFKcAJuZ0AzbJMqK8tB
+ /0yat+gpKyP7uoFNaRN6tC2x1Mw2ACWK8Nny2NEI4f3Zvv3YPMEt8MAIEQ==
+X-Gm-Gg: ASbGncsGBActnLqnTKRN//AFlz1y9WCXQ56We7vZjU6MbXo0TjXgTSLH6ClrDw5LlFh
+ UVZOkNBiBS2hNpCgnzkHrWU87drwzSFoMW/vjAd+NnE2g5auSCs3ePNrL45hFOqeDrTnT6PTd2X
+ VDKZ/dQ9K9lcUq1RrfowLRYvLrJTK7Hf7r1OIro1b9ZxKsZ5H5J1C+fP3OOPDvEBLdC0kVKayLF
+ egHkZN29rE7eXVjsCZ2gYrDBO0OidW3payf0IGGjPtb0SwIALzDhlL1fmujgrv5FqgsX/sWs7rV
+ OpxVoBa9laR1UkFgRHPt9dMyRwUoyVsAcMKoae1AuSBzdCXdyg==
+X-Google-Smtp-Source: AGHT+IFBKszsiRLcCSTKnAe2L0Ejmbm9N2O2N/APTy53HBC3EIuf0PeIFteHj7DFu1OHKJM7tNEpBQ==
+X-Received: by 2002:a05:6a20:c886:b0:1db:822f:36d8 with SMTP id
+ adf61e73a8af0-1fe42770d03mr4292260637.3.1742538298915; 
+ Thu, 20 Mar 2025 23:24:58 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.135.36])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af8a2a4761fsm941381a12.65.2025.03.20.23.24.59
+ 41be03b00d2f7-af8a2a4761fsm941381a12.65.2025.03.20.23.24.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 23:25:02 -0700 (PDT)
+ Thu, 20 Mar 2025 23:24:58 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-stable@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 11/12] target/ppc: Fix facility interrupt checks for VSX
-Date: Fri, 21 Mar 2025 16:24:15 +1000
-Message-ID: <20250321062421.116129-12-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 10/12] ppc/spapr: fix default cpu for pre-9.0 machines.
+Date: Fri, 21 Mar 2025 16:24:14 +1000
+Message-ID: <20250321062421.116129-11-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250321062421.116129-1-npiggin@gmail.com>
 References: <20250321062421.116129-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,150 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Facility interrupt checks in general should come after the ISA version
-check, because the facility interrupt and facility type themselves are
-ISA dependent and should not appear on CPUs where the instruction does
-not exist at all.
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-This resolves a QEMU crash booting NetBSD/macppc due to
+When POWER10 CPU was made as default, we missed keeping POWER9 as
+default for older pseries releases (pre-9.0) at that time.
+This caused breakge in default cpu evaluation for older pseries
+machines and hence this fix.
 
-  qemu: fatal: Raised an exception without defined vector 94
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2741
-Cc: Chinmay Rath <rathc@linux.ibm.com>
+Fixes: 51113013f3 ("ppc/spapr: change pseries machine default to POWER10 CPU")
 Cc: qemu-stable@nongnu.org
-Debugged-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Fixes: aa0f34ec3fc7 ("target/ppc: implement vrlq")
-Fixes: 7419dc5b2b5b ("target/ppc: Move VSX vector storage access insns to decodetree.")
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250313094705.2361997-1-harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/translate/vmx-impl.c.inc |  2 +-
- target/ppc/translate/vsx-impl.c.inc | 20 ++++++++++----------
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ hw/ppc/spapr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-index 70d0ad2e71..92d6e8c603 100644
---- a/target/ppc/translate/vmx-impl.c.inc
-+++ b/target/ppc/translate/vmx-impl.c.inc
-@@ -994,8 +994,8 @@ static bool do_vector_rotl_quad(DisasContext *ctx, arg_VX *a, bool mask,
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 9865d7147f..b0a0f8c689 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4816,6 +4816,7 @@ static void spapr_machine_8_2_class_options(MachineClass *mc)
  {
-     TCGv_i64 ah, al, vrb, n, t0, t1, zero = tcg_constant_i64(0);
+     spapr_machine_9_0_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_8_2, hw_compat_8_2_len);
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
+ }
  
--    REQUIRE_VECTOR(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA310);
-+    REQUIRE_VECTOR(ctx);
- 
-     ah = tcg_temp_new_i64();
-     al = tcg_temp_new_i64();
-diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
-index a869f30e86..00ad57c628 100644
---- a/target/ppc/translate/vsx-impl.c.inc
-+++ b/target/ppc/translate/vsx-impl.c.inc
-@@ -61,8 +61,8 @@ static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
-     TCGv EA;
-     TCGv_i64 t0;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     t0 = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
-@@ -80,8 +80,8 @@ static bool trans_LXVW4X(DisasContext *ctx, arg_LXVW4X *a)
-     TCGv EA;
-     TCGv_i64 xth, xtl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     xth = tcg_temp_new_i64();
-     xtl = tcg_temp_new_i64();
-@@ -113,12 +113,12 @@ static bool trans_LXVWSX(DisasContext *ctx, arg_LXVWSX *a)
-     TCGv EA;
-     TCGv_i32 data;
- 
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-     if (a->rt < 32) {
-         REQUIRE_VSX(ctx);
-     } else {
-         REQUIRE_VECTOR(ctx);
-     }
--    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
-     gen_set_access_type(ctx, ACCESS_INT);
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-@@ -133,8 +133,8 @@ static bool trans_LXVDSX(DisasContext *ctx, arg_LXVDSX *a)
-     TCGv EA;
-     TCGv_i64 data;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     gen_set_access_type(ctx, ACCESS_INT);
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-@@ -185,8 +185,8 @@ static bool trans_LXVH8X(DisasContext *ctx, arg_LXVH8X *a)
-     TCGv EA;
-     TCGv_i64 xth, xtl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     xth = tcg_temp_new_i64();
-     xtl = tcg_temp_new_i64();
-@@ -208,8 +208,8 @@ static bool trans_LXVB16X(DisasContext *ctx, arg_LXVB16X *a)
-     TCGv EA;
-     TCGv_i128 data;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     data = tcg_temp_new_i128();
-     gen_set_access_type(ctx, ACCESS_INT);
-@@ -312,8 +312,8 @@ static bool trans_STXVD2X(DisasContext *ctx, arg_STXVD2X *a)
-     TCGv EA;
-     TCGv_i64 t0;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     t0 = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
-@@ -331,8 +331,8 @@ static bool trans_STXVW4X(DisasContext *ctx, arg_STXVW4X *a)
-     TCGv EA;
-     TCGv_i64 xsh, xsl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     xsh = tcg_temp_new_i64();
-     xsl = tcg_temp_new_i64();
-@@ -364,8 +364,8 @@ static bool trans_STXVH8X(DisasContext *ctx, arg_STXVH8X *a)
-     TCGv EA;
-     TCGv_i64 xsh, xsl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     xsh = tcg_temp_new_i64();
-     xsl = tcg_temp_new_i64();
-@@ -394,8 +394,8 @@ static bool trans_STXVB16X(DisasContext *ctx, arg_STXVB16X *a)
-     TCGv EA;
-     TCGv_i128 data;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     data = tcg_temp_new_i128();
-     gen_set_access_type(ctx, ACCESS_INT);
+ DEFINE_SPAPR_MACHINE(8, 2);
 -- 
 2.47.1
 
