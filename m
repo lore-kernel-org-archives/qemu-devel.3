@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 071A8C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 17:45:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A54C36005
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 17:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvgQg-0001e7-9s; Fri, 21 Mar 2025 13:45:12 -0400
+	id 1tvgRk-0002Re-HJ; Fri, 21 Mar 2025 13:46:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvgQE-0001J8-DM
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 13:44:47 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvgRK-0002MP-OR
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 13:45:51 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tvgQA-0006Kk-EN
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 13:44:41 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-301d6cbbd5bso3995280a91.3
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 10:44:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvgRI-0006fy-TN
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 13:45:50 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-ac25520a289so408486166b.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 10:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742579069; x=1743183869; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1742579147; x=1743183947; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GSy130gmSfXTr3mzJJIykDrva4YZMOUUArAaXfWj1sA=;
- b=RetvuKVJMJzu2POJCvVwjlP4JeJ75sqGI37I03ki7ANaMiBEw5FQFYZMQUwls+Hfxj
- +TTiQgGWbwSvsUYso+yUNsSNH+4GWW35sfj0aZ+9z7RZP8Q+x1hS5aJSA8Y9BKUkilJl
- W7ADj8wLZW+rHlaa8sUPLNAF2w+h2sI6CKM5Gax6UphFDZXylmUByJLiTPWnW1rvYMYH
- mPWSzSCl9UDSzF3tjdqHRWKkNNnWV82okdHAkR+7fpsnLPatZo6Xspw6R0V9Ikam9Ue7
- px+lx1Dl1xCVTyZUltzMF+b8KlxKRfuoXHF69OnYuq0+2Rd9vPGlw55wXZqwt8ZTfXVf
- IqPg==
+ bh=sI9t0i9ADPpZuJlZOU//Aqrmvdl9kCFaurXbu/j+ndM=;
+ b=v8A0gv6WwKPDObuIagfbdvhv1YcCvJyPzsGJoyPyar/pE+RStksGWeL07fx9xwXt+q
+ 8IHdVDjt/L3hfHIDcEQOBTBTKuc+ueUfWEkOVN/dAt73GRVH7X4X5kDRU4Igx5P0yiG1
+ 17T/7BRUfbTMnc44X9FQygb1zPxPmbDQ8XlBHc6AUMQ/VbogHS5tUNU9CbXg50YNq8tL
+ o2b45C7iEDkg3SA+NHeMlYjNSBEC7KrN1MdpRJOEBnL+aTAeOnI1SEgeFjTh1k6ryVJC
+ cddETQTj84skdmbtx4p55I9k+Gfu9JyvVwVE4rY0HlYdgjtuoVInZsaDCCbQCGmAuSt8
+ zNoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742579069; x=1743183869;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1742579147; x=1743183947;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GSy130gmSfXTr3mzJJIykDrva4YZMOUUArAaXfWj1sA=;
- b=vrlDS/D6jIqhoKYKImb3wgey8vKe/foE/7SbIAtjNq0IZdIX7ECSbOX7xW4cDK4haz
- cgL08iGE5fB1uuWaB06SvLvuI1ska7F6VyoVE4Kx3I+2+bzB09jDU8H7kKSejlvBW2P/
- O7tha4V5RAZkaICjP9Ufs0QpMKuLUOIuOGQJa3/8r2g3Gx6YlpRNW3yFKJ8PIv+WXte5
- 6u/GB2epL0FqelJxiStrkydZyVHXt/9Rng4VhGJOY8c6eZmVAlU5y6CyeS4XmYZpurOe
- UW/+XYnYhjhcTObabMj9dhHqye/bKwAO/0gQsnbCm9e0H/O+jWy2y78PT2Vdn+bwb1/S
- 3uDA==
+ bh=sI9t0i9ADPpZuJlZOU//Aqrmvdl9kCFaurXbu/j+ndM=;
+ b=pIeY961o4MhESU9VhD3qAKucGU6UfZSIbXDjrCkJBD4Q0u601i0I2rAu0CZQr96m8Y
+ IYaJ+Yhde1pY3yHt1cEcHbztGu2xJVpTk57hC19bVvUlgi5vsVHafMWdsK3LyBUBK6kN
+ jmtv24E6Xjrw+kK6Zx6fd1WJTc3ZMFwc2ahfTrTAXm12n88EqfKCti8oemtRxktzIJRB
+ 8ILTXvIwoBvtLcnqGfGNlJbXu1Qs3qTukN3L1csWdpIJhb9nxaVsDJQWO7UZ+QduqvGf
+ DSGfI/NYnd+/z9DxO8Pg+TB0OAnBfbhzqQLvmHMDmIzoOhNzFmAfk8F0VdCp5rGUTCqu
+ jP2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYHRUb78fLmkf/gYuLDh4nn/3MzchrBcWmY+gKqd9XYJHmTwLRemLm9LH7zRvTg9SrpmGeQThie8Gv@nongnu.org
-X-Gm-Message-State: AOJu0YzIBh/TkhpqnH/tEuP1OFVaEMOV6QUDXFs8d9Hwmy4tiv6KQp8b
- FbrI2r923a3qrI298SXvzH1U2dYSiD/Yl+b2jA9L9OEF1gZpWXDI140E0c356Lg=
-X-Gm-Gg: ASbGncuz0eF4adFjJDfj8UfFmqvfIPcWU8KJ5osC0ZoWhAEPvlGIvLVBr1I6VKpwvSd
- aSJo2+nPcSSo2oAAd5WNqrAgRVi1vsl71q+YChJJFE0vV4k/3HHeoCtIsk3KDTBEUPwPWI+XOcW
- vKPLPqdQzFxnfO9DW9TMWyky1H9auFG3mFsK4HmA9kV4EU5UlhUSkBewFL2SnAUZfPvs7dLg6b/
- JBQ6W1xqwuohAl0s9D2GdEcaWf6uZzRTuLrjMC5oJCBnr82M+Kn50N3sMe4b0Uh7B06cJaDYww6
- NxE5fgKJtj/7drtrzIRAh2vcfXe33W55ziXYr/MjqQj81UK58qiPPID8I9I=
-X-Google-Smtp-Source: AGHT+IFIu03/yX87yjk2Y5orWOkD85HLUZVR2F0fdtrtn45zMEM5RoF4BLzGoqIAqrCESGK13WFPDw==
-X-Received: by 2002:a17:90b:2d4c:b0:2ee:9e06:7db0 with SMTP id
- 98e67ed59e1d1-3030fe8dd62mr6566233a91.11.1742579069469; 
- Fri, 21 Mar 2025 10:44:29 -0700 (PDT)
-Received: from [172.16.224.217] ([209.53.90.26])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-301bf63716fsm6401462a91.47.2025.03.21.10.44.28
+ AJvYcCXkUutfyPtaBZnV4Xb9qRk2skemrlAuTGoiRT4rXx6nzxbZJI3pkTtyLBe618tGdMQSLaBwMbl0y8sB@nongnu.org
+X-Gm-Message-State: AOJu0YyWpYVptKx6HgulP6mWdwR5PsIiOEekCDzau+u67RAgEyM2FVYY
+ HCHbvYs1gJZCM2e0LjgspErcKb2yjtocW/lMIlPqSIgT0UzgES6AgQRXMo64Xbo2mnswOyZqXto
+ V
+X-Gm-Gg: ASbGncu7zY8OzyklvgfMt1/y+XZ1viZvPacGcFKOOuVCgGI+8MoZdkF2IO/gY+h8JsN
+ kqSu4WEzcyAZVZhYPqGSsKEo0vw06nfRQ18zJ75HY91RtLXaHnEm1+Xcdcz4vYVkSv2L96uHipU
+ pgleGV8QCmt35BezG7tRhDBMbIWAbA8vkzATXYmJzHG3o98ImMdvEatVR6OLcbMwFbJhuq63uco
+ YSWFJfpboxc8GtMYDkGvv6dn2qH4NojtUWsz7h2YQ7u4mpB0eTmjqp64BEBfkpVaWgTKph5LRUR
+ 3EX5rh9Q1IDZ3nx+YVvS/rl+lvR5aYL5ZwFWT9SsoYwtmsQ+Oj9xDF6feP0yv4W25C26dASvpzl
+ 6mGVFjwORhQds
+X-Google-Smtp-Source: AGHT+IEwaQWFzZ7GBCribKNyD1ni02/yLz/JKTJKOdpsm1F9h2yXOz52K0900jDEx6K3G8un+0hL4A==
+X-Received: by 2002:a17:906:fe48:b0:ac3:154e:1386 with SMTP id
+ a640c23a62f3a-ac3f2087e96mr414367066b.6.1742579146977; 
+ Fri, 21 Mar 2025 10:45:46 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac3ef86e529sm188907866b.21.2025.03.21.10.45.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Mar 2025 10:44:29 -0700 (PDT)
-Message-ID: <a0d8b695-5e8d-4eaf-8395-383347de3fa6@linaro.org>
-Date: Fri, 21 Mar 2025 10:44:28 -0700
+ Fri, 21 Mar 2025 10:45:46 -0700 (PDT)
+Message-ID: <486d1a0a-3822-4106-920f-3173bd5f8818@linaro.org>
+Date: Fri, 21 Mar 2025 18:45:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 2/4] tcg: Simplify tcg_req_mo() macro
+Subject: Re: [PATCH-for-10.1 3/4] tcg: Convert TCGState::mttcg_enabled to
+ TriState
+To: Anton Johansson <anjo@rev.ng>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250321155925.96626-1-philmd@linaro.org>
+ <20250321155925.96626-4-philmd@linaro.org>
+ <3woeoqgwnmksex36kytsasvlidqoviyogmbjjko4e5mlrnureo@3bdqaducdkjs>
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
-References: <20250321125737.72839-1-philmd@linaro.org>
- <20250321125737.72839-3-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250321125737.72839-3-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <3woeoqgwnmksex36kytsasvlidqoviyogmbjjko4e5mlrnureo@3bdqaducdkjs>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,37 +107,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8yMS8yNSAwNTo1NywgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE5v
-dyB0aGF0IFRDR19HVUVTVF9ERUZBVUxUX01PIGlzIGFsd2F5cyBkZWZpbmVkLA0KPiBzaW1w
-bGlmeSB0aGUgdGNnX3JlcV9tbygpIG1hY3JvLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUGhp
-bGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPiAtLS0NCj4gICBh
-Y2NlbC90Y2cvaW50ZXJuYWwtdGFyZ2V0LmggfCA5ICstLS0tLS0tLQ0KPiAgIGFjY2VsL3Rj
-Zy90Y2ctYWxsLmMgICAgICAgICB8IDMgLS0tDQo+ICAgMiBmaWxlcyBjaGFuZ2VkLCAxIGlu
-c2VydGlvbigrKSwgMTEgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvYWNjZWwv
-dGNnL2ludGVybmFsLXRhcmdldC5oIGIvYWNjZWwvdGNnL2ludGVybmFsLXRhcmdldC5oDQo+
-IGluZGV4IDJjZGYxMWM5MDVlLi4xY2IzNWRiYTk5ZSAxMDA2NDQNCj4gLS0tIGEvYWNjZWwv
-dGNnL2ludGVybmFsLXRhcmdldC5oDQo+ICsrKyBiL2FjY2VsL3RjZy9pbnRlcm5hbC10YXJn
-ZXQuaA0KPiBAQCAtNTAsMTcgKzUwLDEwIEBAIEdfTk9SRVRVUk4gdm9pZCBjcHVfaW9fcmVj
-b21waWxlKENQVVN0YXRlICpjcHUsIHVpbnRwdHJfdCByZXRhZGRyKTsNCj4gICAgKiBtZW1v
-cnkgb3JkZXJpbmcgdnMgdGhlIGhvc3QgbWVtb3J5IG9yZGVyaW5nLiAgQSBub24temVybw0K
-PiAgICAqIHJlc3VsdCBpbmRpY2F0ZXMgdGhhdCBzb21lIGJhcnJpZXIgaXMgcmVxdWlyZWQu
-DQo+ICAgICoNCj4gLSAqIElmIFRDR19HVUVTVF9ERUZBVUxUX01PIGlzIG5vdCBkZWZpbmVk
-LCBhc3N1bWUgdGhhdCB0aGUNCj4gLSAqIGd1ZXN0IHJlcXVpcmVzIHN0cmljdCBvcmRlcmlu
-Zy4NCj4gLSAqDQo+ICAgICogVGhpcyBpcyBhIG1hY3JvIHNvIHRoYXQgaXQncyBjb25zdGFu
-dCBldmVuIHdpdGhvdXQgb3B0aW1pemF0aW9uLg0KPiAgICAqLw0KPiAtI2lmZGVmIFRDR19H
-VUVTVF9ERUZBVUxUX01PDQo+IC0jIGRlZmluZSB0Y2dfcmVxX21vKHR5cGUpIFwNCj4gKyNk
-ZWZpbmUgdGNnX3JlcV9tbyh0eXBlKSBcDQo+ICAgICAgICgodHlwZSkgJiBUQ0dfR1VFU1Rf
-REVGQVVMVF9NTyAmIH5UQ0dfVEFSR0VUX0RFRkFVTFRfTU8pDQo+IC0jZWxzZQ0KPiAtIyBk
-ZWZpbmUgdGNnX3JlcV9tbyh0eXBlKSAoKHR5cGUpICYgflRDR19UQVJHRVRfREVGQVVMVF9N
-TykNCj4gLSNlbmRpZg0KPiAgIA0KPiAgIC8qKg0KPiAgICAqIGNwdV9yZXFfbW86DQo+IGRp
-ZmYgLS1naXQgYS9hY2NlbC90Y2cvdGNnLWFsbC5jIGIvYWNjZWwvdGNnL3RjZy1hbGwuYw0K
-PiBpbmRleCBjMWEzMGIwMTIxOS4uY2I2MzJjYzhjYzcgMTAwNjQ0DQo+IC0tLSBhL2FjY2Vs
-L3RjZy90Y2ctYWxsLmMNCj4gKysrIGIvYWNjZWwvdGNnL3RjZy1hbGwuYw0KPiBAQCAtNzcs
-OSArNzcsNiBAQCBzdGF0aWMgYm9vbCBkZWZhdWx0X210dGNnX2VuYWJsZWQodm9pZCkNCj4g
-ICAgICAgICAgIHJldHVybiBmYWxzZTsNCj4gICAgICAgfQ0KPiAgICNpZmRlZiBUQVJHRVRf
-U1VQUE9SVFNfTVRUQ0cNCj4gLSMgaWZuZGVmIFRDR19HVUVTVF9ERUZBVUxUX01PDQo+IC0j
-ICBlcnJvciAiVEFSR0VUX1NVUFBPUlRTX01UVENHIHdpdGhvdXQgVENHX0dVRVNUX0RFRkFV
-TFRfTU8iDQo+IC0jIGVuZGlmDQo+ICAgICAgIHJldHVybiB0cnVlOw0KPiAgICNlbHNlDQo+
-ICAgICAgIHJldHVybiBmYWxzZTsNCg0KUmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIg
-PHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCg0K
+On 21/3/25 18:01, Anton Johansson wrote:
+> On 21/03/25, Philippe Mathieu-Daudé wrote:
+>> Use the OnOffAuto type as 3-state.
+>>
+>> Since the TCGState instance is zero-initialized, the
+>> mttcg_enabled is initialzed as AUTO (ON_OFF_AUTO_AUTO).
+>>
+>> In tcg_init_machine(), if mttcg_enabled is still AUTO,
+>> set a default value (effectively inlining the
+>> default_mttcg_enabled() method content).
+>>
+>> Instead of emiting a warning when the 'thread' property
+>> is set in tcg_set_thread(), emit it in tcg_init_machine()
+>> where it is consumed.
+>>
+>> In the tcg_get_thread() getter, consider AUTO / OFF states
+>> as "single", otherwise ON is "multi".
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   accel/tcg/tcg-all.c | 68 ++++++++++++++++++++++-----------------------
+>>   1 file changed, 33 insertions(+), 35 deletions(-)
+>>
+>> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+>> index d75ecf531b6..2b7f89eaa20 100644
+>> --- a/accel/tcg/tcg-all.c
+>> +++ b/accel/tcg/tcg-all.c
+>> @@ -32,6 +32,7 @@
+>>   #include "qemu/error-report.h"
+>>   #include "qemu/accel.h"
+>>   #include "qemu/atomic.h"
+>> +#include "qapi/qapi-types-common.h"
+>>   #include "qapi/qapi-builtin-visit.h"
+>>   #include "qemu/units.h"
+>>   #if defined(CONFIG_USER_ONLY)
+>> @@ -47,7 +48,7 @@
+>>   struct TCGState {
+>>       AccelState parent_obj;
+>>   
+>> -    bool mttcg_enabled;
+>> +    OnOffAuto mttcg_enabled;
+>>       bool one_insn_per_tb;
+>>       int splitwx_enabled;
+>>       unsigned long tb_size;
+
+
+>> -/*
+>> - * We default to false if we know other options have been enabled
+>> - * which are currently incompatible with MTTCG. Otherwise when each
+>> - * guest (target) has been updated to support:
+>> - *   - atomic instructions
+>> - *   - memory ordering primitives (barriers)
+>> - * they can set the appropriate CONFIG flags in ${target}-softmmu.mak
+>> - *
+>> - * Once a guest architecture has been converted to the new primitives
+>> - * there is one remaining limitation to check:
+>> - *   - The guest can't be oversized (e.g. 64 bit guest on 32 bit host)
+>> - */
+>> -
+>> -static bool default_mttcg_enabled(void)
+>> -{
+>> -    if (icount_enabled()) {
+>> -        return false;
+>> -    }
+>> -#ifdef TARGET_SUPPORTS_MTTCG
+>> -    return true;
+>> -#else
+>> -    return false;
+>> -#endif
+>> -}
+>> -
+>>   static void tcg_accel_instance_init(Object *obj)
+>>   {
+>>       TCGState *s = TCG_STATE(obj);
+>>   
+>> -    s->mttcg_enabled = default_mttcg_enabled();
+>> -
+>>       /* If debugging enabled, default "auto on", otherwise off. */
+>>   #if defined(CONFIG_DEBUG_TCG) && !defined(CONFIG_USER_ONLY)
+>>       s->splitwx_enabled = -1;
+>> @@ -117,9 +91,37 @@ static int tcg_init_machine(MachineState *ms)
+>>   #else
+>>       unsigned max_cpus = ms->smp.max_cpus;
+>>   #endif
+>> +#ifdef TARGET_SUPPORTS_MTTCG
+>> +    bool mttcg_supported = true;
+>> +#else
+>> +    bool mttcg_supported = false;
+>> +#endif
+>>   
+>>       tcg_allowed = true;
+>>       mttcg_enabled = s->mttcg_enabled;
+>> +    if (mttcg_enabled == ON_OFF_AUTO_AUTO) {
+>> +        /*
+>> +         * We default to false if we know other options have been enabled
+>> +         * which are currently incompatible with MTTCG. Otherwise when each
+>> +         * guest (target) has been updated to support:
+>> +         *   - atomic instructions
+>> +         *   - memory ordering primitives (barriers)
+>> +         * they can set the appropriate CONFIG flags in ${target}-softmmu.mak
+>> +         *
+>> +         * Once a guest architecture has been converted to the new primitives
+>> +         * there is one remaining limitation to check:
+>> +         *   - The guest can't be oversized (e.g. 64 bit guest on 32 bit host)
+>> +         */
+>> +        if (icount_enabled()) {
+>> +            mttcg_enabled = ON_OFF_AUTO_OFF;
+>> +        } else {
+>> +            mttcg_enabled = mttcg_supported;
+>> +        }
+>> +    }
+>> +    if (mttcg_enabled == ON_OFF_AUTO_ON && !mttcg_supported) {
+>> +        warn_report("Guest not yet converted to MTTCG - "
+>> +                    "you may get unexpected results");
+>> +    }
+> 
+> [...]
+> 
+>>   
+>>   static void tcg_set_thread(Object *obj, const char *value, Error **errp)
+>> @@ -155,14 +157,10 @@ static void tcg_set_thread(Object *obj, const char *value, Error **errp)
+>>           if (icount_enabled()) {
+>>               error_setg(errp, "No MTTCG when icount is enabled");
+>>           } else {
+>> -#ifndef TARGET_SUPPORTS_MTTCG
+>> -            warn_report("Guest not yet converted to MTTCG - "
+>> -                        "you may get unexpected results");
+>> -#endif
+> 
+> Patch itself looks good!  My only concern is moving the warning, would
+> it be worthwhile to have a mttcg_supported field in TCGState as well?
+> I.e in a heterogeneous setup it would correspond to wether or not all
+> targets support mttcg.
+
+OK, I'll update s->mttcg_enabled then.
+
+> 
+> Otherwise:
+> 
+> Reviewed-by: Anton Johansson <anjo@rev.ng>
+
+Thanks!
 
