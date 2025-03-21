@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07843C35FFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 00:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E04C28B30
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 00:50:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvQZe-0003lr-Ty; Thu, 20 Mar 2025 20:49:22 -0400
+	id 1tvQaq-00048G-8N; Thu, 20 Mar 2025 20:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tvQZN-0003jW-8Z
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 20:49:14 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tvQaU-00040i-KJ
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 20:50:16 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tvQZL-0006pw-K6
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 20:49:04 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-22435603572so26721775ad.1
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 17:49:02 -0700 (PDT)
+ id 1tvQaS-0007VN-JM
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 20:50:14 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-301e05b90caso1877831a91.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 17:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742518141; x=1743122941; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742518211; x=1743123011; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=F1GjdiALWwLM23BW5wPruQzlNkE+LXjd0xuD3PbPTrw=;
- b=tz5wpFgH7tvb4zy9lmfSOH8bOazQqgdTqInTzbZP/z78X6FEC6LuDMgG9oaghivitP
- Pxjl4Rfg73O/36uj1m7hM9SGheHV8Y2TZVGhRBKSNT79cvQVHHDf4zcCxu5rPi1Bd1Tr
- egiZl1BSV0X7Yyzi/qUQs4zxgzHLLed1lLc1XScjd5oHIl2iaZ02XxmVou6yylsaKGgB
- V8GEP4MU17dHLa+LoF13kwNrCdZgAUtgaD/bD6Jyle4d54rE14H+j1MR5DgT0n/r1g7d
- MdqS0/TntOj40NGtMcEpRjGqv62wQgqPyT0Bh9v+zwHuILecsDvY4ju8j45pbuPzna5p
- lKug==
+ bh=WlpucwqrWLhmkeVrq5z9j4pA1n+K9Rp52DNyUDkh7kg=;
+ b=kiy/JfJj4g6cVTExj12VecGIq+/e47LqvY/CWX1X3xrxS/MFaMEGHBx4ZNlTaNeYD2
+ +JGSWr26wlM7KVAT2yClIj4bnDoIC9XNoJMv51dRDZl3XGIxqhEbbkKvjZ5AKwtLZJvZ
+ 4TLgSV1Ql/r86hRWjtU20h7BXMUkq/mvLJR5HOZ7bsPpqOuplDl5jjC8JKD0nOnRT0w5
+ p8qL+b7z64ypp0FtASbMVd4aFMayd4JxbnT1qWlI0AIeAE7r2RrZt/H9PJg6tiLGSCOY
+ 5FmUgLHzYao4pxB9lX9gIFmpyXKcxOTfbzDAjbtz5ctVD7JiZV952WExW/eYj5TMEvvp
+ ccdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742518141; x=1743122941;
+ d=1e100.net; s=20230601; t=1742518211; x=1743123011;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F1GjdiALWwLM23BW5wPruQzlNkE+LXjd0xuD3PbPTrw=;
- b=jpv5EQxVM901kn9Mn217EtFwcnit7fJ+UNgu7I2WfMMXyUMJYJBHo+w9n7M09N3nKy
- 0fG6jRvfv0NNOEp5cYoP5s0GFCeSCzKDnQcof9Nq62eZxoLhpi+Fli9ha5VJvp9cmh4/
- Y3u4SWAChF28jovAFi+yfClZWv9Op7pvTEhvRHQLqLKhsAtCW9Uku1GvHYSLsOlYK6+d
- NJUTNrQMNktdEOR+QSZkaRdN8vyjkeoUhKoCL4+SA4498Gz1lT90D01J0S2u0cSOuzpd
- xt0GSeSOt9M8Hr1zI4uivS/CC+3Yr+Jp8WukoUH27n9R39hFKShlkSJwdJVwVA8ygjok
- /C4A==
+ bh=WlpucwqrWLhmkeVrq5z9j4pA1n+K9Rp52DNyUDkh7kg=;
+ b=QGFV+cLNbNOsoVJROk53MFpvJBBOrDYUlqG6C9FxXkJP4GOe1qFQ5eVgRRGy+Qa5Zx
+ aCoaiqQ32VO7lkXtzNqqxSrHYD1Dvxoi+3wtGruRPJJfRZaaS9kPwCoHbhcpqiAsMsAH
+ a5pvuvTHmfdMHoNAHQu0AAkIXadmwaMbR+k1mJr8efZA9/7rYCCQQfZM+3qR/9fXvuqn
+ qm0ScPV2aiYw04kfNLARpaYXiFhDmIRpytVBEAIGJsS0189Tzel4WfSSAEkqjfgZR5V1
+ u53AgKPx3qaAoWcLMNPzeLY1995ukT6490Q7vNtBpWAmX5lDI9VGLKtTGvnX6U+DURSy
+ y+2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWtBzr1OurLk37IGumJaba14XSWL/VHwtaFCbkavAh9HvCBTiepRyegy8XGCnOR+b5D4CvBpKQ45DLx@nongnu.org
-X-Gm-Message-State: AOJu0YwvOY5WSi31rysN/BiGJbr77N/XRxbtUvfZzd/JXg6R4AIbmqz/
- 23UY1Dkh9njZuRxoHStVEK/3rddvDWG5eV4Q7sRoQVhRKAREPvpdiutCr/uZb08=
-X-Gm-Gg: ASbGncshfxxu8Yf0TMxIv+HJRGLlzNiFnyRl3/t6SzFUkwQiOHcdsbgTDKEqCnutAAu
- n38YkdMzd7ZZjnTQ4MFG5/P55+42QKuW2GgFJHwQYTNy7dSK7oZDBuYoOZMibzxYedNdyUxH9jh
- vdWIKDGtmQdWNNmVyokqFPZfLcwx5TbFk09jfC+kvLzs9oL8qTU/31WSoJBtiEjmB+uSotOvyLe
- O4BJ3dxPpvtGOVRCTOxsiGdkW03WQ4n1i3lD5kulx4wmWvtkuWLHrhOKOmHPWf9i/n+cNz17XTU
- /I2eAq+uAApINe+bWrYIo4fN81tLyHmBfQ/AaYEXf8s5Nv4MbTINbptku9b+dEqqjuKKZYEhRs7
- H6sU10yoR
-X-Google-Smtp-Source: AGHT+IHF7glLrb83Huy380tNR0azGLpyl8GXDobSLLnDta04yzWiv9zmypTg09YJA7jwsvBONI8nUw==
-X-Received: by 2002:a17:903:18c:b0:223:4816:3e9e with SMTP id
- d9443c01a7336-22780c7a8e9mr15388355ad.13.1742518140744; 
- Thu, 20 Mar 2025 17:49:00 -0700 (PDT)
+ AJvYcCWR2Nv6N5UuFW22FBXdll9k+JaLRlIMU4NqLDhPQRs1FeOsG8dDfksBr2ZlphQlAULqczNOp/fGNF+S@nongnu.org
+X-Gm-Message-State: AOJu0YwMsYnsroGkNWmi68h8JfIu+M8rE7/US9jQ+KDLJ651ou7Vk/6C
+ zJ0DGs9YV5qlxUKCCDuXOwKubyalu/iozH/qkxQ5vGQ5nsKaETfD1u/uX7dXs4E=
+X-Gm-Gg: ASbGncspMY1B3Czqvi/JoE2svEt579lZ6Lqb/2jJ4YkPN64NAqR5eb3Zt4727DLdlAM
+ cGXvXX03zwihdWnyhV3WfgAGFzfqod7p3KzK1TbcI4e/ceYcx/xIy0Qk82wfAW7gsPDkRnYTubc
+ lSu9w4pvrOdB7x6etoJRDs7M6ad0BnevI5QYQQ3JLjHNCZJt9nHkF5rJluDs/pGyIXcl0voTvlh
+ TmTdqKeypOjm2IAe2J2286JX/qvbE8Dp/Kt+PhNGkNPOR7wvgKICKScY8o9Zkn35NMjj3Vh9zJ9
+ Xe/7cerRZ4CzxopBazx9jpHgB7TrqyOdFODYbd5jcwJNjq0/js8sGzZ8a5WzZlpL/MNB+F0p0Fd
+ Ri2g4yveB
+X-Google-Smtp-Source: AGHT+IHDcaFbTBT2zgwH36BimJVgUxz4fIKVLX6wM6NL/cr4XXsZikSbRGijqrReIgIwaYUZccWraw==
+X-Received: by 2002:a17:90b:582d:b0:2ff:7cb8:6eca with SMTP id
+ 98e67ed59e1d1-3030fef41e2mr2087310a91.24.1742518210765; 
+ Thu, 20 Mar 2025 17:50:10 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f4579asm4553645ad.60.2025.03.20.17.48.59
+ 98e67ed59e1d1-301bf576c65sm4656680a91.10.2025.03.20.17.50.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 17:49:00 -0700 (PDT)
-Message-ID: <0d51b754-14bf-4a05-864e-0e3e7e5be2cd@linaro.org>
-Date: Thu, 20 Mar 2025 17:48:58 -0700
+ Thu, 20 Mar 2025 17:50:10 -0700 (PDT)
+Message-ID: <9a94450f-15b8-49d1-bb41-a298dd22473b@linaro.org>
+Date: Thu, 20 Mar 2025 17:50:08 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/42] accel/tcg: Use cpu_ld*_code_mmu in translator.c
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org
+Subject: Re: [PATCH v2 26/42] semihosting: Move user-only implementation
+ out-of-line
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
 References: <20250318213209.2579218-1-richard.henderson@linaro.org>
- <20250318213209.2579218-13-richard.henderson@linaro.org>
- <f3b98848-70b7-4ece-8ba2-43f0e07302ac@linaro.org>
+ <20250318213209.2579218-27-richard.henderson@linaro.org>
+ <e788d7b9-d115-4252-aa91-187c4df096cc@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <f3b98848-70b7-4ece-8ba2-43f0e07302ac@linaro.org>
+In-Reply-To: <e788d7b9-d115-4252-aa91-187c4df096cc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,36 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/25 17:23, Pierrick Bouvier wrote:
->>   uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
->>   {
->> -    uint64_t raw, tgt;
->> +    uint64_t val;
->> -    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
->> -        tgt = tswap64(raw);
->> -    } else {
->> -        tgt = cpu_ldq_code(env, pc);
->> -        raw = tswap64(tgt);
->> -        record_save(db, pc, &raw, sizeof(raw));
->> +    if (!translator_ld(env, db, &val, pc, sizeof(val))) {
->> +        MemOpIdx oi = make_memop_idx(MO_UQ, db->code_mmuidx);
->> +        val = cpu_ldq_code_mmu(env, pc, oi, 0);
->> +        record_save(db, pc, &val, sizeof(val));
->>       }
->> -    return tgt;
->> +    return tswap64(val);
->>   }
->>   void translator_fake_ld(DisasContextBase *db, const void *data, size_t len)
+On 3/19/25 00:16, Philippe Mathieu-Daudé wrote:
+> On 18/3/25 22:31, Richard Henderson wrote:
+>> Avoid testing CONFIG_USER_ONLY in semihost.h.
+>> The only function that's required is semihosting_enabled.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/semihosting/semihost.h | 29 ++---------------------------
+>>   semihosting/user.c             | 15 +++++++++++++++
+>>   semihosting/meson.build        |  2 ++
+>>   3 files changed, 19 insertions(+), 27 deletions(-)
+>>   create mode 100644 semihosting/user.c
 > 
-> If I understand correctly, cpu_ldq_code_mmu performs the tswap call we used to before. 
+> 
+>> diff --git a/semihosting/user.c b/semihosting/user.c
+>> new file mode 100644
+>> index 0000000000..9473729beb
+>> --- /dev/null
+>> +++ b/semihosting/user.c
+>> @@ -0,0 +1,15 @@
+>> +/*
+>> + * Semihosting for user emulation
+>> + *
+>> + * Copyright (c) 2019 Linaro Ltd
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "semihosting/semihost.h"
+>> +
+>> +bool semihosting_enabled(bool is_user)
+>> +{
+> 
+> While moving this code, we could also add:
+> 
+>         assert(is_user);
 
-Incorrect: cpu_ldq_code_mmu has no tswap.
-
-It has a conditional bswap, if MO_BSWAP is set, but that's not true for the MO_UQ used 
-here.  Therefore both the direct load in translator_ld and the cpu_ld*_code_mmu function 
-call both produce host-endian values.
-
-Therefore the tswap at the end correctly swaps host to target-endianness.
+I have added this as a separate patch.
 
 
 r~
