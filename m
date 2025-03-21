@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B0F9C36005
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 874E0C36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvhCx-0007g3-Jf; Fri, 21 Mar 2025 14:35:03 -0400
+	id 1tvhEC-0001Sp-Ah; Fri, 21 Mar 2025 14:36:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvhCs-0007f2-FV
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:34:58 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvhCp-0006QQ-0C
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:34:57 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3995ff6b066so1460070f8f.3
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742582093; x=1743186893; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VCImrLeTQF54hZJTWiziXGlUhQoLGJyQXloUBsF+fQA=;
- b=EQqm8OcHTJR2J9UXqcwVJ2dnKF4oaAU/MO6JKcrtOPIgN4hRQgnNnlD7EKT8ftdTwX
- N/p/OIxLBosS4Sjmf+u6yIH8fmiIMQ4nFTSyp+OnuKChPSY1VTqW+ALMBErXrfw8FAYk
- iaA4h8lo2uPamLOnGhKDF9nmcFMLHanr4U9uKKz8e8qwyZebcRHApSbv3Svkgs81s5K5
- j2zO1D28ReTsSjC1xNUc6eyKAlrANpn79TOD8BF6x26tJvfHc64uD44M7v5QNL508QOW
- OTpzaAEci8eYIAkGkncu0R7uMrXX6LZF2FmkyEY9g1N+dFzoM4xQq3iMpFsIQoSJgsf3
- VLjg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tvhE9-0001Hr-Nh
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tvhE8-00070x-53
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742582175;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rIoCzGEOqHsM41xIt3EuiCgJLmJ6D9tPJwGLj7vy+Rg=;
+ b=ivY4V0b+xaZn//QzcNzqelEPlkaxgFWMpFA71zlUSMMWVLXTGBkxhACjYkdLRYQReGQJqG
+ WDj7NAZOBqgqmfVYDVsDdYwzTlh2usD82CUW6obQNYAbWSQxFoVOtJQ5a/Af85JAbOfDKx
+ VBAfm1KNIXnwbasqYoDPF6uDVRocHuA=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-224-iM4EgZevOOmWYwNLcjehKw-1; Fri, 21 Mar 2025 14:36:14 -0400
+X-MC-Unique: iM4EgZevOOmWYwNLcjehKw-1
+X-Mimecast-MFC-AGG-ID: iM4EgZevOOmWYwNLcjehKw_1742582173
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5edf8a509so1862762a12.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742582093; x=1743186893;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VCImrLeTQF54hZJTWiziXGlUhQoLGJyQXloUBsF+fQA=;
- b=cjfwj8lrsBfP6pEPIokVuWwzfoZ0ETAg3/BVMHbq3RxqkexyJ/JiLzNWHFfuJImoXo
- OTKdjUWGsyqS9iV7f1EftKMil/lQJ3l+ffGZjmnIWIU3HyLTASxzrvR5KJkZVf8R6Ib7
- PFUUnzcjL4J9ecbq9lvV6VcwwH0ms5y1eSEFkDWkWvOvD/IAvqQZaKuEId9/qCapkBDT
- hAWufsedJZPFpQYsD5VFoP06xl+J+awzSXfy5L8o0DPvknUHo8Blc7ur0aTX4QNIIY1x
- 0lK+iecFRGZPp/elJ+F8IhTNFVk3TXLagm+ak2p6Vo+0GsHUNapHkMvMyO2zc95E4olM
- 0Uew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWo9FX/TNnXu2s0yAeN3GsM6TV1PGw93nM6Qk/Ka6BxFRtmdAQklGZW4uh9hNIFGjTIIJyu98SfLeQa@nongnu.org
-X-Gm-Message-State: AOJu0YwfZv14Xxqo+QI4MXeNC3KzZCWhUR5yLf32Fu+e1siOu98ymsUF
- y5t9KRjYc8W2TLy3YwSonlYwoUziqKb5mY/qVYzbKCOcG74EZQdzhOqtVuC4A1I=
-X-Gm-Gg: ASbGnctsMZu712UwGiSR1SiFi5pf6QqIwF7LOGYF+QXVyI5Ek2pzSHzESzDqf9TJjEq
- 2TC1TjHdKwG13o34o/YQGwO0MsS02b6Mk5W4paImzBdL0ZOJU8+LWG+hZ4FZXkhuqKKEb2B1NMe
- bB2j5oS2BkNo2WF74mNNF6AWCwlXHRgl4AZw2WzJmUBx9ubiO4/aGW7pIHSeF9IlMU17ZHWHlfw
- xa+IldU03cicTo4gnlEBgCQ/iFcP32nt2RWbOQ5cGAUA1VjwZp3E6M1W3SPMvJqI0dVyM0Sw+gO
- riTrfLSs0ycUdOYSrZxmd8C+cmPNf3m8Tta94WzDTJMiYet342I+RfWYh8kk0Oz7oV4ucYz8X2W
- +o3v+cjJO66Ql/cgZjUdhOaoLkvjZ8A==
-X-Google-Smtp-Source: AGHT+IEZykZqPxi1Q0RIRT6rKk4eqWRjwBRVLNUn3C2nPhL+D00bJtRz/+n5B3WJFmU5dScO/kAMXw==
-X-Received: by 2002:a05:6000:1acb:b0:391:4095:49b7 with SMTP id
- ffacd0b85a97d-3997f91d52amr5110887f8f.25.1742582092770; 
- Fri, 21 Mar 2025 11:34:52 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f55750sm86617165e9.21.2025.03.21.11.34.50
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Mar 2025 11:34:51 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 v2 0/4] tcg: Convert TARGET_SUPPORTS_MTTCG to
- TCGCPUOps::mttcg_supported field
-Date: Fri, 21 Mar 2025 19:34:45 +0100
-Message-ID: <20250321183450.3970-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ d=1e100.net; s=20230601; t=1742582172; x=1743186972;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rIoCzGEOqHsM41xIt3EuiCgJLmJ6D9tPJwGLj7vy+Rg=;
+ b=g4WhWdcNd1PEc37BqHw0eCjcZCIxg0JloAthyCT8WcLuDFt/SBcOsZLsgohQxq5mkd
+ cnq+FPGNAd6dT/ZcFJLfEPH2TahTfyq8vWQRVCdET47JRIUJWWFV4LmOKWlfJXezdWh2
+ cZ7OnFCwmOlbhmWucxr50b+v6nCXF50Ma6vKd5dhg1+VfVa7saH97b8ktKIC+8aS/vkB
+ a7SBn6lJ7oAtDk+ZPTszOG/rfRmNegvvZxvZW+8Ft2nsrsjUNPJCqG5sIuWDRN7zluHm
+ u6MjKpa1sMfxeRteq/AmOZC9/cTfOAuhvG7xMNfRIJgHpjeXHwJCB4GyNWxauxB+6WKd
+ 5opg==
+X-Gm-Message-State: AOJu0YzjvkKHZydPHD28qzrPe/yw92dkmHcT5FM7mczND/GAHLeh+/tv
+ dx6WdnRZQg1oa1bSpaTLPv/90E1Jo5MmVWQQFjASbE+hMfwelCs6U8Io+GOFeur+/oxZQBHowsT
+ Nul2LFFjv5r+1XMyp/MoRKPstakFkanSxmTpI1tprsMi5PyVOL+vQxwVWQTTfpH5/xNVKwdScmV
+ YrbIwH3z9Ml+UQFbBXs7j6HUxZUdU9XqfaoLjO
+X-Gm-Gg: ASbGncvlmoFl+dhek/l7yUd64CNjULjK+8LV9PSFaGNJWTEI/JnVBF4UGjBgZlWS8a8
+ ZNzT9AQMliOc5rUPxF7LCNFTWQ4McSyoJtUApkGLOXjclnIJsu0cglEcdPuvllZpyonfdhxag0f
+ gv9Z0xMABKxr+rhFfKQYXlR4zk25dA16FwNOjyNlD7CEMqr++5fO7ReiGAdnxF30FAm1SVG9deA
+ aLIWpBLtgN+3XvikYlWRz+PIvqLQQ38hyTncJbmOz9Q/3qB5wMtYXLJ4Ts8DX+vuzByqj6MTMOf
+ qyevzhNv3ZrHkCVhG5Mv
+X-Received: by 2002:a05:6402:50c7:b0:5e6:1602:bfbb with SMTP id
+ 4fb4d7f45d1cf-5ebcd51c8damr3312649a12.27.1742582171990; 
+ Fri, 21 Mar 2025 11:36:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/hWbjx27klsPWgHPxqvdRvwa1hcilhI71INluwbhCQQeIc5hQqPwb8iPNosPolzZGKdzUDA==
+X-Received: by 2002:a05:6402:50c7:b0:5e6:1602:bfbb with SMTP id
+ 4fb4d7f45d1cf-5ebcd51c8damr3312639a12.27.1742582171408; 
+ Fri, 21 Mar 2025 11:36:11 -0700 (PDT)
+Received: from [192.168.122.1] ([151.49.194.153])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5ebcd0dfb33sm1748586a12.68.2025.03.21.11.36.10
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Mar 2025 11:36:11 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 03/24] qdev, rust/hpet: fix type of HPET "timers" property
+Date: Fri, 21 Mar 2025 19:35:35 +0100
+Message-ID: <20250321183556.155097-4-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250321183556.155097-1-pbonzini@redhat.com>
+References: <20250321183556.155097-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,71 +108,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Update TCGState::mttcg_enabled (Anton)
-- Better describe change in patch 3 (Pierrick)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/hw/qdev-properties.h   |  1 +
+ hw/core/qdev-properties.c      | 37 ++++++++++++++++++++++++++++++++++
+ rust/hw/timer/hpet/src/hpet.rs |  6 +++---
+ 3 files changed, 41 insertions(+), 3 deletions(-)
 
-In this series we replace the TARGET_SUPPORTS_MTTCG (Makefile)
-definition by a 'mttcg_supported' field in TCGCPUOps.
-
-Based-on: <20250321181549.3331-1-philmd@linaro.org>
-
-Philippe Mathieu-Daudé (4):
-  target/riscv: Restrict RV128 MTTCG check on system emulation
-  tcg: Move qemu_tcg_mttcg_enabled() to 'system/tcg.h'
-  tcg: Convert TCGState::mttcg_enabled to TriState
-  tcg: Convert TARGET_SUPPORTS_MTTCG to TCGCPUOps::mttcg_supported field
-
- docs/devel/multi-thread-tcg.rst          |  2 +-
- configs/targets/aarch64-softmmu.mak      |  1 -
- configs/targets/alpha-softmmu.mak        |  1 -
- configs/targets/arm-softmmu.mak          |  1 -
- configs/targets/hppa-softmmu.mak         |  1 -
- configs/targets/i386-softmmu.mak         |  1 -
- configs/targets/loongarch64-softmmu.mak  |  1 -
- configs/targets/microblaze-softmmu.mak   |  1 -
- configs/targets/microblazeel-softmmu.mak |  1 -
- configs/targets/mips-softmmu.mak         |  1 -
- configs/targets/mipsel-softmmu.mak       |  1 -
- configs/targets/or1k-softmmu.mak         |  1 -
- configs/targets/ppc64-softmmu.mak        |  1 -
- configs/targets/riscv32-softmmu.mak      |  1 -
- configs/targets/riscv64-softmmu.mak      |  1 -
- configs/targets/s390x-softmmu.mak        |  1 -
- configs/targets/sparc-softmmu.mak        |  1 -
- configs/targets/sparc64-softmmu.mak      |  1 -
- configs/targets/x86_64-softmmu.mak       |  1 -
- configs/targets/xtensa-softmmu.mak       |  1 -
- configs/targets/xtensaeb-softmmu.mak     |  1 -
- include/accel/tcg/cpu-ops.h              |  8 +++
- include/exec/poison.h                    |  1 -
- include/hw/core/cpu.h                    |  9 ----
- include/system/tcg.h                     |  8 +++
- accel/tcg/tcg-all.c                      | 69 +++++++++++++-----------
- target/alpha/cpu.c                       |  1 +
- target/arm/cpu.c                         |  1 +
- target/arm/tcg/cpu-v7m.c                 |  1 +
- target/avr/cpu.c                         |  1 +
- target/hexagon/cpu.c                     |  1 +
- target/hppa/cpu.c                        |  1 +
- target/i386/tcg/tcg-cpu.c                |  1 +
- target/loongarch/cpu.c                   |  1 +
- target/m68k/cpu.c                        |  1 +
- target/microblaze/cpu.c                  |  1 +
- target/mips/cpu.c                        |  1 +
- target/openrisc/cpu.c                    |  1 +
- target/ppc/cpu_init.c                    |  1 +
- target/riscv/tcg/tcg-cpu.c               |  4 +-
- target/rx/cpu.c                          |  1 +
- target/s390x/cpu.c                       |  1 +
- target/sh4/cpu.c                         |  1 +
- target/sparc/cpu.c                       |  1 +
- target/tricore/cpu.c                     |  1 +
- target/xtensa/cpu.c                      |  1 +
- tcg/region.c                             |  4 +-
- 47 files changed, 79 insertions(+), 65 deletions(-)
-
+diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
+index 15fcec5260c..2c99856caac 100644
+--- a/include/hw/qdev-properties.h
++++ b/include/hw/qdev-properties.h
+@@ -52,6 +52,7 @@ extern const PropertyInfo qdev_prop_bool;
+ extern const PropertyInfo qdev_prop_uint8;
+ extern const PropertyInfo qdev_prop_uint16;
+ extern const PropertyInfo qdev_prop_uint32;
++extern const PropertyInfo qdev_prop_usize;
+ extern const PropertyInfo qdev_prop_int32;
+ extern const PropertyInfo qdev_prop_uint64;
+ extern const PropertyInfo qdev_prop_uint64_checkmask;
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index c04df3b337a..147b3ffd16e 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -442,6 +442,43 @@ const PropertyInfo qdev_prop_uint64_checkmask = {
+     .set   = set_uint64_checkmask,
+ };
+ 
++/* --- pointer-size integer --- */
++
++static void get_usize(Object *obj, Visitor *v, const char *name, void *opaque,
++                      Error **errp)
++{
++    const Property *prop = opaque;
++
++#if HOST_LONG_BITS == 32
++    uint32_t *ptr = object_field_prop_ptr(obj, prop);
++    visit_type_uint32(v, name, ptr, errp);
++#else
++    uint64_t *ptr = object_field_prop_ptr(obj, prop);
++    visit_type_uint64(v, name, ptr, errp);
++#endif
++}
++
++static void set_usize(Object *obj, Visitor *v, const char *name, void *opaque,
++                      Error **errp)
++{
++    const Property *prop = opaque;
++
++#if HOST_LONG_BITS == 32
++    uint32_t *ptr = object_field_prop_ptr(obj, prop);
++    visit_type_uint32(v, name, ptr, errp);
++#else
++    uint64_t *ptr = object_field_prop_ptr(obj, prop);
++    visit_type_uint64(v, name, ptr, errp);
++#endif
++}
++
++const PropertyInfo qdev_prop_usize = {
++    .type  = "usize",
++    .get   = get_usize,
++    .set   = set_usize,
++    .set_default_value = qdev_propinfo_set_default_value_uint,
++};
++
+ /* --- string --- */
+ 
+ static void release_string(Object *obj, const char *name, void *opaque)
+diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
+index 20e0afdfca8..63c1971f0b5 100644
+--- a/rust/hw/timer/hpet/src/hpet.rs
++++ b/rust/hw/timer/hpet/src/hpet.rs
+@@ -12,7 +12,7 @@
+ use qemu_api::{
+     bindings::{
+         address_space_memory, address_space_stl_le, qdev_prop_bit, qdev_prop_bool,
+-        qdev_prop_uint32, qdev_prop_uint8,
++        qdev_prop_uint32, qdev_prop_usize,
+     },
+     c_str,
+     cell::{BqlCell, BqlRefCell},
+@@ -859,8 +859,8 @@ impl ObjectImpl for HPETState {
+         c_str!("timers"),
+         HPETState,
+         num_timers,
+-        unsafe { &qdev_prop_uint8 },
+-        u8,
++        unsafe { &qdev_prop_usize },
++        usize,
+         default = HPET_MIN_TIMERS
+     ),
+     qemu_api::define_property!(
 -- 
-2.47.1
+2.49.0
 
 
