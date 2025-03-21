@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C34C35FFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 11:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BB0C36002
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 11:38:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvagS-0003go-IA; Fri, 21 Mar 2025 07:37:04 -0400
+	id 1tvai2-0004mc-JX; Fri, 21 Mar 2025 07:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tvagB-0003fR-8Y
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:36:50 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1tvahu-0004jP-Ex
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:38:37 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tvag7-0000wE-FH
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:36:46 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43d04dc73b7so19553875e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 04:36:42 -0700 (PDT)
+ id 1tvahs-0001Bz-Mg
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:38:34 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3912c09be7dso1182300f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 04:38:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742557001; x=1743161801; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742557110; x=1743161910; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ksViJNUmrrSYW3N3N1or3khLbN2ifl5cj5WJZv3qTMk=;
- b=MEgK+cdTkm8AFREpm71e0b/dxAXQTS2K53Fln/cq7ae4dq6ZLI2jpipnKw26ubYL+K
- /mcZBGYaN2OVIsozDkN9U9owFmbhQs1w29SPWWk+YgYrwH5XzVBxb7TfdDmaG4grkGVo
- wCw0geISzF7z87ICgC3EpOvBMLDSFPsZJR/0/9TWLkG2zu7gHoKmnAo3BdaRg2Y8j/7k
- I2hza1Y/kS1JDQv55ibnCY+YyLN3Z3JnpSrLzAf6h/4pJmjqB8FDBZ1pHZ+41yR3b+Ru
- /HL21tow+6jZyjNgDHWvuJmUYkU40vMoIfh7AcOVr2GfnSaj2GB2PeNgUmQOieG4OI+9
- LNHQ==
+ bh=3tw57Clz7HbaK4s7dPdpLPcWgBWFJpLDZ1uhZQXrSyo=;
+ b=zl60BLg+gv8Y8+rNmORg52VMxG8MkTK+FQjs5qSOM6IImzsekPMcYECljX85E3ZOl4
+ OpQvMxmqKfLIX17yPKety+cN8cAU1IK9YegxElJqOk3lch+X2Fs+R6MuNV2PEBtGs1Ex
+ JdiQUthT1PpGXqd6gy5Aro/2A4hLpoR8LyrejGw9CoZePCPRmU4dI5KB9m2TbEOi1bu8
+ /pk80MnojLJidZk/GlM3926AQu5oatUw7pAAnjkeQlkxLs73K24rzhDh8vsnBvscdyJ9
+ gq1P+Wn/Yx0+NQQKQ/2/DCFqUt3u1/PUUznF/zUmx3WsUbiN5N9uaNrwIdjrzipaZ2Dp
+ OHog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742557001; x=1743161801;
+ d=1e100.net; s=20230601; t=1742557110; x=1743161910;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ksViJNUmrrSYW3N3N1or3khLbN2ifl5cj5WJZv3qTMk=;
- b=fuvH5Xze0cPRwKaTr4trmmyt54qEBWp2ThCqZjJq/sukz/fT0Rlvo1ceXryv9z/HLn
- IX9neAfOT3QZRGnQMPsTqyNajyPAcRz6/NZJ91DcQGp24EJcj9Z1j18YsQXRq5BDgIly
- 44y6WT4wjzwJ426UPqLtiZYRHmrVsur4hu47Q6LyXCdilOatYjwZh8OqZvAUmmHYnKv2
- /npqmf8xZvEp7UGbzOec19PftbPR+3RP4kbtbYDGas04Nh/Uk13MRuyryK+0TMYFLsTX
- h9IGb1rzMW6OBv6+AqidVTMp8c2RELn3EhGyTox3YKi/4EGtsRqmUlrEdtXMsaTwnTlY
- Dn7w==
-X-Gm-Message-State: AOJu0YztJv5wtoENK1N/xtQ6qDwuLrrUdHh5Jm0mT77AAmu7oadIB2C1
- g1eLvACemvESn//6mv2Q5Gs26sJGjJktM+C2+hXU7b1gbslGXoMpNagbsZlpiq8=
-X-Gm-Gg: ASbGncs3PNYqvnLLFtZtTsp4y3NK796Tgt2ET/1rB1PQ3BYmZGWSSQMIkMRgLZPWhQJ
- QepS/iAZx7PgN5zih3g3B3NisIMcZQ2DEypVqgyfDIPkc0qRfDbcS0/KYWvv0LHS2hEkUsStxGx
- UsYqmGEON3wH+2Y+zEU/05PcjOmzt4tsOpn7bxsy/Sx0095/To50MHvMWhppDto2dyfbSmjZxwF
- hh6rfLlN0eDZDZEvFnjY2/809Q2x9fNmvLt41GKi3J/WqX9T0ABMwYJpZ6t8cYmq0umAzMACq4I
- NBa9ldDeMRwOWVgG6E85PBy1PgOTbbulSbAYqeYe1eSO9gc=
-X-Google-Smtp-Source: AGHT+IGJ3BdY1fG6iJg25osEw9dhFmdF+mAbuiu/88xg8qHykCMtF890suvf5SR2QltCCweVB2xtpw==
-X-Received: by 2002:a5d:64a8:0:b0:391:4914:3c6a with SMTP id
- ffacd0b85a97d-3997f913190mr2779932f8f.29.1742557001301; 
- Fri, 21 Mar 2025 04:36:41 -0700 (PDT)
+ bh=3tw57Clz7HbaK4s7dPdpLPcWgBWFJpLDZ1uhZQXrSyo=;
+ b=xPodgzlkCl3mpg08TdKa9MnTokgqjrSKL3T5o5Y9UuRcC2UaaRwrYIPz7jdw7sTXLN
+ W7wusF/qZ5NYKqznqecN7Ku0o3d40FFrkcyPHI7B0Qzy0JfEncpdlYORRRoYnfQBxqRV
+ tpZLlY9ByDM6UMca1lCORPNpWPYyv+Db13CLJhqpHMP4PpL/zt0RG8ORnqQG2wocJ58+
+ /By6i6C5I9jcv+mTpvSPbCYdPX/rRNvAuDaqXfHNqu5rC55eisH89a9ZuCj3Zwq+ho/q
+ mZQh2z61/ghvrSgNaRjKhXij18BzCMyGU/7VX9kZy8yvPCVGMIpf2C6INnbybwdPXhBs
+ FKFg==
+X-Gm-Message-State: AOJu0YxRNTOoG7SIuYJgLjY63903KSK5720r+xN2Ugawkb5mVRVUDck0
+ oEN3jYCqUOFphita2VUn4aW1p6GYelYcfysNGN4WCpPFCGEEqKY4kKeppSFalD4=
+X-Gm-Gg: ASbGncsBAz0n2AQdQcirwtfadflbWEtWaeRE+D7rEzY7l/UMhIj8yjjm2+QzVKqwIcZ
+ q9HGuiL0bsL934kkODxw/iMJiRThYXm8eAhfCKvqywEpPv9Lbj+KJGKXUpZfCWKZOwBLpF628mp
+ tNgXUfCK49wPkDXGXulyd/t6u2/sTiBkldziO5q0yJ3YrpqpqPbMQRM9WtOZucjQ9KJXT2jenSo
+ yo3CBOUorRNLkG40w5P5qOfdGKMJxi1hKF9oaZpxEJfWmGpyaoNmbbJvCYbv8+p6WA3Mtpb1Byt
+ 2/AH10YViExp6jV3eQYmBJQprX6WjTvN+J7Xnw8jvF3UYy4=
+X-Google-Smtp-Source: AGHT+IFKD+l0fijs95nzWjyFE/rc2wV13+lM9HcG3vinnisyty7adsK4HMYTKDMDc7gB1eYyQ5w6Nw==
+X-Received: by 2002:a05:6000:188f:b0:391:304f:34e7 with SMTP id
+ ffacd0b85a97d-3997f932ea8mr3252110f8f.44.1742557109787; 
+ Fri, 21 Mar 2025 04:38:29 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9b25c9sm2113920f8f.42.2025.03.21.04.36.40
+ 5b1f17b1804b1-43d4fdbcfaasm24067905e9.35.2025.03.21.04.38.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 04:36:40 -0700 (PDT)
+ Fri, 21 Mar 2025 04:38:29 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A8A175F7A5;
- Fri, 21 Mar 2025 11:36:39 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 83EFD5F7A5;
+ Fri, 21 Mar 2025 11:38:28 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  Juan
@@ -83,22 +83,20 @@ Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  Juan
  =?utf-8?Q?thieu-Daud=C3=A9?=
  <philmd@linaro.org>,  Nicholas Piggin <npiggin@gmail.com>,  Paolo Bonzini
  <pbonzini@redhat.com>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 02/10] gdbstub: introduce target independent gdb
- register helper
-In-Reply-To: <1bc5463d-1e37-4a92-b43d-2d4b61cc19ff@linaro.org> (Pierrick
- Bouvier's message of "Thu, 20 Mar 2025 12:36:25 -0700")
+Subject: Re: [PATCH 04/10] target/arm: convert 64 bit gdbstub to new helper
+In-Reply-To: <e03abbd9-cb20-4a98-a112-66d13a76d244@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 20 Mar 2025 12:42:15 -0700")
 References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <20250319182255.3096731-3-alex.bennee@linaro.org>
- <2c441f75-8fd8-4792-a4e4-1ae7c78754ba@linaro.org>
- <1bc5463d-1e37-4a92-b43d-2d4b61cc19ff@linaro.org>
+ <20250319182255.3096731-5-alex.bennee@linaro.org>
+ <e03abbd9-cb20-4a98-a112-66d13a76d244@linaro.org>
 User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 21 Mar 2025 11:36:39 +0000
-Message-ID: <87ldsylins.fsf@draig.linaro.org>
+Date: Fri, 21 Mar 2025 11:38:28 +0000
+Message-ID: <87frj6likr.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,116 +121,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> On 3/20/25 12:30, Pierrick Bouvier wrote:
->> On 3/19/25 11:22, Alex Benn=C3=A9e wrote:
->>> The current helper.h functions rely on hard coded assumptions about
->>> target endianess to use the tswap macros. We also end up double
->>> swapping a bunch of values if the target can run in multiple endianess
->>> modes. Avoid this by getting the target to pass the endianess and size
->>> via a MemOp and fixing up appropriately.
->>>
->>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>> ---
->>>    include/gdbstub/registers.h | 30 ++++++++++++++++++++++++++++++
->>>    gdbstub/gdbstub.c           | 22 ++++++++++++++++++++++
->>>    2 files changed, 52 insertions(+)
->>>    create mode 100644 include/gdbstub/registers.h
->>>
->>> diff --git a/include/gdbstub/registers.h b/include/gdbstub/registers.h
->>> new file mode 100644
->>> index 0000000000..4abc7a6ae7
->>> --- /dev/null
->>> +++ b/include/gdbstub/registers.h
->>> @@ -0,0 +1,30 @@
->>> +/*
->>> + * GDB Common Register Helpers
->>> + *
->>> + * Copyright (c) 2025 Linaro Ltd
->>> + *
->>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>> + */
->>> +
->>> +#ifndef GDB_REGISTERS_H
->>> +#define GDB_REGISTERS_H
->>> +
->>> +#include "exec/memop.h"
->>> +
->>> +/**
->>> + * gdb_get_register_value() - get register value for gdb
->>> + * mo: size and endian MemOp
->>> + * buf: GByteArray to store in target order
->>> + * val: pointer to value in host order
->>> + *
->>> + * This replaces the previous legacy read functions with a single
->>> + * function to handle all sizes. Passing @mo allows the target mode to
->>> + * be taken into account and avoids using hard coded tswap() macros.
->>> + *
->>> + * Returns the number of bytes written to the array.
->>> + */
->>> +int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val);
->>> +
->>> +#endif /* GDB_REGISTERS_H */
->>> +
->>> +
->>> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
->>> index 282e13e163..3d7b1028e4 100644
->>> --- a/gdbstub/gdbstub.c
->>> +++ b/gdbstub/gdbstub.c
->>> @@ -32,6 +32,7 @@
->>>    #include "exec/gdbstub.h"
->>>    #include "gdbstub/commands.h"
->>>    #include "gdbstub/syscalls.h"
->>> +#include "gdbstub/registers.h"
->>>    #ifdef CONFIG_USER_ONLY
->>>    #include "accel/tcg/vcpu-state.h"
->>>    #include "gdbstub/user.h"
->>> @@ -45,6 +46,7 @@
->>>    #include "system/runstate.h"
->>>    #include "exec/replay-core.h"
->>>    #include "exec/hwaddr.h"
->>> +#include "exec/memop.h"
->>>       #include "internals.h"
->>>    @@ -551,6 +553,26 @@ static int gdb_write_register(CPUState
->>> *cpu, uint8_t *mem_buf, int reg)
->>>        return 0;
->>>    }
->>>    +/*
->>> + * Target helper function to read value into GByteArray, target
->>> + * supplies the size and target endianess via the MemOp.
->>> + */
->>> +int gdb_get_register_value(MemOp op, GByteArray *buf, uint8_t *val)
->>> +{
->>> +    size_t bytes =3D memop_size(op);
->>> +
->>> +    if (op & MO_BSWAP) {
->>> +        for ( int i =3D bytes ; i > 0; i--) {
->>> +            g_byte_array_append(buf, &val[i - 1], 1);
->>> +        };
->>> +    } else {
->>> +        g_byte_array_append(buf, val, bytes);
->>> +    }
->>> +
->>> +    return bytes;
->>> +}
->>> +
->>> +
->>>    static void gdb_register_feature(CPUState *cpu, int base_reg,
->>>                                     gdb_get_reg_cb get_reg, gdb_set_reg=
-_cb set_reg,
->>>                                     const GDBFeature *feature)
->> It could be preferable to set buf with the value, instead of simply
->> appending the value. This way, there is no need to return the size, as
->> it's contained in buffer size itself.
->> If we insist on returning the size, it's better to make it a
->> parameter
->> (and use a void parameter type), because at the moment, it gives the
->> impression the function itself returns the value, which may be confusing.
+> On 3/19/25 11:22, Alex Benn=C3=A9e wrote:
+>> For some of the helpers we need a temporary variable to copy from
+>> although we could add some helpers to return pointers into env in
+>> those cases if we wanted to.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   target/arm/gdbstub64.c | 53 ++++++++++++++++++++++++++----------------
+>>   1 file changed, 33 insertions(+), 20 deletions(-)
+>> diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+>> index 1a4dbec567..793332af31 100644
+>> --- a/target/arm/gdbstub64.c
+>> +++ b/target/arm/gdbstub64.c
+>> @@ -20,7 +20,7 @@
+>>   #include "qemu/log.h"
+>>   #include "cpu.h"
+>>   #include "internals.h"
+>> -#include "gdbstub/helpers.h"
+>> +#include "gdbstub/registers.h"
+>>   #include "gdbstub/commands.h"
+>>   #include "tcg/mte_helper.h"
+>>   #if defined(CONFIG_USER_ONLY) && defined(CONFIG_LINUX)
+>> @@ -35,15 +35,16 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByt=
+eArray *mem_buf, int n)
+>>         if (n < 31) {
+>>           /* Core integer register.  */
+>> -        return gdb_get_reg64(mem_buf, env->xregs[n]);
+>> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &en=
+v->xregs[n]);
+>>       }
+>>       switch (n) {
+>>       case 31:
+>> -        return gdb_get_reg64(mem_buf, env->xregs[31]);
+>> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &en=
+v->xregs[31]);
+>>       case 32:
+>> -        return gdb_get_reg64(mem_buf, env->pc);
+>> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &en=
+v->pc);
 >
-> Seems like it's the existing convention through
-> gdb_set_reg_cb/gdb_get_reg_cb, so we have to follow this.
+> For the 3 occurrences, should it be MO_TEUQ instead?
 
-For the "g" packet we append multiple registers so the buffer size grows
-as we append each one.
+>> -        int vq =3D sve_vqm1_for_el(env, arm_current_el(env)) + 1;
+>> -        return gdb_get_reg64(buf, vq * 2);
+>> +        uint64_t vq =3D (sve_vqm1_for_el(env, arm_current_el(env)) + 1)=
+ * 2;
+>> +        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &vq);
+>>       }
+>
+> Should it be MO_TEUQ instead?
+
+I've taken Philippe's suggestion and used explicit MO_32/64 which is
+easier to follow.
 
 --=20
 Alex Benn=C3=A9e
