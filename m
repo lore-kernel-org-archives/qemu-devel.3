@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45278C35FFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 09:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 161EFC36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 09:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvYeK-0006Ju-U7; Fri, 21 Mar 2025 05:26:45 -0400
+	id 1tvYeN-0006N9-RY; Fri, 21 Mar 2025 05:26:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tvYeF-0006Dv-TD; Fri, 21 Mar 2025 05:26:39 -0400
+ id 1tvYeI-0006Hj-Tw; Fri, 21 Mar 2025 05:26:43 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tvYeD-00056F-Rp; Fri, 21 Mar 2025 05:26:39 -0400
+ id 1tvYeG-00056F-Tk; Fri, 21 Mar 2025 05:26:42 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 21 Mar
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 02/22] hw/misc/aspeed_hace: Fix buffer overflow in
- has_padding function
-Date: Fri, 21 Mar 2025 17:25:58 +0800
-Message-ID: <20250321092623.2097234-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 03/22] hw/misc/aspeed_hace: Improve readability and
+ consistency in variable naming
+Date: Fri, 21 Mar 2025 17:25:59 +0800
+Message-ID: <20250321092623.2097234-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
 References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
@@ -68,37 +68,95 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The maximum padding size is either 64 or 128 bytes and should always be smaller
-than "req_len". If "padding_size" exceeds "req_len", then
-"req_len - padding_size" underflows due to "uint32_t" data type, leading to a
-large incorrect value (e.g., `0xFFXXXXXX`). This causes an out-of-bounds memory
-access, potentially leading to a buffer overflow.
-
-Added a check to ensure "padding_size" does not exceed "req_len" before
-computing "pad_offset". This prevents "req_len - padding_size" from underflowing
-and avoids accessing invalid memory.
+Currently, users define multiple local variables within different if-statements.
+To improve readability and maintain consistency in variable naming, rename the
+variables accordingly.
+Introduced "sg_addr" to clearly indicate the scatter-gather mode buffer address.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_hace.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/misc/aspeed_hace.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
 diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 8e7e8113a5..d8b5f048bb 100644
+index d8b5f048bb..4bcf6ed074 100644
 --- a/hw/misc/aspeed_hace.c
 +++ b/hw/misc/aspeed_hace.c
-@@ -128,6 +128,11 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
-     if (*total_msg_len <= s->total_req_len) {
-         uint32_t padding_size = s->total_req_len - *total_msg_len;
-         uint8_t *padding = iov->iov_base;
-+
-+        if (padding_size > req_len) {
-+            return false;
-+        }
-+
-         *pad_offset = req_len - padding_size;
-         if (padding[*pad_offset] == 0x80) {
-             return true;
+@@ -145,15 +145,19 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+                               bool acc_mode)
+ {
++    bool sg_acc_mode_final_request = false;
++    g_autofree uint8_t *digest_buf = NULL;
+     struct iovec iov[ASPEED_HACE_MAX_SG];
++    Error *local_err = NULL;
+     uint32_t total_msg_len;
+-    uint32_t pad_offset;
+-    g_autofree uint8_t *digest_buf = NULL;
+     size_t digest_len = 0;
+-    bool sg_acc_mode_final_request = false;
+-    int i;
++    uint32_t sg_addr = 0;
++    uint32_t pad_offset;
++    uint32_t len = 0;
++    uint32_t src = 0;
+     void *haddr;
+-    Error *local_err = NULL;
++    hwaddr plen;
++    int i;
+ 
+     if (acc_mode && s->hash_ctx == NULL) {
+         s->hash_ctx = qcrypto_hash_new(algo, &local_err);
+@@ -166,12 +170,7 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+     }
+ 
+     if (sg_mode) {
+-        uint32_t len = 0;
+-
+         for (i = 0; !(len & SG_LIST_LEN_LAST); i++) {
+-            uint32_t addr, src;
+-            hwaddr plen;
+-
+             if (i == ASPEED_HACE_MAX_SG) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+                         "aspeed_hace: guest failed to set end of sg list marker\n");
+@@ -183,12 +182,12 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+             len = address_space_ldl_le(&s->dram_as, src,
+                                        MEMTXATTRS_UNSPECIFIED, NULL);
+ 
+-            addr = address_space_ldl_le(&s->dram_as, src + SG_LIST_LEN_SIZE,
+-                                        MEMTXATTRS_UNSPECIFIED, NULL);
+-            addr &= SG_LIST_ADDR_MASK;
++            sg_addr = address_space_ldl_le(&s->dram_as, src + SG_LIST_LEN_SIZE,
++                                           MEMTXATTRS_UNSPECIFIED, NULL);
++            sg_addr &= SG_LIST_ADDR_MASK;
+ 
+             plen = len & SG_LIST_LEN_MASK;
+-            haddr = address_space_map(&s->dram_as, addr, &plen, false,
++            haddr = address_space_map(&s->dram_as, sg_addr, &plen, false,
+                                       MEMTXATTRS_UNSPECIFIED);
+             if (haddr == NULL) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+@@ -212,16 +211,16 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+             }
+         }
+     } else {
+-        hwaddr len = s->regs[R_HASH_SRC_LEN];
++        plen = s->regs[R_HASH_SRC_LEN];
+ 
+         haddr = address_space_map(&s->dram_as, s->regs[R_HASH_SRC],
+-                                  &len, false, MEMTXATTRS_UNSPECIFIED);
++                                  &plen, false, MEMTXATTRS_UNSPECIFIED);
+         if (haddr == NULL) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto failed\n", __func__);
+             return;
+         }
+         iov[0].iov_base = haddr;
+-        iov[0].iov_len = len;
++        iov[0].iov_len = plen;
+         i = 1;
+     }
+ 
 -- 
 2.43.0
 
