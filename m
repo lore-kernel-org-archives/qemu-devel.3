@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB9E6C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D090C36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvh5A-00054c-18; Fri, 21 Mar 2025 14:27:00 -0400
+	id 1tvhBF-0006le-DX; Fri, 21 Mar 2025 14:33:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvh57-00054G-Uu
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:26:58 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tvhB9-0006kv-QO
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:33:13 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvh50-0003XE-E0
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:26:57 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3965c995151so1237333f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:26:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tvhB5-0006Dc-9J
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:33:09 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-224191d92e4so47408555ad.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742581607; x=1743186407; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1742581985; x=1743186785; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=v2LSH3OioFz3asKtQ3GQmUNyHdIhlvycQFg6o7yJhyA=;
- b=fqzdOsmXwXlqUso4QQ5NxxKLGIMtLHl0FFoHtaFBBCrwV+wFBXOjcPwmTr7daoiNQf
- p0R+/l+u0/SzoLsKqr/aEkR6KuzEg+iuFCJVAZ3MUjF511R84XVHlILItfwdrSqB9wI0
- 4u/29jsO6rMZCKiSVs90qiG+EjCmLgJ04r9O+WectKjpOwbDyGuBS5APgHWEBGNBXvM1
- eyzBgcfXKheBWNQiTA1OgwjNT4+z7/rPjXgZYI+KMzRwmGDJ0vjR3j+KSnh+2zZZkLC+
- 9wqFx0187WvZVK6PtPmKWCs++sfVet+vFgzUWqoQCqt2UMMb2UEDYIFTSfSRl7VdkBVX
- mt5g==
+ bh=LHdj4SoJZibMhYrEP7jdMlKsy4E2EpcOmeXFVZcOaqM=;
+ b=iT3eNiMP5rBGm2sOSWAMmZ8UbxKsi2ycQEHaY/zamtC07M7qvwgqv7LNIukdLPfNy+
+ F4MFOlog3q3MhCVcFfnzLYahCge0VOyGsga8aQo4/QmWBmRrAa9DjyIB3BbOcYwPsfal
+ /zJ9sLN8RKIg3v7z5oqZ+kthHtmeLWG/JZUBwi5LknOtLkNjShjpd49tAJ2YdmX6jcvV
+ YM72JWCId7HIvvXbDDFhB8YtFm4RDFMhLzuXHiaWkz/DHPT4zIUDNQLFWGMkbR4lpU6i
+ c0PK+FARQnCPyxZ8th0hMsFl/QUSqf8mMN7k2KYaI7O+LYqg+St4V/dq/nEa30SqwbjR
+ l0hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742581607; x=1743186407;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1742581985; x=1743186785;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v2LSH3OioFz3asKtQ3GQmUNyHdIhlvycQFg6o7yJhyA=;
- b=dUgBMnvIAwempQx7GShAWv6C311wutoOJ/ewPymNIMJvudOfEUWXMc6H5QB3HcGzbd
- RKvrxYaoDMjPl2dyQxCXK5ZW0ZkCI+hGlXNBcNTHYO+8hAKRuplgnUwiABWpvp0HiYRx
- fSZWu35lTn4p9A/7D5xjpBbiqUnCkRBkIjrKLMm61Iz5VOqTDdjrL69TiGH6AD6DLvoX
- fdvlwcrNuMtUsVskWvuygy6XbURnYCE942x37aipaBVrlY6uZdkhlwe2HyUxug8SLsGl
- g2tiAC9xGJ6Ps38X0ODuRZUpkOZkMGCEetqxrAPBk1eQsf3BH14VLt36pnAOFvIjsbnu
- oiWg==
+ bh=LHdj4SoJZibMhYrEP7jdMlKsy4E2EpcOmeXFVZcOaqM=;
+ b=qzg+k8A0vyhu5GAiubkwjwOR+bR3TYmvX+Yd/oAgSq1aqSsbgIQBDzpQkLeRUmSLVn
+ 1hi8Mzqr6rOt/Rs7dK66aOvSDJzhIShqIOT/5u/Vfy8zsNIRDrGxE7Xn0eX75prqlBT3
+ irADdDnhOLMq4aGgUmafYlKrc1NVJTJk1Lk3RO4uf/fvv2DWSB9bOqPADXV8tjR4xoG+
+ 1lvl6vQPjLadY4iNEjVZvCX0/zW11b4q4j760FsBKo0wKPwuz3hZKN6mlhdpJ4HUBPa5
+ dzVP+DmXY5RGzPQ/ZYpqbgb11VpB9H1QbsbDkrpA9O5Bb3blu0Y0n80Bugxswbm1NRMk
+ AmMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkvYPOER0raiyAGBxjNQYAIICnCn6M1P3D/kf7Ikg7PWOOIz/XMnzhZ09PkmzsMuUSs6wIiHu5AFkb@nongnu.org
-X-Gm-Message-State: AOJu0Yw+O73axqQ9QV0ms6H2NT7GjunUxpgNLp5L2Zmj8aFOleHm0V5G
- 8bitpcWBSPVwTdytqAd8EUb+wFlkG5LDJz00P5RJxeipZO4IS/LhHKT6HQaQapBCFrqKWKLaMwv
- T
-X-Gm-Gg: ASbGnctpCfA6lumqEkwn68zAkxzVDDD1kbc3R5VvZ6hKJwSWX61KLrLJMl+vHW7hSoy
- uteHoMSjw/Z/pW8hjWTmDsvGstGJmvyRUxd2w+Nj89Tatbqe1hXBrEN8SMyL3uUgrqiCZjgBBD9
- YHLXRdR2aGV7TR1Xw8tmTd0KZshgYvOrQmSpC61mBotmOxwtlGlWrwtt4DKN0MQC8G3oe3exNk0
- hRpPSIkon+s/o2AYceC040wAOqZ5APQd0YQWdwGIMT/DFosGYXjiYUfcXeBDSB0Tun2xWBx++RG
- SRSRweSToWZoDW3+zgCjURK8fmhFojybz6YwblcmADZNV0A7bVUPPY3SmFUUFC+O8zs6F+4Ohui
- PAzKQ8Ji/0F/2
-X-Google-Smtp-Source: AGHT+IEKGJ5IBe+TvLIzJuLIlt/BpawZzaz44fZGC/EYjgm7Tz44bM8P8GLB6aOLqvR7PyytCwJAdQ==
-X-Received: by 2002:a5d:59a2:0:b0:38f:6287:6474 with SMTP id
- ffacd0b85a97d-3997f8fc43dmr4159785f8f.15.1742581606670; 
- Fri, 21 Mar 2025 11:26:46 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9b4cd3sm3102886f8f.57.2025.03.21.11.26.45
+ AJvYcCWs2pe1O6bDkhd8frDp8Ws9aZHzKZgfhM0BR4Q29wB3VRmAaVMPThjE0T/+WvhrUPOy2sd+PBXyuDXw@nongnu.org
+X-Gm-Message-State: AOJu0YwYJPX+PHrnXAzHw3OONJ4FGcrIC+s4UFnm7ksP4FS78AHs+seq
+ Uz8AP+9jYcLxETRZqzssFEn0PZJdBwMt5+cQpxrKVAbTBuJw5QM8vrfAi03aJvo=
+X-Gm-Gg: ASbGncshoP8IHjaOKRx4NXvr/s6mjBybcBPC9ovhhVKZV7AAdgLuJYhstemLtchp+sc
+ zfJ5ZmnPybxlXPPsNuv+2q1lQJa/aA09YgGySya6mUTLELB0fMEzimYTfn3FoGSqyi0FXhJE7D9
+ kvFzdByTf7VwbriypLOCf+AqnyL9j4qoxnucQ2N1mwD2tfIVIEBwWIAHxKpJYK71u4Uh0KtOXin
+ T/gXB65cQJ43p6lgJqkwWkEXqUcYMmpH4t00ors0Vvzuw0qnqopL8hqJvM6/rP+WipiFEDQMAje
+ d7V4VWrrK25oQi9T19v8svBlfDlzgxud4tXzpYatCsfQHBoR6dFSC1rC7zQ=
+X-Google-Smtp-Source: AGHT+IHIReBnXUVLdBhYvBJzMhjGxJqvKZ6MSUn79nut0QY+rJgHprqOvLzNoOruOg+KtX1ppoa4xw==
+X-Received: by 2002:a17:902:e550:b0:225:ac99:ae08 with SMTP id
+ d9443c01a7336-22780c7dbe1mr78096925ad.5.1742581985370; 
+ Fri, 21 Mar 2025 11:33:05 -0700 (PDT)
+Received: from [172.16.224.217] ([209.53.90.26])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-227811baee4sm20583345ad.135.2025.03.21.11.33.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Mar 2025 11:26:46 -0700 (PDT)
-Message-ID: <9f76b15e-ec1e-450c-872e-2efce79e30b4@linaro.org>
-Date: Fri, 21 Mar 2025 19:26:45 +0100
+ Fri, 21 Mar 2025 11:33:04 -0700 (PDT)
+Message-ID: <646fb11c-44db-4e6e-bd49-daa6547e7fd4@linaro.org>
+Date: Fri, 21 Mar 2025 11:33:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-10.1 3/4] tcg: Convert TCGState::mttcg_enabled to
  TriState
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20250321155925.96626-1-philmd@linaro.org>
  <20250321155925.96626-4-philmd@linaro.org>
  <471fb556-e3db-423a-96c3-8f6c33b6fbb7@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <471fb556-e3db-423a-96c3-8f6c33b6fbb7@linaro.org>
+ <9f76b15e-ec1e-450c-872e-2efce79e30b4@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <9f76b15e-ec1e-450c-872e-2efce79e30b4@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,166 +107,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/3/25 18:36, Pierrick Bouvier wrote:
-> On 3/21/25 08:59, Philippe Mathieu-Daudé wrote:
->> Use the OnOffAuto type as 3-state.
->>
->> Since the TCGState instance is zero-initialized, the
->> mttcg_enabled is initialzed as AUTO (ON_OFF_AUTO_AUTO).
->>
->> In tcg_init_machine(), if mttcg_enabled is still AUTO,
->> set a default value (effectively inlining the
->> default_mttcg_enabled() method content).
->>
->> Instead of emiting a warning when the 'thread' property
->> is set in tcg_set_thread(), emit it in tcg_init_machine()
->> where it is consumed.
->>
->> In the tcg_get_thread() getter, consider AUTO / OFF states
->> as "single", otherwise ON is "multi".
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   accel/tcg/tcg-all.c | 68 ++++++++++++++++++++++-----------------------
->>   1 file changed, 33 insertions(+), 35 deletions(-)
->>
->> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
->> index d75ecf531b6..2b7f89eaa20 100644
->> --- a/accel/tcg/tcg-all.c
->> +++ b/accel/tcg/tcg-all.c
->> @@ -32,6 +32,7 @@
->>   #include "qemu/error-report.h"
->>   #include "qemu/accel.h"
->>   #include "qemu/atomic.h"
->> +#include "qapi/qapi-types-common.h"
->>   #include "qapi/qapi-builtin-visit.h"
->>   #include "qemu/units.h"
->>   #if defined(CONFIG_USER_ONLY)
->> @@ -47,7 +48,7 @@
->>   struct TCGState {
->>       AccelState parent_obj;
->> -    bool mttcg_enabled;
->> +    OnOffAuto mttcg_enabled;
->>       bool one_insn_per_tb;
->>       int splitwx_enabled;
->>       unsigned long tb_size;
->> @@ -68,37 +69,10 @@ bool qemu_tcg_mttcg_enabled(void)
->>   }
->>   #endif
->> -/*
->> - * We default to false if we know other options have been enabled
->> - * which are currently incompatible with MTTCG. Otherwise when each
->> - * guest (target) has been updated to support:
->> - *   - atomic instructions
->> - *   - memory ordering primitives (barriers)
->> - * they can set the appropriate CONFIG flags in ${target}-softmmu.mak
->> - *
->> - * Once a guest architecture has been converted to the new primitives
->> - * there is one remaining limitation to check:
->> - *   - The guest can't be oversized (e.g. 64 bit guest on 32 bit host)
->> - */
->> -
->> -static bool default_mttcg_enabled(void)
->> -{
->> -    if (icount_enabled()) {
->> -        return false;
->> -    }
->> -#ifdef TARGET_SUPPORTS_MTTCG
->> -    return true;
->> -#else
->> -    return false;
->> -#endif
->> -}
->> -
->>   static void tcg_accel_instance_init(Object *obj)
->>   {
->>       TCGState *s = TCG_STATE(obj);
->> -    s->mttcg_enabled = default_mttcg_enabled();
->> -
->>       /* If debugging enabled, default "auto on", otherwise off. */
->>   #if defined(CONFIG_DEBUG_TCG) && !defined(CONFIG_USER_ONLY)
->>       s->splitwx_enabled = -1;
->> @@ -117,9 +91,37 @@ static int tcg_init_machine(MachineState *ms)
->>   #else
->>       unsigned max_cpus = ms->smp.max_cpus;
->>   #endif
->> +#ifdef TARGET_SUPPORTS_MTTCG
->> +    bool mttcg_supported = true;
->> +#else
->> +    bool mttcg_supported = false;
->> +#endif
->>       tcg_allowed = true;
->>       mttcg_enabled = s->mttcg_enabled;
->> +    if (mttcg_enabled == ON_OFF_AUTO_AUTO) {
->> +        /*
->> +         * We default to false if we know other options have been 
->> enabled
->> +         * which are currently incompatible with MTTCG. Otherwise 
->> when each
->> +         * guest (target) has been updated to support:
->> +         *   - atomic instructions
->> +         *   - memory ordering primitives (barriers)
->> +         * they can set the appropriate CONFIG flags in ${target}- 
->> softmmu.mak
->> +         *
->> +         * Once a guest architecture has been converted to the new 
->> primitives
->> +         * there is one remaining limitation to check:
->> +         *   - The guest can't be oversized (e.g. 64 bit guest on 32 
->> bit host)
->> +         */
->> +        if (icount_enabled()) {
->> +            mttcg_enabled = ON_OFF_AUTO_OFF;
->> +        } else {
->> +            mttcg_enabled = mttcg_supported;
->> +        }
->> +    }
->> +    if (mttcg_enabled == ON_OFF_AUTO_ON && !mttcg_supported) {
->> +        warn_report("Guest not yet converted to MTTCG - "
->> +                    "you may get unexpected results");
->> +    }
->>       page_init();
->>       tb_htable_init();
->> @@ -144,7 +146,7 @@ static char *tcg_get_thread(Object *obj, Error 
->> **errp)
->>   {
->>       TCGState *s = TCG_STATE(obj);
->> -    return g_strdup(s->mttcg_enabled ? "multi" : "single");
->> +    return g_strdup(s->mttcg_enabled == ON_OFF_AUTO_ON ? "multi" : 
->> "single");
->>   }
->>   static void tcg_set_thread(Object *obj, const char *value, Error 
->> **errp)
->> @@ -155,14 +157,10 @@ static void tcg_set_thread(Object *obj, const 
->> char *value, Error **errp)
->>           if (icount_enabled()) {
->>               error_setg(errp, "No MTTCG when icount is enabled");
->>           } else {
->> -#ifndef TARGET_SUPPORTS_MTTCG
->> -            warn_report("Guest not yet converted to MTTCG - "
->> -                        "you may get unexpected results");
->> -#endif
->> -            s->mttcg_enabled = true;
->> +            s->mttcg_enabled = ON_OFF_AUTO_ON;
->>           }
->>       } else if (strcmp(value, "single") == 0) {
->> -        s->mttcg_enabled = false;
->> +        s->mttcg_enabled = ON_OFF_AUTO_OFF;
->>       } else {
->>           error_setg(errp, "Invalid 'thread' setting %s", value);
->>       }
-> 
-> What are we gaining by moving this warning?
-
-Before: default_mttcg_enabled() was directly using TARGET_SUPPORTS_MTTCG 
-definition, so we could call it to initialize a default value in
-tcg_accel_instance_init().
-
-After: considering the next patch where we need a CPUState initialized
-to get TCGCPUOps::mttcg_supported, we can not use instance_init(), so
-we defer to tcg_init_machine() where we access &first_cpu.
-
-> Are there cases where it was not reported before?
-
-No idea, I'll let Alex answer that.
+T24gMy8yMS8yNSAxMToyNiwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
+IDIxLzMvMjUgMTg6MzYsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBPbiAzLzIxLzI1
+IDA4OjU5LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4+PiBVc2UgdGhlIE9u
+T2ZmQXV0byB0eXBlIGFzIDMtc3RhdGUuDQo+Pj4NCj4+PiBTaW5jZSB0aGUgVENHU3RhdGUg
+aW5zdGFuY2UgaXMgemVyby1pbml0aWFsaXplZCwgdGhlDQo+Pj4gbXR0Y2dfZW5hYmxlZCBp
+cyBpbml0aWFsemVkIGFzIEFVVE8gKE9OX09GRl9BVVRPX0FVVE8pLg0KPj4+DQo+Pj4gSW4g
+dGNnX2luaXRfbWFjaGluZSgpLCBpZiBtdHRjZ19lbmFibGVkIGlzIHN0aWxsIEFVVE8sDQo+
+Pj4gc2V0IGEgZGVmYXVsdCB2YWx1ZSAoZWZmZWN0aXZlbHkgaW5saW5pbmcgdGhlDQo+Pj4g
+ZGVmYXVsdF9tdHRjZ19lbmFibGVkKCkgbWV0aG9kIGNvbnRlbnQpLg0KPj4+DQo+Pj4gSW5z
+dGVhZCBvZiBlbWl0aW5nIGEgd2FybmluZyB3aGVuIHRoZSAndGhyZWFkJyBwcm9wZXJ0eQ0K
+Pj4+IGlzIHNldCBpbiB0Y2dfc2V0X3RocmVhZCgpLCBlbWl0IGl0IGluIHRjZ19pbml0X21h
+Y2hpbmUoKQ0KPj4+IHdoZXJlIGl0IGlzIGNvbnN1bWVkLg0KPj4+DQo+Pj4gSW4gdGhlIHRj
+Z19nZXRfdGhyZWFkKCkgZ2V0dGVyLCBjb25zaWRlciBBVVRPIC8gT0ZGIHN0YXRlcw0KPj4+
+IGFzICJzaW5nbGUiLCBvdGhlcndpc2UgT04gaXMgIm11bHRpIi4NCj4+Pg0KPj4+IFNpZ25l
+ZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4N
+Cj4+PiAtLS0NCj4+PiAgwqAgYWNjZWwvdGNnL3RjZy1hbGwuYyB8IDY4ICsrKysrKysrKysr
+KysrKysrKysrKystLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPj4+ICDCoCAxIGZpbGUgY2hh
+bmdlZCwgMzMgaW5zZXJ0aW9ucygrKSwgMzUgZGVsZXRpb25zKC0pDQo+Pj4NCj4+PiBkaWZm
+IC0tZ2l0IGEvYWNjZWwvdGNnL3RjZy1hbGwuYyBiL2FjY2VsL3RjZy90Y2ctYWxsLmMNCj4+
+PiBpbmRleCBkNzVlY2Y1MzFiNi4uMmI3Zjg5ZWFhMjAgMTAwNjQ0DQo+Pj4gLS0tIGEvYWNj
+ZWwvdGNnL3RjZy1hbGwuYw0KPj4+ICsrKyBiL2FjY2VsL3RjZy90Y2ctYWxsLmMNCj4+PiBA
+QCAtMzIsNiArMzIsNyBAQA0KPj4+ICDCoCAjaW5jbHVkZSAicWVtdS9lcnJvci1yZXBvcnQu
+aCINCj4+PiAgwqAgI2luY2x1ZGUgInFlbXUvYWNjZWwuaCINCj4+PiAgwqAgI2luY2x1ZGUg
+InFlbXUvYXRvbWljLmgiDQo+Pj4gKyNpbmNsdWRlICJxYXBpL3FhcGktdHlwZXMtY29tbW9u
+LmgiDQo+Pj4gIMKgICNpbmNsdWRlICJxYXBpL3FhcGktYnVpbHRpbi12aXNpdC5oIg0KPj4+
+ICDCoCAjaW5jbHVkZSAicWVtdS91bml0cy5oIg0KPj4+ICDCoCAjaWYgZGVmaW5lZChDT05G
+SUdfVVNFUl9PTkxZKQ0KPj4+IEBAIC00Nyw3ICs0OCw3IEBADQo+Pj4gIMKgIHN0cnVjdCBU
+Q0dTdGF0ZSB7DQo+Pj4gIMKgwqDCoMKgwqAgQWNjZWxTdGF0ZSBwYXJlbnRfb2JqOw0KPj4+
+IC3CoMKgwqAgYm9vbCBtdHRjZ19lbmFibGVkOw0KPj4+ICvCoMKgwqAgT25PZmZBdXRvIG10
+dGNnX2VuYWJsZWQ7DQo+Pj4gIMKgwqDCoMKgwqAgYm9vbCBvbmVfaW5zbl9wZXJfdGI7DQo+
+Pj4gIMKgwqDCoMKgwqAgaW50IHNwbGl0d3hfZW5hYmxlZDsNCj4+PiAgwqDCoMKgwqDCoCB1
+bnNpZ25lZCBsb25nIHRiX3NpemU7DQo+Pj4gQEAgLTY4LDM3ICs2OSwxMCBAQCBib29sIHFl
+bXVfdGNnX210dGNnX2VuYWJsZWQodm9pZCkNCj4+PiAgwqAgfQ0KPj4+ICDCoCAjZW5kaWYN
+Cj4+PiAtLyoNCj4+PiAtICogV2UgZGVmYXVsdCB0byBmYWxzZSBpZiB3ZSBrbm93IG90aGVy
+IG9wdGlvbnMgaGF2ZSBiZWVuIGVuYWJsZWQNCj4+PiAtICogd2hpY2ggYXJlIGN1cnJlbnRs
+eSBpbmNvbXBhdGlibGUgd2l0aCBNVFRDRy4gT3RoZXJ3aXNlIHdoZW4gZWFjaA0KPj4+IC0g
+KiBndWVzdCAodGFyZ2V0KSBoYXMgYmVlbiB1cGRhdGVkIHRvIHN1cHBvcnQ6DQo+Pj4gLSAq
+wqDCoCAtIGF0b21pYyBpbnN0cnVjdGlvbnMNCj4+PiAtICrCoMKgIC0gbWVtb3J5IG9yZGVy
+aW5nIHByaW1pdGl2ZXMgKGJhcnJpZXJzKQ0KPj4+IC0gKiB0aGV5IGNhbiBzZXQgdGhlIGFw
+cHJvcHJpYXRlIENPTkZJRyBmbGFncyBpbiAke3RhcmdldH0tc29mdG1tdS5tYWsNCj4+PiAt
+ICoNCj4+PiAtICogT25jZSBhIGd1ZXN0IGFyY2hpdGVjdHVyZSBoYXMgYmVlbiBjb252ZXJ0
+ZWQgdG8gdGhlIG5ldyBwcmltaXRpdmVzDQo+Pj4gLSAqIHRoZXJlIGlzIG9uZSByZW1haW5p
+bmcgbGltaXRhdGlvbiB0byBjaGVjazoNCj4+PiAtICrCoMKgIC0gVGhlIGd1ZXN0IGNhbid0
+IGJlIG92ZXJzaXplZCAoZS5nLiA2NCBiaXQgZ3Vlc3Qgb24gMzIgYml0IGhvc3QpDQo+Pj4g
+LSAqLw0KPj4+IC0NCj4+PiAtc3RhdGljIGJvb2wgZGVmYXVsdF9tdHRjZ19lbmFibGVkKHZv
+aWQpDQo+Pj4gLXsNCj4+PiAtwqDCoMKgIGlmIChpY291bnRfZW5hYmxlZCgpKSB7DQo+Pj4g
+LcKgwqDCoMKgwqDCoMKgIHJldHVybiBmYWxzZTsNCj4+PiAtwqDCoMKgIH0NCj4+PiAtI2lm
+ZGVmIFRBUkdFVF9TVVBQT1JUU19NVFRDRw0KPj4+IC3CoMKgwqAgcmV0dXJuIHRydWU7DQo+
+Pj4gLSNlbHNlDQo+Pj4gLcKgwqDCoCByZXR1cm4gZmFsc2U7DQo+Pj4gLSNlbmRpZg0KPj4+
+IC19DQo+Pj4gLQ0KPj4+ICDCoCBzdGF0aWMgdm9pZCB0Y2dfYWNjZWxfaW5zdGFuY2VfaW5p
+dChPYmplY3QgKm9iaikNCj4+PiAgwqAgew0KPj4+ICDCoMKgwqDCoMKgIFRDR1N0YXRlICpz
+ID0gVENHX1NUQVRFKG9iaik7DQo+Pj4gLcKgwqDCoCBzLT5tdHRjZ19lbmFibGVkID0gZGVm
+YXVsdF9tdHRjZ19lbmFibGVkKCk7DQo+Pj4gLQ0KPj4+ICDCoMKgwqDCoMKgIC8qIElmIGRl
+YnVnZ2luZyBlbmFibGVkLCBkZWZhdWx0ICJhdXRvIG9uIiwgb3RoZXJ3aXNlIG9mZi4gKi8N
+Cj4+PiAgwqAgI2lmIGRlZmluZWQoQ09ORklHX0RFQlVHX1RDRykgJiYgIWRlZmluZWQoQ09O
+RklHX1VTRVJfT05MWSkNCj4+PiAgwqDCoMKgwqDCoCBzLT5zcGxpdHd4X2VuYWJsZWQgPSAt
+MTsNCj4+PiBAQCAtMTE3LDkgKzkxLDM3IEBAIHN0YXRpYyBpbnQgdGNnX2luaXRfbWFjaGlu
+ZShNYWNoaW5lU3RhdGUgKm1zKQ0KPj4+ICDCoCAjZWxzZQ0KPj4+ICDCoMKgwqDCoMKgIHVu
+c2lnbmVkIG1heF9jcHVzID0gbXMtPnNtcC5tYXhfY3B1czsNCj4+PiAgwqAgI2VuZGlmDQo+
+Pj4gKyNpZmRlZiBUQVJHRVRfU1VQUE9SVFNfTVRUQ0cNCj4+PiArwqDCoMKgIGJvb2wgbXR0
+Y2dfc3VwcG9ydGVkID0gdHJ1ZTsNCj4+PiArI2Vsc2UNCj4+PiArwqDCoMKgIGJvb2wgbXR0
+Y2dfc3VwcG9ydGVkID0gZmFsc2U7DQo+Pj4gKyNlbmRpZg0KPj4+ICDCoMKgwqDCoMKgIHRj
+Z19hbGxvd2VkID0gdHJ1ZTsNCj4+PiAgwqDCoMKgwqDCoCBtdHRjZ19lbmFibGVkID0gcy0+
+bXR0Y2dfZW5hYmxlZDsNCj4+PiArwqDCoMKgIGlmIChtdHRjZ19lbmFibGVkID09IE9OX09G
+Rl9BVVRPX0FVVE8pIHsNCj4+PiArwqDCoMKgwqDCoMKgwqAgLyoNCj4+PiArwqDCoMKgwqDC
+oMKgwqDCoCAqIFdlIGRlZmF1bHQgdG8gZmFsc2UgaWYgd2Uga25vdyBvdGhlciBvcHRpb25z
+IGhhdmUgYmVlbg0KPj4+IGVuYWJsZWQNCj4+PiArwqDCoMKgwqDCoMKgwqDCoCAqIHdoaWNo
+IGFyZSBjdXJyZW50bHkgaW5jb21wYXRpYmxlIHdpdGggTVRUQ0cuIE90aGVyd2lzZQ0KPj4+
+IHdoZW4gZWFjaA0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgICogZ3Vlc3QgKHRhcmdldCkgaGFz
+IGJlZW4gdXBkYXRlZCB0byBzdXBwb3J0Og0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgICrCoMKg
+IC0gYXRvbWljIGluc3RydWN0aW9ucw0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgICrCoMKgIC0g
+bWVtb3J5IG9yZGVyaW5nIHByaW1pdGl2ZXMgKGJhcnJpZXJzKQ0KPj4+ICvCoMKgwqDCoMKg
+wqDCoMKgICogdGhleSBjYW4gc2V0IHRoZSBhcHByb3ByaWF0ZSBDT05GSUcgZmxhZ3MgaW4g
+JHt0YXJnZXR9LQ0KPj4+IHNvZnRtbXUubWFrDQo+Pj4gK8KgwqDCoMKgwqDCoMKgwqAgKg0K
+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgICogT25jZSBhIGd1ZXN0IGFyY2hpdGVjdHVyZSBoYXMg
+YmVlbiBjb252ZXJ0ZWQgdG8gdGhlIG5ldw0KPj4+IHByaW1pdGl2ZXMNCj4+PiArwqDCoMKg
+wqDCoMKgwqDCoCAqIHRoZXJlIGlzIG9uZSByZW1haW5pbmcgbGltaXRhdGlvbiB0byBjaGVj
+azoNCj4+PiArwqDCoMKgwqDCoMKgwqDCoCAqwqDCoCAtIFRoZSBndWVzdCBjYW4ndCBiZSBv
+dmVyc2l6ZWQgKGUuZy4gNjQgYml0IGd1ZXN0IG9uIDMyDQo+Pj4gYml0IGhvc3QpDQo+Pj4g
+K8KgwqDCoMKgwqDCoMKgwqAgKi8NCj4+PiArwqDCoMKgwqDCoMKgwqAgaWYgKGljb3VudF9l
+bmFibGVkKCkpIHsNCj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBtdHRjZ19lbmFibGVk
+ID0gT05fT0ZGX0FVVE9fT0ZGOw0KPj4+ICvCoMKgwqDCoMKgwqDCoCB9IGVsc2Ugew0KPj4+
+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIG10dGNnX2VuYWJsZWQgPSBtdHRjZ19zdXBwb3J0
+ZWQ7DQo+Pj4gK8KgwqDCoMKgwqDCoMKgIH0NCj4+PiArwqDCoMKgIH0NCj4+PiArwqDCoMKg
+IGlmIChtdHRjZ19lbmFibGVkID09IE9OX09GRl9BVVRPX09OICYmICFtdHRjZ19zdXBwb3J0
+ZWQpIHsNCj4+PiArwqDCoMKgwqDCoMKgwqAgd2Fybl9yZXBvcnQoIkd1ZXN0IG5vdCB5ZXQg
+Y29udmVydGVkIHRvIE1UVENHIC0gIg0KPj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCAieW91IG1heSBnZXQgdW5leHBlY3RlZCByZXN1bHRzIik7DQo+Pj4g
+K8KgwqDCoCB9DQo+Pj4gIMKgwqDCoMKgwqAgcGFnZV9pbml0KCk7DQo+Pj4gIMKgwqDCoMKg
+wqAgdGJfaHRhYmxlX2luaXQoKTsNCj4+PiBAQCAtMTQ0LDcgKzE0Niw3IEBAIHN0YXRpYyBj
+aGFyICp0Y2dfZ2V0X3RocmVhZChPYmplY3QgKm9iaiwgRXJyb3INCj4+PiAqKmVycnApDQo+
+Pj4gIMKgIHsNCj4+PiAgwqDCoMKgwqDCoCBUQ0dTdGF0ZSAqcyA9IFRDR19TVEFURShvYmop
+Ow0KPj4+IC3CoMKgwqAgcmV0dXJuIGdfc3RyZHVwKHMtPm10dGNnX2VuYWJsZWQgPyAibXVs
+dGkiIDogInNpbmdsZSIpOw0KPj4+ICvCoMKgwqAgcmV0dXJuIGdfc3RyZHVwKHMtPm10dGNn
+X2VuYWJsZWQgPT0gT05fT0ZGX0FVVE9fT04gPyAibXVsdGkiIDoNCj4+PiAic2luZ2xlIik7
+DQo+Pj4gIMKgIH0NCj4+PiAgwqAgc3RhdGljIHZvaWQgdGNnX3NldF90aHJlYWQoT2JqZWN0
+ICpvYmosIGNvbnN0IGNoYXIgKnZhbHVlLCBFcnJvcg0KPj4+ICoqZXJycCkNCj4+PiBAQCAt
+MTU1LDE0ICsxNTcsMTAgQEAgc3RhdGljIHZvaWQgdGNnX3NldF90aHJlYWQoT2JqZWN0ICpv
+YmosIGNvbnN0DQo+Pj4gY2hhciAqdmFsdWUsIEVycm9yICoqZXJycCkNCj4+PiAgwqDCoMKg
+wqDCoMKgwqDCoMKgIGlmIChpY291bnRfZW5hYmxlZCgpKSB7DQo+Pj4gIMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIGVycm9yX3NldGcoZXJycCwgIk5vIE1UVENHIHdoZW4gaWNvdW50
+IGlzIGVuYWJsZWQiKTsNCj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgIH0gZWxzZSB7DQo+Pj4g
+LSNpZm5kZWYgVEFSR0VUX1NVUFBPUlRTX01UVENHDQo+Pj4gLcKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgd2Fybl9yZXBvcnQoIkd1ZXN0IG5vdCB5ZXQgY29udmVydGVkIHRvIE1UVENHIC0g
+Ig0KPj4+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+ICJ5b3UgbWF5IGdldCB1bmV4cGVjdGVkIHJlc3VsdHMiKTsNCj4+PiAtI2VuZGlmDQo+Pj4g
+LcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcy0+bXR0Y2dfZW5hYmxlZCA9IHRydWU7DQo+Pj4g
+K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcy0+bXR0Y2dfZW5hYmxlZCA9IE9OX09GRl9BVVRP
+X09OOw0KPj4+ICDCoMKgwqDCoMKgwqDCoMKgwqAgfQ0KPj4+ICDCoMKgwqDCoMKgIH0gZWxz
+ZSBpZiAoc3RyY21wKHZhbHVlLCAic2luZ2xlIikgPT0gMCkgew0KPj4+IC3CoMKgwqDCoMKg
+wqDCoCBzLT5tdHRjZ19lbmFibGVkID0gZmFsc2U7DQo+Pj4gK8KgwqDCoMKgwqDCoMKgIHMt
+Pm10dGNnX2VuYWJsZWQgPSBPTl9PRkZfQVVUT19PRkY7DQo+Pj4gIMKgwqDCoMKgwqAgfSBl
+bHNlIHsNCj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgIGVycm9yX3NldGcoZXJycCwgIkludmFs
+aWQgJ3RocmVhZCcgc2V0dGluZyAlcyIsIHZhbHVlKTsNCj4+PiAgwqDCoMKgwqDCoCB9DQo+
+Pg0KPj4gV2hhdCBhcmUgd2UgZ2FpbmluZyBieSBtb3ZpbmcgdGhpcyB3YXJuaW5nPw0KPiAN
+Cj4gQmVmb3JlOiBkZWZhdWx0X210dGNnX2VuYWJsZWQoKSB3YXMgZGlyZWN0bHkgdXNpbmcg
+VEFSR0VUX1NVUFBPUlRTX01UVENHDQo+IGRlZmluaXRpb24sIHNvIHdlIGNvdWxkIGNhbGwg
+aXQgdG8gaW5pdGlhbGl6ZSBhIGRlZmF1bHQgdmFsdWUgaW4NCj4gdGNnX2FjY2VsX2luc3Rh
+bmNlX2luaXQoKS4NCj4gDQo+IEFmdGVyOiBjb25zaWRlcmluZyB0aGUgbmV4dCBwYXRjaCB3
+aGVyZSB3ZSBuZWVkIGEgQ1BVU3RhdGUgaW5pdGlhbGl6ZWQNCj4gdG8gZ2V0IFRDR0NQVU9w
+czo6bXR0Y2dfc3VwcG9ydGVkLCB3ZSBjYW4gbm90IHVzZSBpbnN0YW5jZV9pbml0KCksIHNv
+DQo+IHdlIGRlZmVyIHRvIHRjZ19pbml0X21hY2hpbmUoKSB3aGVyZSB3ZSBhY2Nlc3MgJmZp
+cnN0X2NwdS4NCj4gDQoNCk9rLCBtYWtlcyBzZW5zZS4NCkl0IG1pZ2h0IGJlIHdvcnRoIHRv
+IG1lbnRpb24gaW4gdGhlIGNvbW1pdCBtZXNzYWdlLCBhcyBpdCBzZWVtcyANCmluaXRpYWxs
+eSB0aGlzIGNoYW5nZSBpcyBtb3JlIGEgInBlcnNvbmFsIiBwcmVmZXJlbmNlLCB0aGFuIHNv
+bWV0aGluZyANCm5lZWRlZC4NCg0KPj4gQXJlIHRoZXJlIGNhc2VzIHdoZXJlIGl0IHdhcyBu
+b3QgcmVwb3J0ZWQgYmVmb3JlPw0KPiANCj4gTm8gaWRlYSwgSSdsbCBsZXQgQWxleCBhbnN3
+ZXIgdGhhdC4NCg0K
 
