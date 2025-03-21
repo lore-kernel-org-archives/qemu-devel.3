@@ -4,56 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8435FC36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 07:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F66C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 07:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvWX8-0003Ne-66; Fri, 21 Mar 2025 03:11:10 -0400
+	id 1tvWWu-0003Lk-7E; Fri, 21 Mar 2025 03:10:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1tvWX0-0003MX-6G; Fri, 21 Mar 2025 03:11:02 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1tvWWw-00085R-8B; Fri, 21 Mar 2025 03:11:01 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.163])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4ZJtlT1V9wz1f1L5;
- Fri, 21 Mar 2025 15:06:13 +0800 (CST)
-Received: from kwepemk500007.china.huawei.com (unknown [7.202.194.92])
- by mail.maildlp.com (Postfix) with ESMTPS id A00AE1800B1;
- Fri, 21 Mar 2025 15:10:46 +0800 (CST)
-Received: from huawei.com (10.246.99.19) by kwepemk500007.china.huawei.com
- (7.202.194.92) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 21 Mar
- 2025 15:10:45 +0800
-To: <qemu-devel@nongnu.org>
-CC: <stefanha@redhat.com>, <kwolf@redhat.com>, <fam@euphon.net>,
- <hreitz@redhat.com>, <alex.chen@huawei.com>, <chenjianfei3@huawei.com>,
- <eric.fangyi@huawei.com>, <luolongmin@huawei.com>, <mujinsheng@huawei.com>,
- <qemu-block@nongnu.org>, <qemu-stable@nongnu.org>, <renxuming@huawei.com>,
- <suxiaodong1@huawei.com>, <wangjian161@huawei.com>, <wangyan122@huawei.com>,
- <yebiaoxiang@huawei.com>, <zhuyangyang14@huawei.com>, <zoudongjie@huawei.com>
-Subject: [PATCH v2 1/2] io/block: Refactoring the bdrv_drained_begin()
- function and implement a timeout mechanism.
-Date: Fri, 21 Mar 2025 15:09:16 +0800
-Message-ID: <20250321070917.2889854-2-zoudongjie@huawei.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20250321070917.2889854-1-zoudongjie@huawei.com>
-References: <20250321070917.2889854-1-zoudongjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tvWWn-0003L8-NB
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 03:10:50 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tvWWk-0007iI-7r
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 03:10:49 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx367vEN1nBNWfAA--.54903S3;
+ Fri, 21 Mar 2025 15:10:39 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxPsfrEN1nFIdXAA--.60381S3;
+ Fri, 21 Mar 2025 15:10:38 +0800 (CST)
+Subject: Re: [PATCH v6 3/6] hw/loongarch/virt: Fix error handling in cpu unplug
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20250321031259.2419842-1-maobibo@loongson.cn>
+ <20250321031259.2419842-4-maobibo@loongson.cn> <87ecyq98y1.fsf@pond.sub.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <17142cf6-439c-b49d-2872-9a2a2b6b2cae@loongson.cn>
+Date: Fri, 21 Mar 2025 15:09:56 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <87ecyq98y1.fsf@pond.sub.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.246.99.19]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemk500007.china.huawei.com (7.202.194.92)
-Received-SPF: pass client-ip=45.249.212.35; envelope-from=zoudongjie@huawei.com;
- helo=szxga07-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+X-CM-TRANSID: qMiowMCxPsfrEN1nFIdXAA--.60381S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZrWUur1fZry5AFW5Cr1xWFX_yoW5Cry7pr
+ Z7t3WvkFyDAFy0v34Igry3tr10yrs7trW8X3yvyry5Aw4DXrn5tFWay3Wq9Fy7C3s293Wv
+ qw4rCFn8uFn8ZFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
+ 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+ KfnxnUUI43ZEXa7IU8w0eJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.608,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -68,272 +81,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zoudongjie <zoudongjie@huawei.com>
-From:  zoudongjie via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhu Yangyang <zhuyangyang14@huawei.com>
 
-The bdrv_drained_begin() function is a blocking function. In scenarios where network storage
-is used and network links fail, it may block for a long time.
-Therefore, we add a timeout parameter to control the duration of the block.
 
-Since bdrv_drained_begin() has been widely adopted, both bdrv_drained_begin()
-and bdrv_drained_begin_timeout() will be retained.
+On 2025/3/21 下午2:47, Markus Armbruster wrote:
+> Bibo Mao <maobibo@loongson.cn> writes:
+> 
+>> In function virt_cpu_unplug(), it will send cpu unplug message to
+>> interrupt controller extioi and ipi irqchip. If there is problem in
+>> this function, system should continue to run and keep state the same
+>> before cpu is removed.
+>>
+>> If error happends in cpu unplug stage, send cpu plug message to extioi
+>> and ipi irqchip to restore to previous stage, and then return immediately.
+>>
+>> Fixes: 2cd6857f6f5b (hw/loongarch/virt: Implement cpu unplug interface)
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index 8563967c8b..503362a69e 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -958,6 +958,8 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+>>       hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
+>>       if (err) {
+>>           error_propagate(errp, err);
+>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
+>> +                             &error_abort);
+>>           return;
+>>       }
+>>   
+>> @@ -965,6 +967,10 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+>>       hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
+>>       if (err) {
+>>           error_propagate(errp, err);
+>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
+>> +                             &error_abort);
+>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev,
+>> +                             &error_abort);
+>>           return;
+>>       }
+> 
+> virt_cpu_unplug() calls hotplug_handler_unplug() three times to notify
+> ipi, extioi, and acpi_get.  If any notification fails, virt_cpu_unplug()
+> calls hotplug_handler_plug() to "un-notify" the preceeding ones, if any.
+> This must not fail.
+> 
+> virt_cpu_plug() does it the other way round (see previous patch).
+> 
+> So, hotplug_handler_plug() must not fail in virt_cpu_unplug(), yet we
+> check for it to fail in virt_cpu_plug().
+> 
+> Can it really fail in virt_cpu_plug()?
+> 
+> If yes, why can't it fail in virt_cpu_unplug()?
+I do not know what is you meaning.
+In last email I said it was impossible. un-notify is for future use. And 
+you reply such as:
 
-Signed-off-by: Zhu Yangyang <zhuyangyang14@huawei.com>
----
- block/io.c               | 58 +++++++++++++++++++++++++++++++++-------
- include/block/aio-wait.h | 49 +++++++++++++++++++++++++++++++++
- include/block/block-io.h | 22 ++++++++++++++-
- util/aio-wait.c          |  5 ++++
- 4 files changed, 123 insertions(+), 11 deletions(-)
+*You assure us this can't happen today.  Because of that, broken error
+recovery is not an actual problem.
 
-diff --git a/block/io.c b/block/io.c
-index 1ba8d1aeea..912b76c4a4 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -255,6 +255,8 @@ typedef struct {
-     bool begin;
-     bool poll;
-     BdrvChild *parent;
-+    uint64_t timeout_ns;
-+    int ret;
- } BdrvCoDrainData;
- 
- /* Returns true if BDRV_POLL_WHILE() should go into a blocking aio_poll() */
-@@ -283,6 +285,10 @@ static bool bdrv_drain_poll_top_level(BlockDriverState *bs,
-     return bdrv_drain_poll(bs, ignore_parent, false);
- }
- 
-+static int bdrv_do_drained_begin_timeout(BlockDriverState *bs,
-+                                         BdrvChild *parent,
-+                                         bool poll,
-+                                         uint64_t timeout_ns);
- static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
-                                   bool poll);
- static void bdrv_do_drained_end(BlockDriverState *bs, BdrvChild *parent);
-@@ -296,7 +302,9 @@ static void bdrv_co_drain_bh_cb(void *opaque)
-     if (bs) {
-         bdrv_dec_in_flight(bs);
-         if (data->begin) {
--            bdrv_do_drained_begin(bs, data->parent, data->poll);
-+            data->ret = bdrv_do_drained_begin_timeout(bs, data->parent,
-+                                                      data->poll,
-+                                                      data->timeout_ns);
-         } else {
-             assert(!data->poll);
-             bdrv_do_drained_end(bs, data->parent);
-@@ -310,10 +318,11 @@ static void bdrv_co_drain_bh_cb(void *opaque)
-     aio_co_wake(co);
- }
- 
--static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
--                                                bool begin,
--                                                BdrvChild *parent,
--                                                bool poll)
-+static int coroutine_fn bdrv_co_yield_to_drain_timeout(BlockDriverState *bs,
-+                                                       bool begin,
-+                                                       BdrvChild *parent,
-+                                                       bool poll,
-+                                                       uint64_t timeout_ns)
- {
-     BdrvCoDrainData data;
-     Coroutine *self = qemu_coroutine_self();
-@@ -329,6 +338,8 @@ static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
-         .begin = begin,
-         .parent = parent,
-         .poll = poll,
-+        .timeout_ns = timeout_ns,
-+        .ret = 0
-     };
- 
-     if (bs) {
-@@ -342,16 +353,27 @@ static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
-     /* If we are resumed from some other event (such as an aio completion or a
-      * timer callback), it is a bug in the caller that should be fixed. */
-     assert(data.done);
-+    return data.ret;
- }
- 
--static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
--                                  bool poll)
-+static void coroutine_fn bdrv_co_yield_to_drain(BlockDriverState *bs,
-+                                                bool begin,
-+                                                BdrvChild *parent,
-+                                                bool poll)
-+{
-+    bdrv_co_yield_to_drain_timeout(bs, begin, parent, poll, 0);
-+}
-+
-+static int bdrv_do_drained_begin_timeout(BlockDriverState *bs,
-+                                         BdrvChild *parent,
-+                                         bool poll,
-+                                         uint64_t timeout_ns)
- {
-     IO_OR_GS_CODE();
- 
-     if (qemu_in_coroutine()) {
--        bdrv_co_yield_to_drain(bs, true, parent, poll);
--        return;
-+        return bdrv_co_yield_to_drain_timeout(bs, true, parent, poll,
-+                                              timeout_ns);
-     }
- 
-     GLOBAL_STATE_CODE();
-@@ -375,8 +397,17 @@ static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
-      * nodes.
-      */
-     if (poll) {
--        BDRV_POLL_WHILE(bs, bdrv_drain_poll_top_level(bs, parent));
-+        return BDRV_POLL_WHILE_TIMEOUT(bs,
-+                                       bdrv_drain_poll_top_level(bs, parent),
-+                                       timeout_ns);
-     }
-+    return 0;
-+}
-+
-+static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
-+                                  bool poll)
-+{
-+    bdrv_do_drained_begin_timeout(bs, parent, poll, 0);
- }
- 
- void bdrv_do_drained_begin_quiesce(BlockDriverState *bs, BdrvChild *parent)
-@@ -391,6 +422,13 @@ bdrv_drained_begin(BlockDriverState *bs)
-     bdrv_do_drained_begin(bs, NULL, true);
- }
- 
-+int coroutine_mixed_fn
-+bdrv_drained_begin_timeout(BlockDriverState *bs, uint64_t timeout_ns)
-+{
-+    IO_OR_GS_CODE();
-+    return bdrv_do_drained_begin_timeout(bs, NULL, true, timeout_ns);
-+}
-+
- /**
-  * This function does not poll, nor must any of its recursively called
-  * functions.
-diff --git a/include/block/aio-wait.h b/include/block/aio-wait.h
-index cf5e8bde1c..24c31df620 100644
---- a/include/block/aio-wait.h
-+++ b/include/block/aio-wait.h
-@@ -99,6 +99,53 @@ extern AioWait global_aio_wait;
-     qatomic_dec(&wait_->num_waiters);                              \
-     waited_; })
- 
-+/**
-+ * AIO_WAIT_WHILE_TIMEOUT:
-+ *
-+ * Refer to the implementation of AIO_WAIT_WHILE_INTERNAL,
-+ * the timeout parameter is added.
-+ * @timeout_ns: maximum duration to wait, in nanoseconds, except the value
-+ *              is unsigned, 0 means infinite.
-+ */
-+#define AIO_WAIT_WHILE_TIMEOUT(ctx, cond, timeout_ns) ({                 \
-+    int ret_ = 0;                                                        \
-+    uint64_t timeout_ = (timeout_ns);                                    \
-+    AioWait *wait_ = &global_aio_wait;                                   \
-+    AioContext *ctx_ = (ctx);                                            \
-+    AioContext *current_ctx_ = NULL;                                     \
-+    QEMUTimer timer_;                                                    \
-+    /* Increment wait_->num_waiters before evaluating cond. */           \
-+    qatomic_inc(&wait_->num_waiters);                                    \
-+    /* Paired with smp_mb in aio_wait_kick(). */                         \
-+    smp_mb__after_rmw();                                                 \
-+    if (ctx_ && in_aio_context_home_thread(ctx_)) {                      \
-+        current_ctx_ = ctx_;                                             \
-+    } else {                                                             \
-+        assert(qemu_get_current_aio_context() ==                         \
-+               qemu_get_aio_context());                                  \
-+        current_ctx_ = qemu_get_aio_context();                           \
-+    }                                                                    \
-+    if (timeout_ > 0) {                                                  \
-+        timer_init_full(&timer_, &current_ctx_->tlg,                     \
-+                        QEMU_CLOCK_REALTIME,                             \
-+                        SCALE_NS, 0, aio_wait_timer_cb, NULL);           \
-+        timer_mod_ns(&timer_,                                            \
-+                     qemu_clock_get_ns(QEMU_CLOCK_REALTIME) +            \
-+                     timeout_);                                          \
-+    }                                                                    \
-+    while ((cond)) {                                                     \
-+        aio_poll(current_ctx_, true);                                    \
-+        if (timeout_ > 0 && !timer_pending(&timer_)) {                   \
-+            ret_ = -ETIMEDOUT;                                           \
-+            break;                                                       \
-+        }                                                                \
-+    }                                                                    \
-+    if (timeout_ > 0) {                                                  \
-+        timer_del(&timer_);                                              \
-+    }                                                                    \
-+    qatomic_dec(&wait_->num_waiters);                                    \
-+    ret_; })
-+
- #define AIO_WAIT_WHILE(ctx, cond)                                  \
-     AIO_WAIT_WHILE_INTERNAL(ctx, cond)
- 
-@@ -149,4 +196,6 @@ static inline bool in_aio_context_home_thread(AioContext *ctx)
-     }
- }
- 
-+void aio_wait_timer_cb(void *opaque);
-+
- #endif /* QEMU_AIO_WAIT_H */
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index b49e0537dd..844e9cf350 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -354,6 +354,11 @@ bdrv_co_copy_range(BdrvChild *src, int64_t src_offset,
-     AIO_WAIT_WHILE(bdrv_get_aio_context(bs_),              \
-                    cond); })
- 
-+#define BDRV_POLL_WHILE_TIMEOUT(bs, cond, timeout_ns) ({   \
-+    BlockDriverState *bs_ = (bs);                          \
-+    AIO_WAIT_WHILE_TIMEOUT(bdrv_get_aio_context(bs_),      \
-+                           cond, timeout_ns); })
-+
- void bdrv_drain(BlockDriverState *bs);
- 
- int co_wrapper_mixed_bdrv_rdlock
-@@ -432,7 +437,22 @@ bdrv_drain_poll(BlockDriverState *bs, BdrvChild *ignore_parent,
- void bdrv_drained_begin(BlockDriverState *bs);
- 
- /**
-- * bdrv_do_drained_begin_quiesce:
-+ * bdrv_drained_begin_timeout:
-+ *
-+ * Added timeout parameter for bdrv_drained_begin() to make a time limited.
-+ *
-+ * @timeout_ns: maximum duration to wait; 0 means infinite, equal to call
-+ *              bdrv_drained_begin().
-+ *
-+ * Returns: 0 if succeeded; -ETIMEDOUT when a timeout occurs.
-+ *
-+ * Note: when the timeout fails, we've already begin aquiesced section, so we
-+ * still need to call bdrv_drained_end() to end the quiescent section.
-+ */
-+int bdrv_drained_begin_timeout(BlockDriverState *bs, uint64_t timeout_ns);
-+
-+/**
-+ * bdrv_do_drained_badegin_quiesce:
-  *
-  * Quiesces a BDS like bdrv_drained_begin(), but does not wait for already
-  * running requests to complete.
-diff --git a/util/aio-wait.c b/util/aio-wait.c
-index b5336cf5fd..64c3714fb8 100644
---- a/util/aio-wait.c
-+++ b/util/aio-wait.c
-@@ -84,3 +84,8 @@ void aio_wait_bh_oneshot(AioContext *ctx, QEMUBHFunc *cb, void *opaque)
-     aio_bh_schedule_oneshot(ctx, aio_wait_bh, &data);
-     AIO_WAIT_WHILE_UNLOCKED(NULL, !data.done);
- }
-+
-+void aio_wait_timer_cb(void *opaque)
-+{
-+    /* The point is to make AIO_WAIT_WHILE_TIMEOUT()'s aio_poll() return */
-+}
--- 
-2.33.0
+However, if things change some day so it can happen, broken error
+recovery becomes an actual problem.
+
+so, broken error recovery just "for future use" is actually just for
+silent future breakage.
+
+But is it broken?  This is what I'm trying to find out with my "what
+happens if" question.
+
+If it is broken, then passing &error_abort would likely be less bad:
+crash instead of silent breakage.  Also makes it completely obvious in
+the code that these errors are not handled, whereas broken error
+handling looks like it is until you actually think about it.*
+
+Sorry for my bad English, so what is your option about here?
+
+Regards
+Bibo Mao
+> 
+> Same questions for hotplug_handler_unplug().
+> 
 
 
