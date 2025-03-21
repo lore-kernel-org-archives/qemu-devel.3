@@ -4,69 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E4AC36002
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D74C36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:46:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvbk8-0002IO-LN; Fri, 21 Mar 2025 08:44:57 -0400
+	id 1tvbli-0004KZ-R3; Fri, 21 Mar 2025 08:46:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tvbjr-000242-QS
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:44:43 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tvblG-0004AS-R4
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:46:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tvbjp-00064J-Jo
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:44:39 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tvblF-0006V4-2M
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:46:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742561074;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uVrBRAu+ap8zzf0lzr+Lu65Jg9I+GR9/6N+U7337PBU=;
- b=ZaI5qvg72BiuKY9Ps/sQlFjw9HfQDmnE3S8Dnmjk8S1Ft6VaJJvsM5eOYZdTciOU+I9Ux/
- iTpzgqAUu5Byln09draIASXK8uJr2q+KmXcWFIDN/Trf2Hk5dAOvbsQD1uBUjuNrhNGhTH
- 2hiEHrcrUrpSEEwEyhGDoE1m1Gv/vYs=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-g8vysZIHMr6NOghjoiZj3Q-1; Fri, 21 Mar 2025 08:44:32 -0400
-X-MC-Unique: g8vysZIHMr6NOghjoiZj3Q-1
-X-Mimecast-MFC-AGG-ID: g8vysZIHMr6NOghjoiZj3Q_1742561072
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ac287f28514so189675266b.0
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 05:44:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742561071; x=1743165871;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uVrBRAu+ap8zzf0lzr+Lu65Jg9I+GR9/6N+U7337PBU=;
- b=gpF1sKkpdgsoghW/nK5DZZ8/XUIeQD0opic+BCVHKczx8t/8Boj4tEzcHl2qg0tP3e
- wZbRkWax8AGvoXsD3KmWj2FSgXhFNWs2ZT00IRMwYsh0wYJCREL2ta1mpLntaFXPuEBK
- mGVEgh9PfX+XYrp1922Y2KV5Ui+oHfJEcaKxnnufibkQcidXRFcDJuLyPlqouOBkfV1D
- XqQOXGzlavJzA8FgndPTmFXSnpdSIxOm9BQ4juPT0DhLjTJMnyuYXTDgGPn2NfwkfeHf
- xfYKmSg2p1Iuar6drl6UeIJJcqUE6smGiSMq58t40gh4ym6wUS2Ov+9Uu006LeHRgKi6
- EBMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcqffVIb4f9J0wHnh/kgpovorCbVoSBu08qskZ7n2sHA+w4vYwvD073MioiGqwg7nd4DWl/9SLqPop@nongnu.org
-X-Gm-Message-State: AOJu0YwO0/p5AMs0qmanzH9zjlbHhakq7Yhh5Mi9j3H/bw0HkVaxbR/m
- zZctS7Waattplgg23D6nd85rXXkgFcyKzYkVDox9axa6vJegP4d2XwyT5agZrhd6hCRXmg972xC
- 0axHGn9kIr5vnWnk+ti8zPRp8vXszaWcDaC1VUOh89kuzOZ4SWcTBH1/eAJx7pgE7UgIVk6+av6
- GIdVo/YA8ShE9xI2fYxnkDQXW0Bgg=
-X-Gm-Gg: ASbGncuFH+f/FmATc48ECqfqwghmz5YkK7l9lfR93be+TQpp1HoUNZHZQh7Yt7L8tLq
- 8OxDPJ8xDnd8yI+ee6b45r9mLRk9wx9PnjT954H78DWmrD3sRI756ua9Cf7yZgcs2v9848cvwMX
- W5KTfYcYzFdsOSX23epNXWw2AX
-X-Received: by 2002:a17:907:97d6:b0:ac2:9683:ad2c with SMTP id
- a640c23a62f3a-ac3f25412cdmr345170866b.57.1742561071470; 
- Fri, 21 Mar 2025 05:44:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0ekd48NDwI0ETOgwGXhibbygDfqjCHbGE7JSZgez52TFJX+8JcN6beSlGvHJVt7TMrEqccCgj9bnkDRmZAt8=
-X-Received: by 2002:a17:907:97d6:b0:ac2:9683:ad2c with SMTP id
- a640c23a62f3a-ac3f25412cdmr345167166b.57.1742561071058; Fri, 21 Mar 2025
- 05:44:31 -0700 (PDT)
-MIME-Version: 1.0
+ s=mimecast20190719; t=1742561164;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=82wE7nZ1yarYIxypEDNLJWzDvSoFOAKz+O7c/69pmHA=;
+ b=K837F8Syc/+vhu/8LZJmwn/A7TvtQ+uzLzwtQUZNH33brPNdtArJIh7fV4ok2+6KoOkqiD
+ V2bAjiR6piU/TnybbkFqaDSINhifG1JcnA8jzflIG7Pj9pDrFCNLEvla9aJwpikKXOHjNw
+ X4QgYj3TQ/+J+i5ylD7gGIbdrPfoTAI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-vL6ldYQhOf-6aNzhyiQ5Ug-1; Fri,
+ 21 Mar 2025 08:46:00 -0400
+X-MC-Unique: vL6ldYQhOf-6aNzhyiQ5Ug-1
+X-Mimecast-MFC-AGG-ID: vL6ldYQhOf-6aNzhyiQ5Ug_1742561159
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99BB618DB6D3; Fri, 21 Mar 2025 12:45:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.52])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECE47192ED65; Fri, 21 Mar 2025 12:45:52 +0000 (UTC)
+Date: Fri, 21 Mar 2025 12:45:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gerd Hoffman <kraxel@redhat.com>
+Cc: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
+ Alexander Graf <graf@amazon.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <Z91ffa53yRxXkJop@redhat.com>
 References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
  <Z9LeILiEU5GfEHrl@8bytes.org>
  <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
@@ -77,34 +72,20 @@ References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
  <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
  <Z9vSeF67fNazkxBh@8bytes.org>
  <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Fri, 21 Mar 2025 18:14:18 +0530
-X-Gm-Features: AQ5f1JpqpR4hpMMrV6Dxfnzv8woVqXygI_PEvtDbjer7oCd0yUy6ZeVEtl65ocM
-Message-ID: <CAK3XEhNeB29eaPxZ_1Cc7WfEzOGZZPcvTc5uC1XAdtG0uNfDRw@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Gerd Hoffman <kraxel@redhat.com>
-Cc: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, 
- Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000a3f6120630d99d36"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,155 +100,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a3f6120630d99d36
-Content-Type: text/plain; charset="UTF-8"
-
-On Fri, 21 Mar, 2025, 3:38 pm Gerd Hoffman, <kraxel@redhat.com> wrote:
-
+On Fri, Mar 21, 2025 at 11:08:11AM +0100, Gerd Hoffman wrote:
 >   Hi,
->
+> 
 > > >      While digging around in the igvm spec I've seen there is the
 > > >      concept of 'parameters'.  Can this be used to pass on the memory
-> > >      location of kernel + initrd + cmdline?  Maybe the kernel hashes
-> too?
-> >
+> > >      location of kernel + initrd + cmdline?  Maybe the kernel hashes too?
+> > 
 > > The find the locations of the kernel, initrd, cmdline, ... I think IGVM
 > > parameters, either directly or (preferably indirectly) are a good
 > > solution. By "indirectly" I mean to put these regions on a separate and
 > > measured page which also contains the region hashes.
->
+> 
 > regions and hashes should be separate I think.  The regions are not
 > necessarily fixed, the physical memory location where things have been
 > loaded to can change.
->
+> 
 > But also see my other reply.  I'm not convinced any more carrying
 > forward the hashes logic makes much sense.
->
+> 
 > > >  (2) Will the igvm be generated on the fly from FUKI data?  Or should
 > > >      the distros ship igvm images with firmware + kernel + initrd?
-> >
+> > 
 > > My preference would be that distros ship the tooling and components to
 > > build IGVM files and build them during kernel update. If a distro comes
 > > up with a generic initrd+cmdline it can also ship pre-built IGVM files.
->
+> 
 > Working with the (F)UKI instead has the advantage that we can make use
 > of the secure boot signature, with a workflow along these lines:
->
+> 
 > (distro) build:
 >  * Embed the firmware as igvm inside the UKI.
 >  * Sign the UKI.
->
+> 
 > first vm launch:
 >  * Load the complete UKI.
 >  * Pass on (a) the igvm section and (b) the UKI (including signature)
 >    to the vmfwupdate device.
->
+> 
 > vmwupdate device:
 >  * loads the igvm image.
 >  * passes on the UKI location (as igvm parameter?).
->
+> 
 > second vm launch:
 >  * firmware checks UKI signature.
 >  * firmware (optionally) measures UKI into vTPM.
 >  * firmware launches UKI.
->
+
+> 
 > Going ship the distro kernel as igvm image would work too.  Will
 > simplify the measurement pre-calculation.  Also there is no need to pass
 > around any parameters, everything (how the firmware finds the UKI etc)
 > can be arranged at igvm build time then.  Disadvantage: This introduces
 > a completely new boot workflow.  Will probably need a new set of cloud
 > images exclusively for the BYOF case.
->
 
-What does all this mean for the hypervisor interface ?
+Having a completely different boot workflow & images for CVM BYOF that
+does not involve/consume existing UKIs & addons feels pretty undesirable
+to me.
 
->
+If the baseline is that the distro/user is using UKIs for everything,
+and then they want to do BYOF, that change should involve as little
+difference as possible to pull firmware into the mix. Your first
+workflow example with FUKI looks like it would satisfy that, but
+switching to bundle the kernel/initrd/cmdline directly in the IGVM
+would not.
 
---000000000000a3f6120630d99d36
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 21 Mar, 2025, 3:38 pm Ge=
-rd Hoffman, &lt;<a href=3D"mailto:kraxel@redhat.com">kraxel@redhat.com</a>&=
-gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0=
- .8ex;border-left:1px #ccc solid;padding-left:1ex">=C2=A0 Hi,<br>
-<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 While digging around in the igvm spec I&#39;v=
-e seen there is the<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 concept of &#39;parameters&#39;.=C2=A0 Can th=
-is be used to pass on the memory<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 location of kernel + initrd + cmdline?=C2=A0 =
-Maybe the kernel hashes too?<br>
-&gt; <br>
-&gt; The find the locations of the kernel, initrd, cmdline, ... I think IGV=
-M<br>
-&gt; parameters, either directly or (preferably indirectly) are a good<br>
-&gt; solution. By &quot;indirectly&quot; I mean to put these regions on a s=
-eparate and<br>
-&gt; measured page which also contains the region hashes.<br>
-<br>
-regions and hashes should be separate I think.=C2=A0 The regions are not<br=
->
-necessarily fixed, the physical memory location where things have been<br>
-loaded to can change.<br>
-<br>
-But also see my other reply.=C2=A0 I&#39;m not convinced any more carrying<=
-br>
-forward the hashes logic makes much sense.<br>
-<br>
-&gt; &gt;=C2=A0 (2) Will the igvm be generated on the fly from FUKI data?=
-=C2=A0 Or should<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 the distros ship igvm images with firmware + =
-kernel + initrd?<br>
-&gt; <br>
-&gt; My preference would be that distros ship the tooling and components to=
-<br>
-&gt; build IGVM files and build them during kernel update. If a distro come=
-s<br>
-&gt; up with a generic initrd+cmdline it can also ship pre-built IGVM files=
-.<br>
-<br>
-Working with the (F)UKI instead has the advantage that we can make use<br>
-of the secure boot signature, with a workflow along these lines:<br>
-<br>
-(distro) build:<br>
-=C2=A0* Embed the firmware as igvm inside the UKI.<br>
-=C2=A0* Sign the UKI.<br>
-<br>
-first vm launch:<br>
-=C2=A0* Load the complete UKI.<br>
-=C2=A0* Pass on (a) the igvm section and (b) the UKI (including signature)<=
-br>
-=C2=A0 =C2=A0to the vmfwupdate device.<br>
-<br>
-vmwupdate device:<br>
-=C2=A0* loads the igvm image.<br>
-=C2=A0* passes on the UKI location (as igvm parameter?).<br>
-<br>
-second vm launch:<br>
-=C2=A0* firmware checks UKI signature.<br>
-=C2=A0* firmware (optionally) measures UKI into vTPM.<br>
-=C2=A0* firmware launches UKI.<br>
-<br>
-Going ship the distro kernel as igvm image would work too.=C2=A0 Will<br>
-simplify the measurement pre-calculation.=C2=A0 Also there is no need to pa=
-ss<br>
-around any parameters, everything (how the firmware finds the UKI etc)<br>
-can be arranged at igvm build time then.=C2=A0 Disadvantage: This introduce=
-s<br>
-a completely new boot workflow.=C2=A0 Will probably need a new set of cloud=
-<br>
-images exclusively for the BYOF case.<br></blockquote></div></div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">What does all this mean for the hyper=
-visor interface ?</div><div dir=3D"auto"><div class=3D"gmail_quote gmail_qu=
-ote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex=
-;border-left:1px #ccc solid;padding-left:1ex"></blockquote></div></div></di=
-v>
-
---000000000000a3f6120630d99d36--
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
