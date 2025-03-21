@@ -4,73 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2D8C35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 08:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C2EBC35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 08:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvXdx-00068r-Ep; Fri, 21 Mar 2025 04:22:17 -0400
+	id 1tvXf5-0006mZ-GN; Fri, 21 Mar 2025 04:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tvXdt-00068d-Az
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:22:13 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tvXdp-0008Od-PX
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:22:13 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axz3OtId1nIuifAA--.7174S3;
- Fri, 21 Mar 2025 16:22:05 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBx3MSmId1n56JXAA--.56747S3;
- Fri, 21 Mar 2025 16:22:03 +0800 (CST)
-Subject: Re: [PATCH v6 3/6] hw/loongarch/virt: Fix error handling in cpu unplug
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-References: <20250321031259.2419842-1-maobibo@loongson.cn>
- <20250321031259.2419842-4-maobibo@loongson.cn> <87ecyq98y1.fsf@pond.sub.org>
- <87d1b58e-1b8b-f582-753b-574c4ba44a6b@loongson.cn>
- <87ldsy7sry.fsf@pond.sub.org>
- <ff30bac6-9004-0ba2-505a-3406e66623da@loongson.cn>
- <87h63m6c1q.fsf@pond.sub.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <3d9a0037-fad6-4774-e773-45b8bf8301c4@loongson.cn>
-Date: Fri, 21 Mar 2025 16:21:19 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvXf3-0006m1-Jv
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:23:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvXez-0001Ev-Cf
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:23:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742545396;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HyU3kp9o4PG0IjggR3EG2Wq7dzmm3PQDCEB8ncoYdng=;
+ b=QG7tSX6ODsPp2LtBFViz4WgXLevz0g4NPPciu+JcLBsNmqxVhW4D1GWKNQRwRc1kuOmREq
+ sJHNjLhGF8/09dA+9ZsoyD/YTnn/mwP9FzDhwSQpXCRXZEyueRKCkGv95gNA09WNpP76nr
+ 2hnr1urc7c6Sf8QGjFtllRoP2c9TnXk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-scG0tmc7MkyUFYSTkiuv_w-1; Fri,
+ 21 Mar 2025 04:23:10 -0400
+X-MC-Unique: scG0tmc7MkyUFYSTkiuv_w-1
+X-Mimecast-MFC-AGG-ID: scG0tmc7MkyUFYSTkiuv_w_1742545388
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 46109195606E; Fri, 21 Mar 2025 08:23:08 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.38])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D3DDE3001D16; Fri, 21 Mar 2025 08:23:01 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 39B461800390; Fri, 21 Mar 2025 09:22:59 +0100 (CET)
+Date: Fri, 21 Mar 2025 09:22:59 +0100
+From: Gerd Hoffman <kraxel@redhat.com>
+To: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+Cc: Alexander Graf <graf@amazon.com>, Ani Sinha <anisinha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <mimxt26hwxn4kkdt6fgx4dpuejx2667edfenx6jirpuxtnkfqz@r3uybu6g5e44>
+References: <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <6684f169-29d6-4f46-b274-1efd4c191b21@amazon.com>
+ <ok6u7exmwmh7qsahp5o3udnbbzbsr2km22kpqod37t6mdsywcs@yhk2whhakl63>
+ <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
+ <Z9vTEoweLUsmxWMY@8bytes.org>
 MIME-Version: 1.0
-In-Reply-To: <87h63m6c1q.fsf@pond.sub.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MSmId1n56JXAA--.56747S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3JF4DJw4xtryrZFWrWrW5XFc_yoWxuF4fpF
- Wkt3WDKFyDZFyjyw1Ivr98tF10yrs7JrWUXw1Dtr15Jw4qgr1qvFW3Awn09rWxC340qa1F
- qr45GF9xZFnYkFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r4a6rW5MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
- KfnxnUUI43ZEXa7IU82-e7UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.608,
+In-Reply-To: <Z9vTEoweLUsmxWMY@8bytes.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,195 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/3/21 下午4:08, Markus Armbruster wrote:
-> bibo mao <maobibo@loongson.cn> writes:
+On Thu, Mar 20, 2025 at 09:34:26AM +0100, J�rg R�del wrote:
+> On Tue, Mar 18, 2025 at 12:11:02PM +0100, Gerd Hoffman wrote:
+> > Open questions:
+> > 
+> >  - Does the idea to use igvm parameters for the kernel hashes makes
+> >    sense?  Are parameters part of the launch measurement?
 > 
->> On 2025/3/21 下午3:21, Markus Armbruster wrote:
->>> bibo mao <maobibo@loongson.cn> writes:
->>>
->>>> +Igor
->>>>
->>>>
->>>> On 2025/3/21 下午2:47, Markus Armbruster wrote:
->>>>> Bibo Mao <maobibo@loongson.cn> writes:
->>>>>
->>>>>> In function virt_cpu_unplug(), it will send cpu unplug message to
->>>>>> interrupt controller extioi and ipi irqchip. If there is problem in
->>>>>> this function, system should continue to run and keep state the same
->>>>>> before cpu is removed.
->>>>>>
->>>>>> If error happends in cpu unplug stage, send cpu plug message to extioi
->>>>>> and ipi irqchip to restore to previous stage, and then return immediately.
->>>>>>
->>>>>> Fixes: 2cd6857f6f5b (hw/loongarch/virt: Implement cpu unplug interface)
->>>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>>>> ---
->>>>>>     hw/loongarch/virt.c | 6 ++++++
->>>>>>     1 file changed, 6 insertions(+)
->>>>>>
->>>>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->>>>>> index 8563967c8b..503362a69e 100644
->>>>>> --- a/hw/loongarch/virt.c
->>>>>> +++ b/hw/loongarch/virt.c
->>>>>> @@ -958,6 +958,8 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
->>>>>>         hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
->>>>>>         if (err) {
->>>>>>             error_propagate(errp, err);
->>>>>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
->>>>>> +                             &error_abort);
->>>>>>             return;
->>>>>>         }
->>>>>>     
->>>>>> @@ -965,6 +967,10 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
->>>>>>         hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
->>>>>>         if (err) {
->>>>>>             error_propagate(errp, err);
->>>>>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
->>>>>> +                             &error_abort);
->>>>>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev,
->>>>>> +                             &error_abort);
->>>>>>             return;
->>>>>>         }
->>>>>
->>>>> virt_cpu_unplug() calls hotplug_handler_unplug() three times to notify
->>>>> ipi, extioi, and acpi_get.  If any notification fails, virt_cpu_unplug()
->>>>> calls hotplug_handler_plug() to "un-notify" the preceeding ones, if any.
->>>>> This must not fail.
->>>>>
->>>>> virt_cpu_plug() does it the other way round (see previous patch).
->>>>>
->>>>> So, hotplug_handler_plug() must not fail in virt_cpu_unplug(), yet we
->>>>> check for it to fail in virt_cpu_plug().
->>>>>
->>>>> Can it really fail in virt_cpu_plug()?
->>>>>
->>>>> If yes, why can't it fail in virt_cpu_unplug()?
->>>> you can check function acpi_cpu_plug_cb()/loongarch_ipi_cpu_plug(), that
->>>> is cpuplug callback for acpi_ged and ipi. it will not fail.
->>>>
->>>> If *virt_cpu_pre_plug()* pass, it will succeed.
->>>>
->>>> Regards
->>>> Bibo Mao
->>>>
->>>>>
->>>>> Same questions for hotplug_handler_unplug().
->>>
->>> Let me restate my argument.
->>>
->>> We call hotplug_handler_plug() on the happy path, and on error recovery
->>> paths.  Four cases:
->>>
->>> 1. Can fail on the happy path
->>>
->>>      Error recovery is required.
->>>
->>> 1.1 Can fail on the error recovery path
->>>
->>>       Error recovery is required, but broken.
->>>
->>> 1.2 Can't fail on the error recovery path
->>>
->>>       Error recovery is required and works, but why it works is not
->>>       obvious.  Deserves a comment explaining why hotplug_handler_plug()
->>>       can't fail here even though it can fail on the happy path next door.
->>>
->>> 2. Can't fail on the happy path
->>>
->>>      Error recovery is unreachable.
->>>
->>> 2.1 Can fail on the error recovery path
->>>
->>>       Error recovery is unreachable and broken.  Possibly a time bomb, and
->>>       possibly misleading readers.
->>>
->>> 2.2 Can't fail on the error recovery path
->>>
->>>       Error recovery is unreachable and would work, but why it would work
->>>       is again a not obvious.
->>>
->>> Which of the four cases is it?
->> By my understanding, it is "2. Can't fail on the happy path",  and Error
->> recovery is unreachable.
+> Parameters itself are fully measured, their presence is, but not their
+> data. This is to keep the same launch measurements across different
+> platform configurations.
 > 
-> Got it.
-> 
->> I have said that it is impossible and recovery is only for future use.
->>
->> do you mean recovery should be removed? And directly &error_abort is
->> used in virt_cpu_plug() such as:
->> static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->>                             DeviceState *dev, Error **errp)
->> {
->>     if (lvms->ipi) {
->>       hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &error_abort);
-> 
-> Yes, I prefer this.  Here's why.
-This is ok, however I do not think there is obvious advantage. V6 is ok 
-also, there is recovery path only that recovery has problem, system will 
-crash, through it is impossible now.
+> So for hashes it is best to put some on some measured page and let the
+> parameters point to it.
 
-Maybe someone jumps out and say that there is error handling in cpu 
-hotplug, however no such in pc_memory_plug(), why does not LoongArch in 
-such way. If so, there will endless discussion.
+Had a look at the kernel hashes details this week.
 
-void x86_cpu_plug(HotplugHandler *hotplug_dev,
-                   DeviceState *dev, Error **errp)
-{
-     CPUArchId *found_cpu;
-     Error *local_err = NULL;
-     X86CPU *cpu = X86_CPU(dev);
-     X86MachineState *x86ms = X86_MACHINE(hotplug_dev);
+So, the story is this: It's essentially a private arrangement between
+ovmf (the amdsev build variant only) and qemu.  The hashes are placed in
+a specific page, together with "launch secrets" (that is not the sev-snp
+"secrets" page).  That page is part of the lanuch measurement.  That
+effectively makes the kernel + initrd + cmdline part of the launch
+measurement too (ovmf verifies the hashes), but without the relatively
+slow secure processor hashing kernel + initrd + cmdline, which reduces
+the time needed to launch a VM.
 
-     if (x86ms->acpi_dev) {
-         hotplug_handler_plug(x86ms->acpi_dev, dev, &local_err);
+The "launch secret" is intended to hold things like a luks secret to
+unlock the root filesystem.  OVMF doesn't touch it but reserves the page
+and registers a EFI table for it so the linux kernel can find it.
 
-static void pc_memory_plug(HotplugHandler *hotplug_dev,
-                            DeviceState *dev, Error **errp)
-{
-     PCMachineState *pcms = PC_MACHINE(hotplug_dev);
-     X86MachineState *x86ms = X86_MACHINE(hotplug_dev);
-     MachineState *ms = MACHINE(hotplug_dev);
-     bool is_nvdimm = object_dynamic_cast(OBJECT(dev), TYPE_NVDIMM);
+As far I know these are more experimental bits than something actually
+used in production.  It's also clearly a pre-UKI design.  That IMHO
+opens up the question whenever we actually want carry forward with that,
+or if we better check out what alternatives we have.  We'll have a
+signed UKI after all, so going for secure boot and/or measured boot for
+the UKI verification looks attractive compared to passing around hashes
+for the elements inside the UKI.
 
-     pc_dimm_plug(PC_DIMM(dev), MACHINE(pcms));
+Not fully sure what to do about the "launch secrets".  IIRC the initial
+design of this is for sev-es, i.e. pre-snp, so maybe the sev-snp secrets
+page can be used instead.  I see the spec has 0x60 bytes (offset 0xa0)
+reserved for guest os usage.  In any case this probably is only needed
+as temporary stopgap until we have a complete vTPM implementation for
+the svsm.
 
-     if (is_nvdimm) {
-         nvdimm_plug(ms->nvdimms_state);
-     }
-
-     hotplug_handler_plug(x86ms->acpi_dev, dev, &error_abort);
-}
-
-Regards
-Bibo Mao
-> 
-> Error recovery that is unreachable now but might become reachable at
-> some future time is untestable now.  Mind, this does not necessarily
-> make it a bad idea by itself.  But there's more.
-> 
-> Anything that makes this error recovery reachable either breaks it or
-> makes correctness locally unobvious.  Why?  To make it reachable, plug /
-> unplug must be able to fail on the happy path.  But then they either can
-> fail on the error recovery path as well (which breaks error recovery),
-> or they can't fail there for reasons that are not locally obvious.
-> 
-> This sets a trap for readers.  An attentive reader will see the problem
-> (like I did), but to see why the code is not broken right now will take
-> digging (like we did together).  And after such digging, we're left with
-> a queasy feeling about robustness of the code (like we are now).
-> 
-> Passing &error_abort on the happy path avoids all this.  Instead it
-> clearly tells the reader that this is not expected to fail.
-> 
-> If failure becomes possible at some future time, this should crash in
-> testing.  If we neglect to test the new failure (and we really
-> shouldn't), we crash on error in production right away instead of
-> risking botched error recovery messing up the program's state.
-> Both are bad outcomes, but which one's less bad I find impossible to
-> predict.
-> 
+take care,
+  Gerd
 
 
