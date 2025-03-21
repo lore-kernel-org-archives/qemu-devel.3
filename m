@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAC7C28B30
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 03:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3FCBC28B30
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 03:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvSoz-0002Nv-1W; Thu, 20 Mar 2025 23:13:21 -0400
+	id 1tvSow-0002Mt-Tn; Thu, 20 Mar 2025 23:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tvSor-0002L5-Hj
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 23:13:14 -0400
+ id 1tvSor-0002L4-Hb
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 23:13:13 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tvSom-0005Kb-PC
+ (envelope-from <maobibo@loongson.cn>) id 1tvSon-0005LB-4b
  for qemu-devel@nongnu.org; Thu, 20 Mar 2025 23:13:12 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Axz3NB2dxnCJWfAA--.6705S3;
- Fri, 21 Mar 2025 11:13:05 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxaeFC2dxnEJWfAA--.28834S3;
+ Fri, 21 Mar 2025 11:13:06 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxLcU82dxnczRXAA--.54409S5;
- Fri, 21 Mar 2025 11:13:04 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCxLcU82dxnczRXAA--.54409S7;
+ Fri, 21 Mar 2025 11:13:05 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
 	Markus Armbruster <armbru@redhat.com>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v6 3/6] hw/loongarch/virt: Fix error handling in cpu unplug
-Date: Fri, 21 Mar 2025 11:12:56 +0800
-Message-Id: <20250321031259.2419842-4-maobibo@loongson.cn>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 5/6] target/loongarch: Remove unnecessary temporary
+ variable assignment
+Date: Fri, 21 Mar 2025 11:12:58 +0800
+Message-Id: <20250321031259.2419842-6-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250321031259.2419842-1-maobibo@loongson.cn>
 References: <20250321031259.2419842-1-maobibo@loongson.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxLcU82dxnczRXAA--.54409S5
+X-CM-TRANSID: qMiowMCxLcU82dxnczRXAA--.54409S7
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,44 +69,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In function virt_cpu_unplug(), it will send cpu unplug message to
-interrupt controller extioi and ipi irqchip. If there is problem in
-this function, system should continue to run and keep state the same
-before cpu is removed.
+Temporary variable ret is assigned at last line and return, it can
+be removed and return directly.
 
-If error happends in cpu unplug stage, send cpu plug message to extioi
-and ipi irqchip to restore to previous stage, and then return immediately.
-
-Fixes: 2cd6857f6f5b (hw/loongarch/virt: Implement cpu unplug interface)
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/loongarch/virt.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/loongarch/tcg/tlb_helper.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 8563967c8b..503362a69e 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -958,6 +958,8 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
-     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
-     if (err) {
-         error_propagate(errp, err);
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
-+                             &error_abort);
-         return;
-     }
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 646dbf59de..182881a237 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -543,7 +543,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+                           target_ulong level, uint32_t mem_idx)
+ {
+     CPUState *cs = env_cpu(env);
+-    target_ulong badvaddr, index, phys, ret;
++    target_ulong badvaddr, index, phys;
+     uint64_t dir_base, dir_width;
  
-@@ -965,6 +967,10 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
-     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
-     if (err) {
-         error_propagate(errp, err);
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
-+                             &error_abort);
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev,
-+                             &error_abort);
-         return;
-     }
+     if (unlikely((level == 0) || (level > 4))) {
+@@ -571,8 +571,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << 3;
+-    ret = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+-    return ret;
++    return ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+ }
  
+ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
 -- 
 2.39.3
 
