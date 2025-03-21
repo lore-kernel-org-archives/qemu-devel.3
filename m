@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B9BC35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE69C35FFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvVpz-0001HK-QS; Fri, 21 Mar 2025 02:26:35 -0400
+	id 1tvVrS-0003pG-Gd; Fri, 21 Mar 2025 02:28:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoH-00080q-GN; Fri, 21 Mar 2025 02:24:55 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tvVos-0008W1-Kf; Fri, 21 Mar 2025 02:25:29 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoB-0002zw-Jx; Fri, 21 Mar 2025 02:24:49 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-225e3002dffso23036115ad.1; 
- Thu, 20 Mar 2025 23:24:38 -0700 (PDT)
+ id 1tvVob-0003GD-OP; Fri, 21 Mar 2025 02:25:25 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2243803b776so2747625ad.0; 
+ Thu, 20 Mar 2025 23:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742538277; x=1743143077; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742538306; x=1743143106; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kmhaDUCITVTolqS8yLhqK/IZH/DnuSfoIHP1VEj2LYg=;
- b=GK2uFmOot5G0xk6SadwYeqCtdAaHV4vBPg65VFwldDAwuq/GU1PTRzSwDUP5CorJ7W
- OpvZrvIE1iBcPZmloh4aEacSJ1vZNJXZ8hhsuynVHSm7f6THxn5uzGk2SjGYx8HNUwSI
- WRkOpTuJALAkUuMbbz0/D0EjxKdQzOI3CvBWE/Ft5MwNyBBBUoVTzxbzWhoHDoopnHTK
- ox7751Fz04G7uHogm6mftArNVvcnM8zQCyLIKt0XkeD5pNTGf7vqxtG13ce3buFCqcGD
- 4U7ZDlSS6bAzm+OV/z0kG0OYPbVAVox3yUmgYni7XkOJTBqq0qAlts/Q1AbWif0NaklI
- 50bA==
+ bh=24gnmUrT5i08RUn4/4zRaCLV4SSfI5SdNAnq4FqL/eQ=;
+ b=moTed/O+oE3pqiNy3tMzT36JQAamRraMgtQm+fDx11yzXfgrDZwRCnXoRQjcaRVaul
+ rkCMFMvbva9uPJ2Uhg9YsKBZmSYLYemyGU3vbPh2SEjwsxkzM4gHE1JAGAxrlIQMmECK
+ srGtOqr2+PIpG8b7MWyEml+sTXKEK2kDBtptP+X4mnbiXmqA2dCFeorKJxxi22+/3WO6
+ BmHD92IxluASZQdlrfspQzO7ziJO3pgu4AkSH8xtZ97JCrtYQWk4BWsuUqVfazAQ3ogu
+ t4RBNHsc6QObDbw0QGFKfvgo7z+iqZLaO4D7KunVaiTIJTw9QdJkIx2L6UvgHA5uVI7b
+ sqqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742538277; x=1743143077;
+ d=1e100.net; s=20230601; t=1742538306; x=1743143106;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kmhaDUCITVTolqS8yLhqK/IZH/DnuSfoIHP1VEj2LYg=;
- b=tHc8Ip7njaaomMmXQJF2UzaW5TYgBBSkySkZkQF2KV9wWQ564FzMfIiDNNFBK2JQKa
- JQ8d7PGXMgOWhkAUImQRY9wJb90+8tB3fomSiKGYmqqdjF28z+EQGJbAIAgxUG3BNnyP
- cNPO4Vlqg6Fd8OxiMdMNojEomBPPMsRsUuZEaAZnc0FO5adWrKoc1bkPWv2LNzSlhY9e
- S0r9UpeSLQi7chu5t/IXYK0pmWUWHGjGIczyGiXY3pGiZkTLRkWIlYYgl1V/nYaLm5H8
- +ln1bcHkxRIcWsay73s9ZATiAj3zVo9nRwygO7GWWrpLaEhS4RIHZgTqkrOGVaM//3w9
- bd0g==
+ bh=24gnmUrT5i08RUn4/4zRaCLV4SSfI5SdNAnq4FqL/eQ=;
+ b=vvC8dzQoJLnzE/Z9av4zF8A7YkCJo6KLv42N40nYseWYU6yp1Jx+iXYNldF3w2EEX9
+ qkbappzgEpps695Eqok4qMkPAdf5pF1o+3pEw4XFadR6IvIdfoFLCuL6nb97ejVcXKAa
+ phbrwcDFN4HM3CjzbUn7+1gTjtiaBbRH82dksYewJSt+uSIacybev7OCgbZRxwiXtwOI
+ QU9/WbP04t1982NoxCh/T4lpZBPAFwu7D1oBP71rqDqZ+LPQYWsU5Bai0aPPO9dEef2+
+ 9O6PLNJe6MS2vHMQErQhCA/SCncwZA5L3qxUed8Jf8+hBMScEllunuScbW8nTAqZTASs
+ 8CXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9Q6ng9tg15af+5eNOgQ6jPsV/xmhfLK7rzgYVVgMdFk6c3WRyCKiBretbb2d8nsnJgTV+6VF+fA==@nongnu.org
-X-Gm-Message-State: AOJu0YxjMe+AaSZ9oD/SliKhxnJ80ujUjOT3/G65bv6YVaJ1iDOgVko/
- PRh4UVBFc97jFOn5OuRs69z7dnDKWb4GBI4e+50ripL1tCKLfIBvKtCP2w==
-X-Gm-Gg: ASbGnctvGx/3d8SGp00hjxyPjFEvWeCVVKsh2x5liDZSZ7KAfgB+5gV26A2TrXtEQPT
- 5+u3nc4dmjyQ+5qATSW1Wm6J/BrI9oloVFEUlGiZO/qXKuiY4jR7DRHpA9vgUxgYYhiLlhzVLXb
- zvEO9tXAGJsWRPUb/4qZHnSGh2Spd7OTmP7juZe8cKhejD0qL2wK6fdQumuIvHZCXLO+trvDY0S
- up8uqo5e35ZhalF0dR//kQTctKKTi+Ewn3nSjo8H8kcbcDhhgrxEKTT+yjT9jmSa67lw22gI8k6
- KcFeuWrla9vvPEnCYZlnH0k/GrodFEagiZRwddE/4CorI/xJ7g==
-X-Google-Smtp-Source: AGHT+IEOGvsxTiBD3KHtcOeVNMlnmFFi6gUvshWcXmiSLOJZ/rOF8QGFXWq8BVl/pOHX2VbOcGCIYw==
-X-Received: by 2002:a05:6a00:ac4:b0:736:4c93:1bdf with SMTP id
- d2e1a72fcca58-73905a275famr3039921b3a.18.1742538276697; 
- Thu, 20 Mar 2025 23:24:36 -0700 (PDT)
+ AJvYcCUM+CU7yV5KiK5gEdR93Mi4ThQAIuODknNuTwSM9vPmba3tdrykrJwU0yjZ9VVOHIXY1G3hahWVnKSpsVo=@nongnu.org,
+ AJvYcCVO/P9YOGykxmkCCFXGNJIWwBlTRKpJDqgD1eUsySgRD1OGglvEmEPzBG+5Xm8RX8DZbVFCL5POTg==@nongnu.org
+X-Gm-Message-State: AOJu0YzLGeq+tO56QFPNCl0vaQWS2iZNN5o5kJ75F/AQXM0RW8I4fqV3
+ LJrPuXZBo5aATD1zcjn/8/VZkXj2evL/u3HvIGq5srsfYcnkwKR9aCGb+Q==
+X-Gm-Gg: ASbGncumqnP+7Ws/VNQ5ADwSzWWTczxfA7GO0z5k/ZPceI6A7q57wcOd8P1MY5b3vvH
+ 6r3dPYB7yn9SW3cciMjFPG+VNDhPmQ9tEwTRLTNv1G44IZIObwYTyW3+Uyvfwg4+oFdiAnkcb8R
+ MTEy5dRzHXAFQZ31+TMxSY+zUFxMLbhyAZQmaFu3cg4xLQyHo0oDHxB51jKZydmGclLf814vGCw
+ w6WdeGsezWT8iK4mRxxzODpvT7ObWcarMpQLqIKhHv2W9h8+HDPeG2F49ly/1li/d2t9ty5QE3i
+ AH5dOAVURDrmaullYfSXo6WVJriFDeouU/GPpdYGNlgsphHAbw==
+X-Google-Smtp-Source: AGHT+IFvphionuusYD9iRNTfrF/Xp32lZfLaPckWOPBQ/idE4kcPqk59rep4PJ4Gu/NB5/z7BO00EA==
+X-Received: by 2002:a05:6a21:b90:b0:1ee:dded:e5b with SMTP id
+ adf61e73a8af0-1fe42f9bb33mr4381619637.24.1742538305821; 
+ Thu, 20 Mar 2025 23:25:05 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.135.36])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af8a2a4761fsm941381a12.65.2025.03.20.23.24.34
+ 41be03b00d2f7-af8a2a4761fsm941381a12.65.2025.03.20.23.25.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 23:24:36 -0700 (PDT)
+ Thu, 20 Mar 2025 23:25:05 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 03/12] pnv/xive: Fix possible undefined shift error in group
- size calculation
-Date: Fri, 21 Mar 2025 16:24:07 +1000
-Message-ID: <20250321062421.116129-4-npiggin@gmail.com>
+ Roman Kapl <rka@sysgo.com>, qemu-stable@nongnu.org
+Subject: [PULL 12/12] target/ppc: Fix e200 duplicate SPRs
+Date: Fri, 21 Mar 2025 16:24:16 +1000
+Message-ID: <20250321062421.116129-13-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250321062421.116129-1-npiggin@gmail.com>
 References: <20250321062421.116129-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,116 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity discovered a potential shift overflow in group size calculation
-in the case of a guest error. Add checks and logs to ensure a issues are
-caught.
+DSRR0/1 registers are in the BookE ISA not e200 specific, so
+remove the duplicate e200 register definitions.
 
-Make the group and crowd error checking code more similar to one another
-while here.
-
-Resolves: Coverity CID 1593724
-Fixes: 9cb7f6ebed60 ("ppc/xive2: Support group-matching when looking for target")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Cc: Roman Kapl <rka@sysgo.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2768
+Fixes: 0e3bf4890906 ("ppc: add DBCR based debugging")
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive.c  | 27 ++++++++++++++++++++++++---
- hw/intc/xive2.c | 19 ++++++++++++++-----
- 2 files changed, 38 insertions(+), 8 deletions(-)
+ target/ppc/cpu_init.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index e86f274932..3eb28c2265 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -1662,12 +1662,20 @@ uint32_t xive_get_vpgroup_size(uint32_t nvp_index)
-      * (starting with the least significant bits) in the NVP index
-      * gives the size of the group.
-      */
--    return 1 << (ctz32(~nvp_index) + 1);
-+    int first_zero = cto32(nvp_index);
-+    if (first_zero >= 31) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group index 0x%08x",
-+                                       nvp_index);
-+        return 0;
-+    }
-+
-+    return 1U << (first_zero + 1);
- }
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 8b590e7f17..7decc09aec 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -2744,14 +2744,6 @@ static void init_proc_e200(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
+                  0x00000000); /* TOFIX */
+-    spr_register(env, SPR_BOOKE_DSRR0, "DSRR0",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_generic,
+-                 0x00000000);
+-    spr_register(env, SPR_BOOKE_DSRR1, "DSRR1",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_generic,
+-                 0x00000000);
  
- static uint8_t xive_get_group_level(bool crowd, bool ignore,
-                                     uint32_t nvp_blk, uint32_t nvp_index)
- {
-+    int first_zero;
-     uint8_t level;
- 
-     if (!ignore) {
-@@ -1675,12 +1683,25 @@ static uint8_t xive_get_group_level(bool crowd, bool ignore,
-         return 0;
-     }
- 
--    level = (ctz32(~nvp_index) + 1) & 0b1111;
-+    first_zero = cto32(nvp_index);
-+    if (first_zero >= 31) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group index 0x%08x",
-+                                       nvp_index);
-+        return 0;
-+    }
-+
-+    level = (first_zero + 1) & 0b1111;
-     if (crowd) {
-         uint32_t blk;
- 
-         /* crowd level is bit position of first 0 from the right in nvp_blk */
--        blk = ctz32(~nvp_blk) + 1;
-+        first_zero = cto32(nvp_blk);
-+        if (first_zero >= 31) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd block 0x%08x",
-+                                           nvp_blk);
-+            return 0;
-+        }
-+        blk = first_zero + 1;
- 
-         /*
-          * Supported crowd sizes are 2^1, 2^2, and 2^4. 2^3 is not supported.
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index f8ef615487..311b42e15d 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -1153,13 +1153,15 @@ static bool xive2_vp_match_mask(uint32_t cam1, uint32_t cam2,
- 
- static uint8_t xive2_get_vp_block_mask(uint32_t nvt_blk, bool crowd)
- {
--    uint8_t size, block_mask = 0b1111;
-+    uint8_t block_mask = 0b1111;
- 
-     /* 3 supported crowd sizes: 2, 4, 16 */
-     if (crowd) {
--        size = xive_get_vpgroup_size(nvt_blk);
--        if (size == 8) {
--            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd size of 8n");
-+        uint32_t size = xive_get_vpgroup_size(nvt_blk);
-+
-+        if (size != 2 && size != 4 && size != 16) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd size of %d",
-+                                           size);
-             return block_mask;
-         }
-         block_mask &= ~(size - 1);
-@@ -1172,7 +1174,14 @@ static uint32_t xive2_get_vp_index_mask(uint32_t nvt_index, bool cam_ignore)
-     uint32_t index_mask = 0xFFFFFF; /* 24 bits */
- 
-     if (cam_ignore) {
--        index_mask &= ~(xive_get_vpgroup_size(nvt_index) - 1);
-+        uint32_t size = xive_get_vpgroup_size(nvt_index);
-+
-+        if (size < 2) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid group size of %d",
-+                                           size);
-+            return index_mask;
-+        }
-+        index_mask &= ~(size - 1);
-     }
-     return index_mask;
- }
+     init_tlbs_emb(env);
+     init_excp_e200(env, 0xFFFF0000UL);
 -- 
 2.47.1
 
