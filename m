@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E91C35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDE8C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvVr2-0002d2-FB; Fri, 21 Mar 2025 02:27:40 -0400
+	id 1tvW5A-00042t-74; Fri, 21 Mar 2025 02:42:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoq-0008Uu-Rl; Fri, 21 Mar 2025 02:25:28 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoZ-00033Q-5y; Fri, 21 Mar 2025 02:25:10 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-225d66a4839so43025535ad.1; 
- Thu, 20 Mar 2025 23:25:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742538299; x=1743143099; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IQz0IzfTSBf1SfVI6stCuKzL/l4PXUG7VWLq5owfvNU=;
- b=BxghPGQSeskOj1I8Ua/arAYSKgR4cGF66kfmE9QhA0sr0w7PKYBV6yMbt+BqFgof56
- ZdZfabVqZvPisDwwTnS0useZJBSV2zgS8pKmCaw5ZqqH0zBuv/XBxr2Krs5xSFbZ0bhr
- gBmdP+GMrgUHZQwBwCLsorDKWSBfZ0/ordcSx67Twpm5xSKnD67S2TnOdIJb9rTDmN/+
- +Blj/1v/x6gsd5xBkakuIj6mIULA0l1nELlCRuXVhYcaUMWo4+AdytSEd5MZwjxEgqMU
- xq40g7SQJjK+Tp1eM8HrvsSB1/5ddVLsniTOQlAGR+7H56+oQGMP0v3XeYBbOwjICEE/
- PVsQ==
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1tvW56-00042R-UL
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 02:42:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1tvW54-0005Tn-Fp
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 02:42:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742539327;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QAn5WoWuptktZJIVEbzo3Jad/09e7cyhc5XBo5L9c+w=;
+ b=UN7nIrdIzJcksQi6gYjsgrgnIxTgjFM512KdhPw++R2tWhKGgPusa3t4fM3fX6X6oWncGQ
+ oZ7CgmMK9lrCMo2ZjiMIwBgsCl9fb0J/ClSX2+mewjhAEzblRanicZ7qqNyTOaBRuJm+b8
+ O0FnJM3hsM6QKKwFAU/PDEkBmWjUu8o=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-623-293S6RzcMZeYaDSbC_ZI_w-1; Fri, 21 Mar 2025 02:42:05 -0400
+X-MC-Unique: 293S6RzcMZeYaDSbC_ZI_w-1
+X-Mimecast-MFC-AGG-ID: 293S6RzcMZeYaDSbC_ZI_w_1742539325
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7c54a6b0c70so166600185a.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 23:42:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742538299; x=1743143099;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1742539325; x=1743144125;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IQz0IzfTSBf1SfVI6stCuKzL/l4PXUG7VWLq5owfvNU=;
- b=lUPWl4OaeqE0XQ0gr8tOet+8lw9xEzdzaGFpqYVwCig8Gs2tZbanbSRA2Sbmx7rTAP
- htivIUdaaWB9KqreKNkmEeiO5C3Eg7o1BbyOp25Ajiep1nbwjoG5DQGNT2h3TXIauv/3
- nqXl/azEu7qPVtRvhzh5/+VTRIGOCjjtrwAVCDb8gJCGxznKOtbMUHEwJfHCaHnt9Zvq
- JVIqD4TYXiyQtnN/tYmkr8r6BWRL7sdiyb32IChQrRQH60s0+GJTgl0tM2kVWdan2Y7A
- 7GHMvNKrRr81ZWTcmJ8HWu4bLscQLGxeiUOM7AgCs1hL0vIWSpzThPojTUgmik5ewru7
- ZXBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWF+GUMqiSBVxES6w9dg/mDYaFMJywzJ7Cmr5xB29cgZz+vIK/67RhEjdVUeZY8tTJ7BiTAvdhWw43EmhM=@nongnu.org,
- AJvYcCWvwPmCQy47mQXz+JFPLuhsCQaqC4w8gFCpSK2KDstfmWwZAXdfxXjqpOC6W8X4cGE0ZZbasIbgxw==@nongnu.org
-X-Gm-Message-State: AOJu0YzlpkHO6Df/bXoE5tUxQ99mGckO78awOVFKcAJuZ0AzbJMqK8tB
- /0yat+gpKyP7uoFNaRN6tC2x1Mw2ACWK8Nny2NEI4f3Zvv3YPMEt8MAIEQ==
-X-Gm-Gg: ASbGncsGBActnLqnTKRN//AFlz1y9WCXQ56We7vZjU6MbXo0TjXgTSLH6ClrDw5LlFh
- UVZOkNBiBS2hNpCgnzkHrWU87drwzSFoMW/vjAd+NnE2g5auSCs3ePNrL45hFOqeDrTnT6PTd2X
- VDKZ/dQ9K9lcUq1RrfowLRYvLrJTK7Hf7r1OIro1b9ZxKsZ5H5J1C+fP3OOPDvEBLdC0kVKayLF
- egHkZN29rE7eXVjsCZ2gYrDBO0OidW3payf0IGGjPtb0SwIALzDhlL1fmujgrv5FqgsX/sWs7rV
- OpxVoBa9laR1UkFgRHPt9dMyRwUoyVsAcMKoae1AuSBzdCXdyg==
-X-Google-Smtp-Source: AGHT+IFBKszsiRLcCSTKnAe2L0Ejmbm9N2O2N/APTy53HBC3EIuf0PeIFteHj7DFu1OHKJM7tNEpBQ==
-X-Received: by 2002:a05:6a20:c886:b0:1db:822f:36d8 with SMTP id
- adf61e73a8af0-1fe42770d03mr4292260637.3.1742538298915; 
- Thu, 20 Mar 2025 23:24:58 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.135.36])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af8a2a4761fsm941381a12.65.2025.03.20.23.24.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 23:24:58 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/12] ppc/spapr: fix default cpu for pre-9.0 machines.
-Date: Fri, 21 Mar 2025 16:24:14 +1000
-Message-ID: <20250321062421.116129-11-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250321062421.116129-1-npiggin@gmail.com>
-References: <20250321062421.116129-1-npiggin@gmail.com>
+ bh=QAn5WoWuptktZJIVEbzo3Jad/09e7cyhc5XBo5L9c+w=;
+ b=n6hSg6kTEcP+bF+xIa0kWRFc1cvovff1qRZYflAatt7ZZgRMceR8qlJRqout60fqbg
+ s4L0pHACZTrDzdf8vgz84B56vWftfJSwJzpE8aR2HBdUkYmRIbnwlJPTkzZ0MqgBy8Ot
+ +PQicVqIxWiC0u5q3Ic51KMxf9LXPC8PY2JN1J++sAk/vtjito4rQeyGg2bDAweZH0G4
+ O+sqEpnpIwG6PdzR0UdLTG/1XwSRARBqqE7ghPLAG0ZimVGDoRxqSbU+dcH1WOZHGOr6
+ oVT2ZBRGjMbqBnDuVU1QNIu2rCFLfPVMb5RyRsYrOg3EkY6R9cXk5XG/l8xC942kuJ//
+ yXew==
+X-Gm-Message-State: AOJu0YyYQDpD0yESO4+4WsOktSJoUveUJK4AQmJw3Q9G/Qe1s6f1CMkS
+ ZKevpt8hSeVNa8wSkewSz/ybFyFGDbyUYHtNRHhOHMyBm3TI8EGjZFAP6u14Nki3mZatVy0rwTk
+ qASacnlW/zoovoby6+fojTgRnYT8Hs9ufWPbutZZPMUTFmeIFusROva2C5E7PBAwrY7Ma8XLuw6
+ 4EL4b40aud1h8x0xpmpCwOL7+8xdI=
+X-Gm-Gg: ASbGnct2tXDrJecXdE6ExILxdspoHsZkcykC7JoOXeRDXwj+rgKrs1hHOHZpIvA2Qsy
+ BLWUOkISQ8sEABXMyuzp6HgYPipDTKJADX30Zp48bzHwLhObTB6kNSrMh+8gdO/chgJQkD6Iide
+ WGYBYjOxtFfzZsHKxFs9iuarJLhMIbBQ==
+X-Received: by 2002:a05:620a:25d2:b0:7c5:4a8e:b71 with SMTP id
+ af79cd13be357-7c5ba23f47amr345545285a.47.1742539324857; 
+ Thu, 20 Mar 2025 23:42:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxkLoCr6y8GuZqtdfeTwTa4PwfwYnfla+yFJpXDkp4v530+E0LCwlFfwas3lAxhMGD9S+b7Lcs8qqBSrk6gjc=
+X-Received: by 2002:a05:620a:25d2:b0:7c5:4a8e:b71 with SMTP id
+ af79cd13be357-7c5ba23f47amr345543985a.47.1742539324577; Thu, 20 Mar 2025
+ 23:42:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <cover.1742527956.git.yong.huang@smartx.com>
+In-Reply-To: <cover.1742527956.git.yong.huang@smartx.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 21 Mar 2025 10:41:52 +0400
+X-Gm-Features: AQ5f1JoruoIHPDV5gTzvy2-xL2qhBi1ZKluJriCnhJP_dud1eC31rTOxhisq8Pw
+Message-ID: <CAMxuvaxorJD=Vnyuh6-3Ezdt0_6o_py8XhJuo3Dwfxu+zEWJWA@mail.gmail.com>
+Subject: Re: [RFC 0/3] Support live migration for qemu-vdagent chardev
+To: yong.huang@smartx.com
+Cc: qemu-devel@nongnu.org, dengpc12@chinatelecom.cn
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,37 +102,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Hi
 
-When POWER10 CPU was made as default, we missed keeping POWER9 as
-default for older pseries releases (pre-9.0) at that time.
-This caused breakge in default cpu evaluation for older pseries
-machines and hence this fix.
+On Fri, Mar 21, 2025 at 7:40=E2=80=AFAM <yong.huang@smartx.com> wrote:
+>
+> From: Hyman Huang <yong.huang@smartx.com>
+>
+> Our goal is to migrate VMs that are configured with qemu-vdagent-typed
+> chardev while allowing the agent to continue working without having
+> to restart the service in guest.
+>
 
-Fixes: 51113013f3 ("ppc/spapr: change pseries machine default to POWER10 CPU")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250313094705.2361997-1-harshpb@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/ppc/spapr.c | 1 +
- 1 file changed, 1 insertion(+)
+I sent a more complete series last week: "[PATCH for-10.1 00/10]
+Support vdagent migration"
+https://patchew.org/QEMU/20250311155932.1472092-1-marcandre.lureau@redhat.c=
+om/
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 9865d7147f..b0a0f8c689 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4816,6 +4816,7 @@ static void spapr_machine_8_2_class_options(MachineClass *mc)
- {
-     spapr_machine_9_0_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-+    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
- }
- 
- DEFINE_SPAPR_MACHINE(8, 2);
--- 
-2.47.1
+
+
+> Let's justify which fields should be taken into account for struct
+> VDAgentChardev.
+>
+> struct VDAgentChardev {
+>     Chardev parent;
+>
+>     /* config */
+>     bool mouse;
+>     bool clipboard;
+>
+>     /* guest vdagent */
+>     uint32_t caps;
+>     VDIChunkHeader chunk;
+>     uint32_t chunksize;
+>     uint8_t *msgbuf;
+>     uint32_t msgsize;
+>     uint8_t *xbuf;
+>     uint32_t xoff, xsize;
+>     Buffer outbuf;
+>
+>     /* mouse */
+>     DeviceState mouse_dev;
+>     uint32_t mouse_x;
+>     uint32_t mouse_y;
+>     uint32_t mouse_btn;
+>     uint32_t mouse_display;
+>     QemuInputHandlerState *mouse_hs;
+>
+>     /* clipboard */
+>     QemuClipboardPeer cbpeer;
+>     uint32_t last_serial[QEMU_CLIPBOARD_SELECTION__COUNT];
+>     uint32_t cbpending[QEMU_CLIPBOARD_SELECTION__COUNT];
+> };
+>
+> parent:
+> No dynamic information is generated. skip migrating.
+>
+> mouse, clipboard:
+> The mouse and clipboard should be set up identically on both sides.
+> Skip migrating.
+>
+> caps:
+> Store the negotiated caps between the client and the guest.
+> Should migrate.
+>
+> chunk, ... outbuf:
+> The spice agent protocol's message transportation between the client
+> and the guest is implemented using all of these fields, however the
+> message loss can be tolerated by guests because the issue may occur
+> in the real world as well.
+> Could skip migrating.
+
+It's part of the host/guest state, data will be lost and it's likely
+the communication will break if it's not migrated.
+
+>
+> mouse_dev, ... mouse_hs:
+> The mouse state can be reset after a live migration since the agent
+> working inside the guest does not heavily depend on them.
+> Could skip migrating
+
+same
+
+> cbpeer:
+> Since the cbpeer would lose the data it references to if the qemu
+> clipboard data was not migrated, this field can also be initialized
+> after live migration.
+> Could skip migrating
+>
+
+We should migrate the clipboard content too, to avoid having to
+request it again, or have a noticeable effect.
+
+> last_serial, cbpending:
+> It is necessary for the agent to function after live migration.
+> Should migrate.
+>
+> For the last_serial, saving & loading its value to make ensure the
+> client receives the most recent clipboard data from the guest after
+> live migration.
+>
+> For the cbpending, saving & loading its value aims to inform the
+> guest that the clipboard has been released and is now empty in
+> case that the guest acts strangely while supposing that the
+> requested data can be properly retrieved.
+>
+> To summarize, all we need to do is migrate the caps, last_serial
+> and cbpendings fields of the struct VDAgentChardev,
+>
+> Please review, thanks
+>
+> Yong
+>
+> Hyman Huang (3):
+>   vdagent: Wrap vdagent_register_to_qemu_clipboard function
+>   vdagent: Set up mouse and clipboard after live migration
+>   vdagent: Drop blocker to support migration
+>
+>  ui/trace-events |   1 +
+>  ui/vdagent.c    | 102 +++++++++++++++++++++++++++++++++++++++---------
+>  2 files changed, 85 insertions(+), 18 deletions(-)
+>
+> --
+> 2.27.0
+>
 
 
