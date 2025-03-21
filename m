@@ -4,99 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9775C36002
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 22:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A2FC36002
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 22:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvki8-00011C-1h; Fri, 21 Mar 2025 18:19:28 -0400
+	id 1tvkmb-0002J8-P8; Fri, 21 Mar 2025 18:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tvki6-00010u-AY
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 18:19:26 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tvki4-00021a-Lc
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 18:19:26 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2243803b776so27987305ad.0
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 15:19:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742595562; x=1743200362; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2m5L+7pt7GeWrU7Kt4b77ijay6+lliI8NzQ5LxIHZMQ=;
- b=yscsbzga+fle7C7NDQgpGOqrE4JHykylraujAIF3UiwKBa/X0UZkVnyE2dSd12aJNH
- WRCzu8yQiA2OZRSIG8wL9X0anqI2mqqTf96Gr3NcOi+tnEPJvj4S2bM8ok2xn+CISauK
- Ot1H09UW0oZ2IVt077rdAtupDo//tGwbu3HRS9Tmu5CXq99YM5Dwxunqx0nE8sYW+VeT
- d6IdArvpvC5z7/c4bFLEid+e6t/qVTNptjaR68mTzV1zjFeEa96LSJqX2jfQdX2wFmiZ
- BcLgWb/q9m39b9dwv9nEez2lwTLEg6LLV1t7j3/xEuhnQs1kTLwmJExvEF9XtpmPVke6
- kQhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742595562; x=1743200362;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2m5L+7pt7GeWrU7Kt4b77ijay6+lliI8NzQ5LxIHZMQ=;
- b=X5aEdSP5bt8T9Q6pxjQhdH1qq6XMLnS1Rn8ilmsFcj6kZPwufZCqiQRLgCv3Vrdh1V
- VkHSjM9iKd10UJQhBzdmiiU7itrAQXPpLf9iPYOTSLCIg9S8njBvcpdlQAniod65wb50
- G2u6Vzqe55SBKxNrQLMZ9rdJz0cdMi6fSp/7khDwxPLLm8CdNaE6XsYgQPyf2sZKkum1
- iMvRIRYjGPER30p2vduSHCFTiEzbZaZ3pOew8KQmjrafMTqGKYl3aXywHnfdDUXWkN9M
- i+o90Z7GOnnlpjgon2OR9UX+tSVPYGCrWjzxIhWzru367lY4M8FsWQJPqIfrTzPsA80+
- V8uQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRy+nQy7hocuVbUEbjSLIQOLNAKc1W+pTJiyw1hkygkdLllRChlJdenZ0qCBF0miLi+1mJcouj+U4i@nongnu.org
-X-Gm-Message-State: AOJu0YxdVTa+GAaHJZdJXeK2A6Sxau/Nm7bKcnAPFUG4nQUqPfNds9K7
- PVaqW3p1aaDvp2PfzIu/OL7sZ9Yz8zEzhrZUCR32mSViHG7/dN0G1M0SWwZapc8=
-X-Gm-Gg: ASbGnculdg05h2J4P/NhkrbmiDYoamW0FEy0V+CRRL9otJJYVDNUt4LL58pLbrdKlOK
- h/5M/MV4IlGSK70sj1clMsxA3i+zVDdeRbsR5kfX4QgUdc/tgQShUmtRxzObYJK55i+vtlrfdts
- SU4ndTtS6InW0CYZY7nBd6C9Ykgyraj8VNFmCXc6g/g9M8ywzZdoLoSkqw+wFD3xrNSAr/WocB4
- mgwmEOzvFiDF4SslKgZ1VDObzGECcIslCM/DW6yu8ae/nnN107HODbxnqxr5HbgYXp4B54Q3p++
- xhXxJnK3YM0QN4hp8sjvWZphTSCMEQ0hiJ3IFgRrUJmEukxgl4O0OYwY6Lo/DVZKBxtTRNn1lFd
- zH3BrsaLsJS92FnKp9zw=
-X-Google-Smtp-Source: AGHT+IEW6cQdABbMHDm5Jw4zpDdOGnA50ctGXbvRzVQOXJyT4XTYONXfp+PmiJ5E+lNB/pujFV4exg==
-X-Received: by 2002:a05:6a20:2d23:b0:1f5:6f5d:3366 with SMTP id
- adf61e73a8af0-1fe434371c4mr9545558637.37.1742595562592; 
- Fri, 21 Mar 2025 15:19:22 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af8a28058f9sm2346075a12.24.2025.03.21.15.19.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Mar 2025 15:19:22 -0700 (PDT)
-Message-ID: <c0e338f5-6592-4d83-9f17-120b9c4f039e@linaro.org>
-Date: Fri, 21 Mar 2025 15:19:20 -0700
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tvkma-0002Iq-DF
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 18:24:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tvkmY-0004PO-QA
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 18:24:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742595841;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ICHrn58Z+M/8QkgPzJfFzKPG0qQEwVB91FBW2eWxe1k=;
+ b=ad3uN+H90/6+4OrHeXpgtRjpLx3JC0hblJPqWBjbHuksyd4pcN5gqS5Ic2lN4HODbx5teq
+ cbBItaa6d+pDjBQNF7eRVyyYSBaCtN6qNxEG4zms77M15HVUBopaMPEev3P8qZoRMyBp1g
+ BB5LHK+PJZEhLuHO167x1KdThjUTb/c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-BIwg_XO8NrqA1Nj5PvLQbA-1; Fri,
+ 21 Mar 2025 18:23:59 -0400
+X-MC-Unique: BIwg_XO8NrqA1Nj5PvLQbA-1
+X-Mimecast-MFC-AGG-ID: BIwg_XO8NrqA1Nj5PvLQbA_1742595838
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3C13180AB16; Fri, 21 Mar 2025 22:23:57 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.31])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D33B43001D16; Fri, 21 Mar 2025 22:23:54 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 2/5] docs/qapidoc: linting fixes
+Date: Fri, 21 Mar 2025 18:23:44 -0400
+Message-ID: <20250321222347.299121-3-jsnow@redhat.com>
+In-Reply-To: <20250321222347.299121-1-jsnow@redhat.com>
+References: <20250321222347.299121-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/30] exec/target_page: runtime defintion for
- TARGET_PAGE_BITS_MIN
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
- <20250320223002.2915728-18-pierrick.bouvier@linaro.org>
- <2e667bb0-7357-4caf-ab60-4e57aabdceeb@linaro.org>
- <e738b8b8-e06f-48d0-845e-f263adb3dee5@linaro.org>
- <a67d17bb-e0dc-4767-8a43-8f057db70c71@linaro.org>
- <216a39c6-384d-4f9e-b615-05af18c6ef59@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <216a39c6-384d-4f9e-b615-05af18c6ef59@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,34 +83,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/25 13:11, Pierrick Bouvier wrote:
-> On 3/21/25 12:27, Richard Henderson wrote:
->> On 3/21/25 11:09, Pierrick Bouvier wrote:
->>>> Mmm, ok I guess.  Yesterday I would have suggested merging this with page-vary.h, but
->>>> today I'm actively working on making TARGET_PAGE_BITS_MIN a global constant.
->>>>
->>>
->>> When you mention this, do you mean "constant accross all architectures", or a global
->>> (const) variable vs having a function call?
->> The first -- constant across all architectures.
->>
-> 
-> That's great.
-> Does choosing the min(set_of(TARGET_PAGE_BITS_MIN)) is what we want there, or is the 
-> answer more subtle than that?
+This restores the linting baseline in qapidoc. The order of some imports
+have changed slightly due to configuring isort a little better: isort
+was having difficulty understanding that "compat" and "qapidoc_legacy"
+were local modules because docs/sphinx "isn't a python package".
 
-It will be, yes.
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ docs/sphinx/qapi_domain.py | 25 ++++++++++++++-----------
+ docs/sphinx/qapidoc.py     |  5 +++--
+ 2 files changed, 17 insertions(+), 13 deletions(-)
 
-This isn't as hard as it seems, because there are exactly two targets with
-TARGET_PAGE_BITS < 12: arm and avr.
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index c94af5719ca..ebc46a72c61 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -20,16 +20,6 @@
+ 
+ from docutils import nodes
+ from docutils.parsers.rst import directives
+-
+-from compat import (
+-    CompatField,
+-    CompatGroupedField,
+-    CompatTypedField,
+-    KeywordNode,
+-    ParserFix,
+-    Signature,
+-    SpaceNode,
+-)
+ from sphinx import addnodes
+ from sphinx.directives import ObjectDescription
+ from sphinx.domains import (
+@@ -44,6 +34,16 @@
+ from sphinx.util.docutils import SphinxDirective
+ from sphinx.util.nodes import make_id, make_refnode
+ 
++from compat import (
++    CompatField,
++    CompatGroupedField,
++    CompatTypedField,
++    KeywordNode,
++    ParserFix,
++    Signature,
++    SpaceNode,
++)
++
+ 
+ if TYPE_CHECKING:
+     from typing import (
+@@ -56,7 +56,6 @@
+     )
+ 
+     from docutils.nodes import Element, Node
+-
+     from sphinx.addnodes import desc_signature, pending_xref
+     from sphinx.application import Sphinx
+     from sphinx.builders import Builder
+@@ -168,6 +167,8 @@ class QAPIDescription(ParserFix):
+     """
+ 
+     def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
++        # pylint: disable=unused-argument
++
+         # Do nothing. The return value here is the "name" of the entity
+         # being documented; for QAPI, this is the same as the
+         # "signature", which is just a name.
+@@ -210,6 +211,8 @@ def _get_fqn(self, name: Signature) -> str:
+     def add_target_and_index(
+         self, name: Signature, sig: str, signode: desc_signature
+     ) -> None:
++        # pylint: disable=unused-argument
++
+         # name is the return value of handle_signature.
+         # sig is the original, raw text argument to handle_signature.
+         # For QAPI, these are identical, currently.
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 661b2c4ed0e..8011ac9efaf 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -27,6 +27,7 @@
+ 
+ from __future__ import annotations
+ 
++
+ __version__ = "2.0"
+ 
+ from contextlib import contextmanager
+@@ -56,8 +57,6 @@
+     QAPISchemaVisitor,
+ )
+ from qapi.source import QAPISourceInfo
+-
+-from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
+ from sphinx import addnodes
+ from sphinx.directives.code import CodeBlock
+ from sphinx.errors import ExtensionError
+@@ -65,6 +64,8 @@
+ from sphinx.util.docutils import SphinxDirective, switch_source_input
+ from sphinx.util.nodes import nested_parse_with_titles
+ 
++from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
++
+ 
+ if TYPE_CHECKING:
+     from typing import (
+-- 
+2.48.1
 
-Because we still support armv4, TARGET_PAGE_BITS_MIN must be <= 10.
-
-AVR currently has TARGET_PAGE_BITS == 8, which is a bit of a problem.
-My first task is to allow avr to choose TARGET_PAGE_BITS_MIN >= 10.
-
-Which will leave us with TARGET_PAGE_BITS_MIN == 10.
-
-
-r~
 
