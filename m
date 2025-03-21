@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83A2EC36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 14:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37016C36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 14:53:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvdjj-0001dH-AV; Fri, 21 Mar 2025 10:52:39 -0400
+	id 1tvdjl-0001iO-LX; Fri, 21 Mar 2025 10:52:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjP-0001TJ-QP
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjO-0001TC-Rd
  for qemu-devel@nongnu.org; Fri, 21 Mar 2025 10:52:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjM-0006wR-S5
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 10:52:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjL-0006wC-MT
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 10:52:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742568736;
+ s=mimecast20190719; t=1742568735;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YSrRos5HyrEm16kMqZjAz/pRCErOCij+EXv0KMx7yHA=;
- b=JMgHrg9pecbzSrOW0HuZvqTy82kE/e+zUd+n3OFhy6nxDTDPn3z04kFDCjw7juCP5zXqIb
- Bg017pCW7v2YFevsJCz0AZes2SyHEYSSKrUps76QJC1RfJo6czWMeP69GH7q9wkGAYSGr7
- 2BgPa7lSGE3Pfvkl0UVmXmm0VRTzaaI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3nHcO0iQBZg3xP5D9ExG0a55ZvDcfJdZXcEyDfrBdDg=;
+ b=ENVlwBNXwrm0r0UvxCmA+v5MAB2od+gRWPz1gDEEPn6t3ek9q+K5mhIVaTq0Tcv85wH2g/
+ 7Jvc/WNZm57df8oVySTRWz3lSciXkCkRPZhquNn46RX8OE7uXBymXUTHGFIR+DgsCyuQ+6
+ w1Egd2JOpKAle+n5vCD2rBLghIlqZ9Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-WU9PCvDzPr2Zh28-LoHaZw-1; Fri,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-GVeEakK6M8CBHPhBjdl5Yw-1; Fri,
  21 Mar 2025 10:52:11 -0400
-X-MC-Unique: WU9PCvDzPr2Zh28-LoHaZw-1
-X-Mimecast-MFC-AGG-ID: WU9PCvDzPr2Zh28-LoHaZw_1742568730
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+X-MC-Unique: GVeEakK6M8CBHPhBjdl5Yw-1
+X-Mimecast-MFC-AGG-ID: GVeEakK6M8CBHPhBjdl5Yw_1742568730
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 90068196D2CD; Fri, 21 Mar 2025 14:52:09 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BB25180882E; Fri, 21 Mar 2025 14:52:09 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CA5B195609D; Fri, 21 Mar 2025 14:52:03 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB7BD19560AF; Fri, 21 Mar 2025 14:52:08 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C9A8A21E6682; Fri, 21 Mar 2025 15:51:58 +0100 (CET)
+ id D544921E669A; Fri, 21 Mar 2025 15:51:58 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Subject: [PULL 2/8] error: Strip trailing '\n' from an error string argument
-Date: Fri, 21 Mar 2025 15:51:52 +0100
-Message-ID: <20250321145158.3896812-3-armbru@redhat.com>
+Cc: stefanha@redhat.com, Bibo Mao <maobibo@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 5/8] target/loongarch: Fix error handling of KVM feature checks
+Date: Fri, 21 Mar 2025 15:51:55 +0100
+Message-ID: <20250321145158.3896812-6-armbru@redhat.com>
 In-Reply-To: <20250321145158.3896812-1-armbru@redhat.com>
 References: <20250321145158.3896812-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -86,30 +85,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tracked down with scripts/coccinelle/err-bad-newline.cocci.
+From: Bibo Mao <maobibo@loongson.cn>
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250312143504.1659061-1-armbru@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+For some paravirt KVM features, if user forces to enable it however
+KVM does not support, qemu should fail to run and exit immediately,
+rather than continue to run. Here set error message and return directly
+in function kvm_arch_init_vcpu().
+
+Fixes: 6edd2a9bec90 (target/loongarch/kvm: Implement LoongArch PMU extension)
+Fixes: 936c3f4d7916 (target/loongarch: Use auto method with LSX feature)
+Fixes: 5e360dabedb1 (target/loongarch: Use auto method with LASX feature)
+Fixes: 620d9bd0022e (target/loongarch: Add paravirt ipi feature detection)
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20250320032158.1762751-2-maobibo@loongson.cn>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- net/vmnet-common.m | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/loongarch/kvm/kvm.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/vmnet-common.m b/net/vmnet-common.m
-index 54d900ba67..ab33ce2b0c 100644
---- a/net/vmnet-common.m
-+++ b/net/vmnet-common.m
-@@ -94,7 +94,7 @@ ssize_t vmnet_receive_common(NetClientState *nc,
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 28735c80be..7f63e7c8fe 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -1081,7 +1081,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     int ret;
+     Error *local_err = NULL;
  
-     if_status = vmnet_write(s->vmnet_if, &packet, &pkt_cnt);
-     if (if_status != VMNET_SUCCESS) {
--        error_report("vmnet: write error: %s\n",
-+        error_report("vmnet: write error: %s",
-                      vmnet_status_map_str(if_status));
-         return -1;
+-    ret = 0;
+     qemu_add_vm_change_state_handler(kvm_loongarch_vm_stage_change, cs);
+ 
+     if (!kvm_get_one_reg(cs, KVM_REG_LOONGARCH_DEBUG_INST, &val)) {
+@@ -1091,29 +1090,34 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     ret = kvm_cpu_check_lsx(cs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
++        return ret;
      }
+ 
+     ret = kvm_cpu_check_lasx(cs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
++        return ret;
+     }
+ 
+     ret = kvm_cpu_check_lbt(cs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
++        return ret;
+     }
+ 
+     ret = kvm_cpu_check_pmu(cs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
++        return ret;
+     }
+ 
+     ret = kvm_cpu_check_pv_features(cs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
++        return ret;
+     }
+ 
+-    return ret;
++    return 0;
+ }
+ 
+ static bool loongarch_get_lbt(Object *obj, Error **errp)
 -- 
 2.48.1
 
