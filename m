@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D74C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FD0C36001
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvbli-0004KZ-R3; Fri, 21 Mar 2025 08:46:35 -0400
+	id 1tvbwb-0007iT-Us; Fri, 21 Mar 2025 08:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tvblG-0004AS-R4
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:46:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tvblF-0006V4-2M
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:46:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742561164;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=82wE7nZ1yarYIxypEDNLJWzDvSoFOAKz+O7c/69pmHA=;
- b=K837F8Syc/+vhu/8LZJmwn/A7TvtQ+uzLzwtQUZNH33brPNdtArJIh7fV4ok2+6KoOkqiD
- V2bAjiR6piU/TnybbkFqaDSINhifG1JcnA8jzflIG7Pj9pDrFCNLEvla9aJwpikKXOHjNw
- X4QgYj3TQ/+J+i5ylD7gGIbdrPfoTAI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-vL6ldYQhOf-6aNzhyiQ5Ug-1; Fri,
- 21 Mar 2025 08:46:00 -0400
-X-MC-Unique: vL6ldYQhOf-6aNzhyiQ5Ug-1
-X-Mimecast-MFC-AGG-ID: vL6ldYQhOf-6aNzhyiQ5Ug_1742561159
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99BB618DB6D3; Fri, 21 Mar 2025 12:45:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECE47192ED65; Fri, 21 Mar 2025 12:45:52 +0000 (UTC)
-Date: Fri, 21 Mar 2025 12:45:49 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffman <kraxel@redhat.com>
-Cc: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
- Alexander Graf <graf@amazon.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-Message-ID: <Z91ffa53yRxXkJop@redhat.com>
-References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
- <Z9LeILiEU5GfEHrl@8bytes.org>
- <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
- <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
- <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
- <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
- <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
- <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
- <Z9vSeF67fNazkxBh@8bytes.org>
- <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvbwa-0007i8-65
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:57:48 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tvbwY-000308-IL
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:57:47 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-39141ffa9fcso1737629f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 05:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742561864; x=1743166664; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6p8JdnoFtJMlt94AcQnrnXDcS8L2LbxvHkgDYqG268g=;
+ b=LWryqueI8+Qco2XyrFhie4QDTBpTMVX7BdCCVCbwdI3XMrjsInuXZzJL7rLi5n97kr
+ ZpvB/hYqARFyrQsdoG1g91TrlHMD7atWLa33wdk7OOZpu03h9whBe62i229rfWA7cYHG
+ UFkd7XrEmB8ZIA3eQtQ/HQfozMwtQFF520jcH06CBqgOPTPmvzhjuos7UyuFflzIM4j4
+ 5Z9EUL0rPs2DQtMaVD0InnKqcpmjKMBJHMz6kedbzmUvKHkrp7khbs9OUxea+pa+2SSL
+ 9Jd7MMOGJkisbv0ROra+KcbO7Baj9FsD1tK6pCC4CX4Fc3nDWHzSl6WraiT7//1aF2dK
+ kwKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742561864; x=1743166664;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6p8JdnoFtJMlt94AcQnrnXDcS8L2LbxvHkgDYqG268g=;
+ b=t4PAwWrxbqq7eAKXscDWh6OA2p+65eUQMRyLr/DlahnKwq+u6tw+vcHYN0u0VBBZ5u
+ KNEnYYiz3Twc34MDaUg/W4PKX4WC6+6+x3EjxA8zBfKHqIAOo97dAlmtwnX0FlEQTVW5
+ iFtVto+ClnFJrLV25tcLPYb+vsg3fLblZXL5qsDpBV4MySUVyy+PtKJssvQBPaoNS1zl
+ d2jrdfRzaQefNF8wLiG747DiCi9PxbnmnxRhzdpHcUuH/WYlkR49RY4u7TkpiAQI9I48
+ PWwaJUQj5W/gHq3UDXz0JN9NThB4o+div+G1pW+J8sbAAqRQj35uRFPb4KNe6piOjDbQ
+ S1Tg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWxyPVq+g9hotZKxqzIZp6gwunD/OQs5Mjit/dh/CwtwpA0YwjB/MpCCOholVjgrinCJchw98VMVwt@nongnu.org
+X-Gm-Message-State: AOJu0YwlqZ+9wgwcAMv0qBYfsQScxGfP1lqTU43OT03Rf/IfGC7oRGxX
+ vL/z+9F5m/+HYNN/EtcskunNGQcawJtrkWCh7lkeySDbxvnaDZJqMZshsdeCGr0=
+X-Gm-Gg: ASbGncv/RJtvpUV/5fbDZo5qKp936ibMEQBecfjftrEiPU66rEAsd/AYEpMqDZ8zsxa
+ h1IpMtug9qvtccrQuPS/gfejavPz6pOAL/nMJ0gp6EuUAXrfQAUV6WJHulkbWrjGaqy2fKd/ttA
+ DtkzXg3GUcc11jW/23NpPtg3oy0D9YYXWz+4sFL4oqIhJx3MDpRnj93fS0e7QP0KQxnywp69WEj
+ mw8owaspVoOwpf3mm+BMbVK+W3Rf3Nt/wEoteEWhs6Bjk1+fkC+99ygkrpNUgT0usLQDPRXo4Wd
+ nxPrequmi3bq3rxpbHp2gyPahf8skCeFCSuwn3yJUr9sggoNWhc0yKAyieaUmKotrjHU9ZQ+tx8
+ Xw4KEyZuNwf6MNSW4zeGjg0AB4yzj7g==
+X-Google-Smtp-Source: AGHT+IFUQBMp+w2nFZsDKxK0B7nhXJc9Pl4IzFUkoVKyQvFcs0Mvyc3jNpgcCF6ai2dyRtVsSeH4Ug==
+X-Received: by 2002:a05:6000:21c2:b0:399:6d53:68d9 with SMTP id
+ ffacd0b85a97d-3997f939949mr2323472f8f.38.1742561864432; 
+ Fri, 21 Mar 2025 05:57:44 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f9e6445sm2306470f8f.71.2025.03.21.05.57.43
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 21 Mar 2025 05:57:43 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>,
+	qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 1/4] tcg: Always define TCG_GUEST_DEFAULT_MO
+Date: Fri, 21 Mar 2025 13:57:34 +0100
+Message-ID: <20250321125737.72839-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250321125737.72839-1-philmd@linaro.org>
+References: <20250321125737.72839-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,81 +102,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 21, 2025 at 11:08:11AM +0100, Gerd Hoffman wrote:
->   Hi,
-> 
-> > >      While digging around in the igvm spec I've seen there is the
-> > >      concept of 'parameters'.  Can this be used to pass on the memory
-> > >      location of kernel + initrd + cmdline?  Maybe the kernel hashes too?
-> > 
-> > The find the locations of the kernel, initrd, cmdline, ... I think IGVM
-> > parameters, either directly or (preferably indirectly) are a good
-> > solution. By "indirectly" I mean to put these regions on a separate and
-> > measured page which also contains the region hashes.
-> 
-> regions and hashes should be separate I think.  The regions are not
-> necessarily fixed, the physical memory location where things have been
-> loaded to can change.
-> 
-> But also see my other reply.  I'm not convinced any more carrying
-> forward the hashes logic makes much sense.
-> 
-> > >  (2) Will the igvm be generated on the fly from FUKI data?  Or should
-> > >      the distros ship igvm images with firmware + kernel + initrd?
-> > 
-> > My preference would be that distros ship the tooling and components to
-> > build IGVM files and build them during kernel update. If a distro comes
-> > up with a generic initrd+cmdline it can also ship pre-built IGVM files.
-> 
-> Working with the (F)UKI instead has the advantage that we can make use
-> of the secure boot signature, with a workflow along these lines:
-> 
-> (distro) build:
->  * Embed the firmware as igvm inside the UKI.
->  * Sign the UKI.
-> 
-> first vm launch:
->  * Load the complete UKI.
->  * Pass on (a) the igvm section and (b) the UKI (including signature)
->    to the vmfwupdate device.
-> 
-> vmwupdate device:
->  * loads the igvm image.
->  * passes on the UKI location (as igvm parameter?).
-> 
-> second vm launch:
->  * firmware checks UKI signature.
->  * firmware (optionally) measures UKI into vTPM.
->  * firmware launches UKI.
+We only require the TCG_GUEST_DEFAULT_MO for MTTCG-enabled
+frontends, otherwise we use a default value of TCG_MO_ALL.
 
-> 
-> Going ship the distro kernel as igvm image would work too.  Will
-> simplify the measurement pre-calculation.  Also there is no need to pass
-> around any parameters, everything (how the firmware finds the UKI etc)
-> can be arranged at igvm build time then.  Disadvantage: This introduces
-> a completely new boot workflow.  Will probably need a new set of cloud
-> images exclusively for the BYOF case.
+In order to simplify, require the definition for all targets,
+defining it for hexagon, m68k, rx, sh4 and tricore.
 
-Having a completely different boot workflow & images for CVM BYOF that
-does not involve/consume existing UKIs & addons feels pretty undesirable
-to me.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hexagon/cpu-param.h | 3 +++
+ target/m68k/cpu-param.h    | 3 +++
+ target/rx/cpu-param.h      | 3 +++
+ target/sh4/cpu-param.h     | 3 +++
+ target/tricore/cpu-param.h | 3 +++
+ accel/tcg/translate-all.c  | 4 ----
+ 6 files changed, 15 insertions(+), 4 deletions(-)
 
-If the baseline is that the distro/user is using UKIs for everything,
-and then they want to do BYOF, that change should involve as little
-difference as possible to pull firmware into the mix. Your first
-workflow example with FUKI looks like it would satisfy that, but
-switching to bundle the kernel/initrd/cmdline directly in the IGVM
-would not.
-
-With regards,
-Daniel
+diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+index 45ee7b46409..2d57ea6caf9 100644
+--- a/target/hexagon/cpu-param.h
++++ b/target/hexagon/cpu-param.h
+@@ -23,4 +23,7 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 36
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
++/* MTTCG not yet supported: require strict ordering */
++#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
++
+ #endif
+diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
+index 7afbf6d302d..1a909eaa13e 100644
+--- a/target/m68k/cpu-param.h
++++ b/target/m68k/cpu-param.h
+@@ -17,4 +17,7 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
++/* MTTCG not yet supported: require strict ordering */
++#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
++
+ #endif
+diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
+index ef1970a09e9..2ce199164d7 100644
+--- a/target/rx/cpu-param.h
++++ b/target/rx/cpu-param.h
+@@ -24,4 +24,7 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
++/* MTTCG not yet supported: require strict ordering */
++#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
++
+ #endif
+diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
+index 2b6e11dd0ac..1bc90d4695e 100644
+--- a/target/sh4/cpu-param.h
++++ b/target/sh4/cpu-param.h
+@@ -16,4 +16,7 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
++/* MTTCG not yet supported: require strict ordering */
++#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
++
+ #endif
+diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
+index 790242ef3d2..923459370cc 100644
+--- a/target/tricore/cpu-param.h
++++ b/target/tricore/cpu-param.h
+@@ -12,4 +12,7 @@
+ #define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
++/* MTTCG not yet supported: require strict ordering */
++#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
++
+ #endif
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 82bc16bd535..fb9f83dbba3 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -349,11 +349,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
+     tcg_ctx->tlb_dyn_max_bits = CPU_TLB_DYN_MAX_BITS;
+ #endif
+     tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
+-#ifdef TCG_GUEST_DEFAULT_MO
+     tcg_ctx->guest_mo = TCG_GUEST_DEFAULT_MO;
+-#else
+-    tcg_ctx->guest_mo = TCG_MO_ALL;
+-#endif
+ 
+  restart_translate:
+     trace_translate_block(tb, pc, tb->tc.ptr);
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.1
 
 
