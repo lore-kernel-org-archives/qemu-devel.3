@@ -4,100 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9F4C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E4AC36002
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvbiG-000857-Da; Fri, 21 Mar 2025 08:43:00 -0400
+	id 1tvbk8-0002IO-LN; Fri, 21 Mar 2025 08:44:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1tvV9l-0004vC-2r; Fri, 21 Mar 2025 01:42:57 -0400
-Received: from fout-b1-smtp.messagingengine.com ([202.12.124.144])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tvbjr-000242-QS
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:44:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1tvV9i-0003LM-IH; Fri, 21 Mar 2025 01:42:56 -0400
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal
- [10.202.2.53])
- by mailfout.stl.internal (Postfix) with ESMTP id 22D4D11401A8;
- Fri, 21 Mar 2025 01:42:49 -0400 (EDT)
-Received: from phl-imap-13 ([10.202.2.103])
- by phl-compute-13.internal (MEProxy); Fri, 21 Mar 2025 01:42:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.ru; h=cc
- :cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1742535768;
- x=1742622168; bh=rWqBSUjJtMAZyEKPI64Qtxx17ankYzsGjvFxn3DLFvw=; b=
- uZ05dBGgreIOOIFRw0b7s2MY5VJR7z21UIZuc0MmfMBjfWAvQtp1zkR1uBemWKRO
- aVeWCliMUBmBVbDoCYPNkD+Zg4QiiGtvhKVyalt/1Qep02gelrQTWVbI0bPlFNZ4
- Wq2EptWzp0hNSunzeUiSip+d1+pw0LrkmIx8Tl46KSjZ9CxVIANTVdlRaTBFu3lU
- GQxJNSAPYhmb5EIW5dVTR4pZ5VFRfKv8olWUV6WRuRyzP/AaG2ysBB/koen597e7
- sqVT8KnrSSXSmjOZ8FOmVLQqbITYKmNMD5GCVf2y7cNDo3p3TyuP6+lqu8vUHqbg
- nbJMY44n1/DvJzaIhaM6GA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742535768; x=
- 1742622168; bh=rWqBSUjJtMAZyEKPI64Qtxx17ankYzsGjvFxn3DLFvw=; b=g
- mOtgJR0Fp+tClWgNHjVQ7ytYjUHAm4ZZpwigSTQLOCV71OuG56DqYSYBBPn/ZooE
- T115lf5e67hUfjCHLfJMV9hsSx7LPar1FprnX0kXdYNPUKwBYjmN1lrxpAZqZVq+
- /anjiGQ3qBVbH3uIj9rRdrpoAPnCn6lln4e1PWIji4mJb3Tlis5hNUoznp1pOHBf
- 3Gwzt7Sc/jM7mAoTSuK9CE8m4WvYBa3lkgzC4paNBok7ib649gYptVf9N+GMhpjY
- 4ryCUGTf/KcgmT8T8VPARz9+iDTa3X8SGiL4R6UMdrWOwiK99THzZqaCmCN9MHdp
- Br4QS2TnLuHXPPLUXz9UA==
-X-ME-Sender: <xms:VvzcZ6w7nkwP-V88qpniMjm9zzStMXhzguCVuewJNe1j5Otdm5W8Mg>
- <xme:VvzcZ2QMgjsf0KIWrJV_X5Gu0YGchSGIo0nztV7GNWZBEwNRGN3nBpVuXzRiv-E4V
- e56-i2Uo9F7lqxXY54>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduhedtvdekucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
- pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
- gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertder
- tddtnecuhfhrohhmpedftehlvgigvgihucfmrghruggrshhhvghvshhkihihfdcuoegrih
- hksehoiihlrggsshdrrhhuqeenucggtffrrghtthgvrhhnpeehveelteevieehfeejkeeg
- udetlefgvdffveelgffhjeeigfetgeegtdetheejvdenucffohhmrghinheprhgrphhtoh
- hrtghsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
- rhhomheprghikhesohiilhgrsghsrdhruhdpnhgspghrtghpthhtohepgedpmhhouggvpe
- hsmhhtphhouhhtpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhr
- tghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhope
- hqvghmuhdqphhptgesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepmhhjthesthhlshdr
- mhhskhdrrhhu
-X-ME-Proxy: <xmx:VvzcZ8V2EUl3u6Xf72rgsFxpu3LRxSWy8AkmCEQN2Q49n7UFaWMsFw>
- <xmx:VvzcZwj8o2X0iaJ3ckRR4c3kU8QsOZrUU21RNiaZ7B_V9YSqokY7GQ>
- <xmx:VvzcZ8BD5R7eqXH6mSWxWn1A9t_i0nOmxZNsVsTFenfmvQPQhL-JHg>
- <xmx:VvzcZxL1YpgaWjXL_LTA6Wi1QKSRvp_8bXTVwdskl2i4P2TDC-9ENA>
- <xmx:WPzcZ74ugYwhOhpcwI3z36GFTnyubCuoDtfH-ityXe8-Xtes1j5lI7ap>
-Feedback-ID: i6e394913:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id 360A41F00072; Fri, 21 Mar 2025 01:42:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tvbjp-00064J-Jo
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:44:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742561074;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uVrBRAu+ap8zzf0lzr+Lu65Jg9I+GR9/6N+U7337PBU=;
+ b=ZaI5qvg72BiuKY9Ps/sQlFjw9HfQDmnE3S8Dnmjk8S1Ft6VaJJvsM5eOYZdTciOU+I9Ux/
+ iTpzgqAUu5Byln09draIASXK8uJr2q+KmXcWFIDN/Trf2Hk5dAOvbsQD1uBUjuNrhNGhTH
+ 2hiEHrcrUrpSEEwEyhGDoE1m1Gv/vYs=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-76-g8vysZIHMr6NOghjoiZj3Q-1; Fri, 21 Mar 2025 08:44:32 -0400
+X-MC-Unique: g8vysZIHMr6NOghjoiZj3Q-1
+X-Mimecast-MFC-AGG-ID: g8vysZIHMr6NOghjoiZj3Q_1742561072
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ac287f28514so189675266b.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 05:44:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742561071; x=1743165871;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uVrBRAu+ap8zzf0lzr+Lu65Jg9I+GR9/6N+U7337PBU=;
+ b=gpF1sKkpdgsoghW/nK5DZZ8/XUIeQD0opic+BCVHKczx8t/8Boj4tEzcHl2qg0tP3e
+ wZbRkWax8AGvoXsD3KmWj2FSgXhFNWs2ZT00IRMwYsh0wYJCREL2ta1mpLntaFXPuEBK
+ mGVEgh9PfX+XYrp1922Y2KV5Ui+oHfJEcaKxnnufibkQcidXRFcDJuLyPlqouOBkfV1D
+ XqQOXGzlavJzA8FgndPTmFXSnpdSIxOm9BQ4juPT0DhLjTJMnyuYXTDgGPn2NfwkfeHf
+ xfYKmSg2p1Iuar6drl6UeIJJcqUE6smGiSMq58t40gh4ym6wUS2Ov+9Uu006LeHRgKi6
+ EBMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcqffVIb4f9J0wHnh/kgpovorCbVoSBu08qskZ7n2sHA+w4vYwvD073MioiGqwg7nd4DWl/9SLqPop@nongnu.org
+X-Gm-Message-State: AOJu0YwO0/p5AMs0qmanzH9zjlbHhakq7Yhh5Mi9j3H/bw0HkVaxbR/m
+ zZctS7Waattplgg23D6nd85rXXkgFcyKzYkVDox9axa6vJegP4d2XwyT5agZrhd6hCRXmg972xC
+ 0axHGn9kIr5vnWnk+ti8zPRp8vXszaWcDaC1VUOh89kuzOZ4SWcTBH1/eAJx7pgE7UgIVk6+av6
+ GIdVo/YA8ShE9xI2fYxnkDQXW0Bgg=
+X-Gm-Gg: ASbGncuFH+f/FmATc48ECqfqwghmz5YkK7l9lfR93be+TQpp1HoUNZHZQh7Yt7L8tLq
+ 8OxDPJ8xDnd8yI+ee6b45r9mLRk9wx9PnjT954H78DWmrD3sRI756ua9Cf7yZgcs2v9848cvwMX
+ W5KTfYcYzFdsOSX23epNXWw2AX
+X-Received: by 2002:a17:907:97d6:b0:ac2:9683:ad2c with SMTP id
+ a640c23a62f3a-ac3f25412cdmr345170866b.57.1742561071470; 
+ Fri, 21 Mar 2025 05:44:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0ekd48NDwI0ETOgwGXhibbygDfqjCHbGE7JSZgez52TFJX+8JcN6beSlGvHJVt7TMrEqccCgj9bnkDRmZAt8=
+X-Received: by 2002:a17:907:97d6:b0:ac2:9683:ad2c with SMTP id
+ a640c23a62f3a-ac3f25412cdmr345167166b.57.1742561071058; Fri, 21 Mar 2025
+ 05:44:31 -0700 (PDT)
 MIME-Version: 1.0
-X-ThreadId: T87c25bd1b5a51359
-Date: Fri, 21 Mar 2025 16:42:24 +1100
-From: "Alexey Kardashevskiy" <aik@ozlabs.ru>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Michael Tokarev" <mjt@tls.msk.ru>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-PowerPC <qemu-ppc@nongnu.org>
-Message-Id: <60d4416c-6a56-462f-8b98-1ff8800c0e5f@app.fastmail.com>
-In-Reply-To: <6f29bd39-5855-c2c4-80b3-0873c7387897@eik.bme.hu>
-References: <2176cec3-8957-425f-8b50-e48b1f6ff4dc@tls.msk.ru>
- <6f29bd39-5855-c2c4-80b3-0873c7387897@eik.bme.hu>
-Subject: Re: vof-nvram.bin: what it is and how it is used?
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=202.12.124.144; envelope-from=aik@ozlabs.ru;
- helo=fout-b1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+ <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <Z9vSeF67fNazkxBh@8bytes.org>
+ <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
+In-Reply-To: <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Fri, 21 Mar 2025 18:14:18 +0530
+X-Gm-Features: AQ5f1JpqpR4hpMMrV6Dxfnzv8woVqXygI_PEvtDbjer7oCd0yUy6ZeVEtl65ocM
+Message-ID: <CAK3XEhNeB29eaPxZ_1Cc7WfEzOGZZPcvTc5uC1XAdtG0uNfDRw@mail.gmail.com>
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Gerd Hoffman <kraxel@redhat.com>
+Cc: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, 
+ Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000a3f6120630d99d36"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 21 Mar 2025 08:42:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,46 +122,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000a3f6120630d99d36
+Content-Type: text/plain; charset="UTF-8"
 
+On Fri, 21 Mar, 2025, 3:38 pm Gerd Hoffman, <kraxel@redhat.com> wrote:
 
-On Thu, 20 Mar 2025, at 00:14, BALATON Zoltan wrote:
-> On Wed, 19 Mar 2025, Michael Tokarev wrote:
-> > Hi!
+>   Hi,
+>
+> > >      While digging around in the igvm spec I've seen there is the
+> > >      concept of 'parameters'.  Can this be used to pass on the memory
+> > >      location of kernel + initrd + cmdline?  Maybe the kernel hashes
+> too?
 > >
-> > Commit fc8c745d50150a63f6c "spapr: Implement Open Firmware client interface"
-> > in Jun-2021 added a new file, pc-bios/vof-nvram.bin, to qemu sources.
+> > The find the locations of the kernel, initrd, cmdline, ... I think IGVM
+> > parameters, either directly or (preferably indirectly) are a good
+> > solution. By "indirectly" I mean to put these regions on a separate and
+> > measured page which also contains the region hashes.
+>
+> regions and hashes should be separate I think.  The regions are not
+> necessarily fixed, the physical memory location where things have been
+> loaded to can change.
+>
+> But also see my other reply.  I'm not convinced any more carrying
+> forward the hashes logic makes much sense.
+>
+> > >  (2) Will the igvm be generated on the fly from FUKI data?  Or should
+> > >      the distros ship igvm images with firmware + kernel + initrd?
 > >
-> > But there's nothing in the sources which refers to this file, and there's
-> > no mentions about its contents and how it has been generated.
-> >
-> > What's the procedure to create this image?  It would be great if such
-> > procedure can be run during package build time to generate this image anew.
-> >
-> > How it is supposed to be used?
-> 
-> See hw/ppc/spapr.c::spapr_create_nvram(). Looks like it would add a drive 
-> give with -drive if=pflash,index=0 as the nvram backing file. I don't know 
-> if it generates the default if an empty file is passed or maybe SLOF would 
-> do that which then could be used for VOF too and that's how it was made? 
-> So you could try running -machine spapr with an empty nvram with slof then 
-> compare that to the default for VOF.
+> > My preference would be that distros ship the tooling and components to
+> > build IGVM files and build them during kernel update. If a distro comes
+> > up with a generic initrd+cmdline it can also ship pre-built IGVM files.
+>
+> Working with the (F)UKI instead has the advantage that we can make use
+> of the secure boot signature, with a workflow along these lines:
+>
+> (distro) build:
+>  * Embed the firmware as igvm inside the UKI.
+>  * Sign the UKI.
+>
+> first vm launch:
+>  * Load the complete UKI.
+>  * Pass on (a) the igvm section and (b) the UKI (including signature)
+>    to the vmfwupdate device.
+>
+> vmwupdate device:
+>  * loads the igvm image.
+>  * passes on the UKI location (as igvm parameter?).
+>
+> second vm launch:
+>  * firmware checks UKI signature.
+>  * firmware (optionally) measures UKI into vTPM.
+>  * firmware launches UKI.
+>
+> Going ship the distro kernel as igvm image would work too.  Will
+> simplify the measurement pre-calculation.  Also there is no need to pass
+> around any parameters, everything (how the firmware finds the UKI etc)
+> can be arranged at igvm build time then.  Disadvantage: This introduces
+> a completely new boot workflow.  Will probably need a new set of cloud
+> images exclusively for the BYOF case.
+>
 
-I booted with SLOF and -drive if=pflash,index=0 and let SLOF initialize it, and then use the result with VOF.
+What does all this mean for the hypervisor interface ?
 
-> > Should it be shipped in a downstream distribution?
-> 
-> If is't not auto-created with the default values and not easy to create 
-> then maybe more convenient for users to get an example.
+>
 
-At the time I wanted to keep hw/ppc/spapr_vof.c and pc-bios/vof.bin as small as possible so avoided formatting. And a VM would still work even without this pc-bios/vof-nvram.bin (but it would annoyingly complain), hence the image. 
+--000000000000a3f6120630d99d36
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-http://wiki.raptorcs.com/w/images/c/c5/LoPAPR_DRAFT_v11_24March2016_cmt1.pdf  chapter 8 "Non-Volatile Memory" has the format if anyone feels bored :)
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 21 Mar, 2025, 3:38 pm Ge=
+rd Hoffman, &lt;<a href=3D"mailto:kraxel@redhat.com">kraxel@redhat.com</a>&=
+gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0=
+ .8ex;border-left:1px #ccc solid;padding-left:1ex">=C2=A0 Hi,<br>
+<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 While digging around in the igvm spec I&#39;v=
+e seen there is the<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 concept of &#39;parameters&#39;.=C2=A0 Can th=
+is be used to pass on the memory<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 location of kernel + initrd + cmdline?=C2=A0 =
+Maybe the kernel hashes too?<br>
+&gt; <br>
+&gt; The find the locations of the kernel, initrd, cmdline, ... I think IGV=
+M<br>
+&gt; parameters, either directly or (preferably indirectly) are a good<br>
+&gt; solution. By &quot;indirectly&quot; I mean to put these regions on a s=
+eparate and<br>
+&gt; measured page which also contains the region hashes.<br>
+<br>
+regions and hashes should be separate I think.=C2=A0 The regions are not<br=
+>
+necessarily fixed, the physical memory location where things have been<br>
+loaded to can change.<br>
+<br>
+But also see my other reply.=C2=A0 I&#39;m not convinced any more carrying<=
+br>
+forward the hashes logic makes much sense.<br>
+<br>
+&gt; &gt;=C2=A0 (2) Will the igvm be generated on the fly from FUKI data?=
+=C2=A0 Or should<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 the distros ship igvm images with firmware + =
+kernel + initrd?<br>
+&gt; <br>
+&gt; My preference would be that distros ship the tooling and components to=
+<br>
+&gt; build IGVM files and build them during kernel update. If a distro come=
+s<br>
+&gt; up with a generic initrd+cmdline it can also ship pre-built IGVM files=
+.<br>
+<br>
+Working with the (F)UKI instead has the advantage that we can make use<br>
+of the secure boot signature, with a workflow along these lines:<br>
+<br>
+(distro) build:<br>
+=C2=A0* Embed the firmware as igvm inside the UKI.<br>
+=C2=A0* Sign the UKI.<br>
+<br>
+first vm launch:<br>
+=C2=A0* Load the complete UKI.<br>
+=C2=A0* Pass on (a) the igvm section and (b) the UKI (including signature)<=
+br>
+=C2=A0 =C2=A0to the vmfwupdate device.<br>
+<br>
+vmwupdate device:<br>
+=C2=A0* loads the igvm image.<br>
+=C2=A0* passes on the UKI location (as igvm parameter?).<br>
+<br>
+second vm launch:<br>
+=C2=A0* firmware checks UKI signature.<br>
+=C2=A0* firmware (optionally) measures UKI into vTPM.<br>
+=C2=A0* firmware launches UKI.<br>
+<br>
+Going ship the distro kernel as igvm image would work too.=C2=A0 Will<br>
+simplify the measurement pre-calculation.=C2=A0 Also there is no need to pa=
+ss<br>
+around any parameters, everything (how the firmware finds the UKI etc)<br>
+can be arranged at igvm build time then.=C2=A0 Disadvantage: This introduce=
+s<br>
+a completely new boot workflow.=C2=A0 Will probably need a new set of cloud=
+<br>
+images exclusively for the BYOF case.<br></blockquote></div></div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">What does all this mean for the hyper=
+visor interface ?</div><div dir=3D"auto"><div class=3D"gmail_quote gmail_qu=
+ote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex=
+;border-left:1px #ccc solid;padding-left:1ex"></blockquote></div></div></di=
+v>
 
-Thanks,
+--000000000000a3f6120630d99d36--
 
-
-> 
-> Regards,
-> BALATON Zoltan
-> 
 
