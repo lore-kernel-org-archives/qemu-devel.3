@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BA9C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEC45C36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvhEM-0002Ge-9t; Fri, 21 Mar 2025 14:36:30 -0400
+	id 1tvhFY-0004di-QW; Fri, 21 Mar 2025 14:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEG-0001kB-Oy
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:24 -0400
+ id 1tvhEa-00036f-VO
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEF-00072K-2g
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:24 -0400
+ id 1tvhEZ-00075N-8L
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742582182;
+ s=mimecast20190719; t=1742582202;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GxdsFjP0x5vh9Jd/1Uxx3cGM8EOg2J+L3U1w2scPDrQ=;
- b=dy/5NynkW1Fa0ic4di4zTGv0GGi8GhLqC4D65l2ns/Y8aJwSPnz4yrskMixv9y9QGgfrSv
- a93PKmywl1aKnASLDhvzJtwQ4vf1NCt71mHp/3ZGSllItc/pAEmGou1ahZWHjBdHjRkUXN
- zoPWNgV/kdIv68EjnDVetN5VHcr2tGg=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8PRsXG8olna7mdtCEgxlJldcQSAzgu6Hx/iwD+YkCV8=;
+ b=SiIjgYSulJSJxkhvyQGw7Hg7VHHPDdOyvU9c0x3dID64j/HOcpF2a+M7BL8ekRTDnNLUEP
+ kzPbcOdbeQ78WQ3MG3ELgIJpF74KRGXV5R6ET5eK9O84HjYx4gS/GDmi3wmquhRVpuoe7+
+ 2kU/pTt8SbtpboXXAOUcASuOsczcFFE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-7TWddNuRNiO5sNoKOvbR4g-1; Fri, 21 Mar 2025 14:36:20 -0400
-X-MC-Unique: 7TWddNuRNiO5sNoKOvbR4g-1
-X-Mimecast-MFC-AGG-ID: 7TWddNuRNiO5sNoKOvbR4g_1742582180
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ac2db121f95so188796966b.1
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:20 -0700 (PDT)
+ us-mta-649-WUjD732jOC6NzLaDtCnCmA-1; Fri, 21 Mar 2025 14:36:37 -0400
+X-MC-Unique: WUjD732jOC6NzLaDtCnCmA-1
+X-Mimecast-MFC-AGG-ID: WUjD732jOC6NzLaDtCnCmA_1742582196
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-391425471d6so1060525f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742582178; x=1743186978;
+ d=1e100.net; s=20230601; t=1742582195; x=1743186995;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GxdsFjP0x5vh9Jd/1Uxx3cGM8EOg2J+L3U1w2scPDrQ=;
- b=M5RXweMCqA1aY9xZkugS5gK0NPRbO9Xzsj3R856cfi0NITeoHjZDueF/G6gR+vbvMA
- MQShFXpTRrx7MPoBgpLCmFM20rB/I82O5/PKpqjRapC4+nVwcNq85TTX2j/oAkAkhGGn
- 16tFrx0WrYNvarBPIhZxlcYv2z2/e0XNMOw2BWTIPqt/7de94bjWZBC77XQ6SIpfEW6J
- jWXSeRYET9369ijlcxJPUI7G4OGazwbUxCFlC+uEHNkwJsWFl9ur5eTFR46/JWeNnKRJ
- VuVwgjEdalFQFQSZFNL4Z8l8/MayWiUfgBWytzGLHNOtCXkctAzN+ijG3fN1lQUf++Ij
- u6kw==
-X-Gm-Message-State: AOJu0YzoEwo+6K28hp0KEWFr2nNydQ6yADxVbyK1wHL7UKxs1aVfC5JC
- mWSD2tT/r6pgVBiez/TpJOeII8DDcE1k8yDiCH6n+rWEdE1pNcFqm8O4lhNlIOFLUHlHe70WpoK
- MTfK4Ea7Mo5CDv3amHDpXOqSD/pdKaA8BAEVORbNoroyOvEhAt0xcdi37iUQ2Cl2l0UVhqbYnbb
- w2jiJN9Q5AsdJBmfw13b768THRUdfvb2ZupLJd
-X-Gm-Gg: ASbGncsUJpl38MsZ8AEWh4WbCN2F6kZ/XPPczQ2RkzZ5mSirsxX6gnl+jrInKCHE16o
- MGPdNHT1wq71DmUYM88k2uU04HvONXSVVS2G3lw1dzBihsYGBaLWUXt8vFJ02XVNOcAVDgYgvzw
- 3MIoIhEis/89ihgZbBWUwW3F81vWKiWN06wiqTXVLVUlz18XHpKSOTIgw14sy1mBjay8s38iOsq
- DcReLfFIKAMLUGMMNjqrXmC4HExyD3L7uf6JGfQqanGqaOm/HVPq2Ei4Hv4ZAXOJfAIqr5+zoX7
- hJE+nHawYelxZTGddHa/
-X-Received: by 2002:a17:907:d26:b0:ac3:45b5:f4cc with SMTP id
- a640c23a62f3a-ac3f25032d1mr453261666b.44.1742582177688; 
- Fri, 21 Mar 2025 11:36:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEv3KqT8vGvDDwhAEfw+OPtmfmvMpoI4MpWRKTIuo9dCwkQQ1p02tb1PeIa0NlfluJZZrUvhQ==
-X-Received: by 2002:a17:907:d26:b0:ac3:45b5:f4cc with SMTP id
- a640c23a62f3a-ac3f25032d1mr453258666b.44.1742582177106; 
- Fri, 21 Mar 2025 11:36:17 -0700 (PDT)
+ bh=8PRsXG8olna7mdtCEgxlJldcQSAzgu6Hx/iwD+YkCV8=;
+ b=esDe4u8KhGCTRrcPNoCHU58sKoCXSbJ27MisTXc+6gjf2p8ZUBts17t4bZ1sv1OmFK
+ WyPxdJnKcn172XQa1HDSzLoWYuENYOPLQeIILTAI4+mBxSSyC0CD8++a6D2H+Z3orScx
+ DuzzUJ4gFZEZ2/jA79XsjMYoZoEfrnATzgArzOl9bRbuNHzb2h4gAESjr1557aZ/gH8L
+ jbgGsB8nXWhPy/SSDJy/2PY6oROVMZ3KPCCkb+QHK77w3Yhim6TmCeUK9EqoejlCi642
+ J6u5ZngalAr51bGaAijD2Zx89AqQhYrKDFTs+Z/d0JN2is+osSlTwS9OPrSwccAKRX/q
+ Qtsw==
+X-Gm-Message-State: AOJu0YyqCKrz3BiuDN099+J15l3d6IAozV3pp+TMptB06DtRrCzDnbi1
+ 7QDMtLNJtjw0bTTN2hBrFZDXiSdDJXO2yJpeNg+09oUmaaCrhK4Xc756pg/nlaMqMsD6IlbvDMI
+ ZK+kV4M2eEj4mH/1CPxFcM+ZbWjIGDJp0L7AcZBRGBgBZ09EwAVjgqUWpwdNuSqVyfBFHo+Uco7
+ eu9+27X3wF2Bl8xPlL4WR36r7Uqx0c8r2tk0l9
+X-Gm-Gg: ASbGnct6iDoFGAJrGhHw5o5h+Rx8EZ/NaT1PM1RZSjXx0BPS7qbCAM92Qu8ITl9R57d
+ kLlsxwQ5rwJnaK9f0XGFd7mmehBYPXztFU8vLXtkPKruu6ZYAAcgugfez2OIh3IOcTD1jsCb000
+ DjXrD99Zm4fXb9/3AwgIIweWR8454UkWI263WqJrX94TxValmdPZwRQMAlyGm2XwBU8piCMA32q
+ C9EGZ6eln5rmjhWHcLl9k1HKQ90871dsdTnVRt/z1SKb8gcWaJzMX0HVphzBV9YCQLEdTLu1zt0
+ AaH/YcDa5jGNnu1VOdgR
+X-Received: by 2002:a5d:64e4:0:b0:391:43cb:43fa with SMTP id
+ ffacd0b85a97d-3997f9595a8mr4379835f8f.51.1742582195400; 
+ Fri, 21 Mar 2025 11:36:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEclRNjBFHrvbkrHLXBZdIGSc8zgR1dpg1iz6Bq9z7WpDhBl54xZtX/IeT8lNln+flMaVchA==
+X-Received: by 2002:a5d:64e4:0:b0:391:43cb:43fa with SMTP id
+ ffacd0b85a97d-3997f9595a8mr4379810f8f.51.1742582194801; 
+ Fri, 21 Mar 2025 11:36:34 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.194.153])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ebcd0c7737sm1766637a12.49.2025.03.21.11.36.16
+ ffacd0b85a97d-3997f9b3ebcsm3010535f8f.47.2025.03.21.11.36.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 11:36:16 -0700 (PDT)
+ Fri, 21 Mar 2025 11:36:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 06/24] rust: pl011: Check size of state struct at compile time
-Date: Fri, 21 Mar 2025 19:35:38 +0100
-Message-ID: <20250321183556.155097-7-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 13/24] rust/vmstate: Fix type check for varray in vmstate_struct
+Date: Fri, 21 Mar 2025 19:35:45 +0100
+Message-ID: <20250321183556.155097-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250321183556.155097-1-pbonzini@redhat.com>
 References: <20250321183556.155097-1-pbonzini@redhat.com>
@@ -109,75 +108,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-The PL011 device's C implementation exposes its PL011State struct to
-users of the device, and one common usage pattern is to embed that
-struct into the user's own state struct.  (The internals of the
-struct are technically visible to the C user of the device, but in
-practice are treated as implementation details.)
+When pass a varray to vmstate_struct, the `type` parameter should be the
+type of the element in the varray, for example:
 
-This means that the Rust version of the state struct must not be
-larger than the C version's struct; otherwise it will trip a runtime
-assertion in object_initialize_type() when the C user attempts to
-in-place initialize the type.
+vmstate_struct!(HPETState, timers, [0 .. num_timers], VMSTATE_HPET_TIMER,
+		BqlRefCell<HPETTimer>).with_version_id(0)
 
-Add a compile-time assertion on the Rust side, so that if we
-accidentally make the Rust device state larger we know immediately
-that we need to expand the padding in the C version of the struct.
+But this breaks current type check, because it checks the type of
+`field`, which is an array type (for the above example, type of timers
+is [BqlRefCell<HPETTimer>; 32], not BqlRefCell<HPETTimer>).
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/20250321112523.1774131-4-peter.maydell@linaro.org
+But the current assert_field_type() can no longer be extended to include
+new arguments, so a variant of it (a second macro containing the
+`num = $num:ident` parameter) had to be added to handle array cases.
+
+In this new macro, it not only checks the type of element, but also
+checks whether the `num` (number of elements in varray) is out of range.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250318130219.1799170-6-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/wrapper.h                   | 1 +
- rust/hw/char/pl011/src/device.rs | 9 ++++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ rust/qemu-api/src/assertions.rs | 15 +++++++++++++++
+ rust/qemu-api/src/vmstate.rs    |  2 +-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/rust/wrapper.h b/rust/wrapper.h
-index d927ad6799d..d4fec546571 100644
---- a/rust/wrapper.h
-+++ b/rust/wrapper.h
-@@ -65,3 +65,4 @@ typedef enum memory_order {
- #include "exec/memattrs.h"
- #include "qemu/timer.h"
- #include "exec/address-spaces.h"
-+#include "hw/char/pl011.h"
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index f137b49feaf..bf88e0b00a0 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -2,7 +2,7 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use std::{ffi::CStr, ptr::addr_of_mut};
-+use std::{ffi::CStr, mem::size_of, ptr::addr_of_mut};
- 
- use qemu_api::{
-     chardev::{CharBackend, Chardev, Event},
-@@ -12,6 +12,7 @@
-     prelude::*,
-     qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
-     qom::{ObjectImpl, Owned, ParentField},
-+    static_assert,
-     sysbus::{SysBusDevice, SysBusDeviceImpl},
-     vmstate::VMStateDescription,
- };
-@@ -124,6 +125,12 @@ pub struct PL011State {
-     pub migrate_clock: bool,
+diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
+index bba38cfda11..eb12e9499a7 100644
+--- a/rust/qemu-api/src/assertions.rs
++++ b/rust/qemu-api/src/assertions.rs
+@@ -91,6 +91,21 @@ fn types_must_be_equal<T, U>(_: T)
+             }
+         };
+     };
++
++    ($t:ty, $i:tt, $ti:ty, num = $num:ident) => {
++        const _: () = {
++            #[allow(unused)]
++            fn assert_field_type(v: $t) {
++                fn types_must_be_equal<T, U>(_: T)
++                where
++                    T: $crate::assertions::EqType<Itself = U>,
++                {
++                }
++                let index: usize = v.$num.try_into().unwrap();
++                types_must_be_equal::<_, &$ti>(&v.$i[index]);
++            }
++        };
++    };
  }
  
-+// Some C users of this device embed its state struct into their own
-+// structs, so the size of the Rust version must not be any larger
-+// than the size of the C one. If this assert triggers you need to
-+// expand the padding_for_rust[] array in the C PL011State struct.
-+static_assert!(size_of::<PL011State>() <= size_of::<qemu_api::bindings::PL011State>());
-+
- qom_isa!(PL011State : SysBusDevice, DeviceState, Object);
- 
- #[repr(C)]
+ /// Assert that an expression matches a pattern.  This can also be
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index e2a1f7a97aa..9d9cdda993c 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -447,7 +447,7 @@ macro_rules! vmstate_struct {
+                 .as_ptr() as *const ::std::os::raw::c_char,
+             $(num_offset: $crate::offset_of!($struct_name, $num),)?
+             offset: {
+-                $crate::assert_field_type!($struct_name, $field_name, $type);
++                $crate::assert_field_type!($struct_name, $field_name, $type $(, num = $num)?);
+                 $crate::offset_of!($struct_name, $field_name)
+             },
+             size: ::core::mem::size_of::<$type>(),
 -- 
 2.49.0
 
