@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460FEC36000
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79289C36002
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvhEF-0001eX-MA; Fri, 21 Mar 2025 14:36:23 -0400
+	id 1tvhE9-0001FO-IV; Fri, 21 Mar 2025 14:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEB-0001So-HA
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:19 -0400
+ id 1tvhE5-00014x-U9
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhE8-000717-PV
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:19 -0400
+ id 1tvhE4-00070X-5X
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742582176;
+ s=mimecast20190719; t=1742582171;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WIiFgnINXZ71uyJxAf0X6x5Y4veC8fFS8XnwmF9Y+SM=;
- b=aVpH7lZLkRZE/gYwhmlBMWn6+YE8tlD8ld40jklCbz7f8W2+ju/ywkvnZJmU8IYvdPTycZ
- vwlH4m/yNAvvKOC1YY4bajq7oSXXTzWlnQpRw7Y+fSbjSkuHVPoitS9Z6hNCKtaU2BW6gT
- TVgxDlLfmJPWmVnhA8UfBUbMgurP0ks=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hM94b7RjZwD5r8G5ixj1lC759u1MwLyQq0Zg/KCwTz0=;
+ b=R7WokSoJFIug2d95ofE+KkPZja6umwlJ/F7LbPOPCEJLZ+ynC1gGRO0RbiKRFfTPeFQhwb
+ 5pIvT1OJH/7uxjCf/ArW/sEQ7pBf2q7lACwkJXTbJSX/lOEyWep3GOJdqgf8tjAy2DMmyh
+ Qw/IroJYRfTxaeSMsbxV4flytCCFJqA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-8zj7dEEPOdiCt1fAsTizsw-1; Fri, 21 Mar 2025 14:36:07 -0400
-X-MC-Unique: 8zj7dEEPOdiCt1fAsTizsw-1
-X-Mimecast-MFC-AGG-ID: 8zj7dEEPOdiCt1fAsTizsw_1742582166
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43cf5196c25so11107655e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:06 -0700 (PDT)
+ us-mta-529-lrLPxnuIMnujFumsoRIo1Q-1; Fri, 21 Mar 2025 14:36:10 -0400
+X-MC-Unique: lrLPxnuIMnujFumsoRIo1Q-1
+X-Mimecast-MFC-AGG-ID: lrLPxnuIMnujFumsoRIo1Q_1742582169
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d025a52c2so16562385e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742582165; x=1743186965;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WIiFgnINXZ71uyJxAf0X6x5Y4veC8fFS8XnwmF9Y+SM=;
- b=UdbCgL3xYLN0kMfTfXS3ZjcM+Au0RRCeN7WHRgPaI8jwtdyujvbMD0Yh2Gdo80fKJ/
- qsSorSGsZzU0j8Ns8l9VX1ANzC5nxZ7k4v/t54ZU+XGVDhE0HQ8LRG5EHHci0i3hZtPQ
- 0K1jCl/tpyKAoI7PrIenhHmTYWRdD+j34zb9MVN5IDlVx0HiXxxt8KS1LRTq2cg2Ompg
- hwFhqp44spZy8xaSPy0jqXBu2dIPUP9iT4XLSJ2PRz/PoShqIVymGz4pNQwSLLBKMvrR
- euV4KTdXgkebEA2Ht3brcQXMPw0ccCZP9ljbxA8p7Qg9/vtLjl68n3M7rFS3dCiIJ2VE
- 7mog==
-X-Gm-Message-State: AOJu0YwlrXyhVmZZe0ji1n9D0wWzRYGjqA+6M3tLewS0QrXMpBdM5tyX
- pwjH7qvflSsegPAtPbjI2a7icXHuB8kopcF9E/C6n4AzX3TGkT9JdOMxzmehIHdSSaI3h6YCAWw
- JcAMjp7CMm77ieDlUFHzVMRWlRfDEcmasM02BBfh8hQVZS9hwEJE347rfIL7l0zhMQmDjpoCx52
- lVQKU8IHowUxMJA341LRYekdZr5o86ocYzVcet
-X-Gm-Gg: ASbGnctH4AFpH1uDNYnGMW6phkg+aCM4K8OeCQYw/+s+WRu2JLgHK5387E3Jjy7gyLK
- BnkB9UzJkOPYaeo7gox9i5dpvi7n4qjhd7J9efRdtdT93GidwzTO8iXsCOVD7aFp7vF7M/nu95Z
- dceZXvFVI4/XP2hcPWBfyguMC0JcTDql067m5TvmWNKHBpxhxQKolOfSfU54GJqMmTx/XCp4/mJ
- 0SgHl18ALKvI1tU0Tqgu1GiFt3QwNH0jrZ7kP7FIGnKZNe+Q5rLHraC41EDNYNtqHVtqX9LS60D
- hFHaeE3FDqMXk5MUFNoS
-X-Received: by 2002:a05:600c:1d8e:b0:43c:f70a:2af0 with SMTP id
- 5b1f17b1804b1-43d509f642fmr43144375e9.16.1742582165063; 
- Fri, 21 Mar 2025 11:36:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElOnFdDQtQN7jkuUxLcCbknkfAnfHScc6anDk+uKruy4hx5Z9uwpBfm9NTsqD+Z52hSieZyg==
-X-Received: by 2002:a05:600c:1d8e:b0:43c:f70a:2af0 with SMTP id
- 5b1f17b1804b1-43d509f642fmr43144065e9.16.1742582164448; 
- Fri, 21 Mar 2025 11:36:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742582168; x=1743186968;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hM94b7RjZwD5r8G5ixj1lC759u1MwLyQq0Zg/KCwTz0=;
+ b=gSdpQP2oZz7H+esM4Y5+NVVBY0VtzB/jqhPj7qOoAKHecWBd6DgIBTxJ+5eN/scJuf
+ JnepCSHwrH6mDwHTBW1+Gkv6BnXMKN4TIjuhyIeddLrl/U14K59VV13GydZ+PQOP2zX+
+ m6U+f1I7xualBTzy7e+2ZqXCzesoS8KtHH9GN2KduTVhrpkW3hbyNnwEWLHPF9Y2ZWWI
+ /OAsGtRizoU4CdxZOYrzIFSo0X+iDRebk1xp/Dps2lXkmABfwBWQdMkySXnD7zOrVqD2
+ 1CJMT7ePtxvVO60W8gw3lS+GAyz+VugpB+es8TRy2PX8ZS38Q9cLZM+ZFgovbwNPsl4v
+ WVug==
+X-Gm-Message-State: AOJu0YwiiV+2IS/4bPgl9WkA8ewjLFc3uInl1ciRQClzbtYLzo4UipRE
+ +iMFz0mR8lZPEdtShRRMptcoJeed1C5ECC2QdfUeNmQNGDJ0TTZDsa80IgBz4QlzzqycggKCFIq
+ m5EleqgcB0bjJt19rmSUsO6KaeE/RszOaYjpDOSK4TVIkA74DQL0BUG9aLwYzkemkQwKIH49qic
+ jcS/W0DH/s/yLbAdvxj2FqJMv069b1xlq5+umh
+X-Gm-Gg: ASbGncvQwsxiPyVs3lim+JAntayTiaDzt14W9XKfqrboMqN7cQX7SBKTydXNk4sm4Jy
+ fPYaPxRghviUXhlWhSegFc1jj1UxAwWL+YzEnqO++N3n9lhDadi8WmHejiZAMmsZvbCcb8iaF9r
+ Co4aq+ywh9UDPvXmrsDhEQxYcyCgyFItbIQoNpS268dwzq75SozeTjPekUFsaDuFEhwiMSlfYIX
+ 70fxxGaPC9o9I5DwRhPSo4XQrxh4/VlW5JEY7kdsgEfA9IBOhL6B7LJigApRdWfRvjRASPJHzjd
+ SJZGI0eXfbnIBAEJUO4G
+X-Received: by 2002:a05:600c:4ed3:b0:43c:f85d:1245 with SMTP id
+ 5b1f17b1804b1-43d509f8503mr48205675e9.17.1742582167648; 
+ Fri, 21 Mar 2025 11:36:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERIdFFX2mSX424IJFKa6B987z61o6QPkdM24gRxnXfq56SCLHs/Jn34Hw4rHtd6jMRlzjLjQ==
+X-Received: by 2002:a05:600c:4ed3:b0:43c:f85d:1245 with SMTP id
+ 5b1f17b1804b1-43d509f8503mr48205545e9.17.1742582167097; 
+ Fri, 21 Mar 2025 11:36:07 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.194.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9e674fsm2976714f8f.80.2025.03.21.11.36.03
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-43d4174f8d3sm55870665e9.0.2025.03.21.11.36.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 11:36:03 -0700 (PDT)
+ Fri, 21 Mar 2025 11:36:06 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/24] Mostly Rust changes for QEMU 10.0
-Date: Fri, 21 Mar 2025 19:35:32 +0100
-Message-ID: <20250321183556.155097-1-pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Tanish Desai <tanishdesai37@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 01/24] rust: Kconfig: Factor out whether PL011 is Rust or C
+Date: Fri, 21 Mar 2025 19:35:33 +0100
+Message-ID: <20250321183556.155097-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250321183556.155097-1-pbonzini@redhat.com>
+References: <20250321183556.155097-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -105,97 +111,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 1dae461a913f9da88df05de6e2020d3134356f2e:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  Update version for v10.0.0-rc0 release (2025-03-18 10:18:14 -0400)
+Currently every board that uses the PL011 duplicates the logic that
+selects the Rust implementation if Rust was enabled and the C
+implementation if it does not.  Factor this out into a separate
+Kconfig stanza, so that boards can go back to simply doing "select
+PL011" and get whichever implementation is correct for the build.
 
-are available in the Git repository at:
+This fixes a compilation failure if CONFIG_VMAPPLE is enabled
+in a Rust build, because hw/vmapple/Kconfig didn't have the
+"pick the Rust PL011 if Rust is enabled" logic in it.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+Fixes: 59f4d65584bd33 ("hw/vmapple/vmapple: Add vmapple machine type")
+Reported-by: Tanish Desai <tanishdesai37@gmail.com>
+Analyzed-by: Tanish Desai <tanishdesai37@gmail.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20250319193110.1565578-2-peter.maydell@linaro.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/arm/Kconfig      | 30 ++++++++++--------------------
+ hw/char/Kconfig     |  6 ++++++
+ hw/char/meson.build |  2 +-
+ 3 files changed, 17 insertions(+), 21 deletions(-)
 
-for you to fetch changes up to 64acc23c9793e86f2811345f3c122bf3ece8088b:
-
-  rust: hpet: fix decoding of timer registers (2025-03-21 14:23:11 +0100)
-
-The bulk of the changes here are fixes to the vmstate bindings,
-also including test cases, and to the Rust devices.
-
-----------------------------------------------------------------
-* exec/cpu-all: remove BSWAP_NEEDED
-* pl011: pad C PL011State struct to same size as Rust struct
-* rust: hpet: fix type of "timers" property
-* rust: hpet: fix functional tests (and really everything that uses it)
-* rust: Kconfig: Factor out whether devices are Rust or C
-* rust: vmstate: Fixes and tests
-
-----------------------------------------------------------------
-Paolo Bonzini (4):
-      qdev, rust/hpet: fix type of HPET "timers" property
-      rust: assertions: add static_assert
-      load_aout: replace bswap_needed with big_endian
-      rust: hpet: fix decoding of timer registers
-
-Peter Maydell (4):
-      rust: Kconfig: Factor out whether PL011 is Rust or C
-      rust: Kconfig: Factor out whether HPET is Rust or C
-      hw/char/pl011: Pad PL011State struct to same size as Rust impl
-      rust: pl011: Check size of state struct at compile time
-
-Pierrick Bouvier (1):
-      exec/cpu-all: remove BSWAP_NEEDED
-
-Zhao Liu (15):
-      rust/vmstate: Remove unnecessary unsafe
-      rust/vmstate: Fix num_offset in vmstate macros
-      rust/vmstate: Fix num field when varray flags are set
-      rust/vmstate: Fix size field of VMStateField with VMS_ARRAY_OF_POINTER flag
-      rust/vmstate: Fix type check for varray in vmstate_struct
-      rust/vmstate: Fix "cannot infer type" error in vmstate_struct
-      rust/vmstate: Fix unnecessary VMState bound of with_varray_flag()
-      rust/vmstate: Relax array check when build varray in vmstate_struct
-      rust/vmstate: Re-implement VMState trait for timer binding
-      rust/vmstate: Support vmstate_validate
-      rust/vmstate: Add unit test for vmstate_of macro
-      rust/vmstate: Add unit test for vmstate_{of|struct} macro
-      rust/vmstate: Add unit test for pointer case
-      rust/vmstate: Add unit test for vmstate_validate
-      rust/vmstate: Include complete crate path of VMStateFlags in vmstate_clock
-
- configs/devices/i386-softmmu/default.mak |   1 -
- include/exec/cpu-all.h                   |  12 -
- include/exec/poison.h                    |   1 -
- include/hw/char/pl011.h                  |   5 +
- include/hw/loader.h                      |   2 +-
- include/hw/qdev-properties.h             |   1 +
- linux-user/syscall_defs.h                |   2 +-
- rust/wrapper.h                           |   1 +
- bsd-user/elfload.c                       |   6 +-
- hw/core/loader.c                         |   4 +-
- hw/core/qdev-properties.c                |  37 +++
- hw/i386/fw_cfg.c                         |   2 +-
- hw/i386/pc.c                             |   2 +-
- hw/ppc/mac_newworld.c                    |   7 +-
- hw/ppc/mac_oldworld.c                    |   7 +-
- hw/sparc/sun4m.c                         |   9 +-
- hw/sparc64/sun4u.c                       |   9 +-
- linux-user/elfload.c                     |   8 +-
- hw/arm/Kconfig                           |  30 +-
- hw/char/Kconfig                          |   6 +
- hw/char/meson.build                      |   2 +-
- hw/timer/Kconfig                         |   8 +-
- hw/timer/meson.build                     |   2 +-
- rust/hw/char/pl011/src/device.rs         |   9 +-
- rust/hw/char/pl011/src/device_class.rs   |   8 +-
- rust/hw/timer/Kconfig                    |   1 -
- rust/hw/timer/hpet/src/hpet.rs           |   8 +-
- rust/qemu-api/meson.build                |   5 +-
- rust/qemu-api/src/assertions.rs          |  37 +++
- rust/qemu-api/src/vmstate.rs             | 100 +++++--
- rust/qemu-api/tests/tests.rs             |   2 +
- rust/qemu-api/tests/vmstate_tests.rs     | 477 +++++++++++++++++++++++++++++++
- tests/qtest/meson.build                  |   3 +-
- 33 files changed, 705 insertions(+), 109 deletions(-)
- create mode 100644 rust/qemu-api/tests/vmstate_tests.rs
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 15200a2d7e7..a55b44d7bde 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -21,8 +21,7 @@ config ARM_VIRT
+     select PCI_EXPRESS
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select PFLASH_CFI01
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL031 # RTC
+     select PL061 # GPIO
+     select GPIO_PWR
+@@ -75,8 +74,7 @@ config HIGHBANK
+     select AHCI_SYSBUS
+     select ARM_TIMER # sp804
+     select ARM_V7M
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL022 # SPI
+     select PL031 # RTC
+     select PL061 # GPIO
+@@ -89,8 +87,7 @@ config INTEGRATOR
+     depends on TCG && ARM
+     select ARM_TIMER
+     select INTEGRATOR_DEBUG
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL031 # RTC
+     select PL041 # audio
+     select PL050 # keyboard/mouse
+@@ -108,8 +105,7 @@ config MUSCA
+     default y
+     depends on TCG && ARM
+     select ARMSSE
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL031
+     select SPLIT_IRQ
+     select UNIMP
+@@ -173,8 +169,7 @@ config REALVIEW
+     select WM8750 # audio codec
+     select LSI_SCSI_PCI
+     select PCI
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL031  # RTC
+     select PL041  # audio codec
+     select PL050  # keyboard/mouse
+@@ -199,8 +194,7 @@ config SBSA_REF
+     select PCI_EXPRESS
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select PFLASH_CFI01
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL031 # RTC
+     select PL061 # GPIO
+     select USB_XHCI_SYSBUS
+@@ -224,8 +218,7 @@ config STELLARIS
+     select ARM_V7M
+     select CMSDK_APB_WATCHDOG
+     select I2C
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL022 # SPI
+     select PL061 # GPIO
+     select SSD0303 # OLED display
+@@ -285,8 +278,7 @@ config VEXPRESS
+     select ARM_TIMER # sp804
+     select LAN9118
+     select PFLASH_CFI01
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL041 # audio codec
+     select PL181  # display
+     select REALVIEW
+@@ -371,8 +363,7 @@ config RASPI
+     default y
+     depends on TCG && ARM
+     select FRAMEBUFFER
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select SDHCI
+     select USB_DWC2
+     select BCM2835_SPI
+@@ -448,8 +439,7 @@ config XLNX_VERSAL
+     select ARM_GIC
+     select CPU_CLUSTER
+     select DEVICE_TREE
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select CADENCE
+     select VIRTIO_MMIO
+     select UNIMP
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 3f702565e67..9d517f3e287 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -11,6 +11,12 @@ config PARALLEL
+ 
+ config PL011
+     bool
++    # The PL011 has both a Rust and a C implementation
++    select PL011_C if !HAVE_RUST
++    select X_PL011_RUST if HAVE_RUST
++
++config PL011_C
++    bool
+ 
+ config SERIAL
+     bool
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index 86ee808cae7..4e439da8b9e 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -9,7 +9,7 @@ system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('parallel-isa.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugcon.c'))
+ system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_uart.c'))
+ system_ss.add(when: 'CONFIG_PARALLEL', if_true: files('parallel.c'))
+-system_ss.add(when: 'CONFIG_PL011', if_true: files('pl011.c'))
++system_ss.add(when: 'CONFIG_PL011_C', if_true: files('pl011.c'))
+ system_ss.add(when: 'CONFIG_SCLPCONSOLE', if_true: files('sclpconsole.c', 'sclpconsole-lm.c'))
+ system_ss.add(when: 'CONFIG_SERIAL', if_true: files('serial.c'))
+ system_ss.add(when: 'CONFIG_SERIAL_ISA', if_true: files('serial-isa.c'))
 -- 
 2.49.0
 
