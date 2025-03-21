@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE882C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E0EAC36002
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvhEJ-0001uh-3t; Fri, 21 Mar 2025 14:36:27 -0400
+	id 1tvhEX-0002qg-RR; Fri, 21 Mar 2025 14:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEE-0001c1-IB
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:22 -0400
+ id 1tvhEP-0002P9-1l
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhED-000721-1r
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:22 -0400
+ id 1tvhEN-00073J-4a
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742582180;
+ s=mimecast20190719; t=1742582190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eJYKYEdYqunbqZeqDFgxfiUWf3ISoZFIFoRTEsG2okw=;
- b=Lv3d/+5khy+iuc9JuMxCJTDreityzFYJPXpuWpApSuekolNRUOZ6+5eUrnUMzr2VKXsIbL
- qyVIoGccmZnttsX3RrC/pfu5zzi34uLzUJ8PhB/8TOmH05HJd6qoQ8BWf/eEsI1PzDGsCK
- P/FkbUxuuwpksQowshH/o86XFyozQ/Q=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NLiRCVPflMZBiuoT6PpWJ4Rvv6yoCgprry9CsORptr0=;
+ b=FrmH6KqbTN7iBTKtmterIJWgrkbdL+jhGlgNvAptIj+IbKBvFZjGamwH1vACczCvZBsetY
+ WIoWEomkj+qK7KVVhmwNyUi75tnjrHQsRMQ0cnAduzNx05UUdn2sS83yKM5e/6uuntuaCA
+ rKvPywX2fWc4rl0y9Px75nuU1L5HycY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-dIX4ENo2Ohil7_2qkJn_3A-1; Fri, 21 Mar 2025 14:36:16 -0400
-X-MC-Unique: dIX4ENo2Ohil7_2qkJn_3A-1
-X-Mimecast-MFC-AGG-ID: dIX4ENo2Ohil7_2qkJn_3A_1742582175
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ac2aa3513ccso200186166b.0
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:16 -0700 (PDT)
+ us-mta-287-uKjOlCnCOkeJX08uJHN4ng-1; Fri, 21 Mar 2025 14:36:28 -0400
+X-MC-Unique: uKjOlCnCOkeJX08uJHN4ng-1
+X-Mimecast-MFC-AGG-ID: uKjOlCnCOkeJX08uJHN4ng_1742582188
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43ceed237efso18710755e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742582174; x=1743186974;
+ d=1e100.net; s=20230601; t=1742582187; x=1743186987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eJYKYEdYqunbqZeqDFgxfiUWf3ISoZFIFoRTEsG2okw=;
- b=ZBjiVUrLQNJq51tJcE8sLFpVq8mK3SLtVQTvrJqjcJXhypEOdqVvETq9NAuDlmDfKR
- dDwHEIBbeAu91ucAVxzduwqtv+p/FN+CwdP0pCzOyyAiD8PFtSHBBrwPXdcLZdFVTBMV
- wUmA0GDPVkkhyEQqdXIT4oDMCMmgEcrbT+/kQfifCbbOeGfbKYQwaZSjJVYFF+tVLIdR
- gux3nL6r8AozpZRS1xzfoD1qln8jGTL+FGNJaD0ijqwDgEibEtb+3OgYLgo879wY1xEz
- ZZYIrN1IlCISJiX6LYGp0BzHFmsBSPkekbnRQ152C9YamkPWRStCOHJCYjJLkky6IIIq
- i3DQ==
-X-Gm-Message-State: AOJu0YxXwF4hEXxDTttuycJGRuTCGEOchbiw1R6n9hGVjbqqXKDM/scN
- JOxxhYfVO8lLD+5dl54Jpo8tMuOSlHj3HuBxw/KeVp+GgIZsE+F7HM6AFxdawBXCFojGFT4LHXM
- KhPfIWuDaAASlrNA8E2VWLl2XRxNGYy+rn2nK0XmzWsfZBu6WCjgIjCwdJ5XIY52G2+W3JwR6Xi
- iIdJ+ERI2CBXSiJ7ZOIFdMRIOh9Vxf9XFPcFEs
-X-Gm-Gg: ASbGncuku8SJL1gqQJZ+222cJquj/rAhNVChdRNL5TbCfCY/OQUFVZPmZ9FMaiz3sD5
- HGM28HKzaq6jbZC2bMhAobQfdEwfTEQ3Jlfys4JKQfLx7bzv3zKsgMYGUpOPBq7rYIBvAwU8Qk3
- TJbCbFCVVDURGo40mVV9PoVDnfe1DjGxTPKf7XKliTVgKn3xua1fVID2tvFjcxgZUDHZzu1851a
- pLW63Gzxgn5K/TmLvOC+LWRFYiUSxEDARkPmPdsG0Em7sQc8Lw8Vin1fuq0GY/jGM6F/iTp5SB2
- AYn1dEfbJz/LKPVU796K
-X-Received: by 2002:a17:907:1b2a:b0:ac2:8784:4bea with SMTP id
- a640c23a62f3a-ac3f20d30dbmr511750366b.8.1742582174134; 
- Fri, 21 Mar 2025 11:36:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHL4YgOLDFgh9WOMJ8s5Q5SuMud/esYx0rtiJijczdi/umgHKyrZPamHaubZXyqWbh03KPGhQ==
-X-Received: by 2002:a17:907:1b2a:b0:ac2:8784:4bea with SMTP id
- a640c23a62f3a-ac3f20d30dbmr511747166b.8.1742582173616; 
- Fri, 21 Mar 2025 11:36:13 -0700 (PDT)
+ bh=NLiRCVPflMZBiuoT6PpWJ4Rvv6yoCgprry9CsORptr0=;
+ b=HSB6aZ8VIj5thRVZR9rIOmLXRtR5K5R1f2bFyDO/teZh7Dn+cwGMNw8LyhXxtn0pyh
+ BdfVxYxL+43zyBgHH0prMvwjgt0wmzvTmcrLZP4+TisKS8axFP1gFCvM3fI24MqTHNIp
+ mUZEcSo2X7otVQ3q0dpdRhS2eI3xMlEI7bBG/4GzhqCYA73kUOx+Mmai+kd94N8EQd8t
+ mGT041pA+vTXZd/wDXLtvyrAnwIRfOodPqMsAAbG1omPaqJMtHy2rZWKHPKFcrzYMaGc
+ g+S9B6sXd87cufvkOpTzcjYGXq+CTIDCKPr4O0gXGi0YnbBtNv1CklklrRKefbftf+3O
+ jxTQ==
+X-Gm-Message-State: AOJu0Yy8y9hphUvPueWP6Jykhxw1A1fMnAZEi1oQgp87pGgJTP7EZAlj
+ CoJ6Kkwp5ly8OIA2nmTUFibP5J8sMm1kXQtgqeL16t3z9gFvhTW05PLt7Z5N2b924+hDHfg5lF9
+ oXjL6Xq8vfjVTTb458rQCw1+j8FHd5uClFpo6BiNKxHwFlcXzgexu7HM1DHlETqwT4HoxL3Zhin
+ LWZaJ3E0kdk2XGRVmcqclS1c+ionCRTCMT6DDZ
+X-Gm-Gg: ASbGncvzLiOGvlqZUFAubHlB6tnoN2V99ck/p5wDaEUDDxtwsmJF3j66+OgUYkPyRD/
+ TQrPSA6rPMQlKJw2EVwVk1rXLbH6fGSqeLR9553f+OoKl6chPJMA/TPAGtrD7vU6U+BDIGf0vDr
+ OpLgfiA3zjzRWFAubeq26FuaayRxuFtQShMSRlOBUapARiRdHg1YNoxVipHbHZAh74wbyX8wcvT
+ pIT07INEISbPpsMnLYg1ZsTQZsD2UznQB2SBZY7oE72lXTIUwdTFr9SZqoS9SaBIB4Lze868DlU
+ hhelaNynketpbn88/ETx
+X-Received: by 2002:a05:600c:1547:b0:43c:f64c:44a4 with SMTP id
+ 5b1f17b1804b1-43d509ec734mr40116905e9.8.1742582187204; 
+ Fri, 21 Mar 2025 11:36:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHO0IOMLGDvkLwIhTUuBjv8p9yLjAZN86Kfvg1GNpVKlVwx0Fbi1MVhA1cBNLXaulRPzF8Kug==
+X-Received: by 2002:a05:600c:1547:b0:43c:f64c:44a4 with SMTP id
+ 5b1f17b1804b1-43d509ec734mr40116695e9.8.1742582186661; 
+ Fri, 21 Mar 2025 11:36:26 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.194.153])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ebccfb049csm1802736a12.42.2025.03.21.11.36.11
+ 5b1f17b1804b1-43d43f43e2asm87107535e9.11.2025.03.21.11.36.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 11:36:12 -0700 (PDT)
+ Fri, 21 Mar 2025 11:36:24 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 04/24] rust: assertions: add static_assert
-Date: Fri, 21 Mar 2025 19:35:36 +0100
-Message-ID: <20250321183556.155097-5-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 09/24] rust/vmstate: Remove unnecessary unsafe
+Date: Fri, 21 Mar 2025 19:35:41 +0100
+Message-ID: <20250321183556.155097-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250321183556.155097-1-pbonzini@redhat.com>
 References: <20250321183556.155097-1-pbonzini@redhat.com>
@@ -109,52 +108,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new assertion that is similar to "const { assert!(...) }" but can be used
-outside functions and with older versions of Rust.  A similar macro is found in
-Linux, whereas the "static_assertions" crate has a const_assert macro that
-produces worse error messages.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/20250321112523.1774131-2-peter.maydell@linaro.org
+Remove the `unsafe` block of vmsd, because vmsd (passed to
+vmstate_struct) is defined in Rust side now, and it doesn't need
+`unsafe`.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250318130219.1799170-2-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/assertions.rs | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ rust/qemu-api/src/vmstate.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
-index 104dec39774..bba38cfda11 100644
---- a/rust/qemu-api/src/assertions.rs
-+++ b/rust/qemu-api/src/assertions.rs
-@@ -120,3 +120,25 @@ macro_rules! assert_match {
-         );
-     };
- }
-+
-+/// Assert at compile time that an expression is true.  This is similar
-+/// to `const { assert!(...); }` but it works outside functions, as well as
-+/// on versions of Rust before 1.79.
-+///
-+/// # Examples
-+///
-+/// ```
-+/// # use qemu_api::static_assert;
-+/// static_assert!("abc".len() == 3);
-+/// ```
-+///
-+/// ```compile_fail
-+/// # use qemu_api::static_assert;
-+/// static_assert!("abc".len() == 2); // does not compile
-+/// ```
-+#[macro_export]
-+macro_rules! static_assert {
-+    ($x:expr) => {
-+        const _: () = assert!($x);
-+    };
-+}
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index f0510ae769d..6698dfe7aeb 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -447,7 +447,7 @@ macro_rules! vmstate_struct {
+             },
+             size: ::core::mem::size_of::<$type>(),
+             flags: $crate::bindings::VMStateFlags::VMS_STRUCT,
+-            vmsd: unsafe { $vmsd },
++            vmsd: $vmsd,
+             ..$crate::zeroable::Zeroable::ZERO $(
+                 .with_varray_flag($crate::call_func_with_field!(
+                     $crate::vmstate::vmstate_varray_flag,
 -- 
 2.49.0
 
