@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C9A0C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 15:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EEBC36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 15:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tveEj-0002Rb-2m; Fri, 21 Mar 2025 11:24:41 -0400
+	id 1tveGR-00039W-Nc; Fri, 21 Mar 2025 11:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tveEg-0002Qy-BY
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:24:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tveEd-0000iG-1g
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:24:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742570673;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=A3glv2mPpuvXqyU3d7a5LFU6KSwZeT9nfiFnJqEGRKc=;
- b=NSloIL1x3O9AraraPYCSkPQo+Q61e4afNU/asW9Pc1ENjhIORhPSHocanN5gZoWU0jxsMZ
- 0CqmXk0/3dWnRsLAu0F/P6abtoOkPHpIctkuF/vFIWnlANHA3KHYgtAchMopU/hEK1WZ0X
- wPyXIhiaVkhzN05+t40g5lOyULs/Mu0=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-xf5eiXKoMXOiDcluPpuQMg-1; Fri, 21 Mar 2025 11:24:28 -0400
-X-MC-Unique: xf5eiXKoMXOiDcluPpuQMg-1
-X-Mimecast-MFC-AGG-ID: xf5eiXKoMXOiDcluPpuQMg_1742570668
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-47693206d3bso47935951cf.1
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 08:24:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tveG2-00035W-6r
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:26:06 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tveFy-0000zo-Oa
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:26:00 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2264aefc45dso15892685ad.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 08:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742570756; x=1743175556; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FJP4NB085N8UDeixh6pzBI1rRouhH6A5/2xdoAJCOeA=;
+ b=AdZQEk1xXSVnAs9/5FwXz+QrqXVlj5w5FQ8OogiT8Pv9hQvF6Ql3+GCLjSFzwfTDpq
+ D9dpWX1Ql+1sSnMQgXAjcSTs8ce/9ABaKXBNpEvsLvH3941aWlPSyPdxM5QAAJ/twaY4
+ i89czMSLxZDo8CHf+TUgSt8OUah35M2ax5gIEFMS+ly4SG56fwcWvRZ59vSMabo2db1Q
+ rHZLXrm+l9R2aVBNWbcVnCtV/wAMPrfxsUTi59JOGzw+1yTK4mrwH5bTJzkzlsQQHCYd
+ CX9iOxj3rWos3leIqXPav8WwHVS6VwgrZqYKvZFzdz+0ry+DU7F7c2CTQCnmr6wHhKzR
+ R9vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742570668; x=1743175468;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A3glv2mPpuvXqyU3d7a5LFU6KSwZeT9nfiFnJqEGRKc=;
- b=hKlyphMNCkr7FqZYrL+Q9PsJY1ygfTrCAi7V2II/cJpc+rsZtF7mVo+ZtPKEmpVAJN
- boahNSIpu58BALW8mjsyARS2fjAWSugO21uyZ1kK9a6czwfcVeZ+dREuhgRB9P9LQn5d
- 5W13ZfC9LwP/FXUv/vYBxpL3YO8ZOm8IRetRTVQV6MG9w5Wjvo2xwcYiswMKyqGXIEa2
- /f0M1ERUiK3bss+tPSTBj2ISSGTuhOIwElQ3Z4t1UzDcRlOn/uLyjOZZiN7TD36wdJRw
- PCFbYSgyh3s/Yv+gSZs7eS91fQj/Z+KFcOIJVws4xxcRfN/HFbAjK1Opyxl234E5ys5c
- PI5Q==
-X-Gm-Message-State: AOJu0Yw2P+wencgDGSQJxarFyb+MMy+ZlaePf6GvH7fnxsPKwzrgVpiR
- 6wWk1Au9/O/zABVD0rm9h3jQsgQtOI9XJ1Clh/XfvDLBl5rAG5mxsT47WZJGeQsjJ/GLSWy7Gci
- OsZcZ4l5NldcgzL1yUrn6QY5n62oLeEIPKM/wGzpVGKCfX3ABl1C6
-X-Gm-Gg: ASbGnct79PK0uK6rdrBQsnmNuxIF7Cc3swn+qubXPB8TWF2O+Lv9pJL7ijmkn9mcO0F
- pLTOO0fOJrIyV9gHnMyYFkA5fFcVObtjRLrkG03GhS7F0E19MO7X+HOazyN6Mhayn8sRpgZLAIW
- N4OywULNOct3DWEGPlBY6rlJWt62iqU36TwFt8Sfv0r56EVBw1/KHvHz/Hc+SRtsrzaPsWUmumM
- 3vCXG7TZLMymrUROftnG7AdBmPbpdKkdA+Bm+M+HOmA3uiicU287qYSFv6qKJK3Ys+mGkY/gvfP
- PFKmFJg=
-X-Received: by 2002:a05:622a:a30e:b0:477:1ee1:23d9 with SMTP id
- d75a77b69052e-4771ee124e0mr44739631cf.20.1742570667942; 
- Fri, 21 Mar 2025 08:24:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdGMQBeLFdjrYBZpqmynH4mdab/R8jbOiTHtbME47hNB72qCrWa4C4wU7F8eOXlkjPrYltjQ==
-X-Received: by 2002:a05:622a:a30e:b0:477:1ee1:23d9 with SMTP id
- d75a77b69052e-4771ee124e0mr44739171cf.20.1742570667449; 
- Fri, 21 Mar 2025 08:24:27 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4771d159a4dsm13076391cf.16.2025.03.21.08.24.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 08:24:26 -0700 (PDT)
-Date: Fri, 21 Mar 2025 11:24:18 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Manish <manish.mishra@nutanix.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, leobras@redhat.com,
- farosas@suse.de
-Subject: Re: [PATCH v3] QIOChannelSocket: Flush zerocopy socket error queue
- on sendmsg failure due to ENOBUF
-Message-ID: <Z92EoucdEiQ43BNs@x1.local>
-References: <20250317015231.241141-1-manish.mishra@nutanix.com>
- <06c86fe2-3a34-4d74-9ef1-81ac220ecefe@nutanix.com>
+ d=1e100.net; s=20230601; t=1742570756; x=1743175556;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FJP4NB085N8UDeixh6pzBI1rRouhH6A5/2xdoAJCOeA=;
+ b=tsmscOOVjchdlRxXYA36LKNtVBS4UE2Wjt2CKJZ7NvaTQxAcP6pfTGqEgDr5eK/WTA
+ h6B8VyXtMTY27v8CDfntDV154V87bH4sPiCIuA/INU2aj1PU8kagWHhUjzb3kGqQsPvH
+ VwvIzJYpx0/A5g5yWy+vJUVqdcehGmkm5yVwWozh/IocoLGDJ+XrXn9mTx8tOKF9Y2W4
+ /AWrCmTcRUpnYVDJfbyCf9Zyzyj6sL5kF/omayxBlav9rjsDsTx9iqgNj2aKzJ8c1poQ
+ TKNZwVXfTEAv+XH33yyysmPTgDcaU4Qu1oQYFXqGfD/0RMH2tdp5bDuoG3Yp26p1Oj+S
+ g/Ug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2bG3NPeZkldXW5U/zc7eIs6Ws8sjZKw7cjyqxr4+CenZDNAZ+ibtTc0yaYMuuTDbXU8gBKQ12MIeM@nongnu.org
+X-Gm-Message-State: AOJu0YzVQEA2vEC0QImhJRGjq+bIHDnL1ZSQjM6swvpnVcAEcqKE0m2+
+ l+nHDws0YxuNqnOga5VtgWOjIZrY4t9z35Bccc9Ent0FcCJTZY3z0eW9IIz3wG/q01+5MOQte0P
+ 8
+X-Gm-Gg: ASbGncvf1FwJ6GwZpNdX1BxtRW1b7vOcCfC7/ra3Q1iDBArrkgvUB4hgtVpET9gE1yu
+ y6wToat0jdvrhxbdIffYK5rzy3I7rFPGlaSeE4v6bmlKFneQhBp+oTJKac/N3iGcqNHoUgG0jCq
+ R1LEOLtmCP3xpfhCx/W3M8MI8ZeFqR/tbT889907kczW5s6gm95TIJ+sF/yoL4bYrPZbT9ygZJO
+ hCvu6sleCF0i16potzQt2LTtCkrsqKK2u76/841XDBszC+41T390yiOtkKjK1M8dAfGd0t63BXn
+ NP+dp18/dYW7+cJDfp45byY7gvAC1YCNtAFH3rdKvoVn1OsA5xe8oC2Ur48T5Xj7MF0bEIam91z
+ ibpMZ/JOP
+X-Google-Smtp-Source: AGHT+IEQ9rW6eI4BAlbi8Ue70Iywz9Meox2Na2nka6+vb9onMFSq2M0IzjmLpXjbdDO/y7Wudh0I3A==
+X-Received: by 2002:a17:903:178b:b0:21f:6bda:e492 with SMTP id
+ d9443c01a7336-22780e09daamr69009385ad.35.1742570756255; 
+ Fri, 21 Mar 2025 08:25:56 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2278120a8e5sm17939505ad.259.2025.03.21.08.25.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Mar 2025 08:25:55 -0700 (PDT)
+Message-ID: <b222f717-c0fe-4137-b0b6-60269f8c0189@linaro.org>
+Date: Fri, 21 Mar 2025 08:25:54 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <06c86fe2-3a34-4d74-9ef1-81ac220ecefe@nutanix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-10.1 4/4] tcg: Define guest_default_memory_order
+ in TCGCPUOps
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+References: <20250321125737.72839-1-philmd@linaro.org>
+ <20250321125737.72839-5-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250321125737.72839-5-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,58 +110,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 21, 2025 at 11:33:31AM +0530, Manish wrote:
-> Hi Daniel, Peter,
+On 3/21/25 05:57, Philippe Mathieu-Daudé wrote:
+> Add theTCGCPUOps::guest_default_memory_order field and have
+> each target initialize it.
 > 
-> Please let me know if this latest patch looks good?
+> Use it to setTCGContext::guest_mo in tb_gen_code(), removing
+> the need for the TCG_GUEST_DEFAULT_MO definition.
 > 
-> 
-> On 17/03/25 7:22 am, Manish Mishra wrote:
-> > We allocate extra metadata SKBs in case of a zerocopy send. This metadata
-> > memory is accounted for in the OPTMEM limit. If there is any error while
-> > sending zerocopy packets or if zerocopy is skipped, these metadata SKBs are
-> > queued in the socket error queue. This error queue is freed when userspace
-> > reads it.
-> > 
-> > Usually, if there are continuous failures, we merge the metadata into a single
-> > SKB and free another one. As a result, it never exceeds the OPTMEM limit.
-> > However, if there is any out-of-order processing or intermittent zerocopy
-> > failures, this error chain can grow significantly, exhausting the OPTMEM limit.
-> > As a result, all new sendmsg requests fail to allocate any new SKB, leading to
-> > an ENOBUF error. Depending on the amount of data queued before the flush
-> > (i.e., large live migration iterations), even large OPTMEM limits are prone to
-> > failure.
-> > 
-> > To work around this, if we encounter an ENOBUF error with a zerocopy sendmsg,
-> > we flush the error queue and retry once more.
-> > 
-> > V2:
-> >    1. Removed the dirty_sync_missed_zero_copy migration stat.
-> >    2. Made the call to qio_channel_socket_flush_internal() from
-> >       qio_channel_socket_writev() non-blocking.
-> > 
-> > V3:
-> >    1. Add the dirty_sync_missed_zero_copy migration stat again.
-> > 
-> > Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
 
-I have an old comment which could still apply here:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-https://lore.kernel.org/all/Z885hS6QmGOZYj7N@x1.local/
-
-That's on s/zero_copy_flush_pending/zerocopy_flush_once/.
-
-But no need to repost only for that.. that's more or less a nitpick.  It's
-unfortunate we need to keep the ABI and the complexity even if the counter
-almost means nothing solid..
-
-The change overall looks good here.
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-Thanks,
-
--- 
-Peter Xu
-
+r~
 
