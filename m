@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFED2C35FFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 09:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B7BFC35FFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 09:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvYeb-0006aH-NL; Fri, 21 Mar 2025 05:27:03 -0400
+	id 1tvYfj-0001H9-PF; Fri, 21 Mar 2025 05:28:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tvYeR-0006T7-Sf; Fri, 21 Mar 2025 05:26:51 -0400
+ id 1tvYff-00013A-0C; Fri, 21 Mar 2025 05:28:07 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tvYeP-00056F-Ed; Fri, 21 Mar 2025 05:26:51 -0400
+ id 1tvYfd-0005jH-8d; Fri, 21 Mar 2025 05:28:06 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 21 Mar
- 2025 17:26:26 +0800
+ 2025 17:26:30 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 21 Mar 2025 17:26:26 +0800
+ Transport; Fri, 21 Mar 2025 17:26:30 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 09/22] hw/misc/aspeed_hace: Ensure HASH_IRQ is always set
- to prevent firmware hang
-Date: Fri, 21 Mar 2025 17:26:05 +0800
-Message-ID: <20250321092623.2097234-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 19/22] test/qtest/hace: Support 64-bit source and digest
+ addresses for AST2700
+Date: Fri, 21 Mar 2025 17:26:15 +0800
+Message-ID: <20250321092623.2097234-20-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
 References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
@@ -68,62 +68,44 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, if the program encounters an unsupported algorithm, it does not set
-the HASH_IRQ bit in the status register and send an interrupt to indicate
-command completion. As a result, the FW gets stuck waiting for a completion
-signal from the HACE module.
-
-Additionally, in do_hash_operation, if an error occurs within the conditional
-statement, the HASH_IRQ bit is not set in the status register. This causes the
-firmware to continuously send HASH commands, as it is unaware that the HACE
-model has completed processing the command.
-
-To fix this, the HASH_IRQ bit in the status register must always be set to
-ensure that the firmware receives an interrupt from the HACE module, preventing
-it from getting stuck or repeatedly sending HASH commands.
+Added "HACE_HASH_SRC_HI" and "HACE_HASH_DIGEST_HI", "HACE_HASH_KEY_BUFF_HI"
+registers to store upper 32 bits.
+Updated "write_regs" to handle 64-bit source and digest addresses.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_hace.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ tests/qtest/aspeed-hace-utils.h | 3 +++
+ tests/qtest/aspeed-hace-utils.c | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 8f333fc97e..d4f653670e 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -311,12 +311,6 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-                             iov[i - 1].iov_len, false,
-                             iov[i - 1].iov_len);
-     }
--
--    /*
--     * Set status bits to indicate completion. Testing shows hardware sets
--     * these irrespective of HASH_IRQ_EN.
--     */
--    s->regs[R_STATUS] |= HASH_IRQ;
+diff --git a/tests/qtest/aspeed-hace-utils.h b/tests/qtest/aspeed-hace-utils.h
+index 0382570fa2..d8684d3f83 100644
+--- a/tests/qtest/aspeed-hace-utils.h
++++ b/tests/qtest/aspeed-hace-utils.h
+@@ -36,6 +36,9 @@
+ #define HACE_HASH_KEY_BUFF       0x28
+ #define HACE_HASH_DATA_LEN       0x2c
+ #define HACE_HASH_CMD            0x30
++#define HACE_HASH_SRC_HI         0x90
++#define HACE_HASH_DIGEST_HI      0x94
++#define HACE_HASH_KEY_BUFF_HI    0x98
+ 
+ /* Scatter-Gather Hash */
+ #define SG_LIST_LEN_LAST         BIT(31)
+diff --git a/tests/qtest/aspeed-hace-utils.c b/tests/qtest/aspeed-hace-utils.c
+index f39bb8ea48..8d9c464f72 100644
+--- a/tests/qtest/aspeed-hace-utils.c
++++ b/tests/qtest/aspeed-hace-utils.c
+@@ -157,7 +157,9 @@ static void write_regs(QTestState *s, uint32_t base, uint64_t src,
+                        uint32_t length, uint64_t out, uint32_t method)
+ {
+         qtest_writel(s, base + HACE_HASH_SRC, extract64(src, 0, 32));
++        qtest_writel(s, base + HACE_HASH_SRC_HI, extract64(src, 32, 32));
+         qtest_writel(s, base + HACE_HASH_DIGEST, extract64(out, 0, 32));
++        qtest_writel(s, base + HACE_HASH_DIGEST_HI, extract64(out, 32, 32));
+         qtest_writel(s, base + HACE_HASH_DATA_LEN, length);
+         qtest_writel(s, base + HACE_HASH_CMD, HACE_SHA_BE_EN | method);
  }
- 
- static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned int size)
-@@ -400,10 +394,16 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-                 qemu_log_mask(LOG_GUEST_ERROR,
-                         "%s: Invalid hash algorithm selection 0x%"PRIx64"\n",
-                         __func__, data & ahc->hash_mask);
--                break;
-+        } else {
-+            do_hash_operation(s, algo, data & HASH_SG_EN,
-+                    ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
-         }
--        do_hash_operation(s, algo, data & HASH_SG_EN,
--                ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
-+
-+        /*
-+         * Set status bits to indicate completion. Testing shows hardware sets
-+         * these irrespective of HASH_IRQ_EN.
-+         */
-+        s->regs[R_STATUS] |= HASH_IRQ;
- 
-         if (data & HASH_IRQ_EN) {
-             qemu_irq_raise(s->irq);
 -- 
 2.43.0
 
