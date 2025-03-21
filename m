@@ -4,61 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93CC0C36002
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 22:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9775C36002
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 22:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvkcT-0007M2-GF; Fri, 21 Mar 2025 18:13:37 -0400
+	id 1tvki8-00011C-1h; Fri, 21 Mar 2025 18:19:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1tvkcQ-0007LY-UQ; Fri, 21 Mar 2025 18:13:35 -0400
-Received: from smtp-relay-canonical-0.canonical.com ([185.125.188.120])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1tvkcN-0005Ca-PW; Fri, 21 Mar 2025 18:13:33 -0400
-Received: from LT2ubnt.. (dynamic-046-114-107-181.46.114.pool.telefonica.de
- [46.114.107.181])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id 7DD763F1A5; 
- Fri, 21 Mar 2025 22:13:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1742595207;
- bh=kx4VVxjwI+JrUSMAodWILioZHf+Ugp7uJC+tR1lSLWA=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type;
- b=GfeKaxe0YL0R9+FDiuJFmEzX9Orn36i0kiDAiXov3alBTmYHMGWbsvRzELXZZRJzI
- p1bILw0TTX3gttMfVXEtU82VaoEuArn/9GN1LQM0Ja2h19l18ENjkFDleI4j1PGPiI
- tKzfHg5fFT35oSLf+86GnLQNPV6Z9KXGHvmplHYl+c7bTkubGH0lomyY5EOVKevpAh
- mVBPTLsrCuQWrIbXaqBGsWqg+N0QacgEGGHZbCPwVP60q4OtMEyswKVfTRmlbfFFrG
- IkLwQW/MHFu2wpytVCorR0LQEAU/a6yskI2tomdzBaGwz08MuUgEnhh0WePmdEJ+nk
- HlzXGGwVsps5g==
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-To: Anup Patel <anup.patel@wdc.com>,
- Alistair Francis <Alistair.Francis@wdc.com>
-Cc: Frederik Du Toit Lotter <fred.lotter@canonical.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Subject: [PATCH v2 1/1] goldfish_rtc: keep time offset when resetting
-Date: Fri, 21 Mar 2025 23:12:48 +0100
-Message-ID: <20250321221248.17764-1-heinrich.schuchardt@canonical.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tvki6-00010u-AY
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 18:19:26 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tvki4-00021a-Lc
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 18:19:26 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2243803b776so27987305ad.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 15:19:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742595562; x=1743200362; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2m5L+7pt7GeWrU7Kt4b77ijay6+lliI8NzQ5LxIHZMQ=;
+ b=yscsbzga+fle7C7NDQgpGOqrE4JHykylraujAIF3UiwKBa/X0UZkVnyE2dSd12aJNH
+ WRCzu8yQiA2OZRSIG8wL9X0anqI2mqqTf96Gr3NcOi+tnEPJvj4S2bM8ok2xn+CISauK
+ Ot1H09UW0oZ2IVt077rdAtupDo//tGwbu3HRS9Tmu5CXq99YM5Dwxunqx0nE8sYW+VeT
+ d6IdArvpvC5z7/c4bFLEid+e6t/qVTNptjaR68mTzV1zjFeEa96LSJqX2jfQdX2wFmiZ
+ BcLgWb/q9m39b9dwv9nEez2lwTLEg6LLV1t7j3/xEuhnQs1kTLwmJExvEF9XtpmPVke6
+ kQhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742595562; x=1743200362;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2m5L+7pt7GeWrU7Kt4b77ijay6+lliI8NzQ5LxIHZMQ=;
+ b=X5aEdSP5bt8T9Q6pxjQhdH1qq6XMLnS1Rn8ilmsFcj6kZPwufZCqiQRLgCv3Vrdh1V
+ VkHSjM9iKd10UJQhBzdmiiU7itrAQXPpLf9iPYOTSLCIg9S8njBvcpdlQAniod65wb50
+ G2u6Vzqe55SBKxNrQLMZ9rdJz0cdMi6fSp/7khDwxPLLm8CdNaE6XsYgQPyf2sZKkum1
+ iMvRIRYjGPER30p2vduSHCFTiEzbZaZ3pOew8KQmjrafMTqGKYl3aXywHnfdDUXWkN9M
+ i+o90Z7GOnnlpjgon2OR9UX+tSVPYGCrWjzxIhWzru367lY4M8FsWQJPqIfrTzPsA80+
+ V8uQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRy+nQy7hocuVbUEbjSLIQOLNAKc1W+pTJiyw1hkygkdLllRChlJdenZ0qCBF0miLi+1mJcouj+U4i@nongnu.org
+X-Gm-Message-State: AOJu0YxdVTa+GAaHJZdJXeK2A6Sxau/Nm7bKcnAPFUG4nQUqPfNds9K7
+ PVaqW3p1aaDvp2PfzIu/OL7sZ9Yz8zEzhrZUCR32mSViHG7/dN0G1M0SWwZapc8=
+X-Gm-Gg: ASbGnculdg05h2J4P/NhkrbmiDYoamW0FEy0V+CRRL9otJJYVDNUt4LL58pLbrdKlOK
+ h/5M/MV4IlGSK70sj1clMsxA3i+zVDdeRbsR5kfX4QgUdc/tgQShUmtRxzObYJK55i+vtlrfdts
+ SU4ndTtS6InW0CYZY7nBd6C9Ykgyraj8VNFmCXc6g/g9M8ywzZdoLoSkqw+wFD3xrNSAr/WocB4
+ mgwmEOzvFiDF4SslKgZ1VDObzGECcIslCM/DW6yu8ae/nnN107HODbxnqxr5HbgYXp4B54Q3p++
+ xhXxJnK3YM0QN4hp8sjvWZphTSCMEQ0hiJ3IFgRrUJmEukxgl4O0OYwY6Lo/DVZKBxtTRNn1lFd
+ zH3BrsaLsJS92FnKp9zw=
+X-Google-Smtp-Source: AGHT+IEW6cQdABbMHDm5Jw4zpDdOGnA50ctGXbvRzVQOXJyT4XTYONXfp+PmiJ5E+lNB/pujFV4exg==
+X-Received: by 2002:a05:6a20:2d23:b0:1f5:6f5d:3366 with SMTP id
+ adf61e73a8af0-1fe434371c4mr9545558637.37.1742595562592; 
+ Fri, 21 Mar 2025 15:19:22 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af8a28058f9sm2346075a12.24.2025.03.21.15.19.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Mar 2025 15:19:22 -0700 (PDT)
+Message-ID: <c0e338f5-6592-4d83-9f17-120b9c4f039e@linaro.org>
+Date: Fri, 21 Mar 2025 15:19:20 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 17/30] exec/target_page: runtime defintion for
+ TARGET_PAGE_BITS_MIN
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
+ <20250320223002.2915728-18-pierrick.bouvier@linaro.org>
+ <2e667bb0-7357-4caf-ab60-4e57aabdceeb@linaro.org>
+ <e738b8b8-e06f-48d0-845e-f263adb3dee5@linaro.org>
+ <a67d17bb-e0dc-4767-8a43-8f057db70c71@linaro.org>
+ <216a39c6-384d-4f9e-b615-05af18c6ef59@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <216a39c6-384d-4f9e-b615-05af18c6ef59@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.120;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-canonical-0.canonical.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,69 +112,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently resetting the leads to resynchronizing the Goldfish RTC with the
-system clock of the host. In real hardware an RTC reset would not change
-the wall time. Other RTCs like pl031 do not show this behavior.
+On 3/21/25 13:11, Pierrick Bouvier wrote:
+> On 3/21/25 12:27, Richard Henderson wrote:
+>> On 3/21/25 11:09, Pierrick Bouvier wrote:
+>>>> Mmm, ok I guess.  Yesterday I would have suggested merging this with page-vary.h, but
+>>>> today I'm actively working on making TARGET_PAGE_BITS_MIN a global constant.
+>>>>
+>>>
+>>> When you mention this, do you mean "constant accross all architectures", or a global
+>>> (const) variable vs having a function call?
+>> The first -- constant across all architectures.
+>>
+> 
+> That's great.
+> Does choosing the min(set_of(TARGET_PAGE_BITS_MIN)) is what we want there, or is the 
+> answer more subtle than that?
 
-Move the synchronization of the RTC with the system clock to the instance
-realization.
+It will be, yes.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Frederik Du Toit Lotter <fred.lotter@canonical.com>
-Fixes: 9a5b40b8427 ("hw: rtc: Add Goldfish RTC device")
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-v2:
-	Remove a superfluous intialization to nul.
-	Add Cc:, Fixes:, and Reviewed-by: tags.
-v1:
-	https://lore.kernel.org/qemu-devel/CAAhSdy0-we9B19wRRqk_rRFkjY2LPPMRGaTdE=_4Ge_pCR4Y4Q@mail.gmail.com/T/
----
- hw/rtc/goldfish_rtc.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+This isn't as hard as it seems, because there are exactly two targets with
+TARGET_PAGE_BITS < 12: arm and avr.
 
-diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
-index 0f1b53e0e4..d83cc26481 100644
---- a/hw/rtc/goldfish_rtc.c
-+++ b/hw/rtc/goldfish_rtc.c
-@@ -239,15 +239,8 @@ static const VMStateDescription goldfish_rtc_vmstate = {
- static void goldfish_rtc_reset(DeviceState *dev)
- {
-     GoldfishRTCState *s = GOLDFISH_RTC(dev);
--    struct tm tm;
- 
-     timer_del(s->timer);
--
--    qemu_get_timedate(&tm, 0);
--    s->tick_offset = mktimegm(&tm);
--    s->tick_offset *= NANOSECONDS_PER_SECOND;
--    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
--    s->tick_offset_vmstate = 0;
-     s->alarm_next = 0;
-     s->alarm_running = 0;
-     s->irq_pending = 0;
-@@ -258,6 +251,7 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
- {
-     SysBusDevice *dev = SYS_BUS_DEVICE(d);
-     GoldfishRTCState *s = GOLDFISH_RTC(d);
-+    struct tm tm;
- 
-     memory_region_init_io(&s->iomem, OBJECT(s),
-                           &goldfish_rtc_ops[s->big_endian], s,
-@@ -267,6 +261,11 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
-     sysbus_init_irq(dev, &s->irq);
- 
-     s->timer = timer_new_ns(rtc_clock, goldfish_rtc_interrupt, s);
-+
-+    qemu_get_timedate(&tm, 0);
-+    s->tick_offset = mktimegm(&tm);
-+    s->tick_offset *= NANOSECONDS_PER_SECOND;
-+    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
- }
- 
- static const Property goldfish_rtc_properties[] = {
--- 
-2.48.1
+Because we still support armv4, TARGET_PAGE_BITS_MIN must be <= 10.
 
+AVR currently has TARGET_PAGE_BITS == 8, which is a bit of a problem.
+My first task is to allow avr to choose TARGET_PAGE_BITS_MIN >= 10.
+
+Which will leave us with TARGET_PAGE_BITS_MIN == 10.
+
+
+r~
 
