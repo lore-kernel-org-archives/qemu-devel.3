@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C789CC36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 09:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B265AC35FFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 10:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvZ7P-0003BD-2j; Fri, 21 Mar 2025 05:56:47 -0400
+	id 1tvZIh-0008VA-K5; Fri, 21 Mar 2025 06:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tvZ7K-0003A1-4e
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 05:56:42 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tvZ7H-0000AT-Ja
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 05:56:41 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2243803b776so6629305ad.0
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 02:56:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742550995; x=1743155795;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hsiQif1VBC0yMxCeUnvdy7BWeFSNFgjL2neoOgQfTbc=;
- b=WPSna86AM46JYwe8j+PntEKSZZC2O2io07hqDDpfk8GmlGSF4iygFiCZpJOSzRPcxS
- T3ovktqpyDa2aLz3HvZJxkmS5sIl5A0H0csADAzT0SKztUMIEpb1wPq4vua7w1W8iVPT
- KvbWRG0CC6Qigi48v93BMPp+iaH0nvCbCFaAEcGXEMSE78jS+UmdAJ3OP4yx3EHr+70g
- RsiW9Y2uC3LDuW53G4X6t9Z9/flHW8kNxi2kUmkPSaJj8tVPv/kyFC0/W3j6wNhSvw7T
- iCc7BJexRZB2Vyx3sKZdNfWEMa/Qqi0OtupuQ4BYPKTVnGYPWZeurje6m/xXEJclJhnG
- 076w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742550995; x=1743155795;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hsiQif1VBC0yMxCeUnvdy7BWeFSNFgjL2neoOgQfTbc=;
- b=l0Ct2NIdx/CuNtGUWb6PMRSAsVddKCaVJIVEtUawqlltXuT3I1R5fW/4BtabAVQBwN
- cF6mAVFJKCij6a8SL6s7ad19bOrWJy5AhFyloHuTPL6+bk4cvz5ZggdU1elTxUlb6EqW
- 06xH0Pce5xXYQrzjcEmJy/AGVRpM88nBcBv4MQ/gD/OlSROOvHCZapx9qSpfJ0SwV8rR
- +M8ekI5lOuB2SBXAzdCpPXdCdxjA7+PNkJCFVizZhZoBcUXXEmRN1XtNYYs+bCThGtwQ
- MogkGtDTlQHKQq7kMsSLHrFveWWoD3Oxy/wt/qjE1x5OAneekGwzpoXolK3ihkB+OVfN
- dXFw==
-X-Gm-Message-State: AOJu0YwoUq+wvNO13MYoJ63PTuiQ4IJ77gbQMHB9tsXlOYHqRxdGtgcT
- peE9YoK9cAL8aubHnJqTc4mhGmK9d0j1yM0P+F6nHWpI70HA3207tKdMA9wulXw=
-X-Gm-Gg: ASbGncuK2lhcGsaqtNziVEIxrjwcFR0R0oJYa40JnVXy/LZBOgvciazemNRYD93cszw
- lTNEcZ6lV9yV4zL+Si90zSS3CBm5BktfrCSi642w/FHzq5Dtw0IYCy/ghzWiOV3bAGN7oIEizOV
- 89uFsLREJTjzi23Fn7kV0d/cAwYi7+nSg4nYzB/6zV7wKk5akcxpqqP0bv9NQ7XVhPotzsnZlGA
- Br5Xf79dNdT2fPgOMTOTIPQBKB0/ywppLVpJhfNGBmD24gZ+GF/sDHn8NOJeC0i9AlOib1n3tDD
- UnY6HGqEsuVmlWn8E3ecHEdRFyNvawgFl+zDDMSSELzvShYh
-X-Google-Smtp-Source: AGHT+IHbPWk1pLXkkuPl3cM7a+FJ3O6Qz3z929aQGl/5fKngJt9gg+yPeMKnSUmCd5DquN2I4EIb9Q==
-X-Received: by 2002:a05:6a21:a44:b0:1f5:8903:860f with SMTP id
- adf61e73a8af0-1fe42f359d0mr5543486637.14.1742550994937; 
- Fri, 21 Mar 2025 02:56:34 -0700 (PDT)
-Received: from localhost ([157.82.207.107])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-7390611d3b4sm1449698b3a.97.2025.03.21.02.56.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Mar 2025 02:56:34 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 21 Mar 2025 18:56:29 +0900
-Subject: [PATCH] virtio-net: Fix the interpretation of max_tx_vq
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvZIf-0008T5-1k
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:08:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvZId-0006rN-79
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:08:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742551701;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=j75yqdIFQvwpSDhl+a54wJT/+mD+keE+bKKiRvrBVpo=;
+ b=NUe65QxSmqqBdwcaVWS+rFYH97d89cqpZ6aNu6O/BV6Wr/wWkhkwL+LFWNbUml+oZOukOV
+ gOP3Lzkr0vZXfRAOwV8gjT4Bc7My2eMxFWaew3TiHGCuv3cEBYg/9/dheXhSP24qfrb5A9
+ Ym70y0tsM3xKi4oQtWYXci9xAWU+vHA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-AXp_vIBBPbSofe5tLmrd7w-1; Fri,
+ 21 Mar 2025 06:08:17 -0400
+X-MC-Unique: AXp_vIBBPbSofe5tLmrd7w-1
+X-Mimecast-MFC-AGG-ID: AXp_vIBBPbSofe5tLmrd7w_1742551695
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AE0F1800265; Fri, 21 Mar 2025 10:08:15 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.38])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E0251180175B; Fri, 21 Mar 2025 10:08:13 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 3DE171800390; Fri, 21 Mar 2025 11:08:11 +0100 (CET)
+Date: Fri, 21 Mar 2025 11:08:11 +0100
+From: Gerd Hoffman <kraxel@redhat.com>
+To: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+Cc: Alexander Graf <graf@amazon.com>, Ani Sinha <anisinha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+ <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <Z9vSeF67fNazkxBh@8bytes.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250321-vq-v1-1-6d6d285e5cbc@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAMw33WcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDYyND3bJCXQvzxLQ0kzRTY8OkNCWgwoKi1LTMCrAh0bG1tQDreCBaVAA
- AAA==
-X-Change-ID: 20250321-vq-87aff4f531bf
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z9vSeF67fNazkxBh@8bytes.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,69 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio-net uses the max_tx_vq field of struct virtio_net_rss_config to
-determine the number of queue pairs and emits an error message saying
-"Can't get queue_pairs". However, the field tells only about tx.
+  Hi,
 
-Examine the indirection table to determine the number of queues required
-for rx, and correct the name of field in the error message, clarifying
-its correct semantics.
+> >      While digging around in the igvm spec I've seen there is the
+> >      concept of 'parameters'.  Can this be used to pass on the memory
+> >      location of kernel + initrd + cmdline?  Maybe the kernel hashes too?
+> 
+> The find the locations of the kernel, initrd, cmdline, ... I think IGVM
+> parameters, either directly or (preferably indirectly) are a good
+> solution. By "indirectly" I mean to put these regions on a separate and
+> measured page which also contains the region hashes.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- hw/net/virtio-net.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+regions and hashes should be separate I think.  The regions are not
+necessarily fixed, the physical memory location where things have been
+loaded to can change.
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index de87cfadffe1..d9ab9e1eb74d 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1450,23 +1450,28 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
-         err_value = (uint32_t)s;
-         goto error;
-     }
--    for (i = 0; i < n->rss_data.indirections_len; ++i) {
--        uint16_t val = n->rss_data.indirections_table[i];
--        n->rss_data.indirections_table[i] = virtio_lduw_p(vdev, &val);
--    }
-     offset += size_get;
-     size_get = sizeof(temp);
-     s = iov_to_buf(iov, iov_cnt, offset, &temp, size_get);
-     if (s != size_get) {
--        err_msg = "Can't get queue_pairs";
-+        err_msg = "Can't get max_tx_vq";
-         err_value = (uint32_t)s;
-         goto error;
-     }
--    queue_pairs = do_rss ? virtio_lduw_p(vdev, &temp.us) : n->curr_queue_pairs;
--    if (queue_pairs == 0 || queue_pairs > n->max_queue_pairs) {
--        err_msg = "Invalid number of queue_pairs";
--        err_value = queue_pairs;
--        goto error;
-+    if (do_rss) {
-+        queue_pairs = virtio_lduw_p(vdev, &temp.us);
-+        for (i = 0; i < n->rss_data.indirections_len; ++i) {
-+            uint16_t val = n->rss_data.indirections_table[i];
-+            n->rss_data.indirections_table[i] = virtio_lduw_p(vdev, &val);
-+            queue_pairs = MAX(queue_pairs, n->rss_data.indirections_table[i]);
-+        }
-+        if (queue_pairs == 0 || queue_pairs > n->max_queue_pairs) {
-+            err_msg = "Invalid number of queue_pairs";
-+            err_value = queue_pairs;
-+            goto error;
-+        }
-+    } else {
-+        queue_pairs = n->curr_queue_pairs;
-     }
-     if (temp.b > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
-         err_msg = "Invalid key size";
+But also see my other reply.  I'm not convinced any more carrying
+forward the hashes logic makes much sense.
 
----
-base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
-change-id: 20250321-vq-87aff4f531bf
+> >  (2) Will the igvm be generated on the fly from FUKI data?  Or should
+> >      the distros ship igvm images with firmware + kernel + initrd?
+> 
+> My preference would be that distros ship the tooling and components to
+> build IGVM files and build them during kernel update. If a distro comes
+> up with a generic initrd+cmdline it can also ship pre-built IGVM files.
 
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+Working with the (F)UKI instead has the advantage that we can make use
+of the secure boot signature, with a workflow along these lines:
+
+(distro) build:
+ * Embed the firmware as igvm inside the UKI.
+ * Sign the UKI.
+
+first vm launch:
+ * Load the complete UKI.
+ * Pass on (a) the igvm section and (b) the UKI (including signature)
+   to the vmfwupdate device.
+
+vmwupdate device:
+ * loads the igvm image.
+ * passes on the UKI location (as igvm parameter?).
+
+second vm launch:
+ * firmware checks UKI signature.
+ * firmware (optionally) measures UKI into vTPM.
+ * firmware launches UKI.
+
+Going ship the distro kernel as igvm image would work too.  Will
+simplify the measurement pre-calculation.  Also there is no need to pass
+around any parameters, everything (how the firmware finds the UKI etc)
+can be arranged at igvm build time then.  Disadvantage: This introduces
+a completely new boot workflow.  Will probably need a new set of cloud
+images exclusively for the BYOF case.
+
+take care,
+  Gerd
 
 
