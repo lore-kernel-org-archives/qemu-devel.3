@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A2EC36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70468C36002
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvhF8-0003Q0-Oz; Fri, 21 Mar 2025 14:37:21 -0400
+	id 1tvhEK-00025s-OV; Fri, 21 Mar 2025 14:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEZ-000342-Bo
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tvhEE-0001c7-My
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEX-000751-JO
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:42 -0400
+ id 1tvhED-000726-4y
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742582200;
+ s=mimecast20190719; t=1742582180;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ReqKjgFzNUJo0s5zSYwcl94ZW9nD5xC2C+v/UzPjG/k=;
- b=B4s8oKAh02M+kxI7UuMYNj7A46dPuDwxo0Xjz5MaWDVa7lKfuCQ659mI2fSb6trdx/HXFB
- B2JrhP5ZkC+uWkh1bzh/92KccJN4TSIAcqY4b3pjx/p3BCR+IE+5L2P1/1W0s+w03buro8
- JC2F1QOH/GxsHXUyk3idqWRS7g05JDk=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kmzz+Z10cF8s6oKBzeZDluVa8sEBlKEmjUCkAgJ5/6I=;
+ b=H8B92rHV6umBp2kGbM9xxYqLLXz+0Gk7CKfnPJqOefFUaZbOIPXTPHb5SjKGLZd80pbOwF
+ 85SDOJOO5bJwZK2jGSu4X8DVPdWMXJ8++42LYvD5iWPuId6H5ch6j8u5oL+1jprXjQ0/1W
+ F8dHeBZtYLjx20HBNkzTNC0CFQZz15g=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-iKGvHK2INPSyG3p_ukGWMw-1; Fri, 21 Mar 2025 14:36:38 -0400
-X-MC-Unique: iKGvHK2INPSyG3p_ukGWMw-1
-X-Mimecast-MFC-AGG-ID: iKGvHK2INPSyG3p_ukGWMw_1742582198
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39141ffa913so1171817f8f.2
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:38 -0700 (PDT)
+ us-mta-594-o1X-onHtN9O72CbQe23b0g-1; Fri, 21 Mar 2025 14:36:19 -0400
+X-MC-Unique: o1X-onHtN9O72CbQe23b0g-1
+X-Mimecast-MFC-AGG-ID: o1X-onHtN9O72CbQe23b0g_1742582178
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac25852291cso195405666b.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742582197; x=1743186997;
+ d=1e100.net; s=20230601; t=1742582176; x=1743186976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ReqKjgFzNUJo0s5zSYwcl94ZW9nD5xC2C+v/UzPjG/k=;
- b=tTNQcMdIoFeeEmqWWv8hATsXy8+NrW5Z6IKVghMIUiqSQDDzIDSU4QwPDShqGFaBrt
- tc6FusNBwouiFVle5zh5punFyiJ2ZGiCyS1qf31N+D9rG6nsxX4fiIYYmGincilrZAyy
- 4YcPdz6WyqmQ9JeJSwj0JuJ4swuAdvhLYg8POkvAw9nGUqtwLDj23GYXwfTMU616CMzB
- 2LdHHIopTuxaeD72HQsmsgQlOeRuWxdKieQDYHJOLPhbV1jRb62jfJdEHErcLzsSllJJ
- zRZJ4zLVpzZWDTTc0YI5lhzIFlEQPoi9oAv8QXfrrnhbR6awRhxlsXrI1y7BpmcJVAdT
- HQTQ==
-X-Gm-Message-State: AOJu0YzDBEA7dzcJUIVtVL7VMtFKh4TMIb7GjcGRa82WT+1r8y8TxL5B
- FtVjmsJ900wNvV5iatrbrodVuGSogoapMGFeuO/qCS+bXEMRIME9wo38V/4LLgFVNb5yeIgnmyF
- 6KZTuSg3r+NPuc3OilnlAEjoWO1H2bl9bwLG39U4VnhrjtItyMrmD9mtxclBcekEcxKZLNl8DGv
- iiynIXiBVU8EL9UItoErTodjSZPG1E7HXmqFdy
-X-Gm-Gg: ASbGncv/omqkqUoHL9TMKSiqx00PxjACljt1fv31IJNhVw4zqSOPjc2Y2kpIR76O46s
- 6FuI+oWcdt+IzBTMKQ8Qd/8sQtjZs9gW5XswbwlpZF9jaaRVDJmllsX+aRZjCONcKRLzWXRa2rn
- X6Kf+2JdqUaitdWiSe/KkRwWbRO5Zy6WvgKQqEEi/l7qm1flpJpaeX7kAKvu3CQE6Zs2J/ZsHmF
- BBjesO1iawioVjgY7/AA66EM528Aa78Eq+556chek5WvtDDd+Q//Vrjbgw3M5Q+XBB1j62qs5bT
- tYj9rCms5a+vwvBBL2wS
-X-Received: by 2002:a5d:6c67:0:b0:391:4835:d8a8 with SMTP id
- ffacd0b85a97d-3997f8f97ecmr4924347f8f.1.1742582196599; 
- Fri, 21 Mar 2025 11:36:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXbFNu7+7WzN5HaI+juy3znczCMs8jaXuwkAZypqcJjzSl/0H/4JvhWXj+AWKF2WBsBdUdRg==
-X-Received: by 2002:a5d:6c67:0:b0:391:4835:d8a8 with SMTP id
- ffacd0b85a97d-3997f8f97ecmr4924328f8f.1.1742582196128; 
- Fri, 21 Mar 2025 11:36:36 -0700 (PDT)
+ bh=kmzz+Z10cF8s6oKBzeZDluVa8sEBlKEmjUCkAgJ5/6I=;
+ b=mPw1hpo9OqD5OFH8J2X4X72WNwHreGMGprx8VZHaAwM5f9S0OxELUnLPeubiBMysOd
+ csKxSr9GURtM4y9/smosz7gn4megV3VDCYTyqUmXyT9FB0xIlskn6X725vc1D3FsG4fr
+ 0ko4xUQ0NPqDfCRT1F+WAT9wZq9PS9Age3Zu11S2A14hrOEVzxSmjjH6T9rrpicRBHv5
+ uKGbb7qKpUxm++/gvlC7fDwKfh3/M2gGKNGGlRK7x/qYtbfNMM1fHxoHT5w4Wq2H48AJ
+ DICq23XTcRoZSJ1s60vjf8RiGjZzinJJf9elWLxDPmnytj+VEUMsA29+vzvL9WTRfVAh
+ X0Cw==
+X-Gm-Message-State: AOJu0YzabG//H28ZR5nvYCWoebjcX8eivHo3GHsfGJbuI1vHFDAE85+m
+ mZjLoOMtjkzNYUITfBO850CWMNNIhD056sqTo55gjMBxDxrqjQdTyDvNVMkU8M6gh4wLGvu5mCy
+ Cb61XQEdL5klrEswzOfEnD2UkHZZlk1TiDdez4LUnREqTZiUTbct08qfjX0kV3Pgb//NXSmydJE
+ bF6DWD/oRqal0TkjA2YMEgZufPyDlSTdAth9zm
+X-Gm-Gg: ASbGncv4IucfjgCcYdv0COjQqxuPKIyQl3h9OHZhUywxqpzJ9StqXmon/MZmvUTA+5T
+ qbuAtSFHy/MGG9oaYSQxdmTCeMhVteudHFgvLI00KBpkl3RZhTkpmiEv1iF5LklUpW+1ge6/Sw1
+ lsjpneE9stA0/Q3gysp2i16slnwPE+3k9o/EFYBTY4bb2R3fgz6hogEGeHcTaxD4q+EKBHv1oOD
+ 4PGWIGABoeyzkkP7A1nbzJh8jW2keWy9C6/E9gKkZAZzvq6Y3Rn8BJIdH1djpUbzag0XUuQBSqe
+ aLtZwWDSF7J+3Ez68RhV
+X-Received: by 2002:a17:907:3ea2:b0:ac2:baab:681c with SMTP id
+ a640c23a62f3a-ac3f22b2bddmr421988166b.28.1742582176360; 
+ Fri, 21 Mar 2025 11:36:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGG4RC6lChpnRUoT8qFxk85rSdD8ABIvBfoz+pBRkloQQbSxWUuit/uDEF9itMSxxXgFkVOZw==
+X-Received: by 2002:a17:907:3ea2:b0:ac2:baab:681c with SMTP id
+ a640c23a62f3a-ac3f22b2bddmr421983866b.28.1742582175873; 
+ Fri, 21 Mar 2025 11:36:15 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.194.153])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43fdac9dsm84409445e9.30.2025.03.21.11.36.35
+ a640c23a62f3a-ac3efb51cebsm194768966b.107.2025.03.21.11.36.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 11:36:35 -0700 (PDT)
+ Fri, 21 Mar 2025 11:36:14 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 14/24] rust/vmstate: Fix "cannot infer type" error in
- vmstate_struct
-Date: Fri, 21 Mar 2025 19:35:46 +0100
-Message-ID: <20250321183556.155097-15-pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 05/24] hw/char/pl011: Pad PL011State struct to same size as
+ Rust impl
+Date: Fri, 21 Mar 2025 19:35:37 +0100
+Message-ID: <20250321183556.155097-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250321183556.155097-1-pbonzini@redhat.com>
 References: <20250321183556.155097-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,48 +110,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Rust cannot infer the type (it should be VMStateField) after
-Zeroable::ZERO, which cause the compiling error.
+We have some users of the PL011 struct which embed it directly into
+their own state structs. This means that the Rust version of the
+device must have a state struct that is the same size or smaller
+than the C struct.
 
-To fix this error, call with_varray_flag() after VMStateField's
-initialization.
+In commit 9b642097d6b7 ("rust: pl011: switch to safe chardev operation")
+the Rust PL011 state struct changed from having a bindings::CharBackend
+to a chardev::CharBackend, which made it grow larger than the C
+version. This results in an assertion at startup when QEMU was
+built with Rust enabled:
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250318130219.1799170-7-zhao1.liu@intel.com
+ $ qemu-system-arm -M raspi2b -display none
+ ERROR:../../qom/object.c:562:object_initialize_with_type: assertion
+ failed: (size >= type->instance_size)
+
+The long-term better approach to this problem would be to move
+our C device code patterns away from "embed a struct" and (back)
+to "have a pointer to the device", so we can make the C PL011State
+struct a private implementation detail rather than exposed to
+its users.
+
+For the short term, add a padding field at the end of the C struct
+so it's big enough that the Rust state struct can fit.
+
+Fixes: 9b642097d6b7 ("rust: pl011: switch to safe chardev operation")
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Link: https://lore.kernel.org/r/20250321112523.1774131-3-peter.maydell@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/vmstate.rs | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ include/hw/char/pl011.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 9d9cdda993c..3be3a7260fe 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -453,13 +453,15 @@ macro_rules! vmstate_struct {
-             size: ::core::mem::size_of::<$type>(),
-             flags: $crate::bindings::VMStateFlags::VMS_STRUCT,
-             vmsd: $vmsd,
--            ..$crate::zeroable::Zeroable::ZERO $(
--                .with_varray_flag($crate::call_func_with_field!(
--                    $crate::vmstate::vmstate_varray_flag,
--                    $struct_name,
--                    $num))
--               $(.with_varray_multiply($factor))?)?
--        }
-+            ..$crate::zeroable::Zeroable::ZERO
-+         } $(.with_varray_flag(
-+                  $crate::call_func_with_field!(
-+                      $crate::vmstate::vmstate_varray_flag,
-+                      $struct_name,
-+                      $num
-+                  )
-+              )
-+           $(.with_varray_multiply($factor))?)?
-     };
- }
+diff --git a/include/hw/char/pl011.h b/include/hw/char/pl011.h
+index 4fcaf3d7d30..299ca9b18bb 100644
+--- a/include/hw/char/pl011.h
++++ b/include/hw/char/pl011.h
+@@ -52,6 +52,11 @@ struct PL011State {
+     Clock *clk;
+     bool migrate_clk;
+     const unsigned char *id;
++    /*
++     * Since some users embed this struct directly, we must
++     * ensure that the C struct is at least as big as the Rust one.
++     */
++    uint8_t padding_for_rust[16];
+ };
  
+ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr);
 -- 
 2.49.0
 
