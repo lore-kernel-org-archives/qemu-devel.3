@@ -4,81 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998D0C35FFF
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 10:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B56CC35FFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 10:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvZrk-0006wl-73; Fri, 21 Mar 2025 06:44:40 -0400
+	id 1tvZvP-0008Hf-7T; Fri, 21 Mar 2025 06:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1tvZrg-0006wG-Ug
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:44:37 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1tvZre-0004g4-7p
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:44:36 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-471fe5e0a80so14649221cf.1
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 03:44:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742553871; x=1743158671;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=J0kZnq3BxFYvryAcOh7IZRzu8Q1Q0L8Sh4TqIztd86s=;
- b=dVlTStKBhL2BqJgu/nhfTedexKfRl7buqOW151tQvrvlkIt96tGR7EWcpsYBQ+HeRH
- +TkOaCwgMSyN6rByS+HxPFHPbU7SVe6ZTKBXgKYNuHRNWu1bvr3oVZm9JW/cVHqWMUp9
- OmvtMPninlTcuFFVlYqaVSUbn3jiLDu5AcMY0LsjeOtBYNXvjCiZt/8ZSpTfRFCt/pBi
- yHix6S6cG60THQXHHrwQemQrB7xVV5OMxG5f8aOB1S9aYE94vNt9i3pyhz9Po0r7M/s9
- zhMIn3xzjZtAPxO6OTfYiQEYVjSsBQdQbFaYVeyvTdVnn3fSTln/8819Zeowjggq1NT2
- U3aA==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tvZvN-0008HD-7n
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:48:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1tvZvL-0005Fp-2N
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:48:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742554100;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M8QS2K4bdbH/7UaDSAhBGCQIxvyGiZvIGILRO+WO/CA=;
+ b=doamEb92rfXWH/O/BFLHaWp83EWtsyd/g0bmRpA8XBvzAZwLFEharU/zo0D6ShveZClUD7
+ TzONfol06U7DDBi/vysYc4rZrzzD+VXwxY2EFTWDi2lRn3yheczmrUxZtUGJF+bFxLBWO4
+ 31wYRWQwlGez5ICwRcf6b9Y7BahiuhU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-191-NPaQKBGEOh6Mp0cYRT6cfA-1; Fri, 21 Mar 2025 06:48:19 -0400
+X-MC-Unique: NPaQKBGEOh6Mp0cYRT6cfA-1
+X-Mimecast-MFC-AGG-ID: NPaQKBGEOh6Mp0cYRT6cfA_1742554098
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43d22c304adso12693805e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 03:48:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742553871; x=1743158671;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=J0kZnq3BxFYvryAcOh7IZRzu8Q1Q0L8Sh4TqIztd86s=;
- b=dYXCK2x2iISyHiUKzwMm44lSxd8VpFqtKewMq9d8tbNX+92VkS9IMp4jq1M4fXC4zU
- xjj0O7wrsHQf/kWOGC/YpK3dUpAf6EfqEAgA1PFkjzX1JMPoD3trW6u0i5RwhtT51kYp
- LkwA2J5IdWFluZsV8RbmWNbaLtbb0cAKQnhDjWGXJXt24UEXCRU+Yp8wzPRodNCsfBKP
- c2Wtu0zwjwaVwSIJ+rpFx+S0SocRGyYIAN3AJoa8yi1ptZ7sldseIjkUk7P63tphrpOr
- R6XwB6Ao7tyBrfKW3unFee+rm+hrPl/MbX/rBWcFLLdNoLvF2bRKE6PddtDSTQJz9zgo
- qyEQ==
-X-Gm-Message-State: AOJu0Yz36WXSwZPBIfo6tI92Bq6+Y5i35vhwlLjjQLAbc1e3wJp7E0A4
- dhIoZ2D2lH51AOOix+7B8kWhVSpRDeh7EjL4+kDzP/wBKhCy9n+IG0ceLyYhkH7+R7zD8RVXqMC
- rYIWZa0ALGvyV+ndMf4XONfje0oRe/kcfN54a2Q==
-X-Gm-Gg: ASbGncsUQZFgLz/etFi+BV22rpo7LK9g3iCezh7Z20I66Qp3tEoGrcEINWN7Nx7UOas
- GqDbLdQKc+SQak5E1PyH8r16RTlq0pMzoaTFB3HkPi7eTU6BcmGJ7MShHcCXChT59Z14E+HUqj3
- 4FyhrrzZCzk2qYRVjhWrHm13xfSmQdqOkoVgrUkkOm4s3SU8/CMV1HWR6SVb5V
-X-Google-Smtp-Source: AGHT+IEOSuBuyIaMHL+t888inE5/P8YNskfKfoAoHk1ErbDMKNlO0XTGYh+AAXKdiMiKhNtSRDkNjaf80nTrGr7yQCs=
-X-Received: by 2002:a05:622a:22a5:b0:476:aa7a:2f78 with SMTP id
- d75a77b69052e-4771de5b160mr41484091cf.49.1742553871450; Fri, 21 Mar 2025
- 03:44:31 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742554098; x=1743158898;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M8QS2K4bdbH/7UaDSAhBGCQIxvyGiZvIGILRO+WO/CA=;
+ b=r3afKu5e5wADCfZFopqJfU3ZPlD46yPuZrd07TuGm0fz2U70G/g0CZwWuTFCP/N9Vr
+ V9iHRJWpwtySESfw55NIF7U/Gb2y8ahmUdD1lWOCrDz5drOApRDS8lBQ7zuD1yKO8ulw
+ QhnCPPiitnqJQQd0oMqwyQ5vaZYhzKPlx9r5g0V/kunV64IdsjcPfUCz7w3CeIo7MwFN
+ Fx/8V2AQCCtGF2cRe+alXxM3yA4wRTxfz/NVoeu2FVAcU98UkTeblCnHrXbz/C7es/Kn
+ Qb7bD3T2QhDu59nHnagRZl3yCjWTeNDICGXt/ilTY+UR6d/ooh0j7F552iGEAKg0IP3Z
+ t+8A==
+X-Gm-Message-State: AOJu0YzP0c3IAzgWdP6XsrpMyeW2G3k1x2gLH21LRMA/Qkmv6DhgFVqI
+ Apiu8wmmgzxGwaw6AqdF95KMhA2EkeZzaYbukAGuwYLZdC0gKI3gId28cT8Eh5qAgexo7eW6Ghs
+ 77yAI7PxQW4xaAIvfj22me25E3OIawhnBZbFir3hfJIjvdkyI5yllmXaHn2Zp/nHjo2myNGXsGa
+ 7bCkkNB4YL7xi+4LgAFma8v/LrKFM=
+X-Gm-Gg: ASbGncv9LM5CyzlUjMeykzJVilC4XScjep9+bU1ZefuGMNOB9fMeh0dRPmmyDa7XqVd
+ Gs92GEOS2mL3Dh4jovZ39FBZW2bWq2JEbEV0Owy1Kxs0B5AWmwzZdhlzKn+V3H0EvDGEUthMRmn
+ M=
+X-Received: by 2002:a05:600c:1e8f:b0:43b:c7f0:6173 with SMTP id
+ 5b1f17b1804b1-43d502e4332mr29001425e9.4.1742554097839; 
+ Fri, 21 Mar 2025 03:48:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUAUqwvEAhftSC4CCP/GPPW6LJq4cZOX/mweI1IyXGhmJY9275XzAQ2/9s8P1UC6fcsbXJmd02NuyT0dphAmc=
+X-Received: by 2002:a05:600c:1e8f:b0:43b:c7f0:6173 with SMTP id
+ 5b1f17b1804b1-43d502e4332mr29001185e9.4.1742554097344; Fri, 21 Mar 2025
+ 03:48:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250321-vq-v1-1-6d6d285e5cbc@daynix.com>
-In-Reply-To: <20250321-vq-v1-1-6d6d285e5cbc@daynix.com>
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
-Date: Fri, 21 Mar 2025 12:44:20 +0200
-X-Gm-Features: AQ5f1Jrkk7KVpWkl9kXU1ICSaIl9UWJECNcm-VIH4xr9Xgr1BYKOlAVHcH6jbhA
-Message-ID: <CAOEp5Od-TTWt9yAQfxpSNGg=1edXaAX8b71vd7ZQfNnr7-2ArA@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: Fix the interpretation of max_tx_vq
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, devel@daynix.com
+References: <20250307134203.29443-1-farosas@suse.de>
+ <20250307134203.29443-2-farosas@suse.de>
+ <CAE8KmOx0KQ7OfbyivQ_256JVRugtJ8ekykxtQw-uz91Uiuv-tg@mail.gmail.com>
+ <875xk3bw1i.fsf@suse.de>
+In-Reply-To: <875xk3bw1i.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Fri, 21 Mar 2025 16:17:59 +0530
+X-Gm-Features: AQ5f1JrDZSh6aR4KsV7kdhVSWWjhdTX1TAPZeh0lxrdVB366YWcz5KdJnJSTvQo
+Message-ID: <CAE8KmOwHVAnTwUUXVMuGRiLbhELUunVoWQjimcSxS2s8+1VfVg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=yuri.benditovich@daynix.com; helo=mail-qt1-x833.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,88 +105,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 21, 2025 at 11:56=E2=80=AFAM Akihiko Odaki <akihiko.odaki@dayni=
-x.com> wrote:
->
-> virtio-net uses the max_tx_vq field of struct virtio_net_rss_config to
-> determine the number of queue pairs and emits an error message saying
-> "Can't get queue_pairs". However, the field tells only about tx.
->
-> Examine the indirection table to determine the number of queues required
-> for rx, and correct the name of field in the error message, clarifying
-> its correct semantics.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/net/virtio-net.c | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index de87cfadffe1..d9ab9e1eb74d 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -1450,23 +1450,28 @@ static uint16_t virtio_net_handle_rss(VirtIONet *=
-n,
->          err_value =3D (uint32_t)s;
->          goto error;
->      }
-> -    for (i =3D 0; i < n->rss_data.indirections_len; ++i) {
-> -        uint16_t val =3D n->rss_data.indirections_table[i];
-> -        n->rss_data.indirections_table[i] =3D virtio_lduw_p(vdev, &val);
-> -    }
->      offset +=3D size_get;
->      size_get =3D sizeof(temp);
->      s =3D iov_to_buf(iov, iov_cnt, offset, &temp, size_get);
->      if (s !=3D size_get) {
-> -        err_msg =3D "Can't get queue_pairs";
-> +        err_msg =3D "Can't get max_tx_vq";
->          err_value =3D (uint32_t)s;
->          goto error;
->      }
-> -    queue_pairs =3D do_rss ? virtio_lduw_p(vdev, &temp.us) : n->curr_que=
-ue_pairs;
-> -    if (queue_pairs =3D=3D 0 || queue_pairs > n->max_queue_pairs) {
-> -        err_msg =3D "Invalid number of queue_pairs";
-> -        err_value =3D queue_pairs;
-> -        goto error;
-> +    if (do_rss) {
-> +        queue_pairs =3D virtio_lduw_p(vdev, &temp.us);
-> +        for (i =3D 0; i < n->rss_data.indirections_len; ++i) {
-> +            uint16_t val =3D n->rss_data.indirections_table[i];
-> +            n->rss_data.indirections_table[i] =3D virtio_lduw_p(vdev, &v=
-al);
-> +            queue_pairs =3D MAX(queue_pairs, n->rss_data.indirections_ta=
-ble[i]);
-> +        }
+On Thu, 20 Mar 2025 at 20:15, Fabiano Rosas <farosas@suse.de> wrote:
+> Technically both can happen. But that would just be the case of
+> file:fdset migration which requires an extra fd for O_DIRECT. So
+> "multiple" in the usual sense of "more is better" is only
+> fd-per-thread. IOW, using multiple fds is an implementation detail IMO,
+> what people really care about is medium saturation, which we can only
+> get (with multifd) via parallelization.
 
-I think this change will create a problem rather than improve something.
-curr_queue_pairs is used in virtio_net_can_receive.
-Let's say the device has 4 queues and 4 CPUs.
-If the OS currently configures the RSS for first 2 queues only the
-curr_queue_pairs becomes 2.
-The packets that come to queues 2 and 3 will be dropped, see
-virtio_net_receive_rcu and virtio_net_can_receive
+* I see. Multifd is essentially multiple threads = thread pool then.
 
-IMO the curr_queue_pairs should not be changed after it was set by
-VIRTIO_NET_CTRL_MQ / VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET
+> > Because doing migration via QMP commands is not as
+> > straightforward, I wonder who might do that and why.
+> >
+>
+> All of QEMU developers, libvirt developers, cloud software developers,
+> kernel developers etc.
 
-> +        if (queue_pairs =3D=3D 0 || queue_pairs > n->max_queue_pairs) {
-> +            err_msg =3D "Invalid number of queue_pairs";
-> +            err_value =3D queue_pairs;
-> +            goto error;
-> +        }
-> +    } else {
-> +        queue_pairs =3D n->curr_queue_pairs;
->      }
->      if (temp.b > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
->          err_msg =3D "Invalid key size";
+* Really? That must be using QMP apis via libvirt/virsh kind of tools
+I guess. Otherwise how does one follow above instructions to enable
+'multifd' and set number of channels on both source and destination
+machines? User has to open QMP shell on two machines and invoke QMP
+commands?
+
+> > * So multifd mechanism can be used to transfer non-ram data as well? I
+> > thought it's only used for RAM migration. Are device/gpu states etc
+> > bits also transferred via multifd threads?
+> >
+> device state migration with multifd has been merged for 10.0
 >
-> ---
-> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
-> change-id: 20250321-vq-87aff4f531bf
->
-> Best regards,
-> --
-> Akihiko Odaki <akihiko.odaki@daynix.com>
->
+> <rant>
+> If it were up to me, we'd have a pool of multifd threads that transmit
+> everything migration-related.
+
+* Same my thought: If multifd is to be used for all data, why not use
+the existing QEMU thread pool  OR  make it a migration thread pool.
+IIRC, there is also some discussion about having a thread pool for
+VFIO or GPU state transfer. Having so many different thread pools does
+not seem right.
+
+> Unfortunately, that's not so
+> straight-forward to implement without rewriting a lot of code, multifd
+> requires too much entanglement from the data producer. We're constantly
+> dealing with details of data transmission getting in the way of data
+> production/consumption (e.g. try to change ram.c to produce multiple
+> pages at once and watch everyting explode).
+
+* Ideally there should be separation between what the client is doing
+and how migration is working.
+
+* IMO, migration is a mechanism to transfer byte streams from one
+machine to another. And while doing so, facilitate writing (data) at
+specific addresses/offsets on the destination, not just append bytes
+at the tail end. This entails that each individual migration packet
+specifies where to write data on the destination. Let's say a
+migration stream is a train of packets. Each packet has a header and
+data.
+
+     ( [header][...data...] )><><( [header][...data...] )><><(
+[header][data] )><>< ... ><><( [header][data] )
+
+Header specifies:
+    - Serial number
+    - Header length
+    - Data length/size (2MB/4MB/8MB etc.)
+    - Destination address <- offset where to write migration data, if
+it is zero(0) append that data
+    - Data type (optional): Whether it is RAM/Device/GPU/CPU state etc.
+    - Data iteration number <- version/iteration of the same RAM page
+    ...   more variables
+    ...   more variables
+    - Some reserved bytes
+Migration data is:
+    - Just a data byte stream <= Data length/size above.
+
+* Such a train of packets is then transferred via 1 thread or 10
+threads is an operational change.
+* Such a packet is pushed (Precopy) from source to destination  OR
+pulled (Postcopy) by destination from the source side is an
+operational difference. In Postcopy phase, it could send a message
+saying I need the next RAM packet for this offset and RAM module on
+the source side provides only relevant data. Again packaging and
+transmission is done by the migration module. Similarly the Postcopy
+phase could send a message saying I need the next GPU packet, and the
+GPU module on the source side would provide relevant data.
+* How long such a train of packets is, is also immaterial.
+* With such a separation, things like synchronisation of threads is
+not connected to the data (RAM/GPU/CPU/etc.) type.
+* It may also allow us to apply compression/encryption uniformly
+across all channels/threads, irrespective of the data type.
+* Since migration is a packet transport mechanism,
+creation/modification/destruction of packets could be done by one
+entity. Clients (like RAM/GPU/CPU/VFIO etc.) shall only supply 'data'
+to be packaged and sent. It shouldn't be like RAM.c writes its own
+pakcets as they like, GPU.c writes their own packets as they like,
+that does not seem right.
+
+ >> +- A packet which is the final result of all the data aggregation
+> >> +  and/or transformation. The packet contains: a *header* with magic and
+> >> +  version numbers and flags that inform of special processing needed
+> >> +  on the destination; a *payload-specific header* with metadata referent
+> >> +  to the packet's data portion, e.g. page counts; and a variable-size
+> >> +  *data portion* which contains the actual opaque payload data.
+
+* Thread synchronisation and other such control messages could/should
+be a separate packets of its own, to be sent on the main channel.
+Thread synchronisation flags could/should not be combined with the
+migration data packets above. Control message packets may have _no
+data_ to be processed. (just sharing thoughts)
+
+Thank you.
+---
+  - Prasad
+
 
