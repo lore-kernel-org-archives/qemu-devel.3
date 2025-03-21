@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159D7C36001
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 14:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 274F7C36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 14:53:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvdjm-0001kF-Tc; Fri, 21 Mar 2025 10:52:42 -0400
+	id 1tvdjj-0001dN-BX; Fri, 21 Mar 2025 10:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjQ-0001TL-1M
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 10:52:29 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjG-0001RR-Si
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 10:52:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjM-0006wG-On
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 10:52:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvdjE-0006QZ-GX
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 10:52:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742568735;
+ s=mimecast20190719; t=1742568726;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=db9wHzRcobb29GKZw+mNtoerBkhoPENHgzYniQYfu2U=;
- b=eEBVBOpQBu1WqeqdDeDOeZ1L7eXLW4ed7XrO7MVBc/cVX3yRbk0evHBLbIkZfRDHg5/W7S
- y3/7oGOz4CMVzUq/0tZWrHt+uPN/sa8gdva5f00vcLYCYWunA7WHpo/xX0NCJxsDMVMtr/
- PgNe5L+qkpM97X6aHhOcI5QVihEn2P4=
+ bh=8XsGujRoterEtGzXJVm8qVL9JsXCcR8HxMOqyt9Jv00=;
+ b=SanFAVimfPrXiApJnrMJchLSgz4IOvgcXazj9OZdagQ6f5fFYMLUlq64JGqjevoJpCjS+8
+ rCURnbbBkRSP2mgoMh9s04iuVaPAckZmUwfA7PX2txgSBjHQq+1p0Ce3oDUQ+4V+jlcggL
+ Fj0lbxtXPtyGF50pAjkq+ILg6P4oHOc=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-D2s88yHRMA-0N8cAC1mcGw-1; Fri,
- 21 Mar 2025 10:52:11 -0400
-X-MC-Unique: D2s88yHRMA-0N8cAC1mcGw-1
-X-Mimecast-MFC-AGG-ID: D2s88yHRMA-0N8cAC1mcGw_1742568731
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-qJWGUSxcPSuCavwt57TDgQ-1; Fri,
+ 21 Mar 2025 10:52:05 -0400
+X-MC-Unique: qJWGUSxcPSuCavwt57TDgQ-1
+X-Mimecast-MFC-AGG-ID: qJWGUSxcPSuCavwt57TDgQ_1742568724
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE4621801A00; Fri, 21 Mar 2025 14:52:10 +0000 (UTC)
+ id 2B0C4180882E; Fri, 21 Mar 2025 14:52:04 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 437451800946; Fri, 21 Mar 2025 14:52:09 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E33F191F241; Fri, 21 Mar 2025 14:52:03 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D910B21E65D0; Fri, 21 Mar 2025 15:51:58 +0100 (CET)
+ id CD97B21E668C; Fri, 21 Mar 2025 15:51:58 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 6/8] hw/loongarch/virt: Eliminate error_propagate()
-Date: Fri, 21 Mar 2025 15:51:56 +0100
-Message-ID: <20250321145158.3896812-7-armbru@redhat.com>
+	Stefano Stabellini <sstabellini@kernel.org>
+Subject: [PULL 3/8] hw/xen: Fix xen_bus_realize() error handling
+Date: Fri, 21 Mar 2025 15:51:53 +0100
+Message-ID: <20250321145158.3896812-4-armbru@redhat.com>
 In-Reply-To: <20250321145158.3896812-1-armbru@redhat.com>
 References: <20250321145158.3896812-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -84,112 +84,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+The Error ** argument must be NULL, &error_abort, &error_fatal, or a
+pointer to a variable containing NULL.  Passing an argument of the
+latter kind twice without clearing it in between is wrong: if the
+first call sets an error, it no longer points to NULL for the second
+call.
 
-When there is an error, it is put into a local variable and then
-propagated to somewhere else. Instead the error can be set right
-away, error propagation can be removed.
+xen_bus_realize() is wrong that way: it passes &local_err to
+xs_node_watch() in a loop.  If this fails in more than one iteration,
+it can trip error_setv()'s assertion.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <20250320032158.1762751-5-maobibo@loongson.cn>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Fix by clearing @local_err.
+
+Fixes: c4583c8c394e (xen-bus: reduce scope of backend watch)
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20250314143500.2449658-2-armbru@redhat.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- hw/loongarch/virt.c | 32 +++++++++++---------------------
- 1 file changed, 11 insertions(+), 21 deletions(-)
+ hw/xen/xen-bus.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a5840ff968..4674bd9163 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -859,30 +859,29 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
-     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
-     CPUState *cs = CPU(dev);
-     CPUArchId *cpu_slot;
--    Error *err = NULL;
-     LoongArchCPUTopo topo;
-     int arch_id;
- 
-     if (lvms->acpi_ged) {
-         if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
--            error_setg(&err,
-+            error_setg(errp,
-                        "Invalid thread-id %u specified, must be in range 1:%u",
-                        cpu->thread_id, ms->smp.threads - 1);
--            goto out;
-+            return;
+diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
+index 8260f1e1bb..2aacc1436f 100644
+--- a/hw/xen/xen-bus.c
++++ b/hw/xen/xen-bus.c
+@@ -357,6 +357,7 @@ static void xen_bus_realize(BusState *bus, Error **errp)
+             error_reportf_err(local_err,
+                               "failed to set up '%s' enumeration watch: ",
+                               type[i]);
++            local_err = NULL;
          }
  
-         if ((cpu->core_id < 0) || (cpu->core_id >= ms->smp.cores)) {
--            error_setg(&err,
-+            error_setg(errp,
-                        "Invalid core-id %u specified, must be in range 1:%u",
-                        cpu->core_id, ms->smp.cores - 1);
--            goto out;
-+            return;
-         }
- 
-         if ((cpu->socket_id < 0) || (cpu->socket_id >= ms->smp.sockets)) {
--            error_setg(&err,
-+            error_setg(errp,
-                        "Invalid socket-id %u specified, must be in range 1:%u",
-                        cpu->socket_id, ms->smp.sockets - 1);
--            goto out;
-+            return;
-         }
- 
-         topo.socket_id = cpu->socket_id;
-@@ -891,11 +890,11 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
-         arch_id =  virt_get_arch_id_from_topo(ms, &topo);
-         cpu_slot = virt_find_cpu_slot(ms, arch_id);
-         if (CPU(cpu_slot->cpu)) {
--            error_setg(&err,
-+            error_setg(errp,
-                        "cpu(id%d=%d:%d:%d) with arch-id %" PRIu64 " exists",
-                        cs->cpu_index, cpu->socket_id, cpu->core_id,
-                        cpu->thread_id, cpu_slot->arch_id);
--            goto out;
-+            return;
-         }
-     } else {
-         /* For cold-add cpu, find empty cpu slot */
-@@ -911,33 +910,24 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev,
-     cpu->env.address_space_iocsr = &lvms->as_iocsr;
-     cpu->phy_id = cpu_slot->arch_id;
-     cs->cpu_index = cpu_slot - ms->possible_cpus->cpus;
--    numa_cpu_pre_plug(cpu_slot, dev, &err);
--out:
--    if (err) {
--        error_propagate(errp, err);
--    }
-+    numa_cpu_pre_plug(cpu_slot, dev, errp);
- }
- 
- static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
-                                     DeviceState *dev, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
--    Error *err = NULL;
-     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
-     CPUState *cs = CPU(dev);
- 
-     if (cs->cpu_index == 0) {
--        error_setg(&err, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
-+        error_setg(errp, "hot-unplug of boot cpu(id%d=%d:%d:%d) not supported",
-                    cs->cpu_index, cpu->socket_id,
-                    cpu->core_id, cpu->thread_id);
--        error_propagate(errp, err);
-         return;
-     }
- 
--    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
--    if (err) {
--        error_propagate(errp, err);
--    }
-+    hotplug_handler_unplug_request(HOTPLUG_HANDLER(lvms->acpi_ged), dev, errp);
- }
- 
- static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+         g_free(node);
 -- 
 2.48.1
 
