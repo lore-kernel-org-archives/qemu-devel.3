@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB8FCC36007
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867D4C36007
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 12:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvbbu-0001pm-7s; Fri, 21 Mar 2025 08:36:26 -0400
+	id 1tvbbz-0001tR-I1; Fri, 21 Mar 2025 08:36:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvbbs-0001oE-IK
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:36:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvbbu-0001py-U4
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:36:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvbbq-0008ML-Ho
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:36:23 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tvbbt-0008Nc-DH
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 08:36:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742560581;
+ s=mimecast20190719; t=1742560584;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YP3W3SSziRWWK3FyAofg3Yc/0xIn1O5FtN33E19E/V0=;
- b=Y0nZyIzJW/ze6UXnayVmSaz/584Yzg0dF9MHgy5rAv5qsnvwwc9HdPoDSSuG7Fyj345Hyd
- Dxf66dI2fifnxj7ffJ+H4yeolGbfN93bshwSbfsrshEt2VjR8p+2eyBiGjy8va6BFSo0rI
- X0MGRFdC/0F7X9NT7RSSG31oeh0K6xw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VRDSLwYwETArjgeOrFMmyM+30TOgKYOKUr0h0AFCGSM=;
+ b=cTNwmm9it3R2yLQ6slRF1JtCMgfy0S/1XHJQ3O0w724Y/6YTihoz/RZIvYnV7iUxecKbTR
+ wJyTHQ6NBaidZRALtKeb0B+X7c5N0Xl9QesMBmU1kOQ+vOhpuOY8HjpM80YsQp8S4Ct3Ng
+ 0xqFo/YAJxFeDtylQ98SHMJuDfnT+Eg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-CIlqUPMSMIGPGBQGd2M3Tg-1; Fri,
- 21 Mar 2025 08:36:17 -0400
-X-MC-Unique: CIlqUPMSMIGPGBQGd2M3Tg-1
-X-Mimecast-MFC-AGG-ID: CIlqUPMSMIGPGBQGd2M3Tg_1742560576
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-nmyjx7c3PrmWmrFZ9oBHvQ-1; Fri,
+ 21 Mar 2025 08:36:20 -0400
+X-MC-Unique: nmyjx7c3PrmWmrFZ9oBHvQ-1
+X-Mimecast-MFC-AGG-ID: nmyjx7c3PrmWmrFZ9oBHvQ_1742560578
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC6271933B4F; Fri, 21 Mar 2025 12:36:15 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7C3D196D2D8; Fri, 21 Mar 2025 12:36:18 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.45.224.38])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 413B9195609D; Fri, 21 Mar 2025 12:36:15 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 386BF1801766; Fri, 21 Mar 2025 12:36:18 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 28AE81800607; Fri, 21 Mar 2025 13:36:05 +0100 (CET)
+ id 49E381800609; Fri, 21 Mar 2025 13:36:05 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -58,25 +58,26 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 4/6] hw/uefi-vars-sysbus: allow for riscv virt
-Date: Fri, 21 Mar 2025 13:36:02 +0100
-Message-ID: <20250321123604.2126923-5-kraxel@redhat.com>
+Subject: [PULL 6/6] docs/firmware: add feature flag for host uefi variable
+ store
+Date: Fri, 21 Mar 2025 13:36:04 +0100
+Message-ID: <20250321123604.2126923-7-kraxel@redhat.com>
 In-Reply-To: <20250321123604.2126923-1-kraxel@redhat.com>
 References: <20250321123604.2126923-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,46 +93,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow the device being added to riscv virt VMs.
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20250319141159.1461621-5-kraxel@redhat.com>
+Message-ID: <20250319141159.1461621-7-kraxel@redhat.com>
 ---
- hw/riscv/virt.c | 2 ++
- hw/uefi/Kconfig | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ docs/interop/firmware.json | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index dae46f4733cd..e517002fdfc7 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -57,6 +57,7 @@
- #include "hw/acpi/aml-build.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
-+#include "hw/uefi/var-service-api.h"
+diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+index 57f55f6c5455..745d21d82232 100644
+--- a/docs/interop/firmware.json
++++ b/docs/interop/firmware.json
+@@ -214,13 +214,23 @@
+ #                  PL011 UART. @verbose-static is mutually exclusive
+ #                  with @verbose-dynamic.
+ #
++# @host-uefi-vars: The firmware expects the host to provide an uefi
++#                  variable store.  qemu supports that via
++#                  "uefi-vars-sysbus" (aarch64, riscv64, loongarch64)
++#                  or "uefi-vars-x64" (x86_64) devices.  The firmware
++#                  will not use flash for nvram.  When loading the
++#                  firmware into flash the 'stateless' setup should be
++#                  used.  It is recommened to load the firmware into
++#                  memory though.
++#
+ # Since: 3.0
+ ##
+ { 'enum' : 'FirmwareFeature',
+   'data' : [ 'acpi-s3', 'acpi-s4',
+              'amd-sev', 'amd-sev-es', 'amd-sev-snp',
+              'intel-tdx',
+-             'enrolled-keys', 'requires-smm', 'secure-boot',
++             'enrolled-keys', 'requires-smm',
++             'secure-boot', 'host-uefi-vars',
+              'verbose-dynamic', 'verbose-static' ] }
  
- /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
- static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
-@@ -1935,6 +1936,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-     hc->plug = virt_machine_device_plug_cb;
- 
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
- #ifdef CONFIG_TPM
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
- #endif
-diff --git a/hw/uefi/Kconfig b/hw/uefi/Kconfig
-index ca6c2bc46a96..f139008b632b 100644
---- a/hw/uefi/Kconfig
-+++ b/hw/uefi/Kconfig
-@@ -1,3 +1,3 @@
- config UEFI_VARS
- 	bool
--        default y if X86_64 || AARCH64
-+        default y if X86_64 || AARCH64 || RISCV64
+ ##
 -- 
 2.49.0
 
