@@ -4,144 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133C1C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 10:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998D0C35FFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 10:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvZTx-0002b3-Vz; Fri, 21 Mar 2025 06:20:06 -0400
+	id 1tvZrk-0006wl-73; Fri, 21 Mar 2025 06:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tvZTw-0002ah-07
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:20:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tvZTn-000372-UZ
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:20:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742552394;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=GhFb5M2hOr6rXGAtnNvo9nkgnrnPTljukB9Hxc0pV/w=;
- b=D8mx3nj40KRagXyjsT4SjIiMl2KuGwLdX1xd8VGGuA17EH8xjReAkJ1GnE3QR0QYi5DoX0
- CyqppbxJGBXG5OEbe27nMbF89aOzaL0OsS8D3E2IrFetJJQTuG+SPXF421W0nzj08sb8Vs
- VIwWLRUK9joV6kD+wGSzsSsmx2RRo7U=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-tLf-rMjTO8ukmh4_g5Kpow-1; Fri, 21 Mar 2025 06:19:52 -0400
-X-MC-Unique: tLf-rMjTO8ukmh4_g5Kpow-1
-X-Mimecast-MFC-AGG-ID: tLf-rMjTO8ukmh4_g5Kpow_1742552391
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d4d15058dso11173435e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 03:19:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742552391; x=1743157191;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
+ id 1tvZrg-0006wG-Ug
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:44:37 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
+ id 1tvZre-0004g4-7p
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 06:44:36 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-471fe5e0a80so14649221cf.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 03:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742553871; x=1743158671;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GhFb5M2hOr6rXGAtnNvo9nkgnrnPTljukB9Hxc0pV/w=;
- b=SmVHzIX8LOYtw0b9q80PpHRmgMSO/ssKAVSmCPuxwpzErs18ELEN7qxEuijpuBonI0
- LLm4+vEUZ4HyPHyOQk00Z2S1qd1h6U1ZHLchc3JDlNBgv7Qoay83Ih+2jb9AjOoM3qaY
- C56Lz8VdNEoeDSkBn8JHNKaIRTFVLGFAn2mBKvjhrdbdbnt+VpOzmsw1NXFSkXLirwRf
- UmmeJnIVfCoR8rawKWsbz1a8Q77nG/PUVGJTVDDBWU4q2mtdp8PXupEED268zXRyh3QV
- wc3J4fQjtBRLpL3mkU/NAG2c7za5TLfrdpKXiNGm7wiVMaqqMc7AZ0JTgB+h2QgsplsB
- 344A==
-X-Gm-Message-State: AOJu0Yw31QftjPLFAAyX+90dk/uE+nXEEOpfvamLnXXwTUU83+VWFnWR
- UlUsL/DcsLi97v+R88mjV50tgV0fiavMizrCpQEeH66JGqF3luXasHqDelBJO42wrLc11bgM04h
- BFcXPX2pUAQZgM7HtQxXbzlKfzQmZfAZI8+sWRbBvPntExYM/jAdC
-X-Gm-Gg: ASbGncuiMdai0dVXjMmb0/ICbzMJ6eN1XEL7hZ1vXCqcOGjKytNn2/swX/J7Iv8NlZI
- UhFw/gN3m9fgiYFDJp3oNc8ucNMnKzEIX/f+wZ0MrwjnUZa2D9gGnvRQmuAhHeOJ82JLYRzDaEC
- rX/I6C1x8hgXy/XzFlYADsHPc7N+CpmCyyxO7KRLRn9h9UcNE0N86TlyY4x3EIplTxt8d2U5K3w
- 6HKS+mZP7bRHjlgdIpNKDDBj/TrORnIFPn3+eX/LSN50GP/eyMRWK+17prC6OD4CuW0HHruqJPK
- DwxC4iDMKqkTumSNqJz71ELxQ9A7Bg0emL4wbB7WMz/V4FdYbjBoYQ==
-X-Received: by 2002:a05:600c:5742:b0:43c:e70d:44f0 with SMTP id
- 5b1f17b1804b1-43d510fff60mr15834835e9.19.1742552391091; 
- Fri, 21 Mar 2025 03:19:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQyLtq4VF1Cqtq2Y+FYk1tD6mxWxBTeB6EgqpbW/5zZPLvAonAUMvxP0/m/P62Q6rvCRsWPw==
-X-Received: by 2002:a05:600c:5742:b0:43c:e70d:44f0 with SMTP id
- 5b1f17b1804b1-43d510fff60mr15834535e9.19.1742552390576; 
- Fri, 21 Mar 2025 03:19:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d440ed4b8sm72698245e9.35.2025.03.21.03.19.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Mar 2025 03:19:50 -0700 (PDT)
-Message-ID: <d64ecace-2a6a-4d5b-8689-5182cd770bb7@redhat.com>
-Date: Fri, 21 Mar 2025 11:19:49 +0100
+ bh=J0kZnq3BxFYvryAcOh7IZRzu8Q1Q0L8Sh4TqIztd86s=;
+ b=dVlTStKBhL2BqJgu/nhfTedexKfRl7buqOW151tQvrvlkIt96tGR7EWcpsYBQ+HeRH
+ +TkOaCwgMSyN6rByS+HxPFHPbU7SVe6ZTKBXgKYNuHRNWu1bvr3oVZm9JW/cVHqWMUp9
+ OmvtMPninlTcuFFVlYqaVSUbn3jiLDu5AcMY0LsjeOtBYNXvjCiZt/8ZSpTfRFCt/pBi
+ yHix6S6cG60THQXHHrwQemQrB7xVV5OMxG5f8aOB1S9aYE94vNt9i3pyhz9Po0r7M/s9
+ zhMIn3xzjZtAPxO6OTfYiQEYVjSsBQdQbFaYVeyvTdVnn3fSTln/8819Zeowjggq1NT2
+ U3aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742553871; x=1743158671;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J0kZnq3BxFYvryAcOh7IZRzu8Q1Q0L8Sh4TqIztd86s=;
+ b=dYXCK2x2iISyHiUKzwMm44lSxd8VpFqtKewMq9d8tbNX+92VkS9IMp4jq1M4fXC4zU
+ xjj0O7wrsHQf/kWOGC/YpK3dUpAf6EfqEAgA1PFkjzX1JMPoD3trW6u0i5RwhtT51kYp
+ LkwA2J5IdWFluZsV8RbmWNbaLtbb0cAKQnhDjWGXJXt24UEXCRU+Yp8wzPRodNCsfBKP
+ c2Wtu0zwjwaVwSIJ+rpFx+S0SocRGyYIAN3AJoa8yi1ptZ7sldseIjkUk7P63tphrpOr
+ R6XwB6Ao7tyBrfKW3unFee+rm+hrPl/MbX/rBWcFLLdNoLvF2bRKE6PddtDSTQJz9zgo
+ qyEQ==
+X-Gm-Message-State: AOJu0Yz36WXSwZPBIfo6tI92Bq6+Y5i35vhwlLjjQLAbc1e3wJp7E0A4
+ dhIoZ2D2lH51AOOix+7B8kWhVSpRDeh7EjL4+kDzP/wBKhCy9n+IG0ceLyYhkH7+R7zD8RVXqMC
+ rYIWZa0ALGvyV+ndMf4XONfje0oRe/kcfN54a2Q==
+X-Gm-Gg: ASbGncsUQZFgLz/etFi+BV22rpo7LK9g3iCezh7Z20I66Qp3tEoGrcEINWN7Nx7UOas
+ GqDbLdQKc+SQak5E1PyH8r16RTlq0pMzoaTFB3HkPi7eTU6BcmGJ7MShHcCXChT59Z14E+HUqj3
+ 4FyhrrzZCzk2qYRVjhWrHm13xfSmQdqOkoVgrUkkOm4s3SU8/CMV1HWR6SVb5V
+X-Google-Smtp-Source: AGHT+IEOSuBuyIaMHL+t888inE5/P8YNskfKfoAoHk1ErbDMKNlO0XTGYh+AAXKdiMiKhNtSRDkNjaf80nTrGr7yQCs=
+X-Received: by 2002:a05:622a:22a5:b0:476:aa7a:2f78 with SMTP id
+ d75a77b69052e-4771de5b160mr41484091cf.49.1742553871450; Fri, 21 Mar 2025
+ 03:44:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 25/32] vfio: Move vfio_set_migration_error() into
- migration.c
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20250318095415.670319-1-clg@redhat.com>
- <20250318095415.670319-26-clg@redhat.com>
- <CAE8KmOyBghHqFSmW-vbQfe1zvDkDJ8Dkq1FgUdZHXt4dGO9vLA@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CAE8KmOyBghHqFSmW-vbQfe1zvDkDJ8Dkq1FgUdZHXt4dGO9vLA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250321-vq-v1-1-6d6d285e5cbc@daynix.com>
+In-Reply-To: <20250321-vq-v1-1-6d6d285e5cbc@daynix.com>
+From: Yuri Benditovich <yuri.benditovich@daynix.com>
+Date: Fri, 21 Mar 2025 12:44:20 +0200
+X-Gm-Features: AQ5f1Jrkk7KVpWkl9kXU1ICSaIl9UWJECNcm-VIH4xr9Xgr1BYKOlAVHcH6jbhA
+Message-ID: <CAOEp5Od-TTWt9yAQfxpSNGg=1edXaAX8b71vd7ZQfNnr7-2ArA@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: Fix the interpretation of max_tx_vq
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=yuri.benditovich@daynix.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,62 +94,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
->> +void vfio_migration_set_error(int ret)
->> +{
->> +    if (migration_is_running()) {
->> +        migration_file_set_error(ret, NULL);
->> +    }
->> +}
->> --
-> 
-> * The change looks okay. But with the 'Error *err = NULL' parameter,
-> the error (ret) is also not passed on. Could we call
-> migration_file_set_error(ret, errp), instead of defining
-> 'vfio_migration_set_error'? 
-
-So you mean open coding :
-  
-     if (migration_is_running()) {
-         migration_file_set_error(ret, errp);
-     }
-
-?
-
-Yes. I think it is a good idea to limit proliferation of this wrapper.
-Ideally, we wouldn't need to use migration_file_set_error() at all but
-we still have some callback routines not taking an Error **parameter
-unfortunately.
-
-IOMMU notifiers :
-
-   vfio_iommu_map_notify
-   vfio_iommu_map_dirty_notify
-
-
-MemoryListener handlers :
-
-   vfio_listener_log_global_stop
-   vfio_listener_log_sync
-
-
-I will send a series removing vfio_migration_set_error() to improve
-error reporting in the dirty tracking handlers. This makes sense,
-thanks for reminding me.
-
-C.
-
-
-
-
-
-> Because currently it accepts only one
-> 'ret' parameter, later adding *errp to it would entail changing all
-> call sites.
-> 
-> Thank you.
+On Fri, Mar 21, 2025 at 11:56=E2=80=AFAM Akihiko Odaki <akihiko.odaki@dayni=
+x.com> wrote:
+>
+> virtio-net uses the max_tx_vq field of struct virtio_net_rss_config to
+> determine the number of queue pairs and emits an error message saying
+> "Can't get queue_pairs". However, the field tells only about tx.
+>
+> Examine the indirection table to determine the number of queues required
+> for rx, and correct the name of field in the error message, clarifying
+> its correct semantics.
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->    - Prasad
-> 
+>  hw/net/virtio-net.c | 25 +++++++++++++++----------
+>  1 file changed, 15 insertions(+), 10 deletions(-)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index de87cfadffe1..d9ab9e1eb74d 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -1450,23 +1450,28 @@ static uint16_t virtio_net_handle_rss(VirtIONet *=
+n,
+>          err_value =3D (uint32_t)s;
+>          goto error;
+>      }
+> -    for (i =3D 0; i < n->rss_data.indirections_len; ++i) {
+> -        uint16_t val =3D n->rss_data.indirections_table[i];
+> -        n->rss_data.indirections_table[i] =3D virtio_lduw_p(vdev, &val);
+> -    }
+>      offset +=3D size_get;
+>      size_get =3D sizeof(temp);
+>      s =3D iov_to_buf(iov, iov_cnt, offset, &temp, size_get);
+>      if (s !=3D size_get) {
+> -        err_msg =3D "Can't get queue_pairs";
+> +        err_msg =3D "Can't get max_tx_vq";
+>          err_value =3D (uint32_t)s;
+>          goto error;
+>      }
+> -    queue_pairs =3D do_rss ? virtio_lduw_p(vdev, &temp.us) : n->curr_que=
+ue_pairs;
+> -    if (queue_pairs =3D=3D 0 || queue_pairs > n->max_queue_pairs) {
+> -        err_msg =3D "Invalid number of queue_pairs";
+> -        err_value =3D queue_pairs;
+> -        goto error;
+> +    if (do_rss) {
+> +        queue_pairs =3D virtio_lduw_p(vdev, &temp.us);
+> +        for (i =3D 0; i < n->rss_data.indirections_len; ++i) {
+> +            uint16_t val =3D n->rss_data.indirections_table[i];
+> +            n->rss_data.indirections_table[i] =3D virtio_lduw_p(vdev, &v=
+al);
+> +            queue_pairs =3D MAX(queue_pairs, n->rss_data.indirections_ta=
+ble[i]);
+> +        }
 
+I think this change will create a problem rather than improve something.
+curr_queue_pairs is used in virtio_net_can_receive.
+Let's say the device has 4 queues and 4 CPUs.
+If the OS currently configures the RSS for first 2 queues only the
+curr_queue_pairs becomes 2.
+The packets that come to queues 2 and 3 will be dropped, see
+virtio_net_receive_rcu and virtio_net_can_receive
+
+IMO the curr_queue_pairs should not be changed after it was set by
+VIRTIO_NET_CTRL_MQ / VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET
+
+> +        if (queue_pairs =3D=3D 0 || queue_pairs > n->max_queue_pairs) {
+> +            err_msg =3D "Invalid number of queue_pairs";
+> +            err_value =3D queue_pairs;
+> +            goto error;
+> +        }
+> +    } else {
+> +        queue_pairs =3D n->curr_queue_pairs;
+>      }
+>      if (temp.b > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
+>          err_msg =3D "Invalid key size";
+>
+> ---
+> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+> change-id: 20250321-vq-87aff4f531bf
+>
+> Best regards,
+> --
+> Akihiko Odaki <akihiko.odaki@daynix.com>
+>
 
