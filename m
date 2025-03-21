@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6682C35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BE8C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvVpq-0000he-FM; Fri, 21 Mar 2025 02:26:26 -0400
+	id 1tvVpz-0001HR-A3; Fri, 21 Mar 2025 02:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoG-000808-OI; Fri, 21 Mar 2025 02:24:48 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tvVoY-0008Dr-Ha; Fri, 21 Mar 2025 02:25:11 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tvVoE-000309-He; Fri, 21 Mar 2025 02:24:48 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-223fd89d036so30893035ad.1; 
- Thu, 20 Mar 2025 23:24:41 -0700 (PDT)
+ id 1tvVoS-00032e-Pn; Fri, 21 Mar 2025 02:25:05 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2240b4de12bso43014725ad.2; 
+ Thu, 20 Mar 2025 23:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742538279; x=1743143079; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742538295; x=1743143095; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SqViPbJrwkFdFnQi1kgDINENtOBtFE3qJ3dGXQXwpNg=;
- b=X1yFSua1JjPqLE1uXq1Jl6WXqn2S/IqqYVfqb1KSdc+O44vt9DWNuLTX03hAVP7Maj
- 7w2ptpy9awpA4bdWD4GcaUqmHhT0Mia1i8vmJ8zdvvOv7Y2fd4KD4DcohIZ/3czMXn1U
- Myhe6Po4Mw8RwzsRESUDzApqxKNTHyq04+im6CD0k/q5A0F/Jdixr4kNSI39sXX76/2x
- BWprQuUeTqdm89IE0gm75WFIJrDqJHUKqmXMWu0TSv/L+8i6pz1TVoDpbBODwXBSn8sV
- CzwnQH0zY3nJ5B33B99hw9e59O8SmAq7cio1FpNzr2amcHLK6ewpSCdaAT/1FsXYqwoO
- ZrYg==
+ bh=UI94a7Hw91whhjlIDY7N1S0ogpBosIVfhZhQbQGDvvE=;
+ b=fQs0qkF0grf9EMVDffYpEU4cDMaie6lue/15Tqh8TugLVTI+gkB3e+4uIe7Zslf4L3
+ OkpNQgJYnZCM8fLLfc3u2x6AyvLO3YMqAKcC6vN4mR4XN152dw2keRGIeqCtz1bYofwr
+ EUUMrJ5+tnbPBt6h1qd3sv9VB1tG7gknaPF4JbvjzNhETmVtKcUTwKRTHlqpT+KI1l9q
+ Yxs540FZF6bYRsQC/MWNyJR6T5CUvL2oX10LfmQW8FgmOannjirW9DvHME+UUHTG81R4
+ 1dBmGF35kZGRN+c0OD58U5Pxc7OCrvWHKS+lz9j/hAkb4TFu0ERRPiODCMvF5O6t9eXG
+ SC0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742538279; x=1743143079;
+ d=1e100.net; s=20230601; t=1742538295; x=1743143095;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SqViPbJrwkFdFnQi1kgDINENtOBtFE3qJ3dGXQXwpNg=;
- b=W8f8Jyqy/M0ZhqP5zehEmsS0c/2VkbV7/oGP3rzSh1AQrCcaRLJfAW7bcojxa4qXUH
- z8S+Xn8EYWqrj6XsjnoxnDMyG+0iBK4xFvdphVLYFp8GNZI5P5nH4ntTTqVuEegIqihl
- RMVvR3w5S6OuOTSx37gdeQyJkzcoaUV7Lr36vbb1PMh6eWJDlIW5YcEKpBG+7fyTaMTh
- CUdkdCLQ5yEOHp5eosAeIYzu7zlg1EYAz3JxAHbdXnDX7CylVhJWAfxF+q9IC34LdSZn
- VRbpzESWOM25Bx6HawZeuRHHEgWTxknEvJlomLmgphDHafgeE1UyOrjsSUflAonW0U1k
- ec3g==
+ bh=UI94a7Hw91whhjlIDY7N1S0ogpBosIVfhZhQbQGDvvE=;
+ b=SpOzqVjtyOPFm/IFDkhn7PVQfLk8bD9NsUkOMlZQHXAyF5O+lDIpOghidMCL0EbJG0
+ WBY9w9Xj0hxjXosRYHZ0aFt6fkpyZfv4KNAKE49yNVSw6OdMRLhNgZHfPwmvdwGN11aS
+ llUCqj/SCA8WvuVB0Gk6xnREJQTLrl3gdvFXDmiKmM64scgQW0WOYAigM3+AJ3ZmMhFt
+ ZH/coo4JEZX9WRnMoMVw5q37nsX3IOL4IciZxT5B5lrpWR/GpO1b5pLgA+cvXvrMiAOD
+ p/coa78OGXGAd7/RQdHQv1Eh72pDd6ln/3KQg7qlj/wtAKjfCMmAKYxTPhUrmsMfi3lw
+ jJzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8CI2WRKCVGH55kzeht3i/Hu4dfYgMKTJDe/Z5DnYZ38q8SzdRXN0R3rFTWSeExm+cPIkJYYUGUg==@nongnu.org
-X-Gm-Message-State: AOJu0YxH7STPDtt2kdFFyJydTnK2bDZJt0gpD21lryaNK7+RRuPRk5Xo
- alXR8Wr3Sdo+Wzz589ycaR13+IK8NRtKIpwI6PIXHwyqiW975UzIu3pmew==
-X-Gm-Gg: ASbGncu2024o7iGj7i8GpjD/eZ8C/lAUsQgCywvZhOnni0XhDM1/30Rm7yIp8M18Xw/
- C+iFsh2H2L+3O2OA/EWI7dMOYjKGBcz27QvKtVchZnDQjY6bG2xhM+4Dkc3R5ksI3kN4Rv5VTP9
- RUmQQ8rvwWWWKPqouLVKVfNo+e1VdfT6imtEo9f/70K4pq//R2eAALIMP7WchPIUsJpqATBbCtW
- UvK6rteXuVspv9AHP11l9soV4UfxQmQqx8mnstJdxo934EzqJc+tddI/aH4mwRYHfVklgUKQa9O
- Xv0OcH9ODG7VMpRuFddXLTWBG66GAQAs5pvwnHfhfeJAGIV43g==
-X-Google-Smtp-Source: AGHT+IGhTE2seVPaGLaeE3sDq2xR7yTGaBdO/okZaNXp3hmqtCtqbwn9Hbd6fAfsIdSkkD/1Oxbznw==
-X-Received: by 2002:a05:6a00:3d0a:b0:736:4d05:2e2e with SMTP id
- d2e1a72fcca58-739059667damr4118480b3a.6.1742538279456; 
- Thu, 20 Mar 2025 23:24:39 -0700 (PDT)
+ AJvYcCX/SCC7zvGoTlqPnCOz2n6dtNW3FvtZmC7C/Nk5+wTjeujtECfuZu6RCqS9VBPUMJeY5E/Ttq9F+w==@nongnu.org
+X-Gm-Message-State: AOJu0Yw20Oa37b/N47YoBAQKHjeAY7zSb/dXGe9im3w+8QTONytQ/ZuL
+ w3sVOeJ1s4Kduk7M56NKPmnAJPmXpHaUHpeZ9Sw/UWjEQjFgI3LCuFC1zQ==
+X-Gm-Gg: ASbGncshaeG+6hjRpxifNi0I24sCrXeopwPtWGldxKTdnuUmrhTU2P2p9RBDJMv/w92
+ Za2nxPQKtHEUnm0SakBaxl3eOQLlALytCaJzo3SYZyZLLiMJ6yxnCkaX50j4nacKUL9dN68BNAb
+ O+E5f3k1vXhEo3vg2EFOALDoXAknVyfSt8RqDxV8jFDLwvH+0r2IoSPsw3RrUXI+jJp6DvdJoJg
+ gsoABjx3/V1LBAD45C7mp9HXiCAULjQ687rfEqKspOkkxCe3cac3H7ynOGx4BUcIn4RIALUhUE5
+ 0T+DDzi5i/D72BVb4vSAJfr7XSlizr962F3C4InxG5aXZOE0hw==
+X-Google-Smtp-Source: AGHT+IHchM7hVeW3NoHawa4F8N20+QV0J2N/cppA+T+l0672m/ck1m4M4Y8Yfta1LyitDdJBF1PNaQ==
+X-Received: by 2002:a05:6a00:240a:b0:735:d89c:4b8e with SMTP id
+ d2e1a72fcca58-7390593b951mr3120789b3a.5.1742538295049; 
+ Thu, 20 Mar 2025 23:24:55 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.135.36])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af8a2a4761fsm941381a12.65.2025.03.20.23.24.37
+ 41be03b00d2f7-af8a2a4761fsm941381a12.65.2025.03.20.23.24.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 23:24:39 -0700 (PDT)
+ Thu, 20 Mar 2025 23:24:54 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 04/12] ppc/xive2: Fix logical / bitwise comparison typo
-Date: Fri, 21 Mar 2025 16:24:08 +1000
-Message-ID: <20250321062421.116129-5-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/12] ppc/amigaone: Constify default_env
+Date: Fri, 21 Mar 2025 16:24:13 +1000
+Message-ID: <20250321062421.116129-10-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250321062421.116129-1-npiggin@gmail.com>
 References: <20250321062421.116129-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,30 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The comparison as written is always false (perhaps confusingly, because
-the functions/macros are not really booleans but return 0 or the tested
-bit value). Change to use logical-and.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Resolves: Coverity CID 1593721
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+The variable holding default env is not supposed to be written.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250314200145.08E0F4E6067@zero.eik.bme.hu>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive2.c | 2 +-
+ hw/ppc/amigaone.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 311b42e15d..7d584dfafa 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -1344,7 +1344,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-         return;
-     }
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index 5d787c3059..e9407a51b5 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -63,7 +63,7 @@ static const char dummy_fw[] = {
+ #define NVRAM_ADDR 0xfd0e0000
+ #define NVRAM_SIZE (4 * KiB)
  
--    if (xive2_end_is_crowd(&end) & !xive2_end_is_ignore(&end)) {
-+    if (xive2_end_is_crowd(&end) && !xive2_end_is_ignore(&end)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "XIVE: invalid END, 'crowd' bit requires 'ignore' bit\n");
-         return;
+-static char default_env[] =
++static const char default_env[] =
+     "baudrate=115200\0"
+     "stdout=vga\0"
+     "stdin=ps2kbd\0"
 -- 
 2.47.1
 
