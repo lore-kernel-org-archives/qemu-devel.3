@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BB0C36002
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 11:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB66C35FFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 11:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvai2-0004mc-JX; Fri, 21 Mar 2025 07:38:44 -0400
+	id 1tvapc-0007Gg-TP; Fri, 21 Mar 2025 07:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tvahu-0004jP-Ex
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:38:37 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1tvapY-0007FK-Rh
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:46:28 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tvahs-0001Bz-Mg
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:38:34 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3912c09be7dso1182300f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 04:38:31 -0700 (PDT)
+ id 1tvapX-0003uf-4K
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 07:46:28 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ac3b12e8518so409945566b.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 04:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742557110; x=1743161910; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742557583; x=1743162383; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3tw57Clz7HbaK4s7dPdpLPcWgBWFJpLDZ1uhZQXrSyo=;
- b=zl60BLg+gv8Y8+rNmORg52VMxG8MkTK+FQjs5qSOM6IImzsekPMcYECljX85E3ZOl4
- OpQvMxmqKfLIX17yPKety+cN8cAU1IK9YegxElJqOk3lch+X2Fs+R6MuNV2PEBtGs1Ex
- JdiQUthT1PpGXqd6gy5Aro/2A4hLpoR8LyrejGw9CoZePCPRmU4dI5KB9m2TbEOi1bu8
- /pk80MnojLJidZk/GlM3926AQu5oatUw7pAAnjkeQlkxLs73K24rzhDh8vsnBvscdyJ9
- gq1P+Wn/Yx0+NQQKQ/2/DCFqUt3u1/PUUznF/zUmx3WsUbiN5N9uaNrwIdjrzipaZ2Dp
- OHog==
+ bh=LEleFT8eL9IAm/t1fQpCxzOOBsSb9NZ1X1vSPjxWOeM=;
+ b=v8vXuTEZZgdqJngShE1yQjDLuhSSMWvhehpHOqMDOJC0dPbZhko2X4D6lHn30Iiu9y
+ HLDibLqrYBPKsxUHPkek1kXcjPdQ3Zk+VP5JGLN7RQScoW6/x/mJYWVYpU0CuRIKOQng
+ B/kpqfe6+ked4eZ1Lfhly7AOhWxR0fXvTJKvd/mm/H8eTA9esrm5AF71LLUvPBwfUuuA
+ CyejeXE65s5kTHjkL1aUJ+7iTt/qucn0pVi3OVIj7adOUw7jfTy3/JWcAfXD3Ty7khtr
+ EkHgRacploR8lndOBAelJPoJBTQjFRmBr+PAekRR+m/1dLqQTrEIRDFxhfSbrpBtoD43
+ HgTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742557110; x=1743161910;
+ d=1e100.net; s=20230601; t=1742557583; x=1743162383;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3tw57Clz7HbaK4s7dPdpLPcWgBWFJpLDZ1uhZQXrSyo=;
- b=xPodgzlkCl3mpg08TdKa9MnTokgqjrSKL3T5o5Y9UuRcC2UaaRwrYIPz7jdw7sTXLN
- W7wusF/qZ5NYKqznqecN7Ku0o3d40FFrkcyPHI7B0Qzy0JfEncpdlYORRRoYnfQBxqRV
- tpZLlY9ByDM6UMca1lCORPNpWPYyv+Db13CLJhqpHMP4PpL/zt0RG8ORnqQG2wocJ58+
- /By6i6C5I9jcv+mTpvSPbCYdPX/rRNvAuDaqXfHNqu5rC55eisH89a9ZuCj3Zwq+ho/q
- mZQh2z61/ghvrSgNaRjKhXij18BzCMyGU/7VX9kZy8yvPCVGMIpf2C6INnbybwdPXhBs
- FKFg==
-X-Gm-Message-State: AOJu0YxRNTOoG7SIuYJgLjY63903KSK5720r+xN2Ugawkb5mVRVUDck0
- oEN3jYCqUOFphita2VUn4aW1p6GYelYcfysNGN4WCpPFCGEEqKY4kKeppSFalD4=
-X-Gm-Gg: ASbGncsBAz0n2AQdQcirwtfadflbWEtWaeRE+D7rEzY7l/UMhIj8yjjm2+QzVKqwIcZ
- q9HGuiL0bsL934kkODxw/iMJiRThYXm8eAhfCKvqywEpPv9Lbj+KJGKXUpZfCWKZOwBLpF628mp
- tNgXUfCK49wPkDXGXulyd/t6u2/sTiBkldziO5q0yJ3YrpqpqPbMQRM9WtOZucjQ9KJXT2jenSo
- yo3CBOUorRNLkG40w5P5qOfdGKMJxi1hKF9oaZpxEJfWmGpyaoNmbbJvCYbv8+p6WA3Mtpb1Byt
- 2/AH10YViExp6jV3eQYmBJQprX6WjTvN+J7Xnw8jvF3UYy4=
-X-Google-Smtp-Source: AGHT+IFKD+l0fijs95nzWjyFE/rc2wV13+lM9HcG3vinnisyty7adsK4HMYTKDMDc7gB1eYyQ5w6Nw==
-X-Received: by 2002:a05:6000:188f:b0:391:304f:34e7 with SMTP id
- ffacd0b85a97d-3997f932ea8mr3252110f8f.44.1742557109787; 
- Fri, 21 Mar 2025 04:38:29 -0700 (PDT)
+ bh=LEleFT8eL9IAm/t1fQpCxzOOBsSb9NZ1X1vSPjxWOeM=;
+ b=VLPk/3HPtK4WUk+vpqHI3wXFG2rn7oWxv/eTJ6ggpmuK0A0snlHV+Gg2LR6/VRjyjs
+ uTdk5UW+TW2ujbWz3TanHQsMydy1T5YNfby02+N91EcsRmQT4wAaXvu7pOEVzP7WDQYE
+ Ac4hOEB60xY8UwYOWl+MqUCC+cncBgClnFI5a/UTFdXRRmUZm6PCJno7sRlVbZEg1c2u
+ Tu3udZz0l14KsB8gziUMx0De4je+1wmsL08nf4KU5TJWa35DSxwL5eue+GHAfKd6k7HY
+ BHhXhliTXfhRJMg+YSsToBPNergtB7z6CuZowun+G5JQiA36QD60twEmyHsSKLjhCU4E
+ jjtg==
+X-Gm-Message-State: AOJu0YxF8Qem5lDbFUJ7acZXpG2sI4pRUXDfG3KIlzBXRl/dSo89N2SI
+ sL2bznMaP0AU1yWgzw9vOU/NMJlMEElKqCTE3HHhiLBNRK8++8qp9qBCJS0bj0E=
+X-Gm-Gg: ASbGncstCdbLlUa3FYav93r82YJ01mP2PLwpVVv91/dDrigLZhV6Q9Y+blRumMfVq4n
+ E6szQpb7tyY4t0lmqApb6m3KeWO4WHvYv3UkV6wMDwFenhwQzHbZuLP01Z964W3L+pCW5cu+VI9
+ Y7WIKKoWO2m07w5QAcXPHhHqiYfLSeHVooqjjY7/xeVSPwupaMewULHnSNR2+kiWDLtjbvveguB
+ 6JfFEnnXNYiKNDpXaqIUKD54qRZHb4/lh6N4vcOeskb/JaGBTSnkcrKqqGmuJYDZS86LdzHecIB
+ xugYTi6lGT8RJuUXloJCm9q+hfpnbyxB9Ah2DzxeNCkvYYTosBdIIQ3hXQ==
+X-Google-Smtp-Source: AGHT+IHkF6tRqp1+aTmM7Iv2NAbqAoCjaeaY63kL09Obqw9obo52t+ocOuM0n2T6a9OdNoyya8dG4g==
+X-Received: by 2002:a17:907:c88a:b0:ac3:bdd2:e70c with SMTP id
+ a640c23a62f3a-ac3f24d1708mr315641966b.35.1742557582775; 
+ Fri, 21 Mar 2025 04:46:22 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d4fdbcfaasm24067905e9.35.2025.03.21.04.38.29
+ 4fb4d7f45d1cf-5ebcd0c77edsm1195181a12.54.2025.03.21.04.46.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 04:38:29 -0700 (PDT)
+ Fri, 21 Mar 2025 04:46:22 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 83EFD5F7A5;
- Fri, 21 Mar 2025 11:38:28 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 6CD5C5F7A5;
+ Fri, 21 Mar 2025 11:46:21 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  Juan
@@ -83,20 +83,19 @@ Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  Juan
  =?utf-8?Q?thieu-Daud=C3=A9?=
  <philmd@linaro.org>,  Nicholas Piggin <npiggin@gmail.com>,  Paolo Bonzini
  <pbonzini@redhat.com>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 04/10] target/arm: convert 64 bit gdbstub to new helper
-In-Reply-To: <e03abbd9-cb20-4a98-a112-66d13a76d244@linaro.org> (Pierrick
- Bouvier's message of "Thu, 20 Mar 2025 12:42:15 -0700")
+Subject: Re: [PATCH 00/10] gdbstub: conversion to runtime endianess helpers
+In-Reply-To: <0bc36324-4fb7-41ee-a9f1-3a7de4ad7fa4@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 20 Mar 2025 12:52:22 -0700")
 References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <20250319182255.3096731-5-alex.bennee@linaro.org>
- <e03abbd9-cb20-4a98-a112-66d13a76d244@linaro.org>
+ <0bc36324-4fb7-41ee-a9f1-3a7de4ad7fa4@linaro.org>
 User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 21 Mar 2025 11:38:28 +0000
-Message-ID: <87frj6likr.fsf@draig.linaro.org>
+Date: Fri, 21 Mar 2025 11:46:21 +0000
+Message-ID: <87a59eli7m.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,57 +121,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
 > On 3/19/25 11:22, Alex Benn=C3=A9e wrote:
->> For some of the helpers we need a temporary variable to copy from
->> although we could add some helpers to return pointers into env in
->> those cases if we wanted to.
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>   target/arm/gdbstub64.c | 53 ++++++++++++++++++++++++++----------------
->>   1 file changed, 33 insertions(+), 20 deletions(-)
->> diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
->> index 1a4dbec567..793332af31 100644
->> --- a/target/arm/gdbstub64.c
->> +++ b/target/arm/gdbstub64.c
->> @@ -20,7 +20,7 @@
->>   #include "qemu/log.h"
->>   #include "cpu.h"
->>   #include "internals.h"
->> -#include "gdbstub/helpers.h"
->> +#include "gdbstub/registers.h"
->>   #include "gdbstub/commands.h"
->>   #include "tcg/mte_helper.h"
->>   #if defined(CONFIG_USER_ONLY) && defined(CONFIG_LINUX)
->> @@ -35,15 +35,16 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByt=
-eArray *mem_buf, int n)
->>         if (n < 31) {
->>           /* Core integer register.  */
->> -        return gdb_get_reg64(mem_buf, env->xregs[n]);
->> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &en=
-v->xregs[n]);
->>       }
->>       switch (n) {
->>       case 31:
->> -        return gdb_get_reg64(mem_buf, env->xregs[31]);
->> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &en=
-v->xregs[31]);
->>       case 32:
->> -        return gdb_get_reg64(mem_buf, env->pc);
->> +        return gdb_get_register_value(MO_TEUO, mem_buf, (uint8_t *) &en=
-v->pc);
+>> The aim of this work is to get rid of the endian aware helpers in
+>> gdbstub/helpers.h which due to their use of tswap() mean target
+>> gdbstubs need to be built multiple times. While this series doesn't
+>> actually build each stub once it introduces a new helper -
+>> gdb_get_register_value() which takes a MemOp which can describe the
+>> current endian state of the system. This will be a lot easier to
+>> dynamically feed from a helper function.
+>> The most complex example is PPC which has a helper called
+>> ppc_maybe_bswap_register() which was doing this.
+>> This is still an RFC so I'm interested in feedback:
+>>    - is the API sane
+>>    - can we avoid lots of (uint8_t *) casting?
 >
-> For the 3 occurrences, should it be MO_TEUQ instead?
-
->> -        int vq =3D sve_vqm1_for_el(env, arm_current_el(env)) + 1;
->> -        return gdb_get_reg64(buf, vq * 2);
->> +        uint64_t vq =3D (sve_vqm1_for_el(env, arm_current_el(env)) + 1)=
- * 2;
->> +        return gdb_get_register_value(MO_TEUL, buf, (uint8_t *) &vq);
->>       }
+> Even though the series has a good intent, the fact we make everything
+> "generic" makes that we lose all guarantees we could get by relying on
+> static typing, and that we had possibility of mistakes when passing
+> size (which happened in patch 4 if I'm correct). And explicit casting
+> comes as a *strong* warning about that.
 >
-> Should it be MO_TEUQ instead?
+> By patch 7, I was really feeling it's not a win vs explicit functions
+> per size.
+>
+> If the goal of the series is to get rid of endian aware helpers, well,
+> this can be fixed in the helpers themselves, without needing to
+> introduce a "generic" size helper. Maybe we are trying to solve two
+> different problems here?
 
-I've taken Philippe's suggestion and used explicit MO_32/64 which is
-easier to follow.
+It did seem natural that if you were defining a MemOp you would use all
+of it rather than only its endian definition. But you are right we could
+introduce the same helpers with a bool flag for endianess.
+
+Maybe we should have fully formed mops and just assert in the helper:
+
+  gdb_get_reg32(MemOp op, GByteArray *buf, uint32_t val) {
+      g_assert(op & MO_SIZE =3D=3D MO_32);
+      gdb_get_register_value(op, buf, &val);
+  }
+
+I was also trying to avoid over boilerplating the code.
+
+>
+>>    - should we have a reverse helper for setting registers
+>> If this seems like the right approach I can have a go at more of the
+>> frontends later.
+>> There are a few other misc clean-ups I did on the way which might be
+>> worth cherry picking for 10.0 but I'll leave that up to maintainers.
+>> Alex.
+>> Alex Benn=C3=A9e (10):
+>>    include/gdbstub: fix include guard in commands.h
+>>    gdbstub: introduce target independent gdb register helper
+>>    target/arm: convert 32 bit gdbstub to new helper
+>>    target/arm: convert 64 bit gdbstub to new helper
+>>    target/ppc: expand comment on FP/VMX/VSX access functions
+>>    target/ppc: make ppc_maybe_bswap_register static
+>>    target/ppc: convert gdbstub to new helper (!hacky)
+>>    gdbstub: assert earlier in handle_read_all_regs
+>>    include/exec: fix assert in size_memop
+>>    target/microblaze: convert gdbstub to new helper
+>>   include/exec/memop.h        |   4 +-
+>>   include/gdbstub/commands.h  |   2 +-
+>>   include/gdbstub/registers.h |  30 ++++++
+>>   target/ppc/cpu.h            |   8 +-
+>>   gdbstub/gdbstub.c           |  24 ++++-
+>>   target/arm/gdbstub.c        |  57 +++++++----
+>>   target/arm/gdbstub64.c      |  53 ++++++----
+>>   target/microblaze/gdbstub.c |  44 ++++----
+>>   target/ppc/gdbstub.c        | 194 ++++++++++++++++++++----------------
+>>   9 files changed, 257 insertions(+), 159 deletions(-)
+>>   create mode 100644 include/gdbstub/registers.h
+>>=20
 
 --=20
 Alex Benn=C3=A9e
