@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A76CFC35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 04:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2965C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 04:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvTji-0004AA-G2; Fri, 21 Mar 2025 00:11:58 -0400
+	id 1tvU0o-0000MP-Qw; Fri, 21 Mar 2025 00:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tvTje-00049K-Qo; Fri, 21 Mar 2025 00:11:55 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tvU0m-0000Lu-5l
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 00:29:36 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tvTjb-0006kX-3q; Fri, 21 Mar 2025 00:11:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742530311; x=1774066311;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=uKqMiHfxqUU1QswsJ9itCG+7AgcaEQycIrOEAhAxPZk=;
- b=Kd3sYT64WngYnFLpJYDmxCx2CedyYOwY54rTEzUfCfiJ0c1O1cFMwGup
- hIZCPMoJ5Mt4Q/ZgYwEvHxrvOrbeqEDicyR2z4AlryA0202IAsaZwoH5H
- pC0jlk6GMB/S+cr/meJoC1ky0F5QQQfOjSyzE6pca8vT8Td2DB0Xs2AGE
- IIsf1Z4COQh9xeFKfa1Pn6KSI6AXcztQRtjnW1e7ViPs49C1qzKa5cvY0
- VP8KzqTOhyFI7bY68zSYZSsv1efavmjHZfPBpdtOk6LhtSF0cgCM/HNVJ
- X4n+W7Rrl1X4k/NJLB5aDQVvDwqIG/mU78d2hQqwiWf2ToAd6+l+0Cn8g Q==;
-X-CSE-ConnectionGUID: UWV4MoydTpStqlaH5dnbcg==
-X-CSE-MsgGUID: Af/wUMvqTdu5kgV8vnkFOg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11379"; a="46540737"
-X-IronPort-AV: E=Sophos;i="6.14,263,1736841600"; d="scan'208";a="46540737"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2025 21:11:43 -0700
-X-CSE-ConnectionGUID: xerjebGDRV2wYEFT342WjA==
-X-CSE-MsgGUID: 4N5o0sOBR8m4U3UlG84R5A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,263,1736841600"; d="scan'208";a="123741185"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 20 Mar 2025 21:11:42 -0700
-Date: Fri, 21 Mar 2025 12:31:56 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 3/3] rust: pl011: Check size of state struct at compile
- time
-Message-ID: <Z9zrvF7qRoykMupa@intel.com>
-References: <20250320133248.1679485-1-peter.maydell@linaro.org>
- <20250320133248.1679485-4-peter.maydell@linaro.org>
- <Z9w4Gttv8QeBRKfZ@intel.com>
- <CAFEAcA_BQOtzugW31ke=sit1mKnvxieGC_GXLOG4=MK_O2mKqw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1tvU0k-0005iP-CP
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 00:29:35 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52L070Nw025394;
+ Fri, 21 Mar 2025 04:29:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=v1nr//
+ pF3MFaF/UYfB4A9Mq/IZWVzHrFSXsTlgLHwVI=; b=CHIG3Vpu6ovFWzzb8C1dP3
+ cFyj/wFZTxSz74oBWRLFHBhTRpOgi/vrNSuOab842IQ9g7xcxuLn9W1xFZuyiSs/
+ 6B+zM6S/9vdRSJGWkG/BvmnLS3fBmVYIplYpJcfDqua31jdZNl5azdBHt4Ia3Aa5
+ 4RuqItx6m/6qZfkypJXgm9D43V9EPdc6Uyd33c82eigYBUQ6t4FnGuTiONrJMM2s
+ S5r6o+YY6o6xllC7LRQAlDMS6xpjFrSPaCoWWLtR+WRt1/XU7OHGB6LYwwPgCC9q
+ +NGbvWu4hrF+JmwFm/M+HWk+1ZgrMbrvAPDZdbpU8zuQMGUq8fYpQ8gjlXEg7eCQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45gmepbue0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Mar 2025 04:29:31 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52L2lmUs012351;
+ Fri, 21 Mar 2025 04:29:30 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45dmvpbq3x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Mar 2025 04:29:30 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52L4TTjj54788376
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 21 Mar 2025 04:29:30 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A65315804E;
+ Fri, 21 Mar 2025 04:29:29 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F03A5803F;
+ Fri, 21 Mar 2025 04:29:29 +0000 (GMT)
+Received: from [9.61.250.157] (unknown [9.61.250.157])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 21 Mar 2025 04:29:29 +0000 (GMT)
+Message-ID: <816c6468-9fb4-44d3-9bce-ecdc04f118be@linux.ibm.com>
+Date: Thu, 20 Mar 2025 23:29:29 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: VDPA MAC address problem
+Content-Language: en-US
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>,
+ eperezma <eperezma@redhat.com>
+References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
+ <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+ <fa821773-225f-4e2b-8642-72d269802d96@linux.ibm.com>
+ <CACGkMEsOx5bdpny3y9BfJsefNKbiXk2bG3+TPKtFyr7CWhz1FA@mail.gmail.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <CACGkMEsOx5bdpny3y9BfJsefNKbiXk2bG3+TPKtFyr7CWhz1FA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA_BQOtzugW31ke=sit1mKnvxieGC_GXLOG4=MK_O2mKqw@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: LkyDR9V76aUByQ4SJjaWweIpqDL-EZU1
+X-Proofpoint-ORIG-GUID: LkyDR9V76aUByQ4SJjaWweIpqDL-EZU1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-21_01,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=789 clxscore=1015
+ impostorscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503210029
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,48 +114,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > > +// Some C users of this device embed its state struct into their own
-> > > +// structs, so the size of the Rust version must not be any larger
-> > > +// than the size of the C one. If this assert triggers you need to
-> > > +// expand the padding_for_rust[] array in the C PL011State struct.
-> > > +static_assert!(mem::size_of::<PL011State>() <= mem::size_of::<bindings::PL011State>());
-> > > +
-> >
-> > maybe use qemu_api::bindings::PL011State directly? Because bindings
-> > contains native C structures/functions and their use should not be
-> > encouraged, I think it's better to 'hide' bindings (not list it at the
-> > beginning of the file).
+On 3/20/2025 20:22, Jason Wang wrote:
+> On Fri, Mar 21, 2025 at 12:45â€¯AM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
+>>
+>> On 3/19/2025 19:58, Jason Wang wrote:
+>>> On Thu, Mar 20, 2025 at 12:34â€¯AM Konstantin Shkolnyy <kshk@linux.ibm.com> wrote:
+>>>> Upon reading this forum, I see that VHOST_VDPA_SET_CONFIG is
+>>>> â€œdeprecatedâ€, and so VIRTIO_NET_CTRL_MAC_ADDR_SET must be the right
+>>>> method, but itâ€™s apparently called too late.
+>>>
+>>> VHOST_VDPA_SET_CONFIG requires the vDPA parent support which is not
+>>> necessarily there.
+>>
+>> The mlx5 driver doesn't do anything for VHOST_VDPA_SET_CONFIG. Intel's
+>> driver, however, apparently stores the configuration. So, it appears,
+>> Intel will avoid the problem... Perhaps mlx5 could do the same so that
+>> QEMU can set the address before it starts the VM (QEMU doesn't have to
+>> later let the VM change the config).
 > 
-> Yeah, I wasn't sure what our preferred style approach is here
-> regarding what we "use" and what we just directly reference
-> (and the same in the other direction for mem::size_of vs
-> size_of). Is there a "normal" pattern to follow here ?
+> The problem is that config space is not allowed to be written, that is
+> why mlx5 doesn't implement the write method.
+> 
+>> Conceptually, setting the address
+>> by QEMU cmdline doesn't look different from setting it by "vdpa dev add".
+> 
+> It's kind of different.
+> 
+> E.g the device may not even have VIRTIO_NET_F_MAC feature etc.
 
-There seems no clear doc on when to list use statements, but it's common
-to list as clearly as possible to make it easier to sort out dependencies.
+I'm not sure I understand... This is the MAC address returned by 
+VHOST_VDPA_GET_CONFIG. If mlx5 allows it to be set by "vdpa dev add", 
+shouldn't it also allow it to be set by VHOST_VDPA_SET_CONFIG called by 
+virtio_net_device_realize(), before the VM exists.
 
-About bindings, I think it's better to clearly point out the specific
-members in bindings, so ¡®use qemu_api::bindings¡¯ looks vague. Alternatively,
-the qemu_api::bindings::PL011State could also be listed at the beginning of
-the file, similar to a previous clean up: 06a1cfb5550a ("rust/pl011: Avoid
-bindings::*") and another patch [1].
-
-[1]: https://lore.kernel.org/qemu-devel/20250318130219.1799170-16-zhao1.liu@intel.com/
-
-> Speaking of size_of, I noticed that Rust provides both
-> core::mem::size_of and std::mem::size_of, and in rust/ at
-> the moment we have uses of both. What's the difference?
-
-They're the same (a simple proof of this is that the "source" option of
-the std::mem page [2] points to the core::mem repo). `core` is
-self-contained without OS dependency, and `std` is the superset of `core`
-with extra OS dependency. And there's a previous cleanup to consolidate
-`std::ptr` (commit c48700e86d, "rust: prefer importing std::ptr over
-core::ptr"). So I think we can prefer std::mem as well.
-
-[2]: https://doc.rust-lang.org/std/mem/index.html
-
-Regards,
-Zhao
+When VM starts running, it queries this MAC address and QEMU fetches it 
+by VHOST_VDPA_GET_CONFIG. But, because VHOST_VDPA_SET_CONFIG hasn't 
+stored it, it fetches a wrong stale address.
 
 
