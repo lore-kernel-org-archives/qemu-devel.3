@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346D8C28B30
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 01:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375F1C35FFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 01:23:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvR66-0003MP-Pi; Thu, 20 Mar 2025 21:22:54 -0400
+	id 1tvR6j-0003Qz-Py; Thu, 20 Mar 2025 21:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tvR65-0003MF-UI
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 21:22:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tvR6h-0003QT-45
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 21:23:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tvR64-0007p4-1e
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 21:22:53 -0400
+ id 1tvR6e-0007x3-Ig
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 21:23:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742520167;
+ s=mimecast20190719; t=1742520207;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oXHq4/ezx+pRWUflYNeTIWXfpA/U/rs5XQSdt7VacGQ=;
- b=KiS/CrNwzZmumfVAzNZuzo2NvmwWOwGBHOwtla1AyByfgPIHBznjcWZr7+wDy08lsIL2pR
- GklaWxXc0np74lw+qrwNkRP/Az7FwjhWOtw4o2doReiln8Ucx5hCJZgYUYDEkFC+Fz2E+Y
- rxHbhl9lNNe4zGBxkTe+zqBLIR4w6Hk=
-Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
- [209.85.221.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EbdO/qLz3qQxfQhexe4/3x7QSlw5d7uX+UagPeCsop8=;
+ b=Wz/xHmazA+JHOvpsUUFJcZVN8LVRtyIt3q8XpkruWRtv4kuqT+em7jV2zuSdQOBVc3LepX
+ YGZ1p7OBD34XWm+WawxbLXdKU3ksnPEhOQEpWuZ+0UEn3hlxwGJPo3c5kO8v6WBv6swmcc
+ Xco4XCbWwkoPH/HFzTw6CKEgbwdR2Xg=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-_oH7OXocPpuvPq54yOJD9g-1; Thu, 20 Mar 2025 21:22:46 -0400
-X-MC-Unique: _oH7OXocPpuvPq54yOJD9g-1
-X-Mimecast-MFC-AGG-ID: _oH7OXocPpuvPq54yOJD9g_1742520165
-Received: by mail-vk1-f200.google.com with SMTP id
- 71dfb90a1353d-5240cd60cdbso1738233e0c.0
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 18:22:46 -0700 (PDT)
+ us-mta-444-Xl9kB0WlPTqVX0xqku4e2w-1; Thu, 20 Mar 2025 21:23:26 -0400
+X-MC-Unique: Xl9kB0WlPTqVX0xqku4e2w-1
+X-Mimecast-MFC-AGG-ID: Xl9kB0WlPTqVX0xqku4e2w_1742520205
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-8617b6c6d03so284972241.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 18:23:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742520165; x=1743124965;
+ d=1e100.net; s=20230601; t=1742520205; x=1743125005;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oXHq4/ezx+pRWUflYNeTIWXfpA/U/rs5XQSdt7VacGQ=;
- b=Ql+IOUP3/tn4enZJA3UQziKPsHmFosazifejMy6koihwFC47QHMpjaEn2y4Ox6lfvw
- TrPiTV1qbr6D1Hn1V6ZIR0AAznQvMZaaAYquB5ITN4hjSqLQvkiL0zyoRKEv6Lyq2Hho
- mIpPzDU4onUJNr25GSx54w0RU2/OBPUWh+7WnE/nuhP+ITJ94JTBQG2o9t4b0fULQyLu
- OgmkG3Fsr8LTjenzLXbGNaHpSfJP1kwMyolnQTwqgmL/PjG8PVTz51lmSBNqE5dt5UZt
- rWJnh9N2cW/W86zcyXt8Y6QLhoxgUz08zb8fr40IHeWMklxFDyyt+XnySg2sZBZRKMQv
- 5zZw==
-X-Gm-Message-State: AOJu0YypvwP6rCY7skJIofKGGBG9cw4LWJfFIzba0uf51txP1mbfAlO/
- qWcPqgyRTJO34YTTRYrrha4ExhoTAdL6JC+d1Dd/q16TwovEEnDGOywVgAo5rQCeNTV5jgnjSnc
- 4GrsRpabv3DCvzwcZqf5y5ZCNCxfbUyDHqxIT+4atTf1K85DIRyPf0db0KoeuL6/cy3tQgGTABZ
- iD7tJFXB8ciDXF8wf6qDzc30TBfQU=
-X-Gm-Gg: ASbGncv2Ii7+FvHhg8K6K2gobacEjllLkMxDalQdssk2hY6EjPYHdq7OJnalL/Zlajm
- MqyFLfXdSmsGfbk9pF4xrmubB27c6g6g0ZNM/y1CJMyRbTqtMZX+hCHXrTGSRHuo+GyhXTrlp
-X-Received: by 2002:a05:6122:201a:b0:521:b3ee:4970 with SMTP id
- 71dfb90a1353d-52595d6a50dmr5514212e0c.2.1742520165631; 
- Thu, 20 Mar 2025 18:22:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfG4H/WbVZYJeA68T5wOSEu0A3dwQLqVRCYK1doXH2DY8sBK2gdIijcwH0394ayyX/Po4o4WkR+SxTTEyFrro=
-X-Received: by 2002:a05:6122:201a:b0:521:b3ee:4970 with SMTP id
- 71dfb90a1353d-52595d6a50dmr5514208e0c.2.1742520165327; Thu, 20 Mar 2025
- 18:22:45 -0700 (PDT)
+ bh=EbdO/qLz3qQxfQhexe4/3x7QSlw5d7uX+UagPeCsop8=;
+ b=PciSP+hTiNR2yMk/25dmIeTZFXCKxZerxGALilAJh7NtjIdiZrrUATUWr6HPQCm4jH
+ ToJ0XeB4Yt3KOnCk5Av+rdjhcVIHEhKHYxAPnKxWsJt47An5L7RMpZF48GnH0Yrj0o38
+ i2CXPUFivFZ0cxUmPfI7hCCKplpqeRvCWUEKzSUKq6W8rW1pE7XBZCxLgIAX07/IdC5w
+ JjMp2lRHHrXLTyly1F4ShoNNsYQnD1lByghh/5iNDbd4dMV/TAI/Uvt0oHXrU0xKrh30
+ Lms+EXlp2zUOzZ4r7/ruZ+Xltn5S/aeNmIcfXOO5HyISeDw5gcveFCi4rlgY8PHZduCO
+ uERw==
+X-Gm-Message-State: AOJu0Yw9IQLbF+zk4koNKnEKzbsbZozykgalhpbWvMySqgRUAbw2GLcM
+ QWPzGS1U2i9+tdJ6ZxERlyf1SeAv6jB9za1bwxksVI2gfB/xSi0VdtBcfeH5Sz8RxQxGBRrSDl8
+ akPJ7DQMcyauDmDG2ZK8AXTrCZS1s5l5yS8UNtUpAgEJ47YQCEMPkcEDe1Hls8fV8v4o64/j2JL
+ kFvJwCfJSAplGrkovM9aDWiuQEFQQ=
+X-Gm-Gg: ASbGncswwPjfQ1MBlD1/sAkgLhcc2X/aFFv5lweUH/tx0zCsXmGHbUC/8CGXRfNrj3f
+ gDvsPkUbrDcFby0oV97tRITVJrT/deYTix/X+1ZSVSIDVf1Zmlxk1MjBz2y8P+WdAZWKK9xdr
+X-Received: by 2002:a05:6102:290a:b0:4c4:fdb9:2ea with SMTP id
+ ada2fe7eead31-4c50d4bdcfamr1210486137.7.1742520205629; 
+ Thu, 20 Mar 2025 18:23:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkOH4+FLiLK8GLvFueH1rwlEb8q/Zk3fMZbvatQNw1CoqfGIwdqrlxNusQJM5sYAuDS/wlP0NXhlmmIaZZZik=
+X-Received: by 2002:a05:6102:290a:b0:4c4:fdb9:2ea with SMTP id
+ ada2fe7eead31-4c50d4bdcfamr1210481137.7.1742520205304; Thu, 20 Mar 2025
+ 18:23:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
  <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
- <fa821773-225f-4e2b-8642-72d269802d96@linux.ibm.com>
-In-Reply-To: <fa821773-225f-4e2b-8642-72d269802d96@linux.ibm.com>
+ <2aa3381f-cf89-4634-aac8-3ed5491f0ee8@linux.ibm.com>
+In-Reply-To: <2aa3381f-cf89-4634-aac8-3ed5491f0ee8@linux.ibm.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 21 Mar 2025 09:22:32 +0800
-X-Gm-Features: AQ5f1JoZcG8_BZA0nBidapyfgVgOVUh7rZRkzxr19YxIrmbw3NT8bfJ2W7CCPwk
-Message-ID: <CACGkMEsOx5bdpny3y9BfJsefNKbiXk2bG3+TPKtFyr7CWhz1FA@mail.gmail.com>
+Date: Fri, 21 Mar 2025 09:23:12 +0800
+X-Gm-Features: AQ5f1JoIM6wjVmrZe1cSd05WA3_ZS9auwd3jAniBL9D0j_jYNFzviTaOlpdQDlo
+Message-ID: <CACGkMEsE=bh4f=pZ1_3cjHQqwsipejceuVLAzowkcXeT77XS_Q@mail.gmail.com>
 Subject: Re: VDPA MAC address problem
 To: Konstantin Shkolnyy <kshk@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>, 
  eperezma <eperezma@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,38 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 21, 2025 at 12:45=E2=80=AFAM Konstantin Shkolnyy <kshk@linux.ib=
+On Thu, Mar 20, 2025 at 10:19=E2=80=AFPM Konstantin Shkolnyy <kshk@linux.ib=
 m.com> wrote:
 >
 > On 3/19/2025 19:58, Jason Wang wrote:
+> > Adding Cindy and Eugenio
+> >
 > > On Thu, Mar 20, 2025 at 12:34=E2=80=AFAM Konstantin Shkolnyy <kshk@linu=
 x.ibm.com> wrote:
-> >> Upon reading this forum, I see that VHOST_VDPA_SET_CONFIG is
-> >> =E2=80=9Cdeprecated=E2=80=9D, and so VIRTIO_NET_CTRL_MAC_ADDR_SET must=
- be the right
-> >> method, but it=E2=80=99s apparently called too late.
+> >>
+> >> I=E2=80=99m observing a problem while testing VDPA with Nvidia Connect=
+X-6 (mlx5)
+> >> on s390.
+> >>
+> >> Upon start, virtio_net_device_realize() tries to set a new MAC address
+> >> by VHOST_VDPA_SET_CONFIG which doesn=E2=80=99t do anything.
+> >>
+> >> Later, the VM gets started and learns about the old address from
+> >> virtio_net_get_config() which returns whatever VHOST_VDPA_GET_CONFIG
+> >> returns, unless it's "6 zero bytes", in which case it instead returns
+> >> the desired new address (and the problem is avoided).
+> >>
+> >> Then QEMU again tries to set the new address from vhost_net_start(), n=
+ow
+> >> by calling vhost_vdpa_net_load_cmd(...,VIRTIO_NET_CTRL_MAC,
+> >> VIRTIO_NET_CTRL_MAC_ADDR_SET, ...). This time the new address is
+> >> successfully programmed into the NIC, but the VM doesn't know about it=
+.
 > >
-> > VHOST_VDPA_SET_CONFIG requires the vDPA parent support which is not
-> > necessarily there.
+> > Have you enabled shadow virtqueue? If yes, does it work if you don't do=
+ that?
 >
-> The mlx5 driver doesn't do anything for VHOST_VDPA_SET_CONFIG. Intel's
-> driver, however, apparently stores the configuration. So, it appears,
-> Intel will avoid the problem... Perhaps mlx5 could do the same so that
-> QEMU can set the address before it starts the VM (QEMU doesn't have to
-> later let the VM change the config).
+> I only run it in the default configuration, which has SVQ enabled.
+>
+> >> As it is, the only VDPA scenario that's working for me is:
+> >> 1) Avoid specifying the MAC address in the "vdpa dev add" command (whi=
+ch
+> >> will create the "6 zero bytes" condition on the first launch).
+> >> 2) Keep using the same MAC address for every subsequent VM launch on t=
+he
+> >> same NIC "virtual function" (so that the old and new addresses are the
+> >> same).
+> >
+> > This is the way we currently use it. Is there any limitation of this?
+>
+> To be honest, I don't know how severe this limitation is, because I'm
+> not a sysadmin. The problem is that I was searching www for info on how
+> to setup VDPA and ended up hitting this bug and investigating it.
 
-The problem is that config space is not allowed to be written, that is
-why mlx5 doesn't implement the write method.
+Exactly, I think we need to improve the documentation anyhow.
 
-> Conceptually, setting the address
-> by QEMU cmdline doesn't look different from setting it by "vdpa dev add".
-
-It's kind of different.
-
-E.g the device may not even have VIRTIO_NET_F_MAC feature etc.
+> Because the found info sources are variable and some show the address
+> specified in "vdpa dev add".
+>
 
 Thanks
-
->
 
 
