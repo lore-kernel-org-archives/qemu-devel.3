@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D08C36002
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BAFC36000
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 18:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvhEV-0002fJ-ET; Fri, 21 Mar 2025 14:36:39 -0400
+	id 1tvhFT-0004GP-Un; Fri, 21 Mar 2025 14:37:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEN-0002Nl-Bs
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:31 -0400
+ id 1tvhEs-0003NV-6I
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:37:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tvhEL-000732-6u
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:36:30 -0400
+ id 1tvhEo-000780-O6
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 14:37:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742582188;
+ s=mimecast20190719; t=1742582218;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ARwQvT1yfemKSMVduMIcuJwWl7QM1d9mutRu5Jpdvbc=;
- b=ha3Acsru2kMEegsAo7IhiRlA4KsrkNdfjbQg2tscmW8LBsaIIeP+OeSRkZBgtJTOGm9h8R
- i9KuE0vuptrVYqJgXeAKtD+oDP0BykM+yAMSwsk4GxfeXlBjrus8mZj6q3lYdPnHAy/aC2
- anbRiwSasqtcJGiLVagQ/bCdEdtNmGc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zxHQkV48tuPPh4skSGkR+Kk+7dztE2eJ25IcFhaYuDw=;
+ b=hnF922Ubj75bJf5JnfasYewTPXH3KZ2fYeKdfjsBgVKUO/LDniL1AZuzaLPQYKs930dH+H
+ roVthlvZav7MN+fR5s+67TMV9fkQcSxG2HIMb4SnMWwh/ekwzN0oLVcjBwK6o50H0RRsem
+ dDoGt8Kp5Iu6dTEgJKC5roYv8Nsl+0M=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-120-agGpQ4-mOYa3yLLE6PuHtA-1; Fri, 21 Mar 2025 14:36:26 -0400
-X-MC-Unique: agGpQ4-mOYa3yLLE6PuHtA-1
-X-Mimecast-MFC-AGG-ID: agGpQ4-mOYa3yLLE6PuHtA_1742582185
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43cf172ffe1so16791975e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:26 -0700 (PDT)
+ us-mta-670-Wxv2xBd8PEyIJkCpbaS6AA-1; Fri, 21 Mar 2025 14:36:49 -0400
+X-MC-Unique: Wxv2xBd8PEyIJkCpbaS6AA-1
+X-Mimecast-MFC-AGG-ID: Wxv2xBd8PEyIJkCpbaS6AA_1742582208
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3914bc0cc4aso1156855f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 11:36:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742582184; x=1743186984;
+ d=1e100.net; s=20230601; t=1742582207; x=1743187007;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ARwQvT1yfemKSMVduMIcuJwWl7QM1d9mutRu5Jpdvbc=;
- b=gESUC63ObrCJF68W+plpmEqVYMLFYW+dVgZZ8xma7Ac14cQjKYLFM+mQ1Swp+4zxwX
- NaCXLSPRW/l7ft3+uOYwuRgsdT/6Pj+QpU8INYmiLjLxijx35M8f8bfwmG8GsIxvyyue
- d1pmz+HYmgmof/8Ml86SGY7d6Z5OJGnHp5AO8i0uTB3ONLxB79bqz95en8JcU99JGw65
- BjOgUVp+fpsKgKilTtwchYeodwgExs6CYa0+aHykgqvztcSLRG3vCUf3GePdfSElvoHC
- zE2DTb6PqmS1e7FN7SsatgtRdOCOHoRpzesPtD74/lq0snRy3QiXqYHAK9KRy5kERBuP
- +7gA==
-X-Gm-Message-State: AOJu0YzjTRJCblAUfG6IvMyeZw/6a7XIGMmzZrdekiMiTqGnRJRD+ojJ
- jtlG7GSP//ZjTZ3AwbmCWENTrU+qm5vmcl69NFb4ilPyMHtvseUOY1yNcMjHaTNyfB+/nHZN9iq
- e6QPYolgEVeEDv6+gC+Sd3NnIZ8cq1rh5TOH6v+W0KGLQPY5Bg8fcFy+1rqvCBW7gNCIAm0KCpM
- qtAnBbklJ+EUIWsZcIG1XDki/7W17BizMUr0do
-X-Gm-Gg: ASbGncsLf5Cl3clRE4LEzDSAEABP/gWfGMxNxIYatF3VZDBDmwYluNZoAMVjQ0NpK33
- Q3AScxz68IBCjc5OJEaxy5EtDRM/wgIgKkxvMQqbCiRq43ko30eWyFq4d84o8tCheuH3DORm/NH
- nx3ReWFhwraVJw7nccxVZ8ox+jNnztMPlDi6VevON2Duwrz0DsDbMvdJoRG25BmUvUoFXWGup2H
- bbkide9/+RmReAhHM1Mw0y2vPhW/+N3EqAkzlZEf2dAD1vY45v4Fg2MXacJEhmKWGeCTtEbuerH
- LLkCLNHNMG4RGGC7WoXs
-X-Received: by 2002:a05:600c:c07:b0:43d:45a:8fc1 with SMTP id
- 5b1f17b1804b1-43d509e4640mr41408395e9.4.1742582184450; 
- Fri, 21 Mar 2025 11:36:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExia5UvrQSVHPoBcIrkOomqSQ8Oaj7AVZIKYatjFo3b3QqoM9Cc7MiWAl7ZAuq8sRs+//gsA==
-X-Received: by 2002:a05:600c:c07:b0:43d:45a:8fc1 with SMTP id
- 5b1f17b1804b1-43d509e4640mr41408115e9.4.1742582183861; 
- Fri, 21 Mar 2025 11:36:23 -0700 (PDT)
+ bh=zxHQkV48tuPPh4skSGkR+Kk+7dztE2eJ25IcFhaYuDw=;
+ b=E2bpMdjzu+ofaWiFFvScHqUObZHGiucK87Xle3eFFSjkou8ZqzaEwPyBbs67MssbSM
+ j+5+Nk9xOelBaTDbEe00XwhuKhvujdxNPU/1bkgPb6fYbU4EpuFSH/HxibGsGHefwOrP
+ NNYW1ZXE7NYaFVjVKVDheki8QR3xP03jnk2t94doH9Q3z7lLo4tDc1vtCKQbIQvCewn6
+ gQZxDvmZignb7XPKRLSQW00FGuarfRuy/xNcNFktxanpRqqQUzK5R6EKkYuCDxigjIgh
+ C/9XZRruP90TPgiBs7kKRTnl5XxYXW4nWEWVVl2QQ3kpM3ssQzNcWXti1YSVBmmdQN/t
+ q5Fg==
+X-Gm-Message-State: AOJu0YwQ35ky9qsPVy8ZmOMbcqyqVhWFnzAeZUW1aG/VH/1wSiatlPl6
+ 73SqoOWmIc58vTlKlAH1rtBMliXHcU7NI5Aov4ysdREhB9mg0QDIJ4FWURKbmgN1+5NcyARLyy1
+ e+8mdLkQ4zKStFiTrIrmTaiqPSJ28FCdup8shnf4iK3AFHVA68VTRbuMssDEY2WhBmcDD2/pugs
+ 79bfOkUGPEF7LttHbzoW3wLpULmSJ29ZLWKvCm
+X-Gm-Gg: ASbGncsfJGQ/R3QmutVyo5/ObYGlMBzxvUIG1DFTi6LaccQWWLYBz7CvQCYVCXgVnLc
+ JxFN115CTGBKEu6RjrXwG3xPhZA0MUKpovo8wMwjX3i8zvHzVGZ8hhKqvjcEZkZ2w02wDU78/LW
+ dp2l+WecU1r6Fcl7mw8vyV8saDxfMe+zuPzpDyhpgsdXTSKOcvKaCZHF8KfKoi9fNevXCxVie6z
+ 0SLDf6AMuTaoyUtairyTq6/Al7v6s3i/Rf8f37PHUAgb1IB0eWeEGckklcDkTHn+mveX/ClOixS
+ llZDrtGa87Fzrv7UircH
+X-Received: by 2002:a5d:6d88:0:b0:391:1473:336a with SMTP id
+ ffacd0b85a97d-3997f937d76mr4210009f8f.36.1742582206816; 
+ Fri, 21 Mar 2025 11:36:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdmEXaFsqQICMncMlB+Im2KoVQ0WuRm+oQI7eQBf/kavf0U6/RvXqgRMDxpjx7DUDCoTL14A==
+X-Received: by 2002:a5d:6d88:0:b0:391:1473:336a with SMTP id
+ ffacd0b85a97d-3997f937d76mr4209992f8f.36.1742582206284; 
+ Fri, 21 Mar 2025 11:36:46 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.194.153])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9a3a10sm3012109f8f.28.2025.03.21.11.36.22
+ ffacd0b85a97d-3997f995789sm3089435f8f.17.2025.03.21.11.36.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Mar 2025 11:36:23 -0700 (PDT)
+ Fri, 21 Mar 2025 11:36:43 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 08/24] exec/cpu-all: remove BSWAP_NEEDED
-Date: Fri, 21 Mar 2025 19:35:40 +0100
-Message-ID: <20250321183556.155097-9-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 18/24] rust/vmstate: Support vmstate_validate
+Date: Fri, 21 Mar 2025 19:35:50 +0100
+Message-ID: <20250321183556.155097-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250321183556.155097-1-pbonzini@redhat.com>
 References: <20250321183556.155097-1-pbonzini@redhat.com>
@@ -108,141 +108,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-This identifier is poisoned, so it can't be used from common code
-anyway. We replace all occurrences with its definition directly.
+In C version, VMSTATE_VALIDATE accepts the function pointer, which is
+used to check if some conditions of structure could meet, although the
+C version macro doesn't accept any structure as the opaque type.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/r/20250320223002.2915728-2-pierrick.bouvier@linaro.org
+But it's hard to integrate VMSTATE_VALIDAE into vmstate_struct, a new
+macro has to be introduced to specifically handle the case corresponding
+to VMSTATE_VALIDATE.
+
+One of the difficulties is inferring the type of a callback by its name
+`test_fn`. We can't directly use `test_fn` as a parameter of
+test_cb_builder__() to get its type "F", because in this way, Rust
+compiler will be too conservative on drop check and complain "the
+destructor for this type cannot be evaluated in constant functions".
+
+Fortunately, PhantomData<T> could help in this case, because it is
+considered to never have a destructor, no matter its field type [*].
+
+The `phantom__()` in the `call_func_with_field` macro provides a good
+example of using PhantomData to infer type. So copy this idea and apply
+it to the `vmstate_validate` macro.
+
+[*]: https://doc.rust-lang.org/std/ops/trait.Drop.html#drop-check
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250318130219.1799170-11-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/exec/cpu-all.h    | 12 ------------
- include/exec/poison.h     |  1 -
- linux-user/syscall_defs.h |  2 +-
- bsd-user/elfload.c        |  6 +++---
- linux-user/elfload.c      |  8 ++++----
- 5 files changed, 8 insertions(+), 21 deletions(-)
+ rust/qemu-api/src/vmstate.rs | 52 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 51 insertions(+), 1 deletion(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 8cd6c00cf89..47b14446b8f 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -26,18 +26,6 @@
- #include "exec/tswap.h"
- #include "hw/core/cpu.h"
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 01f06ed7379..9740931fb16 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -25,9 +25,12 @@
+ //!   functionality that is missing from `vmstate_of!`.
  
--/* some important defines:
-- *
-- * HOST_BIG_ENDIAN : whether the host cpu is big endian and
-- * otherwise little endian.
-- *
-- * TARGET_BIG_ENDIAN : same for the target cpu
-- */
--
--#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
--#define BSWAP_NEEDED
--#endif
--
- /* Target-endianness CPU memory access functions. These fit into the
-  * {ld,st}{type}{sign}{size}{endian}_p naming scheme described in bswap.h.
-  */
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index 8ed04b31083..2c151fd1e0c 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -37,7 +37,6 @@
- #pragma GCC poison TARGET_NAME
- #pragma GCC poison TARGET_SUPPORTS_MTTCG
- #pragma GCC poison TARGET_BIG_ENDIAN
--#pragma GCC poison BSWAP_NEEDED
+ use core::{marker::PhantomData, mem, ptr::NonNull};
++use std::os::raw::{c_int, c_void};
  
- #pragma GCC poison TARGET_LONG_BITS
- #pragma GCC poison TARGET_FMT_lx
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 86d773add75..5d227599924 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -462,7 +462,7 @@ typedef struct {
-     abi_ulong sig[TARGET_NSIG_WORDS];
- } target_sigset_t;
+ pub use crate::bindings::{VMStateDescription, VMStateField};
+-use crate::{bindings::VMStateFlags, prelude::*, qom::Owned, zeroable::Zeroable};
++use crate::{
++    bindings::VMStateFlags, callbacks::FnCall, prelude::*, qom::Owned, zeroable::Zeroable,
++};
  
--#ifdef BSWAP_NEEDED
-+#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
- static inline void tswap_sigset(target_sigset_t *d, const target_sigset_t *s)
- {
-     int i;
-diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-index 833fa3bd057..3bca0cc9ede 100644
---- a/bsd-user/elfload.c
-+++ b/bsd-user/elfload.c
-@@ -44,7 +44,7 @@ static inline void memcpy_fromfs(void *to, const void *from, unsigned long n)
-     memcpy(to, from, n);
+ /// This macro is used to call a function with a generic argument bound
+ /// to the type of a field.  The function must take a
+@@ -508,6 +511,53 @@ macro_rules! vmstate_fields {
+     }}
  }
  
--#ifdef BSWAP_NEEDED
-+#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
- static void bswap_ehdr(struct elfhdr *ehdr)
- {
-     bswap16s(&ehdr->e_type);            /* Object file type */
-@@ -111,7 +111,7 @@ static void bswap_note(struct elf_note *en)
-     bswap32s(&en->n_type);
- }
- 
--#else /* ! BSWAP_NEEDED */
-+#else
- 
- static void bswap_ehdr(struct elfhdr *ehdr) { }
- static void bswap_phdr(struct elf_phdr *phdr, int phnum) { }
-@@ -119,7 +119,7 @@ static void bswap_shdr(struct elf_shdr *shdr, int shnum) { }
- static void bswap_sym(struct elf_sym *sym) { }
- static void bswap_note(struct elf_note *en) { }
- 
--#endif /* ! BSWAP_NEEDED */
-+#endif /* HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN */
- 
- #include "elfcore.c"
- 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 8799e4ea27d..fa83d78667c 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2121,7 +2121,7 @@ static inline void memcpy_fromfs(void * to, const void * from, unsigned long n)
-     memcpy(to, from, n);
- }
- 
--#ifdef BSWAP_NEEDED
-+#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
- static void bswap_ehdr(struct elfhdr *ehdr)
- {
-     bswap16s(&ehdr->e_type);            /* Object file type */
-@@ -3143,7 +3143,7 @@ static bool parse_elf_properties(const ImageSource *src,
-      * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
-      * Swap most of them now, beyond the header and namesz.
-      */
--#ifdef BSWAP_NEEDED
-+#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
-     for (int i = 4; i < n / 4; i++) {
-         bswap32s(note.data + i);
-     }
-@@ -3999,7 +3999,7 @@ struct target_elf_prpsinfo {
-     char    pr_psargs[ELF_PRARGSZ]; /* initial part of arg list */
- };
- 
--#ifdef BSWAP_NEEDED
-+#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
- static void bswap_prstatus(struct target_elf_prstatus *prstatus)
- {
-     prstatus->pr_info.si_signo = tswap32(prstatus->pr_info.si_signo);
-@@ -4038,7 +4038,7 @@ static void bswap_note(struct elf_note *en)
- static inline void bswap_prstatus(struct target_elf_prstatus *p) { }
- static inline void bswap_psinfo(struct target_elf_prpsinfo *p) {}
- static inline void bswap_note(struct elf_note *en) { }
--#endif /* BSWAP_NEEDED */
-+#endif /* HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN */
- 
- /*
-  * Calculate file (dump) size of given memory region.
++pub extern "C" fn rust_vms_test_field_exists<T, F: for<'a> FnCall<(&'a T, u8), bool>>(
++    opaque: *mut c_void,
++    version_id: c_int,
++) -> bool {
++    let owner: &T = unsafe { &*(opaque.cast::<T>()) };
++    let version: u8 = version_id.try_into().unwrap();
++    // SAFETY: the opaque was passed as a reference to `T`.
++    F::call((owner, version))
++}
++
++pub type VMSFieldExistCb = unsafe extern "C" fn(
++    opaque: *mut std::os::raw::c_void,
++    version_id: std::os::raw::c_int,
++) -> bool;
++
++#[doc(alias = "VMSTATE_VALIDATE")]
++#[macro_export]
++macro_rules! vmstate_validate {
++    ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
++        $crate::bindings::VMStateField {
++            name: ::std::ffi::CStr::as_ptr($test_name),
++            field_exists: {
++                const fn test_cb_builder__<
++                    T,
++                    F: for<'a> $crate::callbacks::FnCall<(&'a T, u8), bool>,
++                >(
++                    _phantom: ::core::marker::PhantomData<F>,
++                ) -> $crate::vmstate::VMSFieldExistCb {
++                    let _: () = F::ASSERT_IS_SOME;
++                    $crate::vmstate::rust_vms_test_field_exists::<T, F>
++                }
++
++                const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
++                    ::core::marker::PhantomData
++                }
++                Some(test_cb_builder__::<$struct_name, _>(phantom__(&$test_fn)))
++            },
++            flags: $crate::bindings::VMStateFlags(
++                $crate::bindings::VMStateFlags::VMS_MUST_EXIST.0
++                    | $crate::bindings::VMStateFlags::VMS_ARRAY.0,
++            ),
++            num: 0, // 0 elements: no data, only run test_fn callback
++            ..$crate::zeroable::Zeroable::ZERO
++        }
++    };
++}
++
+ /// A transparent wrapper type for the `subsections` field of
+ /// [`VMStateDescription`].
+ ///
 -- 
 2.49.0
 
