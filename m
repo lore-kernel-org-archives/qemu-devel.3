@@ -4,80 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3FFCC35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 08:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92277C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 08:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvXR2-0007R8-Oa; Fri, 21 Mar 2025 04:08:58 -0400
+	id 1tvXRv-0007m4-9f; Fri, 21 Mar 2025 04:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvXQv-0007QV-0V
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:08:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <prvs=1689b3432=graf@amazon.de>)
+ id 1tvXRt-0007jn-Nm
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:09:49 -0400
+Received: from smtp-fw-52004.amazon.com ([52.119.213.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvXQs-0005TQ-K5
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:08:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742544525;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8FbVsDnu14sl5aKhI98/P8CCHJxCY7XkPanjNglX0mY=;
- b=DQTLkWXtywRF8BhkXgOSuwtLYZRiFQ/EQz4wLDMiEbbjxiKzHD+rKAKQeOcMfxaY3bUFdH
- 3DXxQ8acX/RKhGKdjKKFCvjYhRMtVDMIq2Ap2bN99iKDF1VF6FB89/1iGOjUP76NRufWZV
- tCZkDRIBxBqBRXAhi1kmNUR3l5Dw0v4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-CNW5SLlUONGpNq0r59lC3g-1; Fri,
- 21 Mar 2025 04:08:41 -0400
-X-MC-Unique: CNW5SLlUONGpNq0r59lC3g-1
-X-Mimecast-MFC-AGG-ID: CNW5SLlUONGpNq0r59lC3g_1742544520
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1ED318001F3; Fri, 21 Mar 2025 08:08:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA3911955BFE; Fri, 21 Mar 2025 08:08:36 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 24BB621E675E; Fri, 21 Mar 2025 09:08:33 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: bibo mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Igor
- Mammedov <imammedo@redhat.com>
-Subject: Re: [PATCH v6 3/6] hw/loongarch/virt: Fix error handling in cpu unplug
-In-Reply-To: <ff30bac6-9004-0ba2-505a-3406e66623da@loongson.cn> (bibo mao's
- message of "Fri, 21 Mar 2025 15:35:37 +0800")
-References: <20250321031259.2419842-1-maobibo@loongson.cn>
- <20250321031259.2419842-4-maobibo@loongson.cn>
- <87ecyq98y1.fsf@pond.sub.org>
- <87d1b58e-1b8b-f582-753b-574c4ba44a6b@loongson.cn>
- <87ldsy7sry.fsf@pond.sub.org>
- <ff30bac6-9004-0ba2-505a-3406e66623da@loongson.cn>
-Date: Fri, 21 Mar 2025 09:08:33 +0100
-Message-ID: <87h63m6c1q.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <prvs=1689b3432=graf@amazon.de>)
+ id 1tvXRr-0005Xt-HT
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 04:09:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1742544588; x=1774080588;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=6fSG6XTn+RVOKCYlBfLRvxucrnCnfK4BDsxh9FyusqI=;
+ b=IB3YopcpM+cMxVuTv2bng6uz3xQRdJPdILDPPVLrb/N/QG5H0eEltBP/
+ xfyTpnWkFfrehpIQq+ZqCOWXB18ZIMPOQVqHLwY2dyZxSpbfW7A/DtB1+
+ T/nW/fH3WcEFcE6yF5wJClfIsjJpZ6KoJRsAOKFpKrvAEGPrWHvw3kLs3 A=;
+X-IronPort-AV: E=Sophos;i="6.14,264,1736812800"; d="scan'208";a="281342386"
+Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.2])
+ by smtp-border-fw-52004.iad7.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2025 08:09:42 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [10.0.7.35:19034]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.164:2525]
+ with esmtp (Farcaster)
+ id 61000f02-d540-434a-9a43-20af703df5f2; Fri, 21 Mar 2025 08:09:41 +0000 (UTC)
+X-Farcaster-Flow-ID: 61000f02-d540-434a-9a43-20af703df5f2
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Fri, 21 Mar 2025 08:09:41 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Fri, 21 Mar 2025
+ 08:09:37 +0000
+Message-ID: <79e8ca94-3d8a-46fc-8cd8-f4ec6324b722@amazon.com>
+Date: Fri, 21 Mar 2025 09:09:35 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Ani Sinha <anisinha@redhat.com>
+CC: Gerd Hoffman <kraxel@redhat.com>, =?UTF-8?B?SsO2cmcgUsO2ZGVs?=
+ <joro@8bytes.org>, Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Igor
+ Mammedov" <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ <qemu-devel@nongnu.org>
+References: <sxavsa2i4drnei4kmy6pd4uekk3xaa43njd47jtogar7ui7qm7@n73chaex5ms2>
+ <Z9LeILiEU5GfEHrl@8bytes.org>
+ <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <6684f169-29d6-4f46-b274-1efd4c191b21@amazon.com>
+ <ok6u7exmwmh7qsahp5o3udnbbzbsr2km22kpqod37t6mdsywcs@yhk2whhakl63>
+ <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
+ <c7f840d5-19ed-493e-8de8-7d64aef38948@amazon.com>
+ <CAK3XEhO4BMvDBe667=_xe9+A7pN4_N_nkGh0KH12Pq_qLu9AWQ@mail.gmail.com>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
+In-Reply-To: <CAK3XEhO4BMvDBe667=_xe9+A7pN4_N_nkGh0KH12Pq_qLu9AWQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D044UWA003.ant.amazon.com (10.13.139.43) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Received-SPF: pass client-ip=52.119.213.154;
+ envelope-from=prvs=1689b3432=graf@amazon.de; helo=smtp-fw-52004.amazon.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,162 +110,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bibo mao <maobibo@loongson.cn> writes:
 
-> On 2025/3/21 =E4=B8=8B=E5=8D=883:21, Markus Armbruster wrote:
->> bibo mao <maobibo@loongson.cn> writes:
->>=20
->>> +Igor
+On 21.03.25 04:36, Ani Sinha wrote:
+> On Thu, Mar 20, 2025 at 7:24 PM Alexander Graf <graf@amazon.com> wrote:
+>> Hey Gerd,
+>>
+>> On 18.03.25 12:11, Gerd Hoffman wrote:
+>>>     Hi,
 >>>
+>>>> Maybe not from the user's point of view, but surely for the vmfwupdate
+>>>> interface design and for the launch measurement calculations.
+>>>>
+>>>> When using igvm parameters for the kernel hashes we need to pass on (at
+>>>> least) two items via vmfwupdate API:  The igvm image itself and the
+>>>> kernel hashes, so the VMM can fill the parameters for launch.
+>>>>
+>>>> I tend to think it makes sense to keep the region list, so we can
+>>>> actually pass on multiple items if needed, and simply add region flags
+>>>> to declare that a region is an IGVM image.
+>>> Went over the interface spec today, here it is.  Changes:
 >>>
->>> On 2025/3/21 =E4=B8=8B=E5=8D=882:47, Markus Armbruster wrote:
->>>> Bibo Mao <maobibo@loongson.cn> writes:
->>>>
->>>>> In function virt_cpu_unplug(), it will send cpu unplug message to
->>>>> interrupt controller extioi and ipi irqchip. If there is problem in
->>>>> this function, system should continue to run and keep state the same
->>>>> before cpu is removed.
->>>>>
->>>>> If error happends in cpu unplug stage, send cpu plug message to extioi
->>>>> and ipi irqchip to restore to previous stage, and then return immedia=
-tely.
->>>>>
->>>>> Fixes: 2cd6857f6f5b (hw/loongarch/virt: Implement cpu unplug interfac=
-e)
->>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>>> ---
->>>>>    hw/loongarch/virt.c | 6 ++++++
->>>>>    1 file changed, 6 insertions(+)
->>>>>
->>>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->>>>> index 8563967c8b..503362a69e 100644
->>>>> --- a/hw/loongarch/virt.c
->>>>> +++ b/hw/loongarch/virt.c
->>>>> @@ -958,6 +958,8 @@ static void virt_cpu_unplug(HotplugHandler *hotpl=
-ug_dev,
->>>>>        hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &er=
-r);
->>>>>        if (err) {
->>>>>            error_propagate(errp, err);
->>>>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
->>>>> +                             &error_abort);
->>>>>            return;
->>>>>        }
->>>>>=20=20=20=20
->>>>> @@ -965,6 +967,10 @@ static void virt_cpu_unplug(HotplugHandler *hotp=
-lug_dev,
->>>>>        hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &=
-err);
->>>>>        if (err) {
->>>>>            error_propagate(errp, err);
->>>>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev,
->>>>> +                             &error_abort);
->>>>> +        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev,
->>>>> +                             &error_abort);
->>>>>            return;
->>>>>        }
->>>>
->>>> virt_cpu_unplug() calls hotplug_handler_unplug() three times to notify
->>>> ipi, extioi, and acpi_get.  If any notification fails, virt_cpu_unplug=
-()
->>>> calls hotplug_handler_plug() to "un-notify" the preceeding ones, if an=
-y.
->>>> This must not fail.
->>>>
->>>> virt_cpu_plug() does it the other way round (see previous patch).
->>>>
->>>> So, hotplug_handler_plug() must not fail in virt_cpu_unplug(), yet we
->>>> check for it to fail in virt_cpu_plug().
->>>>
->>>> Can it really fail in virt_cpu_plug()?
->>>>
->>>> If yes, why can't it fail in virt_cpu_unplug()?
->>> you can check function acpi_cpu_plug_cb()/loongarch_ipi_cpu_plug(), that
->>> is cpuplug callback for acpi_ged and ipi. it will not fail.
+>>>    - Moved descriptions into source code comments.
+>>>    - Added leftovers noticed in recent discussions, such as cpuid page.
+>>>    - Added capability flags and region flags for IGVM.
 >>>
->>> If *virt_cpu_pre_plug()* pass, it will succeed.
+>>> Open questions:
 >>>
->>> Regards
->>> Bibo Mao
->>>
->>>>
->>>> Same questions for hotplug_handler_unplug().
->>=20
->> Let me restate my argument.
->>=20
->> We call hotplug_handler_plug() on the happy path, and on error recovery
->> paths.  Four cases:
->>=20
->> 1. Can fail on the happy path
->>=20
->>     Error recovery is required.
->>=20
->> 1.1 Can fail on the error recovery path
->>=20
->>      Error recovery is required, but broken.
->>=20
->> 1.2 Can't fail on the error recovery path
->>=20
->>      Error recovery is required and works, but why it works is not
->>      obvious.  Deserves a comment explaining why hotplug_handler_plug()
->>      can't fail here even though it can fail on the happy path next door.
->>=20
->> 2. Can't fail on the happy path
->>=20
->>     Error recovery is unreachable.
->>=20
->> 2.1 Can fail on the error recovery path
->>=20
->>      Error recovery is unreachable and broken.  Possibly a time bomb, and
->>      possibly misleading readers.
->>=20
->> 2.2 Can't fail on the error recovery path
->>=20
->>      Error recovery is unreachable and would work, but why it would work
->>      is again a not obvious.
->>=20
->> Which of the four cases is it?
-> By my understanding, it is "2. Can't fail on the happy path",  and Error=
-=20
-> recovery is unreachable.
+>>>    - Does the idea to use igvm parameters for the kernel hashes makes
+>>>      sense?  Are parameters part of the launch measurement?
+>>>    - Do we want actually keep the complete interface (and the functional
+>>>      overlap with igvm)?
+>>
+>> I think if we want to embrace IGVM, we should embrace it fully and make
+>> it replace the region list. At the end of the day, IGVM is effectively a
+>> region list plus data.
+> Are you suggesting that vmfwupdate only accept IGVM as payload? I am
+> not sure if I like that idea.
 
-Got it.
 
-> I have said that it is impossible and recovery is only for future use.
->
-> do you mean recovery should be removed? And directly &error_abort is=20
-> used in virt_cpu_plug() such as:
-> static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->                            DeviceState *dev, Error **errp)
-> {
->    if (lvms->ipi) {
->      hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &error_abort);
+I don't like it either, but I don't see a good alternative. If the spec 
+allowed both IGVM and the home grown region list, hypervisors would 
+still need to implement both ways to be compatible with all payloads. So 
+by adding one more path, we're only adding complexity without helping 
+anyone.
 
-Yes, I prefer this.  Here's why.
 
-Error recovery that is unreachable now but might become reachable at
-some future time is untestable now.  Mind, this does not necessarily
-make it a bad idea by itself.  But there's more.
-
-Anything that makes this error recovery reachable either breaks it or
-makes correctness locally unobvious.  Why?  To make it reachable, plug /
-unplug must be able to fail on the happy path.  But then they either can
-fail on the error recovery path as well (which breaks error recovery),
-or they can't fail there for reasons that are not locally obvious.
-
-This sets a trap for readers.  An attentive reader will see the problem
-(like I did), but to see why the code is not broken right now will take
-digging (like we did together).  And after such digging, we're left with
-a queasy feeling about robustness of the code (like we are now).
-
-Passing &error_abort on the happy path avoids all this.  Instead it
-clearly tells the reader that this is not expected to fail.
-
-If failure becomes possible at some future time, this should crash in
-testing.  If we neglect to test the new failure (and we really
-shouldn't), we crash on error in production right away instead of
-risking botched error recovery messing up the program's state.
-Both are bad outcomes, but which one's less bad I find impossible to
-predict.
+Alex
 
 
