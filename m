@@ -4,99 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45047C35FF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 05:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75905C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 06:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvV5J-0003r4-7E; Fri, 21 Mar 2025 01:38:21 -0400
+	id 1tvVUA-0002Ji-7w; Fri, 21 Mar 2025 02:04:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
- id 1tvV5H-0003qX-Kk; Fri, 21 Mar 2025 01:38:19 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
- id 1tvV5F-0001RK-4V; Fri, 21 Mar 2025 01:38:19 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-225d66a4839so42677455ad.1; 
- Thu, 20 Mar 2025 22:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742535494; x=1743140294; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XM023hlGEOTsxrVeFrhqhWpzzevPypp0Gh8j9sxHdwQ=;
- b=Y+bLlcPsAncDen/w4HvFzW3Go9x6uDgJQnKLrxZ0ewYCFY5a98wXXCth0CQS3ctrW1
- fr20cwpLfxuuP9Aa9XrIWSnX9Ng1F3zyoP6yc1B7dDE38XOz8heytj8jrtlDqkx20tOt
- 3CnTAbXTY13wZ1+REkr0gb5lU6LDnzm3zpsL56mww4ZdwRctsWCK5oLpQAHFPrv7SeOO
- 4QDX4n4SRNqwDdXzxBFyrkh8E+PQ2tIkrlbSql7Pw3sHO22mYK/9S1uwp1MOKw0qUibQ
- 6rYotBmbQ4U6epQ97Kptiv8zMB6O1s+FcxbQl5fhs65n2b48yPNj1wxdvyQJu5cJNyKB
- Z9kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742535494; x=1743140294;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XM023hlGEOTsxrVeFrhqhWpzzevPypp0Gh8j9sxHdwQ=;
- b=j/IYr+Sp47hpLSj7LCsURtg2sdBKUF6wayqwtYy/VXvxLYuT8vO3DLEV3T4S1i4suF
- 9gw8i+cahfcLwYxU3vNgNi6vUwbzKjMVWJ0SdZtkwQR009GsfLtR5IWkViamJCVdtkl9
- 6V7GMKoeQbwik8+6l7a+G2vXvLaQac7yYC4hdbrbq0Rqv49j/DaXOXrFqfaR//9S+ob1
- tZ9E9OwNJrhFjYsV9j/5a0vUKEMIqmFSzofnU0JIEwgrY7mPeiJdFqM3m64Y4mkPr3A2
- mffXKNFT4M0wvs0VbkCADOtbaN75tAWv0yFBu1lDyyU/mSeNV427k/KEeeiUQ46FpuRD
- VSMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFhS54AS/nICPMEa+uSWLGdpfTLfjoFIZXq9psPUmBgTFujWGtdG9Npjc5k5n/RECOfrryYF4ojT1G@nongnu.org
-X-Gm-Message-State: AOJu0YwSiKfanJpZgJdUSYtCwqLt0uaKa0UZUbkvncCOwijUAG7evj7E
- 8Qw5yYSFuU/eK+ROC90+QuX1ZKu3CLtntZfmLI3E8tdtYRvnqlag
-X-Gm-Gg: ASbGnctgQcPEioYrpW8yWTuiiRwhHCxMMZWVy2YX+r4X9gnO1D+RxWIHPsEL04PU0wj
- 9F4+phYFZOY+4OXx5XRBWe3zybR0ZNiCQ3ao4ICtipL2If/scUftBV6+UJmA8AIX7OXcqcuS4Wi
- mduNxmbfWECLo+0wOeGAU/LGRIWCfWRg+Q5rGVjf+B5OFR5lxSmhR51F55xy0HyeQBPshTyfd0s
- No7bxpHfH02oVEcBDLy1N5Bb+V7prlZ5DmVPbtUnK/+giy3pWuZsO4MbNwyLOi9kt4pdb/pTUTM
- i7hnSB3x73YRGcUI6PaEwZFTS+DeZ98F1NsnKfWZUjaCNiXsySpea3f4cL22DMg=
-X-Google-Smtp-Source: AGHT+IG7NlGd2F4n/5EZtrSsk69UYC1kqGn8FT4SranSxdSlM3OLnZzt36vIlEMld2Hjsy2dosIUDw==
-X-Received: by 2002:a05:6a00:6108:b0:736:b923:5323 with SMTP id
- d2e1a72fcca58-7377a1d9565mr8619110b3a.10.1742535494117; 
- Thu, 20 Mar 2025 22:38:14 -0700 (PDT)
-Received: from [172.20.149.24] ([222.151.198.97])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390611cb14sm882153b3a.114.2025.03.20.22.38.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Mar 2025 22:38:13 -0700 (PDT)
-Message-ID: <53f4a617-5c4a-46ff-9961-17e6c88734d8@gmail.com>
-Date: Fri, 21 Mar 2025 14:38:00 +0900
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <manish.mishra@nutanix.com>)
+ id 1tvVU8-0002JR-DV
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 02:04:00 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <manish.mishra@nutanix.com>)
+ id 1tvVU4-0003Er-CF
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 02:04:00 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52KMlSPF006192;
+ Thu, 20 Mar 2025 23:03:52 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=hz2TOoEa98XWHwgQoA+bPDNfquHoZQbors+F1lUwS
+ S8=; b=QH84f5gdcrQhYkw61HPhmj9dJ3/Yt043c0lD36F8Gp9qQ/ldNOwHEBJnI
+ L+i0Tgc4PFWekLP7nMw/CbQym/EcqMP1j78PK2Lcoh+46ja7b2Tq0Mv9AruKKr9p
+ wT0eK1sz20UDU25N3oO3AXP8ZBele+aHLX0DHseCFRUm4YybZTOJjCE4+q7fwerR
+ 73LxWrlBAxgvHqQ2CL1q1w4kL6APXq/ENXzoMj5tEJH7RhlVyncCKulJD/B3dFlM
+ 1M/l3jUqPVFLcnQyDQMkY3hAKHQL5Pk9VMQRFObJLzje06VTeuCTzgWsvEYV4oMw
+ Z3pJrS3KPeWcXGX7r/lMRM1qIoayw==
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazlp17012050.outbound.protection.outlook.com
+ [40.93.20.50])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 45d8mfyd6f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Mar 2025 23:03:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=u7PXLFFu7vkqrTbR2pUcrX81Leb3S6fUjUMDo/rdqji+MaLxzuxDg+LhNAaIOTGEGaLnYikOVEpJW3uB67bSlvi2+VMTQkwkwzOz7DnrY9gt/fWczohFqBPHObmBkcVUyH/eE2pawXBQXFIGnQq7f44xDStFmrSxiX4P2zIwds708cvRxf9s4tLRU8KhftqpmlrH5zbnWDn3mL3HrLyA2K3UdlOQYZTUyZvPOKZBSiNz4/ZmSqp7xIp4z9AkwGjGXfQivlOUv8oxNcy1qwFHMIb0ZEsPqotrFZt7YDUQyWlPftD1QVBFgaMNH64rML/JeGoXHbw3hA7oC2eMZDgFnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hz2TOoEa98XWHwgQoA+bPDNfquHoZQbors+F1lUwSS8=;
+ b=eZS5dAX97j3SDfVFbtjs3DEol13a6uy4fyoGUKUAPpgKL5Zwgd2JSgyRCqeYUwGL5zSdM8yyg4Tv8DqMN+Lv1tAzpwDekWz3qeL4Oo9BQGn6nL7gOzy32JRidw9iLKqKefCGKIpBx/AoA5kyRM+1GOTiTsIomw4wFCfdznITyVJQfLihKGznGjJws4RYYJyNZHGK7rBgb87zci+exptfa/uXLNUQoxMmFpVbSgwTNr0vCD5LO5Naj+d/oKwN10IVUFA13INjh3Cog4uivuVHQ8Hv6ehYRQnfstz0Dd6fpJcnuraxISHiZoFLGZKGgk+Xd2KJ1L2I+d8d4E2BevrYmw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hz2TOoEa98XWHwgQoA+bPDNfquHoZQbors+F1lUwSS8=;
+ b=ZNAWEs8c4pbzxa5xrYE0/WQHRSHXuqwpP3mKGIhQQZLfLi4k25drKDbNyggp/BG2qsmsRzwzHr+K7PjjVV9vhkb9J4qGSApbm8doPd/9e9pOv6FZhWB1NQ/QG+5iVtvtsfX7E2Qox0QR/btU7MNGyvyb9I9ot3rvM8lMrQ8UoKvqT9yU+r6gTL5KQQhJ1dCXAowkJxSM3P67P5VLK7JmE31ULc9+nWvGnuDZR1wvGLSfJwG5MscPV0PdXa8Ca/I+2E7J4WJ6tOZq4J11IupQJ969+QsvgfoG24GjI2QxEpD4H8CY1u5bJpb+LXeAHpoZ3F8FvVh4YYO3mt8lYtZ0Bg==
+Received: from PH0PR02MB7384.namprd02.prod.outlook.com (2603:10b6:510:12::12)
+ by DM6PR02MB6843.namprd02.prod.outlook.com (2603:10b6:5:21e::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.34; Fri, 21 Mar
+ 2025 06:03:49 +0000
+Received: from PH0PR02MB7384.namprd02.prod.outlook.com
+ ([fe80::6bd7:e8f0:596a:4842]) by PH0PR02MB7384.namprd02.prod.outlook.com
+ ([fe80::6bd7:e8f0:596a:4842%7]) with mapi id 15.20.8534.034; Fri, 21 Mar 2025
+ 06:03:49 +0000
+Message-ID: <06c86fe2-3a34-4d74-9ef1-81ac220ecefe@nutanix.com>
+Date: Fri, 21 Mar 2025 11:33:31 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 v9 0/9] virtio-net: add support for SR-IOV
- emulation
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, devel@daynix.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
-References: <20250314-sriov-v9-0-57dae8ae3ab5@daynix.com>
- <b8a1565a-2adc-420b-aad3-d10efa2e2650@gmail.com>
- <b9283f28-fec7-4ed4-bb10-e1cffac03457@daynix.com>
-Content-Language: en-US
-From: Yui Washizu <yui.washidu@gmail.com>
-In-Reply-To: <b9283f28-fec7-4ed4-bb10-e1cffac03457@daynix.com>
+Subject: Re: [PATCH v3] QIOChannelSocket: Flush zerocopy socket error queue on
+ sendmsg failure due to ENOBUF
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, berrange@redhat.com, leobras@redhat.com, farosas@suse.de
+References: <20250317015231.241141-1-manish.mishra@nutanix.com>
+Content-Language: en-GB
+From: Manish <manish.mishra@nutanix.com>
+In-Reply-To: <20250317015231.241141-1-manish.mishra@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=yui.washidu@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA0PR01CA0067.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:ad::13) To PH0PR02MB7384.namprd02.prod.outlook.com
+ (2603:10b6:510:12::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7384:EE_|DM6PR02MB6843:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8b761b9d-63b0-4e9b-4d58-08dd683e2591
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|52116014|376014|10070799003|366016|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aThOaEhDL2FoT0RYWW01TXkwb01FR0VmVE1OdWpHdkMramVXMzFWNDVwYnBp?=
+ =?utf-8?B?VUUzais1WFBKd3pmVzE2Q2xmY1NHamtRMFBUeU02OVZLM2UzeE9rZzdZYTBI?=
+ =?utf-8?B?ZEx5K1N1YXNYbUhoVmMwZGl2azRmOGtiMWhBeUdmY3hDZFk0ZG4wc1hMU2la?=
+ =?utf-8?B?dlppaXpiQjROaEY3Q2hxKzd5WUR1OHNLeUlSb0lnM2xwemZpQllhejIxekl5?=
+ =?utf-8?B?bWJaT2lvQ01RTEh3QVRuWVl0S2JwSGVocFk2YzVaWVdBd09TSy9YVXhHTG1s?=
+ =?utf-8?B?TVlDZ3cwdmQ2cnJ5K3hUREQ3VlpadjBBaVJuV1VRd3d5TzJBYSs1azVYY0VW?=
+ =?utf-8?B?dFNjV3puN2pBWlM3NTltUW9IazJZVFZQQVA5K3RpV0NKdktqbDV2TS8wd1Rn?=
+ =?utf-8?B?THZPSE5xL1Q1UzM2dTBSbUMvQmdqeWNvb0x0UDdOL3NBVGd3a3lzbzE1Qkw3?=
+ =?utf-8?B?MzZHa0FSNFJ3VC9pdW11T21DZGpjZVVCbnoxd0NmZzhKQlB3czRjeTlpTGgz?=
+ =?utf-8?B?R2UvUG96emxIUjJ0SXBKS0E5MVJTeWpEM0JEWDFtaUttYmpBZkJKTUVRcTZD?=
+ =?utf-8?B?V1hwUG0vQWRZeFh4aS9CWEdqRGQrd3FDTXY2QkVwZUdUK3RwcFdOcHlzUTd3?=
+ =?utf-8?B?MjJhcUU4UkFaY3djdTFla1FkaWRjSVBSbFZock00U2NYb1pKd1A5M1gzZjZv?=
+ =?utf-8?B?SSsyam9SOWRPeHVaRmtPZmRQbHV6K3hKR1pzT05TUlJ1VXJwOTI0RExWVEpx?=
+ =?utf-8?B?eng5VnRUampHOEVxODRMeWw1TDVBSXh6aGNGTklqazNHVWp5bzhmbnhvbkp4?=
+ =?utf-8?B?RlIwMkU0QjZ1ZkJMZzQxWURsaE9kMTF4NzRTYzMxWG5SMWsxS2JFcUpMUXpa?=
+ =?utf-8?B?ZDIwQmtsQVcweVRHNTRKUkxESWN6SU1PSGNObEcvbU1BZ24ySzIwbEw2Vml6?=
+ =?utf-8?B?ZTBpWWt1di9HbnptbURJSE1GMEhWTStUYXFoYTNYU1hwT1JEdWExRU1FN2Ry?=
+ =?utf-8?B?alBnR1p5am1Yck5ITy9BYS9STVlZK3lOU29ZQkhrWW5uZXErb0dOdFNPUE5Y?=
+ =?utf-8?B?MDJwR1RSZEpBWUhXN1VhQ0NaWktkVjJFTjYrUmNnck03eWtCZlZ3eFBGQkRO?=
+ =?utf-8?B?clhZSjZnYmdObmlUNUsra3dSUFgvWXBTRURWQ3hDbXFBTDNGN2VIbCszNXJH?=
+ =?utf-8?B?SVIzQW92UEtaWWgrSll0SDRsZVliMVc4OU9wSmo4dzcyY1dQajZKNWxsVzBK?=
+ =?utf-8?B?WmIwUTR4YzIvR3NKMVNueTJFb1FCRDR6dzI3UDhQSFJYRlRKSS9jbWVXTDZu?=
+ =?utf-8?B?WlpoczFVWmJGQlVrUGVybUY2ek9uRDFZMG51bUV4UFJhUW5DTVpESnJDcWkr?=
+ =?utf-8?B?MWNhRFRhVVJrMVFlbUk5cjhxdVZEc0JaTHpCQzZtVzJCRHQ4WHlPamtDcWtr?=
+ =?utf-8?B?UGpCUW50b1c0L1hsNlFsVWx0S1pFWGhLVitGdjdGYlpPUEJ1K3lpTkRpcUxC?=
+ =?utf-8?B?d2JBRXMrOUkrMWF0MlY0VzNuekYxU2ZQYmRoWU1sTXA5VTlVTThPQU4wRkIy?=
+ =?utf-8?B?TUNad25pUDRNc0JGSHh4UDhXNkRaeGRTR0YvM05ySGg0VXR3aFVLMVJ0YmtQ?=
+ =?utf-8?B?UXloT1FiOGwrb0syY2R5SllPN21GOVVGQkpZWHgvUmtXTmF6M1poWEl5ZHpy?=
+ =?utf-8?B?bzhWa014OWlaRk1mcGhOem93Z1E4UkZhdHIzeGxka2pnRkJZNisxSWVPQ3hC?=
+ =?utf-8?B?enpWWnlHVDhIbDhKYjZCemZCL2t6VlNSVlpaUkwxNjYwajFQSmd2TGpxY05Y?=
+ =?utf-8?B?V3VQNzVDNzFSUVpIMWgzTWUrcUJ0RHRlczVnZEUwWk94S21Ec1BVT2N2dUVF?=
+ =?utf-8?Q?FRbTYH0429l+8?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7384.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(52116014)(376014)(10070799003)(366016)(1800799024); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dUUzZkRNTDhlZ0t6N1h0ZDRBYVMrcEx5emdHaW4xRFRWbkVvclhmQXBvd3lC?=
+ =?utf-8?B?NGZ4SzV3Zk9uZkc5QXgyN1hZM2wzbkxlUU5sclgzOTc0TDdmOVpRbnRDbjRu?=
+ =?utf-8?B?K0ZRTkZ4V2tSQ1Q2OXZPL3ptdWJpYUJ6Y1NxSmtkc1ArcmMrYlVvRG9CbGkr?=
+ =?utf-8?B?Tkh3Y0ROZ2ZwL0RMWGpOYS9UWEhTYmM5UEsraHJ6L3czL0tubGphRTFmaGN0?=
+ =?utf-8?B?czk2R011VG0yWlFIY1ZLMlFkTU1kNm5kRE9wa2dNQiszOTlOOHQxdjcvN0FH?=
+ =?utf-8?B?ekZRWTZIS2l6bWNkdXl6K0dLOVJqREM2Z3pxOWR1ZmFEMjBabnE0a3p2SnVT?=
+ =?utf-8?B?TW1UVWxkeFpLZXdPZlRJQ3poR2hoQ3p0OXhGczJhSWxUSUJ5bXRWUGkvZ2dK?=
+ =?utf-8?B?cGx5QUFQMTlNcnQvdGpIOW9yOVBZYytMZmVYS2VQNmliWmszdkVXOCtNZlM5?=
+ =?utf-8?B?Y0RVUGJIN2hYY0xHWmFuSXczOGt5eWlVaHgxc3hXbS84ZURNT3h3aStMWXF5?=
+ =?utf-8?B?TDcveDZMQU5uV291L1dCNVZxQk9qOVdITS9xUmd1ZVlLN2pYQkNKR3R2VmpM?=
+ =?utf-8?B?TjBXdjg5TnhhMC9jRnRYR2g5Q2xLMlBNQ0RUV2Mvc2RxeWUxMjYyT21UOCtr?=
+ =?utf-8?B?RXplZnZuZ3hiZHZKVTlmNWVTUTJmcXlwb2lSRjV5bTh2cHlMMGdJUlQ1UjRY?=
+ =?utf-8?B?S01UWU55YVVjQ2pPQlowaGpJMm9GQzJVYThDNDIveWN3bzRFb2FDeEZDckd4?=
+ =?utf-8?B?Q3M3SlU2N2tjNXdvRVo4VEFWTEZHeVQ0aGpzSDExekhxenZ5dnpLdmJZS041?=
+ =?utf-8?B?amJIZnpOZjYxenJ5ZjA5Vm5KRGEzL01uMWV3aU5YZzBmVEt5SUl6ZFNxS2Ev?=
+ =?utf-8?B?Z1JyKzMvdUpldHcvWCtjTHhxbUtsY0JVUGU4S2c4bUMvY1RGZEhQM216dWhl?=
+ =?utf-8?B?SkJmSVFCOTQyd0dGbmJBK1JyWkd0SUxtdVRaK29tZlNBZHdVSVdseXBKYmdZ?=
+ =?utf-8?B?Mjk5ckM4czVON3FWcVdBTnFhUDB3MUc2ZFdiUkNUcTh5amxxVlREdTRGQWlM?=
+ =?utf-8?B?R1ZKVmRTSDRnMnQ5OXMzY2o3aTJXYWM3cWVaTHVER2M3WHhIVzVKTENSVERP?=
+ =?utf-8?B?Mk5lT1NGdW94MUpBWkRoY2RBenpJRURSUGZJQzBaQ0c5VnlnN2pTaTFqUUxl?=
+ =?utf-8?B?VW9KN2JxeHVNMkdpUUVYK2VSbVdNcEV6SE1XYmxRNC9qMWtnSm0raERxQUlh?=
+ =?utf-8?B?SEFPRGt6b0FzQVJpaFZ1Vlp6Z2VsUzVpU20vcUY2THNMUmExVGprVDhrMzF1?=
+ =?utf-8?B?WEd4RHJpOUNPd1p1eWRXV3ZHdzlyRmZBVi85dXRnZU1jK2x3MDRIWGM5RW9u?=
+ =?utf-8?B?TjF5WTdhSFUyWmxad3c0MkxGbUtPWVk4UmJpSjFQQVQ0ME5Yd3N3dVdITmdL?=
+ =?utf-8?B?ZnN4U3c4cGdvY3M1ajZsd2lNajNmV0kzYWJJelh6UnowRm5nYzlJZ2lQUll4?=
+ =?utf-8?B?Y0tMaVluVS92dTZTU2JJTUd3dEhmOHpoNmlrbkZWcE9ibmNxNVVIVXVYZG1l?=
+ =?utf-8?B?OEhyRm80dDg5TU13MkZXUVU2NVQwZFdsaFdwYlNGZHFkdzZVSUhXN2NSbWJH?=
+ =?utf-8?B?Tmt6cUFuWnZyV1d6Z1loaVBWTnlDZTNHRStSZGtSSG1FakNyeUMvb3NjS1Jp?=
+ =?utf-8?B?U3BKT0dUOG4zRGJ0NnBLZk1aVS93RkFJKzJQeDlwNTBtRWhnc1grUmFSWHE3?=
+ =?utf-8?B?UTh3KzljbTFUajFKMmVLc1JLN0p0dkVhMzc5ZXl6K2JJdnk2UDM2RW4xSktN?=
+ =?utf-8?B?TVNySHRwaVpYZnVYZjY2TnJTalk0S0JFbXA2TjZydUk3S0N1aXl3SUJQS1BX?=
+ =?utf-8?B?UnhXSkRDTitwcUhJbmhzSW5XMmhmQ2lxd1dtbThqUU9hQXAzcFJXK1Y4STB4?=
+ =?utf-8?B?VWUyYWlOMld2WXoxbWJocVBhZUNHT0ZSZllSMVV1RnRWZlVjcUtqZTlUckc1?=
+ =?utf-8?B?NEJGbGVnTjcyUFFiRlgxMGsrTlA4bDZHMUw3blZxVW4rbVNiV2U4Z1JHdzdr?=
+ =?utf-8?B?bnY5bDMvbVRBaVE0VEFURVpJSXFnUy91QW9yeXczQkFENExLYTNqN0swa0Yw?=
+ =?utf-8?B?MzhSczJ1cTdvQmdsVVZNUm5GUFlZdVhTQkxod3JFazhFUEs4KzV0TUVZYWdo?=
+ =?utf-8?B?OC9yeEJobUF4akdqdndKNUdwaVBaTi80cGhYUXh1K0ZtS1M1ZVREUk9XbTFk?=
+ =?utf-8?B?a1FlL0tJdkV2WTIycE84Mlo4c05nPT0=?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8b761b9d-63b0-4e9b-4d58-08dd683e2591
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7384.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2025 06:03:48.8577 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: c9JzRxTanNcZWud2lyqp9hGBIo6tFfFqDjozVNNJ5Six40jYOQM3KmTralP+6YSEd5EY/TiAZ68oSS+veQo3axEweuJjOK1QJg0pAAMisig=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6843
+X-Proofpoint-GUID: C8d7SjU8kIGjPGS30xobl3jMB_v66oHC
+X-Authority-Analysis: v=2.4 cv=R50DGcRX c=1 sm=1 tr=0 ts=67dd0148 cx=c_pps
+ a=Al84TKQ7ImdPUwhB59KusQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Vs1iUdzkB0EA:10 a=H5OGdu5hBBwA:10 a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8
+ a=po7NilS97JvGOaug97gA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: C8d7SjU8kIGjPGS30xobl3jMB_v66oHC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-21_02,2025-03-20_01,2024-11-22_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=manish.mishra@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,203 +210,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Daniel, Peter,
 
-On 2025/03/21 14:18, Akihiko Odaki wrote:
-> On 2025/03/21 13:34, Yui Washizu wrote:
->>
->> I tested the following features with this patch series, and there 
->> were not  issues:
->> - Creation and deletion of VFs
->> - Communication with an external machine through VFs
->>
->> Thank you.
+Please let me know if this latest patch looks good?
+
+
+On 17/03/25 7:22 am, Manish Mishra wrote:
+> We allocate extra metadata SKBs in case of a zerocopy send. This metadata
+> memory is accounted for in the OPTMEM limit. If there is any error while
+> sending zerocopy packets or if zerocopy is skipped, these metadata SKBs are
+> queued in the socket error queue. This error queue is freed when userspace
+> reads it.
 >
-> Can you reply with:
+> Usually, if there are continuous failures, we merge the metadata into a single
+> SKB and free another one. As a result, it never exceeds the OPTMEM limit.
+> However, if there is any out-of-order processing or intermittent zerocopy
+> failures, this error chain can grow significantly, exhausting the OPTMEM limit.
+> As a result, all new sendmsg requests fail to allocate any new SKB, leading to
+> an ENOBUF error. Depending on the amount of data queued before the flush
+> (i.e., large live migration iterations), even large OPTMEM limits are prone to
+> failure.
 >
-> Tested-by: Your Name <youraddress@example.com>
-
-
-OK, Thank you.
-
-I resend it along with the content.
-
-
-I tested the following features with this patch series, and there were 
-not  issues:
-- Creation and deletion of VFs
-- Communication with an external machine through VFs
-
-
-Tested-by: Yui Washizu <yui.washidu@gmail.com>
-
-
+> To work around this, if we encounter an ENOBUF error with a zerocopy sendmsg,
+> we flush the error queue and retry once more.
 >
-> This tag means:
-> - you have tested changes you found significant,
-> - you found no problems with them, and
-> - you are fine to record that in Git commit logs
+> V2:
+>    1. Removed the dirty_sync_missed_zero_copy migration stat.
+>    2. Made the call to qio_channel_socket_flush_internal() from
+>       qio_channel_socket_writev() non-blocking.
 >
-> Pasha Tatashin (who told me they tried the patches), it would be nice 
-> if you do the same.
+> V3:
+>    1. Add the dirty_sync_missed_zero_copy migration stat again.
 >
-> Regards,
-> Akihiko Odaki
+> Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
+> ---
+>   include/io/channel-socket.h |  5 +++
+>   io/channel-socket.c         | 74 ++++++++++++++++++++++++++++++-------
+>   2 files changed, 65 insertions(+), 14 deletions(-)
 >
->>
->>
->> Yui
->>
->>
->> On 2025/03/14 15:14, Akihiko Odaki wrote:
->>> Based-on:<20250104-reuse-v18-0-c349eafd8673@daynix.com>
->>> ("[PATCH v18 00/14] hw/pci: SR-IOV related fixes and improvements")
->>>
->>> Introduction
->>> ------------
->>>
->>> This series is based on the RFC series submitted by Yui Washizu[1].
->>> See also [2] for the context.
->>>
->>> This series enables SR-IOV emulation for virtio-net. It is useful
->>> to test SR-IOV support on the guest, or to expose several vDPA devices
->>> in a VM. vDPA devices can also provide L2 switching feature for
->>> offloading though it is out of scope to allow the guest to configure
->>> such a feature.
->>>
->>> The PF side code resides in virtio-pci. The VF side code resides in
->>> the PCI common infrastructure, but it is restricted to work only for
->>> virtio-net-pci because of lack of validation.
->>>
->>> User Interface
->>> --------------
->>>
->>> A user can configure a SR-IOV capable virtio-net device by adding
->>> virtio-net-pci functions to a bus. Below is a command line example:
->>>    -netdev user,id=n -netdev user,id=o
->>>    -netdev user,id=p -netdev user,id=q
->>>    -device pcie-root-port,id=b
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
->>>
->>> The VFs specify the paired PF with "sriov-pf" property. The PF must be
->>> added after all VFs. It is user's responsibility to ensure that VFs 
->>> have
->>> function numbers larger than one of the PF, and the function numbers
->>> have a consistent stride.
->>>
->>> Keeping VF instances
->>> --------------------
->>>
->>> A problem with SR-IOV emulation is that it needs to hotplug the VFs as
->>> the guest requests. Previously, this behavior was implemented by
->>> realizing and unrealizing VFs at runtime. However, this strategy does
->>> not work well for the proposed virtio-net emulation; in this proposal,
->>> device options passed in the command line must be maintained as VFs
->>> are hotplugged, but they are consumed when the machine starts and not
->>> available after that, which makes realizing VFs at runtime impossible.
->>>
->>> As an strategy alternative to runtime realization/unrealization, this
->>> series proposes to reuse the code to power down PCI Express devices.
->>> When a PCI Express device is powered down, it will be hidden from the
->>> guest but will be kept realized. This effectively implements the
->>> behavior we need for the SR-IOV emulation.
->>>
->>> Summary
->>> -------
->>>
->>> Patch 1 disables ROM BAR, which virtio-net-pci enables by default, for
->>> VFs.
->>> Patch 2 makes zero stride valid for 1 VF configuration.
->>> Patch 3 and 4 adds validations.
->>> Patch 5 adds user-created SR-IOV VF infrastructure.
->>> Patch 6 makes virtio-pci work as SR-IOV PF for user-created VFs.
->>> Patch 7 allows user to create SR-IOV VFs with virtio-net-pci.
->>>
->>> [1]https://patchew.org/QEMU/1689731808-3009-1-git-send-email- 
->>> yui.washidu@gmail.com/
->>> [2]https://lore.kernel.org/all/5d46f455- 
->>> f530-4e5e-9ae7-13a2297d4bc5@daynix.com/
->>>
->>> Co-developed-by: Yui Washizu<yui.washidu@gmail.com>
->>> Signed-off-by: Akihiko Odaki<akihiko.odaki@daynix.com>
->>> ---
->>> Changes in v9:
->>> - Rebased.
->>> - Link to v8:https://lore.kernel.org/r/20250104-sriov- 
->>> v8-0-56144cfdc7d9@daynix.com
->>>
->>> Changes in v8:
->>> - Rebased.
->>> - Link to v7:https://lore.kernel.org/r/20240813-sriov- 
->>> v7-0-8515e3774df7@daynix.com
->>>
->>> Changes in v7:
->>> - Removed #include <error-report.h>, which is no longer needed.
->>> - Rebased.
->>> - Link to v6:https://lore.kernel.org/r/20240802-sriov- 
->>> v6-0-0c8ff49c4276@daynix.com
->>>
->>> Changes in v6:
->>> - Added ARI extended capability.
->>> - Rebased.
->>> - Link to v5:https://lore.kernel.org/r/20240715-sriov- 
->>> v5-0-3f5539093ffc@daynix.com
->>>
->>> Changes in v5:
->>> - Dropped the RFC tag.
->>> - Fixed device unrealization.
->>> - Rebased.
->>> - Link to v4:https://lore.kernel.org/r/20240428-sriov-v4-0- 
->>> ac8ac6212982@daynix.com
->>>
->>> Changes in v4:
->>> - Added patch "hw/pci: Fix SR-IOV VF number calculation" to fix 
->>> division
->>>    by zero reported by Yui Washizu.
->>> - Rebased.
->>> - Link to v3:https://lore.kernel.org/r/20240305-sriov-v3-0- 
->>> abdb75770372@daynix.com
->>>
->>> Changes in v3:
->>> - Rebased.
->>> - Link to v2:https://lore.kernel.org/r/20231210-sriov-v2-0- 
->>> b959e8a6dfaf@daynix.com
->>>
->>> Changes in v2:
->>> - Changed to keep VF instances.
->>> - Link to v1:https://lore.kernel.org/r/20231202-sriov- 
->>> v1-0-32b3570f7bd6@daynix.com
->>>
->>> ---
->>> Akihiko Odaki (9):
->>>        hw/pci: Do not add ROM BAR for SR-IOV VF
->>>        hw/pci: Fix SR-IOV VF number calculation
->>>        pcie_sriov: Ensure PF and VF are mutually exclusive
->>>        pcie_sriov: Check PCI Express for SR-IOV PF
->>>        pcie_sriov: Allow user to create SR-IOV device
->>>        virtio-pci: Implement SR-IOV PF
->>>        virtio-net: Implement SR-IOV VF
->>>        docs: Document composable SR-IOV device
->>>        pcie_sriov: Make a PCI device with user-created VF ARI-capable
->>>
->>>   MAINTAINERS                    |   1 +
->>>   docs/system/index.rst          |   1 +
->>>   docs/system/sriov.rst          |  37 ++++++
->>>   include/hw/pci/pci_device.h    |   6 +-
->>>   include/hw/pci/pcie_sriov.h    |  21 +++
->>>   include/hw/virtio/virtio-pci.h |   1 +
->>>   hw/pci/pci.c                   |  76 +++++++----
->>>   hw/pci/pcie_sriov.c            | 294 
->>> +++++++++++++++++++++++++++++++ ++--------
->>>   hw/virtio/virtio-net-pci.c     |   1 +
->>>   hw/virtio/virtio-pci.c         |  24 +++-
->>>   10 files changed, 378 insertions(+), 84 deletions(-)
->>> ---
->>> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
->>> change-id: 20231202-sriov-9402fb262be8
->>>
->>> Best regards,
->
+> diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
+> index ab15577d38..2c48b972e8 100644
+> --- a/include/io/channel-socket.h
+> +++ b/include/io/channel-socket.h
+> @@ -49,6 +49,11 @@ struct QIOChannelSocket {
+>       socklen_t remoteAddrLen;
+>       ssize_t zero_copy_queued;
+>       ssize_t zero_copy_sent;
+> +    /**
+> +     * This flag indicates whether any new data was successfully sent with
+> +     * zerocopy since the last qio_channel_socket_flush() call.
+> +     */
+> +    bool new_zero_copy_sent_success;
+>   };
+>   
+>   
+> diff --git a/io/channel-socket.c b/io/channel-socket.c
+> index 608bcf066e..604ca9890d 100644
+> --- a/io/channel-socket.c
+> +++ b/io/channel-socket.c
+> @@ -37,6 +37,12 @@
+>   
+>   #define SOCKET_MAX_FDS 16
+>   
+> +#ifdef QEMU_MSG_ZEROCOPY
+> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
+> +                                             bool block,
+> +                                             Error **errp);
+> +#endif
+> +
+>   SocketAddress *
+>   qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
+>                                        Error **errp)
+> @@ -65,6 +71,7 @@ qio_channel_socket_new(void)
+>       sioc->fd = -1;
+>       sioc->zero_copy_queued = 0;
+>       sioc->zero_copy_sent = 0;
+> +    sioc->new_zero_copy_sent_success = FALSE;
+>   
+>       ioc = QIO_CHANNEL(sioc);
+>       qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+> @@ -566,6 +573,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>       size_t fdsize = sizeof(int) * nfds;
+>       struct cmsghdr *cmsg;
+>       int sflags = 0;
+> +    bool zero_copy_flush_pending = TRUE;
+>   
+>       memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
+>   
+> @@ -612,9 +620,25 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>               goto retry;
+>           case ENOBUFS:
+>               if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
+> -                error_setg_errno(errp, errno,
+> -                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
+> -                return -1;
+> +                /**
+> +                 * Socket error queueing may exhaust the OPTMEM limit. Try
+> +                 * flushing the error queue once.
+> +                 */
+> +                if (zero_copy_flush_pending) {
+> +                    ret = qio_channel_socket_flush_internal(ioc, false, errp);
+> +                    if (ret < 0) {
+> +                        error_setg_errno(errp, errno,
+> +                                         "Zerocopy flush failed");
+> +                        return -1;
+> +                    }
+> +                    zero_copy_flush_pending = FALSE;
+> +                    goto retry;
+> +                } else {
+> +                    error_setg_errno(errp, errno,
+> +                                     "Process can't lock enough memory for "
+> +                                     "using MSG_ZEROCOPY");
+> +                    return -1;
+> +                }
+>               }
+>               break;
+>           }
+> @@ -725,8 +749,9 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>   
+>   
+>   #ifdef QEMU_MSG_ZEROCOPY
+> -static int qio_channel_socket_flush(QIOChannel *ioc,
+> -                                    Error **errp)
+> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
+> +                                             bool block,
+> +                                             Error **errp)
+>   {
+>       QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+>       struct msghdr msg = {};
+> @@ -734,7 +759,6 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
+>       struct cmsghdr *cm;
+>       char control[CMSG_SPACE(sizeof(*serr))];
+>       int received;
+> -    int ret;
+>   
+>       if (sioc->zero_copy_queued == sioc->zero_copy_sent) {
+>           return 0;
+> @@ -744,16 +768,19 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
+>       msg.msg_controllen = sizeof(control);
+>       memset(control, 0, sizeof(control));
+>   
+> -    ret = 1;
+> -
+>       while (sioc->zero_copy_sent < sioc->zero_copy_queued) {
+>           received = recvmsg(sioc->fd, &msg, MSG_ERRQUEUE);
+>           if (received < 0) {
+>               switch (errno) {
+>               case EAGAIN:
+> -                /* Nothing on errqueue, wait until something is available */
+> -                qio_channel_wait(ioc, G_IO_ERR);
+> -                continue;
+> +                if (block) {
+> +                    /* Nothing on errqueue, wait until something is
+> +                     * available.
+> +                     */
+> +                    qio_channel_wait(ioc, G_IO_ERR);
+> +                    continue;
+> +                }
+> +                return 0;
+>               case EINTR:
+>                   continue;
+>               default:
+> @@ -791,13 +818,32 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
+>           /* No errors, count successfully finished sendmsg()*/
+>           sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
+>   
+> -        /* If any sendmsg() succeeded using zero copy, return 0 at the end */
+> +        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
+>           if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
+> -            ret = 0;
+> +            sioc->new_zero_copy_sent_success = TRUE;
+>           }
+>       }
+>   
+> -    return ret;
+> +    return 0;
+> +}
+> +
+> +static int qio_channel_socket_flush(QIOChannel *ioc,
+> +                                    Error **errp)
+> +{
+> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+> +    int ret;
+> +
+> +    ret = qio_channel_socket_flush_internal(ioc, true, errp);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    if (sioc->new_zero_copy_sent_success) {
+> +        sioc->new_zero_copy_sent_success = FALSE;
+> +        return 0;
+> +    }
+> +
+> +    return 1;
+>   }
+>   
+>   #endif /* QEMU_MSG_ZEROCOPY */
 
