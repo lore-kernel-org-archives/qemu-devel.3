@@ -4,73 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36883C36000
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 15:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1666C36002
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 15:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tveZt-0005Vq-BG; Fri, 21 Mar 2025 11:46:37 -0400
+	id 1tvelP-0008Og-7s; Fri, 21 Mar 2025 11:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tveZR-0005St-Uw
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:46:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tveZM-0008M1-RM
- for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:46:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742571959;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=923fBdFpF7srfDlQezpPiv/YV/Ew1UvKsMi6Eia5/Ig=;
- b=E7SVklV5T7CZ/tFxa4fV6Bxwk3IPi6ZESJENirfHOvLMbPsH/j/faLdX6CQI7+CxuZHmwB
- DasInH6wh5Wv0BlSKdQwpewrwOWUthEdKsMrb5llevGFB6JqMtxNPOsCqZZVhUpYfJxxOU
- z4FsCO+VX45XKsbh4QboVjaXl0+OX3s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-hxwevHI8PQWfWnThkMgiKg-1; Fri,
- 21 Mar 2025 11:45:55 -0400
-X-MC-Unique: hxwevHI8PQWfWnThkMgiKg-1
-X-Mimecast-MFC-AGG-ID: hxwevHI8PQWfWnThkMgiKg_1742571954
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E3C5A1933B41; Fri, 21 Mar 2025 15:45:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8016C19373C4; Fri, 21 Mar 2025 15:45:51 +0000 (UTC)
-Date: Fri, 21 Mar 2025 15:45:48 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Manish Mishra <manish.mishra@nutanix.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, leobras@redhat.com,
- farosas@suse.de
-Subject: Re: [PATCH v3] QIOChannelSocket: Flush zerocopy socket error queue
- on sendmsg failure due to ENOBUF
-Message-ID: <Z92JrM6pF-dhyCGd@redhat.com>
-References: <20250317015231.241141-1-manish.mishra@nutanix.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tvelB-0008La-QD
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:58:16 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tvel8-00043A-T4
+ for qemu-devel@nongnu.org; Fri, 21 Mar 2025 11:58:12 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cfb6e9031so20065705e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 08:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742572688; x=1743177488; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zJIKqcqwKhfvCB2m7BH5xanx5S5b/Y8o9jvPbTHs/+M=;
+ b=AQp9HN+LxU1J/wd2mqjsy0zHI9/4Ss8sGicfMzIFtbgK6fWeR8TTWtsl9PrPF60QeS
+ Rbp3OjvY8pswE8ep63ApRg6/kueWtQ5XHYK+fSIc5Sz9FahcamvMtiXIeY8T3iEUuGHU
+ s2ZSgDSWr00L0Vyu6S8qmWpTY73gnyaneXalsu1EiAS0HZmaWe4B1zOsfuaCQcGAEtsd
+ sbgqzCos2p+BUPYCzqVT0N+gFht8YWfL9pYUP74ketwkEJUAIsjfMexCMxuNjNXQT2jd
+ whpzNRn2OHLx7x/Afg9wrBX4xvu9PjYpP85W/Rg+FkkYGalBh9YkO9pycYttG/lh6rSX
+ mGpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742572688; x=1743177488;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zJIKqcqwKhfvCB2m7BH5xanx5S5b/Y8o9jvPbTHs/+M=;
+ b=Kfx8Lir545vRxOFRRj5LnrqFsaQFzhqOvN8pPt2dmNyp2iw1GzMbr5ubHYP2H1+glU
+ IhyIXlTEgkQBOUKBuc2eKBvjhz8ctLtjz3uo4mQMuA6lsx2V0INJbRSXpqhweih2sT5x
+ SueXLabN8gRXVfDMhLbF50nS/pnpzDmXYR5VoWzGB7HYB0o6Mfe8Kd7xvwd7avKoXNFc
+ VJ4wDzLBpKbu50UHL3KUmInXFVdYgWCob+iTFqe/1B+VmGi3f+7L14nDMIP3G0kFi4J4
+ lCN6DjxskXFkLAeI8gw4r/xiQm+TWwJiz+kQy9oH3iaqGrr7NjhCltaym+5vC0icPlwZ
+ e1Vg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU44R6GHxA0AYkW9J6ZHDqWGYjh3zYeJsnJI0AhdN7mRw9W1SlcIH7/ldsHzC0+3ntL1kDFbRASCfYT@nongnu.org
+X-Gm-Message-State: AOJu0YwpvDsIuZkoLYUilUX4ePbGqqPvpf63rrcSA75oIQQ2UXSupBfB
+ li9euCUqu+/ZHZvaQCXiKLh9kHo2UBhMmQlxmtwOEt85JG1G/rN+RM8eCmZkFoU=
+X-Gm-Gg: ASbGncvwaZm5yEumnP7KdW3noiQhhCR9xBSZG0o+AyGS1S4BtUHP6x9jw17Y+JTdQPB
+ UzsNLqovbuMmx1HVFgi73O8G4YTdWo77zcH63IvipwOZddCfld/gt16KkaZr189oqIz7Ak40uxS
+ Cpm8peNXlZoF+Yi5JnG/VLTfBrvmFgUvgZJ4QIn5nFSRTr8Y+AFbqO+UDp6Y3qHP7ZkB/HrpTdx
+ ifEbl81J7MmPs9HvVPTL8oB7PRz/13x1zRXnNYrnyc0jcr6qvPdAJMgYd1hMrv8AMzRFvcQC2/L
+ RLb/8ZLntn/Y6F7WUP3G5MP4eSJ7OCdAoTxHWowS+1T2ph68plg=
+X-Google-Smtp-Source: AGHT+IFS4wRx4rig41V4HYQbkIPU7AQmA9QLC9TgQNm7H6J3Uu+kYIDWoE+o48rrDqd7VqZiuxfytg==
+X-Received: by 2002:a05:6000:1fa4:b0:391:952:c730 with SMTP id
+ ffacd0b85a97d-3997f8f8c1fmr3686221f8f.11.1742572688435; 
+ Fri, 21 Mar 2025 08:58:08 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f9efd61sm2731049f8f.91.2025.03.21.08.58.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Mar 2025 08:58:07 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] tests/functional/meson.build: Bump arm_aspeed_bletchley
+ timeout
+Date: Fri, 21 Mar 2025 15:58:06 +0000
+Message-ID: <20250321155806.1888867-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250317015231.241141-1-manish.mishra@nutanix.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,210 +96,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 16, 2025 at 09:52:31PM -0400, Manish Mishra wrote:
-> We allocate extra metadata SKBs in case of a zerocopy send. This metadata
-> memory is accounted for in the OPTMEM limit. If there is any error while
-> sending zerocopy packets or if zerocopy is skipped, these metadata SKBs are
-> queued in the socket error queue. This error queue is freed when userspace
-> reads it.
-> 
-> Usually, if there are continuous failures, we merge the metadata into a single
-> SKB and free another one. As a result, it never exceeds the OPTMEM limit.
-> However, if there is any out-of-order processing or intermittent zerocopy
-> failures, this error chain can grow significantly, exhausting the OPTMEM limit.
-> As a result, all new sendmsg requests fail to allocate any new SKB, leading to
-> an ENOBUF error. Depending on the amount of data queued before the flush
-> (i.e., large live migration iterations), even large OPTMEM limits are prone to
-> failure.
-> 
-> To work around this, if we encounter an ENOBUF error with a zerocopy sendmsg,
-> we flush the error queue and retry once more.
-> 
-> V2:
->   1. Removed the dirty_sync_missed_zero_copy migration stat.
->   2. Made the call to qio_channel_socket_flush_internal() from
->      qio_channel_socket_writev() non-blocking.
-> 
-> V3:
->   1. Add the dirty_sync_missed_zero_copy migration stat again.
+The arm_aspeed_bletchley timeout takes more than its
+current 120s timeout on a debug Rust config:
 
-These notes about changes each version should always be below
-the '---' line, because they shouldn't remain in the commit message
-when merged.
+$ time (cd build/rust; PYTHONPATH=../../python:../../tests/functional QEMU_TEST_QEMU_BINARY=./qemu-system-arm ./pyvenv/bin/python3 ../../tests/functional/test_arm_aspeed_bletchley.py)
+TAP version 13
+ok 1 test_arm_aspeed_bletchley.BletchleyMachine.test_arm_ast2600_bletchley_openbmc
+1..1
 
-> 
-> Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
-> ---
->  include/io/channel-socket.h |  5 +++
->  io/channel-socket.c         | 74 ++++++++++++++++++++++++++++++-------
->  2 files changed, 65 insertions(+), 14 deletions(-)
-> 
+real    2m15.536s
+user    3m21.444s
+sys     0m11.558s
 
-> diff --git a/io/channel-socket.c b/io/channel-socket.c
-> index 608bcf066e..604ca9890d 100644
-> --- a/io/channel-socket.c
-> +++ b/io/channel-socket.c
-> @@ -37,6 +37,12 @@
->  
->  #define SOCKET_MAX_FDS 16
->  
-> +#ifdef QEMU_MSG_ZEROCOPY
-> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> +                                             bool block,
-> +                                             Error **errp);
-> +#endif
-> +
->  SocketAddress *
->  qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
->                                       Error **errp)
-> @@ -65,6 +71,7 @@ qio_channel_socket_new(void)
->      sioc->fd = -1;
->      sioc->zero_copy_queued = 0;
->      sioc->zero_copy_sent = 0;
-> +    sioc->new_zero_copy_sent_success = FALSE;
->  
->      ioc = QIO_CHANNEL(sioc);
->      qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-> @@ -566,6 +573,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->      size_t fdsize = sizeof(int) * nfds;
->      struct cmsghdr *cmsg;
->      int sflags = 0;
-> +    bool zero_copy_flush_pending = TRUE;
->  
->      memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
->  
-> @@ -612,9 +620,25 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->              goto retry;
->          case ENOBUFS:
->              if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
-> -                error_setg_errno(errp, errno,
-> -                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
-> -                return -1;
-> +                /**
-> +                 * Socket error queueing may exhaust the OPTMEM limit. Try
-> +                 * flushing the error queue once.
-> +                 */
-> +                if (zero_copy_flush_pending) {
-> +                    ret = qio_channel_socket_flush_internal(ioc, false, errp);
+Bump it up to 480s, same as arm_aspeed_rainier.
 
-Hardcoding block==false isn't right.  The socket may be in either
-blocking or non-blocking mode, and that needs to be taken into
-account, otherwise we'll get spurious failures in blocking mode
-if "flush" would otherwise want to block.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/functional/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> +                    if (ret < 0) {
-> +                        error_setg_errno(errp, errno,
-> +                                         "Zerocopy flush failed");
-> +                        return -1;
-> +                    }
-> +                    zero_copy_flush_pending = FALSE;
-> +                    goto retry;
-> +                } else {
-> +                    error_setg_errno(errp, errno,
-> +                                     "Process can't lock enough memory for "
-> +                                     "using MSG_ZEROCOPY");
-> +                    return -1;
-> +                }
->              }
->              break;
->          }
-> @@ -725,8 +749,9 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->  
->  
->  #ifdef QEMU_MSG_ZEROCOPY
-> -static int qio_channel_socket_flush(QIOChannel *ioc,
-> -                                    Error **errp)
-> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> +                                             bool block,
-> +                                             Error **errp)
->  {
->      QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
->      struct msghdr msg = {};
-> @@ -734,7 +759,6 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->      struct cmsghdr *cm;
->      char control[CMSG_SPACE(sizeof(*serr))];
->      int received;
-> -    int ret;
->  
->      if (sioc->zero_copy_queued == sioc->zero_copy_sent) {
->          return 0;
-> @@ -744,16 +768,19 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->      msg.msg_controllen = sizeof(control);
->      memset(control, 0, sizeof(control));
->  
-> -    ret = 1;
-> -
->      while (sioc->zero_copy_sent < sioc->zero_copy_queued) {
->          received = recvmsg(sioc->fd, &msg, MSG_ERRQUEUE);
->          if (received < 0) {
->              switch (errno) {
->              case EAGAIN:
-> -                /* Nothing on errqueue, wait until something is available */
-> -                qio_channel_wait(ioc, G_IO_ERR);
-> -                continue;
-> +                if (block) {
-> +                    /* Nothing on errqueue, wait until something is
-> +                     * available.
-> +                     */
-> +                    qio_channel_wait(ioc, G_IO_ERR);
-> +                    continue;
-> +                }
-> +                return 0;
->              case EINTR:
->                  continue;
->              default:
-> @@ -791,13 +818,32 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->          /* No errors, count successfully finished sendmsg()*/
->          sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
->  
-> -        /* If any sendmsg() succeeded using zero copy, return 0 at the end */
-> +        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
->          if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> -            ret = 0;
-> +            sioc->new_zero_copy_sent_success = TRUE;
->          }
->      }
->  
-> -    return ret;
-> +    return 0;
-> +}
-
-
-
-> +
-> +static int qio_channel_socket_flush(QIOChannel *ioc,
-> +                                    Error **errp)
-> +{
-> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
-> +    int ret;
-> +
-> +    ret = qio_channel_socket_flush_internal(ioc, true, errp);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    if (sioc->new_zero_copy_sent_success) {
-> +        sioc->new_zero_copy_sent_success = FALSE;
-> +        return 0;
-> +    }
-> +
-> +    return 1;
->  }
->  
->  #endif /* QEMU_MSG_ZEROCOPY */
-> -- 
-> 2.43.0
-> 
-
-With regards,
-Daniel
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 96d28289279..0f8be30fe27 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -26,7 +26,7 @@ test_timeouts = {
+   'arm_aspeed_witherspoon' : 120,
+   'arm_aspeed_ast2500' : 720,
+   'arm_aspeed_ast2600' : 1200,
+-  'arm_aspeed_bletchley' : 120,
++  'arm_aspeed_bletchley' : 480,
+   'arm_aspeed_rainier' : 480,
+   'arm_bpim2u' : 500,
+   'arm_collie' : 180,
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
