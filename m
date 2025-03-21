@@ -4,87 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 758B3C28B30
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 03:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32D4C35FF3
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Mar 2025 03:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvTF9-00032c-JO; Thu, 20 Mar 2025 23:40:23 -0400
+	id 1tvTKF-0006CZ-9E; Thu, 20 Mar 2025 23:45:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tvTF1-0002wy-Ct
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 23:40:16 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tvTEz-00080E-Dn
- for qemu-devel@nongnu.org; Thu, 20 Mar 2025 23:40:15 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2243803b776so7815ad.0
- for <qemu-devel@nongnu.org>; Thu, 20 Mar 2025 20:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1742528411; x=1743133211;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/kByEk8Ezb+MN3eJtjKV8YMAmgK1UNNA7qz2bIqmhrE=;
- b=kh4yb1YraM1Ab2zIjMUHdgay+bR+bcKe3mynm+m8z6OErgj9s1+zsKdsDUqdIuElFV
- lIV1yd11lyqjgPvgRqY1ocam8ejS4ErVI2UI59b5m5WLi4P1OTOAGWHr4jZrJYChncJv
- rB9DM//lrucraelTYwZxehv98S5eQBUzi07iPlyzTmYPl6x8Z/b3ZQUz/nzN6mug4CEq
- wAFMs+vuaI+bqsAAAK0KpIrH20l5qbjX6S/Yb2rCV4YACer54bQmWWexylRRO+0XuENx
- vzc5PTn16T/pDRbQCHSBW1mJpo31WEHSiyLDjM054mnK4aIsCp+H8vXJBr5BuKPoRxD6
- hvig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742528411; x=1743133211;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/kByEk8Ezb+MN3eJtjKV8YMAmgK1UNNA7qz2bIqmhrE=;
- b=gRkbKu86Vfm+/Cn6Ut8VWcfri6+VqLPWGkqSipI1XxG0Z4FwjjS7puwVu/qgCkfmwU
- tBmcEYoaZGqjm0PqstnW0fgxWzjL0IpPXmgV/P3YQR7o4CEJj3O2/B3GmeKQ3o+MHZFf
- FmgSbSaqvNpDqOB5SOh6ALzUOL3HysXd8NDYVCCnbBf2FUa2alkQM+W0wt1DBwzvyC0Q
- jErehQxaWrtHi/eYizmgVCANXnu6UPQbfmhdD7hUR9tCgpAIWQnNx62yLPkjdGZJXuPf
- nRBsRaFdbeaexHP3AisBKDfgJR+uMhUy59MHQEYNSr4Ic9t+kpE8yXMHerADlFYie2Ty
- 6Zpg==
-X-Gm-Message-State: AOJu0YwBMV+Qx87RtyYN3M9J3gQZteGcNVAY31952NanIRSA2kGPzr/g
- B0V8L4e2XsTLvF3PsEfjy5gi6sQ1JkmIlti0yra0x1yadb/9vq/ugMz+63of1hcHCDkGuX9N/a+
- F0UUbwDvl
-X-Gm-Gg: ASbGncs1Otlk6dY+187cXFehntdfas/h8BjwGEhZyngk8IHnNMyl2y/n+F5Yh1mpJee
- 2Eux0TBB2/ih2bXs/rpt3Fk2Yl6oMJjZSzEF7iUZZldzqDSDjkqsCRDFA4Vduxeh7H/WjwY/Lc1
- /ynr3LrqpDMToTZE53BM7nfl7y5pyc4FvmwUybxm4UCxS7L/WJJ/GMBT+JxiQWxBOMM8Ryfj5dI
- SlHLRPbjWC6CDpscwodRhK3Qg7oOERTuOabrQFYFMYoquHo1x8iYyIxDT4h4Vv9KDIhZ6yfZCU/
- kQS0oHLhh2oRcvGldi2pdVJgV+y0d796NERxUZoiGZy13MRnF/EwpsgND14HlE0kVQ==
-X-Google-Smtp-Source: AGHT+IHpvR62fNkaBd5UeLAcRxSKjSbM3zgDh2KyVM+gyDC0wpvpfyXMmxFS4OKH7tcxaGJdGTOvwg==
-X-Received: by 2002:a17:903:2d2:b0:223:6744:bfb9 with SMTP id
- d9443c01a7336-22780e02a15mr34789405ad.41.1742528411534; 
- Thu, 20 Mar 2025 20:40:11 -0700 (PDT)
-Received: from Hyman-Dev-Euler.zelin.local ([103.85.74.93])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-227811b8075sm6079725ad.128.2025.03.20.20.40.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Mar 2025 20:40:11 -0700 (PDT)
-From: yong.huang@smartx.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>, dengpc12@chinatelecom.cn
-Subject: [RFC 3/3] vdagent: Drop blocker to support migration
-Date: Fri, 21 Mar 2025 11:38:13 +0800
-Message-Id: <428847678b4d47b4469236da2d888db18cc4c31c.1742527956.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1742527956.git.yong.huang@smartx.com>
-References: <cover.1742527956.git.yong.huang@smartx.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tvTKC-0006Al-Tt
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 23:45:36 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tvTK9-0002NE-MJ
+ for qemu-devel@nongnu.org; Thu, 20 Mar 2025 23:45:36 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8DxOGrY4NxnSJ2fAA--.8555S3;
+ Fri, 21 Mar 2025 11:45:28 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMBxLsfR4Nxn+j9XAA--.61233S5;
+ Fri, 21 Mar 2025 11:45:27 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 3/3] target/loongarch: fix bad shift in check_ps()
+Date: Fri, 21 Mar 2025 11:45:21 +0800
+Message-Id: <20250321034521.2425622-4-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250321034521.2425622-1-maobibo@loongson.cn>
+References: <20250321034521.2425622-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=yong.huang@smartx.com; helo=mail-pl1-x62b.google.com
+X-CM-TRANSID: qMiowMBxLsfR4Nxn+j9XAA--.61233S5
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,63 +65,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+From: Song Gao <gaosong@loongson.cn>
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+In expression 1ULL << tlb_ps, left shifting by more than 63 bits has
+undefined behavior. The shift amount, tlb_ps, is as much as 64. check
+"tlb_ps >=64" to fix.
+
+Resolves: Coverity CID 1593475
+
+Fixes: d882c284a3 ("target/loongarch: check tlb_ps")
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- ui/vdagent.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ target/loongarch/internals.h      |  2 +-
+ target/loongarch/tcg/csr_helper.c |  2 +-
+ target/loongarch/tcg/tlb_helper.c | 10 +++++-----
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index 4635e8fa56..36b0568135 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -6,7 +6,6 @@
- #include "qemu/option.h"
- #include "qemu/units.h"
- #include "hw/qdev-core.h"
--#include "migration/blocker.h"
- #include "migration/vmstate.h"
- #include "ui/clipboard.h"
- #include "ui/console.h"
-@@ -33,9 +32,6 @@
- struct VDAgentChardev {
-     Chardev parent;
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 1cd959a766..9fdc3059d8 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -43,7 +43,7 @@ enum {
+     TLBRET_PE = 7,
+ };
  
--    /* TODO: migration isn't yet supported */
--    Error *migration_blocker;
--
-     /* config */
-     bool mouse;
-     bool clipboard;
-@@ -673,10 +669,6 @@ static void vdagent_chr_open(Chardev *chr,
-     return;
- #endif
+-bool check_ps(CPULoongArchState *ent, int ps);
++bool check_ps(CPULoongArchState *ent, uint8_t ps);
  
--    if (migrate_add_blocker(&vd->migration_blocker, errp) != 0) {
--        return;
--    }
--
-     vd->mouse = VDAGENT_MOUSE_DEFAULT;
-     if (cfg->has_mouse) {
-         vd->mouse = cfg->mouse;
-@@ -998,15 +990,12 @@ static void vdagent_chr_init(Object *obj)
+ extern const VMStateDescription vmstate_loongarch_cpu;
  
-     buffer_init(&vd->outbuf, "vdagent-outbuf");
-     vmstate_register(NULL, 0, &vmstate_vdagent, vd);
--    error_setg(&vd->migration_blocker,
--               "The vdagent chardev doesn't yet support migration");
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 379c71e741..6a7a65c860 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -115,7 +115,7 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+ 
+ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+ {
+-    int shift, ptbase;
++    uint8_t shift, ptbase;
+     int64_t old_v = env->CSR_PWCL;
+ 
+     /*
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 646dbf59de..bd8081e886 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -19,12 +19,12 @@
+ #include "exec/log.h"
+ #include "cpu-csr.h"
+ 
+-bool check_ps(CPULoongArchState *env, int tlb_ps)
++bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
+ {
+-     if (tlb_ps > 64) {
+-         return false;
+-     }
+-     return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
++    if (tlb_ps >= 64) {
++        return false;
++    }
++    return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
  }
  
- static void vdagent_chr_fini(Object *obj)
- {
-     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
- 
--    migrate_del_blocker(&vd->migration_blocker);
-     vdagent_disconnect(vd);
-     if (vd->mouse_hs) {
-         qemu_input_handler_unregister(vd->mouse_hs);
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
 -- 
-2.27.0
+2.43.5
 
 
