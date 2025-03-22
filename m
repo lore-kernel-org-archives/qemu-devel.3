@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1BD5C35FFC
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Mar 2025 06:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D940C35FFC
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Mar 2025 06:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tvsdm-0006V9-0u; Sat, 22 Mar 2025 02:47:30 -0400
+	id 1tvspD-0007ya-MO; Sat, 22 Mar 2025 02:59:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tvsdj-0006Uz-VC
- for qemu-devel@nongnu.org; Sat, 22 Mar 2025 02:47:28 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tvsdh-0006oU-OL
- for qemu-devel@nongnu.org; Sat, 22 Mar 2025 02:47:27 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-224171d6826so25773385ad.3
- for <qemu-devel@nongnu.org>; Fri, 21 Mar 2025 23:47:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1742626044; x=1743230844;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HlJaKT6chzFZB7kBHf/avw4HERGs/FORckTxDZzElJc=;
- b=kNf7tdpgHvEUlvtk2eTtJYjYamQK80T5BrzgHyaEZjwZU5+IrQdIn0i3Fe+U5O4Ltz
- YafNl49VVqUzoVJd/R5WQYcWsBRvi7Mn5BVKmNcspc+9fH/nyibXbfi6M3Jv9Qg3smFL
- e3I2yDcS5BMATn2u6yoRnTmRS6G+pwa9bspQwMXF2xE9qF7jbLXrqZWn8JO6D+wScrUe
- FfTygB0cs7N/FYG7OQ69rbPf46epS7GVnvmBG7iEhYgeY2afsPuAAIZiyaRdwryQXw5X
- Vdu6eYpim0rcO8HOuINeuzCSWaJoby56xG0f0MDxcyR0zMtRgRhW2e/PSiHKYe1fH2bI
- HCPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742626044; x=1743230844;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HlJaKT6chzFZB7kBHf/avw4HERGs/FORckTxDZzElJc=;
- b=YPGXPMcRM1Dfb6RQfhu8KsaEsUiNRePYa8WVig67Q3+BpewxMmFtyzPjjbQQtn/r0k
- uRb57I45ZxHKNQYvTtXdKDPRwDcxqMwS3IYrwQYjbMCBajgU96AM5gOlviomwPlN+Vzw
- fvh7CXk/DX0vNH+b5S+RE+8+p+9vCJja1d2jE96OYpmnBIqFp48Lqc5r9GiRdTZkk0RU
- 3bOTyvon1gtoKQzmJm6bQ9/z22lQqUe7f4xazsk5oViWiA0H1MdwsGzTH7K2hbPXD1l5
- 968gTwzMOvANP6LXmJYAemMD7JazRxKUbYnt5ZjKXeqv0a7z3x3i61SKgN3aaH5cMLM2
- v6Ew==
-X-Gm-Message-State: AOJu0Yzh5uKA/IVgKK6JOe8+hB+brepQrmBW00+2PraAl2/sxdwfD1rF
- BzrBJ/Bj+tXBjfisUK0TVwFMZjpS/DdiZthHnU1MCe4V6Ei1bgsrHK+968Dk+DY=
-X-Gm-Gg: ASbGncufwXiWhv/FXEbUQxVHjAPtVNSpGtzv1Ta5zVa1TCC7/4XMKmWPtYJMyKBafNO
- ikKxbY8KEScU5NJkzjjjXDfEzvtBUIKtoYNrK1zYXvvy021la+c2C+h30hAL6jyM8fSHuhIyAQ1
- V6yLhVUhEsqg2C64rkl7y6yDKTcoaejDtd8vBQFCGvGuQWL012/HkJCiTVvaoLjxl/uL46vprwU
- rBCH+dxpKiaH/4eXW06mUJd2W0Rr2yDU0gMqKFyQrHh/Hbxfjydgg6UmbiTuS92mNvLeyBFcWnC
- glHxdnbe38RoAPGDIJVu0u6W0FCJAVlVpbojwrDEnMD2BsdsTSA=
-X-Google-Smtp-Source: AGHT+IH0pOUAPbgFd4FMcrDI1tK9n700KatWZeeLVO/iHcWW0Pf/vMRE+FmcBvyhl0M7dumdUYAkow==
-X-Received: by 2002:a05:6a20:a10c:b0:1f5:5614:18d3 with SMTP id
- adf61e73a8af0-1fe42f07bb6mr10954057637.8.1742626043788; 
- Fri, 21 Mar 2025 23:47:23 -0700 (PDT)
-Received: from localhost ([2400:4050:b783:b00:4952:3c52:120a:27e9])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-73906159dd5sm3352274b3a.135.2025.03.21.23.47.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Mar 2025 23:47:23 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 22 Mar 2025 15:47:17 +0900
-Subject: [PATCH v2] virtio-net: Fix the interpretation of max_tx_vq
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvspB-0007y3-OS
+ for qemu-devel@nongnu.org; Sat, 22 Mar 2025 02:59:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tvspA-0002ic-6D
+ for qemu-devel@nongnu.org; Sat, 22 Mar 2025 02:59:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742626753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZomakooW81rP6SZzEiGbTHnE93xEmJJMzaMXgk9SmyQ=;
+ b=ZUhA3rRRjquv2EKQwiANAVQuY0u0QXglcOc/kOI9cPFGKcxFOxjBcBtJBO74Ngukt20KxY
+ iwpGB3mJXfw/rSvpAMjOR6ExsyDB2KMtKFwcaoCk+tTJOUPOfagz1Eyj+tO5ckYPuRYb/0
+ NOTI700HqTN1euih5L+IbBOpo+oCap8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-4oUYrmJXM_SdDAm58Fvfaw-1; Sat,
+ 22 Mar 2025 02:59:11 -0400
+X-MC-Unique: 4oUYrmJXM_SdDAm58Fvfaw-1
+X-Mimecast-MFC-AGG-ID: 4oUYrmJXM_SdDAm58Fvfaw_1742626750
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0868B196D2CC; Sat, 22 Mar 2025 06:59:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FA63180A802; Sat, 22 Mar 2025 06:59:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AC4EB21E6773; Sat, 22 Mar 2025 07:59:04 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [RFC PATCH 04/18] qemu: Introduce 'qemu/legacy_binary_info.h'
+In-Reply-To: <014fe512-6271-4de3-8587-7ceafbc8c6b5@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 19 Mar 2025 15:25:33
+ +0100")
+References: <20250305153929.43687-1-philmd@linaro.org>
+ <20250305153929.43687-5-philmd@linaro.org>
+ <b2971494-525a-4d39-820d-7bb8905d60d5@linaro.org>
+ <014fe512-6271-4de3-8587-7ceafbc8c6b5@linaro.org>
+Date: Sat, 22 Mar 2025 07:59:04 +0100
+Message-ID: <87bjttzh3b.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250322-vq-v2-1-cee0aafe6404@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAPRc3mcC/1WMQQ7CIBBFr9LM2jGFSm1ceQ/TBYXBzkKwYEibh
- ruL3bl8P/+9HRJFpgS3ZodImRMHX0GeGjCz9k9CtpVBtlK1nRSYFxyu2rmLU52YHNTjO5Lj9Yg
- 8xsozp0+I29HM4rf+6VmgwN72Vg6KlJnM3erN83o24QVjKeULsaxuL5UAAAA=
-X-Change-ID: 20250321-vq-87aff4f531bf
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>, devel@daynix.com, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.332,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,76 +94,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio-net uses the max_tx_vq field of struct virtio_net_rss_config to
-determine the number of queue pairs and emits an error message saying
-"Can't get queue_pairs". However, the field tells only about tx.
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Examine unclassified_queue and indirection_table to determine the number
-of queues required for rx, and correct the name of field in the error
-message, clarifying its correct semantics.
+> Cc'ing Markus.
+>
+> On 6/3/25 02:56, Richard Henderson wrote:
+>> On 3/5/25 07:39, Philippe Mathieu-Daud=C3=A9 wrote:
+>>> +void legacy_binary_info_init(const char *argv0)
+>>> +{
+>
+>
+>>> +=C2=A0=C2=A0=C2=A0 for (size_t i =3D 0; i < ARRAY_SIZE(legacy_binary_i=
+nfos); i++) {
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!strcmp(legacy_binary_i=
+nfos[i].binary_name, binary_name)) {
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cur=
+rent_index =3D i;
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret=
+urn;
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>> +=C2=A0=C2=A0=C2=A0 }
+>
+>
+>> When testing for errors before and after a patch, I often rename
+>> the binary, e.g. qemu-system-aarch64-good / qemu-system-aarch64-bad.
+>
+> I'd not qemu-system-microblazeel-good to match qemu-system-microblaze.
+>
+>> Leaving it in the same build directory is required in order to let
+>> it find the uninstalled rom images.
+>> Is there a way we can preserve something akin to this?
+>> Do we need to add the -target command-line option that Pierrick mooted?
 
-Fixes: 590790297c0d ("virtio-net: implement RSS configuration command")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
-Changes in v2:
-- Handled unclassified_queue too.
-- Added a Fixes: tag.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250321-vq-v1-1-6d6d285e5cbc@daynix.com
----
- hw/net/virtio-net.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+Having behavior depend on the binary name is problematic.  When users
+run it with some other name (renamed binary, link to binary), behavior
+changes, which is generally not desired and may be quite confusing.
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index de87cfadffe1..afc6b82f13c9 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1450,23 +1450,29 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
-         err_value = (uint32_t)s;
-         goto error;
-     }
--    for (i = 0; i < n->rss_data.indirections_len; ++i) {
--        uint16_t val = n->rss_data.indirections_table[i];
--        n->rss_data.indirections_table[i] = virtio_lduw_p(vdev, &val);
--    }
-     offset += size_get;
-     size_get = sizeof(temp);
-     s = iov_to_buf(iov, iov_cnt, offset, &temp, size_get);
-     if (s != size_get) {
--        err_msg = "Can't get queue_pairs";
-+        err_msg = "Can't get max_tx_vq";
-         err_value = (uint32_t)s;
-         goto error;
-     }
--    queue_pairs = do_rss ? virtio_lduw_p(vdev, &temp.us) : n->curr_queue_pairs;
--    if (queue_pairs == 0 || queue_pairs > n->max_queue_pairs) {
--        err_msg = "Invalid number of queue_pairs";
--        err_value = queue_pairs;
--        goto error;
-+    if (do_rss) {
-+        queue_pairs = MAX(virtio_lduw_p(vdev, &temp.us),
-+                          n->rss_data.default_queue);
-+        for (i = 0; i < n->rss_data.indirections_len; ++i) {
-+            uint16_t val = n->rss_data.indirections_table[i];
-+            n->rss_data.indirections_table[i] = virtio_lduw_p(vdev, &val);
-+            queue_pairs = MAX(queue_pairs, n->rss_data.indirections_table[i]);
-+        }
-+        if (queue_pairs == 0 || queue_pairs > n->max_queue_pairs) {
-+            err_msg = "Invalid number of queue_pairs";
-+            err_value = queue_pairs;
-+            goto error;
-+        }
-+    } else {
-+        queue_pairs = n->curr_queue_pairs;
-     }
-     if (temp.b > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
-         err_msg = "Invalid key size";
+I guess you want to do it here to replace multiple binaries by a single
+one with several names.  Correct?
 
----
-base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
-change-id: 20250321-vq-87aff4f531bf
+The stupid solution is to configure the single binary's behavior the
+non-clever way with command line options such as -target, then provide
+compatibility wrappers that run the single binary with suitable options.
+Drawback: wrappers are slow, ugly, and can also be confusing.  Say when
+you rename just the wrapper to -good and -bad.
 
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+If we want to go with behavior depending on the binary name, we could
+try to reduce confusion by making unorthodox names fail cleanly.  Say
+make -target optional only when the binary name matches exactly.
+
+> Not that easy, CLI is evaluated *after* QOM types are registered.
+> IIUC we'd need to add this as a -preconfig option, Markus is that right?
+
+Ah, the startup mess.  I don't remember a thing.  Except for the need to
+have QMP up and running before any non-trivial startup.  To get that,
+the command line needs to be processed this early, too.
+
+-preconfig is a disgusting hack to delay parts of startup until it's
+explicitly triggered in the monitor.  Not a general solution for "need
+to configurate more before startup", and not sure it helps here.
 
 
