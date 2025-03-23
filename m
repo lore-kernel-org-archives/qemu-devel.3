@@ -4,106 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACA8C28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:33:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB8CC36005
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twPBm-0004AQ-S8; Sun, 23 Mar 2025 13:32:46 -0400
+	id 1twPGY-0005r8-OC; Sun, 23 Mar 2025 13:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twPBe-00049C-0Q
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:32:44 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twPGW-0005pL-EJ
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:40 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twPBa-0002Et-M8
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:32:36 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2243803b776so53449755ad.0
- for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:32:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twPGU-0002tt-MT
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:40 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso66342345ad.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742751147; x=1743355947; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QN0GHYm7ARKHsVaSIzGzewxESAN/2OxGoKlMgVhc8Ig=;
- b=uq130VKupXtYVKxBCKQkzCQyb4Ce8gQ0Et+4BgrWqPCyVDjiRwet7Ijt7BlYOVVBOx
- YS0gzf5oBs6gVfkA9ZQ00IECM/QU/Qlsah0bZKUM4mOkzaBn9Fqbul/YZ49t6oid4inR
- wRyww5bPU0cC7G7L+pcWvQVc6J/8j9scrrhUjxYWRPjWD8Ntk11v188Y4/TBzvwJwCcY
- w6sAL860I/2cIoqJkg0RCf/fpMCVm28yfyHCNo3ei+2BbGLS/ie/jL/j7K0GTVs6aaxA
- zM14Ai4G+bPZjFgStlZs9RGKmT24HSSxZh1XcyFghAFjJiKLHbk5KhL5nUUwr7k7mtbu
- o+bw==
+ d=linaro.org; s=google; t=1742751457; x=1743356257; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rA9BN8KH+TQHBF8y80g6NTHRuQA2RHpbRpcidozR5So=;
+ b=mf1Z64jOULGRXw1/xLSETzXbYNLRj4w/bGhpiMPw/5kISuh4Bl4Ho3O8c7U/+d/QvR
+ ykGZ/OuGgbto3AN5YJwBnWtrZzklHlAD0vaRDJ4XPKkvZTDuVUpZHN/ETfBPnJRB0LLm
+ 6rQAe9QHniUFzZ8YmcpPgneklmLrRNw3brdUysHrq5OgS4RoD7TFZSR92aadqiMEmYQC
+ qSAZbYNTNIfka/qrEVVF5o3XVF+VaSi5/+UJYJbikwVeH12UO3LlOpF0xhaaFCBymPi3
+ +tWG7uHCICObli1mtuaHn45pUOp4Y/LeT73lKVLTmisYG0/PP9rctsI95McS3NkggFdw
+ NK+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742751147; x=1743355947;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QN0GHYm7ARKHsVaSIzGzewxESAN/2OxGoKlMgVhc8Ig=;
- b=DZsZqHzy0XiHoUDJLBqAyTNFupWHM00ATHSGyCv4tfFBHanuJ66a6WKjJema4WuMKC
- qvXyI6l1YKs8dvZm4sgzTpdeOgDh+NS3y6Jv6oqFG/yiZ4BvlfLN2+os0e7Alf3mXtS/
- 6MA7ZwhERMcenrvKsMHdmsjjJxTOFZlR8MDk55NnYvr9wd4nBZrmRodBUfwA7T40I/zc
- mjNeaBkm6GRRp6hy7z67u7krCIWt2sD4lBiasIvciL5HDR5gbg2f2CqG/lN0hXqJaNU9
- jU3RSBeFcm0be+g0+K9DNVFboidnVLx9xRW+nAY+yYWwvrBTEzb9+u7izgBwF+zA46Hv
- YMbw==
-X-Gm-Message-State: AOJu0YyExwT2iuULaE00wl5IZ8O1fvZAHeVKFEGGbgXFRAw8VqR4enEC
- 7FM7ATlatwtvJmDQJHnkkaaqWPxY5K6zOjIQYHmD6HFpYgzicAS/gjsYZnHOx7U=
-X-Gm-Gg: ASbGnctu/hKjIrpLJQal6375wAQvczEBbsC60tPjEK66MJ81OL3eBcn8DNxTmIdIFtO
- lWDUuKw+OP85jpYXhKPlP/XsmayXfdPDH/rlQLs+QHYMuRStnyg6k4ZCFUGE514St+POwmyOL7m
- ib5b7qQ71NipXmwdPDaGCWmZ3wCgVh738KAidiR2kO/rjljoLy1CK+S3wv4hxG0HAoEDGyrVNHX
- ICFbRAz+739CCxBRvyXamZOOQR5UetZkPhsDkl9OiTskbgsbsSUg/yzGhyF/Gbf1TW/mgu+l64A
- yxdM/+TOhnetzSCl0g11H44MDz2voQ9PJSGuWsihWTPB5N/EwKAulhFESQ==
-X-Google-Smtp-Source: AGHT+IGwnwcaX2ssWP0FvqI3mw/RLSqk3B8/HVXK8zY51t0taTc5yPC+uD4q61HWQx+YrwuvWBwFzA==
-X-Received: by 2002:a17:902:c411:b0:224:1ec0:8a1a with SMTP id
- d9443c01a7336-22780e1a8demr154590515ad.51.1742751147223; 
- Sun, 23 Mar 2025 10:32:27 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
+ d=1e100.net; s=20230601; t=1742751457; x=1743356257;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rA9BN8KH+TQHBF8y80g6NTHRuQA2RHpbRpcidozR5So=;
+ b=tuGy8u+48FZsYzoiUYizLHx/U6+pjn75IOhRvIXfaXTyHR9EgAxQF++5vt5f/lwuq1
+ AyU53csQQZGYODBWYIlozLtoXmsGkKi4FPwZz7CtpL4VQhsNjNUmWi6IvgXGmwcRvlQv
+ 3I7GkG1iJANPQCtIR0n6Hvnx2XR6t3caiRqp1aAnPZRMaJ1rOGg6luWjYSzkHmcMg7gn
+ 3FaVXMDYpPQ7U+Yf9RhpD2BqvCwG+BGOcaWXVKeXFllyzr/XZBBa5MzAxHFnHSYUi2Gl
+ bNsvY/sByG2zJl/8ZA8hZO3EgaXBigyBJR7WrVvAzihv5LtnqyQU2cJxfKBYuxBrV2nJ
+ Jm1A==
+X-Gm-Message-State: AOJu0YyRhRfJ8Nz4aA8KK1/FLv6XDf/btWxLMq4MVmiTLVRwndpTiAid
+ hL76i84DyayTJKSX1uUoFfBT7k4Fr77zMTU69vPMAEE+E26jSALevMnpinobnA38bY5z5K03UlE
+ U
+X-Gm-Gg: ASbGncv9UDxAHvmkpxXmAhgShdG5EiW+7gOF9oWCiTj+eX+qnAkSZY57HXVeIw5gkif
+ H1dYM/tFaxPl4Ae6ef9Wq/66GJ+mezdtw57pBFdjER+QzY80YrAuqP/fEVKA9inb84DIELBtUP5
+ olJ5qQgu9P6z+KTw5rg+WUP2vM7RC8d8IK1Z47dRERbRtJ7q6VdXLNyTTsLYn1ivJ3CKZDqBuM3
+ y3JMe8NdkWYkdFSDgwk2unnNZdBjSL8MXbIFRHSZPRdBFquka334hRrt0HqrFSkyz2GqcuCGwIM
+ Glv2J5NDoZwuLhafIRzQ3vSZl3fSfPGkRKbrKHAaoUDikJlk8MejpMyHaHT1w1aIQwAQ6dGmAHs
+ bE5AY9qw9snY=
+X-Google-Smtp-Source: AGHT+IHkOjuzjmhJgV6JaV/SXtj5NUSPfXQWfBo5RzZy8Hq2cwFPpGSc09FzCDwtT/9LWFsMMcLYVw==
+X-Received: by 2002:a17:903:1aac:b0:220:df73:b639 with SMTP id
+ d9443c01a7336-22780e0b2efmr153799675ad.36.1742751457346; 
+ Sun, 23 Mar 2025 10:37:37 -0700 (PDT)
+Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3030f5d4f0asm6273658a91.17.2025.03.23.10.32.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Mar 2025 10:32:26 -0700 (PDT)
-Message-ID: <4dd676bf-3b33-42cb-8054-3e06e3ac656a@linaro.org>
-Date: Sun, 23 Mar 2025 10:32:25 -0700
+ d9443c01a7336-22781209ff3sm54075165ad.257.2025.03.23.10.37.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 23 Mar 2025 10:37:37 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mrolnik@gmail.com,
+	philmd@linaro.org,
+	pierrick.bouvier@linaro.org
+Subject: [PATCH 08/17] target/avr: Add offset-io cpu property
+Date: Sun, 23 Mar 2025 10:37:20 -0700
+Message-ID: <20250323173730.3213964-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250323173730.3213964-1-richard.henderson@linaro.org>
+References: <20250323173730.3213964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] gdbstub: conversion to runtime endianess helpers
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
- qemu-ppc@nongnu.org, David Gibson <david@gibson.dropbear.id.au>,
- qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
- Greg Kurz <groug@kaod.org>, Nicholas Piggin <npiggin@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20250319182255.3096731-1-alex.bennee@linaro.org>
- <0bc36324-4fb7-41ee-a9f1-3a7de4ad7fa4@linaro.org>
- <87a59eli7m.fsf@draig.linaro.org>
- <3e1c7b60-18cf-4ca6-b853-02203954fc3a@linaro.org>
- <8b8bf1e1-ebcb-4779-ab09-c208da910630@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <8b8bf1e1-ebcb-4779-ab09-c208da910630@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,30 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8yMy8yNSAwODo0MSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDIxLzMvMjUgMTg6MzEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+Pg0KPj4gQWRkaW5n
-IHByb3BlciBmdW5jdGlvbnMgZGVmaW5pdGlvbiBpbnN0ZWFkIG9mIG1hY3JvcywgYW5kIGVs
-aW1pbmF0aW5nDQo+PiBpZmRlZnMgaXMgbm90IHJlYWxseSBib2lsZXJwbGF0ZS4NCj4gDQo+
-IEluIGFub3RoZXIgdGhyZWFkIFJpY2hhcmQgc2FpZCBmb3IgdGhlc2UgY2FzZXMgd2Ugc2hv
-dWxkIHVzZSBfR2VuZXJpYygpDQo+IG1vcmUuDQo+IA0KDQpJIHdhcyB0aGlua2luZyBhYm91
-dCBzdWdnZXN0aW5nIGl0IHdoZW4gSSBmaXJzdCBhbnN3ZXJlZCBvbiB0aGlzIHRocmVhZC4g
-DQpIb3dldmVyLCBJIHJlYWxpemVkIGl0IGRvZXNuJ3QgcmVhbGx5IGhlbHAgdXMgdG93YXJk
-cyBvdXIgZW5kIGdvYWwgdG8gDQp1bmlmeSB2YXJpYW50cyBvZiBhIGNvbXBpbGF0aW9uIHVu
-aXQuDQoNCl9HZW5lcmljIGlzIGp1c3QgYSB3YXkgdG8gaGF2ZSBhIGNvbXBpbGUgdGltZQ0K
-c3dpdGNoKHR5cGVvZih4KSkgew0KICAgY2FzZSB0eXBlX2E6IC4uLg0KICAgY2FzZSB0eXBl
-X2I6IC4uLg0KfQ0KDQpUaGlzIGlzLCBpbiBzb21lIHdheXMsIHdoYXQgb3VyIGV4aXN0aW5n
-IG1hY3JvcyBkbyBoZXJlLCBiYXNlZCBvbiANClRBUkdFVF9MT05HX0JJVFMuIFNvbWUgQyBj
-b21waWxlcnMgdGFyZ2V0dGluZyBlbWJlZGRlZCBzeXN0ZW1zIHN1cHBvcnQgDQpzaXplb2Yg
-b24gaW50ZWdyYWwgdHlwZXMgaW4gdGhlIHByZXByb2Nlc3NvciB0byBzdXBwb3J0IHRoaXMg
-a2luZCBvZiANCmNhc2UgYmVmb3JlIF9HZW5lcmljIGV4aXN0ZWQuDQoNCkl0IGNhbiByZXBs
-YWNlIG1hY3JvcyBiYXNlZCBvbiBzdGF0aWMgdHlwZXMsIGJ1dCBpdCBkb2Vzbid0IG1ha2Ug
-bXVjaCANCm1vcmUgdG93YXJkcyBlbGltaW5hdGluZyB0YXJnZXQgdHlwZSBkZXBlbmRlbmN5
-Lg0KDQpJdCBjb3VsZCBzdGlsbCBiZSB1c2VkIGhlcmUgdGhvdWdoLCB0byBhdm9pZCB0aGUg
-bmVlZCB0byBwYXRjaCBhbGwgDQp0YXJnZXRzIHVzaW5nIGdkYiByZWdpc3RlciBtYWNyb3Ms
-IHRoYXQgYWxyZWFkeSB1c2VkIGZpeGVkIHR5cGVzLg0KDQpCdXQgc2luY2Ugb3VyIGxpc3Qg
-b2YgY2FsbCBzaXRlcyBpcyBub3Qgc28gaHVnZSwgSSB3b3VsZCBiZSBpbiBmYXZvciB0byAN
-CmZpeCB0aGUgY29kZSBkaXJlY3RseSwgaW5zdGVhZCBvZiByZWx5aW5nIG9uIF9HZW5lcmlj
-LiBCdXQgSSdtIG9wZW4gdG8gDQp0aGF0IGlmIHdlIGNvbGxlY3RpdmVseSB0aGluayBpdCdz
-IGEgYmV0dGVyIHdheS4NCg0KPj4gQWRkaW5nIGNhc3RzIHRvIGxvb3NlbiB0eXBlIHN5c3Rl
-bSBpcyBub3QgYSB3aW4gdmVyc3VzIHRoYXQuDQo+IA0KPiBBZ3JlZWQuDQoNCg==
+Communicate the offset of io within the first page between the
+board, the cpu, and the translator.  So far this is always 0.
+This will be used to optimize memory layout.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/avr/cpu.h       | 2 ++
+ hw/avr/atmega.c        | 2 ++
+ target/avr/cpu.c       | 1 +
+ target/avr/translate.c | 2 ++
+ 4 files changed, 7 insertions(+)
+
+diff --git a/target/avr/cpu.h b/target/avr/cpu.h
+index be27b0152b..0f5e1a53bc 100644
+--- a/target/avr/cpu.h
++++ b/target/avr/cpu.h
+@@ -148,6 +148,8 @@ struct ArchCPU {
+ 
+     /* Initial value of stack pointer */
+     uint32_t init_sp;
++    /* Offset of the beginning of I/O within the first page. */
++    uint32_t offset_io;
+ };
+ 
+ /**
+diff --git a/hw/avr/atmega.c b/hw/avr/atmega.c
+index f6844bf118..273582b8af 100644
+--- a/hw/avr/atmega.c
++++ b/hw/avr/atmega.c
+@@ -236,6 +236,8 @@ static void atmega_realize(DeviceState *dev, Error **errp)
+ 
+     object_property_set_uint(OBJECT(&s->cpu), "init-sp",
+                              mc->io_size + mc->sram_size - 1, &error_abort);
++    object_property_set_uint(OBJECT(&s->cpu), "offset-io",
++                             0, &error_abort);
+ 
+     qdev_realize(DEVICE(&s->cpu), NULL, &error_abort);
+     cpudev = DEVICE(&s->cpu);
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index 0b14b36c17..080f6f30d3 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -169,6 +169,7 @@ static void avr_cpu_initfn(Object *obj)
+ 
+ static const Property avr_cpu_properties[] = {
+     DEFINE_PROP_UINT32("init-sp", AVRCPU, init_sp, 0),
++    DEFINE_PROP_UINT32("offset-io", AVRCPU, offset_io, 0),
+ };
+ 
+ static ObjectClass *avr_cpu_class_by_name(const char *cpu_model)
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index 0490936cd5..e9fef1aaad 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -92,6 +92,7 @@ struct DisasContext {
+ 
+     /* Routine used to access memory */
+     int memidx;
++    uint32_t offset_io;
+ 
+     /*
+      * some AVR instructions can make the following instruction to be skipped
+@@ -2664,6 +2665,7 @@ static void avr_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->cs = cs;
+     ctx->env = cpu_env(cs);
+     ctx->npc = ctx->base.pc_first / 2;
++    ctx->offset_io = env_archcpu(ctx->env)->offset_io;
+ 
+     ctx->skip_cond = TCG_COND_NEVER;
+     if (tb_flags & TB_FLAGS_SKIP) {
+-- 
+2.43.0
+
 
