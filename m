@@ -4,57 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23215C28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 14:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8090CC28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 15:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twMRI-0006Qy-Ev; Sun, 23 Mar 2025 10:36:36 -0400
+	id 1twNHV-0002Kv-1A; Sun, 23 Mar 2025 11:30:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1twMRG-0006QU-5y
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 10:36:34 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1twMRE-0006ta-Gg
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 10:36:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=0H0FTU/s8FTPXZYyS4Z2UFsQYCf8MHFYMAZB6oB/cQ0=; b=iepHK5Jktr73tDTzqg5fCMDwje
- uJDbuJsXvtYIHfiAE2SheWPUTxcOtaCSajVFAUAgDRoke5HaSeeVK2D2zIlK7JJfdeLIBsqPxJGP5
- Bq/rHHfPNHrvVF2XsrCKwbfrqvj0iZXyfD2Ns+cQZF1yCQYwpydB9BHF7K7U0LnczADlM+nII9sT5
- sK+j0pedDqnSaiQw5uqUIZVDg+U9oxXtx2BMYw7o6/5+6Fw8uuw6qb18xoyhjIaIZjGkyADFAkz1s
- bv5i30iPO5TNxmG2d9R3KrZvAFWvNxbdwM+l34c6XpZqJmXBZslYvGSzHJnik/iyjwEzyVt0ARVgh
- uEGngUtTJatRE7p1SnqeLDnttCjcZY0zlGmTj5iLvcDihIz7G0d14NpLfTqslt/pJjJ7V9oyvsWlZ
- xCVp0e1LeKstKftP2ytPgw5Uh4HR5TBQrFggNUKGRdt0yubfutn4q73ErNsM6zLHcRXaI+xIi4mfE
- ScPc/G2ky+V/a9vdrrXUjCOLeldCzWtSo3r/VGIMr8KL+tEtHCT38k47WzRfmKdIuA8FAdufnPMIu
- IZqvgCr1kv0Yxl/DfQI9V4ZHfgKM795NPqPcNogqZXQe1BdmT8UsblfsetSbc8KfZ91ULgH4MG2vj
- +AjCTpTZAFFv3Q8wtm3VRHl9lc8kVDhRVwEZgYbWk=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twNHQ-0002K8-EG
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 11:30:28 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twNHM-0006ae-7l
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 11:30:26 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43ce70f9afbso35943905e9.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 08:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742743821; x=1743348621; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yerTe46hOeOx/6uzV6bvMyIILUze4DRGCFduLBD+Bkg=;
+ b=byU6n4qzC+VX7bMMXEcX+PU7IhDXehkl/Ql0EqND4i2XGa7ePakGvW8Y1n+ss+I3xE
+ /NiD3LxAm6QouXg1esHic+IUF+8rqi/y+5upZheGVYhJy9CC3ijfsNZa0XCOg80oegq9
+ EvboMv3X+VscDOYdgD6YucnMqombEd+8Gmp94rLW0fgQwnciiTldHa7Kcy7SIh5gBJik
+ vJjUkIaWNM+8x13in5F1Zf47v2bm9MmOpOuGjJjHrC2k8A88115Tzs7iP0gs2xb50+GS
+ IjbM/NcMxxXWZCXGAtmjr3SYoELwCHfIHjg1d+3Uv+MF/Vx9qM8lXVbE/KrAlKlThm0W
+ UgpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742743821; x=1743348621;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yerTe46hOeOx/6uzV6bvMyIILUze4DRGCFduLBD+Bkg=;
+ b=Ac2tetUpMUQHT5e47h0gfFb+CF3LlRVuhVcbl2m6y94b3NK3cPwo2KoWVQYaI/OAqi
+ abVwXNWTlvrFRlCLDjdvx1eGUzP5aZ6uY/3DvBsiw2NUvO/ou3AnKAauK0ytJB+G1pRV
+ 0Uhmv9MbLvtEZ69uN8yZReOlcwPYzpOsGzwm9PZaqH0XeCSG+aQ+3b/su5Xz0DTtFJLy
+ TNbnnkwcR+z0loBHxCI8VpGx6j1++l4dIcAzPPdhjMjRceJJM/npvdNaypd7wslfarw8
+ rxwJ4kN6sm3VtXJBZrJSnxbPsRB4yBfibku8HbT2hcFrE0iyzzfcpmtCuR1v/pp8rgvn
+ Encw==
+X-Gm-Message-State: AOJu0Yyyrsh/VXyD5ADymrIyG8j4hFbirtyYIO+wuohCIQtXjmGAFHhX
+ fzulnFryRZGfH2j5p0qfIcLnTnPpeojb7SIRw7mXHWxXc8tDFXRZAaWqksw+yWlZn013CEJHDaV
+ I
+X-Gm-Gg: ASbGncvFcLuWquC/ADAgS/ZERscsOg28wCNQ980w87KQDegjScOOCDsSYkKe4ltkuZh
+ HMUT0w1Qn8OUloTWplkLGR9w85oQo9Edl67Fm4Hr5Y2HM6zb8EdYkjCtzSS3NPCpIHcsMmmfCO7
+ fKiUZRlaSqM+G6rWWWAvdZrffnZKddDneIIuHX4AZUovBkBajvzU8OTJgxX7pnxb8XiRKIUpIXd
+ nF2kjDCYVeR4ZZNtC8AP3XcoahB79OGMxqFkrBiCbZo3z9HpYSRpVIIuz6jOnyRyE4dgZrYLNqz
+ zFtQ9u6mGU44AHvW8cQssE8P3gjV/yfDb2ttCLbgpGQY9CiH8PwYxYT234pKPfoVMAy1s3OC0fW
+ Pi1n8D3YPzRpHgtxn/CA=
+X-Google-Smtp-Source: AGHT+IHJksFDBl5nsv06LwH7ppCxJvcRLA5hTkOPQiPn9haa6/QvOluDnPtq/QDPVFWj/f5X3esmmQ==
+X-Received: by 2002:a05:600c:4693:b0:43c:fda5:41e9 with SMTP id
+ 5b1f17b1804b1-43d50a5237fmr72353295e9.31.1742743820868; 
+ Sun, 23 Mar 2025 08:30:20 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f9b517csm8215543f8f.51.2025.03.23.08.30.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 23 Mar 2025 08:30:20 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Volker Ruemelin <vr_qemu@t-online.de>, Gerd Hoffmann <kraxel@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: Re: [PATCH] alsaaudio: Set try-poll to false by default
-Date: Sun, 23 Mar 2025 15:36:27 +0100
-Message-ID: <2118992.kbFERA6akJ@silver>
-In-Reply-To: <20250316002046.D066A4E6004@zero.eik.bme.hu>
-References: <20250316002046.D066A4E6004@zero.eik.bme.hu>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ qemu-s390x@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] target/s390x: Fix a typo in s390_cpu_class_init()
+Date: Sun, 23 Mar 2025 16:30:18 +0100
+Message-ID: <20250323153018.73491-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,62 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sunday, March 16, 2025 1:20:46 AM CET BALATON Zoltan wrote:
-> Quoting Volker R=FCmelin: "try-poll=3Don tells the ALSA backend to try to
-> use an event loop instead of the audio timer. This works most of the
-> time. But the poll event handler in the ALSA backend has a bug. For
-> example, if the guest can't provide enough audio frames in time, the
-> ALSA buffer is only partly full and the event handler will be called
-> again and again on every iteration of the main loop. This increases
-> the processor load and the guest has less processor time to provide
-> new audio frames in time. I have two examples where a guest can't
-> recover from this situation and the guest seems to hang."
->=20
-> One reproducer I've found is booting MorphOS demo iso on
-> qemu-system-ppc -machine pegasos2 -audio alsa which should play a
-> startup sound but instead it freezes. Even when it does not hang it
-> plays choppy sound. Volker suggested using command line to set
-> try-poll=3Doff saying: "The try-poll=3Doff arguments are typically
-> necessary, because the alsa backend has a design issue with
-> try-poll=3Don. If the guest can't provide enough audio frames, it's
-> really unhelpful to ask for new audio frames on every main loop
-> iteration until the guest can provide enough audio frames. Timer based
-> playback doesn't have that problem."
->=20
-> But users cannot easily find this option and having a non-working
-> default is really unhelpful so to make life easier just set it to
-> false by default which works until the issue with the alsa backend can
-> be fixed.
->=20
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
-> This fixes my issue but if somebody has a better fix I'm open to that
-> too.
->=20
->  audio/alsaaudio.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-> index cacae1ea59..9b6c01c0ef 100644
-> --- a/audio/alsaaudio.c
-> +++ b/audio/alsaaudio.c
-> @@ -899,7 +899,7 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
->  static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apd=
-o)
->  {
->      if (!apdo->has_try_poll) {
-> -        apdo->try_poll =3D true;
-> +        apdo->try_poll =3D false;
->          apdo->has_try_poll =3D true;
->      }
->  }
->=20
+Fixes: 41868f846d2 ("s390x/cpumodel: "host" and "qemu" as CPU subclasses")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/s390x/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Correct me if I am wrong, but AFAICS if polling is not used then no state
-changes would be handled, no? At least I don't see any snd_pcm_state() call
-outside of alsa_poll_handler().
-
-/Christian
-
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index d73142600bf..1f75629ddc2 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -377,7 +377,7 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
+     resettable_class_set_parent_phases(rc, NULL, s390_cpu_reset_hold, NULL,
+                                        &scc->parent_phases);
+ 
+-    cc->class_by_name = s390_cpu_class_by_name,
++    cc->class_by_name = s390_cpu_class_by_name;
+     cc->mmu_index = s390x_cpu_mmu_index;
+     cc->dump_state = s390_cpu_dump_state;
+     cc->query_cpu_fast = s390_query_cpu_fast;
+-- 
+2.47.1
 
 
