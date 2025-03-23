@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE52C28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 22:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E369BC28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 22:41:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twTzp-0005vZ-O1; Sun, 23 Mar 2025 18:40:45 -0400
+	id 1twU09-00063Z-Ue; Sun, 23 Mar 2025 18:41:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twTzn-0005uu-62
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:40:43 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twU07-000628-BQ
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:41:03 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twTzj-000684-JA
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:40:42 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3996af42857so3065883f8f.0
- for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 15:40:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twU04-0006Bu-HX
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:41:03 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so37961855e9.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 15:41:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742769637; x=1743374437; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=WUzza3AvpEPfaWJWwigxhFBok8Yah8voXDxqR6U1fGw=;
- b=C1sQrKrEqS//U0PE5zh1pi5SLETrv4j5L4eRBi3L+KnnLQ5i4yw7keLZIQGZAOTsSU
- 8XerG5c8OBut4OWXjE4CLa7cRODk08rrdF4a4fne9MTANukAXCASSZN4j3zgDIdfk5ZG
- LIhvXWkPwws9JhLvH+lGAHaLZcV93z1ot+tDCy+JmParNeSen00LblKk3v/Qc6xQjb6b
- YLOnRtCKci5vt1eGeXi3jRFZN/7unyAyyu2eBH6ZzfQsO1k0rxh8zrE0ui5JmuEA8gLZ
- /CT8UN2e75ZFJSWUoBpo4/oXPdfw58CqNqhaHnYROM/63IHquW03QYFTR7T1UxOMF8a7
- uvcw==
+ d=linaro.org; s=google; t=1742769659; x=1743374459; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F3UrwbOIIaM8kGadwD98OC60MbBxsesgGxlGmJo4cKw=;
+ b=kyGoI3dbmIEO5h4Z6lodldM1OVzo3hWQivogsOGviwoDqvKUz4/2iT8CRJc95+wsl5
+ rZFbwG5ERpeFx54F1moNnSXfHG1xC/rdDF7//UGk93Iy4zhG075XzQxPJVpNm4fB9IqX
+ 5xH8KxVn0uHkJV5jRIwXS7NY2Q42oxGJgsyp7MRerWXx96zocqANnx/sPWD6PMs5r+cI
+ uB7dA+BjRWLsUM2qLkZyOFWXRIb9BScDLEXnlqWlkh1EfBkbQV3BY7LdhSe5/Gs3l2MK
+ SR+YW8B2jqtdO+/SJ32IBhAhnIYcn4ZSuAShASpyja9e/iAuhuWR4AdB+oo4PWJtqYjj
+ mk7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742769637; x=1743374437;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WUzza3AvpEPfaWJWwigxhFBok8Yah8voXDxqR6U1fGw=;
- b=b3cjchaPuJaL0Mh+hY3q3RTRDW2P0kgjAYSRJDnqO1z+0UdR1fZ9uYE2RElJSuNcVk
- t71U/quEVx1WntQnPu5VyqCxHpN5lkkHO+BNpZcjN8WGsx/1YtFjs8+ZUhGO9udW6WdI
- vqAm8lqkwvY8RbAbGjg+gyXZq304gsbM6IUFQ1eagjRzZ5BpuP5SfcNLXQcVg6WzfYjK
- uo0Y2ARt8YXjjy1Zzt6a/3AcRhSDHNK+AioTzK+H9vcLTcD7F8L5mb7oS+rlxcVw0ZFi
- aRbkKom4vDpVzysYQwmNIacsaH1FNGtIg8+mXgHLnXfHSUfQqESoFoafbbMePKdr7FI5
- KxXg==
-X-Gm-Message-State: AOJu0YxETsu75fZ1zD2pCG3ENMg+P+kX5kmGh3UR8wEpTda8Ud5RBrOy
- mQvYKpcrBpw1R30NjS/v46XpKAGALAB/nEY1tMbTFKaBZn4yG4Rm0KkkktZaQtkXDMyK2oVIQJY
- X
-X-Gm-Gg: ASbGnctbot5o6jE1FHtgxoxbDRH99Cu7uynY3rg4+2GQtpM0n1yL8GYfvYTU97Y1fVB
- ph28Qh+zuvDhcnhBz6tYV/KZc9QmOlP1zmbz2zlNjqWu19KZtxJe/6XNPlMv++7eu63wdrcKTOq
- CxAwOJd7bU8oD8r11TZyrw5a80t/yWkWLWoraLECoF/Mwf5a+DBvBwr1xTXW1OtorN/wXpMUYLs
- bzgwg5yG8GzVLsZvWnw8ChiJkRu4voYs1r4Q3efDbI8DjfG44oQRYjI4UD/i83GDx7js6ZCm+qk
- ypTb2J60LQ/h7JehgpN02hgw0F88pKwHpJKuAt30KuFf6/Ytx0VgMZdjwD1ZBIgjpkHqf1y/RE+
- /qS7hDgXmx4e93hRRmZ99/JET
-X-Google-Smtp-Source: AGHT+IH1o7jidLPC7EmCNJERyEwibmyaN9bWu1oir6BayLoTzS06ftnPf9udLhhmkETV3oHQARkMCQ==
-X-Received: by 2002:a05:6000:1565:b0:38d:b028:d906 with SMTP id
- ffacd0b85a97d-3997f933816mr9204362f8f.21.1742769637325; 
- Sun, 23 Mar 2025 15:40:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742769659; x=1743374459;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F3UrwbOIIaM8kGadwD98OC60MbBxsesgGxlGmJo4cKw=;
+ b=kpTLv+jotSUsNrBEzszQDF4Pw16J4ZMSKhqkqKfP/EB3O/J65YBkM7PZXCckqtf1sh
+ s7JDQLU9dfYfM1vL3gNKQf+dhgg7YhjDUDbfK9F0Hf5jYNG4sqvbH3w2mNtno4pDfWsD
+ Aw/4wTVXKN7dYMDFd39CsG6pVLfKijj6YPRXgmkyfgMFHAw4nel0GRDbmFXL9l+zGb9/
+ utgBd1ga3NGVg+E4k8SDm0udT6MvgZZ8+AsANLPG4G3IzKPVkspfhl5uz6eq2Y+EAE9B
+ 25+N99p8GqLMl1zeJ7QGjMeZGuIx3rkap2GcielTMq4iqjy7v0hkkVQqkEwmPlP4qYGY
+ KRsQ==
+X-Gm-Message-State: AOJu0YyP8cMSxK0oHHEEvJk4YJq4j9Cgvq4AaGjUvTf+OVGAFV1D+ntS
+ rYPOQ5MKrcfcKg8JpY3jMPvoJxutDkrOVe3U+8kOY2YyvvQ6GDhRNi84utHK2FjCbduKmWBhe7B
+ 6
+X-Gm-Gg: ASbGnctrm6wmcgLCVQ04zd2BFS2TR5t94UKzwFTLy/lhIiPRPxWy+Gwqq9J+r/He4qa
+ k7sMHWPuaKrOPkqSlZ6HAt9myp7FDKe4c3f40BzBdLrDdUmXDCmq2pEMexH1WLAi9il8AVu/Xgn
+ gw0rg7WdNGAmMbfFRcchTzy6b64uQcIzTTefkb0JQLM23yxtGo0gpJqPnY4nXEWOzI/D2F0pRyl
+ jLER1fhQgtZYsTCPbGgB6LaHnKnXRk+kuYW9slcZ7lSbFiFnjP3wtVHA7x0/5J52oAmauCJk2L/
+ cKT8iWHCjpuQVxtTPAmO1kyJkkm/SmytIEnZAP25fzajcGc/1pKrgFVI/FB7OaR2/eWW1gWbZwC
+ KiguYUbjKmcb0+JIMU/Gob36x
+X-Google-Smtp-Source: AGHT+IGmoYGTMc2RrnredA98U8J6aihwrxlN1VEBWVgsFAoOSA+5fLhhzu4HgdCTkxWD1fAHXAZTgQ==
+X-Received: by 2002:a05:6000:400a:b0:390:fe05:da85 with SMTP id
+ ffacd0b85a97d-3997f8fc301mr10772575f8f.16.1742769658808; 
+ Sun, 23 Mar 2025 15:40:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9a3a10sm8856262f8f.28.2025.03.23.15.40.36
+ 5b1f17b1804b1-43d43f47196sm150164465e9.16.2025.03.23.15.40.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 23 Mar 2025 15:40:36 -0700 (PDT)
+ Sun, 23 Mar 2025 15:40:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -73,16 +74,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 0/6] cpus: Convert cpu_list definition to
- CPUClass:list_cpus callback
-Date: Sun, 23 Mar 2025 23:40:29 +0100
-Message-ID: <20250323224035.34698-1-philmd@linaro.org>
+Subject: [PATCH-for-10.1 4/6] target/sparc: Register CPUClass:list_cpus
+Date: Sun, 23 Mar 2025 23:40:33 +0100
+Message-ID: <20250323224035.34698-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250323224035.34698-1-philmd@linaro.org>
+References: <20250323224035.34698-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,33 +107,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'cpu_list' might be defined per target, and force code to be
-built per-target. We can avoid that by introducing a CPUClass
-callback.
+Register sparc_cpu_list() as CPUClass:list_cpus callback.
+Reduce its scope and remove the cpu_list definition.
 
-This series combined with another which converts CPU_RESOLVING_TYPE
-to a runtime helper, allows to move most of cpu-target to common.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/sparc/cpu.h | 3 ---
+ target/sparc/cpu.c | 3 ++-
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-Philippe Mathieu-Daudé (6):
-  cpus: Introduce CPUClass::list_cpus() callback
-  target/i386: Register CPUClass:list_cpus
-  target/ppc: Register CPUClass:list_cpus
-  target/sparc: Register CPUClass:list_cpus
-  target/sparc: Register CPUClass:list_cpus
-  cpus: Remove #ifdef check on cpu_list definition
-
- include/hw/core/cpu.h |  2 ++
- target/i386/cpu.h     |  3 ---
- target/ppc/cpu.h      |  4 ----
- target/s390x/cpu.h    |  1 -
- target/sparc/cpu.h    |  3 ---
- cpu-target.c          | 25 ++++++++++++-------------
- target/i386/cpu.c     |  3 ++-
- target/ppc/cpu_init.c |  3 ++-
- target/s390x/cpu.c    |  1 +
- target/sparc/cpu.c    |  3 ++-
- 10 files changed, 21 insertions(+), 27 deletions(-)
-
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 462bcb6c0e6..7c6296ae70e 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -594,7 +594,6 @@ G_NORETURN void cpu_raise_exception_ra(CPUSPARCState *, int, uintptr_t);
+ 
+ /* cpu_init.c */
+ void cpu_sparc_set_id(CPUSPARCState *env, unsigned int cpu);
+-void sparc_cpu_list(void);
+ /* mmu_helper.c */
+ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                         MMUAccessType access_type, int mmu_idx,
+@@ -665,8 +664,6 @@ hwaddr cpu_get_phys_page_nofault(CPUSPARCState *env, target_ulong addr,
+ 
+ #define CPU_RESOLVING_TYPE TYPE_SPARC_CPU
+ 
+-#define cpu_list sparc_cpu_list
+-
+ /* MMU modes definitions */
+ #if defined (TARGET_SPARC64)
+ #define MMU_USER_IDX   0
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 57161201173..635d5d81143 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -579,7 +579,7 @@ static void print_features(uint32_t features, const char *prefix)
+     }
+ }
+ 
+-void sparc_cpu_list(void)
++static void sparc_cpu_list(void)
+ {
+     unsigned int i;
+ 
+@@ -1031,6 +1031,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, void *data)
+                                        &scc->parent_phases);
+ 
+     cc->class_by_name = sparc_cpu_class_by_name;
++    cc->list_cpus = sparc_cpu_list,
+     cc->parse_features = sparc_cpu_parse_features;
+     cc->mmu_index = sparc_cpu_mmu_index;
+     cc->dump_state = sparc_cpu_dump_state;
 -- 
 2.47.1
 
