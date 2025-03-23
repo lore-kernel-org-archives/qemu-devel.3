@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD97AC28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D00A9C36005
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twPGd-0005u7-5S; Sun, 23 Mar 2025 13:37:47 -0400
+	id 1twPGc-0005tR-GP; Sun, 23 Mar 2025 13:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPGZ-0005rN-9P
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:44 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1twPGZ-0005rt-P8
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:43 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPGX-0002v0-Lx
+ id 1twPGY-0002v7-3k
  for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:43 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2255003f4c6so66876955ad.0
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-225fbdfc17dso54026345ad.3
  for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742751460; x=1743356260; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742751461; x=1743356261; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n5/rrT9rGaCRyYHGfR9L9lev75C870EJXXZh29se8QE=;
- b=V0kcn3QfBPvZI+tew/CR1Mc65ccpVAYzDu4sL/tEYVGo4RveRAvX3H1+vO0zzo/SIr
- LItWujIk8rCJ676QV1GvoPUE8D8hg8+Ht+qbbpwr5CIwQe/DO10wBkmuR3/0hT4k5pYs
- FaVibqyEMff7OY5bWaJRUNEHt+9527jodFo7daNZI2omAg0RZueIAzmrPCPK+gl/hYXg
- lZswQkpt0M0AAoXKhM+LyAwrVhKHktpBeriAI0v1BhVWD9Z2PvvrnGqdzJ02Ke7sWdu8
- Zo3+q8PSRprseD9VzCnk8NZHybP1QMWEPdC1Z47Fj9bkkA2ZqQlZ5m7QKS93nwyPnJBX
- e9+w==
+ bh=ewSa7YLsmr/V8RFNcj2I2xqcVJc7xLcAd7Q9LXiEnxw=;
+ b=BegQvGA2ByvCocHieF+qLEQ4vjq4r1wtFAX9DsuHCX2UDe4J+mU13hqZ5iJUCbrrOz
+ zk3Yoi2BL2o3bTxTi400+ObusaqW2SzwFrlQm2Pe9AIGKkGvN4rVbtj0ufHbUG8MsfLT
+ V8P6aacJOVFCUGBxuOpbcL+RmhW4beYcQ2gSjsIvPWBtkLAeeSDVoYoJQlBUeKmnGoZD
+ p0ORISm3AtAszR3piUzL7bC8hiylVux2K9fEGzj/4IWCDd4yrHk8xO4zT4WBkwV03/tk
+ qg8SBEVNsRI/9idefLQyLGjAGBkvQiPS4Df9NcAwZ2q7/2ZtSbQA/NbJDwpbsgcC6o28
+ LZaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742751460; x=1743356260;
+ d=1e100.net; s=20230601; t=1742751461; x=1743356261;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n5/rrT9rGaCRyYHGfR9L9lev75C870EJXXZh29se8QE=;
- b=YA+rCNcBxMhYdVzgmHmrq/Gq9YyxmHHh0JyzJGH5RBoG/m6ypXeO6nSnZiIJQ2eKLj
- +ppKYb7OyvB8JxtOr72dkroYwtrGs83qALbYC1nUdHv3ZGXNjZmhUZkBy9lTxdFA8EVj
- g59kJo7Y04fm+xzNZtQbhMUxD67YeYUsm9PpGHzYLDxYgLZElY42iTiyIldh1vX13guD
- Z1fXjFrmxldsS9cBZ/K6TZv0kQqGeu7ZWlBDIrMEP9VMHd2jAjZC+nTqjLVy2Ifq6EC3
- XBUs4TYvqmUbQ+ExJAqwy4oJOlNxF2wqw+G7uKlXyk3HMfDprrSSnjpwXW706CJas9q8
- k45w==
-X-Gm-Message-State: AOJu0Yyua2AT2sveXHqHTZwsdRlf69NtGBmsm/HDXpHSUOGPIGFUA5F2
- YHbUWCmA5NQkkzXjT+YRLaCDYYps0mfcPN7dy104aPG7iKgIMkRP8aA8qSY2MBx2hkXRE8Ke9Vg
- d
-X-Gm-Gg: ASbGncuuITguODO20uTJamKYUwP1uNZeYYbnwg/pILCdseEIodVXj+xjqrTE/owKcJN
- dUF0hJ8M+kDmzaoEjjRxlcv2qg1nVCO1Uk67UexcK9qZTNALhVG8BsRm093JT4YUZuFwdju94AN
- GyRfVd5XrRVsahLzc7grAFxKMhYtaH+SAmmqLT5zussnrp1ckRLfI93kqcWgGHACIbMg32sy4yW
- fKudnYdgy1s1ld4/94MumiDRmkBtigNP0wzRXoU/p0eTKfTXoisFz/La//zLpjrB4XIQU+8lwTA
- TO/YQqMUrtiRoHWNO3ipxBdu/Ji44E6uQeTn6ylP4E6By4tjOpsWdBCxw/sxXqglQLakU4gPljx
- LEqivXm7UwKw=
-X-Google-Smtp-Source: AGHT+IH/b1yUzgQ+kNOeWXZv97pYh9WAiXHTeLCP/1q17A19wPjHihwThAzrv9MMFbpd9mE3VVPK3w==
-X-Received: by 2002:a17:902:cccb:b0:223:65dc:4580 with SMTP id
- d9443c01a7336-22780e45f67mr141878385ad.52.1742751460212; 
+ bh=ewSa7YLsmr/V8RFNcj2I2xqcVJc7xLcAd7Q9LXiEnxw=;
+ b=looOQBxZdlnnV7bVeHk7Q9FCjcrPlZL2Qw4g7HNJN/LSwZ+DCyt91ZRN8L+xVcZs4e
+ fnN8Q6lE7y9C/Mhsgo+bDMaR5rGAL3X6s/hi2fN+sIeTHYM7W6hWG/3OdDkki6H/4aJA
+ 46SuiUSg1fTlmQk3pvs8GZLiMqpTtGrXV/y+GlNKqgpGeZ25V5Rk7B5tz61c1k1VsFS+
+ Xpsjf3iO/0COLww3Tz01PZMdWxYPxzf/K5OTbZYd86s6v0/FfU7Y8kg0FomCFKkZeCWC
+ Sb35b9jbeT03co7F593L2/QfdIcvb+IHXLpqW90rnfQLqljGkPcKXbOll65PLxJL1Zzm
+ 6WlA==
+X-Gm-Message-State: AOJu0Yzt7DNqzfFA+aiEvUMNePoX3gPBCfSfqJBjoJrOoYvvrfg0Kf93
+ gpzPYzKd8cYGstx6pPe6gczX9U51FEOxRF0bGxxDkkd7U48z20txrpmKHhoR6sG99KAubmlDGp6
+ B
+X-Gm-Gg: ASbGncv/EhMHSDZCJlL3SdlT1klvUk2SPl8GlporhomUlAxlBQ77OYCiDMDZz/L7Kx/
+ CV4ejKy8YBhkHw9MA7n+9YKTlgUsmF2ATQtjgBZFd4tYVHsxWzAhZbTKNci4TjgUdNJr0P4nwi2
+ 5iqs1HTcj64Nb3Qjn0fneZufqfnghL6vdfuDzTUm2HZwBTKq7+kBCBeuPOCiJlAn5juUxxYmxaS
+ aeiWw8Yf+nqjpq5PT/+H1gBLmpb0otLPx7jWnfg59tPUPgtywhypHSRM/Ob1WDsDBJy0GuXeYAz
+ 9mto5XGVBH1gx91Yi6kE6ph5B/KWxyz1DUMeZjFpyogYKnAhmsPAS1kRWH6+21f6oftKsNceIqq
+ g
+X-Google-Smtp-Source: AGHT+IGb6atHwiO/o1LnwdT0INAtTFlcCPcZXPjgYakMtPe84hrL7/HtqgBVrqD2LxEco2kQiu6Rog==
+X-Received: by 2002:a17:902:c942:b0:220:ca39:d453 with SMTP id
+ d9443c01a7336-22780d8004emr151935625ad.17.1742751460839; 
  Sun, 23 Mar 2025 10:37:40 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22781209ff3sm54075165ad.257.2025.03.23.10.37.39
+ d9443c01a7336-22781209ff3sm54075165ad.257.2025.03.23.10.37.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Mar 2025 10:37:39 -0700 (PDT)
+ Sun, 23 Mar 2025 10:37:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mrolnik@gmail.com,
 	philmd@linaro.org,
 	pierrick.bouvier@linaro.org
-Subject: [PATCH 12/17] target/avr: Handle offset_io in helper.c
-Date: Sun, 23 Mar 2025 10:37:24 -0700
-Message-ID: <20250323173730.3213964-13-richard.henderson@linaro.org>
+Subject: [PATCH 13/17] target/avr: Handle offset_io in avr_cpu_realizefn
+Date: Sun, 23 Mar 2025 10:37:25 -0700
+Message-ID: <20250323173730.3213964-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250323173730.3213964-1-richard.henderson@linaro.org>
 References: <20250323173730.3213964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,27 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare for offset_io being non-zero in do_stb.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/avr/helper.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/avr/cpu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index 9608e59584..3323f32c22 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -69,7 +69,8 @@ bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index e4011004b4..538fcbc215 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -161,12 +161,14 @@ static void avr_cpu_realizefn(DeviceState *dev, Error **errp)
+     memory_region_init_io(&cpu->cpu_reg1, OBJECT(cpu), &avr_cpu_reg1, env,
+                           "avr-cpu-reg1", 32);
+     memory_region_add_subregion(get_system_memory(),
+-                                OFFSET_DATA, &cpu->cpu_reg1);
++                                OFFSET_DATA + cpu->offset_io,
++                                &cpu->cpu_reg1);
  
- static void do_stb(CPUAVRState *env, uint32_t addr, uint8_t data, uintptr_t ra)
- {
--    cpu_stb_mmuidx_ra(env, addr, data, MMU_DATA_IDX, ra);
-+    cpu_stb_mmuidx_ra(env, addr + env_archcpu(env)->offset_io,
-+                      data, MMU_DATA_IDX, ra);
+     memory_region_init_io(&cpu->cpu_reg2, OBJECT(cpu), &avr_cpu_reg2, env,
+                           "avr-cpu-reg2", 8);
+     memory_region_add_subregion(get_system_memory(),
+-                                OFFSET_DATA + 0x58, &cpu->cpu_reg2);
++                                OFFSET_DATA + cpu->offset_io + 0x58,
++                                &cpu->cpu_reg2);
  }
  
- void avr_cpu_do_interrupt(CPUState *cs)
+ static void avr_cpu_set_int(void *opaque, int irq, int level)
 -- 
 2.43.0
 
