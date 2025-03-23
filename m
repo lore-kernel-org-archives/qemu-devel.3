@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60705C28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854DBC28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twPGX-0005pz-A6; Sun, 23 Mar 2025 13:37:41 -0400
+	id 1twPGb-0005sa-C4; Sun, 23 Mar 2025 13:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPGV-0005oR-BY
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:39 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1twPGY-0005r7-MK
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:42 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPGT-0002tR-Fl
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:39 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3018f827c9bso4898054a91.0
- for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:37:37 -0700 (PDT)
+ id 1twPGW-0002un-UE
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:42 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-223fd89d036so64755695ad.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742751456; x=1743356256; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742751459; x=1743356259; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ntv50KlP9/+Qy60eqjdM/5mfxACbQs3UzEcbO1R0LI0=;
- b=bDI58YWBXyeYvRCmsxbe2nHCfsK/ED2AI8YMSo+XispEf6bdMQRQx4TnQbti5b+3u1
- yZRSS3DL/4FzS+Uo1J6/H3di2iiSK5coDRqDZnaipAgSvudPsqX/AS9cfvPvp4otewbG
- VDzJ8X+rcILbD/YgTzktM+ry2FC85kc4uNpnz8Vt3Ib1FljuplCPb7hUCVO37jE5mRgL
- dBifwnL5tfk5+x1vstKaSyyoTGIEWsBlePMB5WmP7aailJyor0yt/tr+kbFKMTgkeRqA
- gezLmoSvb7BFdPOOmPxXW5tO6T5ewXLELB5ziNSi8cCRgfjAfLZUX5bKupAhCfIE2q3+
- 79Pg==
+ bh=oGR007VvjFffVl8PvgR+T2VNJf200xt2PbQ7cdgNESw=;
+ b=Two8K1g2LVyOQZ9cFcyeIpnd33HDl1qspvQAKTT+g1U6STwdo667rdd4D9CQdia5by
+ qp4SA1YIV8og6+M+24W02JJFCv2jpZvJkRbtgDuqfdGIsBnHvLGT7s5KZp/gJLHhmv6b
+ xrPgvPQ9jJ5udjB9clW1PaGbWz/Ubg55kU60KX4NbyumJvEGqlhaHCFWQBJpX8ttdioo
+ HESQ+5ZN/doTGHWkRLN0N2sZjNFmYucAqnhbKpgRrFSvND/OQ8YzPFaHxGLkDkVorQ5/
+ rxXOjtkONmQ1paJ7ZSGT9h4oZMqI1vmhd5Tr9R2YtvHXhEpXTnPjq8qTshoGeSmlTwfR
+ l8mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742751456; x=1743356256;
+ d=1e100.net; s=20230601; t=1742751459; x=1743356259;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ntv50KlP9/+Qy60eqjdM/5mfxACbQs3UzEcbO1R0LI0=;
- b=gfse2N1xbF2GDHynQOSbD5CfZXDq1MaJDW3DpYJrcObL3zBLW5w0dbciztHKhSrJmh
- 7pKmKBCP0R2KzdYfUhY1w8GZiDL9ZA9bhW5luoqGaotqMxP7MF/2UH6d2yAyR+pPC08J
- NvcHfQypHiAt0CbNs0H71uEP3V2prwbrdcfqGlRvUJ1lE9kKV0F4Jigopdlek1WKIumI
- Kj+y+JboSceeF+I8PEh4Bow+oF/qBtaH4A0UkgAkR0zYxqysM9kCGi9G0GQ2CvrfJdDT
- +8nLF9/WnSZCvdY8vrjp/DkUlbh2Kue+ARQz9Cqx3U3azE06bWuvWoQEiXhWUtPA27zI
- olgQ==
-X-Gm-Message-State: AOJu0YxfGzpyN/bzoHD4xoXXeHE0CxPnTQK/P0mqi0Q+DWS5eNUOPil+
- g4UveD0A1nQhv6LMCiIewLKmj9REgqrDen+GbmaJGPEqxL8SG8Q6nEd1HZOpof76prUxSNYNAiR
- /
-X-Gm-Gg: ASbGnct6xduoS2/tQVKqfV8Y0Ii+fK48pIRZT9ssZ7d9LWptwvE5ljkXE4+NqUJdJ74
- XTXMJG8vSAJtgXSTAQyNJzCy5rqfrAFe5yNmYsWP5Wlm4DCUokvQPfZWMsLy1WuMTsCKwBjxxen
- iHmnhnjo6SZzNFxr86HQpAjWKO570SoHzLlKbHfd7yL4NOXHBp9ni0warNngaI5G2kip+4vm9yR
- FV8jxSJgRB5P1z2p2is8JffohUlRtmOxhVJLm8hoHjjLV1L6lcaRQqTbwLzNSii6f4qQPfrYPXu
- OaEOythHlYGvjNA8VQzcOgsBRheouTPW74jvotxBJPdDITFg+vm1iS/1vjAP/UHNyXwpFdvSdBA
- Z
-X-Google-Smtp-Source: AGHT+IEfMSGxb6e/TcX2p3xWv4uWcpPjWdpgaOAXguMAGXxTkJuDR0y8hg3Q9T3bz0HKXyokwZYTXw==
-X-Received: by 2002:a17:90b:2743:b0:2ff:4a8d:74f8 with SMTP id
- 98e67ed59e1d1-3030fe721dfmr14669091a91.6.1742751455820; 
- Sun, 23 Mar 2025 10:37:35 -0700 (PDT)
+ bh=oGR007VvjFffVl8PvgR+T2VNJf200xt2PbQ7cdgNESw=;
+ b=XGjTYG/t6AW9f4X6p14a9+bsZlMIpmVB4vObdwjE5a2U9YmOzWbCYRBy/kjmoldBki
+ wWveg51Jr1knChyjN483BCUpGTkp3K7q20Ggh2LzELl0uSijaLyOtYO/4N9sStOxi3t5
+ pcNs4qVGzwjdw3Fo7uBpiz/ntkhOWzuM6IGhovCO7Xvy96UsM0He+tCBmo6MI7JlSOXw
+ 4vgBv2/Qr53J0u1h4Tb5rDo7lSpIZL/WJmDJjDAyPIsaoPrOO0YcI98AdqikSQVd7/dn
+ H5aB0r+xOz81ZOz8dslTIk7hLpeDaFu2Sb6UJpeOKH1sJJagJd7XTeeDPGpOvA3pXCyv
+ Vm0Q==
+X-Gm-Message-State: AOJu0YxCLRmAbBErV9OaANxkAoSEcjSkYerrPbu9n2hC89lB6IcKnuIo
+ mj5b0SiSmjDNvA81E6paRtYEC0f3xjX50Dr/LtgeNDCn6eFhGOkgens98KrJuYb5DtAOQe5q1a6
+ Q
+X-Gm-Gg: ASbGnct70Ri83uKc1LJEKB7wTbUfTV9NLefnDHkJYYQihxFdNXKOhqVnSAQe95vFGKg
+ C19FH5rAbw71FDB++qGx6boolEfLAPk7rYsmzVPNxTJIlzWpKqSI8qo8nbOIQHNcXupYXK9ic/o
+ 3JO/7/6Leh9gQo0wi4PHi4hLacBMVlDMLiDiswElx5uwDsK43+F/yCp9+fBW3L+hLNzyXzlN8p+
+ OznLCq2RDFt9crxi9viNWVfzXYL24Yb2NZpv7VB4o4hEUXMdcRTXrKXc0xxzQPLZoewDY/7RtTo
+ lOTpWry4eA5+pCLsfyNN44jS95dT+YE5M0HOiDo+nxKuu+6OodMInUhR+VSREMe8uCtNR8Vlb/w
+ H
+X-Google-Smtp-Source: AGHT+IHHx0nOVmHngDjuW981So2eTho/hEHIb4ep9xftdtoXyFfhar8ZUpbQmkUQtm6NonO0IxxAdQ==
+X-Received: by 2002:a17:902:f550:b0:224:26f2:97d6 with SMTP id
+ d9443c01a7336-22780db4699mr188214705ad.28.1742751459621; 
+ Sun, 23 Mar 2025 10:37:39 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22781209ff3sm54075165ad.257.2025.03.23.10.37.35
+ d9443c01a7336-22781209ff3sm54075165ad.257.2025.03.23.10.37.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Mar 2025 10:37:35 -0700 (PDT)
+ Sun, 23 Mar 2025 10:37:39 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mrolnik@gmail.com,
 	philmd@linaro.org,
 	pierrick.bouvier@linaro.org
-Subject: [PATCH 06/17] target/avr: Use cpu_stb_mmuidx_ra in helper_fullwr
-Date: Sun, 23 Mar 2025 10:37:18 -0700
-Message-ID: <20250323173730.3213964-7-richard.henderson@linaro.org>
+Subject: [PATCH 11/17] target/avr: Implement CPUState.memory_rw_debug
+Date: Sun, 23 Mar 2025 10:37:23 -0700
+Message-ID: <20250323173730.3213964-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250323173730.3213964-1-richard.henderson@linaro.org>
 References: <20250323173730.3213964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,52 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid direct use of address_space_memory.
-Make use of the softmmu cache of the i/o page.
+Prepare for offset_io being non-zero when accessing from gdb.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/avr/helper.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ target/avr/cpu.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index df7e2109d4..7cfd3d1093 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -23,10 +23,10 @@
- #include "qemu/error-report.h"
- #include "cpu.h"
- #include "accel/tcg/cpu-ops.h"
-+#include "accel/tcg/getpc.h"
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/cpu_ldst.h"
--#include "exec/address-spaces.h"
- #include "exec/helper-proto.h"
- 
- bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-@@ -67,6 +67,11 @@ bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-     return false;
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index 080f6f30d3..e4011004b4 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -68,6 +68,35 @@ static void avr_restore_state_to_opc(CPUState *cs,
+     cpu_env(cs)->pc_w = data[0];
  }
  
-+static void do_stb(CPUAVRState *env, uint32_t addr, uint8_t data, uintptr_t ra)
++static int avr_memory_rw_debug(CPUState *cpu, vaddr addr,
++                               uint8_t *buf, size_t len, bool is_write)
 +{
-+    cpu_stb_mmuidx_ra(env, addr, data, MMU_DATA_IDX, ra);
++    if (addr < OFFSET_DATA) {
++        size_t len_code;
++        int ret;
++
++        if (addr + len <= OFFSET_DATA) {
++            return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
++        }
++
++        len_code = addr + len - OFFSET_DATA;
++        ret = cpu_memory_rw_debug(cpu, addr, buf, len_code, is_write);
++        if (ret != 0) {
++            return ret;
++        }
++        addr = OFFSET_DATA;
++        len -= len_code;
++    }
++
++    /*
++     * Data is biased such that SRAM begins at TARGET_PAGE_SIZE,
++     * and I/O is immediately prior.  This leave a hole between
++     * OFFSET_DATA and the relative start of the address space.
++     */
++    addr += env_archcpu(cpu_env(cpu))->offset_io;
++    return cpu_memory_rw_debug(cpu, addr, buf, len, is_write);
 +}
 +
- void avr_cpu_do_interrupt(CPUState *cs)
+ static void avr_cpu_reset_hold(Object *obj, ResetType type)
  {
-     CPUAVRState *env = cpu_env(cs);
-@@ -311,8 +316,7 @@ void helper_fullwr(CPUAVRState *env, uint32_t data, uint32_t addr)
-         break;
- 
-     default:
--        address_space_stb(&address_space_memory, OFFSET_DATA + addr, data,
--                          MEMTXATTRS_UNSPECIFIED, NULL);
-+        do_stb(env, addr, data, GETPC());
-         break;
-     }
+     CPUState *cs = CPU(obj);
+@@ -262,6 +291,7 @@ static void avr_cpu_class_init(ObjectClass *oc, void *data)
+     cc->gdb_write_register = avr_cpu_gdb_write_register;
+     cc->gdb_adjust_breakpoint = avr_cpu_gdb_adjust_breakpoint;
+     cc->gdb_core_xml_file = "avr-cpu.xml";
++    cc->memory_rw_debug = avr_memory_rw_debug;
+     cc->tcg_ops = &avr_tcg_ops;
  }
+ 
 -- 
 2.43.0
 
