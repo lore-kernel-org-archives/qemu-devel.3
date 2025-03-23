@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E13C36008
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D24DC28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twPGS-0005mr-KJ; Sun, 23 Mar 2025 13:37:36 -0400
+	id 1twPGY-0005qr-Au; Sun, 23 Mar 2025 13:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPGQ-0005mc-F7
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:34 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1twPGV-0005p0-NY
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:39 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPGO-0002sR-NW
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:34 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2254e0b4b79so50947805ad.2
- for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:37:32 -0700 (PDT)
+ id 1twPGU-0002tf-2W
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:37:39 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22398e09e39so70809405ad.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742751451; x=1743356251; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9BW2dAXVXr0ySSoXg992bbAtIdIuEdH3iISj3g2uQDA=;
- b=PCjRxY2ScYX9t7qrLF3YI6TxHTDwN2JlgSDLoZ/cRWmq+aTBAaN73gxa+PlGQ5YZ5V
- 2WISIzzIRPYYBkONNJvUgIq5t4FGCfeKLiHUbrKbVpz2d2qAA0kz4qauDmLPe/RCP+jN
- MQWal5P2mtp4xDm135YMkYQoQEVNRUAt45OP1b+M15PMBSc9pIDhDzXhORQMwoEvdRyc
- 41OJNVVBu02cb8FX3hsvJT7L6EDZtzHVBqhHjisJbeFYWolG8JS24ahUPpu6xXmCbdXk
- hm3BOrGjEWtT+nTIrMikxJ+nHSi0PZLjbXEUp0f6EiAVeBhQi24oXNmcMFb2Qp37fqKS
- FRxQ==
+ d=linaro.org; s=google; t=1742751456; x=1743356256; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kuaWE3TjFjqiJm1M4aj1btd/FSbEJW/CWHj5+bscQKY=;
+ b=XA7+3wFzxC1EOFvPNPWaoT7fPdib5G9Hz0r3gTTyaPVp75FhFx3PK8l6FaQqywFZjQ
+ 80FhYeQcpxjP+QGCaJ3FPOkLJjlZ4FAq+0jS0Wn0JWZQUmAVAMLOWWdyhXrqy0y6767C
+ 3OnPbl7xaARpw1lkxOgiAJ3awIJxrUoaJWV/Z2221xYJfXJViu6KSQYFR8M8FznAYb4x
+ PxnvJFV1Cp1JLTsva+pAgPgp0K3lpc8fv0gq88C9yxlHaKpEF7ptte7it7IRwlcJKfCO
+ KgviSL5ewJjNpC9FG1bylF8ik7YtNO9pgXTjVQa50Go5K13zx8GCow5Sm2LgX99p1ezX
+ iZdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742751451; x=1743356251;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9BW2dAXVXr0ySSoXg992bbAtIdIuEdH3iISj3g2uQDA=;
- b=iUogVYNN+Q/1y+tmKb5WIMSClRoA6/4Mm+idxoYkzm590vawxtdxn2GxuoC+zaYuoC
- 25kKZyFcisepLKS0rPYZTYBjAfDkoe6UkiVfVUUtNnU4z+XQjRqa4PZyRpO4MTejBShg
- dbN8GSf24epIJlgU+aM9ZSsusp75i8qLife9IdAZoZSDIjqJ8+w6FAv2CiiBIDL5GIe7
- zIPNhrb3A611OQDuDIbbA5FVUnTML1icbL+4UsyOltVZ4oKYQZuBkSkR/JBGi+us2bXW
- zZUuxPmGSQ9XivRXAg0qdte6nIqYh5OBbIH812q5FPImlVWgBBkHr/p/lRwq28hyUl3P
- wgIg==
-X-Gm-Message-State: AOJu0YyR42JHxdmNuuutpQkBUzY0hsRpLRQBZCLoELMJrN12dfotWmcC
- AAab9d1Nr6LsV6CjePA61BOTA3TPUyAvWB0DG7SDbZhnhe/TF7hkw2cYwjpkbLzPJldsxdD1Dtr
- S
-X-Gm-Gg: ASbGnctPe0E4X9OGtT/FyK5hrNztkSTYHrJAMgeHO2QOrOmUiPWOZKt1/Dc0AmKtNfs
- KBYnOJhT4RzTzzL5Jjc0TAadaug71dQYuja+N87IjHjt6cIobsGFTTHNMDDLCeGgPEPAmLE30aV
- 6kT67pp3sej1HGE2F8LNTeqUfX9SJvW26zikHkPcXqk7GnTNzae0/vg2LPqTwNjpEsNMDxid3O0
- ZdTqK+5mcD/n88Gt0FalmGHjGUS28hY8U7x7SqUWmEdl9cKTiIdbfapHAC6NF+FeFwHxfvoAqVB
- bCvpNIH6QkuabJMldWvU0hn+BNVpPc7lOraZlA/IAPxEVpzf+W/w8mo+37RikC1wwJ8xBawHXp/
- fE/0XKo8B2lg=
-X-Google-Smtp-Source: AGHT+IE7rpc++sC9o1GBacCIDCGtbP5z1DzrC/EBzxiaZmHJ5Ik9CDM92tbHoMJmq0opXDcI7mSNKw==
-X-Received: by 2002:a17:902:d48d:b0:220:f59b:6e6 with SMTP id
- d9443c01a7336-22780c54d63mr128993865ad.8.1742751451167; 
- Sun, 23 Mar 2025 10:37:31 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742751456; x=1743356256;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kuaWE3TjFjqiJm1M4aj1btd/FSbEJW/CWHj5+bscQKY=;
+ b=CtmngcuAdpcK/0KvoBtE/DO0/WEjd5e3M+iqdH5xRQAqPWiQ3EQQRKun71CTN1ANe8
+ hB2pD2kUWky8n5qdNnZj/URfIjS/XsLqbbhLHG2o2hr8Lz76bR7hU0vCpm92l0Bwiiod
+ qr7Z9I7N4jc3jWXxkx2pcPavbucI1KF0Xrs783wvIpjwEOT3W70C1JqH/eLItYzDaV8e
+ TeSL+q27GpGdcAGz8BlDaBzX/QfWECgo4dulzrlNR/BcaWr1l0yRFVctj7KQjY0WcsZl
+ uniIZMkL86JxBuiXPTmR0F6IjrY6SuZ26fsMi1ztgIIqX9hqPeKWbs/G0kl7VRDV1YSG
+ P1Kw==
+X-Gm-Message-State: AOJu0Yw3Wu82VU98gov/ASmnGmYK8Qac9HxMZV5NOe0ZeF+IYxAb3YwE
+ kISse1uJ7kiwdTYnVcUtRf+rMdHPsGqzXs6SFaWZdQBkALjXiib2EtZ3S4wjE4y8fcel6XRM7IB
+ m
+X-Gm-Gg: ASbGncs/BClFXct3yjxPMTkO3OR53W+juDecpBJD/Anqo/d6cTcwAw2rEbvdIe72ogG
+ X80POGeO1aTQ+CW4d6hJH+PYIv8y727D0hDb8OpidYS2PwFNiJIjJNi7+C6CV2N7bmzIjTTCA93
+ gyZ1xy8zyFT4lNPYc00jf6XkXTu9+pUqWd8Va7vzquFEY1LuMBAEudHbITa6lpoLbNtR9fmWtEI
+ iqgnklQEWdg9RwLzy2e+GqBKoS7LWnct7ExH0il5Lu2XsXd9jrbyiKPMgMeJA2Epgq35X3RRMCs
+ Rm6LjOCjYLdr3CGdVN4Lf0Swel+H7H3mczHMzcUu74FZ2p/68DHmjGsIPD16ECN8MXqu4km7v58
+ b
+X-Google-Smtp-Source: AGHT+IEcRuGLq0u72PQX58NJUYaF6jpBPR3IJ3YCsvzaFOx6+X5tZAlByxXis2tsWh8Gba7zgiHZyA==
+X-Received: by 2002:a17:902:ecd0:b0:224:1eab:97b5 with SMTP id
+ d9443c01a7336-22780c529e9mr144510455ad.1.1742751456529; 
+ Sun, 23 Mar 2025 10:37:36 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22781209ff3sm54075165ad.257.2025.03.23.10.37.30
+ d9443c01a7336-22781209ff3sm54075165ad.257.2025.03.23.10.37.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Mar 2025 10:37:30 -0700 (PDT)
+ Sun, 23 Mar 2025 10:37:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mrolnik@gmail.com,
 	philmd@linaro.org,
 	pierrick.bouvier@linaro.org
-Subject: [PATCH 00/17] target/avr: Increase page size
-Date: Sun, 23 Mar 2025 10:37:12 -0700
-Message-ID: <20250323173730.3213964-1-richard.henderson@linaro.org>
+Subject: [PATCH 07/17] target/avr: Use do_stb in avr_cpu_do_interrupt
+Date: Sun, 23 Mar 2025 10:37:19 -0700
+Message-ID: <20250323173730.3213964-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250323173730.3213964-1-richard.henderson@linaro.org>
+References: <20250323173730.3213964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,65 +102,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For single-binary, we would really like to have a common
-TARGET_PAGE_BITS_MIN.  A value of 10 will suffice for armv4
-and will just fit required page flags and alignment.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/avr/helper.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-AVR's use of TARGET_PAGE_BITS == 8 is unfortunate, and is due to
-having memory mapped i/o in the first 256 or 512 bytes and sram
-starting immediately afterward -- the softmmu page table mapping
-really doesn't like mixed i/o and sram on the same page.
-
-My solution is to bias the entire AVR address space up in the
-QEMU address space.  This places sram at the start of the second
-QEMU page, and the i/o immediately beforehand, at the end of
-the first QEMU page.
-
-Once the bias exists, we can choose any value we like.
-Use this to select a larger page size, based on the size of sram.
-This minimizes the number of pages required to span flash and sram.
-
-There are also two bugs fixed in the avr disassembler.
-
-
-r~
-
-
-Richard Henderson (17):
-  hw/core/cpu: Use size_t for memory_rw_debug len argument
-  target/avr: Fix buffer read in avr_print_insn
-  target/avr: Improve decode of LDS, STS
-  target/avr: Remove OFFSET_CPU_REGISTERS
-  target/avr: Move cpu register accesses into system memory
-  target/avr: Use cpu_stb_mmuidx_ra in helper_fullwr
-  target/avr: Use do_stb in avr_cpu_do_interrupt
-  target/avr: Add offset-io cpu property
-  target/avr: Introduce gen_data_{load,store}_raw
-  target/avr: Update cpu_sp after push and pop
-  target/avr: Implement CPUState.memory_rw_debug
-  target/avr: Handle offset_io in helper.c
-  target/avr: Handle offset_io in avr_cpu_realizefn
-  hw/avr: Set offset_io and increase page size to 1k
-  hw/avr: Pass mcu_type to class_base_init via .class_data
-  hw/avr: Move AtmegaMcuClass to atmega.h
-  target/avr: Enable TARGET_PAGE_BITS_VARY
-
- hw/avr/atmega.h           |  20 +++
- include/hw/core/cpu.h     |   2 +-
- target/avr/cpu-param.h    |  13 +-
- target/avr/cpu.h          |  11 +-
- target/avr/helper.h       |   3 -
- target/sparc/cpu.h        |   2 +-
- hw/avr/arduino.c          |  31 ++++-
- hw/avr/atmega.c           |  76 ++++++-----
- target/avr/cpu.c          |  49 +++++++
- target/avr/disas.c        |  21 ++-
- target/avr/helper.c       | 263 +++++++++++++++++---------------------
- target/avr/translate.c    | 106 +++++++++------
- target/sparc/mmu_helper.c |   2 +-
- target/avr/insn.decode    |   7 +-
- 14 files changed, 346 insertions(+), 260 deletions(-)
-
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index 7cfd3d1093..9608e59584 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -88,14 +88,14 @@ void avr_cpu_do_interrupt(CPUState *cs)
+     }
+ 
+     if (avr_feature(env, AVR_FEATURE_3_BYTE_PC)) {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
+-        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
+-        cpu_stb_data(env, env->sp--, (ret & 0xff0000) >> 16);
++        do_stb(env, env->sp--, ret, 0);
++        do_stb(env, env->sp--, ret >> 8, 0);
++        do_stb(env, env->sp--, ret >> 16, 0);
+     } else if (avr_feature(env, AVR_FEATURE_2_BYTE_PC)) {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
+-        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
++        do_stb(env, env->sp--, ret, 0);
++        do_stb(env, env->sp--, ret >> 8, 0);
+     } else {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
++        do_stb(env, env->sp--, ret, 0);
+     }
+ 
+     env->pc_w = base + vector * size;
 -- 
 2.43.0
 
