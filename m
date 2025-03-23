@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E6CC28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 18:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1137C28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 18:37:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twPkl-0005IN-TH; Sun, 23 Mar 2025 14:08:55 -0400
+	id 1twQBK-0002T5-4v; Sun, 23 Mar 2025 14:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPkk-0005I9-Db
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 14:08:54 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1twQBH-0002Ry-FH
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 14:36:19 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twPki-00078s-Hz
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 14:08:54 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2260c915749so46160265ad.3
- for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 11:08:52 -0700 (PDT)
+ id 1twQBF-0002MI-KQ
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 14:36:19 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-227a8cdd241so13571435ad.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 11:36:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742753331; x=1743358131; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742754975; x=1743359775; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=HrGwYODeIkBtzkoNaVd3VqF8jOeE271ZHG8rl9Wp6aQ=;
- b=QCKI7PqIN/50c0obu1YEYWs2ZDKYsSryxd48+44/t9liT40Yl788ArpTSD5frSLZhf
- cMl5YWGW77tZdZbE5wNjYbCxApfPkCK2TCGosWPDXwPVTdXfWB/sj4w10f5uHeJYr7e/
- wyOvIR72aoooc7/+JwitSY8OCw9TF6Qqi9Td9+Ot76uD86xUYvl/7NAQxVykn+B6ViCO
- IsYEpNjIklWx8MXqcvyA/51++QUtRD6494SOeUQhVWCZSapLbFjj58SX3uViOFZmr/Jc
- BsLZW85NNmDVLoKBiwptjWImoYodDUAJcwmnBm14/ojHdi8/jPuSryCHwVEEGTSd5rM8
- CsuQ==
+ bh=G2qrNbJRAZbpMl4Sn6+sWDBz6wTnV27zw+SxxTWiOV8=;
+ b=HbOnPdRqHQiaHjLvq3mmVLg1jdq/nMrwL+rL3XTbzQ2aB1B8oJ+LjtxaBDGNNFZWNP
+ xb0M0JcvZHZWYKzAfoZ99EuCic/p5OLWN6dzxWMKxCUmO0iDiCq4JmTxttSk7xHpOcH/
+ FHra2FQNa042z6UUDAg/DOqzpZLMy5AZ8kcD/YntbJ8K46BPqCRrUIkxCqIdcCzwsSxI
+ jK98YksHrNGMnArH6qB4O7ejT87cx5aOEa1F1v66fwtgn2AJushU6/HvORZxFUZZzw+S
+ KgMSFvN+epoxd+K6yBAobZ438AQSUN7gm/LTrIyve2IneEqrgs8KJEr98XRG8Uka9e4w
+ 78pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742753331; x=1743358131;
+ d=1e100.net; s=20230601; t=1742754975; x=1743359775;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HrGwYODeIkBtzkoNaVd3VqF8jOeE271ZHG8rl9Wp6aQ=;
- b=A0XQ3ceaBN+eOxG5D5biPHvNNuTpYRMou7c5gAWlbWInpOkk7gpUjSIIqX8bLoXu4+
- 7ksYn4PhIIZDi2/TcOtHvq4QnjI4/E0rc1jByQvuwBapxuaq738PSy5YWSEu2PK2b1sX
- CBUwPEN7fRwihxV9fEMQPuqOUzCa5nkbI1mrxMecjfNPH5S5RvdehCVwevaW5jGm/wIl
- qf8I0gZx2v9zeq9DTM4wSb8C5IxCUG0t5YAjTx6va7mHG/uKNiyjrCQe+IsKlqTY+IAE
- U3sATZUbGKpj7gOYHLS3S/2HEXgsmNBxUOsXaTFNRPIB/SIste1NznBzSjFGmwcbLmOY
- gf0A==
+ bh=G2qrNbJRAZbpMl4Sn6+sWDBz6wTnV27zw+SxxTWiOV8=;
+ b=ofHnejGxVSyw+5/wJvd946oOCpVOpcFShEkOmW/yfOuFxw5EsrFTCDfz+pvPixJndQ
+ rbVxHTrYT380uiYeV+kqkmnAgqejUNvuz34i7cP6o5hku2xN2BTALoHULLGwDxGSAtEE
+ wGJuhlfaVGUSpPaMLIGS0fwbabrTbD0FgoYr+KOHFgW8ro/mFo7pK1gWToJYQwJ+wkxz
+ SF5TF1oxsIt/+e38378moAuQJiypQnWUEUBewbyeuyjj0x+pevFrqS8/gYpLh+SSAr2o
+ pR5DgoI58wy1+ROqfLvvUxxLWnuGCoFHpdNvo5RT4UEsLBl1FLdj/Te6li3gE+wxFAyQ
+ zceg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1Mnd5c5+Komy+KiRA4nT1HHc0K5DkK+W2s8DkdnM3B7JzF2pNvC6NL332zU0XpKKD9xAmXO2RmRAz@nongnu.org
-X-Gm-Message-State: AOJu0Yz+imrq7Q+Zq6AyrZD7Hb/mxbI55R0UdU9dzNCqfTaTdk1/w7bP
- V8dRkWHeSEZPZ8CKGClQSL2SsE1xItRGe4pyZkCr1G7zsTxLEwdGNZ7VZbx/oJ4=
-X-Gm-Gg: ASbGncshupXhe9mfF9i0BW34UesRsUmDkN5UWgn2LB192njcUn+8PNEsnt4Takf6Ne0
- v31lYTJo941ghFH75Pc8RD9CZRiIiqAp0XwbvTxEcnc2XeuaIjTUZR8iuNymUeLW2VqdCtagEGi
- eVIhDm2kMPpSuYKC/5nMLZvCUSW9K+G1J9xuXAkySTfSkz8K38CAk91gRfyio1Vmcqf6iRY1QWj
- 9iZIzj5OCU/nKYGAw7TMgmce2D+beHTpPur+lZX2xcIsmVoRcmhGOSoVNsMqpaqgAJFhqcM9Jil
- dp0+wLPC37tko/yr/h9zbFg9wN1HVwwI49a6fOfZyebC/VqSqOcMBTiMvGXHpZK7knNRteRTZjF
- NA5YtsBQC
-X-Google-Smtp-Source: AGHT+IHff8iT9LuyVx94jYz3N8YABafjggeoZZ2M3b40lHqBZCs+N3YCMHbmQMnexrv0c0Wu3TfclQ==
-X-Received: by 2002:a17:902:f548:b0:224:a74:28cd with SMTP id
- d9443c01a7336-22780dacae2mr130271905ad.31.1742753330918; 
- Sun, 23 Mar 2025 11:08:50 -0700 (PDT)
+ AJvYcCXlrqeScfa32FxJgR7Th4HL5x2Uv2QxEZjSIKYQF8xdXQv2OEMh0/qWAxtePan7RYmRm4xcX/iNutuN@nongnu.org
+X-Gm-Message-State: AOJu0Yw8TaCt+q5moWuGMsnbUk3O//q8dF5nGwK0E4h8NR2ZGTFM1bKx
+ tJpkHhy4ig87jHbWIUA3lCNoX/lVqijQVLKlnW3sAAOvEG7mGPaYiMUokNnb7GQ=
+X-Gm-Gg: ASbGncuTXKmdqon/bNzpTUPNO26T8a2WNZcQgIXl3zfOx6dYTM30kGaS72BThWZg25W
+ IeVIejMTVd/x+rRmrLU2yoBUaSy0juZQpOaca4CeTX/nJDSQcu771HifW/DBggxMi1ieeocSVCy
+ wKjwuiexwZOp1xujZNB7/suAjVu2Rvk8ztN/rKiCFJhDGEM++SxSW7c/oEyGvFuz4Sj7ER7SP5X
+ +U0jkJzvW4evAW98SBfPDDRIchRHr5pH3dQQ53vi9NughgUgbEFAFgQzJEcSDu/9oQGjqP8Y9Co
+ z0npUdiSeUfSL1ZRCXj2khhAzot0oWT5YBLnAsjjQnW4odkK3vtyruhtvIxZ47kQ/jAR0YmLjH7
+ /ZM4WJv7mxBxREyzxw3s=
+X-Google-Smtp-Source: AGHT+IGZCix34SJ5t5o+/qKB79zQzlSgSdVLuaDjingzP/d+oQl5caa/q/K45jeqyipJyCJdbX/xmg==
+X-Received: by 2002:a17:903:8cd:b0:21f:35fd:1b7b with SMTP id
+ d9443c01a7336-22780e1a303mr179076525ad.50.1742754975064; 
+ Sun, 23 Mar 2025 11:36:15 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f3bb2fsm54507495ad.15.2025.03.23.11.08.50
+ d9443c01a7336-227811c156dsm54528625ad.117.2025.03.23.11.36.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Mar 2025 11:08:50 -0700 (PDT)
-Message-ID: <2650b68f-e705-4994-9791-0bf8b2e01d74@linaro.org>
-Date: Sun, 23 Mar 2025 11:08:49 -0700
+ Sun, 23 Mar 2025 11:36:14 -0700 (PDT)
+Message-ID: <9e31c172-0474-4254-8fe7-96eaa517ddac@linaro.org>
+Date: Sun, 23 Mar 2025 11:36:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 1/4] target/riscv: Restrict RV128 MTTCG check on
- system emulation
+Subject: Re: [PATCH-for-10.1 2/4] tcg: Move qemu_tcg_mttcg_enabled() to
+ 'system/tcg.h'
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250321155925.96626-1-philmd@linaro.org>
- <20250321155925.96626-2-philmd@linaro.org>
+ <20250321155925.96626-3-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250321155925.96626-2-philmd@linaro.org>
+In-Reply-To: <20250321155925.96626-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,15 +109,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/21/25 08:59, Philippe Mathieu-Daudé wrote:
-> Multi-threaded TCG only concerns system emulation.
+> qemu_tcg_mttcg_enabled() is specific to 1/ TCG and
+> 2/ system emulation. Move the prototype declaration
+> to "system/tcg.h", reducing 'mttcg_enabled' variable
+> scope.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/core/cpu.h      |  9 ---------
+>   include/system/tcg.h       |  8 ++++++++
+>   accel/tcg/tcg-all.c        | 11 ++++++++++-
+>   target/riscv/tcg/tcg-cpu.c |  1 +
+>   tcg/region.c               |  4 +++-
+>   5 files changed, 22 insertions(+), 11 deletions(-)
+> 
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 5d11d26556a..54570d21aea 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -597,15 +597,6 @@ extern CPUTailQ cpus_queue;
+>   
+>   extern __thread CPUState *current_cpu;
+>   
+> -/**
+> - * qemu_tcg_mttcg_enabled:
+> - * Check whether we are running MultiThread TCG or not.
+> - *
+> - * Returns: %true if we are in MTTCG mode %false otherwise.
+> - */
+> -extern bool mttcg_enabled;
+> -#define qemu_tcg_mttcg_enabled() (mttcg_enabled)
+> -
+>   /**
+>    * cpu_paging_enabled:
+>    * @cpu: The CPU whose state is to be inspected.
+> diff --git a/include/system/tcg.h b/include/system/tcg.h
+> index 73229648c63..7622dcea302 100644
+> --- a/include/system/tcg.h
+> +++ b/include/system/tcg.h
+> @@ -17,4 +17,12 @@ extern bool tcg_allowed;
+>   #define tcg_enabled() 0
+>   #endif
+>   
+> +/**
+> + * qemu_tcg_mttcg_enabled:
+> + * Check whether we are running MultiThread TCG or not.
+> + *
+> + * Returns: %true if we are in MTTCG mode %false otherwise.
+> + */
+> +bool qemu_tcg_mttcg_enabled(void);
+> +
+>   #endif
+> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+> index cb632cc8cc7..d75ecf531b6 100644
+> --- a/accel/tcg/tcg-all.c
+> +++ b/accel/tcg/tcg-all.c
+> @@ -38,6 +38,7 @@
+>   #include "hw/qdev-core.h"
+>   #else
+>   #include "hw/boards.h"
+> +#include "system/tcg.h"
+>   #endif
+>   #include "internal-common.h"
+>   #include "cpu-param.h"
+> @@ -58,6 +59,15 @@ typedef struct TCGState TCGState;
+>   DECLARE_INSTANCE_CHECKER(TCGState, TCG_STATE,
+>                            TYPE_TCG_ACCEL)
+>   
+> +static bool mttcg_enabled;
+> +
+> +#ifndef CONFIG_USER_ONLY
+> +bool qemu_tcg_mttcg_enabled(void)
+> +{
+> +    return mttcg_enabled;
+> +}
+> +#endif
 
-That's not really true.  User emulation simply has no option to
-run in a single-threaded context.
-
-I really don't think we should allow RV128 in user-mode at all.
-Certainly not until there's a kernel abi for it.
+It would appear (and it makes sense) that mttcg_enabled is only set for user-mode.  I 
+think you should be conditionalizing the variable for system mode as well.
 
 
 r~
-
 
