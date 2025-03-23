@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F19EC28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 06:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA9AC28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 08:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twEus-0001rz-2y; Sun, 23 Mar 2025 02:34:38 -0400
+	id 1twGK1-0007iJ-Du; Sun, 23 Mar 2025 04:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hemanshu.khilari.foss@gmail.com>)
- id 1twEuq-0001rf-QK; Sun, 23 Mar 2025 02:34:36 -0400
-Received: from mail-pj1-x1042.google.com ([2607:f8b0:4864:20::1042])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hemanshu.khilari.foss@gmail.com>)
- id 1twEup-0000TQ-5s; Sun, 23 Mar 2025 02:34:36 -0400
-Received: by mail-pj1-x1042.google.com with SMTP id
- 98e67ed59e1d1-2ff85fec403so9063287a91.1; 
- Sat, 22 Mar 2025 23:34:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742711672; x=1743316472; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=WwqhSpGVpYgAHl7lNT8uSfGBwD38nmoAMNw86OtCg9g=;
- b=BgRs6nOW8Fw9q8pkGPG7UIEsjaXt0SsBevUzt2g5IuRDFra2pJROO4QY9CkJcRFpki
- jNzcN9kIj6t+T6xSq3BVlLUK9nYQMz47qOK+gdLk2yFuzCILaOoqbJiRPs2T13cl/d8e
- aeCRoD6F3GtqcgVbcsibNPx0Bj4j+w1sIuVQDM/naHZUPhZv/set7ELUsEoHtvJdieHq
- bohLqrT0Mcf0mSyB2Hp+Ha9VZBq4q883f+uxsM08qhI08e0N0Kqcja5JPAuRgzwwC9v3
- AUOGKCYyHzLCIStk+/S2zCrxUHwEvmiS70pO+V7ghgV2rsw/M51DOwfmAXen+4mL2npp
- d8rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742711672; x=1743316472;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WwqhSpGVpYgAHl7lNT8uSfGBwD38nmoAMNw86OtCg9g=;
- b=ktu4RFQ6ADmItPycdo9CMY6X5gLDWBPCvEst23lQ24Bxtcks3jZ0i63ccRR5mv6UZk
- 5jjJpTUGVLQ0PC+8jKhJKWYKCjxS5XuiGgyCgNZhtYI3pcaqa1m3ZK2W1iOki1vAqr30
- jBC+wim+RC5E7wiDsVZ5YnGSSHH+lVOKqaGobALWBaP2InZZpH2LS5kJoiwNkZUZIPiP
- NcprhIkSro2N/ZtUM/Fp4UNaUB996QhQPGOColxtd+P13C80sx9P+6sCy3D0+hAiW/5i
- KiUgDjriAXkAqGGzppMDKxnQQ41iQMfyu/d5Wje/hfCVMu1D7w531hfWgSDOQFl81OKt
- Fsbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWgd7mGjx3Zok05oM10VyQjt6kMt+AHTRQkh0k7UuqKs2FtR9khWlPm9sYGvXE8mD3i1IUHMcsjOLv9@nongnu.org
-X-Gm-Message-State: AOJu0Ywned+f3VhdrKbx9pFuC9isk96D1Odn6Rkd33Z6lXE5qXFEnMBc
- aWaBtejB9EOTSbGiu9fm4OmVoXxMpRxz3+rHqQJ4kQbhOL3KhtKM6r56JHtt/dI=
-X-Gm-Gg: ASbGncvEuiMLRcUvcIAF/z7oa1bYwxxFiLwbyQxQ7DTTVBL3OnEJZhvW8H/TJrO2zLI
- z3+kM/7c5az9UVks1sSTgZIbeYzek5eLi65TQQU5Ix8ooioNoKsR45uWVf626MhZyc14n+ulKlr
- 8Teb9OEzfY+3HF1O0DI3EWXDwjJx+WtxXNhYEK6uc88b17QZXHwJojSLOuBrFxCOU5i7AqmP/c3
- 1HJPZu3kH/9vmQsb49uvHO6HmaqaE2POUio4v2bTzVLmTID4v9x48ritBL2nLFasw0TLhE31Rcp
- d9MLmvOYtCTR4b0VXWCZoFXneRFY3ExOdxn93eCdPpw8/h2m8XmJOv0/bt4OiYX9p4zwEpW0/Q=
- =
-X-Google-Smtp-Source: AGHT+IF75habzKvnlrTfzjXbcAEEKspTjnUcAGOV0zqlweaAwSBRtbWeOBTt7N5eQlB8nCvBw4qBSg==
-X-Received: by 2002:a17:90b:2551:b0:2ee:9661:eafb with SMTP id
- 98e67ed59e1d1-3030f38e57dmr14853447a91.12.1742711672387; 
- Sat, 22 Mar 2025 23:34:32 -0700 (PDT)
-Received: from localhost.localdomain ([160.202.36.194])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-301bf635fc2sm9347937a91.46.2025.03.22.23.34.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 22 Mar 2025 23:34:31 -0700 (PDT)
-From: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Alistair.Francis@wdc.com, qemu-riscv@nongnu.org,
- "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
-Subject: [PATCH v3] docs/specs/riscv-iommu: Fixed broken link to external risv
- iommu document
-Date: Sun, 23 Mar 2025 12:04:00 +0530
-Message-ID: <20250323063404.13206-1-hemanshu.khilari.foss@gmail.com>
-X-Mailer: git-send-email 2.42.0
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1twGJz-0007i8-WD
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 04:04:40 -0400
+Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1twGJy-0006Vi-6c
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 04:04:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1742717079; x=1774253079;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=58LqqjA2NDxKt5Zx4AeK6Ham2POP/vmhVzEhbT7fq3g=;
+ b=Zpozm3ManKcJo5F1UB0Hcm8ihIlIV/t7JNEwNbr0oKpcuzuNwBhf/BvA
+ 40DGC34dzEfn8zPIFql8blNir/cnr1acYuN8y3UsVP5xAL3xm/Ckhc2cX
+ qn2DpNYOMzFizOiZZFOtD+4fDGqb2kglZBXU6suKGdAAFqfBhMAnnQvS0
+ fNtmkPbRaLzVRXxee4j2UcnS7cpqJz3z6WItKJuW3vSW9kXwq7mQumHeT
+ v596gO4flejNbqRPUCy4Qm2riZBMXnvdR/qH59Xzz9u5q4+BAqVe8pnS8
+ XzB0X3slanwruKMZpPu5DTIX/sSgoD6vfIoG760QziZ9WYrB8g+Yiu3QH w==;
+X-CSE-ConnectionGUID: /+gz4H6lRFaLO1P3bVl7Ww==
+X-CSE-MsgGUID: RlSaA5tAS6WmXHGG3fDWsw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11381"; a="193894444"
+X-IronPort-AV: E=Sophos;i="6.14,269,1736780400"; d="scan'208";a="193894444"
+Received: from unknown (HELO oym-r3.gw.nic.fujitsu.com) ([210.162.30.91])
+ by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Mar 2025 17:04:30 +0900
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id 848F8E9EE5
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 17:04:27 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 4480BD4F46
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 17:04:27 +0900 (JST)
+Received: from FNSTPC.g08.fujitsu.local (unknown [10.167.135.44])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id E6BF01A00A0;
+ Sun, 23 Mar 2025 16:04:25 +0800 (CST)
+To: Jonathan Cameron <jonathan.cameron@huawei.com>,
+	qemu-devel@nongnu.org
+Cc: Fan Ni <fan.ni@samsung.com>, linux-cxl@vger.kernel.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH] hw/pci-bridge/pci_expander_bridge: Fix HDM passthrough
+ condition
+Date: Sun, 23 Mar 2025 16:04:20 +0800
+Message-ID: <20250323080420.935930-1-lizhijian@fujitsu.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1042;
- envelope-from=hemanshu.khilari.foss@gmail.com; helo=mail-pj1-x1042.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=207.54.90.49; envelope-from=lizhijian@fujitsu.com;
+ helo=esa3.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,51 +83,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
+From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The links to riscv iommu specification document are incorrect. This patch
-updates all the said link to point to correct location.
+Reverse the logical condition for HDM passthrough support in
+pci_expander_bridge. This patch ensures the HDM passthrough condition
+is evaluated only when hdm_for_passthrough is set to true, aligning
+behavior with intended semantics and comments.
 
-Cc: qemu-riscv@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2808
-Signed-off-by: hemanshu.khilari.foss <hemanshu.khilari.foss@gmail.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 ---
- docs/specs/riscv-iommu.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
-index 000c7e1f57..991d376fdc 100644
---- a/docs/specs/riscv-iommu.rst
-+++ b/docs/specs/riscv-iommu.rst
-@@ -4,7 +4,7 @@ RISC-V IOMMU support for RISC-V machines
- ========================================
- 
- QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU spec
--version 1.0 `iommu1.0`_.
-+version 1.0 `iommu1.0.0`_.
- 
- The emulation includes a PCI reference device (riscv-iommu-pci) and a platform
- bus device (riscv-iommu-sys) that QEMU RISC-V boards can use.  The 'virt'
-@@ -14,7 +14,7 @@ riscv-iommu-pci reference device
- --------------------------------
- 
- This device implements the RISC-V IOMMU emulation as recommended by the section
--"Integrating an IOMMU as a PCIe device" of `iommu1.0`_: a PCI device with base
-+"Integrating an IOMMU as a PCIe device" of `iommu1.0.0`_: a PCI device with base
- class 08h, sub-class 06h and programming interface 00h.
- 
- As a reference device it doesn't implement anything outside of the specification,
-@@ -109,7 +109,7 @@ riscv-iommu options:
- - "s-stage": enabled
- - "g-stage": enabled
- 
--.. _iommu1.0: https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf
-+.. _iommu1.0.0: https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0.0/riscv-iommu.pdf
- 
- .. _linux-v8: https://lore.kernel.org/linux-riscv/cover.1718388908.git.tjeznach@rivosinc.com/
- 
+This change corrects what appears to be a previous mistake in logic
+regarding HDM passthrough conditions.
+---
+ hw/pci-bridge/pci_expander_bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 3396ab4bdd..25f8922d76 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -307,7 +307,7 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
+      * The CXL specification allows for host bridges with no HDM decoders
+      * if they only have a single root port.
+      */
+-    if (!PXB_CXL_DEV(dev)->hdm_for_passthrough) {
++    if (PXB_CXL_DEV(dev)->hdm_for_passthrough) {
+         dsp_count = pcie_count_ds_ports(hb->bus);
+     }
+     /* Initial reset will have 0 dsp so wait until > 0 */
 -- 
-2.42.0
+2.41.0
 
 
