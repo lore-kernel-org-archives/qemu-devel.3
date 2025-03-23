@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B8AC28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 22:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A59C28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 22:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twTdh-0001pU-Jv; Sun, 23 Mar 2025 18:17:53 -0400
+	id 1twTsO-0004S1-Np; Sun, 23 Mar 2025 18:33:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twTdg-0001pI-T2
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:17:52 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1twTsM-0004Rg-Fa
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:33:03 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twTde-0003dp-Ss
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:17:52 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-22401f4d35aso75051545ad.2
- for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 15:17:49 -0700 (PDT)
+ id 1twTsI-0005HT-GU
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 18:33:00 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-225df540edcso90840935ad.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 15:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742768268; x=1743373068; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742769175; x=1743373975; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SQ6hU4NEtsbcSc2GDiDAt8t8vZmN3Jr68Nr5mZDVvyg=;
- b=uTKp2TeJp0MBYjfOn6EwsvPBAC+ocbK32n30Z8jyherMx+pG6/hJKflHNs+t3HMcKQ
- Y0O3PyKai+DLJ4zz6LNtAQcYUxIlZDpGnii6LkPaR7q846XZL+ZfsVTFSn0RitugChJD
- AEcocpa43z1MSAdOCort6JUHpZg/5cpvEFqLi7tv2rxIZdFVzw/2wb1rSAvtgQX1BJ6c
- fGV/wPvO0sXHtXga2PJouu+aeo4A6MYg2BVbLga2nl0AAj9iayneLGhBCWAKpQQox6JC
- fG7FQxIuUnUhSu2U/Z/jt3hW513BjWvnhmCXpawCeB9c+rhhUktq/DBfp0SQ5uF3yXVa
- e4oA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1dfBOWhIK0yRflxjnnMQn7Hmw4i1SlwuQ+2tR2ldUdw=;
+ b=frhwQ/jwGKIB7+vLvZe7nIXcUXh0IZOk9Kvp8nJnoyQVWVkbRgH4Rt//f+Gspiq+BX
+ 8Oukr5EbyONz+2OuWTWymVe3MxdVVJqc5PGMCgg5StYcUZB9W9RdaGvDeKhL7pHvZ1UU
+ B9Kf/7VP8n2qXsdxRR8uZJOY7B/2oQ8HxOYwN8YY0M6wAuPo5DTvnxIHAA+qtpzpH+xZ
+ /VhjGFZ0H03lRcYUQBAlZvWUFws6LXRH/csJoef6FK0EZ0tOlx3/bf1XJE/M1hkjQGwa
+ 6pj9pQ+5rFrhsJVD0LUzwNwVow/B+rqaH0bq3hKY/y/8pj0tLlZtNv7Qz9cc+1YifZfR
+ 5eKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742768268; x=1743373068;
+ d=1e100.net; s=20230601; t=1742769175; x=1743373975;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SQ6hU4NEtsbcSc2GDiDAt8t8vZmN3Jr68Nr5mZDVvyg=;
- b=dZG0il06iUIj+KLQYbDf0mePMzPYnGI9B22lliULdEb2hTOtNqTotDCWoRpbpvsCS7
- pr7QgvYrMEw5cz4m4qUWOdOcpURMg/eIOQtRokcRxc9X/ejWD4gnS1xEf9zl/3rjmavq
- nOByBccjd6kRKw55bC2rrCQ4p5ouz7e2S7hBj/iMpHmOG5+3AkiA/lq8ITqIqS23O9Ra
- ktU87ewfGrOFkTJtFBbaLQYFRtNmjmqKi+us3ziKQPKrPdnD6oG7rBdrTS2QXgosUKYn
- YGzfxaXFuIfwE9f74UTYB+3yjk+c3F1LEY4PKOt5iUuExUG02mkGqob44fZrruvPSX8p
- AUgw==
-X-Gm-Message-State: AOJu0YwZAdtCZzN2D9+amaWTeBdi4hAsXE2Vs8t3KkgINmE4MgWwSZxl
- oPFPupGkNRH0taiexkAjUOBt8hoZ50O6BQuhXk3CtzmQF1lMI+Tr+moYvcUhl9w=
-X-Gm-Gg: ASbGncs/D2jmG3IuFFVMQN/e5/xbpai/Z2kRdGYenVGCShkYrmwSIcyfsj5ZJl+S1hN
- FHSI/khV4c1M9RqMI32OhhMc1dp10TuYQwCGUdGMQXhgZVdwMWwWLwziUTqzhJ/1dslcVuzKt1h
- 3fz5w7BTJZC+WOUqOFpLoRD0iW4LSjvp4LQdtRserBssuwyQkv9oTr0s/05Mzrx8/k6omdDRBdh
- kvdsrnSlrwTdfI2pM74jYepw0H4qOJfdM5xX5qb4cD6R0NIgZHPcV8srJ6tBoxNMk9Kq3o4bRaK
- eyJVvk36aQP8aaFldrsy5/MtHgDLmchCa/UTl/KAvYj5MbaPvHNRYHNsZx2z6NuLHaf/Q4Kfj9T
- b55ZK+ZuO
-X-Google-Smtp-Source: AGHT+IGzwWGs7xSdHSGQMvA3cKVS3OsdGl3aG1pHofT3kBuEddUqF8gp92LZMB2EX7l0uIPQfeQlrA==
-X-Received: by 2002:a05:6a00:ac4:b0:736:4c93:1bdf with SMTP id
- d2e1a72fcca58-73905a275famr15358527b3a.18.1742768268399; 
- Sun, 23 Mar 2025 15:17:48 -0700 (PDT)
+ bh=1dfBOWhIK0yRflxjnnMQn7Hmw4i1SlwuQ+2tR2ldUdw=;
+ b=LjdyPKGCBlkg+1a3aeKxpznqyCUTT3lN1EqKygSOgJ5yid9gGeX3zsWe80mtN3sj/h
+ f+VJVM2MrAa+/y6VXW3N1/FDbzt3pu+jhZrjIhBK/Rv/Nz9wa+dh3pMWAyx1IiV3whoI
+ mQGMGEjDwWFGA51Bh13wibvudZKKucfLdHl0DjoEU5LiloiKnlr/pt+4sbFSVtTs/Lnj
+ lXw3pEgsA3lbjMd6OP5BIt6euyPQKa9EPqhtN5PJJUooGFmQhQg4RvbTCu9Z/V2zOlkE
+ zZ6/jlp1uv8rKA6ksWgd5nfrekt6vAT4oQDAzJ89klMtftHivGG+EfumwysR+pun7jeh
+ aegQ==
+X-Gm-Message-State: AOJu0Yzvng0vEBlt1DOM2tQ8pHXphj5sUQrDbFsDISfaHseW1rs543w0
+ v+dgOk08Y1QfXe6oegvYnnPgtHcRU5Q06d8k0ad7PrdOdqwsPAyvzregzaFvoj2aiymGiCtPw1N
+ 9
+X-Gm-Gg: ASbGncttMU3dgkJ8O66VePMu6HHHHxQddVHSRfmA127YrLezpyOO9DxmwULDnBdu7Xe
+ SGG2JziWvE0Pu9ovSclQk1PihsXp3dM9TCOuPb4Mgosxbvpnu8lf2Ss2GXsywJWDxOyzsrqtV7L
+ zonlpJih3iNdLj08HmHfr5OEh8bMzRbvAXdUNgCaT5lViiSgYWwLLkbQVA29Le5Zy+jbCzCh/Zc
+ 5MTDaF9FX3h61fOVvA7khJLdh5OEzSrjC4hrqS0fjEzI0OhVkt2spb+VQY4Lf9x01+hP6xyVaGD
+ 0Ld4VEHLxTkj8y6Q2c6wv8rbkJawPfgWH2DOR+SBytPi0uO343QqmkbupwdNRKat4dvZY/6HmI5
+ 8cqfe/z8t
+X-Google-Smtp-Source: AGHT+IElpiOCEk2eWTFInA6qXcWit72OadL4QQQFuqmphfpLUK4yzmHYjqzP7yTSceo31WY+F0OTUQ==
+X-Received: by 2002:a05:6a00:2382:b0:736:4e14:8ec5 with SMTP id
+ d2e1a72fcca58-73905a2a70emr16678153b3a.11.1742769175051; 
+ Sun, 23 Mar 2025 15:32:55 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390614de5fsm6288049b3a.127.2025.03.23.15.17.47
+ d2e1a72fcca58-7390615804esm6534635b3a.133.2025.03.23.15.32.54
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Mar 2025 15:17:48 -0700 (PDT)
-Message-ID: <fd7ecaa3-5995-4124-a7bc-8393dd4e6d7b@linaro.org>
-Date: Sun, 23 Mar 2025 15:17:46 -0700
+ Sun, 23 Mar 2025 15:32:54 -0700 (PDT)
+Message-ID: <6a651ddf-8a01-40bf-9d7a-126ba69d2f95@linaro.org>
+Date: Sun, 23 Mar 2025 15:32:53 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 4/4] tcg: Convert TARGET_SUPPORTS_MTTCG to
- TCGCPUOps::mttcg_supported field
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-ppc <qemu-ppc@nongnu.org>,
- Anton Johansson <anjo@rev.ng>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20250321155925.96626-1-philmd@linaro.org>
- <20250321155925.96626-5-philmd@linaro.org>
- <8cc6f6a4-b868-4dc8-bc14-25b438ad62a5@linaro.org>
- <5bd8498c-b5ff-4fb1-94d7-a2efa2f20fd9@linaro.org>
- <cc7d5557-0e0a-b7df-1eab-8f9d86444d2b@eik.bme.hu>
+Subject: Re: [PATCH] load_aout: replace bswap_needed with big_endian
+To: qemu-devel@nongnu.org
+References: <20250320124313.819222-1-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cc7d5557-0e0a-b7df-1eab-8f9d86444d2b@eik.bme.hu>
+In-Reply-To: <20250320124313.819222-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,34 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/23/25 15:13, BALATON Zoltan wrote:
-> On Sun, 23 Mar 2025, Philippe Mathieu-Daudé wrote:
->> On 23/3/25 20:07, Richard Henderson wrote:
->>>> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
->>>> index 28fbbb8d3c1..ed79cc1a6b7 100644
->>>> --- a/target/ppc/cpu_init.c
->>>> +++ b/target/ppc/cpu_init.c
->>>> @@ -7490,6 +7490,7 @@ static const TCGCPUOps ppc_tcg_ops = {
->>>>     .translate_code = ppc_translate_code,
->>>>     .restore_state_to_opc = ppc_restore_state_to_opc,
->>>> +  .mttcg_supported = TARGET_LONG_BITS == 64,
->>>>     .guest_default_memory_order = 0,
->>>
->>> Similarly.  I'd be surprised if ppc32 can't use mttcg, really.
->>
->> Per Cédric on IRC our ppc32 implementations are single core,
->> so never tested for mttcg.
+On 3/20/25 05:43, Paolo Bonzini wrote:
+> Targets know whether they are big-endian more than they know if
+> the endianness is different from the host: the former is mostly
+> a constant, at least in machine creation code, while the latter
+> has to be computed with TARGET_BIG_ENDIAN != HOST_BIG_ENDIAN or
+> something like that.
 > 
-> We're just trying to implement more CPUs for G4 mac99 and tested it with -smp 2 and it 
-> seems to generally work but we need to implement more of the Mac hardware for this but we 
-> could already run Mac OS X with two CPUs and mttcg and Linux too if we add a delay on boot 
-> when second CPU is started (it may need implementing timebase control as done on the G4 
-> Mac to avoid that but if it gets past that it seems to work). So please leave this 
-> enabled. Not tested does not mean it does not work so only disable if there's a known 
-> problem.
+> load_aout, however, takes a "bswap_needed" argument.  Replace
+> it with a "big_endian" argument; even though all users are
+> big-endian, it is cheap enough to keep the optional swapping
+> functionality even for little-endian boards.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-MTTCG is not enabled for qemu-system-ppc right now.
-Phil's patch does not current change behaviour.
+Thanks, queued to tcg-next for 10.1.
 
 
 r~
