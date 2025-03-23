@@ -4,70 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA83C28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 15:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACA8C28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:33:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twNSO-00041m-HN; Sun, 23 Mar 2025 11:41:48 -0400
+	id 1twPBm-0004AQ-S8; Sun, 23 Mar 2025 13:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twNSG-0003zF-Oi
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 11:41:42 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1twPBe-00049C-0Q
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:32:44 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twNSD-0007Mo-7g
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 11:41:39 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-39127512371so2267140f8f.0
- for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 08:41:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1twPBa-0002Et-M8
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:32:36 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2243803b776so53449755ad.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 10:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742744493; x=1743349293; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1742751147; x=1743355947; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=j//WT3tUMHrDI7HP9P/g3xp/xK5prE+gy76j+wGNdVM=;
- b=geuhMt55GQqVAHXEY4LrNNlZD3ZusWf1w4I7PfhE4ew0BCbCBw2BA51aly5T7z9eDR
- 9kfWwzzLmIL3iTBCwOVjXoXLVFS9+QVsDDQvPvBfMLMR9HtNupgm1E8fGz1zJKr/y/xs
- c0sNfgDE1Cl6wrTZUcFFNxTKVaX2a3InqWmx0kL8K0NDECzQAQ9snNvgm+/FJzIWLuK5
- J5aVC0jXbfKrtbGz/NtC4BIiWb2UmHLOtj4+fkQw1v1NNOdFkG7H6FDhDMkjCpP6/G3r
- pIkk2ujguW8WW2kbtS7n0c+S8htji9/aKWH5wl0BZX4Wxkdc2/puYi+aCIW1ROKFDp/H
- lI8w==
+ bh=QN0GHYm7ARKHsVaSIzGzewxESAN/2OxGoKlMgVhc8Ig=;
+ b=uq130VKupXtYVKxBCKQkzCQyb4Ce8gQ0Et+4BgrWqPCyVDjiRwet7Ijt7BlYOVVBOx
+ YS0gzf5oBs6gVfkA9ZQ00IECM/QU/Qlsah0bZKUM4mOkzaBn9Fqbul/YZ49t6oid4inR
+ wRyww5bPU0cC7G7L+pcWvQVc6J/8j9scrrhUjxYWRPjWD8Ntk11v188Y4/TBzvwJwCcY
+ w6sAL860I/2cIoqJkg0RCf/fpMCVm28yfyHCNo3ei+2BbGLS/ie/jL/j7K0GTVs6aaxA
+ zM14Ai4G+bPZjFgStlZs9RGKmT24HSSxZh1XcyFghAFjJiKLHbk5KhL5nUUwr7k7mtbu
+ o+bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742744493; x=1743349293;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1742751147; x=1743355947;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j//WT3tUMHrDI7HP9P/g3xp/xK5prE+gy76j+wGNdVM=;
- b=DwF/TLbQsOGwQqWwmTDQQHqL/QMeufocvdW/0TJv9/Ih+gSpDYNwbmmOwHSCHwYr45
- F86CMw6jiXxM6pPjbZ3uOXNv1E06swRelgy90560zB2Xt0rJZYWG0wKkUZul79ZxENZB
- /ut0IgqyzOA13I1SRT9CgQuu966dT2lwZgREmwn32mfkT47xT1kUyW2HtDUdSZNzsoTr
- XiKghv4CfSwbrvKbTNgd7Fk8zSuCB1HtMFLTjBtM+sTvEXuTjmkDP5+HplMcWtSfF8mb
- Nv8vsjrsbkQuTLzDS+lYwN5yogKHu8DeB92Rt9fwMkvfRlhdGFODkN7DmNd8DO9qGK7J
- 1gAA==
-X-Gm-Message-State: AOJu0Ywd54D96LxCvWLtxK8rWlEhD181wE8oCdRk4YfYgpUxpI8LQ/8G
- fQRtNeFHLbElP0CO7AJ+lbwW2ZiDmnGE9u1Pg80Jfky1iafc8j3HpEkfJfrm7m8=
-X-Gm-Gg: ASbGncuVXTcdxALINiRrKrn9Q7UJoK0E3fbfU8vxOQLietoBQ1YK2QVqRIPoY5V5Vv3
- V2B0qqEv1w61pBOC7fh6y9XlS6f3FVZWejpk1TPlY8G/pXrvc4mZhI+wibwIMd/qFEnA13Hrzv2
- 1pGSRT+m88/Wvk0W1+bF9RPhLWSGswVnVhCWehwoW4xi4q7sq5ri3PKQovEg+4zC1aPrRFTyF+C
- 6cF5kGQ50qr2RVdxLwWN/NhnuGk3Gw5fglQ+e31zAU7EN63E7DKcJEp3SMTeupALP7tqnZF9BMn
- ScOYey+8yy8UC9xLNHUPfhAIM4d4BTJahXLfWVBU9jBKH4e9PMPj9KSxtVOCMpTj16lCc2tTvoo
- NBJTg7TioI4b7
-X-Google-Smtp-Source: AGHT+IF/BqylgXOBvcV+VTVnzR5rNNdoUBGNOXgHZpFmstBC0iMO4fcevnjQX9yPi/sfFxH9eRtYCg==
-X-Received: by 2002:a5d:64a5:0:b0:391:22a9:4408 with SMTP id
- ffacd0b85a97d-3997f8fecf8mr11296713f8f.16.1742744493125; 
- Sun, 23 Mar 2025 08:41:33 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9b4ce9sm8179246f8f.53.2025.03.23.08.41.31
+ bh=QN0GHYm7ARKHsVaSIzGzewxESAN/2OxGoKlMgVhc8Ig=;
+ b=DZsZqHzy0XiHoUDJLBqAyTNFupWHM00ATHSGyCv4tfFBHanuJ66a6WKjJema4WuMKC
+ qvXyI6l1YKs8dvZm4sgzTpdeOgDh+NS3y6Jv6oqFG/yiZ4BvlfLN2+os0e7Alf3mXtS/
+ 6MA7ZwhERMcenrvKsMHdmsjjJxTOFZlR8MDk55NnYvr9wd4nBZrmRodBUfwA7T40I/zc
+ mjNeaBkm6GRRp6hy7z67u7krCIWt2sD4lBiasIvciL5HDR5gbg2f2CqG/lN0hXqJaNU9
+ jU3RSBeFcm0be+g0+K9DNVFboidnVLx9xRW+nAY+yYWwvrBTEzb9+u7izgBwF+zA46Hv
+ YMbw==
+X-Gm-Message-State: AOJu0YyExwT2iuULaE00wl5IZ8O1fvZAHeVKFEGGbgXFRAw8VqR4enEC
+ 7FM7ATlatwtvJmDQJHnkkaaqWPxY5K6zOjIQYHmD6HFpYgzicAS/gjsYZnHOx7U=
+X-Gm-Gg: ASbGnctu/hKjIrpLJQal6375wAQvczEBbsC60tPjEK66MJ81OL3eBcn8DNxTmIdIFtO
+ lWDUuKw+OP85jpYXhKPlP/XsmayXfdPDH/rlQLs+QHYMuRStnyg6k4ZCFUGE514St+POwmyOL7m
+ ib5b7qQ71NipXmwdPDaGCWmZ3wCgVh738KAidiR2kO/rjljoLy1CK+S3wv4hxG0HAoEDGyrVNHX
+ ICFbRAz+739CCxBRvyXamZOOQR5UetZkPhsDkl9OiTskbgsbsSUg/yzGhyF/Gbf1TW/mgu+l64A
+ yxdM/+TOhnetzSCl0g11H44MDz2voQ9PJSGuWsihWTPB5N/EwKAulhFESQ==
+X-Google-Smtp-Source: AGHT+IGwnwcaX2ssWP0FvqI3mw/RLSqk3B8/HVXK8zY51t0taTc5yPC+uD4q61HWQx+YrwuvWBwFzA==
+X-Received: by 2002:a17:902:c411:b0:224:1ec0:8a1a with SMTP id
+ d9443c01a7336-22780e1a8demr154590515ad.51.1742751147223; 
+ Sun, 23 Mar 2025 10:32:27 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3030f5d4f0asm6273658a91.17.2025.03.23.10.32.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Mar 2025 08:41:32 -0700 (PDT)
-Message-ID: <8b8bf1e1-ebcb-4779-ab09-c208da910630@linaro.org>
-Date: Sun, 23 Mar 2025 16:41:30 +0100
+ Sun, 23 Mar 2025 10:32:26 -0700 (PDT)
+Message-ID: <4dd676bf-3b33-42cb-8054-3e06e3ac656a@linaro.org>
+Date: Sun, 23 Mar 2025 10:32:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 00/10] gdbstub: conversion to runtime endianess helpers
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Juan Quintela <quintela@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
@@ -88,20 +90,20 @@ References: <20250319182255.3096731-1-alex.bennee@linaro.org>
  <0bc36324-4fb7-41ee-a9f1-3a7de4ad7fa4@linaro.org>
  <87a59eli7m.fsf@draig.linaro.org>
  <3e1c7b60-18cf-4ca6-b853-02203954fc3a@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3e1c7b60-18cf-4ca6-b853-02203954fc3a@linaro.org>
+ <8b8bf1e1-ebcb-4779-ab09-c208da910630@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <8b8bf1e1-ebcb-4779-ab09-c208da910630@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,65 +119,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/3/25 18:31, Pierrick Bouvier wrote:
-> On 3/21/25 04:46, Alex Bennée wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>
->>> On 3/19/25 11:22, Alex Bennée wrote:
->>>> The aim of this work is to get rid of the endian aware helpers in
->>>> gdbstub/helpers.h which due to their use of tswap() mean target
->>>> gdbstubs need to be built multiple times. While this series doesn't
->>>> actually build each stub once it introduces a new helper -
->>>> gdb_get_register_value() which takes a MemOp which can describe the
->>>> current endian state of the system. This will be a lot easier to
->>>> dynamically feed from a helper function.
->>>> The most complex example is PPC which has a helper called
->>>> ppc_maybe_bswap_register() which was doing this.
->>>> This is still an RFC so I'm interested in feedback:
->>>>     - is the API sane
->>>>     - can we avoid lots of (uint8_t *) casting?
->>>
->>> Even though the series has a good intent, the fact we make everything
->>> "generic" makes that we lose all guarantees we could get by relying on
->>> static typing, and that we had possibility of mistakes when passing
->>> size (which happened in patch 4 if I'm correct). And explicit casting
->>> comes as a *strong* warning about that.
->>>
->>> By patch 7, I was really feeling it's not a win vs explicit functions
->>> per size.
->>>
->>> If the goal of the series is to get rid of endian aware helpers, well,
->>> this can be fixed in the helpers themselves, without needing to
->>> introduce a "generic" size helper. Maybe we are trying to solve two
->>> different problems here?
->>
->> It did seem natural that if you were defining a MemOp you would use all
->> of it rather than only its endian definition. But you are right we could
->> introduce the same helpers with a bool flag for endianess.
->>
-> 
-> Defining MemOp and passing is ok, but loosing static typing guarantees 
-> is wrong in my opinion. C is already on the weak side regarding typing, 
-> we don't need to "void*"ize things more instead of replacing the calls 
-> with correct variants.
-> 
->> Maybe we should have fully formed mops and just assert in the helper:
->>
->>    gdb_get_reg32(MemOp op, GByteArray *buf, uint32_t val) {
->>        g_assert(op & MO_SIZE == MO_32);
->>        gdb_get_register_value(op, buf, &val);
->>    }
->>
->> I was also trying to avoid over boilerplating the code.
->>
-> 
-> Adding proper functions definition instead of macros, and eliminating 
-> ifdefs is not really boilerplate.
-
-In another thread Richard said for these cases we should use _Generic()
-more.
-
-> Adding casts to loosen type system is not a win versus that.
-
-Agreed.
+T24gMy8yMy8yNSAwODo0MSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
+IDIxLzMvMjUgMTg6MzEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+Pg0KPj4gQWRkaW5n
+IHByb3BlciBmdW5jdGlvbnMgZGVmaW5pdGlvbiBpbnN0ZWFkIG9mIG1hY3JvcywgYW5kIGVs
+aW1pbmF0aW5nDQo+PiBpZmRlZnMgaXMgbm90IHJlYWxseSBib2lsZXJwbGF0ZS4NCj4gDQo+
+IEluIGFub3RoZXIgdGhyZWFkIFJpY2hhcmQgc2FpZCBmb3IgdGhlc2UgY2FzZXMgd2Ugc2hv
+dWxkIHVzZSBfR2VuZXJpYygpDQo+IG1vcmUuDQo+IA0KDQpJIHdhcyB0aGlua2luZyBhYm91
+dCBzdWdnZXN0aW5nIGl0IHdoZW4gSSBmaXJzdCBhbnN3ZXJlZCBvbiB0aGlzIHRocmVhZC4g
+DQpIb3dldmVyLCBJIHJlYWxpemVkIGl0IGRvZXNuJ3QgcmVhbGx5IGhlbHAgdXMgdG93YXJk
+cyBvdXIgZW5kIGdvYWwgdG8gDQp1bmlmeSB2YXJpYW50cyBvZiBhIGNvbXBpbGF0aW9uIHVu
+aXQuDQoNCl9HZW5lcmljIGlzIGp1c3QgYSB3YXkgdG8gaGF2ZSBhIGNvbXBpbGUgdGltZQ0K
+c3dpdGNoKHR5cGVvZih4KSkgew0KICAgY2FzZSB0eXBlX2E6IC4uLg0KICAgY2FzZSB0eXBl
+X2I6IC4uLg0KfQ0KDQpUaGlzIGlzLCBpbiBzb21lIHdheXMsIHdoYXQgb3VyIGV4aXN0aW5n
+IG1hY3JvcyBkbyBoZXJlLCBiYXNlZCBvbiANClRBUkdFVF9MT05HX0JJVFMuIFNvbWUgQyBj
+b21waWxlcnMgdGFyZ2V0dGluZyBlbWJlZGRlZCBzeXN0ZW1zIHN1cHBvcnQgDQpzaXplb2Yg
+b24gaW50ZWdyYWwgdHlwZXMgaW4gdGhlIHByZXByb2Nlc3NvciB0byBzdXBwb3J0IHRoaXMg
+a2luZCBvZiANCmNhc2UgYmVmb3JlIF9HZW5lcmljIGV4aXN0ZWQuDQoNCkl0IGNhbiByZXBs
+YWNlIG1hY3JvcyBiYXNlZCBvbiBzdGF0aWMgdHlwZXMsIGJ1dCBpdCBkb2Vzbid0IG1ha2Ug
+bXVjaCANCm1vcmUgdG93YXJkcyBlbGltaW5hdGluZyB0YXJnZXQgdHlwZSBkZXBlbmRlbmN5
+Lg0KDQpJdCBjb3VsZCBzdGlsbCBiZSB1c2VkIGhlcmUgdGhvdWdoLCB0byBhdm9pZCB0aGUg
+bmVlZCB0byBwYXRjaCBhbGwgDQp0YXJnZXRzIHVzaW5nIGdkYiByZWdpc3RlciBtYWNyb3Ms
+IHRoYXQgYWxyZWFkeSB1c2VkIGZpeGVkIHR5cGVzLg0KDQpCdXQgc2luY2Ugb3VyIGxpc3Qg
+b2YgY2FsbCBzaXRlcyBpcyBub3Qgc28gaHVnZSwgSSB3b3VsZCBiZSBpbiBmYXZvciB0byAN
+CmZpeCB0aGUgY29kZSBkaXJlY3RseSwgaW5zdGVhZCBvZiByZWx5aW5nIG9uIF9HZW5lcmlj
+LiBCdXQgSSdtIG9wZW4gdG8gDQp0aGF0IGlmIHdlIGNvbGxlY3RpdmVseSB0aGluayBpdCdz
+IGEgYmV0dGVyIHdheS4NCg0KPj4gQWRkaW5nIGNhc3RzIHRvIGxvb3NlbiB0eXBlIHN5c3Rl
+bSBpcyBub3QgYSB3aW4gdmVyc3VzIHRoYXQuDQo+IA0KPiBBZ3JlZWQuDQoNCg==
 
