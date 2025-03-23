@@ -4,72 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51938C28B30
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 17:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4ECC28B30
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Mar 2025 18:02:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twPPI-0003M2-KU; Sun, 23 Mar 2025 13:46:45 -0400
+	id 1twPdm-0002de-Tl; Sun, 23 Mar 2025 14:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1twPOi-0002dv-Hp
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:46:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1twPOg-00041M-7Z
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 13:46:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742751964;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MvcPmepQnYaqXyzcNgX6ZnHaPADmQDVdyjY/kGblWr4=;
- b=OulJpfcw870c0+UuwI6D34j7ONQCkj72TabXwYxaz7euxPMU6qLov49hnPOBmjGt0BKMmW
- NNE5Iv6ydDCNUcUGCkjbNTS1qqgaMxEoUahCqzrorbVTicO5u45rap3Nkfroa9RjMKw8+R
- bXTlots/ZgJrzvre93F/uNffuBjYDx8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-t5hOVJvmOfuI_my2LcqDCg-1; Sun,
- 23 Mar 2025 13:46:02 -0400
-X-MC-Unique: t5hOVJvmOfuI_my2LcqDCg-1
-X-Mimecast-MFC-AGG-ID: t5hOVJvmOfuI_my2LcqDCg_1742751961
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A47C180899B; Sun, 23 Mar 2025 17:46:00 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.3])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 88BC61956095; Sun, 23 Mar 2025 17:45:58 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 3/3] hw/misc/aspeed_hace: Fix buffer overflow in has_padding
- function
-Date: Sun, 23 Mar 2025 18:45:41 +0100
-Message-ID: <20250323174541.406860-4-clg@redhat.com>
-In-Reply-To: <20250323174541.406860-1-clg@redhat.com>
-References: <20250323174541.406860-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twPdk-0002dH-22
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 14:01:40 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twPdi-0005x2-B7
+ for qemu-devel@nongnu.org; Sun, 23 Mar 2025 14:01:39 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2240b4de12bso49408015ad.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 11:01:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742752896; x=1743357696; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2xmPGVgeMRBKmsCFQqtt5fFNBLmT1ucA+eqOVA8FXhw=;
+ b=HTrQRZbUinjDiEqDIuEQQ8geHuJwPFe7mTeHY2IaFeAr7I60Ezgj2hkxwgE8PFhJFq
+ 5+4g6BJ/xWVdTWpEORemSDCP7VHu0XfR1FMkCpDu4EjLMWqH40g5TWgD3hJN/ax9NmqY
+ jCMX6u6Yhn1wH9Z1p6RMK3S2C/XZHJ9OQFmcNc2O6yODt0Aj5IKI7mzJmntfAb3hzcmC
+ ryiAFEl2wecYjdtLLTiGtJYI4RgGSDZLcJRwtCrQkEwBCrsM38B9Jayx1qbw+9ZOru7u
+ 5Gtol0Hk+wUv7BEMhDH4AvtcUNABWJTDwPSoorGLbaVVowclQmxgiAf1dMwhT8KWqHfj
+ d27Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742752896; x=1743357696;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2xmPGVgeMRBKmsCFQqtt5fFNBLmT1ucA+eqOVA8FXhw=;
+ b=twAmwwQApD6yUJvWm7WpcKyzHDNucTvs7PkyPABweYCNlDrLoPn5974ekWaWgAQib1
+ 6zjztffpJk4VDwR/jCbWm4SNzPTBZ6xSJp32qJXwjetu16lLqRrgf5sZYzOcRZZ7XDVT
+ w13GhegjeHleZtq2I/bqAdkDR/i7mA/gYqPJgg19bTc2nE5nCqV1QLz5n9nPDiBL7a2F
+ jbMH5uNe7aVBbuOs2xRvlt6oNy1m8y6C/oPEBLdyhtqja8Ii9lrJQDFxM6TT59NaQ+3+
+ PnQW7mmVusG8p0b4bbFtpInUYSZ08gVWWLVUhky6YTp24J2PlxVxcN9sQnErZZXWtiDY
+ 5gjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYQJAkvro39I7Ki56P8GwaTQ6e7ruL9GiTa8NvNaJENRKorx+tsIsBi/P1zO6jigtlnj81pcejWF+J@nongnu.org
+X-Gm-Message-State: AOJu0Ywrm4XgfBns7myvDeIFHlrmmna3lzjrXsmG9nulunP5AjChgpAR
+ Zyzw3+S8WHexCaKYO0beHCFcy8euve7my7C4y8PFg5MU3B7JEaYAuDjoqQ32ug4=
+X-Gm-Gg: ASbGnctX114rQnIQ4fkSgRPTEaWdqgH8Ji3hlpOmo3yl7JWIdJ5aPCkBpem9nPMUSOK
+ H3HdXrrilMwz4c/zISjCz2YDBhZ9r4G8yxaRw6Ss+ZVgKvYQlbYQ+rQIrKahCbIk+vXutztJfdh
+ qAIP8uk2vCy1FYizjWM4Xo+FI10rJGOuLTdSZZrhmp898GGT2YlIXGRJn9f6qGHo2QFpl3x0UQE
+ jZnXBD6f3IekusSSrajWvwnJUEoIX39hXk2Su9v7BmQBH4BLauoJqI/Y9p0nNP47rGW71VBeU4O
+ 1APiM8vjmuGJRLlHiSgAERfi2/kYxlxOGouA0kJcrheXF9ZGePDKC3HUUbAeGiGFSJQ4B151TnD
+ o6KAN8PEW
+X-Google-Smtp-Source: AGHT+IELFC4mXddPni2kBVoTwHDgyDb5PrQHGaHJi8Eb7HMF2vE7D0zBXfdSll2oKLLQVw/o34OHBw==
+X-Received: by 2002:a17:903:2f8c:b0:224:1acc:14db with SMTP id
+ d9443c01a7336-22780dbb92fmr154361495ad.29.1742752895914; 
+ Sun, 23 Mar 2025 11:01:35 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22780f3977fsm54665455ad.14.2025.03.23.11.01.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 23 Mar 2025 11:01:35 -0700 (PDT)
+Message-ID: <8bb0c545-e614-4864-8c21-40de78334c7b@linaro.org>
+Date: Sun, 23 Mar 2025 11:01:33 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v2 4/7] tcg: Remove use of TCG_GUEST_DEFAULT_MO
+ in tb_gen_code()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+References: <20250321181549.3331-1-philmd@linaro.org>
+ <20250321181549.3331-5-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250321181549.3331-5-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,44 +109,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+On 3/21/25 11:15, Philippe Mathieu-Daudé wrote:
+> Use TCGCPUOps::guest_default_memory_order to set TCGContext::guest_mo.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   accel/tcg/translate-all.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+> index fb9f83dbba3..26442e83776 100644
+> --- a/accel/tcg/translate-all.c
+> +++ b/accel/tcg/translate-all.c
+> @@ -349,7 +349,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
+>       tcg_ctx->tlb_dyn_max_bits = CPU_TLB_DYN_MAX_BITS;
+>   #endif
+>       tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
+> -    tcg_ctx->guest_mo = TCG_GUEST_DEFAULT_MO;
+> +    tcg_ctx->guest_mo = cpu->cc->tcg_ops->guest_default_memory_order;
+>   
+>    restart_translate:
+>       trace_translate_block(tb, pc, tb->tc.ptr);
 
-The maximum padding size is either 64 or 128 bytes and should always be smaller
-than "req_len". If "padding_size" exceeds "req_len", then
-"req_len - padding_size" underflows due to "uint32_t" data type, leading to a
-large incorrect value (e.g., `0xFFXXXXXX`). This causes an out-of-bounds memory
-access, potentially leading to a buffer overflow.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Added a check to ensure "padding_size" does not exceed "req_len" before
-computing "pad_offset". This prevents "req_len - padding_size" from underflowing
-and avoids accessing invalid memory.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Fixes: 5cd7d8564a8b563da724b9e6264c967f0a091afa ("aspeed/hace: Support AST2600 HACE ")
-Link: https://lore.kernel.org/qemu-devel/20250321092623.2097234-3-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/misc/aspeed_hace.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 32a5dbded3c6..d75da3335336 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -128,6 +128,11 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
-     if (*total_msg_len <= s->total_req_len) {
-         uint32_t padding_size = s->total_req_len - *total_msg_len;
-         uint8_t *padding = iov->iov_base;
-+
-+        if (padding_size > req_len) {
-+            return false;
-+        }
-+
-         *pad_offset = req_len - padding_size;
-         if (padding[*pad_offset] == 0x80) {
-             return true;
--- 
-2.49.0
-
+r~
 
