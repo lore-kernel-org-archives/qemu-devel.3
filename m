@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890A2C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 16:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C888C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 16:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twkKI-0004g4-52; Mon, 24 Mar 2025 12:06:58 -0400
+	id 1twkM3-0005lK-42; Mon, 24 Mar 2025 12:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1twkK1-0004cC-NW; Mon, 24 Mar 2025 12:06:43 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1twkLp-0005kt-DZ
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 12:08:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1twkJx-0004RT-EQ; Mon, 24 Mar 2025 12:06:40 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZLyWv73plz6K9WH;
- Tue, 25 Mar 2025 00:03:23 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 4084D140723;
- Tue, 25 Mar 2025 00:06:33 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 24 Mar 2025 17:06:33 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Mon, 24 Mar 2025 17:06:33 +0100
-To: Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>
-CC: Donald Dutile <ddutile@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>, "mochs@nvidia.com"
- <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-pcie bus
-Thread-Topic: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-pcie
- bus
-Thread-Index: AQHbkps6in4QB/PMZUednFRw1zRmILN5b66AgADGVyCAAgfGgIAFxokwgABCuACAAC8TgIAAERjQ
-Date: Mon, 24 Mar 2025 16:06:32 +0000
-Message-ID: <85fe1320d25b46189721f2a796f7da22@huawei.com>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-6-shameerali.kolothum.thodi@huawei.com>
- <b3a4ce7f-41a9-4da9-a8ca-54848b9e9cf1@redhat.com>
- <3d1312b411f04121a3be90879a915982@huawei.com>
- <Z9xKL49nOenvQIsW@Asurada-Nvidia>
- <2f84490d309440a4a2ac56fd893ddab8@huawei.com>
- <ad0b5fac-2a7f-4978-9f6b-0f7b1df14a35@redhat.com>
- <Z+GB7c0ME//DhS3R@nvidia.com>
-In-Reply-To: <Z+GB7c0ME//DhS3R@nvidia.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1twkLi-0004hJ-1X
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 12:08:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742832504;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6B17BP+6vjFR+jms0kp9zlEiAvke2uO5Ah/U9zfSDgI=;
+ b=b+TLHn6eZ8hrEtNbT+g1nkGalNqR+Kv/zh7bzt3l4tebs+MiS76ENBKDs7ooEi/nWKYhCO
+ KltmY1fQqmYjS9jbS/xlLm+UGHQy8BzLswJF62MyFBP5YPgkawZa9JxwE9r6i9+8gb9NZN
+ gacenxb2+8d3T6q9wreWSYgyMGn4xM8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-HOmb9XerOWyN7mLsCdNZjA-1; Mon,
+ 24 Mar 2025 12:08:18 -0400
+X-MC-Unique: HOmb9XerOWyN7mLsCdNZjA-1
+X-Mimecast-MFC-AGG-ID: HOmb9XerOWyN7mLsCdNZjA_1742832496
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E1591809CA5; Mon, 24 Mar 2025 16:08:15 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBBDC30001A1; Mon, 24 Mar 2025 16:08:09 +0000 (UTC)
+Date: Mon, 24 Mar 2025 16:08:06 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gerd Hoffman <kraxel@redhat.com>
+Cc: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
+ Alexander Graf <graf@amazon.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <Z-GDZkkyLsXFzk5b@redhat.com>
+References: <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <6684f169-29d6-4f46-b274-1efd4c191b21@amazon.com>
+ <ok6u7exmwmh7qsahp5o3udnbbzbsr2km22kpqod37t6mdsywcs@yhk2whhakl63>
+ <fucfv6gf22t3sclhad4iwbmxi5tdg6a5dlhvl4kl4bzhnjkktu@dtn2eqh27k32>
+ <Z9vTEoweLUsmxWMY@8bytes.org>
+ <mimxt26hwxn4kkdt6fgx4dpuejx2667edfenx6jirpuxtnkfqz@r3uybu6g5e44>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <mimxt26hwxn4kkdt6fgx4dpuejx2667edfenx6jirpuxtnkfqz@r3uybu6g5e44>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,55 +103,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Mar 21, 2025 at 09:22:59AM +0100, Gerd Hoffman wrote:
+> On Thu, Mar 20, 2025 at 09:34:26AM +0100, Jörg Rödel wrote:
+> > On Tue, Mar 18, 2025 at 12:11:02PM +0100, Gerd Hoffman wrote:
+> > > Open questions:
+> > > 
+> > >  - Does the idea to use igvm parameters for the kernel hashes makes
+> > >    sense?  Are parameters part of the launch measurement?
+> > 
+> > Parameters itself are fully measured, their presence is, but not their
+> > data. This is to keep the same launch measurements across different
+> > platform configurations.
+> > 
+> > So for hashes it is best to put some on some measured page and let the
+> > parameters point to it.
+> 
+> Had a look at the kernel hashes details this week.
+> 
+> So, the story is this: It's essentially a private arrangement between
+> ovmf (the amdsev build variant only) and qemu.  The hashes are placed in
+> a specific page, together with "launch secrets" (that is not the sev-snp
+> "secrets" page).  That page is part of the lanuch measurement.  That
+> effectively makes the kernel + initrd + cmdline part of the launch
+> measurement too (ovmf verifies the hashes), but without the relatively
+> slow secure processor hashing kernel + initrd + cmdline, which reduces
+> the time needed to launch a VM.
+> 
+> The "launch secret" is intended to hold things like a luks secret to
+> unlock the root filesystem.  OVMF doesn't touch it but reserves the page
+> and registers a EFI table for it so the linux kernel can find it.
+> 
+> As far I know these are more experimental bits than something actually
+> used in production.  It's also clearly a pre-UKI design.  That IMHO
+> opens up the question whenever we actually want carry forward with that,
+> or if we better check out what alternatives we have.  We'll have a
+> signed UKI after all, so going for secure boot and/or measured boot for
+> the UKI verification looks attractive compared to passing around hashes
+> for the elements inside the UKI.
+
+Although it has been extended to SNP in QEMU, personally I'd consider
+the QEMU 'kernel hashes' functionality to be an niche feature.
+
+From a virt mgmt POV we know in general that direct kernel boot while
+useful, is somewhat limited in usage. Most of the time it is saner to
+have the guest decide what kernel to boot without interaction of the
+host. So by extension, the kernel hashes feature is also going to be
+a similarly (or even more) niche use case. The UKI with system extensions
+and secureboot model gives much greater flexibility for defining policy
+around valid configurations than using fixed hashes - especially when
+it comes to kernel command line which has potentially many valid configs.
 
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Monday, March 24, 2025 4:02 PM
-> To: Eric Auger <eric.auger@redhat.com>
-> Cc: Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; Donald Dutile
-> <ddutile@redhat.com>; qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> peter.maydell@linaro.org; jgg@nvidia.com; berrange@redhat.com;
-> nathanc@nvidia.com; mochs@nvidia.com; smostafa@google.com; Linuxarm
-> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
-> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
-> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
-> Subject: Re: [RFC PATCH v2 05/20] hw/arm/smmuv3-accel: Associate a pxb-
-> pcie bus
->=20
-> On Mon, Mar 24, 2025 at 02:13:20PM +0100, Eric Auger wrote:
-> > >> If VM has an emulated device and a passthrough device:
-> > >>  attach the emulated device to PCIE.0 <=3D> vSMMU bypass (or
-> accel=3Doff?)
-> > >>  attach the passthrough device to pxb-pcie <=3D> vSMMU0 (accel=3Don)
-> > > This can be other way around as well:
-> > > ie,
-> > > pass-through to pcie.0(accel=3Don) and emulated to any other pxb-pcie
-> with accel =3D off.
-> > +1
-> > >
-> > > I think the way bus numbers are allocated in Qemu for pcie.0 and pxb-
-> pcie allows
-> > > us to support this in IORT ID maps.
-> > One trouble we may get into is possible bus reordering by the guest. I
-> > don't know the details but I remember that in certain conditions the
-> > guest can reorder the bus numbers.
->=20
-> Hmm, that sounds troublesome. IORT mappings are done using the bus
-> number, which is fixed to a vSMMU. Can we disable that reordering?
+> Not fully sure what to do about the "launch secrets".  IIRC the initial
+> design of this is for sev-es, i.e. pre-snp, so maybe the sev-snp secrets
+> page can be used instead.  I see the spec has 0x60 bytes (offset 0xa0)
+> reserved for guest os usage.  In any case this probably is only needed
+> as temporary stopgap until we have a complete vTPM implementation for
+> the svsm.
 
-DSM 5# is actually a way to do that. But I don't think we need that as host
-kernel also will have the same issues with IORT if re enumeration happens.
-I think the iommu_fwspec mechanism is to take care of this. I need to doubl=
-e
-check though.
-=20
-Thanks,
-Shameer
+I view the launch secrets feature as a crutch to cope with the HW
+limitations of SEV/SEV-ES. You have the host initiated attestation
+dance and after verification can pass data back to the host, which
+will inject it into the guest. The inability to have a secure TPM
+in SEV/SEV-ES forces you down this road. It is highly undesirable
+as a feature going forward because we're better served by having
+a boot workflow that is common to traditional virt, confidential
+virt, and bare metal, and TPM delivers on that.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
