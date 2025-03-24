@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40219C36001
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 06:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53AC1C36001
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 06:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twawn-0006D7-7S; Mon, 24 Mar 2025 02:06:05 -0400
+	id 1twaxz-0007HC-5Z; Mon, 24 Mar 2025 02:07:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twawf-00069Z-1k
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 02:05:57 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twaxk-0007GW-D9
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 02:07:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twawd-0001XM-Gc
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 02:05:56 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twaxi-0001gT-PR
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 02:07:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742796352;
+ s=mimecast20190719; t=1742796422;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=C7MyYCAPaEDrf8uVX/HciWma8sx81bkCIrIDqKSU6IQ=;
- b=X+gFgsAvTHMPkSxG8DakTTBkk2xxVtOEA++b9+eB+7JKJOnBNHjn8YKA/NjxCvPohuhxS5
- EowAjqDyI3Kan1E9byzMqr4qIO0qm9v9gwM5R4Rl2/g8iEKn0OU6RYjhC2AgiOcij1rhfD
- 5BL2h0RTkJ7Uej2hbjzi4GEMBz3SyYQ=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Ael0JugYJiHVP5uWguAC9F5zluxYiHbUvNiFDqrhhOU=;
+ b=YOZqFfOowhOBb01uXzfFcfmuG5ycjion1M49CDeHPhE62QHLdLeYGYec3lk2tV3QV7gEta
+ TLao36coofHro+G2DA8Jid28IPCoId3bzRYG3bhkvLWYwWuqpzEN4pRCC6frOiXJqWlTAh
+ nPHmIjsGALhFTO5tOHEzl7dHgjUbyGg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-pU3DAI62OV2uPj36DDl57w-1; Mon,
- 24 Mar 2025 02:05:47 -0400
-X-MC-Unique: pU3DAI62OV2uPj36DDl57w-1
-X-Mimecast-MFC-AGG-ID: pU3DAI62OV2uPj36DDl57w_1742796346
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-HD1Ubo_TNp-nxP3PyTcApQ-1; Mon,
+ 24 Mar 2025 02:06:58 -0400
+X-MC-Unique: HD1Ubo_TNp-nxP3PyTcApQ-1
+X-Mimecast-MFC-AGG-ID: HD1Ubo_TNp-nxP3PyTcApQ_1742796417
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63A4619560BB; Mon, 24 Mar 2025 06:05:45 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0DE9A18EBE88; Mon, 24 Mar 2025 06:06:57 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D7F119560AD; Mon, 24 Mar 2025 06:05:44 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28AF5180176C; Mon, 24 Mar 2025 06:06:56 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 360A621E66C4; Mon, 24 Mar 2025 07:05:41 +0100 (CET)
+ id 4B8A221E66C4; Mon, 24 Mar 2025 07:06:53 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Bibo Mao <maobibo@loongson.cn>
 Cc: Song Gao <gaosong@loongson.cn>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v7 1/2] hw/loongarch/virt: Fix cpuslot::cpu set at last
- in virt_cpu_plug()
-In-Reply-To: <20250324030145.3037408-2-maobibo@loongson.cn> (Bibo Mao's
- message of "Mon, 24 Mar 2025 11:01:44 +0800")
+Subject: Re: [PATCH v7 2/2] hw/loongarch/virt: Replace destination error
+ with error_abort
+In-Reply-To: <20250324030145.3037408-3-maobibo@loongson.cn> (Bibo Mao's
+ message of "Mon, 24 Mar 2025 11:01:45 +0800")
 References: <20250324030145.3037408-1-maobibo@loongson.cn>
- <20250324030145.3037408-2-maobibo@loongson.cn>
-Date: Mon, 24 Mar 2025 07:05:41 +0100
-Message-ID: <875xjzvu8a.fsf@pond.sub.org>
+ <20250324030145.3037408-3-maobibo@loongson.cn>
+Date: Mon, 24 Mar 2025 07:06:53 +0100
+Message-ID: <871punvu6a.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -89,38 +89,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Bibo Mao <maobibo@loongson.cn> writes:
 
-> In function virt_cpu_plug(), Object cpuslot::cpu is set at last
-> only when there is no any error, otherwise it is problematic that
-> cpuslot::cpu is set in advance however it returns because of error.
+> In function virt_cpu_plug() and virt_cpu_unplug(), the error is
+> impossile. Destination error is not propagated and replaced with
+> error_abort. With this, the logic is simple.
 >
-> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->  hw/loongarch/virt.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index e25864214f..504f8755a0 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -973,8 +973,6 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->      LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
->      Error *err = NULL;
->  
-> -    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> -    cpu_slot->cpu = CPU(dev);
->      if (lvms->ipi) {
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
->          if (err) {
-> @@ -998,6 +996,8 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->          }
->      }
->  
-> +    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> +    cpu_slot->cpu = CPU(dev);
->      return;
->  }
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+I did not double-check myself that errors are impossible.
+
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
