@@ -4,117 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5898C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 12:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2068C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 12:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twgxb-0003XH-77; Mon, 24 Mar 2025 08:31:19 -0400
+	id 1twgzq-0004HV-5r; Mon, 24 Mar 2025 08:33:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1twgxZ-0003Wo-3g
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 08:31:17 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1twgxR-0000G8-Up
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 08:31:16 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1twgzk-0004Ge-VT
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 08:33:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1twgzg-0000SP-LV
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 08:33:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742819604;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=G2JGI4YQ8kpY47siz/tqiZn/e9QgxXkGITbzhe3gYfo=;
+ b=YH5+Ml2tjrDoNlnPKRVr8sZEeYzi1jA6rv+qsJwxI3EP5qNnXs0eAmUQFbqI9tb+RIPbCt
+ g/tEdX3eP8JCi/gLgXVIhW/gEUG3w7z5ZnA353r6avoFIs9SWZRmRaWzbZZKgGvHfCCtp4
+ y9gAGyKrCOjMeN0D47819UnESRSKeDY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-22gnzSrzO8O488OTirJZ7A-1; Mon,
+ 24 Mar 2025 08:33:23 -0400
+X-MC-Unique: 22gnzSrzO8O488OTirJZ7A-1
+X-Mimecast-MFC-AGG-ID: 22gnzSrzO8O488OTirJZ7A_1742819602
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C6EC01F44F;
- Mon, 24 Mar 2025 12:31:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742819462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wU6eImXGNJQjveIzP4uGnurBhHmfYpWBFHrX7b/QZ4k=;
- b=hbZWkcMV6XNQNsA85O9yG2tcQQGPJmdA1xZpzdNAiSZ9JkqOqwgFn7pyA9Ou3U5xeEsDJQ
- AOnjtzgwGPW0vK/ZubykWesE/HguuSdNglpcqcUXUYEMD5asE9gxPg0jyM2RdGt6rnT/tf
- yTS9t7jNNpcxa4hUBKiduEsGLQlix7w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742819462;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wU6eImXGNJQjveIzP4uGnurBhHmfYpWBFHrX7b/QZ4k=;
- b=o9vodFSD62+YpO4e4WaOD0Tn9frtFCIHWHwkoonLyWPO+wxV2Rse3g9k9voovGFiNiKuER
- JDBFtubinr2ShfCA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1742819462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wU6eImXGNJQjveIzP4uGnurBhHmfYpWBFHrX7b/QZ4k=;
- b=hbZWkcMV6XNQNsA85O9yG2tcQQGPJmdA1xZpzdNAiSZ9JkqOqwgFn7pyA9Ou3U5xeEsDJQ
- AOnjtzgwGPW0vK/ZubykWesE/HguuSdNglpcqcUXUYEMD5asE9gxPg0jyM2RdGt6rnT/tf
- yTS9t7jNNpcxa4hUBKiduEsGLQlix7w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1742819462;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wU6eImXGNJQjveIzP4uGnurBhHmfYpWBFHrX7b/QZ4k=;
- b=o9vodFSD62+YpO4e4WaOD0Tn9frtFCIHWHwkoonLyWPO+wxV2Rse3g9k9voovGFiNiKuER
- JDBFtubinr2ShfCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 37C5013874;
- Mon, 24 Mar 2025 12:31:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UjvZOoVQ4WfkIQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 24 Mar 2025 12:31:01 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Huacai Chen <chenhuacai@kernel.org>, Peter
- Xu <peterx@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar
- Rikalo <arikalo@gmail.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Aurelien
- Jarno <aurelien@aurel32.net>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH-for-10.1 3/3] migration/cpu: Remove
- qemu_{get,put}_[s]betl[s] macros
-In-Reply-To: <20250323225047.35419-4-philmd@linaro.org>
-References: <20250323225047.35419-1-philmd@linaro.org>
- <20250323225047.35419-4-philmd@linaro.org>
-Date: Mon, 24 Mar 2025 09:30:59 -0300
-Message-ID: <87r02ma9vg.fsf@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2940196D2CD; Mon, 24 Mar 2025 12:33:21 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.3])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 07515180A803; Mon, 24 Mar 2025 12:33:19 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	Alex Williamson <alex.williamson@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH] vfio: Open code vfio_migration_set_error()
+Date: Mon, 24 Mar 2025 13:33:15 +0100
+Message-ID: <20250324123315.637827-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.09 / 50.00]; BAYES_HAM(-2.79)[99.08%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[ilande.co.uk,linaro.org,kernel.org,redhat.com,flygoat.com,gmail.com,aurel32.net];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,22 +81,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+VFIO uses migration_file_set_error() in a couple of places where an
+'Error **' parameter is not provided. In MemoryListener handlers :
 
-> The following macros:
->
->  - qemu_put_betl()
->  - qemu_get_betl()
->  - qemu_put_betls()
->  - qemu_get_betls()
->  - qemu_put_sbetl()
->  - qemu_get_sbetl()
->  - qemu_put_sbetls()
->  - qemu_get_sbetls()
->
-> are not used in the whole code base, remove them.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+  vfio_listener_region_add
+  vfio_listener_log_global_stop
+  vfio_listener_log_sync
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+and in callback routines for IOMMU notifiers :
+
+  vfio_iommu_map_notify
+  vfio_iommu_map_dirty_notify
+
+Hopefully, one day, we will be able to extend these callbacks with an
+'Error **' parameter and avoid setting the global migration error.
+Until then, it seems sensible to clearly identify the use cases, which
+are limited, and open code vfio_migration_set_error(). One other
+benefit is an improved error reporting when migration is running.
+
+While at it, slightly modify error reporting to only report errors
+when migration is not active and not always as is currently done.
+
+Cc: Prasad Pandit <pjp@fedoraproject.org>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/common.c | 60 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 36 insertions(+), 24 deletions(-)
+
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 1a0d9290f88c9774a98f65087a36b86922b21a73..a591ce5b97ff41cdc8249e9eeafc8dc347d45fac 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -149,13 +149,6 @@ bool vfio_viommu_preset(VFIODevice *vbasedev)
+     return vbasedev->bcontainer->space->as != &address_space_memory;
+ }
+ 
+-static void vfio_set_migration_error(int ret)
+-{
+-    if (migration_is_running()) {
+-        migration_file_set_error(ret, NULL);
+-    }
+-}
+-
+ bool vfio_device_state_is_running(VFIODevice *vbasedev)
+ {
+     VFIOMigration *migration = vbasedev->migration;
+@@ -291,9 +284,14 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+                                 iova, iova + iotlb->addr_mask);
+ 
+     if (iotlb->target_as != &address_space_memory) {
+-        error_report("Wrong target AS \"%s\", only system memory is allowed",
+-                     iotlb->target_as->name ? iotlb->target_as->name : "none");
+-        vfio_set_migration_error(-EINVAL);
++        error_setg(&local_err,
++                   "Wrong target AS \"%s\", only system memory is allowed",
++                   iotlb->target_as->name ? iotlb->target_as->name : "none");
++        if (migration_is_running()) {
++            migration_file_set_error(-EINVAL, local_err);
++        } else {
++            error_report_err(local_err);
++        }
+         return;
+     }
+ 
+@@ -326,11 +324,16 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+         ret = vfio_container_dma_unmap(bcontainer, iova,
+                                        iotlb->addr_mask + 1, iotlb);
+         if (ret) {
+-            error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+-                         "0x%"HWADDR_PRIx") = %d (%s)",
+-                         bcontainer, iova,
+-                         iotlb->addr_mask + 1, ret, strerror(-ret));
+-            vfio_set_migration_error(ret);
++            error_setg(&local_err,
++                       "vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
++                       "0x%"HWADDR_PRIx") = %d (%s)",
++                       bcontainer, iova,
++                       iotlb->addr_mask + 1, ret, strerror(-ret));
++            if (migration_is_running()) {
++                migration_file_set_error(ret, local_err);
++            } else {
++                error_report_err(local_err);
++            }
+         }
+     }
+ out:
+@@ -1112,8 +1115,11 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
+     if (ret) {
+         error_prepend(&local_err,
+                       "vfio: Could not stop dirty page tracking - ");
+-        error_report_err(local_err);
+-        vfio_set_migration_error(ret);
++        if (migration_is_running()) {
++            migration_file_set_error(ret, local_err);
++        } else {
++            error_report_err(local_err);
++        }
+     }
+ }
+ 
+@@ -1229,14 +1235,14 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
+ 
+     if (iotlb->target_as != &address_space_memory) {
+-        error_report("Wrong target AS \"%s\", only system memory is allowed",
+-                     iotlb->target_as->name ? iotlb->target_as->name : "none");
++        error_setg(&local_err,
++                   "Wrong target AS \"%s\", only system memory is allowed",
++                   iotlb->target_as->name ? iotlb->target_as->name : "none");
+         goto out;
+     }
+ 
+     rcu_read_lock();
+     if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
+-        error_report_err(local_err);
+         goto out_unlock;
+     }
+ 
+@@ -1247,7 +1253,6 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+                       "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+                       "0x%"HWADDR_PRIx") failed - ", bcontainer, iova,
+                       iotlb->addr_mask + 1);
+-        error_report_err(local_err);
+     }
+ 
+ out_unlock:
+@@ -1255,7 +1260,11 @@ out_unlock:
+ 
+ out:
+     if (ret) {
+-        vfio_set_migration_error(ret);
++        if (migration_is_running()) {
++            migration_file_set_error(ret, local_err);
++        } else {
++            error_report_err(local_err);
++        }
+     }
+ }
+ 
+@@ -1388,8 +1397,11 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+     if (vfio_log_sync_needed(bcontainer)) {
+         ret = vfio_sync_dirty_bitmap(bcontainer, section, &local_err);
+         if (ret) {
+-            error_report_err(local_err);
+-            vfio_set_migration_error(ret);
++            if (migration_is_running()) {
++                migration_file_set_error(ret, local_err);
++            } else {
++                error_report_err(local_err);
++            }
+         }
+     }
+ }
+-- 
+2.49.0
+
 
