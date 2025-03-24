@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5CCC36002
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2866C36008
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twe5l-0002Bt-PK; Mon, 24 Mar 2025 05:27:33 -0400
+	id 1twe5O-000267-0s; Mon, 24 Mar 2025 05:27:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe5j-0002B6-PD
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:27:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe5L-000257-Tz
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:27:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe5i-0008Re-93
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:27:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe5J-0008Oj-1M
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:27:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742808448;
+ s=mimecast20190719; t=1742808421;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HlCug5h/YL/Mrt4g5QXyaYFsdFop57ufd2zmLpO6mr0=;
- b=ZhFYJ6ys3+NYq2MFpmZ3UorvDsmVGtvRbGUo6ZO1lJNoRT2Qx/bvctHy7n8o8OZLfpoic0
- YdnSzTsCQWuhwp8p+kcfxijfYgA0RJAOVpiQJ2XkMRAoTyyMiV9mXcg1IFcOw8JQRj1jym
- vaziXk4tBlrUClKLI1cDuKxjgXmFSKI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1TRwBJzCCXTwavx3YE5tbitMRUrqL2w8druys+ao5yI=;
+ b=gACtaanvN7Ed/KlGomoYc6FfXvbtluMCDZ854DsyIBlCe7pQDOf1UcW7vFS/0SUgWi8qr/
+ AibqTWRddCID0VrIQOQ/JzRB5ecsGKBKk3J+idjHVRrmILy3CDkNcoYsJYzUJbSSwT+LeD
+ hemaNdBq0/SlOJTNZxy4UE64UqRRuJg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-AKaHEHzFPPGUaJbRE_IWSg-1; Mon, 24 Mar 2025 05:27:27 -0400
-X-MC-Unique: AKaHEHzFPPGUaJbRE_IWSg-1
-X-Mimecast-MFC-AGG-ID: AKaHEHzFPPGUaJbRE_IWSg_1742808446
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d00017e9dso26823865e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 02:27:27 -0700 (PDT)
+ us-mta-652-mWFIfD48MFqts1OVqRnTRQ-1; Mon, 24 Mar 2025 05:26:59 -0400
+X-MC-Unique: mWFIfD48MFqts1OVqRnTRQ-1
+X-Mimecast-MFC-AGG-ID: mWFIfD48MFqts1OVqRnTRQ_1742808419
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-391459c0395so1801665f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 02:26:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742808446; x=1743413246;
+ d=1e100.net; s=20230601; t=1742808418; x=1743413218;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HlCug5h/YL/Mrt4g5QXyaYFsdFop57ufd2zmLpO6mr0=;
- b=DeA0qgqHSVRmQqIp08+fhuvyj1NJrmO+FZwusTP9oBcMze8sewM/OPVD2WDC6/kH1N
- 20Z/HTa25STmMytPBFoXUZrozDdRhBofBGfvKWXdqD+5OEnJa/PwOTMeV4/7unmi7rHr
- MhXlIKQFKSxcM+4beK7qxP3U6qfkfkmeg9y2nuCaM0udsWKNtnTURBw2FXXF/MCZuLvO
- iYLo4QGmHmTBoa2DyDq+sAdHDGEKQUI1vtaKYMcipqjWL4nSXMoiQzFxwEo/49Qz2i4L
- 32mKwwT2lXy7AWOChTg8Zh80T/4fwK67s6/1Oy9bXJhnUQ7xI3teMWCLHeCBJ28RvYen
- sCfw==
+ bh=1TRwBJzCCXTwavx3YE5tbitMRUrqL2w8druys+ao5yI=;
+ b=TkbB0SZi6IpJ/o9kIkwn0plTZIH9PpLM2EE9APuq6U5bTZ/3L8kMPKxnqygnpnbD2f
+ tovh+OSc+jEzaPIBuQbtsrf5y/PkIoB0jbwLKsnYyUSYJV2s6RQ+XYgMHyS5keG2pHna
+ GcJGriYvfRN4g0enkdHBmavNCj1ICf3YljH3+hsUVAq65b8vpPWsGVlYGZMkyhPQwlNJ
+ DzGX5MINttp7OndVD9KtAIGK4MfdpqcDkfOcMZecBGWBHOxw3s9IAcmf8FYRFMsZak7d
+ 5VkrzzkMU0B8K1Z3FHnL5sp9FzJLZdmxGnjh7rcIP56JI4WF6h5ZbGBaA10/d7410AnE
+ ecSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoIvHUyrHKI3viXCPrG1jujAZlOPQvXkhQg04FOoz/7mfezUn2Kjlz8K4RSk2hGRx9sIGCz7mfiJz2@nongnu.org
-X-Gm-Message-State: AOJu0YyDjhh5+qhnvcErrZMWF/MVc5ODwPs5HeglCHpnkWL+mPT/Sa4M
- ZKnJTowb/UcFOdvN2jYeUbIpW5bK4GJkAnfAQMYXrpV4q35ffxTrGkC70Gvv/TlFcmcLjZK3z50
- Lfxe0VYvR04MCTcX7mncZ+fT4QYn1WYQ7oaQWxtS3er7D612KCeIi
-X-Gm-Gg: ASbGncs3IKtKpMjGCNPUfxqKicj/W5ek66cC4PUZDLc8Tjk7xw0S0zIA8nEEO7lK4rY
- k5V2NbqHwwsd3wCPEUgqgSN5IaqpR8XrcLdA+Ih7LcLsgHFi+z1VE1s0R7u491/hQvEQu/VT/JP
- vkR1l0qjlrZxtDfGnWB0dnx+WoOkhjH7JldwdzKAvXLSZInEWvaGFwDcRF2gFLFaOngz7PACkJn
- aPpje9np3cwmGB69jedwAy2uefFoYsHOu0dFn6fuAL3hWGXAqYI6AH9MPhsYdigOSmJUuOXTOcE
- 38gP4JJs2tUM5JI3+FS+W7E5Mp5bgWXTWhTT/ASt
-X-Received: by 2002:a05:600c:3d19:b0:43d:209:21fd with SMTP id
- 5b1f17b1804b1-43d50a3ce66mr125281955e9.30.1742808445968; 
- Mon, 24 Mar 2025 02:27:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHpSdAlbfEzncK7le5qMdTh/zYwf2fyRzFiE67Rip51CnNPr+VEWpfTuQc4yVhywQLBG0Eohw==
-X-Received: by 2002:a05:600c:3d19:b0:43d:209:21fd with SMTP id
- 5b1f17b1804b1-43d50a3ce66mr125281685e9.30.1742808445545; 
- Mon, 24 Mar 2025 02:27:25 -0700 (PDT)
+ AJvYcCUDGNHR8QeSPePNIT4XTeZUXf+Uvt9HFYq3Yvejn4GBvd4Rd7qLIJpMRVR1owGFm28AsbRAdEgXVAvh@nongnu.org
+X-Gm-Message-State: AOJu0YyhXNwGQAKJ6f2Mx8Kuwo0JqCw/RBXzInCvan9PPqv5DJ9Xawky
+ IutapBqR82XAOJxlQK+dPiw98MKDPb8ogTjpyf+3wbgZlOph8j3AyVTZ9zYdf5NAMzWvyvMtl2R
+ Vr0WTDZ4wOtyTFVC3Ya/Tp7OHJoaDrbdz9QLoD+w4ZYRBaQd8snuO
+X-Gm-Gg: ASbGncunipbmnLGKVkcZt7bEBemx9MLR+TGqFULcPgidFLAaroL9KT/nazgi2BkxVZE
+ gBTUu69yOSCx7PSxoBIa0g3l6ZQP+OxmkEBAw0YIk20CkZcKFzYWl8pIrHwy7CrLql744FT47/n
+ zKmOHoysnEnh8amejnQYxxybM0rmxQS6eUrhPWeeIiRizG3hbK8R7faHUghVwQstTRdoQj0YDBu
+ e+idlz4yJ105cN55Sb8qNgiN6QgCE9UkBfW/vPjR8Y0XjZAQHSMKyG6MYmet4bji+Cp9oqZxMBT
+ JnDGuLQyKafXN/y/imejFeJDfrd9NPKBtdPejXI1
+X-Received: by 2002:a5d:6c6e:0:b0:38f:4f60:e669 with SMTP id
+ ffacd0b85a97d-3997f925e5bmr11253658f8f.29.1742808418529; 
+ Mon, 24 Mar 2025 02:26:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2mBigOr0poXJ9bnqGZMpoUcFWQjIuNvr30STLCXU8UHKgUHjlK0q27AAKbIWC4mCUuH9jdw==
+X-Received: by 2002:a5d:6c6e:0:b0:38f:4f60:e669 with SMTP id
+ ffacd0b85a97d-3997f925e5bmr11253629f8f.29.1742808418068; 
+ Mon, 24 Mar 2025 02:26:58 -0700 (PDT)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d4fceae03sm118694535e9.8.2025.03.24.02.27.24
+ ffacd0b85a97d-3997f9e6539sm10420586f8f.77.2025.03.24.02.26.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 02:27:25 -0700 (PDT)
-Message-ID: <84aadca1-7adf-491b-846c-b931a8e23398@redhat.com>
-Date: Mon, 24 Mar 2025 10:27:24 +0100
+ Mon, 24 Mar 2025 02:26:57 -0700 (PDT)
+Message-ID: <260c04df-0faf-40b2-b200-ca94fee54fd7@redhat.com>
+Date: Mon, 24 Mar 2025 10:26:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 2/6] target/i386: Register CPUClass:list_cpus
+Subject: Re: [PATCH-for-10.1 1/6] cpus: Introduce CPUClass::list_cpus()
+ callback
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -87,7 +88,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 References: <20250323224035.34698-1-philmd@linaro.org>
- <20250323224035.34698-3-philmd@linaro.org>
+ <20250323224035.34698-2-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -132,7 +133,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250323224035.34698-3-philmd@linaro.org>
+In-Reply-To: <20250323224035.34698-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -144,7 +145,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,16 +162,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/03/2025 23.40, Philippe Mathieu-Daudé wrote:
-> Register x86_cpu_list() as CPUClass:list_cpus callback.
-> Reduce its scope and remove the cpu_list definition.
+> Some targets define cpu_list to a method listing their
+> CPUs on stdout. In order to make list_cpus() generic,
+> introduce the CPUClass::list_cpus() callback.
+> When no callback is registered, list_cpus() defaults
+> to the cpu_list definition.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/cpu.h | 3 ---
->   target/i386/cpu.c | 3 ++-
->   2 files changed, 2 insertions(+), 4 deletions(-)
-
-Nice clean-up!
+>   include/hw/core/cpu.h | 2 ++
+>   cpu-target.c          | 8 +++++++-
+>   2 files changed, 9 insertions(+), 1 deletion(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
