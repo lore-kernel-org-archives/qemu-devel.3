@@ -4,147 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC1FC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F2BC36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twe8V-000590-Bi; Mon, 24 Mar 2025 05:30:23 -0400
+	id 1tweFf-0007IA-WF; Mon, 24 Mar 2025 05:37:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe8O-00058N-2X
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:30:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe8M-0000cb-Co
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:30:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742808612;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0JXU5pRRY9gsgeef4yq0ZYoQdOJr9GVQpFHfd70Mgww=;
- b=WSLU8oQETKxTklATa95SmcXSQbnZy/I78SrYEfLeoQBw5FQpzFi5zlIUXvkpLQnmIbioq8
- d/lxIY1LPI0sSfHcsCqwuaV/UYzIHRGw8TVaobKXcnvnMmfQ2DI1GfXJLctKWNkuioVaif
- 9GL9ADaZIElKhln+d3y6UTc7/IXpDAk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-qAOx7pMCMRCPwMQcAEIViQ-1; Mon, 24 Mar 2025 05:30:11 -0400
-X-MC-Unique: qAOx7pMCMRCPwMQcAEIViQ-1
-X-Mimecast-MFC-AGG-ID: qAOx7pMCMRCPwMQcAEIViQ_1742808609
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43ce245c5acso49319395e9.2
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 02:30:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742808609; x=1743413409;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0JXU5pRRY9gsgeef4yq0ZYoQdOJr9GVQpFHfd70Mgww=;
- b=m8HZ8irdXN2TH2q0stT6NWXFWqGKwVDqrPanVIVCZrL3cWorp949p1G36ZclgegOaO
- UzUvteJoX8NU/GJn5ObLKau2IDo3l8/zw+rt1SumCFQ6BfZFF8P/c3NEC5pwXBi+0RUn
- j4DBp7ujHFB7TkAhJI50TZ3TfUQyKAJdkhJBqISRPzXB9Mo7LVMW6mYfI+T4INDHlQQ/
- gX5W/olxelYRX7ALRbJkTBSd2DZlsj5t6uH4ktJX0kW+kskQ07M4VoqkFQNh1wcQjjZU
- p2y34ZR9vHt61fxPN9VFN/7y6RDK9ELp5NZe/9bNtKqd/VSVzQFhiIGmihk753JqskzL
- +NXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXM/yf+kHbr38cyKy0QDb7CBQDje5P6MoHc/48G45dh9B3a13fRJZRey9VTIK9J/kgXLbf5NhxShtTI@nongnu.org
-X-Gm-Message-State: AOJu0YyAp32DLtM8Q/NjR6zXYVe79oFF2uGAOH7VpwxwwyfWzivFXzAa
- VU9RugzP6RbIPxi0JcPfNGgl7dQfKpK+6yhHnDU3GTcaJJ/vn7JtDKmKYoWW/kGC4Hldf+CAfpK
- DBovA893u6pr7JwJNk6wVSw4xfgal4nQwCTSpHdGQd180CRc0tRUyAaXq/U5n1nU=
-X-Gm-Gg: ASbGncveNKwTpxVc5C7/2o9WqzEw2bPDOWmt3RhAbhsyYngvR32P/hiffQWzymU565e
- AS8EBIe5ACUvanRiN0K7zcvY1VQ62CuF2Z4w9CSybqShUpj1IeAVOxo5b4R0G7W3cS2Q4eBil8W
- oqu3Lfs3y/0xvSmkgvig7uZe101gsyNah3+PtEcO0wfX8leEoFksH4y2iJjmfNk5f3oA0hm4oLO
- 0/GTcgn8x+8lJ4IsTWBexlxSOOCQJXCXdqTce+oF9IzKKt9tbS/RB1bUMJIryHH5inuwGoN33Q6
- RKsxR6XblPb+lV3KO+zOVk0ax4oq1IyUlf3lzHcR
-X-Received: by 2002:a5d:47a5:0:b0:390:f699:8c27 with SMTP id
- ffacd0b85a97d-3997f902e3dmr9964694f8f.12.1742808609038; 
- Mon, 24 Mar 2025 02:30:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8EjFFlmetYJ2148IJ+GTBCpB/JwWCtg3HA/wWmoJ8XZAgFsncnABuA3gBtwzehm97oB0gjg==
-X-Received: by 2002:a5d:47a5:0:b0:390:f699:8c27 with SMTP id
- ffacd0b85a97d-3997f902e3dmr9964655f8f.12.1742808608589; 
- Mon, 24 Mar 2025 02:30:08 -0700 (PDT)
-Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9eef37sm10206764f8f.85.2025.03.24.02.30.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 02:30:08 -0700 (PDT)
-Message-ID: <8115b7be-03b8-4d08-8f7e-9d316f11e082@redhat.com>
-Date: Mon, 24 Mar 2025 10:30:07 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tweFb-0007En-HR
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:37:43 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tweFY-0001Rj-5q
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:37:43 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8AxQK3cJ+FnLPujAA--.62038S3;
+ Mon, 24 Mar 2025 17:37:32 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMCxPsfaJ+FnGn1dAA--.15661S2;
+ Mon, 24 Mar 2025 17:37:31 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 00/16] hw/intc/loongarch_pch: Cleanup with memory region ops
+Date: Mon, 24 Mar 2025 17:37:14 +0800
+Message-Id: <20250324093730.3683378-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 5/6] target/sparc: Register CPUClass:list_cpus
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-s390x@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20250323224035.34698-1-philmd@linaro.org>
- <20250323224035.34698-6-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250323224035.34698-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+X-CM-TRANSID: qMiowMCxPsfaJ+FnGn1dAA--.15661S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,43 +63,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/03/2025 23.40, Philippe Mathieu-Daudé wrote:
-> Register sparc_cpu_list() as CPUClass:list_cpus callback
-> and remove the cpu_list definition.
+This series patchset is to clean up with memory regions of loongarch pch
+pic interrupt controller. Originally there are three iomem regions:
+iomem32_low, iomem8, iomem32_highm. Since these regions only support
+4 bytes/1 byte/4 bytes access, it is divided into three regions.
 
-Copy-n-paste error in both, subject and patch description: This should be 
-about s390x, not sparc.
+Now it is merged into one region, this regions supports 1/2/4/8 bytes
+access.
 
-> diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-> index 5b7992deda6..1aac967a0ce 100644
-> --- a/target/s390x/cpu.h
-> +++ b/target/s390x/cpu.h
-> @@ -902,7 +902,6 @@ static inline uint8_t s390_cpu_get_state(S390CPU *cpu)
->   
->   /* cpu_models.c */
->   void s390_cpu_list(void);
+Patch 1-6 is to replace register name, no function change.
+Patch 7-16 is to use unifed memory region iomem, and supports 1/2/4/8
+bytes access with read/write ops for this region, and merge three
+regions above into one.
 
-Don't you want to remove the prototype here, too? (and make the function 
-static in the .c file)
+---
+  v1 ... v2:
+    1. Add 1/2/4/8 bytes access support with memory region read and
+       write ops.
+    2. Merge three memory regions iomem32_low, iomem8 and iomem32_high
+       into one region iomem.
+    3. Merge trace functions for ops in above three memory regions into
+       one trace function
+---
+Bibo Mao (16):
+  hw/intc/loongarch_pch: Modify name of some registers
+  hw/intc/loongarch_pch: Modify register name PCH_PIC_xxx_OFFSET with
+    PCH_PIC_xxx
+  hw/intc/loongarch_pch: Remove some duplicate macro
+  hw/intc/loongarch_pch: Set version information at initial stage
+  hw/intc/loongarch_pch: Use relative address in MemoryRegionOps
+  hw/intc/loongarch_pch: Discard write operation with ISR register
+  hw/intc/loongarch_pch: Use generic read callback for iomem32_low
+    region
+  hw/intc/loongarch_pch: Use generic read callback for iomem32_high
+    region
+  hw/intc/loongarch_pch: Use generic read callback for iomem8 region
+  hw/intc/loongarch_pch: Use generic write callback for iomem32_low
+    region
+  hw/intc/loongarch_pch: Use generic write callback for iomem32_high
+    region
+  hw/intc/loongarch_pch: Use generic write callback for iomem8 region
+  hw/intc/loongarch_pch: Use unified trace event for memory region ops
+  hw/intc/loongarch_pch: Rename memory region iomem32_low with iomem
+  hw/intc/loongarch_pch: Set flexible memory access size with iomem
+    region
+  hw/intc/loongarch_pch: Merge three memory region into one
 
-  Thomas
+ hw/intc/loongarch_pch_pic.c            | 339 +++++++++----------------
+ hw/intc/trace-events                   |   8 +-
+ hw/loongarch/virt.c                    |   6 -
+ include/hw/intc/loongarch_pic_common.h |  57 ++---
+ 4 files changed, 147 insertions(+), 263 deletions(-)
 
 
-> -#define cpu_list s390_cpu_list
->   void s390_set_qemu_cpu_model(uint16_t type, uint8_t gen, uint8_t ec_ga,
->                                const S390FeatInit feat_init);
->   
-> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-> index 1f75629ddc2..ac05e82f0ac 100644
-> --- a/target/s390x/cpu.c
-> +++ b/target/s390x/cpu.c
-> @@ -378,6 +378,7 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
->                                          &scc->parent_phases);
->   
->       cc->class_by_name = s390_cpu_class_by_name;
-> +    cc->list_cpus = s390_cpu_list;
->       cc->mmu_index = s390x_cpu_mmu_index;
->       cc->dump_state = s390_cpu_dump_state;
->       cc->query_cpu_fast = s390_query_cpu_fast;
+base-commit: 71119ed3651622e1c531d1294839e9f3341adaf5
+-- 
+2.39.3
 
 
