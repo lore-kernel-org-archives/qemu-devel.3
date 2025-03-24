@@ -4,79 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996F1C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A17BC36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twmIB-0002aO-V3; Mon, 24 Mar 2025 14:12:55 -0400
+	id 1twmXB-0004sh-RJ; Mon, 24 Mar 2025 14:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1twmIA-0002Zx-8w
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:12:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1twmI8-0004H3-AZ
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:12:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742839970;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zKhB18Cek92V2nGHHwD6m9Adcuf8cpkp56Pu+RdaoXA=;
- b=AdW83w+cCkEhySe7PtRd0YFCjxawCLCkW0rnsvtJYgpUrNkrFqlztGWeDxR5PvnXChpvHD
- whR4J9C7pIzOkp/G/MQ0/V67xwXK/IzDHDXBaYLp7/g5gflTJnFeNi2l8GHnLQUCwpkrZz
- ccmpAtrcscenKiDOQsimQ1f+zVCDKqU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-AaRJItl_NrygrC4i45r78A-1; Mon,
- 24 Mar 2025 14:12:43 -0400
-X-MC-Unique: AaRJItl_NrygrC4i45r78A-1
-X-Mimecast-MFC-AGG-ID: AaRJItl_NrygrC4i45r78A_1742839961
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27B2718EBE88; Mon, 24 Mar 2025 18:12:41 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.139])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EF38C180B48C; Mon, 24 Mar 2025 18:12:39 +0000 (UTC)
-Date: Mon, 24 Mar 2025 14:12:33 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: zoudongjie <zoudongjie@huawei.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, fam@euphon.net,
- hreitz@redhat.com, alex.chen@huawei.com, chenjianfei3@huawei.com,
- eric.fangyi@huawei.com, luolongmin@huawei.com,
- mujinsheng@huawei.com, qemu-block@nongnu.org,
- qemu-stable@nongnu.org, renxuming@huawei.com,
- suxiaodong1@huawei.com, wangjian161@huawei.com,
- wangyan122@huawei.com, yebiaoxiang@huawei.com, zhuyangyang14@huawei.com
-Subject: Re: [PATCH v2 2/2] qapi/throttle: add timeout parameter for
- qmp_block_set_io_throttle()
-Message-ID: <20250324181233.GI64982@fedora>
-References: <20250321070917.2889854-1-zoudongjie@huawei.com>
- <20250321070917.2889854-3-zoudongjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twmX8-0004qz-6v
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:28:24 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twmX5-00063u-Nv
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:28:21 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-225477548e1so88342495ad.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742840898; x=1743445698; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FW+P+KmJAHBmglYRWoVPylz5k0iBKQBwwS8egCK1yuE=;
+ b=UqVjw4gGWcu55cawTT9jp2bG0L/TbqSbQrrgTXZc7ACNNRAP/lG1dVvByGHrygpMBX
+ RUnWfaSkP8LKOl44X18tj/+RekmB60Sf6qEgNTgAoRsL/5sab5kXMiOWxfZSmfL53dxm
+ UWXYFUhETWZzkvLZqkmgo6drW/9yTBwetWPlS387LTF558L+0319qBCLnvHs2gekfPBd
+ i0gIVa4kBFtZCpxp79jGkRfraa2MZMzR2KPDf3YKEBdsrJdJdrBy07abRS8bdSU/CqXg
+ mEKEK0RgqDHEb/N9YLoZDKhmWYnRvD1Hqop/H3C+8QOsumNjbk0FXqQhnXMr04RlE7Ur
+ k/gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742840898; x=1743445698;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FW+P+KmJAHBmglYRWoVPylz5k0iBKQBwwS8egCK1yuE=;
+ b=HOkwCVzApcwciEzUOpKYofj0ipwqMfZwYXIZ1uqUfyHGXkvq9IQ2dnrhyWVRi2taXW
+ IrV5bd/RnIfsq+YZ4BZ7zMw1TzS377b3dfF2ITnDHMJpCieTLU8ojsNys7Mt5cs/2k6L
+ P3a13EvyGWRpRdNwHcJTK5WUIeHuIFv7P3OeT6sRhnXzsIU10J2tgVcbrw4E5XsUkXzH
+ RZWsAw3N1Ev9nE9ObMwkdXKKmiL0MXULMuJWg4xSIDFLfbXcnSztNmNzDKk0MkdwnbEg
+ jSori8mu5Ll8W0DkxWi/MxyU/d+isThBcnFjiI+HugGfOJoKHemHpNbkGednUZyjh5z7
+ yksQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4dPFFDcIY57qZDrzrBB08c2s1hC4cqyF7vkvJLLZ6KnnC9k/4veQv0LmWMGAZisGx9GTVEQmEkJv7@nongnu.org
+X-Gm-Message-State: AOJu0YwYL40kVDMYWVgEJtIz8MPFR6itq3rnBNAG4VoH7zi9ToKFI9II
+ nlNsZFIplt1VvnTH4Xng3z70XS/yziokP1t9g42Zrx2cYOQCko7npxJS5lUwoH0=
+X-Gm-Gg: ASbGncuuaok3zGzZwVGZdfaCqp8BUEPu1lEyo+apH2Zs/4Ry68yyF/s1pohZvggPjh/
+ tGl3wT1CKDYVNbmtQoRx5qwMhV/TVG1Kfu7wBt9RzwCnsHbT+WsOuCEIAEn0Q5IzulXIOmSwLVq
+ slSBFaowvh1iJ4Rz8BC+aqMfrmJ8Aeb5jRoR4wHzJI642eXRMIDXG/UPUPsVp6i/sRXQzDeKDsv
+ 3/4nKrhhSIhHfR+uzGpro7XEEOBNdvkYJ++GZzS1b7QERl8BvCUDcrEZ0opXGrMTglkpX72Qt5x
+ YwJP+SGEfsZ5McMnw9PkO5rg9y4bjn8cq8RRN/0PxkdF3Vz9pjKhVuW+gOdbVi/FSGDxnmbMqPV
+ haP8SrxHe
+X-Google-Smtp-Source: AGHT+IGdgWKWjwZpByro2ssN63XugXkhO6cYBe3N6+jgzS4RmZazZkZdgPCNQvTUx/YamU9ZG2VHWg==
+X-Received: by 2002:a17:902:d4c5:b0:221:7e36:b13e with SMTP id
+ d9443c01a7336-22780c7a32dmr222295215ad.12.1742840897809; 
+ Mon, 24 Mar 2025 11:28:17 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-227811b80b7sm74280905ad.110.2025.03.24.11.28.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Mar 2025 11:28:17 -0700 (PDT)
+Message-ID: <d3d564b8-1b74-4569-afc3-23c0a7d3bf25@linaro.org>
+Date: Mon, 24 Mar 2025 11:28:15 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="lGbyohPnbRQ7aWrs"
-Content-Disposition: inline
-In-Reply-To: <20250321070917.2889854-3-zoudongjie@huawei.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 0/6] cpus: Convert cpu_list definition to
+ CPUClass:list_cpus callback
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-s390x@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20250323224035.34698-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250323224035.34698-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,51 +111,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/23/25 15:40, Philippe Mathieu-Daudé wrote:
+> 'cpu_list' might be defined per target, and force code to be
+> built per-target. We can avoid that by introducing a CPUClass
+> callback.
+> 
+> This series combined with another which converts CPU_RESOLVING_TYPE
+> to a runtime helper, allows to move most of cpu-target to common.
+> 
+> Philippe Mathieu-Daudé (6):
+>    cpus: Introduce CPUClass::list_cpus() callback
+>    target/i386: Register CPUClass:list_cpus
+>    target/ppc: Register CPUClass:list_cpus
+>    target/sparc: Register CPUClass:list_cpus
+>    target/sparc: Register CPUClass:list_cpus
+>    cpus: Remove #ifdef check on cpu_list definition
 
---lGbyohPnbRQ7aWrs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Modulo the s390x niggles Thomas pointed out,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-On Fri, Mar 21, 2025 at 03:09:17PM +0800, zoudongjie wrote:
-> From: Zhu Yangyang <zhuyangyang14@huawei.com>
->=20
-> Calling qmp_block_set_io_throttle() will be blocked for a long time
-> when a network disk is configured and the network failure is just about
-> to occur.
->=20
-> Therefore, we add a timeout parameter for qmp_block_set_io_throttle to co=
-ntrol
-> its execution duration.
->=20
-> The default value of timeout is 0, that is infinite wait, consistent with
-> previous behavior.
->=20
-> Signed-off-by: Zhu Yangyang <zhuyangyang14@huawei.com>
-> ---
->  block/block-backend.c                       | 14 +++++++++++++-
->  block/qapi-system.c                         | 10 +++++++++-
->  include/system/block-backend-global-state.h |  1 +
->  qapi/block-core.json                        |  5 ++++-
->  4 files changed, 27 insertions(+), 3 deletions(-)
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---lGbyohPnbRQ7aWrs
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfhoJEACgkQnKSrs4Gr
-c8hdcQgAvKKmAzjrN4WetaIsjwW3/8HJ/xQiepv027SWJGkyPrctSmF3Kjn3xVLo
-xX2GUsHBMWymrt1moq3w3u7qfvqR7ROGGIGfLXcJXPbTBtpuKtwzrR51hvH94VwS
-PvA6EyR5yhFXKPNB+nOmci9DgWhuG/3iWIhU2lahFQ6o/0kyIiv0OgEBKlNT6P7X
-2zbQVwuw/yk4cfK3G+z9uqPSJUawJABR5SXoEkV095EuqZZ8eaJaU844+BrxfC46
-rvu2cV8JuQvxaC/NMhpAqsHjUhKD9kJyDTo83oaxOHcqsovqer9shADuKd495tlH
-s21ignEpnTjE3OnrER60jsd/dWZQ0A==
-=KGED
------END PGP SIGNATURE-----
-
---lGbyohPnbRQ7aWrs--
-
+r~
 
