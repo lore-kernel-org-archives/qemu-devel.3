@@ -4,70 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D6F4C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F35C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twizj-0006gK-Tp; Mon, 24 Mar 2025 10:41:39 -0400
+	id 1twj4V-0007kg-4S; Mon, 24 Mar 2025 10:46:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1twizh-0006fa-Hf
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:41:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1twj4T-0007kT-1g
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:46:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1twizf-0002jQ-AE
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:41:37 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1twj4R-0003FB-E0
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:46:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742827293;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1742827590;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=372Y/nlyiXulFaN9P6j/PsVFmFNsHrTyxRUnaK0U/v8=;
- b=HTIMfJOxAYjLNEbKvzVdmEX0WcGSNZeTWruoJgudFN96CqvQQhBLwjRTPW3A+y8Zcgu6UY
- 44LpDCQVHtFVRaygQTSefnKpI59JV3gQVjEAPrxlcTA8xs8ZLrrhu2TbwqzY/ZAuGez/Ks
- NYHv0pEgK5r08U1ewiX2I3gvyE15xEk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-ymiLp6X6OZOl5dghuAYrfg-1; Mon,
- 24 Mar 2025 10:41:29 -0400
-X-MC-Unique: ymiLp6X6OZOl5dghuAYrfg-1
-X-Mimecast-MFC-AGG-ID: ymiLp6X6OZOl5dghuAYrfg_1742827288
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83E7F196D2DE; Mon, 24 Mar 2025 14:41:28 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.139])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0A8019541A5; Mon, 24 Mar 2025 14:41:27 +0000 (UTC)
-Date: Mon, 24 Mar 2025 10:41:26 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: saz97 <sa.z@qq.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- qemu-block@nongnu.org
-Subject: Re: [PATCH 0/1 RFC] FUSE Export Coroutine Integration Cover Letter
-Message-ID: <20250324144126.GA64982@fedora>
-References: <tencent_4E3504A0739AEE8199766C5415093D24CE05@qq.com>
+ bh=Y/6dJM7WjLY3R3rYiRGivphCR3M2STG0pH0mvJdxxt4=;
+ b=MDDR5IvsldTsP6adikXPqNuWpwuPwuTkmDJzcWEDWgWA+IrNhMlzpS6J2IaMNg3KjaamT6
+ kpk8a6e64zYofKj2x4NubHNwvvGY7KiZjmIpnlMk5xg2Pa6YTD1F4fRGRUsZaRGLB521iE
+ 2FlHh6PGKzAIbzSP+FYk1+0C/XWzq6k=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-549-9ys2yllMNLeBcW3nO9MnhA-1; Mon, 24 Mar 2025 10:46:27 -0400
+X-MC-Unique: 9ys2yllMNLeBcW3nO9MnhA-1
+X-Mimecast-MFC-AGG-ID: 9ys2yllMNLeBcW3nO9MnhA_1742827586
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3914bc0cc4aso2302807f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 07:46:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742827586; x=1743432386;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y/6dJM7WjLY3R3rYiRGivphCR3M2STG0pH0mvJdxxt4=;
+ b=E6FitzmtHvXJ3HQY3VmJBEdxq95Ck3C82hdwfdnxkXKhX04kmpJoJwDXYgshaMz2/T
+ 2TmD/NoTY93GXTHFlBLkji88OHM0kVUsICbb5+MAdPR3oEkypilcyW3DhWbHFkx38bXi
+ RTriLbPeyVQSpgXdk1WpF64qYFChn1+oS9t8f8Yz1HtJ8/lxBlnwozv7r+zSo3GziBQj
+ O6qOwhxipwfygE4MlcDuzTmRY5MwUTSuH5VutQ/fjM2TINVktMMCmZQnNsyHOz64r50Q
+ QxQX+Dk7jq3lISR3aRhOx09Ks+rz83TozbaCnsnrz8FyfCabkZZCJoBdPVNtIdXCSKjc
+ ZQbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW48fmekOkj+5FVT5n1ZuBEAetMYqHxdj4WiNDHtOEyPGldKiF7oEkDVcHo1WRpW2vVrJOAX7ri/GEo@nongnu.org
+X-Gm-Message-State: AOJu0YxcObiOE3ft08IllkBCZMzx2/MBouVFY42Y6tdvIWa66xxiYmNb
+ wWhOeHDq6mw81JyvhZYQ5Ou72RooD7pR1D3oQFY+HhlOkYTA8Ayd/etIsffE+qvYthAyMRpmIeJ
+ YQXBuCEABdC2rH8dCJzIFydrHHm1W+UGYZPojM5NQ+xr3HLfHgp5/
+X-Gm-Gg: ASbGncu+f4as6SISHgujWXh+UBAP/anxU7QxGKKc3B1nf4b9i82w8CSLCIJss/qG7pI
+ /R2xpDKbrlzKDSAy6bjepYzFUVSqKCWB0joH4Ay5vduNUJSAW3hyMoaobN9a38rb+0CJB3mj0J3
+ fHt0k+Z9WE6x8KQmU8QA4ob+qaxCZPaUniMxgdwOYj8iVVGkRgUtqXnVUPDqfKZHUNCEJuKu7sj
+ Kop62zDTTO82sSQuPS+474cuwCufdR7bs5rkjcuPLN27lMsL0yAwPY5eLPhnCD+OkSzgUqNc0si
+ /s7o4ukzEN5BS3W+u+iIvL9u9kwWGncIetwp0pwSLQplqVVnMNJDF8JRI1aKgpg=
+X-Received: by 2002:a05:6000:1543:b0:391:3cf6:95fd with SMTP id
+ ffacd0b85a97d-3997f9144c4mr11349609f8f.30.1742827585762; 
+ Mon, 24 Mar 2025 07:46:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEP/W0gruz98J2WFbQWaPv89KM7O6uPUJB1KPmANBzds8Wog7IyfcxgPu98nLyPRX6rdHK9JQ==
+X-Received: by 2002:a05:6000:1543:b0:391:3cf6:95fd with SMTP id
+ ffacd0b85a97d-3997f9144c4mr11349576f8f.30.1742827585262; 
+ Mon, 24 Mar 2025 07:46:25 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39ab907da9asm8567283f8f.90.2025.03.24.07.46.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Mar 2025 07:46:24 -0700 (PDT)
+Message-ID: <b0465153-3781-44e7-a012-a5994dcbbdae@redhat.com>
+Date: Mon, 24 Mar 2025 15:46:23 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="hBKmaGxpfIv8LLA7"
-Content-Disposition: inline
-In-Reply-To: <tencent_4E3504A0739AEE8199766C5415093D24CE05@qq.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
+ infrastructure for smmuv3-accel device
+Content-Language: en-US
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ jgg@nvidia.com, ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
+ <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
+ <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
+ <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
+ <Z9hzmzHfWw18OyGO@Asurada-Nvidia>
+ <11895c78-d6ab-40c8-a500-4abed1565234@redhat.com>
+ <Z9r7dT/5E+YToqc9@Asurada-Nvidia>
+ <c70fdb0c-ef56-4a52-8591-31df51ff0eec@redhat.com>
+ <Z9sORySxEEL0VXMq@Asurada-Nvidia>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <Z9sORySxEEL0VXMq@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -82,124 +126,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---hBKmaGxpfIv8LLA7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 24, 2025 at 04:05:09PM +0800, saz97 wrote:
-> This patch series refactors QEMU's FUSE export module to leverage corouti=
-nes for read/write operations,
-> addressing concurrency limitations and aligning with QEMU's asynchronous =
-I/O model. The changes
-> demonstrate measurable performance improvements while simplifying resourc=
-e management.
->=20
-> 1. technology implementation
->=20
->    according to Stefan suggerstion, i move the processing logic of read_f=
-rom_fuse_export into a coroutine for buffer management.
->    and change the fuse_getattr to call: bdrv_co_get_allocated_file_size()=
-=2E   =20
->=20
-> 2. performance summary
->=20
->    For the coroutine_integration_fuse test, the average results for iodep=
-th=3D1 and iodepth=3D64 are as follows:
->     ------------------------------- =20
->     Average results for iodepth=3D1:
->     Read_IOPS: coroutine_integration_fuse: 4492.88 | origin: 4309.39 | 4.=
-25% improvement
->     Write_IOPS: coroutine_integration_fuse: 4500.68 | origin: 4318.68 | 4=
-=2E21% improvement
->     Read_BW: coroutine_integration_fuse: 17971.00 KB/s | origin: 17237.30=
- KB/s | 4.26% improvement
->     Write_BW: coroutine_integration_fuse: 18002.50 KB/s | origin: 17274.3=
-0 KB/s | 4.23% improvement
->     --------------------------------
->     -------------------------------
->     Average results for iodepth=3D64:
->     Read_IOPS: coroutine_integration_fuse: 5576.93 | origin: 5347.13 | 4.=
-29% improvement
->     Write_IOPS: coroutine_integration_fuse: 5569.55 | origin: 5337.33 | 4=
-=2E33% improvement
->     Read_BW: coroutine_integration_fuse: 22311.40 KB/s | origin: 21392.20=
- KB/s | 4.31% improvement
->     Write_BW: coroutine_integration_fuse: 22282.20 KB/s | origin: 21353.2=
-0 KB/s | 4.34% improvement
->     --------------------------------
->    Although all metrics show improvements, the gains are concentrated in =
-the 4.2%=E2=80=934.3% range, which is lower than expected. Further investig=
-ation using gprof reveals the reasons for this limited improvement.
->=20
-> 3. Performance Bottlenecks Identified via gprof
->    After running a fio test with the following command:
->    fio --ioengine=3Dio_uring --numjobs=3D1 --runtime=3D30 --ramp_time=3D5=
- \
->     --rw=3Drandrw --bs=3D4k --time_based=3D1 --name=3Djob1 \
->     --filename=3D/mnt/qemu-fuse --iopath=3D64
->    and analyzing the execution profile using gprof, the following issues =
-were identified:
->=20
->    3.1 Increased Overall Execution Time
->    In the original implementation, fuse_write + blk_pwrite accounted for =
-8.7% of total execution time (6.0% + 2.7%).
->    After refactoring, fuse_write_coroutine + blk_co_pwrite now accounts f=
-or 43.1% (22.9% + 20.2%).
->    This suggests that coroutine overhead is contributing significantly to=
- execution time.
->=20
->    3.2 Increased Read and Write Calls
->    fuse_write calls increased from 173,400 =E2=86=92 333,232.
->    fuse_read calls increased from 173,526 =E2=86=92 332,931.
->    This indicates that the coroutine-based approach is introducing redund=
-ant I/O calls, likely due to unnecessary coroutine switches.
->=20
->    3.3 Significant Coroutine Overhead
->    qemu_coroutine_enter is now called 1,572,803 times, compared to ~476,0=
-57 previously.
->    This frequent coroutine switching introduces unnecessary overhead, lim=
-iting the expected performance improvements.
+On 3/19/25 7:34 PM, Nicolin Chen wrote:
+> On Wed, Mar 19, 2025 at 07:09:33PM +0100, Eric Auger wrote:
+>>> Option means something like this:
+>>> 	-device smmuv3,accel=on
+>>> instead of
+>>> 	-device "smmuv3-accel"
+>>> ?
+>>>
+>>> Yea, I think that's good.
+>> Yeah actually that's a big debate for not much. From an implementation
+>> pov that shall not change much. The only doubt I have is if we need to
+>> conditionnaly expose the MSI RESV regions it is easier to do if we
+>> detect we have a smmuv3-accel. what the option allows is the auto mode.
+> Mind elaborating your doubt about the MSI RESV region?
+>
+> Do you mean how VMS code should tag "accel=on" option and generate
+> RMR nodes in the IORT table?
+yes that was my point. Earlier we detected whether a "nested-smmu" was
+part of the object hierarchy. Now we do the same with smmu type and
+check if accel=on. I guess we can retrieve the property value but this
+is worth to test.
+>
+>>> We certainly can't do case (a): not all TLBI commands gives an "SID"
+>>> field (so would have to broadcast, i.e. underlying SMMU HW would run
+>>> commands that were supposed for emulated devices only); in case of
+>>> vCMDQ, commands for emulated devices would be issued to real HW and
+>> I am still confused about that. For instance if the guest sends an
+>> NH_ASID, NH_VA invalidation and it happens both the emulated device and
+>> VFIO-device share the same cd.asid (same guest iommu domain, which
+>> practically should not happen) why shouldn't we propagate the
+>> invalidation to the host. Does the problem come from the usage of vCMDQ
+>> or would you foresee the same problem with a generic physical SMMU?
+> Host (HW) would end up with executing commands that were issued for
+> emulated devices, which impacts performance.
+>
+> With vCMDQ, QEMU cannot trap command queue because all invalidation
+> commands will be issued to HW directly from the guest kernel driver.
+> This includes TLBI and ATC_INV commands. It's probably okay to run
+> TLBI commands with vCMDQ (again perf impact), while ATC_INV commands
+> would result in "unkonwn SID" errors or directly ATC_INV timeouts.
+OK understood. Thanks and sorry for the misunderstanding
 
-Due to the remaining performance issues, let's leave this contribution
-task here.
-
-Please focus on submitting your Google Summer of Code application at
-https://summerofcode.withgoogle.com/ by April 8th.
-
-Thanks,
-Stefan
-
->=20
-> saz97 (1):
->   Integration coroutines into fuse export
->=20
->  block/export/fuse.c | 190 +++++++++++++++++++++++++++++---------------
->  1 file changed, 126 insertions(+), 64 deletions(-)
->=20
-> --=20
-> 2.34.1
->=20
-
---hBKmaGxpfIv8LLA7
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfhbxYACgkQnKSrs4Gr
-c8ifIQgAiFzTH8709F6HFz3TMcsBG7F2HKJB+5OxxkFW6V4ZfQc30LGLTCkenTfq
-NQObEa5C1tTEThhbhCJuo6LMHITetjbgJ3Gg4mVKfSEwMFmDr59wMEZljHOeqCzq
-NGRcV4R1jRgtPYimmGFzUzPyplOkxo39zBMeD0mv6JCKvEE2TdUGrzS4DlM+zsd3
-LSdz23aaFDZnup0XBsC03pryIJNS4Q9NhcEhtpw9MfQ5uI1dQ40sDfSyKKKYZo3k
-zl5X2MDv92gBhSIZaSbuEiZx9hOmiax3ApSpTwMegiccSQ6fNiHtnewDRHnQrbUY
-I5j/IKpwdjf4LHUO8tc213XgghELRA==
-=yQll
------END PGP SIGNATURE-----
-
---hBKmaGxpfIv8LLA7--
+Eric
+>
+> Thanks
+> Nicolin
+>
 
 
