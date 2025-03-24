@@ -4,147 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C8BC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07790C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twe6u-0004Bp-SK; Mon, 24 Mar 2025 05:28:45 -0400
+	id 1twe8g-0005IK-MQ; Mon, 24 Mar 2025 05:30:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe6t-00047o-Ik
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:28:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe6r-0000BW-2D
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:28:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742808520;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fQbssTF4Stj/GdfTKHhtwUnOn5wgCucrNDLTffE1AaE=;
- b=F72wWciBf+bP9tzZtdlxD4Q0IlY8FWG5/n4gB6bEwE0x0gJgN1Gqgo0Ppe4ybx1zbySGpx
- FZdHJF5zrjXFXYuY57hI2JHL25eIFbdKse7bM4tZ8eKHtMekq8NYBQ0DE8WNAbykWgwSYT
- 9mW1M78JdkK7ff0j6a/09Qrv/Fpc6yo=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-L3K4NKhEM7CXGCkXkLRhIw-1; Mon, 24 Mar 2025 05:28:38 -0400
-X-MC-Unique: L3K4NKhEM7CXGCkXkLRhIw-1
-X-Mimecast-MFC-AGG-ID: L3K4NKhEM7CXGCkXkLRhIw_1742808518
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d51bd9b41so24360475e9.3
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 02:28:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1twe8e-0005F3-VW
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:30:33 -0400
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1twe8c-0000dq-SZ
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:30:32 -0400
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-476805acddaso48028921cf.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 02:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742808628; x=1743413428; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GH/hfBW+1DtRhfgFa0lH6ukFMCurbYIWadTLpiL6pfU=;
+ b=RW6MDcX9YJiMVwhHMiSnmgFY84S0iATRPlCizWpWQMFp2inJBEez6R77pOgH43E1Ka
+ ltAIrU08Xi0fRmyrwZsvOEkaYhKetptqQk9h1Xz7+gwUIUjJVw6EIWAQ9tKZ6Ut4MIDp
+ rVWxhcmaaZAQhF4yJqseZMZkV2Dyu8oBnChaI1m0XNNBB61/sgvnTbcgZYnZXx5boH2z
+ 8okfzOADW6HwW8ODd42Hx905OcIjukfiC8mWeLDKbQJg8OXujd2RaAE1R0MvJRZ2ANPm
+ Yq0OeXRpWHkexi5Mtondmft0RcFtJYat0NYKEMgANlD/ZfcMjbULw09cCWS9svKg5wJz
+ r0Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742808517; x=1743413317;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fQbssTF4Stj/GdfTKHhtwUnOn5wgCucrNDLTffE1AaE=;
- b=MkV7F0ArJ0MH/qyG9Z4XyBSqaIbUSsoQXXrVDR7JT2DySr9AKB7vog1uESIaYXJ+95
- kqTc7HlNTgdbunWb+a3KBjrGE6IaGYwl8T+BzVLBI31aXvHsBUcCKX2ZxuKJOEurMU0w
- XR016uZzyQk4hiYDyjiYG1goG3O7KdqIaoE/Asl6aLXhciW+zBbqfXmX/eU6IvaGeCkG
- 525PEy1g1sYUntchyxtJEQpFh+jxtFJPN4g5vvXQxT8hjp8hP0M4bdmHwC0w3bfzV5Rm
- Evv1LRDnNgSWscLfNmccQp6FDFm0CjkVDOYpGu/j0AIzlGTTA1E5hHNuLZCDNnaOYCYw
- RKDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvNtp2WF1nQ8WuBsEvzMIH6W6FDwVHGPud60C/T+LpQOpRpNzucwCwLr2wxVtxENzxNsGna61uterw@nongnu.org
-X-Gm-Message-State: AOJu0YzYNcU0/t6X/49rRnQXpfsFwBKxfdC0vlTNuyp/LJeoTJGFIxuj
- P/Z8HQkL/tbpUuCFCzM2PFT/q7esW1N9R8NheXP+bHaWnI7Qjx0EM2goV3LDiMW/Ior1A6T3BW1
- VjMd9A2UzQqVOw3DNgDiCAOiP99QFRdv5g3odbwee1kVi2jgmo0J2
-X-Gm-Gg: ASbGncug0RZVYY9i2liyGlerU28j0DnNfr7k7q/JRr75CcNCw6HsR6EN9cM8f9/EQvf
- IXet2At8/7SPNTFJ5WcZaoxjw7skZunWqZ/3nQkZDzAlNm7ZHZkI0tKls1wa+lhHYl0cQh6iRfB
- AYn8fo4280S8TKPXbh0Gc+PJC7xcUP7Xny9zgPR3RcanZzKmUn1YNC7Z8q2aJ2riiZyaIPzNDhN
- PRC7VClP31RDATu8XBG3zh+7cKddqxpEP+wtMRvGjV7rdtlFqkAoUGi0XSXyKchFlHuXWKClrtM
- q6MtDy/559BiSkbGbgrMPEYT4Kmc+lyDnHf5xJh8
-X-Received: by 2002:a05:6000:2801:b0:391:139f:61af with SMTP id
- ffacd0b85a97d-3997f913a91mr7668504f8f.32.1742808517451; 
- Mon, 24 Mar 2025 02:28:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHF9XgJjXZYZdQgwPmbJN8aii8ZT63j1VMUP2loGTwWzSqMclyjMfwqFlyO/byzfGfnIldmXA==
-X-Received: by 2002:a05:6000:2801:b0:391:139f:61af with SMTP id
- ffacd0b85a97d-3997f913a91mr7668487f8f.32.1742808517054; 
- Mon, 24 Mar 2025 02:28:37 -0700 (PDT)
-Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d4fcea6ecsm115321105e9.5.2025.03.24.02.28.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 02:28:36 -0700 (PDT)
-Message-ID: <fa4c7f3b-7c77-4919-936a-2dcb328670d7@redhat.com>
-Date: Mon, 24 Mar 2025 10:28:36 +0100
+ d=1e100.net; s=20230601; t=1742808628; x=1743413428;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GH/hfBW+1DtRhfgFa0lH6ukFMCurbYIWadTLpiL6pfU=;
+ b=kpOh4motMS1J95ToKfIEHF0sYENvwReupwo3No0q+/EXdIuRZpErHoJBm9Z6h96zh5
+ 5l4W1oh6m5a5/d21FB7OCjmnpHtBDhVUEkIq/sWiUdhCUV7f/+IL+qU91HIRGZbc3ElU
+ m7lvciE/4WQSv5nYzCLj+p69ffopf6XXnk0XvAL1o3F/RZJQduirhSDbYwKXL1hZ6vDA
+ LDEyP98LasO/bOqVw1E6JWEnBMpn3Qw/+R26GgNznSHW70SfkyLP764F7pZ65+dgnj4W
+ fKkqk8o/lvUaDNwDrC6lF6E6De9wOM5iqFzmgR5gXseFY07cSJjaVoDcsaekODPq3et4
+ CvrA==
+X-Gm-Message-State: AOJu0Yzak09krVmpRqGIDrA/gwfs1MkZJq24x4n81ANMO92L2AqaogmI
+ Po5HPm5N/QVtK6vLV2L8XkVZnS8tvrGq0nZiwfA4s5DFXEu5FEk4cckgYh7zyXJ/Wet5Kirhzg6
+ c5qP8o93ifnAr5KYEtss08pjzrP4=
+X-Gm-Gg: ASbGncvegB7SzWJIrBjc/b2jqjuEw0Ply6y6OVAVijP28SyuyzX7wJi46HUUVEAmDbh
+ KxMyWTDf2OX6LSM2fXpYXacL1raDajoiPbQzAE7eVNSztYBbf4UA8zOPKKtJJt/HyQrsl3ObsD7
+ mrtEsa9x8kTqjuvBFzCydCf/DY859dbwcYKy8S5VKZKGn/ZL1VNV14huhQQCg=
+X-Google-Smtp-Source: AGHT+IHe4ztzLDxnsVim2wEAoMIPZ0rC5rFQbWcgzl9OoIZVtG98ZHI42KB+Za6ls4+klh66gcuzFBF3S2d+O9Lt4dU=
+X-Received: by 2002:a05:622a:5449:b0:476:923a:f1cb with SMTP id
+ d75a77b69052e-4771de13fccmr227152181cf.41.1742808628010; Mon, 24 Mar 2025
+ 02:30:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 4/6] target/sparc: Register CPUClass:list_cpus
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-s390x@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20250323224035.34698-1-philmd@linaro.org>
- <20250323224035.34698-5-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250323224035.34698-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250324081922.359369-1-yuq825@gmail.com>
+ <20250324081922.359369-7-yuq825@gmail.com>
+In-Reply-To: <20250324081922.359369-7-yuq825@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 24 Mar 2025 13:30:16 +0400
+X-Gm-Features: AQ5f1JpFTfUNQp0-qKOAYi3QhnCi-tpI6Cqs98alZnFrrHcbIlXiwn8vcwOF8Ic
+Message-ID: <CAJ+F1C+NCda4V_1n-zL3GA_e+HabO6sbKBxWQb_S_zzPPjLNQQ@mail.gmail.com>
+Subject: Re: [PATCH 6/6] ui/spice: support multi plane dmabuf scanout
+To: yuq825@gmail.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,16 +94,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/03/2025 23.40, Philippe Mathieu-Daudé wrote:
-> Register sparc_cpu_list() as CPUClass:list_cpus callback.
-> Reduce its scope and remove the cpu_list definition.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi
+
+On Mon, Mar 24, 2025 at 12:20=E2=80=AFPM <yuq825@gmail.com> wrote:
+>
+> From: Qiang Yu <yuq825@gmail.com>
+>
+> Signed-off-by: Qiang Yu <yuq825@gmail.com>
 > ---
->   target/sparc/cpu.h | 3 ---
->   target/sparc/cpu.c | 3 ++-
->   2 files changed, 2 insertions(+), 4 deletions(-)
+>  meson.build        |  2 +-
+>  ui/spice-display.c | 65 +++++++++++++++++++++++-----------------------
+>  2 files changed, 34 insertions(+), 33 deletions(-)
+>
+> diff --git a/meson.build b/meson.build
+> index 9d9c11731f..b87704a83b 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1329,7 +1329,7 @@ if get_option('spice') \
+>               .require(pixman.found(),
+>                        error_message: 'cannot enable SPICE if pixman is n=
+ot available') \
+>               .allowed()
+> -  spice =3D dependency('spice-server', version: '>=3D0.14.0',
+> +  spice =3D dependency('spice-server', version: '>=3D0.14.3',
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I am okay with bumping dependency requirements, but the nicer
+alternative would be to allow the current version and check the
+existence of the new API/function instead.
 
+
+>                       required: get_option('spice'),
+>                       method: 'pkg-config')
+>  endif
+> diff --git a/ui/spice-display.c b/ui/spice-display.c
+> index b7016ece6a..46b6d5dfc9 100644
+> --- a/ui/spice-display.c
+> +++ b/ui/spice-display.c
+> @@ -28,6 +28,8 @@
+>
+>  #include "ui/spice-display.h"
+>
+> +#include "standard-headers/drm/drm_fourcc.h"
+> +
+>  bool spice_opengl;
+>
+>  int qemu_spice_rect_is_empty(const QXLRect* r)
+> @@ -884,16 +886,11 @@ static void spice_gl_switch(DisplayChangeListener *=
+dcl,
+>      if (ssd->ds) {
+>          uint32_t offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES];
+>          int fd[DMABUF_MAX_PLANES], num_planes, fourcc;
+> +        uint64_t modifier;
+>
+>          surface_gl_create_texture(ssd->gls, ssd->ds);
+>          if (!egl_dmabuf_export_texture(ssd->ds->texture, fd, (EGLint *)o=
+ffset,
+> -                                       (EGLint *)stride, &fourcc, &num_p=
+lanes, NULL)) {
+> -            surface_gl_destroy_texture(ssd->gls, ssd->ds);
+> -            return;
+> -        }
+> -
+> -        if (num_planes > 1) {
+> -            fprintf(stderr, "%s: does not support multi-plane texture\n"=
+, __func__);
+> +                                       (EGLint *)stride, &fourcc, &num_p=
+lanes, &modifier)) {
+>              surface_gl_destroy_texture(ssd->gls, ssd->ds);
+>              return;
+>          }
+> @@ -904,10 +901,11 @@ static void spice_gl_switch(DisplayChangeListener *=
+dcl,
+>                                      fourcc);
+>
+>          /* note: spice server will close the fd */
+> -        spice_qxl_gl_scanout(&ssd->qxl, fd[0],
+> -                             surface_width(ssd->ds),
+> -                             surface_height(ssd->ds),
+> -                             stride[0], fourcc, false);
+> +        spice_qxl_gl_scanout2(&ssd->qxl, fd,
+> +                              surface_width(ssd->ds),
+> +                              surface_height(ssd->ds),
+> +                              offset, stride, num_planes,
+> +                              fourcc, modifier, false);
+>          ssd->have_surface =3D true;
+>          ssd->have_scanout =3D false;
+>
+> @@ -930,7 +928,8 @@ static void qemu_spice_gl_scanout_disable(DisplayChan=
+geListener *dcl)
+>      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay, dc=
+l);
+>
+>      trace_qemu_spice_gl_scanout_disable(ssd->qxl.id);
+> -    spice_qxl_gl_scanout(&ssd->qxl, -1, 0, 0, 0, 0, false);
+> +    spice_qxl_gl_scanout2(&ssd->qxl, NULL, 0, 0, NULL, NULL, 0, DRM_FORM=
+AT_INVALID,
+> +                          DRM_FORMAT_MOD_INVALID, false);
+>      qemu_spice_gl_monitor_config(ssd, 0, 0, 0, 0);
+>      ssd->have_surface =3D false;
+>      ssd->have_scanout =3D false;
+> @@ -948,22 +947,21 @@ static void qemu_spice_gl_scanout_texture(DisplayCh=
+angeListener *dcl,
+>      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay, dc=
+l);
+>      EGLint offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES], fourcc =
+=3D 0;
+>      int fd[DMABUF_MAX_PLANES], num_planes;
+> +    uint64_t modifier;
+>
+>      assert(tex_id);
+>      if (!egl_dmabuf_export_texture(tex_id, fd, offset, stride, &fourcc,
+> -                                   &num_planes, NULL)) {
+> +                                   &num_planes, &modifier)) {
+>          fprintf(stderr, "%s: failed to export dmabuf for texture\n", __f=
+unc__);
+>          return;
+>      }
+> -    if (num_planes > 1) {
+> -        fprintf(stderr, "%s: does not support multi-plane dmabuf\n", __f=
+unc__);
+> -        return;
+> -    }
+> +
+>      trace_qemu_spice_gl_scanout_texture(ssd->qxl.id, w, h, fourcc);
+>
+>      /* note: spice server will close the fd */
+> -    spice_qxl_gl_scanout(&ssd->qxl, fd[0], backing_width, backing_height=
+,
+> -                         stride[0], fourcc, y_0_top);
+> +    spice_qxl_gl_scanout2(&ssd->qxl, fd, backing_width, backing_height,
+> +                          (uint32_t *)offset, (uint32_t *)stride, num_pl=
+anes,
+> +                          fourcc, modifier, y_0_top);
+>      qemu_spice_gl_monitor_config(ssd, x, y, w, h);
+>      ssd->have_surface =3D false;
+>      ssd->have_scanout =3D true;
+> @@ -1034,11 +1032,10 @@ static void qemu_spice_gl_update(DisplayChangeLis=
+tener *dcl,
+>                                   uint32_t x, uint32_t y, uint32_t w, uin=
+t32_t h)
+>  {
+>      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay, dc=
+l);
+> -    EGLint stride =3D 0, fourcc =3D 0;
+> +    EGLint fourcc =3D 0;
+>      bool render_cursor =3D false;
+>      bool y_0_top =3D false; /* FIXME */
+>      uint64_t cookie;
+> -    int fd;
+>      uint32_t width, height, texture;
+>
+>      if (!ssd->have_scanout) {
+> @@ -1075,6 +1072,7 @@ static void qemu_spice_gl_update(DisplayChangeListe=
+ner *dcl,
+>                  ssd->blit_fb.height !=3D height) {
+>                  int fds[DMABUF_MAX_PLANES], num_planes;
+>                  uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_=
+PLANES];
+> +                uint64_t modifier;
+>
+>                  trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, width,
+>                                                    height);
+> @@ -1083,27 +1081,30 @@ static void qemu_spice_gl_update(DisplayChangeLis=
+tener *dcl,
+>                                       width, height);
+>                  if (!egl_dmabuf_export_texture(ssd->blit_fb.texture, fds=
+,
+>                                                 (EGLint *)offsets, (EGLin=
+t *)strides,
+> -                                               &fourcc, &num_planes, NUL=
+L)) {
+> +                                               &fourcc, &num_planes, &mo=
+difier)) {
+>                      fprintf(stderr, "%s: failed to export dmabuf for tex=
+ture\n", __func__);
+>                      return;
+>                  }
+> -                if (num_planes > 1) {
+> -                    fprintf(stderr, "%s: does not support multi-plane dm=
+abuf\n", __func__);
+> -                    return;
+> -                }
+> -                spice_qxl_gl_scanout(&ssd->qxl, fds[0], width, height,
+> -                                     strides[0], fourcc, false);
+> +
+> +                spice_qxl_gl_scanout2(&ssd->qxl, fds, width, height, off=
+sets, strides,
+> +                                      num_planes, fourcc, modifier, fals=
+e);
+>              }
+>          } else {
+> -            stride =3D qemu_dmabuf_get_stride(dmabuf)[0];
+> +            int fds[DMABUF_MAX_PLANES];
+> +
+>              fourcc =3D qemu_dmabuf_get_fourcc(dmabuf);
+>              y_0_top =3D qemu_dmabuf_get_y0_top(dmabuf);
+> -            qemu_dmabuf_dup_fd(dmabuf, &fd);
+> +            qemu_dmabuf_dup_fd(dmabuf, fds);
+>
+>              trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id, width, heigh=
+t);
+>              /* note: spice server will close the fd, so hand over a dup =
+*/
+> -            spice_qxl_gl_scanout(&ssd->qxl, fd, width, height,
+> -                                 stride, fourcc, y_0_top);
+> +            spice_qxl_gl_scanout2(&ssd->qxl, fds, width, height,
+> +                                  qemu_dmabuf_get_offset(dmabuf),
+> +                                  qemu_dmabuf_get_stride(dmabuf),
+> +                                  qemu_dmabuf_get_num_planes(dmabuf),
+> +                                  fourcc,
+> +                                  qemu_dmabuf_get_modifier(dmabuf),
+> +                                  y_0_top);
+>          }
+>          qemu_spice_gl_monitor_config(ssd, 0, 0, width, height);
+>          ssd->guest_dmabuf_refresh =3D false;
+> --
+> 2.43.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
