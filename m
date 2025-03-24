@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68659C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 19:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81466C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 19:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twn0t-0000zW-S0; Mon, 24 Mar 2025 14:59:07 -0400
+	id 1twn2K-0002QC-JY; Mon, 24 Mar 2025 15:00:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twn0s-0000yx-F8
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:59:06 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twn25-0002AM-SG
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 15:00:24 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twn0q-0001PS-S8
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:59:06 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3914aba1ce4so4058563f8f.2
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:59:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1twn23-0001iT-RO
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 15:00:21 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2ff615a114bso8507238a91.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 12:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742842743; x=1743447543; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=H0dvd2P36winpZovlVz4NmarrWHHCldFw3mWW6dP9ow=;
- b=OI2G3Azk+a5sNtfMmME005iyAiRlNgl8HDiynHZ+DJItQVaRf9HOOXjhk1dEGqcHn3
- eOdkDDVmhX4bFL6L3i88+7bcXk1HOWr4/ZQ/1a2iPD/ajStz3JfaMGe3KDUJ85uxSeaj
- 7QIeP6L3rghXwmjkpiuWd6yef6oV/CD5dBvL17Lvscmn/MS9hvgMYafKppAWwXlHoYF6
- 7DbiJ5ENbZ5sC/Kdi6tLBavlMuzZnN9kNEVdNizInYjnni/HidsM7qhxVh578irw2SXb
- vkhuxsNoH9WN7mlrGJITUrPYk8utRWndQrBQteBxHuHAG2tC1mTEtfQHDsgUffIS+iTH
- lh5A==
+ d=linaro.org; s=google; t=1742842818; x=1743447618; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QyOBr9YjbmzOLwKeFu7wpFEtVg6dviWnm+AXyNYm/3g=;
+ b=eMTd5GZ8pasmAGoM2CODaJxFGb1TQgh2vPArtmoKeQy4s5Bl/jOMl63l91ZbWaccPQ
+ M8+j5c+jU2ZmxzAnEhLWJUXqUwDOX2s9ZwPh2s/y1qxJpXd5KO8iVqqy3gmR3aX1Xpp0
+ GhHmZ65VpDl5NyemWnlp07vga3QT/QpD5eu0/hqtkGCAKLVLBX4kNqjb2cgQdmj6zAdi
+ WcfsaKQqrYKdYe4trYr78cApPCCvyrh7apRCTOY92K1ygUghaiqJlshK9InbG1Lzv4Is
+ 5u1+Th1sWZif8GpRnHFDsYa0Me+/pLDHaWGP+AB4UAT8Sli9irCtyj67VHUNYKEsvLMK
+ 6guQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742842743; x=1743447543;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=H0dvd2P36winpZovlVz4NmarrWHHCldFw3mWW6dP9ow=;
- b=nPXrdUZGctRWhkzIXuDD0qLrMZzN2Yn7EF+F6jPle4pi6sdOJDj0lzYTx7iozZNIwH
- JMphrPQPpD7AKFFlf9q5Z3fGjvfk/We99jgQoyQL7+vC1EJce1hdEnOqXSfFuQkhpAgC
- 3aIX3tmOa0MH0f457AKILR2HfN7ePevwTbkEmwWj80jff5gQ9iw+7pr3u7wZjdq7ZScf
- 2YWUDXn6o3CHnJZU8nqzgu8mZnalb1nKlBtNefMOapZ6mli0Cjiy3jbANoJA95kEh+ic
- 0h3RVo4rh5EqtokR1caIFClJVCXu4bgXbFR3FeGgn4clDLfrdGLWOvDAfKPeUIDY3hPn
- ZVJQ==
-X-Gm-Message-State: AOJu0YxSeIA4uFwJxp22WDtvNHvYdf1mksFa4dyeLNujTWvIqaVgVi0h
- lngtaVd2TwrSaKp12YLkN4sibB0Ie/yS6m2AU1wVdvKJ6SqaaGFP+ma0aGWlq+d1BBTc44a9nqV
- y
-X-Gm-Gg: ASbGncsqCclWy2fX7O7wwXmGGJAppIAE5XY1vUPcxcpoL/hGYLvy1c4pJrElBRrd88o
- BQqSx+4RW3e+23g9PeFy/J+USTlNoyDSIYd7kBwn8L+K13j6NNJXVEKVE3/GsZ2/Eo1X/copUPj
- dGtJOjzNrny7aVHuz82QdmFWebKpiPjWpcxCCfrOslWBznGLhWXrEJmgk33o9wjyyDpIR+gKnHH
- 8RcCKEJltfzJwoAR1CDJtILoHYr8WnV2y79hkXw7l5ZhAArCky4KdVhKGed5z2Os5icXGi8RtkH
- R1+XS0F+wYY2CTcfPAjqPq7jfKmmtChvvLSDCgOISerj81H0JzVbMX5xPzAb7XQZi26HbZJK2WA
- YAHNWu34oQq8ugASO+0+LhTEj
-X-Google-Smtp-Source: AGHT+IHC6tzIzk1XqaJZfNEoX4ga1xqBGGRmiZwnpZijmlQbX/ux/00M6PoWFd34rkDOxKwVmpkTEw==
-X-Received: by 2002:a05:6000:2801:b0:391:139f:61af with SMTP id
- ffacd0b85a97d-3997f913a91mr9102368f8f.32.1742842742804; 
- Mon, 24 Mar 2025 11:59:02 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d4fd18505sm127632185e9.11.2025.03.24.11.59.00
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Mar 2025 11:59:01 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Eric Farman <farman@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Yanan Wang <wangyanan55@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v3 4/7] target/sparc: Register CPUClass:list_cpus
-Date: Mon, 24 Mar 2025 19:58:34 +0100
-Message-ID: <20250324185837.46506-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250324185837.46506-1-philmd@linaro.org>
-References: <20250324185837.46506-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1742842818; x=1743447618;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QyOBr9YjbmzOLwKeFu7wpFEtVg6dviWnm+AXyNYm/3g=;
+ b=sEDst388suyMfouND2qa8P2XIeBwxzu08yCmYh6YQF9CoNp+TqWyA7gArxMYwVnzgX
+ wIkwqIRfufA7aqHAQnI3gSPXnPh1H6vXiPIHQTvt8YAd+lBlRAqyIJHV5G20RzR+FaaK
+ 5DOxGLjvSej4MoWwL0BP03tuW8dpvNouVy1IRl9OjqSsMciMqbCWRI4ud4kdDxDvpv++
+ HDwpDl9od0GjJ/H9kMsh7EP2CF+/jum9bQxkPXDzPlUvIu0A8vfXbn+OKw7K+quZCMu8
+ OozU/WHb93QJ8ECWjl+xGh20v91l0LS1Xvl5h0QfbCX5EK/UQt/9rJw9gvtnAxCeA9JJ
+ iaEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEJ17eW/WE9kyLPZacUxVk1oATZLYbds3hvSkGLOrpmlLW4wdxcnLS9RWUaStHdsbsHzLFPcrLHocW@nongnu.org
+X-Gm-Message-State: AOJu0YyI0yv4GxwRy4tLwpoIL1pNSP3Ux8+WBO7a6D9hcv4Ck0GdYrr7
+ no+F2oZ7gLQOKJwWYI0RMPH7lBkMP636mZ1mKWGLYuZ3CQjSo8U+J9A6E+z02BY=
+X-Gm-Gg: ASbGncsQOP/WaEdr4uTx1m7QAZsV5q90TOc12/4dByoztpQD59uT4BxRjHBEekU/UXc
+ js3fv0+Z35iHfHFCWz44su8dd5Vv61mFUFkN5NPNQKduVAzzeeGDYnPQQlaT/2EtrYelvUv63Lp
+ tcjBUk4qmg4GlXvTP/JdVVyHj47hOWoRZS72NMIXm/Tj2HZX4nBd+p8Z+ZTktFwwkGu4Ie0O3NX
+ BzWV3wok1LDf++6aXMJFxYT++wOs091U+GA8csC7qaVnWW7x/Lx7mapxbeNT8TokUrauBoERT7d
+ Kq1Lv7IqE2WkLGIbMRAujL/SDVk8Fz0S4IZmJiwsDaH8JJinBE9w/Ckbf+zV7TYY+s/Kfansbgd
+ WxNEg6qJl
+X-Google-Smtp-Source: AGHT+IFXY47Jgkb1SpWfL6drWicK3wFEXNEvDkV6WxAjU5B/KX9KKMVJPVn3E51oZ62AsNzVnEwiSQ==
+X-Received: by 2002:a17:90b:1d48:b0:2ff:6e58:89f5 with SMTP id
+ 98e67ed59e1d1-3030ec2648cmr24036670a91.6.1742842818271; 
+ Mon, 24 Mar 2025 12:00:18 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3030f7e9bbasm8499062a91.39.2025.03.24.12.00.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Mar 2025 12:00:17 -0700 (PDT)
+Message-ID: <273b7663-e5d9-49f4-9746-e5f30ce7adb0@linaro.org>
+Date: Mon, 24 Mar 2025 12:00:16 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v2 5/7] target/s390x: Declare
+ s390_set_qemu_cpu_model/cpu_list in cpu_models.h
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-s390x@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-ppc@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
+References: <20250324184611.44031-1-philmd@linaro.org>
+ <20250324184611.44031-6-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250324184611.44031-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,60 +116,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register sparc_cpu_list() as CPUClass:list_cpus callback.
-Reduce its scope and remove the cpu_list definition.
+On 3/24/25 11:46, Philippe Mathieu-Daudé wrote:
+> Both s390_cpu_list() and s390_set_qemu_cpu_model() are
+> defined in cpu_models.c, move their declarations in the
+> related "cpu_models.h" header. Use full path to header
+> in s390-virtio-ccw.c file.
+> 
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/cpu.h         | 4 ----
+>   target/s390x/cpu_models.h  | 3 +++
+>   hw/s390x/s390-virtio-ccw.c | 2 +-
+>   3 files changed, 4 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+> index 5b7992deda6..8dd1936e3e2 100644
+> --- a/target/s390x/cpu.h
+> +++ b/target/s390x/cpu.h
+> @@ -900,11 +900,7 @@ static inline uint8_t s390_cpu_get_state(S390CPU *cpu)
+>   }
+>   
+>   
+> -/* cpu_models.c */
+> -void s390_cpu_list(void);
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/sparc/cpu.h | 3 ---
- target/sparc/cpu.c | 3 ++-
- 2 files changed, 2 insertions(+), 4 deletions(-)
+Are you really able to remove this here, without the next patch?
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index 462bcb6c0e6..7c6296ae70e 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -594,7 +594,6 @@ G_NORETURN void cpu_raise_exception_ra(CPUSPARCState *, int, uintptr_t);
- 
- /* cpu_init.c */
- void cpu_sparc_set_id(CPUSPARCState *env, unsigned int cpu);
--void sparc_cpu_list(void);
- /* mmu_helper.c */
- bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                         MMUAccessType access_type, int mmu_idx,
-@@ -665,8 +664,6 @@ hwaddr cpu_get_phys_page_nofault(CPUSPARCState *env, target_ulong addr,
- 
- #define CPU_RESOLVING_TYPE TYPE_SPARC_CPU
- 
--#define cpu_list sparc_cpu_list
--
- /* MMU modes definitions */
- #if defined (TARGET_SPARC64)
- #define MMU_USER_IDX   0
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 57161201173..635d5d81143 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -579,7 +579,7 @@ static void print_features(uint32_t features, const char *prefix)
-     }
- }
- 
--void sparc_cpu_list(void)
-+static void sparc_cpu_list(void)
- {
-     unsigned int i;
- 
-@@ -1031,6 +1031,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, void *data)
-                                        &scc->parent_phases);
- 
-     cc->class_by_name = sparc_cpu_class_by_name;
-+    cc->list_cpus = sparc_cpu_list,
-     cc->parse_features = sparc_cpu_parse_features;
-     cc->mmu_index = sparc_cpu_mmu_index;
-     cc->dump_state = sparc_cpu_dump_state;
--- 
-2.47.1
 
+r~
 
