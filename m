@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D880FC3600C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D62C36008
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tweFu-0007MZ-OB; Mon, 24 Mar 2025 05:38:02 -0400
+	id 1tweFr-0007LC-16; Mon, 24 Mar 2025 05:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tweFs-0007LN-1H
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:38:00 -0400
+ id 1tweFp-0007Kh-9X
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:37:57 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tweFp-0001Ty-0j
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:37:59 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1tweFn-0001TF-5s
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:37:57 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxyuDpJ+FnT_ujAA--.13433S3;
- Mon, 24 Mar 2025 17:37:45 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxXWvmJ+FnRvujAA--.13339S3;
+ Mon, 24 Mar 2025 17:37:42 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxPsfaJ+FnGn1dAA--.15661S16;
- Mon, 24 Mar 2025 17:37:44 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCxPsfaJ+FnGn1dAA--.15661S12;
+ Mon, 24 Mar 2025 17:37:41 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 14/16] hw/intc/loongarch_pch: Rename memory region
- iomem32_low with iomem
-Date: Mon, 24 Mar 2025 17:37:28 +0800
-Message-Id: <20250324093730.3683378-15-maobibo@loongson.cn>
+Subject: [PATCH v2 10/16] hw/intc/loongarch_pch: Use generic write callback
+ for iomem32_low region
+Date: Mon, 24 Mar 2025 17:37:24 +0800
+Message-Id: <20250324093730.3683378-11-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250324093730.3683378-1-maobibo@loongson.cn>
 References: <20250324093730.3683378-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxPsfaJ+FnGn1dAA--.15661S16
+X-CM-TRANSID: qMiowMCxPsfaJ+FnGn1dAA--.15661S12
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,87 +66,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename memory region iomem32_low with iomem, also change ops name
-as follows:
-  loongarch_pch_pic_reg32_low_ops  --> loongarch_pch_pic_ops
-  loongarch_pch_pic_low_readw      --> loongarch_pch_pic_read
-  loongarch_pch_pic_low_writew     --> loongarch_pch_pic_write
+For memory region iomem32_low, generic write callback is used.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c            | 26 +++++++-------------------
- include/hw/intc/loongarch_pic_common.h |  2 +-
- 2 files changed, 8 insertions(+), 20 deletions(-)
+ hw/intc/loongarch_pch_pic.c | 140 +++++++++++++++++++-----------------
+ 1 file changed, 73 insertions(+), 67 deletions(-)
 
 diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index ff1e5992bd..db0d8ce7ac 100644
+index 01e6fc6257..d5a8c8377d 100644
 --- a/hw/intc/loongarch_pch_pic.c
 +++ b/hw/intc/loongarch_pch_pic.c
-@@ -230,18 +230,6 @@ static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
-     }
+@@ -118,6 +118,53 @@ static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
+     return (val >> (offset * 8)) & field_mask;
  }
  
--static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
--                                            unsigned size)
--{
--    return loongarch_pch_pic_read(opaque, addr, size);
--}
--
--static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
--                                         uint64_t value, unsigned size)
--{
--    loongarch_pch_pic_write(opaque, addr, value, size);
--}
--
- static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
-                                         unsigned size)
++static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
++                          uint64_t field_mask)
++{
++    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
++    uint32_t offset;
++    uint64_t old, mask, data;
++
++    offset = addr & 7;
++    addr -= offset;
++    mask = field_mask << (offset * 8);
++    data = (value & field_mask) << (offset * 8);
++    switch (addr) {
++    case PCH_PIC_INT_MASK ... PCH_PIC_INT_MASK + 7:
++        old = s->int_mask;
++        s->int_mask = (old & ~mask) | data;
++        if (old & ~data) {
++            pch_pic_update_irq(s, old & ~data, 1);
++        }
++
++        if (~old & data) {
++            pch_pic_update_irq(s, ~old & data, 0);
++        }
++        break;
++    case PCH_PIC_INT_EDGE ... PCH_PIC_INT_EDGE + 7:
++        s->intedge = (s->intedge & ~mask) | data;
++        break;
++    case PCH_PIC_INT_CLEAR ... PCH_PIC_INT_CLEAR + 7:
++        if (s->intedge & data) {
++            s->intirr &= ~data;
++            pch_pic_update_irq(s, data, 0);
++            s->intisr &= ~data;
++        }
++        break;
++    case PCH_PIC_HTMSI_EN ... PCH_PIC_HTMSI_EN + 7:
++        s->htmsi_en = (s->htmsi_en & ~mask) | data;
++        break;
++    case PCH_PIC_AUTO_CTRL0 ... PCH_PIC_AUTO_CTRL0 + 7:
++    case PCH_PIC_AUTO_CTRL1 ... PCH_PIC_AUTO_CTRL1 + 7:
++        /* Discard auto_ctrl access */
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "pch_pic_write: Bad address 0x%"PRIx64"\n", addr);
++        break;
++    }
++}
++
+ static uint64_t loongarch_pch_pic_read(void *opaque, hwaddr addr,
+                                        unsigned size)
  {
-@@ -270,9 +258,9 @@ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
-     loongarch_pch_pic_write(opaque, addr, data, size);
+@@ -145,6 +192,30 @@ static uint64_t loongarch_pch_pic_read(void *opaque, hwaddr addr,
+     return val;
  }
  
--static const MemoryRegionOps loongarch_pch_pic_reg32_low_ops = {
--    .read = loongarch_pch_pic_low_readw,
--    .write = loongarch_pch_pic_low_writew,
-+static const MemoryRegionOps loongarch_pch_pic_ops = {
-+    .read = loongarch_pch_pic_read,
-+    .write = loongarch_pch_pic_write,
-     .valid = {
-         .min_access_size = 4,
-         .max_access_size = 8,
-@@ -356,15 +344,15 @@ static void loongarch_pic_realize(DeviceState *dev, Error **errp)
++static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
++                                    uint64_t value, unsigned size)
++{
++    switch (size) {
++    case 1:
++        pch_pic_write(opaque, addr, value, 0xFF);
++        break;
++    case 2:
++        pch_pic_write(opaque, addr, value, 0xFFFF);
++        break;
++        break;
++    case 4:
++        pch_pic_write(opaque, addr, value, UINT_MAX);
++        break;
++    case 8:
++        pch_pic_write(opaque, addr, value, UINT64_MAX);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "loongarch_pch_pic_write: Bad size %d\n", size);
++        break;
++    }
++}
++
+ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+                                             unsigned size)
+ {
+@@ -166,73 +237,8 @@ static uint64_t get_writew_val(uint64_t value, uint32_t target, bool hi)
+ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
+                                          uint64_t value, unsigned size)
+ {
+-    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+-    uint32_t old_valid, data = (uint32_t)value;
+-    uint64_t old, int_mask;
+-
+-    trace_loongarch_pch_pic_low_writew(size, addr, data);
+-
+-    switch (addr) {
+-    case PCH_PIC_INT_MASK:
+-        old = s->int_mask;
+-        s->int_mask = get_writew_val(old, data, 0);
+-        old_valid = (uint32_t)old;
+-        if (old_valid & ~data) {
+-            pch_pic_update_irq(s, (old_valid & ~data), 1);
+-        }
+-        if (~old_valid & data) {
+-            pch_pic_update_irq(s, (~old_valid & data), 0);
+-        }
+-        break;
+-    case PCH_PIC_INT_MASK + 4:
+-        old = s->int_mask;
+-        s->int_mask = get_writew_val(old, data, 1);
+-        old_valid = (uint32_t)(old >> 32);
+-        int_mask = old_valid & ~data;
+-        if (int_mask) {
+-            pch_pic_update_irq(s, int_mask << 32, 1);
+-        }
+-        int_mask = ~old_valid & data;
+-        if (int_mask) {
+-            pch_pic_update_irq(s, int_mask << 32, 0);
+-        }
+-        break;
+-    case PCH_PIC_INT_EDGE:
+-        s->intedge = get_writew_val(s->intedge, data, 0);
+-        break;
+-    case PCH_PIC_INT_EDGE + 4:
+-        s->intedge = get_writew_val(s->intedge, data, 1);
+-        break;
+-    case PCH_PIC_INT_CLEAR:
+-        if (s->intedge & data) {
+-            s->intirr &= (~data);
+-            pch_pic_update_irq(s, data, 0);
+-            s->intisr &= (~data);
+-        }
+-        break;
+-    case PCH_PIC_INT_CLEAR + 4:
+-        value <<= 32;
+-        if (s->intedge & value) {
+-            s->intirr &= (~value);
+-            pch_pic_update_irq(s, value, 0);
+-            s->intisr &= (~value);
+-        }
+-        break;
+-    case PCH_PIC_HTMSI_EN:
+-        s->htmsi_en = get_writew_val(s->htmsi_en, data, 0);
+-        break;
+-    case PCH_PIC_HTMSI_EN + 4:
+-        s->htmsi_en = get_writew_val(s->htmsi_en, data, 1);
+-        break;
+-    case PCH_PIC_AUTO_CTRL0:
+-    case PCH_PIC_AUTO_CTRL0 + 4:
+-    case PCH_PIC_AUTO_CTRL1:
+-    case PCH_PIC_AUTO_CTRL1 + 4:
+-        /* discard auto_ctrl access */
+-        break;
+-    default:
+-        break;
+-    }
++    trace_loongarch_pch_pic_low_writew(size, addr, value);
++    loongarch_pch_pic_write(opaque, addr, value, size);
+ }
  
-     qdev_init_gpio_out(dev, s->parent_irq, s->irq_num);
-     qdev_init_gpio_in(dev, pch_pic_irq_handler, s->irq_num);
--    memory_region_init_io(&s->iomem32_low, OBJECT(dev),
--                          &loongarch_pch_pic_reg32_low_ops,
--                          s, PCH_PIC_NAME(.reg32_part1), 0x100);
-+    memory_region_init_io(&s->iomem, OBJECT(dev),
-+                          &loongarch_pch_pic_ops,
-+                          s, TYPE_LOONGARCH_PIC, 0x100);
-     memory_region_init_io(&s->iomem8, OBJECT(dev), &loongarch_pch_pic_reg8_ops,
-                           s, PCH_PIC_NAME(.reg8), 0x2a0);
-     memory_region_init_io(&s->iomem32_high, OBJECT(dev),
-                           &loongarch_pch_pic_reg32_high_ops,
-                           s, PCH_PIC_NAME(.reg32_part2), 0xc60);
--    sysbus_init_mmio(sbd, &s->iomem32_low);
-+    sysbus_init_mmio(sbd, &s->iomem);
-     sysbus_init_mmio(sbd, &s->iomem8);
-     sysbus_init_mmio(sbd, &s->iomem32_high);
- 
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index fb848da4b8..ab8ffff780 100644
---- a/include/hw/intc/loongarch_pic_common.h
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -65,7 +65,7 @@ struct LoongArchPICCommonState {
-     uint8_t route_entry[64];  /* 0x100 - 0x138 */
-     uint8_t htmsi_vector[64]; /* 0x200 - 0x238 */
- 
--    MemoryRegion iomem32_low;
-+    MemoryRegion iomem;
-     MemoryRegion iomem32_high;
-     MemoryRegion iomem8;
-     unsigned int irq_num;
+ static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
 -- 
 2.39.3
 
