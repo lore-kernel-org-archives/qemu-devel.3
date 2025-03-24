@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45497C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CE3C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twiUR-0005Kv-Qy; Mon, 24 Mar 2025 10:09:20 -0400
+	id 1twiUK-0005Gm-UL; Mon, 24 Mar 2025 10:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1twiUH-0005G8-47
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:09:10 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1twiU4-0005E9-Te
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:09:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1twiU8-0005ZU-K6
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:09:08 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1twiU0-0005Z7-OH
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:08:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742825334;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1742825331;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hA9M1B4yvdck0fn8XvTOk+NM2ZGOZygG00aXXl1W8WA=;
- b=C3wTA3aV8pGj78DdSoeYoiAm9xmhnNYzRbSgsQPHc+fG95ubH/XQVi5XmUh2yLEZLSEQnQ
- RGpNgDY4zeDVwwWnGJ0x6+Vl5qWlnGlyVJOAgrNfdc2U8nHOZ78gwJIlVmSCjrWTZ8yBoz
- 1wlo2AWQmZ+b7TZFm1Ih1V2PZu7nX9E=
+ bh=MBJs7Cr9ngAy77vwEXpqh1Y3gpeWITiXtV2Zs3BvqwU=;
+ b=Q3dE0awPJ3UPT/UOCqbL8RkKEjiJfRhvRwEAMZB+n1/xbcVMOtm6bCWZTrit2+j+mdXP4Q
+ WoTix5S1MzJ7PPArzLAMxCDv8c0c30BRQCWIfbKXiMPzOBY12w2c59U5nUWherok5wthHj
+ kFp9T9f6d+ICnK0juaRqB0gS2KB81cc=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-691-MyZWDImqPM2oWwQTyEA2VA-1; Mon, 24 Mar 2025 10:08:53 -0400
-X-MC-Unique: MyZWDImqPM2oWwQTyEA2VA-1
-X-Mimecast-MFC-AGG-ID: MyZWDImqPM2oWwQTyEA2VA_1742825332
+ us-mta-645-sJJEnxLdORK6BqDHBEdxiQ-1; Mon, 24 Mar 2025 10:08:49 -0400
+X-MC-Unique: sJJEnxLdORK6BqDHBEdxiQ-1
+X-Mimecast-MFC-AGG-ID: sJJEnxLdORK6BqDHBEdxiQ_1742825329
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43941ad86d4so23045395e9.2
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 07:08:52 -0700 (PDT)
+ 5b1f17b1804b1-43d51bd9b41so26910695e9.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 07:08:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742825332; x=1743430132;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hA9M1B4yvdck0fn8XvTOk+NM2ZGOZygG00aXXl1W8WA=;
- b=CyUEKC1Yi3DsX1AR7DeyCflCSPkySKywlwPnAHK9QGrutob8P4YzyCzZW8i2UP62/l
- p5HX1qctT0en25kDDu8FFaI079slfnmOU6OWoxO07HuQ8QcTIsyroyNtDRmy2OstbWKt
- DePw956UATHyY0E9fiWK7hXIyCqakzc/5EEVkMgR2DEvJGB23fW4NuuIV8uNg2mngR8E
- S2wNqx0woAiBC+ujDJlbV8OwffvaCEogI00pAKy1RIyTs/qNm7iAHnmEcKvdLuoJMrQE
- qqU9NU/CijWjGzBfgzqGb/0/lGKa7EV4qIlVCqP6mIMTmHECIbjSIw+IQ0k7eB7OA5Ba
- +7mg==
-X-Gm-Message-State: AOJu0YxyCaNbva7ahvMHN1mwTn4xkUObKoIEYBRCIdmEUQfhc/Hc0loE
- FHBiUztBJMvFMzC/ZDn1SCpJx9SC9LUdPtKz/6y4X83S++KwNFb8IyssNFUyCR0++fNdnqsYGQk
- pFfeIp9q/HSYt3kiIxcOWk5oZKlN9RnsyMB8WDBVXpkYOQfWrBUjc
-X-Gm-Gg: ASbGncvo667XAkgkUuLYeEdzLoopq4753TWJiaj9CwTqONqjrB/f8uhT3aGPOjFAJL3
- r//SIqXhN6jwUYLGyH1+pM9iOFv6i1kl40puCL+X431yw7noZ5Lmmv94/Tg57PhUkUEc2jq+Zcl
- hygFsxr4lqBBSVesN46u8HrkYEMoGeoa9VB6VRIECk0jEeX89XHYKnfNmL9tbIlQNTjjy0ym07Q
- y8Wj2vKmdXPktpwczscaLWsi/UF2UxTTLCuYB+z0ZGyCa04Bg5w5CNiOj+9+SIdSKNLkS2L4JQx
- nTJigMMGSA==
-X-Received: by 2002:a05:600c:5025:b0:43d:300f:fa51 with SMTP id
- 5b1f17b1804b1-43d509ea850mr116847205e9.9.1742825331703; 
- Mon, 24 Mar 2025 07:08:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5eyEfBYrHYad5NPuIHXvv4i4rmE+nrbwfMJLyCFh3yg9S41GdX7O/lCB15cVqAwmcY84LxA==
-X-Received: by 2002:a05:600c:5025:b0:43d:300f:fa51 with SMTP id
- 5b1f17b1804b1-43d509ea850mr116846595e9.9.1742825331115; 
- Mon, 24 Mar 2025 07:08:51 -0700 (PDT)
-Received: from rh-jmarcin ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f55c99sm173355095e9.24.2025.03.24.07.08.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Mar 2025 07:08:50 -0700 (PDT)
-Date: Mon, 24 Mar 2025 15:08:48 +0100
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, 
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 2/2] utils/qemu-sockets: Introduce
- keep-alive-idle-period inet socket option
-Message-ID: <io7z2ds3sw66f75wlb5noln3wcewaek4hulm2ysho25siknh35@syhcgxoypjmn>
-References: <20250319163638.456417-1-jmarcin@redhat.com>
- <20250319163638.456417-3-jmarcin@redhat.com>
- <Z-E-JNWlGYuTTK8t@redhat.com>
+ d=1e100.net; s=20230601; t=1742825329; x=1743430129;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MBJs7Cr9ngAy77vwEXpqh1Y3gpeWITiXtV2Zs3BvqwU=;
+ b=YGzh3sBkuPGJhx20oVPD3OEcCXhImYhWvt9kHAU0bhp/Vna3GNB62x/JD719Vo3dxt
+ 14x6OVdTPdNIO6301nTgZh3mvkRwpo23IxMZ7X1syGtm5QNPQB5xMju/pzH6s7KTjJTw
+ tlCmfCKT1jDuTav51/VAVxX1p10B506MAATbw56taox77wue0FcDn1hlvvi/2RMpLYnP
+ s/p6sMUg6cTABXMoeSlDSfaiWbQBVoYLMfTPiZ9GnIIEpJfU5e8zKbBiISP24rvSKWcV
+ rMw8JAnOjPMdBODENeoM0BYxALeZAbg2o8OoRTI+Qw2+8F07qjSD/h5BVFKUY/h99VPS
+ gUPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaOu+dwzMGr8LmtDzXzwfCt3z/bSh6xZx8zWFoISoDJLnoq+vuEChsYZX7tv2ktuSg1tW1ZIupXa5I@nongnu.org
+X-Gm-Message-State: AOJu0YyOzfA8ehmAqr4OJjqv4FtLHBxi9zjWmkljtQzO1KQOonEgXZX+
+ QE5P0AHAQxBCcmm8h+cEeo//Nx9LMhqVdBQ6KjZWP2sPoyH7Q07wDYuQB08hxhS3sa5clnJoRr2
+ VLdjwsW0rmrxoSOXv6p+WgA55JcL1MWvigRmxBeES022PMHP/PDt4
+X-Gm-Gg: ASbGncs86Vf/22fWJKDFn1us+3N74mwWz9dRIc8ayLGwLfr/y6Wf5ChPiEJIp1dAgXx
+ VqVGCEdTu168wnMlcgKvdVzl6mfwiltZAO5yKqs02L8YnLydKNQkPewh2TUH89XimG4BflsRH5l
+ XHipFRd2SSyecFDmOSaZ7k/7UxPnf3EC1Kx5ePNgZPigQNOqQ3pSullSf9wAHh18JTPcvtkSsgo
+ a7U80PB9OWVtH3N6gBEyG/t63pXibLugVrb4EVJ0sWe6XatUV84dAkJLbLtVfSYAXNJezZlixp1
+ QCFaeU0c0O899rQjQJjUaFdX3wSNuDmRDbTQpEo3eqM8DvcVLJGlQvgtvKLlcFs=
+X-Received: by 2002:a05:600c:83cf:b0:43d:22d9:4b8e with SMTP id
+ 5b1f17b1804b1-43d509ec3famr146578675e9.10.1742825328704; 
+ Mon, 24 Mar 2025 07:08:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEi8qY97HbBlvMrWAJruSziuqJW2Cl1ImnF5APBnZUi06YFHNLxs6Tcdqiswnq6A4+ZplVZeQ==
+X-Received: by 2002:a05:600c:83cf:b0:43d:22d9:4b8e with SMTP id
+ 5b1f17b1804b1-43d509ec3famr146578065e9.10.1742825328196; 
+ Mon, 24 Mar 2025 07:08:48 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f9a3b83sm11271536f8f.33.2025.03.24.07.08.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Mar 2025 07:08:47 -0700 (PDT)
+Message-ID: <efbec6a4-e37a-4fa1-ad4a-7294521ee947@redhat.com>
+Date: Mon, 24 Mar 2025 15:08:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z-E-JNWlGYuTTK8t@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 03/20] hw/arm/smmuv3-accel: Add initial
+ infrastructure for smmuv3-accel device
+Content-Language: en-US
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-4-shameerali.kolothum.thodi@huawei.com>
+ <d75feb00-72d3-4d79-a7ac-2548eadb6a77@redhat.com>
+ <Z9hh8MIAQNQcvNlG@Asurada-Nvidia>
+ <71b73212-3d8f-4c9d-93a4-bf07c0f169e3@redhat.com>
+ <Z9hzmzHfWw18OyGO@Asurada-Nvidia> <20250317192453.GR9311@nvidia.com>
+ <Z9iDxSvZVsgtasGj@Asurada-Nvidia>
+ <6cb391a4-d150-4692-b62e-a509448a1034@redhat.com>
+ <20250319003135.GH9311@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250319003135.GH9311@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,172 +126,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-03-24 11:12, Daniel P. Berrangé wrote:
-> On Wed, Mar 19, 2025 at 05:36:20PM +0100, Juraj Marcin wrote:
-> > From: Juraj Marcin <jmarcin@redhat.com>
-> > 
-> > The default idle period for TCP connection could be even 2 hours.
-> > However, in some cases, the application needs to be aware of a
-> > connection issue much sooner.
-> > 
-> > This is the case, for example, for postcopy live migration. If there is
-> > no traffic from the migration destination guest (server-side) to the
-> > migration source guest (client-side), the destination keeps waiting for
-> > pages indefinitely and does not switch to the postcopy-paused state.
-> > This can happen, for example, if the destination QEMU instance is
-> > started with '-S' command line option and the machine is not started yet
-> > or if the machine is idle and produces no new page faults for
-> > not-yet-migrated pages.
-> > 
-> > This patch introduces a new inet socket parameter on platforms where
-> > TCP_KEEPIDLE is defined and passes the configured value to the
-> > TCP_KEEPIDLE socket option when a client-side or server-side socket is
-> > created.
-> > 
-> > The default value is 0, which means system configuration is used, and no
-> > custom value is set.
-> > 
-> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> > ---
-> >  io/dns-resolver.c   |  4 ++++
-> >  meson.build         |  2 ++
-> >  qapi/sockets.json   |  5 +++++
-> >  util/qemu-sockets.c | 29 +++++++++++++++++++++++++++++
-> >  4 files changed, 40 insertions(+)
-> > 
-> > diff --git a/io/dns-resolver.c b/io/dns-resolver.c
-> > index ee7403b65b..03c59673f0 100644
-> > --- a/io/dns-resolver.c
-> > +++ b/io/dns-resolver.c
-> > @@ -128,6 +128,10 @@ static int qio_dns_resolver_lookup_sync_inet(QIODNSResolver *resolver,
-> >  #endif
-> >              .has_keep_alive = iaddr->has_keep_alive,
-> >              .keep_alive = iaddr->keep_alive,
-> > +#ifdef HAVE_TCP_KEEPIDLE
-> > +            .has_keep_alive_idle_period = iaddr->has_keep_alive_idle_period,
-> > +            .keep_alive_idle_period = iaddr->keep_alive_idle_period,
-> > +#endif
-> >          };
-> >  
-> >          (*addrs)[i] = newaddr;
-> 
-> I feel like this code is somewhat fragile. It is probably best to add a
-> commit that refactors it to do a struct copy, and then override the few
-> fields that need to be different.
-> 
->      newaddr->u.inet = iaddr;
->      newaddr->u.inet.host = g_strdup(uaddr);
->      ...
-> 
-> that way we don't risk forgetting to copy fields as fixed in the previous
-> commit
-> 
-> > diff --git a/meson.build b/meson.build
-> > index 41f68d3806..e3440b09c8 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -2734,6 +2734,8 @@ if linux_io_uring.found()
-> >    config_host_data.set('HAVE_IO_URING_PREP_WRITEV2',
-> >                         cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
-> >  endif
-> > +config_host_data.set('HAVE_TCP_KEEPIDLE',
-> > +                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPIDLE'))
-> >  
-> >  # has_member
-> >  config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
-> > diff --git a/qapi/sockets.json b/qapi/sockets.json
-> > index eb50f64e3a..ddd82b1e66 100644
-> > --- a/qapi/sockets.json
-> > +++ b/qapi/sockets.json
-> > @@ -59,6 +59,10 @@
-> >  # @keep-alive: enable keep-alive when connecting to/listening on this socket.
-> >  #     (Since 4.2, not supported for listening sockets until 10.0)
-> >  #
-> > +# @keep-alive-idle-period: time in seconds the connection needs to be idle
-> > +#     before sending a keepalive packet.  Only supported for TCP sockets on
-> > +#     systems where TCP_KEEPIDLE socket option is defined.  (Since 10.0)
-> 
-> There are three tunables for keepalive on TCP sockets:
-> 
->    TCP_KEEPCNT (since Linux 2.4)
->        The maximum number of keepalive probes TCP should send before
->        dropping the connection.  This option should not be used in
->        code intended to be portable.
-> 
->    TCP_KEEPIDLE (since Linux 2.4)
->        The time (in seconds) the connection needs to remain idle
->        before TCP starts sending keepalive probes, if the socket
->        option SO_KEEPALIVE has  been  set  on  this socket.  This
->        option should not be used in code intended to be portable.
-> 
->    TCP_KEEPINTVL (since Linux 2.4)
->        The time (in seconds) between individual keepalive probes.
->        This option should not be used in code intended to be portable.
-> 
-> Shouldn't we be supporting all of these, rather than just a subset ?
+Hi Jason,
 
-They were not strictly necessary for the Live Migration use case, but I
-can also include them in the next version.
+On 3/19/25 1:31 AM, Jason Gunthorpe wrote:
+> On Tue, Mar 18, 2025 at 07:31:36PM +0100, Eric Auger wrote:
+>> Nevertheless I don't think anything prevents the acceleration granted
+>> device from also working with virtio/vhost devices for instance unless
+>> you unplug the existing infra.
+> If the accel mode is using something like vcmdq then it is not
+> possible to work since the invalidations won't even be trapped.
 
-Thank you for your feedback, also for the first patch.
+I acknowledged I was more focused on the case without vcmdq which was
+addressed in the past and now I better see the problem.
 
-Best regards,
+>
+> Even in the case where we trap the invalidations it sure is
+> complicated.. invalidation is done by ASID which is not obviously
+> related to any specific device. An ASID could be hidden inside a CD
+> table that is being HW accessed and also inside a CD table that is SW
+> accessed. The VMM has no way to know what is going on so you'd end up
+> forced to replicate all the ASID invalidations. :\
+Nevertheless I think we shall also support the case without vcmdq
+(currently supported in this series). And this one looks more compatible
+with emulated devices althout less optimized.
 
-Juraj Marcin
+>
+> It just doesn't seem worthwhile to try to make it all work.
+>
+> I'd suggest arranging to share some of the SMMUv3 emulation code,
+> maybe with a library/headerfile or something, but I think it does make
+> sense they would be different implementations given how completely
+> different they should be.
+I agree with can do our utmost to separate implementations. I more
+concerned about having libvirt guessing what kind of devices it shall use.
 
-> 
-> > +#
-> >  # @mptcp: enable multi-path TCP.  (Since 6.1)
-> >  #
-> >  # Since: 1.3
-> > @@ -71,6 +75,7 @@
-> >      '*ipv4': 'bool',
-> >      '*ipv6': 'bool',
-> >      '*keep-alive': 'bool',
-> > +    '*keep-alive-idle-period': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPIDLE' },
-> >      '*mptcp': { 'type': 'bool', 'if': 'HAVE_IPPROTO_MPTCP' } } }
-> >  
-> >  ##
-> 
-> > @@ -697,6 +710,22 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
-> >          }
-> >          addr->has_keep_alive = true;
-> >      }
-> > +#ifdef HAVE_TCP_KEEPIDLE
-> > +    begin = strstr(optstr, ",keep-alive-idle-period=");
-> 
-> A bit too verbose - make it just 'keep-alive-idle='
-> 
-> > +    if (begin) {
-> > +        begin += strlen(",keep-alive-idle-period=");
-> > +        if (sscanf(begin, "%" PRIu32 "%n", &addr->keep_alive_idle_period, &pos) != 1 ||
-> > +            (begin[pos] != '\0' && begin[pos] != ',')) {
-> > +            error_setg(errp, "error parsing keep-alive-idle-period argument");
-> > +            return -1;
-> > +        }
-> > +        if (addr->keep_alive_idle_period > INT_MAX) {
-> > +            error_setg(errp, "keep-alive-idle-period value is too large");
-> > +            return -1;
-> > +        }
-> > +        addr->has_keep_alive_idle_period = true;
-> > +    }
-> > +#endif
-> >  #ifdef HAVE_IPPROTO_MPTCP
-> >      begin = strstr(optstr, ",mptcp");
-> >      if (begin) {
-> > -- 
-> > 2.48.1
-> > 
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-> 
+on x86 libvirt needs to use -device intel-iommu,caching-mode=on if one
+wants to protect a VFIO device. So this looks like similar to adding
+accel=on on ARM.
+
+Eric
+>
+> Jason
+>
 
 
