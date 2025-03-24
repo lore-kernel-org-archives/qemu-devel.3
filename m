@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAC9C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 20:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03878C3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 21:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twop2-0001YT-1L; Mon, 24 Mar 2025 16:55:01 -0400
+	id 1twp2d-0004hs-Jl; Mon, 24 Mar 2025 17:09:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twoox-0001Y6-GQ
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 16:54:55 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twoov-0000vx-VX
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 16:54:55 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22401f4d35aso101300535ad.2
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 13:54:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742849692; x=1743454492; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IjcUgPK06/izKZfVvH05gncc+9DrDMjLcc2e2JeXhy0=;
- b=awnABfK87LMnW8X6t8cQX8OKF1aF+fns/gw1mEpfe2V4ykDls1DWH0BJ+ZIyqBNtrS
- aBPXxT155EabXe48n3PTbEPYWVqL0bZm89haXtKKkFfD7jnqERNwjk65jNJALKfvfoFK
- c8ejzLmf3/JK98IyIStPL+qza4xbPc6DeJP2WUdtg6HNuyXooNKVMQ3qgm2lojmUNU8a
- s6awNcqn5+J6zF27Ecgo8EaL2YKX/gRy4z18zxymc5alVP6JjMg3MfQajct5xj3hkw9S
- eoCxR6pHI7kfjlPyGFfcfouQQhP25Vbnxg36GlK7yoZEa9AN4i0U6olG0KOivfb2DqEd
- ksyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742849692; x=1743454492;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IjcUgPK06/izKZfVvH05gncc+9DrDMjLcc2e2JeXhy0=;
- b=Y74QSYBA438IBrItgVKuzgFqhlJ/h9X6/3E0FGx8qMv4KmlR/od/nhcAA1LqtuAcN5
- Afcre4pcGZRfC/8hkU3pPket8Xmp07aqFRfuXh6rst8ojMr2Ym8Sx/w1cUm55RmONu9v
- ue1VE0vtA/pEDz9UI+bbBfVD8PeBMw/UYq/4RKD4DFxmOeQMuYq/5uHadAIZw+bxTKZN
- ApLVBDgfpfV1O5BavLKobCKhFYH1+SL65at8ZKj6ZUfeyruFrVrwvNrPwPXLAzMobuX5
- AzfpNSb51WLTyayeIpSqkvUEy2YkP8sVfbd96VgwyZafKweRu3yAJLO+zsw6zvyWmWMp
- bMwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX96b0qwx/9kzviFQ4mW6GNNIupemp0ouvge6CpzjHkLdod2SZG+LmLKimvjFOJxzfXE0Nicxs1KsjQ@nongnu.org
-X-Gm-Message-State: AOJu0YxArTTBzgpYhS1JGSIRtc38dN4tMkETVWAQo9aLGToS4oc+SKb1
- NbNagiomxWwfsB7TB1bKcM68EGRKFb7zKn6UDUAtntRkMkjwZ3NLkTp9l+B/1pw=
-X-Gm-Gg: ASbGncvvbLRJtbFXGRnHgoO0KWiiHlACUTijMTWbjQ0swl7wV/T6LjlvhCEdHOKgX5E
- IjkcrIQeHlwO0aFpa2GzPnnGqz/OfV04LUs8VdokZoJu+PHzWc1hVX6YTX1nbJ8byHu9Z07C/Fq
- HcrPo4mLCge8q0P0Q5Gzqi/tnCLVfI4Uv9Ok+INjYnh9xzCn4q2J3XzcjnFZ+iOUy/v8yzpW5NZ
- AhL//9KSHUO0SZ3BJQSSMaQyaTo0r17EiG1ZKKDSy5ZRk6KuEjDpP21HXBC4siUATVCS8oF5j5L
- JPN18IEYvq5LlRAMP8PkGmqmEQQ6seE/eaKbSiQnjU3gUMAfDSmM4liyvVMpptngKSlV
-X-Google-Smtp-Source: AGHT+IGJzNx9IZ5b2eNR9WIGYzP1pk30sz3PbrZFL+zU4w+xOKfS1nIh78+kz3DyaBP6HUlThar6YQ==
-X-Received: by 2002:a05:6a20:c901:b0:1f3:345e:4054 with SMTP id
- adf61e73a8af0-1fe42f32676mr25724414637.14.1742849692427; 
- Mon, 24 Mar 2025 13:54:52 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af8a27db8e5sm7724126a12.14.2025.03.24.13.54.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 13:54:51 -0700 (PDT)
-Message-ID: <6a3f794d-3403-4e80-8fd4-9449a78a4ceb@linaro.org>
-Date: Mon, 24 Mar 2025 13:54:51 -0700
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1twp2P-0004fd-3E; Mon, 24 Mar 2025 17:08:50 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1twp2M-00031V-Sb; Mon, 24 Mar 2025 17:08:48 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D86F2107AAF;
+ Tue, 25 Mar 2025 00:07:32 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 71F4F1D5B7E;
+ Tue, 25 Mar 2025 00:08:41 +0300 (MSK)
+Message-ID: <debb6c58-2a38-40d6-ac9c-b90c60ba8b69@tls.msk.ru>
+Date: Tue, 25 Mar 2025 00:08:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/30] exec/cpu-all: remove BSWAP_NEEDED
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
- <20250320223002.2915728-2-pierrick.bouvier@linaro.org>
- <61f1bc3a-abcd-4cf5-9d56-1132c8fc3ba7@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <61f1bc3a-abcd-4cf5-9d56-1132c8fc3ba7@linaro.org>
+Subject: Re: [PULL 0/3] aspeed queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Steven Lee <steven_lee@aspeedtech.com>
+References: <20250323174541.406860-1-clg@redhat.com>
+ <08930285-903b-4413-bd6e-20a14b2d15bb@tls.msk.ru>
+ <2616d3e5-443c-477f-a024-317fadb76a59@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <2616d3e5-443c-477f-a024-317fadb76a59@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,27 +107,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/23/25 12:26, Richard Henderson wrote:
-> On 3/20/25 15:29, Pierrick Bouvier wrote:
->> This identifier is poisoned, so it can't be used from common code
->> anyway. We replace all occurrences with its definition directly.
->>
->> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
->> ---
->>    include/exec/cpu-all.h    | 12 ------------
->>    linux-user/syscall_defs.h |  2 +-
->>    bsd-user/elfload.c        |  6 +++---
->>    hw/ppc/mac_newworld.c     |  4 +---
->>    hw/ppc/mac_oldworld.c     |  4 +---
->>    hw/sparc/sun4m.c          |  6 +-----
->>    hw/sparc64/sun4u.c        |  6 +-----
->>    linux-user/elfload.c      |  8 ++++----
->>    8 files changed, 12 insertions(+), 36 deletions(-)
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> r~
+24.03.2025 23:46, Cédric Le Goater wrote:
 
-For information, this patch was already merged (by Paolo who cleanup 
-bswap_needed from hw/*).
+>> Is there anything in there worth to pick up for stable series?
+> 
+> you are fast !
+
+I was just about to send final announcements for a bunch of next
+stable releases, and noticed another pull request has been merged.. :)
+
+
+> - "aspeed: Fix maximum number of spi controller" is QEMU 10.0 material.
+> - "hw/intc/aspeed: Fix IRQ handler mask check" was merged in QEMU 9.1
+> - "hw/misc/aspeed_hace: Fix buffer overflow in has_padding function"
+>     was merged in QEMU 7.1
+> 
+> The last 2 deserve to be backported IMO. They will need some massaging.
+
+The "buffer overflow" fix seems to be okay for 9.2, 8.2 and 7.2.
+
+The "IRQ handler mask check" seems to be this (for 9.2). Does it look sane?
+
+Author: Steven Lee <steven_lee@aspeedtech.com>
+Date:   Thu Mar 20 17:25:43 2025 +0800
+
+     hw/intc/aspeed: Fix IRQ handler mask check
+
+     Updated the IRQ handler mask check to AND with select variable.
+     This ensures that the interrupt service routine is correctly triggered
+     for the interrupts within the same irq group.
+
+     For example, both `eth0` and the debug UART are handled in `GICINT132`.
+     Without this fix, the debug console may hang if the `eth0` ISR is not
+     handled.
+
+     Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+     Change-Id: Ic3609eb72218dfd68be6057d78b8953b18828709
+     Reviewed-by: Cédric Le Goater <clg@redhat.com>
+     Fixes: d831c5fd8682 ("aspeed/intc: Add AST2700 support")
+     Link: https://lore.kernel.org/qemu-devel/20250320092543.4040672-2-steven_lee@aspeedtech.com
+     Signed-off-by: Cédric Le Goater <clg@redhat.com>
+     (cherry picked from commit 7b8cbe5162e69ad629c5326bf3c158b81857955d)
+     (Mjt: update for before v9.2.0-2466-g5824e8bf6beb
+      "hw/intc/aspeed: Introduce IRQ handler function to reduce code duplication")
+     Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 126b711b94..495fd2bdfa 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -92,7 +92,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
+
+      trace_aspeed_intc_select(select);
+
+-    if (s->mask[irq] || s->regs[status_addr]) {
++    if ((s->mask[irq] & select) || (s->regs[status_addr] & select)) {
+          /*
+           * a. mask is not 0 means in ISR mode
+           * sources interrupt routine are executing.
+
 
