@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1832BC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 08:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E41C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 08:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twd30-0006IZ-31; Mon, 24 Mar 2025 04:20:41 -0400
+	id 1twd2I-0005y0-7s; Mon, 24 Mar 2025 04:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1twd29-0005wR-0H
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 04:19:45 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1twd2D-0005xH-VS
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 04:19:50 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1twd26-0008UG-SV
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 04:19:44 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-224341bbc1dso73076785ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 01:19:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1twd2A-0008UW-Gm
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 04:19:49 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-223fb0f619dso78751135ad.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 01:19:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742804381; x=1743409181; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742804383; x=1743409183; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CX3LCBnlWo3L0OhbMJDGZVsE/frfpvzUUAqMxsgq760=;
- b=P1XwqQzSf9L0B5ZknFamIlmgnMolL78ve07nJ1fCqPLcTNi7WX5B4B9x6Rhpr/KMEZ
- PRXFBIYo+xOdAD1DDF3gF4IMsP+gMWO6IdXKrSMWufcC4hb3IPF+kB7Ka2S93NJSbnh/
- pok7o4VWj9YjxD48uPi5MhzgNSXCC2HM4ejPGbBZQOf2WvIntMIqSXAgTpx1AmRdZVRe
- vq1B0FX73HA68AH58ZtOWDuCQpk8PibWKluw9xWeY2Ce8TuI1E9EMBymiqyYoAs/ayFw
- IYDPh9JkX0U3lfskTWXpwDkZFySxDVtPTEqwweqf/J6ye1/BKrcA0eLfyVOMQNBmeupP
- J2vw==
+ bh=VjHWsm3dx0YdITjXUi4M45f/K0Yu/f7nUohwYX78sQ4=;
+ b=E11K1VlVXdc3J45pqvFLEdDzq23XF+vNNX3FL8gAWFbuw1XBcP9rGKcqDh08f9gN4I
+ VsXLbprRRGp2u4eqoJ1pgeFZqzwbFPxI0q9e6KcRN9GwkDndC+bajCJkg/HqXF0Mcice
+ mp4PHFRBgz9XckA16PaxIMDUL0PP6LvhgGUvHDd72JN20RIIfxeDYFGZsi/oh6V0re2q
+ PvrK1UTCb03Sg+2TQVi9hlN+NrcxiYGWs/iVEZpQ5tzt2Zi9hawCqYdaQTALozX80OmI
+ xmeFDSlg0nklgE8drw2guBvo+HoHgV3pVi6/+ZnNPHdpPAsunic1u4CgRHhGWXLBy/O2
+ 511A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742804381; x=1743409181;
+ d=1e100.net; s=20230601; t=1742804383; x=1743409183;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CX3LCBnlWo3L0OhbMJDGZVsE/frfpvzUUAqMxsgq760=;
- b=jVpB8zMSxnhivkWOIwj9PqHWU3218kI18gA9Meud454wDIeEMM/wgzDIuOKKzbA/Yc
- BUo6s0kXTdcvD81Mvcu1wMDiNOsswbUX1FkZJjYRbR8odpsLhCGQe08hOvEJSOCfEUaG
- eykI/KCJnuO6xbxJdarkRIQVZuvUhQrN6+6fycXL7hCP6RG9Ig8lLOeyMOGglmN44oYe
- W2yyqRX9a/VChqGDKdh+RrScyQh/SVHNVHKqvWbXmDRoCeVIsBdwrCGVcI+elZJIWXe0
- 6XhfI4iynW8GAD57a4cIyTrzo/m+v1qlr1oQDTayopo3TQpElE2IpfeBUCoXvMeUi+GX
- 7oug==
-X-Gm-Message-State: AOJu0YxhBCBxvV5BU7OlwNYp3nrn4vj3qC6/3cnOxVXHoep0jJXtLzMy
- aAPocdwqN3Ro2acp1cik6aPTFKgZGdyLG6xWZ/pjO/+pC/xozzoHyfE2xNRR
-X-Gm-Gg: ASbGncsIDQDHYzoLh/MlsvZtJKEhKDMpoJIvBx3rbEnS7xspe8iqQXcSCH/PvfvsOcc
- +23lZlkYT6Yn9bJhbNm7Y1kf+RaCRikuaKazWk/nmjGg+f5mv2cqZMcrEzfYryMoatXTnoqH6GQ
- rHEnMES6Yh15xWTTy8CtelwwMva46QkUyeb8cUawOeZ9Yi+qsIt+x10bID/+pzADc2YKQoQK4Rc
- UyZgB3T4dy5ZcaHyRcS9lmP0D1gR+zSfPBaZ1ILnrd59f7AAO3r8XmgMu3sYGNJ0TAgZMSUFyYM
- D4lKCfEG/Lp8R7P46RrxssLyQCwjEQxpkiJlRMlzUzLPY0KpskFnioHnKpXxR2wBEMpQsZKdNx0
- 7s+tIYOmgIrVqCTBQ6igV
-X-Google-Smtp-Source: AGHT+IG/XdccdoLiPWfQ8qMZl0lG00DL8ZVvdp3e+/2bhlueGXUeZ3i7PPgoTZW4oo6aftm+evx9Ug==
-X-Received: by 2002:a17:903:98d:b0:223:5e76:637a with SMTP id
- d9443c01a7336-22780d980fcmr198374405ad.23.1742804380580; 
- Mon, 24 Mar 2025 01:19:40 -0700 (PDT)
+ bh=VjHWsm3dx0YdITjXUi4M45f/K0Yu/f7nUohwYX78sQ4=;
+ b=tDqQmGVZPqu9QGlvDoLObOHNSe03p2iG9DM0f758Sb5tHi4BDge0RfaBoRm2IAGKQz
+ /IqG3TSlLVmaUpkitGtfBcbQX8ELYYTXJmris2hBRB2tXrwI+70jtxLrhxks6V2fC9L5
+ 5h9E4xNRbrXPmocz0dfRNFLE41uMpF+TUKD05phGohSOCRkDkewhPVIpYKEaevi4gYaz
+ 7Gctg3qZE/vD7kZO+/SYf8WZN80eA03InZSTisnuV2LfkdB0qzLuFi9ZvU5dPhynL0QQ
+ Kqfa6C1zl1Dm9tuNYYHa2Y30Dpy2TkvEXZ2JPCe2PfY0OXo9vP9yDEu41Qg8bLh2ykci
+ NUbw==
+X-Gm-Message-State: AOJu0YwBZIwS1Ue6/hYbQi7kM/VDNd5DMwoKRFzdpl93sPdN3N7K3ddw
+ FqEIJafNikxcefMv1MF6d6+JlR9E+CaOsCL5c+04AOX5Zci4npG8u2YxXgrX
+X-Gm-Gg: ASbGnct7ZCkpeJYM/DBo4MWPSMvCjN379OCSslBavEcz+iLw44TBjpk290PSPro7ZVq
+ dNGFh8WcUdFvoNk3w2tIsfWuLFPT/biAyRFzfg82R+KCanDnobrXOYRkl9HqRZh5L+r50QEGsXz
+ lZ22f7BQYn/bt/3ccUgAo4bZo4lQm3Sat+UlCUw3Sde3Msh8yazkah0om1q/WNvpZV/QK4rd37K
+ yu0JLy8kC4pywPYQNTzs7adgc5vboOP2dbu3aWRdj3lO5pAkEyI02T6joIAiJImOn0tHcalMYH9
+ 9edt9QOiON5yUQlHWL0PHaSfNMvtoAmt5WelQMgln0HYpQmi+t5wQvy9K+Lv3vnXZs9ilH/rlDF
+ Q2+WzQkcIiyhq+aAE4fNB
+X-Google-Smtp-Source: AGHT+IFt36h/z8Y2C2iMDjfKnXELWBvzzCrnRKytF6Y6K1DFOCuBs339dO+RqY7qVATO1/els3HspA==
+X-Received: by 2002:a17:902:cece:b0:221:7eae:163b with SMTP id
+ d9443c01a7336-22780e261e7mr195628115ad.46.1742804383216; 
+ Mon, 24 Mar 2025 01:19:43 -0700 (PDT)
 Received: from localhost.localdomain (awork062150.netvigator.com.
  [203.198.28.150]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2278120a5b6sm64717685ad.252.2025.03.24.01.19.38
+ d9443c01a7336-2278120a5b6sm64717685ad.252.2025.03.24.01.19.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Mar 2025 01:19:39 -0700 (PDT)
+ Mon, 24 Mar 2025 01:19:42 -0700 (PDT)
 From: yuq825@gmail.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Qiang Yu <yuq825@gmail.com>
-Subject: [PATCH 2/6] ui/egl: require EGL_EXT_image_dma_buf_import_modifiers
-Date: Mon, 24 Mar 2025 16:19:17 +0800
-Message-ID: <20250324081922.359369-3-yuq825@gmail.com>
+Subject: [PATCH 3/6] ui/egl: use DRM_FORMAT_MOD_INVALID as default modifier
+Date: Mon, 24 Mar 2025 16:19:18 +0800
+Message-ID: <20250324081922.359369-4-yuq825@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250324081922.359369-1-yuq825@gmail.com>
 References: <20250324081922.359369-1-yuq825@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=yuq825@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=yuq825@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,54 +101,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Qiang Yu <yuq825@gmail.com>
 
-It's used already, just check it explicitly.
+0 is used as DRM_FORMAT_MOD_LINEAR already.
 
 Signed-off-by: Qiang Yu <yuq825@gmail.com>
 ---
- ui/egl-helpers.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ hw/display/vhost-user-gpu.c     | 3 ++-
+ hw/display/virtio-gpu-udmabuf.c | 4 +++-
+ ui/egl-helpers.c                | 3 ++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index a7949c7078..a6a510db65 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -18,6 +18,7 @@
+ #include "chardev/char-fe.h"
+ #include "qapi/error.h"
+ #include "migration/blocker.h"
++#include "standard-headers/drm/drm_fourcc.h"
+ 
+ typedef enum VhostUserGpuRequest {
+     VHOST_USER_GPU_NONE = 0,
+@@ -251,7 +252,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+         int fd = qemu_chr_fe_get_msgfd(&g->vhost_chr);
+         uint32_t offset = 0;
+         uint32_t stride = m->fd_stride;
+-        uint64_t modifier = 0;
++        uint64_t modifier = DRM_FORMAT_MOD_INVALID;
+         QemuDmaBuf *dmabuf;
+ 
+         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 34fbe05b7a..de6ce53f16 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -25,6 +25,7 @@
+ #include <linux/memfd.h>
+ #include "qemu/memfd.h"
+ #include "standard-headers/linux/udmabuf.h"
++#include "standard-headers/drm/drm_fourcc.h"
+ 
+ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+ {
+@@ -187,7 +188,8 @@ static VGPUDMABuf
+                                   &offset, &fb->stride,
+                                   r->x, r->y, fb->width, fb->height,
+                                   qemu_pixman_to_drm_format(fb->format),
+-                                  0, &res->dmabuf_fd, 1, true, false);
++                                  DRM_FORMAT_MOD_INVALID, &res->dmabuf_fd,
++                                  1, true, false);
+     dmabuf->scanout_id = scanout_id;
+     QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
+ 
 diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 72a1405782..45b1b0b700 100644
+index 45b1b0b700..970286325f 100644
 --- a/ui/egl-helpers.c
 +++ b/ui/egl-helpers.c
-@@ -257,6 +257,11 @@ int egl_rendernode_init(const char *rendernode, DisplayGLMode mode)
-         error_report("egl: EGL_MESA_image_dma_buf_export not supported");
-         goto err;
-     }
-+    if (!epoxy_has_egl_extension(qemu_egl_display,
-+                                 "EGL_EXT_image_dma_buf_import_modifiers")) {
-+        error_report("egl: EGL_EXT_image_dma_buf_import_modifiers not supported");
-+        goto err;
-+    }
+@@ -23,6 +23,7 @@
+ #include "system/system.h"
+ #include "qapi/error.h"
+ #include "trace.h"
++#include "standard-headers/drm/drm_fourcc.h"
  
-     qemu_egl_rn_ctx = qemu_egl_init_ctx();
-     if (!qemu_egl_rn_ctx) {
-@@ -308,7 +313,7 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     EGLImageKHR image = EGL_NO_IMAGE_KHR;
-     EGLint attrs[64];
-     int i = 0;
--    uint64_t modifier;
-+    uint64_t modifier = qemu_dmabuf_get_modifier(dmabuf);
-     uint32_t texture = qemu_dmabuf_get_texture(dmabuf);
- 
-     if (texture != 0) {
-@@ -328,15 +333,12 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
+ EGLDisplay *qemu_egl_display;
+ EGLConfig qemu_egl_config;
+@@ -333,7 +334,7 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
      attrs[i++] = qemu_dmabuf_get_stride(dmabuf)[0];
      attrs[i++] = EGL_DMA_BUF_PLANE0_OFFSET_EXT;
      attrs[i++] = 0;
--#ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
--    modifier = qemu_dmabuf_get_modifier(dmabuf);
-     if (modifier) {
+-    if (modifier) {
++    if (modifier != DRM_FORMAT_MOD_INVALID) {
          attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT;
          attrs[i++] = (modifier >>  0) & 0xffffffff;
          attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT;
-         attrs[i++] = (modifier >> 32) & 0xffffffff;
-     }
--#endif
-     attrs[i++] = EGL_NONE;
- 
-     image = eglCreateImageKHR(qemu_egl_display,
 -- 
 2.43.0
 
