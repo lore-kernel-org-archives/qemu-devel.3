@@ -4,112 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA418C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 08:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5971C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twdKw-0003jM-Oq; Mon, 24 Mar 2025 04:39:10 -0400
+	id 1twdoz-0007rl-Ri; Mon, 24 Mar 2025 05:10:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1twdKY-0003hk-5i; Mon, 24 Mar 2025 04:38:46 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1twdoy-0007rX-Gl
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:10:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1twdKW-0002Qm-6r; Mon, 24 Mar 2025 04:38:45 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O3kRtD013975;
- Mon, 24 Mar 2025 08:38:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WCRy4l
- DXSkOOjJaJSbt0mxicKspc6+9EqPI2WOcQqZw=; b=L1HR20vjoIES64crWikCI7
- mXTzVPSXDH+6+6qGIY83Opaf0RcC5oFI2oC9VbhIe2ztHzWNRE2juvhnCmUONvhA
- beRBo55spAHNYCCstFUASZ3DLGRVpqH2/OvSWhT7wjIL3lnM7rRbgJfxAS6yvcet
- OrmOO1am7B9MqxnToOpfByISgJLenKhLmwZaWEdXYYbkNP5ZNAs/Vmu2gyDf/cPh
- G0cY041Yy5T0Sc4z63mYqsgmASSHzWU8ySHvE+B61RO3XMmHA13MFbTB/Jn6Pte0
- ZSvwknVsmmkmZ13sqE9s5gA3IQ/jQbRzXLiXDpjMKCC27mJ711eBE11U4ENxzgNg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45jys915ut-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Mar 2025 08:38:33 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52O8WnRe021374;
- Mon, 24 Mar 2025 08:38:33 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45jys915ur-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Mar 2025 08:38:33 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52O75PfU030321;
- Mon, 24 Mar 2025 08:38:32 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j7ht5jkg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Mar 2025 08:38:32 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52O8cSSB55836942
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Mar 2025 08:38:28 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD45E20043;
- Mon, 24 Mar 2025 08:38:28 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 885EE20040;
- Mon, 24 Mar 2025 08:38:26 +0000 (GMT)
-Received: from [9.109.199.160] (unknown [9.109.199.160])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Mar 2025 08:38:26 +0000 (GMT)
-Message-ID: <1df64072-b054-4c8e-b426-12f1ad76b550@linux.ibm.com>
-Date: Mon, 24 Mar 2025 14:08:25 +0530
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1twdov-0006Iy-DL
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:10:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742807406;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=n97f2z7th9agSHgtXKHlEs8mtFefbW/nzYFp4gk4Ejc=;
+ b=YLK1C9ZS9q6FoqzygymQwWWqCDiXbjT7mk6jG9grzzHyjXBIFHSj6DFgaJXdHVUYSKplUV
+ 8pYsrTg6ch9R2vZaG7X14IQJfAZU2zrVeR0DDXGMbFGsK7OQ9dqnZIHFiMxFYIgRc7W+Bi
+ l11xlBIqZKKAE6ctHpb4fAY5AF8AmEA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297--Lh1UDl9OH2bAfi-8RtfWA-1; Mon,
+ 24 Mar 2025 05:09:57 -0400
+X-MC-Unique: -Lh1UDl9OH2bAfi-8RtfWA-1
+X-Mimecast-MFC-AGG-ID: -Lh1UDl9OH2bAfi-8RtfWA_1742807396
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26B79180035E; Mon, 24 Mar 2025 09:09:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9335B180B488; Mon, 24 Mar 2025 09:09:53 +0000 (UTC)
+Date: Mon, 24 Mar 2025 09:09:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] system/vl: Tidy up break in QEMU_OPTION_machine case
+Message-ID: <Z-EhXQExJlSof5rT@redhat.com>
+References: <20250323230006.36057-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/8] ppc/pnv: Add a Power11 Pnv11Chip, and a Power11
- Machine
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250308205141.3219333-1-adityag@linux.ibm.com>
- <20250308205141.3219333-8-adityag@linux.ibm.com>
- <bce5dcfc-24d2-41e2-b11e-7cb5967f2132@kaod.org>
- <337b1a39-ed5f-4737-a98a-1ed2784aef7b@linux.ibm.com>
- <a724951a-738c-403d-8d47-8d3b83c68e13@kaod.org>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <a724951a-738c-403d-8d47-8d3b83c68e13@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -Ptg1P9QXAvR1Nfx22naKjB_sXSRZ4KJ
-X-Proofpoint-GUID: YWpvxG_-khhjm8ILz5crkZv1twgxgW6a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-24_04,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 priorityscore=1501
- lowpriorityscore=0 mlxscore=0 adultscore=0 impostorscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2503240061
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250323230006.36057-1-philmd@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,45 +86,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/03/25 13:05, Cédric Le Goater wrote:
+On Mon, Mar 24, 2025 at 12:00:06AM +0100, Philippe Mathieu-Daudé wrote:
+> The break in the QEMU_OPTION_machine case is mis-placed.
 
-> On 3/24/25 08:13, Aditya Gupta wrote:
->> Hi Cedric,
->>
->> <...snip...>
->>
->> When I do this, every function using Pnv10Chip* will need to be 
->> duplicated to use Pnv11Chip*.
->>
->> I will do that.
->>
->> But what do you say about changing Pnv10 chip to Pnv1x chip ? It may 
->> only be used by Pnv10 and Pnv11, not future chips. But is that 
->> unnecessary for just two versions of the chip ?
->>
->> Just tried to think of some ways to reduce duplication, or having 
->> different files such as pnv10.c, pnv11.c ? I am not sure because 
->> these might be unnecessary things too.
->
-> Please open code (and duplicate) first. Then we will see how we
-> can make things common. Checking the typename in the instance_init
-> handleris a hack not for upstream.
+I think that's largely a bikeshed colouring question. If you
+look at other places in the outer switch using a block in
+the case, eg
 
-Sure Cedric, will duplicate it then.
+   case FOO:
+      {
+         .....
+      }
 
+or
 
-Thanks,
+   case FOO: {
+         .....
+   }
 
-- Aditya Gupta
+they'll also have 'break' inside the '{}', so either this patch
+should change all, or change none.
 
+> 
+> Not a big deal, since producing the same outcome, but
+> suspicious, so put it in the correct place.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  system/vl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/system/vl.c b/system/vl.c
+> index ec93988a03a..dbca9ebba4d 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -3409,8 +3409,8 @@ void qemu_init(int argc, char **argv)
+>                          machine_help_func(machine_opts_dict);
+>                          exit(EXIT_SUCCESS);
+>                      }
+> -                    break;
+>                  }
+> +                break;
+>              case QEMU_OPTION_accel:
+>                  accel_opts = qemu_opts_parse_noisily(qemu_find_opts("accel"),
+>                                                       optarg, true);
+> -- 
+> 2.47.1
+> 
+> 
 
->
-> Thanks,
->
-> C.
->
->
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
