@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A0CC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3657C3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twiPi-00014z-2o; Mon, 24 Mar 2025 10:04:26 -0400
+	id 1twiSi-0003or-2c; Mon, 24 Mar 2025 10:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1twiNg-00089r-8V
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:02:27 -0400
-Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ id 1twiSH-0003hP-Ej
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:07:07 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1twiNd-0004bG-1b
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:02:19 -0400
-Received: by mail-qt1-x82c.google.com with SMTP id
- d75a77b69052e-477296dce76so21367051cf.3
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 07:02:16 -0700 (PDT)
+ id 1twiSD-0005OC-Ds
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:07:03 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-477282401b3so26597521cf.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 07:06:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742824935; x=1743429735; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742825218; x=1743430018; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jxvEqDtXSyIom+n49ofVG7hajT/L7+gwohexakoSBZo=;
- b=gk260NDPX0ObUhbZg0nsv+JLtrWIazBvmyAMkfbeT1pnNxY8LLtXE/6h2Jq0ZZm+05
- kceyD0bwAK5qCon2J1WcedfqATmT+EWSYrknjFF/JlNEAtlPBgbOtmayTZQ7MUfI6JSG
- g5vZzX4xrqqzYN4Kantm+uRsnVdgoPPNssJuZgYjXuaACWNVDHwi3DWTuwTjGazvMRNd
- WxO/xrFbeF53RIMqxynrlqKIl6dPVX7ceTWwHsVFCTLhuqynQWyzkk6OjwKT/zO/bAwQ
- yVbXDtISF39hO25BQigq3CAbm8Ej3v2veEEkhJRI63iMQSJiDUCCmEtHqmrOr8RLQ8Zk
- FttQ==
+ bh=uAw5RkIzyZFGDp6psHcC07mM2JDtStu849KTB7qGpYc=;
+ b=PNcC2z8FE0kU/o9rsK2mlum7xZv2ocrvcUyQ5dovv/0d8djHiHmT+QXxPSwdgwJSAm
+ 1jJI6m9W4/kAnvOn5Mv40NhxxEkaLouOGUELb8+QCnI0NYewT7FSQE1OFKONIVWIqzjH
+ PQeZ4IU8CSsz3fHTJr1m8+z5E89DBpXeSbAxcaKnlANzt+wa9Wx4BaQZPiIY06gJU80f
+ bVvwGTM31vThsZWJQHV+uBgD0ro7MUk7PXOrNlISg2WSfGSbIfil39cSJ96lxzZJ+Ew6
+ 6FXPi7xSNtkaXn4/p8ST7JlpShdly0VTiVLwYhOP8VLxuG5XFgEq5jNpXva8cEWMnT7S
+ El5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742824935; x=1743429735;
+ d=1e100.net; s=20230601; t=1742825218; x=1743430018;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jxvEqDtXSyIom+n49ofVG7hajT/L7+gwohexakoSBZo=;
- b=Ne5PF8PsFqTNEHHLSESFtyg9V5tWCNiwQp8bCeVsnxMvTB+Xgc4wPOgroAL/PDrPxz
- Wh7J6A5U7Z0cWwYukgf+Tvv2IAfuHftss4hOzvHXEBA+1EoKioH7DGPhgF+ygwbYZCGc
- dTZqsLNaUVjDXhFHFtSIUgZUJq3Vv6QAflz9VexkL61AnwxSmzIAYuYsmoIRZ5iBLjXx
- SRWRly+WFeAa+PniTn0LvRitZtntcWfR95IwaKDOIfWrBRTSEfBYbMsgpl7lIdudDq9f
- MraAouT5N/w891Gx6QhUBC/kvvEz8H/8W2by64ZQDaG+Cn4VPJ9wekMdF9EtVLOmSsFb
- IRGQ==
-X-Gm-Message-State: AOJu0Yyxgm1rrZ6QwZ+rGguQuXTNte79SAl41KiJsIFT8vlmR5QXrn+J
- E/WxYW0vrI6GwbMrRNYNk5Dymvz53EbATAoGO2pggmpLPeutz9wNAZaebHnIDmlFZDF8uZAvHLf
- OGMZiYxCWfb4GLPWSG0iQ7CseGBM=
-X-Gm-Gg: ASbGncvG22q99vl1BBBS/eFX6Crc2gVFCVkL8OXZechDrtIDzMUYE6LHSTs71UasSeB
- J2gzk1fg3x9UVTX9AjcznSCLQtBsl2rfDOM67rZqwGTWEYyPqVZso9PmGCYWB2d154wikdCPUtM
- b1eMCwe9NmpVUiSutb8qnBj5YBkVD/mCMDNzlj1ebVuIsgsh4nHtPcDoOtN5E=
-X-Google-Smtp-Source: AGHT+IHL44ZpiPF4XHpdfKvMxzELtdtXzM+hE6Os9JeDX6a3WsHWuzBjB6OfcPKBIFtgeUuv5NlIkquDiDIiy9INmKo=
-X-Received: by 2002:a05:622a:5c9a:b0:476:fd53:287 with SMTP id
- d75a77b69052e-4771de4d690mr228977511cf.44.1742824934711; Mon, 24 Mar 2025
- 07:02:14 -0700 (PDT)
+ bh=uAw5RkIzyZFGDp6psHcC07mM2JDtStu849KTB7qGpYc=;
+ b=kGVlms+s4UfkvVLv37/ycNnO0oVvrtMODG20x5fb4s1oVsbYeL5gXsT08VnjRYtbBy
+ 1U50v64b4Apy0xRwmkH4PXvdto96gpsHaxvneJqD1TpBHSGHKUh/LCkX4tygG/ITRBqZ
+ /NGuhB3njsSlmnTrdjKcbmgvgwNt97t5TJJupggaXVyqWkg4z/DVrD8WYOhbnqwjq2vy
+ O8repCtXN4MNM4Pvo3GMpV/R5ruhNGMSaJGCEkEwenyQV/uKqkuqZ2Gv35yggdbII9QA
+ PH82FMBop6I19jYwJutx9Ox2Nrw/FcFH7cfFGNMZU4/sojghQKKYWTvMqzTfgLaKgoaO
+ Y6yw==
+X-Gm-Message-State: AOJu0YxKxCiKnX0rpzTzI/rjDAKF8ZOH0ncoIhnK3ONoip8sQ98J/fXS
+ jmO4RY1LaDcsQ9/TafEl8O6vgQVOFv1xrDv/2lYqIBXTPMfjK57p3B9YUgXB96qZkieQvEFhQDb
+ cy7yRMut7wp0z1sB99otNsSld0WA=
+X-Gm-Gg: ASbGnct55aB3J93IyQLcQj8iiP4M+V4WzeCYIra7dqDv9W8l3mgr16IHSzU89Hrux63
+ I6aSNDqVC6xF9kmtwCZOVRG+lqKPqLjyENhIjqrwa82jTEJNGwDmI1xB/VaC8FJw+n3Zg82HIdy
+ AIDlqnQvqb7b5Qst2shOCQua62nxlF6iOKz+sBJxyLfZDYahfOsuaeXja0u3g=
+X-Google-Smtp-Source: AGHT+IFeI/Q5cRH1uCJQWqJDDQVOjG2njIrHsxkjKH2DStzUEuVCU47f8xnXd+3b0GWPt77Oy5i2CY2YXSfqWJPrJtA=
+X-Received: by 2002:a05:622a:22aa:b0:476:7f5c:e304 with SMTP id
+ d75a77b69052e-4771dd7038dmr201145301cf.19.1742825217796; Mon, 24 Mar 2025
+ 07:06:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250324081922.359369-1-yuq825@gmail.com>
- <20250324081922.359369-7-yuq825@gmail.com>
- <CAJ+F1C+NCda4V_1n-zL3GA_e+HabO6sbKBxWQb_S_zzPPjLNQQ@mail.gmail.com>
- <CAKGbVbtcih4g1sbeDa3XChNFY6tX1tA6Jg4sj+pCvc7V_xoOJA@mail.gmail.com>
-In-Reply-To: <CAKGbVbtcih4g1sbeDa3XChNFY6tX1tA6Jg4sj+pCvc7V_xoOJA@mail.gmail.com>
+ <20250324081922.359369-2-yuq825@gmail.com>
+ <CAMxuvawwGTN9Dh5tor-ADmNd_5AGnBEgwj7npiMSC59OWZJETg@mail.gmail.com>
+ <CAKGbVbvKLhh0O+raaddhRRiZkC7cPur06FROM0miVP4oOWy7ZQ@mail.gmail.com>
+In-Reply-To: <CAKGbVbvKLhh0O+raaddhRRiZkC7cPur06FROM0miVP4oOWy7ZQ@mail.gmail.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 24 Mar 2025 18:02:02 +0400
-X-Gm-Features: AQ5f1JpvRtTWFa6jIe1pErne5JdAtPF0eJFUgY54SSjqA-7XAw_VHuk4H5JpHS4
-Message-ID: <CAJ+F1CJvkS2iQpd=wxqO+_n9SBvDSC55cLPbzLHqLG06ZjGu4g@mail.gmail.com>
-Subject: Re: [PATCH 6/6] ui/spice: support multi plane dmabuf scanout
+Date: Mon, 24 Mar 2025 18:06:45 +0400
+X-Gm-Features: AQ5f1JrKMpkoGmCX7KkcCR1tjF4jnTJuGWhqmvULZjhshqO86zZzRScPjkA0icg
+Message-ID: <CAJ+F1CJALHh4vUF1fm23Z8Pob7ob1aGkGKzig7PofkE-GfQFBw@mail.gmail.com>
+Subject: Re: [PATCH 1/6] ui/dmabuf: extend QemuDmaBuf to support multi-plane
 To: Qiang Yu <yuq825@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,258 +96,441 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 24, 2025 at 5:35=E2=80=AFPM Qiang Yu <yuq825@gmail.com> wrote:
+Hi
+
+On Mon, Mar 24, 2025 at 5:20=E2=80=AFPM Qiang Yu <yuq825@gmail.com> wrote:
 >
-> On Mon, Mar 24, 2025 at 5:30=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-> <marcandre.lureau@gmail.com> wrote:
+> On Mon, Mar 24, 2025 at 6:04=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+> <marcandre.lureau@redhat.com> wrote:
 > >
 > > Hi
 > >
-> > On Mon, Mar 24, 2025 at 12:20=E2=80=AFPM <yuq825@gmail.com> wrote:
+> > On Mon, Mar 24, 2025 at 12:19=E2=80=AFPM <yuq825@gmail.com> wrote:
 > > >
 > > > From: Qiang Yu <yuq825@gmail.com>
 > > >
+> > > mesa/radeonsi is going to support explicit midifier which
+> > > may export a multi-plane texture. For example, texture with
+> > > DCC enabled (a compressed format) has two planes, one with
+> > > compressed data, the other with meta data for compression.
+> > >
 > > > Signed-off-by: Qiang Yu <yuq825@gmail.com>
 > > > ---
-> > >  meson.build        |  2 +-
-> > >  ui/spice-display.c | 65 +++++++++++++++++++++++---------------------=
+> > >  hw/display/vhost-user-gpu.c     |  6 ++-
+> > >  hw/display/virtio-gpu-udmabuf.c |  6 ++-
+> > >  hw/vfio/display.c               |  7 ++--
+> > >  include/ui/dmabuf.h             | 20 ++++++----
+> > >  ui/dbus-listener.c              | 10 ++---
+> > >  ui/dmabuf.c                     | 67 +++++++++++++++++++++----------=
 --
-> > >  2 files changed, 34 insertions(+), 33 deletions(-)
+> > >  ui/egl-helpers.c                |  4 +-
+> > >  ui/spice-display.c              |  4 +-
+> > >  8 files changed, 76 insertions(+), 48 deletions(-)
 > > >
-> > > diff --git a/meson.build b/meson.build
-> > > index 9d9c11731f..b87704a83b 100644
-> > > --- a/meson.build
-> > > +++ b/meson.build
-> > > @@ -1329,7 +1329,7 @@ if get_option('spice') \
-> > >               .require(pixman.found(),
-> > >                        error_message: 'cannot enable SPICE if pixman =
-is not available') \
-> > >               .allowed()
-> > > -  spice =3D dependency('spice-server', version: '>=3D0.14.0',
-> > > +  spice =3D dependency('spice-server', version: '>=3D0.14.3',
+> > > diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.=
+c
+> > > index 2aed6243f6..a7949c7078 100644
+> > > --- a/hw/display/vhost-user-gpu.c
+> > > +++ b/hw/display/vhost-user-gpu.c
+> > > @@ -249,6 +249,8 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, Vh=
+ostUserGpuMsg *msg)
+> > >      case VHOST_USER_GPU_DMABUF_SCANOUT: {
+> > >          VhostUserGpuDMABUFScanout *m =3D &msg->payload.dmabuf_scanou=
+t;
+> > >          int fd =3D qemu_chr_fe_get_msgfd(&g->vhost_chr);
+> > > +        uint32_t offset =3D 0;
+> > > +        uint32_t stride =3D m->fd_stride;
+> > >          uint64_t modifier =3D 0;
+> > >          QemuDmaBuf *dmabuf;
+> > >
+> > > @@ -282,10 +284,10 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, =
+VhostUserGpuMsg *msg)
+> > >          }
+> > >
+> > >          dmabuf =3D qemu_dmabuf_new(m->width, m->height,
+> > > -                                 m->fd_stride, 0, 0,
+> > > +                                 &offset, &stride, 0, 0,
+> > >                                   m->fd_width, m->fd_height,
+> > >                                   m->fd_drm_fourcc, modifier,
+> > > -                                 fd, false, m->fd_flags &
+> > > +                                 &fd, 1, false, m->fd_flags &
+> > >                                   VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
+> > >
+> > >          dpy_gl_scanout_dmabuf(con, dmabuf);
+> > > diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-=
+udmabuf.c
+> > > index 85ca23cb32..34fbe05b7a 100644
+> > > --- a/hw/display/virtio-gpu-udmabuf.c
+> > > +++ b/hw/display/virtio-gpu-udmabuf.c
+> > > @@ -176,16 +176,18 @@ static VGPUDMABuf
+> > >                            struct virtio_gpu_rect *r)
+> > >  {
+> > >      VGPUDMABuf *dmabuf;
+> > > +    uint32_t offset =3D 0;
+> > >
+> > >      if (res->dmabuf_fd < 0) {
+> > >          return NULL;
+> > >      }
+> > >
+> > >      dmabuf =3D g_new0(VGPUDMABuf, 1);
+> > > -    dmabuf->buf =3D qemu_dmabuf_new(r->width, r->height, fb->stride,
+> > > +    dmabuf->buf =3D qemu_dmabuf_new(r->width, r->height,
+> > > +                                  &offset, &fb->stride,
+> > >                                    r->x, r->y, fb->width, fb->height,
+> > >                                    qemu_pixman_to_drm_format(fb->form=
+at),
+> > > -                                  0, res->dmabuf_fd, true, false);
+> > > +                                  0, &res->dmabuf_fd, 1, true, false=
+);
+> > >      dmabuf->scanout_id =3D scanout_id;
+> > >      QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
+> > >
+> > > diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+> > > index ea87830fe0..9d882235fb 100644
+> > > --- a/hw/vfio/display.c
+> > > +++ b/hw/vfio/display.c
+> > > @@ -214,6 +214,7 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPC=
+IDevice *vdev,
+> > >      struct vfio_device_gfx_plane_info plane;
+> > >      VFIODMABuf *dmabuf;
+> > >      int fd, ret;
+> > > +    uint32_t offset =3D 0;
+> > >
+> > >      memset(&plane, 0, sizeof(plane));
+> > >      plane.argsz =3D sizeof(plane);
+> > > @@ -246,10 +247,10 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIO=
+PCIDevice *vdev,
+> > >
+> > >      dmabuf =3D g_new0(VFIODMABuf, 1);
+> > >      dmabuf->dmabuf_id  =3D plane.dmabuf_id;
+> > > -    dmabuf->buf =3D qemu_dmabuf_new(plane.width, plane.height,
+> > > -                                  plane.stride, 0, 0, plane.width,
+> > > +    dmabuf->buf =3D qemu_dmabuf_new(plane.width, plane.height, &offs=
+et,
+> > > +                                  &plane.stride, 0, 0, plane.width,
+> > >                                    plane.height, plane.drm_format,
+> > > -                                  plane.drm_format_mod, fd, false, f=
+alse);
+> > > +                                  plane.drm_format_mod, &fd, 1, fals=
+e, false);
+> > >
+> > >      if (plane_type =3D=3D DRM_PLANE_TYPE_CURSOR) {
+> > >          vfio_display_update_cursor(dmabuf, &plane);
+> > > diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
+> > > index dc74ba895a..407fb2274e 100644
+> > > --- a/include/ui/dmabuf.h
+> > > +++ b/include/ui/dmabuf.h
+> > > @@ -10,24 +10,29 @@
+> > >  #ifndef DMABUF_H
+> > >  #define DMABUF_H
+> > >
+> > > +#define DMABUF_MAX_PLANES 4
+> > > +
+> > >  typedef struct QemuDmaBuf QemuDmaBuf;
+> > >
+> > >  QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
+> > > -                            uint32_t stride, uint32_t x,
+> > > -                            uint32_t y, uint32_t backing_width,
+> > > -                            uint32_t backing_height, uint32_t fourcc=
+,
+> > > -                            uint64_t modifier, int dmabuf_fd,
+> > > +                            const uint32_t *offset, const uint32_t *=
+stride,
+> > > +                            uint32_t x, uint32_t y,
+> > > +                            uint32_t backing_width, uint32_t backing=
+_height,
+> > > +                            uint32_t fourcc, uint64_t modifier,
+> > > +                            const int32_t *dmabuf_fd, uint32_t num_p=
+lanes,
+> > >                              bool allow_fences, bool y0_top);
+> > >  void qemu_dmabuf_free(QemuDmaBuf *dmabuf);
+> > >
+> > >  G_DEFINE_AUTOPTR_CLEANUP_FUNC(QemuDmaBuf, qemu_dmabuf_free);
+> > >
+> > > -int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
+> > > -int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf);
+> > > +const int *qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
 > >
-> > I am okay with bumping dependency requirements, but the nicer
-> > alternative would be to allow the current version and check the
-> > existence of the new API/function instead.
+> > For clarity, I think the functions should be renamed to a plural form:
+> > get_fds, dup_fds, get_strides, get_offsets etc.. I would also have a
+> > size_t *n_fds to return the length of the returned array.
 > >
-> I'm not familiar with how qemu handle new API dependency, but isn't it mu=
-ch
-> convenient to just bump lib version instead of a macro all around? And I =
-can't
-> see similar macro in meson.build
+> The returned array length is always 4. Valid fds are within num_planes
+> elements. There's no user for n_fds argument.
 
-Yes it is generally simpler to bump requirements, but as Daniel
-hinted, we have policies about supporting older environments.
-
-For your series, I think we could simply have:
-if spice.found()
-  config_host_data.set('HAVE_SPICE_QXL_GL_SCANOUT2',
-    cc.has_function('spice_qxl_gl_scanout2', dependencies: spice))
-endif
-
+I understand it is not strictly needed, but it's about being explicit
+for the API, and making it safer for future refactoring as well.
 
 >
+> > > +void qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf, int *fd);
 > >
-> > >                       required: get_option('spice'),
-> > >                       method: 'pkg-config')
-> > >  endif
-> > > diff --git a/ui/spice-display.c b/ui/spice-display.c
-> > > index b7016ece6a..46b6d5dfc9 100644
-> > > --- a/ui/spice-display.c
-> > > +++ b/ui/spice-display.c
-> > > @@ -28,6 +28,8 @@
+> > That function should take an n_fds arguments as well (fd being renamed
+> > to fds as well)
+> >
+> We just dup all fds in dmabuf, so no need for n_fds argument. And there's
+> no use for this arg either.
+>
+> > thanks
+> >
+> > >  void qemu_dmabuf_close(QemuDmaBuf *dmabuf);
+> > >  uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
+> > >  uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
+> > > -uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
+> > > +const uint32_t *qemu_dmabuf_get_offset(QemuDmaBuf *dmabuf);
+> > > +const uint32_t *qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
+> > > +uint32_t qemu_dmabuf_get_num_planes(QemuDmaBuf *dmabuf);
+> > >  uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf);
+> > >  uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf);
+> > >  uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf);
+> > > @@ -44,6 +49,5 @@ void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, ui=
+nt32_t texture);
+> > >  void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
+> > >  void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
+> > >  void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_su=
+bmitted);
+> > > -void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
 > > >
-> > >  #include "ui/spice-display.h"
+> > >  #endif
+> > > diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+> > > index 51244c9240..3b39a23846 100644
+> > > --- a/ui/dbus-listener.c
+> > > +++ b/ui/dbus-listener.c
+> > > @@ -299,7 +299,7 @@ static void dbus_scanout_dmabuf(DisplayChangeList=
+ener *dcl,
+> > >      uint64_t modifier;
+> > >      bool y0_top;
 > > >
-> > > +#include "standard-headers/drm/drm_fourcc.h"
-> > > +
-> > >  bool spice_opengl;
+> > > -    fd =3D qemu_dmabuf_get_fd(dmabuf);
+> > > +    fd =3D qemu_dmabuf_get_fd(dmabuf)[0];
+> > >      fd_list =3D g_unix_fd_list_new();
+> > >      if (g_unix_fd_list_append(fd_list, fd, &err) !=3D 0) {
+> > >          error_report("Failed to setup dmabuf fdlist: %s", err->messa=
+ge);
+> > > @@ -310,7 +310,7 @@ static void dbus_scanout_dmabuf(DisplayChangeList=
+ener *dcl,
 > > >
-> > >  int qemu_spice_rect_is_empty(const QXLRect* r)
-> > > @@ -884,16 +886,11 @@ static void spice_gl_switch(DisplayChangeListen=
-er *dcl,
-> > >      if (ssd->ds) {
-> > >          uint32_t offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES=
-];
-> > >          int fd[DMABUF_MAX_PLANES], num_planes, fourcc;
-> > > +        uint64_t modifier;
-> > >
-> > >          surface_gl_create_texture(ssd->gls, ssd->ds);
-> > >          if (!egl_dmabuf_export_texture(ssd->ds->texture, fd, (EGLint=
- *)offset,
-> > > -                                       (EGLint *)stride, &fourcc, &n=
-um_planes, NULL)) {
-> > > -            surface_gl_destroy_texture(ssd->gls, ssd->ds);
-> > > -            return;
-> > > -        }
-> > > -
-> > > -        if (num_planes > 1) {
-> > > -            fprintf(stderr, "%s: does not support multi-plane textur=
-e\n", __func__);
-> > > +                                       (EGLint *)stride, &fourcc, &n=
-um_planes, &modifier)) {
-> > >              surface_gl_destroy_texture(ssd->gls, ssd->ds);
-> > >              return;
-> > >          }
-> > > @@ -904,10 +901,11 @@ static void spice_gl_switch(DisplayChangeListen=
-er *dcl,
-> > >                                      fourcc);
-> > >
-> > >          /* note: spice server will close the fd */
-> > > -        spice_qxl_gl_scanout(&ssd->qxl, fd[0],
-> > > -                             surface_width(ssd->ds),
-> > > -                             surface_height(ssd->ds),
-> > > -                             stride[0], fourcc, false);
-> > > +        spice_qxl_gl_scanout2(&ssd->qxl, fd,
-> > > +                              surface_width(ssd->ds),
-> > > +                              surface_height(ssd->ds),
-> > > +                              offset, stride, num_planes,
-> > > +                              fourcc, modifier, false);
-> > >          ssd->have_surface =3D true;
-> > >          ssd->have_scanout =3D false;
-> > >
-> > > @@ -930,7 +928,8 @@ static void qemu_spice_gl_scanout_disable(Display=
-ChangeListener *dcl)
-> > >      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay=
-, dcl);
-> > >
-> > >      trace_qemu_spice_gl_scanout_disable(ssd->qxl.id);
-> > > -    spice_qxl_gl_scanout(&ssd->qxl, -1, 0, 0, 0, 0, false);
-> > > +    spice_qxl_gl_scanout2(&ssd->qxl, NULL, 0, 0, NULL, NULL, 0, DRM_=
-FORMAT_INVALID,
-> > > +                          DRM_FORMAT_MOD_INVALID, false);
-> > >      qemu_spice_gl_monitor_config(ssd, 0, 0, 0, 0);
-> > >      ssd->have_surface =3D false;
-> > >      ssd->have_scanout =3D false;
-> > > @@ -948,22 +947,21 @@ static void qemu_spice_gl_scanout_texture(Displ=
-ayChangeListener *dcl,
-> > >      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay=
-, dcl);
-> > >      EGLint offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES], fou=
-rcc =3D 0;
-> > >      int fd[DMABUF_MAX_PLANES], num_planes;
-> > > +    uint64_t modifier;
+> > >      width =3D qemu_dmabuf_get_width(dmabuf);
+> > >      height =3D qemu_dmabuf_get_height(dmabuf);
+> > > -    stride =3D qemu_dmabuf_get_stride(dmabuf);
+> > > +    stride =3D qemu_dmabuf_get_stride(dmabuf)[0];
+> > >      fourcc =3D qemu_dmabuf_get_fourcc(dmabuf);
+> > >      modifier =3D qemu_dmabuf_get_modifier(dmabuf);
+> > >      y0_top =3D qemu_dmabuf_get_y0_top(dmabuf);
+> > > @@ -505,7 +505,7 @@ static void dbus_scanout_texture(DisplayChangeLis=
+tener *dcl,
+> > >  #ifdef CONFIG_GBM
+> > >      g_autoptr(QemuDmaBuf) dmabuf =3D NULL;
+> > >      int fd;
+> > > -    uint32_t stride, fourcc;
+> > > +    uint32_t offset =3D 0, stride, fourcc;
+> > >      uint64_t modifier;
 > > >
 > > >      assert(tex_id);
-> > >      if (!egl_dmabuf_export_texture(tex_id, fd, offset, stride, &four=
-cc,
-> > > -                                   &num_planes, NULL)) {
-> > > +                                   &num_planes, &modifier)) {
-> > >          fprintf(stderr, "%s: failed to export dmabuf for texture\n",=
- __func__);
+> > > @@ -515,8 +515,8 @@ static void dbus_scanout_texture(DisplayChangeLis=
+tener *dcl,
+> > >          error_report("%s: failed to get fd for texture", __func__);
 > > >          return;
 > > >      }
-> > > -    if (num_planes > 1) {
-> > > -        fprintf(stderr, "%s: does not support multi-plane dmabuf\n",=
- __func__);
-> > > -        return;
-> > > -    }
-> > > +
-> > >      trace_qemu_spice_gl_scanout_texture(ssd->qxl.id, w, h, fourcc);
+> > > -    dmabuf =3D qemu_dmabuf_new(w, h, stride, x, y, backing_width,
+> > > -                             backing_height, fourcc, modifier, fd,
+> > > +    dmabuf =3D qemu_dmabuf_new(w, h, &offset, &stride, x, y, backing=
+_width,
+> > > +                             backing_height, fourcc, modifier, &fd, =
+1,
+> > >                               false, backing_y_0_top);
 > > >
-> > >      /* note: spice server will close the fd */
-> > > -    spice_qxl_gl_scanout(&ssd->qxl, fd[0], backing_width, backing_he=
-ight,
-> > > -                         stride[0], fourcc, y_0_top);
-> > > +    spice_qxl_gl_scanout2(&ssd->qxl, fd, backing_width, backing_heig=
-ht,
-> > > +                          (uint32_t *)offset, (uint32_t *)stride, nu=
-m_planes,
-> > > +                          fourcc, modifier, y_0_top);
-> > >      qemu_spice_gl_monitor_config(ssd, x, y, w, h);
-> > >      ssd->have_surface =3D false;
-> > >      ssd->have_scanout =3D true;
-> > > @@ -1034,11 +1032,10 @@ static void qemu_spice_gl_update(DisplayChang=
-eListener *dcl,
-> > >                                   uint32_t x, uint32_t y, uint32_t w,=
- uint32_t h)
-> > >  {
-> > >      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay=
-, dcl);
-> > > -    EGLint stride =3D 0, fourcc =3D 0;
-> > > +    EGLint fourcc =3D 0;
-> > >      bool render_cursor =3D false;
-> > >      bool y_0_top =3D false; /* FIXME */
-> > >      uint64_t cookie;
-> > > -    int fd;
-> > >      uint32_t width, height, texture;
+> > >      dbus_scanout_dmabuf(dcl, dmabuf);
+> > > diff --git a/ui/dmabuf.c b/ui/dmabuf.c
+> > > index df7a09703f..c4eb307042 100644
+> > > --- a/ui/dmabuf.c
+> > > +++ b/ui/dmabuf.c
+> > > @@ -11,10 +11,12 @@
+> > >  #include "ui/dmabuf.h"
 > > >
-> > >      if (!ssd->have_scanout) {
-> > > @@ -1075,6 +1072,7 @@ static void qemu_spice_gl_update(DisplayChangeL=
-istener *dcl,
-> > >                  ssd->blit_fb.height !=3D height) {
-> > >                  int fds[DMABUF_MAX_PLANES], num_planes;
-> > >                  uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_=
-MAX_PLANES];
-> > > +                uint64_t modifier;
+> > >  struct QemuDmaBuf {
+> > > -    int       fd;
+> > > +    int       fd[DMABUF_MAX_PLANES];
+> > >      uint32_t  width;
+> > >      uint32_t  height;
+> > > -    uint32_t  stride;
+> > > +    uint32_t  offset[DMABUF_MAX_PLANES];
+> > > +    uint32_t  stride[DMABUF_MAX_PLANES];
+> > > +    uint32_t  num_planes;
+> > >      uint32_t  fourcc;
+> > >      uint64_t  modifier;
+> > >      uint32_t  texture;
+> > > @@ -30,28 +32,33 @@ struct QemuDmaBuf {
+> > >  };
 > > >
-> > >                  trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, width=
+> > >  QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
+> > > -                            uint32_t stride, uint32_t x,
+> > > -                            uint32_t y, uint32_t backing_width,
+> > > -                            uint32_t backing_height, uint32_t fourcc=
 ,
-> > >                                                    height);
-> > > @@ -1083,27 +1081,30 @@ static void qemu_spice_gl_update(DisplayChang=
-eListener *dcl,
-> > >                                       width, height);
-> > >                  if (!egl_dmabuf_export_texture(ssd->blit_fb.texture,=
- fds,
-> > >                                                 (EGLint *)offsets, (E=
-GLint *)strides,
-> > > -                                               &fourcc, &num_planes,=
- NULL)) {
-> > > +                                               &fourcc, &num_planes,=
- &modifier)) {
-> > >                      fprintf(stderr, "%s: failed to export dmabuf for=
- texture\n", __func__);
-> > >                      return;
-> > >                  }
-> > > -                if (num_planes > 1) {
-> > > -                    fprintf(stderr, "%s: does not support multi-plan=
-e dmabuf\n", __func__);
-> > > -                    return;
-> > > -                }
-> > > -                spice_qxl_gl_scanout(&ssd->qxl, fds[0], width, heigh=
-t,
-> > > -                                     strides[0], fourcc, false);
+> > > -                            uint64_t modifier, int32_t dmabuf_fd,
+> > > +                            const uint32_t *offset, const uint32_t *=
+stride,
+> > > +                            uint32_t x, uint32_t y,
+> > > +                            uint32_t backing_width, uint32_t backing=
+_height,
+> > > +                            uint32_t fourcc, uint64_t modifier,
+> > > +                            const int32_t *dmabuf_fd, uint32_t num_p=
+lanes,
+> > >                              bool allow_fences, bool y0_top) {
+> > >      QemuDmaBuf *dmabuf;
+> > >
+> > > +    assert(num_planes > 0 && num_planes <=3D DMABUF_MAX_PLANES);
 > > > +
-> > > +                spice_qxl_gl_scanout2(&ssd->qxl, fds, width, height,=
- offsets, strides,
-> > > +                                      num_planes, fourcc, modifier, =
-false);
+> > >      dmabuf =3D g_new0(QemuDmaBuf, 1);
+> > >
+> > >      dmabuf->width =3D width;
+> > >      dmabuf->height =3D height;
+> > > -    dmabuf->stride =3D stride;
+> > > +    memcpy(dmabuf->offset, offset, num_planes * sizeof(*offset));
+> > > +    memcpy(dmabuf->stride, stride, num_planes * sizeof(*stride));
+> > >      dmabuf->x =3D x;
+> > >      dmabuf->y =3D y;
+> > >      dmabuf->backing_width =3D backing_width;
+> > >      dmabuf->backing_height =3D backing_height;
+> > >      dmabuf->fourcc =3D fourcc;
+> > >      dmabuf->modifier =3D modifier;
+> > > -    dmabuf->fd =3D dmabuf_fd;
+> > > +    memcpy(dmabuf->fd, dmabuf_fd, num_planes * sizeof(*dmabuf_fd));
+> > >      dmabuf->allow_fences =3D allow_fences;
+> > >      dmabuf->y0_top =3D y0_top;
+> > >      dmabuf->fence_fd =3D -1;
+> > > +    dmabuf->num_planes =3D num_planes;
+> > >
+> > >      return dmabuf;
+> > >  }
+> > > @@ -65,31 +72,35 @@ void qemu_dmabuf_free(QemuDmaBuf *dmabuf)
+> > >      g_free(dmabuf);
+> > >  }
+> > >
+> > > -int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
+> > > +const int *qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
+> > >  {
+> > >      assert(dmabuf !=3D NULL);
+> > >
+> > >      return dmabuf->fd;
+> > >  }
+> > >
+> > > -int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf)
+> > > +void qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf, int *fd)
+> > >  {
+> > > +    int i;
+> > > +
+> > >      assert(dmabuf !=3D NULL);
+> > >
+> > > -    if (dmabuf->fd >=3D 0) {
+> > > -        return dup(dmabuf->fd);
+> > > -    } else {
+> > > -        return -1;
+> > > +    for (i =3D 0; i < dmabuf->num_planes; i++) {
+> > > +        fd[i] =3D dmabuf->fd[i] >=3D 0 ? dup(dmabuf->fd[i]) : -1;
+> > >      }
+> > >  }
+> > >
+> > >  void qemu_dmabuf_close(QemuDmaBuf *dmabuf)
+> > >  {
+> > > +    int i;
+> > > +
+> > >      assert(dmabuf !=3D NULL);
+> > >
+> > > -    if (dmabuf->fd >=3D 0) {
+> > > -        close(dmabuf->fd);
+> > > -        dmabuf->fd =3D -1;
+> > > +    for (i =3D 0; i < dmabuf->num_planes; i++) {
+> > > +        if (dmabuf->fd[i] >=3D 0) {
+> > > +            close(dmabuf->fd[i]);
+> > > +            dmabuf->fd[i] =3D -1;
+> > > +        }
+> > >      }
+> > >  }
+> > >
+> > > @@ -107,13 +118,27 @@ uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dma=
+buf)
+> > >      return dmabuf->height;
+> > >  }
+> > >
+> > > -uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
+> > > +const uint32_t *qemu_dmabuf_get_offset(QemuDmaBuf *dmabuf)
+> > > +{
+> > > +    assert(dmabuf !=3D NULL);
+> > > +
+> > > +    return dmabuf->offset;
+> > > +}
+> > > +
+> > > +const uint32_t *qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
+> > >  {
+> > >      assert(dmabuf !=3D NULL);
+> > >
+> > >      return dmabuf->stride;
+> > >  }
+> > >
+> > > +uint32_t qemu_dmabuf_get_num_planes(QemuDmaBuf *dmabuf)
+> > > +{
+> > > +    assert(dmabuf !=3D NULL);
+> > > +
+> > > +    return dmabuf->num_planes;
+> > > +}
+> > > +
+> > >  uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf)
+> > >  {
+> > >      assert(dmabuf !=3D NULL);
+> > > @@ -221,9 +246,3 @@ void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *d=
+mabuf, bool draw_submitted)
+> > >      assert(dmabuf !=3D NULL);
+> > >      dmabuf->draw_submitted =3D draw_submitted;
+> > >  }
+> > > -
+> > > -void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd)
+> > > -{
+> > > -    assert(dmabuf !=3D NULL);
+> > > -    dmabuf->fd =3D fd;
+> > > -}
+> > > diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+> > > index d591159480..72a1405782 100644
+> > > --- a/ui/egl-helpers.c
+> > > +++ b/ui/egl-helpers.c
+> > > @@ -323,9 +323,9 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf=
+)
+> > >      attrs[i++] =3D qemu_dmabuf_get_fourcc(dmabuf);
+> > >
+> > >      attrs[i++] =3D EGL_DMA_BUF_PLANE0_FD_EXT;
+> > > -    attrs[i++] =3D qemu_dmabuf_get_fd(dmabuf);
+> > > +    attrs[i++] =3D qemu_dmabuf_get_fd(dmabuf)[0];
+> > >      attrs[i++] =3D EGL_DMA_BUF_PLANE0_PITCH_EXT;
+> > > -    attrs[i++] =3D qemu_dmabuf_get_stride(dmabuf);
+> > > +    attrs[i++] =3D qemu_dmabuf_get_stride(dmabuf)[0];
+> > >      attrs[i++] =3D EGL_DMA_BUF_PLANE0_OFFSET_EXT;
+> > >      attrs[i++] =3D 0;
+> > >  #ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
+> > > diff --git a/ui/spice-display.c b/ui/spice-display.c
+> > > index c794ae0649..82598fe9e8 100644
+> > > --- a/ui/spice-display.c
+> > > +++ b/ui/spice-display.c
+> > > @@ -1075,10 +1075,10 @@ static void qemu_spice_gl_update(DisplayChang=
+eListener *dcl,
+> > >                                       stride, fourcc, false);
 > > >              }
 > > >          } else {
-> > > -            stride =3D qemu_dmabuf_get_stride(dmabuf)[0];
-> > > +            int fds[DMABUF_MAX_PLANES];
-> > > +
+> > > -            stride =3D qemu_dmabuf_get_stride(dmabuf);
+> > > +            stride =3D qemu_dmabuf_get_stride(dmabuf)[0];
 > > >              fourcc =3D qemu_dmabuf_get_fourcc(dmabuf);
 > > >              y_0_top =3D qemu_dmabuf_get_y0_top(dmabuf);
-> > > -            qemu_dmabuf_dup_fd(dmabuf, &fd);
-> > > +            qemu_dmabuf_dup_fd(dmabuf, fds);
+> > > -            fd =3D qemu_dmabuf_dup_fd(dmabuf);
+> > > +            qemu_dmabuf_dup_fd(dmabuf, &fd);
 > > >
 > > >              trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id, width, h=
 eight);
 > > >              /* note: spice server will close the fd, so hand over a =
 dup */
-> > > -            spice_qxl_gl_scanout(&ssd->qxl, fd, width, height,
-> > > -                                 stride, fourcc, y_0_top);
-> > > +            spice_qxl_gl_scanout2(&ssd->qxl, fds, width, height,
-> > > +                                  qemu_dmabuf_get_offset(dmabuf),
-> > > +                                  qemu_dmabuf_get_stride(dmabuf),
-> > > +                                  qemu_dmabuf_get_num_planes(dmabuf)=
-,
-> > > +                                  fourcc,
-> > > +                                  qemu_dmabuf_get_modifier(dmabuf),
-> > > +                                  y_0_top);
-> > >          }
-> > >          qemu_spice_gl_monitor_config(ssd, 0, 0, width, height);
-> > >          ssd->guest_dmabuf_refresh =3D false;
 > > > --
 > > > 2.43.0
 > > >
-> > >
 > >
-> >
-> > --
-> > Marc-Andr=C3=A9 Lureau
-
+>
 
 
 --=20
