@@ -4,83 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3657C3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45497C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 14:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twiSi-0003or-2c; Mon, 24 Mar 2025 10:07:36 -0400
+	id 1twiUR-0005Kv-Qy; Mon, 24 Mar 2025 10:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1twiSH-0003hP-Ej
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:07:07 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1twiSD-0005OC-Ds
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:07:03 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-477282401b3so26597521cf.1
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 07:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742825218; x=1743430018; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uAw5RkIzyZFGDp6psHcC07mM2JDtStu849KTB7qGpYc=;
- b=PNcC2z8FE0kU/o9rsK2mlum7xZv2ocrvcUyQ5dovv/0d8djHiHmT+QXxPSwdgwJSAm
- 1jJI6m9W4/kAnvOn5Mv40NhxxEkaLouOGUELb8+QCnI0NYewT7FSQE1OFKONIVWIqzjH
- PQeZ4IU8CSsz3fHTJr1m8+z5E89DBpXeSbAxcaKnlANzt+wa9Wx4BaQZPiIY06gJU80f
- bVvwGTM31vThsZWJQHV+uBgD0ro7MUk7PXOrNlISg2WSfGSbIfil39cSJ96lxzZJ+Ew6
- 6FXPi7xSNtkaXn4/p8ST7JlpShdly0VTiVLwYhOP8VLxuG5XFgEq5jNpXva8cEWMnT7S
- El5w==
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1twiUH-0005G8-47
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:09:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1twiU8-0005ZU-K6
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 10:09:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742825334;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hA9M1B4yvdck0fn8XvTOk+NM2ZGOZygG00aXXl1W8WA=;
+ b=C3wTA3aV8pGj78DdSoeYoiAm9xmhnNYzRbSgsQPHc+fG95ubH/XQVi5XmUh2yLEZLSEQnQ
+ RGpNgDY4zeDVwwWnGJ0x6+Vl5qWlnGlyVJOAgrNfdc2U8nHOZ78gwJIlVmSCjrWTZ8yBoz
+ 1wlo2AWQmZ+b7TZFm1Ih1V2PZu7nX9E=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-691-MyZWDImqPM2oWwQTyEA2VA-1; Mon, 24 Mar 2025 10:08:53 -0400
+X-MC-Unique: MyZWDImqPM2oWwQTyEA2VA-1
+X-Mimecast-MFC-AGG-ID: MyZWDImqPM2oWwQTyEA2VA_1742825332
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43941ad86d4so23045395e9.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 07:08:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742825218; x=1743430018;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uAw5RkIzyZFGDp6psHcC07mM2JDtStu849KTB7qGpYc=;
- b=kGVlms+s4UfkvVLv37/ycNnO0oVvrtMODG20x5fb4s1oVsbYeL5gXsT08VnjRYtbBy
- 1U50v64b4Apy0xRwmkH4PXvdto96gpsHaxvneJqD1TpBHSGHKUh/LCkX4tygG/ITRBqZ
- /NGuhB3njsSlmnTrdjKcbmgvgwNt97t5TJJupggaXVyqWkg4z/DVrD8WYOhbnqwjq2vy
- O8repCtXN4MNM4Pvo3GMpV/R5ruhNGMSaJGCEkEwenyQV/uKqkuqZ2Gv35yggdbII9QA
- PH82FMBop6I19jYwJutx9Ox2Nrw/FcFH7cfFGNMZU4/sojghQKKYWTvMqzTfgLaKgoaO
- Y6yw==
-X-Gm-Message-State: AOJu0YxKxCiKnX0rpzTzI/rjDAKF8ZOH0ncoIhnK3ONoip8sQ98J/fXS
- jmO4RY1LaDcsQ9/TafEl8O6vgQVOFv1xrDv/2lYqIBXTPMfjK57p3B9YUgXB96qZkieQvEFhQDb
- cy7yRMut7wp0z1sB99otNsSld0WA=
-X-Gm-Gg: ASbGnct55aB3J93IyQLcQj8iiP4M+V4WzeCYIra7dqDv9W8l3mgr16IHSzU89Hrux63
- I6aSNDqVC6xF9kmtwCZOVRG+lqKPqLjyENhIjqrwa82jTEJNGwDmI1xB/VaC8FJw+n3Zg82HIdy
- AIDlqnQvqb7b5Qst2shOCQua62nxlF6iOKz+sBJxyLfZDYahfOsuaeXja0u3g=
-X-Google-Smtp-Source: AGHT+IFeI/Q5cRH1uCJQWqJDDQVOjG2njIrHsxkjKH2DStzUEuVCU47f8xnXd+3b0GWPt77Oy5i2CY2YXSfqWJPrJtA=
-X-Received: by 2002:a05:622a:22aa:b0:476:7f5c:e304 with SMTP id
- d75a77b69052e-4771dd7038dmr201145301cf.19.1742825217796; Mon, 24 Mar 2025
- 07:06:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742825332; x=1743430132;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hA9M1B4yvdck0fn8XvTOk+NM2ZGOZygG00aXXl1W8WA=;
+ b=CyUEKC1Yi3DsX1AR7DeyCflCSPkySKywlwPnAHK9QGrutob8P4YzyCzZW8i2UP62/l
+ p5HX1qctT0en25kDDu8FFaI079slfnmOU6OWoxO07HuQ8QcTIsyroyNtDRmy2OstbWKt
+ DePw956UATHyY0E9fiWK7hXIyCqakzc/5EEVkMgR2DEvJGB23fW4NuuIV8uNg2mngR8E
+ S2wNqx0woAiBC+ujDJlbV8OwffvaCEogI00pAKy1RIyTs/qNm7iAHnmEcKvdLuoJMrQE
+ qqU9NU/CijWjGzBfgzqGb/0/lGKa7EV4qIlVCqP6mIMTmHECIbjSIw+IQ0k7eB7OA5Ba
+ +7mg==
+X-Gm-Message-State: AOJu0YxyCaNbva7ahvMHN1mwTn4xkUObKoIEYBRCIdmEUQfhc/Hc0loE
+ FHBiUztBJMvFMzC/ZDn1SCpJx9SC9LUdPtKz/6y4X83S++KwNFb8IyssNFUyCR0++fNdnqsYGQk
+ pFfeIp9q/HSYt3kiIxcOWk5oZKlN9RnsyMB8WDBVXpkYOQfWrBUjc
+X-Gm-Gg: ASbGncvo667XAkgkUuLYeEdzLoopq4753TWJiaj9CwTqONqjrB/f8uhT3aGPOjFAJL3
+ r//SIqXhN6jwUYLGyH1+pM9iOFv6i1kl40puCL+X431yw7noZ5Lmmv94/Tg57PhUkUEc2jq+Zcl
+ hygFsxr4lqBBSVesN46u8HrkYEMoGeoa9VB6VRIECk0jEeX89XHYKnfNmL9tbIlQNTjjy0ym07Q
+ y8Wj2vKmdXPktpwczscaLWsi/UF2UxTTLCuYB+z0ZGyCa04Bg5w5CNiOj+9+SIdSKNLkS2L4JQx
+ nTJigMMGSA==
+X-Received: by 2002:a05:600c:5025:b0:43d:300f:fa51 with SMTP id
+ 5b1f17b1804b1-43d509ea850mr116847205e9.9.1742825331703; 
+ Mon, 24 Mar 2025 07:08:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH5eyEfBYrHYad5NPuIHXvv4i4rmE+nrbwfMJLyCFh3yg9S41GdX7O/lCB15cVqAwmcY84LxA==
+X-Received: by 2002:a05:600c:5025:b0:43d:300f:fa51 with SMTP id
+ 5b1f17b1804b1-43d509ea850mr116846595e9.9.1742825331115; 
+ Mon, 24 Mar 2025 07:08:51 -0700 (PDT)
+Received: from rh-jmarcin ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d43f55c99sm173355095e9.24.2025.03.24.07.08.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Mar 2025 07:08:50 -0700 (PDT)
+Date: Mon, 24 Mar 2025 15:08:48 +0100
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 2/2] utils/qemu-sockets: Introduce
+ keep-alive-idle-period inet socket option
+Message-ID: <io7z2ds3sw66f75wlb5noln3wcewaek4hulm2ysho25siknh35@syhcgxoypjmn>
+References: <20250319163638.456417-1-jmarcin@redhat.com>
+ <20250319163638.456417-3-jmarcin@redhat.com>
+ <Z-E-JNWlGYuTTK8t@redhat.com>
 MIME-Version: 1.0
-References: <20250324081922.359369-1-yuq825@gmail.com>
- <20250324081922.359369-2-yuq825@gmail.com>
- <CAMxuvawwGTN9Dh5tor-ADmNd_5AGnBEgwj7npiMSC59OWZJETg@mail.gmail.com>
- <CAKGbVbvKLhh0O+raaddhRRiZkC7cPur06FROM0miVP4oOWy7ZQ@mail.gmail.com>
-In-Reply-To: <CAKGbVbvKLhh0O+raaddhRRiZkC7cPur06FROM0miVP4oOWy7ZQ@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 24 Mar 2025 18:06:45 +0400
-X-Gm-Features: AQ5f1JrKMpkoGmCX7KkcCR1tjF4jnTJuGWhqmvULZjhshqO86zZzRScPjkA0icg
-Message-ID: <CAJ+F1CJALHh4vUF1fm23Z8Pob7ob1aGkGKzig7PofkE-GfQFBw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] ui/dmabuf: extend QemuDmaBuf to support multi-plane
-To: Qiang Yu <yuq825@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z-E-JNWlGYuTTK8t@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,443 +111,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 2025-03-24 11:12, Daniel P. Berrangé wrote:
+> On Wed, Mar 19, 2025 at 05:36:20PM +0100, Juraj Marcin wrote:
+> > From: Juraj Marcin <jmarcin@redhat.com>
+> > 
+> > The default idle period for TCP connection could be even 2 hours.
+> > However, in some cases, the application needs to be aware of a
+> > connection issue much sooner.
+> > 
+> > This is the case, for example, for postcopy live migration. If there is
+> > no traffic from the migration destination guest (server-side) to the
+> > migration source guest (client-side), the destination keeps waiting for
+> > pages indefinitely and does not switch to the postcopy-paused state.
+> > This can happen, for example, if the destination QEMU instance is
+> > started with '-S' command line option and the machine is not started yet
+> > or if the machine is idle and produces no new page faults for
+> > not-yet-migrated pages.
+> > 
+> > This patch introduces a new inet socket parameter on platforms where
+> > TCP_KEEPIDLE is defined and passes the configured value to the
+> > TCP_KEEPIDLE socket option when a client-side or server-side socket is
+> > created.
+> > 
+> > The default value is 0, which means system configuration is used, and no
+> > custom value is set.
+> > 
+> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> > ---
+> >  io/dns-resolver.c   |  4 ++++
+> >  meson.build         |  2 ++
+> >  qapi/sockets.json   |  5 +++++
+> >  util/qemu-sockets.c | 29 +++++++++++++++++++++++++++++
+> >  4 files changed, 40 insertions(+)
+> > 
+> > diff --git a/io/dns-resolver.c b/io/dns-resolver.c
+> > index ee7403b65b..03c59673f0 100644
+> > --- a/io/dns-resolver.c
+> > +++ b/io/dns-resolver.c
+> > @@ -128,6 +128,10 @@ static int qio_dns_resolver_lookup_sync_inet(QIODNSResolver *resolver,
+> >  #endif
+> >              .has_keep_alive = iaddr->has_keep_alive,
+> >              .keep_alive = iaddr->keep_alive,
+> > +#ifdef HAVE_TCP_KEEPIDLE
+> > +            .has_keep_alive_idle_period = iaddr->has_keep_alive_idle_period,
+> > +            .keep_alive_idle_period = iaddr->keep_alive_idle_period,
+> > +#endif
+> >          };
+> >  
+> >          (*addrs)[i] = newaddr;
+> 
+> I feel like this code is somewhat fragile. It is probably best to add a
+> commit that refactors it to do a struct copy, and then override the few
+> fields that need to be different.
+> 
+>      newaddr->u.inet = iaddr;
+>      newaddr->u.inet.host = g_strdup(uaddr);
+>      ...
+> 
+> that way we don't risk forgetting to copy fields as fixed in the previous
+> commit
+> 
+> > diff --git a/meson.build b/meson.build
+> > index 41f68d3806..e3440b09c8 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -2734,6 +2734,8 @@ if linux_io_uring.found()
+> >    config_host_data.set('HAVE_IO_URING_PREP_WRITEV2',
+> >                         cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
+> >  endif
+> > +config_host_data.set('HAVE_TCP_KEEPIDLE',
+> > +                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPIDLE'))
+> >  
+> >  # has_member
+> >  config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
+> > diff --git a/qapi/sockets.json b/qapi/sockets.json
+> > index eb50f64e3a..ddd82b1e66 100644
+> > --- a/qapi/sockets.json
+> > +++ b/qapi/sockets.json
+> > @@ -59,6 +59,10 @@
+> >  # @keep-alive: enable keep-alive when connecting to/listening on this socket.
+> >  #     (Since 4.2, not supported for listening sockets until 10.0)
+> >  #
+> > +# @keep-alive-idle-period: time in seconds the connection needs to be idle
+> > +#     before sending a keepalive packet.  Only supported for TCP sockets on
+> > +#     systems where TCP_KEEPIDLE socket option is defined.  (Since 10.0)
+> 
+> There are three tunables for keepalive on TCP sockets:
+> 
+>    TCP_KEEPCNT (since Linux 2.4)
+>        The maximum number of keepalive probes TCP should send before
+>        dropping the connection.  This option should not be used in
+>        code intended to be portable.
+> 
+>    TCP_KEEPIDLE (since Linux 2.4)
+>        The time (in seconds) the connection needs to remain idle
+>        before TCP starts sending keepalive probes, if the socket
+>        option SO_KEEPALIVE has  been  set  on  this socket.  This
+>        option should not be used in code intended to be portable.
+> 
+>    TCP_KEEPINTVL (since Linux 2.4)
+>        The time (in seconds) between individual keepalive probes.
+>        This option should not be used in code intended to be portable.
+> 
+> Shouldn't we be supporting all of these, rather than just a subset ?
 
-On Mon, Mar 24, 2025 at 5:20=E2=80=AFPM Qiang Yu <yuq825@gmail.com> wrote:
->
-> On Mon, Mar 24, 2025 at 6:04=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-> <marcandre.lureau@redhat.com> wrote:
-> >
-> > Hi
-> >
-> > On Mon, Mar 24, 2025 at 12:19=E2=80=AFPM <yuq825@gmail.com> wrote:
-> > >
-> > > From: Qiang Yu <yuq825@gmail.com>
-> > >
-> > > mesa/radeonsi is going to support explicit midifier which
-> > > may export a multi-plane texture. For example, texture with
-> > > DCC enabled (a compressed format) has two planes, one with
-> > > compressed data, the other with meta data for compression.
-> > >
-> > > Signed-off-by: Qiang Yu <yuq825@gmail.com>
-> > > ---
-> > >  hw/display/vhost-user-gpu.c     |  6 ++-
-> > >  hw/display/virtio-gpu-udmabuf.c |  6 ++-
-> > >  hw/vfio/display.c               |  7 ++--
-> > >  include/ui/dmabuf.h             | 20 ++++++----
-> > >  ui/dbus-listener.c              | 10 ++---
-> > >  ui/dmabuf.c                     | 67 +++++++++++++++++++++----------=
---
-> > >  ui/egl-helpers.c                |  4 +-
-> > >  ui/spice-display.c              |  4 +-
-> > >  8 files changed, 76 insertions(+), 48 deletions(-)
-> > >
-> > > diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.=
-c
-> > > index 2aed6243f6..a7949c7078 100644
-> > > --- a/hw/display/vhost-user-gpu.c
-> > > +++ b/hw/display/vhost-user-gpu.c
-> > > @@ -249,6 +249,8 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, Vh=
-ostUserGpuMsg *msg)
-> > >      case VHOST_USER_GPU_DMABUF_SCANOUT: {
-> > >          VhostUserGpuDMABUFScanout *m =3D &msg->payload.dmabuf_scanou=
-t;
-> > >          int fd =3D qemu_chr_fe_get_msgfd(&g->vhost_chr);
-> > > +        uint32_t offset =3D 0;
-> > > +        uint32_t stride =3D m->fd_stride;
-> > >          uint64_t modifier =3D 0;
-> > >          QemuDmaBuf *dmabuf;
-> > >
-> > > @@ -282,10 +284,10 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, =
-VhostUserGpuMsg *msg)
-> > >          }
-> > >
-> > >          dmabuf =3D qemu_dmabuf_new(m->width, m->height,
-> > > -                                 m->fd_stride, 0, 0,
-> > > +                                 &offset, &stride, 0, 0,
-> > >                                   m->fd_width, m->fd_height,
-> > >                                   m->fd_drm_fourcc, modifier,
-> > > -                                 fd, false, m->fd_flags &
-> > > +                                 &fd, 1, false, m->fd_flags &
-> > >                                   VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
-> > >
-> > >          dpy_gl_scanout_dmabuf(con, dmabuf);
-> > > diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-=
-udmabuf.c
-> > > index 85ca23cb32..34fbe05b7a 100644
-> > > --- a/hw/display/virtio-gpu-udmabuf.c
-> > > +++ b/hw/display/virtio-gpu-udmabuf.c
-> > > @@ -176,16 +176,18 @@ static VGPUDMABuf
-> > >                            struct virtio_gpu_rect *r)
-> > >  {
-> > >      VGPUDMABuf *dmabuf;
-> > > +    uint32_t offset =3D 0;
-> > >
-> > >      if (res->dmabuf_fd < 0) {
-> > >          return NULL;
-> > >      }
-> > >
-> > >      dmabuf =3D g_new0(VGPUDMABuf, 1);
-> > > -    dmabuf->buf =3D qemu_dmabuf_new(r->width, r->height, fb->stride,
-> > > +    dmabuf->buf =3D qemu_dmabuf_new(r->width, r->height,
-> > > +                                  &offset, &fb->stride,
-> > >                                    r->x, r->y, fb->width, fb->height,
-> > >                                    qemu_pixman_to_drm_format(fb->form=
-at),
-> > > -                                  0, res->dmabuf_fd, true, false);
-> > > +                                  0, &res->dmabuf_fd, 1, true, false=
-);
-> > >      dmabuf->scanout_id =3D scanout_id;
-> > >      QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
-> > >
-> > > diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-> > > index ea87830fe0..9d882235fb 100644
-> > > --- a/hw/vfio/display.c
-> > > +++ b/hw/vfio/display.c
-> > > @@ -214,6 +214,7 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPC=
-IDevice *vdev,
-> > >      struct vfio_device_gfx_plane_info plane;
-> > >      VFIODMABuf *dmabuf;
-> > >      int fd, ret;
-> > > +    uint32_t offset =3D 0;
-> > >
-> > >      memset(&plane, 0, sizeof(plane));
-> > >      plane.argsz =3D sizeof(plane);
-> > > @@ -246,10 +247,10 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIO=
-PCIDevice *vdev,
-> > >
-> > >      dmabuf =3D g_new0(VFIODMABuf, 1);
-> > >      dmabuf->dmabuf_id  =3D plane.dmabuf_id;
-> > > -    dmabuf->buf =3D qemu_dmabuf_new(plane.width, plane.height,
-> > > -                                  plane.stride, 0, 0, plane.width,
-> > > +    dmabuf->buf =3D qemu_dmabuf_new(plane.width, plane.height, &offs=
-et,
-> > > +                                  &plane.stride, 0, 0, plane.width,
-> > >                                    plane.height, plane.drm_format,
-> > > -                                  plane.drm_format_mod, fd, false, f=
-alse);
-> > > +                                  plane.drm_format_mod, &fd, 1, fals=
-e, false);
-> > >
-> > >      if (plane_type =3D=3D DRM_PLANE_TYPE_CURSOR) {
-> > >          vfio_display_update_cursor(dmabuf, &plane);
-> > > diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
-> > > index dc74ba895a..407fb2274e 100644
-> > > --- a/include/ui/dmabuf.h
-> > > +++ b/include/ui/dmabuf.h
-> > > @@ -10,24 +10,29 @@
-> > >  #ifndef DMABUF_H
-> > >  #define DMABUF_H
-> > >
-> > > +#define DMABUF_MAX_PLANES 4
-> > > +
-> > >  typedef struct QemuDmaBuf QemuDmaBuf;
-> > >
-> > >  QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-> > > -                            uint32_t stride, uint32_t x,
-> > > -                            uint32_t y, uint32_t backing_width,
-> > > -                            uint32_t backing_height, uint32_t fourcc=
-,
-> > > -                            uint64_t modifier, int dmabuf_fd,
-> > > +                            const uint32_t *offset, const uint32_t *=
-stride,
-> > > +                            uint32_t x, uint32_t y,
-> > > +                            uint32_t backing_width, uint32_t backing=
-_height,
-> > > +                            uint32_t fourcc, uint64_t modifier,
-> > > +                            const int32_t *dmabuf_fd, uint32_t num_p=
-lanes,
-> > >                              bool allow_fences, bool y0_top);
-> > >  void qemu_dmabuf_free(QemuDmaBuf *dmabuf);
-> > >
-> > >  G_DEFINE_AUTOPTR_CLEANUP_FUNC(QemuDmaBuf, qemu_dmabuf_free);
-> > >
-> > > -int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
-> > > -int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf);
-> > > +const int *qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
-> >
-> > For clarity, I think the functions should be renamed to a plural form:
-> > get_fds, dup_fds, get_strides, get_offsets etc.. I would also have a
-> > size_t *n_fds to return the length of the returned array.
-> >
-> The returned array length is always 4. Valid fds are within num_planes
-> elements. There's no user for n_fds argument.
+They were not strictly necessary for the Live Migration use case, but I
+can also include them in the next version.
 
-I understand it is not strictly needed, but it's about being explicit
-for the API, and making it safer for future refactoring as well.
+Thank you for your feedback, also for the first patch.
 
->
-> > > +void qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf, int *fd);
-> >
-> > That function should take an n_fds arguments as well (fd being renamed
-> > to fds as well)
-> >
-> We just dup all fds in dmabuf, so no need for n_fds argument. And there's
-> no use for this arg either.
->
-> > thanks
-> >
-> > >  void qemu_dmabuf_close(QemuDmaBuf *dmabuf);
-> > >  uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
-> > >  uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
-> > > -uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
-> > > +const uint32_t *qemu_dmabuf_get_offset(QemuDmaBuf *dmabuf);
-> > > +const uint32_t *qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
-> > > +uint32_t qemu_dmabuf_get_num_planes(QemuDmaBuf *dmabuf);
-> > >  uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf);
-> > >  uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf);
-> > >  uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf);
-> > > @@ -44,6 +49,5 @@ void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, ui=
-nt32_t texture);
-> > >  void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
-> > >  void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
-> > >  void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_su=
-bmitted);
-> > > -void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
-> > >
-> > >  #endif
-> > > diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-> > > index 51244c9240..3b39a23846 100644
-> > > --- a/ui/dbus-listener.c
-> > > +++ b/ui/dbus-listener.c
-> > > @@ -299,7 +299,7 @@ static void dbus_scanout_dmabuf(DisplayChangeList=
-ener *dcl,
-> > >      uint64_t modifier;
-> > >      bool y0_top;
-> > >
-> > > -    fd =3D qemu_dmabuf_get_fd(dmabuf);
-> > > +    fd =3D qemu_dmabuf_get_fd(dmabuf)[0];
-> > >      fd_list =3D g_unix_fd_list_new();
-> > >      if (g_unix_fd_list_append(fd_list, fd, &err) !=3D 0) {
-> > >          error_report("Failed to setup dmabuf fdlist: %s", err->messa=
-ge);
-> > > @@ -310,7 +310,7 @@ static void dbus_scanout_dmabuf(DisplayChangeList=
-ener *dcl,
-> > >
-> > >      width =3D qemu_dmabuf_get_width(dmabuf);
-> > >      height =3D qemu_dmabuf_get_height(dmabuf);
-> > > -    stride =3D qemu_dmabuf_get_stride(dmabuf);
-> > > +    stride =3D qemu_dmabuf_get_stride(dmabuf)[0];
-> > >      fourcc =3D qemu_dmabuf_get_fourcc(dmabuf);
-> > >      modifier =3D qemu_dmabuf_get_modifier(dmabuf);
-> > >      y0_top =3D qemu_dmabuf_get_y0_top(dmabuf);
-> > > @@ -505,7 +505,7 @@ static void dbus_scanout_texture(DisplayChangeLis=
-tener *dcl,
-> > >  #ifdef CONFIG_GBM
-> > >      g_autoptr(QemuDmaBuf) dmabuf =3D NULL;
-> > >      int fd;
-> > > -    uint32_t stride, fourcc;
-> > > +    uint32_t offset =3D 0, stride, fourcc;
-> > >      uint64_t modifier;
-> > >
-> > >      assert(tex_id);
-> > > @@ -515,8 +515,8 @@ static void dbus_scanout_texture(DisplayChangeLis=
-tener *dcl,
-> > >          error_report("%s: failed to get fd for texture", __func__);
-> > >          return;
-> > >      }
-> > > -    dmabuf =3D qemu_dmabuf_new(w, h, stride, x, y, backing_width,
-> > > -                             backing_height, fourcc, modifier, fd,
-> > > +    dmabuf =3D qemu_dmabuf_new(w, h, &offset, &stride, x, y, backing=
-_width,
-> > > +                             backing_height, fourcc, modifier, &fd, =
-1,
-> > >                               false, backing_y_0_top);
-> > >
-> > >      dbus_scanout_dmabuf(dcl, dmabuf);
-> > > diff --git a/ui/dmabuf.c b/ui/dmabuf.c
-> > > index df7a09703f..c4eb307042 100644
-> > > --- a/ui/dmabuf.c
-> > > +++ b/ui/dmabuf.c
-> > > @@ -11,10 +11,12 @@
-> > >  #include "ui/dmabuf.h"
-> > >
-> > >  struct QemuDmaBuf {
-> > > -    int       fd;
-> > > +    int       fd[DMABUF_MAX_PLANES];
-> > >      uint32_t  width;
-> > >      uint32_t  height;
-> > > -    uint32_t  stride;
-> > > +    uint32_t  offset[DMABUF_MAX_PLANES];
-> > > +    uint32_t  stride[DMABUF_MAX_PLANES];
-> > > +    uint32_t  num_planes;
-> > >      uint32_t  fourcc;
-> > >      uint64_t  modifier;
-> > >      uint32_t  texture;
-> > > @@ -30,28 +32,33 @@ struct QemuDmaBuf {
-> > >  };
-> > >
-> > >  QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-> > > -                            uint32_t stride, uint32_t x,
-> > > -                            uint32_t y, uint32_t backing_width,
-> > > -                            uint32_t backing_height, uint32_t fourcc=
-,
-> > > -                            uint64_t modifier, int32_t dmabuf_fd,
-> > > +                            const uint32_t *offset, const uint32_t *=
-stride,
-> > > +                            uint32_t x, uint32_t y,
-> > > +                            uint32_t backing_width, uint32_t backing=
-_height,
-> > > +                            uint32_t fourcc, uint64_t modifier,
-> > > +                            const int32_t *dmabuf_fd, uint32_t num_p=
-lanes,
-> > >                              bool allow_fences, bool y0_top) {
-> > >      QemuDmaBuf *dmabuf;
-> > >
-> > > +    assert(num_planes > 0 && num_planes <=3D DMABUF_MAX_PLANES);
-> > > +
-> > >      dmabuf =3D g_new0(QemuDmaBuf, 1);
-> > >
-> > >      dmabuf->width =3D width;
-> > >      dmabuf->height =3D height;
-> > > -    dmabuf->stride =3D stride;
-> > > +    memcpy(dmabuf->offset, offset, num_planes * sizeof(*offset));
-> > > +    memcpy(dmabuf->stride, stride, num_planes * sizeof(*stride));
-> > >      dmabuf->x =3D x;
-> > >      dmabuf->y =3D y;
-> > >      dmabuf->backing_width =3D backing_width;
-> > >      dmabuf->backing_height =3D backing_height;
-> > >      dmabuf->fourcc =3D fourcc;
-> > >      dmabuf->modifier =3D modifier;
-> > > -    dmabuf->fd =3D dmabuf_fd;
-> > > +    memcpy(dmabuf->fd, dmabuf_fd, num_planes * sizeof(*dmabuf_fd));
-> > >      dmabuf->allow_fences =3D allow_fences;
-> > >      dmabuf->y0_top =3D y0_top;
-> > >      dmabuf->fence_fd =3D -1;
-> > > +    dmabuf->num_planes =3D num_planes;
-> > >
-> > >      return dmabuf;
-> > >  }
-> > > @@ -65,31 +72,35 @@ void qemu_dmabuf_free(QemuDmaBuf *dmabuf)
-> > >      g_free(dmabuf);
-> > >  }
-> > >
-> > > -int qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
-> > > +const int *qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
-> > >  {
-> > >      assert(dmabuf !=3D NULL);
-> > >
-> > >      return dmabuf->fd;
-> > >  }
-> > >
-> > > -int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf)
-> > > +void qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf, int *fd)
-> > >  {
-> > > +    int i;
-> > > +
-> > >      assert(dmabuf !=3D NULL);
-> > >
-> > > -    if (dmabuf->fd >=3D 0) {
-> > > -        return dup(dmabuf->fd);
-> > > -    } else {
-> > > -        return -1;
-> > > +    for (i =3D 0; i < dmabuf->num_planes; i++) {
-> > > +        fd[i] =3D dmabuf->fd[i] >=3D 0 ? dup(dmabuf->fd[i]) : -1;
-> > >      }
-> > >  }
-> > >
-> > >  void qemu_dmabuf_close(QemuDmaBuf *dmabuf)
-> > >  {
-> > > +    int i;
-> > > +
-> > >      assert(dmabuf !=3D NULL);
-> > >
-> > > -    if (dmabuf->fd >=3D 0) {
-> > > -        close(dmabuf->fd);
-> > > -        dmabuf->fd =3D -1;
-> > > +    for (i =3D 0; i < dmabuf->num_planes; i++) {
-> > > +        if (dmabuf->fd[i] >=3D 0) {
-> > > +            close(dmabuf->fd[i]);
-> > > +            dmabuf->fd[i] =3D -1;
-> > > +        }
-> > >      }
-> > >  }
-> > >
-> > > @@ -107,13 +118,27 @@ uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dma=
-buf)
-> > >      return dmabuf->height;
-> > >  }
-> > >
-> > > -uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
-> > > +const uint32_t *qemu_dmabuf_get_offset(QemuDmaBuf *dmabuf)
-> > > +{
-> > > +    assert(dmabuf !=3D NULL);
-> > > +
-> > > +    return dmabuf->offset;
-> > > +}
-> > > +
-> > > +const uint32_t *qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
-> > >  {
-> > >      assert(dmabuf !=3D NULL);
-> > >
-> > >      return dmabuf->stride;
-> > >  }
-> > >
-> > > +uint32_t qemu_dmabuf_get_num_planes(QemuDmaBuf *dmabuf)
-> > > +{
-> > > +    assert(dmabuf !=3D NULL);
-> > > +
-> > > +    return dmabuf->num_planes;
-> > > +}
-> > > +
-> > >  uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf)
-> > >  {
-> > >      assert(dmabuf !=3D NULL);
-> > > @@ -221,9 +246,3 @@ void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *d=
-mabuf, bool draw_submitted)
-> > >      assert(dmabuf !=3D NULL);
-> > >      dmabuf->draw_submitted =3D draw_submitted;
-> > >  }
-> > > -
-> > > -void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd)
-> > > -{
-> > > -    assert(dmabuf !=3D NULL);
-> > > -    dmabuf->fd =3D fd;
-> > > -}
-> > > diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-> > > index d591159480..72a1405782 100644
-> > > --- a/ui/egl-helpers.c
-> > > +++ b/ui/egl-helpers.c
-> > > @@ -323,9 +323,9 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf=
-)
-> > >      attrs[i++] =3D qemu_dmabuf_get_fourcc(dmabuf);
-> > >
-> > >      attrs[i++] =3D EGL_DMA_BUF_PLANE0_FD_EXT;
-> > > -    attrs[i++] =3D qemu_dmabuf_get_fd(dmabuf);
-> > > +    attrs[i++] =3D qemu_dmabuf_get_fd(dmabuf)[0];
-> > >      attrs[i++] =3D EGL_DMA_BUF_PLANE0_PITCH_EXT;
-> > > -    attrs[i++] =3D qemu_dmabuf_get_stride(dmabuf);
-> > > +    attrs[i++] =3D qemu_dmabuf_get_stride(dmabuf)[0];
-> > >      attrs[i++] =3D EGL_DMA_BUF_PLANE0_OFFSET_EXT;
-> > >      attrs[i++] =3D 0;
-> > >  #ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
-> > > diff --git a/ui/spice-display.c b/ui/spice-display.c
-> > > index c794ae0649..82598fe9e8 100644
-> > > --- a/ui/spice-display.c
-> > > +++ b/ui/spice-display.c
-> > > @@ -1075,10 +1075,10 @@ static void qemu_spice_gl_update(DisplayChang=
-eListener *dcl,
-> > >                                       stride, fourcc, false);
-> > >              }
-> > >          } else {
-> > > -            stride =3D qemu_dmabuf_get_stride(dmabuf);
-> > > +            stride =3D qemu_dmabuf_get_stride(dmabuf)[0];
-> > >              fourcc =3D qemu_dmabuf_get_fourcc(dmabuf);
-> > >              y_0_top =3D qemu_dmabuf_get_y0_top(dmabuf);
-> > > -            fd =3D qemu_dmabuf_dup_fd(dmabuf);
-> > > +            qemu_dmabuf_dup_fd(dmabuf, &fd);
-> > >
-> > >              trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id, width, h=
-eight);
-> > >              /* note: spice server will close the fd, so hand over a =
-dup */
-> > > --
-> > > 2.43.0
-> > >
-> >
->
+Best regards,
 
+Juraj Marcin
 
---=20
-Marc-Andr=C3=A9 Lureau
+> 
+> > +#
+> >  # @mptcp: enable multi-path TCP.  (Since 6.1)
+> >  #
+> >  # Since: 1.3
+> > @@ -71,6 +75,7 @@
+> >      '*ipv4': 'bool',
+> >      '*ipv6': 'bool',
+> >      '*keep-alive': 'bool',
+> > +    '*keep-alive-idle-period': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPIDLE' },
+> >      '*mptcp': { 'type': 'bool', 'if': 'HAVE_IPPROTO_MPTCP' } } }
+> >  
+> >  ##
+> 
+> > @@ -697,6 +710,22 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
+> >          }
+> >          addr->has_keep_alive = true;
+> >      }
+> > +#ifdef HAVE_TCP_KEEPIDLE
+> > +    begin = strstr(optstr, ",keep-alive-idle-period=");
+> 
+> A bit too verbose - make it just 'keep-alive-idle='
+> 
+> > +    if (begin) {
+> > +        begin += strlen(",keep-alive-idle-period=");
+> > +        if (sscanf(begin, "%" PRIu32 "%n", &addr->keep_alive_idle_period, &pos) != 1 ||
+> > +            (begin[pos] != '\0' && begin[pos] != ',')) {
+> > +            error_setg(errp, "error parsing keep-alive-idle-period argument");
+> > +            return -1;
+> > +        }
+> > +        if (addr->keep_alive_idle_period > INT_MAX) {
+> > +            error_setg(errp, "keep-alive-idle-period value is too large");
+> > +            return -1;
+> > +        }
+> > +        addr->has_keep_alive_idle_period = true;
+> > +    }
+> > +#endif
+> >  #ifdef HAVE_IPPROTO_MPTCP
+> >      begin = strstr(optstr, ",mptcp");
+> >      if (begin) {
+> > -- 
+> > 2.48.1
+> > 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
+
 
