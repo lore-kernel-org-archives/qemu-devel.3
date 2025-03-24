@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2866C36008
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 084BDC36008
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 09:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twe5O-000267-0s; Mon, 24 Mar 2025 05:27:10 -0400
+	id 1twe6H-0002co-Rs; Mon, 24 Mar 2025 05:28:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe5L-000257-Tz
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:27:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe6F-0002Zs-Fu
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:28:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe5J-0008Oj-1M
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:27:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twe6C-0008Vi-RH
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 05:28:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742808421;
+ s=mimecast20190719; t=1742808479;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1TRwBJzCCXTwavx3YE5tbitMRUrqL2w8druys+ao5yI=;
- b=gACtaanvN7Ed/KlGomoYc6FfXvbtluMCDZ854DsyIBlCe7pQDOf1UcW7vFS/0SUgWi8qr/
- AibqTWRddCID0VrIQOQ/JzRB5ecsGKBKk3J+idjHVRrmILy3CDkNcoYsJYzUJbSSwT+LeD
- hemaNdBq0/SlOJTNZxy4UE64UqRRuJg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uSinPhhKBn4lQFV7JndcetvNUmOb+g210Y8BciIasQM=;
+ b=jM6LJHo1EhSrZWPVx5GAPe+/Kgncf4wexPgUEYr+BLNZUCkOoMiV1hgUozlGfOGLOh3h3n
+ z7vRPyZM4PbeLM3Cmh5aT2fs+Zlsy+QmELLfFWvWXnkj1KjuWDJTy4PpCb+7k5xxeAMvjd
+ bV1xmUCokNRtCjm+uw2jtg4ud+4SUHs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-mWFIfD48MFqts1OVqRnTRQ-1; Mon, 24 Mar 2025 05:26:59 -0400
-X-MC-Unique: mWFIfD48MFqts1OVqRnTRQ-1
-X-Mimecast-MFC-AGG-ID: mWFIfD48MFqts1OVqRnTRQ_1742808419
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-391459c0395so1801665f8f.2
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 02:26:59 -0700 (PDT)
+ us-mta-149-fjwEtppIPU2fTBsnqJXEJw-1; Mon, 24 Mar 2025 05:27:58 -0400
+X-MC-Unique: fjwEtppIPU2fTBsnqJXEJw-1
+X-Mimecast-MFC-AGG-ID: fjwEtppIPU2fTBsnqJXEJw_1742808477
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4394040fea1so18684645e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 02:27:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742808418; x=1743413218;
+ d=1e100.net; s=20230601; t=1742808477; x=1743413277;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1TRwBJzCCXTwavx3YE5tbitMRUrqL2w8druys+ao5yI=;
- b=TkbB0SZi6IpJ/o9kIkwn0plTZIH9PpLM2EE9APuq6U5bTZ/3L8kMPKxnqygnpnbD2f
- tovh+OSc+jEzaPIBuQbtsrf5y/PkIoB0jbwLKsnYyUSYJV2s6RQ+XYgMHyS5keG2pHna
- GcJGriYvfRN4g0enkdHBmavNCj1ICf3YljH3+hsUVAq65b8vpPWsGVlYGZMkyhPQwlNJ
- DzGX5MINttp7OndVD9KtAIGK4MfdpqcDkfOcMZecBGWBHOxw3s9IAcmf8FYRFMsZak7d
- 5VkrzzkMU0B8K1Z3FHnL5sp9FzJLZdmxGnjh7rcIP56JI4WF6h5ZbGBaA10/d7410AnE
- ecSg==
+ bh=uSinPhhKBn4lQFV7JndcetvNUmOb+g210Y8BciIasQM=;
+ b=WS+6e/WiP4Br9vPksjGNuvO0GPkXwzsjwzwXrZEvQ2T4LCdgJWdQpwnKWToFBP9V0e
+ SJvlGF0xrb3Q3op34Rc9cJPo2feOLNAssmorhLBdehgoT9bMxDAOr6Nm7g2LfdMA4lnO
+ uT0NEkpAqS//7RosI6Sdv1itiuNwiVh0MsNQtFU41NKUlpw4PrgJc2kvmATnmjYyTgvM
+ T974DJk+Z92WEMDzFrfGtZDCbWdZ7E19fWkjxMVoIWkR2g+JoQ0WTOCvzGYWF7wC/ayo
+ xzj1oXsUSb5IaNE6senehUKM6dFt0DJU/iOlJn07Ep3RMPD7m+CSatelTT7e/OaYrp+G
+ vA6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDGNHR8QeSPePNIT4XTeZUXf+Uvt9HFYq3Yvejn4GBvd4Rd7qLIJpMRVR1owGFm28AsbRAdEgXVAvh@nongnu.org
-X-Gm-Message-State: AOJu0YyhXNwGQAKJ6f2Mx8Kuwo0JqCw/RBXzInCvan9PPqv5DJ9Xawky
- IutapBqR82XAOJxlQK+dPiw98MKDPb8ogTjpyf+3wbgZlOph8j3AyVTZ9zYdf5NAMzWvyvMtl2R
- Vr0WTDZ4wOtyTFVC3Ya/Tp7OHJoaDrbdz9QLoD+w4ZYRBaQd8snuO
-X-Gm-Gg: ASbGncunipbmnLGKVkcZt7bEBemx9MLR+TGqFULcPgidFLAaroL9KT/nazgi2BkxVZE
- gBTUu69yOSCx7PSxoBIa0g3l6ZQP+OxmkEBAw0YIk20CkZcKFzYWl8pIrHwy7CrLql744FT47/n
- zKmOHoysnEnh8amejnQYxxybM0rmxQS6eUrhPWeeIiRizG3hbK8R7faHUghVwQstTRdoQj0YDBu
- e+idlz4yJ105cN55Sb8qNgiN6QgCE9UkBfW/vPjR8Y0XjZAQHSMKyG6MYmet4bji+Cp9oqZxMBT
- JnDGuLQyKafXN/y/imejFeJDfrd9NPKBtdPejXI1
-X-Received: by 2002:a5d:6c6e:0:b0:38f:4f60:e669 with SMTP id
- ffacd0b85a97d-3997f925e5bmr11253658f8f.29.1742808418529; 
- Mon, 24 Mar 2025 02:26:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2mBigOr0poXJ9bnqGZMpoUcFWQjIuNvr30STLCXU8UHKgUHjlK0q27AAKbIWC4mCUuH9jdw==
-X-Received: by 2002:a5d:6c6e:0:b0:38f:4f60:e669 with SMTP id
- ffacd0b85a97d-3997f925e5bmr11253629f8f.29.1742808418068; 
- Mon, 24 Mar 2025 02:26:58 -0700 (PDT)
+ AJvYcCUjhICNpMAlWbF92Kgagpq66XtB63RTpvVGk4/POaQsXgU/xa//CvoFfSB6BNloDNL4zLdJLPAldoS9@nongnu.org
+X-Gm-Message-State: AOJu0Yx3AVQSmGNc2RPoqWksyWhvyNHyd4/5iRPFSP4fzvZKYH32QV0W
+ yX3/5TFCtlEeWkrI+D/Ry/zf9/NVwsip+CYoNymXWd9yz2zi98kHhiVVp+NdiVdH5fEQEc8Y5qn
+ R8V9YsvG9xjshlWn0l9GkgwtsVJNfDKNnGtxfYJ3VORdh+frgs3oazCcKAcDfHng=
+X-Gm-Gg: ASbGncuoJnFuQC0oXfurXhag9sHZm9HKdd5WsMLZyvlx/wOrWOqbsogIOrhRTQpmtth
+ Dix0G0bbKN17uzeo6H/b+JXPbVvg6tnBNjPBcQ/0lJ2xSZhzFx/ANB3gw49nAmk+4w0I/eL2tCA
+ WWNIB+Ok9ToZ3VGykqh69Vgmmr/XsOHiMPKcYIVBKyY874OlJb62dRMIsLonXncThhJFKnUUnFr
+ mu/rSYnv5FTaunKgi6T0eGUtzFXcRk1a05qpH13AXIAA4lWb+oH7WR0NQSQYu98O2Y9OtgkBumf
+ dq/VZ0//D1s2Uq78+nQflpXSholprYauN8MVRf2G
+X-Received: by 2002:a05:600c:3659:b0:43c:ec72:3daf with SMTP id
+ 5b1f17b1804b1-43d491bf814mr103608005e9.14.1742808477081; 
+ Mon, 24 Mar 2025 02:27:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYCJHNN34pPHezVB1nTzz7dr2kZ5wxKafFiCUHnv3LFbMdEpFUx4/Wzy0EA8isv6yBsTxEEQ==
+X-Received: by 2002:a05:600c:3659:b0:43c:ec72:3daf with SMTP id
+ 5b1f17b1804b1-43d491bf814mr103607765e9.14.1742808476613; 
+ Mon, 24 Mar 2025 02:27:56 -0700 (PDT)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9e6539sm10420586f8f.77.2025.03.24.02.26.57
+ 5b1f17b1804b1-43d4fdb0669sm113452715e9.34.2025.03.24.02.27.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 02:26:57 -0700 (PDT)
-Message-ID: <260c04df-0faf-40b2-b200-ca94fee54fd7@redhat.com>
-Date: Mon, 24 Mar 2025 10:26:56 +0100
+ Mon, 24 Mar 2025 02:27:56 -0700 (PDT)
+Message-ID: <a5b41179-702b-4a19-bd45-35a337da898f@redhat.com>
+Date: Mon, 24 Mar 2025 10:27:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 1/6] cpus: Introduce CPUClass::list_cpus()
- callback
+Subject: Re: [PATCH-for-10.1 3/6] target/ppc: Register CPUClass:list_cpus
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -88,7 +87,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 References: <20250323224035.34698-1-philmd@linaro.org>
- <20250323224035.34698-2-philmd@linaro.org>
+ <20250323224035.34698-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -133,17 +132,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250323224035.34698-2-philmd@linaro.org>
+In-Reply-To: <20250323224035.34698-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -162,17 +161,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/03/2025 23.40, Philippe Mathieu-Daudé wrote:
-> Some targets define cpu_list to a method listing their
-> CPUs on stdout. In order to make list_cpus() generic,
-> introduce the CPUClass::list_cpus() callback.
-> When no callback is registered, list_cpus() defaults
-> to the cpu_list definition.
+> Register ppc_cpu_list() as CPUClass:list_cpus callback.
+> Reduce its scope and remove the cpu_list definition.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/core/cpu.h | 2 ++
->   cpu-target.c          | 8 +++++++-
->   2 files changed, 9 insertions(+), 1 deletion(-)
+>   target/ppc/cpu.h      | 4 ----
+>   target/ppc/cpu_init.c | 3 ++-
+>   2 files changed, 2 insertions(+), 5 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
