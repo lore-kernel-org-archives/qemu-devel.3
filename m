@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B40C8C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 19:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA84C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 20:01:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twnou-0000xI-FC; Mon, 24 Mar 2025 15:50:48 -0400
+	id 1twnz1-0003Tm-LM; Mon, 24 Mar 2025 16:01:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1twnos-0000wt-AE
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 15:50:46 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ id 1twnz0-0003TM-Ix
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 16:01:14 -0400
+Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1twnoq-0008JD-U6
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 15:50:46 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-47663aeff1bso46785231cf.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 12:50:44 -0700 (PDT)
+ id 1twnyz-00016n-5s
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 16:01:14 -0400
+Received: by mail-qv1-xf2a.google.com with SMTP id
+ 6a1803df08f44-6e1b11859a7so17870556d6.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 13:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742845844; x=1743450644; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1742846472; x=1743451272; darn=nongnu.org;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:from:to:cc:subject:date:message-id:reply-to;
- bh=lB+t8NIN5zmryZrQRnHOEKgPh/WA3Pb/vJrIyB8yj6M=;
- b=MxWv3tkJz/HAOBTbVQSzRqeAQl7A2AjFk8cUraHj7T+GTYPN+Ia700VpwGQ6fCBSFW
- csb9qP4GdJ8z/Zjc7BkvIXDrzOhFHqLZeHErpRZQA6qZzYtp896HIzOBpT2uQ+QFLmX6
- c7ihPDKGE8qV4/nAG7VWC8gLaQRTFfGELpf4Ue1ld2jeg6PSNuMq8nzCARCbSohKBlQ9
- BLXC/C2z1/PX+7ebLbmbVZ0Co4TCZVKdJyau2Ygv2rFvjixFNpND4UN7BDVaYk86KPbA
- uoFCkuo+KAe1cT5VA5wsnTqKbcJYST9ONjDa2D7WnzYHND9DaT5F2QaapT+IZ2taO0jT
- iCrw==
+ bh=UDqone1i9pqSul15TF2a/V8oLXjSwF8RI1NeifkTY+g=;
+ b=WVNwst5+wo0mnZebFGWB4o4aCNVyLbvLSMKvSVNTpHzJPKza7Lafq1XgZVGdJ+aDTv
+ Vx6v4CI9EV4TkdXyS70fztyfeMbNwEp4+xQ1Ko3o1g5hpO7+c23Aj0Y6DUyzPunxHlgn
+ utyRFqtTeHpgvoOBBJNr2PedtvL/V/ijc3M6/zTdbtBLph5jmHf81eoA9cXxk9tM7HHf
+ qTqdtxOKXnIDBZhG9cZpRTQr5vbiRdX8tvNOwZpEmtQmCvOWMRxNGh6GSENMt2++LpMp
+ g3tE7FWU486fcIsN6UBjzpiIRfRPPL+OIjQfbQm7jTFV/L1Js/h2yvveMEhvH5VZvX4F
+ X3vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742845844; x=1743450644;
+ d=1e100.net; s=20230601; t=1742846472; x=1743451272;
  h=content-language:thread-index:content-transfer-encoding
  :mime-version:message-id:date:subject:in-reply-to:references:cc:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lB+t8NIN5zmryZrQRnHOEKgPh/WA3Pb/vJrIyB8yj6M=;
- b=brarsZTzJucRgZsfnOvT7RSxPryX/5e2bPN5U87dW0qG65PN8MweLjaTBgDyNwAvz5
- oMlxg6Iye+VsOukwJ1E6X+kAnF6F21xiHan00Ro4yJIAEOEEsX5V/f2qN2fSzlX3K3XT
- rCnJfwMRJkXMkseup/wQiq2hOR3rJfq+NwRilX6ZTaslpv3YHjPcWSigQsgdVcutagky
- lHXclC6atQqWMOV2AW3RAPXP081KRBnhSd6ZvOOWdROw4coflwXR3Rs0UeG2EGcKIiqz
- +tiYDSy3Qr6rJ4IT00YWRJ5IhzT5Q4QiBKsd5RoGeuwgzvST2fgVvs1H3tPcClkWCdZq
- Zl/Q==
+ bh=UDqone1i9pqSul15TF2a/V8oLXjSwF8RI1NeifkTY+g=;
+ b=mZZ1a2MZhtnpZoH4+Ax3WA36Q1iw7zu4I/rKH2BEkwuPC6hApbx2Djk3aaumb/vK8f
+ 1Z3/FT7pZKb7yo6NTLqReBH8bh+cDsO0bae0+dX4NCVakX+yLHXI5DWF0tKFrZwChWPm
+ 8mknkrmzc6Nswv4UhRURJc/PLrp1+OYPxma+k6SEO7jFc4Nr0KEtWbwbrKmuOmhY6ts2
+ 744U+iLHeemQGacgIWgOyk6FxGWwO9U2IJn5XG2CfzwxL3Yz849VUdmwufqkqwTdl4hJ
+ 14KOXqKTQnas9g2Cm3LP6FXdZWOMo5g2hmMcUcMHDBSPa4ZQX2cUucLh1H61/Wa9/u+b
+ qbyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkiESd+xyGgKOUJG6exw+G7M0/d5984Xdibh1JnVuNPVNDbBrZWYb3eHrLUtmfoWTh7pW7fff9jIgF@nongnu.org
-X-Gm-Message-State: AOJu0YwhsvXIaCZKFNf78oWMC2nPyd2L75LIH4UNUjzCKTjpX6LTstMu
- Jh4XbSCtIHlwTI/kzb78J71rvgKU1ekFDPHmIzN4LxptU2H2i01pKrWtcGMQZ+w=
-X-Gm-Gg: ASbGncs/D9N1HJRzMnojozi8tq4A8o+dhM6vyMj3MusVy2wL4jlB0SHuJ04sffNTbsb
- j1nlxQwxOx+bDkGGINDGe7Sa5nG+jXKOc11+97atborR10bNv440hjbIcOm8VSYi3c/opdLp0Cc
- 5ofrx6UM9xCmfkpgJCoIlDegs1vYRAG7aq+z4XMGydf8i+FoRuBldcPEXagtLz8edd3F4HrZnUX
- 7PbTJcP0HdvN8cdDuOW5LOnBbaPBehf5+KfMkHo4fIUbADMCwDddEnN6fo/AUhh5i8b0al2PCU/
- +rmcnPQKkO5trdYekzrgs0r4mWh46CbGlQYw+fH/yNlCKT2sqDP8+EYmJW65i4k=
-X-Google-Smtp-Source: AGHT+IEexRF1bxTtLRxEnrLB7jzSwVpz9Ls6uPO4RUphRWtWDrrUceb03PfZgjaUi5WRSFb4iPlggw==
-X-Received: by 2002:a05:622a:909:b0:476:ff0d:ed6c with SMTP id
- d75a77b69052e-4771de115f9mr218659991cf.40.1742845843611; 
- Mon, 24 Mar 2025 12:50:43 -0700 (PDT)
+ AJvYcCXR1bn+NmaHv++ZqVSj0PqZkYNvWSLV5PYBWee8EWZhKa+z4ZcdoeNRryp43JgHkVLPmV6Y+v55WULF@nongnu.org
+X-Gm-Message-State: AOJu0YzsCvoxSZu6BC/fVetHzH8/61bfOnGqMr67no4dU0ufA49hsH18
+ 8dR+NwmjZ2V/YsKeCzAB5bHXAEYEQtDuLYH0GXO8HIN85AGFB5Fpv+2yc/zabJw=
+X-Gm-Gg: ASbGncuV1jagyC3HtblAi2CtG0YWWKk1rsYWOoMeQ+ORW2+NJqNVDJ8XgxiFH3bduVA
+ 4AG6C/eJh6kuhKK6CxzHBhL9Symquxnq7mxVJ5BwkM88sMP80v04G3bky5P4orXaCcL+eojeQl6
+ 2RwtpKo6OBb6kSSFmwU0l9RmcQlCq3DAr180eUE7E/t/r0pDSFZdxzEXHrHQ7JdD8xzxjPc5Mkk
+ 4IvPaOR1gGzErrGLuJLUUsMQgLCVPEeJDAWjoXa7Kff3HeOQQKQBLA9rpvsZRsnKZcfjypf/q4T
+ 8P4+kPkYMXhpOTwIhvJcg94seSEkNqkGsZy/0Su1/z2iElHqpmnZzaG9ub2uuUQ=
+X-Google-Smtp-Source: AGHT+IFzKnTZJ81Fxu6/RyyZ92oYNj6hmcDbiBJwz6kP1PDwfYZji2GDxeTKAwX6/11dhi2DgMM+3Q==
+X-Received: by 2002:a05:6214:dc9:b0:6e8:fe60:fdeb with SMTP id
+ 6a1803df08f44-6eb3f2beca7mr241084486d6.17.1742846471626; 
+ Mon, 24 Mar 2025 13:01:11 -0700 (PDT)
 Received: from DESKTOPUU50BPD ([2603:6000:a500:306:319a:7f6b:e6fe:90fa])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4771d6361b6sm50725981cf.74.2025.03.24.12.50.41
+ 6a1803df08f44-6eb3ef1f8dasm47780216d6.39.2025.03.24.13.01.10
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 24 Mar 2025 12:50:42 -0700 (PDT)
+ Mon, 24 Mar 2025 13:01:11 -0700 (PDT)
 From: <ltaylorsimpson@gmail.com>
 To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
 	<qemu-devel@nongnu.org>
 Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
  <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
  <quic_mliebel@quicinc.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>,
- "'Brian Cain'" <bcain@quicinc.com>
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
 References: <20250301172045.1295412-1-brian.cain@oss.qualcomm.com>
- <20250301172045.1295412-4-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250301172045.1295412-4-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH 3/8] hw/hexagon: Add v68, sa8775-cdsp0 defs
-Date: Mon, 24 Mar 2025 14:50:41 -0500
-Message-ID: <04bd01db9cf6$06be1510$143a3f30$@gmail.com>
+ <20250301172045.1295412-5-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250301172045.1295412-5-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH 4/8] hw/hexagon: Add support for cfgbase
+Date: Mon, 24 Mar 2025 15:01:10 -0500
+Message-ID: <04bf01db9cf7$7d5f62e0$781e28a0$@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
 	charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQBnRK9gH0BRY5vrCSddsvIJtQ/qNAJ2Sz3itlev+bA=
+Thread-Index: AQBnRK9gH0BRY5vrCSddsvIJtQ/qNAGrZGPZtl4Hq7A=
 Content-Language: en-us
 X-Antivirus: Norton (VPS 250324-4, 3/24/2025), Outbound message
 X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qt1-x82a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,13 +121,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
 > quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
 > alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
-> Subject: [PATCH 3/8] hw/hexagon: Add v68, sa8775-cdsp0 defs
+> sidneym@quicinc.com
+> Subject: [PATCH 4/8] hw/hexagon: Add support for cfgbase
 > 
-> From: Brian Cain <bcain@quicinc.com>
+> From: Sid Manning <sidneym@quicinc.com>
 > 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Sid Manning <sidneym@quicinc.com>
 
-Acked-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+
 
 
