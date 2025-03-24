@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED6CC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 08:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70114C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 08:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twcod-0002qA-41; Mon, 24 Mar 2025 04:05:47 -0400
+	id 1twcqs-0003ay-8z; Mon, 24 Mar 2025 04:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
- id 1twcoX-0002ph-HT; Mon, 24 Mar 2025 04:05:41 -0400
-Received: from out203-205-221-233.mail.qq.com ([203.205.221.233])
+ id 1twcqn-0003aB-DV; Mon, 24 Mar 2025 04:08:01 -0400
+Received: from out203-205-221-235.mail.qq.com ([203.205.221.235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
- id 1twcoT-0006d9-Gn; Mon, 24 Mar 2025 04:05:41 -0400
+ id 1twcqj-0006wY-8J; Mon, 24 Mar 2025 04:08:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1742803517; bh=M0AebHbWlzW8Hied416z3SaDV8X6LvMttUbkEpuVRHM=;
+ t=1742803660; bh=sDm5F++MQx8tv1ijd6HJU2F5moglJ2hGeXZ1HHaAySQ=;
  h=From:To:Cc:Subject:Date;
- b=nj98BVxGIxqt7pEEXX5yMohRsz/wwt+nEftEdAhoPjvTTYUP8z6MKCSISn8u2uUA4
- DrqWJex0058Avr3Sa4MMe+EtLoXaltfSnzAwM5YyF6w7Yk89Hyga0UCDVqBgTJnQGV
- kbiw73mU62thOw67DSubK9FBHCnX1CsNXYpVr09w=
+ b=Kz1ggdHBFTgsKdwLF7q6nl9qfaGnbrT9VPyo17EQmCiN4u8Mz9eDqswcr5kc7oZGX
+ 3IX3ix+pRWZeQmOAzhMRK5oa4SgHAga6QhvKA7gPk2sglAlS2q75QhFR7i5V7JMhN2
+ fGM0MAWIoXRGY9y6rjalRMskpqtT6ff4pYSx0z/4=
 Received: from localhost.localdomain ([120.46.176.49])
- by newxmesmtplogicsvrszc16-0.qq.com (NewEsmtp) with SMTP
- id 14FB9632; Mon, 24 Mar 2025 16:05:15 +0800
-X-QQ-mid: xmsmtpt1742803515t577p4abw
-Message-ID: <tencent_4E3504A0739AEE8199766C5415093D24CE05@qq.com>
-X-QQ-XMAILINFO: Mh8zSn5h7V45vr9Dmd/ASDX9ZQc/PPSikapeITg3F8vcyWvW+kwKm63bKf/LX3
- bDp+O2QDsMCxT3OaVtw8RkmiyoKCRVTCVT3jzMq0wajerZv2y1avWfiJ6Ix5pbDu6zaSan+wUkvT
- 88FYkOz7vSw/dUTwv0LUdJQIC95m8gVewoGXeLNP4YEzCcKiZBRlgL+CZKDkp1wNIp5RWEBoAJiD
- 43vgRfDFjTtZNEiEel4cuj3llpUCi1gtaa40PmkLXTwUU1n5ZKSQQ4FQwBekrMiDmxfu+RioQepK
- rlDRRQHJrZuWBVA6Jur5eWSIFWKU/++Vnsw41Vj9WcEIO/3usvn0d5HKd9MwIXEdXmJdaWx0Lmbx
- Qf3bv6OjNW/Aib6EZV/TydP95QAFTa4E4/ExHODpwQ3sAzCIjhhkWlSh0MiPVcUOyPlCTg5VxtDK
- blz17uz7JIbJ1+4LSDFV5TCU7J4WevTukURVRP49p0njt9K+IxjEJxmX0chhX0sqeDKaPCeePygW
- 0NfqIXw7emO5jo9R0eUHMjjWH6Vt2bMhy0HY51b22w8gn4ql/Pwc5eztIOyZOF7bwTBz6WeVnfOV
- jW6w5DjeWBWm89oqRkiia34ZDWEhMOZ5DXjrOHDEnqngziRqqCwAM63S4ADZhnUPHNLuMUkHAP2b
- ubaVLW7jlIjaCekxNYJNoj91hBlI9ZhVrzxPP303/8n8jptABkFR3EDuk5u+bKNoWsNX0QHKbdGx
- D+Q/zVkohv3K8t3VxUU2DWNlW4YyvarypywGFBi/SceSmMIvdMajxJx2U2miX8d9y0fgMjni3zYc
- wQBLvVzWNITnVXgVUW2/bUbqFtjzp0LZ8cvExl0AiMtEwGiUs2d4z2zyGIAL4HiCvMlEH4j2rLta
- T0Mchguhz67uWqsRBvb71ApVVTfmr0fCDi/SAYr89DqkSptz1JAorEkrRbREEzdA==
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+ by newxmesmtplogicsvrszb16-1.qq.com (NewEsmtp) with SMTP
+ id 1E686019; Mon, 24 Mar 2025 16:07:38 +0800
+X-QQ-mid: xmsmtpt1742803658t4zc496o2
+Message-ID: <tencent_4F432E3A4DE9149849C736550BD0FDE2BE09@qq.com>
+X-QQ-XMAILINFO: MgRVKi3YcRBIli7uSvWfJGahoZkvYcAvAtcpkDIMV30MfMdHBijWQvJfmUbbBA
+ mp8OjttE5JerAyEe7A9JQIXpicFiKlXr1JUm8WhlRrImq1UFvcxHg20P8MJIoTKq5NQmBq5QXfa6
+ 4zGC7guitXN+oGajueeL88701F6oUUuK6a5RPOkoh6WO1HduyuSjILik31p+CdLh7C/6yj1HJMg+
+ av3zasva/LwCNFhyp+X6dCwihGPwui9bzeFSrkvSy2n2JV1BQc+XSaBjOoLxNaKfUiXtPqG4cgNJ
+ GLSQbbwgZUYfgmQLeaBWQKH1G8St/eww8oBRvDfoyq1yCs/bzJqhOcCfGnQC033gmNAgfqH+xfJY
+ 3krNHdXzRxXYhe/uSG519BXQeDMNWLszPAAgyOrYG+H0XK0wMqwz8YnUu/M03MeK+AfeEEgf7laV
+ JTQo2DHZnLiHDa3GZVENOPsEOhk5a4uGJYUD6CBxSVZdf/VARiRcFwL0eBQVrYFsD2Fmzfkj9uHV
+ Gb8FLUdLprkPgOCCcLvdCug+Cp4pQqQZnNnyhmXu/xhK1ByN+wqRe0V2JYvnPAZg611mqDy110Jk
+ 5Jw5anXD+Tw/n6vRmPp6L7yWROy8jY5H5E8lokNW7W0jX9q/Mxj23QSY3lb7PBbbeK/SxVKoE+c2
+ H746/2PkSnKKs1IT4m8M7pdONfj3DpCjdHe1vyCnxZmZp01XaLy76TrRd/mrkDmvGpwmZbkhyCCe
+ +8vqTtuA4leZH5Qx6VwEp5Yu7+X/HoRlQuw5xJt70oLrfBhdjqsJ3w7OuT2cuy3vmRLbtoydaKIF
+ ADIBTqjNMSZLwr/1lHiQ4KPPvGTI0T5DSitF4AjF0d51guELbXnGDZdfuON8nfmGyegSsqHw7GL8
+ IdSSAoGHKW3FVGYGsjh0Rh3SJUI7eO8v7ReklZoV4/iViLQomauI7yegd+PzedkA==
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
 From: saz97 <sa.z@qq.com>
 To: qemu-devel@nongnu.org
 Cc: hreitz@redhat.com, kwolf@redhat.com, stefanha@redhat.com,
  qemu-block@nongnu.org, saz97 <sa.z@qq.com>
-Subject: [PATCH 0/1 RFC] FUSE Export Coroutine Integration Cover Letter
-Date: Mon, 24 Mar 2025 16:05:09 +0800
-X-OQ-MSGID: <20250324080509.150472-1-sa.z@qq.com>
+Subject: [PATCH 1/1 RFC V3] Integration coroutines into fuse export
+Date: Mon, 24 Mar 2025 16:07:31 +0800
+X-OQ-MSGID: <20250324080731.150678-1-sa.z@qq.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.233; envelope-from=sa.z@qq.com;
- helo=out203-205-221-233.mail.qq.com
+Received-SPF: pass client-ip=203.205.221.235; envelope-from=sa.z@qq.com;
+ helo=out203-205-221-235.mail.qq.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
@@ -80,61 +79,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series refactors QEMU's FUSE export module to leverage coroutines for read/write operations,
-addressing concurrency limitations and aligning with QEMU's asynchronous I/O model. The changes
-demonstrate measurable performance improvements while simplifying resource management.
+Signed-off-by: Changzhi Xie <sa.z@qq.com>
 
-1. technology implementation
+This commit refactors the FUSE export to process read and write operations
+using coroutines, improving concurrency and avoiding blocking the main loop.
 
-   according to Stefan suggerstion, i move the processing logic of read_from_fuse_export into a coroutine for buffer management.
-   and change the fuse_getattr to call: bdrv_co_get_allocated_file_size().    
+The main changes include:
+1.  Move read_from_fuse_export into coroutine
+2.  Move read/write processing into coroutine fuse_read_coroutine and fuse_write_coroutine
+3.  Remove fuse_buf from FuseExport, and have a separate struct fuse_buf for every request
+---
+ block/export/fuse.c | 188 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 125 insertions(+), 63 deletions(-)
 
-2. performance summary
-
-   For the coroutine_integration_fuse test, the average results for iodepth=1 and iodepth=64 are as follows:
-    -------------------------------  
-    Average results for iodepth=1:
-    Read_IOPS: coroutine_integration_fuse: 4492.88 | origin: 4309.39 | 4.25% improvement
-    Write_IOPS: coroutine_integration_fuse: 4500.68 | origin: 4318.68 | 4.21% improvement
-    Read_BW: coroutine_integration_fuse: 17971.00 KB/s | origin: 17237.30 KB/s | 4.26% improvement
-    Write_BW: coroutine_integration_fuse: 18002.50 KB/s | origin: 17274.30 KB/s | 4.23% improvement
-    --------------------------------
-    -------------------------------
-    Average results for iodepth=64:
-    Read_IOPS: coroutine_integration_fuse: 5576.93 | origin: 5347.13 | 4.29% improvement
-    Write_IOPS: coroutine_integration_fuse: 5569.55 | origin: 5337.33 | 4.33% improvement
-    Read_BW: coroutine_integration_fuse: 22311.40 KB/s | origin: 21392.20 KB/s | 4.31% improvement
-    Write_BW: coroutine_integration_fuse: 22282.20 KB/s | origin: 21353.20 KB/s | 4.34% improvement
-    --------------------------------
-   Although all metrics show improvements, the gains are concentrated in the 4.2%–4.3% range, which is lower than expected. Further investigation using gprof reveals the reasons for this limited improvement.
-
-3. Performance Bottlenecks Identified via gprof
-   After running a fio test with the following command:
-   fio --ioengine=io_uring --numjobs=1 --runtime=30 --ramp_time=5 \
-    --rw=randrw --bs=4k --time_based=1 --name=job1 \
-    --filename=/mnt/qemu-fuse --iopath=64
-   and analyzing the execution profile using gprof, the following issues were identified:
-
-   3.1 Increased Overall Execution Time
-   In the original implementation, fuse_write + blk_pwrite accounted for 8.7% of total execution time (6.0% + 2.7%).
-   After refactoring, fuse_write_coroutine + blk_co_pwrite now accounts for 43.1% (22.9% + 20.2%).
-   This suggests that coroutine overhead is contributing significantly to execution time.
-
-   3.2 Increased Read and Write Calls
-   fuse_write calls increased from 173,400 → 333,232.
-   fuse_read calls increased from 173,526 → 332,931.
-   This indicates that the coroutine-based approach is introducing redundant I/O calls, likely due to unnecessary coroutine switches.
-
-   3.3 Significant Coroutine Overhead
-   qemu_coroutine_enter is now called 1,572,803 times, compared to ~476,057 previously.
-   This frequent coroutine switching introduces unnecessary overhead, limiting the expected performance improvements.
-
-saz97 (1):
-  Integration coroutines into fuse export
-
- block/export/fuse.c | 190 +++++++++++++++++++++++++++++---------------
- 1 file changed, 126 insertions(+), 64 deletions(-)
-
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 465cc9891d..896cb55e3a 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -49,7 +49,6 @@ typedef struct FuseExport {
+     BlockExport common;
+ 
+     struct fuse_session *fuse_session;
+-    struct fuse_buf fuse_buf;
+     unsigned int in_flight; /* atomic */
+     bool mounted, fd_handler_set_up;
+ 
+@@ -64,6 +63,14 @@ typedef struct FuseExport {
+     gid_t st_gid;
+ } FuseExport;
+ 
++typedef struct FuseIORequest {
++    fuse_req_t req;
++    size_t size;
++    off_t offset;
++    FuseExport *exp;
++    char *write_buf;
++} FuseIORequest;
++
+ static GHashTable *exports;
+ static const struct fuse_lowlevel_ops fuse_ops;
+ 
+@@ -281,13 +288,10 @@ fail:
+     return ret;
+ }
+ 
+-/**
+- * Callback to be invoked when the FUSE session FD can be read from.
+- * (This is basically the FUSE event loop.)
+- */
+-static void read_from_fuse_export(void *opaque)
++static void coroutine_fn read_from_fuse_export_coroutine(void *opaque)
+ {
+     FuseExport *exp = opaque;
++    struct fuse_buf buf = {};
+     int ret;
+ 
+     blk_exp_ref(&exp->common);
+@@ -295,13 +299,13 @@ static void read_from_fuse_export(void *opaque)
+     qatomic_inc(&exp->in_flight);
+ 
+     do {
+-        ret = fuse_session_receive_buf(exp->fuse_session, &exp->fuse_buf);
++        ret = fuse_session_receive_buf(exp->fuse_session, &buf);
+     } while (ret == -EINTR);
+     if (ret < 0) {
+         goto out;
+     }
+ 
+-    fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
++    fuse_session_process_buf(exp->fuse_session, &buf);
+ 
+ out:
+     if (qatomic_fetch_dec(&exp->in_flight) == 1) {
+@@ -309,6 +313,20 @@ out:
+     }
+ 
+     blk_exp_unref(&exp->common);
++
++    free(buf.mem);
++
++}
++
++/**
++ * Callback to be invoked when the FUSE session FD can be read from.
++ * (This is basically the FUSE event loop.)
++ */
++static void read_from_fuse_export(void *opaque)
++{
++    Coroutine *co;
++    co = qemu_coroutine_create(read_from_fuse_export_coroutine, opaque);
++    qemu_coroutine_enter(co);
+ }
+ 
+ static void fuse_export_shutdown(BlockExport *blk_exp)
+@@ -347,7 +365,6 @@ static void fuse_export_delete(BlockExport *blk_exp)
+         fuse_session_destroy(exp->fuse_session);
+     }
+ 
+-    free(exp->fuse_buf.mem);
+     g_free(exp->mountpoint);
+ }
+ 
+@@ -417,7 +434,7 @@ static void fuse_getattr(fuse_req_t req, fuse_ino_t inode,
+         return;
+     }
+ 
+-    allocated_blocks = bdrv_get_allocated_file_size(blk_bs(exp->common.blk));
++    allocated_blocks = bdrv_co_get_allocated_file_size(blk_bs(exp->common.blk));
+     if (allocated_blocks <= 0) {
+         allocated_blocks = DIV_ROUND_UP(length, 512);
+     } else {
+@@ -570,102 +587,147 @@ static void fuse_open(fuse_req_t req, fuse_ino_t inode,
+     fuse_reply_open(req, fi);
+ }
+ 
+-/**
+- * Handle client reads from the exported image.
+- */
+-static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+-                      size_t size, off_t offset, struct fuse_file_info *fi)
++static void coroutine_fn fuse_read_coroutine(void *opaque)
+ {
+-    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = opaque;
++    FuseExport *exp = io_req->exp;
+     int64_t length;
+-    void *buf;
++    void *buffer;
+     int ret;
+ 
+-    /* Limited by max_read, should not happen */
+-    if (size > FUSE_MAX_BOUNCE_BYTES) {
+-        fuse_reply_err(req, EINVAL);
+-        return;
++    if (io_req->size > FUSE_MAX_BOUNCE_BYTES) {
++        fuse_reply_err(io_req->req, EINVAL);
++        goto cleanup;
+     }
+ 
+-    /**
+-     * Clients will expect short reads at EOF, so we have to limit
+-     * offset+size to the image length.
+-     */
+     length = blk_getlength(exp->common.blk);
+     if (length < 0) {
+-        fuse_reply_err(req, -length);
+-        return;
++        fuse_reply_err(io_req->req, -length);
++        goto cleanup;
+     }
+ 
+-    if (offset + size > length) {
+-        size = length - offset;
++    if (io_req->offset + io_req->size > length) {
++        io_req->size = length - io_req->offset;
+     }
+ 
+-    buf = qemu_try_blockalign(blk_bs(exp->common.blk), size);
+-    if (!buf) {
+-        fuse_reply_err(req, ENOMEM);
+-        return;
++    if (io_req->size == 0) {
++        fuse_reply_buf(io_req->req, NULL, 0);
++        goto cleanup;
++    }
++
++    buffer = qemu_try_blockalign(blk_bs(exp->common.blk), io_req->size);
++    if (!buffer) {
++        fuse_reply_err(io_req->req, ENOMEM);
++        goto cleanup;
+     }
+ 
+-    ret = blk_pread(exp->common.blk, offset, size, buf, 0);
++    ret = blk_co_pread(exp->common.blk, io_req->offset,
++                       io_req->size, buffer, 0);
+     if (ret >= 0) {
+-        fuse_reply_buf(req, buf, size);
++        fuse_reply_buf(io_req->req, buffer, io_req->size);
+     } else {
+-        fuse_reply_err(req, -ret);
++        fuse_reply_err(io_req->req, -ret);
+     }
+ 
+-    qemu_vfree(buf);
++    qemu_vfree(buffer);
++
++cleanup:
++    g_free(io_req);
+ }
+ 
+-/**
+- * Handle client writes to the exported image.
+- */
+-static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+-                       size_t size, off_t offset, struct fuse_file_info *fi)
++static void coroutine_fn fuse_write_coroutine(void *opaque)
+ {
+-    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = opaque;
++    FuseExport *exp = io_req->exp;
+     int64_t length;
+     int ret;
+ 
+-    /* Limited by max_write, should not happen */
+-    if (size > BDRV_REQUEST_MAX_BYTES) {
+-        fuse_reply_err(req, EINVAL);
+-        return;
++    if (io_req->size > BDRV_REQUEST_MAX_BYTES) {
++        fuse_reply_err(io_req->req, EINVAL);
++        goto cleanup;
+     }
+ 
+     if (!exp->writable) {
+-        fuse_reply_err(req, EACCES);
+-        return;
++        fuse_reply_err(io_req->req, EACCES);
++        goto cleanup;
+     }
+ 
+-    /**
+-     * Clients will expect short writes at EOF, so we have to limit
+-     * offset+size to the image length.
+-     */
+     length = blk_getlength(exp->common.blk);
+     if (length < 0) {
+-        fuse_reply_err(req, -length);
+-        return;
++        fuse_reply_err(io_req->req, -length);
++        goto cleanup;
+     }
+ 
+-    if (offset + size > length) {
++    if (io_req->offset + io_req->size > length) {
+         if (exp->growable) {
+-            ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
++            ret = fuse_do_truncate(exp, io_req->offset + io_req->size,
++                                   true, PREALLOC_MODE_OFF);
+             if (ret < 0) {
+-                fuse_reply_err(req, -ret);
+-                return;
++                fuse_reply_err(io_req->req, -ret);
++                goto cleanup;
+             }
+         } else {
+-            size = length - offset;
++            io_req->size = MAX(0, length - io_req->offset);
++            if (io_req->size == 0) {
++                fuse_reply_write(io_req->req, 0);
++                goto cleanup;
++            }
+         }
+     }
+ 
+-    ret = blk_pwrite(exp->common.blk, offset, size, buf, 0);
++    ret = blk_co_pwrite(exp->common.blk, io_req->offset, io_req->size,
++                        io_req->write_buf, 0);
+     if (ret >= 0) {
+-        fuse_reply_write(req, size);
++        fuse_reply_write(io_req->req, io_req->size);
+     } else {
+-        fuse_reply_err(req, -ret);
++        fuse_reply_err(io_req->req, -ret);
+     }
++
++cleanup:
++    g_free(io_req->write_buf);
++    g_free(io_req);
++}
++
++/**
++ * Handle client reads from the exported image.
++ */
++static void fuse_read(fuse_req_t req, fuse_ino_t inode,
++                      size_t size, off_t offset, struct fuse_file_info *fi)
++{
++    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = g_new(FuseIORequest, 1);
++
++    *io_req = (FuseIORequest) {
++        .req = req,
++        .size = size,
++        .offset = offset,
++        .exp = exp,
++    };
++
++    Coroutine *co = qemu_coroutine_create(fuse_read_coroutine, io_req);
++    qemu_coroutine_enter(co);
++}
++
++
++/**
++ * Handle client writes to the exported image.
++ */
++static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
++                       size_t size, off_t offset, struct fuse_file_info *fi)
++{
++    FuseExport *exp = fuse_req_userdata(req);
++    FuseIORequest *io_req = g_new(FuseIORequest, 1);
++
++    *io_req = (FuseIORequest) {
++        .req = req,
++        .size = size,
++        .offset = offset,
++        .exp = exp,
++        .write_buf = g_memdup2_qemu(buf, size),
++    };
++
++    Coroutine *co = qemu_coroutine_create(fuse_write_coroutine, io_req);
++    qemu_coroutine_enter(co);
+ }
+ 
+ /**
 -- 
 2.34.1
 
