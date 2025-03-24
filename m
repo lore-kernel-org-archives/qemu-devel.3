@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D37DC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6404EC3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twmpj-00025M-Fr; Mon, 24 Mar 2025 14:47:40 -0400
+	id 1twmp4-0001XP-Ep; Mon, 24 Mar 2025 14:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmp6-0001ZB-IV
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:46:57 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmp1-0001Vi-V8
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:46:52 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmp3-0008TQ-V0
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:46:56 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-39129fc51f8so3868389f8f.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:46:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmoz-0008Sa-0V
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:46:51 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43d0359b1fcso30352465e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742842012; x=1743446812; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742842006; x=1743446806; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oN8jfo5grq0MHdHsUE+0JullpCPbAdZoVNQ+DvNKQ/g=;
- b=SwL4HtrSyxfWHvwmA8T3TEsz40qVljp4hjXGYhkgxHiLMGN36eL789Sob1sX75CLor
- UzaocFxUcv/6m/xd16rNTtmfP1MQvyOnXw8gHPiiQYx41PODtDjZVUSq/91njz1PQqlT
- a8Nvv5a45iYjSJBEeLoCYhAEeb0ydsyu/PvCgqDMnAT+qHRSwmSATjcBSjqGyj6N7QwQ
- IvXq+7BndTTFp1w3JtFCzm5E3Fdkpc9bNeLdD9cW+jJ0GEm+/pJt4crDJ3w0qu2HKq4Q
- z3DRFWChE46tA5Sa4hKAsBJHhUPnGM/SYvo5Y6el4edJVdeUmeqtSp8tkmb0xVML+sWS
- ZYDA==
+ bh=s7H2XHk6YCrzpCT2rz8iyqMZS6d6X/wrnwDCxj4nPhU=;
+ b=O+l0N3cae/2IL4RvZTOUa7NkAVi3gBFHzQ7/3UY1tp2I53g4GFOilqeNIGEDAGSVvP
+ MeHnnNi1T+2xC6y6ZxTVsnt4UfaRNtXL880wG5SPDG9YXtrVN078mCl8ohoNXDfeh03+
+ en1gvLeifUBlZD8jT88c5GrMgAg/sd6abwLEqBQaWlQY1ilO2pLqjqQ15vTkgYJzHcUJ
+ ng10xf/DCZyfXZvio2LUphuQl47aud3Ty5wUK9pkx8PXSMFON9lbycHKWDLx6veECxyF
+ ynrBpetvGJtioQpquA9iYayPTsP7m6fbmayAdPQFAwom58X3CqCRPiLNMAugnWP2OOjx
+ BwqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742842012; x=1743446812;
+ d=1e100.net; s=20230601; t=1742842006; x=1743446806;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oN8jfo5grq0MHdHsUE+0JullpCPbAdZoVNQ+DvNKQ/g=;
- b=QT+medD2YVFzOnyCuBMdy++kaFFbzNTTNAZ10ZD4TgkwnHG1b4QTfVrs+QLuXPecO0
- loSp08uo1RTxFSqzfYqeEYE8e6l7STO5GymqkrhkiubWddLgHNqrpMBx2TEIjRdyKMB7
- NfSti89CLG04PIXrA37Trr3AUHjtWLhkwqV+4ityVt7AaSlBxPAM+KREnmH3NNZpfj5i
- oDaZnWoiEezJCFjz+A5M7ZJUjO8vFuBEXcWqADtTNPPCSjyKRwu6Wsz5SUOrfH5uGTnv
- RcFGC+gc7uRV7CW9PPX+TdSdLigADxhh5oY/RWpDivU3Nrp1TKMXPonwVfJbrCAvEhM3
- DRCQ==
-X-Gm-Message-State: AOJu0YzpVvz/vSBLMuL2TELL1+hluF4HU6DAjb6tv4YsLnq85tiuzhyj
- M0IcACux6aKHbG4uZ05hE6I73T4fYEXpupM96tBO6Wnt+MNvGw/7tSkJb2cj2V5KC5Hr8W1M+9C
- v
-X-Gm-Gg: ASbGnctXuaCnwUZJE9expFvf0w7zJ3U1MIKUUfHDCFv/E0iBPRJphzP91E+FolJvBfv
- LBnt3g7zej6LfilkUD09ZnyRTDTN8AdHcnHboxhmvrgt0xuHIiEJadBjrHLxOoWKV8ZsnTLThhF
- fVdzyJNTzBV3em1Gvq79rw26MgO63qb+Ry1hyOz+xuwiT19L4gIpdJktdqd/OsZSjImQfUEBrcN
- 0XI282BYNqBhpDLT1SIKFezdcKeSC1TK+EVh9i8zDDRXciWaWckIuy9xO44e44mqQz4FNfeK400
- BsVfNbXMb6w7WjT5buzuqiP3tjGAA9DiBL2mYuZWXr5lGHqg13tPRd2kfeACHbBEjWSrGgINi6P
- h7s04REkLDuAXDq8s+4vMyNqs
-X-Google-Smtp-Source: AGHT+IE3cTcSx4ZN1CMTzffZ6A3Bt3px2Yoe5OBUs8ZAl0sMh866jiPJ6JNiNVMG9/ZAkMDSdoKPOg==
-X-Received: by 2002:a5d:5f42:0:b0:391:2995:5ef2 with SMTP id
- ffacd0b85a97d-3997f937538mr11141784f8f.37.1742842012150; 
- Mon, 24 Mar 2025 11:46:52 -0700 (PDT)
+ bh=s7H2XHk6YCrzpCT2rz8iyqMZS6d6X/wrnwDCxj4nPhU=;
+ b=I51Uce2jqpHyqJCutKtOMaoH+dfcRKNMD8EbckpbV2qCJgemc6oie9TJIlDCtPKSyv
+ OVh5MHqw7OAqXy5Y6/0bkDnhvtDv2DhBbTaO4vkiX5WCUP8P5niamwBVp2QVQ7cqBW+/
+ 43tpfVTvV7+KwjBAGZNNAokJzckHotQ4hCXBGZNHklbXIqtecovlOX/DTQRR8b0aaMnu
+ w/dc1M1/wBSV6dTvydPkE3QJ+g78lM5Sdb55sW+C0VdcfWit56VnaQ7OGb2D4jxxaXPm
+ DPxWT1p6+IOCxgFGNKfsQ6NP89TALr/moaVcocavlrQEjxHyo1MMMBVW4Qr6Hmn/1O7p
+ cFhQ==
+X-Gm-Message-State: AOJu0YxWF6Nn0H2lEskfm2HfPITGj7mLYfuoIl5HmvNOwL6ttMW7QBsH
+ ddhc/xnDIVS97Vb0XYXDBUaCw3dhNVYFksTku76BHVR//F+4eCc1txLr+a7VBiA1x9XMTT/IDG2
+ H
+X-Gm-Gg: ASbGncuyxNFjI5RZijJilJZEmHwSd1Q6psK1BD168gSQHiQXMPf37VSYHAN2nauAVae
+ WQ8nyNsMR2oLkcnjnmxiT54QY8Iy8HE+uMVMDCs96gR5JabTDSKjXkEcBWMKG1ouNtKkTPRHxdJ
+ 0mEVMekThPTzBBZJao2fCcOB6u34KvVINsr3VxBFkH0g4mPUUdqfP2vU1i/2wdklJBrWft4RNqO
+ vvSjwhFecBGP3V/8wx6VZCtjoM7dkj/x72JI4svUHec9SRLicPT4Q9BJ5STWLNiTR8uHNB+x8nP
+ VDd5biWPEMheVxXMyNOyTpmb3w9yrMseA6ed9CYSUxrJp0iNVl4HEg0IA3R3UnH36YVMsPwCcdm
+ wlq09VQp3MftMjTRN/0NI1lw6
+X-Google-Smtp-Source: AGHT+IEg60/OZle+C70hTonPY2nA007ovpgbs59oWz0xEO6CaVk+5tssDzGG1Gj8aaXTgxJp5134RA==
+X-Received: by 2002:a05:600c:3552:b0:43c:f509:2bbf with SMTP id
+ 5b1f17b1804b1-43d491bfe15mr216286005e9.15.1742842006399; 
+ Mon, 24 Mar 2025 11:46:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9955c0sm11515751f8f.3.2025.03.24.11.46.50
+ 5b1f17b1804b1-43d440ed786sm177702985e9.38.2025.03.24.11.46.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Mar 2025 11:46:51 -0700 (PDT)
+ Mon, 24 Mar 2025 11:46:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
@@ -78,18 +78,17 @@ Cc: Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 v2 7/7] cpus: Remove #ifdef check on cpu_list
- definition
-Date: Mon, 24 Mar 2025 19:46:11 +0100
-Message-ID: <20250324184611.44031-8-philmd@linaro.org>
+Subject: [PATCH-for-10.1 v2 6/7] target/s390x: Register CPUClass:list_cpus
+Date: Mon, 24 Mar 2025 19:46:10 +0100
+Message-ID: <20250324184611.44031-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250324184611.44031-1-philmd@linaro.org>
 References: <20250324184611.44031-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,59 +111,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we removed all definitions of cpu_list, the #ifdef
-check is always true. Remove it, inlining cpu_list().
+Register s390_cpu_list() as CPUClass:list_cpus callback
+and remove the cpu_list definition.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- cpu-target.c | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ target/s390x/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/cpu-target.c b/cpu-target.c
-index 5947ca31a0a..30598619581 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -71,7 +71,6 @@ const char *parse_cpu_option(const char *cpu_option)
-     return cpu_type;
- }
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 8449bfee5a9..2876f2c4eb3 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -385,6 +385,7 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
+                                        &scc->parent_phases);
  
--#ifndef cpu_list
- static void cpu_list_entry(gpointer data, gpointer user_data)
- {
-     CPUClass *cc = CPU_CLASS(OBJECT_CLASS(data));
-@@ -85,17 +84,6 @@ static void cpu_list_entry(gpointer data, gpointer user_data)
-     }
- }
- 
--static void cpu_list(void)
--{
--    GSList *list;
--
--    list = object_class_get_list_sorted(TYPE_CPU, false);
--    qemu_printf("Available CPUs:\n");
--    g_slist_foreach(list, cpu_list_entry, NULL);
--    g_slist_free(list);
--}
--#endif
--
- void list_cpus(void)
- {
-     CPUClass *cc = CPU_CLASS(object_class_by_name(CPU_RESOLVING_TYPE));
-@@ -103,7 +91,12 @@ void list_cpus(void)
-     if (cc->list_cpus) {
-         cc->list_cpus();
-     } else {
--        cpu_list();
-+        GSList *list;
-+
-+        list = object_class_get_list_sorted(TYPE_CPU, false);
-+        qemu_printf("Available CPUs:\n");
-+        g_slist_foreach(list, cpu_list_entry, NULL);
-+        g_slist_free(list);
-     }
- }
- 
+     cc->class_by_name = s390_cpu_class_by_name;
++    cc->list_cpus = s390_cpu_list;
+     cc->mmu_index = s390x_cpu_mmu_index;
+     cc->dump_state = s390_cpu_dump_state;
+     cc->query_cpu_fast = s390_query_cpu_fast;
 -- 
 2.47.1
 
