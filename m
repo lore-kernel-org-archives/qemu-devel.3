@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A1BC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 07:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFB50C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 07:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twcLa-0005n3-J9; Mon, 24 Mar 2025 03:35:46 -0400
+	id 1twcR4-0006pN-AX; Mon, 24 Mar 2025 03:41:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=sfo0=WL=kaod.org=clg@ozlabs.org>)
- id 1twcLY-0005mX-8o; Mon, 24 Mar 2025 03:35:44 -0400
+ id 1twcQz-0006p9-EC; Mon, 24 Mar 2025 03:41:21 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=sfo0=WL=kaod.org=clg@ozlabs.org>)
- id 1twcLV-0003Tb-R0; Mon, 24 Mar 2025 03:35:44 -0400
+ id 1twcQv-0003vN-Tj; Mon, 24 Mar 2025 03:41:21 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZLlFv6wp2z4x8X;
- Mon, 24 Mar 2025 18:35:31 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZLlNT40F1z4x8X;
+ Mon, 24 Mar 2025 18:41:13 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZLlFs17Scz4wvb;
- Mon, 24 Mar 2025 18:35:28 +1100 (AEDT)
-Message-ID: <a724951a-738c-403d-8d47-8d3b83c68e13@kaod.org>
-Date: Mon, 24 Mar 2025 08:35:25 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZLlNQ4993z4wcd;
+ Mon, 24 Mar 2025 18:41:10 +1100 (AEDT)
+Message-ID: <57ce8d50-db92-44f0-96a9-e1297eea949f@kaod.org>
+Date: Mon, 24 Mar 2025 08:41:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/8] ppc/pnv: Add a Power11 Pnv11Chip, and a Power11
- Machine
+Subject: Re: [PATCH v5 0/8] Power11 support for QEMU [PowerNV]
 To: Aditya Gupta <adityag@linux.ibm.com>,
  Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -41,9 +40,6 @@ To: Aditya Gupta <adityag@linux.ibm.com>,
  =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
 References: <20250308205141.3219333-1-adityag@linux.ibm.com>
- <20250308205141.3219333-8-adityag@linux.ibm.com>
- <bce5dcfc-24d2-41e2-b11e-7cb5967f2132@kaod.org>
- <337b1a39-ed5f-4737-a98a-1ed2784aef7b@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,9 +84,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <337b1a39-ed5f-4737-a98a-1ed2784aef7b@linux.ibm.com>
+In-Reply-To: <20250308205141.3219333-1-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=sfo0=WL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -40
@@ -115,66 +111,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/24/25 08:13, Aditya Gupta wrote:
-> Hi Cedric,
-> 
-> On 09/03/25 19:38, Cédric Le Goater wrote:
->> On 3/8/25 21:51, Aditya Gupta wrote:
->>> <...snip...>
->>>
->>>   static void pnv_chip_power8_instance_init(Object *obj)
->>>   {
->>>       Pnv8Chip *chip8 = PNV8_CHIP(obj);
->>> @@ -1966,6 +1996,20 @@ static void pnv_chip_power10_instance_init(Object *obj)
->>>       PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
->>>       int i;
->>>   +    /*
->>> +     * Power11 declares Power10 as it's parent class, to be able to reuse
->>> +     * most of the Power10 code.
->>> +     * But this causes Power10 and Power11's both instance init to be
->>> +     * called for PowerNV11 chip
->>> +     *
->>> +     * Skip initialising Power10 specific child objects, if the chip is
->>> +     * Power11 chip, in which case power11's instance init will initialise
->>> +     * the child objects
->>> +     */
->>> +    if (!strcmp(object_get_typename(obj), TYPE_PNV_CHIP_POWER11)) {
->>> +        return;
->>> +    }
->>> +
->>
->> This is a hack !  Please duplicate the code like done for other chips.
->>
->>
->>> <...snip...>
->>>
->>>   +    /*
->>> +     * P11 chip and variants
->>> +     */
->>> +    {
->>> +        .name          = TYPE_PNV11_CHIP,
->>> +        .parent        = TYPE_PNV10_CHIP,
->>
->> why is the parent not TYPE_PNV_CHIP like the other chips ?
->>
->> This is a hack which can be easily avoided with more work :)
-> 
-> 
-> When I do this, every function using Pnv10Chip* will need to be duplicated to use Pnv11Chip*.
-> 
-> I will do that.
-> 
-> But what do you say about changing Pnv10 chip to Pnv1x chip ? It may only be used by Pnv10 and Pnv11, not future chips. But is that unnecessary for just two versions of the chip ?
-> 
-> Just tried to think of some ways to reduce duplication, or having different files such as pnv10.c, pnv11.c ? I am not sure because these might be unnecessary things too.
+Hello Aditya,
 
-Please open code (and duplicate) first. Then we will see how we
-can make things common. Checking the typename in the instance_init
-handleris a hack not for upstream.
+On 3/8/25 21:51, Aditya Gupta wrote:
+> Overview
+> ============
+> 
+> Add support for Power11 powernv machine type, to emulate PowerNV VMs
+> running on Power11.
+
+Could you please consider deprecating the POWER8NVL and POWER8E CPUs
+and associated chips and machines ? I think keeping POWER8 is fine
+since it has different HW implementation from the following generations.
+However, the POWER8NVL and POWER8E variants don't add much to QEMU.
+They were practical at one point for bringup (2014). They are not
+anymore.
+
+This will remove some lpc peculiarities.
 
 Thanks,
 
 C.
 
+
+
+> 
+> As Power11 core is same as Power10, hence much of the code has been reused
+> from Power10. And Power10 PNV Chip has been declared as parent of Power11
+> PNV Chip so that any existing/new functionality can also be reused for
+> Power11.
+> 
+> This parent/child hierarchy causes an issue in .instance_init, as parent's
+> instance_init is also called for the child object. Skip initialising child
+> objects in P10's instance init if we have a P11 chip, this prevents
+> initialising same objects twice by p10 and p11 instance inits.
+> 
+> Power11 PSeries already added in QEMU in:
+>    commit 273db89bcaf4 ("ppc/pseries: Add Power11 cpu type")
+> 
+> Git Tree for Testing
+> ====================
+> 
+> QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-powernv-v5
+> 
+> Has been tested with following cases:
+> * '-M powernv' / '-M powernv10' / '-M powernv11'
+> * '-smp' option tested
+> 
+> skiboot with Power11 support: https://github.com/open-power/skiboot, since
+> commit 785a5e3
+> 
+> Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+> 
+> Note: Functional test not added now, will add as soon as op-build releases
+> new kernel image with Power11 support
+> 
+> Changelog
+> =========
+> v5:
+>    + add chiptod
+>    + add instance_init for P11 to use P11 models
+>    + move patch introducing Pnv11Chip to the last
+>    + update skiboot.lid to skiboot's upstream/master
+> 
+> v4:
+>    + patch #5: fix memory leak in pnv_chip_power10_quad_realize
+>    - no change in other patches
+> 
+> v3:
+>    + patch #1: version power11 as power11_v2.0
+>    + patch #2: split target hw/pseries code into patch #2
+>    + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
+>    + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
+>    + patch #6-#11: no change
+>    - remove commit to make Power11 as default
+> 
+> v2:
+>    + split powernv patch into homer,lpc,occ,psi,sbe
+>    + reduce code duplication by reusing power10 code
+>    + make power11 as default
+>    + rebase on qemu upstream/master
+>    + add more information in commit descriptions
+>    + update docs
+>    + update skiboot.lid
+> 
+> Aditya Gupta (8):
+>    ppc/pnv: Add HOMER for POWER11
+>    ppc/pnv: Add a LPC controller for POWER11
+>    ppc/pnv: Add OCC for Power11
+>    ppc/pnv: Add a PSI bridge model for Power11
+>    ppc/pnv: Add SBE model for Power11
+>    ppc/pnv: Add ChipTOD model for Power11
+>    ppc/pnv: Add a Power11 Pnv11Chip, and a Power11 Machine
+>    ppc/pnv: Update skiboot to support Power11
+> 
+>   docs/system/ppc/powernv.rst            |   9 +-
+>   hw/ppc/pnv.c                           | 177 ++++++++++++++++++++++++-
+>   hw/ppc/pnv_chiptod.c                   |  37 ++++++
+>   hw/ppc/pnv_core.c                      |  11 ++
+>   hw/ppc/pnv_homer.c                     |   8 ++
+>   hw/ppc/pnv_lpc.c                       |  14 ++
+>   hw/ppc/pnv_occ.c                       |  14 ++
+>   hw/ppc/pnv_psi.c                       |  24 ++++
+>   hw/ppc/pnv_sbe.c                       |  15 +++
+>   include/hw/ppc/pnv.h                   |   5 +
+>   include/hw/ppc/pnv_chip.h              |   7 +
+>   include/hw/ppc/pnv_chiptod.h           |   2 +
+>   include/hw/ppc/pnv_core.h              |   1 +
+>   include/hw/ppc/pnv_homer.h             |   3 +
+>   include/hw/ppc/pnv_lpc.h               |   4 +
+>   include/hw/ppc/pnv_occ.h               |   2 +
+>   include/hw/ppc/pnv_psi.h               |   2 +-
+>   include/hw/ppc/pnv_sbe.h               |   2 +
+>   pc-bios/skiboot.lid                    | Bin 2527328 -> 2527424 bytes
+>   19 files changed, 321 insertions(+), 10 deletions(-)
+> 
 
 
