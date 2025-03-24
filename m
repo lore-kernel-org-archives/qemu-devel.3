@@ -4,71 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AB2AC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 07:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28993C36008
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 07:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twbvd-0008HB-J4; Mon, 24 Mar 2025 03:08:57 -0400
+	id 1twc0Q-0002Z4-JT; Mon, 24 Mar 2025 03:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1twbvT-0008Fl-8C
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 03:08:47 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1twc0O-0002Xg-Gh; Mon, 24 Mar 2025 03:13:52 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1twbvQ-0008IV-TK
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 03:08:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742800125; x=1774336125;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=ANkPs0h4mhk6jy/bkiJEEPbEptITE5hW4KH1EhFBtXk=;
- b=CR3FeUI+4FFye4IuxfA5KK9hDngOWnZaQff6Nu7f/4u6oJTez1fkv7bK
- ZoI1gZkbbaXKMG8ns0OVz/OoTjF7/ZKe2ztQNx44GhVtCnZ7xQX0qczo7
- 4+cMIjgmfRjlKvz/zQh/0Qh64wDGAV+yC4N0a9BZPan0x1Ez1qG4p4wpm
- xwl1aBzGjfZrXsmkCHkPBi/n6iQBnpULYgm6N3ixiPXAXBtFsQTQLxBeW
- L0t8X/bPi4oTm63To5tshTFZ0LAuQxyLAQ0ddqYYBHh2MSvKsiw4K24io
- /vQ+tN1ELax4gE6c5sGqL5CHB3MLkMtL9QzYtGt+yLavoqxKYFDNQlkAS w==;
-X-CSE-ConnectionGUID: jDs2amaXTbmSZ6K5v3+e1g==
-X-CSE-MsgGUID: l6WLLp4nSsKamn4Ua2RiLw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11382"; a="31588448"
-X-IronPort-AV: E=Sophos;i="6.14,271,1736841600"; d="scan'208";a="31588448"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Mar 2025 00:08:40 -0700
-X-CSE-ConnectionGUID: cBOFxVkVTkytqH8YnZ3tnA==
-X-CSE-MsgGUID: //Xcw+dXToqFsjpHLZzwQw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,271,1736841600"; d="scan'208";a="123944311"
-Received: from emr.sh.intel.com ([10.112.229.56])
- by fmviesa007.fm.intel.com with ESMTP; 24 Mar 2025 00:08:37 -0700
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Sean Christopherson <seanjc@google.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
- Zide Chen <zide.chen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Dongli Zhang <dongli.zhang@oracle.com>, Mingwei Zhang <mizhang@google.com>,
- Das Sandipan <Sandipan.Das@amd.com>, Shukla Manali <Manali.Shukla@amd.com>,
- Dapeng Mi <dapeng1.mi@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>
-Subject: [PATCH 0/3] Enable x86 mediated vPMU
-Date: Mon, 24 Mar 2025 12:37:09 +0000
-Message-Id: <20250324123712.34096-1-dapeng1.mi@linux.intel.com>
-X-Mailer: git-send-email 2.40.1
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1twc0M-0000Wr-Pz; Mon, 24 Mar 2025 03:13:52 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52NKeB2B027468;
+ Mon, 24 Mar 2025 07:13:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Bj/ph5
+ rohYlJAZkx9Jm0X6zH5p2DC6OecRuf09JtLFs=; b=sMsdR9Org/1QdIE38fDAKq
+ HIyhMIPHfnaZlkh5J3LZjyMmNHnd9OIcYG45NSNPBh8BRqVX2nJfwNig5xXvpURD
+ 0VazHA6CrGHZgmplJhIjv4+GbnVc3RTLHulNsDesjTJzav2NGpRNh5KBokWCZ7/2
+ cbX6KlBxDOPTPwvxHndgTiwlk4nuMYkfDNpQTJ/bk6JAomJuIJYUBHUQEUL1YfAP
+ cyDYzOZdJUk5PqHpF1pDcbjaP+HrYbcZtWL/0WaCJad9IhUPj4LEsEqU58ZWPcPL
+ vKw5O/N19U3GzkBZAyJmqSgyFdsOxIJDb/mFEHQ/RaQqkCJGmaje79xMNd7gX4tA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45jjb4ubat-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Mar 2025 07:13:40 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52O7Brlf000756;
+ Mon, 24 Mar 2025 07:13:40 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45jjb4ubap-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Mar 2025 07:13:39 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52O4mCBD009709;
+ Mon, 24 Mar 2025 07:13:39 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j9rkcuwq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Mar 2025 07:13:38 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52O7DZ9s54264108
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Mar 2025 07:13:35 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 290D12004B;
+ Mon, 24 Mar 2025 07:13:35 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4CADF20040;
+ Mon, 24 Mar 2025 07:13:33 +0000 (GMT)
+Received: from [9.109.199.160] (unknown [9.109.199.160])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Mar 2025 07:13:33 +0000 (GMT)
+Message-ID: <337b1a39-ed5f-4737-a98a-1ed2784aef7b@linux.ibm.com>
+Date: Mon, 24 Mar 2025 12:43:32 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 7/8] ppc/pnv: Add a Power11 Pnv11Chip, and a Power11
+ Machine
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250308205141.3219333-1-adityag@linux.ibm.com>
+ <20250308205141.3219333-8-adityag@linux.ibm.com>
+ <bce5dcfc-24d2-41e2-b11e-7cb5967f2132@kaod.org>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <bce5dcfc-24d2-41e2-b11e-7cb5967f2132@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.16;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_03_06=3.027,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: I0HNRdAOnMxe5KNyiGEhi-GCdHnLpexY
+X-Proofpoint-ORIG-GUID: PKb0eHPVTWWJcgxXeZjUrZUe-eKr5lme
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-24_03,2025-03-21_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=999 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
+ mlxscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503240049
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,60 +123,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This small patch series enables the newly introduced KVM x86 mediated
-vPMU solution. As KVM maintainer's suggestion, KVM mediated vPMU is
-disabled by default unless user explicitly calls KVM_CAP_PMU_CAPABILITY
-ioctl to enable it.
+Hi Cedric,
 
-As for mediated vPMU, it's a new pass-through vPMU solution which is
-designed to replace the legacy perf-based vPMU which has several
-drawbacks, such as high performance overhead, hard to support new PMU
-features, etc. Most of PMU MSRs except EVENTSELx are passed through to
-guest in mediated vPMU. Currently the latest mediated vPMU patch series
-is v3[1], the v4 patchset would be sent soon.
-
-In this series, patch 1/3 introduces a helper
-kvm_arch_pre_create_vcpu() which would be called before creating vCPU.
-This patch comes from Xiaoyao's "QEMU TDX support" patchset[2]. Patch
-2/3 leverages the patch 1/3 introduced helper to call
-KVM_CAP_PMU_CAPABILITY ioctl to enable/disable KVM vPMU (mediated vPMU).
-This patch is similar with patch 4/10 of Dongli's
-"target/i386/kvm/pmu: PMU Enhancement, Bugfix and Cleanup" patchset[3],
-but can be considered as an enhanced version. Patch 3/3 provides support
-for newly introduced VMCS bit SAVE_IA32_PERF_GLOBAL_CTRL.
-
-Tests:
-  * Tests on Sapphire Rapids platform, both mediated vPMU and legacy
-    perf-based vPMU can be enabled/disabled with "+/-pmu" option.
-
-Ref:
-[1] https://lore.kernel.org/all/20240801045907.4010984-1-mizhang@google.com/
-[2] https://lore.kernel.org/all/20250124132048.3229049-8-xiaoyao.li@intel.com/
-[3] https://lore.kernel.org/all/20250302220112.17653-5-dongli.zhang@oracle.com/  
-
-Dapeng Mi (2):
-  target/i386: Call KVM_CAP_PMU_CAPABILITY iotcl to enable/disable PMU
-  target/i386: Support VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL
-
-Xiaoyao Li (1):
-  kvm: Introduce kvm_arch_pre_create_vcpu()
-
- accel/kvm/kvm-all.c        |  5 +++++
- include/system/kvm.h       |  1 +
- target/arm/kvm.c           |  5 +++++
- target/i386/cpu.c          | 12 ++++++++----
- target/i386/cpu.h          |  1 +
- target/i386/kvm/kvm.c      | 22 ++++++++++++++++++++++
- target/loongarch/kvm/kvm.c |  5 +++++
- target/mips/kvm.c          |  5 +++++
- target/ppc/kvm.c           |  5 +++++
- target/riscv/kvm/kvm-cpu.c |  5 +++++
- target/s390x/kvm/kvm.c     |  5 +++++
- 11 files changed, 67 insertions(+), 4 deletions(-)
+On 09/03/25 19:38, Cédric Le Goater wrote:
+> On 3/8/25 21:51, Aditya Gupta wrote:
+>> <...snip...>
+>>
+>>   static void pnv_chip_power8_instance_init(Object *obj)
+>>   {
+>>       Pnv8Chip *chip8 = PNV8_CHIP(obj);
+>> @@ -1966,6 +1996,20 @@ static void 
+>> pnv_chip_power10_instance_init(Object *obj)
+>>       PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
+>>       int i;
+>>   +    /*
+>> +     * Power11 declares Power10 as it's parent class, to be able to 
+>> reuse
+>> +     * most of the Power10 code.
+>> +     * But this causes Power10 and Power11's both instance init to be
+>> +     * called for PowerNV11 chip
+>> +     *
+>> +     * Skip initialising Power10 specific child objects, if the chip is
+>> +     * Power11 chip, in which case power11's instance init will 
+>> initialise
+>> +     * the child objects
+>> +     */
+>> +    if (!strcmp(object_get_typename(obj), TYPE_PNV_CHIP_POWER11)) {
+>> +        return;
+>> +    }
+>> +
+>
+> This is a hack !  Please duplicate the code like done for other chips.
+>
+>
+>> <...snip...>
+>>
+>>   +    /*
+>> +     * P11 chip and variants
+>> +     */
+>> +    {
+>> +        .name          = TYPE_PNV11_CHIP,
+>> +        .parent        = TYPE_PNV10_CHIP,
+>
+> why is the parent not TYPE_PNV_CHIP like the other chips ?
+>
+> This is a hack which can be easily avoided with more work :)
 
 
-base-commit: 71119ed3651622e1c531d1294839e9f3341adaf5
--- 
-2.40.1
+When I do this, every function using Pnv10Chip* will need to be 
+duplicated to use Pnv11Chip*.
+
+I will do that.
+
+But what do you say about changing Pnv10 chip to Pnv1x chip ? It may 
+only be used by Pnv10 and Pnv11, not future chips. But is that 
+unnecessary for just two versions of the chip ?
+
+Just tried to think of some ways to reduce duplication, or having 
+different files such as pnv10.c, pnv11.c ? I am not sure because these 
+might be unnecessary things too.
+
+
+Thanks,
+
+- Aditya G
 
 
