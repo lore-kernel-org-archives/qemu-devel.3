@@ -4,54 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C312C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 03:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FFFC36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 03:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twY4f-0007Pf-Fp; Sun, 23 Mar 2025 23:02:01 -0400
+	id 1twY8a-0000wu-2V; Sun, 23 Mar 2025 23:06:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1twY4c-0007OZ-3Q
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 23:01:58 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1twY4Y-0003Fu-LX
- for qemu-devel@nongnu.org; Sun, 23 Mar 2025 23:01:57 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bxlmkay+BntqijAA--.12778S3;
- Mon, 24 Mar 2025 11:01:46 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBx3MQZy+Bn0xRdAA--.10121S4;
- Mon, 24 Mar 2025 11:01:46 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>,
-	Markus Armbruster <armbru@redhat.com>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v7 2/2] hw/loongarch/virt: Replace destination error with
- error_abort
-Date: Mon, 24 Mar 2025 11:01:45 +0800
-Message-Id: <20250324030145.3037408-3-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250324030145.3037408-1-maobibo@loongson.cn>
-References: <20250324030145.3037408-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1twY8P-0000vl-RD; Sun, 23 Mar 2025 23:05:57 -0400
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1twY8O-0003qZ-9u; Sun, 23 Mar 2025 23:05:53 -0400
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-86d42f08219so1502317241.0; 
+ Sun, 23 Mar 2025 20:05:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742785551; x=1743390351; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TEYqHOa7/h0uCByt7ItyqRpjqfJCepGzXZEdZcTkBrU=;
+ b=lboHYMhvu2xznIoDJH2u7uw1JH6OJm4rj0LmJbmf5VusqbFm9nEYc4K5Q7K25PxiEi
+ 0RHXMrM+o90P3+5JrYG1TAUzxp5GzZO75A0CaJPZb14TlXNoHbeCHwe0tuvOLDtsIrVB
+ YOyj4kzHWz5A2uMKWabIg2XA5T2mZI6gFi8m9tmCqDGodILQBJ+Zk6UWZd4gCCiIMZHC
+ wYVFOoJCP9LBBCwcVIC3UzhQB8M1gI44iCYIrFpN4oy9gnoX5n1OYtD3WTJgj/zN7QzO
+ OMAPl6R+GWwPc+2k11sxFu476eYhBILd6tjaCblmp6X86dLiKhZca3BqaiAGY5N9y24N
+ X3lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742785551; x=1743390351;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TEYqHOa7/h0uCByt7ItyqRpjqfJCepGzXZEdZcTkBrU=;
+ b=EPc//kuSXhzkqSgJfnK62ArMy1LoDfCYKG1OqPH7hNCSitrdrhO4NopDVu1YrkW5fb
+ oSFK5aTk5CA4OFVr/H0KKkUQi/9bAJpAgmhxhTr1rNiHd3h34Q7r0MS161ZnczNgKKQp
+ NpDhXhd2KTbvG3mKeOfydvCez4u3kbP4uXiTCE1lprM1LdnFlQpeqZYVYhaUoVp18/DC
+ KWWOcB+6vlKT8MsRhj1ey7kkXuKxj1Q4NZZQ9cZA4SaIG7Ms2dtc8pRZ2f3ODvRgdW1u
+ yMEmoDoL1b649Rkmx3dti5k/fvqqUwfKVmCXhag/YmmBIFpJ8s7Bq1OL1+x4gEHAEHSp
+ QSUQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfDVpWvzLLu6n0xm0qhEI4Zcg9Pu0CSj2LnQ4OYgUWPEngKQhk60jTb4T1h47IJpLmUtFd25UTscESag==@nongnu.org,
+ AJvYcCWT6Dofs7Mqwn0jr9cf8lfK3AxRjHYpA/eTzvBN/iMcDMyLqs+pj2u3ByhFxURGAV8otTcCtQHQy0Va@nongnu.org
+X-Gm-Message-State: AOJu0Yy5PWQ2Dws7kg2zbSbtAaU3cGliv3PGixAJYRHhe+Ta97akpY/y
+ vu53p2EV6bCHCLf1sRweIzJyDCKlOApBnXe6S7UyTSgylEaw7oC/ieHqK4BWEjbgG8NpGZ7hbMj
+ tYHQBKEUqdKOtKcjuRMt38OMe/EU=
+X-Gm-Gg: ASbGncvzkFV7UioMl0XmEv9B9RMEyoz02kK1/1Fnqv3K9lv9LiDGNU0XeOk2CrhzPKR
+ SFvz+VTnn09Ufo+hkpgNN9Tb4K/EdbCG58OsewPupog8cIQwFJSZf2K5hSjZDjc/JQRg13wF9Q3
+ tBriugzwTAQoJBdnbIStkqcMufQ7Zm633Sc0XGeCXCbs2+kgxF6CLQVOElcoljv+GY2Q==
+X-Google-Smtp-Source: AGHT+IGGJVt6JqxOmqxKrwEEECaJrQ8WFeuvSv0eAK4BrxzKx1X6SQ0XBJb9x7pXFZzBTRXWM6jqCaewVLYXwQoaG/o=
+X-Received: by 2002:a05:6102:cce:b0:4c1:a448:ac7d with SMTP id
+ ada2fe7eead31-4c50d4b8786mr6953723137.10.1742785550682; Sun, 23 Mar 2025
+ 20:05:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx3MQZy+Bn0xRdAA--.10121S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20250306064636.452396-1-debug@rivosinc.com>
+ <b47fd8e8-f0dd-448f-ac9f-f6e23aead1bb@tls.msk.ru>
+In-Reply-To: <b47fd8e8-f0dd-448f-ac9f-f6e23aead1bb@tls.msk.ru>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 24 Mar 2025 13:05:24 +1000
+X-Gm-Features: AQ5f1Jr2pQ6F0ICfEnwQJSJl8nujR9Gx4LWHN2dq4FuORUnKxrB7NeZmzJMCGxY
+Message-ID: <CAKmqyKPEpYKOO8RmoMRxpF=GPt5W+c4RmfQdr70Prs6fv1cBvQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] target/riscv: fix access permission checks for
+ CSR_SSP
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ Adam Zabrocki <azabrocki@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,87 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In function virt_cpu_plug() and virt_cpu_unplug(), the error is
-impossile. Destination error is not propagated and replaced with
-error_abort. With this, the logic is simple.
+On Sat, Mar 22, 2025 at 4:03=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>
+> On 06.03.2025 09:46, Deepak Gupta wrote:
+> > Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
+> > zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
+> > to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
+> > rather rules clearly specified in section "22.2.1. Shadow Stack Pointer
+> > (ssp) CSR access contr" in the priv spec.
+> >
+> > Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls
+> > for zicfiss". Thanks to Adam Zabrocki for bringing this to attention.
+>
+> Is this patchset (including "[2/2] target/riscv: fixes a bug against
+> `ssamoswap` behavior in M-mode") applicable for stable qemu series?
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/loongarch/virt.c | 39 +++++++--------------------------------
- 1 file changed, 7 insertions(+), 32 deletions(-)
+Yes, if it applies it is (it probably won't apply to older stables as
+it's a new-ish feature).
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 504f8755a0..65c9027feb 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -936,29 +936,15 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
-                             DeviceState *dev, Error **errp)
- {
-     CPUArchId *cpu_slot;
--    Error *err = NULL;
-     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
- 
-     /* Notify ipi and extioi irqchip to remove interrupt routing to CPU */
--    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
--    if (err) {
--        error_propagate(errp, err);
--        return;
--    }
--
--    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
--    if (err) {
--        error_propagate(errp, err);
--        return;
--    }
-+    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, &error_abort);
-+    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &error_abort);
- 
-     /* Notify acpi ged CPU removed */
--    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
--    if (err) {
--        error_propagate(errp, err);
--        return;
--    }
-+    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &error_abort);
- 
-     cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-     cpu_slot->cpu = NULL;
-@@ -971,29 +957,18 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
-     CPUArchId *cpu_slot;
-     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
--    Error *err = NULL;
- 
-     if (lvms->ipi) {
--        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
--        if (err) {
--            error_propagate(errp, err);
--            return;
--        }
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &error_abort);
-     }
- 
-     if (lvms->extioi) {
--        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
--        if (err) {
--            error_propagate(errp, err);
--            return;
--        }
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &error_abort);
-     }
- 
-     if (lvms->acpi_ged) {
--        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
--        if (err) {
--            error_propagate(errp, err);
--        }
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev,
-+                             &error_abort);
-     }
- 
-     cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
--- 
-2.39.3
+Alistair
 
+>
+> Thanks,
+>
+> /mjt
+>
 
