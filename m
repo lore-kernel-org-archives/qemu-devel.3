@@ -4,83 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39860C3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20939C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twmei-0007fO-Q5; Mon, 24 Mar 2025 14:36:12 -0400
+	id 1twmoi-000151-7R; Mon, 24 Mar 2025 14:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1twmee-0007dP-VZ
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:36:10 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmog-00012o-Kp
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:46:30 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1twmec-0006zN-Br
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:36:08 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5e66407963fso8429634a12.2
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:36:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmod-0008Ok-ME
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:46:30 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43d0c18e84eso21703345e9.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:46:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742841361; x=1743446161; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1742841986; x=1743446786; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q5/PZ7BT+HhntyRVen9heaZkUf/s+/XZ8b7pFI4Ln3I=;
- b=hza+G0XEDYD7JpF9QDNMx9KFN9XODS4BreyH4Zd6N/0oNdZD4qDZs1/P26KjTFZW9A
- l/lAuj8IVJIoykM47XeVyaGvDrYAH11ngDAzYYmgI6e+SxeR1FRx3Phf2HzS6uFmTYVf
- QIC5sV01z1pgtf0i91HgYDWqIqaf3zudwaEnvQTDOWs4g1qFHCRQMsuqWtuhitll7TT4
- kTwvL8ECqDwDkHEE5QTI6B1Y/hzATVQVl9EbpLTlrW+a96/qHTj5Yg3N2nGlyJYb088L
- JVmmKfg0bTTfH3o09rWirEXAoZMPeiO04pEXPAgxZQyq5eTpSKvGOUIlNYCb+HJR3irC
- 2fdw==
+ bh=UVmEVjUsWOxsPo3u/Y0kR5E5YJmUOlp4odxRJhRKZMg=;
+ b=IkDEr31D8WXmMtefQ2RFTYgl+7cXg4tPKfEJGfH7cY43HESBLxKFZjPzykoCRDJT5v
+ WrH3uw09c8wf6skZDXSoRw/0gD+KcvTjKvsehDv+otPLu46mauI/+Gi3b9ocn1VXKt6J
+ sOdWOHBJCuXZdvCfoLHzRPuFVtp4jXGVoQW2Mi536j/VUyidWESDPPXrsIQMogVHpXkt
+ til+np31/scay/dED1SGHOMHgpp5TQbbJVaIQltUxb+M/1x9P8Au9pwVcSxNEEqpOCGA
+ uS69Ih5zE++HXci3Znmmx5cy1aGqHAoURIW7a5rnkn693VYo54qt7sgaSs37Gw0b2thT
+ Ipug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742841361; x=1743446161;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1742841986; x=1743446786;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q5/PZ7BT+HhntyRVen9heaZkUf/s+/XZ8b7pFI4Ln3I=;
- b=SIiLgPYPkLgTOhXyqh2lUSa1tTrJoK3s0pjU/0HbYqwG9ofiyRAK0gLL51jLbCZe5K
- M6jR11zdZabWM07uTkGO4XS50Kqvv21LB3qTxJwp+yJv71nFaSrupiZ98V18e2D+pGjK
- g9JHW8lK5YtKxnHHYZviyLEuzYe9rp49j9xl5eaCapIWOG2+Iw+QrO7/okavdusGSQvD
- 1J9O+m64RnGdhmT5db/FJ8DoktvovvbeQxsJxvo3GGb6S3aRsQ0+v9kCNk456kfl/pFB
- HUVuACXD9UEOYsAeTn73UaWhE37JuCYFldAtytob1sNlcVwEZVV1vSr626OEjijK2VHL
- yxTw==
-X-Gm-Message-State: AOJu0Yz8sWrwSME27Wg+tDjz8dlpSyqTuwh5NxU/kTDCyPJnKYIdgBT2
- cC7uefFyGpX1w5wCj89stT2+QB3i3wY+EMnvg/Yk7VZVcgfoDkWjm8N/Qrmx0a5uQJN4QPJjOzh
- 2MHYl7Pg8H51hQUWhf2YKGkBTtxA=
-X-Gm-Gg: ASbGncvMAs1z62TjkUcuZkGClaGRs+6sjlnAvXQ9faMjMT04b0BpXsNXx4OLGnW9VRB
- Lk88WIgZK0/d3bEtA/3zkp7yKZHqSEmSlAx2h3QRRpPZ06q1Bjee16JYD0TPI5gV2dpa02mBMEq
- Ix1YvQnZPkf5wF4/E286f3Q4gR
-X-Google-Smtp-Source: AGHT+IG26lOm1EkcEpZUzH2Cu8Z0EbUSlmEOzNpJZRNwy01djDNjDyF9yP3fuAfDZZD7nEjzd9592WihreYZV41rBus=
-X-Received: by 2002:a05:6402:3214:b0:5ec:da2e:6e30 with SMTP id
- 4fb4d7f45d1cf-5ecda2e6e54mr2460389a12.4.1742841360469; Mon, 24 Mar 2025
- 11:36:00 -0700 (PDT)
+ bh=UVmEVjUsWOxsPo3u/Y0kR5E5YJmUOlp4odxRJhRKZMg=;
+ b=HUN564638srn/AkYrJCtcEaOIlWTtSJGqR06RGXkSFcaVsVaxDWhPhJCPU6KozsjEr
+ WskV4Arj4l9H6/xCMl7xcyk4gg84W726JWi2FaFkMg/AhnOatDCY2WmYDubu0YZ+VILw
+ xFoIi55J7XJf9Gg8G8c7P8RgPwo5GKa9ocga8kgMTT1nDSREaPLq4OMMKnJvtwdmmeO9
+ yFYa0fm2dhIGLJkpk3OKD8JI4tENvuNIxlZNj5bn1LVgLUJpTRnbt5xagxkInC0L0AiN
+ y0ne2Zd8El5f224UVyA/co6KMBWuzqQM1qSHDffB4vJ/aFuLJ35ByCscPrC6CW2/uU5i
+ n6RA==
+X-Gm-Message-State: AOJu0YyewkwUc3D4P5cFf9wAN+jrmsY7QTO740R1jyGc/IRPpyKT97BQ
+ NTsWl7mqjbNFXE9p9FaS/P6p7A+1EXe4E+fXIxcLWJuhvJGgF+NnmzGrnUISoxSo2bZZgcvrDwL
+ m
+X-Gm-Gg: ASbGncsqCzC4OU3vGf+Ik9FeDgUXEGvNh4gvUUDWjt7IzQlmcsrTE5jutsEc+B+GL4L
+ WFNOkFnDRDGkhLsAQrPqPwFro5kpfxmBBvSPU456TUUoJi66aE0NGjWo0M6N9yKZkY3XMts3MRq
+ j9khdMiHgb+XC4mN5Zfv6AOf65j+kRTfj97TqGydkA2071dBrUXdtdyplkpAPCdx1LVhVYgxWxg
+ v2CaU+MP4vJHc1eL9OY1kNYI4osMNzk98vIbn3lTpp+YzaqkY+OTL46o9hzBpkHQYZa0FvCadHN
+ dd4CDf8PtpQa2pyyP7jznr9hiLZA3oiXH13fGH11iYybyF0mR/uPjiK0Up821VaFsh0Gz93JQcP
+ Xv9r3EgUbu44cti2Z4FhZ4gee
+X-Google-Smtp-Source: AGHT+IHXDlUKgKzUo6UNZg/EHyaXNGWm4g5qNyeMrQywuqeBrD7jm5+vRVtxWgq3QpyYZb4i1n3arg==
+X-Received: by 2002:a05:600c:3b9c:b0:43d:160:cd97 with SMTP id
+ 5b1f17b1804b1-43d50a4a7a7mr98114915e9.25.1742841985732; 
+ Mon, 24 Mar 2025 11:46:25 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f9e65f0sm11744102f8f.74.2025.03.24.11.46.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 24 Mar 2025 11:46:25 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-s390x@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-ppc@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 v2 2/7] target/i386: Register CPUClass:list_cpus
+Date: Mon, 24 Mar 2025 19:46:06 +0100
+Message-ID: <20250324184611.44031-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250324184611.44031-1-philmd@linaro.org>
+References: <20250324184611.44031-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <9d87fed729b2697605bcf5b6062669b6239e5c0f.camel@linux.ibm.com>
- <CAJSP0QXqseVpaHZEfhJv7nZ8N18PGQqpW-tb9LCkGyvOKvW_zQ@mail.gmail.com>
- <38af196895ab98bafb5423cbc390a1cb79e764df.camel@linux.ibm.com>
-In-Reply-To: <38af196895ab98bafb5423cbc390a1cb79e764df.camel@linux.ibm.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 24 Mar 2025 14:35:48 -0400
-X-Gm-Features: AQ5f1JoOjkR0nRzUFnrRvJkBb4Abkfmm5ccWqLpMXHUO5djQgcACt1oiYVysHy8
-Message-ID: <CAJSP0QX-T=8Fw=x_De2HdiNVKNQf2nTbrHp5cnUeJfFzxVONwQ@mail.gmail.com>
-Subject: Re: Best practice for issuing blocking calls in response to an event
-To: milesg@linux.ibm.com
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,147 +111,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 21, 2025 at 11:17=E2=80=AFAM Miles Glenn <milesg@linux.ibm.com>=
- wrote:
->
-> On Thu, 2025-03-20 at 16:09 -0400, Stefan Hajnoczi wrote:
-> > On Thu, Mar 20, 2025 at 12:34=E2=80=AFPM Miles Glenn <milesg@linux.ibm.=
-com> wrote:
-> > > Hello,
-> > >
-> > > I am attempting to simulate a system with multiple CPU
-> > > architectures.  To do this I am starting a unique QEMU process for ea=
-ch
-> > > CPU architecture that is needed. I'm also developing some QEMU code
-> > > that aids in transporting MMIO transactions across the process
-> > > boundaries using sockets.
-> >
-> > I have CCed Phil. He has been working on heterogenous target emulation
-> > and might be interested.
-> >
-> > > The design takes MMIO request messages off of a socket, services the
-> > > request by calling address_space_ldq_be(), then sends a response
-> > > message (containing the requested data) over the same
-> > > socket.  Currently, this is all done inside the socket IOReadHandler
-> > > callback function.
-> >
-> > At a high level this is similar to the vfio-user feature where a PCI
-> > device is emulated in a separate process. This also involves sending
-> > messages describing QEMU's MemoryRegion accesses. See the "remote"
-> > machine type in QEMU to look at the code.
-> >
-> > > This works as long as the targeted register exists in the same QEMU
-> > > process that received the request.  However, If the register exists i=
-n
-> > > another QEMU process, then the call to address_space_ldq_be() results
-> > > in another socket message being sent to that QEMU process, requesting
-> > > the data, and then waiting (blocking) for the response message
-> > > containing the data.  In other words, it ends up blocking inside the
-> > > event handler and even though the QEMU process containing the target
-> > > register was able to receive the request and send the response, the
-> > > originator of the request is unable to receive the response until it
-> > > eventually times out and stops blocking.  Once it times out and stops
-> > > blocking, it does receive the response, but now it is too late.
-> > >
-> > > Here's a summary of the stack up to where the code blocks:
-> > >
-> > > IOReadHandler callback
-> > >   calls address_space_ldq_be()
-> > >     resolves to mmio read op of a remote device
-> > >       sends request over socket and waits (blocks) for response
-> > >
-> > > So, I'm looking for a way to handle the work of calling
-> > > address_space_ldq_be(), which might block when attempting to read a
-> > > register of a remote device, without blocking inside the IOReadHandle=
-r
-> > > callback context.
-> > >
-> > > I've done a lot of searches and reading about how to do this on the w=
-eb
-> > > and in the QEMU code but it's still not really clear to me how this
-> > > should be done in QEMU.  I've seen a lot about using coroutines to
-> > > handle cases like this. Is that what I should be using here?
-> >
-> > The fundamental problem is that address_space_ldq_be() is synchronous,
-> > so there is no way to return back to the caller until the response has
-> > been received.
-> >
-> > vfio-user didn't solve this problem. It simply blocks until the
-> > response is received, but it does drop the Big QEMU Lock during this
-> > time so that other vCPU threads can run. For example, see
-> > hw/remote/proxy.c:send_bar_access_msg() and
-> > mpqemu_msg_send_and_await_reply().
-> >
-> > QEMU supports nested event loops, but they come with their own set of
-> > gotchas. The way a nested event loop might help here is to send the
-> > request and then call aio_poll() to receive the response in another
-> > IOReadHandler. This way other event loop processing can take place
-> > while waiting in address_space_ldq_be().
-> >
-> > The second problem is that this approach where QEMU processes send
-> > requests to each other needs to be implemented carefully to avoid
-> > deadlocks. For example, devices that do DMA could load/store memory
-> > belonging to another device handled by another QEMU. Once there is an
-> > A -> B -> A situation it could deadlock.
-> >
-> > Both vfio-user and vhost-user have similar issues with their
-> > bi-directional communication where a device emulation process can send
-> > a message to QEMU while processing a message from QEMU. Deadlock can
-> > be avoided if the code is structured so that QEMU is able to receive
-> > new requests during the time when it is waiting for a response.
-> >
-> > Stefan
->
-> Stefan, Thank you for the quick response and great information!
->
-> I'm not sure if this is the best way, but I was able to get things
-> working today using the coroutine approach.
->
-> Now, the aforementioned stack looks like this:
->
-> IOReadHandler callback receives request
->   enters coroutine
->     calls address_space_ldq_be()
->       resolves to mmio read op of a remote device
->         sends request
-> over socket
->         detects coroutine context and
->         calls qemu_coroutine_yield() instead of blocking
->   returns to callback
->
-> <time passes>
->
-> IOReadHandler callback receives response
->   re-enters coroutine
->         mmio read op returns data received in response message
->     address_space_ldq_be() returns
->   coroutine completes and returns to callback
->
-> While this works, I couldn't help but notice that the coroutine concept
-> seems to be like a form of multithreading.  Is there some advantage to
-> using coroutines over doing the work in another thread?  Does QEMU
-> offer an interface that allows for a callback to queue up work that can
-> be handled by another thread or a pool of threads?
+Register x86_cpu_list() as CPUClass:list_cpus callback.
+Reduce its scope and remove the cpu_list definition.
 
-Coroutines make it easier to write concurrent code in an event loop.
-The alternative is to write asynchronous callback functions, which is
-tedious for sequences with multiple steps that need to wait for I/O.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ target/i386/cpu.h | 3 ---
+ target/i386/cpu.c | 3 ++-
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-Coroutines do not offer parallelism, so they are not replacement for
-multi-threading. QEMU is mostly event-driven rather than
-multi-threaded. Usually only computation in QEMU that really needs its
-own CPU runs in its own thread (vCPUs, compression, blocking syscalls
-when there is no alternative, etc).
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 76f24446a55..28011eff0a8 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2367,7 +2367,6 @@ int x86_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+ int x86_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+ void x86_cpu_gdb_init(CPUState *cs);
+ 
+-void x86_cpu_list(void);
+ int cpu_x86_support_mca_broadcast(CPUX86State *env);
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -2561,8 +2560,6 @@ uint64_t cpu_get_tsc(CPUX86State *env);
+ #define TARGET_DEFAULT_CPU_TYPE X86_CPU_TYPE_NAME("qemu32")
+ #endif
+ 
+-#define cpu_list x86_cpu_list
+-
+ /* MMU modes definitions */
+ #define MMU_KSMAP64_IDX    0
+ #define MMU_KSMAP32_IDX    1
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1b64ceaaba4..1f502587c96 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6305,7 +6305,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
+ }
+ 
+ /* list available CPU models and flags */
+-void x86_cpu_list(void)
++static void x86_cpu_list(void)
+ {
+     int i, j;
+     GSList *list;
+@@ -8924,6 +8924,7 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
+     cc->reset_dump_flags = CPU_DUMP_FPU | CPU_DUMP_CCOP;
+ 
+     cc->class_by_name = x86_cpu_class_by_name;
++    cc->list_cpus = x86_cpu_list;
+     cc->parse_features = x86_cpu_parse_featurestr;
+     cc->mmu_index = x86_cpu_mmu_index;
+     cc->dump_state = x86_cpu_dump_state;
+-- 
+2.47.1
 
-There are advantages to using coroutines: less synchronization is
-necessary than with threads (you can be sure no other coroutine will
-run in the same thread while your code is running) and this eliminates
-most thread-safety issues. Also, event loops are seen as more scalable
-than threads (lots of historical resources, for example
-http://www.kegel.com/c10k.html). One QEMU-specific advantage of
-coroutines: coroutine code has access to all of QEMU's APIs that
-require the event loop whereas threads need to take extra steps to
-interact with the rest of QEMU.
-
-Stefan
 
