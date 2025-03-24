@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03878C3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 21:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57843C36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 21:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twp2d-0004hs-Jl; Mon, 24 Mar 2025 17:09:03 -0400
+	id 1twp5Z-000626-Au; Mon, 24 Mar 2025 17:12:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twp2P-0004fd-3E; Mon, 24 Mar 2025 17:08:50 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twp2M-00031V-Sb; Mon, 24 Mar 2025 17:08:48 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D86F2107AAF;
- Tue, 25 Mar 2025 00:07:32 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 71F4F1D5B7E;
- Tue, 25 Mar 2025 00:08:41 +0300 (MSK)
-Message-ID: <debb6c58-2a38-40d6-ac9c-b90c60ba8b69@tls.msk.ru>
-Date: Tue, 25 Mar 2025 00:08:41 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1twp5W-00061k-WA
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 17:12:03 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1twp5U-0003gr-QM
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 17:12:02 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-227b650504fso34805185ad.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 14:12:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742850719; x=1743455519; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0QyIWcLuKy6ayyJnu5/t5A5DBKW0SwtVnX/A9OP+mX0=;
+ b=oWEQeQ3IP7xtrlyv4vmHB1yI41TMADEB3oiQua/wAv6PQtyNk4jw4phr7QuaAbfS11
+ pkRMVcwaWUKvBqswgwRS2XoZDwcDP3YzoFfJXpLJtgCLFI3j7/BtF/LmF441GMRW+v61
+ bu0B2PEkF/ccZ8WvCYqhqsSPvVYA473cb+ADuDcDDa8lNgG96iiM0OZV0dmtpUgNgwQq
+ xW516D3uI48xCH1Tw5k32uFZsW0gv8EFIguxAld+V8YsNdJycYOMGz11hPNjYhJ8IArC
+ viCLO+0f3xwG1JZQ6doqDpkyDz18FhOGe4tmU4KqcHE+MDmEXUgdDFzoqy1URZvy71b0
+ ao1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742850719; x=1743455519;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0QyIWcLuKy6ayyJnu5/t5A5DBKW0SwtVnX/A9OP+mX0=;
+ b=s4thrS0hvvhDS8u7F2+qJo4ZjSvJ/hSIFgS2VkCskHKJGnseRf8UXnuSJcKJtLz3Al
+ M75v3exkvgwi4S4tDGdHgbBvmYPpWmNJZSXPJeDnDjWXwcXj7bYjYEuvwBYzbOByth5F
+ okOkiqv0fiqKD5V9G5v+mL+H6dMtRAKq3cJ02Pn22ZrhJ5kqxYWnZz+Rsj+qgjOhkAS2
+ zb+OhkMWwS/FDFVTt2Kv7VuT8J38RJDFeNXQOMD2IuoWygnWxnfz25BYmwOpxh5hSAKo
+ uz8s0LfOwkKWGOZ81N7JOpcmN+d4+y2NH5zwwy6u8BWrwcxLEJrs5ffuccIoksg7in6G
+ D3nw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVL2qN+oicn7+aGsNKnMiLR69bl19UDgb6zgyTKoStSoPHbkxPkgtDDX/SZfucrzyZozGJSxZsUIMD4@nongnu.org
+X-Gm-Message-State: AOJu0YzV+H5ixW2eZ2WxwaYvPTLAzM7dCySaqQ6Bdrqlsk1cGGEzGA+T
+ K15rZX97fl3r0D4UDx7wgS4UxejY2Qiwwn295VdRGESFslClmi/pvr7eCXy4QVo=
+X-Gm-Gg: ASbGncvTTpUZy5GGKgImY08yhsFWBR8oC7VrHaFNkNFvSpWmlcZyNcws1EWlsboRvHR
+ wId+uTeqaONkSN6Udb+NQoTjxQgJ9IFQrx2Jq9EQLH8ksFsfHhCmxmKbqUZGs4E3Vyy6tU5dnY2
+ Zdff6QwCTbpJsrsuvCAazHh8tt9ayCZtDQFBACzNtOkLCbh9vqI53wiszTfPWcJ362RooxZemT6
+ j7N6tgPQ8qOWjUE3k7KBHii5ATBqjgQ/zqulAJd+B//n2xGblmASPDbUYZlkjK1yLKrGuqB0bbL
+ Mxu0eBXq2th7kRMK9aLb6xbvfQvnpKZrbS13+sV4XX2/5iAK5Lq7owAydw==
+X-Google-Smtp-Source: AGHT+IHhKhK1Wampe7HG5CfLYgXfzWCQTUvTf2PVOHx87p/lS/w3GjKKNRuQC3jxYB7GAzu+vy6I7g==
+X-Received: by 2002:a05:6a00:1702:b0:736:3ea8:4805 with SMTP id
+ d2e1a72fcca58-7390597f7eamr17945734b3a.7.1742850719026; 
+ Mon, 24 Mar 2025 14:11:59 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73939d2bdb1sm1805196b3a.144.2025.03.24.14.11.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Mar 2025 14:11:58 -0700 (PDT)
+Message-ID: <11b5441f-c7c0-4b4c-8061-471a49e8465a@linaro.org>
+Date: Mon, 24 Mar 2025 14:11:57 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/3] aspeed queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>
-References: <20250323174541.406860-1-clg@redhat.com>
- <08930285-903b-4413-bd6e-20a14b2d15bb@tls.msk.ru>
- <2616d3e5-443c-477f-a024-317fadb76a59@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <2616d3e5-443c-477f-a024-317fadb76a59@redhat.com>
+Subject: Re: [PATCH v2 20/30] target/arm/cpu: always define kvm related
+ registers
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
+ <20250320223002.2915728-21-pierrick.bouvier@linaro.org>
+ <1109fe22-9008-47c6-b14d-7323f9888822@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <1109fe22-9008-47c6-b14d-7323f9888822@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,63 +108,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-24.03.2025 23:46, Cédric Le Goater wrote:
-
->> Is there anything in there worth to pick up for stable series?
+On 3/23/25 12:37, Richard Henderson wrote:
+> On 3/20/25 15:29, Pierrick Bouvier wrote:
+>> This does not hurt, even if they are not used.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    target/arm/cpu.h | 2 --
+>>    1 file changed, 2 deletions(-)
+>>
+>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>> index a8a1a8faf6b..ab7412772bc 100644
+>> --- a/target/arm/cpu.h
+>> +++ b/target/arm/cpu.h
+>> @@ -971,7 +971,6 @@ struct ArchCPU {
+>>         */
+>>        uint32_t kvm_target;
+>>    
+>> -#ifdef CONFIG_KVM
+>>        /* KVM init features for this CPU */
+>>        uint32_t kvm_init_features[7];
+>>    
+>> @@ -984,7 +983,6 @@ struct ArchCPU {
+>>    
+>>        /* KVM steal time */
+>>        OnOffAuto kvm_steal_time;
+>> -#endif /* CONFIG_KVM */
+>>    
+>>        /* Uniprocessor system with MP extensions */
+>>        bool mp_is_up;
 > 
-> you are fast !
+> I'm not sure what this achieves?   CONFIG_KVM is a configure-time selection.
+>
 
-I was just about to send final announcements for a bunch of next
-stable releases, and noticed another pull request has been merged.. :)
+CONFIG_KVM is a poisoned identifier.
+It's included via config-target.h, and not config-host.h. So common code 
+relying on it might do the wrong thing.
+As well, its presence is conditioned by target architecture (see 
+meson.build), so it can't be enabled for all targets.
 
+For this patch, it's only cpu definition, but for code based on 
+CONFIG_KVM/TCG/HVF/XEN, we should probably check {accel}_enabled() 
+accordingly.
 
-> - "aspeed: Fix maximum number of spi controller" is QEMU 10.0 material.
-> - "hw/intc/aspeed: Fix IRQ handler mask check" was merged in QEMU 9.1
-> - "hw/misc/aspeed_hace: Fix buffer overflow in has_padding function"
->     was merged in QEMU 7.1
+However, at the moment, I'm not sure what is the best way to deal with 
+it for common code, as {accel}_enabled() symbol can only be present once 
+in the end.
+
 > 
-> The last 2 deserve to be backported IMO. They will need some massaging.
-
-The "buffer overflow" fix seems to be okay for 9.2, 8.2 and 7.2.
-
-The "IRQ handler mask check" seems to be this (for 9.2). Does it look sane?
-
-Author: Steven Lee <steven_lee@aspeedtech.com>
-Date:   Thu Mar 20 17:25:43 2025 +0800
-
-     hw/intc/aspeed: Fix IRQ handler mask check
-
-     Updated the IRQ handler mask check to AND with select variable.
-     This ensures that the interrupt service routine is correctly triggered
-     for the interrupts within the same irq group.
-
-     For example, both `eth0` and the debug UART are handled in `GICINT132`.
-     Without this fix, the debug console may hang if the `eth0` ISR is not
-     handled.
-
-     Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-     Change-Id: Ic3609eb72218dfd68be6057d78b8953b18828709
-     Reviewed-by: Cédric Le Goater <clg@redhat.com>
-     Fixes: d831c5fd8682 ("aspeed/intc: Add AST2700 support")
-     Link: https://lore.kernel.org/qemu-devel/20250320092543.4040672-2-steven_lee@aspeedtech.com
-     Signed-off-by: Cédric Le Goater <clg@redhat.com>
-     (cherry picked from commit 7b8cbe5162e69ad629c5326bf3c158b81857955d)
-     (Mjt: update for before v9.2.0-2466-g5824e8bf6beb
-      "hw/intc/aspeed: Introduce IRQ handler function to reduce code duplication")
-     Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 126b711b94..495fd2bdfa 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -92,7 +92,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-
-      trace_aspeed_intc_select(select);
-
--    if (s->mask[irq] || s->regs[status_addr]) {
-+    if ((s->mask[irq] & select) || (s->regs[status_addr] & select)) {
-          /*
-           * a. mask is not 0 means in ISR mode
-           * sources interrupt routine are executing.
+> r~
 
 
