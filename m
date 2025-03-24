@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3893C36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 11:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B871AC36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 11:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twflH-00059T-LU; Mon, 24 Mar 2025 07:14:31 -0400
+	id 1twfpQ-00062X-3G; Mon, 24 Mar 2025 07:18:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1twflG-000599-Ak
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 07:14:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1twflE-0005qQ-5c
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 07:14:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742814866;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qBDGSLfeRp8NOuPa+ChfE3PkHcB2AZvg1fetL+05X6A=;
- b=SzFpqFgFFneZZdcXlVhHI8L18n1crmrpIx5eIzlmSVfrb2Tj/DiiOsG5MlEgyAyM9kSru5
- 2X8SYvx18yHwtw84wzdnqacm7rSL8Wd57II2MxrqSH2j96XxpgoD0oHLUOxwPml9Ljj0u/
- m8cxXxfiMRv3+QR4ZAUdFnAXqKrUk34=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-3t74ZT97PR2k-tR_Z2wDOA-1; Mon, 24 Mar 2025 07:14:23 -0400
-X-MC-Unique: 3t74ZT97PR2k-tR_Z2wDOA-1
-X-Mimecast-MFC-AGG-ID: 3t74ZT97PR2k-tR_Z2wDOA_1742814862
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d01024089so30887365e9.1
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 04:14:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1twfpN-00061g-FX
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 07:18:45 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1twfpL-0006bL-KF
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 07:18:45 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2260c91576aso68927445ad.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 04:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1742815121; x=1743419921; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bElPtOoPd6bz5+Z61z6KsrnYhmnmbNko5W0M+/FgjwA=;
+ b=crjWreAX6HS3HCmCZZDS1wx5aF6smWvfDGD6S2njec8wGuwPR2MIhp3kg0uCsF26ZJ
+ CGEXVzs5dCizgNRXMe55toGjZeKxVqdgb870vLdWSIa/eo7rRH/M4MNuYq9o4cNT5vL2
+ UslYUmcmLKBttXsYf2Gsgt5M2bHfBYbQhj2zUYfkFSZnzACWBKUntq6kipmwIF28Yv3H
+ gNOtmeg50jaTADN0DjySN0KCBr0GpRjxmse1p+uLA6Z3rh5ANCGt4LRiyrmtaeXJh/PI
+ uzqhG0UOL/COu3Mi0ZExkAdhaPd5bwsaVWG1iuq77iKDvDez0cCGVoeaG/5HjL4UbC+k
+ uZxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742814862; x=1743419662;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qBDGSLfeRp8NOuPa+ChfE3PkHcB2AZvg1fetL+05X6A=;
- b=oE2VueganBq6kpPntY/E9mPeNvsrT0Mj8BwQO3eNT730dFELAM6vwP+5RVZu0vnHB2
- tIbaYsLJO8iEDcByuQpmlf9QOZisfuLxXsm/T9PU1nawAx2bNcVb0KPZep+ZJdrkwViK
- QT4gkvelcadL2obOxnJYkk7dBsZpyQaVJScJiGZMZfbpa2N+tmIewuWpP154UXUYdcLR
- F6ezddHekrFZxqexBly5JcjBK9W65MPcTWiVA22n/12ySBffUTqFJJWqV9L6QH+Ffhz4
- RK4r5Frc7SOd6VyP3YcFHhcSuTD52ldD3r59OkBEMdPS4smuD8wJWzQfL2yuc7my73nZ
- neIw==
-X-Gm-Message-State: AOJu0YxXHZTmXuPU2rwadfcNAuoAcWZGG8pZlX/NyzL5vx9kahG94uv0
- CgZTimFf7aVIC3snqB0yWaSt7Vv16tKigYxNG28N+d15nLZfe0V3aG2x4M5FgIWr7vyR9GELenL
- BcwzJPmx8HYwZR/NZZak+AofAS/V1QLm4MLXPRDCwGIg+hx3mTbia2SBAYgUT/NW7rHp8N6uRuA
- 5ZCGaGDJZ9VuZOF1I8AV2WHCTOF3A=
-X-Gm-Gg: ASbGnctiaMyrOxac3xjspm+TK/CUmdjzlgDES3HDrBAHzNVZkTlhO8OlOo8AcZsAYwi
- ER3DF+5t3j9xkrjGl8NdkWwA2k+chHoHlkNXmiw7zxxKAFZoi/yfMwtrPAeQS53pcPu6J1Knsxg
- ==
-X-Received: by 2002:a05:600c:4e91:b0:43c:fffc:7855 with SMTP id
- 5b1f17b1804b1-43d50a0dae9mr109930975e9.15.1742814862101; 
- Mon, 24 Mar 2025 04:14:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoZDz0q3aC5h+X5bUfp1tha/Pi2K7AoK9Wf/7dbw4VMYud7eCVH9iMDVT5eUdmLykZCDYglcoav/7EUy4mNlI=
-X-Received: by 2002:a05:600c:4e91:b0:43c:fffc:7855 with SMTP id
- 5b1f17b1804b1-43d50a0dae9mr109930665e9.15.1742814861656; Mon, 24 Mar 2025
- 04:14:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742815121; x=1743419921;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bElPtOoPd6bz5+Z61z6KsrnYhmnmbNko5W0M+/FgjwA=;
+ b=fZDuSMwFd2nAzgTZa+rMXtewq6c2CHcRJ3BU+j1qO1ZWUkBMG51goB9aRVgGrvjH9K
+ G1/RmEG+P5nZl/pSEY+eVqOms5mDO54pzGUXYZd3s2TCfPDHpWhi2Z0hqqLhtUGuWEf2
+ 9Hd21dgqfS3a/KRTVffLObjo96aqbMZordvBDKfg7ZZcnXiAGaZO6OrZegrzberEwQBm
+ WkZ2gb2tj+P9OssETxLVLXkrx0jFx+uINnYyDaVAHEA2A5phUlgmyIfc3/X//747xHGW
+ YpHga7L+NEje8GDlta2aFGY8isA7xT7aGBW/S/cFVf5/emXhL/eL4zbgOll+FG2aGcw5
+ oFog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYro81gE4WT67oxXkxAMQPwCn3DmzwCOyf84yr4mtesCNEIt7fbI+4XILwlME+Pbojkv1cPLCN+qw3@nongnu.org
+X-Gm-Message-State: AOJu0YwAIwvr79yW6RO9o8gocezClQG2L7f9Nep40tcUOco+gitTeOY0
+ lGwp9EM6Ckpk2A/8kyNx/92CPOMPouquUeY0D2eRUaF9rnr2ulYmKYK1V6XWdns=
+X-Gm-Gg: ASbGncs2SgSxWfNYhsvLnzSDH+XiH5PZXFGJlsTwauCL27TzinIi7ayzyYtnOQcX/lk
+ gygfsqBWKXytU/OytTn2SvBjA1RK3Wqc+2xyNO2IQzQPmuJv9cbbs/EqTyT4NmuctCCWc9mk/20
+ BLBqtHZcuAN7XllJahWBhhpvN51quiinK0oEQ8GA9ctVRzro3Hl7fVqz1LBTxbpDrMNOz3mge2x
+ bj/PZ8ZGprmV7FR1jD3JRasTN7T9mGEwhvARRdFS9JGuAWDfSGaCaRtGQ5bKxt86EuEONJuh4iF
+ 4VriN9mI+3kRT7K8oBVbaGoKuLvMEPgpG67uiTZbynk/AExqm5PDxUTg+ae3FoNpqrW6sJhgqxY
+ mJC6n+uZsaZAvwLowXeQZ
+X-Google-Smtp-Source: AGHT+IFm38LdfKYVcilHBwY2V7os7PQpqhq05pViY5a0hoIhu2sOluTPFqFkOpdEzw5E3qBLqt46AQ==
+X-Received: by 2002:a05:6a20:7347:b0:1f1:432:f4a3 with SMTP id
+ adf61e73a8af0-1fe42f57916mr19531769637.23.1742815121216; 
+ Mon, 24 Mar 2025 04:18:41 -0700 (PDT)
+Received: from [192.168.68.110] (201-69-66-189.dial-up.telesp.net.br.
+ [201.69.66.189]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73905fd517fsm7583655b3a.40.2025.03.24.04.18.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Mar 2025 04:18:40 -0700 (PDT)
+Message-ID: <876d83fc-1651-4f6e-b7b2-38e9da34583a@ventanamicro.com>
+Date: Mon, 24 Mar 2025 08:18:35 -0300
 MIME-Version: 1.0
-References: <20250307134203.29443-1-farosas@suse.de>
- <20250307134203.29443-2-farosas@suse.de>
- <CAE8KmOx0KQ7OfbyivQ_256JVRugtJ8ekykxtQw-uz91Uiuv-tg@mail.gmail.com>
- <875xk3bw1i.fsf@suse.de>
- <CAE8KmOwHVAnTwUUXVMuGRiLbhELUunVoWQjimcSxS2s8+1VfVg@mail.gmail.com>
- <87wmcia3an.fsf@suse.de>
-In-Reply-To: <87wmcia3an.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 24 Mar 2025 16:44:03 +0530
-X-Gm-Features: AQ5f1JrftF65oJipGQXnIbsN6KyWBJvrJkOFJ-fkAt4mz79oVUSay3wXe6pF_bc
-Message-ID: <CAE8KmOwqhats07V8YWrg63e6vToB6Y8x4zeG1uj+5ya=qUdu3A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] migration: Add some documentation for multifd
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] target/riscv: fix handling of nop for vstart >= vl
+ in some vector instruction
+To: Michael Tokarev <mjt@tls.msk.ru>, Chao Liu <lc00631@tecorigin.com>,
+ alistair23@gmail.com
+Cc: alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ zhiwei_liu@linux.alibaba.com, zqz00548@tecorigin.com
+References: <cover.1741573286.git.lc00631@tecorigin.com>
+ <b2649f14915150be4c602d63cd3ea4adf47e9d75.1741573286.git.lc00631@tecorigin.com>
+ <e9992f04-869c-4485-a7f3-14538a872fa3@tls.msk.ru>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <e9992f04-869c-4485-a7f3-14538a872fa3@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,173 +109,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-On Fri, 21 Mar 2025 at 19:34, Fabiano Rosas <farosas@suse.de> wrote:
-> Well, I can't speak for everyone, of course, but generally the less
-> layers on top of the object of your work the better.
 
-* Yes, true.
+On 3/24/25 1:48 AM, Michael Tokarev wrote:
+> 10.03.2025 05:35, Chao Liu wrote:
+>> Recently, when I was writing a RISCV test, I found that when VL is set to 0, the
+>> instruction should be nop, but when I tested it, I found that QEMU will treat
+>> all elements as tail elements, and in the case of VTA=1, write all elements
+>> to 1.
+>>
+>> After troubleshooting, it was found that the vext_vx_rm_1 function was called in
+>> the vext_vx_rm_2, and then the vext_set_elems_1s function was called to process
+>> the tail element, but only VSTART >= vl was checked in the vext_vx_rm_1
+>> function, which caused the tail element to still be processed even if it was
+>> returned in advance.
+>>
+>> So I've made the following change:
+>>
+>> Put VSTART_CHECK_EARLY_EXIT(env) at the beginning of the vext_vx_rm_2 function,
+>> so that the VSTART register is checked correctly.
+>>
+>> Fixes: df4252b2ec ("target/riscv/vector_helpers: do early exit when
+>> vstart >= vl")
+>> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
+>> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> 
+> Is this a qemu-stable material (9.2)?
 
-> There are several ways of accessing QMP, some examples I have lying
-> around:
->
-> ==
->   $QEMU ... -qmp unix:${SRC_SOCK},server,wait=off
->
->   echo "
->        { 'execute': 'qmp_capabilities' }
->        { 'execute': 'migrate-set-capabilities','arguments':{ 'capabilities':[ \
->        { 'capability': 'mapped-ram', 'state': true }, \
->        { 'capability': 'multifd', 'state': true } \
->        ] } }
->        { 'execute': 'migrate-set-parameters','arguments':{ 'multifd-channels': 8 } }
->        { 'execute': 'migrate-set-parameters','arguments':{ 'max-bandwidth': 0 } }
->        { 'execute': 'migrate-set-parameters','arguments':{ 'direct-io': true } }
->        { 'execute': 'migrate${incoming}','arguments':{ 'uri': 'file:$MIGFILE' } }
->        " | nc -NU $SRC_SOCK
-> ==
-> (echo "migrate_set_capability x-ignore-shared on"; echo
-> "migrate_set_capability validate-uuid on"; echo "migrate
-> exec:cat>migfile-s390x"; echo "quit") | ./qemu-system-s390x -bios
-> /tmp/migration-test-16K1Z2/bootsect -monitor stdio
-> ==
-> $QEMU ... -qmp unix:${DST_SOCK},server,wait=off
-> ./qemu/scripts/qmp/qmp-shell $DST_SOCK
-> ==
-> $QEMU ...
-> C-a c
-> (qemu) info migrate
+Yes. Go ahead. Thanks,
 
-* Interesting. Initially I tried enabling multifd on two hosts and
-setting multifd channels via QMP, but then quickly moved to virsh(1)
-for its convenience.
+Daniel
 
-> I think we all agree that having different sets of threads managed in
-> different ways, is not ideal.
-
-* Yes.
-
-> The thing with multifd is that it's very
-> important to keep the performance and constraints of ram migration. If
-> we manage to achieve that with some generic thread pool, that's
-> great. But it's an exploration work that will have to be done.
-
-* Yes.
-
-> >> Unfortunately, that's not so
-> >> straight-forward to implement without rewriting a lot of code, multifd
-> >> requires too much entanglement from the data producer. We're constantly
-> >> dealing with details of data transmission getting in the way of data
-> >> production/consumption (e.g. try to change ram.c to produce multiple
-> >> pages at once and watch everyting explode).
-
-* Hmmn, I think that's where a clear separation between migration and
-client could help.
-
-> But then there's stuff like mapped-ram which wants its data free of any
-> metadata because it mirrors the RAM layout in the migration file.
-
-* I'm not sure how it works now OR why it works that way. But shall
-have a look at it.
-
-> I generally like the idea of having the size of the header/data
-> specified in the header itself. It does seem like it would allow for
-> better extensibility over time. I spent a lot of time looking at those
-> "unused" bytes in MultiFDPacket_t trying to figure out a way of
-> embedding the size information in a backward-compatible way. We ended up
-> going with Maciej's idea of isolating the common parts of the header in
-> the MultiFDPacketHdr_t and having each data type define it's own
-> specific sub-header.
->
-> I don't know how this looks like in terms of type-safety and how we'd
-> keep compatibility (two separate issues) because a variable-size header
-> needs to end up in a well-defined structure at some point. It's
-> generally more difficult to maintain code that simply takes a buffer and
-> pokes at random offsets in there.
-
-* I'm not sure if the header size would vary as much.
-
-> This is all in the end client-centric, which means it is "data" from the
-> migration perspective. So the question I put earlier still remains, what
-> determines the kind of data that goes in the header and the kind of data
-> that goes in the data part of the packet? It seems we cannot escape from
-> having the client bring it's own header format.
-
-* Yes. Actually that begs the question - Why do we need the migration
-and client headers? The answer might differ based on how we look at
-things.
-
-Guest State
-     |
-     +---pcie-root-ports[0..15] -> [0...2GB]
-     |
-     +---Timer -> [0...1MB]
-     |
-     +---Audio -> [0...1MB]
-     |
-     +---Block -> [0...2GB]
-     |
-     +---RAM -> [0...128GB]
-     |
-     +---DirtyBitmap -> [0...4GB]
-     |
-     +---GPU -> [0...128GB]
-     |
-     +---CPUs[0...31] -> [0...8GB]
-     ...
-     |
-     + (above numbers are for example only)
-
-     [Host-1: Guest State]    <== [Migration] ==>    [Host-2: Guest State]
-
-* Migration should create this same 'Guest State'  tree on the
-destination Host-2 as:
-     0. Whole guest state (vmstate) is a list of different nodes with
-their own state as above.
-     1. Migration core on the source side would iterate over these
-nodes to call the respective  *_read() function to read their 'state'.
-     2. Migration core would transmit the read 'state'  (as 2MB/4MB
-data blocks) to the destination.
-     3. On the destination side - Migration core needs to know where
-to store/write/deliver the received 2MB/4MB data blocks.
-          - This is where the migration header would help, to identify
-which *_write() function to call.
-     4. The respective *_write() function would then write (or
-overwrite) the received block at the specified 'offset' within its
-state.
-
-* Let's say 'Migration Core' is similar to the TCP layer. Irrespective
-of the application protocol (ftp/http/ssh/ncat(1)) TCP behaves the
-same. TCP layer identifies where to deliver received data by its port
-and connection numbers. TCP layer does not care which program is
-running at a given port. Similarly 'Migration core' could read data
-from Host-1 and write/deliver it on the Host-2, irrespective of
-whether it is a RAM or GPU or any other state block.
-
-* To answer the question, what goes in the header part: is the minimum
-information required to identify where to write/deliver the data
-block. As with application protocols, that information could be
-embedded in the data block itself as well. In which case migration
-header may not be required OR it may store bits related to the threads
-OR bandwidth control OR accounting etc. depending on their purpose.
-
-* Migration core could:
-    - Create/destroy threads to transmit data
-    - Apply compression/decompression on the data
-    - Apply encryption/decryption on the data
-    - Apply bandwidth control/limits across all threads while transmitting data
-
-> Right, so we'd need an extra abstraction layer with a well defined
-> interface to convert a raw packet into something that's useful for the
-> clients. The vmstate macros actually do that work kind of well. A device
-> emulation code does not need to care (too much) about how migration
-> works as long as the vmstate is written properly.
-
-* Yes.
-
-Thank you.
----
-  - Prasad
+> 
+> Thanks,
+> 
+> /mjt
 
 
