@@ -4,98 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A17BC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39860C3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twmXB-0004sh-RJ; Mon, 24 Mar 2025 14:28:25 -0400
+	id 1twmei-0007fO-Q5; Mon, 24 Mar 2025 14:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twmX8-0004qz-6v
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:28:24 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1twmee-0007dP-VZ
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:36:10 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1twmX5-00063u-Nv
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:28:21 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-225477548e1so88342495ad.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:28:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1twmec-0006zN-Br
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:36:08 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5e66407963fso8429634a12.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:36:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742840898; x=1743445698; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FW+P+KmJAHBmglYRWoVPylz5k0iBKQBwwS8egCK1yuE=;
- b=UqVjw4gGWcu55cawTT9jp2bG0L/TbqSbQrrgTXZc7ACNNRAP/lG1dVvByGHrygpMBX
- RUnWfaSkP8LKOl44X18tj/+RekmB60Sf6qEgNTgAoRsL/5sab5kXMiOWxfZSmfL53dxm
- UWXYFUhETWZzkvLZqkmgo6drW/9yTBwetWPlS387LTF558L+0319qBCLnvHs2gekfPBd
- i0gIVa4kBFtZCpxp79jGkRfraa2MZMzR2KPDf3YKEBdsrJdJdrBy07abRS8bdSU/CqXg
- mEKEK0RgqDHEb/N9YLoZDKhmWYnRvD1Hqop/H3C+8QOsumNjbk0FXqQhnXMr04RlE7Ur
- k/gw==
+ d=gmail.com; s=20230601; t=1742841361; x=1743446161; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q5/PZ7BT+HhntyRVen9heaZkUf/s+/XZ8b7pFI4Ln3I=;
+ b=hza+G0XEDYD7JpF9QDNMx9KFN9XODS4BreyH4Zd6N/0oNdZD4qDZs1/P26KjTFZW9A
+ l/lAuj8IVJIoykM47XeVyaGvDrYAH11ngDAzYYmgI6e+SxeR1FRx3Phf2HzS6uFmTYVf
+ QIC5sV01z1pgtf0i91HgYDWqIqaf3zudwaEnvQTDOWs4g1qFHCRQMsuqWtuhitll7TT4
+ kTwvL8ECqDwDkHEE5QTI6B1Y/hzATVQVl9EbpLTlrW+a96/qHTj5Yg3N2nGlyJYb088L
+ JVmmKfg0bTTfH3o09rWirEXAoZMPeiO04pEXPAgxZQyq5eTpSKvGOUIlNYCb+HJR3irC
+ 2fdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742840898; x=1743445698;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FW+P+KmJAHBmglYRWoVPylz5k0iBKQBwwS8egCK1yuE=;
- b=HOkwCVzApcwciEzUOpKYofj0ipwqMfZwYXIZ1uqUfyHGXkvq9IQ2dnrhyWVRi2taXW
- IrV5bd/RnIfsq+YZ4BZ7zMw1TzS377b3dfF2ITnDHMJpCieTLU8ojsNys7Mt5cs/2k6L
- P3a13EvyGWRpRdNwHcJTK5WUIeHuIFv7P3OeT6sRhnXzsIU10J2tgVcbrw4E5XsUkXzH
- RZWsAw3N1Ev9nE9ObMwkdXKKmiL0MXULMuJWg4xSIDFLfbXcnSztNmNzDKk0MkdwnbEg
- jSori8mu5Ll8W0DkxWi/MxyU/d+isThBcnFjiI+HugGfOJoKHemHpNbkGednUZyjh5z7
- yksQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4dPFFDcIY57qZDrzrBB08c2s1hC4cqyF7vkvJLLZ6KnnC9k/4veQv0LmWMGAZisGx9GTVEQmEkJv7@nongnu.org
-X-Gm-Message-State: AOJu0YwYL40kVDMYWVgEJtIz8MPFR6itq3rnBNAG4VoH7zi9ToKFI9II
- nlNsZFIplt1VvnTH4Xng3z70XS/yziokP1t9g42Zrx2cYOQCko7npxJS5lUwoH0=
-X-Gm-Gg: ASbGncuuaok3zGzZwVGZdfaCqp8BUEPu1lEyo+apH2Zs/4Ry68yyF/s1pohZvggPjh/
- tGl3wT1CKDYVNbmtQoRx5qwMhV/TVG1Kfu7wBt9RzwCnsHbT+WsOuCEIAEn0Q5IzulXIOmSwLVq
- slSBFaowvh1iJ4Rz8BC+aqMfrmJ8Aeb5jRoR4wHzJI642eXRMIDXG/UPUPsVp6i/sRXQzDeKDsv
- 3/4nKrhhSIhHfR+uzGpro7XEEOBNdvkYJ++GZzS1b7QERl8BvCUDcrEZ0opXGrMTglkpX72Qt5x
- YwJP+SGEfsZ5McMnw9PkO5rg9y4bjn8cq8RRN/0PxkdF3Vz9pjKhVuW+gOdbVi/FSGDxnmbMqPV
- haP8SrxHe
-X-Google-Smtp-Source: AGHT+IGdgWKWjwZpByro2ssN63XugXkhO6cYBe3N6+jgzS4RmZazZkZdgPCNQvTUx/YamU9ZG2VHWg==
-X-Received: by 2002:a17:902:d4c5:b0:221:7e36:b13e with SMTP id
- d9443c01a7336-22780c7a32dmr222295215ad.12.1742840897809; 
- Mon, 24 Mar 2025 11:28:17 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-227811b80b7sm74280905ad.110.2025.03.24.11.28.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 11:28:17 -0700 (PDT)
-Message-ID: <d3d564b8-1b74-4569-afc3-23c0a7d3bf25@linaro.org>
-Date: Mon, 24 Mar 2025 11:28:15 -0700
+ d=1e100.net; s=20230601; t=1742841361; x=1743446161;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Q5/PZ7BT+HhntyRVen9heaZkUf/s+/XZ8b7pFI4Ln3I=;
+ b=SIiLgPYPkLgTOhXyqh2lUSa1tTrJoK3s0pjU/0HbYqwG9ofiyRAK0gLL51jLbCZe5K
+ M6jR11zdZabWM07uTkGO4XS50Kqvv21LB3qTxJwp+yJv71nFaSrupiZ98V18e2D+pGjK
+ g9JHW8lK5YtKxnHHYZviyLEuzYe9rp49j9xl5eaCapIWOG2+Iw+QrO7/okavdusGSQvD
+ 1J9O+m64RnGdhmT5db/FJ8DoktvovvbeQxsJxvo3GGb6S3aRsQ0+v9kCNk456kfl/pFB
+ HUVuACXD9UEOYsAeTn73UaWhE37JuCYFldAtytob1sNlcVwEZVV1vSr626OEjijK2VHL
+ yxTw==
+X-Gm-Message-State: AOJu0Yz8sWrwSME27Wg+tDjz8dlpSyqTuwh5NxU/kTDCyPJnKYIdgBT2
+ cC7uefFyGpX1w5wCj89stT2+QB3i3wY+EMnvg/Yk7VZVcgfoDkWjm8N/Qrmx0a5uQJN4QPJjOzh
+ 2MHYl7Pg8H51hQUWhf2YKGkBTtxA=
+X-Gm-Gg: ASbGncvMAs1z62TjkUcuZkGClaGRs+6sjlnAvXQ9faMjMT04b0BpXsNXx4OLGnW9VRB
+ Lk88WIgZK0/d3bEtA/3zkp7yKZHqSEmSlAx2h3QRRpPZ06q1Bjee16JYD0TPI5gV2dpa02mBMEq
+ Ix1YvQnZPkf5wF4/E286f3Q4gR
+X-Google-Smtp-Source: AGHT+IG26lOm1EkcEpZUzH2Cu8Z0EbUSlmEOzNpJZRNwy01djDNjDyF9yP3fuAfDZZD7nEjzd9592WihreYZV41rBus=
+X-Received: by 2002:a05:6402:3214:b0:5ec:da2e:6e30 with SMTP id
+ 4fb4d7f45d1cf-5ecda2e6e54mr2460389a12.4.1742841360469; Mon, 24 Mar 2025
+ 11:36:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 0/6] cpus: Convert cpu_list definition to
- CPUClass:list_cpus callback
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-s390x@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20250323224035.34698-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250323224035.34698-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+References: <9d87fed729b2697605bcf5b6062669b6239e5c0f.camel@linux.ibm.com>
+ <CAJSP0QXqseVpaHZEfhJv7nZ8N18PGQqpW-tb9LCkGyvOKvW_zQ@mail.gmail.com>
+ <38af196895ab98bafb5423cbc390a1cb79e764df.camel@linux.ibm.com>
+In-Reply-To: <38af196895ab98bafb5423cbc390a1cb79e764df.camel@linux.ibm.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 24 Mar 2025 14:35:48 -0400
+X-Gm-Features: AQ5f1JoOjkR0nRzUFnrRvJkBb4Abkfmm5ccWqLpMXHUO5djQgcACt1oiYVysHy8
+Message-ID: <CAJSP0QX-T=8Fw=x_De2HdiNVKNQf2nTbrHp5cnUeJfFzxVONwQ@mail.gmail.com>
+Subject: Re: Best practice for issuing blocking calls in response to an event
+To: milesg@linux.ibm.com
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,25 +96,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/23/25 15:40, Philippe Mathieu-Daudé wrote:
-> 'cpu_list' might be defined per target, and force code to be
-> built per-target. We can avoid that by introducing a CPUClass
-> callback.
-> 
-> This series combined with another which converts CPU_RESOLVING_TYPE
-> to a runtime helper, allows to move most of cpu-target to common.
-> 
-> Philippe Mathieu-Daudé (6):
->    cpus: Introduce CPUClass::list_cpus() callback
->    target/i386: Register CPUClass:list_cpus
->    target/ppc: Register CPUClass:list_cpus
->    target/sparc: Register CPUClass:list_cpus
->    target/sparc: Register CPUClass:list_cpus
->    cpus: Remove #ifdef check on cpu_list definition
+On Fri, Mar 21, 2025 at 11:17=E2=80=AFAM Miles Glenn <milesg@linux.ibm.com>=
+ wrote:
+>
+> On Thu, 2025-03-20 at 16:09 -0400, Stefan Hajnoczi wrote:
+> > On Thu, Mar 20, 2025 at 12:34=E2=80=AFPM Miles Glenn <milesg@linux.ibm.=
+com> wrote:
+> > > Hello,
+> > >
+> > > I am attempting to simulate a system with multiple CPU
+> > > architectures.  To do this I am starting a unique QEMU process for ea=
+ch
+> > > CPU architecture that is needed. I'm also developing some QEMU code
+> > > that aids in transporting MMIO transactions across the process
+> > > boundaries using sockets.
+> >
+> > I have CCed Phil. He has been working on heterogenous target emulation
+> > and might be interested.
+> >
+> > > The design takes MMIO request messages off of a socket, services the
+> > > request by calling address_space_ldq_be(), then sends a response
+> > > message (containing the requested data) over the same
+> > > socket.  Currently, this is all done inside the socket IOReadHandler
+> > > callback function.
+> >
+> > At a high level this is similar to the vfio-user feature where a PCI
+> > device is emulated in a separate process. This also involves sending
+> > messages describing QEMU's MemoryRegion accesses. See the "remote"
+> > machine type in QEMU to look at the code.
+> >
+> > > This works as long as the targeted register exists in the same QEMU
+> > > process that received the request.  However, If the register exists i=
+n
+> > > another QEMU process, then the call to address_space_ldq_be() results
+> > > in another socket message being sent to that QEMU process, requesting
+> > > the data, and then waiting (blocking) for the response message
+> > > containing the data.  In other words, it ends up blocking inside the
+> > > event handler and even though the QEMU process containing the target
+> > > register was able to receive the request and send the response, the
+> > > originator of the request is unable to receive the response until it
+> > > eventually times out and stops blocking.  Once it times out and stops
+> > > blocking, it does receive the response, but now it is too late.
+> > >
+> > > Here's a summary of the stack up to where the code blocks:
+> > >
+> > > IOReadHandler callback
+> > >   calls address_space_ldq_be()
+> > >     resolves to mmio read op of a remote device
+> > >       sends request over socket and waits (blocks) for response
+> > >
+> > > So, I'm looking for a way to handle the work of calling
+> > > address_space_ldq_be(), which might block when attempting to read a
+> > > register of a remote device, without blocking inside the IOReadHandle=
+r
+> > > callback context.
+> > >
+> > > I've done a lot of searches and reading about how to do this on the w=
+eb
+> > > and in the QEMU code but it's still not really clear to me how this
+> > > should be done in QEMU.  I've seen a lot about using coroutines to
+> > > handle cases like this. Is that what I should be using here?
+> >
+> > The fundamental problem is that address_space_ldq_be() is synchronous,
+> > so there is no way to return back to the caller until the response has
+> > been received.
+> >
+> > vfio-user didn't solve this problem. It simply blocks until the
+> > response is received, but it does drop the Big QEMU Lock during this
+> > time so that other vCPU threads can run. For example, see
+> > hw/remote/proxy.c:send_bar_access_msg() and
+> > mpqemu_msg_send_and_await_reply().
+> >
+> > QEMU supports nested event loops, but they come with their own set of
+> > gotchas. The way a nested event loop might help here is to send the
+> > request and then call aio_poll() to receive the response in another
+> > IOReadHandler. This way other event loop processing can take place
+> > while waiting in address_space_ldq_be().
+> >
+> > The second problem is that this approach where QEMU processes send
+> > requests to each other needs to be implemented carefully to avoid
+> > deadlocks. For example, devices that do DMA could load/store memory
+> > belonging to another device handled by another QEMU. Once there is an
+> > A -> B -> A situation it could deadlock.
+> >
+> > Both vfio-user and vhost-user have similar issues with their
+> > bi-directional communication where a device emulation process can send
+> > a message to QEMU while processing a message from QEMU. Deadlock can
+> > be avoided if the code is structured so that QEMU is able to receive
+> > new requests during the time when it is waiting for a response.
+> >
+> > Stefan
+>
+> Stefan, Thank you for the quick response and great information!
+>
+> I'm not sure if this is the best way, but I was able to get things
+> working today using the coroutine approach.
+>
+> Now, the aforementioned stack looks like this:
+>
+> IOReadHandler callback receives request
+>   enters coroutine
+>     calls address_space_ldq_be()
+>       resolves to mmio read op of a remote device
+>         sends request
+> over socket
+>         detects coroutine context and
+>         calls qemu_coroutine_yield() instead of blocking
+>   returns to callback
+>
+> <time passes>
+>
+> IOReadHandler callback receives response
+>   re-enters coroutine
+>         mmio read op returns data received in response message
+>     address_space_ldq_be() returns
+>   coroutine completes and returns to callback
+>
+> While this works, I couldn't help but notice that the coroutine concept
+> seems to be like a form of multithreading.  Is there some advantage to
+> using coroutines over doing the work in another thread?  Does QEMU
+> offer an interface that allows for a callback to queue up work that can
+> be handled by another thread or a pool of threads?
 
-Modulo the s390x niggles Thomas pointed out,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Coroutines make it easier to write concurrent code in an event loop.
+The alternative is to write asynchronous callback functions, which is
+tedious for sequences with multiple steps that need to wait for I/O.
 
+Coroutines do not offer parallelism, so they are not replacement for
+multi-threading. QEMU is mostly event-driven rather than
+multi-threaded. Usually only computation in QEMU that really needs its
+own CPU runs in its own thread (vCPUs, compression, blocking syscalls
+when there is no alternative, etc).
 
-r~
+There are advantages to using coroutines: less synchronization is
+necessary than with threads (you can be sure no other coroutine will
+run in the same thread while your code is running) and this eliminates
+most thread-safety issues. Also, event loops are seen as more scalable
+than threads (lots of historical resources, for example
+http://www.kegel.com/c10k.html). One QEMU-specific advantage of
+coroutines: coroutine code has access to all of QEMU's APIs that
+require the event loop whereas threads need to take extra steps to
+interact with the rest of QEMU.
+
+Stefan
 
