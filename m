@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB2FC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 10:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C92C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 10:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twewj-0002tj-9R; Mon, 24 Mar 2025 06:22:17 -0400
+	id 1twewq-00032u-Ep; Mon, 24 Mar 2025 06:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1twewL-0002jm-MP
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:21:54 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1twewU-0002lo-3d
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:22:06 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1twewG-0006zm-N6
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:21:52 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5e5b6f3025dso6360617a12.1
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 03:21:48 -0700 (PDT)
+ id 1twewL-00072g-Sq
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:22:01 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-abbb12bea54so509651966b.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 03:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742811707; x=1743416507; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742811710; x=1743416510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gQxQFIFLKkSMaiU0IyJnJ1HI7neBwpu7NlcNgtElhLA=;
- b=plkzUrM+kJNKT0rJpwOLt6M3PjnXKCmW0qdRWznDoper23o8gIpYXYRjBh1yCSDucP
- FsJSjDpgtxQdOFg4QIfTtwVol60n+dx+VLVUNAeCXG8LjPqify75FWVDOG4hIhR4X5SO
- EogW7+5JqhyKfSxbJT3BQOtqaBPjAJ1ZvyygMAC4zdFqJsqclW04v9YIdmRr2e5VG1T/
- stfmoe9rdMqyc90pSe7DxQjOfRiJcmXzwoGy/DAPQmifrC1kG09ntySU45TX0zQ5aMAl
- Ck5VM6X17uiA3qLPRXHNghQSUmv98gZWvRhlqFP78ST+0sA9hSoHzyROzkerlMcHaY2j
- TXTQ==
+ bh=sKRs4BLeOk1m6YkwKmGBAfW8cTZegbhEme+UuM3G2r8=;
+ b=QlOQ6ezo1HY7o6LBqUFj1DNwDE5Mgzx6KjAMYGbpUyHeC4IPSCoZro6UmLB2sge2g8
+ QnGmHcq2nBH1nbgnnOY4+DyG4AbVUKaA4EVVt+R9UA9CYnNzDWcUDntUPSnbiPq8I/VL
+ ybyrcY9FGnI43SVB/ZBrsZyU/Ln6wO+1VG+TbMoa82H2swZtUEi1qM+NVrIy4s8qscW3
+ 9cDOb8fD1w3Qqf0hhi4uh68w2+mzb/oYa0m+zbbP0ho3NIYqtUb8Fkx84eRLkTEZAblo
+ jcPavX9Zgzqi9KsHLHatwLx2HGfNft1Ml14lsexxDjH98f5FMfMq9z3aDgM86vRUHRov
+ 8Xtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742811707; x=1743416507;
+ d=1e100.net; s=20230601; t=1742811710; x=1743416510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gQxQFIFLKkSMaiU0IyJnJ1HI7neBwpu7NlcNgtElhLA=;
- b=ER5Ldg3hmWBnEGa/8AOVSLBUX/Fjm9BjvondhgohCQGZ/IcW1kG/iqU4soyAgeseMS
- oVlH/RV4kG1ippV4glvWu9/MARDMKlT3MA/IICmni07GbcDpVIO5o+h0IAuD/oAIYikQ
- W+0BbxhXSDVyv4FPo+Q6sKehz3I01ukztRj0UMekFimLiNVDPxgDg6Ll1UAZBOg/q3iE
- MFrObkV9iuqyr7Jca3N4JIWM6wPPgFRMo2SFiTybjDiTNmEU3HFzDkRAtBap5fkFQqdK
- N7+syLHZJL05UWwqYCrgb5eKI4u8XQZ37C2kC9Rzepb2lkqkbmQJzPCmgo4KkxhoXAJL
- pz0A==
-X-Gm-Message-State: AOJu0YznrWtA4CFArKO10NtH76wWOfCMiWoGXmTjT1/jBnla8Myi4euv
- c91DD7Qkl58n7nEIplfLTtudC/JuSM0qUZr9qnBajsrbdJ/FTrV+KBr+O2FsL9A=
-X-Gm-Gg: ASbGncsNwL8m8089TKhxXTT9bBEFOHokPjooWl3zFkhd+ez4JqePh7cVAGRksfTVp8v
- jC/52+I399kSNmFXtBmCxE2SQ63y0L+vMAvrtEzKOt81gu9YLnlBuWgSGISh0hZdwXBW6ckVOQ8
- ZdaRdbJ2VbkZZSWhAcLYVlLEpxA//YHuhF1YcKhf54swUjNrj2cbaQIKx/BKHDCoN9eEDB/N2T2
- 9CqBeD6mqrKHwwPC/xK40XHXYZ/ucCM4P7g8QKZ+ukiZNd0yDazd4eSdpwmN0az0LcknvxM6429
- Fkv8FRcHh9AaJJqRAwBMt+HXIcXnv7RGYEgOUXlFFfh98Kc=
-X-Google-Smtp-Source: AGHT+IG1NvIDnqPcUhX0DNHpjpgTWH/FxoPfqWOijYLg+UStAPD6cFivzQ1JCOsYqdQvZD5KZ+XV0g==
-X-Received: by 2002:a05:6402:42c6:b0:5e5:9a2b:167a with SMTP id
- 4fb4d7f45d1cf-5ebcd468ed3mr11530410a12.17.1742811706141; 
- Mon, 24 Mar 2025 03:21:46 -0700 (PDT)
+ bh=sKRs4BLeOk1m6YkwKmGBAfW8cTZegbhEme+UuM3G2r8=;
+ b=bJq94al3cacib28KeFjQ19pxRtZoeNdTTqiV1nwGh18j4hEncFfj2GQOd2BxcuXxSk
+ eEvfadgjUg+UMB7CrHh6tqs+HhPs/qnm4kwRrmnMb6Hwh7W+mT2DewZjCbSyJjEBlbSl
+ NFzuqB5SGpA4FnV12Sk+I25sJ7Tah9ckjKCnfigzjt7nPVhLy2pc0aUPyfs6kICRraxp
+ hmGElbWxoHmHgAZW/9p9GG89nAJpbVSxdfC1QPAHEsscNnqlFl/BPr0k6R1SNDAheZst
+ 2hHEWgO+v1kqJwmAvCm94KFBzO8157LqpcD/D27Snf2LkUGq3v0Viut3asiup0MHsFwt
+ b5Mg==
+X-Gm-Message-State: AOJu0YyDpf8meuH/dCGnJ7F9hp3g52Gpaz01BHbo9qAA7ZqxjTU8ABpu
+ olwNDIGgtZodVkReXtkWzh3ALxpdYVsL3xS5NMwTv6Kl64RYmd1SQTGBp3uUQt0=
+X-Gm-Gg: ASbGnct/MHzbSZFFx1ASY0i8RecFaQPTiaq9ugV3jXGValvnxnJkB515FdBy9ie/5lx
+ zsMpPpEsWi2fpjGzaS33cuWDxRo4+RNpHkF23qiz8TtPxSoCfB+RRaWv6X4keAzA9OTadE0s6fW
+ o724mD2EaI28kXZhz6u0MNdh6nvTAU8S1rcDbl8Tz7nUICyCSflJ2eW8xPRPIT4uhMa+G4qUiA+
+ P4UOtFhroYxEMhNUnE6LeVPGRx/Kr58eEyWbujhbt9CC1aVnCsM9C1WzMoEwNfj22lGnWFrbdiV
+ 6g1gtQ5NLjAXf5jd35JbCgl8eVuPNnUZ8jS3RDjW4RN4RPE=
+X-Google-Smtp-Source: AGHT+IEd1ubeA6VqHngadLwmANX9ge6i6Mz02m9+49Zlw0aFd38rf0JaBY4Z476t3W2qbHGeY8IWDg==
+X-Received: by 2002:a17:907:1b1e:b0:ac3:c7bd:e436 with SMTP id
+ a640c23a62f3a-ac3f252f763mr1248300266b.51.1742811710381; 
+ Mon, 24 Mar 2025 03:21:50 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ebccf8ccb0sm5820322a12.30.2025.03.24.03.21.43
+ a640c23a62f3a-ac3ef8d3f17sm652319266b.63.2025.03.24.03.21.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Mar 2025 03:21:43 -0700 (PDT)
+ Mon, 24 Mar 2025 03:21:46 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F1B335FB96;
- Mon, 24 Mar 2025 10:21:42 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 70E845FD7E;
+ Mon, 24 Mar 2025 10:21:43 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
@@ -83,18 +83,17 @@ Cc: qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  David Hildenbrand <david@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 04/11] gdbstub: introduce target independent gdb register
- helper
-Date: Mon, 24 Mar 2025 10:21:35 +0000
-Message-Id: <20250324102142.67022-5-alex.bennee@linaro.org>
+Subject: [PATCH v2 09/11] target/ppc: convert gdbstub to new helpers
+Date: Mon, 24 Mar 2025 10:21:40 +0000
+Message-Id: <20250324102142.67022-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250324102142.67022-1-alex.bennee@linaro.org>
 References: <20250324102142.67022-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -117,136 +116,387 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current helper.h functions rely on hard coded assumptions about
-target endianess to use the tswap macros. We also end up double
-swapping a bunch of values if the target can run in multiple endianess
-modes. Avoid this by getting the target to pass the endianess and size
-via a MemOp and fixing up appropriately.
+By passing the explicit state of LE/BE via the memop we can avoid the
+messing about we do with ppc_maybe_bswap_register() at least for
+supplying register values to gdbstub.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The fact we still need the helper for setting the values probably
+indicates we could do with a reverse helper, possibly to setting env
+vars directly? This is complicated by aliasing though.
+
+We also have to deal with heavy usage of target_ulong so we copy some
+macro stuff from the old helpers.h and add a gdb_get_regl_value()
+helper.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 ---
 v2
-  - use unsigned consistently
-  - fix some rouge whitespace
-  - add typed reg32/64 wrappers
-  - pass void * to underlying helper to avoid casting
+  - use new helpers
+  - fix bunch of target_ulong cases
 ---
- include/gdbstub/registers.h | 55 +++++++++++++++++++++++++++++++++++++
- gdbstub/gdbstub.c           | 23 ++++++++++++++++
- 2 files changed, 78 insertions(+)
- create mode 100644 include/gdbstub/registers.h
+ target/ppc/gdbstub.c | 195 ++++++++++++++++++++++++-------------------
+ 1 file changed, 111 insertions(+), 84 deletions(-)
 
-diff --git a/include/gdbstub/registers.h b/include/gdbstub/registers.h
-new file mode 100644
-index 0000000000..2220f58efe
---- /dev/null
-+++ b/include/gdbstub/registers.h
-@@ -0,0 +1,55 @@
-+/*
-+ * GDB Common Register Helpers
-+ *
-+ * Copyright (c) 2025 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef GDB_REGISTERS_H
-+#define GDB_REGISTERS_H
-+
-+#include "exec/memop.h"
-+
-+/**
-+ * gdb_get_register_value() - get register value for gdb
-+ * mo: size and endian MemOp
-+ * buf: GByteArray to store in target order
-+ * val: pointer to value in host order
-+ *
-+ * This replaces the previous legacy read functions with a single
-+ * function to handle all sizes. Passing @mo allows the target mode to
-+ * be taken into account and avoids using hard coded tswap() macros.
-+ *
-+ * There are wrapper functions for the common sizes you can use to
-+ * keep type checking.
-+ *
-+ * Returns the number of bytes written to the array.
-+ */
-+int gdb_get_register_value(MemOp op, GByteArray *buf, void *val);
-+
-+/**
-+ * gdb_get_reg32_value() - type checked wrapper for gdb_get_register_value()
-+ * mo: size and endian MemOp
-+ * buf: GByteArray to store in target order
-+ * val: pointer to uint32_t value in host order
-+ */
-+static inline int gdb_get_reg32_value(MemOp op, GByteArray *buf, uint32_t *val) {
-+    g_assert((op & MO_SIZE) == MO_32);
-+    return gdb_get_register_value(op, buf, val);
-+}
-+
-+/**
-+ * gdb_get_reg64_value() - type checked wrapper for gdb_get_register_value()
-+ * mo: size and endian MemOp
-+ * buf: GByteArray to store in target order
-+ * val: pointer to uint32_t value in host order
-+ */
-+static inline int gdb_get_reg64_value(MemOp op, GByteArray *buf, uint64_t *val) {
-+    g_assert((op & MO_SIZE) == MO_64);
-+    return gdb_get_register_value(op, buf, val);
-+}
-+
-+#endif /* GDB_REGISTERS_H */
-+
-+
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b6d5e11e03..e799fdc019 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -32,6 +32,7 @@
+diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
+index c09e93abaf..b96c3ac5b8 100644
+--- a/target/ppc/gdbstub.c
++++ b/target/ppc/gdbstub.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
  #include "exec/gdbstub.h"
- #include "gdbstub/commands.h"
- #include "gdbstub/syscalls.h"
+-#include "gdbstub/helpers.h"
 +#include "gdbstub/registers.h"
- #ifdef CONFIG_USER_ONLY
- #include "accel/tcg/vcpu-state.h"
- #include "gdbstub/user.h"
-@@ -45,6 +46,7 @@
- #include "system/runstate.h"
- #include "exec/replay-core.h"
- #include "exec/hwaddr.h"
-+#include "exec/memop.h"
+ #include "internal.h"
  
- #include "internals.h"
+ static int ppc_gdb_register_len_apple(int n)
+@@ -74,12 +74,12 @@ static int ppc_gdb_register_len(int n)
+ }
  
-@@ -551,6 +553,27 @@ static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
-     return 0;
+ /*
+- * We need to present the registers to gdb in the "current" memory
+- * ordering.  For user-only mode we get this for free;
+- * TARGET_BIG_ENDIAN is set to the proper ordering for the
+- * binary, and cannot be changed.  For system mode,
+- * TARGET_BIG_ENDIAN is always set, and we must check the current
+- * mode of the chip to see if we're running in little-endian.
++ * We need to map the target endian registers from gdb in the
++ * "current" memory ordering. For user-only mode we get this for free;
++ * TARGET_BIG_ENDIAN is set to the proper ordering for the binary, and
++ * cannot be changed. For system mode, TARGET_BIG_ENDIAN is always
++ * set, and we must check the current mode of the chip to see if we're
++ * running in little-endian.
+  */
+ static void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len)
+ {
+@@ -98,6 +98,41 @@ static void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len
+ #endif
  }
  
 +/*
-+ * Target helper function to read value into GByteArray, target
-+ * supplies the size and target endianess via the MemOp.
++ * We need to present the registers to gdb in the "current" memory
++ * ordering. For user-only mode this is hardwired by TARGET_BIG_ENDIAN
++ * and cannot be changed. For system mode we must check the current
++ * mode of the chip to see if we're running in little-endian.
 + */
-+int gdb_get_register_value(MemOp op, GByteArray *buf, void *val)
++static MemOp ppc_gdb_memop(CPUPPCState *env, int len)
 +{
-+    unsigned bytes = memop_size(op);
++#ifndef CONFIG_USER_ONLY
++    MemOp end = FIELD_EX64(env->msr, MSR, LE) ? MO_LE : MO_BE;
++#else
++    #ifdef TARGET_BIG_ENDIAN
++    MemOp end = MO_BE;
++    #else
++    MemOp end = MO_LE;
++    #endif
++#endif
 +
-+    if (op & MO_BSWAP) {
-+        uint8_t *ptr = &((uint8_t *) val)[bytes - 1];
-+        for (unsigned i = bytes; i > 0; i--) {
-+            g_byte_array_append(buf, ptr--, 1);
-+        };
-+    } else {
-+        g_byte_array_append(buf, val, bytes);
-+    }
-+
-+    return bytes;
++    return size_memop(len) | end;
 +}
 +
++/*
++ * Helpers copied from helpers.h just for handling target_ulong values
++ * from gdbstub's GByteArray based on what the build config is. This
++ * will need fixing for single-binary.
++ */
 +
- static void gdb_register_feature(CPUState *cpu, int base_reg,
-                                  gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
-                                  const GDBFeature *feature)
++#if TARGET_LONG_BITS == 64
++#define ldtul_p(addr) ldq_p(addr)
++#define gdb_get_regl_value(m, b, v) gdb_get_reg64_value(m, b, v)
++#else
++#define ldtul_p(addr) ldl_p(addr)
++#define gdb_get_regl_value(m, b, v) gdb_get_reg32_value(m, b, v)
++#endif
++
+ /*
+  * Old gdb always expects FP registers.  Newer (xml-aware) gdb only
+  * expects whatever the target description contains.  Due to a
+@@ -109,51 +144,50 @@ static void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len
+ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
+ {
+     CPUPPCState *env = cpu_env(cs);
+-    uint8_t *mem_buf;
+     int r = ppc_gdb_register_len(n);
++    MemOp mo;
+ 
+     if (!r) {
+         return r;
+     }
+ 
++    mo = ppc_gdb_memop(env, r);
++
+     if (n < 32) {
+         /* gprs */
+-        gdb_get_regl(buf, env->gpr[n]);
++        return gdb_get_regl_value(mo, buf, &env->gpr[n]);
+     } else {
+         switch (n) {
+         case 64:
+-            gdb_get_regl(buf, env->nip);
+-            break;
++            return gdb_get_regl_value(mo, buf, &env->nip);
+         case 65:
+-            gdb_get_regl(buf, env->msr);
+-            break;
++            return gdb_get_regl_value(mo, buf, &env->msr);
+         case 66:
+             {
+                 uint32_t cr = ppc_get_cr(env);
+-                gdb_get_reg32(buf, cr);
+-                break;
++                return gdb_get_register_value(ppc_gdb_memop(env, 4), buf, &cr);
+             }
+         case 67:
+-            gdb_get_regl(buf, env->lr);
++            return gdb_get_regl_value(mo, buf, &env->lr);
+             break;
+         case 68:
+-            gdb_get_regl(buf, env->ctr);
++            return gdb_get_regl_value(mo, buf, &env->ctr);
+             break;
+         case 69:
+-            gdb_get_reg32(buf, cpu_read_xer(env));
+-            break;
++            uint32_t val = cpu_read_xer(env);
++            return gdb_get_register_value(ppc_gdb_memop(env, 4), buf, &val);
+         }
+     }
+-    mem_buf = buf->data + buf->len - r;
+-    ppc_maybe_bswap_register(env, mem_buf, r);
+-    return r;
++
++    return 0;
+ }
+ 
+ int ppc_cpu_gdb_read_register_apple(CPUState *cs, GByteArray *buf, int n)
+ {
+     CPUPPCState *env = cpu_env(cs);
+-    uint8_t *mem_buf;
+     int r = ppc_gdb_register_len_apple(n);
++    MemOp mo = ppc_gdb_memop(env, r);
++    int actual = 0;
+ 
+     if (!r) {
+         return r;
+@@ -161,44 +195,48 @@ int ppc_cpu_gdb_read_register_apple(CPUState *cs, GByteArray *buf, int n)
+ 
+     if (n < 32) {
+         /* gprs */
+-        gdb_get_reg64(buf, env->gpr[n]);
++        actual = gdb_get_regl_value(mo, buf, &env->gpr[n]);
+     } else if (n < 64) {
+         /* fprs */
+-        gdb_get_reg64(buf, *cpu_fpr_ptr(env, n - 32));
++        actual = gdb_get_reg64_value(mo, buf, cpu_fpr_ptr(env, n - 32));
+     } else if (n < 96) {
+-        /* Altivec */
+-        gdb_get_reg64(buf, n - 64);
+-        gdb_get_reg64(buf, 0);
++        /* Altivec - where are they? ppc_vsr_t vsr[64]? */
++        uint64_t empty = 0;
++        actual = gdb_get_reg64_value(mo, buf, &empty);
++        actual = gdb_get_reg64_value(mo, buf, &empty);
+     } else {
+         switch (n) {
+         case 64 + 32:
+-            gdb_get_reg64(buf, env->nip);
++            actual = gdb_get_regl_value(mo, buf, &env->nip);
+             break;
+         case 65 + 32:
+-            gdb_get_reg64(buf, env->msr);
++            actual = gdb_get_regl_value(mo, buf, &env->msr);
+             break;
+         case 66 + 32:
+-            {
+-                uint32_t cr = ppc_get_cr(env);
+-                gdb_get_reg32(buf, cr);
+-                break;
+-            }
++        {
++            uint32_t cr = ppc_get_cr(env);
++            actual = gdb_get_reg32_value(mo, buf, &cr);
++            break;
++        }
+         case 67 + 32:
+-            gdb_get_reg64(buf, env->lr);
++            actual = gdb_get_regl_value(mo, buf, &env->lr);
+             break;
+         case 68 + 32:
+-            gdb_get_reg64(buf, env->ctr);
++            actual = gdb_get_regl_value(mo, buf, &env->ctr);
+             break;
+         case 69 + 32:
+-            gdb_get_reg32(buf, cpu_read_xer(env));
++        {
++            uint32_t xer = cpu_read_xer(env);
++            actual = gdb_get_reg32_value(mo, buf, &xer);
+             break;
++        }
+         case 70 + 32:
+-            gdb_get_reg64(buf, env->fpscr);
++            actual = gdb_get_regl_value(mo, buf, &env->fpscr);
+             break;
+         }
+     }
+-    mem_buf = buf->data + buf->len - r;
+-    ppc_maybe_bswap_register(env, mem_buf, r);
++
++    g_assert(r == actual);
+     return r;
+ }
+ 
+@@ -210,6 +248,9 @@ int ppc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     if (!r) {
+         return r;
+     }
++
++    g_assert(r == n);
++    
+     ppc_maybe_bswap_register(env, mem_buf, r);
+     if (n < 32) {
+         /* gprs */
+@@ -367,18 +408,16 @@ static int gdb_get_spr_reg(CPUState *cs, GByteArray *buf, int n)
+ {
+     PowerPCCPU *cpu = POWERPC_CPU(cs);
+     CPUPPCState *env = &cpu->env;
++    MemOp mo = ppc_gdb_memop(env, TARGET_LONG_SIZE);
++    target_ulong val;
+     int reg;
+-    int len;
+ 
+     reg = gdb_find_spr_idx(env, n);
+     if (reg < 0) {
+         return 0;
+     }
+ 
+-    len = TARGET_LONG_SIZE;
+-
+     /* Handle those SPRs that are not part of the env->spr[] array */
+-    target_ulong val;
+     switch (reg) {
+ #if defined(TARGET_PPC64)
+     case SPR_CFAR:
+@@ -400,10 +439,7 @@ static int gdb_get_spr_reg(CPUState *cs, GByteArray *buf, int n)
+     default:
+         val = env->spr[reg];
+     }
+-    gdb_get_regl(buf, val);
+-
+-    ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, len), len);
+-    return len;
++    return gdb_get_regl_value(mo, buf, &val);
+ }
+ 
+ static int gdb_set_spr_reg(CPUState *cs, uint8_t *mem_buf, int n)
+@@ -441,18 +477,14 @@ static int gdb_get_float_reg(CPUState *cs, GByteArray *buf, int n)
+ {
+     PowerPCCPU *cpu = POWERPC_CPU(cs);
+     CPUPPCState *env = &cpu->env;
+-    uint8_t *mem_buf;
++    MemOp mo;
+     if (n < 32) {
+-        gdb_get_reg64(buf, *cpu_fpr_ptr(env, n));
+-        mem_buf = gdb_get_reg_ptr(buf, 8);
+-        ppc_maybe_bswap_register(env, mem_buf, 8);
+-        return 8;
++        mo = ppc_gdb_memop(env, 8);
++        return gdb_get_reg64_value(mo, buf, cpu_fpr_ptr(env, n));
+     }
+     if (n == 32) {
+-        gdb_get_reg32(buf, env->fpscr);
+-        mem_buf = gdb_get_reg_ptr(buf, 4);
+-        ppc_maybe_bswap_register(env, mem_buf, 4);
+-        return 4;
++        mo = ppc_gdb_memop(env, TARGET_LONG_SIZE);
++        return gdb_get_regl_value(mo, buf, &env->fpscr);
+     }
+     return 0;
+ }
+@@ -479,26 +511,21 @@ static int gdb_get_avr_reg(CPUState *cs, GByteArray *buf, int n)
+ {
+     PowerPCCPU *cpu = POWERPC_CPU(cs);
+     CPUPPCState *env = &cpu->env;
+-    uint8_t *mem_buf;
++    MemOp mo;
+ 
+     if (n < 32) {
+         ppc_avr_t *avr = cpu_avr_ptr(env, n);
+-        gdb_get_reg128(buf, avr->VsrD(0), avr->VsrD(1));
+-        mem_buf = gdb_get_reg_ptr(buf, 16);
+-        ppc_maybe_bswap_register(env, mem_buf, 16);
+-        return 16;
++        mo = ppc_gdb_memop(env, 16);
++        return gdb_get_register_value(mo, buf, avr);
+     }
+     if (n == 32) {
+-        gdb_get_reg32(buf, ppc_get_vscr(env));
+-        mem_buf = gdb_get_reg_ptr(buf, 4);
+-        ppc_maybe_bswap_register(env, mem_buf, 4);
+-        return 4;
++        uint32_t vscr = ppc_get_vscr(env);
++        mo = ppc_gdb_memop(env, 4);
++        return gdb_get_reg32_value(mo, buf, &vscr);
+     }
+     if (n == 33) {
+-        gdb_get_reg32(buf, (uint32_t)env->spr[SPR_VRSAVE]);
+-        mem_buf = gdb_get_reg_ptr(buf, 4);
+-        ppc_maybe_bswap_register(env, mem_buf, 4);
+-        return 4;
++        mo = ppc_gdb_memop(env, TARGET_LONG_SIZE);
++        return gdb_get_regl_value(mo, buf, &env->spr[SPR_VRSAVE]);
+     }
+     return 0;
+ }
+@@ -532,25 +559,25 @@ static int gdb_get_spe_reg(CPUState *cs, GByteArray *buf, int n)
+ {
+     PowerPCCPU *cpu = POWERPC_CPU(cs);
+     CPUPPCState *env = &cpu->env;
++    MemOp mo;
+ 
+     if (n < 32) {
+ #if defined(TARGET_PPC64)
+-        gdb_get_reg32(buf, env->gpr[n] >> 32);
+-        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 4), 4);
++        uint32_t low = env->gpr[n] >> 32;
++        mo = ppc_gdb_memop(env, 4);
++        return gdb_get_reg32_value(mo, buf, &low);
+ #else
+-        gdb_get_reg32(buf, env->gprh[n]);
++        mo = ppc_gdb_memop(env, 4);
++        return gdb_get_reg32_value(mo, buf, &env->gprh[n]);
+ #endif
+-        return 4;
+     }
+     if (n == 32) {
+-        gdb_get_reg64(buf, env->spe_acc);
+-        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 8), 8);
+-        return 8;
++        mo = ppc_gdb_memop(env, 8);
++        return gdb_get_reg64_value(mo, buf, &env->spe_acc);
+     }
+     if (n == 33) {
+-        gdb_get_reg32(buf, env->spe_fscr);
+-        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 4), 4);
+-        return 4;
++        mo = ppc_gdb_memop(env, 4);
++        return gdb_get_reg32_value(mo, buf, &env->spe_fscr);
+     }
+     return 0;
+ }
+@@ -593,9 +620,9 @@ static int gdb_get_vsx_reg(CPUState *cs, GByteArray *buf, int n)
+     CPUPPCState *env = &cpu->env;
+ 
+     if (n < 32) {
+-        gdb_get_reg64(buf, *cpu_vsrl_ptr(env, n));
+-        ppc_maybe_bswap_register(env, gdb_get_reg_ptr(buf, 8), 8);
+-        return 8;
++        return gdb_get_reg64_value(ppc_gdb_memop(env, 8),
++                                   buf,
++                                   cpu_vsrl_ptr(env, n));
+     }
+     return 0;
+ }
 -- 
 2.39.5
 
