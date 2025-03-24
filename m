@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06CAC36002
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF30BC36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 18:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twmwV-0008Nc-69; Mon, 24 Mar 2025 14:54:35 -0400
+	id 1twn0h-0000ux-EP; Mon, 24 Mar 2025 14:58:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmwT-0008NK-T9
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:54:33 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twn0e-0000tr-62
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:58:52 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twmwS-0000xV-2x
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:54:33 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso51099745e9.3
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:54:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1twn0a-0001MY-5q
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 14:58:50 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3914aba1ce4so4058269f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 11:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742842470; x=1743447270; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QhniJqJiM+UzT+FGHLzZBxft2LbeuB3hSKSZ8RUvv0c=;
- b=hEbAsvFhgUhAWELy+wNigCe786FrH/iBPh3vH6C4t+cfS9CwefBrNtinJf5ORsS/1K
- J3a09krCm1DAxklzAxKbkSxht0RLBLZgAisYRkmemRTR6P0GqSYm9h5fYsrqxdhtEFPZ
- O8HTMeMv+5jI49yr87O1IWXhvtmCnSWo+GFZbKjWeCRAT/I2yRn9K8umsqJ0SIa8Qea4
- YMf1nKd4EYfOY0//W7SCDie0nxnlH5bsri4yRaHDiZFzz4g2lhP9JVwLaMRSxB/oEHTJ
- 6x/FPyM9NIShZwVuCH06Amtdb05ERFNwNnaNm3QqJc7WPoNu6sIbVzj1WhLquxrODGWT
- 38Ig==
+ d=linaro.org; s=google; t=1742842726; x=1743447526; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IpLxLOfIgkSLgm5ySIPU3BNmm1oN+7/70Slcc1e/Pik=;
+ b=oxEUQ6V0qPmpWWrSD+4Qpb7yq7cQYazzVc4VRaj5RGZ/fczXIA+5UoG/Jdw+0EoNXF
+ 5beeZMqVLG1g4rLaHqTG8ppJi0fAPAVDvWoriQkv5+LcEcwfRsK/J7k/esVAM1EKlv0Y
+ PoVPySjXi/81im2PipfjiHfphDTKubMy/w/rZ5JHrrzX0e3ud/Kk9wKCTLjbj7WqSK64
+ gVYkhTd3/I894seYonUz/sUp8m+1GxW6Zdy3VzVQlpqe/zwdsPQ6PPL4TUcHH4pvG+1L
+ 2eS/jNW4F4odcvQN1yes1vwtVgZfVZE8Yt2OxyoTZisHt6675tpT0inbohwF5zben5zb
+ eD1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742842470; x=1743447270;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QhniJqJiM+UzT+FGHLzZBxft2LbeuB3hSKSZ8RUvv0c=;
- b=jkd+0qs+PL1YPd84riUtEHhdZ79KnWP2oCtywlneLNxBt6Q4pc9iX5JXLc/Nx/arOv
- Fop+RRFWvJVUq7NdifJa0rizOP9ekDcwksAV0hjtkw5+sfNDks9xhJE6abDtQS7X9sFj
- SVYsNX3DIKoqsMd5K4n+RY3huaY4GpRqm9np+htJix94QXSwX7UCqb725KKc4xJ30Nmu
- JaRaPsqCqfIRVBLsQ5cwo3CyXRWA9ClWyJDhxAVVMLwMqxv/MW4ARiXEMDo77OQMr9Z9
- q+LTpnNlwZyVIFmcUwsSj9MggWxkyXvLi6M6gd9QCPo8pTzAJn9xABFSrXv330WwaexD
- G1iw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoSJoOsIVmG/tOAalNSl7JATsYoXjuwK1iP6jSnH4MjGTKBnviBpI4r5foQ0Om2uI50ZaZzulFIlBf@nongnu.org
-X-Gm-Message-State: AOJu0YzgOkciBuTdAHVCWHhiE+vtdCDwDr87qH1EszBksuv9yjRg50RL
- kBRHRDF4bRZdTJlV6+h1D7kDwsHsZyKSoIpDtwbeYSKZFZrToAbMqWfJ6uPRWho=
-X-Gm-Gg: ASbGncuOStfbIW2E2thURkAnpTT3Gumlsex9NPVfoLC7cpNHF5Q+ZScgnAsZbFzTaD2
- ntnVMWmNPYRMWk2KEpi4EHG4i4jIMGJiLRbjQt3x+tUOR8iFatuUsW/kNHYApgaQkdzU+gO9WP7
- P1rzTxI2w2HU5Re0uhSq+YlL0Q2dqKAzAjO3lNYzzoWOVofZCSd2Wi+nFZS024EaKvwtBrSLLwY
- 0SZzYkh4SLVYxZGAl1h2yIGFKpceA+rCVd5yjgg2pPYqclqwN2/p/WMFd7PpaiBAHkNKENfqFYK
- yDfA+5XE5QxzisLPupNXV8nem+AOZ6cgm6G1LHDNXuzOHrhkv4/WDAmoxTDjiF2zO6Q9aUuVctJ
- nviJRiR21fbsZrylUBA==
-X-Google-Smtp-Source: AGHT+IG7COj5eyHM+UMi8BRxHQAcGWI6FDjKs5OEV11Ei6Ja93pyWUMcviitr77BTUio5hoOvu0lrw==
-X-Received: by 2002:a05:600c:1d92:b0:43c:fdbe:4398 with SMTP id
- 5b1f17b1804b1-43d509e3881mr135210055e9.6.1742842469816; 
- Mon, 24 Mar 2025 11:54:29 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1742842726; x=1743447526;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IpLxLOfIgkSLgm5ySIPU3BNmm1oN+7/70Slcc1e/Pik=;
+ b=D0Hj+8pYRfhBxvdxDcW75BfldFvh6G/UexMFOUyKD7e4f04qElDGG8O1UDiSTDjWlS
+ P4Cc3GBW2BWz9lWZ1uPZLt8XwO6jgWWLpnwxVvQ2di94p7G7PaMN0KscEuH+TWK5z5H6
+ u6+ibDx9ljV1DURAbh6J3NE3ZsDXEwqUMoJoAIZ4+FOTKkrMlvaIRZsBSWDacs5DcswM
+ wr/RlNF9vi+svfMtFhNgVEItbTJH14hf5buVxbb+G48tfDZ4px5IOgNlv0+kyMWWFejb
+ TGmv/9bKXMapFEzjVDWsQFBSKy6SsS7ZG07XLOp84wApk+szsPfzQWCXwb9DYbN4FmiD
+ X/Eg==
+X-Gm-Message-State: AOJu0YzfXfKFvuqu2rGOhWBEzRIqfQf07p0YahikqAqawzHANdBZxnId
+ 8jBt93uoTKJcmWaKtTLiQanm/oNBBQ6htaCR7r8WYmQB9uL0dy6SXd6TyGchDbHVQr3o6dyYGyf
+ 2
+X-Gm-Gg: ASbGncs8cN4LsPm5RQxnWj+AeRDicwN9zCKi9/XI4iDJhiANqfLWhbgNkRqT20wWj8y
+ NyPC23l54oGsKldLQegqYQ2gjX70bKg5kkYYVq76kXU6XFEw6lwgpm3EDW4o+LAAZ99PyZPNrlJ
+ RQko0c1woLZDdRxYQHiO8NbiPLvJZ1JGbOuldDnfceZPkJamLWB4zKUwcTmnjrgjywB9XVps7VC
+ 2Bi71bKMG5jxWU531nnDHgrsh0F+zUmLLYY8wcPZHBWU4a7FymfEqG+Hv9I17h0gd1NzvVhlN25
+ LPgmtD06SuPTLH1j8kIGl2RSC3JJ5dlWQSNCKSouniknfV3hf0fD+GRzaREgjn+CfU6nYSZqFap
+ Q5Y8JaXvNw2JPm2MvLzmcWNM8
+X-Google-Smtp-Source: AGHT+IH8Jp2YhVh2I5RBKIZ+nBMKefdxFBhVJEKtI+9XqNw5qq9AgDGx+nqzbkPYycCs7qgzP3JQIg==
+X-Received: by 2002:a05:6000:4187:b0:38f:4fa6:68df with SMTP id
+ ffacd0b85a97d-3997f940e06mr8229005f8f.51.1742842725682; 
+ Mon, 24 Mar 2025 11:58:45 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f55c3dsm179939015e9.23.2025.03.24.11.54.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 11:54:28 -0700 (PDT)
-Message-ID: <12eed6b9-ed87-43e1-b40a-2ebdd20b4dfa@linaro.org>
-Date: Mon, 24 Mar 2025 19:54:27 +0100
+ ffacd0b85a97d-3997f9b5b8dsm11845800f8f.59.2025.03.24.11.58.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 24 Mar 2025 11:58:44 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Eric Farman <farman@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v3 1/7] cpus: Introduce CPUClass::list_cpus() callback
+Date: Mon, 24 Mar 2025 19:58:31 +0100
+Message-ID: <20250324185837.46506-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250324185837.46506-1-philmd@linaro.org>
+References: <20250324185837.46506-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/devel/build-environment: enhance MSYS2 instructions
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- Yonggang Luo <luoyonggang@gmail.com>, Stefan Weil <sw@weilnetz.de>
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250305213853.3685771-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250305213853.3685771-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,31 +111,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Stefan and Yonggang
+Some targets define cpu_list to a method listing their
+CPUs on stdout. In order to make list_cpus() generic,
+introduce the CPUClass::list_cpus() callback.
+When no callback is registered, list_cpus() defaults
+to the cpu_list definition.
 
-On 5/3/25 22:38, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   docs/devel/build-environment.rst | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/docs/devel/build-environment.rst b/docs/devel/build-environment.rst
-> index f133ef2e012..661f6ea8504 100644
-> --- a/docs/devel/build-environment.rst
-> +++ b/docs/devel/build-environment.rst
-> @@ -97,11 +97,11 @@ build QEMU in MSYS2 itself.
->   
->   ::
->   
-> -    pacman -S wget
-> +    pacman -S wget base-devel git
->       wget https://raw.githubusercontent.com/msys2/MINGW-packages/refs/heads/master/mingw-w64-qemu/PKGBUILD
->       # Some packages may be missing for your environment, installation will still
->       # be done though.
-> -    makepkg -s PKGBUILD || true
-> +    makepkg --syncdeps --nobuild PKGBUILD || true
->   
->   Build on windows-aarch64
->   ++++++++++++++++++++++++
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/hw/core/cpu.h | 2 ++
+ cpu-target.c          | 8 +++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 5d11d26556a..ccfcd3eb3a6 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -102,6 +102,7 @@ struct SysemuCPUOps;
+  * CPUClass:
+  * @class_by_name: Callback to map -cpu command line model name to an
+  *                 instantiatable CPU type.
++ * @list_cpus: list available CPU models and flags.
+  * @parse_features: Callback to parse command line arguments.
+  * @reset_dump_flags: #CPUDumpFlags to use for reset logging.
+  * @mmu_index: Callback for choosing softmmu mmu index;
+@@ -150,6 +151,7 @@ struct CPUClass {
+     /*< public >*/
+ 
+     ObjectClass *(*class_by_name)(const char *cpu_model);
++    void (*list_cpus)(void);
+     void (*parse_features)(const char *typename, char *str, Error **errp);
+ 
+     int (*mmu_index)(CPUState *cpu, bool ifetch);
+diff --git a/cpu-target.c b/cpu-target.c
+index cae77374b38..5947ca31a0a 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -98,7 +98,13 @@ static void cpu_list(void)
+ 
+ void list_cpus(void)
+ {
+-    cpu_list();
++    CPUClass *cc = CPU_CLASS(object_class_by_name(CPU_RESOLVING_TYPE));
++
++    if (cc->list_cpus) {
++        cc->list_cpus();
++    } else {
++        cpu_list();
++    }
+ }
+ 
+ /* enable or disable single step mode. EXCP_DEBUG is returned by the
+-- 
+2.47.1
 
 
