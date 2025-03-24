@@ -4,89 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AD0C36008
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 07:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED6CC36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 08:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twcT0-0007lg-HT; Mon, 24 Mar 2025 03:43:26 -0400
+	id 1twcod-0002qA-41; Mon, 24 Mar 2025 04:05:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1twcSz-0007lJ-4D
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 03:43:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
+ id 1twcoX-0002ph-HT; Mon, 24 Mar 2025 04:05:41 -0400
+Received: from out203-205-221-233.mail.qq.com ([203.205.221.233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1twcSv-00041C-VL
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 03:43:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742802199;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jeCb8jK4b8UM6BUDqZ7E0UspaWiXS12m8DOy3Hn4Ve8=;
- b=TltWHQi3Xs8GWq5qrio8l8iRr/OOVmvHV6Zm4ExhYDWhZNO4TskZQBtusk8Rcy71KC42vR
- E8F9KiDx07vI+UQGwpAMrxmG3ZujuVLHru53I/ZFVLKHbSYmp+h39lRGaxRmO5/x/a/+lk
- c3wmNAUjaQO3WIjZ3lGZzXznZPfaks0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-7-wEBnqHqYNM2g0kZTCE1uBA-1; Mon,
- 24 Mar 2025 03:43:13 -0400
-X-MC-Unique: wEBnqHqYNM2g0kZTCE1uBA-1
-X-Mimecast-MFC-AGG-ID: wEBnqHqYNM2g0kZTCE1uBA_1742802191
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DAB5196E007; Mon, 24 Mar 2025 07:43:10 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.45.224.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68034180A802; Mon, 24 Mar 2025 07:43:09 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id C9E101800387; Mon, 24 Mar 2025 08:43:06 +0100 (CET)
-Date: Mon, 24 Mar 2025 08:43:06 +0100
-From: Gerd Hoffman <kraxel@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, 
- Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-Message-ID: <h2s75tkddnrmodbbr7hxugrivpbhq7cfpbmhmgqmnn5mlafedk@jhv5cobgtjkc>
-References: <Z9LeILiEU5GfEHrl@8bytes.org>
- <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
- <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
- <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
- <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
- <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
- <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
- <Z9vSeF67fNazkxBh@8bytes.org>
- <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
- <CAK3XEhNeB29eaPxZ_1Cc7WfEzOGZZPcvTc5uC1XAdtG0uNfDRw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <sa.z@qq.com>)
+ id 1twcoT-0006d9-Gn; Mon, 24 Mar 2025 04:05:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1742803517; bh=M0AebHbWlzW8Hied416z3SaDV8X6LvMttUbkEpuVRHM=;
+ h=From:To:Cc:Subject:Date;
+ b=nj98BVxGIxqt7pEEXX5yMohRsz/wwt+nEftEdAhoPjvTTYUP8z6MKCSISn8u2uUA4
+ DrqWJex0058Avr3Sa4MMe+EtLoXaltfSnzAwM5YyF6w7Yk89Hyga0UCDVqBgTJnQGV
+ kbiw73mU62thOw67DSubK9FBHCnX1CsNXYpVr09w=
+Received: from localhost.localdomain ([120.46.176.49])
+ by newxmesmtplogicsvrszc16-0.qq.com (NewEsmtp) with SMTP
+ id 14FB9632; Mon, 24 Mar 2025 16:05:15 +0800
+X-QQ-mid: xmsmtpt1742803515t577p4abw
+Message-ID: <tencent_4E3504A0739AEE8199766C5415093D24CE05@qq.com>
+X-QQ-XMAILINFO: Mh8zSn5h7V45vr9Dmd/ASDX9ZQc/PPSikapeITg3F8vcyWvW+kwKm63bKf/LX3
+ bDp+O2QDsMCxT3OaVtw8RkmiyoKCRVTCVT3jzMq0wajerZv2y1avWfiJ6Ix5pbDu6zaSan+wUkvT
+ 88FYkOz7vSw/dUTwv0LUdJQIC95m8gVewoGXeLNP4YEzCcKiZBRlgL+CZKDkp1wNIp5RWEBoAJiD
+ 43vgRfDFjTtZNEiEel4cuj3llpUCi1gtaa40PmkLXTwUU1n5ZKSQQ4FQwBekrMiDmxfu+RioQepK
+ rlDRRQHJrZuWBVA6Jur5eWSIFWKU/++Vnsw41Vj9WcEIO/3usvn0d5HKd9MwIXEdXmJdaWx0Lmbx
+ Qf3bv6OjNW/Aib6EZV/TydP95QAFTa4E4/ExHODpwQ3sAzCIjhhkWlSh0MiPVcUOyPlCTg5VxtDK
+ blz17uz7JIbJ1+4LSDFV5TCU7J4WevTukURVRP49p0njt9K+IxjEJxmX0chhX0sqeDKaPCeePygW
+ 0NfqIXw7emO5jo9R0eUHMjjWH6Vt2bMhy0HY51b22w8gn4ql/Pwc5eztIOyZOF7bwTBz6WeVnfOV
+ jW6w5DjeWBWm89oqRkiia34ZDWEhMOZ5DXjrOHDEnqngziRqqCwAM63S4ADZhnUPHNLuMUkHAP2b
+ ubaVLW7jlIjaCekxNYJNoj91hBlI9ZhVrzxPP303/8n8jptABkFR3EDuk5u+bKNoWsNX0QHKbdGx
+ D+Q/zVkohv3K8t3VxUU2DWNlW4YyvarypywGFBi/SceSmMIvdMajxJx2U2miX8d9y0fgMjni3zYc
+ wQBLvVzWNITnVXgVUW2/bUbqFtjzp0LZ8cvExl0AiMtEwGiUs2d4z2zyGIAL4HiCvMlEH4j2rLta
+ T0Mchguhz67uWqsRBvb71ApVVTfmr0fCDi/SAYr89DqkSptz1JAorEkrRbREEzdA==
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+From: saz97 <sa.z@qq.com>
+To: qemu-devel@nongnu.org
+Cc: hreitz@redhat.com, kwolf@redhat.com, stefanha@redhat.com,
+ qemu-block@nongnu.org, saz97 <sa.z@qq.com>
+Subject: [PATCH 0/1 RFC] FUSE Export Coroutine Integration Cover Letter
+Date: Mon, 24 Mar 2025 16:05:09 +0800
+X-OQ-MSGID: <20250324080509.150472-1-sa.z@qq.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAK3XEhNeB29eaPxZ_1Cc7WfEzOGZZPcvTc5uC1XAdtG0uNfDRw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=203.205.221.233; envelope-from=sa.z@qq.com;
+ helo=out203-205-221-233.mail.qq.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,72 +80,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+This patch series refactors QEMU's FUSE export module to leverage coroutines for read/write operations,
+addressing concurrency limitations and aligning with QEMU's asynchronous I/O model. The changes
+demonstrate measurable performance improvements while simplifying resource management.
 
-> > Going ship the distro kernel as igvm image would work too.  Will
-> > simplify the measurement pre-calculation.  Also there is no need to pass
-> > around any parameters, everything (how the firmware finds the UKI etc)
-> > can be arranged at igvm build time then.  Disadvantage: This introduces
-> > a completely new boot workflow.  Will probably need a new set of cloud
-> > images exclusively for the BYOF case.
-> 
-> What does all this mean for the hypervisor interface ?
+1. technology implementation
 
-That means we'll go scratch the region list idea and depend on igvm
-instead.
+   according to Stefan suggerstion, i move the processing logic of read_from_fuse_export into a coroutine for buffer management.
+   and change the fuse_getattr to call: bdrv_co_get_allocated_file_size().    
 
-Which means we are back to the single firmware image.  I think it makes
-sense to continue supporting classic rom images (which can also be
-loaded via -bios).  Any use case which needs more fine-grained control
-must use igvm.  We can use format bits in both capabilities and control
-fields to indicate what the hypervisor supports and what has been
-uploaded to the firmware image region.  See interface header file draft
-below.
+2. performance summary
 
-'opaque' exists as before, even though I think it makes sense to also
-specify the size for the opaque blob.  This gives the guest a bit more
-flexibility in how this is used, for example it could pass the complete
-UKI as opaque blob.
+   For the coroutine_integration_fuse test, the average results for iodepth=1 and iodepth=64 are as follows:
+    -------------------------------  
+    Average results for iodepth=1:
+    Read_IOPS: coroutine_integration_fuse: 4492.88 | origin: 4309.39 | 4.25% improvement
+    Write_IOPS: coroutine_integration_fuse: 4500.68 | origin: 4318.68 | 4.21% improvement
+    Read_BW: coroutine_integration_fuse: 17971.00 KB/s | origin: 17237.30 KB/s | 4.26% improvement
+    Write_BW: coroutine_integration_fuse: 18002.50 KB/s | origin: 17274.30 KB/s | 4.23% improvement
+    --------------------------------
+    -------------------------------
+    Average results for iodepth=64:
+    Read_IOPS: coroutine_integration_fuse: 5576.93 | origin: 5347.13 | 4.29% improvement
+    Write_IOPS: coroutine_integration_fuse: 5569.55 | origin: 5337.33 | 4.33% improvement
+    Read_BW: coroutine_integration_fuse: 22311.40 KB/s | origin: 21392.20 KB/s | 4.31% improvement
+    Write_BW: coroutine_integration_fuse: 22282.20 KB/s | origin: 21353.20 KB/s | 4.34% improvement
+    --------------------------------
+   Although all metrics show improvements, the gains are concentrated in the 4.2%–4.3% range, which is lower than expected. Further investigation using gprof reveals the reasons for this limited improvement.
 
-take care,
-  Gerd
+3. Performance Bottlenecks Identified via gprof
+   After running a fio test with the following command:
+   fio --ioengine=io_uring --numjobs=1 --runtime=30 --ramp_time=5 \
+    --rw=randrw --bs=4k --time_based=1 --name=job1 \
+    --filename=/mnt/qemu-fuse --iopath=64
+   and analyzing the execution profile using gprof, the following issues were identified:
 
------------------------------- cut here -----------------------------
-struct vmfwupdate {
-    // VMM capabilities, see VMFWUPDATE_CAP_*, read-only.
-    uint64_t capabilities;
-    // control bits, see VMFWUPDATE_CTL_*
-    uint64_t control;
+   3.1 Increased Overall Execution Time
+   In the original implementation, fuse_write + blk_pwrite accounted for 8.7% of total execution time (6.0% + 2.7%).
+   After refactoring, fuse_write_coroutine + blk_co_pwrite now accounts for 43.1% (22.9% + 20.2%).
+   This suggests that coroutine overhead is contributing significantly to execution time.
 
-    // firmware rom/flash storage size, read-only.
-    uint64_t fw_rom_size;
+   3.2 Increased Read and Write Calls
+   fuse_write calls increased from 173,400 → 333,232.
+   fuse_read calls increased from 173,526 → 332,931.
+   This indicates that the coroutine-based approach is introducing redundant I/O calls, likely due to unnecessary coroutine switches.
 
-    // address and size of the firmware update image.  Will be cleared on
-    // firmware update and reset.
-    uint64_t fw_image_addr;
-    uint16_t fw_image_size;
+   3.3 Significant Coroutine Overhead
+   qemu_coroutine_enter is now called 1,572,803 times, compared to ~476,057 previously.
+   This frequent coroutine switching introduces unnecessary overhead, limiting the expected performance improvements.
 
-    // address + size of opaque blob.  The guest can use this to pass on
-    // information, for example which memory region the linux kernel has been
-    // loaded to.  writable, will be kept intact on firmware update.
-    uint64_t opaque_addr;
-    uint64_t opaque_size;
-};
+saz97 (1):
+  Integration coroutines into fuse export
 
-// --- format bits, used by both 'capabilities' and 'control' ---
-// igvm
-#define VMFWUPDATE_FORMAT_IGVM           (1 << 32)
-// rom/flash on platform-specific location
-//  - x86: below 4G + 1G
-//  - arm: 0
-#define VMFWUPDATE_FORMAT_PLATFORM_ROM   (1 << 33)
+ block/export/fuse.c | 190 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 126 insertions(+), 64 deletions(-)
 
-// --- 'capabilities' field bits ---
-// vmm supports resizing of x86 firmware memory
-#define VMFWUPDATE_CAP_X86_RESIZE         (1 << 0)
-
-// --- 'control' field bits ---
-// disable vmfwupdate interface
-#define VMFWUPDATE_CTL_DISABLE            (1 << 0)
+-- 
+2.34.1
 
 
