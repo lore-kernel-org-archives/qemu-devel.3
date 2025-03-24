@@ -4,104 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B956EC3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 10:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B928C36002
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 10:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twewm-0002wG-6w; Mon, 24 Mar 2025 06:22:20 -0400
+	id 1twf55-0003wI-5X; Mon, 24 Mar 2025 06:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1twewS-0002ld-Hn
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:22:04 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1twewI-000719-JE
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:21:57 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5e5bc066283so6100477a12.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 03:21:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742811709; x=1743416509; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=anRXtUlHElY7q3eBibps8zhum/h3zcEOqynU32vgNmQ=;
- b=Mjk69l0DtWRbb5NyH/nSmM5U7TpOMFT7ZSgR8TrnB/MSdmace9C5GfA9haVMDIOcga
- z3pPrqsM7AfpwAC64gT8aqCZh3R+21xtT7lVBmuYwZovMUQGbV4IZasrDooJlGdllK/H
- TJ9DLaLOlZgh6bK+gBJeJqg4b3xMxQG9oltKK77pqscNmMZ5VhP02+qge/pJQF5vM3wX
- UvBdWFDql/qLAGlxIs3CVT8A3LTAsqPAbHQHSXiTbeAirmLTlZC+8ldeY9fTKPZYHh8A
- /Z3udvgQxNZL9twFWIKnklyi28vN7TL/WtpHFVZdVzFwVvDiqZdGI9rDVolESFakt+xa
- Ufjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742811709; x=1743416509;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=anRXtUlHElY7q3eBibps8zhum/h3zcEOqynU32vgNmQ=;
- b=tZfKGOm2+pbvjsVjWwpv/dDxkbbjAM1xzXXBeBQ4vnCzjo4BKIzUaOf7i1isD9n3t5
- qr9lw298uRI/4uDTItQbZxZ4b9eM1mD7o9JKuUTLgzk9C6BP2x+T/RuV51ZcFvQKR7S7
- K29/AjxnbHvf2p0P+65+Pa5FnOsG7maVNY5i9UhyU9vQzyhpvob4CyM3Rr5cr/iD3oOE
- 6jwML6541/rdtti88U5/sAQxAsNqin2kqZojSxIWsdB1Qtwio3Z0XgxpuKfYKoHgiQHY
- ipv1vG1QLYdbh6QyNfe/HKRemqXaShVr7nrUPtjkUArBPsHZUK4mJezPa20UdynUz1XL
- L2pA==
-X-Gm-Message-State: AOJu0YxRJcCEqLlC8Nv/TkqWVI7F2nA6KZpACh1qhoE2JU4Wm/ckmMh/
- 6g0lzjBKoROEjecMzzIumAcsTFwPTVoZTJXemY+tJWrtSPJ/uiPbHBXlOn9E6wE=
-X-Gm-Gg: ASbGncuHyXgfpfLO+UzzMJw340SvoxlBKUNAgh59/xHHcsQQ3dmXKejq0JtDg5DPL2A
- /kzFuyxyIkAqGoqP6O81FNOuHz+VtTjF1uF/iqDnQZ42Lgv1DcDGfsJLQV8miNT7madOpL3Kd0o
- AXSEwjc9UBBF3vU5J8/qgUpCaeZhs1FQ2qaabEQ5xSiOUwdUCZ8W66936rcNaC492uEs0f7EKww
- gldJ//EeW4pQ+m9iVjnppjG6UmbrBRY/kDIlHZNRA5wtuSu0cZ297gMft1Bo0uON695R87w7XHn
- tGoD2ak+E6fO+IQ6r99NgBkLC2FMkkIdRumjjubqEbjTmwQ=
-X-Google-Smtp-Source: AGHT+IFOtION1xBThZUSS0Gi/bW/CsiHB5vJFSHH7hDjp4LaP6NYiBydytfxSLpMaxDcS97CrVw1tA==
-X-Received: by 2002:a17:907:2d14:b0:abf:75d7:72a2 with SMTP id
- a640c23a62f3a-ac3f24ada3dmr1066907666b.38.1742811708863; 
- Mon, 24 Mar 2025 03:21:48 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3efd47f39sm642345566b.169.2025.03.24.03.21.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Mar 2025 03:21:46 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 457295FD05;
- Mon, 24 Mar 2025 10:21:43 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 07/11] target/ppc: expand comment on FP/VMX/VSX access
- functions
-Date: Mon, 24 Mar 2025 10:21:38 +0000
-Message-Id: <20250324102142.67022-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250324102142.67022-1-alex.bennee@linaro.org>
-References: <20250324102142.67022-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1twf53-0003u7-Cb
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:30:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1twf4z-0008M6-E9
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 06:30:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742812246;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=VrAxGYxmhYNSAwuo6/Z/a5BTLXqTOQa5SWGf9wocxAc=;
+ b=bKpUg7wSosKPkdcwknCmrzo+sm5l0p2mBGJo6EOQc+rTTnVk0F5za7l1Ts5+OZz9bGw2JK
+ 9kHcOPyfgwhNlLmJcuhKiPQjNSrr6roMbcVr5BhzkKXViggQGzSwDHUhTrgIRmLMHbZD0f
+ 7xXGTDa7p+0p5bWRGaUgAZa07BImXrg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-dd_ES3hGN1iC8kg5oHfxnA-1; Mon,
+ 24 Mar 2025 06:30:44 -0400
+X-MC-Unique: dd_ES3hGN1iC8kg5oHfxnA-1
+X-Mimecast-MFC-AGG-ID: dd_ES3hGN1iC8kg5oHfxnA_1742812243
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0F0BE196D2EE; Mon, 24 Mar 2025 10:30:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71AAC18009BC; Mon, 24 Mar 2025 10:30:40 +0000 (UTC)
+Date: Mon, 24 Mar 2025 10:30:37 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 1/2] util/qemu-sockets: Add support for keep-alive
+ flag to passive sockets
+Message-ID: <Z-E0Te99X7LOeLj6@redhat.com>
+References: <20250319163638.456417-1-jmarcin@redhat.com>
+ <20250319163638.456417-2-jmarcin@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250319163638.456417-2-jmarcin@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,37 +84,173 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mainly as an aid to myself getting confused too many bswaps deep into
-the code.
+On Wed, Mar 19, 2025 at 05:36:19PM +0100, Juraj Marcin wrote:
+> From: Juraj Marcin <jmarcin@redhat.com>
+> 
+> Commit aec21d3175 (qapi: Add InetSocketAddress member keep-alive)
+> introduces the keep-alive flag, which enables the SO_KEEPALIVE socket
+> option, but only on client-side sockets. However, this option is also
+> useful for server-side sockets, so they can check if a client is still
+> reachable or drop the connection otherwise.
+> 
+> This patch enables the SO_KEEPALIVE socket option on passive server-side
+> sockets if the keep-alive flag is enabled. This socket option is then
+> inherited by active server-side sockets communicating with connected
+> clients.
+> 
+> This patch also fixes an issue in 'qio_dns_resolver_lookup_sync_inet()'
+> where the keep-alive flag is not copied together with other attributes.
+> 
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> ---
+>  io/dns-resolver.c   |  2 ++
+>  qapi/sockets.json   |  4 ++--
+>  util/qemu-sockets.c | 52 +++++++++++++++++++++++++--------------------
+>  3 files changed, 33 insertions(+), 25 deletions(-)
+> 
+> diff --git a/io/dns-resolver.c b/io/dns-resolver.c
+> index 53b0e8407a..ee7403b65b 100644
+> --- a/io/dns-resolver.c
+> +++ b/io/dns-resolver.c
+> @@ -126,6 +126,8 @@ static int qio_dns_resolver_lookup_sync_inet(QIODNSResolver *resolver,
+>              .has_mptcp = iaddr->has_mptcp,
+>              .mptcp = iaddr->mptcp,
+>  #endif
+> +            .has_keep_alive = iaddr->has_keep_alive,
+> +            .keep_alive = iaddr->keep_alive,
+>          };
+>  
+>          (*addrs)[i] = newaddr;
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/ppc/cpu.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+This is a bugfix, so should be a separate commit to facilitate cherry
+picking back to stable branches.
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index efab54a068..1e833ade04 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -2906,7 +2906,12 @@ static inline bool lsw_reg_in_range(int start, int nregs, int rx)
-            (start + nregs > 32 && (rx >= start || rx < start + nregs - 32));
- }
- 
--/* Accessors for FP, VMX and VSX registers */
-+/*
-+ * Access functions for FP, VMX and VSX registers
-+ *
-+ * The register is stored as a 128 bit host endian value so we need to
-+ * take that into account when accessing smaller parts of it.
-+ */
- #if HOST_BIG_ENDIAN
- #define VsrB(i) u8[i]
- #define VsrSB(i) s8[i]
+> diff --git a/qapi/sockets.json b/qapi/sockets.json
+> index 6a95023315..eb50f64e3a 100644
+> --- a/qapi/sockets.json
+> +++ b/qapi/sockets.json
+> @@ -56,8 +56,8 @@
+>  # @ipv6: whether to accept IPv6 addresses, default try both IPv4 and
+>  #     IPv6
+>  #
+> -# @keep-alive: enable keep-alive when connecting to this socket.  Not
+> -#     supported for passive sockets.  (Since 4.2)
+> +# @keep-alive: enable keep-alive when connecting to/listening on this socket.
+> +#     (Since 4.2, not supported for listening sockets until 10.0)
+
+This needs to be '10.1', since we're past feature freeze for '10.0'
+
+>  #
+>  # @mptcp: enable multi-path TCP.  (Since 6.1)
+>  #
+> diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+> index 77477c1cd5..99357a4435 100644
+> --- a/util/qemu-sockets.c
+> +++ b/util/qemu-sockets.c
+> @@ -205,6 +205,22 @@ static int try_bind(int socket, InetSocketAddress *saddr, struct addrinfo *e)
+>  #endif
+>  }
+>  
+> +static int inet_set_sockopts(int sock, InetSocketAddress *saddr, Error **errp)
+> +{
+> +    if (saddr->keep_alive) {
+> +        int keep_alive = 1;
+> +        int ret = setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
+> +                             &keep_alive, sizeof(keep_alive));
+> +
+> +        if (ret < 0) {
+> +            error_setg_errno(errp, errno,
+> +                             "Unable to set keep-alive option on socket");
+> +            return -1;
+> +        }
+> +    }
+> +    return 0;
+> +}
+> +
+>  static int inet_listen_saddr(InetSocketAddress *saddr,
+>                               int port_offset,
+>                               int num,
+> @@ -220,12 +236,6 @@ static int inet_listen_saddr(InetSocketAddress *saddr,
+>      int saved_errno = 0;
+>      bool socket_created = false;
+>  
+> -    if (saddr->keep_alive) {
+> -        error_setg(errp, "keep-alive option is not supported for passive "
+> -                   "sockets");
+> -        return -1;
+> -    }
+> -
+>      memset(&ai,0, sizeof(ai));
+>      ai.ai_flags = AI_PASSIVE;
+>      if (saddr->has_numeric && saddr->numeric) {
+> @@ -313,13 +323,18 @@ static int inet_listen_saddr(InetSocketAddress *saddr,
+>                      goto listen_failed;
+>                  }
+>              } else {
+> -                if (!listen(slisten, num)) {
+> +                if (listen(slisten, num)) {
+> +                    if (errno != EADDRINUSE) {
+> +                        error_setg_errno(errp, errno,
+> +                                         "Failed to listen on socket");
+> +                        goto listen_failed;
+> +                    }
+
+The implicit '} else {' fallthough is a success code path,
+but you're failing to set socket opts in that case. We
+accept that the socket might already be listening, but
+we must still ensure the keepalives are set.
+
+> +                } else {
+> +                    if (inet_set_sockopts(slisten, saddr, errp)) {
+> +                        goto listen_failed;
+> +                    }
+>                      goto listen_ok;
+>                  }
+
+Stylewise, don't nest the success codepath - this also would
+fix the comment above.
+
+> -                if (errno != EADDRINUSE) {
+> -                    error_setg_errno(errp, errno, "Failed to listen on socket");
+> -                    goto listen_failed;
+> -                }
+>              }
+>              /* Someone else managed to bind to the same port and beat us
+>               * to listen on it! Socket semantics does not allow us to
+> @@ -474,19 +489,10 @@ int inet_connect_saddr(InetSocketAddress *saddr, Error **errp)
+>          error_propagate(errp, local_err);
+>          return sock;
+>      }
+> -
+> -    if (saddr->keep_alive) {
+> -        int val = 1;
+> -        int ret = setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
+> -                             &val, sizeof(val));
+> -
+> -        if (ret < 0) {
+> -            error_setg_errno(errp, errno, "Unable to set KEEPALIVE");
+> -            close(sock);
+> -            return -1;
+> -        }
+> +    if (inet_set_sockopts(sock, saddr, errp)) {
+> +        close(sock);
+> +        return -1;
+>      }
+
+This is the refactoring of existing code into a separate function. This
+can be done in a separate commit, then the new feature of adding it to
+the listener socket codepath  can be a followon commit.
+
+
+With regards,
+Daniel
 -- 
-2.39.5
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
