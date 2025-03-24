@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FFFC36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 03:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C6FAC36001
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Mar 2025 04:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twY8a-0000wu-2V; Sun, 23 Mar 2025 23:06:04 -0400
+	id 1twZ3m-0007yx-Lq; Mon, 24 Mar 2025 00:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1twY8P-0000vl-RD; Sun, 23 Mar 2025 23:05:57 -0400
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1twY8O-0003qZ-9u; Sun, 23 Mar 2025 23:05:53 -0400
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-86d42f08219so1502317241.0; 
- Sun, 23 Mar 2025 20:05:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742785551; x=1743390351; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TEYqHOa7/h0uCByt7ItyqRpjqfJCepGzXZEdZcTkBrU=;
- b=lboHYMhvu2xznIoDJH2u7uw1JH6OJm4rj0LmJbmf5VusqbFm9nEYc4K5Q7K25PxiEi
- 0RHXMrM+o90P3+5JrYG1TAUzxp5GzZO75A0CaJPZb14TlXNoHbeCHwe0tuvOLDtsIrVB
- YOyj4kzHWz5A2uMKWabIg2XA5T2mZI6gFi8m9tmCqDGodILQBJ+Zk6UWZd4gCCiIMZHC
- wYVFOoJCP9LBBCwcVIC3UzhQB8M1gI44iCYIrFpN4oy9gnoX5n1OYtD3WTJgj/zN7QzO
- OMAPl6R+GWwPc+2k11sxFu476eYhBILd6tjaCblmp6X86dLiKhZca3BqaiAGY5N9y24N
- X3lw==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1twZ3W-0007ux-Cg
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 00:04:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1twZ3U-0002fi-B8
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 00:04:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742789090;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kx9FKP2OSaeEfv+u80zms3JE0BaYrGhKmfnuGiR6/cE=;
+ b=IvXvA6bYiBEr8QnqtMnxWSJsn98TJ12EUqoPuVc1SmnSuTFvtKA84xsxmki/UuTGICZWgm
+ SYHzCV7PPbDVpYE3lRR6W9DzaE7MH0gs6DYMHzEHlE/6dd4WQkepwTm30LToTfDhmpnlEM
+ fbvPK4rp6dlm2lMKHrTvz5KNJbap3mY=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-373-AEfrOVVjPnyMwIBExAlsCA-1; Mon, 24 Mar 2025 00:04:48 -0400
+X-MC-Unique: AEfrOVVjPnyMwIBExAlsCA-1
+X-Mimecast-MFC-AGG-ID: AEfrOVVjPnyMwIBExAlsCA_1742789087
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2ff854a2541so6308858a91.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Mar 2025 21:04:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742785551; x=1743390351;
+ d=1e100.net; s=20230601; t=1742789087; x=1743393887;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TEYqHOa7/h0uCByt7ItyqRpjqfJCepGzXZEdZcTkBrU=;
- b=EPc//kuSXhzkqSgJfnK62ArMy1LoDfCYKG1OqPH7hNCSitrdrhO4NopDVu1YrkW5fb
- oSFK5aTk5CA4OFVr/H0KKkUQi/9bAJpAgmhxhTr1rNiHd3h34Q7r0MS161ZnczNgKKQp
- NpDhXhd2KTbvG3mKeOfydvCez4u3kbP4uXiTCE1lprM1LdnFlQpeqZYVYhaUoVp18/DC
- KWWOcB+6vlKT8MsRhj1ey7kkXuKxj1Q4NZZQ9cZA4SaIG7Ms2dtc8pRZ2f3ODvRgdW1u
- yMEmoDoL1b649Rkmx3dti5k/fvqqUwfKVmCXhag/YmmBIFpJ8s7Bq1OL1+x4gEHAEHSp
- QSUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUfDVpWvzLLu6n0xm0qhEI4Zcg9Pu0CSj2LnQ4OYgUWPEngKQhk60jTb4T1h47IJpLmUtFd25UTscESag==@nongnu.org,
- AJvYcCWT6Dofs7Mqwn0jr9cf8lfK3AxRjHYpA/eTzvBN/iMcDMyLqs+pj2u3ByhFxURGAV8otTcCtQHQy0Va@nongnu.org
-X-Gm-Message-State: AOJu0Yy5PWQ2Dws7kg2zbSbtAaU3cGliv3PGixAJYRHhe+Ta97akpY/y
- vu53p2EV6bCHCLf1sRweIzJyDCKlOApBnXe6S7UyTSgylEaw7oC/ieHqK4BWEjbgG8NpGZ7hbMj
- tYHQBKEUqdKOtKcjuRMt38OMe/EU=
-X-Gm-Gg: ASbGncvzkFV7UioMl0XmEv9B9RMEyoz02kK1/1Fnqv3K9lv9LiDGNU0XeOk2CrhzPKR
- SFvz+VTnn09Ufo+hkpgNN9Tb4K/EdbCG58OsewPupog8cIQwFJSZf2K5hSjZDjc/JQRg13wF9Q3
- tBriugzwTAQoJBdnbIStkqcMufQ7Zm633Sc0XGeCXCbs2+kgxF6CLQVOElcoljv+GY2Q==
-X-Google-Smtp-Source: AGHT+IGGJVt6JqxOmqxKrwEEECaJrQ8WFeuvSv0eAK4BrxzKx1X6SQ0XBJb9x7pXFZzBTRXWM6jqCaewVLYXwQoaG/o=
-X-Received: by 2002:a05:6102:cce:b0:4c1:a448:ac7d with SMTP id
- ada2fe7eead31-4c50d4b8786mr6953723137.10.1742785550682; Sun, 23 Mar 2025
- 20:05:50 -0700 (PDT)
+ bh=kx9FKP2OSaeEfv+u80zms3JE0BaYrGhKmfnuGiR6/cE=;
+ b=NJz0cUEN48ctTZB8ShQd1iZgwVF5dDsEpXq+X6afG3XqeYjypOpIaIBvU4zI9LGDT+
+ ndoYhiltOYqQ94dXu2wV62EVyXqW5uTCG8CRufEObhz3ZTHy+oPRhJoDLCyoMxJCq98Q
+ NMoaLZ6vYJdAmOFNtMT7nXGJ/p3e/PEQwFqC2z6w771FaJlYOdLUmyaUBRdANnhwCcgT
+ KOwLSkmIGKipeniFYP+dpjuVS3EPPPNmkahqm1pbsZHOfHh8Uk/zlNE1bTaf7ctcukWF
+ Jh8XsHybSqlsYljVlL4KoN+ebrsgL4eWjj3GBVUej34SeAuZwVxPS9l5Ds874/TnNFTj
+ 7iXg==
+X-Gm-Message-State: AOJu0YyzlKG5hWTPcyYn7mvciSE6bRRLJLBWT5XXdaymX4sXO8SxDdtg
+ 3FQmFsrPNbpwCT1FyV4c80fqY3I+WjRQ3l27qorfBaLaTAixgvOhHh3k0oojUXIJhTY+jtIgnCw
+ FKloDI4lFE1RrnxuzLB4VMCWPIys5c3mQc0oraF4BG5KjIcuvQS4ZiPxvlJOgRVqH2d+yCtE1LM
+ 8fbbf+Yc0VRX3xxrHUuSKZYUUk22Q=
+X-Gm-Gg: ASbGncvUamVrrIQUAtshdP9F+htgP+5cDHZ3kgp1jX5S2THBgyl0CqqlsbMXrDZxgG6
+ YkKO9k/D+IpsXOY5lPjVv/1wLBSkXH+Kmxso06XjEpG4kZUcq5bfrXBbHRdYm+aJky8G/TlQ=
+X-Received: by 2002:a17:90b:1b0b:b0:2ee:8e75:4aeb with SMTP id
+ 98e67ed59e1d1-3030feb7a20mr18424852a91.17.1742789087319; 
+ Sun, 23 Mar 2025 21:04:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnbDr63EXlxhsNFX4mXxnypvcDfZ+aP8VINicug2gXKmcOG4cDYH5zzRjvAjUy9hgsCE9r6Xt9/cj3EqvX6dg=
+X-Received: by 2002:a17:90b:1b0b:b0:2ee:8e75:4aeb with SMTP id
+ 98e67ed59e1d1-3030feb7a20mr18424808a91.17.1742789086799; Sun, 23 Mar 2025
+ 21:04:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250306064636.452396-1-debug@rivosinc.com>
- <b47fd8e8-f0dd-448f-ac9f-f6e23aead1bb@tls.msk.ru>
-In-Reply-To: <b47fd8e8-f0dd-448f-ac9f-f6e23aead1bb@tls.msk.ru>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Mar 2025 13:05:24 +1000
-X-Gm-Features: AQ5f1Jr2pQ6F0ICfEnwQJSJl8nujR9Gx4LWHN2dq4FuORUnKxrB7NeZmzJMCGxY
-Message-ID: <CAKmqyKPEpYKOO8RmoMRxpF=GPt5W+c4RmfQdr70Prs6fv1cBvQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] target/riscv: fix access permission checks for
- CSR_SSP
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- Adam Zabrocki <azabrocki@nvidia.com>
+References: <553b11b5-4cc4-4e59-9211-74c8cce51a96@linux.ibm.com>
+ <CACGkMEvrOx=jN9iULQ_svJdqKt3guJuZNEOan9-eeLirLk7_=g@mail.gmail.com>
+ <fa821773-225f-4e2b-8642-72d269802d96@linux.ibm.com>
+ <CACGkMEsOx5bdpny3y9BfJsefNKbiXk2bG3+TPKtFyr7CWhz1FA@mail.gmail.com>
+ <816c6468-9fb4-44d3-9bce-ecdc04f118be@linux.ibm.com>
+In-Reply-To: <816c6468-9fb4-44d3-9bce-ecdc04f118be@linux.ibm.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 24 Mar 2025 12:04:35 +0800
+X-Gm-Features: AQ5f1Joi-8RtnBRIXJBMRxOz24YnE0u1U-i4a23sD8zgRm7zjR7b1OvZ3-LoLhU
+Message-ID: <CACGkMEsK12J6+vrg_rnv9mL6=AGRKsiUvuXcaafEh1BzaFpDPQ@mail.gmail.com>
+Subject: Re: VDPA MAC address problem
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, Cindy Lu <lulu@redhat.com>, 
+ eperezma <eperezma@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,30 +106,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 22, 2025 at 4:03=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
+On Fri, Mar 21, 2025 at 12:29=E2=80=AFPM Konstantin Shkolnyy <kshk@linux.ib=
+m.com> wrote:
 >
-> On 06.03.2025 09:46, Deepak Gupta wrote:
-> > Commit:8205bc1 ("target/riscv: introduce ssp and enabling controls for
-> > zicfiss") introduced CSR_SSP but it mis-interpreted the spec on access
-> > to CSR_SSP in M-mode. Gated to CSR_SSP is not gated via `xSSE`. But
-> > rather rules clearly specified in section "22.2.1. Shadow Stack Pointer
-> > (ssp) CSR access contr" in the priv spec.
+> On 3/20/2025 20:22, Jason Wang wrote:
+> > On Fri, Mar 21, 2025 at 12:45=E2=80=AFAM Konstantin Shkolnyy <kshk@linu=
+x.ibm.com> wrote:
+> >>
+> >> On 3/19/2025 19:58, Jason Wang wrote:
+> >>> On Thu, Mar 20, 2025 at 12:34=E2=80=AFAM Konstantin Shkolnyy <kshk@li=
+nux.ibm.com> wrote:
+> >>>> Upon reading this forum, I see that VHOST_VDPA_SET_CONFIG is
+> >>>> =E2=80=9Cdeprecated=E2=80=9D, and so VIRTIO_NET_CTRL_MAC_ADDR_SET mu=
+st be the right
+> >>>> method, but it=E2=80=99s apparently called too late.
+> >>>
+> >>> VHOST_VDPA_SET_CONFIG requires the vDPA parent support which is not
+> >>> necessarily there.
+> >>
+> >> The mlx5 driver doesn't do anything for VHOST_VDPA_SET_CONFIG. Intel's
+> >> driver, however, apparently stores the configuration. So, it appears,
+> >> Intel will avoid the problem... Perhaps mlx5 could do the same so that
+> >> QEMU can set the address before it starts the VM (QEMU doesn't have to
+> >> later let the VM change the config).
 > >
-> > Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls
-> > for zicfiss". Thanks to Adam Zabrocki for bringing this to attention.
+> > The problem is that config space is not allowed to be written, that is
+> > why mlx5 doesn't implement the write method.
+> >
+> >> Conceptually, setting the address
+> >> by QEMU cmdline doesn't look different from setting it by "vdpa dev ad=
+d".
+> >
+> > It's kind of different.
+> >
+> > E.g the device may not even have VIRTIO_NET_F_MAC feature etc.
 >
-> Is this patchset (including "[2/2] target/riscv: fixes a bug against
-> `ssamoswap` behavior in M-mode") applicable for stable qemu series?
+> I'm not sure I understand... This is the MAC address returned by
+> VHOST_VDPA_GET_CONFIG. If mlx5 allows it to be set by "vdpa dev add",
 
-Yes, if it applies it is (it probably won't apply to older stables as
-it's a new-ish feature).
+This requires privileges where userspace(VM) doesn't necessarily have.
 
-Alistair
+> shouldn't it also allow it to be set by VHOST_VDPA_SET_CONFIG called by
+> virtio_net_device_realize(), before the VM exists.
+>
+> When VM starts running, it queries this MAC address and QEMU fetches it
+> by VHOST_VDPA_GET_CONFIG. But, because VHOST_VDPA_SET_CONFIG hasn't
+> stored it, it fetches a wrong stale address.
 
->
-> Thanks,
->
-> /mjt
->
+For example, for some reason management wants to forbid mac address
+changes from the guest.
+
+Thanks
+
 
