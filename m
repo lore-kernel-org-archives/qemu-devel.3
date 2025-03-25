@@ -4,97 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB99C36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 01:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8539C36002
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 01:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twtTt-0002F5-R5; Mon, 24 Mar 2025 21:53:29 -0400
+	id 1twtWM-000322-QP; Mon, 24 Mar 2025 21:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1twtTs-0002Ep-Kx
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:53:28 -0400
-Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1twtTo-0000OX-DD
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:53:28 -0400
-Received: by mail-qv1-xf29.google.com with SMTP id
- 6a1803df08f44-6ed0cc5eca4so2950736d6.1
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 18:53:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742867603; x=1743472403; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=eF8AsYLB8ryNKzx8FOQtDCgtdWwU+MxMBC3RmTM3L8E=;
- b=QomudQGPe1qgJL6WIyiyqJy5/YEOvCRVmELNfLCzFDXPuYzJPtuCetMNW3FInASvWQ
- RnVIJt3t2sQa9mzO4DOxbzDY3PeB96AMRUEiBZNp+E643HcCXxRxJumJdbxcsZpZ683Y
- Q0fqyD3en3YwMuvYhW4IcA1YurSc4ugliuvZ4bD4pzikiWwN2ok1QQK489Y6h/KZadWI
- I7jaWD6PcR1bzTRo7eb5KVp+AddMkf5vBuImJsX5nh2qQuRNVFWTnv/MBCHQu6ovQn1S
- /tlNX/r+KVx2ODVWWOQI93CeIMmlPD1OYgKoQdjdBdD6lYsMi6iG6sCDUIU2aRPkMvdd
- ugNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742867603; x=1743472403;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eF8AsYLB8ryNKzx8FOQtDCgtdWwU+MxMBC3RmTM3L8E=;
- b=fiEym/FznqETpLa748YEuN6SklLV7Xf5oylH+eU6WC0XcJxKu73bnfPj5aK9hyaWdE
- Arq5r1QZSCXLDVd+jebH6OGaktgnrUDb7ojO+hUkIFsH//sUFdIlC1g4j8ke+Pgg0vDI
- ZvAkIMxqX9PxGh9pVVoVVYx/AZ2dCbOTz6mYmy9/mJGRVBLWvOEK/8Cagh6id5WlSGVr
- LNviRPRR+nQZHyTjrGXzuGrGAmNqzj6B/MmV+6CMN0Zx7Py9zZDnmrlkB/nTtTQdEak5
- Djsba5MeAzBhtOutA0DGdl9z8+rc+YMk6X+41pPqmSZpKe1jAfXUwsZaC/RhA1FxYFLg
- +k+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZ94qJxpIirxjEWIFBBqXHaKztYIaU3RzgjM8bXkpwgXExVIxgY+1TTZ/gQFNkBMVGDVRK7BBdCSsx@nongnu.org
-X-Gm-Message-State: AOJu0Yx0/Vwbb1tQYc4nXiGXQnsbvxZNmMWYKhIVz+nZOala0gngSC7b
- w1OlJgnbX+0dIlRuVcApcykelh9BZg0IkhJrvGt2cobu9DfZXL7m
-X-Gm-Gg: ASbGncu2kp9JvBlNLFGJLfhxH6SWjnbP/1HHSuM1lyvzd9hXUXWqS5v8Y90KZCs2ZY2
- 8aUc39I2Zpc+kHDPoxfThqUHBTp7fxbsabcZh0jRzP1aKwuWuyBFqyl+Z2b2713WmZnl68ik7tE
- DRxnJB8MRzqAuVfHqysxj7GPORpNbfF/5QS3y7me6kj94ZsM5KTjC+lVksQrm8nyIzP1AaDDUQw
- MzUXHv3FHYV3OMBMUUJrU0Fo5Le9Vi8xMHH0qc/HxfGt9JrZdboVFUC20a272Jq5td0j0neJrAX
- oVgZ3cgnYyjQi+/Tx8S7FHk+eg41sb1EeCzKjYmug5oR0qljrL6hd/c6cer2iw==
-X-Google-Smtp-Source: AGHT+IH14IvXRRxGuI/qo7I/hxPO2D1DS4mdLxisqPp0HNqF5siB+K8zitMVZkkLaUtWPFP2CTBzVg==
-X-Received: by 2002:a05:6214:21c6:b0:6e2:3761:71b0 with SMTP id
- 6a1803df08f44-6eb3f090126mr312480006d6.5.1742867603228; 
- Mon, 24 Mar 2025 18:53:23 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2603:6000:a500:306:70c5:433:52e6:1b6e])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6eb3ef1f666sm50829056d6.41.2025.03.24.18.53.21
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 24 Mar 2025 18:53:22 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Anton Johansson'" <anjo@rev.ng>,
-	<qemu-devel@nongnu.org>
-Cc: <ale@rev.ng>,
-	<brian.cain@oss.qualcomm.com>,
-	<philmd@linaro.org>
-References: <20250312194547.7364-1-anjo@rev.ng>
- <20250312194547.7364-3-anjo@rev.ng>
-In-Reply-To: <20250312194547.7364-3-anjo@rev.ng>
-Subject: RE: [PATCH 2/2] target/hexagon: Drop `ident` postprocess step
-Date: Mon, 24 Mar 2025 20:53:20 -0500
-Message-ID: <001501db9d28$affce200$0ff6a600$@gmail.com>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1twtWJ-00031F-Cv; Mon, 24 Mar 2025 21:55:59 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1twtWH-0000iA-5x; Mon, 24 Mar 2025 21:55:59 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 969F5615EE;
+ Tue, 25 Mar 2025 01:55:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEC6C4CEDD;
+ Tue, 25 Mar 2025 01:55:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1742867748;
+ bh=z+Wk5IOn8VAQYfBz4WAglsmF7LsYJkY/3Dz5LBKsXM4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=MB9dJaYHD69rttkB55fX1MpeO+qMHYheWWeLHl7gXSQ0SjdGHf5q33wucdlxtv7tt
+ ZbmBY2kxkdK1SdyoVdFMfGE+/Bad7HIJEtmQ73dFTIcRhZOo3XURi1hXMjbVhnwy29
+ PKD4Z7OvZ8WHYN1biIRho/k6kwBi608gYyUWgIdZwNB94oIPHGpzv1A7O+3Pi8asfj
+ CJTi5d3iNDH9QVzY//nWqAEs6jA3wtEIhHcbgD57WD9oi8/CHTVdmTJyMgQwIewb5G
+ AX24T8slszXJL5JDpTUiWns8RfVW7qJjwI+5C8J9GiHuTmHjZEDbSXa18mU2GB/qdn
+ vCBmiSwDnTgcw==
+Date: Tue, 25 Mar 2025 09:55:22 +0800
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
+ =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Gavin Shan
+ <gshan@redhat.com>, Ani Sinha <anisinha@redhat.com>, Cleber Rosa
+ <crosa@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>, John Snow
+ <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Markus
+ Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ kvm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 00/20] Change ghes to use HEST-based offsets and add
+ support for error inject
+Message-ID: <20250325095522.335112ba@sal.lan>
+In-Reply-To: <cover.1741374594.git.mchehab+huawei@kernel.org>
+References: <cover.1741374594.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHqw2qhMYTgftKQtEzGJUewzZGqVAFkGngws1mpMIA=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250324-4, 3/24/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-qv1-xf29.google.com
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,61 +82,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Michael,
 
+Gentile ping.
 
-> -----Original Message-----
-> From: Anton Johansson <anjo@rev.ng>
-> Sent: Wednesday, March 12, 2025 2:46 PM
-> To: qemu-devel@nongnu.org
-> Cc: ale@rev.ng; ltaylorsimpson@gmail.com; brian.cain@oss.qualcomm.com;
-> philmd@linaro.org
-> Subject: [PATCH 2/2] target/hexagon: Drop `ident` postprocess step
+Regards,
+Mauro
+
+Em Fri,  7 Mar 2025 20:14:29 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
+
+> Hi Michael,
 > 
-> The indent command is not available on a default mac osx setup with xcode
-> cli tools installed.  While it does make idef-parser generated code nicer
-to
-> debug, it's not crucial and can be dropped.
+> I'm sending v8 to avoid a merge conflict with v7 due to this
+> changeset:
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>    611f3bdb20f7 ("hw/acpi/ghes: Make  static")
+> 
+> As ghes_record_cper_errors() was written since the beginning
+> to be public and used by ghes-cper.c. It ended being meged
+> earlier because the error-injection series become too big,
+> so it was decided last year to split in two to make easier for
+> reviewers and maintainers to discuss.
+> 
+> Anyway, as mentioned on v7, I guess we're ready to merge this
+> series, as patches here have been thoughfully reviewed mainly 
+> by Igor and Jonathan over the last 5-6 months.
+> 
+> The only change from v7 is a minor editorial change at HEST doc
+> spec, and the addition of Igor and Jonathan's A-B/R-B.
+> 
+> This series change the way HEST table offsets are calculated,
+> making them identical to what an OSPM would do and allowing
+> multiple HEST entries without causing migration issues. It open
+> space to add HEST support for non-arm architectures, as now
+> the number and type of HEST notification entries are not
+> hardcoded at ghes.c. Instead, they're passed as a parameter
+> from the arch-dependent init code.
+> 
+> With such issue addressed, it adds a new notification type and
+> add support to inject errors via a Python script. The script
+> itself is at the final patch.
+> 
 > ---
->  target/hexagon/meson.build | 21 ++-------------------
->  1 file changed, 2 insertions(+), 19 deletions(-)
+> v8:
+>   - added a patch to revert recently-added changeset causing a
+>     conflict with these. All remaining patches are identical.
 > 
-> diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-> index abcf00ca1f..246dc7b241 100644
-> --- a/target/hexagon/meson.build
-> +++ b/target/hexagon/meson.build
-> @@ -323,30 +323,13 @@ if idef_parser_enabled and 'hexagon-linux-user' in
-> target_dirs
->          command: [idef_parser, '@INPUT@', '@OUTPUT0@', '@OUTPUT1@',
-> '@OUTPUT2@']
->      )
+> v7:
+>   - minor editorial change at the patch updating HEST doc spec
+>    with the new workflow
 > 
-> -    indent = find_program('indent', required: false)
-> -    if indent.found()
-> -        idef_generated_tcg_c = custom_target(
-> -            'indent',
-> -            input: idef_generated_tcg[0],
-> -            output: 'idef-generated-emitter.indented.c',
-> -            command: [indent, '-linux', '@INPUT@', '-o', '@OUTPUT@']
-> -        )
-> -    else
-> -        idef_generated_tcg_c = custom_target(
-> -            'copy',
-> -            input: idef_generated_tcg[0],
-> -            output: 'idef-generated-emitter.indented.c',
-> -            command: ['cp', '@INPUT@', '@OUTPUT@']
-> -        )
-> -    endif
-> -
-
-I prefer to have the indented version present.
-
-Is the above check/fallback not sufficient on MacOS?  It works on a Linux
-system where indent is not present.
-
-Thanks,
-Taylor
-
-
+> v6:
+> - some minor nits addressed:
+>    - use GPA instead of offset;
+>    - merged two patches;
+>    - fixed a couple of long line coding style issues;
+>    - the HEST/DSDT diff inside a patch was changed to avoid troubles
+>      applying it.
+> 
+> v5:
+> - make checkpatch happier;
+> - HEST table is now tested;
+> - some changes at HEST spec documentation to align with code changes;
+> - extra care was taken with regards to git bisectability.
+> 
+> v4:
+> - added an extra comment for AcpiGhesState structure;
+> - patches reordered;
+> - no functional changes, just code shift between the patches in this series.
+> 
+> v3:
+> - addressed more nits;
+> - hest_add_le now points to the beginning of HEST table;
+> - removed HEST from tests/data/acpi;
+> - added an extra patch to not use fw_cfg with virt-10.0 for hw_error_le
+> 
+> v2: 
+> - address some nits;
+> - improved ags cleanup patch and removed ags.present field;
+> - added some missing le*_to_cpu() calls;
+> - update date at copyright for new files to 2024-2025;
+> - qmp command changed to: inject-ghes-v2-error ans since updated to 10.0;
+> - added HEST and DSDT tables after the changes to make check target happy.
+>   (two patches: first one whitelisting such tables; second one removing from
+>    whitelist and updating/adding such tables to tests/data/acpi)
+> 
+> Mauro Carvalho Chehab (20):
+>   tests/acpi: virt: add an empty HEST file
+>   tests/qtest/bios-tables-test: extend to also check HEST table
+>   tests/acpi: virt: update HEST file with its current data
+>   Revert "hw/acpi/ghes: Make ghes_record_cper_errors() static"
+>   acpi/ghes: Cleanup the code which gets ghes ged state
+>   acpi/ghes: prepare to change the way HEST offsets are calculated
+>   acpi/ghes: add a firmware file with HEST address
+>   acpi/ghes: Use HEST table offsets when preparing GHES records
+>   acpi/ghes: don't hard-code the number of sources for HEST table
+>   acpi/ghes: add a notifier to notify when error data is ready
+>   acpi/generic_event_device: Update GHES migration to cover hest addr
+>   acpi/generic_event_device: add logic to detect if HEST addr is
+>     available
+>   acpi/generic_event_device: add an APEI error device
+>   tests/acpi: virt: allow acpi table changes at DSDT and HEST tables
+>   arm/virt: Wire up a GED error device for ACPI / GHES
+>   qapi/acpi-hest: add an interface to do generic CPER error injection
+>   acpi/generic_event_device.c: enable use_hest_addr for QEMU 10.x
+>   tests/acpi: virt: update HEST and DSDT tables
+>   docs: hest: add new "etc/acpi_table_hest_addr" and update workflow
+>   scripts/ghes_inject: add a script to generate GHES error inject
+> 
+>  MAINTAINERS                                   |  10 +
+>  docs/specs/acpi_hest_ghes.rst                 |  28 +-
+>  hw/acpi/Kconfig                               |   5 +
+>  hw/acpi/aml-build.c                           |  10 +
+>  hw/acpi/generic_event_device.c                |  44 ++
+>  hw/acpi/ghes-stub.c                           |   7 +-
+>  hw/acpi/ghes.c                                | 233 ++++--
+>  hw/acpi/ghes_cper.c                           |  38 +
+>  hw/acpi/ghes_cper_stub.c                      |  19 +
+>  hw/acpi/meson.build                           |   2 +
+>  hw/arm/virt-acpi-build.c                      |  35 +-
+>  hw/arm/virt.c                                 |  19 +-
+>  hw/core/machine.c                             |   2 +
+>  include/hw/acpi/acpi_dev_interface.h          |   1 +
+>  include/hw/acpi/aml-build.h                   |   2 +
+>  include/hw/acpi/generic_event_device.h        |   1 +
+>  include/hw/acpi/ghes.h                        |  51 +-
+>  include/hw/arm/virt.h                         |   2 +
+>  qapi/acpi-hest.json                           |  35 +
+>  qapi/meson.build                              |   1 +
+>  qapi/qapi-schema.json                         |   1 +
+>  scripts/arm_processor_error.py                | 476 ++++++++++++
+>  scripts/ghes_inject.py                        |  51 ++
+>  scripts/qmp_helper.py                         | 703 ++++++++++++++++++
+>  target/arm/kvm.c                              |   7 +-
+>  tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5240 bytes
+>  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5326 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6601 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7723 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5442 bytes
+>  tests/data/acpi/aarch64/virt/HEST             | Bin 0 -> 224 bytes
+>  tests/qtest/bios-tables-test.c                |   2 +-
+>  32 files changed, 1695 insertions(+), 90 deletions(-)
+>  create mode 100644 hw/acpi/ghes_cper.c
+>  create mode 100644 hw/acpi/ghes_cper_stub.c
+>  create mode 100644 qapi/acpi-hest.json
+>  create mode 100644 scripts/arm_processor_error.py
+>  create mode 100755 scripts/ghes_inject.py
+>  create mode 100755 scripts/qmp_helper.py
+>  create mode 100644 tests/data/acpi/aarch64/virt/HEST
+> 
 
