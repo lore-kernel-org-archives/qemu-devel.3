@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBDFC36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07467C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txD0d-0002xI-AG; Tue, 25 Mar 2025 18:44:35 -0400
+	id 1txD0a-0002ml-4Q; Tue, 25 Mar 2025 18:44:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0K-0001lj-R3
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:16 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1txD0H-0001WR-1c
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:13 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0I-000756-Au
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:16 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-227d6b530d8so51673125ad.3
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:12 -0700 (PDT)
+ id 1txD0E-00073P-DL
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:12 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-224171d6826so54962655ad.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942652; x=1743547452; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942649; x=1743547449; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=my/amCjVPulkTASqhfbzg7kjMYbxalxX57V5rEPDp7E=;
- b=cqWuDF+2YwWSWcnajvmr+G2JCtfnDSgAlP7t0wkOBtKkuJeW/PDHgGU4lzxk2DFzIq
- pFoeoHeH21UrovO/v6Ip9Uceg+rN6OIqzFbsL9y3x07+JzRK4Bkq83fXcR16hV743MKh
- aXrmwBo2B4eavTvFxXkAOJIuCQ3menhWlWHjsr2UhAnGSeC0955obO99S/AQum9qPc8E
- vtSTwBEl+NelcdcbrcFV1I03QWGtJNs5qiLR5Qbl0748z6mtbFDhzTRPJThqo8uR+0dz
- vcYe2rdWBnsHmnA23AmiGboZ0YdD+V40AsXx4pfgYXw5WU9Xzkwsu3MJpexs929IQqKp
- YHgg==
+ bh=NysG+klqlTH+Cqa+DgVibFr5yz9FYb8KE+rqeZdAsXI=;
+ b=xXd+J4u0wAnLpQTlhReTB0DFbDDZsVBJ5ZEkhf+wUbVSzKcR7VhrMr9rnomow17lAF
+ 7+M2tlLZp/07FtqXYk0xVFaQ3S+tfuGLWZEBltESmgU69EbNgWJ68lv/ooJORPSMLDiX
+ t9qeTQQRcv9ComCT/JMm7aScY44W/WhB4u2qV1g6lwlQk4V1qc+PPPNZ/BC256VLOzMP
+ P8sqRlZag77eVprQIm6BL00yVJewZWXdckuagca4cqwiXRFMPsKWt9Woobts8/XKpciC
+ mfnYBfCUq06Mg1b3r13o6PtH/S3ARsSGJcCJzBGzeCD3bTsQsVOzP2IiLu2gwZdgWRV8
+ Sjog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942652; x=1743547452;
+ d=1e100.net; s=20230601; t=1742942649; x=1743547449;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=my/amCjVPulkTASqhfbzg7kjMYbxalxX57V5rEPDp7E=;
- b=RZGnqLJDmwkOM0SrHcPDAh+hf8gcbycdy1047wisSd7x6d1XmEckNBwi+1ufDLXi3s
- 4/6IPDl7B0HJMTPxM4LsCsXQPhGMnNfxw84jV6nm0SEGr9beycUiK7aplLmnHu/XUWw2
- zeVTvVTYGVDUZP2oJ7bWmzxtD1JVD7gYaeSPOqXNIznNOIjKX777sQuUsdUaa7FupZPd
- C7eQkP1hbFWyk07uvLeM2Ssi9yOf/JTthNCdbgNVHtg+PlE/tnDasf9hWaxoNORVfU+G
- yPgC4CfLXRFmv5lIYM3QCoO32Gr4spctEW4h+ijXBZImVWekzeV6Z3Ot255/5F/6exHs
- P02w==
-X-Gm-Message-State: AOJu0YyJY8ifupy6ZNfG9SYZhh5B5MaLFa0AsPRlaIZBqKDs8fV6pO4N
- n4JktylLCJAFDjt3Bj3jyqDDjTJ/JLg2SUEdYs4AqNfdUbDyHROu/9sWq8koKzoUUGUy4MMqQG9
- 7
-X-Gm-Gg: ASbGncvuNJNdt3dUh4SSDL/PDSf2T0USdcBB/aoJ32/5KSc/BziYK4KGX1dfkRhvPkl
- X+6list+Zas53OReo/MqIr4/9+b42k4iYJCRY9nTiOQ8uY1BkXaYFmnrpA+TT57PBYmMp3dUxrP
- pI3uoiRiFezv+HbBg4zY2ESiL+R4NhrzFgAYIVlln3H78vWRcsn105MoWC34rrrFJOQUkPXiADb
- MapReLOJ7o6eNciZUrTm1gCFCGdLlLP87rIZ/GyhfQ1EauvE0R4KTnQkAjo0nlz0Ubd073HHZfX
- Z2OKPFbpuXdK5u8BZVa1zZVQXiz0NKa8/dAsYz76DtdhHRzmAfeOjMWPHm/sUKNp/tPVOwF72Oo
- 7M3BaeqpKOpA=
-X-Google-Smtp-Source: AGHT+IEszGH0V/rAOIia344CQu0LmDGG4ehRgPGlgICY3wuExP5TSQdw9x22gU+E54/rb4XuSFp8TQ==
-X-Received: by 2002:a05:6a20:7347:b0:1ee:e2ac:5159 with SMTP id
- adf61e73a8af0-1fe42f53152mr31245781637.19.1742942651963; 
- Tue, 25 Mar 2025 15:44:11 -0700 (PDT)
+ bh=NysG+klqlTH+Cqa+DgVibFr5yz9FYb8KE+rqeZdAsXI=;
+ b=ifU2H3HX/P15rSbtMiaCKY/n1dfGeRFNcBRmxJcAcJVrqsgCRhJ3erH6oahhN0k1S8
+ 0TzmjTLXZOWPbd6tbuwNYEPLqlpOfVub2tcMJL9/PZrYPT1hEsUFOVeasqzd/XpaO8YU
+ SBYmm2Yj1IxO7+CGBNxfxz1U7VOgRF+5gxQeu5Ty2H0/iNtAJEBhLEij15oPekbv1zUJ
+ 45qmXzdz8tpTrFy2usMIQeyK1mb/QixZQFRk1wZlnCFe/04lhneAscBV3E2shibJTGQm
+ 1D56aW/DBdaSocA7vcLuNPCDfUF0m9Bh1Nup7qRCEOtF4Tou5OilnpYO1oXvfpx8Ng/2
+ fxfA==
+X-Gm-Message-State: AOJu0YyJPmGvfvRizSBUFJ5vAVRPYIcMEZHOkAdAm2C5IF2iqsCfx/lA
+ Ufrwst8+OF1AhhjWmRChgH9lPzYbg5w6ytXk6nN+TeqMnzRUTr5JHlkL53xrY+SNtL2EKdwBNkj
+ X
+X-Gm-Gg: ASbGnctuQXQm5cJdebh4ZoF5IsQqD8VhLft/g+l0pb1eC4Gvsjy2gw2ue0RUH3no42e
+ 5PSpsLHP+TqA+wQooY4zjjQdG5UYDJx2kelW3wBKDaSN9yyG64TLfCXmnrs7rQD8T0OS2Iktq+3
+ Jh1iFRwiFV1x7D+CHqrmnNAfpql9oDVBa0BHR8E2GhItgnl9R/y4VvlitUkD2T1yCgHzzmrXa6u
+ Yv3t2ue7WNX1P+cocW/8joi2Jpatoiog+pSCzn+mIn44QNODa2kCM4o3pld2GKiRKXOl37P8Xpy
+ Fc15YbUJxufrRwHe3S/adiNBFz2HOQWnHo49VcwOM7VvHvC+TD1Y/Y7sPqoXbZ3OVjet9gh7tcC
+ g
+X-Google-Smtp-Source: AGHT+IEZ6cu7oXzjvNlHCM4jz5Ez5N8kIDllVgrKO1EMwgmRJ0X9Y8IwI7+SbpaC9eWf1Xa8i5qsZw==
+X-Received: by 2002:a17:903:32c8:b0:224:1609:a74a with SMTP id
+ d9443c01a7336-22780e14a50mr322363575ad.34.1742942649052; 
+ Tue, 25 Mar 2025 15:44:09 -0700 (PDT)
 Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.11
+ d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Mar 2025 15:44:11 -0700 (PDT)
+ Tue, 25 Mar 2025 15:44:08 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mrolnik@gmail.com,
 	philmd@linaro.org,
 	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 10/11] hw/avr: Prepare for TARGET_PAGE_SIZE > 256
-Date: Tue, 25 Mar 2025 15:44:02 -0700
-Message-ID: <20250325224403.4011975-11-richard.henderson@linaro.org>
+Subject: [PATCH v2 06/11] target/avr: Add defines for i/o port registers
+Date: Tue, 25 Mar 2025 15:43:58 -0700
+Message-ID: <20250325224403.4011975-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
 References: <20250325224403.4011975-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,95 +102,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If i/o does not cover the entire first page, allocate a portion
-of ram as an i/o device, so that the entire first page is i/o.
-
-While memory_region_init_ram_device_ptr is happy to allocate
-the RAMBlock, it does not register the ram for migration.
-Do this by hand.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/avr/atmega.h |  1 +
- hw/avr/atmega.c | 39 ++++++++++++++++++++++++++++++++-------
- 2 files changed, 33 insertions(+), 7 deletions(-)
+ target/avr/cpu.h    | 10 ++++++++++
+ target/avr/helper.c | 36 ++++++++++++++++++------------------
+ 2 files changed, 28 insertions(+), 18 deletions(-)
 
-diff --git a/hw/avr/atmega.h b/hw/avr/atmega.h
-index a99ee15c7e..9ac4678231 100644
---- a/hw/avr/atmega.h
-+++ b/hw/avr/atmega.h
-@@ -41,6 +41,7 @@ struct AtmegaMcuState {
-     MemoryRegion flash;
-     MemoryRegion eeprom;
-     MemoryRegion sram;
-+    MemoryRegion sram_io;
-     DeviceState *io;
-     AVRMaskState pwr[POWER_MAX];
-     AVRUsartState usart[USART_MAX];
-diff --git a/hw/avr/atmega.c b/hw/avr/atmega.c
-index f6844bf118..11fab184de 100644
---- a/hw/avr/atmega.c
-+++ b/hw/avr/atmega.c
-@@ -19,6 +19,7 @@
- #include "hw/sysbus.h"
- #include "qom/object.h"
- #include "hw/misc/unimp.h"
-+#include "migration/vmstate.h"
- #include "atmega.h"
+diff --git a/target/avr/cpu.h b/target/avr/cpu.h
+index b49e7a7056..ebcdda20ac 100644
+--- a/target/avr/cpu.h
++++ b/target/avr/cpu.h
+@@ -45,6 +45,16 @@
+ /* Number of CPU registers */
+ #define NUMBER_OF_CPU_REGISTERS 32
  
- enum AtmegaPeripheral {
-@@ -224,8 +225,6 @@ static void atmega_realize(DeviceState *dev, Error **errp)
-     char *devname;
-     size_t i;
- 
--    assert(mc->io_size <= 0x200);
--
-     if (!s->xtal_freq_hz) {
-         error_setg(errp, "\"xtal-frequency-hz\" property must be provided.");
-         return;
-@@ -240,11 +239,37 @@ static void atmega_realize(DeviceState *dev, Error **errp)
-     qdev_realize(DEVICE(&s->cpu), NULL, &error_abort);
-     cpudev = DEVICE(&s->cpu);
- 
--    /* SRAM */
--    memory_region_init_ram(&s->sram, OBJECT(dev), "sram", mc->sram_size,
--                           &error_abort);
--    memory_region_add_subregion(get_system_memory(),
--                                OFFSET_DATA + mc->io_size, &s->sram);
-+    /*
-+     * SRAM
-+     *
-+     * Softmmu is not able mix i/o and ram on the same page.
-+     * Therefore in all cases, the first page exclusively contains i/o.
-+     *
-+     * If the MCU's i/o region matches the page size, then we can simply
-+     * allocate all ram starting at the second page.  Otherwise, we must
-+     * allocate some ram as i/o to complete the first page.
-+     */
-+    assert(mc->io_size == 0x100 || mc->io_size == 0x200);
-+    if (mc->io_size >= TARGET_PAGE_SIZE) {
-+        memory_region_init_ram(&s->sram, OBJECT(dev), "sram", mc->sram_size,
-+                               &error_abort);
-+        memory_region_add_subregion(get_system_memory(),
-+                                    OFFSET_DATA + mc->io_size, &s->sram);
-+    } else {
-+        int sram_io_size = TARGET_PAGE_SIZE - mc->io_size;
-+        void *sram_io_mem = g_malloc0(sram_io_size);
++/* CPU registers mapped into i/o ports 0x38-0x3f. */
++#define REG_38_RAMPD  0
++#define REG_38_RAMPX  1
++#define REG_38_RAMPY  2
++#define REG_38_RAMPZ  3
++#define REG_38_EIDN   4
++#define REG_38_SPL    5
++#define REG_38_SPH    6
++#define REG_38_SREG   7
 +
-+        memory_region_init_ram_device_ptr(&s->sram_io, OBJECT(dev), "sram-as-io",
-+                                          sram_io_size, sram_io_mem);
-+        memory_region_add_subregion(get_system_memory(),
-+                                    OFFSET_DATA + mc->io_size, &s->sram_io);
-+        vmstate_register_ram(&s->sram_io, dev);
-+
-+        memory_region_init_ram(&s->sram, OBJECT(dev), "sram",
-+                               mc->sram_size - sram_io_size, &error_abort);
-+        memory_region_add_subregion(get_system_memory(),
-+                                    OFFSET_DATA + TARGET_PAGE_SIZE, &s->sram);
-+    }
+ /*
+  * Offsets of AVR memory regions in host memory space.
+  *
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index e5bf16c6b7..f8ada8b106 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -216,29 +216,29 @@ target_ulong helper_inb(CPUAVRState *env, uint32_t port)
+ {
+     target_ulong data = 0;
  
-     /* Flash */
-     memory_region_init_rom(&s->flash, OBJECT(dev),
+-    switch (port) {
+-    case 0x38: /* RAMPD */
++    switch (port - 0x38) {
++    case REG_38_RAMPD:
+         data = 0xff & (env->rampD >> 16);
+         break;
+-    case 0x39: /* RAMPX */
++    case REG_38_RAMPX:
+         data = 0xff & (env->rampX >> 16);
+         break;
+-    case 0x3a: /* RAMPY */
++    case REG_38_RAMPY:
+         data = 0xff & (env->rampY >> 16);
+         break;
+-    case 0x3b: /* RAMPZ */
++    case REG_38_RAMPZ:
+         data = 0xff & (env->rampZ >> 16);
+         break;
+-    case 0x3c: /* EIND */
++    case REG_38_EIDN:
+         data = 0xff & (env->eind >> 16);
+         break;
+-    case 0x3d: /* SPL */
++    case REG_38_SPL:
+         data = env->sp & 0x00ff;
+         break;
+-    case 0x3e: /* SPH */
++    case REG_38_SPH:
+         data = env->sp >> 8;
+         break;
+-    case 0x3f: /* SREG */
++    case REG_38_SREG:
+         data = cpu_get_sreg(env);
+         break;
+     default:
+@@ -265,39 +265,39 @@ void helper_outb(CPUAVRState *env, uint32_t port, uint32_t data)
+ {
+     data &= 0x000000ff;
+ 
+-    switch (port) {
+-    case 0x38: /* RAMPD */
++    switch (port - 0x38) {
++    case REG_38_RAMPD:
+         if (avr_feature(env, AVR_FEATURE_RAMPD)) {
+             env->rampD = (data & 0xff) << 16;
+         }
+         break;
+-    case 0x39: /* RAMPX */
++    case REG_38_RAMPX:
+         if (avr_feature(env, AVR_FEATURE_RAMPX)) {
+             env->rampX = (data & 0xff) << 16;
+         }
+         break;
+-    case 0x3a: /* RAMPY */
++    case REG_38_RAMPY:
+         if (avr_feature(env, AVR_FEATURE_RAMPY)) {
+             env->rampY = (data & 0xff) << 16;
+         }
+         break;
+-    case 0x3b: /* RAMPZ */
++    case REG_38_RAMPZ:
+         if (avr_feature(env, AVR_FEATURE_RAMPZ)) {
+             env->rampZ = (data & 0xff) << 16;
+         }
+         break;
+-    case 0x3c: /* EIDN */
++    case REG_38_EIDN:
+         env->eind = (data & 0xff) << 16;
+         break;
+-    case 0x3d: /* SPL */
++    case REG_38_SPL:
+         env->sp = (env->sp & 0xff00) | (data);
+         break;
+-    case 0x3e: /* SPH */
++    case REG_38_SPH:
+         if (avr_feature(env, AVR_FEATURE_2_BYTE_SP)) {
+             env->sp = (env->sp & 0x00ff) | (data << 8);
+         }
+         break;
+-    case 0x3f: /* SREG */
++    case REG_38_SREG:
+         cpu_set_sreg(env, data);
+         break;
+     default:
 -- 
 2.43.0
 
