@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253CFC36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 01:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC41C36002
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 01:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twtEc-0001aF-Vf; Mon, 24 Mar 2025 21:37:42 -0400
+	id 1twtEU-0001X3-LI; Mon, 24 Mar 2025 21:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twtEa-0001ZP-N0
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:41 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1twtEM-0001VR-KV
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:26 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twtEU-0007QY-Bk
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:40 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2260c915749so66296455ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 18:37:31 -0700 (PDT)
+ id 1twtEK-0007PX-Q5
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:26 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22580c9ee0aso99115535ad.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 18:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742866650; x=1743471450; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742866643; x=1743471443; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UwgoocbzyjIZFw5YoMLGSPLzvZLOD/sl0xS6wYzFato=;
- b=db0Wz4JTHHzS3bBsugv0W4X7JsvA2mqYEsoox17Nnovb5AqbGQhRG35RaGb9G8Q8tl
- VLVsij35YdfPjko49lusxWXU15LY87yLsHTPosNueP+CC1RkKX9qojPSARV6ihOevzZ8
- veLB3WzsE+RqP1TeSfic4O6iiVrX+a4IeLpVmupFtI1TPJaiblgNd1jkxNCYMyg+6YAB
- KNxcFybODpbI7hsI2XSdfGwOTEIB0G8OxoL9Swt8s+O014QRKFVdS1q8NJnU9vCVFdYv
- jKYuvMlIqt3j2AwWdG5cjMbMRyR2b10qFzEMe7aMS3FiH7NyneWv1LgrfCAk56y7WR2E
- Q6eA==
+ bh=9Qsv8GWi8oHmDmrLISV9ECCnpn06gwR3uptN7njeHoo=;
+ b=IgtbB2zpPuxNqPHr9EIkGJqEqUU8dyc4BzYmrxs9QWxwkvGIIrRQHPi01+IEGGnJsS
+ RjJn799kWZyfd2ZY2rp6l6nGy0f4QiY7d4kqszIiki3+C01yccZX1mhgAWv9XJxuUQ/P
+ N4MbnyeGr7RIWBjdFd6snii/QHc7dWIfFUBh6cYXz5ZINJ7WDEfy6NRdjpESDeDlXJfG
+ OBuFMPurMXdyC5K2hrZzHnWFJoSCeItEHXjIjifboRTcVV73lYAMHvAz6c857fn1yhp1
+ msP++TG6zdd7KwShgGEnU+CzJiuW+IKy4LCO0030aviunQPPXsDAnPwFaGiiCFLK8gNy
+ FBoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742866650; x=1743471450;
+ d=1e100.net; s=20230601; t=1742866643; x=1743471443;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UwgoocbzyjIZFw5YoMLGSPLzvZLOD/sl0xS6wYzFato=;
- b=VhR7+vKGVjRavN5EAGcf51YZdH37OiyF8oUvHpgw0EfGBSORfSgMsxrw/bP6J/xbsO
- l5kxRxrrZMH4lxorFo8VxVxtudbwqxivS6wIe/IkpaFK4HouwC8L5L3niABlREO7h8hA
- MRlL9Ksvt5XU8dtsZdu8fiVYawZrDkUgqKwKDpjcTZvEJjqKgK+a1CGkRti3IwbaPOkU
- ImNZgOwEt/WuVE3fA7pXa1/f5TX6nnh36MYhYWsGN/p2tE7k8iPVAz/mL6dD3XjDFcnI
- MpK4oG0faOBpTkax/ngR8QaGFL4SCmtBG8Mpwf2vE58rAOxLifyoLrAeQe5rYLv/TTCZ
- pWIg==
+ bh=9Qsv8GWi8oHmDmrLISV9ECCnpn06gwR3uptN7njeHoo=;
+ b=G7WVXVsYQo241sS+DC4ltPqqf5+aYLYT+PNVUpVD1tnyIOzpa3fcGKxNS4vu+vruqd
+ Lmq/WrMh0+Tiu1GWxcpEw32055UeUA+rpEGupEFdk5AUs5TDQTVBjq8UggD5CScM3KZc
+ RnA6aEMH32/b3BIS5S4jr4ku4v2MHmEzZftV6T5o1ebUtBe1d/xrwTSywLgn5jX7BSA2
+ x1B3SkU3cns2GgRQP8ksjD730i5VU24kuUU5yZ+oiofnWaUeZdStfyAPNicnVAZqICh1
+ F0+MWx2oBM89yXQvwNb47XrHRgf90mBpn72F1BSfrbnJsQ2RSIFFB9myMQVlY5FpxrS6
+ 1c5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXc/0U6c1ClcEs66bASj5vbnORxkRXo4SaxwRsIukk8QEELEbq9JV62TAvTYJp/yajQAcwYd278v3ys@nongnu.org
-X-Gm-Message-State: AOJu0Yx1R6nkZS2pBTDrATKnepY/zaelAT8vBrpcs1pTd6EEiGEYCTSl
- xgQiWqy7tJSWFO3XeYPuSKzAFXGWsVZjral/NIR5El8QUh4QmN1Y6+mYAJ78Cs8QLuWKobWbGWc
- T6rU=
-X-Gm-Gg: ASbGncuvyYMP0h5MG+b2xvZD1CxOLT9hTLkbJQ3tZSLaZkGFJXfd0z0C4qk2/8DhvZi
- SxK+5BoY+jCFoXtZSCuaQHqiIjKTdx6r0NMSiasTfktdW01aCLVYB1kfw3TLPWePOp0GNTZCb96
- qP4+mOgoYAT1u3+7tW1mdnTpyJr8+f9neFOjF+P/NWgqINZO8G9IpbBuMtiBBwMIz5pc9aJXENH
- ThPoiy5suo750vt8qCUf9X2TGWZ+9ctb/iLcHU/hzMCJZvTq8XLE0qRTRVnzV375a2W7VOaIHq9
- CTsf+qEWt8nhpaRs2ujSCEcHW2YvSVHLfOuL5eba8PaLhKEN1o9d2tS0nw==
-X-Google-Smtp-Source: AGHT+IHjEpHCQ0H2gpHkBwhU12Hh3f1pvPqq29o3qNn2s8Hc78qWYTm1QwX5L0b8zIxH2zexZQbfDA==
-X-Received: by 2002:a05:6a00:2316:b0:736:3fa8:cf7b with SMTP id
- d2e1a72fcca58-739059a347cmr24165122b3a.13.1742866650335; 
- Mon, 24 Mar 2025 18:37:30 -0700 (PDT)
+ AJvYcCXUtQbTF2jv4TmcAGXY7c6eFi890wsYx1sG5aj5vqLToTIucpyCmi/+PCWcMN6F4WiIcrbJ0r35ALmD@nongnu.org
+X-Gm-Message-State: AOJu0YwjYGrTG3GwDuwvtPFTmabybm04BHH1VauloYUmoGeGIFM5t8/6
+ xgFee+fiaCsuWMhPYcQnjI/Ik0gXtnx8Ubp11Y48yjrJ4hgOIg4kJKkNy2XaGQ8=
+X-Gm-Gg: ASbGncu9UEw8P6AEZ95vvHSiLkJwcUjlJhxBfnp2Tf1KXa/UTV/FcUZVzURsOw6qjOZ
+ LjDBKYl73s9As6Vv9wCQ3X0/z1i6YOesrqeFnG6YDd9qRcF1N2kiGH9Wgm/lm63tGB+IAq86VVh
+ EFtHMUAjFx0lTPIKpIpU7WZbbKb8OFSilxzreI/8bjCxHsmKcfF1bHJyePhClv+/Z23fXJkQdUw
+ EPQpi1zdongaMXTGbOVzsBP1WgN36IGzbYAeC3rX7N2l3dz6Z3gyYQixKn9eSlBt+1wdORqSpJB
+ /2Jy3tskAnhTZX9seRpRbJI5DURMVwahEO+J4ubtFh4mUbowYXefHHKKUQ==
+X-Google-Smtp-Source: AGHT+IFMGBat3/gj91m2OSHiv9vwM81+UzlU882tawVsvv9h2Crv0CdZVPy8IDv3ChQw8GoBTdm6yQ==
+X-Received: by 2002:a05:6a00:80e:b0:736:6279:ca25 with SMTP id
+ d2e1a72fcca58-73905a27ae5mr27610127b3a.24.1742866642618; 
+ Mon, 24 Mar 2025 18:37:22 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73905fa38e1sm8784770b3a.35.2025.03.24.18.37.29
+ d2e1a72fcca58-73906158ef2sm9090422b3a.141.2025.03.24.18.37.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 18:37:29 -0700 (PDT)
-Message-ID: <b07b3853-ca39-4098-ac9e-56a3ea6b508e@linaro.org>
-Date: Mon, 24 Mar 2025 18:24:10 -0700
+ Mon, 24 Mar 2025 18:37:22 -0700 (PDT)
+Message-ID: <3f6af01d-97a5-4c6d-b642-a5897aa8ad55@linaro.org>
+Date: Mon, 24 Mar 2025 18:12:53 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/17] target/avr: Enable TARGET_PAGE_BITS_VARY
+Subject: Re: [PATCH 09/17] target/avr: Introduce gen_data_{load,store}_raw
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: mrolnik@gmail.com, philmd@linaro.org
 References: <20250323173730.3213964-1-richard.henderson@linaro.org>
- <20250323173730.3213964-18-richard.henderson@linaro.org>
+ <20250323173730.3213964-10-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250323173730.3213964-18-richard.henderson@linaro.org>
+In-Reply-To: <20250323173730.3213964-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,16 +104,115 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/23/25 10:37, Richard Henderson wrote:
-> Increase TARGET_PHYS_ADDR_SPACE_BITS to allow flexibility in the page
-> size without triggering an assert.  Select the page size based on the
-> size of sram.  This leaves sram on exactly one page and minimizes the
-> number of pages required to span the flash.
+> Prepare for offset_io being non-zero; also allow folding
+> stack pointer offsets into the arithmetic.
+> So far, all offsets are 0.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/avr/cpu-param.h | 11 +++++++++--
->   hw/avr/arduino.c       | 15 +++++++++++++++
->   2 files changed, 24 insertions(+), 2 deletions(-)
+>   target/avr/translate.c | 42 ++++++++++++++++++++++++++++++++----------
+>   1 file changed, 32 insertions(+), 10 deletions(-)
+> 
+> diff --git a/target/avr/translate.c b/target/avr/translate.c
+> index e9fef1aaad..6bb4154dff 100644
+> --- a/target/avr/translate.c
+> +++ b/target/avr/translate.c
+> @@ -198,6 +198,28 @@ static bool decode_insn(DisasContext *ctx, uint16_t insn);
+>   static void gen_inb(DisasContext *ctx, TCGv data, int port);
+>   static void gen_outb(DisasContext *ctx, TCGv data, int port);
+>   
+> +static void gen_data_store_raw(DisasContext *ctx, TCGv data,
+> +                               TCGv addr, int offset, MemOp mop)
+> +{
+> +    if (ctx->offset_io + offset) {
+> +        TCGv t = tcg_temp_new();
+> +        tcg_gen_addi_tl(t, addr, ctx->offset_io + offset);
+> +        addr = t;
+> +    }
+> +    tcg_gen_qemu_st_tl(data, addr, MMU_DATA_IDX, mop);
+> +}
+> +
+> +static void gen_data_load_raw(DisasContext *ctx, TCGv data,
+> +                              TCGv addr, int offset, MemOp mop)
+> +{
+> +    if (ctx->offset_io + offset) {
+> +        TCGv t = tcg_temp_new();
+> +        tcg_gen_addi_tl(t, addr, ctx->offset_io + offset);
+> +        addr = t;
+> +    }
+> +    tcg_gen_qemu_ld_tl(data, addr, MMU_DATA_IDX, mop);
+> +}
+> +
+>   /*
+>    * Arithmetic Instructions
+>    */
+> @@ -940,21 +962,21 @@ static void gen_push_ret(DisasContext *ctx, int ret)
+>       if (avr_feature(ctx->env, AVR_FEATURE_1_BYTE_PC)) {
+>           TCGv t0 = tcg_constant_i32(ret & 0x0000ff);
+>   
+> -        tcg_gen_qemu_st_tl(t0, cpu_sp, MMU_DATA_IDX, MO_UB);
+> +        gen_data_store_raw(ctx, t0, cpu_sp, 0, MO_UB);
+>           tcg_gen_subi_tl(cpu_sp, cpu_sp, 1);
+>       } else if (avr_feature(ctx->env, AVR_FEATURE_2_BYTE_PC)) {
+>           TCGv t0 = tcg_constant_i32(ret & 0x00ffff);
+>   
+>           tcg_gen_subi_tl(cpu_sp, cpu_sp, 1);
+> -        tcg_gen_qemu_st_tl(t0, cpu_sp, MMU_DATA_IDX, MO_BEUW);
+> +        gen_data_store_raw(ctx, t0, cpu_sp, 0, MO_BEUW);
+>           tcg_gen_subi_tl(cpu_sp, cpu_sp, 1);
+>       } else if (avr_feature(ctx->env, AVR_FEATURE_3_BYTE_PC)) {
+>           TCGv lo = tcg_constant_i32(ret & 0x0000ff);
+>           TCGv hi = tcg_constant_i32((ret & 0xffff00) >> 8);
+>   
+> -        tcg_gen_qemu_st_tl(lo, cpu_sp, MMU_DATA_IDX, MO_UB);
+> +        gen_data_store_raw(ctx, lo, cpu_sp, 0, MO_UB);
+>           tcg_gen_subi_tl(cpu_sp, cpu_sp, 2);
+> -        tcg_gen_qemu_st_tl(hi, cpu_sp, MMU_DATA_IDX, MO_BEUW);
+> +        gen_data_store_raw(ctx, hi, cpu_sp, 0, MO_BEUW);
+>           tcg_gen_subi_tl(cpu_sp, cpu_sp, 1);
+>       }
+>   }
+> @@ -963,20 +985,20 @@ static void gen_pop_ret(DisasContext *ctx, TCGv ret)
+>   {
+>       if (avr_feature(ctx->env, AVR_FEATURE_1_BYTE_PC)) {
+>           tcg_gen_addi_tl(cpu_sp, cpu_sp, 1);
+> -        tcg_gen_qemu_ld_tl(ret, cpu_sp, MMU_DATA_IDX, MO_UB);
+> +        gen_data_load_raw(ctx, ret, cpu_sp, 0, MO_UB);
+>       } else if (avr_feature(ctx->env, AVR_FEATURE_2_BYTE_PC)) {
+>           tcg_gen_addi_tl(cpu_sp, cpu_sp, 1);
+> -        tcg_gen_qemu_ld_tl(ret, cpu_sp, MMU_DATA_IDX, MO_BEUW);
+> +        gen_data_load_raw(ctx, ret, cpu_sp, 0, MO_BEUW);
+>           tcg_gen_addi_tl(cpu_sp, cpu_sp, 1);
+>       } else if (avr_feature(ctx->env, AVR_FEATURE_3_BYTE_PC)) {
+>           TCGv lo = tcg_temp_new_i32();
+>           TCGv hi = tcg_temp_new_i32();
+>   
+>           tcg_gen_addi_tl(cpu_sp, cpu_sp, 1);
+> -        tcg_gen_qemu_ld_tl(hi, cpu_sp, MMU_DATA_IDX, MO_BEUW);
+> +        gen_data_load_raw(ctx, hi, cpu_sp, 0, MO_BEUW);
+>   
+>           tcg_gen_addi_tl(cpu_sp, cpu_sp, 2);
+> -        tcg_gen_qemu_ld_tl(lo, cpu_sp, MMU_DATA_IDX, MO_UB);
+> +        gen_data_load_raw(ctx, lo, cpu_sp, 0, MO_UB);
+>   
+>           tcg_gen_deposit_tl(ret, lo, hi, 8, 16);
+>       }
+> @@ -1498,13 +1520,13 @@ static void gen_data_store(DisasContext *ctx, TCGv data, TCGv addr)
+>       if (ctx->base.tb->flags & TB_FLAGS_FULL_ACCESS) {
+>           gen_helper_fullwr(tcg_env, data, addr);
+>       } else {
+> -        tcg_gen_qemu_st_tl(data, addr, MMU_DATA_IDX, MO_UB);
+> +        gen_data_store_raw(ctx, data, addr, 0, MO_UB);
+>       }
+>   }
+>   
+>   static void gen_data_load(DisasContext *ctx, TCGv data, TCGv addr)
+>   {
+> -    tcg_gen_qemu_ld_tl(data, addr, MMU_DATA_IDX, MO_UB);
+> +    gen_data_load_raw(ctx, data, addr, 0, MO_UB);
+>   }
+>   
+>   static void gen_inb(DisasContext *ctx, TCGv data, int port)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
