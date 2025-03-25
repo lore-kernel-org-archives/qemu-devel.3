@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4AA6C3600D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1141C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txASP-0000V2-BW; Tue, 25 Mar 2025 16:01:05 -0400
+	id 1txAT3-0000e6-FY; Tue, 25 Mar 2025 16:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASC-0000T4-V7
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:00:54 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASW-0000WU-B3
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASA-0002ft-5O
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:00:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASU-0002ip-65
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742932848;
+ s=mimecast20190719; t=1742932869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5ApwEwoihrCnB8RAIIj76ecSOvM6kyG6NSlUytVIbqM=;
- b=i6YmkcCezaKZdOltS/wvNe0efMMYMa+le496M6atIwTEklkOlQEiOaA8uixnUxeE8ClHZ2
- a0c+A1q+iph+82uAPFIrGxFWi0sh8A32puI8ed+4wBUZ3fGPvHRgjb7uLyCx7pnNE6YZSZ
- Arj9VE9+7DWpwQiMhwuY+Cb2ZskyA7Q=
+ bh=OMfKHH7jWlCkxAkMF9yH52BXKUoQi/4NSWSb+piWgVM=;
+ b=FdEwLAFBMItz8J4pE07RIIlhhZGvRV53vXGUJXvdcL6CdM7tdvp1GmVkN7mSeWDQK+Pdr1
+ A4fqo3+HESJrbQz+eLF0qOnEFdt42oAP/KxvQYK74mOmvFpr78t3e1QwkqswswSnM9ylKO
+ Xz9N/PscJkZ18qWKS+KIyZgVELQtu2s=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-XHyi_4aHMlKmnUf5UardnQ-1; Tue,
- 25 Mar 2025 16:00:46 -0400
-X-MC-Unique: XHyi_4aHMlKmnUf5UardnQ-1
-X-Mimecast-MFC-AGG-ID: XHyi_4aHMlKmnUf5UardnQ_1742932846
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-OMTVpebkPhO_z89hxQMZCw-1; Tue,
+ 25 Mar 2025 16:01:07 -0400
+X-MC-Unique: OMTVpebkPhO_z89hxQMZCw-1
+X-Mimecast-MFC-AGG-ID: OMTVpebkPhO_z89hxQMZCw_1742932866
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3BDF18009B1; Tue, 25 Mar 2025 20:00:45 +0000 (UTC)
+ id 92C88180035C; Tue, 25 Mar 2025 20:01:05 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.142])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 572D81801747; Tue, 25 Mar 2025 20:00:44 +0000 (UTC)
+ id C414A1801756; Tue, 25 Mar 2025 20:01:03 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 04/15] tests/functional: Convert the i386 replay avocado test
-Date: Tue, 25 Mar 2025 21:00:12 +0100
-Message-ID: <20250325200026.344006-5-thuth@redhat.com>
+Subject: [PATCH 11/15] tests/functional: Use the tuxrun kernel for the x86
+ replay test
+Date: Tue, 25 Mar 2025 21:00:19 +0100
+Message-ID: <20250325200026.344006-12-thuth@redhat.com>
 In-Reply-To: <20250325200026.344006-1-thuth@redhat.com>
 References: <20250325200026.344006-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,193 +85,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Since this was the last test in tests/avocado/replay_kernel.py,
-we can remove that Avocado file now.
+This way we can do a full boot in record-replay mode and
+should get a similar test coverage compared to the old
+replay test from tests/avocado/replay_linux.py. Thus remove
+the x86 avocado replay_linux test now.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                          |   1 -
- tests/avocado/replay_kernel.py       | 110 ---------------------------
- tests/functional/meson.build         |   1 +
- tests/functional/test_i386_replay.py |  28 +++++++
- 4 files changed, 29 insertions(+), 111 deletions(-)
- delete mode 100644 tests/avocado/replay_kernel.py
- create mode 100755 tests/functional/test_i386_replay.py
+ tests/avocado/replay_linux.py          | 46 --------------------------
+ tests/functional/test_x86_64_replay.py | 43 ++++++++++++++++++------
+ 2 files changed, 33 insertions(+), 56 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 73ccf5e5176..4e1d816f2b4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3668,7 +3668,6 @@ F: include/system/replay.h
- F: docs/devel/replay.rst
- F: docs/system/replay.rst
- F: stubs/replay.c
--F: tests/avocado/replay_kernel.py
- F: tests/avocado/replay_linux.py
- F: tests/functional/*reverse_debug*.py
- F: tests/functional/*replay*.py
-diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-deleted file mode 100644
-index 35515323723..00000000000
---- a/tests/avocado/replay_kernel.py
-+++ /dev/null
-@@ -1,110 +0,0 @@
--# Record/replay test that boots a Linux kernel
--#
--# Copyright (c) 2020 ISP RAS
--#
--# Author:
--#  Pavel Dovgalyuk <Pavel.Dovgaluk@ispras.ru>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--import os
--import lzma
--import shutil
--import logging
--import time
--import subprocess
--
--from avocado import skip
--from avocado import skipUnless
--from avocado import skipUnless
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import archive
--from avocado.utils import process
--from boot_linux_console import LinuxKernelTest
--
--class ReplayKernelBase(LinuxKernelTest):
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+index 59169224353..6ba283d3bf6 100644
+--- a/tests/avocado/replay_linux.py
++++ b/tests/avocado/replay_linux.py
+@@ -118,52 +118,6 @@ def run_replay_dump(self, replay_path):
+         except subprocess.CalledProcessError:
+             self.fail('replay-dump.py failed')
+ 
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxX8664(ReplayLinux):
 -    """
--    Boots a Linux kernel in record mode and checks that the console
--    is operational and the kernel command line is properly passed
--    from QEMU to the kernel.
--    Then replays the same scenario and verifies, that QEMU correctly
--    terminates.
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=accel:tcg
 -    """
 -
--    timeout = 180
--    KERNEL_COMMON_COMMAND_LINE = 'printk.time=1 panic=-1 '
+-    chksum = 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0'
 -
--    def run_vm(self, kernel_path, kernel_command_line, console_pattern,
--               record, shift, args, replay_path):
--        # icount requires TCG to be available
--        self.require_accelerator('tcg')
--
--        logger = logging.getLogger('replay')
--        start_time = time.time()
--        vm = self.get_vm()
--        vm.set_console()
--        if record:
--            logger.info('recording the execution...')
--            mode = 'record'
--        else:
--            logger.info('replaying the execution...')
--            mode = 'replay'
--        vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s' %
--                    (shift, mode, replay_path),
--                    '-kernel', kernel_path,
--                    '-append', kernel_command_line,
--                    '-net', 'none',
--                    '-no-reboot')
--        if args:
--            vm.add_args(*args)
--        vm.launch()
--        self.wait_for_console_pattern(console_pattern, vm)
--        if record:
--            vm.shutdown()
--            logger.info('finished the recording with log size %s bytes'
--                        % os.path.getsize(replay_path))
--            self.run_replay_dump(replay_path)
--            logger.info('successfully tested replay-dump.py')
--        else:
--            vm.wait()
--            logger.info('successfully finished the replay')
--        elapsed = time.time() - start_time
--        logger.info('elapsed time %.2f sec' % elapsed)
--        return elapsed
--
--    def run_replay_dump(self, replay_path):
--        try:
--            subprocess.check_call(["./scripts/replay-dump.py",
--                                   "-f", replay_path],
--                                  stdout=subprocess.DEVNULL)
--        except subprocess.CalledProcessError:
--            self.fail('replay-dump.py failed')
--
--    def run_rr(self, kernel_path, kernel_command_line, console_pattern,
--               shift=7, args=None):
--        replay_path = os.path.join(self.workdir, 'replay.bin')
--        t1 = self.run_vm(kernel_path, kernel_command_line, console_pattern,
--                         True, shift, args, replay_path)
--        t2 = self.run_vm(kernel_path, kernel_command_line, console_pattern,
--                         False, shift, args, replay_path)
--        logger = logging.getLogger('replay')
--        logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
--
--class ReplayKernelNormal(ReplayKernelBase):
--
--    def test_i386_pc(self):
+-    def test_pc_i440fx(self):
 -        """
--        :avocado: tags=arch:i386
 -        :avocado: tags=machine:pc
 -        """
--        kernel_url = ('https://storage.tuxboot.com/20230331/i386/bzImage')
--        kernel_hash = 'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956'
--        kernel_path = self.fetch_asset(kernel_url,
--                                       asset_hash=kernel_hash,
--                                       algorithm = "sha256")
+-        self.run_rr(shift=1)
 -
+-    def test_pc_q35(self):
+-        """
+-        :avocado: tags=machine:q35
+-        """
+-        self.run_rr(shift=3)
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxX8664Virtio(ReplayLinux):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=virtio
+-    :avocado: tags=accel:tcg
+-    """
+-
+-    hdd = 'virtio-blk-pci'
+-    cd = 'virtio-blk-pci'
+-    bus = None
+-
+-    chksum = 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0'
+-
+-    def test_pc_i440fx(self):
+-        """
+-        :avocado: tags=machine:pc
+-        """
+-        self.run_rr(shift=1)
+-
+-    def test_pc_q35(self):
+-        """
+-        :avocado: tags=machine:q35
+-        """
+-        self.run_rr(shift=3)
+ 
+ @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+ class ReplayLinuxAarch64(ReplayLinux):
+diff --git a/tests/functional/test_x86_64_replay.py b/tests/functional/test_x86_64_replay.py
+index 180f23a60c5..27287d452dc 100755
+--- a/tests/functional/test_x86_64_replay.py
++++ b/tests/functional/test_x86_64_replay.py
+@@ -5,30 +5,53 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import Asset, skipFlakyTest
++from subprocess import check_call, DEVNULL
++
++from qemu_test import Asset, skipFlakyTest, get_qemu_img
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+ class X86Replay(ReplayKernelBase):
+ 
+     ASSET_KERNEL = Asset(
+-         ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
+-          '/releases/29/Everything/x86_64/os/images/pxeboot/vmlinuz'),
+-        '8f237d84712b1b411baf3af2aeaaee10b9aae8e345ec265b87ab3a39639eb143')
++        'https://storage.tuxboot.com/buildroot/20241119/x86_64/bzImage',
++        'f57bfc6553bcd6e0a54aab86095bf642b33b5571d14e3af1731b18c87ed5aef8')
++
++    ASSET_ROOTFS = Asset(
++        'https://storage.tuxboot.com/buildroot/20241119/x86_64/rootfs.ext4.zst',
++        '4b8b2a99117519c5290e1202cb36eb6c7aaba92b357b5160f5970cf5fb78a751')
+ 
+-    def do_test_x86(self, machine):
++    def do_test_x86(self, machine, blkdevice, devroot):
++        self.require_netdev('user')
+         self.set_machine(machine)
++        self.cpu="Nehalem"
+         kernel_path = self.ASSET_KERNEL.fetch()
 -        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
 -        console_pattern = 'VFS: Cannot open root device'
--
 -        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index bcb4f50a62f..452d863f187 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -151,6 +151,7 @@ tests_i386_system_quick = [
- ]
++
++        raw_disk = self.uncompress(self.ASSET_ROOTFS)
++        disk = self.scratch_file('scratch.qcow2')
++        qemu_img = get_qemu_img(self)
++        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', raw_disk,
++                    '-F', 'raw', disk], stdout=DEVNULL, stderr=DEVNULL)
++
++        args = ('-drive', 'file=%s,snapshot=on,id=hd0,if=none' % disk,
++                '-drive', 'driver=blkreplay,id=hd0-rr,if=none,image=hd0',
++                '-device', '%s,drive=hd0-rr' % blkdevice,
++                '-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
++                '-device', 'virtio-net,netdev=vnet',
++                '-object', 'filter-replay,id=replay,netdev=vnet')
++
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               f"console=ttyS0 root=/dev/{devroot}")
++        console_pattern = 'Welcome to TuxTest'
++        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5,
++                    args=args)
  
- tests_i386_system_thorough = [
-+  'i386_replay',
-   'i386_tuxrun',
- ]
+     @skipFlakyTest('https://gitlab.com/qemu-project/qemu/-/issues/2094')
+     def test_pc(self):
+-        self.do_test_x86('pc')
++        self.do_test_x86('pc', 'virtio-blk', 'vda')
  
-diff --git a/tests/functional/test_i386_replay.py b/tests/functional/test_i386_replay.py
-new file mode 100755
-index 00000000000..7c4c2602da9
---- /dev/null
-+++ b/tests/functional/test_i386_replay.py
-@@ -0,0 +1,28 @@
-+#!/usr/bin/env python3
-+#
-+# Replay test that boots a Linux kernel on a i386 machine
-+# and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from replay_kernel import ReplayKernelBase
-+
-+
-+class I386Replay(ReplayKernelBase):
-+
-+    ASSET_KERNEL = Asset(
-+         'https://storage.tuxboot.com/20230331/i386/bzImage',
-+        'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956')
-+
-+    def test_pc(self):
-+        self.set_machine('pc')
-+        kernel_url = ()
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-+        console_pattern = 'VFS: Cannot open root device'
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
-+
-+
-+if __name__ == '__main__':
-+    ReplayKernelBase.main()
+     def test_q35(self):
+-        self.do_test_x86('q35')
++        self.do_test_x86('q35', 'ide-hd', 'sda')
+ 
+ 
+ if __name__ == '__main__':
 -- 
 2.49.0
 
