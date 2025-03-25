@@ -4,89 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D6DCC36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 21:04:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF797C36005
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txBRI-000523-MF; Tue, 25 Mar 2025 17:04:01 -0400
+	id 1txCyv-0000T2-9c; Tue, 25 Mar 2025 18:42:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txBRC-00051l-Ld
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 17:03:55 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txBR9-0003gc-JZ
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 17:03:54 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso56414135e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 14:03:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742936629; x=1743541429; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sq4B4EpxBjwT8fAFSoe5xZO4IKFj4tNkwWbItZBUwsA=;
- b=HISvkr3B8F9CbFAC3ueJ8n8euBicjtqcia/ETC1wRGP8jV025v/Co1MTPdVYJiOPv6
- uWTVlVsM9V2lcAXfrFdy6MWYUNdmxSG+aZ3GH6oysTsf4arQ3nDJgnnhPAX9ruIbwhfD
- ccUuENzBhy9hFN7pDEHzi90Q8B31pCZ00729hrsJEo7cR1DvU6Y5oQYQRmr2QEfL/raS
- Gw9AJAiSDKh5NSYPNHNN2yonct35HCtgtpEXkmmanAc/yelJyVNkGsNMuchsqBBXXkuR
- dwi/XDkEP7O43EcbHIZagYyqJzGTumvHaoohbG8yimm8pd/gc+L62tBH76pI9BoHtUMl
- MudA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742936629; x=1743541429;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sq4B4EpxBjwT8fAFSoe5xZO4IKFj4tNkwWbItZBUwsA=;
- b=mZUU6iQ+sgOwZL0XJCgOogxHA4iYINeLSziisw2cSU2i7ktIZKvXeamArCZmpq2EYV
- YRZUn/cIMWeQeCVuHutAhtRoFOcd6XAeCIkrZb5ufD1dtIFUEtO2spNvgaT8KFNm2pgS
- rGvozWQXHDEpd4WcSI1+BtzMBvf0xAVWtl5QOGBsQEdptLNv1l2dfUYLgJRB330jhu70
- bxOApzpaFPkmb+3Yv1XjS13qqpBy8ZJaYTyVye0SaBp4BCPJurahkxzRWFiMuvR5Kei5
- b1LZi3Iq6WGWN9YnfHOAlvlmpSSp+hR2WbdPg8A7blohy/DDYXzgm5i1Ti2D81khGXMr
- NjmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIGfrf5uT6fRTaglVhFWOhbQUpc8OJbLIDYNXvdgi7xJXjRqLmOY5rHvnka0U53p5IvX2vzPzZxjW1@nongnu.org
-X-Gm-Message-State: AOJu0YzMKjRZcv4W9ApTcr3rxFyfWyClDVUZatNUXiOoIUI5YEXEC0vd
- SPOE0e6b629yHh0CJMtQRzSrbjXq4N2biHBX5voMEfgp1xmPTmUQDyRRck66wZc=
-X-Gm-Gg: ASbGnctWDogVUiKKxqdpT/RTiHfa0dmHuQ/1cP1PULQ/jKY8ZJQpPVN1at/bH5ym8AP
- NPsbu6xApyeN6ghHyrtT/EJUXcuNPOwTzQbd6NvPzlX0NB86ogf4g9w+9Vnq6ENnZ2jYYrO4MoA
- eIXhp073NJzqRSCkRHV/bUVG6T5qvP7qF0KPLBtzdrRx//Xgb5OO1KIqklb3yqhqj6YV56mY8JM
- RJ/6xRVuOsMw8CX/spJCUU05cSpZl6i2OI99MqIuxKXRueix6YrU//00ERghJQhHFyCs9oBn8iC
- l5YmKk51FHn3xC0sUTLysMel6BKZqZm3pTAqkP7JhG5Y1JD1bb9aAUDDxW3k/lKs2DPaESbu369
- r0l64x9KRE9dQ
-X-Google-Smtp-Source: AGHT+IE2TKqlmE49WRbz/HSITD/wKW2He5sSyGEUSUPpuzgGnDUqAdQ3tV7g8Yf/9f7+tyV2TFHlGA==
-X-Received: by 2002:a05:600c:1ca0:b0:43c:fd72:f039 with SMTP id
- 5b1f17b1804b1-43d58c9a7b1mr152067755e9.11.1742936628798; 
- Tue, 25 Mar 2025 14:03:48 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9ef098sm14438317f8f.84.2025.03.25.14.03.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Mar 2025 14:03:48 -0700 (PDT)
-Message-ID: <1b6532cc-f933-4cc5-8c96-c10d2ec3ea98@linaro.org>
-Date: Tue, 25 Mar 2025 22:03:47 +0100
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1txCys-0000Sb-Fq
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:42:46 -0400
+Received: from mail-dm6nam10on20626.outbound.protection.outlook.com
+ ([2a01:111:f403:2413::626]
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1txCyq-0006sA-0a
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:42:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sRcxyX/BnaZlW74LTdOoD8eM73FpRojB0KOYLzpg58Wbjokx8vYZXEfnD/eJPjqn3Houi5vA269NbQPa8c6NNExytQA10k9JNeLoTy+PX8KzEAWsD++SVDjULw0sLk9adI3olP39XTRQd6G1+1ubKjLSX9pQlWL0cqJyR7iFGWH2P2di/ROTNdTXIGZLImVIM2ffSEP1CMvtlD2GgygOCRIKZqYXqlHnRJQyxgP03g+YqQ5EA92Ccn5+qLlG59WtqEU1dE//djLCVuXa2Dwl8rYLHtDn3bxlmd3uHksEZ0pKeASIvoV/2k70ra/+oiy4QgTCF8v3ttjzj5A6ohbb+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IzLIkYh6WwAViSMwS0RtH/G5N9FUDr0nTyawyeWK7zk=;
+ b=Lz2XT2rYstRvbymX7RvFRzaBheE0+VrLUjHy73mQZslRKWsyvko4lU1Qh7k9eeisHPuC/wC+fP1IwYctIjG7xod94rWa7q2bWvXy1awEfFTN0hZVB7MMED+TptZjWzUiqWQwrz18glAWjr76NxkXGZIHteklaWPi1cNkD2RT1WBBkGatdgxEdNuY3sY0qBCYFxKk1jRssyGtdoW6EK7u16ySEp2dqTLpzsAjRFtrkuiIfiLaY1DDLkQXJfvfMKEEdXimenliRFvPSem7uQq+j0oD+/IKA4O3Gmlrs4sjDf/sds1Zyx2RcA/+BM5yDVARKa7Mv0O5TWS/lbGYFB0zvQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IzLIkYh6WwAViSMwS0RtH/G5N9FUDr0nTyawyeWK7zk=;
+ b=OjhJvU17Hdl7/ePKewbFGAp9zM1gMC5o8S7S0cFH2XjlKz69X44o2wDbVVhmquFnOAGGXnPraxJO0JPmvuvubltPSPMB3pUbcSPSLH0FWqRc4YGF1V5woiuLQO7pMEB3s4yUzNkKb3phITKHTHYeU/jlE3ecw8AYV6jaLBZTm9s=
+Received: from BN8PR15CA0066.namprd15.prod.outlook.com (2603:10b6:408:80::43)
+ by MW4PR12MB5665.namprd12.prod.outlook.com (2603:10b6:303:187::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Tue, 25 Mar
+ 2025 22:42:37 +0000
+Received: from BN3PEPF0000B36E.namprd21.prod.outlook.com
+ (2603:10b6:408:80:cafe::f4) by BN8PR15CA0066.outlook.office365.com
+ (2603:10b6:408:80::43) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.42 via Frontend Transport; Tue,
+ 25 Mar 2025 22:42:37 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN3PEPF0000B36E.mail.protection.outlook.com (10.167.243.165) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8606.2 via Frontend Transport; Tue, 25 Mar 2025 22:42:37 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 25 Mar
+ 2025 17:42:37 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/15] Remove the remainders of the Avocado tests
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250325200026.344006-1-thuth@redhat.com>
- <20250325200026.344006-16-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250325200026.344006-16-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <174238612063.1594466.4005439602392444073@amd.com>
+References: <174238612063.1594466.4005439602392444073@amd.com>
+Subject: Re: [ANNOUNCE] QEMU 10.0.0-rc0 is now available
+From: Michael Roth <michael.roth@amd.com>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+To: <qemu-devel@nongnu.org>
+Date: Tue, 25 Mar 2025 17:42:21 -0500
+Message-ID: <174294254171.2082190.17846262388651328027@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B36E:EE_|MW4PR12MB5665:EE_
+X-MS-Office365-Filtering-Correlation-Id: d9d0f54a-a43b-4fc6-9e59-08dd6bee57c6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YytZN3FxYmNCVHY0S21aK2EzTzhFaktmUkE3OVF1WVl1YU1jZzFqN3NRd01l?=
+ =?utf-8?B?T05iL0wyaVlYdjBlcmxPQW1YU2RxdVhBS2xVUUplZTFlWThaTFAzcnFUQ3du?=
+ =?utf-8?B?eWM5SUJ6TEFTWWlXV0pmSzAxWk52eVF5eHM3N3RvMnlQaFNlZ0tMZTNTejB6?=
+ =?utf-8?B?MTNSZ1k0VXM5OWZwZ2tzb3VCVGthREEwNGg2SExlQUNFTGJ0UC9BVHE5UW5y?=
+ =?utf-8?B?OTcyYVlvdjNadVZTUXhLUlNuNmliNXdHSUhCZXNLL3RaanpMT2wrOCtoTlRU?=
+ =?utf-8?B?ZmZTaEZJWUdnOG1TMDhLWEtkWUFtZGVGUWpDMzFuWUM3ZmpFTXJIREgxNnJ0?=
+ =?utf-8?B?TVNkTFJVMzh5Umx4SWdMYzE4RHh5YXBrc2R2V0JZbXBKU0IrRDNPNVdRcEEz?=
+ =?utf-8?B?SE16MmFDMVRvdjByeWlLSEhTMDRNQkFWRmZlSG1aWlMySm1XeloyMlFoZDE3?=
+ =?utf-8?B?WEtlZE56RURqQUZXelFqZDdVc1UyUXpNM0ZKZFIzTExXUHhzTTA5MC9IQVRQ?=
+ =?utf-8?B?alBoajFNTFI4NVQyMFNUYnFidThTYjZ1WlBtMEVkazRhMmJVMUdRRmY3VHJO?=
+ =?utf-8?B?VDBIdTNMUHZabDZqcndZdVhwTXMrZzVJemxpaVJLdTN1TkJ1OE9zbWVON1Nw?=
+ =?utf-8?B?cUNaUW04RVBYaERsVFY3Z3VoeGpNWTBnVEVzSFRIZTZLZmxnUTZUNFZjTlZI?=
+ =?utf-8?B?RkpDSGZBNElxcWlZL3NYeHFLdmZrVXdteG9VS0lmZUI2Q1d6MkR1TWtoa3NX?=
+ =?utf-8?B?RWNNVDQvckV3SjRWYjlHZDZSMmUvd05xVW4wSXpLak94ZGVYOEkyY3AyN1FB?=
+ =?utf-8?B?UXVPdFBnZHArN3lPWEQraVoxL216VGFTM2htRGZ1Z25BMWdvOEFGcVZHSVkz?=
+ =?utf-8?B?Q1hreGlxMTRlZzRzMllMWUpET1FWb2pYcmFjL0tpSTQ3dDluZmJZTVduNEY2?=
+ =?utf-8?B?QlNBdWxhclgrWFkxdUlqN2ZmUkEvTmY3eUw3R3JIRTZFY1JYOWZOWGsxMGhs?=
+ =?utf-8?B?dFZCVmdoR3l3TlZ6Y1c3aWt2Nncrcm1HS2lId2VHNy83eGQ3R1lzWVhIdkRt?=
+ =?utf-8?B?b296QTBSSVp4akJJYUxkNkV1T1F6WTRpUDdxcEN3OEsybGVRR1NodDllQ3FM?=
+ =?utf-8?B?eXdOb001SVFNUWpDS1BMUEQ3cUNMb0k0NllwWWNra3hMZnVKOWt0dzc3OGtk?=
+ =?utf-8?B?NEhCYkpXMWkvODdzM25qTURmTnV3QXpIdEVTbUR2Z05qd2ljdkd5S0F0a3pH?=
+ =?utf-8?B?RGxjQS9VRlJyblFNS0l3NzdFdzg2dDhDRFRJaGZ6bUhvNDBjazRMeGRBRFVT?=
+ =?utf-8?B?UTI0NHN6c3ozQ2FBaTl3RWNlR0llR1U5MU5CaUpWZTlIa2ZHWHR5OUp1UVk1?=
+ =?utf-8?B?RThiUHVUbjZhcXdUZE9aY2s2Q055TkNXY2wzRENrUHUzcm1RVEF4YmlpYlRu?=
+ =?utf-8?B?S0szZnBkaTR4NjdPc0dNaURQV0hEcmxYQ3lCVGQxK25naUdkUDNXdEN5YVFx?=
+ =?utf-8?B?NWV1RnpKb01YdXRabFJta1JqdEo5VVBjRE9YemZ1ZzEwVmRxbzB0emgrQzZ5?=
+ =?utf-8?B?c25obHRQQnMvTktxUGNqWnkwNkZ5NERRcVR4R0FRUytOWklIUmFmNkFTVU5K?=
+ =?utf-8?B?c05RUUNiZk9INzczRjU3UnZ6RUpsSTUyTVdqR0dmUVBDUjNhTXJ3RTRjbVBN?=
+ =?utf-8?B?YkpCS3ZoOWpnSm9kdHlUWm9ZNlN4bTBBQWRUMUJGTm1LYWZsT0t4R2NWZ21x?=
+ =?utf-8?B?RkFjMlZUeXJHekxUaGRRYklrTkVteUVBOXhub3ZXMHNVNVlyNzBlSWxZc1Aw?=
+ =?utf-8?B?YXNSS2dlakFQcFZxZGppaVF3KzBoeTYwNkx2UXZieWxhRm5wa1pWTml4L3Fp?=
+ =?utf-8?B?ZmJLS3pOQ2FuVUk2aHBKa2MrL2tLT1A0SFJLWlBNdSthYldrU3AraVQ2cS9M?=
+ =?utf-8?Q?hWfnJI1+KHQcxYWieNEW5W5rsg+KREsW?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2025 22:42:37.5060 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d9d0f54a-a43b-4fc6-9e59-08dd6bee57c6
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B36E.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5665
+Received-SPF: permerror client-ip=2a01:111:f403:2413::626;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +155,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/25 21:00, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> Now that all Avocado tests have been converted to or been replaced by
-> other functional tests, we can delete the remainders of the Avocado
-> tests from the QEMU source tree.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   MAINTAINERS                             |   8 +-
->   docs/about/build-platforms.rst          |  10 +-
->   docs/devel/build-system.rst             |  11 +-
->   docs/devel/codebase.rst                 |   5 -
->   docs/devel/testing/avocado.rst          | 581 ------------------------
->   docs/devel/testing/functional.rst       |   3 -
->   docs/devel/testing/index.rst            |   1 -
->   docs/devel/testing/main.rst             |  15 -
->   tests/avocado/README.rst                |  10 -
->   configure                               |   2 +-
->   pythondeps.toml                         |   8 +-
->   tests/Makefile.include                  |  60 +--
->   tests/avocado/avocado_qemu/__init__.py  | 424 -----------------
->   tests/avocado/avocado_qemu/linuxtest.py | 253 -----------
->   14 files changed, 16 insertions(+), 1375 deletions(-)
->   delete mode 100644 docs/devel/testing/avocado.rst
->   delete mode 100644 tests/avocado/README.rst
->   delete mode 100644 tests/avocado/avocado_qemu/__init__.py
->   delete mode 100644 tests/avocado/avocado_qemu/linuxtest.py
+Quoting Michael Roth (2025-03-19 07:08:40)
+> Hello,
+>=20
+> On behalf of the QEMU Team, I'd like to announce the availability of the
+> first release candidate for the QEMU 10.0 release. This release is meant
+> for testing purposes and should not be used in a production environment.
+>=20
+>   http://download.qemu.org/qemu-10.0.0-rc0.tar.xz
+>   http://download.qemu.org/qemu-10.0.0-rc0.tar.xz.sig
+>=20
+> You can help improve the quality of the QEMU 10.0 release by testing this
+> release and reporting bugs using our GitLab issue tracker:
+>=20
+>   https://gitlab.com/qemu-project/qemu/-/milestones/15
+>=20
+> The release plan, as well a documented known issues for release
+> candidates, are available at:
+>=20
+>   http://wiki.qemu.org/Planning/10.0
+>=20
+> Please add entries to the ChangeLog for the 10.0 release below:
+>=20
+>   http://wiki.qemu.org/ChangeLog/10.0
+>=20
+> Thank you to everyone involved!
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Sorry for the delay on this announcement email. Apparently this got stuck
+in my mailer queue and just got sent out today instead of last week as
+intended.
 
-Thanks a lot Thomas for this huge effort of converting from Avocado
-to the simpler functional framework... Sincerely appreciated!
+-Mike
 
