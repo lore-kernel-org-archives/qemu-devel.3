@@ -4,70 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CADC36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF2DBC3600D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txAT4-0000ed-Dd; Tue, 25 Mar 2025 16:01:46 -0400
+	id 1txBKd-0002lK-Mt; Tue, 25 Mar 2025 16:57:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASW-0000WT-Ay
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1txBKb-0002kv-U1; Tue, 25 Mar 2025 16:57:05 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASS-0002iV-Mr
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742932865;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N+iAdaQ+NI5jREqyJw1BczLgIl/Xxx+7leiQHYSN6Rc=;
- b=OXLMTy/fkr8huIVyluCdrIV6nELyXX6RQ5u2v613PjSFtg0QvKtLoo6o6zCjYOf29jKdNp
- ADhBbKGjxfTmyuoLch+8uEGaYy1rSF1kE0Nqn7LQ5qhy+806xQhcFLKKNwbBWBJJDVUCFQ
- eggAyhcc2Dq5dy/YDCepeDu2esgMtyU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-kp5-laBYMkecShAKp42_yQ-1; Tue,
- 25 Mar 2025 16:01:04 -0400
-X-MC-Unique: kp5-laBYMkecShAKp42_yQ-1
-X-Mimecast-MFC-AGG-ID: kp5-laBYMkecShAKp42_yQ_1742932863
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17A811809CA5; Tue, 25 Mar 2025 20:01:03 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.33.142])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6933F1801747; Tue, 25 Mar 2025 20:00:59 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 10/15] tests/avocado: Remove the boot_linux.py tests
-Date: Tue, 25 Mar 2025 21:00:18 +0100
-Message-ID: <20250325200026.344006-11-thuth@redhat.com>
-In-Reply-To: <20250325200026.344006-1-thuth@redhat.com>
-References: <20250325200026.344006-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1txBKZ-0002Xo-5n; Tue, 25 Mar 2025 16:57:05 -0400
+DKIM-Signature: a=rsa-sha256; bh=KBHHJ0S1QqAA7VtLQx4RDhVtq5KSjFOfBkWMWlFPstk=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1742936219; v=1;
+ b=ZetlacOIO/579+FF7XRFA3cnJfEzCtaVhJDZyQklNIWytKPYTtdeiD1DEVvxzO38JKqhpJIh
+ 9WgAgr+JLi4sPIfo6nZ3MuObayOoZlAMvhbIQa04xtPE++VG+imIlOHdfZ/NrPQyMtwuHyoi2+3
+ F01DneFAQ8p2yvw1kT2udRjUzR5wXa5l9/4EylEedeGF5T9ou8ubCUSnTcHuOsgDHSQQ/Hoc+RK
+ 0CmSl1b64hQqS3hMbzxEZhGq6JyOqrVMq/nQa56So5bk0cWC8pxuRlLvdpGxHM//WK5ltzCoXU5
+ qMNiMgY+0U5suoQncDC9+Dl3bbYS6ln+QdLwrD7/MZREg==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 4E4E52087D;
+ Tue, 25 Mar 2025 20:56:59 +0000 (UTC)
+From: ~h0lyalg0rithm <h0lyalg0rithm@git.sr.ht>
+Date: Tue, 25 Mar 2025 21:49:38 +0100
+Subject: [PATCH qemu 1/1] Add IOURING_SETUP_SINGLE_ISSUER flag to improve
+ iouring performance
+Message-ID: <174293621917.22751.11381319865102029969-1@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <174293621917.22751.11381319865102029969-0@git.sr.ht>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,167 +63,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~h0lyalg0rithm <surajshirvankar@gmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Suraj Shirvankar <surajshirvankar@gmail.com>
 
-These tests are based on the cloudinit functions from Avocado.
-The cloudinit is very, very slow compared to our other tests,
-so most of these Avocado tests have either been disabled by default
-with a decorator, or have been marked to only run with KVM.
-
-We won't include this sluggish cloudinit stuff in the functional
-framework, and we've already got plenty of other tests there that
-check pretty much the same things, so let's simply get rid of these
-old tests now.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Suraj Shirvankar <surajshirvankar@gmail.com>
 ---
- tests/avocado/boot_linux.py | 132 ------------------------------------
- 1 file changed, 132 deletions(-)
- delete mode 100644 tests/avocado/boot_linux.py
+ util/fdmon-io_uring.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tests/avocado/boot_linux.py b/tests/avocado/boot_linux.py
-deleted file mode 100644
-index a029ef4ad1e..00000000000
---- a/tests/avocado/boot_linux.py
-+++ /dev/null
-@@ -1,132 +0,0 @@
--# Functional test that boots a complete Linux system via a cloud image
--#
--# Copyright (c) 2018-2020 Red Hat, Inc.
--#
--# Author:
--#  Cleber Rosa <crosa@redhat.com>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--import os
--
--from avocado_qemu.linuxtest import LinuxTest
--from avocado_qemu import BUILD_DIR
--
--from avocado import skipUnless
--
--
--class BootLinuxX8664(LinuxTest):
--    """
--    :avocado: tags=arch:x86_64
--    """
--    timeout = 480
--
--    def test_pc_i440fx_tcg(self):
--        """
--        :avocado: tags=machine:pc
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--    def test_pc_i440fx_kvm(self):
--        """
--        :avocado: tags=machine:pc
--        :avocado: tags=accel:kvm
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--    def test_pc_q35_tcg(self):
--        """
--        :avocado: tags=machine:q35
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--    def test_pc_q35_kvm(self):
--        """
--        :avocado: tags=machine:q35
--        :avocado: tags=accel:kvm
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--
--# For Aarch64 we only boot KVM tests in CI as booting the current
--# Fedora OS in TCG tests is very heavyweight. There are lighter weight
--# distros which we use in the machine_aarch64_virt.py tests.
--class BootLinuxAarch64(LinuxTest):
--    """
--    :avocado: tags=arch:aarch64
--    :avocado: tags=machine:virt
--    """
--    timeout = 720
--
--    def test_virt_kvm(self):
--        """
--        :avocado: tags=accel:kvm
--        :avocado: tags=cpu:host
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.vm.add_args("-machine", "virt,gic-version=host")
--        self.vm.add_args('-bios',
--                         os.path.join(BUILD_DIR, 'pc-bios',
--                                      'edk2-aarch64-code.fd'))
--        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
--        self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--
--# See the tux_baseline.py tests for almost the same coverage in a lot
--# less time.
--class BootLinuxPPC64(LinuxTest):
--    """
--    :avocado: tags=arch:ppc64
--    """
--
--    timeout = 360
--
--    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
--    def test_pseries_tcg(self):
--        """
--        :avocado: tags=machine:pseries
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--    def test_pseries_kvm(self):
--        """
--        :avocado: tags=machine:pseries
--        :avocado: tags=accel:kvm
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.vm.add_args("-machine", "cap-ccf-assist=off")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--class BootLinuxS390X(LinuxTest):
--    """
--    :avocado: tags=arch:s390x
--    """
--
--    timeout = 240
--
--    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
--    def test_s390_ccw_virtio_tcg(self):
--        """
--        :avocado: tags=machine:s390-ccw-virtio
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
--- 
-2.49.0
-
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index b0d68bdc44..235837abcb 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -324,8 +324,14 @@ static const FDMonOps fdmon_io_uring_ops =3D {
+ bool fdmon_io_uring_setup(AioContext *ctx)
+ {
+     int ret;
++    unsigned int flags =3D 0;
+=20
+-    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring=
+, 0);
++    /* This improves performance but can be skipped on old hosts */
++#ifdef IORING_SETUP_SINGLE_ISSUER
++    flags |=3D IORING_SETUP_SINGLE_ISSUER
++#endif
++
++    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring=
+, flags);
+     if (ret !=3D 0) {
+         return false;
+     }
+--=20
+2.45.3
 
