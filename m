@@ -4,105 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CBE0C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35388C3600D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txD0R-0002Ep-CP; Tue, 25 Mar 2025 18:44:23 -0400
+	id 1txD0e-00030m-Jj; Tue, 25 Mar 2025 18:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0E-0001MP-VS
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:11 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1txD0L-0001hd-34
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:17 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0B-000724-7r
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:10 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso56970665e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1txD0G-00074n-TO
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:15 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22435603572so114894755ad.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942645; x=1743547445; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942651; x=1743547451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E9/STNz6nQDMG9kyJBqDX5R7dSuwG1jTpb/QPXoh7r8=;
- b=s2ZTPOPJs+eqBeYXrVm110GfrZ8gpa+8maI8Vfn8yUdQawg+foKJJSYzCGHkpgVYN/
- yai6KOOfE6h8lI75Xzg4TT3iGnDNo9hjiyJLBsvWYjV64lpxWXVEvIuqzQmh5Wa4xxBz
- 5TC88HjQeogoy/zKdPglzdxBP3zageHuWpXs5MMD1cM9QTTOTDC8cpOUN9qSHwPnjq/c
- EyqfmcjEXFWn3oXkvmS4ivdfYKtdoitkTBGUrlkciqRhgRiMwWoOvZxfaMeSZndLQ33W
- A9+OMQtbCSZL63OHfdu7YHVtMYv2aKeDJgDXAHceXPBirNNht0Fje+aDA9XUgmUs4l91
- 9x9Q==
+ bh=DUF+4Y4/PqO50T2IhlnvWA6B/DIxYokH9Y5du5vjVAo=;
+ b=bgPB6yiFVH5jS42UV3b0FnAH686e/n5E9eZRTD8LuUTyESImhNy703ucuErOfWC35+
+ /4Tqr+Y9pdRa+3/1bzp6rDR3GXfxv/7neBGJJvRvrQZA1HKE7qd4qIk9F/KnuVvU4aV2
+ A51enqWaoWN2YA/CFVgIosiLnEyt98RgvJ7aaEhw5GC4yvXKk+EoXYB14DmChEcj+Y0B
+ NVLE5hU7QcOWxGxEYKmmfAJV7HMxydpu1TYpTrK5xUsEo33tw11mvNaA2J6jDrNRGUUs
+ FWkwRVkRiUUY19kEYNFOeisPwwlThPf1VzUxRGtG0K9s3KE8/ct+UAQ3h3P2sAjZvj5z
+ 2DmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942645; x=1743547445;
+ d=1e100.net; s=20230601; t=1742942651; x=1743547451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E9/STNz6nQDMG9kyJBqDX5R7dSuwG1jTpb/QPXoh7r8=;
- b=P3Z/S5SZyqoo834xYQIvIGX50eUDUWObry6puM5UnRNYqmcSK4b8LjztdY+7Jc7VVq
- saXyL+fxCRVsOJY6s9JCJDsr33N0QvVKYgQKKrNc64feWN7RzK5hqNsPgLfpa7bHQbGG
- k/6D93SpTgqRVFXxsDvvh0wjDn1ojaCOFpMwc0DeggWZusIpU3Tq5xS6wVncKfIjWYC9
- mXCTkseL8x8wbr0ofoRRCuW5YhBjsQK5TNOnITPFFlFBENdqe5m0SErNr7r9h9O9AoSb
- zTuX2LbYXN121ohOmtNTitjd1IdRzSTKTAsKQv+zKrux+ZnLAinMoqPIYqL/uc1Pxq1+
- aqPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8FhNZGgf/cLOJ1YUdFL0y6jLu362G6YN5NHukIMqzszTExZS63hENtolaa5c0rXRLa0XR+XwC3i9h@nongnu.org
-X-Gm-Message-State: AOJu0YxiB4RW0Wur7f55cWY7GMtDxyC8imYZeJz+PcfVnpt6HPfWCjr8
- n6OfauadMI1pLH1CTz1WhWrevIOcTbbF1VDn0fAn2VFS9aLrHFcbrqrg/t4lVgs=
-X-Gm-Gg: ASbGncv2wOQbtJu/V9tXrfbS8yRqZ6s8QD6ghlJIyqMTiN3ZSAePDksabVZKk+9QyY5
- FnF7C8M1snpnvvhnNdL18CqKCJwxMkURW4ekwqaafKDzgfZg7FihMTzFb4ji+nLplohM0Yv4D4O
- OgCoVkUEKsmRhrL56vxcFrsz2YPvY3nbI/SFbL18ls6sDjsi1ZVulg+jkI6O+RVNwjPmxrpo/Xc
- DQr3v7dJHBDIp4dIEHw9iDbzZD2Bbcsm/BviAqLcOxv83KsEPl0bhJQUgIObNt1dFMJWwdllvOp
- 9F167jtt4YmPReis8i9ekFFVJQwAuF+NjGuMBXsuqYvNhJljDtHDjEJFs4mW7siMBb/dHrl22eW
- HquGETJAMAzsJGKP8TVM=
-X-Google-Smtp-Source: AGHT+IHQncLLXGBF0htKe21i8k3nraJt/ZV1SOe2Y1LqXAFzYvG95pKq/Cj4J4oTKE397zrZrhet/w==
-X-Received: by 2002:a5d:47af:0:b0:391:2dea:c98d with SMTP id
- ffacd0b85a97d-3997f8f89bbmr16627163f8f.8.1742942645300; 
- Tue, 25 Mar 2025 15:44:05 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43fdeba1sm213436255e9.32.2025.03.25.15.44.02
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 15:44:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Glenn Miles <milesg@linux.ibm.com>, Samuel Tardieu <sam@rfc1149.net>,
- qemu-block@nongnu.org, Patrick Leis <venture@google.com>,
- David Hildenbrand <david@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
- Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: [PATCH-for-10.0 09/12] hw/nvram/xlnx-efuse: Do not expose as
- user-creatable
-Date: Tue, 25 Mar 2025 23:43:07 +0100
-Message-ID: <20250325224310.8785-10-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
-References: <20250325224310.8785-1-philmd@linaro.org>
+ bh=DUF+4Y4/PqO50T2IhlnvWA6B/DIxYokH9Y5du5vjVAo=;
+ b=dbgaLI2Y4JBj9ILEDlfLoDzlq0GYZsa4mZwO5WYMOrC5hVAOOEvBugwd6nc+dFCIVR
+ 8bn8vQcZHTPYBpVhBc1N9SlAkyv1QQGUfm6vz5LheESxklUvVLiq3qlvhHdG9kPUAYYb
+ tHiwSlwiVHDegmSgrqTg+NV/XhOiQeg6yay3Kv5LSfDuUopA8Pb4nRNNRYCY8zAmu2o7
+ M0I+Lxwwm9P5cfmrFjtDCBgH2/tJqJKYcM4BlI1/Ymr4+sJxP29dQujvmkmKliJoYlXj
+ g1+Ql2KDRTa6ESSqWV3MIhSl8mSMOzi+D9lbUuTuoYqY2ohD15ZC+fQTkCizdhPBSINb
+ Q/OQ==
+X-Gm-Message-State: AOJu0YwzTYLdAWIoWxt/zUSmF7XPudVaDmOKtOVa3mvCkL9i3lhxk8ql
+ XtyyX3q8rNSJ8AcoqepyI/RlWu73+cVizXa9EV9iDCUKvnQONPap0HjClnkbepHSqLWAf6JEus6
+ b
+X-Gm-Gg: ASbGncuiNSdGiYYUVZFnbspxZv+vsGtoYXuXNIPkMeCNVcfoo5aA8qskyRHNa6+gcu+
+ 9b4ebir+vPbYcyu+V6YcchBaq5ouUyWSW0+LAQR3jKAwKP48JrhJgkwE5q4VwD4sjxWPWpf/nPH
+ u73IMOzm4VTrozZ7KhqOmtCg/kL9gag8gCMJ+edShOle9Ghvlt6L1xD7EGVa6M+KM6HbA9b73PP
+ vHz0VBdO+VCojSZOy5g6f7qRiLtPg3tgf3HJtzQkqB4TIweBejTKGDaiSgllwdVz1BX8xDsqVhf
+ I0HU21bzxn6TmjIcunbIbmgMBaX8Ae7EE2/DHvsdDwP7F3KfO+1uE9fLqhYL2F+A+SB4nts4uBr
+ D
+X-Google-Smtp-Source: AGHT+IF+O3jqSfhskRIrF/LYeAaFY9DjONIdRIEXeBM1gppUB3NNc4GfWGD4AezYeBzPHfXGTz9wcQ==
+X-Received: by 2002:a05:6a00:3a1e:b0:736:3954:d78c with SMTP id
+ d2e1a72fcca58-739059b3e40mr28359477b3a.6.1742942651220; 
+ Tue, 25 Mar 2025 15:44:11 -0700 (PDT)
+Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Mar 2025 15:44:10 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mrolnik@gmail.com,
+	philmd@linaro.org,
+	pierrick.bouvier@linaro.org
+Subject: [PATCH v2 09/11] target/avr: Use do_stb in avr_cpu_do_interrupt
+Date: Tue, 25 Mar 2025 15:44:01 -0700
+Message-ID: <20250325224403.4011975-10-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
+References: <20250325224403.4011975-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,28 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This device is part of SoC components thus can not
-be created manually.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/nvram/xlnx-efuse.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/avr/helper.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
-index 29e7dd539ec..176e88fcd17 100644
---- a/hw/nvram/xlnx-efuse.c
-+++ b/hw/nvram/xlnx-efuse.c
-@@ -280,6 +280,8 @@ static void efuse_class_init(ObjectClass *klass, void *data)
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index 7d6954ec26..f23fa3e8ba 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -88,14 +88,14 @@ void avr_cpu_do_interrupt(CPUState *cs)
+     }
  
-     dc->realize = efuse_realize;
-     device_class_set_props(dc, efuse_properties);
-+    /* Reason: Part of Xilinx SoC */
-+    dc->user_creatable = false;
- }
+     if (avr_feature(env, AVR_FEATURE_3_BYTE_PC)) {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
+-        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
+-        cpu_stb_data(env, env->sp--, (ret & 0xff0000) >> 16);
++        do_stb(env, env->sp--, ret, 0);
++        do_stb(env, env->sp--, ret >> 8, 0);
++        do_stb(env, env->sp--, ret >> 16, 0);
+     } else if (avr_feature(env, AVR_FEATURE_2_BYTE_PC)) {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
+-        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
++        do_stb(env, env->sp--, ret, 0);
++        do_stb(env, env->sp--, ret >> 8, 0);
+     } else {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
++        do_stb(env, env->sp--, ret, 0);
+     }
  
- static const TypeInfo efuse_info = {
+     env->pc_w = base + vector * size;
 -- 
-2.47.1
+2.43.0
 
 
