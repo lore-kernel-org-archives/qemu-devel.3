@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7657FC36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 05:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA66C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 05:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twwrc-00046G-C2; Tue, 25 Mar 2025 01:30:12 -0400
+	id 1twwru-0004An-Jp; Tue, 25 Mar 2025 01:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twwrb-000466-F0
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 01:30:11 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twwrt-0004AT-65
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 01:30:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twwrY-0001K9-Qj
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 01:30:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twwrr-0001Y8-FT
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 01:30:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742880605;
+ s=mimecast20190719; t=1742880626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bYlxFuWV7pDVJWezFSva/6+FcSgxHD/Te5BvRTTcELU=;
- b=K11ePKdzYma2eQ9y5b4q4SjRik3YRZnruV98dHZvvuug//JmDxHXJA3kFVuAUO7s/eAfwx
- ArhYayDxWX427nVFDgpRGjPR85D/ekA+7mIxuURBRBi+F2PGDZxM/MpuY080Tdrh4dzpFq
- TeQQE0nkmcGui/enrZluIAa8mfIyqaI=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vFE2uo8E4oe0rMUlR1JpVgCzM5SoEIjjgWNHFAXJjmc=;
+ b=MTc2CONDnyriqgl6WnKTDng9m20d54YTQibEL7ccQZ5PjzDlOW1zuk8o/Gez5D9XCFsgWt
+ 7abVvlSyPPlPQbKExKRvk52NPmzZBFqKURkjoYhebpZAX2+2dvatd6RtEufH9FEMmRSV6b
+ d7Ysu2SzKfwbJJ5L/IXNfs7AklS9ZkM=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-MHFbZ6TuPlGP4Dqo3UU_Rg-1; Tue, 25 Mar 2025 01:30:02 -0400
-X-MC-Unique: MHFbZ6TuPlGP4Dqo3UU_Rg-1
-X-Mimecast-MFC-AGG-ID: MHFbZ6TuPlGP4Dqo3UU_Rg_1742880601
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ac384a889easo556394666b.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 22:30:01 -0700 (PDT)
+ us-mta-638-ATXH-5QLM1SfaWQTTwN2pA-1; Tue, 25 Mar 2025 01:30:19 -0400
+X-MC-Unique: ATXH-5QLM1SfaWQTTwN2pA-1
+X-Mimecast-MFC-AGG-ID: ATXH-5QLM1SfaWQTTwN2pA_1742880619
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5e6b2b8339fso5059119a12.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 22:30:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742880601; x=1743485401;
+ d=1e100.net; s=20230601; t=1742880618; x=1743485418;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bYlxFuWV7pDVJWezFSva/6+FcSgxHD/Te5BvRTTcELU=;
- b=rAnZGoTFITNw2Qr7/5s7rQ4PdSByrvA3/kK1n1FtPfpBCC6OZ6DPe3Ep1kNJRv3FAY
- P9j/gziBzs6+OvJDhS+/PR99LkMrkUqJM2hxcacKS59tmU8x1IjQnQC0pBNoQxlcDaUL
- cBowdBzF4oPlx0azHQqjlKI6bILEOqKQe32rm94ObqL39JflCONQZFfWnCiIzmhgGlmQ
- 1ucSAFMuc2ouMWYvVouozwpfsWNofnNzPh1zwIVbOs9Jy+nJlsa1jzdENAgZ2V+epSQS
- M08LyfFZTYKng4U/Blyd0PgIz7tqQPxusXFHcMKSWTDXAeqlEaoYz/FnqicBCTDZjigp
- cZKw==
+ bh=vFE2uo8E4oe0rMUlR1JpVgCzM5SoEIjjgWNHFAXJjmc=;
+ b=pF/2jb2YlV+mepYCitmh9/hdYO3Bt6EbeMMM36Z3zHZw3QzQwDAziq65mkCkMhegXT
+ /rrjo4f5QWNLjUTi05yptW9D+r96NbQ9t9y97vJoa69COT0SH3vaH9CEVfcRToqByNks
+ atsPEr0+BmVXSRLpbk3FcgJUYv8gz66drlHcbcTRvXCS+iDgzuhAP9pqp10GDTWdHsxn
+ He+S/2mxQ6Bep5oOPJE4vuFZac0u4IlySK5no6eRCjzo4v8sGV/pyMEmWH6yT0H0mv8P
+ 6DQECNxKN6j9fQJRaL3N6GVxycM06AmFzj9Y8+0UgtCMA/wjLbj5Sn8RjI6gUTOwwTdB
+ XTEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUs7MG1omaOAldVmzKRZHkOGrJf71ZugmYmGzKDCqQ9ALvMkSABpEGjuNslSnYjiO7EUi6dmNhEtInx@nongnu.org
-X-Gm-Message-State: AOJu0YzvLskZ6jXsi0s4G7qjEpFo1E4fc5EetpoYYoBcn/3D/hREr3Uq
- EMrlKe4yHLzlNMrj6xhDrWDou1QCLfe7J/W0wUh6KAslIJuMPZdHByDVvn+xAspyfbM9xEu+fBY
- 4+JP4ATEW1LR3e82dgAyn9G7ARWMglmsYFBCrBwGnOKjC8KPI7lqM
-X-Gm-Gg: ASbGnctTWam6izq/8WvcFzrOM70ViYQQc16VFHImUO8gexVJ3C6CQWy/AF3lQJaENv3
- dSvpPcTD4XTcGGmUCI+hivCIsTGAsfhU0A5Yo4gZU+Y8LNAIhexbxUydqJDY2SPnzCK789YLT3w
- v/Q/m4f/d4ipKzEdrfU/tnmj1fSDSUAbzesR80XVE093AyOahUPAtWDV/hoKwv4ldhDisSbWShu
- 2+Az6M488IqBH59fGie7Pe2ADlC0RkGzqioZCwDrNbWWNFZrQFwvatTQsqL9wAnB0wVJQwq4KMW
- h0C22WLonTt+osr2ZVqwj7iQ93yWzi6RGYNDYfhj5Mh4
-X-Received: by 2002:a17:907:c23:b0:ac1:edc5:d73b with SMTP id
- a640c23a62f3a-ac3cdb96185mr1834969466b.8.1742880600721; 
- Mon, 24 Mar 2025 22:30:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyHLn2RslQ1fzVhvhxuk5Co1sXMcxcIYFAI/axP/YY6Ukz6TTUinRvNu9v4vlnTr76Mfr9Jg==
-X-Received: by 2002:a17:907:c23:b0:ac1:edc5:d73b with SMTP id
- a640c23a62f3a-ac3cdb96185mr1834967366b.8.1742880600250; 
- Mon, 24 Mar 2025 22:30:00 -0700 (PDT)
+ AJvYcCVMpdjofIqjYNnebQ+Ycmjf7XxivHB/xDbzhHFxY7k+RCspVrUyTegMXG0lGsytl9msan+bOMZqA6/t@nongnu.org
+X-Gm-Message-State: AOJu0YxdXz983LEwbizvo5BQEKwPwhd3Mx1WhCTNWKGWhRBeCQyxSA+M
+ dhX1YDPdxVMpS+/HS3BuLfRWkya94+L6TdF1cCtZBNpQq8MSxMiVn/mKxQCa5ZSD1g61esf/f17
+ +yf1/T80KphBnJGsipTQwtKfrCAL7M0z9Ax/Fs/Cclmb7tQ5vX/lj
+X-Gm-Gg: ASbGncu17B7XwcIHKrRaUpublA3qVYRk8h4Y0Msxw5v3EFEnGLQ9dp4NjzuA95EJl1o
+ uxvbY55Z42kcFZRRD7VUpRSy/DkrJooWXb170Fvufdzn13DU+YSpymt8DOQ1h8PYCcEQgs8ujVX
+ sCrDxW4RXVwtqIvM6yI0CmQqT4HMYcZsw16ve5ZxncEyys5zR5kJ/lEFXU+K6Q/zO6N2a1Kz29A
+ L21qJfmIntTHYTV3PBRnVIsB7pAX2GakUrP5Jb53ixOgZwtzHhfTNIYyHDAYL6ijfesHYNCcsyW
+ kWipVurD4s6iYiiEUHctn1L/Af0HhskYcRNl0EAy40EB
+X-Received: by 2002:a05:6402:35c4:b0:5d9:82bc:ad06 with SMTP id
+ 4fb4d7f45d1cf-5ebcd40b07dmr14710992a12.3.1742880618584; 
+ Mon, 24 Mar 2025 22:30:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFfX8qJiGhiAcLmaDEqRh2MT3MYOvj4WEcRdcTgpadea/7gEF6vrLDstcCnsSmhTTQviNA0XQ==
+X-Received: by 2002:a05:6402:35c4:b0:5d9:82bc:ad06 with SMTP id
+ 4fb4d7f45d1cf-5ebcd40b07dmr14710954a12.3.1742880618102; 
+ Mon, 24 Mar 2025 22:30:18 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-54.web.vodafone.de. [109.42.49.54])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3efd95122sm792534466b.177.2025.03.24.22.29.58
+ 4fb4d7f45d1cf-5ebcd0c6f47sm7054496a12.52.2025.03.24.22.30.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 22:29:59 -0700 (PDT)
-Message-ID: <cb0f437d-c050-46e6-a436-49281f8a92c9@redhat.com>
-Date: Tue, 25 Mar 2025 06:29:57 +0100
+ Mon, 24 Mar 2025 22:30:16 -0700 (PDT)
+Message-ID: <6e7af38e-5dcb-4ba9-ab6b-1379504641e7@redhat.com>
+Date: Tue, 25 Mar 2025 06:30:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] target/s390x: Register CPUClass:list_cpus
+Subject: Re: [PATCH v3 5/7] target/s390x: Declare
+ s390_set_qemu_cpu_model/cpu_list in cpu_models.h
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+ qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Hildenbrand <david@redhat.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Eric Farman <farman@linux.ibm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
  Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-ppc@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 References: <20250324185837.46506-1-philmd@linaro.org>
- <20250324185837.46506-7-philmd@linaro.org>
- <fb9e488b-b6c4-4270-aeaf-d5bbffa942c4@linaro.org>
- <793cf6ca-3aaa-4aad-a625-43f21feca6ef@linaro.org>
+ <20250324185837.46506-6-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -137,7 +137,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <793cf6ca-3aaa-4aad-a625-43f21feca6ef@linaro.org>
+In-Reply-To: <20250324185837.46506-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -149,7 +149,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,27 +165,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/03/2025 20.04, Philippe Mathieu-Daudé wrote:
-> On 24/3/25 20:02, Richard Henderson wrote:
->> On 3/24/25 11:58, Philippe Mathieu-Daudé wrote:
->>> Register s390_cpu_list() as CPUClass:list_cpus callback
->>> and remove the cpu_list definition.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   target/s390x/cpu.h | 3 ---
->>>   target/s390x/cpu.c | 1 +
->>>   2 files changed, 1 insertion(+), 3 deletions(-)
->>
->> I really think this has to be merged with the previous.
->> I strongly suspect that it either doesn't compile separately,
->> or doesn't function as desired.
+On 24/03/2025 19.58, Philippe Mathieu-Daudé wrote:
+> Both s390_cpu_list() and s390_set_qemu_cpu_model() are
+> defined in cpu_models.c, move their declarations in the
+> related "cpu_models.h" header. Use full path to header
+> in s390-virtio-ccw.c file.
 > 
-> It does compile, because "cpu.h" includes "cpu_models.h".
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/cpu.h         | 4 ----
+>   target/s390x/cpu_models.h  | 3 +++
+>   hw/s390x/s390-virtio-ccw.c | 2 +-
+>   3 files changed, 4 insertions(+), 5 deletions(-)
 > 
-> I don't mind squashing if Thomas is OK.
-
-I don't mind either way!
+> diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+> index 5b7992deda6..8dd1936e3e2 100644
+> --- a/target/s390x/cpu.h
+> +++ b/target/s390x/cpu.h
+> @@ -900,11 +900,7 @@ static inline uint8_t s390_cpu_get_state(S390CPU *cpu)
+>   }
+>   
+>   
+> -/* cpu_models.c */
+> -void s390_cpu_list(void);
+>   #define cpu_list s390_cpu_list
+> -void s390_set_qemu_cpu_model(uint16_t type, uint8_t gen, uint8_t ec_ga,
+> -                             const S390FeatInit feat_init);
+>   
+>   
+>   /* helper.c */
+> diff --git a/target/s390x/cpu_models.h b/target/s390x/cpu_models.h
+> index 71d4bc2dd4a..f701bc0b532 100644
+> --- a/target/s390x/cpu_models.h
+> +++ b/target/s390x/cpu_models.h
+> @@ -113,6 +113,9 @@ static inline uint64_t s390_cpuid_from_cpu_model(const S390CPUModel *model)
+>   }
+>   S390CPUDef const *s390_find_cpu_def(uint16_t type, uint8_t gen, uint8_t ec_ga,
+>                                       S390FeatBitmap features);
+> +void s390_set_qemu_cpu_model(uint16_t type, uint8_t gen, uint8_t ec_ga,
+> +                             const S390FeatInit feat_init);
+> +void s390_cpu_list(void);
+>   
+>   bool kvm_s390_cpu_models_supported(void);
+>   bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp);
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 75b32182eb0..4f11c75b625 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -35,7 +35,7 @@
+>   #include "hw/s390x/css-bridge.h"
+>   #include "hw/s390x/ap-bridge.h"
+>   #include "migration/register.h"
+> -#include "cpu_models.h"
+> +#include "target/s390x/cpu_models.h"
+>   #include "hw/nmi.h"
+>   #include "hw/qdev-properties.h"
+>   #include "hw/s390x/tod.h"
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
