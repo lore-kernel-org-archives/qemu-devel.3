@@ -4,96 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A497BC35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 08:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5BA2C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 08:05:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twzHQ-0002Hj-Eg; Tue, 25 Mar 2025 04:05:00 -0400
+	id 1twzHt-0002Xi-3c; Tue, 25 Mar 2025 04:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=172191a1e=graf@amazon.de>)
- id 1twzHP-0002HZ-19
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:04:59 -0400
-Received: from smtp-fw-80008.amazon.com ([99.78.197.219])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twzHo-0002V9-6n
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:05:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=172191a1e=graf@amazon.de>)
- id 1twzHM-0002sm-VI
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:04:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1742889896; x=1774425896;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=xHULfJdpCjNNf+K8/84ojUi1JsIvOLMizSVmCF8JGDk=;
- b=F/Kg4yTBpijqy76LNrVyqRQFwS+kyZGTa5v8c2aZGVItFlXszKjOFXpD
- pbI+c9bQv7QfSTMQ0YkYW7/WGWXRzx+rr7lJHnu3o09RqLSHujH8s7ij4
- hNLRsSypfuYmLimCO7/9SekXQiwwaf1VbhkPO7sZbLBXfPMISrTNHaHuk Y=;
-X-IronPort-AV: E=Sophos;i="6.14,274,1736812800"; d="scan'208";a="181615274"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
- by smtp-border-fw-80008.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2025 08:04:51 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [10.0.38.20:16962]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.41.16:2525]
- with esmtp (Farcaster)
- id 01270109-b87e-4178-9dbe-fa5d0cab68dd; Tue, 25 Mar 2025 08:04:51 +0000 (UTC)
-X-Farcaster-Flow-ID: 01270109-b87e-4178-9dbe-fa5d0cab68dd
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Tue, 25 Mar 2025 08:04:51 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14; Tue, 25 Mar 2025
- 08:04:47 +0000
-Message-ID: <d79cff63-324f-4624-aef3-b6570cdb23e2@amazon.com>
-Date: Tue, 25 Mar 2025 09:04:45 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twzHl-00036Q-JJ
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:05:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742889919;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IMA2I6a6fX/tIYLx1OaKkKfCFgCUauy6VS4Y865aUK4=;
+ b=feh8efiwREQ8QzCM7dfSvq5Ljm1iV3otVNigdvxQU8j2Iny2BVpuR0tFlU3/FpnOoEjk1t
+ SrprvEInWbmJAd62AzQeNvLoeOSXS4n5sVwKM0f+VGOMXEssOXNHBnlzkIMfLmibUIjEhJ
+ Qg/aJiGFVkAdGaKqCX6zX0C1UjPdTo0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-FMgH2eiuMP2wbUgWTgo9dA-1; Tue,
+ 25 Mar 2025 04:05:17 -0400
+X-MC-Unique: FMgH2eiuMP2wbUgWTgo9dA-1
+X-Mimecast-MFC-AGG-ID: FMgH2eiuMP2wbUgWTgo9dA_1742889916
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44D431800266; Tue, 25 Mar 2025 08:05:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF42A1801756; Tue, 25 Mar 2025 08:05:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D86CC21E6773; Tue, 25 Mar 2025 09:05:11 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 5/5] qapi: delete un-needed python static analysis configs
+In-Reply-To: <20250321222347.299121-6-jsnow@redhat.com> (John Snow's message
+ of "Fri, 21 Mar 2025 18:23:47 -0400")
+References: <20250321222347.299121-1-jsnow@redhat.com>
+ <20250321222347.299121-6-jsnow@redhat.com>
+Date: Tue, 25 Mar 2025 09:05:11 +0100
+Message-ID: <871pulpmbs.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Gerd Hoffman <kraxel@redhat.com>
-CC: Ani Sinha <anisinha@redhat.com>, =?UTF-8?B?SsO2cmcgUsO2ZGVs?=
- <joro@8bytes.org>, Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Richard Henderson
- <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Igor
- Mammedov" <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
-References: <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
- <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
- <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
- <Z9vSeF67fNazkxBh@8bytes.org>
- <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
- <CAK3XEhNeB29eaPxZ_1Cc7WfEzOGZZPcvTc5uC1XAdtG0uNfDRw@mail.gmail.com>
- <h2s75tkddnrmodbbr7hxugrivpbhq7cfpbmhmgqmnn5mlafedk@jhv5cobgtjkc>
- <CAK3XEhPYmBsn2-=PMR7qVQHiu0ydoh3EfJOEuunLccriSkKipg@mail.gmail.com>
- <53jhridwtejsuy4qojjr66rcjdebnyarwke4bs3m3w2afmqhe6@pab5zfyo46fx>
- <4f6a21a9-746e-45ac-88c7-dc0204480a86@amazon.com>
- <kmqzqeaatk3iyrpl4tvfxtfv6gefyusxpyxtz5bollw7jlp3wk@5c4zawrzehwq>
-Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <kmqzqeaatk3iyrpl4tvfxtfv6gefyusxpyxtz5bollw7jlp3wk@5c4zawrzehwq>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D038UWB002.ant.amazon.com (10.13.139.185) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Received-SPF: pass client-ip=99.78.197.219;
- envelope-from=prvs=172191a1e=graf@amazon.de; helo=smtp-fw-80008.amazon.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,100 +86,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John Snow <jsnow@redhat.com> writes:
 
-On 24.03.25 18:53, Gerd Hoffman wrote:
-> On Mon, Mar 24, 2025 at 05:31:30PM +0100, Alexander Graf wrote:
->>>>>> What does all this mean for the hypervisor interface ?
->>>>> That means we'll go scratch the region list idea and depend on igvm
->>>>> instead.
->>>>> Which means we are back to the single firmware image.
->>>> So in this model, how are we passing the hashes of kernel, initrd and cmdline?
->>>> Are they going to be part of the firmware image as was previously thought?
->>> Either scratch the idea of using hashes to verify kernel + initrd +
->>> cmdline and use a secure boot signed UKI instead, or use IGVM firmware
->>> images and add the kernel hashes page to the igvm.
->> It's a nice idea to have a firmware IGVM file that contains a signature, so
->> you can for example have a RHEL provided IGVM that only runs UKIs that are
->> signed by Red Hat.
-> Yep, that is what should be possible when all this is ready.
+> The pylint config is being left in place because the settings differ
+> enough from the python/ directory settings that we need a chit-chat on
+> how to merge them O:-)
 >
->>    - Attestable Bootable Containers. In that case, the command line contains
->> a hash of the target fs-verity protected partition. Red Hat can not be the
->> entity signing that UKI. It must be the user.
-> Well, add-ons have been created to address exactly that:  Allow the UKI
-> being configured without changing it, so the UKI can be signed by redhat.
-> You'll go add user-signed add-on for the command line.
-
-
-The problem is that add-ons are
-
-   1) Separate binaries. So you need to match multiple files.
-   2) In this case, get generated out of the vendor (RH)'s control in a 
-one-off fashion.
-
-I don't think "signing" is the correct way to address the latter. It's 
-rather hashing. But I agree with you that it could (should?) be hashing 
-at the PE loader level similar or identical to Secure Boot rather than a 
-separate hashing mechanism.
-
-
+> Everything else can go.
 >
->>    - Add-ons. How do you provide a "debug add-on" and prevent it to gain any
->> access to confidential data?
-> Not sure I understand the point you are trying to raise.  Add-ons
-> signatures are checked too.
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  scripts/qapi/.flake8    | 3 ---
+>  scripts/qapi/.isort.cfg | 7 -------
+>  scripts/qapi/mypy.ini   | 4 ----
+>  3 files changed, 14 deletions(-)
+>  delete mode 100644 scripts/qapi/.flake8
+>  delete mode 100644 scripts/qapi/.isort.cfg
+>  delete mode 100644 scripts/qapi/mypy.ini
+>
+> diff --git a/scripts/qapi/.flake8 b/scripts/qapi/.flake8
+> deleted file mode 100644
+> index a873ff67309..00000000000
+> --- a/scripts/qapi/.flake8
+> +++ /dev/null
+> @@ -1,3 +0,0 @@
+> -[flake8]
+> -# Prefer pylint's bare-except checks to flake8's
+> -extend-ignore = E722
 
+python/setup.cfg has:
 
-2 points here here:
+   [flake8]
+   # Prefer pylint's bare-except checks to flake8's
+   extend-ignore = E722
+   exclude = __pycache__,
 
-   1) With add-ons, there are multiple binaries. We can't only pass a 
-single one.
-   2) The security posture of the system may be different between 2 
-validly signed images. Think of Daniel's example of verbose kernel 
-output. Maybe I consider verbose kernel output already inacceptable, 
-while RH thinks it's an ok posture to have. The user needs to have the 
-chance to differentiate between a system booted with or without verbose 
-kernel output.
+Good.
 
+> diff --git a/scripts/qapi/.isort.cfg b/scripts/qapi/.isort.cfg
+> deleted file mode 100644
+> index 643caa1fbd6..00000000000
+> --- a/scripts/qapi/.isort.cfg
+> +++ /dev/null
+> @@ -1,7 +0,0 @@
+> -[settings]
+> -force_grid_wrap=4
+> -force_sort_within_sections=True
+> -include_trailing_comma=True
+> -line_length=72
+> -lines_after_imports=2
+> -multi_line_output=3
 
->> So we need some equivalent of a hash page.
-> Ok.  So two opaque blobs, one which is measured into the launch
-> measurement and one which is not?  That gives you the option to pass
-> around hashes (or any other data) and leave a trace in the launch
-> measurement should you need that.
+python/setup.cfg has:
 
+   [isort]
+   force_grid_wrap=4
+   force_sort_within_sections=True
+   include_trailing_comma=True
+   line_length=72
+   lines_after_imports=2
+   multi_line_output=3
 
-Yes, I think you want to have one or multiple pages with what 
-effectively is a db append variable update blob. Or even a full variable 
-store blob. Then a built-in always-on UEFI Secure Boot that runs in 
-kernel mode rather than SMM. The IGVM should dictate the physical 
-location of that blob so that you can precalculate the launch digest 
-with the blob included. Ukify.py then generates the blob along with the 
-FUKI.
+Good.
 
->> That can absolutely integrate more deeply into UEFI and be actual PE
->> hashes rather than the icky thing the OVMF code does today.
-> How the measured opaque blob is actually used is not something
-> vmfwupdate needs to care about.
+> diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
+> deleted file mode 100644
+> index 8109470a031..00000000000
+> --- a/scripts/qapi/mypy.ini
+> +++ /dev/null
+> @@ -1,4 +0,0 @@
+> -[mypy]
+> -strict = True
+> -disallow_untyped_calls = False
+> -python_version = 3.8
 
+python/setup.cfg has:
 
-I agree, from a vmfwupdate point of view, we would basically have an 
-IGVM. The IGVM describes 2 special page (ranges?): One for the CPUID 
-special page, one for the variable store seed. To precalculate the 
-launch digest you would need the firmware IGVM, and the seed blob.
+   [mypy]
+   strict = True
+   python_version = 3.8
+   warn_unused_configs = True
+   namespace_packages = True
+   warn_unused_ignores = False
 
-All unauthenticated data, such as locations of the UKI and its add-ons 
-gets passed as parameter to the firmware IGVM.
+Also a bunch of [mypy-FOO] sections that don't apply here.
 
+You explained the differences in review of a prior iteration.  Recap:
 
->> But we need to support a way to embed the hash in the ukify.py
->> generated IGVM on the fly. With add-ons, maybe even multiple ones.
-> I'd prefer not patch the IGVM on the fly at boot time.
+} warn_unused_configs: Catches config values that aren't actually recognized
+} or used. Was helpful once upon a time when re-arranging the Python
+} directory to behave like a package to ensure that the conf files were
+} working correctly.
 
+Could this be culled now?
 
-Does the flow above align with your preferences? :)
+Hmm, according to mypy(1), strict implies warn-unused-configs.
 
+The question does not block this patch.
 
-Alex
+} namespace_packages: Needed for the python/ directory structure (nested
+} packages under a namespace, "qemu"). Doesn't impact scripts/qapi at all.
+} Read up on PEP420 if you are curious. Details in commit message, see below
+} if you're still curious.
+
+mypy(1) makes me suspect this is the default.  If that's true across the
+versions we care for, this could be culled.
+
+Also does not block this patch.
+
+} warn_unused_ignores: Needed once upon a time for cross-version mypy support
+} where some versions would warn in some cases and others would not. Adding
+} an ignore would effectively just invert which versions complained. Probably
+} still needed, but it's hard to measure.
+
+Harmless enough.
+
+} python_version: Changes mypy behavior regardless of the invoking python
+} interpreter to check the file as if it were to be executed by Python 3.8. I
+} actually want to remove this value from setup.cfg but haven't yet. I
+} removed it from the python-qemu-qmp repo and never added it for qapi.
+} Removing it is actually probably correct as it will catch errors specific
+} to various python versions we support, but there are some nits to iron out
+} in my neck of the woods. This is a case where scripts/qapi/ is stricter
+} than python/ :)
+} (Not reasonable to solve for this series.)
+
+Also present in the deleted file, so no change.
+
+} lack of disallow_untyped_calls = False: I think this might be a remnant
+} from when we gradually typed qapi; it's evidently no longer needed since
+} qapi still checks fine without this affordance. The default under strict is
+} True.
+
+Fair enough.
+
+Let's mention the differences in the commit message.  Here's my try:
+
+    Since the previous commit, python/setup.cfg applies to scripts/qapi/
+    as well.  Configuration files in scripts/qapi/ override
+    python/setup.cfg.
+
+    scripts/qapi/.flake8 and scripts/qapi/.isort.cfg actually match
+    python/setup.cfg exactly, and can go.
+
+    The differences between scripts/qapi/mypy.ini and python/setup.cfg
+    are harmless: [list the differences, explain why they're harmless as
+    long as you can keep it brief, and if not, fall back to "trust me"].
+    So scripts/qapi/mypy.ini can go, too.
+
+    The pylint config is being left in place because the settings differ
+    enough from the python/ directory settings that we need a chit-chat on
+    how to merge them O:-)
+
+With something like that
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
