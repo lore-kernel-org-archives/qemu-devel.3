@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0878C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E76C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twyBt-0004KQ-Dr; Tue, 25 Mar 2025 02:55:13 -0400
+	id 1twy9H-0005py-Bo; Tue, 25 Mar 2025 02:52:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twyA4-0007C0-3T; Tue, 25 Mar 2025 02:53:21 -0400
+ id 1twy8J-0004xe-VR; Tue, 25 Mar 2025 02:51:33 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twyA1-00020L-PA; Tue, 25 Mar 2025 02:53:19 -0400
+ id 1twy8I-0001jP-77; Tue, 25 Mar 2025 02:51:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 05F50107D82;
- Tue, 25 Mar 2025 09:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 27CA4107D6E;
+ Tue, 25 Mar 2025 09:49:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9CE341D5E8D;
- Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BEA311D5E7B;
+ Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8AE6C57062; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ id B7E5D5703E; Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Roman Kapl <rka@sysgo.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 64/69] target/ppc: Fix e200 duplicate SPRs
-Date: Tue, 25 Mar 2025 09:50:37 +0300
-Message-Id: <20250325065043.3263864-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 47/51] vdpa: Allow vDPA to work on big-endian machine
+Date: Tue, 25 Mar 2025 09:50:33 +0300
+Message-Id: <20250325065038.3263786-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
-References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
+References: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,38 +64,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
-DSRR0/1 registers are in the BookE ISA not e200 specific, so
-remove the duplicate e200 register definitions.
+Add .set_vnet_le() function that always returns success, assuming that
+vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
+outputs the message:
+"backend does not support LE vnet headers; falling back on userspace virtio"
 
-Cc: Roman Kapl <rka@sysgo.com>
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2768
-Fixes: 0e3bf4890906 ("ppc: add DBCR based debugging")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 73c0c904fc99e2ceecbbded84ec76d40d3f2daae)
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit b027f55a994af885a7a498a40373a2dcc2d8b15e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index efcb80d1c2..158b8035be 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2732,14 +2732,6 @@ static void init_proc_e200(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000); /* TOFIX */
--    spr_register(env, SPR_BOOKE_DSRR0, "DSRR0",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_generic,
--                 0x00000000);
--    spr_register(env, SPR_BOOKE_DSRR1, "DSRR1",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_generic,
--                 0x00000000);
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 94b68063e4..0d82205576 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -258,6 +258,18 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
  
-     init_tlbs_emb(env);
-     init_excp_e200(env, 0xFFFF0000UL);
+ }
+ 
++/*
++ * FIXME: vhost_vdpa doesn't have an API to "set h/w endianness". But it's
++ * reasonable to assume that h/w is LE by default, because LE is what
++ * virtio 1.0 and later ask for. So, this function just says "yes, the h/w is
++ * LE". Otherwise, on a BE machine, higher-level code would mistakely think
++ * the h/w is BE and can't support VDPA for a virtio 1.0 client.
++ */
++static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool enable)
++{
++    return 0;
++}
++
+ static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
+                                        Error **errp)
+ {
+@@ -421,6 +433,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .cleanup = vhost_vdpa_cleanup,
+         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
+         .has_ufo = vhost_vdpa_has_ufo,
++        .set_vnet_le = vhost_vdpa_set_vnet_le,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
+ };
 -- 
 2.39.5
 
