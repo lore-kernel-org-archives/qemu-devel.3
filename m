@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E94C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 07:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BB28C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 07:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twz2z-0005Jz-Dq; Tue, 25 Mar 2025 03:50:05 -0400
+	id 1twz68-0006Qo-VR; Tue, 25 Mar 2025 03:53:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1twz2m-0005IU-OD
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 03:49:53 -0400
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1twz2j-0000lq-OS
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 03:49:52 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDn7GgSYOJnWbJPDQ--.301S2;
- Tue, 25 Mar 2025 15:49:38 +0800 (CST)
-Received: from wangyuquan1236$phytium.com.cn ( [218.76.62.144] ) by
- ajax-webmail-mail (Coremail) ; Tue, 25 Mar 2025 15:49:37 +0800 (GMT+08:00)
-X-Originating-IP: [218.76.62.144]
-Date: Tue, 25 Mar 2025 15:49:37 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Yuquan Wang" <wangyuquan1236@phytium.com.cn>
-To: "Jonathan Cameron" <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH] docs/cxl: Add serial number for persistent-memdev
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
- 20240812(cfb32469) Copyright (c) 2002-2025 www.mailtech.cn
- mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
-In-Reply-To: <20250312181035.00006e32@huawei.com>
-References: <20250217112039.138650-1-wangyuquan1236@phytium.com.cn>
- <20250220161213.000049a9@huawei.com>
- <20250221065509-mutt-send-email-mst@kernel.org>
- <17b91a9f.2847.1955fd23d78.Coremail.wangyuquan1236@phytium.com.cn>
- <20250305141359.00001288@huawei.com>
- <4752672.2b5f.19565e01b65.Coremail.wangyuquan1236@phytium.com.cn>
- <20250312181035.00006e32@huawei.com>
-Content-Transfer-Encoding: base64
-X-CM-CTRLDATA: rc52s2Zvb3Rlcl90eHQ9MjkyMDozODM=
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twz67-0006QX-5e
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 03:53:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twz65-0001QF-14
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 03:53:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742889194;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ih4ZCts7KdtmIGttLE/z31TncmIqkNyg5qead0jt7NQ=;
+ b=hD5+G2XKmRkRPafSAA5bQMliSm0dn1d+ob46FHv1bkloD1WAdBY22m07x1NsOEiDqeTX0t
+ XYvv4VyzQQZe2DuftS71P+WbljZRSf4/PPWeoSSJWGKXE3UzK1M5sctR1CwD0fNgHgN+XT
+ 8JIYnWRyhRtUtXmajmEPAoCzhYUIdho=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-Qe5ZBKyhNjmRbGK_JOboPw-1; Tue,
+ 25 Mar 2025 03:52:59 -0400
+X-MC-Unique: Qe5ZBKyhNjmRbGK_JOboPw-1
+X-Mimecast-MFC-AGG-ID: Qe5ZBKyhNjmRbGK_JOboPw_1742889179
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B8581800267; Tue, 25 Mar 2025 07:52:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71788180B492; Tue, 25 Mar 2025 07:52:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 66D8C21E6773; Tue, 25 Mar 2025 08:52:53 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 4/5] python: add qapi static analysis tests
+In-Reply-To: <20250321222347.299121-5-jsnow@redhat.com> (John Snow's message
+ of "Fri, 21 Mar 2025 18:23:46 -0400")
+References: <20250321222347.299121-1-jsnow@redhat.com>
+ <20250321222347.299121-5-jsnow@redhat.com>
+Date: Tue, 25 Mar 2025 08:52:53 +0100
+Message-ID: <87jz8dpmwa.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Message-ID: <243092c2.4d3c.195cc474586.Coremail.wangyuquan1236@phytium.com.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: AQAAfwBna4cRYOJn6cdTAA--.8322W
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAAAWfhujoEA
-	wABsA
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3WFy5CF13tr17Ar1kZF4Dtwb_yoW3Gr1rp3
- W8Aa48Aw1UK3W7G3ySkw18AryUK3yUGr47Xw1vy390ywnrJrn8XrnxKFZ7J3Wjgay5trs8
- t3W7X390qr1UtrUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_BL=0.001,
- RCVD_IN_MSPIKE_ZBI=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,67 +86,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CgoKPiAtLS0tLeWOn+Wni+mCruS7ti0tLS0tCj4g5Y+R5Lu25Lq6OiAiSm9uYXRoYW4gQ2FtZXJv
-biIgPEpvbmF0aGFuLkNhbWVyb25AaHVhd2VpLmNvbT4KPiDlj5HpgIHml7bpl7Q6MjAyNS0wMy0x
-MyAwMjoxMDozNSAo5pif5pyf5ZubKQo+IOaUtuS7tuS6ujogIll1cXVhbiBXYW5nIiA8d2FuZ3l1
-cXVhbjEyMzZAcGh5dGl1bS5jb20uY24+Cj4g5oqE6YCBOiBxZW11LWRldmVsQG5vbmdudS5vcmcs
-IGxpbnV4LWN4bEB2Z2VyLmtlcm5lbC5vcmcKPiDkuLvpopg6IFJlOiBbUEFUQ0hdIGRvY3MvY3hs
-OiBBZGQgc2VyaWFsIG51bWJlciBmb3IgcGVyc2lzdGVudC1tZW1kZXYKPiAKPiBPbiBXZWQsIDUg
-TWFyIDIwMjUgMTg6MzU6NDAgKzA4MDAKPiBZdXF1YW4gV2FuZyA8d2FuZ3l1cXVhbjEyMzZAcGh5
-dGl1bS5jb20uY24+IHdyb3RlOgo+IAo+ID4gPiAKPiA+ID4gT24gVHVlLCA0IE1hciAyMDI1IDE0
-OjIyOjQ4ICswODAwCj4gPiA+IFl1cXVhbiBXYW5nIDx3YW5neXVxdWFuMTIzNkBwaHl0aXVtLmNv
-bS5jbj4gd3JvdGU6Cj4gPiA+ICAgCj4gPiA+ID4gPiAKPiA+ID4gPiA+IE9uIFRodSwgRmViIDIw
-LCAyMDI1IGF0IDA0OjEyOjEzUE0gKzAwMDAsIEpvbmF0aGFuIENhbWVyb24gd3JvdGU6ICAgIAo+
-ID4gPiA+ID4gPiBPbiBNb24sIDE3IEZlYiAyMDI1IDE5OjIwOjM5ICswODAwCj4gPiA+ID4gPiA+
-IFl1cXVhbiBXYW5nIDx3YW5neXVxdWFuMTIzNkBwaHl0aXVtLmNvbS5jbj4gd3JvdGU6Cj4gPiA+
-ID4gPiA+ICAgICAKPiA+ID4gPiA+ID4gPiBBZGQgc2VyaWFsIG51bWJlciBwYXJhbWV0ZXIgaW4g
-dGhlIGN4bCBwZXJzaXN0ZW50IGV4YW1wbGVzLgo+ID4gPiA+ID4gPiA+IAo+ID4gPiA+ID4gPiA+
-IFNpZ25lZC1vZmYtYnk6IFl1cXVhbiBXYW5nIDx3YW5neXVxdWFuMTIzNkBwaHl0aXVtLmNvbS5j
-bj4gICAgCj4gPiA+ID4gPiA+IExvb2tzIGdvb2QuICBJJ3ZlIHF1ZXVlZCBpdCB1cCBvbiBteSBn
-aXRsYWIgc3RhZ2luZyB0cmVlLCBidXQKPiA+ID4gPiA+ID4gTWljaGFlbCBpZiB5b3Ugd2FudCB0
-byBwaWNrIHRoaXMgb25lIGRpcmVjdGx5IHRoYXQncyBmaW5lIGFzIHdlbGwuICAgIAo+ID4gPiA+
-ID4gCj4gPiA+ID4gPiBTZWUgbm8gcmVhc29uIHRvLCBJIHdhcyBub3QgZXZlbiBDQydkLiAgICAK
-PiA+ID4gPiAKPiA+ID4gPiBIaSwgTWljaGFlbAo+ID4gPiA+IAo+ID4gPiA+IEknbSBzb3JyeSwg
-dGhpcyBpcyBteSBmYXVsdC4gSSB1c2VkICJnZXRfbWFpbnRhaW5lci5wbCIgdG8gY2hlY2sgdGhp
-cwo+ID4gPiA+IHBhdGNoJ3MgbWFpbnRhaW5lcnMgYnV0IGl0IHNob3dzICJObyBtYWludGFpbmVy
-cyBmb3VuZCwgcHJpbnRpbmcgcmVjZW50Cj4gPiA+ID4gY29udHJpYnV0b3JzIi4gCj4gPiA+ID4g
-ICAKPiA+ID4gSSB1c3VhbGx5IHN0YWdlIHVwIG11bHRpcGxlIHNlcmllcyB0b2dldGhlciBhbmQg
-c2VuZCBvbiB0byBNaWNoYWVsLgo+ID4gPiBTbyBpdCB3YXMgYmUgYmVpbmcgbGF6eSBmb3IgYSBt
-aW5vciBjaGFuZ2UgcmF0aGVyIHRoYW4gYW55dGhpbmcgbXVjaAo+ID4gPiB0aGF0IHlvdSBkaWQg
-d3JvbmcuCj4gPiA+IAo+ID4gPiBJZiBJIGdldCB0aW1lIEknbGwgcG9zdCBhIHNlcmllcyB3aXRo
-IHRoaXMgYSBmZXcgb3RoZXIgcGF0Y2hlcwo+ID4gPiBsYXRlciB0b2RheS4gIAo+ID4gPiAKPiA+
-ID4gSm9uYXRoYW4KPiA+ID4gICAKPiA+IFRoYW5rIHlvdSEKPiA+IAo+ID4gQlRXLCBJIGZvdW5k
-IGEgY29ybmVyIGNhc2UgaW4gQ1hMIG51bWEgbm9kZSBjcmVhdGlvbi4KPiA+IAo+ID4gQ29uZGl0
-aW9uOiAKPiA+IDEpIEEgVU1BL05VTUEgc3lzdGVtIHdpdGhvdXQgU1JBVCwgYnV0IHdpdGggQ0VE
-VC5DRk1XUwo+ID4gMu+8iUVuYWJsZSBDT05GSUdfQUNQSV9OVU1BCj4gPiAKPiA+IFJlc3VsdHM6
-Cj4gPiAxKSBhY3BpX251bWFfaW5pdDogdGhlIGZha2VfcHhtIHdpbGwgYmUgMCBhbmQgc2VuZCB0
-byBhY3BpX3BhcnNlX2NmbXdzKCkKPiA+IDLvvIlJZiBkeW5hbWljYWxseSBjcmVhdGUgY3hsIHJh
-bSByZWdpb24sIHRoZSBjeGwgbWVtb3J5IHdvdWxkIGJlIGFzc2lnbmVkCj4gPiB0byBub2RlMCBy
-YXRoZXIgdGhhbiBhIG5ldyBub2RlCj4gPiAKPiA+IENvbmZ1c2lvbnM6Cj4gPiAxKSBJcyBhIG51
-bWEgc3lzdGVtIGEgcmVxdWlyZW1lbnQgZm9yIENYTCBtZW1vcnkgdXNhZ2U/Cj4gCj4gT2J2aW91
-c2x5IGRpc2N1c3Npb24gaGFzIGdvbmUgb24gZWxzZXdoZXJlLCBidXQgSSdkIHNheSBpbiBnZW5l
-cmFsIGl0Cj4gd291bGQgYmUgYSBiYWQgaWRlYSB0byBub3QgaGF2ZSBhbiBTUkFUIGJlY2F1c2Ug
-dGhlIG1vbWVudCB3ZSBhZGQgQ1hMCj4gaXQgaXMgZGVmaW5pdGVseSBhIE5VTUEgc3lzdGVtIGFu
-ZCB3ZSB3YW50IHRoZSBHZW5lcmljIFBvcnQgZW50cnkgdG8KPiBhbGxvdyB1cyB0byBnZXQgcGVy
-ZiBpbmZvcm1hdGlvbi4KPiAKPiBTbyBJIHdvdWxkbid0IG1pbmQgaWYgd2UgZmFpbCBDWEwgaW5p
-dCBpbiB0aGlzIGNhc2UsIGJ1dCBtYXliZQo+IGl0IGlzIHdvcnRoIHBhcGVyaW5nIG92ZXIgdGhp
-bmdzLgo+IAo+IEpvbmF0aGFuCj4gCgpIaSwgSm9uYXRoYW4KClJlY2VudGx0eSBJIG1hbmFnZWQg
-dG8gZG8gc29tZSBob3QtcGx1ZyB0ZXN0cyBvbiBjeGwgdHlwZTMgZGV2aWNlIG9uIFFFTVUuCkkg
-dHJpZWQgdXNlICJkZXZpY2UgYWRkIiBxZW11IGNvbW1hbmQgaW4gbW9uaXRvciwgYnV0IGl0IGZh
-aWxlZC4gSSBhbHNvIHVzZWQKdW5iaW5kL2JpbmQgY3hsX3BjaSBkcml2ZXIgaW4gc3lzZnMsIEkg
-Y2FuIHNlZSB0aGUgc29mdHdhcmUgZmxvdyBvbiBkZXZpY2UgYnV0Cm5vIGV4cGVjdGVkIGFjdGlv
-bnMgb24gY3hsIHJvb3QgcG9ydHMgbGlua2VkKGxpa2UgcGNpZSBob3QtcGx1ZyBpbnRlcnJ1cHQg
-YW5kCnNvIG9uKS4KCkNvdWxkIHdlIHNpbXVsYXRlIGEgaG90LWFkZCBmbG93IG9mIHR5cGUzIGRl
-dmljZSBpbiBxZW11IG5vdz8gTWF5YmUgSSB1c2VkIHRoZQp3cm9uZyBtZXRob2QgOigKCll1cXVh
-bgoNCg0K5L+h5oGv5a6J5YWo5aOw5piO77ya5pys6YKu5Lu25YyF5ZCr5L+h5oGv5b2S5Y+R5Lu2
-5Lq65omA5Zyo57uE57uH5omA5pyJLOWPkeS7tuS6uuaJgOWcqOe7hOe7h+WvueivpemCruS7tuaL
-peacieaJgOacieadg+WIqeOAguivt+aOpeaUtuiAheazqOaEj+S/neWvhizmnKrnu4/lj5Hku7bk
-urrkuabpnaLorrjlj68s5LiN5b6X5ZCR5Lu75L2V56ys5LiJ5pa557uE57uH5ZKM5Liq5Lq66YCP
-6Zyy5pys6YKu5Lu25omA5ZCr5L+h5oGv44CCDQpJbmZvcm1hdGlvbiBTZWN1cml0eSBOb3RpY2U6
-IFRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaW4gdGhpcyBtYWlsIGlzIHNvbGVseSBwcm9wZXJ0
-eSBvZiB0aGUgc2VuZGVyJ3Mgb3JnYW5pemF0aW9uLlRoaXMgbWFpbCBjb21tdW5pY2F0aW9uIGlz
-IGNvbmZpZGVudGlhbC5SZWNpcGllbnRzIG5hbWVkIGFib3ZlIGFyZSBvYmxpZ2F0ZWQgdG8gbWFp
-bnRhaW4gc2VjcmVjeSBhbmQgYXJlIG5vdCBwZXJtaXR0ZWQgdG8gZGlzY2xvc2UgdGhlIGNvbnRl
-bnRzIG9mIHRoaXMgY29tbXVuaWNhdGlvbiB0byBvdGhlcnMu
+John Snow <jsnow@redhat.com> writes:
+
+> Update the python tests to also check qapi. No idea why I didn't do this
+> before. I guess I was counting on moving it under python/ and then just
+> forgot after that was NACKed. Oops, this turns out to be really easy.
+>
+> flake8, isort and mypy use the tool configuration from the existing
+> python directory (in setup.cfg). pylint continues to use the special
+> configuration located in scripts/qapi/ - that configuration is more
+> permissive. If we wish to unify the two configurations, that's a
+> separate series and a discussion for a later date.
+>
+> As a result of this patch, one would be able to run any of the following
+> tests locally from the qemu.git/python directory and have it cover the
+> scripts/qapi/ module as well. All of the following options run the
+> python tests, static analysis tests, and linter checks; but with
+> different combinations of dependencies and interpreters.
+>
+> - "make check-minreqs" Run tests specifically under our oldest supported
+>   Python and our oldest supported dependencies. This is the test that
+>   runs on GitLab as "check-python-minreqs". This helps ensure we do not
+>   regress support on older platforms accidentally.
+>
+> - "make check-tox" Runs the tests under the newest supported
+>   dependencies, but under each supported version of Python in turn. At
+>   time of writing, this is Python 3.8 to 3.13 inclusive. This test helps
+>   catch bleeding-edge problems before they become problems for developer
+>   workstations. This is the GitLab test "check-python-tox" and is an
+>   optionally run, may-fail test due to the unpredictable nature of new
+>   dependencies being released into the ecosystem that may cause
+>   regressions.
+>
+> - "make check-dev" Runs the tests under the newest supported
+>   dependencies using whatever version of Python the user happens to have
+>   installed. This is a quick convenience check that does not map to any
+>   particular GitLab test.
+>
+> (Note! check-dev may be busted on Fedora 41 and bleeding edge versions
+> of setuptools. That's unrelated to this patch and I'll address it
+> separately and soon. Thank you for your patience, --mgmt)
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+
+Let's mention this is a step towards having "make check" run the static
+analysis we want developers to run, but we're not there, yet.
+
+> ---
+>  python/setup.cfg            |  1 +
+>  python/tests/minreqs.txt    | 21 +++++++++++++++++++++
+>  python/tests/qapi-flake8.sh |  4 ++++
+>  python/tests/qapi-isort.sh  |  6 ++++++
+>  python/tests/qapi-mypy.sh   |  2 ++
+>  python/tests/qapi-pylint.sh |  6 ++++++
+>  scripts/qapi/pylintrc       |  1 +
+>  7 files changed, 41 insertions(+)
+>  create mode 100755 python/tests/qapi-flake8.sh
+>  create mode 100755 python/tests/qapi-isort.sh
+>  create mode 100755 python/tests/qapi-mypy.sh
+>  create mode 100755 python/tests/qapi-pylint.sh
+>
+> diff --git a/python/setup.cfg b/python/setup.cfg
+> index cf5af7e6641..84d8a1fd30d 100644
+> --- a/python/setup.cfg
+> +++ b/python/setup.cfg
+> @@ -47,6 +47,7 @@ devel =
+>      urwid >= 2.1.2
+>      urwid-readline >= 0.13
+>      Pygments >= 2.9.0
+> +    sphinx >= 3.4.3
+>  
+>  # Provides qom-fuse functionality
+>  fuse =
+> diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+> index 19c0f5e4c50..94928936d44 100644
+> --- a/python/tests/minreqs.txt
+> +++ b/python/tests/minreqs.txt
+> @@ -11,6 +11,9 @@
+>  # When adding new dependencies, pin the very oldest non-yanked version
+>  # on PyPI that allows the test suite to pass.
+>  
+> +# Dependencies for qapidoc/qapi_domain et al
+> +sphinx==3.4.3
+> +
+>  # Dependencies for the TUI addon (Required for successful linting)
+>  urwid==2.1.2
+>  urwid-readline==0.13
+> @@ -49,3 +52,21 @@ platformdirs==2.2.0
+>  toml==0.10.0
+>  tomlkit==0.10.1
+>  wrapt==1.14.0
+> +
+> +# Transitive sphinx dependencies
+> +Jinja2==2.7
+> +MarkupSafe==1.1.0
+> +alabaster==0.7.1
+> +babel==1.3
+> +docutils==0.12
+> +imagesize==0.5.0
+> +packaging==14.0
+> +pytz==2011b0
+> +requests==2.5.0
+> +snowballstemmer==1.1
+> +sphinxcontrib-applehelp==1.0.0
+> +sphinxcontrib-devhelp==1.0.0
+> +sphinxcontrib-htmlhelp==1.0.0
+> +sphinxcontrib-jsmath==1.0.0
+> +sphinxcontrib-qthelp==1.0.0
+> +sphinxcontrib-serializinghtml==1.0.0
+
+This wasn't there when I last saw this patch.  The previous patch also
+updates this file.  How did you decide which updates go where?  Or is
+this an accident?
+
+> diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
+> new file mode 100755
+> index 00000000000..7b5983d64a9
+> --- /dev/null
+> +++ b/python/tests/qapi-flake8.sh
+> @@ -0,0 +1,4 @@
+> +#!/bin/sh -e
+> +python3 -m flake8 ../scripts/qapi/ \
+> +        ../docs/sphinx/qapidoc.py \
+> +        ../docs/sphinx/qapi_domain.py
+
+Not linting docs/sphinx/qapidoc_legacy.py.  This is intentional (see its
+initial commit message).  Since we plan to drop it soon, there's no real
+need for a comment here, but mentioning it in the commit message
+wouldn't hurt.
+
+> diff --git a/python/tests/qapi-isort.sh b/python/tests/qapi-isort.sh
+> new file mode 100755
+> index 00000000000..f31f12d3425
+> --- /dev/null
+> +++ b/python/tests/qapi-isort.sh
+> @@ -0,0 +1,6 @@
+> +#!/bin/sh -e
+> +python3 -m isort --sp . -c ../scripts/qapi/
+> +# Force isort to recognize "compat" as a local module and not third-party
+> +python3 -m isort --sp . -c -p compat -p qapidoc_legacy \
+> +        ../docs/sphinx/qapi_domain.py \
+> +        ../docs/sphinx/qapidoc.py
+
+Comment on flake8 applies.
+
+> diff --git a/python/tests/qapi-mypy.sh b/python/tests/qapi-mypy.sh
+> new file mode 100755
+> index 00000000000..377b29b873b
+> --- /dev/null
+> +++ b/python/tests/qapi-mypy.sh
+> @@ -0,0 +1,2 @@
+> +#!/bin/sh -e
+> +python3 -m mypy ../scripts/qapi
+
+Not type-checking docs/sphinx/qapi_domain.py and docs/sphinx/qapidoc.py?
+Impractical due to us targeting an isanely wide Sphinx version range?
+
+> diff --git a/python/tests/qapi-pylint.sh b/python/tests/qapi-pylint.sh
+> new file mode 100755
+> index 00000000000..f4bb7a5a795
+> --- /dev/null
+> +++ b/python/tests/qapi-pylint.sh
+> @@ -0,0 +1,6 @@
+> +#!/bin/sh -e
+> +SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint \
+> +                                --rcfile=../scripts/qapi/pylintrc \
+> +                                ../scripts/qapi/ \
+> +                                ../docs/sphinx/qapidoc.py \
+> +                                ../docs/sphinx/qapi_domain.py
+
+Comment on flake8 applies.
+
+> diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
+> index d24eece7411..e16283ada3d 100644
+> --- a/scripts/qapi/pylintrc
+> +++ b/scripts/qapi/pylintrc
+> @@ -19,6 +19,7 @@ disable=consider-using-f-string,
+>          too-many-instance-attributes,
+>          too-many-positional-arguments,
+>          too-many-statements,
+> +        unknown-option-value,
+>          useless-option-value,
+>  
+>  [REPORTS]
+
+This wasn't there when I last saw this patch.  PATCH 1 also updates this
+file.  How did you decide which updates go where?  Or is this an
+accident?
 
 
