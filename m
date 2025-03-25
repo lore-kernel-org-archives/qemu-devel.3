@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1AA2C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 12:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D144DC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 13:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx3iG-0005na-6s; Tue, 25 Mar 2025 08:49:00 -0400
+	id 1tx3wH-00016V-Fs; Tue, 25 Mar 2025 09:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tx3iB-0005mr-W8
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:48:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1tx3iA-0006GA-7G
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:48:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742906932;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nIpTs37xBGdc5mfU36q2Optwtu0+Cl1Y7RxPG6aby3E=;
- b=b+a8WlwgAxOpBMDDSadUXOJd2ASeAo47mxt7CUepORuaMeduuopO60t9JnjfTqo2b/qhR5
- rsKst9N9H6NjW7L9lmFmKgBoK1Vs2W+1qq+x3y46Qbscqw19/lAVZPP84XIh/DZJeWu1yS
- eI85UhMu2ii+6dri38L0ikj5ActoFys=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-kuFRcnocMBiZaclKwu9LFw-1; Tue,
- 25 Mar 2025 08:48:49 -0400
-X-MC-Unique: kuFRcnocMBiZaclKwu9LFw-1
-X-Mimecast-MFC-AGG-ID: kuFRcnocMBiZaclKwu9LFw_1742906928
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A028B1903081; Tue, 25 Mar 2025 12:48:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.47])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0A48180A803; Tue, 25 Mar 2025 12:48:37 +0000 (UTC)
-Date: Tue, 25 Mar 2025 13:48:35 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Alberto Faria <afaria@redhat.com>
-Cc: qemu-devel@nongnu.org, Fam Zheng <fam@euphon.net>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- stefanha@redhat.com
-Subject: Re: [PATCH 2/2] scsi-disk: Add native FUA support
-Message-ID: <Z-KmIyWX8hxRNe2u@redhat.com>
-References: <20250304155232.1325581-1-afaria@redhat.com>
- <20250304155232.1325581-3-afaria@redhat.com>
- <Z8l56U16vyT7cnvi@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3vL-0000oi-Gu
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 09:02:45 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3vI-00081d-Vx
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 09:02:30 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43cfe63c592so53538615e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 06:02:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742907745; x=1743512545; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FI28d3al9G1K9slKxPKNzbPGTJUh0uXNQ2pfMhuk3Rw=;
+ b=FeW2qV7LahFFUJceDlnvQIkk48El1/PNaYGvxXpsFOOP8oSM0hF5ItuIoUVsSMgmN6
+ PrIs3RRrVf0TUgRjjLy5O5wTaM1LXMspUXwerZDANvIRFs4hBRrKqDGIrgcZ71/9paD3
+ aTl8g1eIvgY2k6SwEvSKaC8PjzXwM6GtP3nDo9IqXTvs3LW0klNopkPeEF3kybqYXtYx
+ DwKnU6ecBVtrJI9LgoqOIzSQrusc3+8ZsLT3HspKRJdnOe3YIoHqRTVPIaQ/GpOdwO6j
+ EZr62mig429AHcPj4FFa90bhpXVikv4/jD7jExGi0Rf8Y+JyKXimyGRQGwW8rmg38Y3f
+ +i+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742907745; x=1743512545;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FI28d3al9G1K9slKxPKNzbPGTJUh0uXNQ2pfMhuk3Rw=;
+ b=WsK0UblBaaNix4GWOw5YUaq8zFi3cIP5sTZhTr66NVffhtD7g9eaQwl7mKkbJx6D4h
+ ut0ddph4DC1LFG34oACGg+mRHRwfY2PJ829i0c0UzzynijX5sjBEz4K6sYD1nhIvljhr
+ l/56jyUvdAf+6em88AJYqWWSAdpkTweSTntqPTdfxsCJPy2ffX3iO7NbXsjb/zPEoUE7
+ /gUo1XweMZdlbWhjinMvZOcN2fXqGNyMhgZx3T7L2QhsKc7jb9R/PjA8pJRnWWw7rHB1
+ du1zTE7fMx4ZLxIDOObf0j3kiUbbec5Db3BDZTNe4X/tEdsUlTZFOqpkRmNmF7tOh8d6
+ /LWA==
+X-Gm-Message-State: AOJu0YzkKULPr/0j152gKbXaNVtG6Lg0zXtSGOPL70Dc8z5FmSzovPJa
+ QXVuZz+Scj1/1/LFW+swhzIEeKAv3f2dYvtz2EFgfkF0t3EouiUQqc92epKpFGP6X27wJ+0qOnC
+ h
+X-Gm-Gg: ASbGncs0gb/02fQAjTf12Gf4SXHSmwQ46D348a447+w+CwVyL+HT9Ga2s7V3uX4RMUC
+ 2Ia8BOdexCvNuG6DpuA3U2K6dWnA93mKQ98tNUrmM13lJdzk87ZRdE1Za85zaBOE0IY2BLsvxWf
+ TSI8df8FqhLExzOq8awlxTFQc4efPUPDdCdQZsMCHyp2tPcJ1LaXgkcIAoB2tNnDLH5/PS2T/tE
+ y7k5eKnz8balAvDRRjDxJn1BdRidjsLQ6rxObPxPZ859ysbo73aAvgKpwPL3qq9k7LYMpbZbmdc
+ zvNF9Q8pC6kq0OJ/dg89v1+c2ecwB/WQl/wcbQB0icBGq2Ll9KQMbdL/j2wT+bwHaIoHt3pMvTc
+ vzR6qk/WjbcD9EiVfNMQ=
+X-Google-Smtp-Source: AGHT+IEzeqCbUfPLvuwdx1q8hey8oeembA/H8J9h2Tg4riiFXtjL4FzH9420ZZEBN/fG/lGE/StzTQ==
+X-Received: by 2002:a05:600c:c0c:b0:43c:f64c:447f with SMTP id
+ 5b1f17b1804b1-43d50a35aaemr171833115e9.29.1742907743199; 
+ Tue, 25 Mar 2025 06:02:23 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d4fd18580sm148311815e9.16.2025.03.25.06.02.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 25 Mar 2025 06:02:22 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Paolo Bonzini <pbonzini@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
+Subject: [PATCH-for-10.1 0/5] exec: Remove TARGET_LONG_SIZE definition
+Date: Tue, 25 Mar 2025 14:02:15 +0100
+Message-ID: <20250325130221.76116-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z8l56U16vyT7cnvi@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,64 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 06.03.2025 um 11:33 hat Kevin Wolf geschrieben:
-> Am 04.03.2025 um 16:52 hat Alberto Faria geschrieben:
-> > Avoid emulating FUA when the driver supports it natively. This should
-> > provide better performance than a full flush after the write.
-> > 
-> > Signed-off-by: Alberto Faria <afaria@redhat.com>
-> 
-> Did you try out if you can see performance improvements in practice?
-> It's always nice to have numbers in the commit message for patches that
-> promise performance improvements.
+TARGET_LONG_SIZE is only used in 1 source file
+and 1 header. Remove it to be able to focus on
+making TARGET_LONG_BITS target agnostic.
 
-I was curious enough to see how this and the recent series by Stefan
-(virtio-scsi multiqueue) and myself (FUA on the backend + polling
-improvements) play out with virtio-scsi, so I just ran some fio
-benchmarks with sync=1 myself to compare:
+Philippe Mathieu-Daudé (5):
+  target/i386: Use explicit little-endian LD/ST API
+  gdbstub: Remove ldtul_be_p() and ldtul_le_p() macros
+  target/ppc/gdbstub: Replace TARGET_LONG_SIZE -> sizeof(target_ulong)
+  user/tswap: Replace TARGET_LONG_SIZE -> TARGET_LONG_BITS
+  exec/target_long: Remove TARGET_LONG_SIZE definition
 
-iops bs=4k cache=none           |    virtio-scsi    |     virtio-blk    |
-O_SYNC workload                 |   qd 1  |  qd 16  |   qd 1  |  qd 16  |
---------------------------------+---------+---------+---------+---------+
-master                          |   21296 |  109747 |   25762 |  130576 |
-+ virtio-scsi multiqueue        |   28798 |  121170 |       - |       - |
-+ FUA in scsi-disk              |   51893 |  204199 |       - |       - |
---------------------------------+---------+---------+---------+---------+
-Total change                    | +143.7% |  +86.1% |       - |       - |
+ include/exec/target_long.h           |  8 +++----
+ include/gdbstub/helpers.h            |  4 ----
+ include/user/tswap-target.h          |  2 +-
+ target/i386/gdbstub.c                | 24 ++++++++++-----------
+ target/i386/tcg/system/excp_helper.c |  4 ++--
+ target/i386/xsave_helper.c           | 32 ++++++++++++++--------------
+ target/ppc/gdbstub.c                 | 10 ++++-----
+ 7 files changed, 39 insertions(+), 45 deletions(-)
 
-(No new numbers for virtio-blk because virtio-scsi patches obviously
-don't change anything about it. Also no numbers for FUA in file-posix
-because it's unused with cache=none.)
-
-iops bs=4k cache=directsync     |    virtio-scsi    |     virtio-blk    |
-O_SYNC workload                 |   qd 1  |  qd 16  |   qd 1  |  qd 16  |
---------------------------------+---------+---------+---------+---------+
-master                          |   32223 |  109748 |   45583 |  258416 |
-+ FUA in file-posix + polling   |   32148 |  198665 |   58601 |  320190 |
-+ virtio-scsi multiqueue        |   51739 |  225031 |       - |       - |
-+ FUA in scsi-disk              |   56061 |  227535 |       - |       - |
---------------------------------+---------+---------+---------+---------+
-Total change                    |  +74.0% | +107.3% |  +28.6% |  +23.9% |
-
-Of course, the huge improvements on the virtio-scsi side only show how
-bad it was before. In most numbers it is still behind virtio-blk even
-after all three patch series (apart from cache=none where the
-availability of FUA on the device side makes a big difference, and I
-expect that virtio-blk will improve similarly once we implement it
-there).
-
-Also note that when testing the virtio-scsi multiqueue patches, this
-was still a single iothread, i.e. I wasn't even making use of the new
-feature per se. I assume much of this comes from enabling polling
-because the series moved the event queue handling to the main loop,
-which prevented polling for virtio-scsi before. The series also got rid
-of an extra coroutine per request for the blk_is_available() call in
-virtio_scsi_ctx_check(), which might play a role, too.
-
-Anyway, I like these numbers for FUA in scsi-disk. It makes write back
-cache modes almost catch up to write through with O_SYNC workloads. We
-should definitely get this merged and do the same for virtio-blk.
-
-Kevin
+-- 
+2.47.1
 
 
