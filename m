@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 382DEC3ABA1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359F8C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 01:39:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twtEb-0001Zc-K9; Mon, 24 Mar 2025 21:37:41 -0400
+	id 1twtEW-0001Xb-Ot; Mon, 24 Mar 2025 21:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twtEZ-0001Z4-E0
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:39 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1twtEP-0001W7-IQ
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:31 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twtEQ-0007QO-HF
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:32 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2243803b776so25110405ad.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 18:37:30 -0700 (PDT)
+ id 1twtEM-0007Pr-FM
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 21:37:27 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-22403cbb47fso96023825ad.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 18:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742866649; x=1743471449; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742866645; x=1743471445; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hy7YxU/BOkkmct0LEa6sX5iFnTbsVC/VEJwRAgXKmQ8=;
- b=DPY0Iwfgyv//K7WXSeaEv2tzdMiQFY/nRdF9la2TR6q/7Jm/0WbDDfbVRbSI1DXr4+
- I2l1pviPHuXFkoBME9BDGdR6M/VP1ffLsYa435rvzw10z3Q4bz8Ad+5D4lXvqCWsfTA9
- YD8GIDveIED0uBRWWNdS0AcfBdDB/NoEAC/2vOB5DJ5JsJODv3fju9IrQckghA7JKgrj
- /buQvMR7c2ruYYJNP83r/LHkXrY330ixFtjkN2nE559TSOyqnQM3lx3KOtTxrptDut0u
- 2eOOP+WSlqgJxt6DefeLMxU+VjJpv7vU/XjwtrKyhbHUjLkIzPwP+qrV+AwllDTuj3Zc
- 5jSA==
+ bh=73eju5b8PAtVZfnFlHNygTriKdBR5WLNyrjR3QHF0ZA=;
+ b=tZhzaiTo2jzCq9rGnjGJvhJlV666Vod6wmDXY6cU27FJHTkI60RGFdee4CAk6TJJlT
+ rIpqVBuwa+xY0MIZR/btfJ1mvw7WEQSOA3vhfzE9fmoRs3qPEMXBRIP2UK9b8jNeaJie
+ qqa5ZECAuFMHmHCla5OkWtvPYHfyA7iC314RElIBhF34uHXvnHZ03HW2zbTXwGbGVeV5
+ xIQT0DURQCPujDLJSbhMS9Ai3LeMb/h1tNg8uIzJuy6VL+fbjeCIW+D7W4H0cIafTxvM
+ q2jNK1++ogZ+yuu9WAIpqBvRQGBTHAsVSWu4Ud4FLA8d8KEKr0NUWq87clQvc29fk5Ru
+ y5nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742866649; x=1743471449;
+ d=1e100.net; s=20230601; t=1742866645; x=1743471445;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hy7YxU/BOkkmct0LEa6sX5iFnTbsVC/VEJwRAgXKmQ8=;
- b=kQshcRdUXA253ZsXEh+RdNdJe9Oh7yHcV1L9Oev39GCDvWqCZByFSrjSAJMt5Of6WW
- lj80y/HdBHk9Ikw2bX0gj1n0YrEA6aoBpAJWXMYYCqhu7HXArxkUvRo0sKVKD8LWu+up
- MwfmyZ9+MCV47owllGf2PnKlnRIco/t4/sBM5srZR6T9OCw1UeGnPpj8Wg0X/syxHsQR
- ceAq9U9Rknu7/A6OSKK54abrhbj7nMifOKEUopYrCv1OrEgcf7r8k3EzDZugqCGbjQO+
- +vwJ6YdajmA3LHBI1igGVyUJDigyEvGQP+wWsQUpUjxnI7sGGXPSbkLe9Iuy72kqjCiM
- fyeQ==
+ bh=73eju5b8PAtVZfnFlHNygTriKdBR5WLNyrjR3QHF0ZA=;
+ b=SMiophc+ppBSRLwHKwqi3HIXCcPexWPO8nejiLU9xMKhpTbSJCkmgiKZY9DLz5aiCU
+ 9ZZyUzRoOaboGIkwDc0DMvCW4+RpNQAp+3Ndge6lioAbBPQaMzTmOjhqRrDd9wx501P+
+ fGMD1v9F+TxenjRHH7k/Y2dltr9V2aAO+7OdPpxr/pVZTGlFg57yEVbTsQTvbTkFm0jX
+ rXkLigXJJXAuVojdK/e+A3ZbgP4DBnqiqvy8fEVjPsA5TWm+OUMydo0uIRNnpAcz3Gb4
+ WC7XcKBOO9Vr2y/jx0d1zBO1fHI+g+JCf4w0XfDxn0F9RJgr+8oNz2wVFTyH573IbWnq
+ ZOvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNGZhmHVFN5HfBQJw2brADUJn+suyaOrh3BZu8+OYF7y78F+xO8QsoMC5DdA3SwiFykWnBTPCiDRwJ@nongnu.org
-X-Gm-Message-State: AOJu0YxnJCmnVTra8qpPcyi7EekJYd83xrOYdMSghY9qKw4llxp10lxo
- hqgwSPK5ye23jGfb+WrTCyAosezvaUsMVfHIzZJeK/k1nL7WQYA5MVgLpYOAasA=
-X-Gm-Gg: ASbGnct2wbHDDGszcSausVCmZb0To+dTlgtQoDKsbRCG7tYsJz3zlV1BDcBd2Iw17I7
- i9Rrk71ffFSy5phe455/NP/6oOtv+Gv/G7gF2LCvpL2ioJcDcpYSDWzcT0qJnU54wmM7lriPnX+
- uIqyOIza8obILotWBUuuEIRi8Y3J4P3728bZs0F1/z4ArgLfgw/u0cmlCFYGLGvP08svwjHwBlV
- OiusPF7wowpiQF4N6bGCFUWR2xebmqswwc1XpG//zglj+BfWu37cBfsoahvLUPxdcJnF/tZUjit
- gPNXMueGomDvHzdi132x2GRJAF5nzDVYUV3IpZgJRdeYXmKlIy/oT9xbCg==
-X-Google-Smtp-Source: AGHT+IE0ViLTJJKIDYC+v+HjmD2dTkpz1tg1gxPDYjWHjlVt9rgnR8M9FQqYMVsIQunInfx02DfYAg==
-X-Received: by 2002:a05:6a00:2291:b0:735:7bc0:dcda with SMTP id
- d2e1a72fcca58-7390597e330mr21664245b3a.5.1742866648965; 
- Mon, 24 Mar 2025 18:37:28 -0700 (PDT)
+ AJvYcCVALxw/gwM+AKoKGMpY0CciNkExClo3qxlEtlSfCo+q5dSk6NdB8tb7Z+mH2QGpPVvr3yScl80+f09G@nongnu.org
+X-Gm-Message-State: AOJu0YxpFtZljL0RO+jXEg0p69u3x9Pb4/vHqR7ZhbPAzC6xYvOGxZX4
+ mx6l1YEjRxYcnyYSKIQSzmU7AnHn77NpKapoguoGFPcCfA4Z2uJLqNzPsUrarCE=
+X-Gm-Gg: ASbGncs1NAVDAo9jp8fZOYAuDQnJtR56GZf5otB6GIFzY7+nSd5ZmG44tXzfHtuOQTU
+ 1TlHq1TY7dnu6op1eFbQkHqoLymcbha3ZrgrDWjdzyoBuu3Jt/PLb6GIkXYi6LGAPyEeTt+CVPx
+ 8Kp1x76WLXzth5xXLxh5Ai2fEzKklRS6XXPHms3cX4lsuwuJkaQtlJMr5BS1g9ZzddBOCUf5aCB
+ 2buKNFhK0Zqda3J695XMih6DR6c5sg7f4XQqHOsDcRIvu5etBJN6F6XVs7IorsV1EmvcYCuillc
+ hizYKEZyaGslV70zA4fLmW2DnL8cdqRx7upZhKfiA0TKyWnSOMRP48x+Jw==
+X-Google-Smtp-Source: AGHT+IHfDbroOS1ZoUL1OayUMtVUZKYQWW/z735eNg/g17WHhtISdjS64F/4Vz3lewH3oj7sLRwJdQ==
+X-Received: by 2002:a05:6a00:3d43:b0:732:2923:b70f with SMTP id
+ d2e1a72fcca58-7390599ea49mr25946966b3a.11.1742866644872; 
+ Mon, 24 Mar 2025 18:37:24 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73906158ef2sm9090422b3a.141.2025.03.24.18.37.27
+ d2e1a72fcca58-73906158ef2sm9090422b3a.141.2025.03.24.18.37.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 18:37:28 -0700 (PDT)
-Message-ID: <a4f03a8b-4bfa-4039-97c8-11f1a04d4c94@linaro.org>
-Date: Mon, 24 Mar 2025 18:22:53 -0700
+ Mon, 24 Mar 2025 18:37:24 -0700 (PDT)
+Message-ID: <7f12053e-b9cf-4182-bbfc-bb96040776ae@linaro.org>
+Date: Mon, 24 Mar 2025 18:20:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/17] hw/avr: Move AtmegaMcuClass to atmega.h
+Subject: Re: [PATCH 12/17] target/avr: Handle offset_io in helper.c
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: mrolnik@gmail.com, philmd@linaro.org
 References: <20250323173730.3213964-1-richard.henderson@linaro.org>
- <20250323173730.3213964-17-richard.henderson@linaro.org>
+ <20250323173730.3213964-13-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250323173730.3213964-17-richard.henderson@linaro.org>
+In-Reply-To: <20250323173730.3213964-13-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,90 +104,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/23/25 10:37, Richard Henderson wrote:
+> Prepare for offset_io being non-zero in do_stb.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/avr/atmega.h | 20 ++++++++++++++++++++
->   hw/avr/atmega.c | 22 +---------------------
->   2 files changed, 21 insertions(+), 21 deletions(-)
+>   target/avr/helper.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/avr/atmega.h b/hw/avr/atmega.h
-> index a99ee15c7e..f031e6c10a 100644
-> --- a/hw/avr/atmega.h
-> +++ b/hw/avr/atmega.h
-> @@ -23,6 +23,10 @@
->   #define TYPE_ATMEGA1280_MCU "ATmega1280"
->   #define TYPE_ATMEGA2560_MCU "ATmega2560"
+> diff --git a/target/avr/helper.c b/target/avr/helper.c
+> index 9608e59584..3323f32c22 100644
+> --- a/target/avr/helper.c
+> +++ b/target/avr/helper.c
+> @@ -69,7 +69,8 @@ bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
 >   
-> +typedef struct AtmegaMcuClass AtmegaMcuClass;
-> +DECLARE_CLASS_CHECKERS(AtmegaMcuClass, ATMEGA_MCU,
-> +                       TYPE_ATMEGA_MCU)
-> +
->   typedef struct AtmegaMcuState AtmegaMcuState;
->   DECLARE_INSTANCE_CHECKER(AtmegaMcuState, ATMEGA_MCU,
->                            TYPE_ATMEGA_MCU)
-> @@ -32,6 +36,22 @@ DECLARE_INSTANCE_CHECKER(AtmegaMcuState, ATMEGA_MCU,
->   #define TIMER_MAX 6
->   #define GPIO_MAX 12
+>   static void do_stb(CPUAVRState *env, uint32_t addr, uint8_t data, uintptr_t ra)
+>   {
+> -    cpu_stb_mmuidx_ra(env, addr, data, MMU_DATA_IDX, ra);
+> +    cpu_stb_mmuidx_ra(env, addr + env_archcpu(env)->offset_io,
+> +                      data, MMU_DATA_IDX, ra);
+>   }
 >   
-> +struct AtmegaMcuClass {
-> +    /*< private >*/
-> +    SysBusDeviceClass parent_class;
-> +    /*< public >*/
-> +    const char *uc_name;
-> +    const char *cpu_type;
-> +    size_t flash_size;
-> +    size_t eeprom_size;
-> +    size_t sram_size;
-> +    size_t io_size;
-> +    size_t gpio_count;
-> +    size_t adc_count;
-> +    const uint8_t *irq;
-> +    const struct peripheral_cfg *dev;
-> +};
-> +
->   struct AtmegaMcuState {
->       /*< private >*/
->       SysBusDevice parent_obj;
-> diff --git a/hw/avr/atmega.c b/hw/avr/atmega.c
-> index d4fc9c4aee..96e36743bc 100644
-> --- a/hw/avr/atmega.c
-> +++ b/hw/avr/atmega.c
-> @@ -36,7 +36,7 @@ enum AtmegaPeripheral {
->   #define TIMER(n)    (n + TIMER0)
->   #define POWER(n)    (n + POWER0)
->   
-> -typedef struct {
-> +typedef struct peripheral_cfg {
->       uint16_t addr;
->       enum AtmegaPeripheral power_index;
->       uint8_t power_bit;
-> @@ -46,26 +46,6 @@ typedef struct {
->       bool is_timer16;
->   } peripheral_cfg;
->   
-> -struct AtmegaMcuClass {
-> -    /*< private >*/
-> -    SysBusDeviceClass parent_class;
-> -    /*< public >*/
-> -    const char *uc_name;
-> -    const char *cpu_type;
-> -    size_t flash_size;
-> -    size_t eeprom_size;
-> -    size_t sram_size;
-> -    size_t io_size;
-> -    size_t gpio_count;
-> -    size_t adc_count;
-> -    const uint8_t *irq;
-> -    const peripheral_cfg *dev;
-> -};
-> -typedef struct AtmegaMcuClass AtmegaMcuClass;
-> -
-> -DECLARE_CLASS_CHECKERS(AtmegaMcuClass, ATMEGA_MCU,
-> -                       TYPE_ATMEGA_MCU)
-> -
->   static const peripheral_cfg dev168_328[PERIFMAX] = {
->       [USART0]        = {  0xc0, POWER0, 1 },
->       [TIMER2]        = {  0xb0, POWER0, 6, 0x70, 0x37, false },
+>   void avr_cpu_do_interrupt(CPUState *cs)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
