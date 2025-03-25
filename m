@@ -4,79 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF88C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B38C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx504-0008WM-2l; Tue, 25 Mar 2025 10:11:29 -0400
+	id 1tx53y-000148-RV; Tue, 25 Mar 2025 10:15:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tx4zx-0008Vm-21
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:11:21 -0400
+ id 1tx53w-00013Z-0g
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:15:28 -0400
 Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tx4zu-0008Im-JP
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:11:20 -0400
+ id 1tx53s-0000OF-PE
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:15:27 -0400
 Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-227d6b530d8so37967305ad.3
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 07:11:17 -0700 (PDT)
+ d9443c01a7336-22435603572so103573105ad.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 07:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742911877; x=1743516677; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742912120; x=1743516920; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0q8ZHqHcodOf4u4kkY22ulJB8ppeZ/DHex6AS60GNm0=;
- b=NifAMpedZrSrSCSAJvF0DUlV+YixhRGsXSOmDG2PRN0VXf3HYegzua9Orq5q4xSowI
- HPbzJCB/BKMxtFUG8ucRMRWSmq8IL2rDbPayp6HDcQh+Bjey65IGElpeJ178a1ZGcWnI
- ZvarUYbo62QkXQPw2uuMrrqGbuTpOXjh/ryyH1PkkWOBSCk/YiXW+9cheYdYlfCT4vBm
- 3iZBHDU63SxGxVWH558eUOhekBejEFHUvk94ytulbQBGS1hNtpxSmGSLBzirG9rSxVul
- FaChkZO6zdwIMK0qgYMiSpCA4P0hHI84uVp9jxoyNvOE5VoDGNzgZoAeDTw4q3ocXy5B
- Py1A==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tzuXAwtMn/t76BOmKSNi/yBEvN7eFuMnVUBtlaqTRHA=;
+ b=ckD65es/ZycFPXdSTF98NAPGhvoaoEdeLBYwgTvC6mrnuVGtzJ8S6YQwBg1aB97X+T
+ q5N7yNqMNq9lfu/7NXniG4ZDSSAW9ZP2Y4n5pDMg88ds7FJPaT1G7Kgh6rbu3QtAhVqD
+ RsTROowwmzC/e4nMMaELIFkKkXePxN4RqixA03tRL/+8TAFhX7fX67Nj2GAOQJAZabaV
+ 0pW47xQJc4YXXOETFLUGTc3Ng20XV5K5w5ygyLgZPCGJBXpFATWHOkMwG8vgLW9rN1eO
+ uSBzvu8WB31PpIk8t2grNPiyQKGJsQfK9xckf3nE4wMciUx02bKKBb8NhsnEPJpirR5V
+ hMzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742911877; x=1743516677;
+ d=1e100.net; s=20230601; t=1742912120; x=1743516920;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0q8ZHqHcodOf4u4kkY22ulJB8ppeZ/DHex6AS60GNm0=;
- b=dFAzECgE/mGwVtuJkW+4zOCc334YEC5NyPSR8i07rwNg+puIU0O1k+Qupc2vxMSYjf
- UvzbcpNzkQ6mRmfLS7vxnYMEXvldBk5mNhigdF69LFCLwVOYZqITIdyn5laBXrIBzUsf
- fMcp6m6ttG/XSxGG7kMmjCUIJu1pEPTedXa2PJ42zEe1R7MRx7kTDRCRaOEq2277Pka5
- lZYbF2s8lK7F6eSrvTTZhIa1u2hK2n8paMzxtrpr7+uYFTZ8cAp7EA6IAjNJUiVASssv
- Y5A/Q8DrhapP1/GSSYgZkxsQfx/9wsiNHIpgze1KY562DBeWBJwrACJhZAbrHJsFW5QV
- XFpA==
-X-Gm-Message-State: AOJu0YyYNM50ZSYOmqP1p34j90O7OL28Lgv9nlTdN3PzecJTzrhZeZnP
- tsUQuEDqkKCvWfe9xBTJQtJR1LFKe/4fa5Uocuk+sw+rw9RIWdVtJYrGJ7D+4yuDMU32nyCBvQr
- p
-X-Gm-Gg: ASbGncttrMGtX46ri3A23lDkGy6fLgSj6rQv2tGOKVDoqTdEl6bp80iQBcrey48O/QP
- 7AJS/V8vbZfnd8R0jETr3L9SDMVvC7/ISA4diaPmyi1E9HyQ31T4PkakSvzJ6zKYsPQE13dCKer
- jf7NMhgSZ3gJ+ymVE6UWYgQkQdn6LZGTF2ltDwCtqfwZPHKj5yBizkrw2oAUw0tC2fSUrzgTXYg
- abhksVFEoa9FMrhVWstI7aGwA9cqBnxXLlH1cp0a9ZmoZPqKePMez2HFNfg1eoR7dCzNhT2oZgt
- STsk10ZzMxyQFFGZpxcBtDroJ7z6D17yQZd8KOm4fBH0grU3ZMWiunvKu/82Tl4yWKSJ6TpRCDr
- rW0RK5T82
-X-Google-Smtp-Source: AGHT+IGBNn7/SC+jtB4DGtfAKqT4Q7IhofNc+B6tfYOiCVk8EbAG4hhRBPaSc3nBqaTxxGQXLjsAkQ==
-X-Received: by 2002:a17:903:40cb:b0:224:1c41:a4cd with SMTP id
- d9443c01a7336-22780c50d38mr251174675ad.3.1742911876578; 
- Tue, 25 Mar 2025 07:11:16 -0700 (PDT)
+ bh=tzuXAwtMn/t76BOmKSNi/yBEvN7eFuMnVUBtlaqTRHA=;
+ b=cHZB3m2Yww+p1Pw9UcpHaUrnQv3AQ3IjZ2W1j2V+0/xCZKYCyClAEVGbC57leWnwp/
+ mGtEKrO/t4jP1Ywup0FPJ/wdZ2hDKaZ0iWxZMYW0OB2U9t8qvGzYrJjp5VWOIb3mff07
+ zxOf7sQ7NaksDZv5FKSAfd60WRwAgMy1OKZugKz5/a2wIVSrmfgXjycFtAXIQednsoJO
+ dX3u6LY6NPVOQjYTnhonIDJ+ay4I1sJ6sEkn/Xx5n/Rib1ssZcdjyw7UhNqRlRkSZ/lG
+ rb/62vRCs/8u3kg3Vto+gsUOi8qYFJmoISF1ih3u0W9Td8BWiW32+SjV1KDdxtOF6jFI
+ 5/1g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXETjlDBGC6iDCdV6GvIFDmAEIzxnYWUqbzbdvhXCHthbQEtcgyR28OiBkO1ngkSPvH5RKxrP90+tfy@nongnu.org
+X-Gm-Message-State: AOJu0YwZ/jQsYPqB6XRyRxOQCvn9sE1X7/U1Upx/BDhauzXnB52QGeYA
+ MYR6m7KTqufxxYSjFQbK9vpWv+6bpVDGEpYjTfhoJRfxItA9jnqfjTkgqYtfy4g=
+X-Gm-Gg: ASbGnctUoM8l1qlbJJGEmlA0gsHdOSPjPdyhaA2VmCzYv2HmGjKi643+Ogk4n359Q2R
+ 1EPDK4RpcBmpFG9s1a4h3/ZAnEYoLCJC8YK1h3oPTDhM7H784uBKIqn3aIte/BAMZscyBsN2JZL
+ vg0+QEAW8pP5svHZjSvGJz4vMxzwwzgepc6t6EY5bMUZ3vU/5dYXBs8GQX00czmQSJEArYLtej0
+ 1sWTfn6F3Ke0jLg3piJAgcwOR0Lu7hO4ZEvYdefn7AjWTEKT9ehGPhU7gKCFXyBg4nz8KrsXaqt
+ dnsJxrzVk0taGpL7Tv87sxoyJDMrLbsgCeen7YBp10lMIH90WUJX3+JfXJa51EmYRbVR59aKlM+
+ f99faquQM
+X-Google-Smtp-Source: AGHT+IG7Zg5SL7AdUiNEjn+5RT6svJ+SNwtQmmCXH4fHKNc7FHAidPyy82jJnr6xcyiwhjVeSUIxZA==
+X-Received: by 2002:a17:903:40cb:b0:224:e33:8896 with SMTP id
+ d9443c01a7336-22780c536c7mr260984905ad.11.1742912119458; 
+ Tue, 25 Mar 2025 07:15:19 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-227811da2eesm90458725ad.172.2025.03.25.07.11.16
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-227811da2e3sm89843085ad.174.2025.03.25.07.15.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Mar 2025 07:11:16 -0700 (PDT)
-Message-ID: <2bfe3f4b-95d3-46a3-8236-75e7a8210a9f@linaro.org>
-Date: Tue, 25 Mar 2025 07:11:14 -0700
+ Tue, 25 Mar 2025 07:15:19 -0700 (PDT)
+Message-ID: <d9a81b84-fd34-4a4c-bb6e-fc5f0e5ce18b@linaro.org>
+Date: Tue, 25 Mar 2025 07:15:17 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 1/4] target/sparc: Expose more CPU features
-To: qemu-devel@nongnu.org
-References: <20250325123927.74939-1-philmd@linaro.org>
- <20250325123927.74939-2-philmd@linaro.org>
+Subject: Re: [PATCH-for-10.1 0/5] exec: Remove TARGET_LONG_SIZE definition
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Riku Voipio <riku.voipio@iki.fi>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ qemu-ppc@nongnu.org
+References: <20250325130221.76116-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250325123927.74939-2-philmd@linaro.org>
+In-Reply-To: <20250325130221.76116-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
@@ -103,52 +110,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/25/25 05:39, Philippe Mathieu-Daudé wrote:
-> Various features were not displayed or settable from command line.
-> 
-> Diff of 'qemu-system-sparc -cpu help':
-> 
->   ...
->     TI-SuperSparc-60     (IU 40000000 FPU 00000000 MMU 01000800 NWINS 8)
->     TI-SuperSparc-61     (IU 44000000 FPU 00000000 MMU 01000000 NWINS 8)
->     TI-SuperSparc-II     (IU 40000000 FPU 00000000 MMU 08000000 NWINS 8)
->   - LEON2                (IU f2000000 FPU 00080000 MMU f2000000 NWINS 8)
->   - LEON3                (IU f3000000 FPU 00080000 MMU f3000000 NWINS 8)
->   + LEON2                (IU f2000000 FPU 00080000 MMU f2000000 NWINS 8) +shutdown
->   + LEON3                (IU f3000000 FPU 00080000 MMU f3000000 NWINS 8) +shutdown +asr17 +cachectrl +powerdown +casa
->    Default CPU feature flags (use '-' to remove): mul div fsmuld
->   -Available CPU feature flags (use '+' to add): float128
->   +Available CPU feature flags (use '+' to add): shutdown asr17 cachectrl powerdown casa float128
->    Numerical features (use '=' to set): iu_version fpu_version mmu_version nwindows
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/sparc/cpu.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-> index 57161201173..37406227cb7 100644
-> --- a/target/sparc/cpu.c
-> +++ b/target/sparc/cpu.c
-> @@ -548,6 +548,11 @@ static const sparc_def_t sparc_defs[] = {
->   /* This must match sparc_cpu_properties[]. */
->   static const char * const feature_name[] = {
->       [CPU_FEATURE_BIT_FLOAT128] = "float128",
-> +    [CPU_FEATURE_BIT_TA0_SHUTDOWN] = "shutdown",
-> +    [CPU_FEATURE_BIT_POWERDOWN] = "powerdown",
-> +    [CPU_FEATURE_BIT_CACHE_CTRL] = "cachectrl",
-> +    [CPU_FEATURE_BIT_ASR17] = "asr17",
-> +    [CPU_FEATURE_BIT_CASA] = "casa",
->   #ifdef TARGET_SPARC64
->       [CPU_FEATURE_BIT_CMT] = "cmt",
->       [CPU_FEATURE_BIT_GL] = "gl",
+On 3/25/25 06:02, Philippe Mathieu-Daudé wrote:
+> Philippe Mathieu-Daudé (5):
+>    target/i386: Use explicit little-endian LD/ST API
+>    gdbstub: Remove ldtul_be_p() and ldtul_le_p() macros
+>    target/ppc/gdbstub: Replace TARGET_LONG_SIZE -> sizeof(target_ulong)
+>    user/tswap: Replace TARGET_LONG_SIZE -> TARGET_LONG_BITS
+>    exec/target_long: Remove TARGET_LONG_SIZE definition
 
-I'm not convinced this is a good idea.
-
-The only effect of disabling these is to break LEON kernels. These features are not 
-exposed for kernel discovery, so you can't just turn them on and have them used on 
-supersparc either.  They will certainly break anything sparc64.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
