@@ -4,94 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA0CC36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 08:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DADBC36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 08:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twzmb-0007iA-Rb; Tue, 25 Mar 2025 04:37:13 -0400
+	id 1twzqH-0000Ju-Oh; Tue, 25 Mar 2025 04:41:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1twzmY-0007hP-5v
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:37:10 -0400
-Received: from mail-qv1-xf2b.google.com ([2607:f8b0:4864:20::f2b])
+ id 1twzqE-0000JE-8a
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:40:58 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1twzmV-00070C-8M
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:37:09 -0400
-Received: by mail-qv1-xf2b.google.com with SMTP id
- 6a1803df08f44-6e8fce04655so49572166d6.3
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 01:37:06 -0700 (PDT)
+ id 1twzqA-0007hn-3a
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:40:56 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2254e0b4b79so94201435ad.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 01:40:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1742891825; x=1743496625;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1742892052; x=1743496852;
  darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SP3DjIET/stR6++mvR7CmAy+9GiFj4hrMIx/d1aW+/I=;
- b=YUT6R5Xwg+KB2waXemuNSr6exbmBt0QT20/ALkOvUW8S93OREBNFeziTAeT7LNQYUq
- gjId7Q6kGWdrWUyJnYZG4juZfXpUAA2eg4wKbFwnh36Rx4HYo6HojndvMKOvXZvep4/j
- Ye5mMUj8z+7MdCPDjA+rZPntZ31yyGnjLDOHCGrzn19To+z5CGxV1QzlONTQkiraQSUC
- 00l1qEAsJEbUYcLVPPthz72Z+Z+mzEg6VHpbax0E8fww1mNSMzBurY5uWgv+sP1db0Mm
- tshEDMUyMCcCdyWoTggs6P9pse7X0X5jEfALjYLoMRhhdhMXUrqrgcb1+suf6rJuinHJ
- 1frw==
+ bh=N7jLg/5/bPqNbiEJFTOgXX/riLPjGBdOy0BRo0JXC+M=;
+ b=jgzreywi3R8f/1Iair1hUCOaVpAy2vvpIwkDwK8P3jT2F8tecLFrLe0zB+hErNiFM3
+ FOXJWpBbx3HQa2s4Na81ogl+FZ8vQPhQFY3AYHNuPHXabogDJ8ax07DEtgPQupILx/UJ
+ 4/k4drcw0g8u4QHEaC0q0NDkGGdUkWt8sOm8uMcV6Uw6halU31JBSMWegSF1iASEeFr0
+ MAEddG5utElZwIYEc1HVGxvTB0jcuiK/1WyMpHIIEbrFyKEkjOni4yh1y0tVb5aQUwB0
+ SoxA7s0nSTvPZS0mNb9BxR2FPCVLmUce8WVTfCxNZbhXQZFkFWm7ab0b4tTfiHeGFMSS
+ 0D3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742891825; x=1743496625;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1742892052; x=1743496852;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SP3DjIET/stR6++mvR7CmAy+9GiFj4hrMIx/d1aW+/I=;
- b=nwV9+yjwpCHZ5Ho/Yw7ZAQjNxmWmIVNZSnVt2CfYDYoPQoLs9zIquFkZbT9RySOBhK
- ZIjmm7SobC3n1BFBWWom8RX8ZqAitzH+rR4ZFqr7YMrGZtn/d2lT4bgojJSkd+a3O8Yd
- Z2tTxiORBNz//hA9jtJNQXE0+UcjDndg3kh4lNOWHmlt+qBNEQJf70Ms1miwi+BO0Y76
- Q/499j792om88hYuas5Lc2bdLN6MWu/3tW7UHN8eHTantEZUNWLqbpR2LGOMvscBfHdw
- lbwjdNn1a0tGDfHxu226rH3wNUX/b7rt0GKhT8VVo9UQU+gh1JL4PhcLuSLIGikVdH2s
- 0gRA==
-X-Gm-Message-State: AOJu0YwSLv7DvTgKADZEyX2JThcMfZWxK40Iz1Okfa6E7A3laERZ/VJv
- T6kdfQzuxLvZVzkSyamvde4UJa+jR8lL7ERdldMl4iWNyu9Fn8wfxk2atUtwYzpTXlz/H7d+3XM
- 40XB8HqJ6vv7Gg1WRU19zaExiNYfhk9z1bTnk9w==
-X-Gm-Gg: ASbGncv8nTYVeDsVkoqZppa8atHli8n1JTJkUD9nEZgrZSM1SVpctDRMwCLWPxnKQgG
- 1L0eyD09d1tQSt6dQ5eL/vDIapcbSS4a2fmvxNUJsYDZwkjwT9Mb9XYkJF/FaehQ6x8Ot6H7p0K
- P/aze8LGSBszhd682EDMsJmWojZA==
-X-Google-Smtp-Source: AGHT+IF7281NZEquKsibVEouI0403+oGT0fWoXmMO+kVjWQFTcmc2sMtQikzq6UgMiMx3ZahdEai6SyTb5jLAi5olW8=
-X-Received: by 2002:a05:6214:529e:b0:6e4:4085:9f72 with SMTP id
- 6a1803df08f44-6eb3f26e8c8mr219006596d6.7.1742891824741; Tue, 25 Mar 2025
- 01:37:04 -0700 (PDT)
-MIME-Version: 1.0
+ bh=N7jLg/5/bPqNbiEJFTOgXX/riLPjGBdOy0BRo0JXC+M=;
+ b=QSHQNN+Krh26lnd0YgHZj20P1VjGaoCeGcIIwborlUxdikuKz7IEkyrMuGtO4lqznN
+ hBPIwZuTw34UV35bYk4hpHDcZrHbF/tSLcXEXzECyttB+qO5wRWJE0YXPGwBkHUPPACw
+ kzT2YsKdmcWv7bI9m3xnAFSVUuezNHZCEolND7OcG4NPjMJ+kyQOwxsSQASGoFk3MWcb
+ 9Kn537XwTjt/bMX3Rem1dP2wGgFtjbUZcXSbPFSHazxfLlxZvvCpcm6Hpeg56nOmLjnf
+ HNiqrtWhmAE/GkIbmzRTvggSO3JSL/Qrxw14seg+EKr8mlAuEL3WBAMn7JFEChkl3fDk
+ DYYA==
+X-Gm-Message-State: AOJu0Yx94Nt7LoCn9cRJsS3HTbkFdYxpGOmzwA6DB+gZP36Nrl7aB3bX
+ 4T9ozDesZGI68UXlrtSNmGTIvahokqz5lwiNpV+T3XQTiqxbQJoO1h887x6sJzI=
+X-Gm-Gg: ASbGncvBLTutQrw4Npk6xXMBWJM1u7FVG5FL/Uk63ndSMgbT+oo9zRVvpBPfWxNgJ5R
+ /qS1jILJ1TCd1TpuLr7hUajiD4d3kKOAuEYW80jnHJzbpc9XzkjBXOMG78KHEopgZ7aXYJ7fySi
+ xijtM194PfMtK25qyAggzejchJO6gFniR8d5D1rx+7eZgY8BANIkofQHKbHD1ILDCMLRUbWMGal
+ c4TPIByZCG/pZ/HgVLSvf4/Sx1QI1+RShtHr3ldMAJpN4D3akWGD7IWfrfkNqA6w667dOE9GfpF
+ QPINZ8j4inNH6VViQmEUgiAPQSR9RXQrEQz/X4tgNX4Xf53ViH499g==
+X-Google-Smtp-Source: AGHT+IF+DNf9+5nzy6lW5Eghx/P2YTehbj/ArEkobqROCjt9Bh+iSlEmh0O7u1tWVzJQYnu0L/7Tzg==
+X-Received: by 2002:a17:903:298b:b0:223:5a6e:b16 with SMTP id
+ d9443c01a7336-22780c55886mr295004415ad.5.1742892051546; 
+ Tue, 25 Mar 2025 01:40:51 -0700 (PDT)
+Received: from smtpclient.apple ([62.192.175.172])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73905fa4021sm9892930b3a.13.2025.03.25.01.40.47
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 25 Mar 2025 01:40:51 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
+Subject: Re: [PATCH v2 3/3] vhost-user: return failure if backend crash when
+ live migration
+From: Haoqian He <haoqian.he@smartx.com>
+In-Reply-To: <scj244d5eifrvxe7qgz4aszeg7wbjxzhh6tdccuzxkj5k3jxvi@ujonxzfmd3tb>
+Date: Tue, 25 Mar 2025 16:39:46 +0800
+Cc: qemu-devel@nongnu.org, Li Feng <fengli@smartx.com>, yuhua@smartx.com,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4DC039FB-6711-4FAC-9FCF-FB59E6B1151E@smartx.com>
 References: <20250309090708.3928953-1-haoqian.he@smartx.com>
  <20250314101535.1059308-1-haoqian.he@smartx.com>
- <20250314101535.1059308-3-haoqian.he@smartx.com>
- <ho2s47wmeqgeh6otsx4ttqdy3zudgehkokth2ccubsoywzvqhp@mv45e5do5rj7>
- <780BAD55-0C1E-4DE6-92F8-C6203F6CC350@smartx.com>
- <y57skxgavl6g2j6syekaefkgyyfwodj2u7execoo4meky6k2x2@u4gmzfu4cth2>
-In-Reply-To: <y57skxgavl6g2j6syekaefkgyyfwodj2u7execoo4meky6k2x2@u4gmzfu4cth2>
-From: Haoqian He <haoqian.he@smartx.com>
-Date: Tue, 25 Mar 2025 16:36:53 +0800
-X-Gm-Features: AQ5f1JqBqTsfGDW0yrFHU_TJ7CK8mpJOrVpMtrMJxV-XNJYgSc695gQOXGQ-k3w
-Message-ID: <CAPbyyq8+S9T2d=p5ywRYU5HWdafjTrwFcf4Mk6eiXu4oKA-QzQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] vhost: return failure if stop virtqueue failed in
- vhost_dev_stop
+ <20250314101535.1059308-4-haoqian.he@smartx.com>
+ <5wblbg4qq7lmfrycksxo45ynh566gbzocwtim6yy6hiibus66a@fb75vbwpz5r5>
+ <C1643EB1-EBA7-4627-A1E9-BB4F8CC688A2@smartx.com>
+ <scj244d5eifrvxe7qgz4aszeg7wbjxzhh6tdccuzxkj5k3jxvi@ujonxzfmd3tb>
 To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, Li Feng <fengli@smartx.com>, yuhua@smartx.com, 
- Raphael Norwitz <raphael@enfabrica.net>, "Michael S. Tsirkin" <mst@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- "open list:Block layer core" <qemu-block@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2b;
- envelope-from=haoqian.he@smartx.com; helo=mail-qv1-xf2b.google.com
+X-Mailer: Apple Mail (2.3731.500.231)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,213 +114,419 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-2025=E5=B9=B43=E6=9C=8824=E6=97=A5 22:25=EF=BC=8CStefano Garzarella <sgarza=
-re@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
 
-On Thu, Mar 20, 2025 at 08:21:25PM +0800, Haoqian He wrote:
+> 2025=E5=B9=B43=E6=9C=8824=E6=97=A5 22:31=EF=BC=8CStefano Garzarella =
+<sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> On Thu, Mar 20, 2025 at 08:21:30PM +0800, Haoqian He wrote:
+>>=20
+>>=20
+>>> 2025=E5=B9=B43=E6=9C=8819=E6=97=A5 23:20=EF=BC=8CStefano Garzarella =
+<sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
+>>>=20
+>>> On Fri, Mar 14, 2025 at 06:15:34AM -0400, Haoqian He wrote:
+>>>> Live migration should be terminated if the backend crashes before
+>>>> the migration completes.
+>>>>=20
+>>>> Since the vhost device will be stopped when VM is stopped before
+>>>> the end of the live migration, current implementation if vhost
+>>>> backend died, vhost device's set_status() will not return failure,
+>>>> live migration won't perceive the disconnection between qemu and
+>>>> vhost backend, inflight io would be submitted in migration target
+>>>> host, leading to IO error.
+>>>>=20
+>>>> To fix this issue:
+>>>> 1. Add set_status_ext() which has return value for
+>>>> VirtioDeviceClass and vhost-user-blk/scsi use the _ext version.
+>>>>=20
+>>>> 2. In set_status_ext(), return failure if the flag `connected`
+>>>> is false or vhost_dev_stop return failure, which means qemu lost
+>>>> connection with backend.
+>>>>=20
+>>>> Hence migration_completion() will process failure, terminate
+>>>> migration and restore VM.
+>>>>=20
+>>>> Signed-off-by: Haoqian He <haoqian.he@smartx.com>
+>>>> ---
+>>>> hw/block/vhost-user-blk.c             | 29 =
++++++++++++++++------------
+>>>> hw/scsi/vhost-scsi-common.c           | 13 ++++++------
+>>>> hw/scsi/vhost-user-scsi.c             | 20 ++++++++++--------
+>>>> hw/virtio/virtio.c                    | 20 +++++++++++++-----
+>>>> include/hw/virtio/vhost-scsi-common.h |  2 +-
+>>>> include/hw/virtio/virtio.h            |  1 +
+>>>> 6 files changed, 52 insertions(+), 33 deletions(-)
+>>>>=20
+>>>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+>>>> index ae42327cf8..4865786c54 100644
+>>>> --- a/hw/block/vhost-user-blk.c
+>>>> +++ b/hw/block/vhost-user-blk.c
+>>>> @@ -204,7 +204,7 @@ err_host_notifiers:
+>>>> return ret;
+>>>> }
+>>>>=20
+>>>> -static void vhost_user_blk_stop(VirtIODevice *vdev)
+>>>> +static int vhost_user_blk_stop(VirtIODevice *vdev)
+>>>> {
+>>>> VHostUserBlk *s =3D VHOST_USER_BLK(vdev);
+>>>> BusState *qbus =3D BUS(qdev_get_parent_bus(DEVICE(vdev)));
+>>>> @@ -212,26 +212,26 @@ static void vhost_user_blk_stop(VirtIODevice =
+*vdev)
+>>>> int ret;
+>>>>=20
+>>>> if (!s->started_vu) {
+>>>> -        return;
+>>>> +        return 0;
+>>>> }
+>>>> s->started_vu =3D false;
+>>>>=20
+>>>> if (!k->set_guest_notifiers) {
+>>>> -        return;
+>>>> +        return 0;
+>>>> }
+>>>>=20
+>>>> -    vhost_dev_stop(&s->dev, vdev, true);
+>>>> +    ret =3D vhost_dev_stop(&s->dev, vdev, true);
+>>>>=20
+>>>> -    ret =3D k->set_guest_notifiers(qbus->parent, s->dev.nvqs, =
+false);
+>>>> -    if (ret < 0) {
+>>>> +    if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < =
+0) {
+>>>>    error_report("vhost guest notifier cleanup failed: %d", ret);
+>>>> -        return;
+>>>> +        return -1;
+>>>> }
+>>>>=20
+>>>> vhost_dev_disable_notifiers(&s->dev, vdev);
+>>>> +    return ret;
+>>>> }
+>>>>=20
+>>>> -static void vhost_user_blk_set_status(VirtIODevice *vdev, uint8_t =
+status)
+>>>> +static int vhost_user_blk_set_status(VirtIODevice *vdev, uint8_t =
+status)
+>>>> {
+>>>> VHostUserBlk *s =3D VHOST_USER_BLK(vdev);
+>>>> bool should_start =3D virtio_device_should_start(vdev, status);
+>>>> @@ -239,11 +239,11 @@ static void =
+vhost_user_blk_set_status(VirtIODevice *vdev, uint8_t status)
+>>>> int ret;
+>>>>=20
+>>>> if (!s->connected) {
+>>>> -        return;
+>>>> +        return -1;
+>>>> }
+>>>>=20
+>>>> if (vhost_dev_is_started(&s->dev) =3D=3D should_start) {
+>>>> -        return;
+>>>> +        return 0;
+>>>> }
+>>>>=20
+>>>> if (should_start) {
+>>>> @@ -253,9 +253,12 @@ static void =
+vhost_user_blk_set_status(VirtIODevice *vdev, uint8_t status)
+>>>>        qemu_chr_fe_disconnect(&s->chardev);
+>>>>    }
+>>>> } else {
+>>>> -        vhost_user_blk_stop(vdev);
+>>>> +        ret =3D vhost_user_blk_stop(vdev);
+>>>> +        if (ret < 0) {
+>>>> +            return ret;
+>>>> +        }
+>>>> }
+>>>> -
+>>>> +    return 0;
+>>>> }
+>>>>=20
+>>>> static uint64_t vhost_user_blk_get_features(VirtIODevice *vdev,
+>>>> @@ -597,7 +600,7 @@ static void =
+vhost_user_blk_class_init(ObjectClass *klass, void *data)
+>>>> vdc->get_config =3D vhost_user_blk_update_config;
+>>>> vdc->set_config =3D vhost_user_blk_set_config;
+>>>> vdc->get_features =3D vhost_user_blk_get_features;
+>>>> -    vdc->set_status =3D vhost_user_blk_set_status;
+>>>> +    vdc->set_status_ext =3D vhost_user_blk_set_status;
+>>>> vdc->reset =3D vhost_user_blk_reset;
+>>>> vdc->get_vhost =3D vhost_user_blk_get_vhost;
+>>>> }
+>>>> diff --git a/hw/scsi/vhost-scsi-common.c =
+b/hw/scsi/vhost-scsi-common.c
+>>>> index 4c8637045d..43525ba46d 100644
+>>>> --- a/hw/scsi/vhost-scsi-common.c
+>>>> +++ b/hw/scsi/vhost-scsi-common.c
+>>>> @@ -101,24 +101,25 @@ err_host_notifiers:
+>>>> return ret;
+>>>> }
+>>>>=20
+>>>> -void vhost_scsi_common_stop(VHostSCSICommon *vsc)
+>>>> +int vhost_scsi_common_stop(VHostSCSICommon *vsc)
+>>>> {
+>>>> VirtIODevice *vdev =3D VIRTIO_DEVICE(vsc);
+>>>> BusState *qbus =3D BUS(qdev_get_parent_bus(DEVICE(vdev)));
+>>>> VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(qbus);
+>>>> int ret =3D 0;
+>>>>=20
+>>>> -    vhost_dev_stop(&vsc->dev, vdev, true);
+>>>> +    ret =3D vhost_dev_stop(&vsc->dev, vdev, true);
+>>>>=20
+>>>> if (k->set_guest_notifiers) {
+>>>> -        ret =3D k->set_guest_notifiers(qbus->parent, =
+vsc->dev.nvqs, false);
+>>>> -        if (ret < 0) {
+>>>> -                error_report("vhost guest notifier cleanup failed: =
+%d", ret);
+>>>> +        int r =3D k->set_guest_notifiers(qbus->parent, =
+vsc->dev.nvqs, false);
+>>>> +        if (r < 0) {
+>>>> +            error_report("vhost guest notifier cleanup failed: =
+%d", ret);
+>>>=20
+>>> The variable `ret` in the error_report() seems wrong.
+>>=20
+>> Ohh, thanks, I will fix it later.
+>>=20
+>>>=20
+>>>> +            return r;
+>>>>    }
+>>>> }
+>>>> -    assert(ret >=3D 0);
+>>>>=20
+>>>> vhost_dev_disable_notifiers(&vsc->dev, vdev);
+>>>> +    return ret;
+>>>> }
+>>>>=20
+>>>> uint64_t vhost_scsi_common_get_features(VirtIODevice *vdev, =
+uint64_t features,
+>>>> diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+>>>> index adb41b9816..8e7efc38f2 100644
+>>>> --- a/hw/scsi/vhost-user-scsi.c
+>>>> +++ b/hw/scsi/vhost-user-scsi.c
+>>>> @@ -52,19 +52,19 @@ static int vhost_user_scsi_start(VHostUserSCSI =
+*s, Error **errp)
+>>>> return ret;
+>>>> }
+>>>>=20
+>>>> -static void vhost_user_scsi_stop(VHostUserSCSI *s)
+>>>> +static int vhost_user_scsi_stop(VHostUserSCSI *s)
+>>>> {
+>>>> VHostSCSICommon *vsc =3D VHOST_SCSI_COMMON(s);
+>>>>=20
+>>>> if (!s->started_vu) {
+>>>> -        return;
+>>>> +        return 0;
+>>>> }
+>>>> s->started_vu =3D false;
+>>>>=20
+>>>> -    vhost_scsi_common_stop(vsc);
+>>>> +    return vhost_scsi_common_stop(vsc);
+>>>> }
+>>>>=20
+>>>> -static void vhost_user_scsi_set_status(VirtIODevice *vdev, uint8_t =
+status)
+>>>> +static int vhost_user_scsi_set_status(VirtIODevice *vdev, uint8_t =
+status)
+>>>> {
+>>>> VHostUserSCSI *s =3D (VHostUserSCSI *)vdev;
+>>>> DeviceState *dev =3D DEVICE(vdev);
+>>>> @@ -75,11 +75,11 @@ static void =
+vhost_user_scsi_set_status(VirtIODevice *vdev, uint8_t status)
+>>>> int ret;
+>>>>=20
+>>>> if (!s->connected) {
+>>>> -        return;
+>>>> +        return -1;
+>>>> }
+>>>>=20
+>>>> if (vhost_dev_is_started(&vsc->dev) =3D=3D should_start) {
+>>>> -        return;
+>>>> +        return 0;
+>>>> }
+>>>>=20
+>>>> if (should_start) {
+>>>> @@ -91,8 +91,12 @@ static void =
+vhost_user_scsi_set_status(VirtIODevice *vdev, uint8_t status)
+>>>>        qemu_chr_fe_disconnect(&vs->conf.chardev);
+>>>>    }
+>>>> } else {
+>>>> -        vhost_user_scsi_stop(s);
+>>>> +        ret =3D vhost_user_scsi_stop(s);
+>>>> +        if (ret) {
+>>>> +            return ret;
+>>>> +        }
+>>>> }
+>>>> +    return 0;
+>>>> }
+>>>>=20
+>>>> static void vhost_user_scsi_handle_output(VirtIODevice *vdev, =
+VirtQueue *vq)
+>>>> @@ -399,7 +403,7 @@ static void =
+vhost_user_scsi_class_init(ObjectClass *klass, void *data)
+>>>> vdc->unrealize =3D vhost_user_scsi_unrealize;
+>>>> vdc->get_features =3D vhost_scsi_common_get_features;
+>>>> vdc->set_config =3D vhost_scsi_common_set_config;
+>>>> -    vdc->set_status =3D vhost_user_scsi_set_status;
+>>>> +    vdc->set_status_ext =3D vhost_user_scsi_set_status;
+>>>> fwc->get_dev_path =3D vhost_scsi_common_get_fw_dev_path;
+>>>> vdc->reset =3D vhost_user_scsi_reset;
+>>>> vdc->get_vhost =3D vhost_user_scsi_get_vhost;
+>>>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>>>> index 5e8d4cab53..fff7cdb35d 100644
+>>>> --- a/hw/virtio/virtio.c
+>>>> +++ b/hw/virtio/virtio.c
+>>>> @@ -2221,12 +2221,12 @@ int virtio_set_status(VirtIODevice *vdev, =
+uint8_t val)
+>>>> {
+>>>> VirtioDeviceClass *k =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+>>>> trace_virtio_set_status(vdev, val);
+>>>> +    int ret =3D 0;
+>>>>=20
+>>>> if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+>>>>    if (!(vdev->status & VIRTIO_CONFIG_S_FEATURES_OK) &&
+>>>>        val & VIRTIO_CONFIG_S_FEATURES_OK) {
+>>>> -            int ret =3D virtio_validate_features(vdev);
+>>>> -
+>>>> +            ret =3D virtio_validate_features(vdev);
+>>>>        if (ret) {
+>>>>            return ret;
+>>>>        }
+>>>> @@ -2238,12 +2238,18 @@ int virtio_set_status(VirtIODevice *vdev, =
+uint8_t val)
+>>>>    virtio_set_started(vdev, val & VIRTIO_CONFIG_S_DRIVER_OK);
+>>>> }
+>>>>=20
+>>>> -    if (k->set_status) {
+>>>> +    if (k->set_status_ext) {
+>>>> +        ret =3D k->set_status_ext(vdev, val);
+>>>> +        if (ret) {
+>>>> +            qemu_log("set %s status to %d failed, old status: =
+%d\n",
+>>>> +                     vdev->name, val, vdev->status);
+>>>> +        }
+>>>> +    } else if (k->set_status) {
+>>>>    k->set_status(vdev, val);
+>>>> }
+>>>> vdev->status =3D val;
+>>>>=20
+>>>> -    return 0;
+>>>> +    return ret;
+>>>> }
+>>>>=20
+>>>> static enum virtio_device_endian virtio_default_endian(void)
+>>>> @@ -3436,7 +3442,11 @@ static int virtio_vmstate_change(void =
+*opaque, bool running, RunState state)
+>>>> }
+>>>>=20
+>>>> if (!backend_run) {
+>>>> -        virtio_set_status(vdev, vdev->status);
+>>>> +        // the return value was used for stopping VM during =
+migration
+>>>=20
+>>> Can you elaborate a bit this comment?
+>>=20
+>> This comment is to explain that the return value is used to indicate =
+that
+>> the live migration of the stop vhost-user device failed cuz the lost
+>> connection with backend.
+>>=20
+>>>=20
+>>>> +        int ret =3D virtio_set_status(vdev, vdev->status);
+>>>> +        if (ret) {
+>>>> +            return ret;
+>>>> +        }
+>>>> }
+>>>> return 0;
+>>>> }
+>>>> diff --git a/include/hw/virtio/vhost-scsi-common.h =
+b/include/hw/virtio/vhost-scsi-common.h
+>>>> index c5d2c09455..d54d9c916f 100644
+>>>> --- a/include/hw/virtio/vhost-scsi-common.h
+>>>> +++ b/include/hw/virtio/vhost-scsi-common.h
+>>>> @@ -40,7 +40,7 @@ struct VHostSCSICommon {
+>>>> };
+>>>>=20
+>>>> int vhost_scsi_common_start(VHostSCSICommon *vsc, Error **errp);
+>>>> -void vhost_scsi_common_stop(VHostSCSICommon *vsc);
+>>>> +int vhost_scsi_common_stop(VHostSCSICommon *vsc);
+>>>> char *vhost_scsi_common_get_fw_dev_path(FWPathProvider *p, BusState =
+*bus,
+>>>>                                    DeviceState *dev);
+>>>> void vhost_scsi_common_set_config(VirtIODevice *vdev, const uint8_t =
+*config);
+>>>> diff --git a/include/hw/virtio/virtio.h =
+b/include/hw/virtio/virtio.h
+>>>> index 6386910280..c99d56f519 100644
+>>>> --- a/include/hw/virtio/virtio.h
+>>>> +++ b/include/hw/virtio/virtio.h
+>>>> @@ -187,6 +187,7 @@ struct VirtioDeviceClass {
+>>>> void (*set_config)(VirtIODevice *vdev, const uint8_t *config);
+>>>> void (*reset)(VirtIODevice *vdev);
+>>>> void (*set_status)(VirtIODevice *vdev, uint8_t val);
+>>>> +    int (*set_status_ext)(VirtIODevice *vdev, uint8_t val);
+>>>=20
+>>> Why we need a new callback instead having `set_status` returning int =
+?
+>>=20
+>> Because there are other devices such as virtio-net, virtio-ballon, =
+etc.,
+>> we only focus on vhost-user-blk/scsi when live migration.
+>=20
+> Why only them?
+>=20
+> What I mean, is why in devices where it's not important, don't we just =
+return 0?
+> It seems more complicated to maintain and confusing for new devices to =
+have 2 callbacks for the same thing.
+>=20
+> Stefano
 
+The series of these patches only want to fix that the inflight IO can't =
+be
+completed due to the disconnection between and the vhost-user backend =
+for
+vhost-user-blk / scsi devices during live migration. For other virito =
+devices
+the issue does not exist, and `vm_state_notify` cannot distinguish =
+specific
+devices, it's better not to return error.
 
-2025=E5=B9=B43=E6=9C=8819=E6=97=A5 23:11=EF=BC=8CStefano Garzarella <sgarza=
-re@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
+I try to list the virtio sub-devices as follows:
 
-On Fri, Mar 14, 2025 at 06:15:33AM -0400, Haoqian He wrote:
+hw/virtio/virtio-iommu.c:    vdc->set_status =3D =
+virtio_iommu_set_status;
+hw/virtio/virtio-balloon.c:    vdc->set_status =3D =
+virtio_balloon_set_status;
+hw/virtio/virtio-rng.c:    vdc->set_status =3D virtio_rng_set_status;
+hw/virtio/virtio-crypto.c:    vdc->set_status =3D =
+virtio_crypto_set_status;
+hw/virtio/vhost-vsock.c:    vdc->set_status =3D vhost_vsock_set_status;
+hw/virtio/vhost-user-vsock.c:    vdc->set_status =3D vuv_set_status;
+hw/virtio/vhost-user-scmi.c:    vdc->set_status =3D vu_scmi_set_status;
+hw/virtio/vhost-user-fs.c:    vdc->set_status =3D vuf_set_status;
+hw/virtio/vhost-user-base.c:    vdc->set_status =3D vub_set_status;
+hw/virtio/vdpa-dev.c:    vdc->set_status =3D =
+vhost_vdpa_device_set_status;
+tests/qtest/libqos/virtio-pci.c:    .set_status =3D =
+qvirtio_pci_set_status,
+tests/qtest/libqos/virtio-pci-modern.c:    .set_status =3D set_status,
+tests/qtest/libqos/virtio-mmio.c:    .set_status =3D =
+qvirtio_mmio_set_status,
+hw/scsi/vhost-user-scsi.c:    vdc->set_status =3D =
+vhost_user_scsi_set_status;
+hw/scsi/vhost-scsi.c:    vdc->set_status =3D vhost_scsi_set_status;
+hw/net/virtio-net.c:    vdc->set_status =3D virtio_net_set_status;
+hw/char/virtio-serial-bus.c:    vdc->set_status =3D set_status;
+hw/block/vhost-user-blk.c:    vdc->set_status =3D =
+vhost_user_blk_set_status;
+hw/block/virtio-blk.c:    vdc->set_status =3D virtio_blk_set_status;
 
-The backend maybe crash when vhost_dev_stop and GET_VRING_BASE
-would fail, we can return failure to indicate the connection
-with the backend is broken.
-
-Signed-off-by: Haoqian He <haoqian.he@smartx.com>
----
-hw/virtio/vhost.c         | 27 +++++++++++++++------------
-include/hw/virtio/vhost.h |  8 +++++---
-2 files changed, 20 insertions(+), 15 deletions(-)
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6aa72fd434..c82bbbe4cc 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1368,23 +1368,23 @@ fail_alloc_desc:
-return r;
-}
-
--void vhost_virtqueue_stop(struct vhost_dev *dev,
--                          struct VirtIODevice *vdev,
--                          struct vhost_virtqueue *vq,
--                          unsigned idx)
-+int vhost_virtqueue_stop(struct vhost_dev *dev,
-+                         struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq,
-+                         unsigned idx)
-{
-int vhost_vq_index =3D dev->vhost_ops->vhost_get_vq_index(dev, idx);
-struct vhost_vring_state state =3D {
- .index =3D vhost_vq_index,
-};
--    int r;
-+    int r =3D 0;
-
-if (virtio_queue_get_desc_addr(vdev, idx) =3D=3D 0) {
- /* Don't stop the virtqueue which might have not been started */
--        return;
-+        return 0;
-}
-
--    r =3D dev->vhost_ops->vhost_get_vring_base(dev, &state);
-+    r |=3D dev->vhost_ops->vhost_get_vring_base(dev, &state);
-
-
-We can avoid this and also initialize r to 0.
-
-
-Here we need to do `vhost_virtqueue_stop` for each vq.
-
-
-Sorry, my question is what's the point of initializing r to 0 and then
-putting it in or here with the result of vhost_get_vring_base?
-Can't we leave it as before and initialize it directly here?
-
-
-Acked.
-
-
-
-
-if (r < 0) {
- VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
- /* Connection to the backend is broken, so let's sync internal
-@@ -1412,6 +1412,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
-                0, virtio_queue_get_avail_size(vdev, idx));
-vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
-                0, virtio_queue_get_desc_size(vdev, idx));
-+    return r;
-}
-
-static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
-@@ -2136,9 +2137,10 @@ fail_features:
-}
-
-/* Host notifiers must be enabled at this point. */
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vring=
-s)
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings=
-)
-{
-int i;
-+    int rc =3D 0;
-
-/* should only be called after backend is connected */
-assert(hdev->vhost_ops);
-@@ -2157,10 +2159,10 @@ void vhost_dev_stop(struct vhost_dev *hdev,
-VirtIODevice *vdev, bool vrings)
- vhost_dev_set_vring_enable(hdev, false);
-}
-for (i =3D 0; i < hdev->nvqs; ++i) {
--        vhost_virtqueue_stop(hdev,
--                             vdev,
--                             hdev->vqs + i,
--                             hdev->vq_index + i);
-+        rc |=3D vhost_virtqueue_stop(hdev,
-+                                   vdev,
-+                                   hdev->vqs + i,
-+                                   hdev->vq_index + i);
-
-
-Also other function can fails, should we consider also them?
-(e.g. , vhost_dev_set_vring_enable, etc.)
-
-If not, why?
-
-
-Since we only want to know the return value of callback when the stopping d=
-evice
-live migration, there is no need to catch the failure of `vhost_dev_start`.
-
-
-Please add that in the commit message, and maybe also in a comment here.
-
-
-We can also catch the failure of `vhost_dev_set_vring_enable`, because
-`vhost_dev_set_vring_enable` will also fail if qemu lost connection with th=
-e
-the backend, but I need to test it.
-
-
-Capturing failures of only some things is a little confusing to me, I
-think it needs to be better explained.
-
-
-Only capture vhost_virtqueue_stop's error based on the following considerat=
-ions:
-
-1. `vhost_dev_start` always return 0 when stopping, so there is no need to
-capture the error.
-
-2. For `vhost_dev_set_vring_enable`/`vhost_reset_status`, it is necessary t=
-o
-satisfy that virtio has set certain feature bits (e.g.
-VHOST_USER_PROTOCOL_F_STATUS).
-Relatively speaking, `vhost_virtqueue_stop` is more universal, if stop
-virtiqueue
-fails, we will abort the live migration.
-
-3. Even if we capture the error of any function, we cannot return directly,=
- and
-we still need to execute the rest of `vhost_dev_stop`.
+If the new function pointer type is not added, the number of functions =
+affected
+will be very huge. Although it may seem a bit complicated to use two =
+callbacks,
+it's much safer.
 
 Thanks,
 Haoqian
 
-
-
-Thanks,
-Stefano
-
-
-
-}
-if (hdev->vhost_ops->vhost_reset_status) {
- hdev->vhost_ops->vhost_reset_status(hdev);
-@@ -2177,6 +2179,7 @@ void vhost_dev_stop(struct vhost_dev *hdev,
-VirtIODevice *vdev, bool vrings)
-hdev->started =3D false;
-vdev->vhost_started =3D false;
-hdev->vdev =3D NULL;
-+    return rc;
-}
-
-int vhost_net_set_backend(struct vhost_dev *hdev,
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index a9469d50bc..fd96ec9c39 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -232,8 +232,10 @@ int vhost_dev_start(struct vhost_dev *hdev,
-VirtIODevice *vdev, bool vrings);
-* Stop the vhost device. After the device is stopped the notifiers
-* can be disabled (@vhost_dev_disable_notifiers) and the device can
-* be torn down (@vhost_dev_cleanup).
-+ *
-+ * Return: 0 on success, !=3D 0 on error when stopping dev.
-*/
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vring=
-s);
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings=
-);
-
-/**
-* DOC: vhost device configuration handling
-@@ -333,8 +335,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev,
-uint64_t iova, int write);
-
-int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vdev,
-                   struct vhost_virtqueue *vq, unsigned idx);
--void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev=
-,
--                          struct vhost_virtqueue *vq, unsigned idx);
-+int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq, unsigned idx);
-
-void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
-void vhost_dev_free_inflight(struct vhost_inflight *inflight);
---
-2.48.1
 
