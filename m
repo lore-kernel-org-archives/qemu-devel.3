@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59ACC36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 11:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BABCAC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 11:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx2O7-0005OE-4u; Tue, 25 Mar 2025 07:24:07 -0400
+	id 1tx2Sh-0004L0-P0; Tue, 25 Mar 2025 07:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tx2O5-0005NT-GE; Tue, 25 Mar 2025 07:24:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1tx2Sg-0004Kc-37; Tue, 25 Mar 2025 07:28:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tx2O3-00049j-FR; Tue, 25 Mar 2025 07:24:05 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PAk1Tt028005;
- Tue, 25 Mar 2025 11:23:54 GMT
+ id 1tx2Se-00054Q-DY; Tue, 25 Mar 2025 07:28:49 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52P7FJST027978;
+ Tue, 25 Mar 2025 11:28:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=12fSLS
- AqNMg2i8Q+tBT4BJvxNsgrqMezdSuCv/AVOEc=; b=H6ApR1x9e/HClkcaOz7YSj
- bH2GM7tETPNweCfyRjsnrNfsPMiq4hAvIQYyRguDQDiibQTORmNPHzUMseD0/AGQ
- /bUzXdEUq6mucsXCPZ8h7MxNjPXvbWOPnfEW8iSh6uA1xxlh83AMGeANlJAnNC0C
- 7p6XBN3Ow5NRy4BQ2tPU2YABQzQ/zQqq92SBkLmwlaMeH5cKGSYf7L2mYqtZSAzM
- /sf3qCKibIN0gZB0/iGMVx1n/kLzjFggKT3VOIDtNowFsZ1uMhhDo7R+C4qVmjIS
- Q8mKTxooSEj0IZudlKbqpphpQjhZxWZmXjPEAshcvIMUj8P8h/S8s//+poidQaEQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qTZQbi
+ u9GNmsj5JRbkvTenj2tQqifbwCImwJ2cGtzRs=; b=LYaY3P1vTk0b93ljXm9v+K
+ WUh1B6Zrom69lCWhUGZxOQ/2HtgYMnnMkfZZRTRBYdKi1a2EEymm35XGHsn/nQXP
+ EBEbO5qy34Qw0mFq6OrdLhopoxo81yaB3Fd/7PPmSwQOOdcUOYpXEzO5ebNsz+q8
+ 6OroEMcimAlJzzvmXBzfrpbOTmo6DCYcglI4BnSa1dWducFlslMC+NhsHzrKj0FO
+ 2wt0jq6/RX9n/GPGdQdEeKBCjStx3NKVphO9jeUVG2R0IzTSEuWs0Jjg7BdqvWOv
+ 2qAZGaocR4N4PjCbwf9PwJNFxvrJa7pGtCCLPOBjW7Mn0FGXBu0SQi+z6qQN2OnQ
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45k7e3dwvj-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kbjwv86b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Mar 2025 11:23:53 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52PB7tci032580;
- Tue, 25 Mar 2025 11:23:53 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45k7e3dwvf-1
+ Tue, 25 Mar 2025 11:28:44 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52PBSi0j024577;
+ Tue, 25 Mar 2025 11:28:44 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kbjwv869-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Mar 2025 11:23:53 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52P8lQxr025666;
- Tue, 25 Mar 2025 11:23:52 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j7x038mm-1
+ Tue, 25 Mar 2025 11:28:44 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52P9T2ur012239;
+ Tue, 25 Mar 2025 11:28:43 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j91m328c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Mar 2025 11:23:52 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52PBNmpr31457744
+ Tue, 25 Mar 2025 11:28:43 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52PBSd8t60031320
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Mar 2025 11:23:48 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2827120040;
- Tue, 25 Mar 2025 11:23:48 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9656E2004B;
- Tue, 25 Mar 2025 11:23:45 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.216.239])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 25 Mar 2025 11:23:45 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Tue, 25 Mar 2025 11:28:39 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 76E3D20043;
+ Tue, 25 Mar 2025 11:28:39 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 360F720040;
+ Tue, 25 Mar 2025 11:28:37 +0000 (GMT)
+Received: from [9.124.216.239] (unknown [9.124.216.239])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Mar 2025 11:28:36 +0000 (GMT)
+Message-ID: <65c04078-e952-4806-bc3f-1f1130dc9683@linux.ibm.com>
+Date: Tue, 25 Mar 2025 16:58:36 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/8] Power11 support for QEMU [PowerNV]
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: [PATCH v6 01/10] ppc/pnv: Add HOMER for Power11
-Date: Tue, 25 Mar 2025 16:53:10 +0530
-Message-ID: <20250325112319.927190-2-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250325112319.927190-1-adityag@linux.ibm.com>
-References: <20250325112319.927190-1-adityag@linux.ibm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250308205141.3219333-1-adityag@linux.ibm.com>
+ <57ce8d50-db92-44f0-96a9-e1297eea949f@kaod.org>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <57ce8d50-db92-44f0-96a9-e1297eea949f@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: FjIogFUfGsoskdssdFehDwegswZQrc99
-X-Proofpoint-GUID: DHPGOqy0BnyLMarwrHTv7q6l8niC0HF5
+X-Proofpoint-GUID: IaAnxNlpaP_9JwUgZWB1oXoVqtM_laUE
+X-Proofpoint-ORIG-GUID: PWXI2zzd_xxzoD3iwXzeCY9y8e71x8of
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-25_04,2025-03-25_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015
- mlxscore=0 suspectscore=0 phishscore=0 adultscore=0 impostorscore=0
- mlxlogscore=793 lowpriorityscore=0 priorityscore=1501 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503250076
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 spamscore=0
+ clxscore=1015 bulkscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=951 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503250080
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -119,62 +121,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power11 core is same as Power10, declare PNV11_HOMER as a child
-class of PNV10_HOMER, so it goes through same class init
+Hi Cedric,
 
-Cc: Cédric Le Goater <clg@kaod.org>
-Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- hw/ppc/pnv_homer.c         | 8 ++++++++
- include/hw/ppc/pnv_homer.h | 3 +++
- 2 files changed, 11 insertions(+)
+On 24/03/25 13:11, Cédric Le Goater wrote:
+> Hello Aditya,
+>
+> On 3/8/25 21:51, Aditya Gupta wrote:
+>> Overview
+>> ============
+>>
+>> Add support for Power11 powernv machine type, to emulate PowerNV VMs
+>> running on Power11.
+>
+> Could you please consider deprecating the POWER8NVL and POWER8E CPUs
+> and associated chips and machines ? I think keeping POWER8 is fine
+> since it has different HW implementation from the following generations.
+> However, the POWER8NVL and POWER8E variants don't add much to QEMU.
+> They were practical at one point for bringup (2014). They are not
+> anymore.
+>
+> This will remove some lpc peculiarities.
 
-diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
-index 18a53a80c183..fdd3db41828f 100644
---- a/hw/ppc/pnv_homer.c
-+++ b/hw/ppc/pnv_homer.c
-@@ -238,6 +238,13 @@ static const TypeInfo pnv_homer_power10_type_info = {
-     .parent        = TYPE_PNV_HOMER,
-     .instance_size = sizeof(PnvHomer),
-     .class_init    = pnv_homer_power10_class_init,
-+    .class_base_init = pnv_homer_power10_class_init,
-+};
-+
-+static const TypeInfo pnv_homer_power11_type_info = {
-+    .name          = TYPE_PNV11_HOMER,
-+    .parent        = TYPE_PNV10_HOMER,
-+    .instance_size = sizeof(PnvHomer),
- };
- 
- static void pnv_homer_realize(DeviceState *dev, Error **errp)
-@@ -291,6 +298,7 @@ static void pnv_homer_register_types(void)
-     type_register_static(&pnv_homer_power8_type_info);
-     type_register_static(&pnv_homer_power9_type_info);
-     type_register_static(&pnv_homer_power10_type_info);
-+    type_register_static(&pnv_homer_power11_type_info);
- }
- 
- type_init(pnv_homer_register_types);
-diff --git a/include/hw/ppc/pnv_homer.h b/include/hw/ppc/pnv_homer.h
-index a6f2710fa16b..ab7b43f4c910 100644
---- a/include/hw/ppc/pnv_homer.h
-+++ b/include/hw/ppc/pnv_homer.h
-@@ -35,6 +35,9 @@ DECLARE_INSTANCE_CHECKER(PnvHomer, PNV9_HOMER,
- #define TYPE_PNV10_HOMER TYPE_PNV_HOMER "-POWER10"
- DECLARE_INSTANCE_CHECKER(PnvHomer, PNV10_HOMER,
-                          TYPE_PNV10_HOMER)
-+#define TYPE_PNV11_HOMER TYPE_PNV_HOMER "-POWER11"
-+DECLARE_INSTANCE_CHECKER(PnvHomer, PNV11_HOMER,
-+                         TYPE_PNV11_HOMER)
- 
- struct PnvHomer {
-     DeviceState parent;
--- 
-2.49.0
 
+I don't know how we 'mark' something deprecated in qemu. Checked the git 
+history.
+
+By deprecating, should I just mention it in deprecated section in 
+documentation like done for PSeries in commit 0cac0f1b ?
+
+Or directly remove it ?
+
+
+Thanks,
+
+- Aditya G
+
+>
+>
+> Thanks,
+>
+> C.
+>
 
