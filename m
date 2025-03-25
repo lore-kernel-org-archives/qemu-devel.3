@@ -4,90 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8F2C36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29B7C36005
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txD0Y-0002fD-Tf; Tue, 25 Mar 2025 18:44:30 -0400
+	id 1txD0Y-0002ez-QX; Tue, 25 Mar 2025 18:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0G-0001TV-ER
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:12 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0U-0002PB-HJ
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:26 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0D-00072p-0e
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:12 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-223a7065ff8so65114635ad.0
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0Q-00077Y-PC
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:25 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cfdc2c8c9so37139035e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942648; x=1743547448; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942661; x=1743547461; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=whE4tOIG14eY8JQ2gptqlrplDWnqt4RDL3Ybv6G0d7s=;
- b=sG/NaOzEaWpk7opPUEF4B3xv9qoNkqSWagSfDVvQx8MhZnv8StkWtd0LTKxQvdVsiK
- yVdRWmB778QuFxhC9q87NNkK2/F/tOwAA/hrjiPQFiZW6bcSnWC2B+bNPEmHSmZUR4zk
- 3qvF3W5HpDcxZhRqsucRhCdxmGTKnmwgMOK5Dpf8fhHH/xH9msyqdi2KG6/vH1SLefxN
- O/XATIwPpL42qfgL2Dv0r4N2Hh7GXt0W5SDb21BkgkEtqIY/9UcFVqNIhbD8o3qYXU3h
- gc3V4QN8t91Q130LDZL26kwSTogAPjPuhVHOYePOMXbQ+sWg4rWH233DP3pY9xFNd63e
- jFPA==
+ bh=JG2VRaJptEB9qSuT5SVsGGWb28vBDAuwNTjCKkTxX/4=;
+ b=xlUEOtqY8RK6YPCJV1+iwe/3bkff9SZG0CsThUBTOvg8AtaBTIbgVvE8I84ud65paC
+ 7zBx84S9/1QWFIDETVsX3JZJqrBALXHy8XQCScX93G2v0vw3UfQYBFI3hSLHB0s3Qf18
+ yvd+3Jd871DT9VcdUZZfmPo/tx4CLtTophl6P+/20LYm3RKi+cclhRyZ7PB4a7iey55k
+ dO83alSyFd9Wx4TxV36UsT71rc5u2EV7bZoqJUgq5yvnM5leWDFSvGnH4RtIK2swoqu/
+ b6CfhhfiRGr+mFFGOEP/cPNkpWFbGgrFemoN2ll9PrMtOrnPdGFkZJwt7LTpx1nVysqV
+ xJzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942648; x=1743547448;
+ d=1e100.net; s=20230601; t=1742942661; x=1743547461;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=whE4tOIG14eY8JQ2gptqlrplDWnqt4RDL3Ybv6G0d7s=;
- b=KVNcrM5RXcKnaPq1lOxrrzPuVK03wLaW7sTgaUO1ieC1UHVKQqeiXWjRwP7UxXRRxl
- ry0/1CdC2xz3yYj+2YOwvzx6Eapano/0bfgcRnS5wv9qELp4yuLVvJMtwFlPPTN5yRWT
- QGFI+HwLMYVaCZ/k/fs5cAeG6mpo8s16E2izvv2z80wC97qKlTQSsTPDcCMFa/lDN/C1
- Tzw+cbzfvCepsra09tqubfIwNPIxRIvR8fqU/XpgSqQWdf5B4eLGVHH39SG8GDZ+bRUo
- FFTgpqrkcGVokF9+9GVpsgDJK+Q9PUgKsH8R9DVneBywzYBLR/1bqQmhiQ9/RUeFOqSw
- X5tA==
-X-Gm-Message-State: AOJu0YxZd8ECkN/ZGo9N2/1bR3hTUalGtvZ0eEvUvVHiuvqB1O80734Y
- fpVg/94ATxgPXsDiHwy5qPPiXpu5sr/wM9uCBBu/qh9lEPXgDMTVVsb1+RyU9W2Nzvte2AMPbev
- d
-X-Gm-Gg: ASbGncvkc74AC47V2qJCUC+MxDwT5cnLd9J8IoY7WTzktW2BsVRmRnBqMqOhBn7yjzN
- JAvX/se4fRissPY1iD636+i3tYaPj6OrdojE1rhS6f1gAbEsxxL1F/udPgA9wCTcrMQRssY2UBx
- +Lto7R49Mk48FN9HchX+JXMBAddk++lmu9d4CBIaqS1Tu1kpnyazN0ZmhbPifQnWKvJ6NvQQ1+O
- 1CNwYfJOVWAMPd9S0PbrEQfdQdoc8tmUvk3pBCDVenOGAv4wxrbMjitWyK/JE0Goc8e2W3DzRae
- JyRhYOys6D2r3sm7Gbnw8VhsXFaupH8n/8nPRbK/1uRehzc4Qv2RrwyLRiDhj7Y+48f9esITtIV
- F
-X-Google-Smtp-Source: AGHT+IEXffIXkKaM32i1wEX+euvVjlaaKwE1ovgiZkhgtiVM2mWY7BsVax9OA5jpwqtcKGfJClW2gw==
-X-Received: by 2002:a05:6a21:9990:b0:1f5:679a:226c with SMTP id
- adf61e73a8af0-1fe42f07b0dmr29169962637.5.1742942647740; 
- Tue, 25 Mar 2025 15:44:07 -0700 (PDT)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Mar 2025 15:44:07 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mrolnik@gmail.com,
-	philmd@linaro.org,
-	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 04/11] target/avr: Remove OFFSET_CPU_REGISTERS
-Date: Tue, 25 Mar 2025 15:43:56 -0700
-Message-ID: <20250325224403.4011975-5-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
-References: <20250325224403.4011975-1-richard.henderson@linaro.org>
+ bh=JG2VRaJptEB9qSuT5SVsGGWb28vBDAuwNTjCKkTxX/4=;
+ b=u5E2ENODNYMu18Xi02Y6GRJJIFE6bEgm4JUKynkCY/9cOx5JC/E77Brxt8OUulCH+2
+ iQcwGtLSIXI0i65/eNhZhOWvxBSzcIALDxMFkj78ER7vtM276lFZ9KoUL2Q6+flfDeLG
+ j5CjE6vtuvLjyJpKqXgFD+Q5lArknljRW006ZJYcneTOOSuex4wfI8OsMvb1yqYwwb19
+ KpCKkss2Le0X/9aa+E2SFFM3CqMwOQe8uyex0CohA1BusNuuI8GLV1bplEGbg4g24X0i
+ CMusv3MP1t03imuUbY8aKq0zuTrYOTdCGPHv0V2m/yRpVA+GHp6p0aFUmovwN6Z9YvGt
+ yLpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVA+BRlCu/7RYK6V1sVcR8pF1gH/vq8fFoIZ4lQNeuWKEqMfvUzeY1VUOTzUCw7im/snZDfE/XTr4Ub@nongnu.org
+X-Gm-Message-State: AOJu0YxA5tNb8iaSQ229+RIaSS7MiteU8C9uhrMxFQJPAmxso5fiJWed
+ ZzpUIxDPgB6infuv1FVATqH9k0M6SzAaMBaWxlExhKEhr9BYZqrMiNhSE3yTgRo=
+X-Gm-Gg: ASbGncvc4NGBmpf+v2iIaGZ5q01OHgIJniN2jGDS7dznlUTpXhicDtx4HrunD9sMCRB
+ TIzw6lHuc+bfbiSp48LSlvjsbDCRPdw600is5KMNoY3qNwOJ5Ok3p6BUqHBr6IFTeuHhzKp7L+J
+ WdkqV6sLxrELpw4TDLmb74Hz2VqGY0txblYhzaCIZqrKppkGYxO9+lbXiIbRaek5hwj7JlvXmFJ
+ ONJITa1CkFtgPDaiMl3GamUA/QRyI13fCXCha2TGWHfjum1cRD5YGku+Wke4k26j6acoYx+EAU9
+ EAYo+z4+fxSNP71bX/3gd6kf7G2xukgqeSIn+IECBAbNWCrWKgb1NT5C6GZk61pZPLOmBr2xh3b
+ 6aaW6ax2+ej3D7DXFyfU=
+X-Google-Smtp-Source: AGHT+IHtCqqvEbiZkF49JQUKYCyK1lGiUAwYYACnRUKAwCWdLsBh+wdAaKzPxqdwJWLSGFThr3AZgg==
+X-Received: by 2002:a05:600c:1989:b0:43c:e7ae:4bcf with SMTP id
+ 5b1f17b1804b1-43d508725ecmr163452165e9.0.1742942661253; 
+ Tue, 25 Mar 2025 15:44:21 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d4fcea6ecsm164303625e9.5.2025.03.25.15.44.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 25 Mar 2025 15:44:20 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Thomas Huth <thuth@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Samuel Tardieu <sam@rfc1149.net>,
+ qemu-block@nongnu.org, Patrick Leis <venture@google.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
+ Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: [RFC PATCH-for-10.0 12/12] hw/s390x/zpci: Re-categorize as BRIDGE
+Date: Tue, 25 Mar 2025 23:43:10 +0100
+Message-ID: <20250325224310.8785-13-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
+References: <20250325224310.8785-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,44 +117,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This define isn't really used.
+A 'zpci' device encapsulate a PCI device to be usable
+by System/Z. Categorize it as bridge.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/avr/cpu.h    | 2 --
- target/avr/helper.c | 3 +--
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ hw/s390x/s390-pci-bus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/avr/cpu.h b/target/avr/cpu.h
-index 06f5ae4d1b..84a8f5cc8c 100644
---- a/target/avr/cpu.h
-+++ b/target/avr/cpu.h
-@@ -60,8 +60,6 @@
- #define OFFSET_CODE 0x00000000
- /* CPU registers, IO registers, and SRAM */
- #define OFFSET_DATA 0x00800000
--/* CPU registers specifically, these are mapped at the start of data */
--#define OFFSET_CPU_REGISTERS OFFSET_DATA
- /*
-  * IO registers, including status register, stack pointer, and memory
-  * mapped peripherals, mapped just after CPU registers
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index 3412312ad5..e5bf16c6b7 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -340,8 +340,7 @@ void helper_fullwr(CPUAVRState *env, uint32_t data, uint32_t addr)
-     env->fullacc = false;
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index 2591ee49c11..dbfe24f6eca 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1562,7 +1562,7 @@ static void s390_pci_device_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
  
-     /* Following logic assumes this: */
--    assert(OFFSET_CPU_REGISTERS == OFFSET_DATA);
--    assert(OFFSET_IO_REGISTERS == OFFSET_CPU_REGISTERS +
-+    assert(OFFSET_IO_REGISTERS == OFFSET_DATA +
-                                   NUMBER_OF_CPU_REGISTERS);
- 
-     if (addr < NUMBER_OF_CPU_REGISTERS) {
+     dc->desc = "zpci device";
+-    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+     device_class_set_legacy_reset(dc, s390_pci_device_reset);
+     dc->bus_type = TYPE_S390_PCI_BUS;
+     dc->realize = s390_pci_device_realize;
 -- 
-2.43.0
+2.47.1
 
 
