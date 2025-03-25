@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D747C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 12:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4161EC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 12:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx3ZH-00011m-FJ; Tue, 25 Mar 2025 08:39:44 -0400
+	id 1tx3ZT-00012c-VG; Tue, 25 Mar 2025 08:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3Z8-00010V-AD
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:39:35 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3ZJ-000120-EH
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:39:45 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3Z6-0005Fa-Lt
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:39:34 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43948f77f1aso37075675e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 05:39:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3ZB-0005I8-I1
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:39:44 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43d2d952eb1so41548575e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 05:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742906370; x=1743511170; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LvpIQaGgz+WyIhLXyfsv0D0CbvtQ9N3s81gzfhIm8jQ=;
- b=r6lfbZtTuvizdhy4uIwzEemu29ntnYCuF4PgkJGiy6CViikNGVeuKF7rYlzWtiA84Q
- lMq3IVEFVKu2bwkWQp2sOMcSZrnGp9VFsttMY7FiNckbFfCNV57NXUZQuM54QcRgEcWX
- Rs7YTbj7bL9zWHCQxeGESWyAmuw1hHy8ge2E0ILS6b11qotwUFEq+RNDLEUnOsF756b0
- Vsnv5Mn8XB8jWfAvVagv15YcUpZhUwdzzTOAfmy16vQAa4gVToxv++hxWUY3DuwOuv7q
- Yspe1G/rBHj2pqaixKIuIovBcDcb8QZjDUW2CBr8xuJ/WHyZbQjGhyFflOuAPZ/Qmn9Z
- ThgA==
+ d=linaro.org; s=google; t=1742906375; x=1743511175; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NRiDNSfza2GYouIqjVX2heKQgBy/qgPHwE2OCmqBWtw=;
+ b=FwP4QE6eTeYH+Dbks2rNP0MLSU+IakD3qMMpp9Rj8f1OVIarMwqCCTjcejwZ8o+cqp
+ BxPUMe2jsGqSkHahcHABkq96K5GARJXpuxq3TVKpS6df9coC7Xh0rTqqaBnQFOzUh5W2
+ Tqwl0ky8qw2iCgke5GcUJ1DAwrw9eDAbsczxDcTqFT+QRPeLE/UAg6RibNg0E0fzkyF/
+ //in0fk6JcjoTl/YokLAT6EyYaMYDs3PSmljeLBAvIYJeoHLi/jrrHnsKlO1usOyNh++
+ 6YMvNWLXl+TOEJHgg/wI6bLsJ3OD4ITy7y5x9IlZzccas4DKUtGsIg1c1fLaUIRpiJbJ
+ ElaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742906370; x=1743511170;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LvpIQaGgz+WyIhLXyfsv0D0CbvtQ9N3s81gzfhIm8jQ=;
- b=Ci2vJqGVQt4EYEWEJyR05EvxcVDZB3He1UyJOiAMC5OMwOsVqmDEyJX8fAQpWq8VOb
- Unt09gm8CVsjHyS3dgqHXtkHoQmzRNl2gZzF/RyYD3DB+5+F+XCtCbWy5S4bg9yYSlQW
- ZvCtu9VYoJuGWVaKKONVhORDVnOwXrtttqs0VqjJSTyOGM61OUmPfzKnd5fPfO0BznVs
- +SXfL7dY5YYiEoS2PIai+8VaYpYSx/IpdCbQDIl0y9njHT4e0vesR3YLv6f7DeC3x3wT
- sHWR+AQ2i2mG0BHD3+mk8ZGPcpQecqC3X5IKEQrGf1HGy6rOgSAa9vElPYS3HF8VlEnb
- HI1g==
-X-Gm-Message-State: AOJu0YylSkWGAwFGJdhJho+ops0RrJN0ScVmvOVbo7dxnH6ahvRaF+iB
- xJrjgrSORtRi9FahiCEaVjaO8jwFKKArDQbmNyRKJx2wnOXfVLeH+vpZx6Ok9fyXVigPg8p2mA5
- N
-X-Gm-Gg: ASbGnctSEhBBwD2DRYxqfHlI43dyJBhw+h+yov+jxLStnOVtV5Z+FOn0AhbQEY+Q7GM
- MVfXXJkEGiTk2SdDa8KodBek/7MOcK3LrJS6S728zPHNT4FuONNyi0O5Q4WjUs++rBmFvh7+duv
- ZVWlG0IApzKKq0NPt11yu9ARolQ7ek4GxQTxYxVPvJ7byrXXaEst7//42byPhWYnhOPnqgWd7qI
- icrQgIZKFoQjk+DRE84c7P4YjzxedTfBFmPAOaoj77BDHJbZYnponwrpVM+kkaFEcL8OiWfsTFL
- kztg6gyj2SvyFlmkzie/RfTIGwozdI8fC8rEDL4XctNMXTk5oRaTposkHoEyIujE/DQajOGrSsh
- t4YlwKB9TEdmS15oplFA=
-X-Google-Smtp-Source: AGHT+IF20gTE19DpGV5W4S1bGCbocJ1SsBXtqurQF+ISJEEyPICOhWY2AWzeQ91c9/SfwPTn3TXr4w==
-X-Received: by 2002:a05:600c:8719:b0:43d:53c:1ad6 with SMTP id
- 5b1f17b1804b1-43d50a4ae7dmr125752555e9.26.1742906370024; 
- Tue, 25 Mar 2025 05:39:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742906375; x=1743511175;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NRiDNSfza2GYouIqjVX2heKQgBy/qgPHwE2OCmqBWtw=;
+ b=plmc8GYIM3QX39El9kP9lsdShYPj5B9VhptE0udhBmunjS7XV6G7R4+m2pL9VquM4S
+ rpWipmJj+lAflCnuOl5LsGnHEjW8ORlHBCCJyHa80qQOfFomkurclWddcNZPJvSakgkl
+ 7of5lmb4nLJXw111QK6x6g/NQY0VkC83BSRlr119tkkzIDe1ip+FBicBijwF6S4WBMiC
+ XWkKhNSianAuoY76yF1+rt5q6EDXT0bJ7m1mQgUVP2SjcevP6A/bawWzHNrGqnXD/InC
+ xjjQvFrTbIssI6/DJUys33/jK1yVOppnkofDaNcnRclHh65fWRxNSG0hoLWchOqtZcdF
+ YvXQ==
+X-Gm-Message-State: AOJu0Yzc7wcLAWmk/qPFMzBcaavYCsKwGKJrR6g0DQOex7Tvqxe32LRQ
+ 654eIJhJenhskzQXgXfVUHLusnQV90aW/kVEi6Sj+0C+866sRweLluQNzw04nXO6TAZCcKFHjxG
+ G
+X-Gm-Gg: ASbGncuuduGDjBLXLOLS1agrkXChHwgIsVzmq9gMuGTIQ3P/h9rT49Z0fo8q8+VirvJ
+ aa8tbMRBF3rAednTjWRvPrUnfQCElTlXsZuVaOg6xvPQ+G11XiwKbbHusDygRJ5QmKnPK4aWpYl
+ WCxlOPQPEAKuxaaymG5m7l+OsSviaqjAyBrz7OIk4pJNEWD/gzD5HLX/YUHVk8A19X90AD/rtnL
+ XjnB6eG3741oQkJvEj/gRgfGyl8cEOsTwbBV+1MeAUv1sr0YXNgWdCf5/2WVNmFVwoditkn6DqQ
+ hbHy56+YceFxxWlS/NbNJirXqScJZPzK7lSuBBrv69MA/h9uWB+Mig71dyZCSxrO4RyfrdChfmT
+ HBkqMYFuivWJS9A/AYxE=
+X-Google-Smtp-Source: AGHT+IGkR0G5jetXxrJEiY19iSavAKopIU7YGwPotlmAKPc+GqQ11WPVtrBgTS4ZJUlMxtpmE42NpQ==
+X-Received: by 2002:a05:600c:4e94:b0:43c:f16a:641e with SMTP id
+ 5b1f17b1804b1-43d509e2e7bmr122857925e9.6.1742906374865; 
+ Tue, 25 Mar 2025 05:39:34 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f43ed6sm198978595e9.13.2025.03.25.05.39.28
+ 5b1f17b1804b1-43d4fdbd0a9sm151230465e9.38.2025.03.25.05.39.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 05:39:29 -0700 (PDT)
+ Tue, 25 Mar 2025 05:39:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Frederic Konrad <konrad.frederic@yahoo.fr>,
@@ -69,22 +70,22 @@ Cc: Frederic Konrad <konrad.frederic@yahoo.fr>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 0/4] target/sparc: Spring cleanups around CPU
- features & LEON3
-Date: Tue, 25 Mar 2025 13:39:23 +0100
-Message-ID: <20250325123927.74939-1-philmd@linaro.org>
+Subject: [PATCH-for-10.1 1/4] target/sparc: Expose more CPU features
+Date: Tue, 25 Mar 2025 13:39:24 +0100
+Message-ID: <20250325123927.74939-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250325123927.74939-1-philmd@linaro.org>
+References: <20250325123927.74939-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,25 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some LEON3 specific flags seems to be disableable, so list them.
+Various features were not displayed or settable from command line.
 
-Move HW specific code from CPU ENV one layer upper.
+Diff of 'qemu-system-sparc -cpu help':
 
-Philippe Mathieu-Daudé (4):
-  target/sparc: Expose more CPU features
-  target/sparc: Restrict SPARC64 specific features
-  target/sparc: Log unimplemented ASI load/store accesses
-  target/sparc: Move hardware fields from CPUSPARCState to SPARCCPU
+ ...
+   TI-SuperSparc-60     (IU 40000000 FPU 00000000 MMU 01000800 NWINS 8)
+   TI-SuperSparc-61     (IU 44000000 FPU 00000000 MMU 01000000 NWINS 8)
+   TI-SuperSparc-II     (IU 40000000 FPU 00000000 MMU 08000000 NWINS 8)
+ - LEON2                (IU f2000000 FPU 00080000 MMU f2000000 NWINS 8)
+ - LEON3                (IU f3000000 FPU 00080000 MMU f3000000 NWINS 8)
+ + LEON2                (IU f2000000 FPU 00080000 MMU f2000000 NWINS 8) +shutdown
+ + LEON3                (IU f3000000 FPU 00080000 MMU f3000000 NWINS 8) +shutdown +asr17 +cachectrl +powerdown +casa
+  Default CPU feature flags (use '-' to remove): mul div fsmuld
+ -Available CPU feature flags (use '+' to add): float128
+ +Available CPU feature flags (use '+' to add): shutdown asr17 cachectrl powerdown casa float128
+  Numerical features (use '=' to set): iu_version fpu_version mmu_version nwindows
 
- target/sparc/cpu.h             | 10 +++++-----
- target/sparc/cpu-feature.h.inc | 20 +++++++++++--------
- hw/sparc/leon3.c               | 35 +++++++++++++++++-----------------
- target/sparc/cpu.c             |  6 +++++-
- target/sparc/int32_helper.c    |  8 ++++++--
- target/sparc/ldst_helper.c     | 20 +++++++++++++------
- target/sparc/translate.c       | 10 ++++++++--
- 7 files changed, 68 insertions(+), 41 deletions(-)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/sparc/cpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 57161201173..37406227cb7 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -548,6 +548,11 @@ static const sparc_def_t sparc_defs[] = {
+ /* This must match sparc_cpu_properties[]. */
+ static const char * const feature_name[] = {
+     [CPU_FEATURE_BIT_FLOAT128] = "float128",
++    [CPU_FEATURE_BIT_TA0_SHUTDOWN] = "shutdown",
++    [CPU_FEATURE_BIT_POWERDOWN] = "powerdown",
++    [CPU_FEATURE_BIT_CACHE_CTRL] = "cachectrl",
++    [CPU_FEATURE_BIT_ASR17] = "asr17",
++    [CPU_FEATURE_BIT_CASA] = "casa",
+ #ifdef TARGET_SPARC64
+     [CPU_FEATURE_BIT_CMT] = "cmt",
+     [CPU_FEATURE_BIT_GL] = "gl",
 -- 
 2.47.1
 
