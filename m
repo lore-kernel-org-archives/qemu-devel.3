@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF2DBC3600D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E00C9C36005
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txBKd-0002lK-Mt; Tue, 25 Mar 2025 16:57:08 -0400
+	id 1txBKf-0002lx-32; Tue, 25 Mar 2025 16:57:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1txBKb-0002kv-U1; Tue, 25 Mar 2025 16:57:05 -0400
+ id 1txBKd-0002lC-3W; Tue, 25 Mar 2025 16:57:07 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1txBKZ-0002Xo-5n; Tue, 25 Mar 2025 16:57:05 -0400
-DKIM-Signature: a=rsa-sha256; bh=KBHHJ0S1QqAA7VtLQx4RDhVtq5KSjFOfBkWMWlFPstk=; 
+ id 1txBKZ-0002Xn-61; Tue, 25 Mar 2025 16:57:06 -0400
+DKIM-Signature: a=rsa-sha256; bh=8/RBsoX6Ih2HEV322wVLWsxwEtJcj3rG0PpJE1ehlbM=; 
  c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1742936219; v=1;
- b=ZetlacOIO/579+FF7XRFA3cnJfEzCtaVhJDZyQklNIWytKPYTtdeiD1DEVvxzO38JKqhpJIh
- 9WgAgr+JLi4sPIfo6nZ3MuObayOoZlAMvhbIQa04xtPE++VG+imIlOHdfZ/NrPQyMtwuHyoi2+3
- F01DneFAQ8p2yvw1kT2udRjUzR5wXa5l9/4EylEedeGF5T9ou8ubCUSnTcHuOsgDHSQQ/Hoc+RK
- 0CmSl1b64hQqS3hMbzxEZhGq6JyOqrVMq/nQa56So5bk0cWC8pxuRlLvdpGxHM//WK5ltzCoXU5
- qMNiMgY+0U5suoQncDC9+Dl3bbYS6ln+QdLwrD7/MZREg==
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1742936219; v=1;
+ b=lWhJadpbEf0Gs/LLVzXIM2EdITHs3hvOUlWZxU5tP1pyz2X3fTmcFdh2iYkq5AEyiZIQx3vP
+ GUsiXq+ViyVc3hJ5Rw90VShlRZsyb17hW0LXJk9OjFkEWi7tNHs7u9dKIJ3Rak4oKj5ec8xKFu5
+ xYCNZGhp4Ki7MwSa8jOqMvfNlFxT+J7Nk+AL2w3raaIq2xD8Lzj+/8+ONksmDoc0Dpxm1N7CTWp
+ nwoSx9pWSKuftB6WrWmB/ya9Rh6EtFYiqfyMmlr83xcPbo2SX23wU98MA9S+p2trgPfQDq+hTzj
+ 0sGfyc6INNm1Z3nf8o0T6S9btvbvbpHAIeNyAqg9cOzHQ==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 4E4E52087D;
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 33E512069A;
  Tue, 25 Mar 2025 20:56:59 +0000 (UTC)
 From: ~h0lyalg0rithm <h0lyalg0rithm@git.sr.ht>
-Date: Tue, 25 Mar 2025 21:49:38 +0100
-Subject: [PATCH qemu 1/1] Add IOURING_SETUP_SINGLE_ISSUER flag to improve
+Date: Tue, 25 Mar 2025 20:56:59 +0000
+Subject: [PATCH qemu 0/1] Add IOURING_SETUP_SINGLE_ISSUER flag to improve
  iouring performance
-Message-ID: <174293621917.22751.11381319865102029969-1@git.sr.ht>
+MIME-Version: 1.0
+Message-ID: <174293621917.22751.11381319865102029969-0@git.sr.ht>
 X-Mailer: git.sr.ht
-In-Reply-To: <174293621917.22751.11381319865102029969-0@git.sr.ht>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
  helo=mail-a.sr.ht
 X-Spam_score_int: 4
@@ -67,35 +66,14 @@ Reply-To: ~h0lyalg0rithm <surajshirvankar@gmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Suraj Shirvankar <surajshirvankar@gmail.com>
+Suggestion by Stefan Hajnoczi to improve io_uring performance
 
-Signed-off-by: Suraj Shirvankar <surajshirvankar@gmail.com>
----
+Suraj Shirvankar (1):
+  Add IOURING_SETUP_SINGLE_ISSUER flag to improve iouring performance
+
  util/fdmon-io_uring.c | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index b0d68bdc44..235837abcb 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -324,8 +324,14 @@ static const FDMonOps fdmon_io_uring_ops =3D {
- bool fdmon_io_uring_setup(AioContext *ctx)
- {
-     int ret;
-+    unsigned int flags =3D 0;
-=20
--    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring=
-, 0);
-+    /* This improves performance but can be skipped on old hosts */
-+#ifdef IORING_SETUP_SINGLE_ISSUER
-+    flags |=3D IORING_SETUP_SINGLE_ISSUER
-+#endif
-+
-+    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring=
-, flags);
-     if (ret !=3D 0) {
-         return false;
-     }
---=20
+-- 
 2.45.3
 
