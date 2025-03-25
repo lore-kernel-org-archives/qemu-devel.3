@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40607C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B945CC3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twy7u-0004jx-J1; Tue, 25 Mar 2025 02:51:07 -0400
+	id 1twy9b-0006G8-GQ; Tue, 25 Mar 2025 02:52:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7s-0004hN-Hu; Tue, 25 Mar 2025 02:51:04 -0400
+ id 1twy8q-0005Mb-Qh; Tue, 25 Mar 2025 02:52:05 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7q-0001hM-Hy; Tue, 25 Mar 2025 02:51:04 -0400
+ id 1twy8p-0001vL-19; Tue, 25 Mar 2025 02:52:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 181A8107D6A;
- Tue, 25 Mar 2025 09:49:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CAF57107D76;
+ Tue, 25 Mar 2025 09:49:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AEEB51D5E77;
- Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D9111D5E81;
+ Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id ADC2E57036; Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
+ id 6C73D5704A; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Joe Komlodi <komlodi@google.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 42/51] util/cacheflush: Make first DSB unconditional
- on aarch64
-Date: Tue, 25 Mar 2025 09:50:29 +0300
-Message-Id: <20250325065038.3263786-1-mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 51/69] util/cacheflush: Make first DSB unconditional on
+ aarch64
+Date: Tue, 25 Mar 2025 09:50:25 +0300
+Message-Id: <20250325065043.3263864-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
-References: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
