@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D97C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D25CC36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 18:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx8NF-0004bh-Ps; Tue, 25 Mar 2025 13:47:38 -0400
+	id 1tx8hk-0008SI-S3; Tue, 25 Mar 2025 14:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tx8N9-0004Zz-LA
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 13:47:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tx8hd-0008R4-Fn
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 14:08:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tx8N5-0003MN-Me
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 13:47:30 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tx8hZ-0005hC-Ou
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 14:08:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742924846;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1742926116;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8Wa+Ntkfj/VhmBDG86uXoUXCsflGUH477hNKufMAWAM=;
- b=Y2Cu+u8ZlscnXwBkDf5kdfi4adPG7xe3ePzEjW3IbzhsjBwtI2Ng0Jz/FrZV9/zW4oV1nN
- TAsrTyEqxCWyYsQLgo0odLEDu5v+n7TZYkjeI88mcUhXX5w9d/tlvUuehWe5I6d9Vn8lnz
- X7zX7iYtaTqvt0ggPUauHUvDqsdmo68=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eQeqxyFjZDfP8tiyt1ayO1EtZZ59B7aWgMm9xLmFc9Q=;
+ b=VAziw9V/XPm2Pbx9WhRl59DGYvM6CRTFIPs6gg/wcAP1+bGw76MSeS5obqcZAIywbPFva7
+ 6lcz5f9up6NVq8U5Ch9ssU42Y4wCdGzSvspbKkp1GOHCehJZ2eiCOJ1Ctxsu3w5sDjzA0w
+ U+VouoJjHTi0gcqPlBxfYOHI8uO/kcM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-amFT27ytPfWOC9I4BFpGiA-1; Tue, 25 Mar 2025 13:47:22 -0400
-X-MC-Unique: amFT27ytPfWOC9I4BFpGiA-1
-X-Mimecast-MFC-AGG-ID: amFT27ytPfWOC9I4BFpGiA_1742924839
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2ff7aecba07so10014158a91.2
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 10:47:20 -0700 (PDT)
+ us-mta-180-viJlB7XROR6QimooO8K4ig-1; Tue, 25 Mar 2025 14:08:33 -0400
+X-MC-Unique: viJlB7XROR6QimooO8K4ig-1
+X-Mimecast-MFC-AGG-ID: viJlB7XROR6QimooO8K4ig_1742926112
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-399744f742bso1447670f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 11:08:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742924839; x=1743529639;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1742926112; x=1743530912;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8Wa+Ntkfj/VhmBDG86uXoUXCsflGUH477hNKufMAWAM=;
- b=p7wCbZTEeFGgsLA8o8uoOF09IH5/Y1j242TCek8QmeZzOEXEuSxKW3SCMJQYtqwxBF
- 8RLGfyVEWxUX6C4YF2uZiBVTsmpgMlVkU7SDvZxb7V9+d6GG1WjazYnbKC02sl8Iidrf
- J3GLnHJCVTL6PHfRMUZFNvRLY4LbVvwPB9hcXgqErbsiDP4Xkk3wXSKT+HD6W6eeD497
- 10YCcIhemh8RsHVoBD+rBKCjBB8ma1QkS+uqd4/HVl3izbWef9Yh2kZhjkHt7vZO6d5N
- tw1XRz2EdR49ehsFQGjcamO3ORpco0ZFdV85SbexiLqlHjdPApYyaGLAe5CaVfiS2nVp
- Osjw==
-X-Gm-Message-State: AOJu0YyMFdkXd3Yr0DMf4Srju3ZTtTI1DCgMOGm4uNSZsk9LaeLxfsWZ
- 7s7kv/Vob+/If8EOgSko3qajfTykduIvlku2OQ5f7SlTVpEOQv5Lgvz0PhNdkyPlJgtTfPK7wy7
- jd2igc5uAxMA0fti5LR3937JKik3GX9JEqaxB3M7ThEpU2/bItzQ9hmgX3OJxjfq0KFarggfSVx
- HvxYowwZNmgq7R0I3cE63LeCTuTZQ=
-X-Gm-Gg: ASbGncsZ3pP++ksMAKgZWHYASblNiF1W0MbFfGZJZMdy1wFXU6b/tmkekOOG4V/b6aT
- ip9JCld5fmnPaN0Ak0OnfuFXTmoOgGdOKTwTr91RroNRewkADa5J9wBFw/pCIkdjjIoA9HHGxeg
- vwG9WC5xYG5rz/OWb7y4XI5VM0rbOR
-X-Received: by 2002:a17:90b:28cb:b0:2ff:698d:ef74 with SMTP id
- 98e67ed59e1d1-3030fee5674mr24464108a91.26.1742924838783; 
- Tue, 25 Mar 2025 10:47:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSeF+XdEYm3gQKXdTn8Z78U7uN5LTjfH0my7duqRQuGXYneEE8r4HZimvPVADXk662vDAmEQMtizNUXV2Vov8=
-X-Received: by 2002:a17:90b:28cb:b0:2ff:698d:ef74 with SMTP id
- 98e67ed59e1d1-3030fee5674mr24464037a91.26.1742924838118; Tue, 25 Mar 2025
- 10:47:18 -0700 (PDT)
+ bh=eQeqxyFjZDfP8tiyt1ayO1EtZZ59B7aWgMm9xLmFc9Q=;
+ b=IGKHMbFk2kUbD785wnlEI7QSwYghOvlPyNYn0MtXI2Sj2/Ps4XcNQ+jt22oipffb+o
+ 2FS7DZQZB5ai4WAAebZodpeGe2PtKLe/azQToeh7ThThyc91iN/G/QYHNr6VH8vcohNa
+ 2nxCs/1T4/wveCtVjag89wL0vnH9sIf49+y3SYicy9FN9YK8g796TWYm0t7ROowXnGKq
+ gW1N1IJ8/vVz72SXFawaZpOg+A0bnKod2PtdOrjbzZwJGFVPazMkZNku561bQTnTibTt
+ IhcPk34jwovjGqLLhpRtL973s2oXfQbe4oB5x/+qJ7OcZk1cMPHP+BIjIToQPtBGLh4O
+ p7Fw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVNX9LT8MW2ZD9qWfqcgmkdBGM/0T555isWKk0bKHhup/fLQ1DGM+LXcpoqikfoiidEEkx0PNpr7dX@nongnu.org
+X-Gm-Message-State: AOJu0YzcMYmf53XcvwtiS/Md6wogB32/SErbS7uhE/bsYuXnVUzo0rXp
+ No0epkNayE1aGXjWP3+C3odG0ze7gFuFcqnNot/RPanFsTjzFPtPO+nY0Jbx5uOza3ssYIbS6It
+ 1DkgAQX3MYKJsTqiqOJH/apDPfj3X2qL/y6yGDYorYjnqjMyw9UU2
+X-Gm-Gg: ASbGncuWTqXZIHz15hkE8YHO7Uas90cMKMZxXPznqBD5bnFnPf5h81WbrnacMt8sarq
+ W/J7yQ3vT5Qk/gmgD2NTBN19sovQliOpDTwGuZvBTLVPqxb26QiyM1k3WQUoUEM8fFsyzlsWARc
+ lkFS/xjzpdo4Y1XqU7KExFDkPRseLurJUn6Jh03Ev7Vko7qYmafh6x2QO86bByowjpdktyNSiJC
+ SH0R6du5AnjV2lHgoUBDZ3nPYkDgsk7cqY5ykLxAQE1vogVEn/9UiLeP1D570AyJ43v5lRTa3+Q
+ IepllEm0kzQ4lavq+vw3ghlsVh3JHhdXrMWUliMSL6OI9tBXvLasbBejdDIg1kA=
+X-Received: by 2002:a5d:59ad:0:b0:391:39fb:59b4 with SMTP id
+ ffacd0b85a97d-3997f903a71mr15996186f8f.27.1742926112282; 
+ Tue, 25 Mar 2025 11:08:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERKytj53Q/YEPBw9wqib83+mHGlipYIoVnbYH0kKsY2skD+0gYj1H6QafhSdwmmoI7+APJpQ==
+X-Received: by 2002:a5d:59ad:0:b0:391:39fb:59b4 with SMTP id
+ ffacd0b85a97d-3997f903a71mr15996150f8f.27.1742926111762; 
+ Tue, 25 Mar 2025 11:08:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f9a345fsm14186253f8f.24.2025.03.25.11.08.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Mar 2025 11:08:30 -0700 (PDT)
+Message-ID: <4333965f-f5bc-412f-ae23-46544d7dc919@redhat.com>
+Date: Tue, 25 Mar 2025 19:08:29 +0100
 MIME-Version: 1.0
-References: <20250322010857.309490-1-jsnow@redhat.com>
- <20250322010857.309490-3-jsnow@redhat.com>
- <87cye5mopz.fsf@pond.sub.org>
-In-Reply-To: <87cye5mopz.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 25 Mar 2025 13:47:06 -0400
-X-Gm-Features: AQ5f1Jr5i3EWRihW2uXAbooTlMgqxW-HmLFcZvGW9vsSeE1J6r2JGwDYXY81ewQ
-Message-ID: <CAFn=p-ZDmOTDWie6tCKyOGFj3R4wm9N_4r+J9VWzGYKKoF7sbw@mail.gmail.com>
-Subject: Re: [PATCH 2/4] docs, qapi: generate undocumented return sections
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Lukas Straub <lukasstraub2@web.de>, 
- Fabiano Rosas <farosas@suse.de>, Eduardo Habkost <eduardo@habkost.net>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, qemu-trivial@nongnu.org, 
- Jason Wang <jasowang@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, Yanan Wang <wangyanan55@huawei.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org, 
- Zhenwei Pi <pizhenwei@bytedance.com>, Mads Ynddal <mads@ynddal.dk>, 
- Gerd Hoffmann <kraxel@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Eric Blake <eblake@redhat.com>, Jiri Pirko <jiri@resnulli.us>
-Content-Type: multipart/alternative; boundary="000000000000d8c53b06312e4ff6"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 10/20] hw/arm/smmuv3-accel: Support nested STE
+ install/uninstall support
+Content-Language: en-US
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-11-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250311141045.66620-11-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,224 +118,275 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d8c53b06312e4ff6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Tue, Mar 25, 2025 at 5:41=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
-
-> John Snow <jsnow@redhat.com> writes:
+On 3/11/25 3:10 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
 >
-> > This patch changes the qapidoc transmogrifier to generate Return value
-> > documentation for any command that has a return value but hasn't
-> > explicitly documented that return value.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
+> Allocates a s1 HWPT for the Guest s1 stage and attaches that
+> to the dev. This will be invoked in a subsequent patch when
+> Guest issues SMMU_CMD_CFGI_STE.
+CMD_CFGI_STE ...
+or CMD_CFGI_STE_RANGE
 >
-> [...]
+> While at it, we are also exporting both smmu_find_ste() and
+> smmuv3_flush_config() from smmuv3.c for use here.
 >
-> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> > index 949d9e8bff7..8c382a049af 100644
-> > --- a/scripts/qapi/parser.py
-> > +++ b/scripts/qapi/parser.py
-> > @@ -815,6 +815,17 @@ def connect_feature(self, feature:
-> 'QAPISchemaFeature') -> None:
-> >                                 % feature.name)
-> >          self.features[feature.name].connect(feature)
-> >
-> > +    def ensure_returns(self, info: QAPISourceInfo) -> None:
-> > +        if not any(s.kind =3D=3D QAPIDoc.Kind.RETURNS for s in
-> self.all_sections):
-> > +
-> > +            # Stub "Returns" section for undocumented returns value.
-> > +            # Insert stub after the last non-PLAIN section.
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/smmuv3-accel.c         | 111 ++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3-internal.h      |  13 ++++
+>  hw/arm/smmuv3.c               |   5 +-
+>  hw/arm/trace-events           |   1 +
+>  include/hw/arm/smmuv3-accel.h |   6 ++
+>  5 files changed, 133 insertions(+), 3 deletions(-)
 >
-> Can you explain why that's where it should go?
->
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 1c696649d5..d3a5cf9551 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -13,6 +13,8 @@
+>  #include "hw/arm/smmuv3-accel.h"
+>  #include "hw/pci/pci_bridge.h"
+>  
+> +#include "smmuv3-internal.h"
+> +
+>  static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *s, SMMUPciBus *sbus,
+>                                                  PCIBus *bus, int devfn)
+>  {
+> @@ -32,6 +34,115 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *s, SMMUPciBus *sbus,
+>      return accel_dev;
+>  }
+>  
+> +static void
+> +smmuv3_accel_dev_uninstall_nested_ste(SMMUv3AccelDevice *accel_dev, bool abort)
+> +{
+> +    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
+> +    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
+> +    uint32_t hwpt_id;
+> +
+> +    if (!s1_hwpt || !accel_dev->viommu) {
+> +        return;
+> +    }
+> +
+> +    if (abort) {
+> +        hwpt_id = accel_dev->viommu->abort_hwpt_id;
+> +    } else {
+> +        hwpt_id = accel_dev->viommu->bypass_hwpt_id;
+> +    }
+> +
+> +    host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, &error_abort);
+> +    iommufd_backend_free_id(s1_hwpt->iommufd, s1_hwpt->hwpt_id);
+> +    accel_dev->s1_hwpt = NULL;
+> +    g_free(s1_hwpt);
+> +}
+> +
+> +static int
+> +smmuv3_accel_dev_install_nested_ste(SMMUv3AccelDevice *accel_dev,
+> +                                    uint32_t data_type, uint32_t data_len,
+> +                                    void *data)
+> +{
+> +    SMMUViommu *viommu = accel_dev->viommu;
+> +    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
+> +    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
+> +
+> +    if (!idev || !viommu) {
+> +        return -ENOENT;
+> +    }
+> +
+> +    if (s1_hwpt) {
+> +        smmuv3_accel_dev_uninstall_nested_ste(accel_dev, false);
+why do you choose abort = false?
+> +    }
+> +
+> +    s1_hwpt = g_new0(SMMUS1Hwpt, 1);
+> +    if (!s1_hwpt) {
+no need to test the result.
 
-... No.
+"
+If any call to allocate memory using functions |g_new()|
+<https://docs.gtk.org/glib/func.new.html>, |g_new0()|
+<https://docs.gtk.org/glib/func.new0.html>, |g_renew()|
+<https://docs.gtk.org/glib/func.renew.html>, |g_malloc()|
+<https://docs.gtk.org/glib/func.malloc.html>, |g_malloc0()|
+<https://docs.gtk.org/glib/func.malloc0.html>, |g_malloc0_n()|
+<https://docs.gtk.org/glib/func.malloc0_n.html>, |g_realloc()|
+<https://docs.gtk.org/glib/func.realloc.html> and |g_realloc_n()|
+<https://docs.gtk.org/glib/func.realloc_n.html> fails, the application
+is terminated. This also means that there is no need to check if the
+call succeeded.
+"
 
-(Joking...)
+https://docs.gtk.org/glib/memory.html#title
 
-I'm open to better positions if you can define them, admittedly I just
-picked a place that's likely to be at the end of the info field list
-sections. (Reminder: "info field list" means the sections that are
-converted directly into the two-column layout section of the rendered docs.=
-)
+> +        return -ENOMEM;
+> +    }
+> +
+> +    s1_hwpt->iommufd = idev->iommufd;
+> +    iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
+> +                               viommu->core.viommu_id, 0, data_type, data_len,
+> +                               data, &s1_hwpt->hwpt_id, &error_abort);
+> +    host_iommu_device_iommufd_attach_hwpt(idev, s1_hwpt->hwpt_id, &error_abort);
+> +    accel_dev->s1_hwpt = s1_hwpt;
+> +    return 0;
+> +}
+> +
+> +void smmuv3_accel_install_nested_ste(SMMUDevice *sdev, int sid)
+> +{
+> +    SMMUv3AccelDevice *accel_dev;
+> +    SMMUEventInfo event = {.type = SMMU_EVT_NONE, .sid = sid,
+> +                           .inval_ste_allowed = true};
+> +    struct iommu_hwpt_arm_smmuv3 nested_data = {};
+> +    SMMUv3State *s = sdev->smmu;
+> +    SMMUState *bs = &s->smmu_state;
+> +    uint32_t config;
+> +    STE ste;
+> +    int ret;
+> +
+> +    if (!bs->accel) {
+> +        return;
+> +    }
+> +
+> +    accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
+> +    if (!accel_dev->viommu) {
+> +        return;
+> +    }
+> +
+> +    ret = smmu_find_ste(sdev->smmu, sid, &ste, &event);
+> +    if (ret) {
+> +        /*
+> +         * For a 2-level Stream Table, the level-2 table might not be ready
+> +         * until the device gets inserted to the stream table. Ignore this.
+> +         */
+I am confused by the above comment. Please can you describe the
+circumstances when this happens and why this should be an error
+> +        return;
+> +    }
+> +
+> +    config = STE_CONFIG(&ste);
+> +    if (!STE_VALID(&ste) || !STE_CFG_S1_ENABLED(config)) {
+you fully bypass the logic of smmuv3_get_config/decode_config. Couldn't
+you reuse it. Originally we used the s1ctxptr and disabled/bypassed info.
+> +        smmuv3_accel_dev_uninstall_nested_ste(accel_dev, STE_CFG_ABORT(config));
+> +        smmuv3_flush_config(sdev);
+> +        return;
+> +    }
+> +
+> +    nested_data.ste[0] = (uint64_t)ste.word[0] | (uint64_t)ste.word[1] << 32;
+> +    nested_data.ste[1] = (uint64_t)ste.word[2] | (uint64_t)ste.word[3] << 32;
+> +    /* V | CONFIG | S1FMT | S1CTXPTR | S1CDMAX */
+> +    nested_data.ste[0] &= 0xf80fffffffffffffULL;
+> +    /* S1DSS | S1CIR | S1COR | S1CSH | S1STALLD | EATS */
+> +    nested_data.ste[1] &= 0x380000ffULL;
+> +    ret = smmuv3_accel_dev_install_nested_ste(accel_dev,
+> +                                              IOMMU_HWPT_DATA_ARM_SMMUV3,
+> +                                              sizeof(nested_data),
+> +                                              &nested_data);
+> +    if (ret) {
+> +        error_report("Unable to install nested STE=%16LX:%16LX, ret=%d",
+> +                     nested_data.ste[1], nested_data.ste[0], ret);
+also print the SID
+> +    }
+> +    trace_smmuv3_accel_install_nested_ste(sid, nested_data.ste[1],
+> +                                          nested_data.ste[0]);
+> +}
+> +
+>  static bool
+>  smmuv3_accel_dev_attach_viommu(SMMUv3AccelDevice *accel_dev,
+>                                 HostIOMMUDeviceIOMMUFD *idev, Error **errp)
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index b6b7399347..46c8bcae14 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -24,6 +24,8 @@
+>  #include "hw/registerfields.h"
+>  #include "hw/arm/smmu-common.h"
+>  
+> +#include CONFIG_DEVICES
+> +
+>  typedef enum SMMUTranslationStatus {
+>      SMMU_TRANS_DISABLE,
+>      SMMU_TRANS_ABORT,
+> @@ -547,6 +549,17 @@ typedef struct CD {
+>      uint32_t word[16];
+>  } CD;
+>  
+> +int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
+> +                  SMMUEventInfo *event);
+> +void smmuv3_flush_config(SMMUDevice *sdev);
+> +
+> +#if defined(CONFIG_ARM_SMMUV3_ACCEL) && defined(CONFIG_IOMMUFD)
+> +void smmuv3_accel_install_nested_ste(SMMUDevice *sdev, int sid);
+> +#else
+> +static inline void smmuv3_accel_install_nested_ste(SMMUDevice *sdev, int sid)
+> +{
+> +}
+> +#endif
+>  /* STE fields */
+>  
+>  #define STE_VALID(x)   extract32((x)->word[0], 0, 1)
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index b49a59b64c..ea63731d61 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -628,8 +628,7 @@ bad_ste:
+>   * Supports linear and 2-level stream table
+>   * Return 0 on success, -EINVAL otherwise
+>   */
+> -static int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
+> -                         SMMUEventInfo *event)
+> +int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+>  {
+>      dma_addr_t addr, strtab_base;
+>      uint32_t log2size;
+> @@ -898,7 +897,7 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
+>      return cfg;
+>  }
+>  
+> -static void smmuv3_flush_config(SMMUDevice *sdev)
+> +void smmuv3_flush_config(SMMUDevice *sdev)
+>  {
+>      SMMUv3State *s = sdev->smmu;
+>      SMMUState *bc = &s->smmu_state;
+> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+> index 17960794bf..cd2eac31c2 100644
+> --- a/hw/arm/trace-events
+> +++ b/hw/arm/trace-events
+> @@ -61,6 +61,7 @@ smmu_reset_exit(void) ""
+>  #smmuv3-accel.c
+>  smmuv3_accel_set_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
+>  smmuv3_accel_unset_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x"
+> +smmuv3_accel_install_nested_ste(uint32_t sid, uint64_t ste_1, uint64_t ste_0) "sid=%d ste=%"PRIx64":%"PRIx64
+>  
+>  # strongarm.c
+>  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
+> diff --git a/include/hw/arm/smmuv3-accel.h b/include/hw/arm/smmuv3-accel.h
+> index aca6838dca..d6b0b1ca30 100644
+> --- a/include/hw/arm/smmuv3-accel.h
+> +++ b/include/hw/arm/smmuv3-accel.h
+> @@ -35,9 +35,15 @@ typedef struct SMMUViommu {
+>      QLIST_ENTRY(SMMUViommu) next;
+>  } SMMUViommu;
+>  
+> +typedef struct SMMUS1Hwpt {
+> +    IOMMUFDBackend *iommufd;
+> +    uint32_t hwpt_id;
+> +} SMMUS1Hwpt;
+> +
+>  typedef struct SMMUv3AccelDevice {
+>      SMMUDevice  sdev;
+>      HostIOMMUDeviceIOMMUFD *idev;
+> +    SMMUS1Hwpt  *s1_hwpt;
+>      SMMUViommu *viommu;
+>      QLIST_ENTRY(SMMUv3AccelDevice) next;
+>  } SMMUv3AccelDevice;
+Thanks
 
-
->
-> Should we tighten section order some more?
->
-
-I wouldn't mind, but I believe this needs to be a change that you direct.
-From memory, I believe my preferred "enforced order" is something like this=
-:
-
-1. Intro paragraph(s)
-2. Members
-3. Features
-4. Errors
-5. Returns
-6. Detail paragraph(s)
-
-...Give or take some re-ordering between features/errors/returns as
-appropriate, I don't actually really care about the order there so much as
-I care about the fact that plain paragraphs do not appear between the
-members-features-errors-returns "region". The rest can be your preference.
-
-(Since and TODO can go wherever, from the perspective of the
-transmogrifier, I do not care about them since I do not render them in the
-document flow.)
-
-
->
-> > +            for sect in reversed(self.all_sections):
-> > +                if sect.kind !=3D QAPIDoc.Kind.PLAIN:
-> > +                    stub =3D QAPIDoc.Section(info, QAPIDoc.Kind.RETURN=
-S)
-> > +                    idx =3D self.all_sections.index(sect) + 1
-> > +                    self.all_sections.insert(idx, stub)
-> > +
-> >      def check_expr(self, expr: QAPIExpression) -> None:
-> >          if 'command' in expr:
-> >              if self.returns and 'returns' not in expr:
-> > diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-> > index cbe3b5aa91e..3abddea3525 100644
-> > --- a/scripts/qapi/schema.py
-> > +++ b/scripts/qapi/schema.py
-> > @@ -1062,6 +1062,9 @@ def connect_doc(self, doc: Optional[QAPIDoc] =3D
-> None) -> None:
-> >              if self.arg_type and self.arg_type.is_implicit():
-> >                  self.arg_type.connect_doc(doc)
-> >
-> > +            if self.ret_type and self.info:
-> > +                doc.ensure_returns(self.info)
-> > +
-> >      def visit(self, visitor: QAPISchemaVisitor) -> None:
-> >          super().visit(visitor)
-> >          visitor.visit_command(
->
->
-
---000000000000d8c53b06312e4ff6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 25,=
- 2025 at 5:41=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; This patch changes the qapidoc transmogrifier to generate Return value=
-<br>
-&gt; documentation for any command that has a return value but hasn&#39;t<b=
-r>
-&gt; explicitly documented that return value.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-[...]<br>
-<br>
-&gt; diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py<br>
-&gt; index 949d9e8bff7..8c382a049af 100644<br>
-&gt; --- a/scripts/qapi/parser.py<br>
-&gt; +++ b/scripts/qapi/parser.py<br>
-&gt; @@ -815,6 +815,17 @@ def connect_feature(self, feature: &#39;QAPISchem=
-aFeature&#39;) -&gt; None:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0% <a href=3D"http://feature=
-.name" rel=3D"noreferrer" target=3D"_blank">feature.name</a>)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.features[<a href=3D"http://feat=
-ure.name" rel=3D"noreferrer" target=3D"_blank">feature.name</a>].connect(fe=
-ature)<br>
-&gt;=C2=A0 <br>
-&gt; +=C2=A0 =C2=A0 def ensure_returns(self, info: QAPISourceInfo) -&gt; No=
-ne:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if not any(s.kind =3D=3D QAPIDoc.Kind.RET=
-URNS for s in self.all_sections):<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Stub &quot;Returns&quot; =
-section for undocumented returns value.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Insert stub after the las=
-t non-PLAIN section.<br>
-<br>
-Can you explain why that&#39;s where it should go?<br></blockquote><div><br=
-></div><div>... No.</div><div><br></div><div>(Joking...)</div><div><br></di=
-v><div>I&#39;m open to better positions if you can define them, admittedly =
-I just picked a place that&#39;s likely to be at the end of the info field =
-list sections. (Reminder: &quot;info field list&quot; means the sections th=
-at are converted directly into the two-column layout section of the rendere=
-d docs.)</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">
-<br>
-Should we tighten section order some more?<br></blockquote><div><br></div><=
-div>I wouldn&#39;t mind, but I believe this needs to be a change that you d=
-irect. From memory, I believe my preferred &quot;enforced order&quot; is so=
-mething like this:</div><div><br></div><div>1. Intro paragraph(s)<br></div>=
-<div>2. Members</div><div>3. Features</div><div>4. Errors</div><div>5. Retu=
-rns</div><div>6. Detail paragraph(s)</div><div><br></div><div>...Give or ta=
-ke some re-ordering between features/errors/returns as appropriate, I don&#=
-39;t actually really care about the order there so much as I care about the=
- fact that plain paragraphs do not appear between the members-features-erro=
-rs-returns &quot;region&quot;. The rest can be your preference.</div><div><=
-br></div><div>(Since and TODO can go wherever, from the perspective of the=
-=20
-transmogrifier, I do not care about them since I do not render them in=20
-the document flow.)</div><div>=C2=A0</div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for sect in reversed(self.a=
-ll_sections):<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if sect.kind =
-!=3D QAPIDoc.Kind.PLAIN:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- stub =3D QAPIDoc.Section(info, QAPIDoc.Kind.RETURNS)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- idx =3D self.all_sections.index(sect) + 1<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- self.all_sections.insert(idx, stub)<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 def check_expr(self, expr: QAPIExpression) -&gt; N=
-one:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if &#39;command&#39; in expr:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if self.returns and &#=
-39;returns&#39; not in expr:<br>
-&gt; diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py<br>
-&gt; index cbe3b5aa91e..3abddea3525 100644<br>
-&gt; --- a/scripts/qapi/schema.py<br>
-&gt; +++ b/scripts/qapi/schema.py<br>
-&gt; @@ -1062,6 +1062,9 @@ def connect_doc(self, doc: Optional[QAPIDoc] =3D=
- None) -&gt; None:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if self.arg_type and s=
-elf.arg_type.is_implicit():<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.arg=
-_type.connect_doc(doc)<br>
-&gt;=C2=A0 <br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if self.ret_type and <a hre=
-f=3D"http://self.info" rel=3D"noreferrer" target=3D"_blank">self.info</a>:<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 doc.ensure_re=
-turns(<a href=3D"http://self.info" rel=3D"noreferrer" target=3D"_blank">sel=
-f.info</a>)<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 def visit(self, visitor: QAPISchemaVisitor) -&gt; =
-None:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 super().visit(visitor)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 visitor.visit_command(<br>
-<br>
-</blockquote></div></div>
-
---000000000000d8c53b06312e4ff6--
+Eric
 
 
