@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E14C36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72955C3600D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:48:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txCzj-0000jP-OP; Tue, 25 Mar 2025 18:43:41 -0400
+	id 1txD0U-0002MF-1v; Tue, 25 Mar 2025 18:44:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txCzd-0000dI-7B
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:33 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD00-00010I-7Q
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:58 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txCza-0006vs-Gx
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:32 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cef035a3bso43327525e9.1
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:43:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txCzx-0006zk-Gx
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:55 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43ce70f9afbso60889485e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942609; x=1743547409; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942632; x=1743547432; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uIsbtSKYbmjuBlwlygMfh2FAmt4wKaqUSYQkYlcHhAY=;
- b=PQz9VHJQnv9EXVpieVpBpnyn5UKBTIaPufX3fyeO59/MWAgy4A9XjovQ7B2DZUZ2iC
- vEo0UV0XSBw6byBP+i1f8hE1+1Lbkbddv7LR6/hzkmqSkThlS04Td+42StZdNKNrQXkp
- GnHBpAFODeO69ur8c1CrSI58A150/Bux2K3bDLWHgY/R0OdXGZ3SoVbTGt59uPt8mOE2
- NOXx1E7/JZOts4qURzLobXDohK+8eKDDMFAQ34sD/mW+tXGm2HJb/CYs6oNwUpb7EKqj
- O3YdWmgM6qE5CerXhH9F+PQADUg3vasw5Io0rttNurzCdRcYbFDUYcZ93vBMefSTxXVS
- MdZw==
+ bh=eP0RXPwsF3SX47mGX273slrVOKCgPW3RL9KKH1EnAUU=;
+ b=y5Kg2eQrWYPcuhZoVCOgic3gwlOIjNWl9ZJ8oR0nCY3lIbNI0sMC9mh9XwYHMAspcr
+ h43tzhoyH1e0T36HxGNSdduO3DQzeThDxkv3gTSaPgBpE6MCSDO+xNfcloTtb0KNABaU
+ pmQKRkBZOTftWE/rsW7C06tkhMHaINzenmDKHbE2q866Tq0RG/F0uDgWHsM84jmJCIdD
+ vLOP6mghI4E91ZirX82zuhNo6qUH4DM20ixXTt2rw3FQkIFIbDCpT4LXpqOPwBw5f5bZ
+ WynyfwLzvbKQxGOqfGfoQVE7UTTc34KVKGXFHFbHm4B7oiJbnqfjAaHIidhNlh7eNSSB
+ NFfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942609; x=1743547409;
+ d=1e100.net; s=20230601; t=1742942632; x=1743547432;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uIsbtSKYbmjuBlwlygMfh2FAmt4wKaqUSYQkYlcHhAY=;
- b=FHAPDmUMKLx1lKcuCQqoCRvDAQuEk21iTGvUCU/hZ7jT4hM7w9AYM4nO7sfzlGErFE
- t2zCglc5mVBkvXr0Q+41jB188U2PAhd3n0U2x4KvvUYGJ/AFDkL5indLQlJHsLh28Y62
- 9zHedPCHnTPL49soLzWOxYRi5ksbmwrGdWqnVEGRpGm59J5HIbWMvngWcEv9OdZHi2O7
- fmx+5OoV0GzOX8dPnn468aq91zNJpmtVaSwsEgJ7O2ZFctXw4Hicp2LSZKdTEpn6YBiJ
- SP9a6NolyQ5vpygN11BK3ycpw1dLhxdpB26Anqapv+mB/mZgs8mDrSxeNvLikE7ZybIG
- nrHQ==
+ bh=eP0RXPwsF3SX47mGX273slrVOKCgPW3RL9KKH1EnAUU=;
+ b=TmtB6Osn3u+vbjgs6dBaDldgVFkNL3dXGxU/qfT+bAnZrB4IorUkojB64LjNN4abqm
+ Y10Om6pMwWh+LlBTBnCiY/EndwP+ZiYAGYhbQAanIA3bhbAbOV5RTOF6t/qRSVWfrb/1
+ dKkF18J5JIYSGhW+WM89656ZooXN4lAilU2ZRPAm7grUSwx3Hiy+qF9rH4ptn18WpycY
+ ICzXKbhHgQ+z0fqj6EH8xjaR0I003sUP8lxtJ8c78U4i3+WW7gc6ePuK8s27FtLawvNr
+ sI4iribx8GZCg7CXJgGA5UPqZBn7CPvNk6yibHbAFJk/b/6BBklyfnN9WzVw1qYcKgUa
+ vCAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8i/I52qLlUkSv7kWsTPq0R3BBootP7aSx1DhoTO+XvKupaKz0O2mA3y0jbtGPlgIcx9ZaK/7AdsjE@nongnu.org
-X-Gm-Message-State: AOJu0YyLi3A4ggd3G68jw3UHAJGMPJLDt+3VsWR2M5y80lMkRV2KgyPj
- wFHvv90JjSdnyFQJsWI8tEDVOFCpAi/frMptFvNaZxgOuWOGoZ2dnlHjso7dQhg=
-X-Gm-Gg: ASbGnct+TRFrFiZ5r7ER+KCCEh801fmZPZxYiEQ+PwQx6qVrO0DPkBmcgiKLoXKoijc
- /qirxXSL/KI9/oDpeDYSvcBk2GGPmi+y5yL7d5e6Z4/kEqwS6JFh9OftRw+N9bIK3s71UBcVzo/
- GBy5h0/LrQWZRiKEDyQzCTXIJnGAe/Bt2+LFJ1nWP887obV7HodBvT7mN7v5MLvQjHzr5cc1ou3
- PuccyKRkXciokgLHvpokhqUKDgkKxdC85zDBeyQLHMHsF5674a09rLZaz9ESl91Qyx3Qk4ojCkO
- i89djEEz5VlS4wav90Bbfiz1yeOxxmterEv+oQiNcl7+Qjix36It2eguoVXOwh1URgDXiFt6a06
- /ESLdngwXxtq856JLYIg=
-X-Google-Smtp-Source: AGHT+IEikcytfaNnArbXeF3qffbmnL+GFR4CLgt3WXT0mak2c6j/QH6STzKh/q5GWmP4LsWfw2zlRg==
-X-Received: by 2002:a05:600c:34cc:b0:43c:efed:732c with SMTP id
- 5b1f17b1804b1-43d50a3c1d4mr162965315e9.28.1742942609083; 
- Tue, 25 Mar 2025 15:43:29 -0700 (PDT)
+ AJvYcCVCD/dAvhIygI4dNGgYyMCZXUZei6ZKMzSDF0Mo069JqB4eK74V3zSPXiZ3+cM25ob1LoIi3YbbbvtX@nongnu.org
+X-Gm-Message-State: AOJu0YzffC/LYGPaWqHZySf8xD2EzqzrXgPg9ruSf8CL0nLQLUthkFsU
+ V2enydWR93zlfUpkrI4zsXnHHCmKyWPDYra1FCH4MF4kDuCn+AgvYRD1DRc5BEE=
+X-Gm-Gg: ASbGnctr4D124jcU5evyoH+ivA3w7R1arEAJDgOkp5aVTCbPWtj8K50ow/LihPbjlDv
+ bFPBDVp2I7MTo4ZYpdQ6hr1kzoF3EoicA+PH08YdCY9qHayhdiqj5I0R3A1uv6CutqYCFncGFkD
+ AV+KJXZl8h8sQ4adJl7SCd/63ouGA+AgAd/+Obzg+RPP8HbUHKq9+8znSsF0L6I+1xDVYN6TBHi
+ 0QHPu4VTlRYbddCH4a+UK2zj/Vo5Bh7rAeXJDTk9CLa3+u+OIDVfFklyqDAcc1XITR/S0oYW+Db
+ xyNqPOWcATSC4dhEsMRa5jEBBrFgPT01dEQZ3glUIEXxjRLCFSjh0DOCZliGlhRGLX6VsHi9ETC
+ WWXaQAAAN/Ipj32O1DAk=
+X-Google-Smtp-Source: AGHT+IFRD/qFLzoLgvBst6JqhurFyP69z55jO8SNGLjYctQKmdZPg3mLwjwd/KwbbwRGh7MUlT+PLg==
+X-Received: by 2002:a05:6000:144e:b0:38f:28cb:4d35 with SMTP id
+ ffacd0b85a97d-3997f902c76mr19201735f8f.13.1742942631785; 
+ Tue, 25 Mar 2025 15:43:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9b517csm15243394f8f.51.2025.03.25.15.43.27
+ 5b1f17b1804b1-43d43f33237sm214876075e9.4.2025.03.25.15.43.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 15:43:28 -0700 (PDT)
+ Tue, 25 Mar 2025 15:43:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Thomas Huth <thuth@redhat.com>,
 	qemu-devel@nongnu.org
@@ -84,17 +84,17 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
  Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org
-Subject: [PATCH-for-10.0 03/12] hw/display/dm163: Add description
-Date: Tue, 25 Mar 2025 23:43:01 +0100
-Message-ID: <20250325224310.8785-4-philmd@linaro.org>
+Subject: [PATCH-for-10.0 07/12] hw/misc/axp2xx: Categorize and add description
+Date: Tue, 25 Mar 2025 23:43:05 +0100
+Message-ID: <20250325224310.8785-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
 References: <20250325224310.8785-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,22 +119,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/dm163.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/misc/axp2xx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/display/dm163.c b/hw/display/dm163.c
-index 75a91f62bd3..f6f0ec0c632 100644
---- a/hw/display/dm163.c
-+++ b/hw/display/dm163.c
-@@ -330,7 +330,7 @@ static void dm163_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
+diff --git a/hw/misc/axp2xx.c b/hw/misc/axp2xx.c
+index af646878cd2..747af430479 100644
+--- a/hw/misc/axp2xx.c
++++ b/hw/misc/axp2xx.c
+@@ -232,6 +232,7 @@ static void axp2xx_class_init(ObjectClass *oc, void *data)
+     ResettableClass *rc = RESETTABLE_CLASS(oc);
  
--    dc->desc = "DM163";
-+    dc->desc = "DM163 8x3-channel constant current LED driver";
-     dc->vmsd = &vmstate_dm163;
-     dc->realize = dm163_realize;
-     rc->phases.hold = dm163_reset_hold;
+     rc->phases.enter = axp2xx_reset_enter;
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+     dc->vmsd = &vmstate_axp2xx;
+     isc->event = axp2xx_event;
+     isc->recv = axp2xx_rx;
+@@ -250,7 +251,9 @@ static const TypeInfo axp2xx_info = {
+ static void axp209_class_init(ObjectClass *oc, void *data)
+ {
+     AXP2xxClass *sc = AXP2XX_CLASS(oc);
++    DeviceClass *dc = DEVICE_CLASS(oc);
+ 
++    dc->desc = "AXP209 power system management";
+     sc->reset_enter = axp209_reset_enter;
+ }
+ 
+@@ -263,7 +266,9 @@ static const TypeInfo axp209_info = {
+ static void axp221_class_init(ObjectClass *oc, void *data)
+ {
+     AXP2xxClass *sc = AXP2XX_CLASS(oc);
++    DeviceClass *dc = DEVICE_CLASS(oc);
+ 
++    dc->desc = "AXP221 power system management";
+     sc->reset_enter = axp221_reset_enter;
+ }
+ 
 -- 
 2.47.1
 
