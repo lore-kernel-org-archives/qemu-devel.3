@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A1BBC3600B
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 15:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A41C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 15:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx6Ov-0003nt-9V; Tue, 25 Mar 2025 11:41:13 -0400
+	id 1tx6PA-0003rT-AT; Tue, 25 Mar 2025 11:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx6Os-0003nH-Co
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:41:10 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx6P7-0003qm-3v
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:41:25 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx6Op-00045x-Ng
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:41:10 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3912baafc58so4594734f8f.1
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 08:41:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx6P3-00047w-P3
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:41:24 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43cfba466b2so53879235e9.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 08:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742917265; x=1743522065; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742917280; x=1743522080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vQ002iHqIIcWPiB1XY1rX4088N6FNysAgcdy0xlTwbQ=;
- b=CMjMS5r8r1TqVpRTdum4cQLvc4HWychQ/OiMBdSo1y2+nCoDkmyamMlaFdZDur9yb0
- cgx1MBsc/Zb/vEgkuv4SQJzLKsce2iDPsaNW4TFs2EEkXfSi+wyIyxnW71Jt0clSydmG
- pAxug+ltjBMZzOKwI6sc8TpjIzl2ZgTRwasPfeNh4/89bN3abXHSbBW/+18kO8yfD9PK
- xDJrDZwTQvaSK3M1zHGoWXiW/gpQkDhAGfU1KnUlDvAh71un2+PFCedk5lKlwGdhBreB
- rWBuGbF5nFWGgZLDg88Rwtpee23OdsytZ8Wcft07l4rTko40HsQRbwZzvBKC5XZ5nWro
- enFQ==
+ bh=LLYIE82ADpP9MMv3tzyn92JCIJn6rh3Qqe+NEpTBgls=;
+ b=mLzcgHjimvDBBfsB8XrcP7/rupcg1tde2k/DjvMh7/813fK188SYe5uYQbLiQr1w9b
+ rGlbPyH4/DbtdYP5ohbrvSMdy0JBpmjFyOxqXly0EftIl1iGvr8eVSpiWn66xrdT/LSB
+ o+LI1/3T65HyejSLumjhT8/XdEX5jgpaA8TIsHitG+dfaJOnM7oeOjbqy8QVVaBTgMF5
+ mVNwM0bJmY3stFszSJFMwioBcMRUhwiJzUpcO4GqkmSFcOXT2w1hnDTiubdfT5fiasPN
+ N4takroXKdZRk6KQ4GJoE2AhRLvvwIhDMzFfxS8qJA8RdQzaqphXr9JDdwFg6qJdbLxM
+ tLKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742917265; x=1743522065;
+ d=1e100.net; s=20230601; t=1742917280; x=1743522080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vQ002iHqIIcWPiB1XY1rX4088N6FNysAgcdy0xlTwbQ=;
- b=Exd/vSjbkxCWLrMiuCg5RJNAfC22fZquYZ+7+o8xC+7BvQZ0Ct9lotoZQwDhOW/VzH
- i5/XgZNZJu9chCP7idNsfKtHWbGvmiPxROpdiCgtptqwMYM6fZaHxk/0ze2mETw7K8dp
- H12BPZPsZzxbmOJid/QzzOsKt4v5ALjx9P1Y2tF22cOaRkoy+/1zdGBchbEAXDAQlRD4
- b/y3A0sLFYY2kDPkqvbW45KEsjFWV+r2c5yI2p9755YWB9ZhIMfiHlN+WY0f1mx4+oFK
- z7SMUJq+hdhn7etD1H0FAc0A+yjiweyozBYSVhY9t0BBpoet2ppZDXBiIkSmtDkFUNow
- t+WA==
-X-Gm-Message-State: AOJu0Ywml1Pv6ydf3oGnZb6WuTdsY3b6mc1O2B76myNibaDQn0YdmApM
- MlslKoSFRwb5f2+j4vmwHi9SPIbi3WM7qaZc72xUl8ITkrVvDdIZ/CtYtc49AQsSiHWPod7/c89
- I
-X-Gm-Gg: ASbGncsBH4vHo3vIxl7JLlQt8VmEN/epsk0W3h+tJuL46p/lx/ETOoP6Opi8kWoVT19
- +jG76oNS7/n0w8kI6HlYQL2gtH2g4x3PFYDMuZUd+8hxg+kX7g2xfCHESaRHALc9qV1Gd3Tkuze
- I+g4gvOBNEaY3y3wuX8QLBOZhymzYdF1HFjy/2k5NW7ImPsAzdaP8x4+ZGatciSVfmUppnoeOJw
- /cF48xWONb1FYPf4xLl1DmtNVkM2R6A09n/WkIlVFy5X2VzCzNEOjtVKaafKoI/nf83iQpBkjgk
- XNRHTXsQKCXzzI/pNd8XV3aDO1UX1UTDQW9/JnKMDuOr2RDfNAThhQ1yY5OGbEAvexWCEveUba2
- d04SRzZaNMotHaYyrsr0=
-X-Google-Smtp-Source: AGHT+IGECrLTcWKDu7mHWtA1lA/qZo8cfniO7etIuxla2lCEwg8UOGl7Ig8dnQNHROioc1iJozH6cQ==
-X-Received: by 2002:a5d:588b:0:b0:391:4282:f60e with SMTP id
- ffacd0b85a97d-3997f91d8e1mr15663179f8f.32.1742917265328; 
- Tue, 25 Mar 2025 08:41:05 -0700 (PDT)
+ bh=LLYIE82ADpP9MMv3tzyn92JCIJn6rh3Qqe+NEpTBgls=;
+ b=w+3654M6sF7AI/JkqDINTzQzMa92AyVYpH8vH2VLb6YoqUz9YD1OjCGvLOQMci0dvL
+ R103H53qJPGjSDthhEzPALvM7KieRdQbM2hNZEVd5vvbhch851nZTvNkDogqPxrJhYOB
+ A2t1olus+5mNizPqQru600W5zigLIjTKDGOS1VvZbRre8bkxSfUoHGR3Zo+Lu76RiDBk
+ SBWJpSWcAMBZBNNL89P8t+LnIg0e9xkTbzHbNyACtvwu5NTeB97bUrv+Y1ObyL01ImtF
+ umZQdRIlIbRBLiGwowg8/zYBbQRg7P9nSe74eBYdguyt9tqnlCcTDOl8LnTVugRJRFVw
+ +lrA==
+X-Gm-Message-State: AOJu0Yw3HhjiYZ2KtqtXiwXPm/I22y3+zmgekSOUWnVUIyg9X+5EG4xI
+ rPGgkaaiZj0W6GB3Vfr4KE7n8zXvdXS497YXKmDBixwz1qOlkaZRH8MKZJkXieS8T4PbTBDT0KU
+ r
+X-Gm-Gg: ASbGncvYbG3Q0oFGEjVKtuvvxx5idEqfSirzj3YaAsRI//CfrBAbmBLuKE4G27fWp0h
+ 9CMyGjd5yb/DG1EQ88z37tXVHZJg2MkBA+VSmLf/B4Tm0IztwhBztMigOuGz2Aby6CMgGu63LHw
+ JwBq5BEyn4Fr0/shNXDvCuEC2yBOdJjVmI5vmG/JIgDxSkDrVhIwffLG+dAnPwZl0S+X8cscSxg
+ ZQ5akYQWQ7EqcGwImMq7eBGE/onEd04RftUXAytN1D1fol1OVbDl/bNk75M7Ir9ycTt2/KZsfqI
+ bKM8tdzcj7kJt+2XiTk97NFPUyEvCdw5m7CDEc8t8hBbW2MbJL87KnV8nOkNvB6Db2+ZHrzhFxE
+ 4zC00RA22DRZSBqNJTwTg71uj+JrZJA==
+X-Google-Smtp-Source: AGHT+IGSHgYzV8FIt/jQwdeaOtOswtV83eIQS4NoWVpi1HUv8C8xKZUmmLo5OqkIJB7OBDDUqywmQA==
+X-Received: by 2002:a05:600c:3c9e:b0:439:9424:1b70 with SMTP id
+ 5b1f17b1804b1-43d50a4f8camr173393095e9.30.1742917279777; 
+ Tue, 25 Mar 2025 08:41:19 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9b3c2csm13776977f8f.46.2025.03.25.08.41.04
+ ffacd0b85a97d-3997f9ef098sm13767225f8f.84.2025.03.25.08.41.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 08:41:04 -0700 (PDT)
+ Tue, 25 Mar 2025 08:41:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -74,20 +74,18 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Aurelien Jarno <aurelien@aurel32.net>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH-for-10.1 1/8] cpus: Open code OBJECT_DECLARE_TYPE() in
- OBJECT_DECLARE_CPU_TYPE()
-Date: Tue, 25 Mar 2025 16:40:51 +0100
-Message-ID: <20250325154058.92735-2-philmd@linaro.org>
+ Anton Johansson <anjo@rev.ng>
+Subject: [PATCH-for-10.1 4/8] target/mips: Prefix MMU API with 'mips_'
+Date: Tue, 25 Mar 2025 16:40:54 +0100
+Message-ID: <20250325154058.92735-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250325154058.92735-1-philmd@linaro.org>
 References: <20250325154058.92735-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,62 +108,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the OBJECT_DECLARE_CPU_TYPE() macro uses the abstract ArchCPU
-type, when declaring multiple CPUs of the same ArchCPU type we get
-an error related to the indirect G_DEFINE_AUTOPTR_CLEANUP_FUNC()
-use within OBJECT_DECLARE_TYPE():
-
-  target/mips/cpu-qom.h:31:1: error: redefinition of 'glib_autoptr_clear_ArchCPU'
-  OBJECT_DECLARE_CPU_TYPE(MIPS64CPU, MIPSCPUClass, MIPS64_CPU)
-  ^
-  include/hw/core/cpu.h:82:5: note: expanded from macro 'OBJECT_DECLARE_CPU_TYPE'
-      OBJECT_DECLARE_TYPE(ArchCPU, CpuClassType, CPU_MODULE_OBJ_NAME);
-      ^
-  include/qom/object.h:237:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
-      G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
-      ^
-  /usr/include/glib-2.0/glib/gmacros.h:1371:3: note: expanded from macro 'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
-    _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
-    ^
-  /usr/include/glib-2.0/glib/gmacros.h:1354:36: note: expanded from macro '_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
-    static G_GNUC_UNUSED inline void _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) (TypeName *_ptr)                     \
-                                     ^
-  /usr/include/glib-2.0/glib/gmacros.h:1338:49: note: expanded from macro '_GLIB_AUTOPTR_CLEAR_FUNC_NAME'
-  #define _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) glib_autoptr_clear_##TypeName
-                                                  ^
-  <scratch space>:54:1: note: expanded from here
-  glib_autoptr_clear_ArchCPU
-  ^
-  target/mips/cpu-qom.h:30:1: note: previous definition is here
-  OBJECT_DECLARE_CPU_TYPE(MIPS32CPU, MIPSCPUClass, MIPS32_CPU)
-  ^
-
-Avoid that problem by expanding the OBJECT_DECLARE_TYPE() macro
-within OBJECT_DECLARE_CPU_TYPE().
+MIPS MMU API declared in tcg-internal.h has public linkage.
+In order to avoid name clashing with other targets, prefix
+the API with 'mips_'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ target/mips/tcg/tcg-internal.h      | 2 +-
+ target/mips/cpu.c                   | 2 +-
+ target/mips/tcg/system/tlb_helper.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5d11d26556a..01e03f267cc 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -82,7 +82,12 @@ DECLARE_CLASS_CHECKERS(CPUClass, CPU,
-  */
- #define OBJECT_DECLARE_CPU_TYPE(CpuInstanceType, CpuClassType, CPU_MODULE_OBJ_NAME) \
-     typedef struct ArchCPU CpuInstanceType; \
--    OBJECT_DECLARE_TYPE(ArchCPU, CpuClassType, CPU_MODULE_OBJ_NAME);
-+    typedef struct CpuClassType CpuClassType; \
-+    \
-+    G_DEFINE_AUTOPTR_CLEANUP_FUNC(CpuInstanceType, object_unref) \
-+    \
-+    DECLARE_OBJ_CHECKERS(CpuInstanceType, CpuClassType, \
-+                         CPU_MODULE_OBJ_NAME, TYPE_##CPU_MODULE_OBJ_NAME)
+diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
+index 74fc1309a71..a8bf2a5da40 100644
+--- a/target/mips/tcg/tcg-internal.h
++++ b/target/mips/tcg/tcg-internal.h
+@@ -45,7 +45,7 @@ void do_raise_exception(CPUMIPSState *env,
+ void mips_cpu_do_interrupt(CPUState *cpu);
+ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
  
- typedef struct CPUWatchpoint CPUWatchpoint;
+-void mmu_init(CPUMIPSState *env, const mips_def_t *def);
++void mips_mmu_init(CPUMIPSState *env, const mips_def_t *def);
+ 
+ void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask);
+ 
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 5ed6b3402d3..d8930468b7d 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -485,7 +485,7 @@ static void mips_cpu_realizefn(DeviceState *dev, Error **errp)
+     env->exception_base = (int32_t)0xBFC00000;
+ 
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+-    mmu_init(env, env->cpu_model);
++    mips_mmu_init(env, env->cpu_model);
+ #endif
+     fpu_init(env, env->cpu_model);
+     mvp_init(env);
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index ca4d6b27bc9..1ef2c32cfd4 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -466,7 +466,7 @@ static void r4k_mmu_init(CPUMIPSState *env, const mips_def_t *def)
+     env->tlb->helper_tlbinvf = r4k_helper_tlbinvf;
+ }
+ 
+-void mmu_init(CPUMIPSState *env, const mips_def_t *def)
++void mips_mmu_init(CPUMIPSState *env, const mips_def_t *def)
+ {
+     env->tlb = g_malloc0(sizeof(CPUMIPSTLBContext));
  
 -- 
 2.47.1
