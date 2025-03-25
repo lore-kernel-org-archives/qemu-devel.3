@@ -4,87 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63833C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 09:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71ABC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 10:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx0zA-0008MW-3O; Tue, 25 Mar 2025 05:54:16 -0400
+	id 1tx14f-00014q-AN; Tue, 25 Mar 2025 05:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tx0z8-0008Li-3q
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 05:54:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1tx14c-000144-TH; Tue, 25 Mar 2025 05:59:54 -0400
+Received: from mail-gw02.astralinux.ru ([195.16.41.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1tx0z6-0000li-7O
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 05:54:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742896449;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EjillSEcqVaUsh1DhSqrU96PBZuRfpOeZzMMpzqgRxg=;
- b=Bdsq/Nvxb7dA2Rix0188lzGHzvs3iU0ccEqXRJpXAD7RZ8dB027yrNPftdVzXO8VtqLyZT
- ihToAMMV0MANToQ43M7idljVPQJwfdRUxK9eil4NPXt/LDSZ9sChZy+LSSor2gZ2H1omsD
- f68Rgk8ybBXZwxtmQQQHdVnVE+zXWdg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-LsPlY6jIOxGtzjnBJmMm-Q-1; Tue, 25 Mar 2025 05:54:08 -0400
-X-MC-Unique: LsPlY6jIOxGtzjnBJmMm-Q-1
-X-Mimecast-MFC-AGG-ID: LsPlY6jIOxGtzjnBJmMm-Q_1742896447
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3913f546dfdso2893067f8f.1
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 02:54:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742896446; x=1743501246;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EjillSEcqVaUsh1DhSqrU96PBZuRfpOeZzMMpzqgRxg=;
- b=uPeVyvE+Cobrf4j+aOOLWznP7ubFc3E5Jz+E8X9io3tUl7tTtAUF7OWNQbmCeTSu55
- 8WW/74smrQgOPzawcA/xROL8SboPT91rRKI5ewSLPi9AJ6a8IYmza7IQruesok7JKc9A
- UVqao/NLIX7esJ6IeUrdY7lAmGFng/TVNxmstzBCFIrNW51xkEZa8GuJAv4tbo50hqY4
- uy8jIw4DQcAW1p/xvfV7Pku/U48T/uIPhWO2gldyhfZLty78gqCfAKi13vmZT0ZOeV1z
- KxS4eGEWQb/HjKRF12dcDYnhsVv1RRpqqN2PelFx0opANn8vPJOHlr+FyL13j2pdDwDW
- XLvw==
-X-Gm-Message-State: AOJu0Yx3aBQh+onUlukFwNtxTLJhiEK9E0vKMWGbUBWA1S9XM4ta3bKO
- wpJbsQ5FN77AdeakWZCxKhxfkitKcXOhHQgRKAcjpEOBPKdrYldv3/zcE84HNBjY+rkeFTUDG7W
- Bf2kyLXyGsNynGA3eSktDDzEXdJ3dZy283WmgmU3OD911HiP2PZSACBIr4y+0Bdvn0jQLSNJCuR
- pTJ5ypNnWkfJMqdVSz5c2nOKBqBQ1GGCEFdbE=
-X-Gm-Gg: ASbGnctZdJpmXRVP/oMJ8wat/Ptg5KxCnjmvwAfcck8JIYTuj1aQt120DhT9VT4Y8Td
- b54QIHcy1XmOYrjD6MWDBXwHpTZvn5oMuFjfyQe7/jBQv2aCubZ6iTjtmpkA9xKku2lIDGpMH3w
- ==
-X-Received: by 2002:a05:6000:42c2:b0:391:4052:a232 with SMTP id
- ffacd0b85a97d-3997f9424ffmr10078456f8f.55.1742896446117; 
- Tue, 25 Mar 2025 02:54:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlBIVsoOxSpJwcF923uL/PPbexwcFE0DaNHAzPILNMPHj+Y22FjDi3G8fXZx735mMLQNj8Tb4RS2V/VL1lANA=
-X-Received: by 2002:a05:6000:42c2:b0:391:4052:a232 with SMTP id
- ffacd0b85a97d-3997f9424ffmr10078443f8f.55.1742896445816; Tue, 25 Mar 2025
- 02:54:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1tx14a-0001P6-Gk; Tue, 25 Mar 2025 05:59:54 -0400
+Received: from gca-msk-a-srv-ksmg01.astralinux.ru (localhost [127.0.0.1])
+ by mail-gw02.astralinux.ru (Postfix) with ESMTP id 489F31F46F;
+ Tue, 25 Mar 2025 12:59:42 +0300 (MSK)
+Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail03.astralinux.ru
+ [10.177.185.108])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail-gw02.astralinux.ru (Postfix) with ESMTPS;
+ Tue, 25 Mar 2025 12:59:40 +0300 (MSK)
+Received: from localhost.localdomain (unknown [10.177.20.126])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4ZMQPl6YMNz1h0TT;
+ Tue, 25 Mar 2025 12:59:39 +0300 (MSK)
+From: Anastasia Belova <abelova@astralinux.ru>
+To: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: Anastasia Belova <abelova@astralinux.ru>, qemu-arm@nongnu.org,
+ sdl.qemu@linuxtesting.org
+Subject: [PATCH RFC] target/arm: add bounding a->imm assertion
+Date: Tue, 25 Mar 2025 12:59:20 +0300
+Message-ID: <20250325095921.58479-1-abelova@astralinux.ru>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-References: <20250318123846.1370312-1-ppandit@redhat.com>
-In-Reply-To: <20250318123846.1370312-1-ppandit@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 25 Mar 2025 15:23:48 +0530
-X-Gm-Features: AQ5f1Jrw_y4smjb65lYLGHLLBArc5ne30B_J1w6Jz9_hGtvuhnEVMPwXKMdUnig
-Message-ID: <CAE8KmOwiyboWwyjV=gA=GqJSQxQKwm7uG=Jxh3Y1xnJEarYD=g@mail.gmail.com>
-Subject: Re: [PATCH v8 0/7] Allow to enable multifd and postcopy migration
- together
-To: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Cc: peterx@redhat.com, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-KSMG-AntiPhishing: NotDetected
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Envelope-From: abelova@astralinux.ru
+X-KSMG-AntiSpam-Info: LuaCore: 51 0.3.51
+ 68896fb0083a027476849bf400a331a2d5d94398,
+ {Tracking_from_domain_doesnt_match_to},
+ d41d8cd98f00b204e9800998ecf8427e.com:7.1.1; astralinux.ru:7.1.1;
+ 127.0.0.199:7.1.2; new-mail.astralinux.ru:7.1.1, FromAlignment: s
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiSpam-Lua-Profiles: 192080 [Mar 25 2025]
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Version: 6.1.1.11
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854,
+ bases: 2025/03/25 08:37:00 #27838357
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 1
+Received-SPF: pass client-ip=195.16.41.108; envelope-from=abelova@astralinux.ru;
+ helo=mail-gw02.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,26 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Fabiano,
+Add an assertion similar to that in the do_shr_narrow().
+This will make sure that functions from sshll_ops
+have correct arguments.
 
-On Tue, 18 Mar 2025 at 18:10, Prasad Pandit <ppandit@redhat.com> wrote:
-> * This series (v8) splits earlier patch-2 which enabled multifd and
->   postcopy options together into two separate patches. One modifies
->   the channel discovery in migration_ioc_process_incoming() function,
->   and second one enables the multifd and postcopy migration together.
->
->   It also adds the 'save_postcopy_prepare' savevm_state handler to
->   enable different sections to take an action just before the Postcopy
->   phase starts. Thank you Peter for these patches.
-> ===
-> 67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             152.66s   81 subtests passed
-> ===
->
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Ping..! Did you have chance to review this (v8) series. (just checking)
-
-Thank you.
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
 ---
-  - Prasad
+ target/arm/tcg/translate-sve.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index d23be477b4..47ada85c92 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -6250,6 +6250,7 @@ static bool do_shll_tb(DisasContext *s, arg_rri_esz *a,
+     if (a->esz < 0 || a->esz > 2) {
+         return false;
+     }
++    assert(a->imm > 0 && a->imm <= (8 << a->esz));
+     if (sve_access_check(s)) {
+         unsigned vsz = vec_full_reg_size(s);
+         tcg_gen_gvec_2i(vec_full_reg_offset(s, a->rd),
+-- 
+2.47.0
 
 
