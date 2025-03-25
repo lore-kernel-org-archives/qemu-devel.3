@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D74EC3600B
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8A3C3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx7ze-0003ZN-Bc; Tue, 25 Mar 2025 13:23:14 -0400
+	id 1tx87l-0005jy-Ov; Tue, 25 Mar 2025 13:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tx7zL-0003V5-NH
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 13:23:02 -0400
-Received: from mail-pj1-x1041.google.com ([2607:f8b0:4864:20::1041])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tx7zI-00005a-NH
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 13:22:55 -0400
-Received: by mail-pj1-x1041.google.com with SMTP id
- 98e67ed59e1d1-2ff69365e1dso8188394a91.3
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 10:22:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742923370; x=1743528170; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wjRZjoUllmqSg+EfYpaDTJAMQbZL+d+HVA4PveMvE6s=;
- b=mXYK0vU/4WwralgyoC97+Bpe4yQEgRBODVUvsP4nf/zp+IC2AtsPI/MblU3J9HG1F8
- v4CNOLlWAVuu6TgscCctXx5EfQxYbwEtDjVmR6hWaUQ30/eVHUfjDCXNfawMX+X6XojN
- F4wrnvD19I6N0l7Xb+d2ChMTF1IgcCgdMKAlsafGFEs3AW1+9+pW4fkjNM3EmIGTdZJK
- y0OVEluoUOpYI3ygn3kLGWCPzvy5/ZeeRvm4jA4EDIuhMz3ECHRnN9VAynIxpMQHwnDN
- xQqudlBxh8MmeWko0j4xma/uQK3dRuxAj/n82piLiiSjpvFz6mMEXynmlb8mDmLxtQe8
- Chvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742923370; x=1743528170;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wjRZjoUllmqSg+EfYpaDTJAMQbZL+d+HVA4PveMvE6s=;
- b=QBpuQQU0hlvdZpp5hnlKnCqcJyQP4bCKEfwX6+jbh+02WWNXBlAZs84e727uaySMKc
- YAYBS0z1kQXA2jBMCJEz5xOxUfkwSjmKfaXXqmuqaYizvmRhl0W+zbpUT7nLgD871Ghk
- j8YlGz9DPXkpz9/JcenSVF/zX2oHsoUQGz5Eg463446L5oVtT1M2cMlsL0aTGkqKtqE8
- kH4U3ihRZfdX9SJIDR/gZNbAI0NgI4WWQs9pEuqXBJb3ilf4t6brPjzCK4hG6wIa+Wa3
- iq8oS8vyXiRiacHsaUuAPLcQ7AyDD42ls7a7B6IcAflv68jRKErh6ctj6BwQv8ctA1oA
- HGLQ==
-X-Gm-Message-State: AOJu0YzCiMXOUgSHK5WKwkPGhITnHVzcCSZeiCcxxGQk7bmBPM6XMrSz
- RacyAivZrAHPgJmCD/j1dE08t0nvKVfoIXQBxQbyoYF54xWnsd9AHBMv7gw=
-X-Gm-Gg: ASbGncv8ZEOGQUSAZehjKMnGOSbHfnlxaG/dTbBYfi0v0wkWHe1TmXmZPWh6jSg1ok2
- U0a48yIX/cqu5dtY74edVA9nXJLFmB8ZVWjV3hdQfKdAmChqz6Fzx+XBfiyKHCt66gUwN+Azme8
- 5hsJOZr6Qasxv5Tqv0/w15mcpWFqEOEjkNyA3AgHGFx+nfszRxNwIQ0icnFwSaesvJUx75bAj0v
- QKtwJ5n58J8KXdszPw4dhoaX97h6T1yw2EG3c66TzbtXbKo2nUXNgjVP/H6tG9MeuNlHBioi9x9
- WS6HhM2x7jArwU6LuW8Yr27AnxV870bTLT4sPGf+XYp0pReum0vdSriExNDR
-X-Google-Smtp-Source: AGHT+IHPOBfIPDOPwOkH5k1lHT/VfshmB9448Zlc/5usgVFgpBbY97SN0o3vGQvlMTri9+KZNdpEQw==
-X-Received: by 2002:a17:90b:48c2:b0:2fa:15ab:4de7 with SMTP id
- 98e67ed59e1d1-3030fe83954mr36375338a91.12.1742923369501; 
- Tue, 25 Mar 2025 10:22:49 -0700 (PDT)
-Received: from localhost.localdomain ([139.227.182.126])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f39802sm92986365ad.17.2025.03.25.10.22.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Mar 2025 10:22:48 -0700 (PDT)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] vfio/igd: Check host PCI address when probing
-Date: Wed, 26 Mar 2025 01:22:39 +0800
-Message-ID: <20250325172239.27926-1-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.47.2
+ (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
+ id 1tx87E-0005ei-MY; Tue, 25 Mar 2025 13:31:30 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
+ id 1tx874-0001CT-Dm; Tue, 25 Mar 2025 13:30:57 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMcQH6Pk3z4xN6;
+ Wed, 26 Mar 2025 04:30:47 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMcQD24QPz4x1t;
+ Wed, 26 Mar 2025 04:30:43 +1100 (AEDT)
+Message-ID: <f3e1f6e6-c4b7-4777-8555-fa310389b1db@kaod.org>
+Date: Tue, 25 Mar 2025 18:30:41 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] aspeed: ast27x0: Map unimplemented devices in SoC
+ memory
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20250313054020.2583556-1-steven_lee@aspeedtech.com>
+ <20250313054020.2583556-2-steven_lee@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250313054020.2583556-2-steven_lee@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1041;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1041.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=TX69=WM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,68 +112,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, all Intel VGA adapters, including discrete GPUs like A770 and
-B580, were treated as IGD devices. While this had no functional impact,
-a error about "unsupported IGD device" will be printed when passthrough
-Intel discrete GPUs.
+Hello Steven,
 
-Since IGD devices must be at "0000:00:02.0", let's check the host PCI
-address when probing.
+On 3/13/25 06:40, Steven Lee wrote:
+> Maps following unimplemented devices in SoC memory
+> - dpmcu
+> - iomem
+> - iomem0
+> - iomem1
+> - ltpi
+> 
+> Iomem, Iomem0 and Iomem1 include unimplemented controllers in the
+> memory ranges 0x0 - 0x1000000, 0x120000000 - 0x121000000 and
+> 0x14000000 - 0x141000000.
+> 
+> For instance:
+> - USB hub at 0x12010000
+> - eSPI at 0x14C5000
+> - PWM at 0x140C0000
+> 
+> DPMCU stands for Display Port MCU controller. LTPI is used to connect
+> to AST1700.
+> AST1700 is an I/O expander that supports the DC-SCM 2.1 LTPI protocol.
+> It provides AST2700 with additional GPIO, UART, I3C, and other
+> interfaces.
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
----
- hw/vfio/igd.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+For your awareness, I keep in the aspeed branch [1] a series
+adding I3C support. It was sent by Google in 2023 [2]. In case
+you are interested to upstream.
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 265fffc2aa..ff250017b0 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -53,6 +53,13 @@
-  * headless setup is desired, the OpRegion gets in the way of that.
-  */
- 
-+static bool vfio_is_igd(VFIOPCIDevice *vdev)
-+{
-+    return vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) &&
-+           vfio_is_vga(vdev) &&
-+           vfio_pci_host_match(&vdev->host, "0000:00:02.0");
-+}
-+
- /*
-  * This presumes the device is already known to be an Intel VGA device, so we
-  * take liberties in which device ID bits match which generation.  This should
-@@ -427,13 +434,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-     VFIOConfigMirrorQuirk *ggc_mirror, *bdsm_mirror;
-     int gen;
- 
--    /*
--     * This must be an Intel VGA device at address 00:02.0 for us to even
--     * consider enabling legacy mode. Some driver have dependencies on the PCI
--     * bus address.
--     */
--    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
--        !vfio_is_vga(vdev) || nr != 0) {
-+    if (nr != 0 || !vfio_is_igd(vdev)) {
-         return;
-     }
- 
-@@ -490,13 +491,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-     bool legacy_mode_enabled = false;
-     Error *err = NULL;
- 
--    /*
--     * This must be an Intel VGA device at address 00:02.0 for us to even
--     * consider enabling legacy mode.  The vBIOS has dependencies on the
--     * PCI bus address.
--     */
--    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
--        !vfio_is_vga(vdev)) {
-+    if (!vfio_is_igd(vdev)) {
-         return true;
-     }
- 
--- 
-2.47.2
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+[1] https://github.com/legoater/qemu/commits/aspeed-10.0
+[2] https://lore.kernel.org/qemu-devel/20230331010131.1412571-1-komlodi@google.com/
+
+> 
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> Change-Id: Iea6c11651c40e341a395b6dbb81975ea2639aebd
+> ---
+>   include/hw/arm/aspeed_soc.h |  6 +++++
+>   hw/arm/aspeed_ast27x0.c     | 51 ++++++++++++++++++++++++++++++++-----
+>   2 files changed, 50 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index f899356ed9..c46ec6302d 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -90,6 +90,8 @@ struct AspeedSoCState {
+>       SerialMM uart[ASPEED_UARTS_NUM];
+>       Clock *sysclk;
+>       UnimplementedDeviceState iomem;
+> +    UnimplementedDeviceState iomem0;
+> +    UnimplementedDeviceState iomem1;
+>       UnimplementedDeviceState video;
+>       UnimplementedDeviceState emmc_boot_controller;
+>       UnimplementedDeviceState dpmcu;
+> @@ -97,6 +99,7 @@ struct AspeedSoCState {
+>       UnimplementedDeviceState espi;
+>       UnimplementedDeviceState udc;
+>       UnimplementedDeviceState sgpiom;
+> +    UnimplementedDeviceState ltpi;
+>       UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+>       AspeedAPB2OPBState fsi[2];
+>   };
+> @@ -171,6 +174,9 @@ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
+>   enum {
+>       ASPEED_DEV_SPI_BOOT,
+>       ASPEED_DEV_IOMEM,
+> +    ASPEED_DEV_IOMEM0,
+> +    ASPEED_DEV_IOMEM1,
+> +    ASPEED_DEV_LTPI,
+>       ASPEED_DEV_UART0,
+>       ASPEED_DEV_UART1,
+>       ASPEED_DEV_UART2,
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index dce7255a2c..a3fe2582f8 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -23,8 +23,16 @@
+>   #include "qobject/qlist.h"
+>   #include "qemu/log.h"
+>   
+> +#define AST2700_SOC_IO_SIZE          0x01000000
+> +#define AST2700_SOC_IOMEM_SIZE       0x01000000
+> +#define AST2700_SOC_DPMCU_SIZE       0x00040000
+> +#define AST2700_SOC_LTPI_SIZE        0x01000000
+> +
+>   static const hwaddr aspeed_soc_ast2700_memmap[] = {
+> +    [ASPEED_DEV_IOMEM]     =  0x00000000,
+>       [ASPEED_DEV_SRAM]      =  0x10000000,
+> +    [ASPEED_DEV_DPMCU]     =  0x11000000,
+> +    [ASPEED_DEV_IOMEM0]    =  0x12000000,
+>       [ASPEED_DEV_HACE]      =  0x12070000,
+>       [ASPEED_DEV_EMMC]      =  0x12090000,
+>       [ASPEED_DEV_INTC]      =  0x12100000,
+> @@ -36,6 +44,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>       [ASPEED_DEV_TIMER1]    =  0x12C10000,
+>       [ASPEED_DEV_SLI]       =  0x12C17000,
+>       [ASPEED_DEV_UART4]     =  0X12C1A000,
+> +    [ASPEED_DEV_IOMEM1]    =  0x14000000,
+>       [ASPEED_DEV_FMC]       =  0x14000000,
+>       [ASPEED_DEV_SPI0]      =  0x14010000,
+>       [ASPEED_DEV_SPI1]      =  0x14020000,
+> @@ -68,6 +77,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>       [ASPEED_DEV_UART12]    =  0X14C33B00,
+>       [ASPEED_DEV_WDT]       =  0x14C37000,
+>       [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
+> +    [ASPEED_DEV_LTPI]      =  0x300000000,
+>       [ASPEED_DEV_SDRAM]     =  0x400000000,
+>   };
+>   
+> @@ -491,6 +501,16 @@ static void aspeed_soc_ast2700_init(Object *obj)
+>   
+>       snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);
+>       object_initialize_child(obj, "hace", &s->hace, typename);
+> +    object_initialize_child(obj, "dpmcu", &s->dpmcu,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "ltpi", &s->ltpi,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "iomem", &s->iomem,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "iomem0", &s->iomem0,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "iomem1", &s->iomem1,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+>   }
+>   
+>   /*
+> @@ -526,8 +546,10 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
+>       if (!sysbus_realize(gicbusdev, errp)) {
+>           return false;
+>       }
+> -    sysbus_mmio_map(gicbusdev, 0, sc->memmap[ASPEED_GIC_DIST]);
+> -    sysbus_mmio_map(gicbusdev, 1, sc->memmap[ASPEED_GIC_REDIST]);
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 0,
+> +                    sc->memmap[ASPEED_GIC_DIST]);
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 1,
+> +                    sc->memmap[ASPEED_GIC_REDIST]);
+>   
+>       for (i = 0; i < sc->num_cpus; i++) {
+>           DeviceState *cpudev = DEVICE(&a->cpu[i]);
+> @@ -876,11 +898,26 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>       sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
+>                          aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
+>   
+> -    create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+> -    create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+> -    create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+> -    create_unimplemented_device("ast2700.ltpi", 0x30000000, 0x1000000);
+> -    create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->dpmcu),
+> +                                  "aspeed.dpmcu",
+> +                                  sc->memmap[ASPEED_DEV_DPMCU],
+> +                                  AST2700_SOC_DPMCU_SIZE);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ltpi),
+> +                                  "aspeed.ltpi",
+> +                                  sc->memmap[ASPEED_DEV_LTPI],
+> +                                  AST2700_SOC_LTPI_SIZE);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem),
+> +                                  "aspeed.io",
+> +                                  sc->memmap[ASPEED_DEV_IOMEM],
+> +                                  AST2700_SOC_IO_SIZE);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem0),
+> +                                  "aspeed.iomem0",
+> +                                  sc->memmap[ASPEED_DEV_IOMEM0],
+> +                                  AST2700_SOC_IOMEM_SIZE);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem1),
+> +                                  "aspeed.iomem1",
+> +                                  sc->memmap[ASPEED_DEV_IOMEM1],
+> +                                  AST2700_SOC_IOMEM_SIZE);
+>   }
+>   
+>   static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
 
 
