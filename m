@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78B7C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DA5C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twyAe-0000Pi-Bf; Tue, 25 Mar 2025 02:53:56 -0400
+	id 1twy9o-0006eN-5y; Tue, 25 Mar 2025 02:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy92-0005ZI-QI; Tue, 25 Mar 2025 02:52:18 -0400
+ id 1twy8T-00057R-8m; Tue, 25 Mar 2025 02:51:46 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy8z-0001w6-Mt; Tue, 25 Mar 2025 02:52:15 -0400
+ id 1twy8P-0001tr-TM; Tue, 25 Mar 2025 02:51:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D6D33107D79;
- Tue, 25 Mar 2025 09:49:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 346F1107D71;
+ Tue, 25 Mar 2025 09:49:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 798DE1D5E84;
- Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CA4351D5E7E;
+ Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 741A157050; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ id BF45657044; Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Guo Hongyu <guohongyu24@mails.ucas.ac.cn>,
- Xianglai Li <lixianglai@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 54/69] target/loongarch: Fix vldi inst
-Date: Tue, 25 Mar 2025 09:50:28 +0300
-Message-Id: <20250325065043.3263864-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Roman Kapl <rka@sysgo.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 50/51] target/ppc: Fix e200 duplicate SPRs
+Date: Tue, 25 Mar 2025 09:50:36 +0300
+Message-Id: <20250325065038.3263786-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
-References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
+References: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -62,34 +61,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Refer to the link below for a description of the vldi instructions:
-https://jia.je/unofficial-loongarch-intrinsics-guide/lsx/misc/#synopsis_88
-Fixed errors in vldi instruction implementation.
+DSRR0/1 registers are in the BookE ISA not e200 specific, so
+remove the duplicate e200 register definitions.
 
-Signed-off-by: Guo Hongyu <guohongyu24@mails.ucas.ac.cn>
-Tested-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-(cherry picked from commit 02ce6cea71be4f6774351f5e658d50044c5b53b2)
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2865
+Cc: Roman Kapl <rka@sysgo.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2768
+Fixes: 0e3bf4890906 ("ppc: add DBCR based debugging")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+(cherry picked from commit 73c0c904fc99e2ceecbbded84ec76d40d3f2daae)
+(Mjt: context fix for
+ v9.0.0-935-g581eea5d656b "target/ppc: Split off common embedded TLB init")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index ba5ca98a33..dff92772ad 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -3480,7 +3480,7 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
-         break;
-     case 1:
-         /* data: {2{16'0, imm[7:0], 8'0}} */
--        data = (t << 24) | (t << 8);
-+        data = (t << 40) | (t << 8);
-         break;
-     case 2:
-         /* data: {2{8'0, imm[7:0], 16'0}} */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 40fe14a6c2..c01a8c9a90 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -2713,14 +2713,6 @@ static void init_proc_e200(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
+                  0x00000000); /* TOFIX */
+-    spr_register(env, SPR_BOOKE_DSRR0, "DSRR0",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_generic,
+-                 0x00000000);
+-    spr_register(env, SPR_BOOKE_DSRR1, "DSRR1",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_generic,
+-                 0x00000000);
+ #if !defined(CONFIG_USER_ONLY)
+     env->nb_tlb = 64;
+     env->nb_ways = 1;
 -- 
 2.39.5
 
