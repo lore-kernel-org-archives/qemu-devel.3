@@ -4,148 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71706C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 19:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D2EC36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txA2c-0002m1-FN; Tue, 25 Mar 2025 15:34:26 -0400
+	id 1txASt-0000Z2-AS; Tue, 25 Mar 2025 16:01:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1txA2a-0002ll-Eg; Tue, 25 Mar 2025 15:34:24 -0400
-Received: from mail-dm6nam12on20602.outbound.protection.outlook.com
- ([2a01:111:f403:2417::602]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASJ-0000UB-70
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:00:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1txA2Y-0007gc-5o; Tue, 25 Mar 2025 15:34:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rxqce/kE4ARGcskG9wYPVULYwZ49J8K+cYMGwkd07NLdQXhD5yPJLBcDBpnS9a/gAb3g0Lj6Ag+mj46IlxIRy6c4ExLASj+TV9V60FYUA/PzOSVdYd1sdOxfuo6WLaNY3xAc329aWV6n6vQPrJP6NoJLqUBW8Fxtp7pMirmpW4MLKKNNr/FVcoMS3kFE8u8JSpQ36oy5IrI2n/+Th/DQj3Ok26YtSfEUphlav1sEpku2j8vYLdUyqXgup9ki7CApb6keWTSnD1jmBivKmZq/ar3Tn24KgUrKrH3INFqfNj+fpa+tfEjfYv5Q+i1MDATLz3/u5Oe7SP9L7Gt253qqLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M7gNEZfHGx2ubcaFQX3iUJvaOmdLa6wDhAYYAhYQPzA=;
- b=VkNImaPKK0jixX8+TK6C5SVP5TdRlG6dWS2b0CGFqsBesXPh1XMdX5WB94HPkxMdiJOAIcVq1Y8BI5JrmNAEN7bcOrDLcFiGX/qWP3di/VFDtkmKEblM95kI4K93Q0dPP6iYEETgI4k6aqf2pSwMwVF9IMEi24vYadtUjipgDh7xjESMTcjZGLb3OLW7DXzAhjXY1ey3ZfmbWR6+GYSdiuwFw08ARyX6dUNaPw1CnSlVn/C6rcKVpZVQNG/TSWhilaDcr05OaoTxw+eTCUivWWDUZVckwYZ5jX6YKQgdTlbSkwYvYCljJZ/WdCTwDz4N7e65hTV60GK4Hn/uHP98TQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M7gNEZfHGx2ubcaFQX3iUJvaOmdLa6wDhAYYAhYQPzA=;
- b=i6/NIuQHUTrMwxZuaunszU2mr0OLzBZfGX0rXXnq+pPFfh71QC5jDRN9XrvhhdTvpjYnBc+FgDsDXXBEbARu4n93CoqdDqtDxXxqFj10WFIdf7mPoi8j601Y/pxmFMo+U8BinAxNjyseCtXG/ZtC3CS3YyYdkzLj3AwLmR0MFJmcPoLVLtgsqnPDykttlseaGMZvhA9FInwzYLjUc7ObLYax9SfEGTTNayx/Rj/Byr6xFGA9ibj16/x7tMmFrRFVU2bZznknoQbD4UHujtK7AHN6kjxEWhxWQ+uKxN60WMM3dtTXbyAEQ6mioq8ANXmpczm/odf/dnR5sT+McPwqxw==
-Received: from BN9PR03CA0692.namprd03.prod.outlook.com (2603:10b6:408:ef::7)
- by DM6PR12MB4122.namprd12.prod.outlook.com (2603:10b6:5:214::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.43; Tue, 25 Mar
- 2025 19:34:14 +0000
-Received: from BL6PEPF0001AB55.namprd02.prod.outlook.com
- (2603:10b6:408:ef:cafe::4d) by BN9PR03CA0692.outlook.office365.com
- (2603:10b6:408:ef::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.42 via Frontend Transport; Tue,
- 25 Mar 2025 19:34:14 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL6PEPF0001AB55.mail.protection.outlook.com (10.167.241.7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8534.20 via Frontend Transport; Tue, 25 Mar 2025 19:34:14 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 25 Mar
- 2025 12:34:00 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 25 Mar
- 2025 12:34:00 -0700
-Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.129.68.9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 25 Mar 2025 12:33:57 -0700
-Date: Tue, 25 Mar 2025 12:33:55 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
- <jgg@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH v2 10/20] hw/arm/smmuv3-accel: Support nested STE
- install/uninstall support
-Message-ID: <Z+MFIxMpuI7MvGPu@nvidia.com>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-11-shameerali.kolothum.thodi@huawei.com>
- <4333965f-f5bc-412f-ae23-46544d7dc919@redhat.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASG-0002gz-TA
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:00:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742932855;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wA6kZWskR3gX7n4FZRHHsZx4j9G6Km3r5VMFvGP0AWs=;
+ b=iCtJhxcirAc4TBT8cf+PzIx2o/J3o+fiWzzooi3VXqK2CMX3+Z2mXpl6PSdl66WEq8w5S4
+ UAXNgOfc8kYJ+GXvDBP7DsekSUVpGvWJ2hHkqVG/t5hV45JE7kmY5+3A1VuVyXJAm+BA1c
+ jNth1V1c5oFephiM4u4fWQH7nUxnndY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-4GM_mtezMBiPNdUuSCHScw-1; Tue,
+ 25 Mar 2025 16:00:52 -0400
+X-MC-Unique: 4GM_mtezMBiPNdUuSCHScw-1
+X-Mimecast-MFC-AGG-ID: 4GM_mtezMBiPNdUuSCHScw_1742932851
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A070180025E; Tue, 25 Mar 2025 20:00:51 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.142])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 552081801767; Tue, 25 Mar 2025 20:00:48 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 06/15] tests/functional: Convert the 32-bit big endian Wheezy
+ mips test
+Date: Tue, 25 Mar 2025 21:00:14 +0100
+Message-ID: <20250325200026.344006-7-thuth@redhat.com>
+In-Reply-To: <20250325200026.344006-1-thuth@redhat.com>
+References: <20250325200026.344006-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <4333965f-f5bc-412f-ae23-46544d7dc919@redhat.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB55:EE_|DM6PR12MB4122:EE_
-X-MS-Office365-Filtering-Correlation-Id: 25a66fa2-f677-4c4f-0ad2-08dd6bd40674
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|82310400026|7416014|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?uagx+n4PfYlICDHBdQHxu18lGObmANlOA2KBqGgElJ+CnUkD9Ry8rQH04ANi?=
- =?us-ascii?Q?wCqgxWgB7sg6jaB3EAcsjGRJSeGCJRdMw7zzQUUB1yPIhlrsrJPLobjY8X/B?=
- =?us-ascii?Q?au0ZMGFSMKqrXdZdWGFDnWGIL7EBf0Psn+MGQY/8ID0GJCJAm0vvopTMKigU?=
- =?us-ascii?Q?CFH2hnzDunA0f/iG7Wjtp5TvwF9cMnqlIAKjHyW4VUeWOwa89SLBiv0P1sV+?=
- =?us-ascii?Q?CcQyCVRWxk2pvOAYS6BA99Yr/QHEHx3Anm3zz8XquJAPmFAA81G6Zgb7Wxvu?=
- =?us-ascii?Q?bNut8QoOTa0tXTdXhQEelM2d5m6LGHkp6OydAkyGjJCSEqi3Ya65bVYfozZo?=
- =?us-ascii?Q?CRWcmRA3TqN0WLlLtShDErbUDosHZ+qVYa4MOtDT0FTJCiXuhS0o3cYK2pcB?=
- =?us-ascii?Q?8ceKFjLnKtpGK7bojqA3cuVl/dtx9ld0uYf5ZVg5H2l6kx5NBWsMkwF8buEm?=
- =?us-ascii?Q?lz1mFtf34nx4MnjI/191/jsHwyljnv2Tse8ECNDxGXjdro654+lkgEdfTR0K?=
- =?us-ascii?Q?8D2xbnUrl47m7riHNrFnUySf0COFDTIh4/ECZOydW2ydw8AITwgdPxaUhJd1?=
- =?us-ascii?Q?2tMFmsFeFtmugCguRYsaCSYshIglcwcyShkZI+kTrY9mqcgo04kVvy4LcYL0?=
- =?us-ascii?Q?hjRpsUH8e4HQfZb7hkUZJoxJ1IhUaqnLUxmWsYLYzHOkseVkhZwuqa29ACP/?=
- =?us-ascii?Q?mXSF8oVq1/EZzP1df8dudBfphsJ+R5Z7JBghLPu3SX2BaVHTTC3KlbVFsRF3?=
- =?us-ascii?Q?GZ9ij8G2YinE7fyAPEaozvNXmr3xTFpiXqItsi7Crg9yG3WdxqR/+ZoEnr0i?=
- =?us-ascii?Q?zdl+s4vx3jNOTSlmVE2c4kQmEH8VmG5i22OHZgTG9UVpi47XRH1iJcnpSuiW?=
- =?us-ascii?Q?KVByWljntDHuhP/w5ccm6FGahlzn8obW7jn44PP+zl/XX5X6d+eUyp31UBVI?=
- =?us-ascii?Q?xZjM+g4BnD/+RBXDAWC6SmC9CKMpAk/sSD3iCU45/e3Z87tlvL+yvimFhAwZ?=
- =?us-ascii?Q?W8TGr/qTGP/M2rTHWLWx25LBxLYAgkhyj4RbxljgRbdvv9pJnZjgTQKFNYz+?=
- =?us-ascii?Q?5jkrnF+myAmseYah0fJGpDQWXd8T/NJ/g7KjL4syX6+lxsgiE2Z0Q4XjIZSA?=
- =?us-ascii?Q?0pD12lC227JLVGurwSwQo+YmNp/GAq4cpvaPMzFnBIy7zgfFt5viyctrJWWk?=
- =?us-ascii?Q?eo0pP2MKNWSh0ljOLJ+NzlNVT3D2RICfBXRL/BlaNFEypvo/Up1ss62J8Eno?=
- =?us-ascii?Q?CEZ9xGRqBD1e2aMIp/nIFOxC9mTR0iRufFsDOFjw6u7QNalqaHKvIrtjCRBp?=
- =?us-ascii?Q?TdK1wJ/Te+slCbe4Qy5XcuxxYvhe11xcWxbjSj8mOToGbdMD+95UqtES/wxI?=
- =?us-ascii?Q?OtexcWPQ9n7PVDzCY4HxKedoPqGI5UVBjSkxZCImJrF9fpQBwD3VHvS8657L?=
- =?us-ascii?Q?9R9OGYlKbEbsDHHleFKBKMov3I/1NCp3joExVdlP89otuwDd0+hKUNDl388A?=
- =?us-ascii?Q?iYIEkR+d/8lts0U=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(82310400026)(7416014)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2025 19:34:14.0266 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25a66fa2-f677-4c4f-0ad2-08dd6bd40674
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB55.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4122
-Received-SPF: permerror client-ip=2a01:111:f403:2417::602;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,60 +83,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 25, 2025 at 07:08:29PM +0100, Eric Auger wrote:
-> > +static int
-> > +smmuv3_accel_dev_install_nested_ste(SMMUv3AccelDevice *accel_dev,
-> > +                                    uint32_t data_type, uint32_t data_len,
-> > +                                    void *data)
-> > +{
-> > +    SMMUViommu *viommu = accel_dev->viommu;
-> > +    SMMUS1Hwpt *s1_hwpt = accel_dev->s1_hwpt;
-> > +    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-> > +
-> > +    if (!idev || !viommu) {
-> > +        return -ENOENT;
-> > +    }
-> > +
-> > +    if (s1_hwpt) {
-> > +        smmuv3_accel_dev_uninstall_nested_ste(accel_dev, false);
+From: Thomas Huth <thuth@redhat.com>
 
-> why do you choose abort = false?
+The test checks some entries in /proc and the output of some commands ...
+we put these checks into exportable functions now so that they can
+be reused more easily.
 
-There is no particular reason. This is in the way where guest is
-updating the STE. So we want to stage the device somewhere as its
-default stage. Maybe ABORT could be a better place? I didn't give
-this a deeper thought, to be honest. Good question :)
+Additionally the linux_ssh_mips_malta.py uses SSH to test the networking
+of the guest. Since we don't have a SSH module in the functional
+framework yet, let's use the check_http_download() function here instead.
 
-> > +    ret = smmu_find_ste(sdev->smmu, sid, &ste, &event);
-> > +    if (ret) {
-> > +        /*
-> > +         * For a 2-level Stream Table, the level-2 table might not be ready
-> > +         * until the device gets inserted to the stream table. Ignore this.
-> > +         */
+And while we're at it, also switch the NIC to e1000 now to get some more
+test coverage, since the "pcnet" device is already tested in the test
+test_mips_malta_cpio.
 
-> I am confused by the above comment. Please can you describe the
-> circumstances when this happens and why this should be an error
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/avocado/linux_ssh_mips_malta.py |   8 --
+ tests/functional/meson.build          |   2 +-
+ tests/functional/test_mips_malta.py   | 108 +++++++++++++++++++++++++-
+ 3 files changed, 107 insertions(+), 11 deletions(-)
 
-I added this since one of the early versions, and I don't recall
-what was going on exactly... likely I saw smmu_find_ste() return
-an error at that time when guest OS boots with Stream Table init,
-yet later it installed the stage-1 STE and then smmu_find_ste()
-started to return STE.
+diff --git a/tests/avocado/linux_ssh_mips_malta.py b/tests/avocado/linux_ssh_mips_malta.py
+index d9bb525ad9c..73d294ad5cf 100644
+--- a/tests/avocado/linux_ssh_mips_malta.py
++++ b/tests/avocado/linux_ssh_mips_malta.py
+@@ -172,14 +172,6 @@ def check_mips_malta(self, uname_m, endianess):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
+ 
+-    def test_mips_malta32eb_kernel3_2_0(self):
+-        """
+-        :avocado: tags=arch:mips
+-        :avocado: tags=endian:big
+-        :avocado: tags=device:pcnet32
+-        """
+-        self.check_mips_malta('mips', 'be')
+-
+     def test_mips_malta32el_kernel3_2_0(self):
+         """
+         :avocado: tags=arch:mipsel
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 452d863f187..3f8fabd218d 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -39,7 +39,7 @@ test_timeouts = {
+   'arm_tuxrun' : 240,
+   'arm_sx1' : 360,
+   'intel_iommu': 300,
+-  'mips_malta' : 120,
++  'mips_malta' : 480,
+   'mipsel_replay' : 480,
+   'mips64el_replay' : 180,
+   'netdev_ethtool' : 180,
+diff --git a/tests/functional/test_mips_malta.py b/tests/functional/test_mips_malta.py
+index 9697c7d63f8..89b9556f30d 100755
+--- a/tests/functional/test_mips_malta.py
++++ b/tests/functional/test_mips_malta.py
+@@ -6,10 +6,93 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import LinuxKernelTest, Asset
++import os
++
++from qemu_test import LinuxKernelTest, Asset, wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+ 
+ 
++def mips_run_common_commands(test, prompt='#'):
++    exec_command_and_wait_for_pattern(test,
++        'uname -m',
++        'mips')
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'timer')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'serial')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'ata_piix')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'rtc')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/devices',
++        'input')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/devices',
++        'fb')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/ioports',
++        ' : serial')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/ioports',
++        ' : ata_piix')
++    wait_for_console_pattern(test, prompt)
++
++def mips_check_wheezy(test, kernel_path, image_path, kernel_command_line,
++                      dl_file, hsum, nic='pcnet', cpuinfo='MIPS 24Kc'):
++    test.require_netdev('user')
++    test.require_device(nic)
++    test.set_machine('malta')
++
++    port=8080
++    test.vm.add_args('-kernel', kernel_path,
++                     '-append', kernel_command_line,
++                     '-drive', 'file=%s,snapshot=on' % image_path,
++                     '-netdev', 'user,id=n1' +
++                                ',tftp=' + os.path.basename(kernel_path) +
++                                ',hostfwd=tcp:127.0.0.1:0-:%d' % port,
++                     '-device', f'{nic},netdev=n1',
++                     '-no-reboot')
++    test.vm.set_console()
++    test.vm.launch()
++
++    wait_for_console_pattern(test, 'login: ', 'Oops')
++    exec_command_and_wait_for_pattern(test, 'root', 'Password:')
++    exec_command_and_wait_for_pattern(test, 'root', ':~# ')
++    mips_run_common_commands(test)
++
++    exec_command_and_wait_for_pattern(test, 'cd /', '# ')
++    test.check_http_download(dl_file, hsum, port,
++                             pythoncmd='python -m SimpleHTTPServer')
++
++    exec_command_and_wait_for_pattern(test, 'cat /proc/cpuinfo', cpuinfo)
++    exec_command_and_wait_for_pattern(test, 'cat /proc/devices', 'usb')
++    exec_command_and_wait_for_pattern(test, 'cat /proc/ioports',
++                                      ' : piix4_smbus')
++    # lspci for the host bridge does not work on big endian targets:
++    # https://gitlab.com/qemu-project/qemu/-/issues/2826
++    # exec_command_and_wait_for_pattern(test, 'lspci -d 11ab:4620',
++    #                                   'GT-64120')
++    exec_command_and_wait_for_pattern(test,
++                                      'cat /sys/bus/i2c/devices/i2c-0/name',
++                                      'SMBus PIIX4 adapter')
++    exec_command_and_wait_for_pattern(test, 'cat /proc/mtd', 'YAMON')
++    # Empty 'Board Config' (64KB)
++    exec_command_and_wait_for_pattern(test, 'md5sum /dev/mtd2ro',
++                                      '0dfbe8aa4c20b52e1b8bf3cb6cbdf193')
++
++
+ class MaltaMachineConsole(LinuxKernelTest):
+ 
+     ASSET_KERNEL_2_63_2 = Asset(
+@@ -70,7 +153,8 @@ def test_mips_malta_cpio(self):
+         exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
+                                                 'BogoMIPS')
+         exec_command_and_wait_for_pattern(self, 'uname -a',
+-                                                'Debian')
++                                                '4.5.0-2-4kc-malta #1 Debian')
++        mips_run_common_commands(self)
+ 
+         exec_command_and_wait_for_pattern(self, 'ip link set eth0 up',
+                                           'eth0: link up')
+@@ -89,6 +173,26 @@ def test_mips_malta_cpio(self):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
+ 
++    ASSET_WHEEZY_KERNEL = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mips/'
++         'vmlinux-3.2.0-4-4kc-malta'),
++        '0377fcda31299213c10b8e5babe7260ef99188b3ae1aca6f56594abb71e7f67e')
++
++    ASSET_WHEEZY_DISK = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mips/'
++         'debian_wheezy_mips_standard.qcow2'),
++        'de03599285b8382ad309309a6c4869f6c6c42a5cfc983342bab9ec0dfa7849a2')
++
++    def test_wheezy(self):
++        kernel_path = self.ASSET_WHEEZY_KERNEL.fetch()
++        image_path = self.ASSET_WHEEZY_DISK.fetch()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
++                               + 'console=ttyS0 root=/dev/sda1')
++        mips_check_wheezy(self,
++            kernel_path, image_path, kernel_command_line, nic='e1000',
++            dl_file='/boot/initrd.img-3.2.0-4-4kc-malta',
++            hsum='ff0c0369143d9bbb9a6e6bc79322a2be535619df639e84103237f406e87493dc')
++
+ 
+ if __name__ == '__main__':
+     LinuxKernelTest.main()
+-- 
+2.49.0
 
-I think we can drop this comments, until we hit this again.
-
-> > +        return;
-> > +    }
-> > +
-> > +    config = STE_CONFIG(&ste);
-> > +    if (!STE_VALID(&ste) || !STE_CFG_S1_ENABLED(config)) {
-
-> you fully bypass the logic of smmuv3_get_config/decode_config. Couldn't
-> you reuse it. Originally we used the s1ctxptr and disabled/bypassed info.
-
-We likely can, though we don't need the CD part in decode_config
-so we might need to split those functions to reuse.
-
-Thanks
-Nicolin
 
