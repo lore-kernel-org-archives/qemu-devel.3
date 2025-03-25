@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB6BC35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 05:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A09C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 05:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twwQk-0007oa-3i; Tue, 25 Mar 2025 01:02:26 -0400
+	id 1twwOJ-0004It-SU; Tue, 25 Mar 2025 00:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twwOH-0004Bq-EP
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:53 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1twwNx-0003nR-0Y
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:36 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twwOE-00060K-IK
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:53 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2ff6cf448b8so11961506a91.3
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 21:59:49 -0700 (PDT)
+ id 1twwNu-0005qC-MG
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:32 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-3014cb646ecso6658655a91.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 21:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742878788; x=1743483588; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742878769; x=1743483569; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7C1awJz84K192Xls/S9mWSPpF8Y3H6ZCzb0fk03waGc=;
- b=cVm/wR0GrjU4GUzX/UJby62C+2nyYYvQcDkn4Fc0I8FrsMBclN9xbCVihFbEKxikzh
- 3EFlB/SXvHHZ9kW7ESwT7SEJmxoR1u06nBreh1mERKbbzZ5Y2JoiF506OuS79cjT+ubN
- SYqc2jikCzOBHvWEKJovjHCUqtB8BnwJ/uTbcpivfCp9LcpmmpITZVZeo0yra6k3lJa5
- z60DpdYIqvwixdcLxcE50WDBVrj1eln5UGjt0LwkmpSBnFMCl+311M3A25eFbpQpyAhW
- rzmC5Ikh1LgaUYuXguYBaGndgRVbV7MhUR4bKeGXiKTl0jcN1xHBJEeoRv7UNJevsRKH
- CfqA==
+ bh=8rvUTTGe7RSowwob33glnfX6lSJ/LNSVbNxwketpLmc=;
+ b=E46pVlgffJE0YrHPRPU/+n9wmcpldQsM2nY8vJYE2rSuhSX73IG3A9iwgEuSOrIhQ+
+ pjTEsAZP0fVGaG1ww/0I/83YOWtp23vRlFWNoFRKy2DUeKUVfh3K264T5izv0Dnxk6n+
+ 0t2aqcuUyaOfufDSwQR3lUcrFMUh/haCWwDBYrLV6+s9XznpGHHk4Q54r8p+mZcj9rZd
+ HL8QrM/uVcWMtXX0mEc+u2xMUyCpE5HEoTAgu/1kFCqv3ToIL4MlwwnpnVBb7IPncaMa
+ BZOs1I/fG05Q55NbyME83AaH9E/VgDkf94LoeMzgug1UD/2gan/LneDPmGBH5ryyWDfd
+ tmHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742878788; x=1743483588;
+ d=1e100.net; s=20230601; t=1742878769; x=1743483569;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7C1awJz84K192Xls/S9mWSPpF8Y3H6ZCzb0fk03waGc=;
- b=bPQWgQWL9dRlGNo9Zl2e6zFzmS7Xia51tZ/UqOgpCMZiqfna0bvNfiymn7cNIknMdh
- yUKazwb574SNYMZKHP39O7oFUtTnQi9V7y0hLp+m2Rb67gLG4CxXxMRA2SsCLvpI+z2S
- mHeP0AuyS3NyDFRitne9/H2o56UdKwwAaQDXKPmksgYlBjg7vQ/Hl7i66IlA4GzXtTox
- GhgbitRLXkhQ3jgomJX+d3bhoHSN/kMmsbcB4Igd/PWAF8GpPvPVCWfc9jCuVRvjNXiH
- 0eta7sWLpDeTxFPcjkuaX6wbC0HIeQWXPcBG/Gt3tA3Fzlerr9wCqU++84oR67Fg3pw6
- 5cZA==
-X-Gm-Message-State: AOJu0YzYAqJ1NsDV2cvbcixSpnWdBCU7iGR8D75xNMPO/22iaI6pDBBM
- JnMEOQb2Q5+JD9x3zsbqMoeKiPk6LcM9ND1y3OQbs17NkpRH2+P3faqTVKe99EGNID16Uk/FKna
- G
-X-Gm-Gg: ASbGncsUF7Ac/cYGNSBBhltly4dbWdu7eRCEnjdyaDARVMo/uKtXnZ4NiezemnFou1B
- zBVlcwG+oq6yIy2wVL1RoesMPLa9vg4ypKF++79NwJ31GWBN3iOLTEiPJhd1g/TK469sNhJZjD2
- YtHVUJC+q3TB05+o1eLPc0L+ons5SDgwaIY72FcS0NwlDkQJ/u5Cd1FNAa5QJByruilCgpxwBxB
- SVozKN/8hf+mSRIex4XUuijtHbghM5jlX0DeXP5RZgB7u+vHCBY2YKWWb5R9p9XkT4w+TRZsaGr
- F4TBv/JtO/StxRisO9wQYF4IT3RdB59bEHAWH4KtnLsK
-X-Google-Smtp-Source: AGHT+IHSXNPp3Q2e8oDSf/SNPDReLESf+MJRHhmLcAh+DyIr5z05CoANzbsKkecUcyVNZ39qvJN20w==
-X-Received: by 2002:a17:90b:2cc6:b0:2fe:a79e:f56f with SMTP id
- 98e67ed59e1d1-3030fe9e9c3mr24748768a91.13.1742878788216; 
- Mon, 24 Mar 2025 21:59:48 -0700 (PDT)
+ bh=8rvUTTGe7RSowwob33glnfX6lSJ/LNSVbNxwketpLmc=;
+ b=CDW94nPOTDh5fRz0H5ipUEG8bUVoxsmfOhihyu1nBoITZQVZ+oqcI6gRa10xe5971I
+ RtC2RhfNByCYhSqp4qW/58mBEp4Q0BABeUCafzzGgHkA+QFSS8FCr16/j+8rL6L3dKRP
+ uFCfkojrDqOBamAh3PvEkKgZ881Lyr2VLpusTGdnPLdrCuaZpR/fnt/W7vYC5sky20VF
+ WdFII6U4KSYUeRaUFWMCRz8VccpXhyn3ljoQqmMv8VY4R1IZeXLrthtaUYgp8251+Sa5
+ Z4x1LJrb0tDDYfcj3Qrkh0dpi/FqQPH5cF0gSAzlD8Qj3gTSv4axJt8EwparfTBOpri/
+ XgnQ==
+X-Gm-Message-State: AOJu0Yzj0kgk2cIB0AGAgYi7JD10WmyF0qV0ROhQrJTgkkA7KCMHAmWc
+ Ix3ydpD8A7YSQ+x/GTfrRsKlweWYQD7yjRntVNiySyZ4MMxfAkjJDjQo+IhB+y77GMDi5capt6Z
+ o
+X-Gm-Gg: ASbGncvNDn05znH38Xw3+pSXoaghUHzrzy3/tOfFVU1U6Ks9JoTZQ/FBpeh+s7jYiVo
+ I4j1tS89KszCWfCwQwYz1FQM2wN214A3UYtKKj6ImTuDllQ9fG2BbiFExshpuGYUFwAwI+RtyN5
+ j+KMLz/ovIPXWm2cQqjsqw+X1lAPTJ9s4sZ+YER8GJx2VWwybzklgJ+vVG/eIVfFsaZP33JWSyI
+ Ibhkr2tITiwH4k0Wyg7dYATO9u8r6MEMAn0qyqz+XiAdZIVBAqerkBCZ/ca/53+OIx4M5sE2D5B
+ 3+P2WQAScAMbNofLX/GgRmbmmK7b9LtH8rAs5h5WPH2V
+X-Google-Smtp-Source: AGHT+IGd5UXWo/Lkrytq7CX1i0u6UBOb0hauVyNgTE4qX82WgibZ4vfYtc9KuC+rTMrhj/xFHAo1Dg==
+X-Received: by 2002:a17:90b:35c4:b0:2ee:b6c5:1def with SMTP id
+ 98e67ed59e1d1-3030fe75747mr22925455a91.8.1742878768857; 
+ Mon, 24 Mar 2025 21:59:28 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-301bf58b413sm14595120a91.13.2025.03.24.21.59.47
+ 98e67ed59e1d1-301bf58b413sm14595120a91.13.2025.03.24.21.59.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Mar 2025 21:59:47 -0700 (PDT)
+ Mon, 24 Mar 2025 21:59:28 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -72,24 +72,23 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  kvm@vger.kernel.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 28/29] hw/arm/xlnx-versal: prepare compilation unit to be
- common
-Date: Mon, 24 Mar 2025 21:59:13 -0700
-Message-Id: <20250325045915.994760-29-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 08/29] exec/cpu-all: remove exec/cpu-defs include
+Date: Mon, 24 Mar 2025 21:58:53 -0700
+Message-Id: <20250325045915.994760-9-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250325045915.994760-1-pierrick.bouvier@linaro.org>
 References: <20250325045915.994760-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,28 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove kvm unused headers.
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/xlnx-versal.c | 2 --
- 1 file changed, 2 deletions(-)
+ include/exec/cpu-all.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index 278545a3f7b..f0b383b29ee 100644
---- a/hw/arm/xlnx-versal.c
-+++ b/hw/arm/xlnx-versal.c
-@@ -17,9 +17,7 @@
- #include "hw/sysbus.h"
- #include "net/net.h"
- #include "system/system.h"
--#include "system/kvm.h"
- #include "hw/arm/boot.h"
--#include "kvm_arm.h"
- #include "hw/misc/unimp.h"
- #include "hw/arm/xlnx-versal.h"
- #include "qemu/log.h"
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index e5d852fbe2c..db44c0d3016 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -23,7 +23,6 @@
+ #include "hw/core/cpu.h"
+ 
+ /* page related stuff */
+-#include "exec/cpu-defs.h"
+ #include "exec/target_page.h"
+ 
+ #include "cpu.h"
 -- 
 2.39.5
 
