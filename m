@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122D6C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 07:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC51BC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 07:01:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twy7q-0004fv-E1; Tue, 25 Mar 2025 02:51:02 -0400
+	id 1twyCq-0006yk-Mk; Tue, 25 Mar 2025 02:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7n-0004eD-Ur; Tue, 25 Mar 2025 02:50:59 -0400
+ id 1twyAe-0000TB-GF; Tue, 25 Mar 2025 02:53:56 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7l-0001fx-Vz; Tue, 25 Mar 2025 02:50:59 -0400
+ id 1twyAc-00027a-GU; Tue, 25 Mar 2025 02:53:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AA613107D65;
- Tue, 25 Mar 2025 09:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 16B30107D86;
+ Tue, 25 Mar 2025 09:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4D3071D5E74;
- Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id ADACF1D5E91;
+ Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3A69157030; Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ id 94E5F5706A; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Roman Kapl <rka@sysgo.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 33/34] target/ppc: Fix e200 duplicate SPRs
-Date: Tue, 25 Mar 2025 09:50:27 +0300
-Message-Id: <20250325065031.3263718-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 68/69] hw/misc/aspeed_hace: Fix buffer overflow in
+ has_padding function
+Date: Tue, 25 Mar 2025 09:50:41 +0300
+Message-Id: <20250325065043.3263864-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
-References: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,40 +64,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-DSRR0/1 registers are in the BookE ISA not e200 specific, so
-remove the duplicate e200 register definitions.
+The maximum padding size is either 64 or 128 bytes and should always be smaller
+than "req_len". If "padding_size" exceeds "req_len", then
+"req_len - padding_size" underflows due to "uint32_t" data type, leading to a
+large incorrect value (e.g., `0xFFXXXXXX`). This causes an out-of-bounds memory
+access, potentially leading to a buffer overflow.
 
-Cc: Roman Kapl <rka@sysgo.com>
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2768
-Fixes: 0e3bf4890906 ("ppc: add DBCR based debugging")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 73c0c904fc99e2ceecbbded84ec76d40d3f2daae)
-(Mjt: context fix for
- v9.0.0-935-g581eea5d656b "target/ppc: Split off common embedded TLB init")
+Added a check to ensure "padding_size" does not exceed "req_len" before
+computing "pad_offset". This prevents "req_len - padding_size" from underflowing
+and avoids accessing invalid memory.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Fixes: 5cd7d8564a8b563da724b9e6264c967f0a091afa ("aspeed/hace: Support AST2600 HACE ")
+Link: https://lore.kernel.org/qemu-devel/20250321092623.2097234-3-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 78877b2e06464f49f777e086845e094ea7bc82ef)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 294a18a5b7..3f22e0b02e 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -2712,14 +2712,6 @@ static void init_proc_e200(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
-                  0x00000000); /* TOFIX */
--    spr_register(env, SPR_BOOKE_DSRR0, "DSRR0",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_generic,
--                 0x00000000);
--    spr_register(env, SPR_BOOKE_DSRR1, "DSRR1",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_generic,
--                 0x00000000);
- #if !defined(CONFIG_USER_ONLY)
-     env->nb_tlb = 64;
-     env->nb_ways = 1;
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index bc1d66ad80..801e52377d 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -124,6 +124,11 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+     if (*total_msg_len <= s->total_req_len) {
+         uint32_t padding_size = s->total_req_len - *total_msg_len;
+         uint8_t *padding = iov->iov_base;
++
++        if (padding_size > req_len) {
++            return false;
++        }
++
+         *pad_offset = req_len - padding_size;
+         if (padding[*pad_offset] == 0x80) {
+             return true;
 -- 
 2.39.5
 
