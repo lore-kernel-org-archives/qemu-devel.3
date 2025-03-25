@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2B36C35FFC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F7AC3600B
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 11:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx2OT-0005YB-Kx; Tue, 25 Mar 2025 07:24:29 -0400
+	id 1tx2OF-0005SF-7G; Tue, 25 Mar 2025 07:24:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tx2OS-0005Xm-4N; Tue, 25 Mar 2025 07:24:28 -0400
+ id 1tx2OD-0005PO-EN; Tue, 25 Mar 2025 07:24:13 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tx2OQ-0004Pe-5r; Tue, 25 Mar 2025 07:24:27 -0400
+ id 1tx2OA-0004BM-K8; Tue, 25 Mar 2025 07:24:13 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52P9Ktue027943;
- Tue, 25 Mar 2025 11:24:17 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52OMurTN028463;
+ Tue, 25 Mar 2025 11:24:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=w4LmsZ
- G7H6dvK0+cHt9tuT9XdPEfCX9qmo6yMH6DQOA=; b=Sd2y584M4FbqQJ7S5aZl0Y
- d6OOrJgf9T+aqjsaCAZIHk8qxAWn7aV9vZI5ZYi13R9MiQWey6EmW1sTs5J5d3JN
- f3zrDRV1KRDUrS0RcpMBrCkVcdl4DDgD/6phPBB64WOQgTGAj96zxXgAm4MyOSCj
- PTppBqF8HojLMyZOOWENQlSjxLtsXNtUUDU5m5Yyrt8YoM0gtjmxxo23KwgZQE0r
- 3x56SFEBrMZ2Rf7ypWOjoSkO8lLNeIi2LOJj64jJeRt4eH8G3+YSM1n7bptWJnBX
- 5reBFGAkAweTs4vxqdKGSVJSeGuExN1fBxOrf8Ve2/0JOrp75vEkGoLx7sXeZ12Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qN5cVz
+ lXXYR5gyJTh3gauYELXsPbl7xswN4AxV7IXCk=; b=QRX53tQtKrGpxnWUcG6fYU
+ DsYfdK4IN12RG14nXJVl9tlISSCrKHeMMPfLR0F69NWi/JbN4f8HiaWwbr/8c0EY
+ 0kMBuocMWCwJDl9fFF8zbJSr33R8ayoAf0G/VIsesHHv2d6jAlXzjIMWcy8o8AXM
+ DViT01n6SXSTiQXBTm7cbJh6A+y6CAm00QF/YUdWtiBTmsnyLLWVIPrkEITxH3AL
+ na52uCpG2ExKX8cbRsDOfpb4Z7Uws2MBeRZGCncH6/lJGfEAFxul+Fy3AS8KSPfF
+ 7ntkfp0fCpxYET4KH/oIlTOogw+/+wgsIs8B/ev+G0U/aTDZaFbSOWRuTIl80kDA
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45k7e3dwx1-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45k7e3dww3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Mar 2025 11:24:16 +0000 (GMT)
+ Tue, 25 Mar 2025 11:24:06 +0000 (GMT)
 Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52PBFqUU020415;
- Tue, 25 Mar 2025 11:24:16 GMT
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52PBMqcf004614;
+ Tue, 25 Mar 2025 11:24:06 GMT
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45k7e3dwx0-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45k7e3dww2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Mar 2025 11:24:16 +0000 (GMT)
+ Tue, 25 Mar 2025 11:24:06 +0000 (GMT)
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52P9oi60009709;
- Tue, 25 Mar 2025 11:24:15 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j9rkjvqf-1
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52PAFDID009585;
+ Tue, 25 Mar 2025 11:24:05 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j9rkjvq3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Mar 2025 11:24:15 +0000
+ Tue, 25 Mar 2025 11:24:05 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52PBOBlC53149974
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52PBO1LK22086082
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Mar 2025 11:24:12 GMT
+ Tue, 25 Mar 2025 11:24:01 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D76FE20043;
- Tue, 25 Mar 2025 11:24:11 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A2F8120043;
+ Tue, 25 Mar 2025 11:24:01 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BDE1820040;
- Tue, 25 Mar 2025 11:24:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 15EF020040;
+ Tue, 25 Mar 2025 11:23:59 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.124.216.239])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 25 Mar 2025 11:24:09 +0000 (GMT)
+ Tue, 25 Mar 2025 11:23:58 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -73,9 +73,9 @@ To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
 Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: [PATCH v6 10/10] ppc/pnv: Add ChipTOD model for Power11
-Date: Tue, 25 Mar 2025 16:53:19 +0530
-Message-ID: <20250325112319.927190-11-adityag@linux.ibm.com>
+Subject: [PATCH v6 06/10] ppc/pnv: Introduce Pnv11Chip
+Date: Tue, 25 Mar 2025 16:53:15 +0530
+Message-ID: <20250325112319.927190-7-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325112319.927190-1-adityag@linux.ibm.com>
 References: <20250325112319.927190-1-adityag@linux.ibm.com>
@@ -83,15 +83,15 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: D7Daznq_6I0VtSK7VCNw2RbutuYp99zz
-X-Proofpoint-GUID: sku_m4MfB3oRvfGLcig7T4SW5dJvhQJe
+X-Proofpoint-ORIG-GUID: 7crfwqLg3WmWx90No_MsNzJAz-MfcVAG
+X-Proofpoint-GUID: Dl5QCu97FOhvFp8wzr2WUF-JGFy6CkNO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-25_04,2025-03-25_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  bulkscore=0 clxscore=1015
  mlxscore=0 suspectscore=0 phishscore=0 adultscore=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ mlxlogscore=868 lowpriorityscore=0 priorityscore=1501 spamscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2503250076
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
@@ -119,8 +119,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce Power11 ChipTod. The code has been copied from Power10 ChipTod
-code as the Power11 core is same as Power10 core.
+Implement Pnv11Chip, currently without chiptod, xive and phb.
+
+Chiptod, XIVE, PHB are implemented in later patches.
+
+Since Power11 core is same as Power10, the implementation of Pnv11Chip
+is a duplicate of corresponding Pnv10Chip.
 
 Cc: Cédric Le Goater <clg@kaod.org>
 Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
@@ -129,148 +133,563 @@ Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv.c                 | 15 +++++++++
- hw/ppc/pnv_chiptod.c         | 59 ++++++++++++++++++++++++++++++++++++
- include/hw/ppc/pnv_chiptod.h |  2 ++
- 3 files changed, 76 insertions(+)
+ hw/ppc/pnv.c               | 306 +++++++++++++++++++++++++++++++++++++
+ hw/ppc/pnv_core.c          |  17 +++
+ include/hw/ppc/pnv.h       |  20 +++
+ include/hw/ppc/pnv_chip.h  |   7 +
+ include/hw/ppc/pnv_xscom.h |  49 ++++++
+ 5 files changed, 399 insertions(+)
 
 diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 0b741fd4076f..067a63375375 100644
+index 63f2232f32fd..006ff62efd79 100644
 --- a/hw/ppc/pnv.c
 +++ b/hw/ppc/pnv.c
-@@ -2386,6 +2386,8 @@ static void pnv_chip_power11_instance_init(Object *obj)
-     object_property_add_alias(obj, "xive-fabric", OBJECT(&chip11->xive),
-                               "xive-fabric");
-     object_initialize_child(obj, "lpc", &chip11->lpc, TYPE_PNV11_LPC);
-+    object_initialize_child(obj, "chiptod", &chip11->chiptod,
-+                            TYPE_PNV11_CHIPTOD);
-     object_initialize_child(obj, "occ",  &chip11->occ, TYPE_PNV11_OCC);
-     object_initialize_child(obj, "sbe",  &chip11->sbe, TYPE_PNV11_SBE);
-     object_initialize_child(obj, "homer", &chip11->homer, TYPE_PNV11_HOMER);
-@@ -2539,6 +2541,19 @@ static void pnv_chip_power11_realize(DeviceState *dev, Error **errp)
-     chip->dt_isa_nodename = g_strdup_printf("/lpcm-opb@%" PRIx64 "/lpc@0",
-                                             (uint64_t) PNV11_LPCM_BASE(chip));
- 
-+    /* ChipTOD */
-+    object_property_set_bool(OBJECT(&chip11->chiptod), "primary",
-+                             chip->chip_id == 0, &error_abort);
-+    object_property_set_bool(OBJECT(&chip11->chiptod), "secondary",
-+                             chip->chip_id == 1, &error_abort);
-+    object_property_set_link(OBJECT(&chip11->chiptod), "chip", OBJECT(chip),
-+                             &error_abort);
-+    if (!qdev_realize(DEVICE(&chip11->chiptod), NULL, errp)) {
-+        return;
-+    }
-+    pnv_xscom_add_subregion(chip, PNV11_XSCOM_CHIPTOD_BASE,
-+                            &chip11->chiptod.xscom_regs);
-+
-     /* HOMER (must be created before OCC) */
-     object_property_set_link(OBJECT(&chip11->homer), "chip", OBJECT(chip),
-                              &error_abort);
-diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
-index c8987ae67a2a..2e87ab62b2cf 100644
---- a/hw/ppc/pnv_chiptod.c
-+++ b/hw/ppc/pnv_chiptod.c
-@@ -210,6 +210,22 @@ static void chiptod_power10_broadcast_ttype(PnvChipTOD *sender,
-     }
+@@ -490,6 +490,33 @@ static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
+     pnv_dt_lpc(chip, fdt, 0, PNV10_LPCM_BASE(chip), PNV10_LPCM_SIZE);
  }
  
-+static void chiptod_power11_broadcast_ttype(PnvChipTOD *sender,
-+                                            uint32_t trigger)
++static void pnv_chip_power11_dt_populate(PnvChip *chip, void *fdt)
 +{
-+    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    static const char compat[] = "ibm,power11-xscom\0ibm,xscom";
 +    int i;
 +
-+    for (i = 0; i < pnv->num_chips; i++) {
-+        Pnv11Chip *chip11 = PNV11_CHIP(pnv->chips[i]);
-+        PnvChipTOD *chiptod = &chip11->chiptod;
++    pnv_dt_xscom(chip, fdt, 0,
++                 cpu_to_be64(PNV11_XSCOM_BASE(chip)),
++                 cpu_to_be64(PNV11_XSCOM_SIZE),
++                 compat, sizeof(compat));
 +
-+        if (chiptod != sender) {
-+            chiptod_receive_ttype(chiptod, trigger);
-+        }
++    for (i = 0; i < chip->nr_cores; i++) {
++        PnvCore *pnv_core = chip->cores[i];
++        int offset;
++
++        offset = pnv_dt_core(chip, pnv_core, fdt);
++
++        _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
++                           pa_features_31, sizeof(pa_features_31))));
 +    }
++
++    if (chip->ram_size) {
++        pnv_dt_memory(fdt, chip->chip_id, chip->ram_start, chip->ram_size);
++    }
++
++    pnv_dt_lpc(chip, fdt, 0, PNV11_LPCM_BASE(chip), PNV11_LPCM_SIZE);
 +}
 +
- static PnvCore *pnv_chip_get_core_by_xscom_base(PnvChip *chip,
-                                                 uint32_t xscom_base)
+ static void pnv_dt_rtc(ISADevice *d, void *fdt, int lpc_off)
  {
-@@ -283,6 +299,12 @@ static PnvCore *chiptod_power10_tx_ttype_target(PnvChipTOD *chiptod,
+     uint32_t io_base = d->ioport_id;
+@@ -822,6 +849,26 @@ static ISABus *pnv_chip_power10_isa_create(PnvChip *chip, Error **errp)
+     return pnv_lpc_isa_create(&chip10->lpc, false, errp);
+ }
+ 
++static ISABus *pnv_chip_power11_isa_create(PnvChip *chip, Error **errp)
++{
++    Pnv11Chip *chip11 = PNV11_CHIP(chip);
++    qemu_irq irq;
++
++    irq = qdev_get_gpio_in(DEVICE(&chip11->psi), PSIHB9_IRQ_LPCHC);
++    qdev_connect_gpio_out_named(DEVICE(&chip11->lpc), "LPCHC", 0, irq);
++
++    irq = qdev_get_gpio_in(DEVICE(&chip11->psi), PSIHB9_IRQ_LPC_SIRQ0);
++    qdev_connect_gpio_out_named(DEVICE(&chip11->lpc), "SERIRQ", 0, irq);
++    irq = qdev_get_gpio_in(DEVICE(&chip11->psi), PSIHB9_IRQ_LPC_SIRQ1);
++    qdev_connect_gpio_out_named(DEVICE(&chip11->lpc), "SERIRQ", 1, irq);
++    irq = qdev_get_gpio_in(DEVICE(&chip11->psi), PSIHB9_IRQ_LPC_SIRQ2);
++    qdev_connect_gpio_out_named(DEVICE(&chip11->lpc), "SERIRQ", 2, irq);
++    irq = qdev_get_gpio_in(DEVICE(&chip11->psi), PSIHB9_IRQ_LPC_SIRQ3);
++    qdev_connect_gpio_out_named(DEVICE(&chip11->lpc), "SERIRQ", 3, irq);
++
++    return pnv_lpc_isa_create(&chip11->lpc, false, errp);
++}
++
+ static ISABus *pnv_isa_create(PnvChip *chip, Error **errp)
+ {
+     return PNV_CHIP_GET_CLASS(chip)->isa_create(chip, errp);
+@@ -885,6 +932,12 @@ static uint64_t pnv_chip_power10_xscom_core_base(PnvChip *chip,
+     return PNV10_XSCOM_EC_BASE(core_id);
+ }
+ 
++static uint64_t pnv_chip_power11_xscom_core_base(PnvChip *chip,
++                                                 uint32_t core_id)
++{
++    return PNV11_XSCOM_EC_BASE(core_id);
++}
++
+ static bool pnv_match_cpu(const char *default_type, const char *cpu_type)
+ {
+     PowerPCCPUClass *ppc_default =
+@@ -914,6 +967,13 @@ static void pnv_chip_power10_pic_print_info(PnvChip *chip, GString *buf)
+                          pnv_chip_power9_pic_print_info_child, buf);
+ }
+ 
++static void pnv_chip_power11_pic_print_info(PnvChip *chip, GString *buf)
++{
++    Pnv11Chip *chip11 = PNV11_CHIP(chip);
++
++    pnv_psi_pic_print_info(&chip11->psi, buf);
++}
++
+ /* Always give the first 1GB to chip 0 else we won't boot */
+ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
+ {
+@@ -1451,6 +1511,8 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+ 
+ #define POWER10_CORE_MASK  (0xffffffffffffffull)
+ 
++#define POWER11_CORE_MASK  (0xffffffffffffffull)
++
+ static void pnv_chip_power8_instance_init(Object *obj)
+ {
+     Pnv8Chip *chip8 = PNV8_CHIP(obj);
+@@ -2264,6 +2326,203 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
      }
  }
  
-+static PnvCore *chiptod_power11_tx_ttype_target(PnvChipTOD *chiptod,
-+                                               uint64_t val)
++static void pnv_chip_power11_instance_init(Object *obj)
 +{
-+    return chiptod_power10_tx_ttype_target(chiptod, val);
++    Pnv11Chip *chip11 = PNV11_CHIP(obj);
++    PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
++    int i;
++
++    object_initialize_child(obj, "adu",  &chip11->adu, TYPE_PNV_ADU);
++    object_initialize_child(obj, "psi", &chip11->psi, TYPE_PNV11_PSI);
++    object_initialize_child(obj, "lpc", &chip11->lpc, TYPE_PNV11_LPC);
++    object_initialize_child(obj, "occ",  &chip11->occ, TYPE_PNV11_OCC);
++    object_initialize_child(obj, "sbe",  &chip11->sbe, TYPE_PNV11_SBE);
++    object_initialize_child(obj, "homer", &chip11->homer, TYPE_PNV11_HOMER);
++    object_initialize_child(obj, "n1-chiplet", &chip11->n1_chiplet,
++                            TYPE_PNV_N1_CHIPLET);
++
++    for (i = 0; i < pcc->i2c_num_engines; i++) {
++        object_initialize_child(obj, "i2c[*]", &chip11->i2c[i], TYPE_PNV_I2C);
++    }
++
++    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
++        object_initialize_child(obj, "pib_spic[*]", &chip11->pib_spic[i],
++                                TYPE_PNV_SPI);
++    }
 +}
 +
- static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
-                                     uint64_t val, unsigned size)
++static void pnv_chip_power11_quad_realize(Pnv11Chip *chip11, Error **errp)
++{
++    PnvChip *chip = PNV_CHIP(chip11);
++    int i;
++
++    chip11->nr_quads = DIV_ROUND_UP(chip->nr_cores, 4);
++    chip11->quads = g_new0(PnvQuad, chip11->nr_quads);
++
++    for (i = 0; i < chip11->nr_quads; i++) {
++        PnvQuad *eq = &chip11->quads[i];
++
++        pnv_chip_quad_realize_one(chip, eq, chip->cores[i * 4],
++                                  PNV_QUAD_TYPE_NAME("power11"));
++
++        pnv_xscom_add_subregion(chip, PNV11_XSCOM_EQ_BASE(eq->quad_id),
++                                &eq->xscom_regs);
++
++        pnv_xscom_add_subregion(chip, PNV11_XSCOM_QME_BASE(eq->quad_id),
++                                &eq->xscom_qme_regs);
++    }
++}
++
++static void pnv_chip_power11_realize(DeviceState *dev, Error **errp)
++{
++    PnvChipClass *pcc = PNV_CHIP_GET_CLASS(dev);
++    PnvChip *chip = PNV_CHIP(dev);
++    Pnv11Chip *chip11 = PNV11_CHIP(dev);
++    Error *local_err = NULL;
++    int i;
++
++    /* XSCOM bridge is first */
++    pnv_xscom_init(chip, PNV11_XSCOM_SIZE, PNV11_XSCOM_BASE(chip));
++
++    pcc->parent_realize(dev, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    /* ADU */
++    object_property_set_link(OBJECT(&chip11->adu), "lpc", OBJECT(&chip11->lpc),
++                             &error_abort);
++    if (!qdev_realize(DEVICE(&chip11->adu), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_ADU_BASE,
++                            &chip11->adu.xscom_regs);
++
++    pnv_chip_power11_quad_realize(chip11, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    /* WIP: XIVE added in future patch */
++
++    /* Processor Service Interface (PSI) Host Bridge */
++    object_property_set_int(OBJECT(&chip11->psi), "bar",
++                            PNV11_PSIHB_BASE(chip), &error_fatal);
++    if (!qdev_realize(DEVICE(&chip11->psi), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_PSIHB_BASE,
++                            &PNV_PSI(&chip11->psi)->xscom_regs);
++
++    /* LPC */
++    if (!qdev_realize(DEVICE(&chip11->lpc), NULL, errp)) {
++        return;
++    }
++    memory_region_add_subregion(get_system_memory(), PNV11_LPCM_BASE(chip),
++                                &chip11->lpc.xscom_regs);
++
++    chip->fw_mr = &chip11->lpc.isa_fw;
++    chip->dt_isa_nodename = g_strdup_printf("/lpcm-opb@%" PRIx64 "/lpc@0",
++                                            (uint64_t) PNV11_LPCM_BASE(chip));
++
++    /* HOMER (must be created before OCC) */
++    object_property_set_link(OBJECT(&chip11->homer), "chip", OBJECT(chip),
++                             &error_abort);
++    if (!qdev_realize(DEVICE(&chip11->homer), NULL, errp)) {
++        return;
++    }
++    /* Homer Xscom region */
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_PBA_BASE,
++                            &chip11->homer.pba_regs);
++    /* Homer RAM region */
++    memory_region_add_subregion(get_system_memory(), chip11->homer.base,
++                                &chip11->homer.mem);
++
++    /* Create the simplified OCC model */
++    object_property_set_link(OBJECT(&chip11->occ), "homer",
++                             OBJECT(&chip11->homer), &error_abort);
++    if (!qdev_realize(DEVICE(&chip11->occ), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_OCC_BASE,
++                            &chip11->occ.xscom_regs);
++    qdev_connect_gpio_out(DEVICE(&chip11->occ), 0, qdev_get_gpio_in(
++                              DEVICE(&chip11->psi), PSIHB9_IRQ_OCC));
++
++    /* OCC SRAM model */
++    memory_region_add_subregion(get_system_memory(),
++                                PNV11_OCC_SENSOR_BASE(chip),
++                                &chip11->occ.sram_regs);
++
++    /* SBE */
++    if (!qdev_realize(DEVICE(&chip11->sbe), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_SBE_CTRL_BASE,
++                            &chip11->sbe.xscom_ctrl_regs);
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_SBE_MBOX_BASE,
++                            &chip11->sbe.xscom_mbox_regs);
++    qdev_connect_gpio_out(DEVICE(&chip11->sbe), 0, qdev_get_gpio_in(
++                              DEVICE(&chip11->psi), PSIHB9_IRQ_PSU));
++
++    /* N1 chiplet */
++    if (!qdev_realize(DEVICE(&chip11->n1_chiplet), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_N1_CHIPLET_CTRL_REGS_BASE,
++             &chip11->n1_chiplet.nest_pervasive.xscom_ctrl_regs_mr);
++
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_N1_PB_SCOM_EQ_BASE,
++                           &chip11->n1_chiplet.xscom_pb_eq_mr);
++
++    pnv_xscom_add_subregion(chip, PNV11_XSCOM_N1_PB_SCOM_ES_BASE,
++                           &chip11->n1_chiplet.xscom_pb_es_mr);
++
++    /* WIP: PHB added in future patch */
++
++    /*
++     * I2C
++     */
++    for (i = 0; i < pcc->i2c_num_engines; i++) {
++        Object *obj =  OBJECT(&chip11->i2c[i]);
++
++        object_property_set_int(obj, "engine", i + 1, &error_fatal);
++        object_property_set_int(obj, "num-busses",
++                                pcc->i2c_ports_per_engine[i],
++                                &error_fatal);
++        object_property_set_link(obj, "chip", OBJECT(chip), &error_abort);
++        if (!qdev_realize(DEVICE(obj), NULL, errp)) {
++            return;
++        }
++        pnv_xscom_add_subregion(chip, PNV11_XSCOM_I2CM_BASE +
++                                (chip11->i2c[i].engine - 1) *
++                                        PNV11_XSCOM_I2CM_SIZE,
++                                &chip11->i2c[i].xscom_regs);
++        qdev_connect_gpio_out(DEVICE(&chip11->i2c[i]), 0,
++                              qdev_get_gpio_in(DEVICE(&chip11->psi),
++                                               PSIHB9_IRQ_SBE_I2C));
++    }
++    /* PIB SPI Controller */
++    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
++        object_property_set_int(OBJECT(&chip11->pib_spic[i]), "spic_num",
++                                i, &error_fatal);
++        /* pib_spic[2] connected to 25csm04 which implements 1 byte transfer */
++        object_property_set_int(OBJECT(&chip11->pib_spic[i]), "transfer_len",
++                                (i == 2) ? 1 : 4, &error_fatal);
++        object_property_set_int(OBJECT(&chip11->pib_spic[i]), "chip-id",
++                                chip->chip_id, &error_fatal);
++        if (!sysbus_realize(SYS_BUS_DEVICE(OBJECT
++                                        (&chip11->pib_spic[i])), errp)) {
++            return;
++        }
++        pnv_xscom_add_subregion(chip, PNV11_XSCOM_PIB_SPIC_BASE +
++                                i * PNV11_XSCOM_PIB_SPIC_SIZE,
++                                &chip11->pib_spic[i].xscom_spic_regs);
++    }
++}
++
+ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
  {
-@@ -520,6 +542,42 @@ static const TypeInfo pnv_chiptod_power10_type_info = {
+     int i;
+@@ -2302,6 +2561,12 @@ static uint32_t pnv_chip_power10_xscom_pcba(PnvChip *chip, uint64_t addr)
+     return addr >> 3;
+ }
+ 
++static uint32_t pnv_chip_power11_xscom_pcba(PnvChip *chip, uint64_t addr)
++{
++    addr &= (PNV11_XSCOM_SIZE - 1);
++    return addr >> 3;
++}
++
+ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2329,6 +2594,29 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+                                     &k->parent_realize);
+ }
+ 
++static void pnv_chip_power11_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PnvChipClass *k = PNV_CHIP_CLASS(klass);
++
++    static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
++
++    k->chip_cfam_id = 0x220da04980000000ull; /* P11 DD2.0 (with NX) */
++    k->cores_mask = POWER11_CORE_MASK;
++    k->get_pir_tir = pnv_get_pir_tir_p10;
++    k->isa_create = pnv_chip_power11_isa_create;
++    k->dt_populate = pnv_chip_power11_dt_populate;
++    k->pic_print_info = pnv_chip_power11_pic_print_info;
++    k->xscom_core_base = pnv_chip_power11_xscom_core_base;
++    k->xscom_pcba = pnv_chip_power11_xscom_pcba;
++    dc->desc = "PowerNV Chip Power11";
++    k->i2c_num_engines = PNV10_CHIP_MAX_I2C;
++    k->i2c_ports_per_engine = i2c_ports_per_engine;
++
++    device_class_set_parent_realize(dc, pnv_chip_power11_realize,
++                                    &k->parent_realize);
++}
++
+ static void pnv_chip_core_sanitize(PnvMachineState *pnv, PnvChip *chip,
+                                    Error **errp)
+ {
+@@ -2962,6 +3250,13 @@ static void pnv_machine_class_init(ObjectClass *oc, void *data)
+         .parent        = TYPE_PNV10_CHIP,          \
      }
+ 
++#define DEFINE_PNV11_CHIP_TYPE(type, class_initfn) \
++    {                                              \
++        .name          = type,                     \
++        .class_init    = class_initfn,             \
++        .parent        = TYPE_PNV11_CHIP,          \
++    }
++
+ static const TypeInfo types[] = {
+     {
+         .name          = MACHINE_TYPE_NAME("powernv10-rainier"),
+@@ -3017,6 +3312,17 @@ static const TypeInfo types[] = {
+         .abstract      = true,
+     },
+ 
++    /*
++     * P11 chip and variants
++     */
++    {
++        .name          = TYPE_PNV11_CHIP,
++        .parent        = TYPE_PNV_CHIP,
++        .instance_init = pnv_chip_power11_instance_init,
++        .instance_size = sizeof(Pnv11Chip),
++    },
++    DEFINE_PNV11_CHIP_TYPE(TYPE_PNV_CHIP_POWER11, pnv_chip_power11_class_init),
++
+     /*
+      * P10 chip and variants
+      */
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index a33977da1882..ea58d49bdd93 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -473,6 +473,11 @@ static void pnv_core_power10_class_init(ObjectClass *oc, void *data)
+     pcc->xscom_size = PNV10_XSCOM_EC_SIZE;
+ }
+ 
++static void pnv_core_power11_class_init(ObjectClass *oc, void *data)
++{
++    pnv_core_power10_class_init(oc, data);
++}
++
+ static void pnv_core_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -504,6 +509,7 @@ static const TypeInfo pnv_core_infos[] = {
+     DEFINE_PNV_CORE_TYPE(power8, "power8nvl_v1.0"),
+     DEFINE_PNV_CORE_TYPE(power9, "power9_v2.2"),
+     DEFINE_PNV_CORE_TYPE(power10, "power10_v2.0"),
++    DEFINE_PNV_CORE_TYPE(power11, "power11_v2.0"),
  };
  
-+static int pnv_chiptod_power11_dt_xscom(PnvXScomInterface *dev, void *fdt,
-+                             int xscom_offset)
-+{
-+    const char compat[] = "ibm,power-chiptod\0ibm,power11-chiptod";
-+
-+    return pnv_chiptod_dt_xscom(dev, fdt, xscom_offset, compat, sizeof(compat));
-+}
-+
-+static void pnv_chiptod_power11_class_init(ObjectClass *klass, void *data)
-+{
-+    PnvChipTODClass *pctc = PNV_CHIPTOD_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PnvXScomInterfaceClass *xdc = PNV_XSCOM_INTERFACE_CLASS(klass);
-+
-+    dc->desc = "PowerNV ChipTOD Controller (Power11)";
-+    device_class_set_props(dc, pnv_chiptod_properties);
-+
-+    xdc->dt_xscom = pnv_chiptod_power11_dt_xscom;
-+
-+    pctc->broadcast_ttype = chiptod_power11_broadcast_ttype;
-+    pctc->tx_ttype_target = chiptod_power11_tx_ttype_target;
-+
-+    pctc->xscom_size = PNV_XSCOM_CHIPTOD_SIZE;
-+}
-+
-+static const TypeInfo pnv_chiptod_power11_type_info = {
-+    .name          = TYPE_PNV11_CHIPTOD,
-+    .parent        = TYPE_PNV_CHIPTOD,
-+    .instance_size = sizeof(PnvChipTOD),
-+    .class_init    = pnv_chiptod_power11_class_init,
-+    .interfaces    = (InterfaceInfo[]) {
-+        { TYPE_PNV_XSCOM_INTERFACE },
-+        { }
-+    }
-+};
-+
- static void pnv_chiptod_reset(void *dev)
- {
-     PnvChipTOD *chiptod = PNV_CHIPTOD(dev);
-@@ -579,6 +637,7 @@ static void pnv_chiptod_register_types(void)
-     type_register_static(&pnv_chiptod_type_info);
-     type_register_static(&pnv_chiptod_power9_type_info);
-     type_register_static(&pnv_chiptod_power10_type_info);
-+    type_register_static(&pnv_chiptod_power11_type_info);
+ DEFINE_TYPES(pnv_core_infos)
+@@ -725,6 +731,12 @@ static void pnv_quad_power10_class_init(ObjectClass *oc, void *data)
+     pqc->xscom_qme_size = PNV10_XSCOM_QME_SIZE;
  }
  
- type_init(pnv_chiptod_register_types);
-diff --git a/include/hw/ppc/pnv_chiptod.h b/include/hw/ppc/pnv_chiptod.h
-index fde569bcbfa9..466b06560a28 100644
---- a/include/hw/ppc/pnv_chiptod.h
-+++ b/include/hw/ppc/pnv_chiptod.h
-@@ -17,6 +17,8 @@ OBJECT_DECLARE_TYPE(PnvChipTOD, PnvChipTODClass, PNV_CHIPTOD)
- DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV9_CHIPTOD, TYPE_PNV9_CHIPTOD)
- #define TYPE_PNV10_CHIPTOD TYPE_PNV_CHIPTOD "-POWER10"
- DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV10_CHIPTOD, TYPE_PNV10_CHIPTOD)
-+#define TYPE_PNV11_CHIPTOD TYPE_PNV_CHIPTOD "-POWER11"
-+DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV11_CHIPTOD, TYPE_PNV11_CHIPTOD)
++static void pnv_quad_power11_class_init(ObjectClass *oc, void *data)
++{
++    /* Power11 quad is similar to Power10 quad */
++    pnv_quad_power10_class_init(oc, data);
++}
++
+ static void pnv_quad_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -752,6 +764,11 @@ static const TypeInfo pnv_quad_infos[] = {
+         .name = PNV_QUAD_TYPE_NAME("power10"),
+         .class_init = pnv_quad_power10_class_init,
+     },
++    {
++        .parent = TYPE_PNV_QUAD,
++        .name = PNV_QUAD_TYPE_NAME("power11"),
++        .class_init = pnv_quad_power11_class_init,
++    },
+ };
  
- enum tod_state {
-     tod_error = 0,
+ DEFINE_TYPES(pnv_quad_infos);
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index d8fca079f2fe..f0002627bcab 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -33,6 +33,7 @@ typedef struct PnvChip PnvChip;
+ typedef struct Pnv8Chip Pnv8Chip;
+ typedef struct Pnv9Chip Pnv9Chip;
+ typedef struct Pnv10Chip Pnv10Chip;
++typedef struct Pnv10Chip Pnv11Chip;
+ 
+ #define PNV_CHIP_TYPE_SUFFIX "-" TYPE_PNV_CHIP
+ #define PNV_CHIP_TYPE_NAME(cpu_model) cpu_model PNV_CHIP_TYPE_SUFFIX
+@@ -57,6 +58,10 @@ DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER9,
+ DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER10,
+                          TYPE_PNV_CHIP_POWER10)
+ 
++#define TYPE_PNV_CHIP_POWER11 PNV_CHIP_TYPE_NAME("power11_v2.0")
++DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER11,
++                         TYPE_PNV_CHIP_POWER11)
++
+ PnvCore *pnv_chip_find_core(PnvChip *chip, uint32_t core_id);
+ PowerPCCPU *pnv_chip_find_cpu(PnvChip *chip, uint32_t pir);
+ 
+@@ -252,4 +257,19 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
+ #define PNV10_HOMER_BASE(chip)                                           \
+     (0x300ffd800000ll + ((uint64_t)(chip)->chip_id) * PNV_HOMER_SIZE)
+ 
++/* Power11 */
++#define PNV11_XSCOM_SIZE            PNV10_XSCOM_SIZE
++#define PNV11_XSCOM_BASE(chip)      PNV10_XSCOM_BASE(chip)
++
++#define PNV11_LPCM_SIZE             PNV10_LPCM_SIZE
++#define PNV11_LPCM_BASE(chip)       PNV10_LPCM_BASE(chip)
++
++#define PNV11_PSIHB_ESB_SIZE        PNV10_PSIHB_ESB_SIZE
++#define PNV11_PSIHB_ESB_BASE(chip)  PNV10_PSIHB_ESB_BASE(chip)
++
++#define PNV11_PSIHB_SIZE            PNV10_PSIHB_SIZE
++#define PNV11_PSIHB_BASE(chip)      PNV10_PSIHB_BASE(chip)
++
++#define PNV11_OCC_SENSOR_BASE(chip) PNV10_OCC_SENSOR_BASE(chip)
++
+ #endif /* PPC_PNV_H */
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index 24ce37a9c8e4..6bd930f8b439 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -141,6 +141,13 @@ struct Pnv10Chip {
+ #define PNV10_PIR2CHIP(pir)      (((pir) >> 8) & 0x7f)
+ #define PNV10_PIR2THREAD(pir)    (((pir) & 0x7f))
+ 
++#define TYPE_PNV11_CHIP "pnv11-chip"
++DECLARE_INSTANCE_CHECKER(Pnv11Chip, PNV11_CHIP,
++                         TYPE_PNV11_CHIP)
++
++/* Power11 core is same as Power10 */
++typedef struct Pnv10Chip Pnv11Chip;
++
+ struct PnvChipClass {
+     /*< private >*/
+     SysBusDeviceClass parent_class;
+diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
+index a927aea1c09c..09e70ed23211 100644
+--- a/include/hw/ppc/pnv_xscom.h
++++ b/include/hw/ppc/pnv_xscom.h
+@@ -207,6 +207,55 @@ struct PnvXScomInterfaceClass {
+ #define PNV10_XSCOM_PIB_SPIC_BASE 0xc0000
+ #define PNV10_XSCOM_PIB_SPIC_SIZE 0x20
+ 
++/*
++ * Power11 core is same as Power10
++ */
++#define PNV11_XSCOM_EC_BASE(core)  PNV10_XSCOM_EC_BASE(core)
++
++#define PNV11_XSCOM_ADU_BASE       PNV10_XSCOM_ADU_BASE
++#define PNV11_XSCOM_ADU_SIZE       PNV10_XSCOM_ADU_SIZE
++
++#define PNV11_XSCOM_QME_BASE(core) PNV10_XSCOM_QME_BASE(core)
++
++#define PNV11_XSCOM_EQ_BASE(core)  PNV10_XSCOM_EQ_BASE(core)
++
++#define PNV11_XSCOM_PSIHB_BASE     PNV10_XSCOM_PSIHB_BASE
++#define PNV11_XSCOM_PSIHB_SIZE     PNV10_XSCOM_PSIHB_SIZE
++
++#define PNV11_XSCOM_I2CM_BASE      PNV10_XSCOM_I2CM_BASE
++#define PNV11_XSCOM_I2CM_SIZE      PNV10_XSCOM_I2CM_SIZE
++
++#define PNV11_XSCOM_CHIPTOD_BASE   PNV10_XSCOM_CHIPTOD_BASE
++#define PNV11_XSCOM_CHIPTOD_SIZE   PNV10_XSCOM_CHIPTOD_SIZE
++
++#define PNV11_XSCOM_OCC_BASE       PNV10_XSCOM_OCC_BASE
++#define PNV11_XSCOM_OCC_SIZE       PNV10_XSCOM_OCC_SIZE
++
++#define PNV11_XSCOM_SBE_CTRL_BASE  PNV10_XSCOM_SBE_CTRL_BASE
++#define PNV11_XSCOM_SBE_CTRL_SIZE  PNV10_XSCOM_SBE_CTRL_SIZE
++
++#define PNV11_XSCOM_SBE_MBOX_BASE  PNV10_XSCOM_SBE_MBOX_BASE
++#define PNV11_XSCOM_SBE_MBOX_SIZE  PNV10_XSCOM_SBE_MBOX_SIZE
++
++#define PNV11_XSCOM_PBA_BASE       PNV10_XSCOM_PBA_BASE
++#define PNV11_XSCOM_PBA_SIZE       PNV10_XSCOM_PBA_SIZE
++
++#define PNV11_XSCOM_XIVE2_BASE     PNV10_XSCOM_XIVE2_BASE
++#define PNV11_XSCOM_XIVE2_SIZE     PNV10_XSCOM_XIVE2_SIZE
++
++#define PNV11_XSCOM_N1_CHIPLET_CTRL_REGS_BASE  \
++    PNV10_XSCOM_N1_CHIPLET_CTRL_REGS_BASE
++#define PNV11_XSCOM_CHIPLET_CTRL_REGS_SIZE   PNV10_XSCOM_CHIPLET_CTRL_REGS_SIZE
++
++#define PNV11_XSCOM_N1_PB_SCOM_EQ_BASE  PNV10_XSCOM_N1_PB_SCOM_EQ_BASE
++#define PNV11_XSCOM_N1_PB_SCOM_EQ_SIZE  PNV10_XSCOM_N1_PB_SCOM_EQ_SIZE
++
++#define PNV11_XSCOM_N1_PB_SCOM_ES_BASE  PNV10_XSCOM_N1_PB_SCOM_ES_BASE
++#define PNV11_XSCOM_N1_PB_SCOM_ES_SIZE  PNV10_XSCOM_N1_PB_SCOM_ES_SIZE
++
++#define PNV11_XSCOM_PIB_SPIC_BASE  PNV10_XSCOM_PIB_SPIC_BASE
++#define PNV11_XSCOM_PIB_SPIC_SIZE  PNV10_XSCOM_PIB_SPIC_SIZE
++
+ void pnv_xscom_init(PnvChip *chip, uint64_t size, hwaddr addr);
+ int pnv_dt_xscom(PnvChip *chip, void *fdt, int root_offset,
+                  uint64_t xscom_base, uint64_t xscom_size,
 -- 
 2.49.0
 
