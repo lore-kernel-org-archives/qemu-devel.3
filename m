@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F57DC36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C6DC3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx87j-0005j2-Pc; Tue, 25 Mar 2025 13:31:35 -0400
+	id 1tx8A3-0007NF-NW; Tue, 25 Mar 2025 13:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx87T-0005fk-O9; Tue, 25 Mar 2025 13:31:30 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1tx8A0-0007Mo-9n; Tue, 25 Mar 2025 13:33:56 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx87Q-0001Dl-04; Tue, 25 Mar 2025 13:31:17 -0400
+ id 1tx89y-0001VB-1E; Tue, 25 Mar 2025 13:33:55 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMcQn3MxXz4xN6;
- Wed, 26 Mar 2025 04:31:13 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMcTp2nndz4xN6;
+ Wed, 26 Mar 2025 04:33:50 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMcQk0BgNz4x1t;
- Wed, 26 Mar 2025 04:31:09 +1100 (AEDT)
-Message-ID: <d3c84044-390b-4ba5-8cc8-1d21b70beee9@kaod.org>
-Date: Tue, 25 Mar 2025 18:31:07 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMcTk6yWBz4x1t;
+ Wed, 26 Mar 2025 04:33:46 +1100 (AEDT)
+Message-ID: <5e3c1b62-2a1c-4e99-8842-d5a06a80d2f1@kaod.org>
+Date: Tue, 25 Mar 2025 18:33:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/13] aspeed: ast27x0: Correct hex notation for device
- addresses
+Subject: Re: [PATCH v2 00/13] Introduce AST27x0 multi-SoC machine
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -41,7 +40,6 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20250313054020.2583556-1-steven_lee@aspeedtech.com>
- <20250313054020.2583556-3-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,16 +84,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250313054020.2583556-3-steven_lee@aspeedtech.com>
+In-Reply-To: <20250313054020.2583556-1-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=TX69=WM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,17 +111,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Steven,
+
 On 3/13/25 06:40, Steven Lee wrote:
-> Corrected the hexadecimal notation for several device addresses in the
-> aspeed_soc_ast2700_memmap array by changing the uppercase 'X' to
-> lowercase 'x'.
+> This patch series introduces full core support for the AST27x0 SoC, along with necessary updates to the ASPEED AST27x0 SOC.
+> The AST27x0 SoC is a new family of ASPEED SoCs featuring 4 Cortex-A35 cores and 2 Cortex-M4 cores.
 > 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-> Change-Id: I45426e18ea8e68d7ccdf9b60c4ea235c4da33cc3
+> v1:
+>    - Map unimplemented devices in SoC memory
+>    - Intruduce AST2700 CM4 SoC
+>    - Introduce AST27x0FC Machine
+> 
+> v2:
+>    - Remove unused functions
+>    - Correct hex notation for device addresses in AST27x0 SoC
+>    - Add AST2700 SSP INTC and AST2700 TSP INTC
+>    - Split AST27x0 CM4 SoC to AST27x0 SSP SoC and AST27x0 TSP SoC
+>    - Add AST27x0 A0 SSP SoC and AST27x0 A1 SSP SoC
+>    - Add AST27x0 A0 TSP SoC and AST27x0 A1 TSP SoC
+>    - Add functional tests for AST2700FC A0 and AST2700FC A1
+>    - Add Documentation for AST2700FC
 
+Please try to label all patches as v2. See 'git format-patch -v ...'
 
+> Steven Lee (13):
+>    aspeed: ast27x0: Map unimplemented devices in SoC memory
+>    aspeed: ast27x0: Correct hex notation for device addresses
+>    hw/intc/aspeed: Add support for AST2700 SSP INTC
+>    hw/intc/aspeed: Add support for AST2700 TSP INTC
+>    hw/arm/aspeed_ast27x0-ssp: Introduce AST27x0 A0 SSP SoC
+>    hw/arm/aspeed_ast27x0-ssp: Introduce AST27x0 A1 SSP SoC
+>    hw/arm/aspeed_ast27x0-tsp: Introduce AST27x0 A0 TSP SoC
+>    hw/arm/aspeed_ast27x0-tsp: Introduce AST27x0 A1 TSP SoC
+>    hw/arm: Introduce ASPEED AST2700 a0 full core machine
+>    hw/arm: Introduce ASPEED AST2700 a1 full core machine
+>    tests/function/aspeed: Add functional test for AST2700FC
+>    tests/function/aspeed: Add functional test for AST2700FC A1
+>    docs: Add support for ast2700fc machine
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Do we need to add support for the A0 and A1 ? Would A1 be enough ?
+
 
 Thanks,
 
@@ -131,54 +159,21 @@ C.
 
 
 
-> ---
->   hw/arm/aspeed_ast27x0.c | 28 ++++++++++++++-------------->   1 file changed, 14 insertions(+), 14 deletions(-)
+>   docs/system/arm/aspeed.rst                 |  61 ++-
+>   include/hw/arm/aspeed_soc.h                |  32 ++
+>   include/hw/intc/aspeed_intc.h              |   5 +
+>   hw/arm/aspeed_ast27x0-fc.c                 | 340 +++++++++++++++++
+>   hw/arm/aspeed_ast27x0-ssp.c                | 400 +++++++++++++++++++
+>   hw/arm/aspeed_ast27x0-tsp.c                | 400 +++++++++++++++++++
+>   hw/arm/aspeed_ast27x0.c                    |  79 +++-
+>   hw/intc/aspeed_intc.c                      | 424 +++++++++++++++++++++
+>   hw/arm/meson.build                         |   6 +-
+>   tests/functional/test_aarch64_ast2700fc.py | 161 ++++++++
+>   10 files changed, 1884 insertions(+), 24 deletions(-)
+>   create mode 100644 hw/arm/aspeed_ast27x0-fc.c
+>   create mode 100644 hw/arm/aspeed_ast27x0-ssp.c
+>   create mode 100644 hw/arm/aspeed_ast27x0-tsp.c
+>   create mode 100755 tests/functional/test_aarch64_ast2700fc.py
 > 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index a3fe2582f8..b4e4c5e4b6 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -43,7 +43,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
->       [ASPEED_DEV_RTC]       =  0x12C0F000,
->       [ASPEED_DEV_TIMER1]    =  0x12C10000,
->       [ASPEED_DEV_SLI]       =  0x12C17000,
-> -    [ASPEED_DEV_UART4]     =  0X12C1A000,
-> +    [ASPEED_DEV_UART4]     =  0x12C1A000,
->       [ASPEED_DEV_IOMEM1]    =  0x14000000,
->       [ASPEED_DEV_FMC]       =  0x14000000,
->       [ASPEED_DEV_SPI0]      =  0x14010000,
-> @@ -62,19 +62,19 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
->       [ASPEED_DEV_I2C]       =  0x14C0F000,
->       [ASPEED_DEV_INTCIO]    =  0x14C18000,
->       [ASPEED_DEV_SLIIO]     =  0x14C1E000,
-> -    [ASPEED_DEV_VUART]     =  0X14C30000,
-> -    [ASPEED_DEV_UART0]     =  0X14C33000,
-> -    [ASPEED_DEV_UART1]     =  0X14C33100,
-> -    [ASPEED_DEV_UART2]     =  0X14C33200,
-> -    [ASPEED_DEV_UART3]     =  0X14C33300,
-> -    [ASPEED_DEV_UART5]     =  0X14C33400,
-> -    [ASPEED_DEV_UART6]     =  0X14C33500,
-> -    [ASPEED_DEV_UART7]     =  0X14C33600,
-> -    [ASPEED_DEV_UART8]     =  0X14C33700,
-> -    [ASPEED_DEV_UART9]     =  0X14C33800,
-> -    [ASPEED_DEV_UART10]    =  0X14C33900,
-> -    [ASPEED_DEV_UART11]    =  0X14C33A00,
-> -    [ASPEED_DEV_UART12]    =  0X14C33B00,
-> +    [ASPEED_DEV_VUART]     =  0x14C30000,
-> +    [ASPEED_DEV_UART0]     =  0x14C33000,
-> +    [ASPEED_DEV_UART1]     =  0x14C33100,
-> +    [ASPEED_DEV_UART2]     =  0x14C33200,
-> +    [ASPEED_DEV_UART3]     =  0x14C33300,
-> +    [ASPEED_DEV_UART5]     =  0x14C33400,
-> +    [ASPEED_DEV_UART6]     =  0x14C33500,
-> +    [ASPEED_DEV_UART7]     =  0x14C33600,
-> +    [ASPEED_DEV_UART8]     =  0x14C33700,
-> +    [ASPEED_DEV_UART9]     =  0x14C33800,
-> +    [ASPEED_DEV_UART10]    =  0x14C33900,
-> +    [ASPEED_DEV_UART11]    =  0x14C33A00,
-> +    [ASPEED_DEV_UART12]    =  0x14C33B00,
->       [ASPEED_DEV_WDT]       =  0x14C37000,
->       [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
->       [ASPEED_DEV_LTPI]      =  0x300000000,
 
 
