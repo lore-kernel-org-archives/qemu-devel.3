@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8823EC36002
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 00:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2229C36002
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 00:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twsNq-0001aa-Cb; Mon, 24 Mar 2025 20:43:10 -0400
+	id 1twsXD-0002mL-2W; Mon, 24 Mar 2025 20:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twsNp-0001aP-5K
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 20:43:09 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1twsXA-0002lp-5A
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 20:52:48 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twsNm-0001Cc-Pk
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 20:43:08 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-301e05b90caso7614305a91.2
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 17:43:06 -0700 (PDT)
+ id 1twsX8-00029f-81
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 20:52:47 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-30155bbbed9so6539970a91.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 17:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742863384; x=1743468184; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1742863964; x=1743468764; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yV4JPWtUvhZxf9xmsbEeZlN8aocOou+iTwnREPKh/nU=;
- b=lttevpZcyQoVrWN/71NUyZLSm7w5igJz/ERvX9uyg6tkaqO8sapv5PQ1oNNRZ3oO68
- 5J25z94AzZ9kvVN+Pbwg1CGFHfzscfAZkybqpWTMA7Sd042C3seCW6yKm76rt7W82brc
- pz6v3VfjPYvkWZ+4mR4Y+eKXiSECopY40dsfNjecCNkLBnvZBq54UkErk80vMtnFSgMN
- K4nCuaWFAEOsF1X1JTcz7nZ8g/ebEieUPXZ4kh9Wi2eqfv2m7fnEMVzrYU42H4ZW9ACF
- uNpJwUO6YwJQi4YGEFImSbd/6npHw6q8IETGpLhgoI3b+unQx9mZ0lTbZTbSoRyim8wV
- pzEQ==
+ bh=BE/NCzDcfcW/KkqxAOSGBRp4qdENKnqvok87Fmjw3sw=;
+ b=InXQAarI0J2o8jygm35nKPKvf1PbTTQZwHWjQ2nCsZC/i8PP4JU8D7m4kpoWjmmkRm
+ 8wPNQOEW6mc/xdnMnxk2fHCKNCb5y+0GxZuq1abPkMz1HlAdqDieYyeX+b26w1NvhtUT
+ kuyzengvTDk8SsI378kWkx+3dgypx13bZRAezL6iUfTMiYlM0bNHj1MVxG/WFk7V91JB
+ 6sQYWu4b8EV1nXmg3/AHHEMp2epajrPsrr4OK2yVFObES2exlhiYziov/GPRRbsQJXnZ
+ ArHDrf3FK4XPf2AfXvYuMc2nT0mFX8V5mvmWX3tb7ralmQpKdMDZoQ//4rvsPLmVC51E
+ 9R6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742863384; x=1743468184;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1742863964; x=1743468764;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yV4JPWtUvhZxf9xmsbEeZlN8aocOou+iTwnREPKh/nU=;
- b=OKnxm+Wg18E6cpJHTBLAPLakUrlIWwX2MVeOut7SEG9/6bGJ+hjwqPujM4rGczKzu5
- 8qkVOGDW/X5TYCp9nAB0k0EL3nSKmddAaoLredLo/+LH0skFSVJIL5v2X5M2OZiesaJq
- J2Eb9I+iJ5XpWlEUQZZ/PCU87sK0Sh9nUO085hlO4SypcNac1KfWrEbKv+5kVj9DSFg5
- LngOdxHIvX8FWfi0dVNN+xRkuuYRzE7bISk63V/rNcWZX1008mdyK42bm8SUid3oi54H
- cwREcRnA6RU3eWaFcmemfcsl7RJ98J5EKzgODIeaVxTweDlfxX+nMw6h2xEWYBAnn1pu
- GhVw==
+ bh=BE/NCzDcfcW/KkqxAOSGBRp4qdENKnqvok87Fmjw3sw=;
+ b=HPusDPureZ/ab/sOP1xPB/tSXXLMeHqKRxF5iMUqwjfn433+5XRaAa9VN+cXdnaL+z
+ UDgwnL8GL4Yuf0PoNboWeqskRYD+6ogW0/efGS6V+64yE4Q9UdUuUT15HVHinqPIfa9x
+ JMkADDH0IqK/L5BdBpv3Hd4Kve/6S+wl0Lz3LJ2nyM9gWdjgqYb5evg7JZ+KcSxvkudH
+ FsqP+oxltdoQRNJ4f8v2fhInCUW7QG6YLd9Mi3xL98f8+J4mWa9ebGMTn0Wb0k3cORvO
+ JNcH80rm0M9Bql4LeFN/X3pugzBoeR1JdhrqtIvMXkNZoJGdNwX+pvVwhrazH+Egqrr5
+ ftOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIHMUBYfbWm6NT7PEDVZFYCflue8SmYGbU8vyiMWrxCr1okMHoPHBi+Fz7VINNwqDzR+eIfHZVy2ht@nongnu.org
-X-Gm-Message-State: AOJu0YwW9bTovshP2X870HY47j8XS4E2lUB0R7sMAFUq0z39vWy+d2mk
- DZovqTChC5Tthpu7NA36oowaiydZuRkIjZfoj01fcPbGE7Jfedw24ZNB1qBre9Q=
-X-Gm-Gg: ASbGnctL7yI8e0bFJd0Ypjd2WgGXstHN+MRprWtRCCB/CLsi6CRbmNQgunnUDu8tZOP
- IhkVUT4jBW7uWXjgqr5WgTJPHDp2fIwqSCkilyylUMbYOOp9ONQt7sQcstCj+a0QpbmWJe1tlWO
- zMoBoOqit+mBeEU7qI8R1BqYxdY4nAg6Ssd7cX8FB027nyMe22afMYyk0uHEmMb0vrUpaU9GUAq
- 1MNy83L6GGu3b1qTbE+K5RSeqq7R6k3WKk5lJjRLa51ayjQ6m2d6bRKMlvx1twONU9wbNqixvi1
- sGykKS9rF/LNd7QL5N6f8/txPmzYnEMRQctLj9v2/gT5ZHLV5J1UKnl2YA==
-X-Google-Smtp-Source: AGHT+IF/sWBDQGX8cM79wEDOEcNbIPKRcNAKyJJbyy7oSqEo+JTRg7hQAsSjAWxEXKsc6Bu0VLpZWQ==
-X-Received: by 2002:a17:90b:17c7:b0:2f5:88bb:12f with SMTP id
- 98e67ed59e1d1-3030fea9355mr19668987a91.21.1742863384108; 
- Mon, 24 Mar 2025 17:43:04 -0700 (PDT)
+ AJvYcCUUKuPESc+heGG45ksORtMifNqNjd1iR06ZTnDjRg2WDYkPql2uqRHZdVZ9W6Ht89WRrdQG+e2VXSIt@nongnu.org
+X-Gm-Message-State: AOJu0YzaNtwyjZasUHWHiuJRpxkxPuwFo7M0jePiMKgdASkBh0Utv0ZX
+ HipJwogBs9LtNu+Z14MLf+VLCH+YaDagbg4VANMid/Zj6RRzaQ2qlSK+fL5VBh0=
+X-Gm-Gg: ASbGncvRR1xMgLk064RHwVY2GmV4pAiV2ELYaPYahX6g8J0nf4RFyAIZ1T6+bUuzit7
+ juTLnhMazYjCGglOrpyq6cjIBTW81kBh6xWfL74bSm3iQFn+VPW3Ak1KZPB0BG/5fNc5Q44HNMS
+ ZQDxV+EEbrSI0SOVwc8HrM+O0JN6S9j1exsswwbJw+zcPOaFxWpqOI3ksMUfR3Plre8zxya/Mjb
+ G6rJl6FZSOmQ7ltQusZ7JhCy2TmQAXcGpaQj1Om1SjgpzUMu9MqyjXlTmc//3sSIyNs4LGTgsBj
+ xxNWMrKWFyuJUMlJH8qDIuXAKWSJeKNMWCimh8r/FrIFBAd9WlQu5eMnBg==
+X-Google-Smtp-Source: AGHT+IHlW8Ikl6Rzech/fbv2H0rEKRkseQHB2cG2DNd6RXNuskMKTEOfcaaajMQ+zUu98iMYqVTBxw==
+X-Received: by 2002:a17:90b:280b:b0:2ee:d824:b559 with SMTP id
+ 98e67ed59e1d1-3030fef09b9mr22048027a91.28.1742863964141; 
+ Mon, 24 Mar 2025 17:52:44 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3030f807533sm8867293a91.49.2025.03.24.17.43.03
+ 98e67ed59e1d1-301bf58c243sm12927453a91.16.2025.03.24.17.52.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Mar 2025 17:43:03 -0700 (PDT)
-Message-ID: <2fa24813-733d-461a-bf57-45e6fc7edbe5@linaro.org>
-Date: Mon, 24 Mar 2025 17:43:02 -0700
+ Mon, 24 Mar 2025 17:52:43 -0700 (PDT)
+Message-ID: <7124e6ea-2843-4e39-a577-915d7bf16df3@linaro.org>
+Date: Mon, 24 Mar 2025 17:52:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/17] hw/core/cpu: Use size_t for memory_rw_debug len
- argument
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mrolnik@gmail.com, philmd@linaro.org
-References: <20250323173730.3213964-1-richard.henderson@linaro.org>
- <20250323173730.3213964-2-richard.henderson@linaro.org>
+Subject: Re: [PATCH 02/17] target/avr: Fix buffer read in avr_print_insn
 Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mrolnik@gmail.com, philmd@linaro.org, qemu-stable@nongnu.org
+References: <20250323173730.3213964-1-richard.henderson@linaro.org>
+ <20250323173730.3213964-3-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250323173730.3213964-2-richard.henderson@linaro.org>
+In-Reply-To: <20250323173730.3213964-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,54 +104,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/23/25 10:37, Richard Henderson wrote:
-> Match the prototype of cpu_memory_rw_debug().
+> Do not unconditionally attempt to read 4 bytes, as there
+> may only be 2 bytes remaining in the translator cache.
 > 
+> Cc: qemu-stable@nongnu.org
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/hw/core/cpu.h     | 2 +-
->   target/sparc/cpu.h        | 2 +-
->   target/sparc/mmu_helper.c | 2 +-
->   3 files changed, 3 insertions(+), 3 deletions(-)
+>   target/avr/disas.c | 21 ++++++++++++++-------
+>   1 file changed, 14 insertions(+), 7 deletions(-)
 > 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 5d11d26556..abd8764e83 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -154,7 +154,7 @@ struct CPUClass {
+> diff --git a/target/avr/disas.c b/target/avr/disas.c
+> index b7689e8d7c..d341030174 100644
+> --- a/target/avr/disas.c
+> +++ b/target/avr/disas.c
+> @@ -68,28 +68,35 @@ static bool decode_insn(DisasContext *ctx, uint16_t insn);
 >   
->       int (*mmu_index)(CPUState *cpu, bool ifetch);
->       int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
-> -                           uint8_t *buf, int len, bool is_write);
-> +                           uint8_t *buf, size_t len, bool is_write);
->       void (*dump_state)(CPUState *cpu, FILE *, int flags);
->       void (*query_cpu_fast)(CPUState *cpu, CpuInfoFast *value);
->       int64_t (*get_arch_id)(CPUState *cpu);
-> diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-> index 462bcb6c0e..68f8c21e7c 100644
-> --- a/target/sparc/cpu.h
-> +++ b/target/sparc/cpu.h
-> @@ -604,7 +604,7 @@ void dump_mmu(CPUSPARCState *env);
->   
->   #if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
->   int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-> -                              uint8_t *buf, int len, bool is_write);
-> +                              uint8_t *buf, size_t len, bool is_write);
->   #endif
->   
->   /* translate.c */
-> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-> index 7548d01777..3821cd91ec 100644
-> --- a/target/sparc/mmu_helper.c
-> +++ b/target/sparc/mmu_helper.c
-> @@ -389,7 +389,7 @@ void dump_mmu(CPUSPARCState *env)
->    * that the sparc ABI is followed.
->    */
->   int sparc_cpu_memory_rw_debug(CPUState *cs, vaddr address,
-> -                              uint8_t *buf, int len, bool is_write)
-> +                              uint8_t *buf, size_t len, bool is_write)
+>   int avr_print_insn(bfd_vma addr, disassemble_info *info)
 >   {
->       CPUSPARCState *env = cpu_env(cs);
->       target_ulong addr = address;
+> -    DisasContext ctx;
+> +    DisasContext ctx = { info };
+>       DisasContext *pctx = &ctx;
+>       bfd_byte buffer[4];
+>       uint16_t insn;
+>       int status;
+>   
+> -    ctx.info = info;
+> -
+> -    status = info->read_memory_func(addr, buffer, 4, info);
+> +    status = info->read_memory_func(addr, buffer, 2, info);
+>       if (status != 0) {
+>           info->memory_error_func(status, addr, info);
+>           return -1;
+>       }
+>       insn = bfd_getl16(buffer);
+> -    ctx.next_word = bfd_getl16(buffer + 2);
+> -    ctx.next_word_used = false;
+> +
+> +    status = info->read_memory_func(addr + 2, buffer + 2, 2, info);
+> +    if (status == 0) {
+> +        ctx.next_word = bfd_getl16(buffer + 2);
+> +    }
+>   
+>       if (!decode_insn(&ctx, insn)) {
+>           output(".db", "0x%02x, 0x%02x", buffer[0], buffer[1]);
+>       }
+>   
+> -    return ctx.next_word_used ? 4 : 2;
+> +    if (!ctx.next_word_used) {
+> +        return 2;
+> +    } else if (status == 0) {
+> +        return 4;
+> +    }
+> +    info->memory_error_func(status, addr + 2, info);
+> +    return -1;
+>   }
+>   
+>   
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
