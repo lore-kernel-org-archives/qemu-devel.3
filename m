@@ -4,71 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BB28C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 07:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92674C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 08:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twz68-0006Qo-VR; Tue, 25 Mar 2025 03:53:21 -0400
+	id 1twzDg-0001Bl-U0; Tue, 25 Mar 2025 04:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twz67-0006QX-5e
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 03:53:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
+ id 1twzDe-0001A1-3o; Tue, 25 Mar 2025 04:01:06 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1twz65-0001QF-14
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 03:53:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742889194;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ih4ZCts7KdtmIGttLE/z31TncmIqkNyg5qead0jt7NQ=;
- b=hD5+G2XKmRkRPafSAA5bQMliSm0dn1d+ob46FHv1bkloD1WAdBY22m07x1NsOEiDqeTX0t
- XYvv4VyzQQZe2DuftS71P+WbljZRSf4/PPWeoSSJWGKXE3UzK1M5sctR1CwD0fNgHgN+XT
- 8JIYnWRyhRtUtXmajmEPAoCzhYUIdho=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-Qe5ZBKyhNjmRbGK_JOboPw-1; Tue,
- 25 Mar 2025 03:52:59 -0400
-X-MC-Unique: Qe5ZBKyhNjmRbGK_JOboPw-1
-X-Mimecast-MFC-AGG-ID: Qe5ZBKyhNjmRbGK_JOboPw_1742889179
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0B8581800267; Tue, 25 Mar 2025 07:52:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71788180B492; Tue, 25 Mar 2025 07:52:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 66D8C21E6773; Tue, 25 Mar 2025 08:52:53 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 4/5] python: add qapi static analysis tests
-In-Reply-To: <20250321222347.299121-5-jsnow@redhat.com> (John Snow's message
- of "Fri, 21 Mar 2025 18:23:46 -0400")
-References: <20250321222347.299121-1-jsnow@redhat.com>
- <20250321222347.299121-5-jsnow@redhat.com>
-Date: Tue, 25 Mar 2025 08:52:53 +0100
-Message-ID: <87jz8dpmwa.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
+ id 1twzDX-0002UQ-QZ; Tue, 25 Mar 2025 04:01:05 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4ZMMkW0FlHz1FNFy;
+ Tue, 25 Mar 2025 15:58:59 +0800 (CST)
+Received: from kwepemd500011.china.huawei.com (unknown [7.221.188.45])
+ by mail.maildlp.com (Postfix) with ESMTPS id D7ABC1A0188;
+ Tue, 25 Mar 2025 16:00:45 +0800 (CST)
+Received: from kwepemg100001.china.huawei.com (7.202.181.18) by
+ kwepemd500011.china.huawei.com (7.221.188.45) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Tue, 25 Mar 2025 16:00:45 +0800
+Received: from kwepemg100001.china.huawei.com ([7.202.181.18]) by
+ kwepemg100001.china.huawei.com ([7.202.181.18]) with mapi id 15.02.1544.011;
+ Tue, 25 Mar 2025 16:00:45 +0800
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, lex Williamson
+ <alex.williamson@redhat.com>
+CC: "Wangzhou (B)" <wangzhou1@hisilicon.com>, liuyonglong
+ <liuyonglong@huawei.com>, jiangkunkun <jiangkunkun@huawei.com>, "libai (G)"
+ <libai12@huawei.com>, tangchengchang <tangchengchang@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+Subject: Questions about vfio-pci
+Thread-Topic: Questions about vfio-pci
+Thread-Index: AdudW06L4raav9tJRXuEMJF2Lkz38w==
+Date: Tue, 25 Mar 2025 08:00:45 +0000
+Message-ID: <f82e1e01c21e4a75a9a78315c08449ea@huawei.com>
+Accept-Language: en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.67.121.183]
+Content-Type: multipart/alternative;
+ boundary="_000_f82e1e01c21e4a75a9a78315c08449eahuaweicom_"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=45.249.212.191;
+ envelope-from=yangjinqian1@huawei.com; helo=szxga05-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,195 +71,263 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  yangjinqian <yangjinqian1@huawei.com>
+From:  yangjinqian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+--_000_f82e1e01c21e4a75a9a78315c08449eahuaweicom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-> Update the python tests to also check qapi. No idea why I didn't do this
-> before. I guess I was counting on moving it under python/ and then just
-> forgot after that was NACKed. Oops, this turns out to be really easy.
+Hi,
+
+I'm observing intermittent failures when enabling the HNS3 network port in =
+VM using
+QEMU with the mainline kernel.
+
+HNS3 drive in kernel:
+static int hns3_nic_net_up(struct net_device *netdev)
+{
+......
+       /* enable the vectors */
+       for (i =3D 0; i < vector_num; i++)
+{
+napi_enable(napi);
+             enable_irq(vector_irq);
+             hns3_mask_vector_irq(tqp_vector, 1);
+       }
+......
+}
+
+When the VM has two vCPUs, the guest HNS3 driver performs two sequential
+enable_irq operations (vector_num=3D2). The enable_irq will trap into KVM f=
+or interrupt
+configuration and exit to QEMU for PCI device emulation. When emulating int=
+errupt
+enabling in QEMU, vfio_[intx/msi/msix]_enable calls vfio_disable_interrupts=
+ to disable
+all interrupts on the vdev.
+
+The questions are:
+
+1.      Why does the vfio-pci disable all interrupts of the device before e=
+nabling irqs?
+
+2.      Is this a normal vfio-pci process or a problem?
+
+Thanks
+Jinqian
+
+
+--_000_f82e1e01c21e4a75a9a78315c08449eahuaweicom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:dt=3D"uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns:m=3D"http://sc=
+hemas.microsoft.com/office/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-=
+html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-> flake8, isort and mypy use the tool configuration from the existing
-> python directory (in setup.cfg). pylint continues to use the special
-> configuration located in scripts/qapi/ - that configuration is more
-> permissive. If we wish to unify the two configurations, that's a
-> separate series and a discussion for a later date.
->
-> As a result of this patch, one would be able to run any of the following
-> tests locally from the qemu.git/python directory and have it cover the
-> scripts/qapi/ module as well. All of the following options run the
-> python tests, static analysis tests, and linter checks; but with
-> different combinations of dependencies and interpreters.
->
-> - "make check-minreqs" Run tests specifically under our oldest supported
->   Python and our oldest supported dependencies. This is the test that
->   runs on GitLab as "check-python-minreqs". This helps ensure we do not
->   regress support on older platforms accidentally.
->
-> - "make check-tox" Runs the tests under the newest supported
->   dependencies, but under each supported version of Python in turn. At
->   time of writing, this is Python 3.8 to 3.13 inclusive. This test helps
->   catch bleeding-edge problems before they become problems for developer
->   workstations. This is the GitLab test "check-python-tox" and is an
->   optionally run, may-fail test due to the unpredictable nature of new
->   dependencies being released into the ecosystem that may cause
->   regressions.
->
-> - "make check-dev" Runs the tests under the newest supported
->   dependencies using whatever version of Python the user happens to have
->   installed. This is a quick convenience check that does not map to any
->   particular GitLab test.
->
-> (Note! check-dev may be busted on Fedora 41 and bleeding edge versions
-> of setuptools. That's unrelated to this patch and I'll address it
-> separately and soon. Thank you for your patience, --mgmt)
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Segoe UI";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:DengXian;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	font-size:10.5pt;
+	font-family:DengXian;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:DengXian;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:DengXian;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:1746416320;
+	mso-list-type:hybrid;
+	mso-list-template-ids:368977896 -2117812486 67698713 67698715 67698703 676=
+98713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:18.0pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%2\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:42.0pt;
+	text-indent:-21.0pt;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:63.0pt;
+	text-indent:-21.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:84.0pt;
+	text-indent:-21.0pt;}
+@list l0:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%5\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:105.0pt;
+	text-indent:-21.0pt;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:126.0pt;
+	text-indent:-21.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:147.0pt;
+	text-indent:-21.0pt;}
+@list l0:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%8\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-21.0pt;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:189.0pt;
+	text-indent:-21.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-CN" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word;text-justify-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;Sego=
+e UI&quot;,sans-serif;color:black;background:#FCFCFC">I'm observing intermi=
+ttent failures when enabling the HNS3 network port in VM using</span><span =
+lang=3D"EN-US" style=3D"font-family:&quot;Segoe UI&quot;,sans-serif;backgro=
+und:#FCFCFC"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;Sego=
+e UI&quot;,sans-serif;color:black;background:#FCFCFC">QEMU with the mainlin=
+e kernel.</span><span lang=3D"EN-US" style=3D"font-family:&quot;Segoe UI&qu=
+ot;,sans-serif;background:#FCFCFC"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">HNS3 drive in kernel:<o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">static int hns3_nic_net_up(stru=
+ct net_device *netdev)<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">{<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">..=
+....<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; /* enable the vectors */<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; for (i =3D 0; i &lt; vector_num; i&#43;&#43;)<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">{<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:21.0pt;text-indent:21.0pt"><spa=
+n lang=3D"EN-US">napi_enable(napi);<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; enable_irq(vector_irq);<o:p></o:p></sp=
+an></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hns3_mask_vector_irq(tqp_vector, 1);<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; }<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">..=
+....<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">}<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">When the VM has two vCPUs, the =
+guest HNS3 driver performs two sequential<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">enable_irq operations (vector_n=
+um=3D2). The enable_irq will trap into KVM for interrupt<o:p></o:p></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">configuration and exit to QEMU =
+for PCI device emulation. When emulating interrupt<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">enabling in QEMU, vfio_[intx/ms=
+i/msix]_enable calls vfio_disable_interrupts to disable<o:p></o:p></span></=
+p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">all interrupts on the vdev.<o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The questions are:<o:p></o:p></=
+span></p>
+<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;text-indent:-18.0=
+pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US"><span style=3D"mso-list:Ignore">1=
+.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US">Why does the vfio-pci d=
+isable all interrupts of the device before enabling irqs?<o:p></o:p></span>=
+</p>
+<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;text-indent:-18.0=
+pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US"><span style=3D"mso-list:Ignore">2=
+.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US">Is this a normal vfio-p=
+ci process or a problem?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Jinqian<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
 
-Let's mention this is a step towards having "make check" run the static
-analysis we want developers to run, but we're not there, yet.
-
-> ---
->  python/setup.cfg            |  1 +
->  python/tests/minreqs.txt    | 21 +++++++++++++++++++++
->  python/tests/qapi-flake8.sh |  4 ++++
->  python/tests/qapi-isort.sh  |  6 ++++++
->  python/tests/qapi-mypy.sh   |  2 ++
->  python/tests/qapi-pylint.sh |  6 ++++++
->  scripts/qapi/pylintrc       |  1 +
->  7 files changed, 41 insertions(+)
->  create mode 100755 python/tests/qapi-flake8.sh
->  create mode 100755 python/tests/qapi-isort.sh
->  create mode 100755 python/tests/qapi-mypy.sh
->  create mode 100755 python/tests/qapi-pylint.sh
->
-> diff --git a/python/setup.cfg b/python/setup.cfg
-> index cf5af7e6641..84d8a1fd30d 100644
-> --- a/python/setup.cfg
-> +++ b/python/setup.cfg
-> @@ -47,6 +47,7 @@ devel =
->      urwid >= 2.1.2
->      urwid-readline >= 0.13
->      Pygments >= 2.9.0
-> +    sphinx >= 3.4.3
->  
->  # Provides qom-fuse functionality
->  fuse =
-> diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-> index 19c0f5e4c50..94928936d44 100644
-> --- a/python/tests/minreqs.txt
-> +++ b/python/tests/minreqs.txt
-> @@ -11,6 +11,9 @@
->  # When adding new dependencies, pin the very oldest non-yanked version
->  # on PyPI that allows the test suite to pass.
->  
-> +# Dependencies for qapidoc/qapi_domain et al
-> +sphinx==3.4.3
-> +
->  # Dependencies for the TUI addon (Required for successful linting)
->  urwid==2.1.2
->  urwid-readline==0.13
-> @@ -49,3 +52,21 @@ platformdirs==2.2.0
->  toml==0.10.0
->  tomlkit==0.10.1
->  wrapt==1.14.0
-> +
-> +# Transitive sphinx dependencies
-> +Jinja2==2.7
-> +MarkupSafe==1.1.0
-> +alabaster==0.7.1
-> +babel==1.3
-> +docutils==0.12
-> +imagesize==0.5.0
-> +packaging==14.0
-> +pytz==2011b0
-> +requests==2.5.0
-> +snowballstemmer==1.1
-> +sphinxcontrib-applehelp==1.0.0
-> +sphinxcontrib-devhelp==1.0.0
-> +sphinxcontrib-htmlhelp==1.0.0
-> +sphinxcontrib-jsmath==1.0.0
-> +sphinxcontrib-qthelp==1.0.0
-> +sphinxcontrib-serializinghtml==1.0.0
-
-This wasn't there when I last saw this patch.  The previous patch also
-updates this file.  How did you decide which updates go where?  Or is
-this an accident?
-
-> diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
-> new file mode 100755
-> index 00000000000..7b5983d64a9
-> --- /dev/null
-> +++ b/python/tests/qapi-flake8.sh
-> @@ -0,0 +1,4 @@
-> +#!/bin/sh -e
-> +python3 -m flake8 ../scripts/qapi/ \
-> +        ../docs/sphinx/qapidoc.py \
-> +        ../docs/sphinx/qapi_domain.py
-
-Not linting docs/sphinx/qapidoc_legacy.py.  This is intentional (see its
-initial commit message).  Since we plan to drop it soon, there's no real
-need for a comment here, but mentioning it in the commit message
-wouldn't hurt.
-
-> diff --git a/python/tests/qapi-isort.sh b/python/tests/qapi-isort.sh
-> new file mode 100755
-> index 00000000000..f31f12d3425
-> --- /dev/null
-> +++ b/python/tests/qapi-isort.sh
-> @@ -0,0 +1,6 @@
-> +#!/bin/sh -e
-> +python3 -m isort --sp . -c ../scripts/qapi/
-> +# Force isort to recognize "compat" as a local module and not third-party
-> +python3 -m isort --sp . -c -p compat -p qapidoc_legacy \
-> +        ../docs/sphinx/qapi_domain.py \
-> +        ../docs/sphinx/qapidoc.py
-
-Comment on flake8 applies.
-
-> diff --git a/python/tests/qapi-mypy.sh b/python/tests/qapi-mypy.sh
-> new file mode 100755
-> index 00000000000..377b29b873b
-> --- /dev/null
-> +++ b/python/tests/qapi-mypy.sh
-> @@ -0,0 +1,2 @@
-> +#!/bin/sh -e
-> +python3 -m mypy ../scripts/qapi
-
-Not type-checking docs/sphinx/qapi_domain.py and docs/sphinx/qapidoc.py?
-Impractical due to us targeting an isanely wide Sphinx version range?
-
-> diff --git a/python/tests/qapi-pylint.sh b/python/tests/qapi-pylint.sh
-> new file mode 100755
-> index 00000000000..f4bb7a5a795
-> --- /dev/null
-> +++ b/python/tests/qapi-pylint.sh
-> @@ -0,0 +1,6 @@
-> +#!/bin/sh -e
-> +SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint \
-> +                                --rcfile=../scripts/qapi/pylintrc \
-> +                                ../scripts/qapi/ \
-> +                                ../docs/sphinx/qapidoc.py \
-> +                                ../docs/sphinx/qapi_domain.py
-
-Comment on flake8 applies.
-
-> diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
-> index d24eece7411..e16283ada3d 100644
-> --- a/scripts/qapi/pylintrc
-> +++ b/scripts/qapi/pylintrc
-> @@ -19,6 +19,7 @@ disable=consider-using-f-string,
->          too-many-instance-attributes,
->          too-many-positional-arguments,
->          too-many-statements,
-> +        unknown-option-value,
->          useless-option-value,
->  
->  [REPORTS]
-
-This wasn't there when I last saw this patch.  PATCH 1 also updates this
-file.  How did you decide which updates go where?  Or is this an
-accident?
-
+--_000_f82e1e01c21e4a75a9a78315c08449eahuaweicom_--
 
