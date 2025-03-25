@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71ABC35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 10:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A067C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 10:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx14f-00014q-AN; Tue, 25 Mar 2025 05:59:57 -0400
+	id 1tx1MY-0004PU-JJ; Tue, 25 Mar 2025 06:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
- id 1tx14c-000144-TH; Tue, 25 Mar 2025 05:59:54 -0400
-Received: from mail-gw02.astralinux.ru ([195.16.41.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
- id 1tx14a-0001P6-Gk; Tue, 25 Mar 2025 05:59:54 -0400
-Received: from gca-msk-a-srv-ksmg01.astralinux.ru (localhost [127.0.0.1])
- by mail-gw02.astralinux.ru (Postfix) with ESMTP id 489F31F46F;
- Tue, 25 Mar 2025 12:59:42 +0300 (MSK)
-Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail03.astralinux.ru
- [10.177.185.108])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mail-gw02.astralinux.ru (Postfix) with ESMTPS;
- Tue, 25 Mar 2025 12:59:40 +0300 (MSK)
-Received: from localhost.localdomain (unknown [10.177.20.126])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4ZMQPl6YMNz1h0TT;
- Tue, 25 Mar 2025 12:59:39 +0300 (MSK)
-From: Anastasia Belova <abelova@astralinux.ru>
-To: qemu-devel@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Cc: Anastasia Belova <abelova@astralinux.ru>, qemu-arm@nongnu.org,
- sdl.qemu@linuxtesting.org
-Subject: [PATCH RFC] target/arm: add bounding a->imm assertion
-Date: Tue, 25 Mar 2025 12:59:20 +0300
-Message-ID: <20250325095921.58479-1-abelova@astralinux.ru>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tx1MV-0004PE-O9
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 06:18:23 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tx1MK-00040j-0K
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 06:18:17 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5e22e6ed2so8220947a12.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 03:18:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742897889; x=1743502689; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QyxU75tpST2T5/X4xZptX1z3SIVRXpjMPoFsplP+R74=;
+ b=e9xW6s2IZ/uTKWTZ0LbaRCUqRpn+ZjqePKZi5FYlUFcpYDuHLoKi5Sv0nDsfZAnje3
+ Zxf+AJBWt/tA+PuvOwcxSHg+hksHMBDQN+M9okecCypf9BpTKdGj8oCxiHtfpjE53l2u
+ k+BQZaGnXdk0aQKf+TPLp+zUS0VW6DOgIPcK+/lBxVTQpINwchLRsldFwD2miA62N4ZI
+ UjSKZWDigKSEymgeUrQHtiIlroDDFquJG2YVfIWZTko6uRepG2rQTed2oIxFK9nHfhhu
+ QANB4B1OcQaRnKRDJyDbbVygCtCxwVfBr+pu300NpVJ7RWxOXpG5bmWF+colCarx0ECD
+ csYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742897889; x=1743502689;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QyxU75tpST2T5/X4xZptX1z3SIVRXpjMPoFsplP+R74=;
+ b=eb7rVP2gyMsOf/Yb7iUc52kVUO+DNxmaCDnU1hh3Aah0jtQEq8V4pliaudq3WQZPAZ
+ JeFx2q0IyZ+MA31MKrZligEOEsD3w90g2RgqaKQTuvPdUC/v9Dvta/2/Y6BsHMOkgFH0
+ q+/5Ay4Q8Uh+3/YMdwaWpgtlc0rScRKya5KM+/1gG5eDc4k0Rwp5YwGp9ozwSs7iyiNQ
+ 0azJ6gjlITZjspEVw4KiQbQSqoTHfOpDuzajDtRJByA0/0oiu2476mmJAGvh3LIAfGXf
+ BcBu0srohSMibytYHc46WM3qIbQN5jqXO7Oc48UT75XoR4Xpua6cSO6gwcVeKlCABSip
+ bXig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVB03qiGK0YUGXFlALUE2+kTXeOpqIW8i9sdUFCJnUFOUzA+rhdaIXy1RH7S6sPzVmx2HJIlRiRfzh+@nongnu.org
+X-Gm-Message-State: AOJu0YylO1FJGuGaMUIdDIBoF4JjTBYHtvykT3DRftXGTW9Zk3qg5wDJ
+ AVHjxC9VojKEIRJ48OLrfa4xDl7T1VOYZpc1mbnkqJ54QoUTScsajCcl8eW2XGM=
+X-Gm-Gg: ASbGncssDWDfP3wHhIzUozUucU8e5F8jvWdkk0MYXphS9KsXB57XvhXunGd1Pj3N1V9
+ d6y1XzcRloSUyiLe7l8Ga+YQdDguQgTWPzhj6LP2YXP3/KoFOIxnzSg4a4DLbcBReR8eeS1sBil
+ slU4XQHOpOtMKQOHmp+YB/FHHbCU/r+ROlOCltSWm29v0gRs43X5skxo/V68Msoz/6eeTKNGUV4
+ qXUVFiKM9Cyq9NimpuY6rsH9Rhzv8HrjEW8a/6OkTkgZZmkYCeFQl57fzicybdwk/ieDTvztsVd
+ gj2OclBP1XpCojRnIHUtSaTzIdSG3Euj6/bNkT6qtxc6h1I=
+X-Google-Smtp-Source: AGHT+IHmLTviOGnUV668TC40wiUH7g8WDknnBehCPRgwsTNUEfQ2eJJMlcCx8SIftkIFCpFfPHVssA==
+X-Received: by 2002:a17:907:3f94:b0:ac3:45ea:480a with SMTP id
+ a640c23a62f3a-ac3f246d196mr1595532766b.46.1742897889040; 
+ Tue, 25 Mar 2025 03:18:09 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac3ef8e509dsm837428566b.68.2025.03.25.03.18.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Mar 2025 03:18:08 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6FA3E5F76B;
+ Tue, 25 Mar 2025 10:18:07 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH] tests/functional/test_aarch64_virt_gpu: Skip if "dbus"
+ display isn't available
+In-Reply-To: <20250325061609.272847-1-thuth@redhat.com> (Thomas Huth's message
+ of "Tue, 25 Mar 2025 07:16:09 +0100")
+References: <20250325061609.272847-1-thuth@redhat.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Tue, 25 Mar 2025 10:18:07 +0000
+Message-ID: <87pli52z34.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-KSMG-AntiPhishing: NotDetected
-X-KSMG-AntiSpam-Auth: dkim=none
-X-KSMG-AntiSpam-Envelope-From: abelova@astralinux.ru
-X-KSMG-AntiSpam-Info: LuaCore: 51 0.3.51
- 68896fb0083a027476849bf400a331a2d5d94398,
- {Tracking_from_domain_doesnt_match_to},
- d41d8cd98f00b204e9800998ecf8427e.com:7.1.1; astralinux.ru:7.1.1;
- 127.0.0.199:7.1.2; new-mail.astralinux.ru:7.1.1, FromAlignment: s
-X-KSMG-AntiSpam-Interceptor-Info: scan successful
-X-KSMG-AntiSpam-Lua-Profiles: 192080 [Mar 25 2025]
-X-KSMG-AntiSpam-Method: none
-X-KSMG-AntiSpam-Rate: 0
-X-KSMG-AntiSpam-Status: not_detected
-X-KSMG-AntiSpam-Version: 6.1.1.11
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854,
- bases: 2025/03/25 08:37:00 #27838357
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 1
-Received-SPF: pass client-ip=195.16.41.108; envelope-from=abelova@astralinux.ru;
- helo=mail-gw02.astralinux.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +106,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an assertion similar to that in the do_shr_narrow().
-This will make sure that functions from sshll_ops
-have correct arguments.
+Thomas Huth <thuth@redhat.com> writes:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> From: Thomas Huth <thuth@redhat.com>
+>
+> This test currently fails if the "dbus" display has not been compiled
+> into the binary (which can happen when CFI has been enabled, for example).
+> Check for the error message to skip the test in that case.
+>
+> While we're at it, also make sure that this test is covered in the
+> right section in the MAINTAINERS file.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
----
- target/arm/tcg/translate-sve.c | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index d23be477b4..47ada85c92 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -6250,6 +6250,7 @@ static bool do_shll_tb(DisasContext *s, arg_rri_esz *a,
-     if (a->esz < 0 || a->esz > 2) {
-         return false;
-     }
-+    assert(a->imm > 0 && a->imm <= (8 << a->esz));
-     if (sve_access_check(s)) {
-         unsigned vsz = vec_full_reg_size(s);
-         tcg_gen_gvec_2i(vec_full_reg_offset(s, a->rd),
--- 
-2.47.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
