@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DC0C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 05:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5FCC3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 05:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twwOJ-0004Fk-0h; Tue, 25 Mar 2025 00:59:55 -0400
+	id 1twwOJ-0004Fo-1B; Tue, 25 Mar 2025 00:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twwNs-0003kX-Q1
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:30 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1twwNv-0003nK-OJ
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:36 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1twwNo-0005nz-NU
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:28 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-300fefb8e06so9160890a91.0
- for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 21:59:23 -0700 (PDT)
+ id 1twwNs-0005p0-JL
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 00:59:31 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2ff4a4f901fso9525309a91.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 21:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742878763; x=1743483563; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742878767; x=1743483567; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5F5Dzae+RyDol+flZMgGIl7VK6PFPHMGXCHLqJN/jSE=;
- b=ap/YXreiltXMYBxzNXzrzaFS13kjNa1+YZP7e2e/95vbPdTcdv3Xqq+7SfvrKmUxEw
- nFpnrTIbGJSBd5XQEfET4qouMzGQ0UuvioWIuHWIOmxbFwiJlK6RE3lQrfF4ekE1UNKk
- ncldqxScrdj4cDHueiao7jJjse4q/u5WyueZOT61RFEvxbfFM8zhCqU+YVDwTII/X8xm
- 7HxeYpZtY5MWy0XcxcM6ylT1rnsNmcCoSjEkw1BHj5h+wftzO2/wAcNQioOza0szM/y7
- iarKCy87CMkEk6E898ZCnK1+v0vvwSgEP+k+QJzQwAROz49zDsuQ5a5t7uPuZtDOHZ3u
- WAqQ==
+ bh=7u9igk3DJeYNJ4kHlFRAOur7C++4prjQF3K5i5oOOhU=;
+ b=q/bl66CvooQrDt4rLP4tOGdqXj3/AfslP6o2U+azpuBWSkDE66Eih/yAYCu58zyIHq
+ 5bV+IKBipTrUHV9aBDukxzDakSiahB1fzx8CKmlTFj2587uNDV7JnlEfk8V22DXpYG19
+ 6veQPKTvFhFwycc4Mb4+9fuphB7ODWKxqo2fXgB00v01TbOTW+lh6o7AhGYw1IWdy6si
+ GYi8H2qIESMNafKgYH4T3Dxkmt9u50Le5gOYSgR6nq9dRLUD9gTn4ZonVBehVMER0xwi
+ sbFDDynY03GbCwnSmPYnSCCmrSlXNUxo6NIcQ7X+iFJCfxVUXZYTojxqYzL8guuX0D4a
+ 1Caw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742878763; x=1743483563;
+ d=1e100.net; s=20230601; t=1742878767; x=1743483567;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5F5Dzae+RyDol+flZMgGIl7VK6PFPHMGXCHLqJN/jSE=;
- b=xCkexbjDgPr5OSL+jX452oLCIKP8Jy+jhtKanlCTU7SWdQzReg5YActa+PAQEc8wP7
- evWSA+87UeObHzCN1sJmcC1pjCUg0AHJTXL9oE2b/FlVA+hl62a0CfE/qKy76ak6mBnD
- XZM1fycBSKEM0NjXEIUwyW8StVmgKNdc9wVHAm4+Iii+23dou7jc2bMRe1PqpfGDNMpw
- 2w4SrNc28Hh5o3sMaWmfGlYz53WminDMoSv4Vca0pfASkWAQZBPm4X7V078ReYB4gZMg
- zgH16vXpZlmPcDlCwH8+d/SVm3sgqj4vA3BhM6lyqtilS7k4DMOHcvB3LJtm9dkrbIqT
- 96RQ==
-X-Gm-Message-State: AOJu0Yx9j1lwcuG7qQgpBQzd25id0NjwW+nmZDEreF0SwmIZShO+DOZe
- gDiZ3oluGpJpqoVGt/BMH1Ck0gvtl/qSzOVGSC0SbIdo+75d+8faUCG+7gtjzBN8AaLfeHYaZ4r
- 7
-X-Gm-Gg: ASbGnctI3bo2asT9DtgNEQXqZl+yH2qNhQQXkzvmwpPNn2EBWtlL1a0Li919Gs40/dy
- J+TGMmRdih7vTs9dGCfMEgw/p1Xs/Ap3NMPdGDLt2JsCFNxMCLpffKn8c2yeb8XXzuIiQrpo0w2
- 9djpin7hU9ouVLlKzkXmhWXHkXdHJt0WeHGZOd6x6OlnPiX9b7L2i/YhP6gSezkIn3D/gOrwqP4
- 6zzRaNVNZq5asUIu/tsn91eIq/1Eor7yjxl9KyIclMbntMxfrUrisozLDHxQ/3NTqVAbpj27Cfe
- WFBw6iRNhrTekXUQ4Gkt+D/mtIoSBc6XzoLFKMtBxgV5
-X-Google-Smtp-Source: AGHT+IH0t6uEZiEjwREkVEMOOv9C57dpUIwXt6vTK/JF30OlSjVJqYS2wxVP5/VT54dMYHTpk3oDTg==
-X-Received: by 2002:a17:90b:1f81:b0:2fa:157e:c78e with SMTP id
- 98e67ed59e1d1-3030fe6a098mr26719254a91.7.1742878762798; 
- Mon, 24 Mar 2025 21:59:22 -0700 (PDT)
+ bh=7u9igk3DJeYNJ4kHlFRAOur7C++4prjQF3K5i5oOOhU=;
+ b=bIH8yGqmOvJDBKkwdUg+GvranY+bk2lyXvU8WSVzJUaSVjEGsbL1O+5RT6VdZSVttg
+ 806L/dDaGLuikoNQRKZwqg2msSFP0KTX3O2200vrjpazNdJ5RB6P5MX1gYbLxEFp+mY7
+ U2eoyZTn+jmqaofcxCAzd/u/N2XBPfqEfHSjFPLFhAE2fJg1djdj+XDLDvof0m+k9Q6k
+ aO9MLBSY+u1SFI6NAz8ZBIA+62j1HLHI0rl4rNxH4BZLqYzin+zlW89ZFKWRkTisr5Ia
+ XKfcvcgHDepWC7hv6vKkQDiVGvmZIu34wCJ4Cbx6EBRRXCJslmJ8gZwauVM3tWM+90pw
+ /KcQ==
+X-Gm-Message-State: AOJu0YwgzzFbCj0UxlZO3WjeFHLdpXju+qHHcEWzQzR26yzpdIkajE1g
+ 0fpAWX1sWaAJ4WPpb6K+8nfRGqdYhXiVNE4O1suy0xYGrrITaxxO5JkL73JWa3RD9wRp4ztR+Ng
+ a
+X-Gm-Gg: ASbGnctBrke5qLnoFcZj85RMgYfD2wgpajBLkTGR9VydASkXTvuYu9JFsfFZGmNziSR
+ Rxg2RqJj4Vm2+67ddSnwiMd3pRZVNWchRHw4dS5MDmjYgQJu188QyUjFzXqEaDIRbzp2xxn8SUr
+ tFRU24rVJ4qVhttEQA/JSaYX+BEL18wjyTNV3VB8XjfL38WLsjwb9+NnwFXl0V61E/O6b9Ie3oj
+ mPjWgcr40d4J9y3eBkuZ/rlllJ1TuvQA6pkylaKR7kh3ZfeAFNBM99htH5bOj8N9wXiFaHW4p8M
+ yfOp21dLzfUJwvmRo1CZk9u5b5U1WWzeQRT4HjYCU70Z
+X-Google-Smtp-Source: AGHT+IEiLeBzJzC5jt8zA/2EUNgz/WuF2tstB2sh/pCZJeNAww/EeI683sYhypnoorCiSk/JT+KeeQ==
+X-Received: by 2002:a17:90b:5108:b0:2ff:7b28:a519 with SMTP id
+ 98e67ed59e1d1-3030ff24236mr23516938a91.30.1742878767084; 
+ Mon, 24 Mar 2025 21:59:27 -0700 (PDT)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-301bf58b413sm14595120a91.13.2025.03.24.21.59.22
+ 98e67ed59e1d1-301bf58b413sm14595120a91.13.2025.03.24.21.59.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Mar 2025 21:59:22 -0700 (PDT)
+ Mon, 24 Mar 2025 21:59:26 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -72,17 +72,16 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  kvm@vger.kernel.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 01/29] exec/cpu-all: extract tlb flags defines to
- exec/tlb-flags.h
-Date: Mon, 24 Mar 2025 21:58:46 -0700
-Message-Id: <20250325045915.994760-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 06/29] exec/cpu-all: remove tswap include
+Date: Mon, 24 Mar 2025 21:58:51 -0700
+Message-Id: <20250325045915.994760-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250325045915.994760-1-pierrick.bouvier@linaro.org>
 References: <20250325045915.994760-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,334 +107,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/exec/cpu-all.h               | 63 --------------------
- include/exec/tlb-flags.h             | 87 ++++++++++++++++++++++++++++
- accel/tcg/cputlb.c                   |  1 +
- accel/tcg/user-exec.c                |  1 +
- semihosting/uaccess.c                |  1 +
- target/arm/ptw.c                     |  1 +
- target/arm/tcg/helper-a64.c          |  1 +
- target/arm/tcg/mte_helper.c          |  1 +
- target/arm/tcg/sve_helper.c          |  1 +
- target/i386/tcg/system/excp_helper.c |  1 +
- target/riscv/op_helper.c             |  1 +
- target/riscv/vector_helper.c         |  1 +
- target/s390x/tcg/mem_helper.c        |  1 +
- target/sparc/mmu_helper.c            |  1 +
- 14 files changed, 99 insertions(+), 63 deletions(-)
- create mode 100644 include/exec/tlb-flags.h
+ include/exec/cpu-all.h               | 1 -
+ target/ppc/mmu-hash64.h              | 2 ++
+ target/i386/tcg/system/excp_helper.c | 1 +
+ target/i386/xsave_helper.c           | 1 +
+ target/riscv/vector_helper.c         | 1 +
+ 5 files changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 013fcc9412a..d2895fb55b1 100644
+index 4a2cac1252d..1539574a22a 100644
 --- a/include/exec/cpu-all.h
 +++ b/include/exec/cpu-all.h
-@@ -36,69 +36,6 @@ CPUArchState *cpu_copy(CPUArchState *env);
+@@ -21,7 +21,6 @@
  
- #include "cpu.h"
- 
--#ifdef CONFIG_USER_ONLY
--
--/*
-- * Allow some level of source compatibility with softmmu.  We do not
-- * support any of the more exotic features, so only invalid pages may
-- * be signaled by probe_access_flags().
-- */
--#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
--#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 2))
--#define TLB_WATCHPOINT      0
--
--#else
--
--/*
-- * Flags stored in the low bits of the TLB virtual address.
-- * These are defined so that fast path ram access is all zeros.
-- * The flags all must be between TARGET_PAGE_BITS and
-- * maximum address alignment bit.
-- *
-- * Use TARGET_PAGE_BITS_MIN so that these bits are constant
-- * when TARGET_PAGE_BITS_VARY is in effect.
-- *
-- * The count, if not the placement of these bits is known
-- * to tcg/tcg-op-ldst.c, check_max_alignment().
-- */
--/* Zero if TLB entry is valid.  */
--#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
--/* Set if TLB entry references a clean RAM page.  The iotlb entry will
--   contain the page physical address.  */
--#define TLB_NOTDIRTY        (1 << (TARGET_PAGE_BITS_MIN - 2))
--/* Set if TLB entry is an IO callback.  */
--#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 3))
--/* Set if TLB entry writes ignored.  */
--#define TLB_DISCARD_WRITE   (1 << (TARGET_PAGE_BITS_MIN - 4))
--/* Set if the slow path must be used; more flags in CPUTLBEntryFull. */
--#define TLB_FORCE_SLOW      (1 << (TARGET_PAGE_BITS_MIN - 5))
--
--/*
-- * Use this mask to check interception with an alignment mask
-- * in a TCG backend.
-- */
--#define TLB_FLAGS_MASK \
--    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_MMIO \
--    | TLB_FORCE_SLOW | TLB_DISCARD_WRITE)
--
--/*
-- * Flags stored in CPUTLBEntryFull.slow_flags[x].
-- * TLB_FORCE_SLOW must be set in CPUTLBEntry.addr_idx[x].
-- */
--/* Set if TLB entry requires byte swap.  */
--#define TLB_BSWAP            (1 << 0)
--/* Set if TLB entry contains a watchpoint.  */
--#define TLB_WATCHPOINT       (1 << 1)
--/* Set if TLB entry requires aligned accesses.  */
--#define TLB_CHECK_ALIGNED    (1 << 2)
--
--#define TLB_SLOW_FLAGS_MASK  (TLB_BSWAP | TLB_WATCHPOINT | TLB_CHECK_ALIGNED)
--
--/* The two sets of flags must not overlap. */
--QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & TLB_SLOW_FLAGS_MASK);
--
--#endif /* !CONFIG_USER_ONLY */
--
- /* Validate correct placement of CPUArchState. */
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
-diff --git a/include/exec/tlb-flags.h b/include/exec/tlb-flags.h
-new file mode 100644
-index 00000000000..c371ae77602
---- /dev/null
-+++ b/include/exec/tlb-flags.h
-@@ -0,0 +1,87 @@
-+/*
-+ * TLB flags definition
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+#ifndef TLB_FLAGS_H
-+#define TLB_FLAGS_H
-+
-+#include "exec/cpu-defs.h"
-+
-+#ifdef CONFIG_USER_ONLY
-+
-+/*
-+ * Allow some level of source compatibility with softmmu.  We do not
-+ * support any of the more exotic features, so only invalid pages may
-+ * be signaled by probe_access_flags().
-+ */
-+#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
-+#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 2))
-+#define TLB_WATCHPOINT      0
-+
-+#else
-+
-+/*
-+ * Flags stored in the low bits of the TLB virtual address.
-+ * These are defined so that fast path ram access is all zeros.
-+ * The flags all must be between TARGET_PAGE_BITS and
-+ * maximum address alignment bit.
-+ *
-+ * Use TARGET_PAGE_BITS_MIN so that these bits are constant
-+ * when TARGET_PAGE_BITS_VARY is in effect.
-+ *
-+ * The count, if not the placement of these bits is known
-+ * to tcg/tcg-op-ldst.c, check_max_alignment().
-+ */
-+/* Zero if TLB entry is valid.  */
-+#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
-+/* Set if TLB entry references a clean RAM page.  The iotlb entry will
-+   contain the page physical address.  */
-+#define TLB_NOTDIRTY        (1 << (TARGET_PAGE_BITS_MIN - 2))
-+/* Set if TLB entry is an IO callback.  */
-+#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 3))
-+/* Set if TLB entry writes ignored.  */
-+#define TLB_DISCARD_WRITE   (1 << (TARGET_PAGE_BITS_MIN - 4))
-+/* Set if the slow path must be used; more flags in CPUTLBEntryFull. */
-+#define TLB_FORCE_SLOW      (1 << (TARGET_PAGE_BITS_MIN - 5))
-+
-+/*
-+ * Use this mask to check interception with an alignment mask
-+ * in a TCG backend.
-+ */
-+#define TLB_FLAGS_MASK \
-+    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_MMIO \
-+    | TLB_FORCE_SLOW | TLB_DISCARD_WRITE)
-+
-+/*
-+ * Flags stored in CPUTLBEntryFull.slow_flags[x].
-+ * TLB_FORCE_SLOW must be set in CPUTLBEntry.addr_idx[x].
-+ */
-+/* Set if TLB entry requires byte swap.  */
-+#define TLB_BSWAP            (1 << 0)
-+/* Set if TLB entry contains a watchpoint.  */
-+#define TLB_WATCHPOINT       (1 << 1)
-+/* Set if TLB entry requires aligned accesses.  */
-+#define TLB_CHECK_ALIGNED    (1 << 2)
-+
-+#define TLB_SLOW_FLAGS_MASK  (TLB_BSWAP | TLB_WATCHPOINT | TLB_CHECK_ALIGNED)
-+
-+/* The two sets of flags must not overlap. */
-+QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & TLB_SLOW_FLAGS_MASK);
-+
-+#endif /* !CONFIG_USER_ONLY */
-+
-+#endif /* TLB_FLAGS_H */
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 613f919fffb..b2db49e305e 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -34,6 +34,7 @@
- #include "qemu/error-report.h"
- #include "exec/log.h"
- #include "exec/helper-proto-common.h"
-+#include "exec/tlb-flags.h"
- #include "qemu/atomic.h"
- #include "qemu/atomic128.h"
- #include "tb-internal.h"
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index ebc7c3ecf54..667c5e03543 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -21,6 +21,7 @@
- #include "disas/disas.h"
- #include "exec/vaddr.h"
- #include "exec/exec-all.h"
-+#include "exec/tlb-flags.h"
- #include "tcg/tcg.h"
- #include "qemu/bitops.h"
- #include "qemu/rcu.h"
-diff --git a/semihosting/uaccess.c b/semihosting/uaccess.c
-index a9578911669..cb64725a37c 100644
---- a/semihosting/uaccess.c
-+++ b/semihosting/uaccess.c
-@@ -11,6 +11,7 @@
- #include "exec/cpu-all.h"
- #include "exec/cpu-mmu-index.h"
- #include "exec/exec-all.h"
-+#include "exec/tlb-flags.h"
- #include "semihosting/uaccess.h"
- 
- void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 43309003486..8d4e9e07a94 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -12,6 +12,7 @@
- #include "qemu/main-loop.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
-+#include "exec/tlb-flags.h"
- #include "cpu.h"
- #include "internals.h"
- #include "cpu-features.h"
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 9244848efed..fa79d19425f 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -31,6 +31,7 @@
  #include "exec/cpu-common.h"
- #include "exec/exec-all.h"
- #include "exec/cpu_ldst.h"
-+#include "exec/tlb-flags.h"
- #include "qemu/int128.h"
- #include "qemu/atomic128.h"
- #include "fpu/softfloat.h"
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index 80164a80504..888c6707547 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -31,6 +31,7 @@
- #endif
- #include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
-+#include "exec/tlb-flags.h"
- #include "accel/tcg/cpu-ops.h"
- #include "qapi/error.h"
- #include "qemu/guest-random.h"
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index d786b4b1118..e3bed77b48e 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -23,6 +23,7 @@
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
- #include "exec/helper-proto.h"
-+#include "exec/tlb-flags.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "fpu/softfloat.h"
- #include "tcg/tcg.h"
+ #include "exec/cpu-interrupt.h"
+-#include "exec/tswap.h"
+ #include "hw/core/cpu.h"
+ 
+ /* page related stuff */
+diff --git a/target/ppc/mmu-hash64.h b/target/ppc/mmu-hash64.h
+index ae8d4b37aed..b8fb12a9705 100644
+--- a/target/ppc/mmu-hash64.h
++++ b/target/ppc/mmu-hash64.h
+@@ -1,6 +1,8 @@
+ #ifndef MMU_HASH64_H
+ #define MMU_HASH64_H
+ 
++#include "exec/tswap.h"
++
+ #ifndef CONFIG_USER_ONLY
+ 
+ #ifdef TARGET_PPC64
 diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
-index 6876329de21..b0b74df72fd 100644
+index b0b74df72fd..4badd739432 100644
 --- a/target/i386/tcg/system/excp_helper.c
 +++ b/target/i386/tcg/system/excp_helper.c
-@@ -22,6 +22,7 @@
- #include "exec/cpu_ldst.h"
+@@ -23,6 +23,7 @@
  #include "exec/cputlb.h"
  #include "exec/page-protection.h"
-+#include "exec/tlb-flags.h"
+ #include "exec/tlb-flags.h"
++#include "exec/tswap.h"
  #include "tcg/helper-tcg.h"
  
  typedef struct TranslateParams {
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 72dc48e58d3..f3d26b6b957 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -25,6 +25,7 @@
- #include "exec/cputlb.h"
- #include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
-+#include "exec/tlb-flags.h"
- #include "trace.h"
+diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
+index 996e9f3bfef..24ab7be8e9a 100644
+--- a/target/i386/xsave_helper.c
++++ b/target/i386/xsave_helper.c
+@@ -5,6 +5,7 @@
+ #include "qemu/osdep.h"
  
- /* Exceptions processing helpers */
+ #include "cpu.h"
++#include "exec/tswap.h"
+ 
+ void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
+ {
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 67b3bafebbe..83978be0603 100644
+index 83978be0603..7fffa23bc8d 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -25,6 +25,7 @@
- #include "exec/cpu_ldst.h"
+@@ -26,6 +26,7 @@
  #include "exec/page-protection.h"
  #include "exec/helper-proto.h"
-+#include "exec/tlb-flags.h"
+ #include "exec/tlb-flags.h"
++#include "exec/tswap.h"
  #include "fpu/softfloat.h"
  #include "tcg/tcg-gvec-desc.h"
  #include "internals.h"
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 8187b917ba1..0ff2e10d816 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -29,6 +29,7 @@
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/cpu_ldst.h"
-+#include "exec/tlb-flags.h"
- #include "accel/tcg/cpu-ops.h"
- #include "qemu/int128.h"
- #include "qemu/atomic128.h"
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 4a0cedd9e21..cce3046b694 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -23,6 +23,7 @@
- #include "exec/cputlb.h"
- #include "exec/cpu-mmu-index.h"
- #include "exec/page-protection.h"
-+#include "exec/tlb-flags.h"
- #include "qemu/qemu-print.h"
- #include "trace.h"
- 
 -- 
 2.39.5
 
