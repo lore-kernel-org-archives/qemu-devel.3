@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 874E1C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:56:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB9EFC3600C
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twy7h-0004YZ-3W; Tue, 25 Mar 2025 02:50:53 -0400
+	id 1twyBb-0003Ni-41; Tue, 25 Mar 2025 02:54:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7f-0004Y7-LY; Tue, 25 Mar 2025 02:50:51 -0400
+ id 1twyAf-0000cG-EA; Tue, 25 Mar 2025 02:53:57 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7d-0001dQ-B0; Tue, 25 Mar 2025 02:50:51 -0400
+ id 1twyAd-000289-DL; Tue, 25 Mar 2025 02:53:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9EF2C107D62;
- Tue, 25 Mar 2025 09:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A90F107D87;
+ Tue, 25 Mar 2025 09:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 41B5B1D5E71;
- Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B18AA1D5E92;
+ Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3313F5702A; Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ id 9746E5706C; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 29/34] target/arm: Make DisasContext.{fp,
- sve}_access_checked tristate
-Date: Tue, 25 Mar 2025 09:50:24 +0300
-Message-Id: <20250325065031.3263718-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 69/69] hw/intc/aspeed: Fix IRQ handler mask check
+Date: Tue, 25 Mar 2025 09:50:42 +0300
+Message-Id: <20250325065043.3263864-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
-References: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,128 +63,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Steven Lee <steven_lee@aspeedtech.com>
 
-The check for fp_excp_el in assert_fp_access_checked is
-incorrect.  For SME, with StreamingMode enabled, the access
-is really against the streaming mode vectors, and access
-to the normal fp registers is allowed to be disabled.
-C.f. sme_enabled_check.
+Updated the IRQ handler mask check to AND with select variable.
+This ensures that the interrupt service routine is correctly triggered
+for the interrupts within the same irq group.
 
-Convert sve_access_checked to match, even though we don't
-currently check the exception state.
+For example, both `eth0` and the debug UART are handled in `GICINT132`.
+Without this fix, the debug console may hang if the `eth0` ISR is not
+handled.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 3d74825f4d6 ("target/arm: Add SME enablement checks")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250307190415.982049-2-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 298a04998fa4a6dc977abe9234d98dfcdab98423)
-(Mjt: minor context fix in target/arm/tcg/translate.h,
- target/arm/tcg/translate-a64.c is target/arm/translate-a64.c)
+Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+Change-Id: Ic3609eb72218dfd68be6057d78b8953b18828709
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Fixes: d831c5fd8682 ("aspeed/intc: Add AST2700 support")
+Link: https://lore.kernel.org/qemu-devel/20250320092543.4040672-2-steven_lee@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 7b8cbe5162e69ad629c5326bf3c158b81857955d)
+(Mjt: update for before v9.2.0-2466-g5824e8bf6beb
+ "hw/intc/aspeed: Introduce IRQ handler function to reduce code duplication")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/translate-a64.c b/target/arm/translate-a64.c
-index f0b8db7ce5..00463a1e35 100644
---- a/target/arm/translate-a64.c
-+++ b/target/arm/translate-a64.c
-@@ -1176,14 +1176,14 @@ static bool fp_access_check_only(DisasContext *s)
- {
-     if (s->fp_excp_el) {
-         assert(!s->fp_access_checked);
--        s->fp_access_checked = true;
-+        s->fp_access_checked = -1;
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 126b711b94..495fd2bdfa 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -92,7 +92,7 @@ static void aspeed_intc_set_irq(void *opaque, int irq, int level)
  
-         gen_exception_insn_el(s, 0, EXCP_UDEF,
-                               syn_fp_access_trap(1, 0xe, false, 0),
-                               s->fp_excp_el);
-         return false;
-     }
--    s->fp_access_checked = true;
-+    s->fp_access_checked = 1;
-     return true;
- }
+     trace_aspeed_intc_select(select);
  
-@@ -1217,13 +1217,13 @@ bool sve_access_check(DisasContext *s)
-                               syn_sve_access_trap(), s->sve_excp_el);
-         goto fail_exit;
-     }
--    s->sve_access_checked = true;
-+    s->sve_access_checked = 1;
-     return fp_access_check(s);
- 
-  fail_exit:
-     /* Assert that we only raise one exception per instruction. */
-     assert(!s->sve_access_checked);
--    s->sve_access_checked = true;
-+    s->sve_access_checked = -1;
-     return false;
- }
- 
-@@ -1252,8 +1252,9 @@ bool sme_enabled_check(DisasContext *s)
-      * sme_excp_el by itself for cpregs access checks.
-      */
-     if (!s->fp_excp_el || s->sme_excp_el < s->fp_excp_el) {
--        s->fp_access_checked = true;
--        return sme_access_check(s);
-+        bool ret = sme_access_check(s);
-+        s->fp_access_checked = (ret ? 1 : -1);
-+        return ret;
-     }
-     return fp_access_check_only(s);
- }
-@@ -14870,8 +14871,8 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     s->insn = insn;
-     s->base.pc_next = pc + 4;
- 
--    s->fp_access_checked = false;
--    s->sve_access_checked = false;
-+    s->fp_access_checked = 0;
-+    s->sve_access_checked = 0;
- 
-     if (s->pstate_il) {
+-    if (s->mask[irq] || s->regs[status_addr]) {
++    if ((s->mask[irq] & select) || (s->regs[status_addr] & select)) {
          /*
-diff --git a/target/arm/translate-a64.h b/target/arm/translate-a64.h
-index ad3762d1ac..f01d2d973c 100644
---- a/target/arm/translate-a64.h
-+++ b/target/arm/translate-a64.h
-@@ -66,7 +66,7 @@ TCGv_i64 gen_mte_checkN(DisasContext *s, TCGv_i64 addr, bool is_write,
- static inline void assert_fp_access_checked(DisasContext *s)
- {
- #ifdef CONFIG_DEBUG_TCG
--    if (unlikely(!s->fp_access_checked || s->fp_excp_el)) {
-+    if (unlikely(s->fp_access_checked <= 0)) {
-         fprintf(stderr, "target-arm: FP access check missing for "
-                 "instruction 0x%08x\n", s->insn);
-         abort();
-diff --git a/target/arm/translate.h b/target/arm/translate.h
-index 3cdc7dbc2f..3856df8060 100644
---- a/target/arm/translate.h
-+++ b/target/arm/translate.h
-@@ -85,15 +85,19 @@ typedef struct DisasContext {
-     uint64_t features; /* CPU features bits */
-     bool aarch64;
-     bool thumb;
--    /* Because unallocated encodings generate different exception syndrome
-+    /*
-+     * Because unallocated encodings generate different exception syndrome
-      * information from traps due to FP being disabled, we can't do a single
-      * "is fp access disabled" check at a high level in the decode tree.
-      * To help in catching bugs where the access check was forgotten in some
-      * code path, we set this flag when the access check is done, and assert
-      * that it is set at the point where we actually touch the FP regs.
-+     *   0: not checked,
-+     *   1: checked, access ok
-+     *  -1: checked, access denied
-      */
--    bool fp_access_checked;
--    bool sve_access_checked;
-+    int8_t fp_access_checked;
-+    int8_t sve_access_checked;
-     /* ARMv8 single-step state (this is distinct from the QEMU gdbstub
-      * single-step support).
-      */
+          * a. mask is not 0 means in ISR mode
+          * sources interrupt routine are executing.
 -- 
 2.39.5
 
