@@ -4,65 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780C6C36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 23:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 462D9C36005
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 23:41:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txDcW-0003db-Tt; Tue, 25 Mar 2025 19:23:44 -0400
+	id 1txDsq-0007KC-BR; Tue, 25 Mar 2025 19:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1txDcU-0003cP-CR; Tue, 25 Mar 2025 19:23:42 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1txDcR-0003QC-Lk; Tue, 25 Mar 2025 19:23:41 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E06D34E6005;
- Wed, 26 Mar 2025 00:23:33 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id mlfJ0eZ_8WBn; Wed, 26 Mar 2025 00:23:31 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D85494E6000; Wed, 26 Mar 2025 00:23:31 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D28BC74577D;
- Wed, 26 Mar 2025 00:23:31 +0100 (CET)
-Date: Wed, 26 Mar 2025 00:23:31 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- Ilya Leoshkevich <iii@linux.ibm.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Glenn Miles <milesg@linux.ibm.com>, Samuel Tardieu <sam@rfc1149.net>, 
- qemu-block@nongnu.org, Patrick Leis <venture@google.com>, 
- David Hildenbrand <david@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Halil Pasic <pasic@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>, 
- Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>, 
- Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org, 
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH-for-10.0 10/12] hw/rtc: Categorize and add description
-In-Reply-To: <20250325224310.8785-11-philmd@linaro.org>
-Message-ID: <056b78c2-d2fc-fa49-91f7-abe3dd6fc3d2@eik.bme.hu>
-References: <20250325224310.8785-1-philmd@linaro.org>
- <20250325224310.8785-11-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1txDso-0007Jd-AK
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 19:40:34 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1txDsm-0005Am-N9
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 19:40:34 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2240b4de12bso60227605ad.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 16:40:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1742946031; x=1743550831; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WbRXjp/PkWRSGIONZ1VUFU0BcxgTM3fv9Qy3wBTHg1w=;
+ b=XFLIR6bnnW7n233C6cYwa8xfSy/5jxV+bgh+FtF9P/u/GY1pJ7HSbNW0QqtPE28gPr
+ Oi+d3IWMWYyAiPpMM6VQQ+fJDnUK+txmSMa1LAEtL9CZnP4pOGGXP8yTZTOwujamm+fj
+ hTExzz7of79IVIbJUVLloNRJDmEEf6JsPsn9TwotFl8RZsmBLzP+qMJlqi5qrKr22DR1
+ VYliObRksW5SM3DMut4FaJKzm73tE+FB8m/18yEwwrb5u31MvAmu7D7auugmmEvph38g
+ 4NcJWPY8C+R6zX0CuiuZeGRfl0flHjl5xWljxS5+bKgMKh+y1kduyh4B48Rpeoic75TR
+ O/2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742946031; x=1743550831;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WbRXjp/PkWRSGIONZ1VUFU0BcxgTM3fv9Qy3wBTHg1w=;
+ b=OlWSjKyfvw9tlp3WTY4B/eiFgrJOQk43MIik/ETeN0YYmtNc9+Ew/ieI4TTmBpoxIu
+ gjhvN77KRr22pBMLdD73FHIvS5BBn0KFOf469fDDae/PpBNiCsGp4ywUZRuLVct27bid
+ lk2vQn0lcHwtFJJ/uE8l6YHgn7KfP+vntq9HdfJHg3GgDKPOMbWp5zypHzvwTKnKAmp3
+ yXo3AdGPngj+CbtSsuCAjV8zmw50u1iwBZhpXevKm9HgP9U2bwUt7CHXyPrjNp7G4CtB
+ 52gHLW8vzFvpYH2/iunGOfs3Vpf4RF4pxwOTzu5mkiWaUaIe+mKnr/63klKXd7ft/5en
+ R/BA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUU/PxACtpxkMUpwC+jhXBL1O9B+d0qfLf1Bwtujw192pkVfUw4RMBM/taX4PSChPfkdp/wfwtVUIKG@nongnu.org
+X-Gm-Message-State: AOJu0YxM37eDEQYhFzEYksyMtg0fMGVhkgy+2eTjii/1cVnFcvXGqo4b
+ mDEiPT7BCe31F9UT50UiWaaHdE3fg2l+GVgpB51hF1tPiWNTFrb1MDJPmc+OyrMtJJIUOGffggN
+ G
+X-Gm-Gg: ASbGncvbCmvwnaXrw3UyFKGmtcKH72fTBbN+nugPAzxr8ZL9t+VAOXBRvmlRgHU4E4n
+ O7jUtbgasNwvPLiWHMJDf0vVIsftjqgY4uy5UM/snGfDsS0BQEe82CItglirnLAlSD2+r6PHQD1
+ 0+M81Fl6GX4ljvg96db1SSLOOpV2ncEJ5SW05VZCWhP8C2miXTl5V5aSM4QYxVUOHobHPgvnt3Z
+ PifpMQRrqfZpFY80dMo0aQNdRqwnzjzaC9pNLgjzqMMLcfnpyN4qc52K8GnBXSo1JG+As388n58
+ DtJj1w6O1gk8w7Fx50X2s0Ay2rUX2IZ5vzyIdEOhY9r1bsVE1lwiNcF2ECT7ye0oGgZJd1zF0bJ
+ 08nmEucxZ
+X-Google-Smtp-Source: AGHT+IGUw/Gz6m4eCONOEn6IDSAXKA596yMP4OBhO0R+QDCiG4dp+CkK+cnhdnHmF31VvQsLA/VTTg==
+X-Received: by 2002:a17:903:22cb:b0:21f:f3d:d533 with SMTP id
+ d9443c01a7336-22780c5267amr254757465ad.2.1742946030662; 
+ Tue, 25 Mar 2025 16:40:30 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-301bf576c95sm14986253a91.2.2025.03.25.16.40.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Mar 2025 16:40:30 -0700 (PDT)
+Message-ID: <4669c66b-728a-4c6f-8973-0cfb9d0daddc@linaro.org>
+Date: Tue, 25 Mar 2025 16:40:28 -0700
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="3866299591-722171422-1742945011=:7722"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/11] target/avr: Improve decode of LDS, STS
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: mrolnik@gmail.com, pierrick.bouvier@linaro.org, qemu-stable@nongnu.org
+References: <20250325224403.4011975-1-richard.henderson@linaro.org>
+ <20250325224403.4011975-3-richard.henderson@linaro.org>
+ <390926c0-b449-41e9-9b25-f19837df810b@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <390926c0-b449-41e9-9b25-f19837df810b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,67 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 3/25/25 16:13, Philippe Mathieu-Daudé wrote:
+> On 25/3/25 23:43, Richard Henderson wrote:
+>> The comment about not being able to define a field with
+>> zero bits is out of date since 94597b6146f3
+>> ("decodetree: Allow !function with no input bits").
+>>
+>> This fixes the missing load of imm in the disassembler.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 9d8caa67a24 ("target/avr: Add support for disassembling via option '-d in_asm'")
+> 
+> Isn't it:
+> 
+> Fixes: 9732b024f79 ("target/avr: Add instruction translation - Data Transfer Instructions")
+> ?
 
---3866299591-722171422-1742945011=:7722
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Not really.  The trans_FOO for the insn itself does read the immediate.  It was only later 
+when we added the disassembler *without* the immediate read that was buggy.
 
-On Tue, 25 Mar 2025, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> hw/rtc/ds1338.c  | 2 ++
-> hw/rtc/m41t80.c  | 2 ++
-> hw/rtc/rs5c372.c | 2 ++
-> 3 files changed, 6 insertions(+)
->
-> diff --git a/hw/rtc/ds1338.c b/hw/rtc/ds1338.c
-> index 8dd17fdc07c..56162917c1b 100644
-> --- a/hw/rtc/ds1338.c
-> +++ b/hw/rtc/ds1338.c
-> @@ -230,6 +230,8 @@ static void ds1338_class_init(ObjectClass *klass, void *data)
->     k->send = ds1338_send;
->     device_class_set_legacy_reset(dc, ds1338_reset);
->     dc->vmsd = &vmstate_ds1338;
-> +    dc->desc = "Maxim DS1338 RTC";
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> }
->
-> static const TypeInfo ds1338_types[] = {
-> diff --git a/hw/rtc/m41t80.c b/hw/rtc/m41t80.c
-> index 96006956798..55f52d95c51 100644
-> --- a/hw/rtc/m41t80.c
-> +++ b/hw/rtc/m41t80.c
-> @@ -99,6 +99,8 @@ static void m41t80_class_init(ObjectClass *klass, void *data)
->     DeviceClass *dc = DEVICE_CLASS(klass);
->     I2CSlaveClass *sc = I2C_SLAVE_CLASS(klass);
->
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
 
-This set_bit() is not needed for i2c devices, i2c_slave_class_init() sets 
-that already.
-
-Regards,
-BALATON Zoltan
-
-> +    dc->desc = "ST M41T80 RTC";
->     dc->realize = m41t80_realize;
->     sc->send = m41t80_send;
->     sc->recv = m41t80_recv;
-> diff --git a/hw/rtc/rs5c372.c b/hw/rtc/rs5c372.c
-> index 5542f74085a..98067ad06d1 100644
-> --- a/hw/rtc/rs5c372.c
-> +++ b/hw/rtc/rs5c372.c
-> @@ -216,6 +216,8 @@ static void rs5c372_class_init(ObjectClass *klass, void *data)
->     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
->     ResettableClass *rc = RESETTABLE_CLASS(klass);
->
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> +    dc->desc = "Ricoh RS5C372 RTC";
->     k->event = rs5c372_event;
->     k->recv = rs5c372_recv;
->     k->send = rs5c372_send;
->
---3866299591-722171422-1742945011=:7722--
+r~
 
