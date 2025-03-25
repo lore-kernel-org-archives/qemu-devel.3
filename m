@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D74C3600C
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E6DC3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx5Mn-0005QR-7J; Tue, 25 Mar 2025 10:34:57 -0400
+	id 1tx5QS-00078m-UK; Tue, 25 Mar 2025 10:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx5Mk-0005Pt-EF; Tue, 25 Mar 2025 10:34:54 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1tx5QD-00075Y-P5; Tue, 25 Mar 2025 10:38:37 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx5Mh-0002aH-AW; Tue, 25 Mar 2025 10:34:53 -0400
+ id 1tx5Py-000376-FM; Tue, 25 Mar 2025 10:38:29 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMXW84Ld9z4x21;
- Wed, 26 Mar 2025 01:34:44 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMXb56ZXDz4x21;
+ Wed, 26 Mar 2025 01:38:09 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMXW32kCmz4x1w;
- Wed, 26 Mar 2025 01:34:39 +1100 (AEDT)
-Message-ID: <e5dbb0c2-b2a7-44eb-a5b1-9742c18d69ca@kaod.org>
-Date: Tue, 25 Mar 2025 15:34:35 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMXb23PkVz4xM3;
+ Wed, 26 Mar 2025 01:38:06 +1100 (AEDT)
+Message-ID: <6647e498-a334-4eb7-8067-6ea20d0340ac@kaod.org>
+Date: Tue, 25 Mar 2025 15:38:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/10] ppc/pnv: Add HOMER for Power11
+Subject: Re: [PATCH v6 04/10] ppc/pnv: Add a PSI bridge model for Power11
 To: Aditya Gupta <adityag@linux.ibm.com>,
  Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -39,7 +39,7 @@ To: Aditya Gupta <adityag@linux.ibm.com>,
  <fbarrat@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
 References: <20250325112319.927190-1-adityag@linux.ibm.com>
- <20250325112319.927190-2-adityag@linux.ibm.com>
+ <20250325112319.927190-5-adityag@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,17 +84,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250325112319.927190-2-adityag@linux.ibm.com>
+In-Reply-To: <20250325112319.927190-5-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=TX69=WM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,8 +111,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/25 12:23, Aditya Gupta wrote:
-> Power11 core is same as Power10, declare PNV11_HOMER as a child
-> class of PNV10_HOMER, so it goes through same class init
+> Power11 core is same as Power10, reuse PNV10_PSI initialisation, by
+> declaring 'PNV11_PSI' as child class of 'PNV10_PSI'
 > 
 > Cc: Cédric Le Goater <clg@kaod.org>
 > Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
@@ -121,59 +120,77 @@ On 3/25/25 12:23, Aditya Gupta wrote:
 > Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 > Cc: Nicholas Piggin <npiggin@gmail.com>
 > Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+I am removing this Rb.
+
 > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 > ---
->   hw/ppc/pnv_homer.c         | 8 ++++++++
->   include/hw/ppc/pnv_homer.h | 3 +++
->   2 files changed, 11 insertions(+)
+>   hw/ppc/pnv_psi.c         | 24 ++++++++++++++++++++++++
+>   include/hw/ppc/pnv_psi.h |  2 +-
+>   2 files changed, 25 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
-> index 18a53a80c183..fdd3db41828f 100644
-> --- a/hw/ppc/pnv_homer.c
-> +++ b/hw/ppc/pnv_homer.c
-> @@ -238,6 +238,13 @@ static const TypeInfo pnv_homer_power10_type_info = {
->       .parent        = TYPE_PNV_HOMER,
->       .instance_size = sizeof(PnvHomer),
->       .class_init    = pnv_homer_power10_class_init,
-> +    .class_base_init = pnv_homer_power10_class_init,
+> diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+> index 1fe11dde501b..c568edb80e53 100644
+> --- a/hw/ppc/pnv_psi.c
+> +++ b/hw/ppc/pnv_psi.c
+> @@ -937,6 +937,29 @@ static const TypeInfo pnv_psi_power10_info = {
+>       .name          = TYPE_PNV10_PSI,
+>       .parent        = TYPE_PNV9_PSI,
+>       .class_init    = pnv_psi_power10_class_init,
+> +    .class_base_init = pnv_psi_power10_class_init,
 
-I didn't see that previously.
+why change class_base_init ?
 
-Why are you introducing new types for P11 if they are the same as
-P10 ?  Why not use them directly in the P11 chip instance ?
+Thanks,
 
 C.
 
+
 > +};
 > +
-> +static const TypeInfo pnv_homer_power11_type_info = {
-> +    .name          = TYPE_PNV11_HOMER,
-> +    .parent        = TYPE_PNV10_HOMER,
-> +    .instance_size = sizeof(PnvHomer),
+> +static void pnv_psi_power11_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    PnvPsiClass *ppc = PNV_PSI_CLASS(klass);
+> +    static const char compat[] = "ibm,power11-psihb-x\0ibm,psihb-x";
+> +
+> +    dc->desc    = "PowerNV PSI Controller (Power11)";
+> +
+> +    /*
+> +     * ppc->xscom_pbca and ppc->xscom_size will be set up by
+> +     * pnv_psi_power10_class_init
+> +     */
+> +    ppc->compat     = compat;
+> +    ppc->compat_size = sizeof(compat);
+> +}
+> +
+> +static const TypeInfo pnv_psi_power11_info = {
+> +    .name          = TYPE_PNV11_PSI,
+> +    .parent        = TYPE_PNV10_PSI,
+> +    .class_init    = pnv_psi_power11_class_init,
 >   };
 >   
->   static void pnv_homer_realize(DeviceState *dev, Error **errp)
-> @@ -291,6 +298,7 @@ static void pnv_homer_register_types(void)
->       type_register_static(&pnv_homer_power8_type_info);
->       type_register_static(&pnv_homer_power9_type_info);
->       type_register_static(&pnv_homer_power10_type_info);
-> +    type_register_static(&pnv_homer_power11_type_info);
+>   static void pnv_psi_class_init(ObjectClass *klass, void *data)
+> @@ -971,6 +994,7 @@ static void pnv_psi_register_types(void)
+>       type_register_static(&pnv_psi_power8_info);
+>       type_register_static(&pnv_psi_power9_info);
+>       type_register_static(&pnv_psi_power10_info);
+> +    type_register_static(&pnv_psi_power11_info);
 >   }
 >   
->   type_init(pnv_homer_register_types);
-> diff --git a/include/hw/ppc/pnv_homer.h b/include/hw/ppc/pnv_homer.h
-> index a6f2710fa16b..ab7b43f4c910 100644
-> --- a/include/hw/ppc/pnv_homer.h
-> +++ b/include/hw/ppc/pnv_homer.h
-> @@ -35,6 +35,9 @@ DECLARE_INSTANCE_CHECKER(PnvHomer, PNV9_HOMER,
->   #define TYPE_PNV10_HOMER TYPE_PNV_HOMER "-POWER10"
->   DECLARE_INSTANCE_CHECKER(PnvHomer, PNV10_HOMER,
->                            TYPE_PNV10_HOMER)
-> +#define TYPE_PNV11_HOMER TYPE_PNV_HOMER "-POWER11"
-> +DECLARE_INSTANCE_CHECKER(PnvHomer, PNV11_HOMER,
-> +                         TYPE_PNV11_HOMER)
+>   type_init(pnv_psi_register_types);
+> diff --git a/include/hw/ppc/pnv_psi.h b/include/hw/ppc/pnv_psi.h
+> index cf7f95a6b1f5..1182ed47d280 100644
+> --- a/include/hw/ppc/pnv_psi.h
+> +++ b/include/hw/ppc/pnv_psi.h
+> @@ -69,7 +69,7 @@ struct Pnv9Psi {
+>   };
 >   
->   struct PnvHomer {
->       DeviceState parent;
+>   #define TYPE_PNV10_PSI TYPE_PNV_PSI "-POWER10"
+> -
+> +#define TYPE_PNV11_PSI TYPE_PNV_PSI "-POWER11"
+>   
+>   struct PnvPsiClass {
+>       SysBusDeviceClass parent_class;
 
 
