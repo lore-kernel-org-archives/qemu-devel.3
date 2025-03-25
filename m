@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFD1C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824D4C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txD0V-0002Tf-GM; Tue, 25 Mar 2025 18:44:27 -0400
+	id 1txD0K-0001jT-KG; Tue, 25 Mar 2025 18:44:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0N-0001x7-C9
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:19 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txCzs-0000u3-W0
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:49 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0L-00076I-HY
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:19 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43d04dc73b7so64503605e9.3
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txCzr-0006yS-At
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:48 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43d07ca6a80so30983215e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:43:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942656; x=1743547456; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942626; x=1743547426; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rRDzb4lcoabfa1g7TNESo0TRQTsJDJlMbDcBcNVFOTk=;
- b=wTPWNk3cyN+IV0t2U7Ul5bXcNcZ0ImvJGn7+KmwU2FV62F+Nd2c94u7F17v6Phq2eG
- khvx5h4j6FhuoPPX1TIBX5XNkwUvlzGv5liLmWU1kGRW44mXnIhz5jG0BMvp242s09Q/
- IhscxvM+dVfCaugQJLpIGY3uj5fe6x4dQrgCb0lYBtDeNU7T0BsCRKF8egKKHlqns8JG
- StXQtgg1jlWB2jOgo07E2+7XfW7UNKqek470mLwJBCPGgPdBvBIzPBNT48mNfs31HtYx
- 5Jwz6T63GI/9khEuZBDDS8wkIHfb1TdOs3CVfVCQOCFpYNyOxAH6VfI0MfexBdgU/rLm
- djZw==
+ bh=nzqWg6apFTmrvlzKNkVE/DNpvTLzQXt9JAyNTfEbkHg=;
+ b=gdNBCWWI6gAs8m7v05zYj0ItwDQlMvWg356mNwUEH7wfNqOK9xLUU2j8u6iAHxFbpK
+ 9AoE2buGVuj9+Ep6K2yZeIYWnE7CEhqn6slMUIBwsExl8yFbj1iyjAatt9ZpKX04Af20
+ ZRxGP4f+BIGJaBH4EjbIWApoD15lyoJAj6IKKjQV9hThKNTPnjzkzl+MzxiAF2KEamyO
+ HZqDvW9PkQF68VxAamWONrJi0I0iW3jAsSLG5PZS6PrV8KQc0TbJTl5GlLtj7mmg8SZU
+ yzg5w9rrSBQ3SYdrfBiSXrjEP0q+EEqogguwJg56icgV5uqMNwqWndZ2+GdvUzTvJVZs
+ 5U3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942656; x=1743547456;
+ d=1e100.net; s=20230601; t=1742942626; x=1743547426;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rRDzb4lcoabfa1g7TNESo0TRQTsJDJlMbDcBcNVFOTk=;
- b=nTJxpuJeuP8CV5l0Yizh4FDLWpX8BQPLL/asqrQJxp0EE6bAlx5u8GehHO2TvNi21T
- 92pSv8507LUN8gMqLo0n3TC2XwU6oZnsivliMk5ePyJvvqtjkIs8uJsLr59PW1PeIaow
- 1m6aYAmSqd4SUeljKLhCYGi3KXklMm2uxNpfL59D038PImmardQHPAQ02Da1L/dq1gf+
- PQxj7PDD9Tb4zEXndJiydceRgoRgcxQQdQEtJemowqJgIdBbdZsgRnxghbqxrqOZF33T
- jo2GJlr2bInnxxHAIs6fpwSWhgA+DB7aIu04SAZIfju6rzy5aE1+fHwGuja7g/DnzIhx
- jzHQ==
+ bh=nzqWg6apFTmrvlzKNkVE/DNpvTLzQXt9JAyNTfEbkHg=;
+ b=e7uGkL4IBzt2F+GS0ArMPkc7KwNIJF6htDSntJN0XcAyf6P9PJEGqeB8nzg0cynr0L
+ j32Yc8RMy9PAeomATc6Hzhp2kHJ2fl0WMdu5PwqbsIY28DTrOfLwcr95K9emYcXd3riD
+ DEmJX41G66pptpy1Vf2FzMSqCTJggtGvbIfRW0oaeQVslWB62Mk01uiTl/DgFo65LWhx
+ 2RXVLTQYlz2UZ3yo53gB2NfwBCsaVtTPEZW67jqVee/vyuH9y6P88JaO14b1N9WQgpO5
+ jlqTwj0xIX/3aBmthiewka8oBVl2r8UmZ263l6KZVZxyC8l+8ZpjnmTmgX8VfAnNzJRR
+ QqsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvqfV+5Uv+Jxu23rCP1PqvZw9OAyY3kQMUvj0xzDYXFMb5/uvN5dFdB1+3cEDP03B0/2BjUudueQyt@nongnu.org
-X-Gm-Message-State: AOJu0YwVbUfdX3T3TShaw4E3V1xoiOSECfALkAPYNMEzGLyhY4NBRmwp
- 2tXKp/ennNcwakvpnosdQOfPnOf+aiyeV8mUjt/1/WtMk9q/kLLSs2+PIueiggE=
-X-Gm-Gg: ASbGnct3cmYluFZDpQnW/sGiHpxt9GgMJskrPhggRdEaAgLf92v72GBi9XFrslFPaHY
- oEhMDgbDDKwx7z/rNebfLZy04aWnNMVbO5fJM2YCIrmsFEiNiyKM72W53a+N8A/7KR1ea1nWzem
- 4ceak0HfFcLF506Fnm2Q2GEMufg68YfwhPPj+mrdt269m/THPmPM++OxOOT4x7AsMUzpftyZMgK
- WPI+nWAFD5eH+0UJBnLM0sy9qZRTClLZfEIxrrAsiD++RH0NDjcQlJAo0eIdz5w5PrQEp8nFJgZ
- /JVXaUdCihxzrxLC7WjaaW0EcFewpBCvgKaqmuxcgTi2PagrZEw/oDVt2vDasISQzIyMyRqZCv+
- vzYpqlFrgwSmSJ7Y7+wiFtTDqGpPz+g==
-X-Google-Smtp-Source: AGHT+IHHXuXOJ3rhPPn57mhx+DzpUGOFlQZLvBBz9tlzmWRDdef0QxEooRidexd+Q7/SyNK8Dd/jMA==
-X-Received: by 2002:a5d:47a5:0:b0:390:f699:8c27 with SMTP id
- ffacd0b85a97d-3997f902e3dmr16502105f8f.12.1742942656024; 
- Tue, 25 Mar 2025 15:44:16 -0700 (PDT)
+ AJvYcCW+G0qj+PVUVcZkdrBKNl/DKSF/7FJdWQJFirc2MWCDOoNrLfAd17Inkr5aktfvY8mpLgg7MXVHoa6s@nongnu.org
+X-Gm-Message-State: AOJu0YzmLdwf8Tm9boGbgpqDCuS3glDAfRf9KScooAAVF4XQ2COBIFMg
+ PvTzqKYc4MIItMMK3+AzHgLURn9ULmYCrNCi6XMqyw5/KwxUwLPlssEAdDFNSOk=
+X-Gm-Gg: ASbGncuFX/BWdb/HJ264vJwuLrv5qCv9roKwOdq0lMLor5wUPPhUyBYwix1XVCm3a51
+ slxvLYR+/vWQKJKeiq7Yty7GV2n6/zNa2K2U1WAuY0jDqs2E7E5YfqI9PC6WS3TYQzUXBPQXFtU
+ 9zt1IPHYVMmTxk1vFLFjeCL5e1v0Jjo7YmD1wb0sWvS/fe9IAwjO2a1KTMr+K+iJ5uUnOFURQGW
+ /FRCnZ/UhtuJ3ts/909yfP2gbz/M/e8naniJU7I6JOpnzBdDanH5AeEjcsmogTZD6m7ingt8YOb
+ yPHO+zKIZV6pG7lkUvfmMYvEaQCJ/MZO3aQkhhymnKDnIgKpMDpzgtj7UMPk0cEPfDJHMt1zg+m
+ pfa1KvGsVY5RIZxnTc+tCRNWIqK2dQg==
+X-Google-Smtp-Source: AGHT+IHs4UQHBwFObHDTNeiYxdNcM9vTxmJmo8Rr+pkZo5Yzr0PBtMCZ8vgGTj9Sd9VPusd/HyANOA==
+X-Received: by 2002:a05:600c:1c19:b0:43d:db5:7b1a with SMTP id
+ 5b1f17b1804b1-43d509efb48mr157940585e9.12.1742942625793; 
+ Tue, 25 Mar 2025 15:43:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f99561dsm15172846f8f.12.2025.03.25.15.44.14
+ ffacd0b85a97d-3997f9b565bsm15149881f8f.58.2025.03.25.15.43.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 15:44:15 -0700 (PDT)
+ Tue, 25 Mar 2025 15:43:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Thomas Huth <thuth@redhat.com>,
 	qemu-devel@nongnu.org
@@ -84,17 +84,17 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
  Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org
-Subject: [PATCH-for-10.0 11/12] hw/sensor/temp: Categorize and add description
-Date: Tue, 25 Mar 2025 23:43:09 +0100
-Message-ID: <20250325224310.8785-12-philmd@linaro.org>
+Subject: [PATCH-for-10.0 06/12] hw/i2c/pca954x: Categorize and add description
+Date: Tue, 25 Mar 2025 23:43:04 +0100
+Message-ID: <20250325224310.8785-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
 References: <20250325224310.8785-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,90 +119,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sensor/dps310.c  | 2 ++
- hw/sensor/emc141x.c | 6 ++++++
- hw/sensor/tmp105.c  | 2 ++
- hw/sensor/tmp421.c  | 4 ++++
- 4 files changed, 14 insertions(+)
+ hw/i2c/i2c_mux_pca954x.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/hw/sensor/dps310.c b/hw/sensor/dps310.c
-index 6966a53248b..e1e6df6b60a 100644
---- a/hw/sensor/dps310.c
-+++ b/hw/sensor/dps310.c
-@@ -207,6 +207,8 @@ static void dps310_class_init(ObjectClass *klass, void *data)
-     k->send = dps310_tx;
-     device_class_set_legacy_reset(dc, dps310_reset);
-     dc->vmsd = &vmstate_dps310;
-+    dc->desc = "Infineon DPS310 temperature and humidity sensor";
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
- }
- 
- static const TypeInfo dps310_info = {
-diff --git a/hw/sensor/emc141x.c b/hw/sensor/emc141x.c
-index 33c1bd330fd..6adb94e7ff5 100644
---- a/hw/sensor/emc141x.c
-+++ b/hw/sensor/emc141x.c
-@@ -280,19 +280,25 @@ static void emc141x_class_init(ObjectClass *klass, const void *data)
- static void emc1413_class_init(ObjectClass *klass, void *data)
+diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
+index 779cc4e66ed..100b8d86093 100644
+--- a/hw/i2c/i2c_mux_pca954x.c
++++ b/hw/i2c/i2c_mux_pca954x.c
+@@ -175,12 +175,18 @@ I2CBus *pca954x_i2c_get_bus(I2CSlave *mux, uint8_t channel)
+ static void pca9546_class_init(ObjectClass *klass, void *data)
  {
-     EMC141XClass *ec = EMC141X_CLASS(klass);
+     Pca954xClass *s = PCA954X_CLASS(klass);
 +    DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     emc141x_class_init(klass, data);
-     ec->model = EMC1413_DEVICE_ID;
-     ec->sensors_count = 3;
-+    dc->desc = "SMSC EMC1413 temperature sensor";
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++
++    dc->desc = "PCA9546 I2C multiplexer";
+     s->nchans = PCA9546_CHANNEL_COUNT;
  }
  
- static void emc1414_class_init(ObjectClass *klass, void *data)
+ static void pca9548_class_init(ObjectClass *klass, void *data)
  {
-     EMC141XClass *ec = EMC141X_CLASS(klass);
+     Pca954xClass *s = PCA954X_CLASS(klass);
 +    DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     emc141x_class_init(klass, data);
-     ec->model = EMC1414_DEVICE_ID;
-     ec->sensors_count = 4;
-+    dc->desc = "SMSC EMC1414 temperature sensor";
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++
++    dc->desc = "PCA9548 I2C multiplexer";
+     s->nchans = PCA9548_CHANNEL_COUNT;
  }
  
- static const TypeInfo emc141x_info = {
-diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
-index ef2824f3e1b..6a38f2c6670 100644
---- a/hw/sensor/tmp105.c
-+++ b/hw/sensor/tmp105.c
-@@ -323,6 +323,8 @@ static void tmp105_class_init(ObjectClass *klass, void *data)
-     k->recv = tmp105_rx;
-     k->send = tmp105_tx;
-     dc->vmsd = &vmstate_tmp105;
-+    dc->desc = "TI TMP105 temperature sensor";
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+@@ -226,13 +232,13 @@ static void pca954x_class_init(ObjectClass *klass, void *data)
+ 
+     rc->phases.enter = pca954x_enter_reset;
+ 
+-    dc->desc = "Pca954x i2c-mux";
+     dc->realize = pca954x_realize;
+ 
+     k->write_data = pca954x_write_data;
+     k->receive_byte = pca954x_read_byte;
+ 
+     device_class_set_props(dc, pca954x_props);
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
  }
  
- static const TypeInfo tmp105_info = {
-diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
-index 007f7cd018b..ba42ab328e0 100644
---- a/hw/sensor/tmp421.c
-+++ b/hw/sensor/tmp421.c
-@@ -342,6 +342,7 @@ static void tmp421_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-     TMP421Class *sc = TMP421_CLASS(klass);
-+    g_autofree char *name_up = NULL;
- 
-     dc->realize = tmp421_realize;
-     k->event = tmp421_event;
-@@ -349,6 +350,9 @@ static void tmp421_class_init(ObjectClass *klass, void *data)
-     k->send = tmp421_tx;
-     dc->vmsd = &vmstate_tmp421;
-     sc->dev = (DeviceInfo *) data;
-+    name_up = g_ascii_strup(sc->dev->name, -1);
-+    dc->desc = g_strconcat("TI ", name_up, " temperature sensor", NULL);
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
- 
-     object_class_property_add(klass, "temperature0", "int",
-                               tmp421_get_temperature,
+ static const TypeInfo pca954x_info[] = {
 -- 
 2.47.1
 
