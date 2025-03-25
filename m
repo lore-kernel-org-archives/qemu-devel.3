@@ -4,69 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D4AC36002
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 03:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2447FC36005
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 03:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twua2-0006iT-RM; Mon, 24 Mar 2025 23:03:55 -0400
+	id 1twuiw-0008CZ-UK; Mon, 24 Mar 2025 23:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1twuZo-0006gl-2o
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 23:03:41 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1twuZl-0000R8-0n
- for qemu-devel@nongnu.org; Mon, 24 Mar 2025 23:03:39 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxbWv8HOJnIxKlAA--.15231S3;
- Tue, 25 Mar 2025 11:03:25 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDx_MTwHOJnH7NeAA--.14746S3;
- Tue, 25 Mar 2025 11:03:22 +0800 (CST)
-Subject: Re: [PATCH v7 1/2] hw/loongarch/virt: Fix cpuslot::cpu set at last in
- virt_cpu_plug()
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250324030145.3037408-1-maobibo@loongson.cn>
- <20250324030145.3037408-2-maobibo@loongson.cn> <875xjzvu8a.fsf@pond.sub.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <7bfa9f13-6233-0756-7d8b-80f44b5a3775@loongson.cn>
-Date: Tue, 25 Mar 2025 11:02:31 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1twuio-0008Bj-CA
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 23:13:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1twuik-0001Sb-1Z
+ for qemu-devel@nongnu.org; Mon, 24 Mar 2025 23:12:56 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52OIjKOn030755
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 03:12:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ n/fmoKRO2wa2rYwTqKTIx8JVIbaYZrnCKRv2xQEDKes=; b=IzEa2Ewt1zqtZ5eC
+ ZnQ7BRIz+IzLZC/ujv5eeQ2zbUjCicEJSBSon5r32Tz1Xq9DmfO5BLelTfWUBr8f
+ b/Cki0wETTZDQ04ER3vru+Yy00MGbttY1fxkpWIKsK6uhwqvzMGUpTZeLHjBNswZ
+ NLYNdzq8JO2lRrSxh5jToTqRfxDmektg5GGmL9SszlJoj/JidSABMv9tkXv6EFMf
+ HCj8k26aNcjfEckOJu3V5Hp2CVir/L0AIt3EhL1TQvLRlvSoxSeY/UiUzpFfxvP5
+ 4Q7skRCruttPhVgL5ENs8fwHPBGX+GOLmU/RcVYT9P05x0huDP9QrZ9vVdH1EQOz
+ FTZlFA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45hmt068r9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 03:12:50 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2242f3fd213so80018235ad.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Mar 2025 20:12:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742872369; x=1743477169;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=n/fmoKRO2wa2rYwTqKTIx8JVIbaYZrnCKRv2xQEDKes=;
+ b=d1SndxFZIBnkQjENXfMw6Sgx7f8Ro0tSRmVoSON5om2oeU3qsEHqtXo319CYsg3poF
+ aJTZafFdeBdzMFY1NORXKzf6JXmoNi1W6iGCxNEyoKwfyOw1pMn8i1GttimvzdszPPPP
+ CradM0Ns+dZOXyBesj22zWX0RJMtwHz33IN2/xA3FnyYnsLTx0Kwq28rylqnDe9c58dG
+ CKPX+2gXxEm4ep92fkMUPCIN0LCjOTsDr+uZ4GtnSb8UGlcqq0qYW0ZrWPx6O5LVXwpA
+ zRzvdBA06v2rs+oeCc492zl6jMrQ1kT5ZHIy/s1q+MmN/Tcu24TSBVrqktmbwLXwnJ+Z
+ IAYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMyw5Hb9lyELgyOR45n8So5c4YHz88bk09VHrCcpoX6lhRqPESlXbp21hWPWetzREuXc5nH9KjqPqZ@nongnu.org
+X-Gm-Message-State: AOJu0Yzb2h+YV2C2TxIPO5Y0yAvw5QTlrrrfrAfDg1k8Bb5dQZB3aO6H
+ k0K4MVr2WtZoTd/rcTczrcHQ+D7AI1JcwX7CMhek9tfwQd+z3lox5ODV/DOf77eNd2pjrgYdGiz
+ kwKDVwhfvQMNpIabHc/c/TLtzyeoA2ujRiY/z6Ngiur9IZuyKwylFLQ==
+X-Gm-Gg: ASbGnctklGzPoLQ+sihZajheP1oQyO5m7Bt5Cl/9OQx9bEHbYSNWfPkGPGKvHECshxp
+ qxgFYwQdgNvFa2mbWe26eAixNugZ79MtAF25EWxsuedmFlBdVRe9qqAcew30H9CY6H3Cuh8udmC
+ 2GDuXaKbVgUKRX7ZYLNZYeg+Mf3X/OA1bJ1FNe90UKWt2cCEWP7agQ0q2nGsX7lTpoWQBUcQGOu
+ ctz6UUlvQIowflDEQXAEacig5VK9Py3aH0WenODZpd2pE7Tlexb9+wYw/48QRk9izCjfDFqdxNL
+ zH/Hjtf0rfGGF0JGRO2DQWL7R0Z/ZaV1qpxeB3GzNEMtswqeO4efYrgNDpM2wf37oK9tc/hKMRn
+ tGO6klITuF8jZbgmW
+X-Received: by 2002:a05:6a00:84c:b0:736:621d:fd32 with SMTP id
+ d2e1a72fcca58-73905a23312mr22071549b3a.22.1742872369218; 
+ Mon, 24 Mar 2025 20:12:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIUDeKcBdTCaZiqBRmTOdTUPknJjLkEvDsbQ7sKXSgMyAQ8rGvwdeuGjBXNqsi7tARagUO7A==
+X-Received: by 2002:a05:6a00:84c:b0:736:621d:fd32 with SMTP id
+ d2e1a72fcca58-73905a23312mr22071511b3a.22.1742872368619; 
+ Mon, 24 Mar 2025 20:12:48 -0700 (PDT)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739060085b5sm8891425b3a.73.2025.03.24.20.12.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Mar 2025 20:12:48 -0700 (PDT)
+Message-ID: <e02be58e-9459-4799-8725-c7831169c89a@oss.qualcomm.com>
+Date: Mon, 24 Mar 2025 22:12:46 -0500
 MIME-Version: 1.0
-In-Reply-To: <875xjzvu8a.fsf@pond.sub.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] target/hexagon: Drop `ident` postprocess step
+To: ltaylorsimpson@gmail.com, 'Anton Johansson' <anjo@rev.ng>,
+ qemu-devel@nongnu.org
+Cc: ale@rev.ng, philmd@linaro.org
+References: <20250312194547.7364-1-anjo@rev.ng>
+ <20250312194547.7364-3-anjo@rev.ng>
+ <001501db9d28$affce200$0ff6a600$@gmail.com>
 Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <001501db9d28$affce200$0ff6a600$@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDx_MTwHOJnH7NeAA--.14746S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WFyxAry7JF17Jry7Kw48uFX_yoW8Gw4xpr
- ZrA3Wqv3Wktryq9a4IqFyYqryvkrsxGrn7WFsFy3WYgrs8Xr1qyFW2yw4DKF4rC340qF48
- Zw4rCFWq9F4fXrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1YL9U
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.591,
+X-Proofpoint-GUID: v0o0L9R52viAxPJd7zxQBBpG48InyHnC
+X-Proofpoint-ORIG-GUID: v0o0L9R52viAxPJd7zxQBBpG48InyHnC
+X-Authority-Analysis: v=2.4 cv=aqGyCTZV c=1 sm=1 tr=0 ts=67e21f32 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=7w2_MBhos4imgj-Oe9YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-25_01,2025-03-21_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=980 bulkscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 phishscore=0 adultscore=0
+ spamscore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503250021
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,49 +134,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus,
 
-Thanks for your reviewing and guidance.
-
-Regards
-Bibo Mao
-
-On 2025/3/24 下午2:05, Markus Armbruster wrote:
-> Bibo Mao <maobibo@loongson.cn> writes:
-> 
->> In function virt_cpu_plug(), Object cpuslot::cpu is set at last
->> only when there is no any error, otherwise it is problematic that
->> cpuslot::cpu is set in advance however it returns because of error.
+On 3/24/2025 8:53 PM, ltaylorsimpson@gmail.com wrote:
+>
+>> -----Original Message-----
+>> From: Anton Johansson <anjo@rev.ng>
+>> Sent: Wednesday, March 12, 2025 2:46 PM
+>> To: qemu-devel@nongnu.org
+>> Cc: ale@rev.ng; ltaylorsimpson@gmail.com; brian.cain@oss.qualcomm.com;
+>> philmd@linaro.org
+>> Subject: [PATCH 2/2] target/hexagon: Drop `ident` postprocess step
 >>
->> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> The indent command is not available on a default mac osx setup with xcode
+>> cli tools installed.  While it does make idef-parser generated code nicer
+> to
+>> debug, it's not crucial and can be dropped.
+>>
+>> Signed-off-by: Anton Johansson <anjo@rev.ng>
 >> ---
->>   hw/loongarch/virt.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>   target/hexagon/meson.build | 21 ++-------------------
+>>   1 file changed, 2 insertions(+), 19 deletions(-)
 >>
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index e25864214f..504f8755a0 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
->> @@ -973,8 +973,6 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
->>       Error *err = NULL;
->>   
->> -    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
->> -    cpu_slot->cpu = CPU(dev);
->>       if (lvms->ipi) {
->>           hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
->>           if (err) {
->> @@ -998,6 +996,8 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->>           }
->>       }
->>   
->> +    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
->> +    cpu_slot->cpu = CPU(dev);
->>       return;
->>   }
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> 
+>> diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+>> index abcf00ca1f..246dc7b241 100644
+>> --- a/target/hexagon/meson.build
+>> +++ b/target/hexagon/meson.build
+>> @@ -323,30 +323,13 @@ if idef_parser_enabled and 'hexagon-linux-user' in
+>> target_dirs
+>>           command: [idef_parser, '@INPUT@', '@OUTPUT0@', '@OUTPUT1@',
+>> '@OUTPUT2@']
+>>       )
+>>
+>> -    indent = find_program('indent', required: false)
+>> -    if indent.found()
+>> -        idef_generated_tcg_c = custom_target(
+>> -            'indent',
+>> -            input: idef_generated_tcg[0],
+>> -            output: 'idef-generated-emitter.indented.c',
+>> -            command: [indent, '-linux', '@INPUT@', '-o', '@OUTPUT@']
+>> -        )
+>> -    else
+>> -        idef_generated_tcg_c = custom_target(
+>> -            'copy',
+>> -            input: idef_generated_tcg[0],
+>> -            output: 'idef-generated-emitter.indented.c',
+>> -            command: ['cp', '@INPUT@', '@OUTPUT@']
+>> -        )
+>> -    endif
+>> -
+> I prefer to have the indented version present.
+>
+> Is the above check/fallback not sufficient on MacOS?  It works on a Linux
+> system where indent is not present.
 
+
+Aside: could using "clang-format" be another approach?  I suppose it's 
+just exchanging one dependency for another, but maybe xcode comes w/this 
+tool?  Then again, maybe it would be an inconvenient dependency on linux 
+systems?
+
+
+
+> Thanks,
+> Taylor
+>
+>
 
