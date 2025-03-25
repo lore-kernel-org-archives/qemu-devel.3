@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711EFC3600B
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C1EC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twy8m-0005Fi-6d; Tue, 25 Mar 2025 02:52:03 -0400
+	id 1twyAe-0000Ol-9M; Tue, 25 Mar 2025 02:53:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy8O-00050m-S5; Tue, 25 Mar 2025 02:51:37 -0400
+ id 1twyA2-0007BE-1Y; Tue, 25 Mar 2025 02:53:21 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy8M-0001qj-Hx; Tue, 25 Mar 2025 02:51:36 -0400
+ id 1twy9y-0001zw-7j; Tue, 25 Mar 2025 02:53:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FA14107D70;
- Tue, 25 Mar 2025 09:49:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 01FF4107D81;
+ Tue, 25 Mar 2025 09:49:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C65B81D5E7D;
- Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 98D661D5E8C;
+ Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BCE0257042; Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
+ id 8894157060; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Andreas Schwab <schwab@suse.de>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.10 49/51] linux-user/riscv: Fix handling of cpu mask in
- riscv_hwprobe syscall
-Date: Tue, 25 Mar 2025 09:50:35 +0300
-Message-Id: <20250325065038.3263786-7-mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 63/69] target/ppc: Fix facility interrupt checks for VSX
+Date: Tue, 25 Mar 2025 09:50:36 +0300
+Message-Id: <20250325065043.3263864-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
-References: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -64,99 +63,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-The third argument of the syscall contains the size of the
-cpu mask in bytes, not bits.  Nor is the size rounded up to
-a multiple of sizeof(abi_ulong).
+Facility interrupt checks in general should come after the ISA version
+check, because the facility interrupt and facility type themselves are
+ISA dependent and should not appear on CPUs where the instruction does
+not exist at all.
 
+This resolves a QEMU crash booting NetBSD/macppc due to
+
+  qemu: fatal: Raised an exception without defined vector 94
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2741
+Cc: Chinmay Rath <rathc@linux.ibm.com>
 Cc: qemu-stable@nongnu.org
-Reported-by: Andreas Schwab <schwab@suse.de>
-Fixes: 9e1c7d982d7 ("linux-user/riscv: Add syscall riscv_hwprobe")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250308225902.1208237-3-richard.henderson@linaro.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 1a010d22b7adecf0fb1c069e1e535af1aa51e9cf)
+Debugged-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: aa0f34ec3fc7 ("target/ppc: implement vrlq")
+Fixes: 7419dc5b2b5b ("target/ppc: Move VSX vector storage access insns to decodetree.")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+(cherry picked from commit 8defe9da08135d03e054f20cb8fea4389be96e18)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 4dff03d2bd..15caa698b2 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8906,35 +8906,38 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
-     }
- }
- 
--static int cpu_set_valid(abi_long arg3, abi_long arg4)
-+/*
-+ * If the cpumask_t of (target_cpus, cpusetsize) cannot be read: -EFAULT.
-+ * If the cpumast_t has no bits set: -EINVAL.
-+ * Otherwise the cpumask_t contains some bit set: 0.
-+ * Unlike the kernel, we do not mask cpumask_t by the set of online cpus,
-+ * nor bound the search by cpumask_size().
-+ */
-+static int nonempty_cpu_set(abi_ulong cpusetsize, abi_ptr target_cpus)
+diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+index 70d0ad2e71..92d6e8c603 100644
+--- a/target/ppc/translate/vmx-impl.c.inc
++++ b/target/ppc/translate/vmx-impl.c.inc
+@@ -994,8 +994,8 @@ static bool do_vector_rotl_quad(DisasContext *ctx, arg_VX *a, bool mask,
  {
--    int ret, i, tmp;
--    size_t host_mask_size, target_mask_size;
--    unsigned long *host_mask;
--
--    /*
--     * cpu_set_t represent CPU masks as bit masks of type unsigned long *.
--     * arg3 contains the cpu count.
--     */
--    tmp = (8 * sizeof(abi_ulong));
--    target_mask_size = ((arg3 + tmp - 1) / tmp) * sizeof(abi_ulong);
--    host_mask_size = (target_mask_size + (sizeof(*host_mask) - 1)) &
--                     ~(sizeof(*host_mask) - 1);
--
--    host_mask = alloca(host_mask_size);
--
--    ret = target_to_host_cpu_mask(host_mask, host_mask_size,
--                                  arg4, target_mask_size);
--    if (ret != 0) {
--        return ret;
--    }
-+    unsigned char *p = lock_user(VERIFY_READ, target_cpus, cpusetsize, 1);
-+    int ret = -TARGET_EFAULT;
+     TCGv_i64 ah, al, vrb, n, t0, t1, zero = tcg_constant_i64(0);
  
--    for (i = 0 ; i < host_mask_size / sizeof(*host_mask); i++) {
--        if (host_mask[i] != 0) {
--            return 0;
-+    if (p) {
-+        ret = -TARGET_EINVAL;
-+        /*
-+         * Since we only care about the empty/non-empty state of the cpumask_t
-+         * not the individual bits, we do not need to repartition the bits
-+         * from target abi_ulong to host unsigned long.
-+         *
-+         * Note that the kernel does not round up cpusetsize to a multiple of
-+         * sizeof(abi_ulong).  After bounding cpusetsize by cpumask_size(),
-+         * it copies exactly cpusetsize bytes into a zeroed buffer.
-+         */
-+        for (abi_ulong i = 0; i < cpusetsize; ++i) {
-+            if (p[i]) {
-+                ret = 0;
-+                break;
-+            }
-         }
-+        unlock_user(p, target_cpus, 0);
+-    REQUIRE_VECTOR(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, ISA310);
++    REQUIRE_VECTOR(ctx);
+ 
+     ah = tcg_temp_new_i64();
+     al = tcg_temp_new_i64();
+diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+index a869f30e86..00ad57c628 100644
+--- a/target/ppc/translate/vsx-impl.c.inc
++++ b/target/ppc/translate/vsx-impl.c.inc
+@@ -61,8 +61,8 @@ static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
+     TCGv EA;
+     TCGv_i64 t0;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, VSX);
++    REQUIRE_VSX(ctx);
+ 
+     t0 = tcg_temp_new_i64();
+     gen_set_access_type(ctx, ACCESS_INT);
+@@ -80,8 +80,8 @@ static bool trans_LXVW4X(DisasContext *ctx, arg_LXVW4X *a)
+     TCGv EA;
+     TCGv_i64 xth, xtl;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, VSX);
++    REQUIRE_VSX(ctx);
+ 
+     xth = tcg_temp_new_i64();
+     xtl = tcg_temp_new_i64();
+@@ -113,12 +113,12 @@ static bool trans_LXVWSX(DisasContext *ctx, arg_LXVWSX *a)
+     TCGv EA;
+     TCGv_i32 data;
+ 
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+     if (a->rt < 32) {
+         REQUIRE_VSX(ctx);
+     } else {
+         REQUIRE_VECTOR(ctx);
      }
--    return -TARGET_EINVAL;
-+    return ret;
- }
+-    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
  
- static abi_long do_riscv_hwprobe(CPUArchState *cpu_env, abi_long arg1,
-@@ -8951,7 +8954,7 @@ static abi_long do_riscv_hwprobe(CPUArchState *cpu_env, abi_long arg1,
+     gen_set_access_type(ctx, ACCESS_INT);
+     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+@@ -133,8 +133,8 @@ static bool trans_LXVDSX(DisasContext *ctx, arg_LXVDSX *a)
+     TCGv EA;
+     TCGv_i64 data;
  
-     /* check cpu_set */
-     if (arg3 != 0) {
--        ret = cpu_set_valid(arg3, arg4);
-+        ret = nonempty_cpu_set(arg3, arg4);
-         if (ret != 0) {
-             return ret;
-         }
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, VSX);
++    REQUIRE_VSX(ctx);
+ 
+     gen_set_access_type(ctx, ACCESS_INT);
+     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+@@ -185,8 +185,8 @@ static bool trans_LXVH8X(DisasContext *ctx, arg_LXVH8X *a)
+     TCGv EA;
+     TCGv_i64 xth, xtl;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++    REQUIRE_VSX(ctx);
+ 
+     xth = tcg_temp_new_i64();
+     xtl = tcg_temp_new_i64();
+@@ -208,8 +208,8 @@ static bool trans_LXVB16X(DisasContext *ctx, arg_LXVB16X *a)
+     TCGv EA;
+     TCGv_i128 data;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++    REQUIRE_VSX(ctx);
+ 
+     data = tcg_temp_new_i128();
+     gen_set_access_type(ctx, ACCESS_INT);
+@@ -312,8 +312,8 @@ static bool trans_STXVD2X(DisasContext *ctx, arg_STXVD2X *a)
+     TCGv EA;
+     TCGv_i64 t0;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, VSX);
++    REQUIRE_VSX(ctx);
+ 
+     t0 = tcg_temp_new_i64();
+     gen_set_access_type(ctx, ACCESS_INT);
+@@ -331,8 +331,8 @@ static bool trans_STXVW4X(DisasContext *ctx, arg_STXVW4X *a)
+     TCGv EA;
+     TCGv_i64 xsh, xsl;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, VSX);
++    REQUIRE_VSX(ctx);
+ 
+     xsh = tcg_temp_new_i64();
+     xsl = tcg_temp_new_i64();
+@@ -364,8 +364,8 @@ static bool trans_STXVH8X(DisasContext *ctx, arg_STXVH8X *a)
+     TCGv EA;
+     TCGv_i64 xsh, xsl;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++    REQUIRE_VSX(ctx);
+ 
+     xsh = tcg_temp_new_i64();
+     xsl = tcg_temp_new_i64();
+@@ -394,8 +394,8 @@ static bool trans_STXVB16X(DisasContext *ctx, arg_STXVB16X *a)
+     TCGv EA;
+     TCGv_i128 data;
+ 
+-    REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++    REQUIRE_VSX(ctx);
+ 
+     data = tcg_temp_new_i128();
+     gen_set_access_type(ctx, ACCESS_INT);
 -- 
 2.39.5
 
