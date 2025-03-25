@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9B2C3600B
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE617C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txASw-0000aD-0C; Tue, 25 Mar 2025 16:01:38 -0400
+	id 1txASw-0000ac-Mz; Tue, 25 Mar 2025 16:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASo-0000XZ-Jw
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASj-0000XF-4j
  for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASi-0002jt-Pd
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASd-0002jW-17
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742932881;
+ s=mimecast20190719; t=1742932878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mNWq4Zkn511gTXZGqrK+l1nnK3/ULixPs7g79ZxDsAU=;
- b=g7tkMTUqt3ghaG3JJyGzZuS6Oho0pbclHBPjQkcXsBRKvJysPy6xAckhuMCq57AwuSYL1a
- vqNeMdhCrmLE65mcKqu/Z3M+unpf8JsIB14B/u1ip9OHviR+yrHYdvBD3MBYCrSU7dWe+x
- FebvoF26nOsb64h4zReoTUI4P8iGI1Y=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GHHfz+fegxqk8qT+aLB4m7mRgq2owx0MGuT4JPovqSs=;
+ b=RONMfINeUE4KG6NyDrvVk9xgqwflFbnE1rKRQpdncCOZ1kkwu3cNbYpkKhDJAdpo9me99S
+ J3yg/T+a4nC6S/hjVhem4T2tf+24psKdqAJLZyUolGDG7xgLTWK511drh/+weoRgAU3KWj
+ NUvDWs4p8K5g435uoNL+U8gtlWR41k0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-6jXpZHpsMzW54xGxquFOSg-1; Tue,
- 25 Mar 2025 16:01:17 -0400
-X-MC-Unique: 6jXpZHpsMzW54xGxquFOSg-1
-X-Mimecast-MFC-AGG-ID: 6jXpZHpsMzW54xGxquFOSg_1742932876
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-9zq7HHX2Ma61ARixEoXJCA-1; Tue,
+ 25 Mar 2025 16:01:11 -0400
+X-MC-Unique: 9zq7HHX2Ma61ARixEoXJCA-1
+X-Mimecast-MFC-AGG-ID: 9zq7HHX2Ma61ARixEoXJCA_1742932870
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5E0D1903081; Tue, 25 Mar 2025 20:01:16 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B07351956075; Tue, 25 Mar 2025 20:01:10 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.142])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 44FCC1801756; Tue, 25 Mar 2025 20:01:13 +0000 (UTC)
+ id F1C8D1801A65; Tue, 25 Mar 2025 20:01:08 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 15/15] Remove the remainders of the Avocado tests
-Date: Tue, 25 Mar 2025 21:00:23 +0100
-Message-ID: <20250325200026.344006-16-thuth@redhat.com>
+Subject: [PATCH 13/15] tests/functional: Convert the SMMU test to the
+ functional framework
+Date: Tue, 25 Mar 2025 21:00:21 +0100
+Message-ID: <20250325200026.344006-14-thuth@redhat.com>
 In-Reply-To: <20250325200026.344006-1-thuth@redhat.com>
 References: <20250325200026.344006-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -67,8 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,1624 +85,425 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Now that all Avocado tests have been converted to or been replaced by
-other functional tests, we can delete the remainders of the Avocado
-tests from the QEMU source tree.
+This test was using cloudinit and a "dnf install" command in the guest
+to exercise the NIC with SMMU enabled. Since we don't have the cloudinit
+stuff in the functional framework and we should not rely on having access
+to external networks (once our ASSETs have been cached), we rather boot
+into the initrd first, manually mount the root disk and then use the
+check_http_download() function from the functional framework here instead
+for testing whether the network works as expected.
 
+Unfortunately, there seems to be a small race when using the files
+from Fedora 33: To enter the initrd shell, we have to send a "return"
+once. But it does not seem to work if we send it too early. Using a
+sleep(0.2) makes it work reliably for me, but to make it even more
+unlikely to trigger this situation, let's better limit the Fedora 33
+tests to only run with KVM.
+
+Finally, while we're at it, we also add some lines for testing writes
+to the hard disk, as we already do it in the test_intel_iommu test.
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                             |   8 +-
- docs/about/build-platforms.rst          |  10 +-
- docs/devel/build-system.rst             |  11 +-
- docs/devel/codebase.rst                 |   5 -
- docs/devel/testing/avocado.rst          | 581 ------------------------
- docs/devel/testing/functional.rst       |   3 -
- docs/devel/testing/index.rst            |   1 -
- docs/devel/testing/main.rst             |  15 -
- tests/avocado/README.rst                |  10 -
- configure                               |   2 +-
- pythondeps.toml                         |   8 +-
- tests/Makefile.include                  |  60 +--
- tests/avocado/avocado_qemu/__init__.py  | 424 -----------------
- tests/avocado/avocado_qemu/linuxtest.py | 253 -----------
- 14 files changed, 16 insertions(+), 1375 deletions(-)
- delete mode 100644 docs/devel/testing/avocado.rst
- delete mode 100644 tests/avocado/README.rst
- delete mode 100644 tests/avocado/avocado_qemu/__init__.py
- delete mode 100644 tests/avocado/avocado_qemu/linuxtest.py
+ MAINTAINERS                           |   2 +-
+ tests/avocado/smmu.py                 | 139 -----------------
+ tests/functional/meson.build          |   2 +
+ tests/functional/test_aarch64_smmu.py | 205 ++++++++++++++++++++++++++
+ 4 files changed, 208 insertions(+), 140 deletions(-)
+ delete mode 100644 tests/avocado/smmu.py
+ create mode 100755 tests/functional/test_aarch64_smmu.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 9bd9cb836ce..56408133cd6 100644
+index acdd8941168..9bd9cb836ce 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2072,7 +2072,7 @@ S: Supported
- F: hw/acpi/viot.c
- F: hw/acpi/viot.h
- 
--ACPI/AVOCADO/BIOSBITS
-+ACPI/FUNCTIONAL/BIOSBITS
- M: Ani Sinha <anisinha@redhat.com>
- M: Michael S. Tsirkin <mst@redhat.com>
- S: Supported
-@@ -4245,12 +4245,6 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+@@ -211,7 +211,7 @@ L: qemu-arm@nongnu.org
  S: Maintained
- F: tests/tcg/Makefile.target
+ F: hw/arm/smmu*
+ F: include/hw/arm/smmu*
+-F: tests/avocado/smmu.py
++F: tests/functional/test_aarch64_smmu.py
  
--Integration Testing with the Avocado framework
--W: https://trello.com/b/6Qi1pxVn/avocado-qemu
--R: Cleber Rosa <crosa@redhat.com>
--S: Odd Fixes
--F: tests/avocado/
--
- GitLab custom runner (Works On Arm Sponsored)
- M: Alex Bennée <alex.bennee@linaro.org>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 1552b1a7044..52521552c8a 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -123,11 +123,11 @@ Rust build dependencies
-   to build QEMU.
- 
- Optional build dependencies
--  Build components whose absence does not affect the ability to build
--  QEMU may not be available in distros, or may be too old for QEMU's
--  requirements.  Many of these, such as the Avocado testing framework
--  or various linters, are written in Python and therefore can also
--  be installed using ``pip``.  Cross compilers are another example
-+  Build components whose absence does not affect the ability to build QEMU
-+  may not be available in distros, or may be too old for our requirements.
-+  Many of these, such as additional modules for the functional testing
-+  framework or various linters, are written in Python and therefore can
-+  also be installed using ``pip``.  Cross compilers are another example
-   of optional build-time dependency; in this case it is possible to
-   download them from repositories such as EPEL, to use container-based
-   cross compilation using ``docker`` or ``podman``, or to use pre-built
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index a759982f45c..258cfad3fe7 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -134,7 +134,7 @@ in how the build process runs Python code.
- 
- At this stage, ``configure`` also queries the chosen Python interpreter
- about QEMU's build dependencies.  Note that the build process does  *not*
--look for ``meson``, ``sphinx-build`` or ``avocado`` binaries in the PATH;
-+look for ``meson`` or ``sphinx-build`` binaries in the PATH;
- likewise, there are no options such as ``--meson`` or ``--sphinx-build``.
- This avoids a potential mismatch, where Meson and Sphinx binaries on the
- PATH might operate in a different Python environment than the one chosen
-@@ -151,7 +151,7 @@ virtual environment with ``pip``, either from wheels in ``python/wheels``
- or by downloading the package with PyPI.  Downloading can be disabled with
- ``--disable-download``; and anyway, it only happens when a ``configure``
- option (currently, only ``--enable-docs``) is explicitly enabled but
--the dependencies are not present\ [#pip]_.
-+the dependencies are not present.
- 
- .. [#distlib] The scripts are created based on the package's metadata,
-               specifically the ``console_script`` entry points.  This is the
-@@ -164,10 +164,6 @@ the dependencies are not present\ [#pip]_.
-               because the Python Packaging Authority provides a package
-               ``distlib.scripts`` to perform this task.
- 
--.. [#pip] ``pip`` might also be used when running ``make check-avocado``
--           if downloading is enabled, to ensure that Avocado is
--           available.
--
- The required versions of the packages are stored in a configuration file
- ``pythondeps.toml``.  The format is custom to QEMU, but it is documented
- at the top of the file itself and it should be easy to understand.  The
-@@ -497,8 +493,7 @@ number of dynamically created files listed later.
-   ``pyvenv/bin``, and calling ``pip`` to install dependencies.
- 
- ``tests/Makefile.include``
--  Rules for external test harnesses. These include the TCG tests
--  and the Avocado-based integration tests.
-+  Rules for external test harnesses like the TCG tests.
- 
- ``tests/docker/Makefile.include``
-   Rules for Docker tests. Like ``tests/Makefile.include``, this file is
-diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
-index 1b09953197b..1da17f40494 100644
---- a/docs/devel/codebase.rst
-+++ b/docs/devel/codebase.rst
-@@ -175,11 +175,6 @@ yet, so sometimes the source code is all you have.
- * `tests <https://gitlab.com/qemu-project/qemu/-/tree/master/tests>`_:
-   QEMU `test <testing>` suite
- 
--  - `avocado <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/avocado>`_:
--    Functional tests booting full VM using `Avocado framework <checkavocado-ref>`.
--    Those tests will be transformed and moved into
--    `tests/functional <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/functional>`_
--    in the future.
-   - `data <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/data>`_:
-     Data for various tests.
-   - `decode <https://gitlab.com/qemu-project/qemu/-/tree/master/tests/decode>`_:
-diff --git a/docs/devel/testing/avocado.rst b/docs/devel/testing/avocado.rst
+ AVR TCG CPUs
+ M: Michael Rolnik <mrolnik@gmail.com>
+diff --git a/tests/avocado/smmu.py b/tests/avocado/smmu.py
 deleted file mode 100644
-index eda76fe2dbd..00000000000
---- a/docs/devel/testing/avocado.rst
+index 83fd79e922e..00000000000
+--- a/tests/avocado/smmu.py
 +++ /dev/null
-@@ -1,581 +0,0 @@
--.. _checkavocado-ref:
--
--
--Integration testing with Avocado
--================================
--
--The ``tests/avocado`` directory hosts integration tests. They're usually
--higher level tests, and may interact with external resources and with
--various guest operating systems.
--
--These tests are written using the Avocado Testing Framework (which must be
--installed separately) in conjunction with a the ``avocado_qemu.QemuSystemTest``
--class, implemented at ``tests/avocado/avocado_qemu``.
--
--Tests based on ``avocado_qemu.QemuSystemTest`` can easily:
--
-- * Customize the command line arguments given to the convenience
--   ``self.vm`` attribute (a QEMUMachine instance)
--
-- * Interact with the QEMU monitor, send QMP commands and check
--   their results
--
-- * Interact with the guest OS, using the convenience console device
--   (which may be useful to assert the effectiveness and correctness of
--   command line arguments or QMP commands)
--
-- * Interact with external data files that accompany the test itself
--   (see ``self.get_data()``)
--
-- * Download (and cache) remote data files, such as firmware and kernel
--   images
--
-- * Have access to a library of guest OS images (by means of the
--   ``avocado.utils.vmimage`` library)
--
-- * Make use of various other test related utilities available at the
--   test class itself and at the utility library:
--
--   - http://avocado-framework.readthedocs.io/en/latest/api/test/avocado.html#avocado.Test
--   - http://avocado-framework.readthedocs.io/en/latest/api/utils/avocado.utils.html
--
--Running tests
---------------
--
--You can run the avocado tests simply by executing:
--
--.. code::
--
--  make check-avocado
--
--This involves the automatic installation, from PyPI, of all the
--necessary avocado-framework dependencies into the QEMU venv within the
--build tree (at ``./pyvenv``). Test results are also saved within the
--build tree (at ``tests/results``).
--
--Note: the build environment must be using a Python 3 stack, and have
--the ``venv`` and ``pip`` packages installed.  If necessary, make sure
--``configure`` is called with ``--python=`` and that those modules are
--available.  On Debian and Ubuntu based systems, depending on the
--specific version, they may be on packages named ``python3-venv`` and
--``python3-pip``.
--
--It is also possible to run tests based on tags using the
--``make check-avocado`` command and the ``AVOCADO_TAGS`` environment
--variable:
--
--.. code::
--
--   make check-avocado AVOCADO_TAGS=quick
--
--Note that tags separated with commas have an AND behavior, while tags
--separated by spaces have an OR behavior. For more information on Avocado
--tags, see:
--
-- https://avocado-framework.readthedocs.io/en/latest/guides/user/chapters/tags.html
--
--To run a single test file, a couple of them, or a test within a file
--using the ``make check-avocado`` command, set the ``AVOCADO_TESTS``
--environment variable with the test files or test names. To run all
--tests from a single file, use:
--
-- .. code::
--
--  make check-avocado AVOCADO_TESTS=$FILEPATH
--
--The same is valid to run tests from multiple test files:
--
-- .. code::
--
--  make check-avocado AVOCADO_TESTS='$FILEPATH1 $FILEPATH2'
--
--To run a single test within a file, use:
--
-- .. code::
--
--  make check-avocado AVOCADO_TESTS=$FILEPATH:$TESTCLASS.$TESTNAME
--
--The same is valid to run single tests from multiple test files:
--
-- .. code::
--
--  make check-avocado AVOCADO_TESTS='$FILEPATH1:$TESTCLASS1.$TESTNAME1 $FILEPATH2:$TESTCLASS2.$TESTNAME2'
--
--The scripts installed inside the virtual environment may be used
--without an "activation".  For instance, the Avocado test runner
--may be invoked by running:
--
-- .. code::
--
--  pyvenv/bin/avocado run $OPTION1 $OPTION2 tests/avocado/
--
--Note that if ``make check-avocado`` was not executed before, it is
--possible to create the Python virtual environment with the dependencies
--needed running:
--
-- .. code::
--
--  make check-venv
--
--It is also possible to run tests from a single file or a single test within
--a test file. To run tests from a single file within the build tree, use:
--
-- .. code::
--
--  pyvenv/bin/avocado run tests/avocado/$TESTFILE
--
--To run a single test within a test file, use:
--
-- .. code::
--
--  pyvenv/bin/avocado run tests/avocado/$TESTFILE:$TESTCLASS.$TESTNAME
--
--Valid test names are visible in the output from any previous execution
--of Avocado or ``make check-avocado``, and can also be queried using:
--
-- .. code::
--
--  pyvenv/bin/avocado list tests/avocado
--
--Manual Installation
---------------------
--
--To manually install Avocado and its dependencies, run:
--
--.. code::
--
--  pip install --user avocado-framework
--
--Alternatively, follow the instructions on this link:
--
--  https://avocado-framework.readthedocs.io/en/latest/guides/user/chapters/installing.html
--
--Overview
----------
--
--The ``tests/avocado/avocado_qemu`` directory provides the
--``avocado_qemu`` Python module, containing the ``avocado_qemu.QemuSystemTest``
--class.  Here's a simple usage example:
--
--.. code::
--
--  from avocado_qemu import QemuSystemTest
--
--
--  class Version(QemuSystemTest):
--      """
--      :avocado: tags=quick
--      """
--      def test_qmp_human_info_version(self):
--          self.vm.launch()
--          res = self.vm.cmd('human-monitor-command',
--                            command_line='info version')
--          self.assertRegex(res, r'^(\d+\.\d+\.\d)')
--
--To execute your test, run:
--
--.. code::
--
--  avocado run version.py
--
--Tests may be classified according to a convention by using docstring
--directives such as ``:avocado: tags=TAG1,TAG2``.  To run all tests
--in the current directory, tagged as "quick", run:
--
--.. code::
--
--  avocado run -t quick .
--
--The ``avocado_qemu.QemuSystemTest`` base test class
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
--
--The ``avocado_qemu.QemuSystemTest`` class has a number of characteristics
--that are worth being mentioned right away.
--
--First of all, it attempts to give each test a ready to use QEMUMachine
--instance, available at ``self.vm``.  Because many tests will tweak the
--QEMU command line, launching the QEMUMachine (by using ``self.vm.launch()``)
--is left to the test writer.
--
--The base test class has also support for tests with more than one
--QEMUMachine. The way to get machines is through the ``self.get_vm()``
--method which will return a QEMUMachine instance. The ``self.get_vm()``
--method accepts arguments that will be passed to the QEMUMachine creation
--and also an optional ``name`` attribute so you can identify a specific
--machine and get it more than once through the tests methods. A simple
--and hypothetical example follows:
--
--.. code::
--
--  from avocado_qemu import QemuSystemTest
--
--
--  class MultipleMachines(QemuSystemTest):
--      def test_multiple_machines(self):
--          first_machine = self.get_vm()
--          second_machine = self.get_vm()
--          self.get_vm(name='third_machine').launch()
--
--          first_machine.launch()
--          second_machine.launch()
--
--          first_res = first_machine.cmd(
--              'human-monitor-command',
--              command_line='info version')
--
--          second_res = second_machine.cmd(
--              'human-monitor-command',
--              command_line='info version')
--
--          third_res = self.get_vm(name='third_machine').cmd(
--              'human-monitor-command',
--              command_line='info version')
--
--          self.assertEqual(first_res, second_res, third_res)
--
--At test "tear down", ``avocado_qemu.QemuSystemTest`` handles all the
--QEMUMachines shutdown.
--
--The ``avocado_qemu.LinuxTest`` base test class
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
--
--The ``avocado_qemu.LinuxTest`` is further specialization of the
--``avocado_qemu.QemuSystemTest`` class, so it contains all the characteristics
--of the later plus some extra features.
--
--First of all, this base class is intended for tests that need to
--interact with a fully booted and operational Linux guest.  At this
--time, it uses a Fedora 31 guest image.  The most basic example looks
--like this:
--
--.. code::
--
--  from avocado_qemu import LinuxTest
--
--
--  class SomeTest(LinuxTest):
--
--      def test(self):
--          self.launch_and_wait()
--          self.ssh_command('some_command_to_be_run_in_the_guest')
--
--Please refer to tests that use ``avocado_qemu.LinuxTest`` under
--``tests/avocado`` for more examples.
--
--QEMUMachine
-------------
--
--The QEMUMachine API is already widely used in the Python iotests,
--device-crash-test and other Python scripts.  It's a wrapper around the
--execution of a QEMU binary, giving its users:
--
-- * the ability to set command line arguments to be given to the QEMU
--   binary
--
-- * a ready to use QMP connection and interface, which can be used to
--   send commands and inspect its results, as well as asynchronous
--   events
--
-- * convenience methods to set commonly used command line arguments in
--   a more succinct and intuitive way
--
--QEMU binary selection
--^^^^^^^^^^^^^^^^^^^^^
--
--The QEMU binary used for the ``self.vm`` QEMUMachine instance will
--primarily depend on the value of the ``qemu_bin`` parameter.  If it's
--not explicitly set, its default value will be the result of a dynamic
--probe in the same source tree.  A suitable binary will be one that
--targets the architecture matching host machine.
--
--Based on this description, test writers will usually rely on one of
--the following approaches:
--
--1) Set ``qemu_bin``, and use the given binary
--
--2) Do not set ``qemu_bin``, and use a QEMU binary named like
--   "qemu-system-${arch}", either in the current
--   working directory, or in the current source tree.
--
--The resulting ``qemu_bin`` value will be preserved in the
--``avocado_qemu.QemuSystemTest`` as an attribute with the same name.
--
--Attribute reference
---------------------
--
--Test
--^^^^
--
--Besides the attributes and methods that are part of the base
--``avocado.Test`` class, the following attributes are available on any
--``avocado_qemu.QemuSystemTest`` instance.
--
--vm
--""
--
--A QEMUMachine instance, initially configured according to the given
--``qemu_bin`` parameter.
--
--arch
--""""
--
--The architecture can be used on different levels of the stack, e.g. by
--the framework or by the test itself.  At the framework level, it will
--currently influence the selection of a QEMU binary (when one is not
--explicitly given).
--
--Tests are also free to use this attribute value, for their own needs.
--A test may, for instance, use the same value when selecting the
--architecture of a kernel or disk image to boot a VM with.
--
--The ``arch`` attribute will be set to the test parameter of the same
--name.  If one is not given explicitly, it will either be set to
--``None``, or, if the test is tagged with one (and only one)
--``:avocado: tags=arch:VALUE`` tag, it will be set to ``VALUE``.
--
--cpu
--"""
--
--The cpu model that will be set to all QEMUMachine instances created
--by the test.
--
--The ``cpu`` attribute will be set to the test parameter of the same
--name. If one is not given explicitly, it will either be set to
--``None ``, or, if the test is tagged with one (and only one)
--``:avocado: tags=cpu:VALUE`` tag, it will be set to ``VALUE``.
--
--machine
--"""""""
--
--The machine type that will be set to all QEMUMachine instances created
--by the test.
--
--The ``machine`` attribute will be set to the test parameter of the same
--name.  If one is not given explicitly, it will either be set to
--``None``, or, if the test is tagged with one (and only one)
--``:avocado: tags=machine:VALUE`` tag, it will be set to ``VALUE``.
--
--qemu_bin
--""""""""
--
--The preserved value of the ``qemu_bin`` parameter or the result of the
--dynamic probe for a QEMU binary in the current working directory or
--source tree.
--
--LinuxTest
--^^^^^^^^^
--
--Besides the attributes present on the ``avocado_qemu.QemuSystemTest`` base
--class, the ``avocado_qemu.LinuxTest`` adds the following attributes:
--
--distro
--""""""
--
--The name of the Linux distribution used as the guest image for the
--test.  The name should match the **Provider** column on the list
--of images supported by the avocado.utils.vmimage library:
--
--https://avocado-framework.readthedocs.io/en/latest/guides/writer/libs/vmimage.html#supported-images
--
--distro_version
--""""""""""""""
--
--The version of the Linux distribution as the guest image for the
--test.  The name should match the **Version** column on the list
--of images supported by the avocado.utils.vmimage library:
--
--https://avocado-framework.readthedocs.io/en/latest/guides/writer/libs/vmimage.html#supported-images
--
--distro_checksum
--"""""""""""""""
--
--The sha256 hash of the guest image file used for the test.
--
--If this value is not set in the code or by a test parameter (with the
--same name), no validation on the integrity of the image will be
--performed.
--
--Parameter reference
---------------------
--
--To understand how Avocado parameters are accessed by tests, and how
--they can be passed to tests, please refer to::
--
--  https://avocado-framework.readthedocs.io/en/latest/guides/writer/chapters/writing.html#accessing-test-parameters
--
--Parameter values can be easily seen in the log files, and will look
--like the following:
--
--.. code::
--
--  PARAMS (key=qemu_bin, path=*, default=./qemu-system-x86_64) => './qemu-system-x86_64
--
--Test
--^^^^
--
--arch
--""""
--
--The architecture that will influence the selection of a QEMU binary
--(when one is not explicitly given).
--
--Tests are also free to use this parameter value, for their own needs.
--A test may, for instance, use the same value when selecting the
--architecture of a kernel or disk image to boot a VM with.
--
--This parameter has a direct relation with the ``arch`` attribute.  If
--not given, it will default to None.
--
--cpu
--"""
--
--The cpu model that will be set to all QEMUMachine instances created
--by the test.
--
--machine
--"""""""
--
--The machine type that will be set to all QEMUMachine instances created
--by the test.
--
--qemu_bin
--""""""""
--
--The exact QEMU binary to be used on QEMUMachine.
--
--LinuxTest
--^^^^^^^^^
--
--Besides the parameters present on the ``avocado_qemu.QemuSystemTest`` base
--class, the ``avocado_qemu.LinuxTest`` adds the following parameters:
--
--distro
--""""""
--
--The name of the Linux distribution used as the guest image for the
--test.  The name should match the **Provider** column on the list
--of images supported by the avocado.utils.vmimage library:
--
--https://avocado-framework.readthedocs.io/en/latest/guides/writer/libs/vmimage.html#supported-images
--
--distro_version
--""""""""""""""
--
--The version of the Linux distribution as the guest image for the
--test.  The name should match the **Version** column on the list
--of images supported by the avocado.utils.vmimage library:
--
--https://avocado-framework.readthedocs.io/en/latest/guides/writer/libs/vmimage.html#supported-images
--
--distro_checksum
--"""""""""""""""
--
--The sha256 hash of the guest image file used for the test.
--
--If this value is not set in the code or by this parameter no
--validation on the integrity of the image will be performed.
--
--Skipping tests
----------------
--
--The Avocado framework provides Python decorators which allow for easily skip
--tests running under certain conditions. For example, on the lack of a binary
--on the test system or when the running environment is a CI system. For further
--information about those decorators, please refer to::
--
--  https://avocado-framework.readthedocs.io/en/latest/guides/writer/chapters/writing.html#skipping-tests
--
--While the conditions for skipping tests are often specifics of each one, there
--are recurring scenarios identified by the QEMU developers and the use of
--environment variables became a kind of standard way to enable/disable tests.
--
--Here is a list of the most used variables:
--
--AVOCADO_ALLOW_LARGE_STORAGE
--^^^^^^^^^^^^^^^^^^^^^^^^^^^
--Tests which are going to fetch or produce assets considered *large* are not
--going to run unless that ``AVOCADO_ALLOW_LARGE_STORAGE=1`` is exported on
--the environment.
--
--The definition of *large* is a bit arbitrary here, but it usually means an
--asset which occupies at least 1GB of size on disk when uncompressed.
--
--SPEED
--^^^^^
--Tests which have a long runtime will not be run unless ``SPEED=slow`` is
--exported on the environment.
--
--The definition of *long* is a bit arbitrary here, and it depends on the
--usefulness of the test too. A unique test is worth spending more time on,
--small variations on existing tests perhaps less so. As a rough guide,
--a test or set of similar tests which take more than 100 seconds to
--complete.
--
--AVOCADO_ALLOW_UNTRUSTED_CODE
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^
--There are tests which will boot a kernel image or firmware that can be
--considered not safe to run on the developer's workstation, thus they are
--skipped by default. The definition of *not safe* is also arbitrary but
--usually it means a blob which either its source or build process aren't
--public available.
--
--You should export ``AVOCADO_ALLOW_UNTRUSTED_CODE=1`` on the environment in
--order to allow tests which make use of those kind of assets.
--
--AVOCADO_TIMEOUT_EXPECTED
--^^^^^^^^^^^^^^^^^^^^^^^^
--The Avocado framework has a timeout mechanism which interrupts tests to avoid the
--test suite of getting stuck. The timeout value can be set via test parameter or
--property defined in the test class, for further details::
--
--  https://avocado-framework.readthedocs.io/en/latest/guides/writer/chapters/writing.html#setting-a-test-timeout
--
--Even though the timeout can be set by the test developer, there are some tests
--that may not have a well-defined limit of time to finish under certain
--conditions. For example, tests that take longer to execute when QEMU is
--compiled with debug flags. Therefore, the ``AVOCADO_TIMEOUT_EXPECTED`` variable
--has been used to determine whether those tests should run or not.
--
--QEMU_TEST_FLAKY_TESTS
--^^^^^^^^^^^^^^^^^^^^^
--Some tests are not working reliably and thus are disabled by default.
--This includes tests that don't run reliably on GitLab's CI which
--usually expose real issues that are rarely seen on developer machines
--due to the constraints of the CI environment. If you encounter a
--similar situation then raise a bug and then mark the test as shown on
--the code snippet below:
--
--.. code::
--
--  # See https://gitlab.com/qemu-project/qemu/-/issues/nnnn
--  @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--  def test(self):
--      do_something()
--
--You can also add ``:avocado: tags=flaky`` to the test meta-data so
--only the flaky tests can be run as a group:
--
--.. code::
--
--   env QEMU_TEST_FLAKY_TESTS=1 ./pyvenv/bin/avocado \
--      run tests/avocado -filter-by-tags=flaky
--
--Tests should not live in this state forever and should either be fixed
--or eventually removed.
--
--
--Uninstalling Avocado
----------------------
--
--If you've followed the manual installation instructions above, you can
--easily uninstall Avocado.  Start by listing the packages you have
--installed::
--
--  pip list --user
--
--And remove any package you want with::
--
--  pip uninstall <package_name>
--
--If you've used ``make check-avocado``, the Python virtual environment where
--Avocado is installed will be cleaned up as part of ``make check-clean``.
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index 9bc973392aa..8030cb4299f 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -6,9 +6,6 @@ Functional testing with Python
- The ``tests/functional`` directory hosts functional tests written in
- Python. They are usually higher level tests, and may interact with
- external resources and with various guest operating systems.
--The functional tests have initially evolved from the Avocado tests, so there
--is a lot of similarity to those tests here (see :ref:`checkavocado-ref` for
--details about the Avocado tests).
- 
- The tests should be written in the style of the Python `unittest`_ framework,
- using stdio for the TAP protocol. The folder ``tests/functional/qemu_test``
-diff --git a/docs/devel/testing/index.rst b/docs/devel/testing/index.rst
-index 1171f7db8f0..ccc2fc6cbc1 100644
---- a/docs/devel/testing/index.rst
-+++ b/docs/devel/testing/index.rst
-@@ -10,7 +10,6 @@ testing infrastructure.
-    main
-    qtest
-    functional
--   avocado
-    acpi-bits
-    ci
-    fuzzing
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 9869bcf0341..3c03d769539 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -894,21 +894,6 @@ Python. You can run the functional tests simply by executing:
- 
- See :ref:`checkfunctional-ref` for more details.
- 
--Integration tests using the Avocado Framework
-----------------------------------------------
--
--The ``tests/avocado`` directory hosts integration tests. They're usually
--higher level tests, and may interact with external resources and with
--various guest operating systems.
--
--You can run the avocado tests simply by executing:
--
--.. code::
--
--  make check-avocado
--
--See :ref:`checkavocado-ref` for more details.
--
- .. _checktcg-ref:
- 
- Testing with "make check-tcg"
-diff --git a/tests/avocado/README.rst b/tests/avocado/README.rst
-deleted file mode 100644
-index 94488371bbe..00000000000
---- a/tests/avocado/README.rst
-+++ /dev/null
-@@ -1,10 +0,0 @@
--=============================================
--Integration tests using the Avocado Framework
--=============================================
--
--This directory contains integration tests. They're usually higher
--level, and may interact with external resources and with various
--guest operating systems.
--
--For more information, please refer to ``docs/devel/testing.rst``,
--section "Integration tests using the Avocado Framework".
-diff --git a/configure b/configure
-index 02f1dd2311f..000309cf610 100755
---- a/configure
-+++ b/configure
-@@ -1685,7 +1685,7 @@ LINKS="$LINKS pc-bios/optionrom/Makefile"
- LINKS="$LINKS pc-bios/s390-ccw/Makefile"
- LINKS="$LINKS pc-bios/vof/Makefile"
- LINKS="$LINKS .gdbinit scripts" # scripts needed by relative path in .gdbinit
--LINKS="$LINKS tests/avocado tests/data"
-+LINKS="$LINKS tests/data"
- LINKS="$LINKS tests/qemu-iotests/check tests/qemu-iotests/Makefile"
- LINKS="$LINKS python"
- for f in $LINKS ; do
-diff --git a/pythondeps.toml b/pythondeps.toml
-index c03c9df81b5..7eaaa0fed10 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -27,9 +27,5 @@ pycotap = { accepted = ">=1.1.0", installed = "1.3.1" }
- sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
- sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
- 
--[avocado]
--# Note that qemu.git/python/ is always implicitly installed.
--# Prefer an LTS version when updating the accepted versions of
--# avocado-framework, for example right now the limit is 92.x.
--avocado-framework = { accepted = "(>=103.0, <104.0)", installed = "103.0", canary = "avocado" }
--pycdlib = { accepted = ">=1.11.0" }
-+[testdeps]
-+qemu.qmp = { accepted = ">=0.0.3", installed = "0.0.3" }
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 010369bd3ac..23fb722d426 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -18,7 +18,6 @@ ifneq ($(filter $(all-check-targets), check-softfloat),)
- 	@echo " $(MAKE) check-tcg                Run TCG tests"
- 	@echo " $(MAKE) check-softfloat          Run FPU emulation tests"
- endif
--	@echo " $(MAKE) check-avocado            Run avocado (integration) tests for currently configured targets"
- 	@echo
- 	@echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML test report"
- 	@echo " $(MAKE) check-venv               Creates a Python venv for tests"
-@@ -26,7 +25,6 @@ endif
- 	@echo
- 	@echo "The following are useful for CI builds"
- 	@echo " $(MAKE) check-build              Build most test binaries"
--	@echo " $(MAKE) get-vm-images            Downloads all images used by avocado tests, according to configured targets (~350 MB each, 1.5 GB max)"
- 	@echo
- 	@echo
- 	@echo "The variable SPEED can be set to control the gtester speed setting."
-@@ -86,26 +84,12 @@ distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
- 
- # Python venv for running tests
- 
--.PHONY: check-venv check-avocado check-acceptance check-acceptance-deprecated-warning
-+.PHONY: check-venv
- 
- # Build up our target list from the filtered list of ninja targets
- TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
- 
- TESTS_VENV_TOKEN=$(BUILD_DIR)/pyvenv/tests.group
--TESTS_RESULTS_DIR=$(BUILD_DIR)/tests/results
--ifndef AVOCADO_TESTS
--	AVOCADO_TESTS=tests/avocado
--endif
--# Controls the output generated by Avocado when running tests.
--# Any number of command separated loggers are accepted.  For more
--# information please refer to "avocado --help".
--AVOCADO_SHOW?=app
--ifndef AVOCADO_TAGS
--	AVOCADO_CMDLINE_TAGS=$(patsubst %-softmmu,-t arch:%, \
--						 $(filter %-softmmu,$(TARGETS)))
--else
--	AVOCADO_CMDLINE_TAGS=$(addprefix -t , $(AVOCADO_TAGS))
--endif
- 
- quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
-     $(PYTHON) -m pip -q --disable-pip-version-check $1, \
-@@ -113,47 +97,11 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
- 
- $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
- 	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
--	$(MKVENV_ENSUREGROUP) $< avocado
-+	$(MKVENV_ENSUREGROUP) $< testdeps
- 	$(call quiet-command, touch $@)
- 
--$(TESTS_RESULTS_DIR):
--	$(call quiet-command, mkdir -p $@, \
--            MKDIR, $@)
--
- check-venv: $(TESTS_VENV_TOKEN)
- 
--FEDORA_31_ARCHES_TARGETS=$(patsubst %-softmmu,%, $(filter %-softmmu,$(TARGETS)))
--FEDORA_31_ARCHES_CANDIDATES=$(patsubst ppc64,ppc64le,$(FEDORA_31_ARCHES_TARGETS))
--FEDORA_31_ARCHES := x86_64 aarch64 ppc64le s390x
--FEDORA_31_DOWNLOAD=$(filter $(FEDORA_31_ARCHES),$(FEDORA_31_ARCHES_CANDIDATES))
--
--# download one specific Fedora 31 image
--get-vm-image-fedora-31-%: check-venv
--	$(call quiet-command, \
--             $(PYTHON) -m avocado vmimage get \
--             --distro=fedora --distro-version=31 --arch=$*, \
--	"AVOCADO", "Downloading avocado tests VM image for $*")
--
--# download all vm images, according to defined targets
--get-vm-images: check-venv $(patsubst %,get-vm-image-fedora-31-%, $(FEDORA_31_DOWNLOAD))
--
--check-avocado: check-venv $(TESTS_RESULTS_DIR) get-vm-images
--	$(call quiet-command, \
--            $(PYTHON) -m avocado \
--            --show=$(AVOCADO_SHOW) run --job-results-dir=$(TESTS_RESULTS_DIR) \
--            $(if $(AVOCADO_TAGS),, --filter-by-tags-include-empty \
--			--filter-by-tags-include-empty-key) \
--            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=1 \
--            $(if $(GITLAB_CI),,--failfast) $(AVOCADO_TESTS), \
--            "AVOCADO", "tests/avocado")
--
--check-acceptance-deprecated-warning:
--	@echo
--	@echo "Note '$(MAKE) check-acceptance' is deprecated, use '$(MAKE) check-avocado' instead."
--	@echo
--
--check-acceptance: check-acceptance-deprecated-warning | check-avocado
--
- FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
- .PHONY: $(FUNCTIONAL_TARGETS)
- $(FUNCTIONAL_TARGETS):
-@@ -166,13 +114,13 @@ check-functional:
- 
- # Consolidated targets
- 
--.PHONY: check check-clean get-vm-images
-+.PHONY: check check-clean
- check:
- 
- check-build: run-ninja
- 
- check-clean:
--	rm -rf $(TESTS_RESULTS_DIR)
-+	rm -rf $(BUILD_DIR)/tests/functional
- 
- clean: check-clean clean-tcg
- distclean: distclean-tcg
-diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
-deleted file mode 100644
-index 93c34602428..00000000000
---- a/tests/avocado/avocado_qemu/__init__.py
-+++ /dev/null
-@@ -1,424 +0,0 @@
--# Test class and utilities for functional tests
+@@ -1,139 +0,0 @@
+-# SMMUv3 Functional tests
 -#
--# Copyright (c) 2018 Red Hat, Inc.
+-# Copyright (c) 2021 Red Hat, Inc.
 -#
 -# Author:
--#  Cleber Rosa <crosa@redhat.com>
+-#  Eric Auger <eric.auger@redhat.com>
 -#
 -# This work is licensed under the terms of the GNU GPL, version 2 or
 -# later.  See the COPYING file in the top-level directory.
--
--import logging
 -import os
--import subprocess
--import sys
--import tempfile
--import time
--import uuid
 -
--import avocado
--from avocado.utils import ssh
--from avocado.utils.path import find_command
+-from avocado import skipUnless
+-from avocado_qemu import BUILD_DIR
+-from avocado_qemu.linuxtest import LinuxTest
 -
--from qemu.machine import QEMUMachine
--from qemu.utils import (get_info_usernet_hostfwd_port, kvm_available,
--                        tcg_available)
--
--
--#: The QEMU build root directory.  It may also be the source directory
--#: if building from the source dir, but it's safer to use BUILD_DIR for
--#: that purpose.  Be aware that if this code is moved outside of a source
--#: and build tree, it will not be accurate.
--BUILD_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
--
--
--def has_cmd(name, args=None):
+-@skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-class SMMU(LinuxTest):
 -    """
--    This function is for use in a @avocado.skipUnless decorator, e.g.:
--
--        @skipUnless(*has_cmd('sudo -n', ('sudo', '-n', 'true')))
--        def test_something_that_needs_sudo(self):
--            ...
+-    :avocado: tags=accel:kvm
+-    :avocado: tags=cpu:host
+-    :avocado: tags=arch:aarch64
+-    :avocado: tags=machine:virt
+-    :avocado: tags=distro:fedora
+-    :avocado: tags=smmu
+-    :avocado: tags=flaky
 -    """
 -
--    if args is None:
--        args = ('which', name)
--
--    try:
--        _, stderr, exitcode = run_cmd(args)
--    except Exception as e:
--        exitcode = -1
--        stderr = str(e)
--
--    if exitcode != 0:
--        cmd_line = ' '.join(args)
--        err = f'{name} required, but "{cmd_line}" failed: {stderr.strip()}'
--        return (False, err)
--    else:
--        return (True, '')
--
--def has_cmds(*cmds):
--    """
--    This function is for use in a @avocado.skipUnless decorator and
--    allows checking for the availability of multiple commands, e.g.:
--
--        @skipUnless(*has_cmds(('cmd1', ('cmd1', '--some-parameter')),
--                              'cmd2', 'cmd3'))
--        def test_something_that_needs_cmd1_and_cmd2(self):
--            ...
--    """
--
--    for cmd in cmds:
--        if isinstance(cmd, str):
--            cmd = (cmd,)
--
--        ok, errstr = has_cmd(*cmd)
--        if not ok:
--            return (False, errstr)
--
--    return (True, '')
--
--def run_cmd(args):
--    subp = subprocess.Popen(args,
--                            stdout=subprocess.PIPE,
--                            stderr=subprocess.PIPE,
--                            universal_newlines=True)
--    stdout, stderr = subp.communicate()
--    ret = subp.returncode
--
--    return (stdout, stderr, ret)
--
--def is_readable_executable_file(path):
--    return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
--
--
--def pick_default_qemu_bin(bin_prefix='qemu-system-', arch=None):
--    """
--    Picks the path of a QEMU binary, starting either in the current working
--    directory or in the source tree root directory.
--
--    :param arch: the arch to use when looking for a QEMU binary (the target
--                 will match the arch given).  If None (the default), arch
--                 will be the current host system arch (as given by
--                 :func:`os.uname`).
--    :type arch: str
--    :returns: the path to the default QEMU binary or None if one could not
--              be found
--    :rtype: str or None
--    """
--    if arch is None:
--        arch = os.uname()[4]
--    # qemu binary path does not match arch for powerpc, handle it
--    if 'ppc64le' in arch:
--        arch = 'ppc64'
--    qemu_bin_name = bin_prefix + arch
--    qemu_bin_paths = [
--        os.path.join(".", qemu_bin_name),
--        os.path.join(BUILD_DIR, qemu_bin_name),
--        os.path.join(BUILD_DIR, "build", qemu_bin_name),
--    ]
--    for path in qemu_bin_paths:
--        if is_readable_executable_file(path):
--            return path
--    return None
--
--
--def _console_interaction(test, success_message, failure_message,
--                         send_string, keep_sending=False, vm=None):
--    assert not keep_sending or send_string
--    if vm is None:
--        vm = test.vm
--    console = vm.console_file
--    console_logger = logging.getLogger('console')
--    while True:
--        if send_string:
--            vm.console_socket.sendall(send_string.encode())
--            if not keep_sending:
--                send_string = None # send only once
--
--        # Only consume console output if waiting for something
--        if success_message is None and failure_message is None:
--            if send_string is None:
--                break
--            continue
--
--        try:
--            msg = console.readline().decode().strip()
--        except UnicodeDecodeError:
--            msg = None
--        if not msg:
--            continue
--        console_logger.debug(msg)
--        if success_message is None or success_message in msg:
--            break
--        if failure_message and failure_message in msg:
--            console.close()
--            fail = 'Failure message found in console: "%s". Expected: "%s"' % \
--                    (failure_message, success_message)
--            test.fail(fail)
--
--def interrupt_interactive_console_until_pattern(test, success_message,
--                                                failure_message=None,
--                                                interrupt_string='\r'):
--    """
--    Keep sending a string to interrupt a console prompt, while logging the
--    console output. Typical use case is to break a boot loader prompt, such:
--
--        Press a key within 5 seconds to interrupt boot process.
--        5
--        4
--        3
--        2
--        1
--        Booting default image...
--
--    :param test: an Avocado test containing a VM that will have its console
--                 read and probed for a success or failure message
--    :type test: :class:`avocado_qemu.QemuSystemTest`
--    :param success_message: if this message appears, test succeeds
--    :param failure_message: if this message appears, test fails
--    :param interrupt_string: a string to send to the console before trying
--                             to read a new line
--    """
--    _console_interaction(test, success_message, failure_message,
--                         interrupt_string, True)
--
--def wait_for_console_pattern(test, success_message, failure_message=None,
--                             vm=None):
--    """
--    Waits for messages to appear on the console, while logging the content
--
--    :param test: an Avocado test containing a VM that will have its console
--                 read and probed for a success or failure message
--    :type test: :class:`avocado_qemu.QemuSystemTest`
--    :param success_message: if this message appears, test succeeds
--    :param failure_message: if this message appears, test fails
--    """
--    _console_interaction(test, success_message, failure_message, None, vm=vm)
--
--def exec_command(test, command):
--    """
--    Send a command to a console (appending CRLF characters), while logging
--    the content.
--
--    :param test: an Avocado test containing a VM.
--    :type test: :class:`avocado_qemu.QemuSystemTest`
--    :param command: the command to send
--    :type command: str
--    """
--    _console_interaction(test, None, None, command + '\r')
--
--def exec_command_and_wait_for_pattern(test, command,
--                                      success_message, failure_message=None):
--    """
--    Send a command to a console (appending CRLF characters), then wait
--    for success_message to appear on the console, while logging the.
--    content. Mark the test as failed if failure_message is found instead.
--
--    :param test: an Avocado test containing a VM that will have its console
--                 read and probed for a success or failure message
--    :type test: :class:`avocado_qemu.QemuSystemTest`
--    :param command: the command to send
--    :param success_message: if this message appears, test succeeds
--    :param failure_message: if this message appears, test fails
--    """
--    _console_interaction(test, success_message, failure_message, command + '\r')
--
--class QemuBaseTest(avocado.Test):
--
--    # default timeout for all tests, can be overridden
--    timeout = 120
--
--    def _get_unique_tag_val(self, tag_name):
--        """
--        Gets a tag value, if unique for a key
--        """
--        vals = self.tags.get(tag_name, [])
--        if len(vals) == 1:
--            return vals.pop()
--        return None
--
--    def setUp(self, bin_prefix):
--        self.arch = self.params.get('arch',
--                                    default=self._get_unique_tag_val('arch'))
--
--        self.cpu = self.params.get('cpu',
--                                   default=self._get_unique_tag_val('cpu'))
--
--        default_qemu_bin = pick_default_qemu_bin(bin_prefix, arch=self.arch)
--        self.qemu_bin = self.params.get('qemu_bin',
--                                        default=default_qemu_bin)
--        if self.qemu_bin is None:
--            self.cancel("No QEMU binary defined or found in the build tree")
--
--    def fetch_asset(self, name,
--                    asset_hash, algorithm=None,
--                    locations=None, expire=None,
--                    find_only=False, cancel_on_missing=True):
--        return super().fetch_asset(name,
--                        asset_hash=asset_hash,
--                        algorithm=algorithm,
--                        locations=locations,
--                        expire=expire,
--                        find_only=find_only,
--                        cancel_on_missing=cancel_on_missing)
--
--
--class QemuSystemTest(QemuBaseTest):
--    """Facilitates system emulation tests."""
--
--    def setUp(self):
--        self._vms = {}
--
--        super().setUp('qemu-system-')
--
--        accel_required = self._get_unique_tag_val('accel')
--        if accel_required:
--            self.require_accelerator(accel_required)
--
--        self.machine = self.params.get('machine',
--                                       default=self._get_unique_tag_val('machine'))
--
--    def require_accelerator(self, accelerator):
--        """
--        Requires an accelerator to be available for the test to continue
--
--        It takes into account the currently set qemu binary.
--
--        If the check fails, the test is canceled.  If the check itself
--        for the given accelerator is not available, the test is also
--        canceled.
--
--        :param accelerator: name of the accelerator, such as "kvm" or "tcg"
--        :type accelerator: str
--        """
--        checker = {'tcg': tcg_available,
--                   'kvm': kvm_available}.get(accelerator)
--        if checker is None:
--            self.cancel("Don't know how to check for the presence "
--                        "of accelerator %s" % accelerator)
--        if not checker(qemu_bin=self.qemu_bin):
--            self.cancel("%s accelerator does not seem to be "
--                        "available" % accelerator)
--
--    def require_netdev(self, netdevname):
--        netdevhelp = run_cmd([self.qemu_bin,
--                             '-M', 'none', '-netdev', 'help'])[0];
--        if netdevhelp.find('\n' + netdevname + '\n') < 0:
--            self.cancel('no support for user networking')
--
--    def _new_vm(self, name, *args):
--        self._sd = tempfile.TemporaryDirectory(prefix="qemu_")
--        vm = QEMUMachine(self.qemu_bin, base_temp_dir=self.workdir,
--                         log_dir=self.logdir)
--        self.log.debug('QEMUMachine "%s" created', name)
--        self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
--        self.log.debug('QEMUMachine "%s" log_dir: %s', name, vm.log_dir)
--        if args:
--            vm.add_args(*args)
--        return vm
--
--    def get_qemu_img(self):
--        self.log.debug('Looking for and selecting a qemu-img binary')
--
--        # If qemu-img has been built, use it, otherwise the system wide one
--        # will be used.
--        qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
--        if not os.path.exists(qemu_img):
--            qemu_img = find_command('qemu-img', False)
--        if qemu_img is False:
--            self.cancel('Could not find "qemu-img"')
--
--        return qemu_img
--
--    @property
--    def vm(self):
--        return self.get_vm(name='default')
--
--    def get_vm(self, *args, name=None):
--        if not name:
--            name = str(uuid.uuid4())
--        if self._vms.get(name) is None:
--            self._vms[name] = self._new_vm(name, *args)
--            if self.cpu is not None:
--                self._vms[name].add_args('-cpu', self.cpu)
--            if self.machine is not None:
--                self._vms[name].set_machine(self.machine)
--        return self._vms[name]
--
--    def set_vm_arg(self, arg, value):
--        """
--        Set an argument to list of extra arguments to be given to the QEMU
--        binary. If the argument already exists then its value is replaced.
--
--        :param arg: the QEMU argument, such as "-cpu" in "-cpu host"
--        :type arg: str
--        :param value: the argument value, such as "host" in "-cpu host"
--        :type value: str
--        """
--        if not arg or not value:
--            return
--        if arg not in self.vm.args:
--            self.vm.args.extend([arg, value])
--        else:
--            idx = self.vm.args.index(arg) + 1
--            if idx < len(self.vm.args):
--                self.vm.args[idx] = value
--            else:
--                self.vm.args.append(value)
--
--    def tearDown(self):
--        for vm in self._vms.values():
--            vm.shutdown()
--        self._sd = None
--        super().tearDown()
--
--
--class LinuxSSHMixIn:
--    """Contains utility methods for interacting with a guest via SSH."""
--
--    def ssh_connect(self, username, credential, credential_is_key=True):
--        self.ssh_logger = logging.getLogger('ssh')
--        res = self.vm.cmd('human-monitor-command',
--                          command_line='info usernet')
--        port = get_info_usernet_hostfwd_port(res)
--        self.assertIsNotNone(port)
--        self.assertGreater(port, 0)
--        self.log.debug('sshd listening on port: %d', port)
--        if credential_is_key:
--            self.ssh_session = ssh.Session('127.0.0.1', port=port,
--                                           user=username, key=credential)
--        else:
--            self.ssh_session = ssh.Session('127.0.0.1', port=port,
--                                           user=username, password=credential)
--        for i in range(10):
--            try:
--                self.ssh_session.connect()
--                return
--            except:
--                time.sleep(i)
--        self.fail('ssh connection timeout')
--
--    def ssh_command(self, command):
--        self.ssh_logger.info(command)
--        result = self.ssh_session.cmd(command)
--        stdout_lines = [line.rstrip() for line
--                        in result.stdout_text.splitlines()]
--        for line in stdout_lines:
--            self.ssh_logger.info(line)
--        stderr_lines = [line.rstrip() for line
--                        in result.stderr_text.splitlines()]
--        for line in stderr_lines:
--            self.ssh_logger.warning(line)
--
--        self.assertEqual(result.exit_status, 0,
--                         f'Guest command failed: {command}')
--        return stdout_lines, stderr_lines
--
--    def ssh_command_output_contains(self, cmd, exp):
--        stdout, _ = self.ssh_command(cmd)
--        for line in stdout:
--            if exp in line:
--                break
--        else:
--            self.fail('"%s" output does not contain "%s"' % (cmd, exp))
-diff --git a/tests/avocado/avocado_qemu/linuxtest.py b/tests/avocado/avocado_qemu/linuxtest.py
-deleted file mode 100644
-index 66fb9f15079..00000000000
---- a/tests/avocado/avocado_qemu/linuxtest.py
-+++ /dev/null
-@@ -1,253 +0,0 @@
--# Test class and utilities for functional Linux-based tests
--#
--# Copyright (c) 2018 Red Hat, Inc.
--#
--# Author:
--#  Cleber Rosa <crosa@redhat.com>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--import os
--import shutil
--
--from avocado.utils import cloudinit, datadrainer, process, vmimage
--
--from avocado_qemu import LinuxSSHMixIn
--from avocado_qemu import QemuSystemTest
--
--if os.path.islink(os.path.dirname(os.path.dirname(__file__))):
--    # The link to the avocado tests dir in the source code directory
--    lnk = os.path.dirname(os.path.dirname(__file__))
--    #: The QEMU root source directory
--    SOURCE_DIR = os.path.dirname(os.path.dirname(os.readlink(lnk)))
--else:
--    SOURCE_DIR = BUILD_DIR
--
--class LinuxDistro:
--    """Represents a Linux distribution
--
--    Holds information of known distros.
--    """
--    #: A collection of known distros and their respective image checksum
--    KNOWN_DISTROS = {
--        'fedora': {
--            '31': {
--                'x86_64':
--                {'checksum': ('e3c1b309d9203604922d6e255c2c5d09'
--                              '8a309c2d46215d8fc026954f3c5c27a0'),
--                 'pxeboot_url': ('https://archives.fedoraproject.org/'
--                                 'pub/archive/fedora/linux/releases/31/'
--                                 'Everything/x86_64/os/images/pxeboot/'),
--                 'kernel_params': ('root=UUID=b1438b9b-2cab-4065-a99a-'
--                                   '08a96687f73c ro no_timer_check '
--                                   'net.ifnames=0 console=tty1 '
--                                   'console=ttyS0,115200n8'),
--                },
--                'aarch64':
--                {'checksum': ('1e18d9c0cf734940c4b5d5ec592facae'
--                              'd2af0ad0329383d5639c997fdf16fe49'),
--                'pxeboot_url': 'https://archives.fedoraproject.org/'
--                               'pub/archive/fedora/linux/releases/31/'
--                               'Everything/aarch64/os/images/pxeboot/',
--                'kernel_params': ('root=UUID=b6950a44-9f3c-4076-a9c2-'
--                                  '355e8475b0a7 ro earlyprintk=pl011,0x9000000'
--                                  ' ignore_loglevel no_timer_check'
--                                  ' printk.time=1 rd_NO_PLYMOUTH'
--                                  ' console=ttyAMA0'),
--                },
--                'ppc64':
--                {'checksum': ('7c3528b85a3df4b2306e892199a9e1e4'
--                              '3f991c506f2cc390dc4efa2026ad2f58')},
--                's390x':
--                {'checksum': ('4caaab5a434fd4d1079149a072fdc789'
--                              '1e354f834d355069ca982fdcaf5a122d')},
--            },
--            '32': {
--                'aarch64':
--                {'checksum': ('b367755c664a2d7a26955bbfff985855'
--                              'adfa2ca15e908baf15b4b176d68d3967'),
--                'pxeboot_url': ('http://dl.fedoraproject.org/pub/fedora/linux/'
--                                'releases/32/Server/aarch64/os/images/'
--                                'pxeboot/'),
--                'kernel_params': ('root=UUID=3df75b65-be8d-4db4-8655-'
--                                  '14d95c0e90c5 ro no_timer_check net.ifnames=0'
--                                  ' console=tty1 console=ttyS0,115200n8'),
--                },
--            },
--            '33': {
--                'aarch64':
--                {'checksum': ('e7f75cdfd523fe5ac2ca9eeece68edc1'
--                              'a81f386a17f969c1d1c7c87031008a6b'),
--                'pxeboot_url': ('http://dl.fedoraproject.org/pub/fedora/linux/'
--                                'releases/33/Server/aarch64/os/images/'
--                                'pxeboot/'),
--                'kernel_params': ('root=UUID=d20b3ffa-6397-4a63-a734-'
--                                  '1126a0208f8a ro no_timer_check net.ifnames=0'
--                                  ' console=tty1 console=ttyS0,115200n8'
--                                  ' console=tty0'),
--                 },
--            },
--        }
--    }
--
--    def __init__(self, name, version, arch):
--        self.name = name
--        self.version = version
--        self.arch = arch
--        try:
--            info = self.KNOWN_DISTROS.get(name).get(version).get(arch)
--        except AttributeError:
--            # Unknown distro
--            info = None
--        self._info = info or {}
--
--    @property
--    def checksum(self):
--        """Gets the cloud-image file checksum"""
--        return self._info.get('checksum', None)
--
--    @checksum.setter
--    def checksum(self, value):
--        self._info['checksum'] = value
--
--    @property
--    def pxeboot_url(self):
--        """Gets the repository url where pxeboot files can be found"""
--        return self._info.get('pxeboot_url', None)
--
--    @property
--    def default_kernel_params(self):
--        """Gets the default kernel parameters"""
--        return self._info.get('kernel_params', None)
--
--
--class LinuxTest(LinuxSSHMixIn, QemuSystemTest):
--    """Facilitates having a cloud-image Linux based available.
--
--    For tests that intend to interact with guests, this is a better choice
--    to start with than the more vanilla `QemuSystemTest` class.
--    """
--
--    distro = None
--    username = 'root'
--    password = 'password'
--    smp = '2'
--    memory = '1024'
--
--    def _set_distro(self):
--        distro_name = self.params.get(
--            'distro',
--            default=self._get_unique_tag_val('distro'))
--        if not distro_name:
--            distro_name = 'fedora'
--
--        distro_version = self.params.get(
--            'distro_version',
--            default=self._get_unique_tag_val('distro_version'))
--        if not distro_version:
--            distro_version = '31'
--
--        self.distro = LinuxDistro(distro_name, distro_version, self.arch)
--
--        # The distro checksum behaves differently than distro name and
--        # version. First, it does not respect a tag with the same
--        # name, given that it's not expected to be used for filtering
--        # (distro name versions are the natural choice).  Second, the
--        # order of precedence is: parameter, attribute and then value
--        # from KNOWN_DISTROS.
--        distro_checksum = self.params.get('distro_checksum',
--                                          default=None)
--        if distro_checksum:
--            self.distro.checksum = distro_checksum
--
--    def setUp(self, ssh_pubkey=None, network_device_type='virtio-net'):
--        super().setUp()
--        self.require_netdev('user')
--        self._set_distro()
--        self.vm.add_args('-smp', self.smp)
--        self.vm.add_args('-m', self.memory)
--        # The following network device allows for SSH connections
--        self.vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
--                         '-device', '%s,netdev=vnet' % network_device_type)
--        self.set_up_boot()
--        if ssh_pubkey is None:
--            ssh_pubkey, self.ssh_key = self.set_up_existing_ssh_keys()
--        self.set_up_cloudinit(ssh_pubkey)
--
--    def set_up_existing_ssh_keys(self):
--        ssh_public_key = os.path.join(SOURCE_DIR, 'tests', 'keys', 'id_rsa.pub')
--        source_private_key = os.path.join(SOURCE_DIR, 'tests', 'keys', 'id_rsa')
--        ssh_dir = os.path.join(self.workdir, '.ssh')
--        os.mkdir(ssh_dir, mode=0o700)
--        ssh_private_key = os.path.join(ssh_dir,
--                                       os.path.basename(source_private_key))
--        shutil.copyfile(source_private_key, ssh_private_key)
--        os.chmod(ssh_private_key, 0o600)
--        return (ssh_public_key, ssh_private_key)
--
--    def download_boot(self):
--        # Set the qemu-img binary.
--        # If none is available, the test will cancel.
--        vmimage.QEMU_IMG = super().get_qemu_img()
--
--        self.log.info('Downloading/preparing boot image')
--        # Fedora 31 only provides ppc64le images
--        image_arch = self.arch
--        if self.distro.name == 'fedora':
--            if image_arch == 'ppc64':
--                image_arch = 'ppc64le'
--
--        try:
--            boot = vmimage.get(
--                self.distro.name, arch=image_arch, version=self.distro.version,
--                checksum=self.distro.checksum,
--                algorithm='sha256',
--                cache_dir=self.cache_dirs[0],
--                snapshot_dir=self.workdir)
--        except:
--            self.cancel('Failed to download/prepare boot image')
--        return boot.path
--
--    def prepare_cloudinit(self, ssh_pubkey=None):
--        self.log.info('Preparing cloudinit image')
--        try:
--            cloudinit_iso = os.path.join(self.workdir, 'cloudinit.iso')
--            pubkey_content = None
--            if ssh_pubkey:
--                with open(ssh_pubkey) as pubkey:
--                    pubkey_content = pubkey.read()
--            cloudinit.iso(cloudinit_iso, self.name,
--                          username=self.username,
--                          password=self.password,
--                          # QEMU's hard coded usermode router address
--                          phone_home_host='10.0.2.2',
--                          phone_home_port=self.phone_server.server_port,
--                          authorized_key=pubkey_content)
--        except Exception:
--            self.cancel('Failed to prepare the cloudinit image')
--        return cloudinit_iso
+-    IOMMU_ADDON = ',iommu_platform=on,disable-modern=off,disable-legacy=on'
+-    kernel_path = None
+-    initrd_path = None
+-    kernel_params = None
 -
 -    def set_up_boot(self):
 -        path = self.download_boot()
--        self.vm.add_args('-drive', 'file=%s' % path)
+-        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
+-                         'drive=drv0,id=virtio-disk0,bootindex=1,'
+-                         'werror=stop,rerror=stop' + self.IOMMU_ADDON)
+-        self.vm.add_args('-drive',
+-                         'file=%s,if=none,cache=writethrough,id=drv0' % path)
 -
--    def set_up_cloudinit(self, ssh_pubkey=None):
--        self.phone_server = cloudinit.PhoneHomeServer(('0.0.0.0', 0),
--                                                      self.name)
--        cloudinit_iso = self.prepare_cloudinit(ssh_pubkey)
--        self.vm.add_args('-drive', 'file=%s,format=raw' % cloudinit_iso)
+-    def setUp(self):
+-        super(SMMU, self).setUp(None, 'virtio-net-pci' + self.IOMMU_ADDON)
 -
--    def launch_and_wait(self, set_up_ssh_connection=True):
--        self.vm.set_console()
--        self.vm.launch()
--        console_drainer = datadrainer.LineLogger(self.vm.console_socket.fileno(),
--                                                 logger=self.log.getChild('console'))
--        console_drainer.start()
--        self.log.info('VM launched, waiting for boot confirmation from guest')
--        while not self.phone_server.instance_phoned_back:
--            self.phone_server.handle_request()
+-    def common_vm_setup(self, custom_kernel=False):
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.vm.add_args("-cpu", "host")
+-        self.vm.add_args("-machine", "iommu=smmuv3")
+-        self.vm.add_args("-d", "guest_errors")
+-        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
+-                         'edk2-aarch64-code.fd'))
+-        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
+-        self.vm.add_args('-object',
+-                         'rng-random,id=rng0,filename=/dev/urandom')
 -
--        if set_up_ssh_connection:
--            self.log.info('Setting up the SSH connection')
--            self.ssh_connect(self.username, self.ssh_key)
+-        if custom_kernel is False:
+-            return
+-
+-        kernel_url = self.distro.pxeboot_url + 'vmlinuz'
+-        initrd_url = self.distro.pxeboot_url + 'initrd.img'
+-        self.kernel_path = self.fetch_asset(kernel_url)
+-        self.initrd_path = self.fetch_asset(initrd_url)
+-
+-    def run_and_check(self):
+-        if self.kernel_path:
+-            self.vm.add_args('-kernel', self.kernel_path,
+-                             '-append', self.kernel_params,
+-                             '-initrd', self.initrd_path)
+-        self.launch_and_wait()
+-        self.ssh_command('cat /proc/cmdline')
+-        self.ssh_command('dnf -y install numactl-devel')
+-
+-
+-    # 5.3 kernel without RIL #
+-
+-    def test_smmu_noril(self):
+-        """
+-        :avocado: tags=smmu_noril
+-        :avocado: tags=smmu_noril_tests
+-        :avocado: tags=distro_version:31
+-        """
+-        self.common_vm_setup()
+-        self.run_and_check()
+-
+-    def test_smmu_noril_passthrough(self):
+-        """
+-        :avocado: tags=smmu_noril_passthrough
+-        :avocado: tags=smmu_noril_tests
+-        :avocado: tags=distro_version:31
+-        """
+-        self.common_vm_setup(True)
+-        self.kernel_params = (self.distro.default_kernel_params +
+-                              ' iommu.passthrough=on')
+-        self.run_and_check()
+-
+-    def test_smmu_noril_nostrict(self):
+-        """
+-        :avocado: tags=smmu_noril_nostrict
+-        :avocado: tags=smmu_noril_tests
+-        :avocado: tags=distro_version:31
+-        """
+-        self.common_vm_setup(True)
+-        self.kernel_params = (self.distro.default_kernel_params +
+-                              ' iommu.strict=0')
+-        self.run_and_check()
+-
+-    # 5.8 kernel featuring range invalidation
+-    # >= v5.7 kernel
+-
+-    def test_smmu_ril(self):
+-        """
+-        :avocado: tags=smmu_ril
+-        :avocado: tags=smmu_ril_tests
+-        :avocado: tags=distro_version:33
+-        """
+-        self.common_vm_setup()
+-        self.run_and_check()
+-
+-    def test_smmu_ril_passthrough(self):
+-        """
+-        :avocado: tags=smmu_ril_passthrough
+-        :avocado: tags=smmu_ril_tests
+-        :avocado: tags=distro_version:33
+-        """
+-        self.common_vm_setup(True)
+-        self.kernel_params = (self.distro.default_kernel_params +
+-                              ' iommu.passthrough=on')
+-        self.run_and_check()
+-
+-    def test_smmu_ril_nostrict(self):
+-        """
+-        :avocado: tags=smmu_ril_nostrict
+-        :avocado: tags=smmu_ril_tests
+-        :avocado: tags=distro_version:33
+-        """
+-        self.common_vm_setup(True)
+-        self.kernel_params = (self.distro.default_kernel_params +
+-                              ' iommu.strict=0')
+-        self.run_and_check()
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index b36fcab0896..8c1d3bb4bdb 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -18,6 +18,7 @@ test_timeouts = {
+   'aarch64_rme_sbsaref' : 1200,
+   'aarch64_sbsaref_alpine' : 1200,
+   'aarch64_sbsaref_freebsd' : 720,
++  'aarch64_smmu' : 720,
+   'aarch64_tuxrun' : 240,
+   'aarch64_virt' : 360,
+   'aarch64_virt_gpu' : 480,
+@@ -88,6 +89,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_sbsaref',
+   'aarch64_sbsaref_alpine',
+   'aarch64_sbsaref_freebsd',
++  'aarch64_smmu',
+   'aarch64_tcg_plugins',
+   'aarch64_tuxrun',
+   'aarch64_virt',
+diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/test_aarch64_smmu.py
+new file mode 100755
+index 00000000000..c65d0f28178
+--- /dev/null
++++ b/tests/functional/test_aarch64_smmu.py
+@@ -0,0 +1,205 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# SMMUv3 Functional tests
++#
++# Copyright (c) 2021 Red Hat, Inc.
++#
++# Author:
++#  Eric Auger <eric.auger@redhat.com>
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
++
++import os
++import time
++
++from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import BUILD_DIR
++from qemu.utils import kvm_available
++
++
++class SMMU(LinuxKernelTest):
++
++    default_kernel_params = ('earlyprintk=pl011,0x9000000 no_timer_check '
++                             'printk.time=1 rd_NO_PLYMOUTH net.ifnames=0 '
++                             'console=ttyAMA0 rd.rescue')
++    IOMMU_ADDON = ',iommu_platform=on,disable-modern=off,disable-legacy=on'
++    kernel_path = None
++    initrd_path = None
++    kernel_params = None
++
++    GUEST_PORT = 8080
++
++    def set_up_boot(self, path):
++        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
++                         'drive=drv0,id=virtio-disk0,bootindex=1,'
++                         'werror=stop,rerror=stop' + self.IOMMU_ADDON)
++        self.vm.add_args('-drive',
++                f'file={path},if=none,cache=writethrough,id=drv0,snapshot=on')
++
++        self.vm.add_args('-netdev',
++                         'user,id=n1,hostfwd=tcp:127.0.0.1:0-:%d' %
++                         self.GUEST_PORT)
++        self.vm.add_args('-device', 'virtio-net,netdev=n1' + self.IOMMU_ADDON)
++
++    def common_vm_setup(self, kernel, initrd, disk):
++        self.require_accelerator("kvm")
++        self.require_netdev('user')
++        self.set_machine("virt")
++        self.vm.add_args('-m', '1G')
++        self.vm.add_args("-accel", "kvm")
++        self.vm.add_args("-cpu", "host")
++        self.vm.add_args("-machine", "iommu=smmuv3")
++        self.vm.add_args("-d", "guest_errors")
++        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
++                         'edk2-aarch64-code.fd'))
++        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
++        self.vm.add_args('-object',
++                         'rng-random,id=rng0,filename=/dev/urandom')
++
++        self.kernel_path = kernel.fetch()
++        self.initrd_path = initrd.fetch()
++        self.set_up_boot(disk.fetch())
++
++    def run_and_check(self, filename, hashsum):
++        self.vm.add_args('-initrd', self.initrd_path)
++        self.vm.add_args('-append', self.kernel_params)
++        self.launch_kernel(self.kernel_path, initrd=self.initrd_path,
++                           wait_for='attach it to a bug report.')
++        prompt = '# '
++        # Fedora 33 requires 'return' to be pressed to enter the shell.
++        # There seems to be a small race between detecting the previous ':'
++        # and sending the newline, so we need to add a small delay here.
++        self.wait_for_console_pattern(':')
++        time.sleep(0.2)
++        exec_command_and_wait_for_pattern(self, '\n', prompt)
++        exec_command_and_wait_for_pattern(self, 'cat /proc/cmdline',
++                                          self.kernel_params)
++
++        # Checking for SMMU enablement:
++        self.log.info("Checking whether SMMU has been enabled...")
++        exec_command_and_wait_for_pattern(self, 'dmesg | grep smmu',
++                                          'arm-smmu-v3')
++        self.wait_for_console_pattern(prompt)
++        exec_command_and_wait_for_pattern(self,
++                                    'find /sys/kernel/iommu_groups/ -type l',
++                                    'devices/0000:00:')
++        self.wait_for_console_pattern(prompt)
++
++        # Copy a file (checked later), umount afterwards to drop disk cache:
++        self.log.info("Checking hard disk...")
++        exec_command_and_wait_for_pattern(self,
++                        "while ! (dmesg -c | grep vda:) ; do sleep 1 ; done",
++                        "vda2")
++        exec_command_and_wait_for_pattern(self, 'mount /dev/vda2 /sysroot',
++                                          'mounted filesystem')
++        exec_command_and_wait_for_pattern(self, 'cp /bin/vi /sysroot/root/vi',
++                                          prompt)
++        exec_command_and_wait_for_pattern(self, 'umount /sysroot', prompt)
++        # Switch from initrd to the cloud image filesystem:
++        exec_command_and_wait_for_pattern(self, 'mount /dev/vda2 /sysroot',
++                                          prompt)
++        exec_command_and_wait_for_pattern(self,
++                ('for d in dev proc sys run ; do '
++                 'mount -o bind /$d /sysroot/$d ; done'), prompt)
++        exec_command_and_wait_for_pattern(self, 'chroot /sysroot', prompt)
++        # Check files on the hard disk:
++        exec_command_and_wait_for_pattern(self,
++            ('if diff -q /root/vi /usr/bin/vi ; then echo "file" "ok" ; '
++             'else echo "files differ"; fi'), 'file ok')
++        self.wait_for_console_pattern(prompt)
++        exec_command_and_wait_for_pattern(self, f'sha256sum {filename}',
++                                          hashsum)
++
++        # Check virtio-net via HTTP:
++        exec_command_and_wait_for_pattern(self, 'dhclient eth0', prompt)
++        self.check_http_download(filename, hashsum, self.GUEST_PORT)
++
++
++    # 5.3 kernel without RIL #
++
++    ASSET_KERNEL_F31 = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
++         'releases/31/Server/aarch64/os/images/pxeboot/vmlinuz'),
++        '3ae07fcafbfc8e4abeb693035a74fe10698faae15e9ccd48882a9167800c1527')
++
++    ASSET_INITRD_F31 = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
++         'releases/31/Server/aarch64/os/images/pxeboot/initrd.img'),
++        '9f3146b28bc531c689f3c5f114cb74e4bd7bd548e0ba19fa77921d8bd256755a')
++
++    ASSET_DISK_F31 = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Cloud/aarch64/images/Fedora-Cloud-Base-31-1.9.aarch64.qcow2'),
++        '1e18d9c0cf734940c4b5d5ec592facaed2af0ad0329383d5639c997fdf16fe49')
++
++    F31_FILENAME = '/boot/initramfs-5.3.7-301.fc31.aarch64.img'
++    F31_HSUM = '1a4beec6607d94df73d9dd1b4985c9c23dd0fdcf4e6ca1351d477f190df7bef9'
++
++    def test_smmu_noril(self):
++        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
++                             self.ASSET_DISK_F31)
++        self.kernel_params = self.default_kernel_params
++        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
++
++    def test_smmu_noril_passthrough(self):
++        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
++                             self.ASSET_DISK_F31)
++        self.kernel_params = (self.default_kernel_params +
++                              ' iommu.passthrough=on')
++        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
++
++    def test_smmu_noril_nostrict(self):
++        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
++                             self.ASSET_DISK_F31)
++        self.kernel_params = (self.default_kernel_params +
++                              ' iommu.strict=0')
++        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
++
++
++    # 5.8 kernel featuring range invalidation
++    # >= v5.7 kernel
++
++    ASSET_KERNEL_F33 = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
++         'releases/33/Server/aarch64/os/images/pxeboot/vmlinuz'),
++        'd8b1e6f7241f339d8e7609c456cf0461ffa4583ed07e0b55c7d1d8a0c154aa89')
++
++    ASSET_INITRD_F33 = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
++         'releases/33/Server/aarch64/os/images/pxeboot/initrd.img'),
++        '92513f55295c2c16a777f7b6c35ccd70a438e9e1e40b6ba39e0e60900615b3df')
++
++    ASSET_DISK_F33 = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/33/Cloud/aarch64/images/Fedora-Cloud-Base-33-1.2.aarch64.qcow2'),
++        'e7f75cdfd523fe5ac2ca9eeece68edc1a81f386a17f969c1d1c7c87031008a6b')
++
++    F33_FILENAME = '/boot/initramfs-5.8.15-301.fc33.aarch64.img'
++    F33_HSUM = '079cfad0caa82e84c8ca1fb0897a4999dd769f262216099f518619e807a550d9'
++
++    def test_smmu_ril(self):
++        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
++                             self.ASSET_DISK_F33)
++        self.kernel_params = self.default_kernel_params
++        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
++
++    def test_smmu_ril_passthrough(self):
++        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
++                             self.ASSET_DISK_F33)
++        self.kernel_params = (self.default_kernel_params +
++                              ' iommu.passthrough=on')
++        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
++
++    def test_smmu_ril_nostrict(self):
++        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
++                             self.ASSET_DISK_F33)
++        self.kernel_params = (self.default_kernel_params +
++                              ' iommu.strict=0')
++        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.49.0
 
