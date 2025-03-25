@@ -4,88 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4432CC36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4584BC3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx8D5-00009t-FF; Tue, 25 Mar 2025 13:37:07 -0400
+	id 1tx8EK-0000rS-I1; Tue, 25 Mar 2025 13:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tx8Cu-00008t-G6
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 13:37:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tx8EI-0000r8-Kx; Tue, 25 Mar 2025 13:38:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tx8Cq-0001xs-LJ
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 13:36:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742924211;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Nystu0w3N8pTN1cdjfW8t6zrh/awpAQQVRVK6VKQoXc=;
- b=LySxEnJrsi+2fWvWNz4r/E+aqRlFoJpgNP6ye9DujOOx0IiI7llRQTSBngauSO5QkSY81l
- 0WvrCMoR6MEaQ/iG4yEgbY9Gb/RULcpI5ChYjUOEAB5Dn3wChARtPwjZw8jzytaljhd3Om
- ojLRqtvukecJn68tXV1IRxZFzmmZ0n8=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-hlZ2h6uCNySyXrkCX4BHBQ-1; Tue, 25 Mar 2025 13:36:49 -0400
-X-MC-Unique: hlZ2h6uCNySyXrkCX4BHBQ-1
-X-Mimecast-MFC-AGG-ID: hlZ2h6uCNySyXrkCX4BHBQ_1742924208
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ff8a2c7912so97991a91.1
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 10:36:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742924208; x=1743529008;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Nystu0w3N8pTN1cdjfW8t6zrh/awpAQQVRVK6VKQoXc=;
- b=azNi9znrNvX4mMfsjdhxIVpop3dFu1SQxBD10VAYdFb5hwrdu49y3zUNkXTe/DZ6KY
- U8EahH3LmUUkFlMJdGLEpWqlILFOO/GUVzUJ1RhgdiZGbQl5B0tPb/OPc7+Lm48U6YN9
- FHMsOrs3IVKkJeBW8SwwliVz3fpcy+GTZX2EyUwL0bm8d1O55S3LOS4hudjnkbfkI0Qi
- p98EAl7K2C8jNZYxA2H4fQkvbx3uWKMCIYIVHIYDPodAveTCSGSQkJWpQ52R2J2jOWkg
- 8jS4mTqfvrj+CGVeCEDEMl444FsoH+9/m5x4RrO/0AWXIrEKGP+a19Y0auJIeEQEeYoi
- GcVA==
-X-Gm-Message-State: AOJu0YyQhUqrNZ+T8EVo0cBGPYUP9eA7LgC6FFgiQr4JCgBJJnjwxGnW
- +FTffTMxYpJaWpCf4rRBBQUSzPgJjAmIP4FCHHN6LzHvDGDp5mPr0WVyNwtdmooISBN2txKZDFx
- wdAeooTlRibYyVJJS0mP+VyWksD2H1fWhKBbdnZod0hENZPdcqqhBZXbs0Wqrp9ftMWArsVbZx/
- c7mcS7I5Qb0WJG1Ao4+X78luV4QKc=
-X-Gm-Gg: ASbGnctHJrPItlrwQD5UxdDCEaMX7iFNz3w3Ogye1asvsIjrtf6fi6PSEwWmODfmfKJ
- t+Sk4Toam+h0kJbR3doPuNdNi2hjaXI3e1i+QzenUaHl2LcDSa4piFLfcj+XbrRwtkUpY4prwMl
- 8/NohaxIctINAJshGsNUmoWZiRXhn3
-X-Received: by 2002:a17:90b:2dc7:b0:2ff:4a8d:74f9 with SMTP id
- 98e67ed59e1d1-3037890df74mr852597a91.10.1742924208032; 
- Tue, 25 Mar 2025 10:36:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEeOkP8GUl8hu2KC8v8bjhkygYRKmvKqSiY6y7EnmRbyCI83fRcRBoRLI4lYtF4CLcTPJUucbpUY3aqJbptmN8=
-X-Received: by 2002:a17:90b:2dc7:b0:2ff:4a8d:74f9 with SMTP id
- 98e67ed59e1d1-3037890df74mr852560a91.10.1742924207535; Tue, 25 Mar 2025
- 10:36:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tx8EG-00022d-Qi; Tue, 25 Mar 2025 13:38:22 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PCS9Om012569;
+ Tue, 25 Mar 2025 17:38:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GPvyRy
+ yLcYdvXxwIzgNUofGZLjxOMwN7Pu4qWVHfWds=; b=kxC8yD833FHJ2ISJj6aUIR
+ KaBmVv8szotMlRfvBHzmeLQ/O3KNseoIHe6mJ7kK8kG2jZKxUTB9zq/+gUlBZro/
+ 7IVAqw83wG8k5Q6sZU6xHwJ+3B7jFogQMsXnjAu/JLaTmCwHlOXTRTsXQyAT5S18
+ bmXBFOTWTjQuzdo2+KvhtoXNQ1HaZX6jPRatQMG3hdZBsIWLyqh61xb/sdCqrf0C
+ OyvYoUrbK6CDsSoauzl8+8ipZmy0dPKBb2zIP/9q2x/ZYuEGwPkH6sYcqNCuTFEI
+ 8AruInOSXsCRbgT4Q/cbJPiW8evCxLNZVjSD/rVToHdQQrylvjl3VY1dq//l6U/w
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kvh31phs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Mar 2025 17:38:16 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52PHaaqa013475;
+ Tue, 25 Mar 2025 17:38:16 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kvh31php-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Mar 2025 17:38:16 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52PGxmtx012262;
+ Tue, 25 Mar 2025 17:38:15 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j91m4evu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Mar 2025 17:38:14 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52PHcB5d42140022
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Mar 2025 17:38:11 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 07B2420043;
+ Tue, 25 Mar 2025 17:38:11 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0E64D20040;
+ Tue, 25 Mar 2025 17:38:09 +0000 (GMT)
+Received: from [9.39.16.55] (unknown [9.39.16.55])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Mar 2025 17:38:08 +0000 (GMT)
+Message-ID: <6d610966-cdc0-42c2-abb8-e80b4be1178d@linux.ibm.com>
+Date: Tue, 25 Mar 2025 23:08:08 +0530
 MIME-Version: 1.0
-References: <20250321222347.299121-1-jsnow@redhat.com>
- <20250321222347.299121-6-jsnow@redhat.com>
- <871pulpmbs.fsf@pond.sub.org>
-In-Reply-To: <871pulpmbs.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 25 Mar 2025 13:36:36 -0400
-X-Gm-Features: AQ5f1JpX0GkdK48V4XCP_N2kFDRTHAJQM0Xv7OiGWIlsMhxQ2tCUWK7e4ZQAsOY
-Message-ID: <CAFn=p-ZMphLO291fDEfSC6M0k6gRerGJb1XzDUdCjYgmS-f7YA@mail.gmail.com>
-Subject: Re: [PATCH 5/5] qapi: delete un-needed python static analysis configs
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000042cef606312e2a11"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 07/10] ppc/pnv: Introduce Power11 PowerNV machine
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250325112319.927190-1-adityag@linux.ibm.com>
+ <20250325112319.927190-8-adityag@linux.ibm.com>
+ <952b3afa-dc63-4230-bdff-5decabc8c25c@kaod.org>
+ <8567b41e-f2b8-413c-93b8-15c74788c171@linux.ibm.com>
+ <5a08e139-a18d-4aae-836f-0ec0bb8fadc9@kaod.org>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <5a08e139-a18d-4aae-836f-0ec0bb8fadc9@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 4pdOF4weGgu6_LbsCkSZ5UJMJ9ka9eMQ
+X-Proofpoint-GUID: LA5IYh6ddNkSopXqf4QZvhI_up6o3FDo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-25_07,2025-03-25_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=825 mlxscore=0
+ clxscore=1015 phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503250122
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,422 +123,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000042cef606312e2a11
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 25/03/25 22:45, Cédric Le Goater wrote:
 
-On Tue, Mar 25, 2025 at 4:05=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+> On 3/25/25 18:07, Aditya Gupta wrote:
+>> On 25/03/25 20:17, Cédric Le Goater wrote:
+>>
+>>> On 3/25/25 12:23, Aditya Gupta wrote:
+>>>> <...snip...>
+>>>>
+>>>> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
+>>>
+>>> There was a lot of work done to have dynamic PHBs in the PowerNV
+>>> machines. This was to add support in libvirt and this goal was
+>>> abandoned when people left. I think we should consider removing
+>>> it as it adds unnecessary complexity.
+>>>
+>> Thanks for telling the history behind it, agreed this is unnecessary, 
+>> will remove in v7.
+>
+> One nice about it IIRC was being able to tune the number of
+> PHBs per chip, which reduced booting time (for 16s) and also
+> provided support to test various chip configs. Check that first.
+>
+I tried some variations of 'device_add/device_del'. Unable to see how to 
+dynamically add/remove phbs.
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > The pylint config is being left in place because the settings differ
-> > enough from the python/ directory settings that we need a chit-chat on
-> > how to merge them O:-)
-> >
-> > Everything else can go.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  scripts/qapi/.flake8    | 3 ---
-> >  scripts/qapi/.isort.cfg | 7 -------
-> >  scripts/qapi/mypy.ini   | 4 ----
-> >  3 files changed, 14 deletions(-)
-> >  delete mode 100644 scripts/qapi/.flake8
-> >  delete mode 100644 scripts/qapi/.isort.cfg
-> >  delete mode 100644 scripts/qapi/mypy.ini
-> >
-> > diff --git a/scripts/qapi/.flake8 b/scripts/qapi/.flake8
-> > deleted file mode 100644
-> > index a873ff67309..00000000000
-> > --- a/scripts/qapi/.flake8
-> > +++ /dev/null
-> > @@ -1,3 +0,0 @@
-> > -[flake8]
-> > -# Prefer pylint's bare-except checks to flake8's
-> > -extend-ignore =3D E722
->
-> python/setup.cfg has:
->
->    [flake8]
->    # Prefer pylint's bare-except checks to flake8's
->    extend-ignore =3D E722
->    exclude =3D __pycache__,
->
-> Good.
->
-> > diff --git a/scripts/qapi/.isort.cfg b/scripts/qapi/.isort.cfg
-> > deleted file mode 100644
-> > index 643caa1fbd6..00000000000
-> > --- a/scripts/qapi/.isort.cfg
-> > +++ /dev/null
-> > @@ -1,7 +0,0 @@
-> > -[settings]
-> > -force_grid_wrap=3D4
-> > -force_sort_within_sections=3DTrue
-> > -include_trailing_comma=3DTrue
-> > -line_length=3D72
-> > -lines_after_imports=3D2
-> > -multi_line_output=3D3
->
-> python/setup.cfg has:
->
->    [isort]
->    force_grid_wrap=3D4
->    force_sort_within_sections=3DTrue
->    include_trailing_comma=3DTrue
->    line_length=3D72
->    lines_after_imports=3D2
->    multi_line_output=3D3
->
-> Good.
->
-> > diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
-> > deleted file mode 100644
-> > index 8109470a031..00000000000
-> > --- a/scripts/qapi/mypy.ini
-> > +++ /dev/null
-> > @@ -1,4 +0,0 @@
-> > -[mypy]
-> > -strict =3D True
-> > -disallow_untyped_calls =3D False
-> > -python_version =3D 3.8
->
-> python/setup.cfg has:
->
->    [mypy]
->    strict =3D True
->    python_version =3D 3.8
->    warn_unused_configs =3D True
->    namespace_packages =3D True
->    warn_unused_ignores =3D False
->
-> Also a bunch of [mypy-FOO] sections that don't apply here.
->
-> You explained the differences in review of a prior iteration.  Recap:
->
-> } warn_unused_configs: Catches config values that aren't actually
-> recognized
-> } or used. Was helpful once upon a time when re-arranging the Python
-> } directory to behave like a package to ensure that the conf files were
-> } working correctly.
->
-> Could this be culled now?
->
-
-Maybe!
+Do you have any options to device_add/del which I can try, I want to see 
+if the dynamic addition/removal of PHB changes if i remove that 
+'_allow_dynamic_sysbus_dev' call.
 
 
+> Also, you should add functional tests for the powernv11 machine.
 >
-> Hmm, according to mypy(1), strict implies warn-unused-configs.
+> See under tests/functional/test_ppc64_powernv.py.
 >
-> The question does not block this patch.
->
-
-Send me a patch to drop it O:-)
-
-
->
-> } namespace_packages: Needed for the python/ directory structure (nested
-> } packages under a namespace, "qemu"). Doesn't impact scripts/qapi at all=
-.
-> } Read up on PEP420 if you are curious. Details in commit message, see
-> below
-> } if you're still curious.
->
-> mypy(1) makes me suspect this is the default.  If that's true across the
-> versions we care for, this could be culled.
->
-> Also does not block this patch.
->
-
-It definitely wasn't once upon a time. It may still not be true on the
-oldest mypy we currently support. We don't have a clear policy for what
-versions of python libraries we need to support - this is a muddy, gray
-area. So far I just try to avoid breaking support on older versions
-needlessly, but I don't have an upgrade policy.
-
-If we want to integrate this directly into make check, we'll likely need to
-formalize this policy.
+Currently the test uses op-build kernels, which don't support Power11, 
+working on that side, will post as soon as op-build creates a new 
+release with p11 support (any linux >= 6.9).
 
 
->
-> } warn_unused_ignores: Needed once upon a time for cross-version mypy
-> support
-> } where some versions would warn in some cases and others would not. Addi=
-ng
-> } an ignore would effectively just invert which versions complained.
-> Probably
-> } still needed, but it's hard to measure.
->
-> Harmless enough.
->
-> } python_version: Changes mypy behavior regardless of the invoking python
-> } interpreter to check the file as if it were to be executed by Python
-> 3.8. I
-> } actually want to remove this value from setup.cfg but haven't yet. I
-> } removed it from the python-qemu-qmp repo and never added it for qapi.
-> } Removing it is actually probably correct as it will catch errors specif=
-ic
-> } to various python versions we support, but there are some nits to iron
-> out
-> } in my neck of the woods. This is a case where scripts/qapi/ is stricter
-> } than python/ :)
-> } (Not reasonable to solve for this series.)
->
-> Also present in the deleted file, so no change.
->
-> } lack of disallow_untyped_calls =3D False: I think this might be a remna=
-nt
-> } from when we gradually typed qapi; it's evidently no longer needed sinc=
-e
-> } qapi still checks fine without this affordance. The default under stric=
-t
-> is
-> } True.
->
-> Fair enough.
->
-> Let's mention the differences in the commit message.  Here's my try:
->
->     Since the previous commit, python/setup.cfg applies to scripts/qapi/
->     as well.  Configuration files in scripts/qapi/ override
->     python/setup.cfg.
->
->     scripts/qapi/.flake8 and scripts/qapi/.isort.cfg actually match
->     python/setup.cfg exactly, and can go.
->
->     The differences between scripts/qapi/mypy.ini and python/setup.cfg
->     are harmless: [list the differences, explain why they're harmless as
->     long as you can keep it brief, and if not, fall back to "trust me"].
->     So scripts/qapi/mypy.ini can go, too.
->
->     The pylint config is being left in place because the settings differ
->     enough from the python/ directory settings that we need a chit-chat o=
-n
->     how to merge them O:-)
->
-> With something like that
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
->
+Thanks,
 
-okey-dokey, let me integrate this feedback and I'll re-send, but I'm going
-to wait until we hash everything else out - you had some questions on other
-bits in this series.
+- Aditya Gupta
 
---00000000000042cef606312e2a11
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 25,=
- 2025 at 4:05=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; The pylint config is being left in place because the settings differ<b=
-r>
-&gt; enough from the python/ directory settings that we need a chit-chat on=
-<br>
-&gt; how to merge them O:-)<br>
-&gt;<br>
-&gt; Everything else can go.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 scripts/qapi/.flake8=C2=A0 =C2=A0 | 3 ---<br>
-&gt;=C2=A0 scripts/qapi/.isort.cfg | 7 -------<br>
-&gt;=C2=A0 scripts/qapi/mypy.ini=C2=A0 =C2=A0| 4 ----<br>
-&gt;=C2=A0 3 files changed, 14 deletions(-)<br>
-&gt;=C2=A0 delete mode 100644 scripts/qapi/.flake8<br>
-&gt;=C2=A0 delete mode 100644 scripts/qapi/.isort.cfg<br>
-&gt;=C2=A0 delete mode 100644 scripts/qapi/mypy.ini<br>
-&gt;<br>
-&gt; diff --git a/scripts/qapi/.flake8 b/scripts/qapi/.flake8<br>
-&gt; deleted file mode 100644<br>
-&gt; index a873ff67309..00000000000<br>
-&gt; --- a/scripts/qapi/.flake8<br>
-&gt; +++ /dev/null<br>
-&gt; @@ -1,3 +0,0 @@<br>
-&gt; -[flake8]<br>
-&gt; -# Prefer pylint&#39;s bare-except checks to flake8&#39;s<br>
-&gt; -extend-ignore =3D E722<br>
-<br>
-python/setup.cfg has:<br>
-<br>
-=C2=A0 =C2=A0[flake8]<br>
-=C2=A0 =C2=A0# Prefer pylint&#39;s bare-except checks to flake8&#39;s<br>
-=C2=A0 =C2=A0extend-ignore =3D E722<br>
-=C2=A0 =C2=A0exclude =3D __pycache__,<br>
-<br>
-Good.<br>
-<br>
-&gt; diff --git a/scripts/qapi/.isort.cfg b/scripts/qapi/.isort.cfg<br>
-&gt; deleted file mode 100644<br>
-&gt; index 643caa1fbd6..00000000000<br>
-&gt; --- a/scripts/qapi/.isort.cfg<br>
-&gt; +++ /dev/null<br>
-&gt; @@ -1,7 +0,0 @@<br>
-&gt; -[settings]<br>
-&gt; -force_grid_wrap=3D4<br>
-&gt; -force_sort_within_sections=3DTrue<br>
-&gt; -include_trailing_comma=3DTrue<br>
-&gt; -line_length=3D72<br>
-&gt; -lines_after_imports=3D2<br>
-&gt; -multi_line_output=3D3<br>
-<br>
-python/setup.cfg has:<br>
-<br>
-=C2=A0 =C2=A0[isort]<br>
-=C2=A0 =C2=A0force_grid_wrap=3D4<br>
-=C2=A0 =C2=A0force_sort_within_sections=3DTrue<br>
-=C2=A0 =C2=A0include_trailing_comma=3DTrue<br>
-=C2=A0 =C2=A0line_length=3D72<br>
-=C2=A0 =C2=A0lines_after_imports=3D2<br>
-=C2=A0 =C2=A0multi_line_output=3D3<br>
-<br>
-Good.<br>
-<br>
-&gt; diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini<br>
-&gt; deleted file mode 100644<br>
-&gt; index 8109470a031..00000000000<br>
-&gt; --- a/scripts/qapi/mypy.ini<br>
-&gt; +++ /dev/null<br>
-&gt; @@ -1,4 +0,0 @@<br>
-&gt; -[mypy]<br>
-&gt; -strict =3D True<br>
-&gt; -disallow_untyped_calls =3D False<br>
-&gt; -python_version =3D 3.8<br>
-<br>
-python/setup.cfg has:<br>
-<br>
-=C2=A0 =C2=A0[mypy]<br>
-=C2=A0 =C2=A0strict =3D True<br>
-=C2=A0 =C2=A0python_version =3D 3.8<br>
-=C2=A0 =C2=A0warn_unused_configs =3D True<br>
-=C2=A0 =C2=A0namespace_packages =3D True<br>
-=C2=A0 =C2=A0warn_unused_ignores =3D False<br>
-<br>
-Also a bunch of [mypy-FOO] sections that don&#39;t apply here.<br>
-<br>
-You explained the differences in review of a prior iteration.=C2=A0 Recap:<=
-br>
-<br>
-} warn_unused_configs: Catches config values that aren&#39;t actually recog=
-nized<br>
-} or used. Was helpful once upon a time when re-arranging the Python<br>
-} directory to behave like a package to ensure that the conf files were<br>
-} working correctly.<br>
-<br>
-Could this be culled now?<br></blockquote><div><br></div><div>Maybe!</div><=
-div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Hmm, according to mypy(1), strict implies warn-unused-configs.<br>
-<br>
-The question does not block this patch.<br></blockquote><div><br></div><div=
->Send me a patch to drop it O:-)</div><div>=C2=A0</div><blockquote class=3D=
-"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
-04,204,204);padding-left:1ex">
-<br>
-} namespace_packages: Needed for the python/ directory structure (nested<br=
 >
-} packages under a namespace, &quot;qemu&quot;). Doesn&#39;t impact scripts=
-/qapi at all.<br>
-} Read up on PEP420 if you are curious. Details in commit message, see belo=
-w<br>
-} if you&#39;re still curious.<br>
-<br>
-mypy(1) makes me suspect this is the default.=C2=A0 If that&#39;s true acro=
-ss the<br>
-versions we care for, this could be culled.<br>
-<br>
-Also does not block this patch.<br></blockquote><div><br></div><div>It defi=
-nitely wasn&#39;t once upon a time. It may still not be true on the oldest =
-mypy we currently support. We don&#39;t have a clear policy for what versio=
-ns of python libraries we need to support - this is a muddy, gray area. So =
-far I just try to avoid breaking support on older versions needlessly, but =
-I don&#39;t have an upgrade policy.</div><div><br></div><div>If we want to =
-integrate this directly into make check, we&#39;ll likely need to formalize=
- this policy.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-<br>
-} warn_unused_ignores: Needed once upon a time for cross-version mypy suppo=
-rt<br>
-} where some versions would warn in some cases and others would not. Adding=
-<br>
-} an ignore would effectively just invert which versions complained. Probab=
-ly<br>
-} still needed, but it&#39;s hard to measure.<br>
-<br>
-Harmless enough.<br>
-<br>
-} python_version: Changes mypy behavior regardless of the invoking python<b=
-r>
-} interpreter to check the file as if it were to be executed by Python 3.8.=
- I<br>
-} actually want to remove this value from setup.cfg but haven&#39;t yet. I<=
-br>
-} removed it from the python-qemu-qmp repo and never added it for qapi.<br>
-} Removing it is actually probably correct as it will catch errors specific=
-<br>
-} to various python versions we support, but there are some nits to iron ou=
-t<br>
-} in my neck of the woods. This is a case where scripts/qapi/ is stricter<b=
-r>
-} than python/ :)<br>
-} (Not reasonable to solve for this series.)<br>
-<br>
-Also present in the deleted file, so no change.<br>
-<br>
-} lack of disallow_untyped_calls =3D False: I think this might be a remnant=
-<br>
-} from when we gradually typed qapi; it&#39;s evidently no longer needed si=
-nce<br>
-} qapi still checks fine without this affordance. The default under strict =
-is<br>
-} True.<br>
-<br>
-Fair enough.<br>
-<br>
-Let&#39;s mention the differences in the commit message.=C2=A0 Here&#39;s m=
-y try:<br>
-<br>
-=C2=A0 =C2=A0 Since the previous commit, python/setup.cfg applies to script=
-s/qapi/<br>
-=C2=A0 =C2=A0 as well.=C2=A0 Configuration files in scripts/qapi/ override<=
-br>
-=C2=A0 =C2=A0 python/setup.cfg.<br>
-<br>
-=C2=A0 =C2=A0 scripts/qapi/.flake8 and scripts/qapi/.isort.cfg actually mat=
-ch<br>
-=C2=A0 =C2=A0 python/setup.cfg exactly, and can go.<br>
-<br>
-=C2=A0 =C2=A0 The differences between scripts/qapi/mypy.ini and python/setu=
-p.cfg<br>
-=C2=A0 =C2=A0 are harmless: [list the differences, explain why they&#39;re =
-harmless as<br>
-=C2=A0 =C2=A0 long as you can keep it brief, and if not, fall back to &quot=
-;trust me&quot;].<br>
-=C2=A0 =C2=A0 So scripts/qapi/mypy.ini can go, too.<br>
-<br>
-=C2=A0 =C2=A0 The pylint config is being left in place because the settings=
- differ<br>
-=C2=A0 =C2=A0 enough from the python/ directory settings that we need a chi=
-t-chat on<br>
-=C2=A0 =C2=A0 how to merge them O:-)<br>
-<br>
-With something like that<br>
-Reviewed-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" tar=
-get=3D"_blank">armbru@redhat.com</a>&gt;<br></blockquote><div><br></div><di=
-v>okey-dokey, let me integrate this feedback and I&#39;ll re-send, but I&#3=
-9;m going to wait until we hash everything else out - you had some question=
-s on other bits in this series.</div><div>=C2=A0</div></div></div>
-
---00000000000042cef606312e2a11--
-
+> Thanks,
+>
+> C.
+>
 
