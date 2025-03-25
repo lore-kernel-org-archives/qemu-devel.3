@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C1EC35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A0BEC36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twyAe-0000Ol-9M; Tue, 25 Mar 2025 02:53:56 -0400
+	id 1twyBD-0001Y1-1T; Tue, 25 Mar 2025 02:54:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twyA2-0007BE-1Y; Tue, 25 Mar 2025 02:53:21 -0400
+ id 1twy8y-0005Ys-B5; Tue, 25 Mar 2025 02:52:17 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy9y-0001zw-7j; Tue, 25 Mar 2025 02:53:16 -0400
+ id 1twy8t-0001vf-HR; Tue, 25 Mar 2025 02:52:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 01FF4107D81;
- Tue, 25 Mar 2025 09:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D3007107D78;
+ Tue, 25 Mar 2025 09:49:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 98D661D5E8C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 75BC11D5E83;
  Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8894157060; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ id 718945704E; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 63/69] target/ppc: Fix facility interrupt checks for VSX
-Date: Tue, 25 Mar 2025 09:50:36 +0300
-Message-Id: <20250325065043.3263864-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 53/69] target/arm: Simplify pstate_sm check in
+ sve_access_check
+Date: Tue, 25 Mar 2025 09:50:27 +0300
+Message-Id: <20250325065043.3263864-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
@@ -63,150 +62,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Facility interrupt checks in general should come after the ISA version
-check, because the facility interrupt and facility type themselves are
-ISA dependent and should not appear on CPUs where the instruction does
-not exist at all.
+In StreamingMode, fp_access_checked is handled already.
+We cannot fall through to fp_access_check lest we fall
+foul of the double-check assertion.
 
-This resolves a QEMU crash booting NetBSD/macppc due to
-
-  qemu: fatal: Raised an exception without defined vector 94
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2741
-Cc: Chinmay Rath <rathc@linux.ibm.com>
 Cc: qemu-stable@nongnu.org
-Debugged-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Fixes: aa0f34ec3fc7 ("target/ppc: implement vrlq")
-Fixes: 7419dc5b2b5b ("target/ppc: Move VSX vector storage access insns to decodetree.")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 8defe9da08135d03e054f20cb8fea4389be96e18)
+Fixes: 285b1d5fcef ("target/arm: Handle SME in sve_access_check")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250307190415.982049-3-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: move declaration of 'ret' to top of block]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit cc7abc35dfa790ba6c20473c03745428c1c626b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-index 70d0ad2e71..92d6e8c603 100644
---- a/target/ppc/translate/vmx-impl.c.inc
-+++ b/target/ppc/translate/vmx-impl.c.inc
-@@ -994,8 +994,8 @@ static bool do_vector_rotl_quad(DisasContext *ctx, arg_VX *a, bool mask,
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index dc6af6ea25..422445aa1d 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1247,23 +1247,23 @@ static bool fp_access_check(DisasContext *s)
+ bool sve_access_check(DisasContext *s)
  {
-     TCGv_i64 ah, al, vrb, n, t0, t1, zero = tcg_constant_i64(0);
- 
--    REQUIRE_VECTOR(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA310);
-+    REQUIRE_VECTOR(ctx);
- 
-     ah = tcg_temp_new_i64();
-     al = tcg_temp_new_i64();
-diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
-index a869f30e86..00ad57c628 100644
---- a/target/ppc/translate/vsx-impl.c.inc
-+++ b/target/ppc/translate/vsx-impl.c.inc
-@@ -61,8 +61,8 @@ static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
-     TCGv EA;
-     TCGv_i64 t0;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     t0 = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
-@@ -80,8 +80,8 @@ static bool trans_LXVW4X(DisasContext *ctx, arg_LXVW4X *a)
-     TCGv EA;
-     TCGv_i64 xth, xtl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     xth = tcg_temp_new_i64();
-     xtl = tcg_temp_new_i64();
-@@ -113,12 +113,12 @@ static bool trans_LXVWSX(DisasContext *ctx, arg_LXVWSX *a)
-     TCGv EA;
-     TCGv_i32 data;
- 
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-     if (a->rt < 32) {
-         REQUIRE_VSX(ctx);
-     } else {
-         REQUIRE_VECTOR(ctx);
+     if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
++        bool ret;
++
+         assert(dc_isar_feature(aa64_sme, s));
+-        if (!sme_sm_enabled_check(s)) {
+-            goto fail_exit;
+-        }
+-    } else if (s->sve_excp_el) {
++        ret = sme_sm_enabled_check(s);
++        s->sve_access_checked = (ret ? 1 : -1);
++        return ret;
++    }
++    if (s->sve_excp_el) {
++        /* Assert that we only raise one exception per instruction. */
++        assert(!s->sve_access_checked);
+         gen_exception_insn_el(s, 0, EXCP_UDEF,
+                               syn_sve_access_trap(), s->sve_excp_el);
+-        goto fail_exit;
++        s->sve_access_checked = -1;
++        return false;
      }
--    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+     s->sve_access_checked = 1;
+     return fp_access_check(s);
+-
+- fail_exit:
+-    /* Assert that we only raise one exception per instruction. */
+-    assert(!s->sve_access_checked);
+-    s->sve_access_checked = -1;
+-    return false;
+ }
  
-     gen_set_access_type(ctx, ACCESS_INT);
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-@@ -133,8 +133,8 @@ static bool trans_LXVDSX(DisasContext *ctx, arg_LXVDSX *a)
-     TCGv EA;
-     TCGv_i64 data;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     gen_set_access_type(ctx, ACCESS_INT);
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-@@ -185,8 +185,8 @@ static bool trans_LXVH8X(DisasContext *ctx, arg_LXVH8X *a)
-     TCGv EA;
-     TCGv_i64 xth, xtl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     xth = tcg_temp_new_i64();
-     xtl = tcg_temp_new_i64();
-@@ -208,8 +208,8 @@ static bool trans_LXVB16X(DisasContext *ctx, arg_LXVB16X *a)
-     TCGv EA;
-     TCGv_i128 data;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     data = tcg_temp_new_i128();
-     gen_set_access_type(ctx, ACCESS_INT);
-@@ -312,8 +312,8 @@ static bool trans_STXVD2X(DisasContext *ctx, arg_STXVD2X *a)
-     TCGv EA;
-     TCGv_i64 t0;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     t0 = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
-@@ -331,8 +331,8 @@ static bool trans_STXVW4X(DisasContext *ctx, arg_STXVW4X *a)
-     TCGv EA;
-     TCGv_i64 xsh, xsl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, VSX);
-+    REQUIRE_VSX(ctx);
- 
-     xsh = tcg_temp_new_i64();
-     xsl = tcg_temp_new_i64();
-@@ -364,8 +364,8 @@ static bool trans_STXVH8X(DisasContext *ctx, arg_STXVH8X *a)
-     TCGv EA;
-     TCGv_i64 xsh, xsl;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     xsh = tcg_temp_new_i64();
-     xsl = tcg_temp_new_i64();
-@@ -394,8 +394,8 @@ static bool trans_STXVB16X(DisasContext *ctx, arg_STXVB16X *a)
-     TCGv EA;
-     TCGv_i128 data;
- 
--    REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    REQUIRE_VSX(ctx);
- 
-     data = tcg_temp_new_i128();
-     gen_set_access_type(ctx, ACCESS_INT);
+ /*
 -- 
 2.39.5
 
