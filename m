@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4564FC35FFC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901BEC3600B
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 08:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twzTc-0004m7-Le; Tue, 25 Mar 2025 04:17:36 -0400
+	id 1twzTb-0004m1-4H; Tue, 25 Mar 2025 04:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twzTZ-0004lc-Lf
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:17:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twzTY-0004lL-3v
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:17:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twzTY-0004RY-2U
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:17:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twzTV-0004RQ-Ql
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 04:17:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742890650;
+ s=mimecast20190719; t=1742890647;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
+ content-transfer-encoding:content-transfer-encoding;
  bh=UQlV0p+74jmI5JyVfg6p+xncXHwdy9n0k/5RG/Os2WQ=;
- b=UZ+TZnvZIxME8eBAqVXskh52VR3zO22FbUsquwmTn5YgUhsXvZKKNQsV8pO4hGo+nW2DRJ
- w1YPVn/6WsfAEkoxPHrwzlP36snR8hv1+wjv4c4ZXo5qKd5I57hPtxfRh8mzQvtWUepQ1q
- t33s5Xm7R6+mfLB+eFbwtKIEeeKt08o=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ b=QH8H6VVT1iW0CmfiIRIPI9iZcJteP8/VY3N7pGEaIu7hpASpJnF33UeLhYxqnj+3IZU9XJ
+ yuD8jrj7w+QXaKHXjxzz6AU9jcpgDEdtNKVwd+orW5z5AMDWXT9n4A2PoXRDtfAJZpfLeF
+ QtxDgG6Wuew74nbP9HUK/mrRwy82jYc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-km4NswSWPP6TGrruWV00Wg-1; Tue,
- 25 Mar 2025 04:17:27 -0400
-X-MC-Unique: km4NswSWPP6TGrruWV00Wg-1
-X-Mimecast-MFC-AGG-ID: km4NswSWPP6TGrruWV00Wg_1742890646
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-8W9Qw8hWMZu2qOg6UryWmQ-1; Tue,
+ 25 Mar 2025 04:17:24 -0400
+X-MC-Unique: 8W9Qw8hWMZu2qOg6UryWmQ-1
+X-Mimecast-MFC-AGG-ID: 8W9Qw8hWMZu2qOg6UryWmQ_1742890643
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED64C1860975; Tue, 25 Mar 2025 08:17:20 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CECDB1828B34; Tue, 25 Mar 2025 08:17:17 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.142])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8D8F11800268; Tue, 25 Mar 2025 08:17:18 +0000 (UTC)
+ id 2F1291801750; Tue, 25 Mar 2025 08:17:14 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -53,10 +52,8 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
 Subject: [PATCH] tests/functional: Skip the screendump tests if the command is
  not available
-Date: Tue, 25 Mar 2025 09:17:13 +0100
-Message-ID: <20250325081713.283490-2-thuth@redhat.com>
-In-Reply-To: <20250325081713.283490-1-thuth@redhat.com>
-References: <20250325081713.283490-1-thuth@redhat.com>
+Date: Tue, 25 Mar 2025 09:17:12 +0100
+Message-ID: <20250325081713.283490-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
