@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64177C36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE2ABC36005
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txCzv-0000v0-AS; Tue, 25 Mar 2025 18:43:51 -0400
+	id 1txD0T-0002J3-3y; Tue, 25 Mar 2025 18:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txCzh-0000jx-D5
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:39 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1txD0J-0001bW-8c
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:15 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txCzf-0006wr-Sm
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:43:37 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3913b539aabso3423623f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:43:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1txD0G-00074C-B6
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:14 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-22435603572so114894545ad.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942614; x=1743547414; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942651; x=1743547451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0SOvxtJeq0EX5lR/jkU2/dH8LgMhbpkIvEfLhQT46Rg=;
- b=cS+9YF5DO1DzdWrCU5nGAMAQliQt2Ombjdj8Tod6IdFBtB3t05t5+tfbVOi21IugBo
- yhWlPTTKLAm0u/l6r1TWN4JDs0Q+naS/XxSt6+bhk5xfIWA93LRz2R0lxKC6fe1BsKM0
- WOTGniZqasvKsv0YpPdHC+jrq1c4UNa/t7QxzlNFNssW5VjhiY2cJ5xwvMJzMTiBLvna
- Y8IGLH8XTf3pfnIWHiH600Yy5oCBt6MIWYKvWFQFWQxjV4JJ3pvxbz9Cs1yDyPJkS7kI
- uOKRiFTHQt0PNVcAHy3DTqv9ViYLI59H19zieviylLnNAkavoPeCWpte8ZnA0B3ztWWq
- AF1A==
+ bh=p5VV71JY8goeor4xQCwdYnut93y9ysd8cImiGLe4Oic=;
+ b=nCuF6PD/FRcp45a/9c8QzRZBhcy4jaMmCQE3XmCI7jRCmDNbGhi+cehg4dc4aczuGK
+ mJ0conJalEGS2vKRIeNrIgAvk16ipf1b3qLUui2HwX8trfsSdYnhcIPpk2WNk6tS8hcT
+ Cf4YdcwXcrKkNaAXoZMwfz0bwEDNqH8rhWtfT+NT0zq2vxG9IwTa/IhjK0CGt4RnATR6
+ ATOkZllUoPk1i6Giojk2UwNRYDbWsNsAjf2r3TL8UJ07KNapp7CgnK34wAl5PBAZMD5t
+ A1yFIcuf4K+xb8Koc8rzhD0XomqlG/ukVmk4mQ22oCgIKCic2gPEJoK1oMxhowMmb3oN
+ fDuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942614; x=1743547414;
+ d=1e100.net; s=20230601; t=1742942651; x=1743547451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0SOvxtJeq0EX5lR/jkU2/dH8LgMhbpkIvEfLhQT46Rg=;
- b=T8SKOq3wAQeF31iFvbiFauocrTNKTdy9Qz9WchNW3Yi0Y+QEQ13g5uBeUL3Ga/81+M
- v0Bq1fLogh8GioS2W53Ov/I1BYEEJvyb4bqvLk8nia78PmupDSVFXFVgJYXFc+VTZ3u5
- cq90ArPKqtK/MaDd1pFQ2CE99WCYV7mmA0v83sHSNbd+ypHQJaJVy/G9IEOYR2QqeZi7
- HiPidvwLqVOQmZZXgCnDadbODYcoIh6wGma5Kjouyfst+pjmM+Z+xrZATSUuEorzb30f
- FboBOqePcuOPDcT5j6qeugILnrfZ+Z78M/fEsyPkk9HL+XfGMDJUL4PWFjto9KdjhnfD
- okiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsw7cbIMSNc6xZYJxqPUyMSOnksNVkQS7bhMjjYJ5r0titFU0JPnXJas7dFBuE+KfooVWuQcC8+bDl@nongnu.org
-X-Gm-Message-State: AOJu0Yxr/t0aerAWbmRzoQFmBW+5PnEL/zy8DGrdCX2/IA1w3+Ed3nak
- hdvqF3ktBvxk6+SIrnvRA8owZwV0hqmtUQcRTe3uMVX6MxXTm60S5FdPgTpI5uA=
-X-Gm-Gg: ASbGncvbYAoZwzSqqFXh1QdglUmKf6MkshWsxFDiuntfn+CZDcAgDwD/Loht0yBXOMt
- XHuzthZGX3TjLu0QqmlOBYmE1+QMv9rBVglES1Bp0FriLjlsMDmsZys2mOOrIP/xi5Bt9cGVALk
- 4THRcyOs7yvhNjdSePoTvkTbr2clP/1PVAIqNiatFATzsejUvlnKZPAgADdQ7TWNnTUqMQZH3MP
- MUmYQSJJNxpIgJEbRUa54S8dnXH0QW28U/DIlhiHhgYcFxDkKNDbAB67UQQvrVdXO/gHj41qniA
- RULjo/NU99Kd62R1wEr5/G4WxlIog6W6MvtngYXfjkAYb+XRh2ZFLOdKK/VbRlZMZiUgPgF8Scd
- BInZOen0kiN+voH8CnSo=
-X-Google-Smtp-Source: AGHT+IFeVdGSd4Y1ZRCNz3OUiqxsUVPZjedabVUe+RqcSWSAusCvErNVEAL+11un++kP3/MeK5lCEg==
-X-Received: by 2002:a05:6000:1842:b0:391:2c09:bdef with SMTP id
- ffacd0b85a97d-3997f9261d0mr15336360f8f.30.1742942614322; 
- Tue, 25 Mar 2025 15:43:34 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9efe61sm15199585f8f.97.2025.03.25.15.43.32
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 15:43:33 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Glenn Miles <milesg@linux.ibm.com>, Samuel Tardieu <sam@rfc1149.net>,
- qemu-block@nongnu.org, Patrick Leis <venture@google.com>,
- David Hildenbrand <david@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
- Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: [PATCH-for-10.0 04/12] hw/dma/i82374: Categorize and add description
-Date: Tue, 25 Mar 2025 23:43:02 +0100
-Message-ID: <20250325224310.8785-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
-References: <20250325224310.8785-1-philmd@linaro.org>
+ bh=p5VV71JY8goeor4xQCwdYnut93y9ysd8cImiGLe4Oic=;
+ b=r2pGQ2bUgfkV/tuQhjm5rSF8/pTNg8Z5n401XpqOJ8BPd1h5qJT4hRlSfB2OturwYG
+ 5Zb/inZ8hzt/M0gZj1dAbO96bRj9dv8NUuzlSdFumsTY+w3jSa/7YsNG0WCcE0PrscIU
+ hbG2jSw045uuZta3jd/NLQDjVnq25KPRc16Mn+oqt+c7ULOJqJ8EFqN8EeoSNeEmTr49
+ uLozQ0EKyz2rQYpWJ3XB3XKn6W2nZ+5DZSH7Mq90ZWjGY3T1iKait6u86WADwv2U0HLm
+ 5wDj2do/FpbT33ExLEEeRUOmqIM7Qg2RFq5Qf1nrFojFG5J0aC/9Hdodfp6eKQa+r8j5
+ QaMQ==
+X-Gm-Message-State: AOJu0Yy5FaEwNn/mI+L0AbCEWWgOpjIY7lNaRPc3x2/QjYnO8mCQFEEo
+ EUDoPZcPvO0PfL2l0s/B8e97sqWfs8JoHKYA1ARUNGPcNL/KJW8EmNDyBlvOkgs7gUl/yxtpLN1
+ b
+X-Gm-Gg: ASbGncu8lofDRA2zofzKNFfzlO7dRMLmJBgTnU2Rf9AjvUGSVoCPsr/e2okoYYZgSwX
+ T5gd0IVu5Ize1lu7K/Q3BQz7cKphKnTompxW8GxjOqhaIVy1BAEGU2anuQRWDSnKNuVmuryaT1q
+ EvZ87BO1+3zDBxOJiVRWe2qN6e2iDMbE2rxn8wsxn7qxFsVOwARgOlUOK5v13Kh3he1/k/DyUn/
+ 6LBS4mg0JitUWRZTthncmoRR7RDN9L2F7AKc2PTY9pbX0Hgsx7+r/fzJZaTcKLM8y5vOL17wrzA
+ qz2Gw0dbHwf9bBdl74QeMbBF9xDZKs1v41jg/I+CQrAzeni8ruNvLXUrWmyAXKxCCdQPgGqYTQi
+ H
+X-Google-Smtp-Source: AGHT+IFm8a9NNf+4zvz2VHdcREc8xFi6eznh/Umr4XhI3SDmP0l4cw/4H0AepL6UTIWhemGEE41j/A==
+X-Received: by 2002:a05:6a00:1a93:b0:736:6ac4:d1ff with SMTP id
+ d2e1a72fcca58-7390598e236mr32895302b3a.3.1742942650615; 
+ Tue, 25 Mar 2025 15:44:10 -0700 (PDT)
+Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Mar 2025 15:44:10 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mrolnik@gmail.com,
+	philmd@linaro.org,
+	pierrick.bouvier@linaro.org
+Subject: [PATCH v2 08/11] target/avr: Use cpu_stb_mmuidx_ra in helper_fullwr
+Date: Tue, 25 Mar 2025 15:44:00 -0700
+Message-ID: <20250325224403.4011975-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
+References: <20250325224403.4011975-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,25 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/dma/i82374.c | 2 ++
- 1 file changed, 2 insertions(+)
+Avoid direct use of address_space_memory.
+Make use of the softmmu cache of the i/o page.
 
-diff --git a/hw/dma/i82374.c b/hw/dma/i82374.c
-index 9652d47adcd..0bf69ef399b 100644
---- a/hw/dma/i82374.c
-+++ b/hw/dma/i82374.c
-@@ -150,6 +150,8 @@ static void i82374_class_init(ObjectClass *klass, void *data)
-     dc->realize = i82374_realize;
-     dc->vmsd = &vmstate_i82374;
-     device_class_set_props(dc, i82374_properties);
-+    dc->desc = "Intel 82374 DMA controller";
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/avr/helper.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index d0e86f5614..7d6954ec26 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -23,10 +23,10 @@
+ #include "qemu/error-report.h"
+ #include "cpu.h"
+ #include "accel/tcg/cpu-ops.h"
++#include "accel/tcg/getpc.h"
+ #include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "exec/cpu_ldst.h"
+-#include "exec/address-spaces.h"
+ #include "exec/helper-proto.h"
+ 
+ bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+@@ -67,6 +67,11 @@ bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+     return false;
  }
  
- static const TypeInfo i82374_info = {
++static void do_stb(CPUAVRState *env, uint32_t addr, uint8_t data, uintptr_t ra)
++{
++    cpu_stb_mmuidx_ra(env, addr, data, MMU_DATA_IDX, ra);
++}
++
+ void avr_cpu_do_interrupt(CPUState *cs)
+ {
+     CPUAVRState *env = cpu_env(cs);
+@@ -311,8 +316,7 @@ void helper_fullwr(CPUAVRState *env, uint32_t data, uint32_t addr)
+         break;
+ 
+     default:
+-        address_space_stb(&address_space_memory, OFFSET_DATA + addr, data,
+-                          MEMTXATTRS_UNSPECIFIED, NULL);
++        do_stb(env, addr, data, GETPC());
+         break;
+     }
+ }
 -- 
-2.47.1
+2.43.0
 
 
