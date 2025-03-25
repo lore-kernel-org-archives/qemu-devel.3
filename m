@@ -4,65 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA51C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C13DC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twy4c-0003cu-Mz; Tue, 25 Mar 2025 02:47:42 -0400
+	id 1twy7d-0004X0-HR; Tue, 25 Mar 2025 02:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twy4V-0003c6-HH
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 02:47:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1twy7a-0004WW-SK; Tue, 25 Mar 2025 02:50:46 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1twy4T-0001AG-3n
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 02:47:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742885251;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=neXRzJyBDHwBU3rOJQUjETMsqY2t2kkrhYAvNGAuyt8=;
- b=PfZ+Zir70WtjWkhSJ7n1SA5EqaQILY2UctBgKfgM0WPebAq/7WrqxT45v+hBxXDLPCXcoY
- iwJSbUaEPhLgVWpS4hkPzVyG93ZEyeoJw3qIbs1beSae0pwy9Cb0eoibVNiIIro4XzdDwk
- byWCAirxmnRd3zeeEOdlBz3MwSEpetY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-57-iMvkSECWM-CcHCFtMt9LVA-1; Tue,
- 25 Mar 2025 02:47:22 -0400
-X-MC-Unique: iMvkSECWM-CcHCFtMt9LVA-1
-X-Mimecast-MFC-AGG-ID: iMvkSECWM-CcHCFtMt9LVA_1742885241
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D90871800262; Tue, 25 Mar 2025 06:47:20 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.60])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF0A01801747; Tue, 25 Mar 2025 06:47:17 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1twy7Y-0001cM-9y; Tue, 25 Mar 2025 02:50:46 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 93862107D5F;
+ Tue, 25 Mar 2025 09:49:21 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 32B3E1D5E6E;
+ Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 2BB5257024; Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/functional/test_vnc: Skip test if VNC support is not
- available
-Date: Tue, 25 Mar 2025 07:47:15 +0100
-Message-ID: <20250325064715.278876-1-thuth@redhat.com>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 v2 00/34] Patch Round-up for stable 7.2.17,
+ freeze on 2025-03-24 (frozen)
+Date: Tue, 25 Mar 2025 09:50:21 +0300
+Message-Id: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,85 +61,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+The following patches are queued for QEMU stable v7.2.17:
 
-These tests currently fail if VNC support has not been compiled into
-the QEMU binary. Let's add some checks to skip the tests in that
-case instead.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/test_vnc.py | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+Patch freeze is 2025-03-24 (frozen), and the release is planned for 2025-03-26:
 
-diff --git a/tests/functional/test_vnc.py b/tests/functional/test_vnc.py
-index 1916be0103f..8c9953bdb00 100755
---- a/tests/functional/test_vnc.py
-+++ b/tests/functional/test_vnc.py
-@@ -12,6 +12,7 @@
- 
- import socket
- from typing import List
-+from qemu.machine.machine import VMLaunchFailure
- 
- from qemu_test import QemuSystemTest
- from qemu_test.ports import Ports
-@@ -32,7 +33,14 @@ class Vnc(QemuSystemTest):
-     def test_no_vnc_change_password(self):
-         self.vm.add_args('-nodefaults', '-S')
-         self.vm.launch()
--        self.assertFalse(self.vm.qmp('query-vnc')['return']['enabled'])
-+
-+        query_vnc_response = self.vm.qmp('query-vnc')
-+        if 'error' in query_vnc_response:
-+            self.assertEqual(query_vnc_response['error']['class'],
-+                             'CommandNotFound')
-+            self.skipTest('VNC support not available')
-+        self.assertFalse(query_vnc_response['return']['enabled'])
-+
-         set_password_response = self.vm.qmp('change-vnc-password',
-                                             password='new_password')
-         self.assertIn('error', set_password_response)
-@@ -41,9 +49,19 @@ def test_no_vnc_change_password(self):
-         self.assertEqual(set_password_response['error']['desc'],
-                          'Could not set password')
- 
-+    def launch_guarded(self):
-+        try:
-+            self.vm.launch()
-+        except VMLaunchFailure as excp:
-+            if "-vnc: invalid option" in excp.output:
-+                self.skipTest("VNC support not available")
-+            else:
-+                self.log.info("unhandled launch failure: %s", excp.output)
-+                raise excp
-+
-     def test_change_password_requires_a_password(self):
-         self.vm.add_args('-nodefaults', '-S', '-vnc', ':1,to=999')
--        self.vm.launch()
-+        self.launch_guarded()
-         self.assertTrue(self.vm.qmp('query-vnc')['return']['enabled'])
-         set_password_response = self.vm.qmp('change-vnc-password',
-                                             password='new_password')
-@@ -55,7 +73,7 @@ def test_change_password_requires_a_password(self):
- 
-     def test_change_password(self):
-         self.vm.add_args('-nodefaults', '-S', '-vnc', ':1,to=999,password=on')
--        self.vm.launch()
-+        self.launch_guarded()
-         self.assertTrue(self.vm.qmp('query-vnc')['return']['enabled'])
-         self.vm.cmd('change-vnc-password',
-                     password='new_password')
-@@ -66,7 +84,7 @@ def do_test_change_listen(self, a, b, c):
-         self.assertFalse(check_connect(c))
- 
-         self.vm.add_args('-nodefaults', '-S', '-vnc', f'{VNC_ADDR}:{a - 5900}')
--        self.vm.launch()
-+        self.launch_guarded()
-         self.assertEqual(self.vm.qmp('query-vnc')['return']['service'], str(a))
-         self.assertTrue(check_connect(a))
-         self.assertFalse(check_connect(b))
--- 
-2.49.0
+  https://wiki.qemu.org/Planning/7.2
 
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* 27a8d899c7a1 Khem Raj:
+   linux-user: Do not define struct sched_attr if libc headers do
+02* 4dafba778aa3 Volker Rümelin:
+   ui/sdl2: reenable the SDL2 Windows keyboard hook procedure
+03* 7a74e468089a Mikael Szreder:
+   target/sparc: Fix gdbstub incorrectly handling registers f32-f62
+04* b819fd699424 Peter Maydell:
+   target/arm: Report correct syndrome for UNDEFINED CNTPS_*_EL1 from EL2 
+   and NS EL1
+05* ccda792945d6 Peter Maydell:
+   target/arm: Report correct syndrome for UNDEFINED S1E2 AT ops at EL3
+06* 707d478ed8f2 Peter Maydell:
+   target/arm: Report correct syndrome for UNDEFINED LOR sysregs when NS=0
+07* 4cf494865161 Peter Maydell:
+   target/arm: Make CP_ACCESS_TRAPs to AArch32 EL3 be Monitor traps
+08* d04c6c3c000a Peter Maydell:
+   hw/intc/arm_gicv3_cpuif: Don't downgrade monitor traps for AArch32 EL3
+09* 464ce71a963b Bernhard Beschow:
+   Kconfig: Extract CONFIG_USB_CHIPIDEA from CONFIG_IMX
+10* 63dc0b864739 Sairaj Kodilkar:
+   amd_iommu: Use correct DTE field for interrupt passthrough
+11* 6291a28645a0 Philippe Mathieu-Daudé:
+   hw/i386/amd_iommu: Explicit use of AMDVI_BASE_ADDR in amdvi_init
+12* 3684717b7407 Sairaj Kodilkar:
+   amd_iommu: Use correct bitmask to set capability BAR
+13* 83cb18ac4500 Stefano Garzarella:
+   cryptodev/vhost: allocate CryptoDevBackendVhost using g_mem0()
+14* ffd455963f23 Max Chou:
+   target/riscv: rvv: Fix unexpected behavior of vector reduction 
+   instructions when vl is 0
+15* 3fba76e61caa Daniel Henrique Barboza:
+   target/riscv/debug.c: use wp size = 4 for 32-bit CPUs
+16* c86edc547692 Daniel Henrique Barboza:
+   target/riscv: throw debug exception before page fault
+17* 3521f9cadc29 Rodrigo Dias Correa:
+   goldfish_rtc: Fix tick_offset migration
+18* 2ad638a3d160 Denis Rastyogin:
+   block/qed: fix use-after-free by nullifying timer pointer after free
+19* 3b2e22c0bbe2 Patrick Venture:
+   hw/gpio: npcm7xx: fixup out-of-bounds access
+20* 29c041ca7f8d Nicholas Piggin:
+   ppc/pnv/occ: Fix common area sensor offsets
+21* 937df81af675 Peter Maydell:
+   hw/net/smc91c111: Ignore attempt to pop from empty RX fifo
+22* 2fa3a5b94696 Peter Maydell:
+   hw/net/smc91c111: Sanitize packet numbers
+23* aad6f264add3 Peter Maydell:
+   hw/net/smc91c111: Sanitize packet length on tx
+24* 700d3d6dd41d Peter Maydell:
+   hw/net/smc91c111: Don't allow data register access to overrun buffer
+25* b75c5f987916 Kevin Wolf:
+   block: Zero block driver state before reopening
+26* 48170c2d865a Greg Kurz:
+   docs: Rename default-configs to configs
+27 9cf6e41fe293 Philippe Mathieu-Daudé:
+   ui/cocoa: Temporarily ignore annoying deprecated declaration warnings
+28 e6c38d2ab55d Joe Komlodi:
+   util/cacheflush: Make first DSB unconditional on aarch64
+29 298a04998fa4 Richard Henderson:
+   target/arm: Make DisasContext.{fp, sve}_access_checked tristate
+30 cc7abc35dfa7 Richard Henderson:
+   target/arm: Simplify pstate_sm check in sve_access_check
+31* 50e975414906 Konstantin Shkolnyy:
+   vdpa: Fix endian bugs in shadow virtqueue
+32 b027f55a994a Konstantin Shkolnyy:
+   vdpa: Allow vDPA to work on big-endian machine
+33 73c0c904fc99 Nicholas Piggin:
+   target/ppc: Fix e200 duplicate SPRs
+34 78877b2e0646 Jamin Lin:
+   hw/misc/aspeed_hace: Fix buffer overflow in has_padding function
+
+(commit(s) marked with * were in previous series and are not resent)
 
