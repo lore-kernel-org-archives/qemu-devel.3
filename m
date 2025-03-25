@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06409C36008
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96A4DC35FFC
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twy7r-0004h4-RV; Tue, 25 Mar 2025 02:51:03 -0400
+	id 1twy8Q-0004zr-7J; Tue, 25 Mar 2025 02:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7p-0004f6-4w; Tue, 25 Mar 2025 02:51:01 -0400
+ id 1twy7v-0004lo-Mw; Tue, 25 Mar 2025 02:51:08 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7m-0001fz-1E; Tue, 25 Mar 2025 02:51:00 -0400
+ id 1twy7t-0001iQ-UG; Tue, 25 Mar 2025 02:51:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AE37E107D66;
- Tue, 25 Mar 2025 09:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 20219107D6C;
+ Tue, 25 Mar 2025 09:49:29 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5104C1D5E75;
- Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B6ED91D5E79;
+ Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3CB0957032; Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ id B2F155703A; Tue, 25 Mar 2025 09:50:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 34/34] hw/misc/aspeed_hace: Fix buffer overflow in
- has_padding function
-Date: Tue, 25 Mar 2025 09:50:28 +0300
-Message-Id: <20250325065031.3263718-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.10 44/51] target/arm: Simplify pstate_sm check in
+ sve_access_check
+Date: Tue, 25 Mar 2025 09:50:31 +0300
+Message-Id: <20250325065038.3263786-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
-References: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
+References: <qemu-stable-8.2.10-20250325094857@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,42 +62,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The maximum padding size is either 64 or 128 bytes and should always be smaller
-than "req_len". If "padding_size" exceeds "req_len", then
-"req_len - padding_size" underflows due to "uint32_t" data type, leading to a
-large incorrect value (e.g., `0xFFXXXXXX`). This causes an out-of-bounds memory
-access, potentially leading to a buffer overflow.
+In StreamingMode, fp_access_checked is handled already.
+We cannot fall through to fp_access_check lest we fall
+foul of the double-check assertion.
 
-Added a check to ensure "padding_size" does not exceed "req_len" before
-computing "pad_offset". This prevents "req_len - padding_size" from underflowing
-and avoids accessing invalid memory.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Fixes: 5cd7d8564a8b563da724b9e6264c967f0a091afa ("aspeed/hace: Support AST2600 HACE ")
-Link: https://lore.kernel.org/qemu-devel/20250321092623.2097234-3-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 78877b2e06464f49f777e086845e094ea7bc82ef)
+Cc: qemu-stable@nongnu.org
+Fixes: 285b1d5fcef ("target/arm: Handle SME in sve_access_check")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250307190415.982049-3-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: move declaration of 'ret' to top of block]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit cc7abc35dfa790ba6c20473c03745428c1c626b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 69175e972d..11bd25708e 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -123,6 +123,11 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
-     if (*total_msg_len <= s->total_req_len) {
-         uint32_t padding_size = s->total_req_len - *total_msg_len;
-         uint8_t *padding = iov->iov_base;
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 67d3219a30..c7428eb674 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1244,23 +1244,23 @@ static bool fp_access_check(DisasContext *s)
+ bool sve_access_check(DisasContext *s)
+ {
+     if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
++        bool ret;
 +
-+        if (padding_size > req_len) {
-+            return false;
-+        }
-+
-         *pad_offset = req_len - padding_size;
-         if (padding[*pad_offset] == 0x80) {
-             return true;
+         assert(dc_isar_feature(aa64_sme, s));
+-        if (!sme_sm_enabled_check(s)) {
+-            goto fail_exit;
+-        }
+-    } else if (s->sve_excp_el) {
++        ret = sme_sm_enabled_check(s);
++        s->sve_access_checked = (ret ? 1 : -1);
++        return ret;
++    }
++    if (s->sve_excp_el) {
++        /* Assert that we only raise one exception per instruction. */
++        assert(!s->sve_access_checked);
+         gen_exception_insn_el(s, 0, EXCP_UDEF,
+                               syn_sve_access_trap(), s->sve_excp_el);
+-        goto fail_exit;
++        s->sve_access_checked = -1;
++        return false;
+     }
+     s->sve_access_checked = 1;
+     return fp_access_check(s);
+-
+- fail_exit:
+-    /* Assert that we only raise one exception per instruction. */
+-    assert(!s->sve_access_checked);
+-    s->sve_access_checked = -1;
+-    return false;
+ }
+ 
+ /*
 -- 
 2.39.5
 
