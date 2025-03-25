@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAFE4C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6530AC3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 17:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx7sZ-0000fP-Au; Tue, 25 Mar 2025 13:15:55 -0400
+	id 1tx7tP-0000ot-OE; Tue, 25 Mar 2025 13:16:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx7sW-0000dz-VR; Tue, 25 Mar 2025 13:15:53 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1tx7tB-0000kH-Al; Tue, 25 Mar 2025 13:16:42 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx7sS-0007jm-OC; Tue, 25 Mar 2025 13:15:51 -0400
+ id 1tx7t8-0007n1-Hp; Tue, 25 Mar 2025 13:16:32 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMc4s1vppz4x3S;
- Wed, 26 Mar 2025 04:15:41 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMc5f49KLz4xN8;
+ Wed, 26 Mar 2025 04:16:22 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMc4p5gCWz4wcr;
- Wed, 26 Mar 2025 04:15:38 +1100 (AEDT)
-Message-ID: <5a08e139-a18d-4aae-836f-0ec0bb8fadc9@kaod.org>
-Date: Tue, 25 Mar 2025 18:15:36 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMc5b5nzcz4xN6;
+ Wed, 26 Mar 2025 04:16:19 +1100 (AEDT)
+Message-ID: <39787293-b0a1-4748-a273-f895a9176aa8@kaod.org>
+Date: Tue, 25 Mar 2025 18:16:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/10] ppc/pnv: Introduce Power11 PowerNV machine
+Subject: Re: [PATCH v5 0/8] Power11 support for QEMU [PowerNV]
 To: Aditya Gupta <adityag@linux.ibm.com>,
  Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250325112319.927190-1-adityag@linux.ibm.com>
- <20250325112319.927190-8-adityag@linux.ibm.com>
- <952b3afa-dc63-4230-bdff-5decabc8c25c@kaod.org>
- <8567b41e-f2b8-413c-93b8-15c74788c171@linux.ibm.com>
+References: <20250308205141.3219333-1-adityag@linux.ibm.com>
+ <57ce8d50-db92-44f0-96a9-e1297eea949f@kaod.org>
+ <65c04078-e952-4806-bc3f-1f1130dc9683@linux.ibm.com>
+ <a213cff4-5f03-4a5b-b146-eedb8fa88466@kaod.org>
+ <a536ed2c-c778-48e2-94e1-a42425aac7c9@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,16 +88,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <8567b41e-f2b8-413c-93b8-15c74788c171@linux.ibm.com>
+In-Reply-To: <a536ed2c-c778-48e2-94e1-a42425aac7c9@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=TX69=WM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,46 +115,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/25/25 18:07, Aditya Gupta wrote:
-> On 25/03/25 20:17, Cédric Le Goater wrote:
-> 
->> On 3/25/25 12:23, Aditya Gupta wrote:
->>> <...snip...>
+On 3/25/25 18:11, Aditya Gupta wrote:
+>>>> Could you please consider deprecating the POWER8NVL and POWER8E CPUs
+>>>> and associated chips and machines ? I think keeping POWER8 is fine
+>>>> since it has different HW implementation from the following generations.
+>>>> However, the POWER8NVL and POWER8E variants don't add much to QEMU.
+>>>> They were practical at one point for bringup (2014). They are not
+>>>> anymore.
+>>>>
+>>>> This will remove some lpc peculiarities.
 >>>
->>>  +static void pnv_machine_power11_class_init(ObjectClass *oc, void *data)
->>> +{
->>> +    MachineClass *mc = MACHINE_CLASS(oc);
->>> +    PnvMachineClass *pmc = PNV_MACHINE_CLASS(oc);
->>> +    static const char compat[] = "qemu,powernv11\0ibm,powernv";
->>> +
->>> +    pmc->compat = compat;
->>> +    pmc->compat_size = sizeof(compat);
->>> +    pmc->max_smt_threads = 4;
->>> +    pmc->has_lpar_per_thread = true;
->>> +    pmc->quirk_tb_big_core = true;
->>> +    pmc->dt_power_mgt = pnv_dt_power_mgt;
->>> +
->>> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
+>>>
+>>> I don't know how we 'mark' something deprecated in qemu. Checked the git history.
+>>>
+>>> By deprecating, should I just mention it in deprecated section in documentation like done for PSeries in commit 0cac0f1b ?
 >>
->> There was a lot of work done to have dynamic PHBs in the PowerNV
->> machines. This was to add support in libvirt and this goal was
->> abandoned when people left. I think we should consider removing
->> it as it adds unnecessary complexity.
+>> commit 1392617d3576 is an example.
 >>
-> Thanks for telling the history behind it, agreed this is unnecessary, 
-> will remove in v7.
+>> versioned machine types are special now and will be automatically
+>> deprecated and removed. powernv machines are not though.
+>>
+>>> Or directly remove it ?. 
+>>
+>> nope. See :
+>>
+>>     https://www.qemu.org/docs/master/about/deprecated.html.
+>>
+>>
+> Thanks Cédric !
+> 
+> I see we have .deprecation_reason and fields like that, will use those to mark the chips and machine deprecated.
 
-One nice about it IIRC was being able to tune the number of
-PHBs per chip, which reduced booting time (for 16s) and also
-provided support to test various chip configs. Check that first.
-
-Also, you should add functional tests for the powernv11 machine.
-
-See under tests/functional/test_ppc64_powernv.py.
+yes. That's unrelated to this series though.
 
 
 Thanks,
 
 C.
+
 
 
