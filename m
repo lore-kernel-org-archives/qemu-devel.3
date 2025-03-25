@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE617C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398F0C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 20:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txASw-0000ac-Mz; Tue, 25 Mar 2025 16:01:38 -0400
+	id 1txASy-0000am-1X; Tue, 25 Mar 2025 16:01:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASj-0000XF-4j
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASS-0000Vu-Ba
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASd-0002jW-17
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txASO-0002iG-3i
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 16:01:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742932878;
+ s=mimecast20190719; t=1742932863;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GHHfz+fegxqk8qT+aLB4m7mRgq2owx0MGuT4JPovqSs=;
- b=RONMfINeUE4KG6NyDrvVk9xgqwflFbnE1rKRQpdncCOZ1kkwu3cNbYpkKhDJAdpo9me99S
- J3yg/T+a4nC6S/hjVhem4T2tf+24psKdqAJLZyUolGDG7xgLTWK511drh/+weoRgAU3KWj
- NUvDWs4p8K5g435uoNL+U8gtlWR41k0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=NF2WpfoQbiQUI4IzT/ViJ7b761G0mBoV5vuWCfOzwVo=;
+ b=e/ZoS3Gie06oyi3pbwyQAAXQXIrANrY4V1lVC8MsB7cF71Yn3nmyg6NnL7qwF8mXmqKCk0
+ jN0bRzyeanpHUmlicLhuRXXiG5gysVf2IVh+uYYBZ6dzl1s8ZefRpr9FBofEdeuG2Q6Ivu
+ urgt+6yHYsRBQV1WFOvwuXg+01BF004=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-9zq7HHX2Ma61ARixEoXJCA-1; Tue,
- 25 Mar 2025 16:01:11 -0400
-X-MC-Unique: 9zq7HHX2Ma61ARixEoXJCA-1
-X-Mimecast-MFC-AGG-ID: 9zq7HHX2Ma61ARixEoXJCA_1742932870
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-i_UBX9y9Mfu4fSdvMgCqtA-1; Tue,
+ 25 Mar 2025 16:00:59 -0400
+X-MC-Unique: i_UBX9y9Mfu4fSdvMgCqtA-1
+X-Mimecast-MFC-AGG-ID: i_UBX9y9Mfu4fSdvMgCqtA_1742932858
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B07351956075; Tue, 25 Mar 2025 20:01:10 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B073E180AF65; Tue, 25 Mar 2025 20:00:58 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.142])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F1C8D1801A65; Tue, 25 Mar 2025 20:01:08 +0000 (UTC)
+ id 261E01801756; Tue, 25 Mar 2025 20:00:56 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 13/15] tests/functional: Convert the SMMU test to the
- functional framework
-Date: Tue, 25 Mar 2025 21:00:21 +0100
-Message-ID: <20250325200026.344006-14-thuth@redhat.com>
+Subject: [PATCH 09/15] tests/functional: Convert the 64-bit big endian Wheezy
+ mips test
+Date: Tue, 25 Mar 2025 21:00:17 +0100
+Message-ID: <20250325200026.344006-10-thuth@redhat.com>
 In-Reply-To: <20250325200026.344006-1-thuth@redhat.com>
 References: <20250325200026.344006-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -85,421 +86,278 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-This test was using cloudinit and a "dnf install" command in the guest
-to exercise the NIC with SMMU enabled. Since we don't have the cloudinit
-stuff in the functional framework and we should not rely on having access
-to external networks (once our ASSETs have been cached), we rather boot
-into the initrd first, manually mount the root disk and then use the
-check_http_download() function from the functional framework here instead
-for testing whether the network works as expected.
+Reuse the test function from the 32-bit big endian test to easily
+convert the 64-bit big endian Wheezy mips test.
 
-Unfortunately, there seems to be a small race when using the files
-from Fedora 33: To enter the initrd shell, we have to send a "return"
-once. But it does not seem to work if we send it too early. Using a
-sleep(0.2) makes it work reliably for me, but to make it even more
-unlikely to trigger this situation, let's better limit the Fedora 33
-tests to only run with KVM.
+Since this was the last test in tests/avocado/linux_ssh_mips_malta.py,
+we can remove this avocado file now, too.
 
-Finally, while we're at it, we also add some lines for testing writes
-to the hard disk, as we already do it in the test_intel_iommu test.
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                           |   2 +-
- tests/avocado/smmu.py                 | 139 -----------------
+ MAINTAINERS                           |   1 -
+ tests/avocado/linux_ssh_mips_malta.py | 181 --------------------------
  tests/functional/meson.build          |   2 +
- tests/functional/test_aarch64_smmu.py | 205 ++++++++++++++++++++++++++
- 4 files changed, 208 insertions(+), 140 deletions(-)
- delete mode 100644 tests/avocado/smmu.py
- create mode 100755 tests/functional/test_aarch64_smmu.py
+ tests/functional/test_mips64_malta.py |  35 +++++
+ 4 files changed, 37 insertions(+), 182 deletions(-)
+ delete mode 100644 tests/avocado/linux_ssh_mips_malta.py
+ create mode 100755 tests/functional/test_mips64_malta.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index acdd8941168..9bd9cb836ce 100644
+index 4e1d816f2b4..7b843c543ff 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -211,7 +211,7 @@ L: qemu-arm@nongnu.org
- S: Maintained
- F: hw/arm/smmu*
- F: include/hw/arm/smmu*
--F: tests/avocado/smmu.py
-+F: tests/functional/test_aarch64_smmu.py
+@@ -1354,7 +1354,6 @@ F: hw/acpi/piix4.c
+ F: hw/mips/malta.c
+ F: hw/pci-host/gt64120.c
+ F: include/hw/southbridge/piix.h
+-F: tests/avocado/linux_ssh_mips_malta.py
+ F: tests/functional/test_mips*_malta.py
+ F: tests/functional/test_mips*_tuxrun.py
  
- AVR TCG CPUs
- M: Michael Rolnik <mrolnik@gmail.com>
-diff --git a/tests/avocado/smmu.py b/tests/avocado/smmu.py
+diff --git a/tests/avocado/linux_ssh_mips_malta.py b/tests/avocado/linux_ssh_mips_malta.py
 deleted file mode 100644
-index 83fd79e922e..00000000000
---- a/tests/avocado/smmu.py
+index 2fa5cf9a6c1..00000000000
+--- a/tests/avocado/linux_ssh_mips_malta.py
 +++ /dev/null
-@@ -1,139 +0,0 @@
--# SMMUv3 Functional tests
+@@ -1,181 +0,0 @@
+-# Functional test that boots a VM and run commands via a SSH session
 -#
--# Copyright (c) 2021 Red Hat, Inc.
--#
--# Author:
--#  Eric Auger <eric.auger@redhat.com>
+-# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
 -#
 -# This work is licensed under the terms of the GNU GPL, version 2 or
 -# later.  See the COPYING file in the top-level directory.
+-
 -import os
+-import re
+-import base64
+-import logging
+-import time
 -
 -from avocado import skipUnless
--from avocado_qemu import BUILD_DIR
--from avocado_qemu.linuxtest import LinuxTest
+-from avocado_qemu import LinuxSSHMixIn
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado.utils import process
+-from avocado.utils import archive
+-from avocado.utils import ssh
 -
--@skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--class SMMU(LinuxTest):
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-@skipUnless(ssh.SSH_CLIENT_BINARY, 'No SSH client available')
+-class LinuxSSH(QemuSystemTest, LinuxSSHMixIn):
 -    """
--    :avocado: tags=accel:kvm
--    :avocado: tags=cpu:host
--    :avocado: tags=arch:aarch64
--    :avocado: tags=machine:virt
--    :avocado: tags=distro:fedora
--    :avocado: tags=smmu
--    :avocado: tags=flaky
+-    :avocado: tags=accel:tcg
 -    """
 -
--    IOMMU_ADDON = ',iommu_platform=on,disable-modern=off,disable-legacy=on'
--    kernel_path = None
--    initrd_path = None
--    kernel_params = None
+-    timeout = 150 # Not for 'configure --enable-debug --enable-debug-tcg'
 -
--    def set_up_boot(self):
--        path = self.download_boot()
--        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
--                         'drive=drv0,id=virtio-disk0,bootindex=1,'
--                         'werror=stop,rerror=stop' + self.IOMMU_ADDON)
--        self.vm.add_args('-drive',
--                         'file=%s,if=none,cache=writethrough,id=drv0' % path)
+-    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+-    VM_IP = '127.0.0.1'
 -
--    def setUp(self):
--        super(SMMU, self).setUp(None, 'virtio-net-pci' + self.IOMMU_ADDON)
+-    BASE_URL = 'https://people.debian.org/~aurel32/qemu/'
+-    IMAGE_INFO = {
+-        'be': {'base_url': 'mips',
+-               'image_name': 'debian_wheezy_mips_standard.qcow2',
+-               'image_hash': '8987a63270df67345b2135a6b7a4885a35e392d5',
+-               'kernel_hash': {
+-                   32: '592e384a4edc16dade52a6cd5c785c637bcbc9ad',
+-                   64: 'db6eea7de35d36c77d8c165b6bcb222e16eb91db'}
+-              },
+-        'le': {'base_url': 'mipsel',
+-               'image_name': 'debian_wheezy_mipsel_standard.qcow2',
+-               'image_hash': '7866764d9de3ef536ffca24c9fb9f04ffdb45802',
+-               'kernel_hash': {
+-                   32: 'a66bea5a8adaa2cb3d36a1d4e0ccdb01be8f6c2a',
+-                   64: '6a7f77245acf231415a0e8b725d91ed2f3487794'}
+-              }
+-        }
+-    CPU_INFO = {
+-        32: {'cpu': 'MIPS 24Kc', 'kernel_release': '3.2.0-4-4kc-malta'},
+-        64: {'cpu': 'MIPS 20Kc', 'kernel_release': '3.2.0-4-5kc-malta'}
+-        }
 -
--    def common_vm_setup(self, custom_kernel=False):
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.vm.add_args("-cpu", "host")
--        self.vm.add_args("-machine", "iommu=smmuv3")
--        self.vm.add_args("-d", "guest_errors")
--        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
--                         'edk2-aarch64-code.fd'))
--        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
--        self.vm.add_args('-object',
--                         'rng-random,id=rng0,filename=/dev/urandom')
+-    def get_url(self, endianess, path=''):
+-        qkey = {'le': 'el', 'be': ''}
+-        return '%s/mips%s/%s' % (self.BASE_URL, qkey[endianess], path)
 -
--        if custom_kernel is False:
--            return
+-    def get_image_info(self, endianess):
+-        dinfo = self.IMAGE_INFO[endianess]
+-        image_url = self.get_url(endianess, dinfo['image_name'])
+-        image_hash = dinfo['image_hash']
+-        return (image_url, image_hash)
 -
--        kernel_url = self.distro.pxeboot_url + 'vmlinuz'
--        initrd_url = self.distro.pxeboot_url + 'initrd.img'
--        self.kernel_path = self.fetch_asset(kernel_url)
--        self.initrd_path = self.fetch_asset(initrd_url)
+-    def get_kernel_info(self, endianess, wordsize):
+-        minfo = self.CPU_INFO[wordsize]
+-        kernel_url = self.get_url(endianess,
+-                                  'vmlinux-%s' % minfo['kernel_release'])
+-        kernel_hash = self.IMAGE_INFO[endianess]['kernel_hash'][wordsize]
+-        return kernel_url, kernel_hash
 -
--    def run_and_check(self):
--        if self.kernel_path:
--            self.vm.add_args('-kernel', self.kernel_path,
--                             '-append', self.kernel_params,
--                             '-initrd', self.initrd_path)
--        self.launch_and_wait()
--        self.ssh_command('cat /proc/cmdline')
--        self.ssh_command('dnf -y install numactl-devel')
+-    def ssh_disconnect_vm(self):
+-        self.ssh_session.quit()
 -
+-    def boot_debian_wheezy_image_and_ssh_login(self, endianess, kernel_path):
+-        image_url, image_hash = self.get_image_info(endianess)
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash)
 -
--    # 5.3 kernel without RIL #
+-        self.vm.set_console()
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
+-                               + 'console=ttyS0 root=/dev/sda1')
+-        self.vm.add_args('-no-reboot',
+-                         '-kernel', kernel_path,
+-                         '-append', kernel_command_line,
+-                         '-drive', 'file=%s,snapshot=on' % image_path,
+-                         '-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
+-                         '-device', 'pcnet,netdev=vnet')
+-        self.vm.launch()
 -
--    def test_smmu_noril(self):
+-        self.log.info('VM launched, waiting for sshd')
+-        console_pattern = 'Starting OpenBSD Secure Shell server: sshd'
+-        wait_for_console_pattern(self, console_pattern, 'Oops')
+-        self.log.info('sshd ready')
+-
+-        self.ssh_connect('root', 'root', False)
+-
+-    def shutdown_via_ssh(self):
+-        self.ssh_command('poweroff')
+-        self.ssh_disconnect_vm()
+-        wait_for_console_pattern(self, 'Power down', 'Oops')
+-
+-    def run_common_commands(self, wordsize):
+-        self.ssh_command_output_contains(
+-            'cat /proc/cpuinfo',
+-            self.CPU_INFO[wordsize]['cpu'])
+-        self.ssh_command_output_contains(
+-            'uname -m',
+-            'mips')
+-        self.ssh_command_output_contains(
+-            'uname -r',
+-            self.CPU_INFO[wordsize]['kernel_release'])
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  timer')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  i8042')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  serial')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  ata_piix')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  eth0')
+-        self.ssh_command_output_contains(
+-            'cat /proc/devices',
+-            'input')
+-        self.ssh_command_output_contains(
+-            'cat /proc/devices',
+-            'usb')
+-        self.ssh_command_output_contains(
+-            'cat /proc/devices',
+-            'fb')
+-        self.ssh_command_output_contains(
+-            'cat /proc/ioports',
+-            ' : serial')
+-        self.ssh_command_output_contains(
+-            'cat /proc/ioports',
+-            ' : ata_piix')
+-        self.ssh_command_output_contains(
+-            'cat /proc/ioports',
+-            ' : piix4_smbus')
+-        self.ssh_command_output_contains(
+-            'lspci -d 11ab:4620',
+-            'GT-64120')
+-        self.ssh_command_output_contains(
+-            'cat /sys/bus/i2c/devices/i2c-0/name',
+-            'SMBus PIIX4 adapter')
+-        self.ssh_command_output_contains(
+-            'cat /proc/mtd',
+-            'YAMON')
+-        # Empty 'Board Config' (64KB)
+-        self.ssh_command_output_contains(
+-            'md5sum /dev/mtd2ro',
+-            '0dfbe8aa4c20b52e1b8bf3cb6cbdf193')
+-
+-    def check_mips_malta(self, uname_m, endianess):
+-        wordsize = 64 if '64' in uname_m else 32
+-        kernel_url, kernel_hash = self.get_kernel_info(endianess, wordsize)
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-        self.boot_debian_wheezy_image_and_ssh_login(endianess, kernel_path)
+-
+-        stdout, _ = self.ssh_command('uname -a')
+-        self.assertIn(True, [uname_m + " GNU/Linux" in line for line in stdout])
+-
+-        self.run_common_commands(wordsize)
+-        self.shutdown_via_ssh()
+-        # Wait for VM to shut down gracefully
+-        self.vm.wait()
+-
+-    def test_mips_malta64eb_kernel3_2_0(self):
 -        """
--        :avocado: tags=smmu_noril
--        :avocado: tags=smmu_noril_tests
--        :avocado: tags=distro_version:31
+-        :avocado: tags=arch:mips64
+-        :avocado: tags=endian:big
+-        :avocado: tags=device:pcnet32
 -        """
--        self.common_vm_setup()
--        self.run_and_check()
--
--    def test_smmu_noril_passthrough(self):
--        """
--        :avocado: tags=smmu_noril_passthrough
--        :avocado: tags=smmu_noril_tests
--        :avocado: tags=distro_version:31
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.passthrough=on')
--        self.run_and_check()
--
--    def test_smmu_noril_nostrict(self):
--        """
--        :avocado: tags=smmu_noril_nostrict
--        :avocado: tags=smmu_noril_tests
--        :avocado: tags=distro_version:31
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.strict=0')
--        self.run_and_check()
--
--    # 5.8 kernel featuring range invalidation
--    # >= v5.7 kernel
--
--    def test_smmu_ril(self):
--        """
--        :avocado: tags=smmu_ril
--        :avocado: tags=smmu_ril_tests
--        :avocado: tags=distro_version:33
--        """
--        self.common_vm_setup()
--        self.run_and_check()
--
--    def test_smmu_ril_passthrough(self):
--        """
--        :avocado: tags=smmu_ril_passthrough
--        :avocado: tags=smmu_ril_tests
--        :avocado: tags=distro_version:33
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.passthrough=on')
--        self.run_and_check()
--
--    def test_smmu_ril_nostrict(self):
--        """
--        :avocado: tags=smmu_ril_nostrict
--        :avocado: tags=smmu_ril_tests
--        :avocado: tags=distro_version:33
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.strict=0')
--        self.run_and_check()
+-        self.check_mips_malta('mips64', 'be')
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index b36fcab0896..8c1d3bb4bdb 100644
+index 63876bc7c42..b36fcab0896 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -18,6 +18,7 @@ test_timeouts = {
-   'aarch64_rme_sbsaref' : 1200,
-   'aarch64_sbsaref_alpine' : 1200,
-   'aarch64_sbsaref_freebsd' : 720,
-+  'aarch64_smmu' : 720,
-   'aarch64_tuxrun' : 240,
-   'aarch64_virt' : 360,
-   'aarch64_virt_gpu' : 480,
-@@ -88,6 +89,7 @@ tests_aarch64_system_thorough = [
-   'aarch64_sbsaref',
-   'aarch64_sbsaref_alpine',
-   'aarch64_sbsaref_freebsd',
-+  'aarch64_smmu',
-   'aarch64_tcg_plugins',
-   'aarch64_tuxrun',
-   'aarch64_virt',
-diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/test_aarch64_smmu.py
+@@ -42,6 +42,7 @@ test_timeouts = {
+   'mips_malta' : 480,
+   'mipsel_malta' : 420,
+   'mipsel_replay' : 480,
++  'mips64_malta' : 240,
+   'mips64el_malta' : 420,
+   'mips64el_replay' : 180,
+   'netdev_ethtool' : 180,
+@@ -191,6 +192,7 @@ tests_mipsel_system_thorough = [
+ ]
+ 
+ tests_mips64_system_thorough = [
++  'mips64_malta',
+   'mips64_tuxrun',
+ ]
+ 
+diff --git a/tests/functional/test_mips64_malta.py b/tests/functional/test_mips64_malta.py
 new file mode 100755
-index 00000000000..c65d0f28178
+index 00000000000..53c3e0c1221
 --- /dev/null
-+++ b/tests/functional/test_aarch64_smmu.py
-@@ -0,0 +1,205 @@
++++ b/tests/functional/test_mips64_malta.py
+@@ -0,0 +1,35 @@
 +#!/usr/bin/env python3
 +#
++# Functional tests for the big-endian 64-bit MIPS Malta board
++#
 +# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# SMMUv3 Functional tests
-+#
-+# Copyright (c) 2021 Red Hat, Inc.
-+#
-+# Author:
-+#  Eric Auger <eric.auger@redhat.com>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
 +
-+import os
-+import time
-+
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import BUILD_DIR
-+from qemu.utils import kvm_available
++from qemu_test import LinuxKernelTest, Asset
++from test_mips_malta import mips_check_wheezy
 +
 +
-+class SMMU(LinuxKernelTest):
++class MaltaMachineConsole(LinuxKernelTest):
 +
-+    default_kernel_params = ('earlyprintk=pl011,0x9000000 no_timer_check '
-+                             'printk.time=1 rd_NO_PLYMOUTH net.ifnames=0 '
-+                             'console=ttyAMA0 rd.rescue')
-+    IOMMU_ADDON = ',iommu_platform=on,disable-modern=off,disable-legacy=on'
-+    kernel_path = None
-+    initrd_path = None
-+    kernel_params = None
++    ASSET_WHEEZY_KERNEL = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mips/'
++         'vmlinux-3.2.0-4-5kc-malta'),
++        '3e4ec154db080b3f1839f04dde83120654a33e5e1716863de576c47cb94f68f6')
 +
-+    GUEST_PORT = 8080
++    ASSET_WHEEZY_DISK = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mips/'
++         'debian_wheezy_mips_standard.qcow2'),
++        'de03599285b8382ad309309a6c4869f6c6c42a5cfc983342bab9ec0dfa7849a2')
 +
-+    def set_up_boot(self, path):
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-+                         'drive=drv0,id=virtio-disk0,bootindex=1,'
-+                         'werror=stop,rerror=stop' + self.IOMMU_ADDON)
-+        self.vm.add_args('-drive',
-+                f'file={path},if=none,cache=writethrough,id=drv0,snapshot=on')
-+
-+        self.vm.add_args('-netdev',
-+                         'user,id=n1,hostfwd=tcp:127.0.0.1:0-:%d' %
-+                         self.GUEST_PORT)
-+        self.vm.add_args('-device', 'virtio-net,netdev=n1' + self.IOMMU_ADDON)
-+
-+    def common_vm_setup(self, kernel, initrd, disk):
-+        self.require_accelerator("kvm")
-+        self.require_netdev('user')
-+        self.set_machine("virt")
-+        self.vm.add_args('-m', '1G')
-+        self.vm.add_args("-accel", "kvm")
-+        self.vm.add_args("-cpu", "host")
-+        self.vm.add_args("-machine", "iommu=smmuv3")
-+        self.vm.add_args("-d", "guest_errors")
-+        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
-+                         'edk2-aarch64-code.fd'))
-+        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
-+        self.vm.add_args('-object',
-+                         'rng-random,id=rng0,filename=/dev/urandom')
-+
-+        self.kernel_path = kernel.fetch()
-+        self.initrd_path = initrd.fetch()
-+        self.set_up_boot(disk.fetch())
-+
-+    def run_and_check(self, filename, hashsum):
-+        self.vm.add_args('-initrd', self.initrd_path)
-+        self.vm.add_args('-append', self.kernel_params)
-+        self.launch_kernel(self.kernel_path, initrd=self.initrd_path,
-+                           wait_for='attach it to a bug report.')
-+        prompt = '# '
-+        # Fedora 33 requires 'return' to be pressed to enter the shell.
-+        # There seems to be a small race between detecting the previous ':'
-+        # and sending the newline, so we need to add a small delay here.
-+        self.wait_for_console_pattern(':')
-+        time.sleep(0.2)
-+        exec_command_and_wait_for_pattern(self, '\n', prompt)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/cmdline',
-+                                          self.kernel_params)
-+
-+        # Checking for SMMU enablement:
-+        self.log.info("Checking whether SMMU has been enabled...")
-+        exec_command_and_wait_for_pattern(self, 'dmesg | grep smmu',
-+                                          'arm-smmu-v3')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                                    'find /sys/kernel/iommu_groups/ -type l',
-+                                    'devices/0000:00:')
-+        self.wait_for_console_pattern(prompt)
-+
-+        # Copy a file (checked later), umount afterwards to drop disk cache:
-+        self.log.info("Checking hard disk...")
-+        exec_command_and_wait_for_pattern(self,
-+                        "while ! (dmesg -c | grep vda:) ; do sleep 1 ; done",
-+                        "vda2")
-+        exec_command_and_wait_for_pattern(self, 'mount /dev/vda2 /sysroot',
-+                                          'mounted filesystem')
-+        exec_command_and_wait_for_pattern(self, 'cp /bin/vi /sysroot/root/vi',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self, 'umount /sysroot', prompt)
-+        # Switch from initrd to the cloud image filesystem:
-+        exec_command_and_wait_for_pattern(self, 'mount /dev/vda2 /sysroot',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                ('for d in dev proc sys run ; do '
-+                 'mount -o bind /$d /sysroot/$d ; done'), prompt)
-+        exec_command_and_wait_for_pattern(self, 'chroot /sysroot', prompt)
-+        # Check files on the hard disk:
-+        exec_command_and_wait_for_pattern(self,
-+            ('if diff -q /root/vi /usr/bin/vi ; then echo "file" "ok" ; '
-+             'else echo "files differ"; fi'), 'file ok')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self, f'sha256sum {filename}',
-+                                          hashsum)
-+
-+        # Check virtio-net via HTTP:
-+        exec_command_and_wait_for_pattern(self, 'dhclient eth0', prompt)
-+        self.check_http_download(filename, hashsum, self.GUEST_PORT)
-+
-+
-+    # 5.3 kernel without RIL #
-+
-+    ASSET_KERNEL_F31 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/31/Server/aarch64/os/images/pxeboot/vmlinuz'),
-+        '3ae07fcafbfc8e4abeb693035a74fe10698faae15e9ccd48882a9167800c1527')
-+
-+    ASSET_INITRD_F31 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/31/Server/aarch64/os/images/pxeboot/initrd.img'),
-+        '9f3146b28bc531c689f3c5f114cb74e4bd7bd548e0ba19fa77921d8bd256755a')
-+
-+    ASSET_DISK_F31 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Cloud/aarch64/images/Fedora-Cloud-Base-31-1.9.aarch64.qcow2'),
-+        '1e18d9c0cf734940c4b5d5ec592facaed2af0ad0329383d5639c997fdf16fe49')
-+
-+    F31_FILENAME = '/boot/initramfs-5.3.7-301.fc31.aarch64.img'
-+    F31_HSUM = '1a4beec6607d94df73d9dd1b4985c9c23dd0fdcf4e6ca1351d477f190df7bef9'
-+
-+    def test_smmu_noril(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
-+                             self.ASSET_DISK_F31)
-+        self.kernel_params = self.default_kernel_params
-+        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
-+
-+    def test_smmu_noril_passthrough(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
-+                             self.ASSET_DISK_F31)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.passthrough=on')
-+        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
-+
-+    def test_smmu_noril_nostrict(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
-+                             self.ASSET_DISK_F31)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.strict=0')
-+        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
-+
-+
-+    # 5.8 kernel featuring range invalidation
-+    # >= v5.7 kernel
-+
-+    ASSET_KERNEL_F33 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/33/Server/aarch64/os/images/pxeboot/vmlinuz'),
-+        'd8b1e6f7241f339d8e7609c456cf0461ffa4583ed07e0b55c7d1d8a0c154aa89')
-+
-+    ASSET_INITRD_F33 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/33/Server/aarch64/os/images/pxeboot/initrd.img'),
-+        '92513f55295c2c16a777f7b6c35ccd70a438e9e1e40b6ba39e0e60900615b3df')
-+
-+    ASSET_DISK_F33 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/33/Cloud/aarch64/images/Fedora-Cloud-Base-33-1.2.aarch64.qcow2'),
-+        'e7f75cdfd523fe5ac2ca9eeece68edc1a81f386a17f969c1d1c7c87031008a6b')
-+
-+    F33_FILENAME = '/boot/initramfs-5.8.15-301.fc33.aarch64.img'
-+    F33_HSUM = '079cfad0caa82e84c8ca1fb0897a4999dd769f262216099f518619e807a550d9'
-+
-+    def test_smmu_ril(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
-+                             self.ASSET_DISK_F33)
-+        self.kernel_params = self.default_kernel_params
-+        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
-+
-+    def test_smmu_ril_passthrough(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
-+                             self.ASSET_DISK_F33)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.passthrough=on')
-+        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
-+
-+    def test_smmu_ril_nostrict(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
-+                             self.ASSET_DISK_F33)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.strict=0')
-+        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
++    def test_wheezy(self):
++        kernel_path = self.ASSET_WHEEZY_KERNEL.fetch()
++        image_path = self.ASSET_WHEEZY_DISK.fetch()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
++                               + 'console=ttyS0 root=/dev/sda1')
++        mips_check_wheezy(self,
++            kernel_path, image_path, kernel_command_line, cpuinfo='MIPS 20Kc',
++            dl_file='/boot/initrd.img-3.2.0-4-5kc-malta',
++            hsum='d98b953bb4a41c0fc0fd8d19bbc691c08989ac52568c1d3054d92dfd890d3f06')
 +
 +
 +if __name__ == '__main__':
