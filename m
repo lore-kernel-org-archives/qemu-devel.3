@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E7FC3600C
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CDDDC35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twyAD-0007mZ-Oy; Tue, 25 Mar 2025 02:53:30 -0400
+	id 1twyBC-0001U6-JE; Tue, 25 Mar 2025 02:54:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy9P-0006AJ-P4; Tue, 25 Mar 2025 02:52:41 -0400
+ id 1twy9c-0006Ny-Ji; Tue, 25 Mar 2025 02:52:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy9L-0001wI-FW; Tue, 25 Mar 2025 02:52:37 -0400
+ id 1twy9Z-0001yQ-IV; Tue, 25 Mar 2025 02:52:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DB0B2107D7A;
+ by isrv.corpit.ru (Postfix) with ESMTP id EA68A107D7E;
  Tue, 25 Mar 2025 09:49:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7D6B41D5E85;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D12A1D5E89;
  Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7697A57052; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ id 80C175705A; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 56/69] vdpa: Allow vDPA to work on big-endian machine
-Date: Tue, 25 Mar 2025 09:50:29 +0300
-Message-Id: <20250325065043.3263864-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Andreas Schwab <schwab@suse.de>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 60/69] linux-user/riscv: Fix handling of cpu mask in
+ riscv_hwprobe syscall
+Date: Tue, 25 Mar 2025 09:50:33 +0300
+Message-Id: <20250325065043.3263864-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,51 +64,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add .set_vnet_le() function that always returns success, assuming that
-vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
-outputs the message:
-"backend does not support LE vnet headers; falling back on userspace virtio"
+The third argument of the syscall contains the size of the
+cpu mask in bytes, not bits.  Nor is the size rounded up to
+a multiple of sizeof(abi_ulong).
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit b027f55a994af885a7a498a40373a2dcc2d8b15e)
+Cc: qemu-stable@nongnu.org
+Reported-by: Andreas Schwab <schwab@suse.de>
+Fixes: 9e1c7d982d7 ("linux-user/riscv: Add syscall riscv_hwprobe")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250308225902.1208237-3-richard.henderson@linaro.org>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 1a010d22b7adecf0fb1c069e1e535af1aa51e9cf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 7195d340a0..5a962255e7 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -262,6 +262,18 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
- 
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index a407d4a023..549e39e196 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -9097,35 +9097,38 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
+     }
  }
  
+-static int cpu_set_valid(abi_long arg3, abi_long arg4)
 +/*
-+ * FIXME: vhost_vdpa doesn't have an API to "set h/w endianness". But it's
-+ * reasonable to assume that h/w is LE by default, because LE is what
-+ * virtio 1.0 and later ask for. So, this function just says "yes, the h/w is
-+ * LE". Otherwise, on a BE machine, higher-level code would mistakely think
-+ * the h/w is BE and can't support VDPA for a virtio 1.0 client.
++ * If the cpumask_t of (target_cpus, cpusetsize) cannot be read: -EFAULT.
++ * If the cpumast_t has no bits set: -EINVAL.
++ * Otherwise the cpumask_t contains some bit set: 0.
++ * Unlike the kernel, we do not mask cpumask_t by the set of online cpus,
++ * nor bound the search by cpumask_size().
 + */
-+static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool enable)
-+{
-+    return 0;
-+}
-+
- static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
-                                        Error **errp)
++static int nonempty_cpu_set(abi_ulong cpusetsize, abi_ptr target_cpus)
  {
-@@ -429,6 +441,7 @@ static NetClientInfo net_vhost_vdpa_info = {
-         .cleanup = vhost_vdpa_cleanup,
-         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
-         .has_ufo = vhost_vdpa_has_ufo,
-+        .set_vnet_le = vhost_vdpa_set_vnet_le,
-         .check_peer_type = vhost_vdpa_check_peer_type,
-         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
- };
+-    int ret, i, tmp;
+-    size_t host_mask_size, target_mask_size;
+-    unsigned long *host_mask;
+-
+-    /*
+-     * cpu_set_t represent CPU masks as bit masks of type unsigned long *.
+-     * arg3 contains the cpu count.
+-     */
+-    tmp = (8 * sizeof(abi_ulong));
+-    target_mask_size = ((arg3 + tmp - 1) / tmp) * sizeof(abi_ulong);
+-    host_mask_size = (target_mask_size + (sizeof(*host_mask) - 1)) &
+-                     ~(sizeof(*host_mask) - 1);
+-
+-    host_mask = alloca(host_mask_size);
+-
+-    ret = target_to_host_cpu_mask(host_mask, host_mask_size,
+-                                  arg4, target_mask_size);
+-    if (ret != 0) {
+-        return ret;
+-    }
++    unsigned char *p = lock_user(VERIFY_READ, target_cpus, cpusetsize, 1);
++    int ret = -TARGET_EFAULT;
+ 
+-    for (i = 0 ; i < host_mask_size / sizeof(*host_mask); i++) {
+-        if (host_mask[i] != 0) {
+-            return 0;
++    if (p) {
++        ret = -TARGET_EINVAL;
++        /*
++         * Since we only care about the empty/non-empty state of the cpumask_t
++         * not the individual bits, we do not need to repartition the bits
++         * from target abi_ulong to host unsigned long.
++         *
++         * Note that the kernel does not round up cpusetsize to a multiple of
++         * sizeof(abi_ulong).  After bounding cpusetsize by cpumask_size(),
++         * it copies exactly cpusetsize bytes into a zeroed buffer.
++         */
++        for (abi_ulong i = 0; i < cpusetsize; ++i) {
++            if (p[i]) {
++                ret = 0;
++                break;
++            }
+         }
++        unlock_user(p, target_cpus, 0);
+     }
+-    return -TARGET_EINVAL;
++    return ret;
+ }
+ 
+ static abi_long do_riscv_hwprobe(CPUArchState *cpu_env, abi_long arg1,
+@@ -9142,7 +9145,7 @@ static abi_long do_riscv_hwprobe(CPUArchState *cpu_env, abi_long arg1,
+ 
+     /* check cpu_set */
+     if (arg3 != 0) {
+-        ret = cpu_set_valid(arg3, arg4);
++        ret = nonempty_cpu_set(arg3, arg4);
+         if (ret != 0) {
+             return ret;
+         }
 -- 
 2.39.5
 
