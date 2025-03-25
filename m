@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698E6C36005
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 23:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91B2C36005
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 23:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txDve-0000P6-4D; Tue, 25 Mar 2025 19:43:30 -0400
+	id 1txDvi-0000QQ-Kg; Tue, 25 Mar 2025 19:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1txDvb-0000OA-Kk
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 19:43:27 -0400
+ id 1txDvf-0000Pa-3j
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 19:43:31 -0400
 Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1txDvZ-0005Gz-RF
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 19:43:27 -0400
+ id 1txDvc-0005HU-Jw
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 19:43:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742946206; x=1774482206;
+ t=1742946209; x=1774482209;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GUPbIlrSAOGAWvUKfKQQlreI6b7vKByoVl8Mn2xfEqE=;
- b=Q6rWroDAXJJhA3WlL7uvNN2wM5dra5T5cEUMTc3VywZ/a2dXHv6Lju+T
- Pa1eQMClcgyilUa1SiDksU6KRvyANTSZYqJwUpZegqUvqod2E69lZ+jfG
- UOjoy72xmz/N+EbUtcA2ANuIA3UqOimslZCZZHLuL1XeLVdDoGL5XdMYb
- 1HodY6r2ORTTLHK9x7vTSPUbnkMylDNEf2erzM4ww9KtLqW+aAvCuwwGp
- FPwnjgF8HDN2mcWEJ5mM0AdiJqA240BwUt6lxDwCe80zoMvLiBAAGIzCk
- XJLZHPnT59Qw0XdolE28UuVYDoUsS9kckTrVgXR/ZheYnhd1lDAYT0dIe A==;
-X-CSE-ConnectionGUID: OeAnHpZGStWkUbwOvEDWTA==
-X-CSE-MsgGUID: ffkblxS6Rlqeq/09HvZYsA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11384"; a="55582833"
-X-IronPort-AV: E=Sophos;i="6.14,276,1736841600"; d="scan'208";a="55582833"
+ bh=SsML3id1zQyQzm0yL+5r+uEIFe5oIh+u9jre2KLjHn4=;
+ b=a/BcgeRi/vt6roE0U8i4je5w3cvBVqiizCmI70g7B3zqjrPl8e8mfgDj
+ RKoluNgR3h7AxfaM2Uv3mhaNM4mnjAMKCgbFexTsSTNxQP3/vjYrqZ8Ey
+ 9qLeIjmvj3hRAW5p2qI4tf04B30mv3VixPGY0rCk7c4Pb7xKtxbSMHyJC
+ RMwP/JU/fdWRLooatOkiG/3YYwZ2bfkIQ4tzZq4hrsAGhdMgevxffD7YK
+ ozpnksc0N8UoD06dauwmivtaTkSUaM/6bFZ1DFVATSYPUBs5PpP1PRo5G
+ ype/3DEsO6NolkzsUpWD8Kovyztpcd8HT2qEnPUm0kRFboVhxTdhtu8Qo g==;
+X-CSE-ConnectionGUID: 2V6Lh3iaQhCPnOnRNo8uLA==
+X-CSE-MsgGUID: 5Xynzmj4TheK+4zWj68K2A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11384"; a="55582849"
+X-IronPort-AV: E=Sophos;i="6.14,276,1736841600"; d="scan'208";a="55582849"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  25 Mar 2025 16:43:19 -0700
-X-CSE-ConnectionGUID: CNzz1PR4S76lvR1ugZy2Jg==
-X-CSE-MsgGUID: kgpRvg1/T+iNt0jvdBpvTA==
+X-CSE-ConnectionGUID: tlxqlSucRjmyHi6ekryCYA==
+X-CSE-MsgGUID: qj7ORnR+S7WlUxfdHHeKlg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,276,1736841600"; d="scan'208";a="124332496"
+X-IronPort-AV: E=Sophos;i="6.14,276,1736841600"; d="scan'208";a="124332508"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  25 Mar 2025 16:43:18 -0700
@@ -53,10 +53,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PATCH v2 1/6] ui/spice: Add an option for users to provide a
- preferred codec
-Date: Tue, 25 Mar 2025 16:39:31 -0700
-Message-ID: <20250325234115.1332883-2-vivek.kasireddy@intel.com>
+Subject: [PATCH v2 5/6] ui/spice: Create a new texture with linear layout when
+ gl=on is enabled
+Date: Tue, 25 Mar 2025 16:39:35 -0700
+Message-ID: <20250325234115.1332883-6-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250325234115.1332883-1-vivek.kasireddy@intel.com>
 References: <20250325234115.1332883-1-vivek.kasireddy@intel.com>
@@ -88,9 +88,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Giving users an option to choose a particular codec will enable
-them to make an appropriate decision based on their hardware and
-use-case.
+Since most encoders/decoders (invoked by Spice) may not work with
+tiled memory associated with a texture, we need to create another
+texture that has linear memory layout and use that instead.
+
+Note that, there does not seem to be a direct way to indicate to the
+GL implementation that a texture's backing memory needs to be linear.
+Instead, we have to do it in a roundabout way where we need to first
+create a tiled texture and import that as a memory object to create
+a new texture that has a linear memory layout.
 
 Cc: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
@@ -99,70 +105,107 @@ Cc: Frediano Ziglio <freddy77@gmail.com>
 Cc: Dongwon Kim <dongwon.kim@intel.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- qemu-options.hx |  5 +++++
- ui/spice-core.c | 12 ++++++++++++
- 2 files changed, 17 insertions(+)
+ ui/spice-display.c | 63 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index dc694a99a3..608a07cfc1 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2281,6 +2281,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
-     "       [,streaming-video=[off|all|filter]][,disable-copy-paste=on|off]\n"
-     "       [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
-     "       [,playback-compression=[on|off]][,seamless-migration=[on|off]]\n"
-+    "       [,video-codecs=<encoder>:<codec>\n"
-     "       [,gl=[on|off]][,rendernode=<file>]\n"
-     "                enable spice\n"
-     "                at least one of {port, tls-port} is mandatory\n",
-@@ -2369,6 +2370,10 @@ SRST
-     ``seamless-migration=[on|off]``
-         Enable/disable spice seamless migration. Default is off.
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index 2c4daa0707..047d453a0b 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -26,6 +26,7 @@
+ #include "ui/console.h"
+ #include "trace.h"
  
-+    ``video-codecs=<encoder>:<codec>``
-+        Provide the preferred codec the Spice server should use.
-+        Default would be spice:mjpeg.
++#include "standard-headers/drm/drm_fourcc.h"
+ #include "ui/spice-display.h"
+ 
+ bool spice_opengl;
+@@ -890,11 +891,65 @@ static void spice_gl_update(DisplayChangeListener *dcl,
+     ssd->gl_updates++;
+ }
+ 
++static bool spice_gl_replace_fd_texture(SimpleSpiceDisplay *ssd,
++                                        EGLint *stride, EGLint *fourcc,
++                                        EGLuint64KHR *modifier,
++                                        int *fd)
++{
++    GLuint texture = 0;
 +
-     ``gl=[on|off]``
-         Enable/disable OpenGL context. Default is off.
- 
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 0326c63bec..907b0e9a81 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -488,6 +488,9 @@ static QemuOptsList qemu_spice_opts = {
-         },{
-             .name = "streaming-video",
-             .type = QEMU_OPT_STRING,
-+        },{
-+            .name = "video-codecs",
-+            .type = QEMU_OPT_STRING,
-         },{
-             .name = "agent-mouse",
-             .type = QEMU_OPT_BOOL,
-@@ -662,6 +665,7 @@ static void qemu_spice_init(void)
-     char *x509_key_file = NULL,
-         *x509_cert_file = NULL,
-         *x509_cacert_file = NULL;
-+    const char *video_codecs = NULL;
-     int port, tls_port, addr_flags;
-     spice_image_compression_t compression;
-     spice_wan_compression_t wan_compr;
-@@ -801,6 +805,14 @@ static void qemu_spice_init(void)
-         spice_server_set_streaming_video(spice_server, SPICE_STREAM_VIDEO_OFF);
-     }
- 
-+    video_codecs = qemu_opt_get(opts, "video-codecs");
-+    if (video_codecs) {
-+        if (spice_server_set_video_codecs(spice_server, video_codecs)) {
-+            error_report("invalid video codecs");
-+            exit(1);
-+        }
++    if (!remote_client) {
++        return true;
 +    }
 +
-     spice_server_set_agent_mouse
-         (spice_server, qemu_opt_get_bool(opts, "agent-mouse", 1));
-     spice_server_set_playback_compression
++    if (surface_format(ssd->ds) == PIXMAN_r5g6b5) {
++        return true;
++    }
++
++    if (*modifier == DRM_FORMAT_MOD_LINEAR) {
++        return true;
++    }
++
++    /*
++     * We really want to ensure that the memory layout of the texture
++     * is linear; otherwise, the encoder's output may show corruption.
++     */
++    surface_gl_create_texture_from_fd(ssd->ds, *fd, &texture);
++
++    /*
++     * A successful return after glImportMemoryFdEXT() means that
++     * the ownership of fd has been passed to GL. In other words,
++     * the fd we got above should not be used anymore.
++     */
++    if (texture > 0) {
++        *fd = egl_get_fd_for_texture(texture,
++                                     stride, fourcc,
++                                     NULL);
++        if (*fd < 0) {
++            glDeleteTextures(1, &texture);
++            *fd = egl_get_fd_for_texture(ssd->ds->texture,
++                                         stride, fourcc,
++                                         NULL);
++            if (*fd < 0) {
++                surface_gl_destroy_texture(ssd->gls, ssd->ds);
++                warn_report("spice: no texture available to display");
++                return false;
++            }
++        } else {
++            surface_gl_destroy_texture(ssd->gls, ssd->ds);
++            ssd->ds->texture = texture;
++        }
++    }
++    return true;
++}
++
+ static void spice_gl_switch(DisplayChangeListener *dcl,
+                             struct DisplaySurface *new_surface)
+ {
+     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
+     EGLint stride, fourcc;
++    EGLuint64KHR modifier;
++    bool ret;
+     int fd;
+ 
+     if (ssd->ds) {
+@@ -905,12 +960,18 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
+         surface_gl_create_texture(ssd->gls, ssd->ds);
+         fd = egl_get_fd_for_texture(ssd->ds->texture,
+                                     &stride, &fourcc,
+-                                    NULL);
++                                    &modifier);
+         if (fd < 0) {
+             surface_gl_destroy_texture(ssd->gls, ssd->ds);
+             return;
+         }
+ 
++        ret = spice_gl_replace_fd_texture(ssd, &stride, &fourcc, &modifier, &fd);
++        if (!ret) {
++            surface_gl_destroy_texture(ssd->gls, ssd->ds);
++            return;
++        }
++
+         trace_qemu_spice_gl_surface(ssd->qxl.id,
+                                     surface_width(ssd->ds),
+                                     surface_height(ssd->ds),
 -- 
 2.48.1
 
