@@ -4,91 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4EFBC36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:45:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CBE0C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txD0V-0002VH-Ln; Tue, 25 Mar 2025 18:44:27 -0400
+	id 1txD0R-0002Ep-CP; Tue, 25 Mar 2025 18:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0G-0001Tt-F4
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:12 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0C-00072d-MP
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0E-0001MP-VS
  for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:11 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22580c9ee0aso127172505ad.2
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:08 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0B-000724-7r
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:10 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43cf06eabdaso56970665e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942647; x=1743547447; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942645; x=1743547445; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YP1/YoZtmNlvDfK/7GvLWQk4iAQ+/s3R4pyDEvaptyk=;
- b=z3MuKUL8R610AmnUVQnnfoUul6I09LrP6+xPBJCffXlM7XzynQmvINOV9Iqat2uIV+
- PYsvu1EBDihLN+1vR3jnTheT9oHgyh4wTp3rKeKaholFcbJrkQ/lhBqP43yk2tfYHR3e
- pyEMonI9sTB8yMbbcgH6Y2ZyCazmUVv1k0YQGURkrwbP0RTTJbcOFB1924uxbdwaBKj8
- DS15E0CeG1B3NjLSdluYrwSme/9jjeLkKb+iVasYWUZayxMczFq5v67RtIiHVC7NfESW
- EgO5FvmgRksoq1dEeokPavO6xnzaHf3nLN77t0PPRdJfl45bG7F4jhYLG69jP/+yQ6mu
- FNrA==
+ bh=E9/STNz6nQDMG9kyJBqDX5R7dSuwG1jTpb/QPXoh7r8=;
+ b=s2ZTPOPJs+eqBeYXrVm110GfrZ8gpa+8maI8Vfn8yUdQawg+foKJJSYzCGHkpgVYN/
+ yai6KOOfE6h8lI75Xzg4TT3iGnDNo9hjiyJLBsvWYjV64lpxWXVEvIuqzQmh5Wa4xxBz
+ 5TC88HjQeogoy/zKdPglzdxBP3zageHuWpXs5MMD1cM9QTTOTDC8cpOUN9qSHwPnjq/c
+ EyqfmcjEXFWn3oXkvmS4ivdfYKtdoitkTBGUrlkciqRhgRiMwWoOvZxfaMeSZndLQ33W
+ A9+OMQtbCSZL63OHfdu7YHVtMYv2aKeDJgDXAHceXPBirNNht0Fje+aDA9XUgmUs4l91
+ 9x9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942647; x=1743547447;
+ d=1e100.net; s=20230601; t=1742942645; x=1743547445;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YP1/YoZtmNlvDfK/7GvLWQk4iAQ+/s3R4pyDEvaptyk=;
- b=UZhasAFYQkzlsLFwD1jstijtbBJIrozdyFEAShx2Cej1JlAqWdBrxrv6AJ4QOzCHy9
- tQtNuLiHrWSMwmT4+4xzALUSUbAOeAalJTxf0C9+NktiBW2kq7+AvoNmrcov0TFMhK6S
- U0u0RFDKnjcP1T24ni5l86v3inR3/9m0bFSZEfgZfpfeuLhJAKa2qDCI8dthu6IJpoxU
- cGlQL4XM8JQpQ7x9mvKkXR7Q2V7M4oXMLsqPgVxDWWhqpeOguJ43rhSYVBYdgSsTqq4E
- Dg3tLmcSCNIzOUrePFSG1J/AdzzC0Pqv+UdLIHjMGmscO/HZ9s9jqu7oNR52M5Ci9W9F
- Nj6Q==
-X-Gm-Message-State: AOJu0Yx+9c3vC7EqYzXgcFQkqnvfS+BVjXBqNbmiEm6Q22h3oBTlu4Wj
- PV1m5UNf2s5DhtYTXAXQpFzMl7+VWjnYT0ztuB/2q0F03gi46SLsCl5IlmTr05FPThI0Z/D9z1r
- 0
-X-Gm-Gg: ASbGnctmB0hB58lHPH3O8ddlHzRRVf6FDnH81iErgvLwWTlnMkPlyjA2XSa7OgfWGE/
- IkHMtS3qIOCG6KTIkQnNb7jl2dLOyh/VOuh3Ql5IJcv2oxvvMfmEVAxKX0LEZnlC4jADplZ3ImP
- RnvuAQ90dK4a9Uy7CRJv6uL/pJvMQBDwLLvO/MfFZJLYWeD1sBI62TR2PwBfJS8dROTVzPU+ZJW
- luvs94VRMsw3xJB08RxvZEt0O6LdiylIDjOKeBo4ttwPdwrJQpn05jtEZZKth6iRdAw2ty2rW/m
- bUCic+88pYm6hvaGtRXTpeA7plv/fNzQrRkbfI753icZIdFheIKq5aPcYHRrmhdUU/aUCLBDIzz
- LRkLdT3u9S9A=
-X-Google-Smtp-Source: AGHT+IEXfQ8MaK3uGSzdmc4hzEM4xER01btUhd+yn5FrwCtOOjvoRd/HgC0pKaFssgBZQ8J2qv2eDA==
-X-Received: by 2002:a05:6a00:4fd6:b0:736:fff2:9ac with SMTP id
- d2e1a72fcca58-73905a2780bmr29178545b3a.23.1742942646941; 
- Tue, 25 Mar 2025 15:44:06 -0700 (PDT)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Mar 2025 15:44:06 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mrolnik@gmail.com,
-	philmd@linaro.org,
-	pierrick.bouvier@linaro.org
-Subject: [PATCH v2 03/11] hw/core/cpu: Use size_t for memory_rw_debug len
- argument
-Date: Tue, 25 Mar 2025 15:43:55 -0700
-Message-ID: <20250325224403.4011975-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
-References: <20250325224403.4011975-1-richard.henderson@linaro.org>
+ bh=E9/STNz6nQDMG9kyJBqDX5R7dSuwG1jTpb/QPXoh7r8=;
+ b=P3Z/S5SZyqoo834xYQIvIGX50eUDUWObry6puM5UnRNYqmcSK4b8LjztdY+7Jc7VVq
+ saXyL+fxCRVsOJY6s9JCJDsr33N0QvVKYgQKKrNc64feWN7RzK5hqNsPgLfpa7bHQbGG
+ k/6D93SpTgqRVFXxsDvvh0wjDn1ojaCOFpMwc0DeggWZusIpU3Tq5xS6wVncKfIjWYC9
+ mXCTkseL8x8wbr0ofoRRCuW5YhBjsQK5TNOnITPFFlFBENdqe5m0SErNr7r9h9O9AoSb
+ zTuX2LbYXN121ohOmtNTitjd1IdRzSTKTAsKQv+zKrux+ZnLAinMoqPIYqL/uc1Pxq1+
+ aqPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8FhNZGgf/cLOJ1YUdFL0y6jLu362G6YN5NHukIMqzszTExZS63hENtolaa5c0rXRLa0XR+XwC3i9h@nongnu.org
+X-Gm-Message-State: AOJu0YxiB4RW0Wur7f55cWY7GMtDxyC8imYZeJz+PcfVnpt6HPfWCjr8
+ n6OfauadMI1pLH1CTz1WhWrevIOcTbbF1VDn0fAn2VFS9aLrHFcbrqrg/t4lVgs=
+X-Gm-Gg: ASbGncv2wOQbtJu/V9tXrfbS8yRqZ6s8QD6ghlJIyqMTiN3ZSAePDksabVZKk+9QyY5
+ FnF7C8M1snpnvvhnNdL18CqKCJwxMkURW4ekwqaafKDzgfZg7FihMTzFb4ji+nLplohM0Yv4D4O
+ OgCoVkUEKsmRhrL56vxcFrsz2YPvY3nbI/SFbL18ls6sDjsi1ZVulg+jkI6O+RVNwjPmxrpo/Xc
+ DQr3v7dJHBDIp4dIEHw9iDbzZD2Bbcsm/BviAqLcOxv83KsEPl0bhJQUgIObNt1dFMJWwdllvOp
+ 9F167jtt4YmPReis8i9ekFFVJQwAuF+NjGuMBXsuqYvNhJljDtHDjEJFs4mW7siMBb/dHrl22eW
+ HquGETJAMAzsJGKP8TVM=
+X-Google-Smtp-Source: AGHT+IHQncLLXGBF0htKe21i8k3nraJt/ZV1SOe2Y1LqXAFzYvG95pKq/Cj4J4oTKE397zrZrhet/w==
+X-Received: by 2002:a5d:47af:0:b0:391:2dea:c98d with SMTP id
+ ffacd0b85a97d-3997f8f89bbmr16627163f8f.8.1742942645300; 
+ Tue, 25 Mar 2025 15:44:05 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d43fdeba1sm213436255e9.32.2025.03.25.15.44.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 25 Mar 2025 15:44:04 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Thomas Huth <thuth@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Samuel Tardieu <sam@rfc1149.net>,
+ qemu-block@nongnu.org, Patrick Leis <venture@google.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
+ Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: [PATCH-for-10.0 09/12] hw/nvram/xlnx-efuse: Do not expose as
+ user-creatable
+Date: Tue, 25 Mar 2025 23:43:07 +0100
+Message-ID: <20250325224310.8785-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
+References: <20250325224310.8785-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,57 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Match the prototype of cpu_memory_rw_debug().
+This device is part of SoC components thus can not
+be created manually.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h     | 2 +-
- target/sparc/cpu.h        | 2 +-
- target/sparc/mmu_helper.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ hw/nvram/xlnx-efuse.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5d11d26556..abd8764e83 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -154,7 +154,7 @@ struct CPUClass {
+diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
+index 29e7dd539ec..176e88fcd17 100644
+--- a/hw/nvram/xlnx-efuse.c
++++ b/hw/nvram/xlnx-efuse.c
+@@ -280,6 +280,8 @@ static void efuse_class_init(ObjectClass *klass, void *data)
  
-     int (*mmu_index)(CPUState *cpu, bool ifetch);
-     int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
--                           uint8_t *buf, int len, bool is_write);
-+                           uint8_t *buf, size_t len, bool is_write);
-     void (*dump_state)(CPUState *cpu, FILE *, int flags);
-     void (*query_cpu_fast)(CPUState *cpu, CpuInfoFast *value);
-     int64_t (*get_arch_id)(CPUState *cpu);
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index 462bcb6c0e..68f8c21e7c 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -604,7 +604,7 @@ void dump_mmu(CPUSPARCState *env);
+     dc->realize = efuse_realize;
+     device_class_set_props(dc, efuse_properties);
++    /* Reason: Part of Xilinx SoC */
++    dc->user_creatable = false;
+ }
  
- #if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
- int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
--                              uint8_t *buf, int len, bool is_write);
-+                              uint8_t *buf, size_t len, bool is_write);
- #endif
- 
- /* translate.c */
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 7548d01777..3821cd91ec 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -389,7 +389,7 @@ void dump_mmu(CPUSPARCState *env)
-  * that the sparc ABI is followed.
-  */
- int sparc_cpu_memory_rw_debug(CPUState *cs, vaddr address,
--                              uint8_t *buf, int len, bool is_write)
-+                              uint8_t *buf, size_t len, bool is_write)
- {
-     CPUSPARCState *env = cpu_env(cs);
-     target_ulong addr = address;
+ static const TypeInfo efuse_info = {
 -- 
-2.43.0
+2.47.1
 
 
