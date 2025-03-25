@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24214C36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E7FC3600C
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twy7m-0004cg-Eg; Tue, 25 Mar 2025 02:50:58 -0400
+	id 1twyAD-0007mZ-Oy; Tue, 25 Mar 2025 02:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7k-0004Zu-IJ; Tue, 25 Mar 2025 02:50:56 -0400
+ id 1twy9P-0006AJ-P4; Tue, 25 Mar 2025 02:52:41 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy7i-0001eN-Fn; Tue, 25 Mar 2025 02:50:56 -0400
+ id 1twy9L-0001wI-FW; Tue, 25 Mar 2025 02:52:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A2CEF107D63;
- Tue, 25 Mar 2025 09:49:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DB0B2107D7A;
+ Tue, 25 Mar 2025 09:49:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 459541D5E72;
- Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7D6B41D5E85;
+ Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3596A5702C; Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
+ id 7697A57052; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.17 30/34] target/arm: Simplify pstate_sm check in
- sve_access_check
-Date: Tue, 25 Mar 2025 09:50:25 +0300
-Message-Id: <20250325065031.3263718-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 56/69] vdpa: Allow vDPA to work on big-endian machine
+Date: Tue, 25 Mar 2025 09:50:29 +0300
+Message-Id: <20250325065043.3263864-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
-References: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,62 +64,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
-In StreamingMode, fp_access_checked is handled already.
-We cannot fall through to fp_access_check lest we fall
-foul of the double-check assertion.
+Add .set_vnet_le() function that always returns success, assuming that
+vDPA h/w always implements LE data format. Otherwise, QEMU disables vDPA and
+outputs the message:
+"backend does not support LE vnet headers; falling back on userspace virtio"
 
-Cc: qemu-stable@nongnu.org
-Fixes: 285b1d5fcef ("target/arm: Handle SME in sve_access_check")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250307190415.982049-3-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: move declaration of 'ret' to top of block]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit cc7abc35dfa790ba6c20473c03745428c1c626b6)
-(Mjt: target/arm/tcg/translate-a64.c is target/arm/translate-a64.c)
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit b027f55a994af885a7a498a40373a2dcc2d8b15e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/translate-a64.c b/target/arm/translate-a64.c
-index 00463a1e35..190574cb29 100644
---- a/target/arm/translate-a64.c
-+++ b/target/arm/translate-a64.c
-@@ -1208,23 +1208,23 @@ static bool fp_access_check(DisasContext *s)
- bool sve_access_check(DisasContext *s)
- {
-     if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
-+        bool ret;
-+
-         assert(dc_isar_feature(aa64_sme, s));
--        if (!sme_sm_enabled_check(s)) {
--            goto fail_exit;
--        }
--    } else if (s->sve_excp_el) {
-+        ret = sme_sm_enabled_check(s);
-+        s->sve_access_checked = (ret ? 1 : -1);
-+        return ret;
-+    }
-+    if (s->sve_excp_el) {
-+        /* Assert that we only raise one exception per instruction. */
-+        assert(!s->sve_access_checked);
-         gen_exception_insn_el(s, 0, EXCP_UDEF,
-                               syn_sve_access_trap(), s->sve_excp_el);
--        goto fail_exit;
-+        s->sve_access_checked = -1;
-+        return false;
-     }
-     s->sve_access_checked = 1;
-     return fp_access_check(s);
--
-- fail_exit:
--    /* Assert that we only raise one exception per instruction. */
--    assert(!s->sve_access_checked);
--    s->sve_access_checked = -1;
--    return false;
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 7195d340a0..5a962255e7 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -262,6 +262,18 @@ static bool vhost_vdpa_has_ufo(NetClientState *nc)
+ 
  }
  
- /*
++/*
++ * FIXME: vhost_vdpa doesn't have an API to "set h/w endianness". But it's
++ * reasonable to assume that h/w is LE by default, because LE is what
++ * virtio 1.0 and later ask for. So, this function just says "yes, the h/w is
++ * LE". Otherwise, on a BE machine, higher-level code would mistakely think
++ * the h/w is BE and can't support VDPA for a virtio 1.0 client.
++ */
++static int vhost_vdpa_set_vnet_le(NetClientState *nc, bool enable)
++{
++    return 0;
++}
++
+ static bool vhost_vdpa_check_peer_type(NetClientState *nc, ObjectClass *oc,
+                                        Error **errp)
+ {
+@@ -429,6 +441,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .cleanup = vhost_vdpa_cleanup,
+         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
+         .has_ufo = vhost_vdpa_has_ufo,
++        .set_vnet_le = vhost_vdpa_set_vnet_le,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
+ };
 -- 
 2.39.5
 
