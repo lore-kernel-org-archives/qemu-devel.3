@@ -4,88 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A4DC36008
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFD1C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 22:47:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txD0K-0001lx-Vn; Tue, 25 Mar 2025 18:44:17 -0400
+	id 1txD0V-0002Tf-GM; Tue, 25 Mar 2025 18:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0D-0001LT-SF
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:10 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0N-0001x7-C9
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:19 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txD0B-00071y-6s
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:09 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2240b4de12bso59342585ad.2
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txD0L-00076I-HY
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 18:44:19 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43d04dc73b7so64503605e9.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:44:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742942645; x=1743547445; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742942656; x=1743547456; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QHX5k2lUgvMa0RL4ytQ9eAaxeLEElDmk4Ql4Y4+DSI8=;
- b=JuHSFqQgR/e307E96SkDtTDBCXlVEu4aAX7qBh3YOqwo563O3dnJJSTr+ZEuX71HuX
- n1eqdV/lGxAArpguyNhvcocCykVGo9g2YZQZLrA8MW//EkhM8+rkTWqIk40nJcKeY+0H
- IdC5bK/PXhnB48WOq9fjxv0YGO/pkLkv0oVAFhZ5B3EKQaEHA+ENW56kKG6DsPXn6XYK
- zxOglN9k4821iUrqtZ/KLCdYV2cJ93N4keis9ceincNRnWW3ofAQJF2Cwl2AeVFftxu+
- 50I6Y4r6QXOOnJRBmyozCZquWK2rzbUj7edkHdBu4JvUu5nuFXBrsZmKgqGn7Cxx3WlJ
- 4muw==
+ bh=rRDzb4lcoabfa1g7TNESo0TRQTsJDJlMbDcBcNVFOTk=;
+ b=wTPWNk3cyN+IV0t2U7Ul5bXcNcZ0ImvJGn7+KmwU2FV62F+Nd2c94u7F17v6Phq2eG
+ khvx5h4j6FhuoPPX1TIBX5XNkwUvlzGv5liLmWU1kGRW44mXnIhz5jG0BMvp242s09Q/
+ IhscxvM+dVfCaugQJLpIGY3uj5fe6x4dQrgCb0lYBtDeNU7T0BsCRKF8egKKHlqns8JG
+ StXQtgg1jlWB2jOgo07E2+7XfW7UNKqek470mLwJBCPGgPdBvBIzPBNT48mNfs31HtYx
+ 5Jwz6T63GI/9khEuZBDDS8wkIHfb1TdOs3CVfVCQOCFpYNyOxAH6VfI0MfexBdgU/rLm
+ djZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742942645; x=1743547445;
+ d=1e100.net; s=20230601; t=1742942656; x=1743547456;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QHX5k2lUgvMa0RL4ytQ9eAaxeLEElDmk4Ql4Y4+DSI8=;
- b=Zy6G3Ug8+8fEdYlZDcQgu5qz9prGyP5By5ouIYDHrh0K9Z/enp4eTCH4drgiySyNFt
- tJGNJdgoKEzP14VuA+LHuBYioNnFM7NA8GyRgEyvBA+rX5aXsCfMmVA/ong4PCzqLLMl
- tPn/0uidWy/E3l+OaAokcw1ey6qBUntZePBDgxD/GzqcTCqPN7SBWmMFxTzwAR2y3z55
- WydYvOZQk1jq0f/2P96ZIy6nQmCQaWu1dnT6XxTYmD4RN6O05z1xCqPYfRCxbqzO4f66
- XU8DsvKnac7Ngh53v/ixfkp8EOOie0KpupdukLE1DNknnBqzPP9liOWoTSQDupbp9jnQ
- 7Gww==
-X-Gm-Message-State: AOJu0YxoWKfwnG9IEgMKOD8iQErJ2DB2nVre9r3NXzeBOC+s5PumREHE
- F0w1eDTeeADupIlT1/3LpR8ZDKK5jobW+bfS7FBCrMeMGdoZdpHJA1Gj/teFvEW5X88DduZQzvJ
- X
-X-Gm-Gg: ASbGnctHMMhLz4/OAuEydHjak+AgVBVmoKqj8yEZJ6HTWrwtoSJxJd6t2mibCmNhmid
- sx1S6tJ6vQDRpJUpx0W4qYGGLaOzv9XxfPx0oFcYhOs7IW6fTcRfnWfbUtHCPOAuT3IJM4ye0BV
- 4TMrPocJYJJJu5qVIfxEJc2MZNyxy0UhQ0hfn2ON2A87E7giFLFmfrzrxc+B7ix+Xs6ZGVaWyJK
- S8a48tOo2jxH7YBKXeJzAiWNTl1gzQsf3ahLMZdxuBe0mCs3EVyiZdikczTXSLNSiOe+Z0l1Qh+
- kxqWYf3P5Pn0wY+rSQeD5glYUwGOf7uiLMDqyR+HsC0lPT9SFZM0lMJbTLoiToCrGpkheQYakyA
- d
-X-Google-Smtp-Source: AGHT+IF1BdqqhDB1O6iCoCoQnLWgNuFN+hT2nfQObV+5Idf262uhi43wCOk4OldnVlQVKvLkB7lxog==
-X-Received: by 2002:a05:6a00:1995:b0:736:34a2:8a18 with SMTP id
- d2e1a72fcca58-73905a27860mr31732395b3a.24.1742942645338; 
- Tue, 25 Mar 2025 15:44:05 -0700 (PDT)
-Received: from stoup.. (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390611d3d6sm11111321b3a.94.2025.03.25.15.44.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Mar 2025 15:44:05 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mrolnik@gmail.com, philmd@linaro.org, pierrick.bouvier@linaro.org,
- qemu-stable@nongnu.org
-Subject: [PATCH v2 01/11] target/avr: Fix buffer read in avr_print_insn
-Date: Tue, 25 Mar 2025 15:43:53 -0700
-Message-ID: <20250325224403.4011975-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
-References: <20250325224403.4011975-1-richard.henderson@linaro.org>
+ bh=rRDzb4lcoabfa1g7TNESo0TRQTsJDJlMbDcBcNVFOTk=;
+ b=nTJxpuJeuP8CV5l0Yizh4FDLWpX8BQPLL/asqrQJxp0EE6bAlx5u8GehHO2TvNi21T
+ 92pSv8507LUN8gMqLo0n3TC2XwU6oZnsivliMk5ePyJvvqtjkIs8uJsLr59PW1PeIaow
+ 1m6aYAmSqd4SUeljKLhCYGi3KXklMm2uxNpfL59D038PImmardQHPAQ02Da1L/dq1gf+
+ PQxj7PDD9Tb4zEXndJiydceRgoRgcxQQdQEtJemowqJgIdBbdZsgRnxghbqxrqOZF33T
+ jo2GJlr2bInnxxHAIs6fpwSWhgA+DB7aIu04SAZIfju6rzy5aE1+fHwGuja7g/DnzIhx
+ jzHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvqfV+5Uv+Jxu23rCP1PqvZw9OAyY3kQMUvj0xzDYXFMb5/uvN5dFdB1+3cEDP03B0/2BjUudueQyt@nongnu.org
+X-Gm-Message-State: AOJu0YwVbUfdX3T3TShaw4E3V1xoiOSECfALkAPYNMEzGLyhY4NBRmwp
+ 2tXKp/ennNcwakvpnosdQOfPnOf+aiyeV8mUjt/1/WtMk9q/kLLSs2+PIueiggE=
+X-Gm-Gg: ASbGnct3cmYluFZDpQnW/sGiHpxt9GgMJskrPhggRdEaAgLf92v72GBi9XFrslFPaHY
+ oEhMDgbDDKwx7z/rNebfLZy04aWnNMVbO5fJM2YCIrmsFEiNiyKM72W53a+N8A/7KR1ea1nWzem
+ 4ceak0HfFcLF506Fnm2Q2GEMufg68YfwhPPj+mrdt269m/THPmPM++OxOOT4x7AsMUzpftyZMgK
+ WPI+nWAFD5eH+0UJBnLM0sy9qZRTClLZfEIxrrAsiD++RH0NDjcQlJAo0eIdz5w5PrQEp8nFJgZ
+ /JVXaUdCihxzrxLC7WjaaW0EcFewpBCvgKaqmuxcgTi2PagrZEw/oDVt2vDasISQzIyMyRqZCv+
+ vzYpqlFrgwSmSJ7Y7+wiFtTDqGpPz+g==
+X-Google-Smtp-Source: AGHT+IHHXuXOJ3rhPPn57mhx+DzpUGOFlQZLvBBz9tlzmWRDdef0QxEooRidexd+Q7/SyNK8Dd/jMA==
+X-Received: by 2002:a5d:47a5:0:b0:390:f699:8c27 with SMTP id
+ ffacd0b85a97d-3997f902e3dmr16502105f8f.12.1742942656024; 
+ Tue, 25 Mar 2025 15:44:16 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f99561dsm15172846f8f.12.2025.03.25.15.44.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 25 Mar 2025 15:44:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Thomas Huth <thuth@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Samuel Tardieu <sam@rfc1149.net>,
+ qemu-block@nongnu.org, Patrick Leis <venture@google.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
+ Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: [PATCH-for-10.0 11/12] hw/sensor/temp: Categorize and add description
+Date: Tue, 25 Mar 2025 23:43:09 +0100
+Message-ID: <20250325224310.8785-12-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
+References: <20250325224310.8785-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,64 +117,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not unconditionally attempt to read 4 bytes, as there
-may only be 2 bytes remaining in the translator cache.
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/avr/disas.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ hw/sensor/dps310.c  | 2 ++
+ hw/sensor/emc141x.c | 6 ++++++
+ hw/sensor/tmp105.c  | 2 ++
+ hw/sensor/tmp421.c  | 4 ++++
+ 4 files changed, 14 insertions(+)
 
-diff --git a/target/avr/disas.c b/target/avr/disas.c
-index b7689e8d7c..d341030174 100644
---- a/target/avr/disas.c
-+++ b/target/avr/disas.c
-@@ -68,28 +68,35 @@ static bool decode_insn(DisasContext *ctx, uint16_t insn);
- 
- int avr_print_insn(bfd_vma addr, disassemble_info *info)
- {
--    DisasContext ctx;
-+    DisasContext ctx = { info };
-     DisasContext *pctx = &ctx;
-     bfd_byte buffer[4];
-     uint16_t insn;
-     int status;
- 
--    ctx.info = info;
--
--    status = info->read_memory_func(addr, buffer, 4, info);
-+    status = info->read_memory_func(addr, buffer, 2, info);
-     if (status != 0) {
-         info->memory_error_func(status, addr, info);
-         return -1;
-     }
-     insn = bfd_getl16(buffer);
--    ctx.next_word = bfd_getl16(buffer + 2);
--    ctx.next_word_used = false;
-+
-+    status = info->read_memory_func(addr + 2, buffer + 2, 2, info);
-+    if (status == 0) {
-+        ctx.next_word = bfd_getl16(buffer + 2);
-+    }
- 
-     if (!decode_insn(&ctx, insn)) {
-         output(".db", "0x%02x, 0x%02x", buffer[0], buffer[1]);
-     }
- 
--    return ctx.next_word_used ? 4 : 2;
-+    if (!ctx.next_word_used) {
-+        return 2;
-+    } else if (status == 0) {
-+        return 4;
-+    }
-+    info->memory_error_func(status, addr + 2, info);
-+    return -1;
+diff --git a/hw/sensor/dps310.c b/hw/sensor/dps310.c
+index 6966a53248b..e1e6df6b60a 100644
+--- a/hw/sensor/dps310.c
++++ b/hw/sensor/dps310.c
+@@ -207,6 +207,8 @@ static void dps310_class_init(ObjectClass *klass, void *data)
+     k->send = dps310_tx;
+     device_class_set_legacy_reset(dc, dps310_reset);
+     dc->vmsd = &vmstate_dps310;
++    dc->desc = "Infineon DPS310 temperature and humidity sensor";
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
  }
  
+ static const TypeInfo dps310_info = {
+diff --git a/hw/sensor/emc141x.c b/hw/sensor/emc141x.c
+index 33c1bd330fd..6adb94e7ff5 100644
+--- a/hw/sensor/emc141x.c
++++ b/hw/sensor/emc141x.c
+@@ -280,19 +280,25 @@ static void emc141x_class_init(ObjectClass *klass, const void *data)
+ static void emc1413_class_init(ObjectClass *klass, void *data)
+ {
+     EMC141XClass *ec = EMC141X_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
  
+     emc141x_class_init(klass, data);
+     ec->model = EMC1413_DEVICE_ID;
+     ec->sensors_count = 3;
++    dc->desc = "SMSC EMC1413 temperature sensor";
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+ }
+ 
+ static void emc1414_class_init(ObjectClass *klass, void *data)
+ {
+     EMC141XClass *ec = EMC141X_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     emc141x_class_init(klass, data);
+     ec->model = EMC1414_DEVICE_ID;
+     ec->sensors_count = 4;
++    dc->desc = "SMSC EMC1414 temperature sensor";
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+ }
+ 
+ static const TypeInfo emc141x_info = {
+diff --git a/hw/sensor/tmp105.c b/hw/sensor/tmp105.c
+index ef2824f3e1b..6a38f2c6670 100644
+--- a/hw/sensor/tmp105.c
++++ b/hw/sensor/tmp105.c
+@@ -323,6 +323,8 @@ static void tmp105_class_init(ObjectClass *klass, void *data)
+     k->recv = tmp105_rx;
+     k->send = tmp105_tx;
+     dc->vmsd = &vmstate_tmp105;
++    dc->desc = "TI TMP105 temperature sensor";
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+ }
+ 
+ static const TypeInfo tmp105_info = {
+diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
+index 007f7cd018b..ba42ab328e0 100644
+--- a/hw/sensor/tmp421.c
++++ b/hw/sensor/tmp421.c
+@@ -342,6 +342,7 @@ static void tmp421_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
+     TMP421Class *sc = TMP421_CLASS(klass);
++    g_autofree char *name_up = NULL;
+ 
+     dc->realize = tmp421_realize;
+     k->event = tmp421_event;
+@@ -349,6 +350,9 @@ static void tmp421_class_init(ObjectClass *klass, void *data)
+     k->send = tmp421_tx;
+     dc->vmsd = &vmstate_tmp421;
+     sc->dev = (DeviceInfo *) data;
++    name_up = g_ascii_strup(sc->dev->name, -1);
++    dc->desc = g_strconcat("TI ", name_up, " temperature sensor", NULL);
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+ 
+     object_class_property_add(klass, "temperature0", "int",
+                               tmp421_get_temperature,
 -- 
-2.43.0
+2.47.1
 
 
