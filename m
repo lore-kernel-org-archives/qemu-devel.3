@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5814BC3600C
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF325C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twyBL-0002Pw-AP; Tue, 25 Mar 2025 02:54:39 -0400
+	id 1twyAm-00015I-R9; Tue, 25 Mar 2025 02:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twyAb-0000Fg-3t; Tue, 25 Mar 2025 02:53:54 -0400
+ id 1twy90-0005ZB-1O; Tue, 25 Mar 2025 02:52:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twyAP-000215-FF; Tue, 25 Mar 2025 02:53:44 -0400
+ id 1twy8t-0001vd-H4; Tue, 25 Mar 2025 02:52:13 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0F0BF107D84;
- Tue, 25 Mar 2025 09:49:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CF1DA107D77;
+ Tue, 25 Mar 2025 09:49:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A472B1D5E8F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 71C661D5E82;
  Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8FF9357066; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ id 6F0E15704C; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Chao Liu <lc00631@tecorigin.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 66/69] target/riscv: refactor VSTART_CHECK_EARLY_EXIT()
- to accept vl as a parameter
-Date: Tue, 25 Mar 2025 09:50:39 +0300
-Message-Id: <20250325065043.3263864-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.2.3 52/69] target/arm: Make DisasContext.{fp,
+ sve}_access_checked tristate
+Date: Tue, 25 Mar 2025 09:50:26 +0300
+Message-Id: <20250325065043.3263864-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
 References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
@@ -64,527 +62,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <lc00631@tecorigin.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Some vector instructions are special, such as the vlm.v instruction,
-where setting its vl actually sets evl = (vl + 7) >> 3. To improve
-maintainability, we will uniformly use VSTART_CHECK_EARLY_EXIT() to
-check for the condition vstart >= vl. This function will also handle
-cases involving evl.
+The check for fp_excp_el in assert_fp_access_checked is
+incorrect.  For SME, with StreamingMode enabled, the access
+is really against the streaming mode vectors, and access
+to the normal fp registers is allowed to be disabled.
+C.f. sme_enabled_check.
 
-Fixes: df4252b2ec ("target/riscv/vector_helpers: do early exit when
-vstart >= vl")
-Signed-off-by: Chao Liu <lc00631@tecorigin.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <f575979874e323a9e0da7796aa391c7d87e56f88.1741573286.git.lc00631@tecorigin.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit e83845316abcea9024eb5402a6c5eb8b092c79d5)
+Convert sve_access_checked to match, even though we don't
+currently check the exception state.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 3d74825f4d6 ("target/arm: Add SME enablement checks")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250307190415.982049-2-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 298a04998fa4a6dc977abe9234d98dfcdab98423)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vcrypto_helper.c b/target/riscv/vcrypto_helper.c
-index f7423df226..1526de96f5 100644
---- a/target/riscv/vcrypto_helper.c
-+++ b/target/riscv/vcrypto_helper.c
-@@ -222,7 +222,7 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-         uint32_t total_elems = vext_get_total_elems(env, desc, 4);        \
-         uint32_t vta = vext_vta(desc);                                    \
-                                                                           \
--        VSTART_CHECK_EARLY_EXIT(env);                                     \
-+        VSTART_CHECK_EARLY_EXIT(env, vl);                                 \
-                                                                           \
-         for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {        \
-             AESState round_key;                                           \
-@@ -248,7 +248,7 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-         uint32_t total_elems = vext_get_total_elems(env, desc, 4);        \
-         uint32_t vta = vext_vta(desc);                                    \
-                                                                           \
--        VSTART_CHECK_EARLY_EXIT(env);                                     \
-+        VSTART_CHECK_EARLY_EXIT(env, vl);                                 \
-                                                                           \
-         for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {        \
-             AESState round_key;                                           \
-@@ -309,7 +309,7 @@ void HELPER(vaeskf1_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
-     uint32_t vta = vext_vta(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, vl);
- 
-     uimm &= 0b1111;
-     if (uimm > 10 || uimm == 0) {
-@@ -357,7 +357,7 @@ void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
-     uint32_t vta = vext_vta(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, vl);
- 
-     uimm &= 0b1111;
-     if (uimm > 14 || uimm < 2) {
-@@ -465,7 +465,7 @@ void HELPER(vsha2ms_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     uint32_t total_elems;
-     uint32_t vta = vext_vta(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         if (sew == MO_32) {
-@@ -582,7 +582,7 @@ void HELPER(vsha2ch32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     uint32_t total_elems;
-     uint32_t vta = vext_vta(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_32(((uint32_t *)vs2) + 4 * i, ((uint32_t *)vd) + 4 * i,
-@@ -602,7 +602,7 @@ void HELPER(vsha2ch64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     uint32_t total_elems;
-     uint32_t vta = vext_vta(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_64(((uint64_t *)vs2) + 4 * i, ((uint64_t *)vd) + 4 * i,
-@@ -622,7 +622,7 @@ void HELPER(vsha2cl32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     uint32_t total_elems;
-     uint32_t vta = vext_vta(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_32(((uint32_t *)vs2) + 4 * i, ((uint32_t *)vd) + 4 * i,
-@@ -642,7 +642,7 @@ void HELPER(vsha2cl64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     uint32_t total_elems;
-     uint32_t vta = vext_vta(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_64(((uint64_t *)vs2) + 4 * i, ((uint64_t *)vd) + 4 * i,
-@@ -676,7 +676,7 @@ void HELPER(vsm3me_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-     uint32_t *vs1 = vs1_vptr;
-     uint32_t *vs2 = vs2_vptr;
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (int i = env->vstart / 8; i < env->vl / 8; i++) {
-         uint32_t w[24];
-@@ -777,7 +777,7 @@ void HELPER(vsm3c_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-     uint32_t *vs2 = vs2_vptr;
-     uint32_t v1[8], v2[8], v3[8];
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (int i = env->vstart / 8; i < env->vl / 8; i++) {
-         for (int k = 0; k < 8; k++) {
-@@ -802,7 +802,7 @@ void HELPER(vghsh_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-     uint32_t vta = vext_vta(desc);
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         uint64_t Y[2] = {vd[i * 2 + 0], vd[i * 2 + 1]};
-@@ -841,7 +841,7 @@ void HELPER(vgmul_vv)(void *vd_vptr, void *vs2_vptr, CPURISCVState *env,
-     uint32_t vta = vext_vta(desc);
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         uint64_t Y[2] = {brev8(vd[i * 2 + 0]), brev8(vd[i * 2 + 1])};
-@@ -879,7 +879,7 @@ void HELPER(vsm4k_vi)(void *vd, void *vs2, uint32_t uimm5, CPURISCVState *env,
-     uint32_t esz = sizeof(uint32_t);
-     uint32_t total_elems = vext_get_total_elems(env, desc, esz);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = group_start; i < group_end; ++i) {
-         uint32_t vstart = i * egs;
-@@ -937,7 +937,7 @@ void HELPER(vsm4r_vv)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
-     uint32_t esz = sizeof(uint32_t);
-     uint32_t total_elems = vext_get_total_elems(env, desc, esz);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = group_start; i < group_end; ++i) {
-         uint32_t vstart = i * egs;
-@@ -973,7 +973,7 @@ void HELPER(vsm4r_vs)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
-     uint32_t esz = sizeof(uint32_t);
-     uint32_t total_elems = vext_get_total_elems(env, desc, esz);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (uint32_t i = group_start; i < group_end; ++i) {
-         uint32_t vstart = i * egs;
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 3731500717..08c7b4eaaf 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -265,7 +265,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base, target_ulong stride,
-     uint32_t esz = 1 << log2_esz;
-     uint32_t vma = vext_vma(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-         k = 0;
-@@ -388,10 +388,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-     uint32_t msize = nf * esz;
-     int mmu_index = riscv_env_mmu_index(env, false);
- 
--    if (env->vstart >= evl) {
--        env->vstart = 0;
--        return;
--    }
-+    VSTART_CHECK_EARLY_EXIT(env, evl);
- 
-     /* Calculate the page range of first page */
-     addr = base + ((env->vstart * nf) << log2_esz);
-@@ -533,7 +530,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
-     uint32_t esz = 1 << log2_esz;
-     uint32_t vma = vext_vma(desc);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     /* load bytes from guest memory */
-     for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-@@ -625,7 +622,7 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-     target_ulong addr, offset, remain, page_split, elems;
-     int mmu_index = riscv_env_mmu_index(env, false);
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
-     /* probe every access */
-     for (i = env->vstart; i < env->vl; i++) {
-@@ -1092,7 +1089,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,   \
-     uint32_t vta = vext_vta(desc);                            \
-     uint32_t i;                                               \
-                                                               \
--    VSTART_CHECK_EARLY_EXIT(env);                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                         \
-                                                               \
-     for (i = env->vstart; i < vl; i++) {                      \
-         ETYPE s1 = *((ETYPE *)vs1 + H(i));                    \
-@@ -1126,7 +1123,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,        \
-     uint32_t vta = vext_vta(desc);                                       \
-     uint32_t i;                                                          \
-                                                                          \
--    VSTART_CHECK_EARLY_EXIT(env);                                        \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                    \
-                                                                          \
-     for (i = env->vstart; i < vl; i++) {                                 \
-         ETYPE s2 = *((ETYPE *)vs2 + H(i));                               \
-@@ -1163,7 +1160,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,   \
-     uint32_t vta_all_1s = vext_vta_all_1s(desc);              \
-     uint32_t i;                                               \
-                                                               \
--    VSTART_CHECK_EARLY_EXIT(env);                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                         \
-                                                               \
-     for (i = env->vstart; i < vl; i++) {                      \
-         ETYPE s1 = *((ETYPE *)vs1 + H(i));                    \
-@@ -1203,7 +1200,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1,          \
-     uint32_t vta_all_1s = vext_vta_all_1s(desc);                \
-     uint32_t i;                                                 \
-                                                                 \
--    VSTART_CHECK_EARLY_EXIT(env);                               \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                           \
-                                                                 \
-     for (i = env->vstart; i < vl; i++) {                        \
-         ETYPE s2 = *((ETYPE *)vs2 + H(i));                      \
-@@ -1301,7 +1298,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,                          \
-     uint32_t vma = vext_vma(desc);                                        \
-     uint32_t i;                                                           \
-                                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                     \
-                                                                           \
-     for (i = env->vstart; i < vl; i++) {                                  \
-         if (!vm && !vext_elem_mask(v0, i)) {                              \
-@@ -1350,7 +1347,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1,      \
-     uint32_t vma = vext_vma(desc);                          \
-     uint32_t i;                                             \
-                                                             \
--    VSTART_CHECK_EARLY_EXIT(env);                           \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                       \
-                                                             \
-     for (i = env->vstart; i < vl; i++) {                    \
-         if (!vm && !vext_elem_mask(v0, i)) {                \
-@@ -1414,7 +1411,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,   \
-     uint32_t vma = vext_vma(desc);                            \
-     uint32_t i;                                               \
-                                                               \
--    VSTART_CHECK_EARLY_EXIT(env);                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                         \
-                                                               \
-     for (i = env->vstart; i < vl; i++) {                      \
-         ETYPE s1 = *((ETYPE *)vs1 + H(i));                    \
-@@ -1481,7 +1478,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,   \
-     uint32_t vma = vext_vma(desc);                                  \
-     uint32_t i;                                                     \
-                                                                     \
--    VSTART_CHECK_EARLY_EXIT(env);                                   \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                               \
-                                                                     \
-     for (i = env->vstart; i < vl; i++) {                            \
-         ETYPE s2 = *((ETYPE *)vs2 + H(i));                          \
-@@ -2030,7 +2027,7 @@ void HELPER(NAME)(void *vd, void *vs1, CPURISCVState *env,           \
-     uint32_t vta = vext_vta(desc);                                   \
-     uint32_t i;                                                      \
-                                                                      \
--    VSTART_CHECK_EARLY_EXIT(env);                                    \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                \
-                                                                      \
-     for (i = env->vstart; i < vl; i++) {                             \
-         ETYPE s1 = *((ETYPE *)vs1 + H(i));                           \
-@@ -2056,7 +2053,7 @@ void HELPER(NAME)(void *vd, uint64_t s1, CPURISCVState *env,         \
-     uint32_t vta = vext_vta(desc);                                   \
-     uint32_t i;                                                      \
-                                                                      \
--    VSTART_CHECK_EARLY_EXIT(env);                                    \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                \
-                                                                      \
-     for (i = env->vstart; i < vl; i++) {                             \
-         *((ETYPE *)vd + H(i)) = (ETYPE)s1;                           \
-@@ -2081,7 +2078,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,          \
-     uint32_t vta = vext_vta(desc);                                   \
-     uint32_t i;                                                      \
-                                                                      \
--    VSTART_CHECK_EARLY_EXIT(env);                                    \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                \
-                                                                      \
-     for (i = env->vstart; i < vl; i++) {                             \
-         ETYPE *vt = (!vext_elem_mask(v0, i) ? vs2 : vs1);            \
-@@ -2107,7 +2104,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1,               \
-     uint32_t vta = vext_vta(desc);                                   \
-     uint32_t i;                                                      \
-                                                                      \
--    VSTART_CHECK_EARLY_EXIT(env);                                    \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                \
-                                                                      \
-     for (i = env->vstart; i < vl; i++) {                             \
-         ETYPE s2 = *((ETYPE *)vs2 + H(i));                           \
-@@ -2154,7 +2151,7 @@ vext_vv_rm_1(void *vd, void *v0, void *vs1, void *vs2,
-              uint32_t vl, uint32_t vm, int vxrm,
-              opivv2_rm_fn *fn, uint32_t vma, uint32_t esz)
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index b2851ea503..dc6af6ea25 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1215,14 +1215,14 @@ static bool fp_access_check_only(DisasContext *s)
  {
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, vl);
+     if (s->fp_excp_el) {
+         assert(!s->fp_access_checked);
+-        s->fp_access_checked = true;
++        s->fp_access_checked = -1;
  
-     for (uint32_t i = env->vstart; i < vl; i++) {
-         if (!vm && !vext_elem_mask(v0, i)) {
-@@ -2281,7 +2278,7 @@ vext_vx_rm_1(void *vd, void *v0, target_long s1, void *vs2,
-              uint32_t vl, uint32_t vm, int vxrm,
-              opivx2_rm_fn *fn, uint32_t vma, uint32_t esz)
+         gen_exception_insn_el(s, 0, EXCP_UDEF,
+                               syn_fp_access_trap(1, 0xe, false, 0),
+                               s->fp_excp_el);
+         return false;
+     }
+-    s->fp_access_checked = true;
++    s->fp_access_checked = 1;
+     return true;
+ }
+ 
+@@ -1256,13 +1256,13 @@ bool sve_access_check(DisasContext *s)
+                               syn_sve_access_trap(), s->sve_excp_el);
+         goto fail_exit;
+     }
+-    s->sve_access_checked = true;
++    s->sve_access_checked = 1;
+     return fp_access_check(s);
+ 
+  fail_exit:
+     /* Assert that we only raise one exception per instruction. */
+     assert(!s->sve_access_checked);
+-    s->sve_access_checked = true;
++    s->sve_access_checked = -1;
+     return false;
+ }
+ 
+@@ -1291,8 +1291,9 @@ bool sme_enabled_check(DisasContext *s)
+      * sme_excp_el by itself for cpregs access checks.
+      */
+     if (!s->fp_excp_el || s->sme_excp_el < s->fp_excp_el) {
+-        s->fp_access_checked = true;
+-        return sme_access_check(s);
++        bool ret = sme_access_check(s);
++        s->fp_access_checked = (ret ? 1 : -1);
++        return ret;
+     }
+     return fp_access_check_only(s);
+ }
+@@ -11825,8 +11826,8 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     s->insn = insn;
+     s->base.pc_next = pc + 4;
+ 
+-    s->fp_access_checked = false;
+-    s->sve_access_checked = false;
++    s->fp_access_checked = 0;
++    s->sve_access_checked = 0;
+ 
+     if (s->pstate_il) {
+         /*
+diff --git a/target/arm/tcg/translate-a64.h b/target/arm/tcg/translate-a64.h
+index 0fcf7cb63a..bb35ebe3ef 100644
+--- a/target/arm/tcg/translate-a64.h
++++ b/target/arm/tcg/translate-a64.h
+@@ -65,7 +65,7 @@ TCGv_i64 gen_mte_checkN(DisasContext *s, TCGv_i64 addr, bool is_write,
+ static inline void assert_fp_access_checked(DisasContext *s)
  {
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, vl);
- 
-     for (uint32_t i = env->vstart; i < vl; i++) {
-         if (!vm && !vext_elem_mask(v0, i)) {
-@@ -3080,7 +3077,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
-     uint32_t vma = vext_vma(desc);                        \
-     uint32_t i;                                           \
-                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                     \
-                                                           \
-     for (i = env->vstart; i < vl; i++) {                  \
-         if (!vm && !vext_elem_mask(v0, i)) {              \
-@@ -3125,7 +3122,7 @@ void HELPER(NAME)(void *vd, void *v0, uint64_t s1,        \
-     uint32_t vma = vext_vma(desc);                        \
-     uint32_t i;                                           \
-                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                     \
-                                                           \
-     for (i = env->vstart; i < vl; i++) {                  \
-         if (!vm && !vext_elem_mask(v0, i)) {              \
-@@ -3713,7 +3710,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
-     uint32_t vma = vext_vma(desc);                     \
-     uint32_t i;                                        \
-                                                        \
--    VSTART_CHECK_EARLY_EXIT(env);                      \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                  \
-                                                        \
-     if (vl == 0) {                                     \
-         return;                                        \
-@@ -4236,7 +4233,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,   \
-     uint32_t vma = vext_vma(desc);                            \
-     uint32_t i;                                               \
-                                                               \
--    VSTART_CHECK_EARLY_EXIT(env);                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                         \
-                                                               \
-     for (i = env->vstart; i < vl; i++) {                      \
-         ETYPE s1 = *((ETYPE *)vs1 + H(i));                    \
-@@ -4278,7 +4275,7 @@ void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2,       \
-     uint32_t vma = vext_vma(desc);                                  \
-     uint32_t i;                                                     \
-                                                                     \
--    VSTART_CHECK_EARLY_EXIT(env);                                   \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                               \
-                                                                     \
-     for (i = env->vstart; i < vl; i++) {                            \
-         ETYPE s2 = *((ETYPE *)vs2 + H(i));                          \
-@@ -4473,7 +4470,7 @@ void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2, \
-     uint32_t vta = vext_vta(desc);                            \
-     uint32_t i;                                               \
-                                                               \
--    VSTART_CHECK_EARLY_EXIT(env);                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                         \
-                                                               \
-     for (i = env->vstart; i < vl; i++) {                      \
-         ETYPE s2 = *((ETYPE *)vs2 + H(i));                    \
-@@ -4803,7 +4800,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
-     uint32_t i;                                           \
-     int a, b;                                             \
-                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                     \
-                                                           \
-     for (i = env->vstart; i < vl; i++) {                  \
-         a = vext_elem_mask(vs1, i);                       \
-@@ -4998,7 +4995,7 @@ void HELPER(NAME)(void *vd, void *v0, CPURISCVState *env, uint32_t desc)  \
-     uint32_t vma = vext_vma(desc);                                        \
-     int i;                                                                \
-                                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                     \
-                                                                           \
-     for (i = env->vstart; i < vl; i++) {                                  \
-         if (!vm && !vext_elem_mask(v0, i)) {                              \
-@@ -5035,7 +5032,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
-     uint32_t vma = vext_vma(desc);                                        \
-     target_ulong offset = s1, i_min, i;                                   \
-                                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                     \
-                                                                           \
-     i_min = MAX(env->vstart, offset);                                     \
-     for (i = i_min; i < vl; i++) {                                        \
-@@ -5070,7 +5067,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
-     uint32_t vma = vext_vma(desc);                                        \
-     target_ulong i_max, i_min, i;                                         \
-                                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                     \
-                                                                           \
-     i_min = MIN(s1 < vlmax ? vlmax - s1 : 0, vl);                         \
-     i_max = MAX(i_min, env->vstart);                                      \
-@@ -5114,7 +5111,7 @@ static void vslide1up_##BITWIDTH(void *vd, void *v0, uint64_t s1,           \
-     uint32_t vma = vext_vma(desc);                                          \
-     uint32_t i;                                                             \
-                                                                             \
--    VSTART_CHECK_EARLY_EXIT(env);                                           \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                       \
-                                                                             \
-     for (i = env->vstart; i < vl; i++) {                                    \
-         if (!vm && !vext_elem_mask(v0, i)) {                                \
-@@ -5165,7 +5162,7 @@ static void vslide1down_##BITWIDTH(void *vd, void *v0, uint64_t s1,           \
-     uint32_t vma = vext_vma(desc);                                            \
-     uint32_t i;                                                               \
-                                                                               \
--    VSTART_CHECK_EARLY_EXIT(env);                                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                         \
-                                                                               \
-     for (i = env->vstart; i < vl; i++) {                                      \
-         if (!vm && !vext_elem_mask(v0, i)) {                                  \
-@@ -5242,7 +5239,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,               \
-     uint64_t index;                                                       \
-     uint32_t i;                                                           \
-                                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                     \
-                                                                           \
-     for (i = env->vstart; i < vl; i++) {                                  \
-         if (!vm && !vext_elem_mask(v0, i)) {                              \
-@@ -5287,7 +5284,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
-     uint64_t index = s1;                                                  \
-     uint32_t i;                                                           \
-                                                                           \
--    VSTART_CHECK_EARLY_EXIT(env);                                         \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                                     \
-                                                                           \
-     for (i = env->vstart; i < vl; i++) {                                  \
-         if (!vm && !vext_elem_mask(v0, i)) {                              \
-@@ -5383,7 +5380,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs2,                 \
-     uint32_t vma = vext_vma(desc);                               \
-     uint32_t i;                                                  \
-                                                                  \
--    VSTART_CHECK_EARLY_EXIT(env);                                \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                            \
-                                                                  \
-     for (i = env->vstart; i < vl; i++) {                         \
-         if (!vm && !vext_elem_mask(v0, i)) {                     \
-diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 05b2d01e58..b490b1d398 100644
---- a/target/riscv/vector_internals.c
-+++ b/target/riscv/vector_internals.c
-@@ -66,7 +66,7 @@ void do_vext_vv(void *vd, void *v0, void *vs1, void *vs2,
-     uint32_t vma = vext_vma(desc);
-     uint32_t i;
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, vl);
- 
-     for (i = env->vstart; i < vl; i++) {
-         if (!vm && !vext_elem_mask(v0, i)) {
-@@ -92,7 +92,7 @@ void do_vext_vx(void *vd, void *v0, target_long s1, void *vs2,
-     uint32_t vma = vext_vma(desc);
-     uint32_t i;
- 
--    VSTART_CHECK_EARLY_EXIT(env);
-+    VSTART_CHECK_EARLY_EXIT(env, vl);
- 
-     for (i = env->vstart; i < vl; i++) {
-         if (!vm && !vext_elem_mask(v0, i)) {
-diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 9e1e15b575..9d41bb3b10 100644
---- a/target/riscv/vector_internals.h
-+++ b/target/riscv/vector_internals.h
-@@ -24,11 +24,11 @@
- #include "tcg/tcg-gvec-desc.h"
- #include "internals.h"
- 
--#define VSTART_CHECK_EARLY_EXIT(env) do { \
--    if (env->vstart >= env->vl) {         \
--        env->vstart = 0;                  \
--        return;                           \
--    }                                     \
-+#define VSTART_CHECK_EARLY_EXIT(env, vl) do { \
-+    if (env->vstart >= vl) {                  \
-+        env->vstart = 0;                      \
-+        return;                               \
-+    }                                         \
- } while (0)
- 
- static inline uint32_t vext_nf(uint32_t desc)
-@@ -158,7 +158,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
-     uint32_t vma = vext_vma(desc);                     \
-     uint32_t i;                                        \
-                                                        \
--    VSTART_CHECK_EARLY_EXIT(env);                      \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                  \
-                                                        \
-     for (i = env->vstart; i < vl; i++) {               \
-         if (!vm && !vext_elem_mask(v0, i)) {           \
+ #ifdef CONFIG_DEBUG_TCG
+-    if (unlikely(!s->fp_access_checked || s->fp_excp_el)) {
++    if (unlikely(s->fp_access_checked <= 0)) {
+         fprintf(stderr, "target-arm: FP access check missing for "
+                 "instruction 0x%08x\n", s->insn);
+         abort();
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 20cd0e851c..06893a61c0 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -91,15 +91,19 @@ typedef struct DisasContext {
+     bool aarch64;
+     bool thumb;
+     bool lse2;
+-    /* Because unallocated encodings generate different exception syndrome
++    /*
++     * Because unallocated encodings generate different exception syndrome
+      * information from traps due to FP being disabled, we can't do a single
+      * "is fp access disabled" check at a high level in the decode tree.
+      * To help in catching bugs where the access check was forgotten in some
+      * code path, we set this flag when the access check is done, and assert
+      * that it is set at the point where we actually touch the FP regs.
++     *   0: not checked,
++     *   1: checked, access ok
++     *  -1: checked, access denied
+      */
+-    bool fp_access_checked;
+-    bool sve_access_checked;
++    int8_t fp_access_checked;
++    int8_t sve_access_checked;
+     /* ARMv8 single-step state (this is distinct from the QEMU gdbstub
+      * single-step support).
+      */
 -- 
 2.39.5
 
