@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E6DC3600B
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82944C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx5QS-00078m-UK; Tue, 25 Mar 2025 10:38:44 -0400
+	id 1tx5Qp-0007S9-Pe; Tue, 25 Mar 2025 10:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx5QD-00075Y-P5; Tue, 25 Mar 2025 10:38:37 -0400
+ id 1tx5Qm-0007NI-UW; Tue, 25 Mar 2025 10:39:05 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx5Py-000376-FM; Tue, 25 Mar 2025 10:38:29 -0400
+ id 1tx5Qk-0003BC-6s; Tue, 25 Mar 2025 10:39:04 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMXb56ZXDz4x21;
- Wed, 26 Mar 2025 01:38:09 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMXc22pgQz4xM3;
+ Wed, 26 Mar 2025 01:38:58 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMXb23PkVz4xM3;
- Wed, 26 Mar 2025 01:38:06 +1100 (AEDT)
-Message-ID: <6647e498-a334-4eb7-8067-6ea20d0340ac@kaod.org>
-Date: Tue, 25 Mar 2025 15:38:04 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMXbz4ffjz4x2g;
+ Wed, 26 Mar 2025 01:38:55 +1100 (AEDT)
+Message-ID: <46b180e0-af65-4da5-8245-2fb681bb487f@kaod.org>
+Date: Tue, 25 Mar 2025 15:38:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/10] ppc/pnv: Add a PSI bridge model for Power11
+Subject: Re: [PATCH v6 05/10] ppc/pnv: Add SBE model for Power11
 To: Aditya Gupta <adityag@linux.ibm.com>,
  Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -39,7 +39,7 @@ To: Aditya Gupta <adityag@linux.ibm.com>,
  <fbarrat@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
 References: <20250325112319.927190-1-adityag@linux.ibm.com>
- <20250325112319.927190-5-adityag@linux.ibm.com>
+ <20250325112319.927190-6-adityag@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,7 +84,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250325112319.927190-5-adityag@linux.ibm.com>
+In-Reply-To: <20250325112319.927190-6-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -111,8 +111,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/25 12:23, Aditya Gupta wrote:
-> Power11 core is same as Power10, reuse PNV10_PSI initialisation, by
-> declaring 'PNV11_PSI' as child class of 'PNV10_PSI'
+> Power11 core is same as Power10, reuse PNV10_SBER initialisation, by
+> declaring PNV11_PSI as child class of PNV10_PSI
 > 
 > Cc: Cédric Le Goater <clg@kaod.org>
 > Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
@@ -120,77 +120,62 @@ On 3/25/25 12:23, Aditya Gupta wrote:
 > Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 > Cc: Nicholas Piggin <npiggin@gmail.com>
 > Reviewed-by: Cédric Le Goater <clg@kaod.org>
-
-I am removing this Rb.
-
 > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 > ---
->   hw/ppc/pnv_psi.c         | 24 ++++++++++++++++++++++++
->   include/hw/ppc/pnv_psi.h |  2 +-
->   2 files changed, 25 insertions(+), 1 deletion(-)
+>   hw/ppc/pnv_sbe.c         | 15 +++++++++++++++
+>   include/hw/ppc/pnv_sbe.h |  2 ++
+>   2 files changed, 17 insertions(+)
 > 
-> diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
-> index 1fe11dde501b..c568edb80e53 100644
-> --- a/hw/ppc/pnv_psi.c
-> +++ b/hw/ppc/pnv_psi.c
-> @@ -937,6 +937,29 @@ static const TypeInfo pnv_psi_power10_info = {
->       .name          = TYPE_PNV10_PSI,
->       .parent        = TYPE_PNV9_PSI,
->       .class_init    = pnv_psi_power10_class_init,
-> +    .class_base_init = pnv_psi_power10_class_init,
+> diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+> index 74cee4eea7ad..12e3914fc9c3 100644
+> --- a/hw/ppc/pnv_sbe.c
+> +++ b/hw/ppc/pnv_sbe.c
+> @@ -366,6 +366,20 @@ static const TypeInfo pnv_sbe_power10_type_info = {
+>       .name          = TYPE_PNV10_SBE,
+>       .parent        = TYPE_PNV9_SBE,
+>       .class_init    = pnv_sbe_power10_class_init,
+> +    .class_base_init = pnv_sbe_power10_class_init,
 
-why change class_base_init ?
-
-Thanks,
+again why change .class_base_init ?
 
 C.
 
-
 > +};
 > +
-> +static void pnv_psi_power11_class_init(ObjectClass *klass, void *data)
+> +static void pnv_sbe_power11_class_init(ObjectClass *klass, void *data)
 > +{
 > +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    PnvPsiClass *ppc = PNV_PSI_CLASS(klass);
-> +    static const char compat[] = "ibm,power11-psihb-x\0ibm,psihb-x";
 > +
-> +    dc->desc    = "PowerNV PSI Controller (Power11)";
-> +
-> +    /*
-> +     * ppc->xscom_pbca and ppc->xscom_size will be set up by
-> +     * pnv_psi_power10_class_init
-> +     */
-> +    ppc->compat     = compat;
-> +    ppc->compat_size = sizeof(compat);
+> +    dc->desc = "PowerNV SBE Controller (Power11)";
 > +}
 > +
-> +static const TypeInfo pnv_psi_power11_info = {
-> +    .name          = TYPE_PNV11_PSI,
-> +    .parent        = TYPE_PNV10_PSI,
-> +    .class_init    = pnv_psi_power11_class_init,
+> +static const TypeInfo pnv_sbe_power11_type_info = {
+> +    .name          = TYPE_PNV11_SBE,
+> +    .parent        = TYPE_PNV10_SBE,
+> +    .class_init    = pnv_sbe_power11_class_init,
 >   };
 >   
->   static void pnv_psi_class_init(ObjectClass *klass, void *data)
-> @@ -971,6 +994,7 @@ static void pnv_psi_register_types(void)
->       type_register_static(&pnv_psi_power8_info);
->       type_register_static(&pnv_psi_power9_info);
->       type_register_static(&pnv_psi_power10_info);
-> +    type_register_static(&pnv_psi_power11_info);
+>   static void pnv_sbe_realize(DeviceState *dev, Error **errp)
+> @@ -409,6 +423,7 @@ static void pnv_sbe_register_types(void)
+>       type_register_static(&pnv_sbe_type_info);
+>       type_register_static(&pnv_sbe_power9_type_info);
+>       type_register_static(&pnv_sbe_power10_type_info);
+> +    type_register_static(&pnv_sbe_power11_type_info);
 >   }
 >   
->   type_init(pnv_psi_register_types);
-> diff --git a/include/hw/ppc/pnv_psi.h b/include/hw/ppc/pnv_psi.h
-> index cf7f95a6b1f5..1182ed47d280 100644
-> --- a/include/hw/ppc/pnv_psi.h
-> +++ b/include/hw/ppc/pnv_psi.h
-> @@ -69,7 +69,7 @@ struct Pnv9Psi {
->   };
+>   type_init(pnv_sbe_register_types);
+> diff --git a/include/hw/ppc/pnv_sbe.h b/include/hw/ppc/pnv_sbe.h
+> index b6b378ad14c7..09073a1256d6 100644
+> --- a/include/hw/ppc/pnv_sbe.h
+> +++ b/include/hw/ppc/pnv_sbe.h
+> @@ -29,6 +29,8 @@ OBJECT_DECLARE_TYPE(PnvSBE, PnvSBEClass, PNV_SBE)
+>   DECLARE_INSTANCE_CHECKER(PnvSBE, PNV9_SBE, TYPE_PNV9_SBE)
+>   #define TYPE_PNV10_SBE TYPE_PNV_SBE "-POWER10"
+>   DECLARE_INSTANCE_CHECKER(PnvSBE, PNV10_SBE, TYPE_PNV10_SBE)
+> +#define TYPE_PNV11_SBE TYPE_PNV_SBE "-POWER11"
+> +DECLARE_INSTANCE_CHECKER(PnvSBE, PNV11_SBE, TYPE_PNV11_SBE)
 >   
->   #define TYPE_PNV10_PSI TYPE_PNV_PSI "-POWER10"
-> -
-> +#define TYPE_PNV11_PSI TYPE_PNV_PSI "-POWER11"
->   
->   struct PnvPsiClass {
->       SysBusDeviceClass parent_class;
+>   struct PnvSBE {
+>       DeviceState xd;
 
 
