@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42CAFC35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394EAC3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx5Di-000400-B9; Tue, 25 Mar 2025 10:25:34 -0400
+	id 1tx5Mf-0005PM-78; Tue, 25 Mar 2025 10:34:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tx5Da-0003zI-RR
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:25:27 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tx5Mc-0005PA-Ot
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:34:46 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tx5DZ-0001l6-3H
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:25:26 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-226185948ffso109226975ad.0
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 07:25:24 -0700 (PDT)
+ id 1tx5Mb-0002Zw-7j
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 10:34:46 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22580c9ee0aso114830685ad.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 07:34:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742912723; x=1743517523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1742913283; x=1743518083; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ev8H5hW3YKFGi2DmfoRfOKAsTEGFQWSbua0lpMfn/y4=;
- b=DxTPuWfj+yWmHWngQby1SCCN8XMdNKwJ23K/hh5G5Eq5ZYSNElNT0QfscB5WTV/FCy
- FmA7YwqoWo9YbaygiNIeukFKV73+/nM/AqAwB1+jOtsa1yR0DHRXfiArWdnyOMzLxWh8
- whOK7yo2vVe1CJdEgLadjMVhK38MuREuGQRP0E6FPgdSx0XlYCnkO1zAZu84G4omfjDE
- ATn43mYl3Cgf7eT5kWLdCLcej/V1pWm6ahAWbT0/N4IOhZm/a9wwFzlXPXOmxLCYTkDk
- yLCddlKkdOSMmAAYf0RMIRcdcOdyPMhk/gqSmRkqWmk3y0vucVaDAzOfk7fBR6hfbLsG
- xPCw==
+ bh=4tANRWR6rCezFKi0rNGPblrcZy4LnuJAvLq6/bKy180=;
+ b=c2cYiBZgc7uKZ1jDsMsQwPjOgcOYjQDHqc+Ayvs/R2btZ2hlqLQFXrQ9HTifbsBHjy
+ Pkco5brsUEDNDoxtP7Ew/FxX0REcmu3D/u2W0Z9FVoqlTEeNTboBXbUEx84qq8U1WfJU
+ mVZWQxlU50CrcM0QZNdQUrHTg5qgD/q9rlGB2Wmi8rrGCCd72H2cugrrG8r8HZVxm4Dh
+ sv5FsMf7b8jKvvjJwA2I93ShG9oNnJONOU1Eu1vNwy3D95iHKVwrN+VbMohMjaDoaN05
+ 6F3tVUtAMPhGUHrDNO/WG+fIDp7o+CM2I5ZToRwd8eQHbbS6vMj5j3IgNmpuobCnzmaK
+ 2+Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742912723; x=1743517523;
+ d=1e100.net; s=20230601; t=1742913283; x=1743518083;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ev8H5hW3YKFGi2DmfoRfOKAsTEGFQWSbua0lpMfn/y4=;
- b=XqPH7DkEynl0HfO9sLG78Hl2V5G+UmtJn0xfDiNucdZVBNxneXH5Dk2/8GX03BI6IM
- oGaSDxC/zn8jaExeCtccrVNgNw9bewV9JWUXJreQCKJK40JBbt2tUPTrKS4CmcibrRSG
- lFS9+nNmBKy8GmskAnT0X1e+RPfu/1eERbZjcMMaigFitH/lyz5ptiS/C6metAofNxO8
- izH84V7ujDcx717ABbpwgm1Qs0pGkwk/7bQJV5iqX9fih0I+BtLv/8FUxEYSmIvZwi56
- 7TIlg+cId7AI4W+xMbRt+F5y1bGOJ6OSzhxzHw1Ff5FKKMD22gk+LB+Cd0SyBUrea37h
- aAcQ==
+ bh=4tANRWR6rCezFKi0rNGPblrcZy4LnuJAvLq6/bKy180=;
+ b=t8K302pQ+Jt5C6bXRhki7KBxkFlOaWcM10CMCqwWr/p3GvUD3dBCqjPhnYnDzlssi3
+ eXSaect1vaAVGyFflfV1VKAVUls/A1Q86DCEq0UvPGVNSE7zbqGzfJKzwpB66KEx2Pyf
+ 5mQruLjXDuLF1/mvMazz46Uu0L4HZ6ZWpoalWxZPgr4tGlB9bwUPkyAeArhvPojrn+ye
+ C0SC8Ht7P7+50sVtO6U1ne2SVmAYrgpzdb/ZuERqVA+xrweWU0e2nnUrUgJ0eWd0vBmM
+ GQltd03wwptP+/yzRXlNmtTCG7kSLQJjfuVBDfCD/BPTyW6WDb60JY2s/WylvWWZ3zPw
+ B1jA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgBllkLixyr3C7KDs0+3CUUCBnIagqkF4G2pg5DeIWjHWfe9PKUUl6WFVR3ABqal6yA/s8Q0+/4GSZ@nongnu.org
-X-Gm-Message-State: AOJu0YwwNXkW2Bupij2BkW7wvT9adNEBgCJ+opVsYBifRUd/P/beUpmm
- FqBG3t/SszLGA2E44AKPk/gVKNhhducsGfVDqsw37GnXnzW1WwmAMBPOv8z1lJI=
-X-Gm-Gg: ASbGnctobn/eO6z9fWg7Z+pwEgWIwyJwPIUcsz4QCAgI7QHXB5+Ej3v6a2hZoBpUI2E
- 12nmPnyRl8xbhqLDwaT2WqyEZMU72I1b0UonAfF4Wxvi0U/PJpYZxNOh1pH4jEFvbMBbZVfupBa
- /TnbCK/uC5D8Qk2gsgTs5kE6ga906b9Gh1Sf4nfGnu+xLrYknGH5WljuZp5oTMpl4SmPV8bzmmA
- ag/MrNuAfldyZ5KbQ5S7VX/qS3eewMR6RS8HBkpEAxqw6pmHlAHW1iTKRPCxRnCOs4E0rK9fOaM
- zbGeCjcT7C9kEtJbATcjCmqWGkBsc1h/5Pfo7/T82a+5zEMHHi/dj22OVA==
-X-Google-Smtp-Source: AGHT+IFWxqLkNDMPvo4+4xAXoh/x9rxpYlBjbxGSKFOHCxOSdQrUpxzSZOOrOJbQi1uEoHTOHOa+9g==
-X-Received: by 2002:a17:902:f652:b0:223:5ada:88ff with SMTP id
- d9443c01a7336-22780d9bde9mr299549905ad.24.1742912723255; 
- Tue, 25 Mar 2025 07:25:23 -0700 (PDT)
+ AJvYcCUnwbbsu2jHvTKK0ci9MInqtl1vJekadHDCsEaBvOw+0GlAWNsC8WOrPMFzceGnpAoQ9VhqfbR/FBd5@nongnu.org
+X-Gm-Message-State: AOJu0YxCcdC8+VrjZrZACibHjKVOIVpTm3hlYhcTYk1/0j6zGxgbqy+K
+ 9PD0E9cc4kv7pbT6/K+/T0hQ5ccXaYuxuv+gOul5eLVPt3+MWoT9zgqCEFlbclk=
+X-Gm-Gg: ASbGncuYg/8QC1TeRZDHN3sU9mQ9+Tb1D0IwsBDYl4DJ8JQfzOIAGd7fFhtbsPqsjbD
+ TAO2IEv+ytiUcuigh62gPemqr7LasTYA7Y/yTsipn6Xdu5qijGdTvDIBp3r7hb3ysJoRqoazhsT
+ 9Qd3SQtBVP5E3NbID8Ddy1HduH6PkzGrnz2ACBz9RP5rwkd0sIKADd3AQ/W05LSbX5ZsaSBgvFf
+ w+vvAo7c0RjSRLkpMZ7NBz++16f7HRikVFUAPzJUC5Wu/WZsBFXEX0n856E6qn6g93YyhIJiuFl
+ dAiDLJeQGUCt3j+h7Ierlkmzgp+npEHNIg5ypK2lCxTKoCYFos6d1nbjzA==
+X-Google-Smtp-Source: AGHT+IG1p5yDETxh98r9349xUtGGZgYUt20C5xBTs7B1RB1rS9QVw/s319WJ9o8+wE/ay6UkW2aNiA==
+X-Received: by 2002:a05:6a21:339a:b0:1f5:51d5:9ef3 with SMTP id
+ adf61e73a8af0-1fe42f995edmr23611776637.20.1742913283305; 
+ Tue, 25 Mar 2025 07:34:43 -0700 (PDT)
 Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f3b520sm90875085ad.6.2025.03.25.07.25.22
+ 41be03b00d2f7-af8a283b33esm7778345a12.35.2025.03.25.07.34.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Mar 2025 07:25:22 -0700 (PDT)
-Message-ID: <d728469c-13bf-4d79-bfce-f06d088124fc@linaro.org>
-Date: Tue, 25 Mar 2025 07:25:21 -0700
+ Tue, 25 Mar 2025 07:34:42 -0700 (PDT)
+Message-ID: <d3da05a2-a01b-49bd-8d25-4128a408ed03@linaro.org>
+Date: Tue, 25 Mar 2025 07:34:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 0/5] exec: Remove TARGET_LONG_SIZE definition
+Subject: Re: [PATCH 05/17] target/avr: Move cpu register accesses into system
+ memory
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Riku Voipio <riku.voipio@iki.fi>,
- Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
-References: <20250325130221.76116-1-philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mrolnik@gmail.com, philmd@linaro.org
+References: <20250323173730.3213964-1-richard.henderson@linaro.org>
+ <20250323173730.3213964-6-richard.henderson@linaro.org>
+ <fcd2d092-f37d-4912-97e2-a55c475e0540@linaro.org>
+ <7df3dc8f-c4ad-47fc-96b7-7ddad3274d51@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250325130221.76116-1-philmd@linaro.org>
+In-Reply-To: <7df3dc8f-c4ad-47fc-96b7-7ddad3274d51@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,16 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8yNS8yNSAwNjowMiwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IFRB
-UkdFVF9MT05HX1NJWkUgaXMgb25seSB1c2VkIGluIDEgc291cmNlIGZpbGUNCj4gYW5kIDEg
-aGVhZGVyLiBSZW1vdmUgaXQgdG8gYmUgYWJsZSB0byBmb2N1cyBvbg0KPiBtYWtpbmcgVEFS
-R0VUX0xPTkdfQklUUyB0YXJnZXQgYWdub3N0aWMuDQo+IA0KPiBQaGlsaXBwZSBNYXRoaWV1
-LURhdWTDqSAoNSk6DQo+ICAgIHRhcmdldC9pMzg2OiBVc2UgZXhwbGljaXQgbGl0dGxlLWVu
-ZGlhbiBMRC9TVCBBUEkNCj4gICAgZ2Ric3R1YjogUmVtb3ZlIGxkdHVsX2JlX3AoKSBhbmQg
-bGR0dWxfbGVfcCgpIG1hY3Jvcw0KPiAgICB0YXJnZXQvcHBjL2dkYnN0dWI6IFJlcGxhY2Ug
-VEFSR0VUX0xPTkdfU0laRSAtPiBzaXplb2YodGFyZ2V0X3Vsb25nKQ0KPiAgICB1c2VyL3Rz
-d2FwOiBSZXBsYWNlIFRBUkdFVF9MT05HX1NJWkUgLT4gVEFSR0VUX0xPTkdfQklUUw0KPiAg
-ICBleGVjL3RhcmdldF9sb25nOiBSZW1vdmUgVEFSR0VUX0xPTkdfU0laRSBkZWZpbml0aW9u
-DQo+IA0KDQpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmll
-ckBsaW5hcm8ub3JnPg0K
+On 3/25/25 06:48, Richard Henderson wrote:
+> On 3/24/25 18:07, Pierrick Bouvier wrote:
+>> A simple nit, maybe we could define constant for register names. This way, it can be used
+>> in the two switch for read/access.
+> 
+> Which constant?
+> 
+>     - The absolute address (0x58-0x5f)
+>     - The i/o port address (0x38-0x3f)
+>     - or the region offset (0-7)
+> 
+> ?  That's where I got stuck and didn't add such.
+> 
+
+Something like:
+
+#define RAMPD 0
+...
+#define SREG 7
+#define REG_IOPORT_BASE_ADDR 0x38
+#define REG_BASE_ADDR 0x58
+
+And in the switch, we can substract base addresses, so only cases 0..7 
+are left.
+
+I don't have a strong opinion on names, just thought seeing those 2 
+address constants + register offset is useful and makes intention clearer.
+
+>> By the way, are there other architectures where cpu registers are mapped in memory like AVR?
+> 
+> Not that I know of.
+> 
+> 
+> r~
+
 
