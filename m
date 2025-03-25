@@ -4,91 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78547C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 12:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C09C3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 12:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx3Zd-00013d-7J; Tue, 25 Mar 2025 08:40:05 -0400
+	id 1tx3gR-0004yd-NM; Tue, 25 Mar 2025 08:47:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3ZU-00013K-3E
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:39:57 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx3ZQ-0005Qt-N4
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:39:55 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso51056605e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 05:39:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742906389; x=1743511189; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c2z/hIXHE7gA8BhYXkl6xq/yq0lVd9BDreez7QJtYPY=;
- b=m9WRlwJHP9SK5VChRHDcN1xdyTmMrfLrum5PyBr7nUEWayzymlohgKuQf6Sc4YlQYa
- ppJZD93f8AVUI6/mnWyzKourhj5A07mYeNJlRJ5UtU+loIoNY7T2StBFHakWpeArqA45
- 2sHWfKZlO0b/sX5IZz2uitk4YdLZlfkcVTxZg+kmvmfxAm8PEWkHUYSJK5Rw2+kLLOtu
- 0Qfsk/qaXbhC0W5J1c1bp9VHHTgYIDMtqwwHWuOIP28ZA78yfW2b76HfYnwUQ06gdY63
- CRINwz5gvzCi8KRbnsn+NFRw0SvRZ9Fpczv4z/d3fmvd7sA4j/5XTKzQDLjxwy/Lu5iE
- S0AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742906389; x=1743511189;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c2z/hIXHE7gA8BhYXkl6xq/yq0lVd9BDreez7QJtYPY=;
- b=tQgN2+CxXe26CSt/FynvpDdB6Au5fiAvElAapalDDF2DLnRrfagKWdM4q/uoCveUOF
- 7GRpaorR4zSB4ZI6FceB7odwyLVK2Y6cDLzJI03asAxlCkZi0UcxJsJ/Kn1Nxv9XedvF
- m85v0hOMSdn0F9AORrrrx32grztLHxirqrFA2zYXFw7OLlamPwIlZocynYNB1+lthX6M
- 3ZxLBHeRhlxq+aFiOxHtjryzoVVYmKqBB8Z/FmmrGFcEXqKlfnPbxe7iFTiwI/LsndcR
- dafdgJJOMy5+8qHrregeOP0CQWT3uq3R/YkI/409HAh+zVwy52fXMv5kqQ4iKSB+mdyh
- IXVQ==
-X-Gm-Message-State: AOJu0YxesDa1F8V8yQkJHd+WGvpnmjy0443IXTlh9KXZr5gdzaKUe9X8
- wdsyyS48Y63SeUV53OkqtnGK2yE9BDEV6PYvaByTUUJsstYBBk/rq/N9vbvHzA47GTbWgHki0qU
- A
-X-Gm-Gg: ASbGncs2TB+UJEpBu+yBI094+Ffkv39tMWuVwMqZhPVhVwbuf/IQIBHAVQ129lWshrY
- 6yg0BAQSRnJCMNPr0c/QrixIsfgBKk8gfLDJ6neX2ctaL7POSqB6OyH6Kin/9IHWmygxLuclnLa
- yLLJnVq8r+qlu4uv4wh7bEYk4f+En44yYO9Zg72gN2QPCy2brgm77A2nU6JXq3xMq1EmTIMydO2
- CoThpso66lmMqYHUimySmAJudRnQVIf8wadkCFOhJyKLBAYFqc6bmjqIhuraSbsCbzamFEXH2qz
- f/FPoovsnR7lqhQUbsqwzv1mgPNtXCK5SUu+VA+dZzd53l0Z94OTJRrgx/SxakXZEBF62VhWHa1
- 55GEehrFT39tK993pjrs=
-X-Google-Smtp-Source: AGHT+IG9yiV4LDXT9THcYlG/8oJgx4mKTpH1S3WCVNqBx8h6pmiyBSvwDMWq1uWKn6X312M14fgFXg==
-X-Received: by 2002:a05:6000:4188:b0:391:487f:27e7 with SMTP id
- ffacd0b85a97d-3997f947b9dmr11278702f8f.55.1742906389418; 
- Tue, 25 Mar 2025 05:39:49 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9e6667sm13835492f8f.72.2025.03.25.05.39.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 05:39:48 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Frederic Konrad <konrad.frederic@yahoo.fr>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 4/4] target/sparc: Move hardware fields from
- CPUSPARCState to SPARCCPU
-Date: Tue, 25 Mar 2025 13:39:27 +0100
-Message-ID: <20250325123927.74939-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250325123927.74939-1-philmd@linaro.org>
-References: <20250325123927.74939-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tx3gN-0004yL-9C
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:47:03 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tx3gI-0006Aq-P4
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 08:47:03 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxGHG7peJnIaylAA--.17193S3;
+ Tue, 25 Mar 2025 20:46:51 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCx_cawpeJn93BfAA--.23126S3;
+ Tue, 25 Mar 2025 20:46:50 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch/boot: Adjust the loading position of the
+ initrd
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
+References: <20250319083216.438159-1-lixianglai@loongson.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <7eb54b16-84ad-8b3e-fe5f-bc7435917fe3@loongson.cn>
+Date: Tue, 25 Mar 2025 20:45:59 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20250319083216.438159-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: qMiowMCx_cawpeJn93BfAA--.23126S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxWw4fuF1xGr4fXw4UZrWUGFX_yoW7JFykpF
+ ZxCrn3Cr1kArZ7Jwn2ya4UWr9rAwn3KF1aqa42kr9YkFsFgr1qvr18GryUZFWkJ3yrtFn0
+ qF1kCw1Y93WUJrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8PCzJUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.031,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,230 +82,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep CPUSPARCState for architectural fields, move Leon3
-hardware specific fields to SPARCCPU.
+Xianglai,
 
-Reset the Leon3 specific 'cache_control' field in
-leon3_cpu_reset() instead of sparc_cpu_reset_hold().
+Thanks for your patch, some comments inline.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sparc/cpu.h          | 10 +++++-----
- hw/sparc/leon3.c            | 35 ++++++++++++++++++-----------------
- target/sparc/cpu.c          |  1 -
- target/sparc/int32_helper.c |  8 ++++++--
- target/sparc/ldst_helper.c  | 12 ++++++------
- 5 files changed, 35 insertions(+), 31 deletions(-)
+On 2025/3/19 下午4:32, Xianglai Li wrote:
+> When only the -kernel parameter is used to load the elf kernel,
+> the initrd is loaded in the ram. If the initrd size is too large,
+> the loading fails, resulting in a VM startup failure.
+> This patch first loads initrd near the kernel.
+> When the nearby memory space of the kernel is insufficient,
+> it tries to load it to the starting position of high-end memory.
+> If there is still not enough, qemu will report an error
+> and ask the user to increase the memory space for the
+> virtual machine to boot.
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Xianglai Li <lixianglai@loongson.cn>
+> 
+>   hw/loongarch/boot.c         | 66 ++++++++++++++++++++++++++++++++-----
+>   hw/loongarch/virt.c         |  1 +
+>   include/hw/loongarch/boot.h |  1 +
+>   3 files changed, 59 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 354cf458c8..3f094ebb39 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -235,6 +235,61 @@ static int64_t load_loongarch_linux_image(const char *filename,
+>       return size;
+>   }
+>   
+> +static void find_initrd_loadoffset(struct loongarch_boot_info *info,
+> +                uint64_t kernel_high, ssize_t kernel_size)
+> +{
+> +    hwaddr base, size, gap;
+> +    ram_addr_t initrd_end, initrd_start;
+> +    int nb_numa_nodes;
+> +    NodeInfo *numa_info;
+> +
+> +    base = VIRT_LOWMEM_BASE;
+> +    gap = VIRT_LOWMEM_SIZE;
+> +    nb_numa_nodes = info->numa_state->num_nodes;
+> +    numa_info = info->numa_state->nodes;
+> +    initrd_start = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
+> +    initrd_end = initrd_start + initrd_size;
+> +
+> +    if (nb_numa_nodes) {
+> +        size = numa_info[0].node_mem;
+why is memory size of the node0 calculated here?
+initrd memory can be put at these places:
+1) near kernel at low memory region.
+2) start from high memory region located at VIRT_HIGHMEM_BASE
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index 462bcb6c0e6..abb71c314dc 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -543,11 +543,6 @@ struct CPUArchState {
- #define SOFTINT_REG_MASK (SOFTINT_STIMER|SOFTINT_INTRMASK|SOFTINT_TIMER)
- #endif
-     sparc_def_t def;
--
--    /* Leon3 */
--    DeviceState *irq_manager;
--    void (*qemu_irq_ack)(CPUSPARCState *env, int intno);
--    uint32_t cache_control;
- };
- 
- /**
-@@ -560,6 +555,11 @@ struct ArchCPU {
-     CPUState parent_obj;
- 
-     CPUSPARCState env;
-+
-+    /* Leon3 */
-+    DeviceState *irq_manager;
-+    void (*qemu_irq_ack)(SPARCCPU *cpu, int intno);
-+    uint32_t cache_control;
- };
- 
- /**
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index 0aeaad3becc..06966861744 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -152,6 +152,7 @@ static void leon3_cpu_reset(void *opaque)
-     int id = info->id;
-     ResetData *s = container_of(info, ResetData, info[id]);
-     CPUState *cpu = CPU(s->info[id].cpu);
-+    SPARCCPU *scpu = SPARC_CPU(cpu);
-     CPUSPARCState *env = cpu_env(cpu);
- 
-     cpu_reset(cpu);
-@@ -159,41 +160,41 @@ static void leon3_cpu_reset(void *opaque)
-     cpu->halted = cpu->cpu_index != 0;
-     env->pc = s->entry;
-     env->npc = s->entry + 4;
-+    scpu->cache_control = 0;
- }
- 
--static void leon3_cache_control_int(CPUSPARCState *env)
-+static void leon3_cache_control_int(SPARCCPU *cpu)
- {
-     uint32_t state = 0;
- 
--    if (env->cache_control & CACHE_CTRL_IF) {
-+    if (cpu->cache_control & CACHE_CTRL_IF) {
-         /* Instruction cache state */
--        state = env->cache_control & CACHE_STATE_MASK;
-+        state = cpu->cache_control & CACHE_STATE_MASK;
-         if (state == CACHE_ENABLED) {
-             state = CACHE_FROZEN;
-             trace_int_helper_icache_freeze();
-         }
- 
--        env->cache_control &= ~CACHE_STATE_MASK;
--        env->cache_control |= state;
-+        cpu->cache_control &= ~CACHE_STATE_MASK;
-+        cpu->cache_control |= state;
-     }
- 
--    if (env->cache_control & CACHE_CTRL_DF) {
-+    if (cpu->cache_control & CACHE_CTRL_DF) {
-         /* Data cache state */
--        state = (env->cache_control >> 2) & CACHE_STATE_MASK;
-+        state = (cpu->cache_control >> 2) & CACHE_STATE_MASK;
-         if (state == CACHE_ENABLED) {
-             state = CACHE_FROZEN;
-             trace_int_helper_dcache_freeze();
-         }
- 
--        env->cache_control &= ~(CACHE_STATE_MASK << 2);
--        env->cache_control |= (state << 2);
-+        cpu->cache_control &= ~(CACHE_STATE_MASK << 2);
-+        cpu->cache_control |= (state << 2);
-     }
- }
- 
--static void leon3_irq_ack(CPUSPARCState *env, int intno)
-+static void leon3_irq_ack(SPARCCPU *cpu, int intno)
- {
--    CPUState *cpu = CPU(env_cpu(env));
--    grlib_irqmp_ack(env->irq_manager, cpu->cpu_index, intno);
-+    grlib_irqmp_ack(cpu->irq_manager, CPU(cpu)->cpu_index, intno);
- }
- 
- /*
-@@ -248,10 +249,10 @@ static void leon3_start_cpu(void *opaque, int n, int level)
-     async_run_on_cpu(cs, leon3_start_cpu_async_work, RUN_ON_CPU_NULL);
- }
- 
--static void leon3_irq_manager(CPUSPARCState *env, int intno)
-+static void leon3_irq_manager(SPARCCPU *cpu, int intno)
- {
--    leon3_irq_ack(env, intno);
--    leon3_cache_control_int(env);
-+    leon3_irq_ack(cpu, intno);
-+    leon3_cache_control_int(cpu);
- }
- 
- static void leon3_generic_hw_init(MachineState *machine)
-@@ -320,8 +321,8 @@ static void leon3_generic_hw_init(MachineState *machine)
-         qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", i,
-                                     qdev_get_gpio_in_named(DEVICE(cpu),
-                                                            "pil", 0));
--        env->irq_manager = irqmpdev;
--        env->qemu_irq_ack = leon3_irq_manager;
-+        cpu->irq_manager = irqmpdev;
-+        cpu->qemu_irq_ack = leon3_irq_manager;
-     }
- 
-     sysbus_mmio_map(SYS_BUS_DEVICE(irqmpdev), 0, LEON3_IRQMP_OFFSET);
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 37406227cb7..d62ad6c4db2 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -78,7 +78,6 @@ static void sparc_cpu_reset_hold(Object *obj, ResetType type)
-     env->pc = 0;
-     env->npc = env->pc + 4;
- #endif
--    env->cache_control = 0;
-     cpu_put_fsr(env, 0);
- }
- 
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index f0266061023..a902702559d 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -168,8 +168,12 @@ void sparc_cpu_do_interrupt(CPUState *cs)
- 
- #if !defined(CONFIG_USER_ONLY)
-     /* IRQ acknowledgment */
--    if ((intno & ~15) == TT_EXTINT && env->qemu_irq_ack != NULL) {
--        env->qemu_irq_ack(env, intno);
-+    if ((intno & ~15) == TT_EXTINT) {
-+        SPARCCPU *cpu = env_archcpu(env);
-+
-+        if (cpu->qemu_irq_ack != NULL) {
-+            cpu->qemu_irq_ack(cpu, intno);
-+        }
-     }
- #endif
- }
-diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index d4de32d3c48..0a11360ccaf 100644
---- a/target/sparc/ldst_helper.c
-+++ b/target/sparc/ldst_helper.c
-@@ -513,7 +513,7 @@ static void sparc_raise_mmu_fault(CPUState *cs, hwaddr addr,
- 
- /* Leon3 cache control */
- 
--static void leon3_cache_control_st(CPUSPARCState *env, target_ulong addr,
-+static void leon3_cache_control_st(SPARCCPU *cpu, target_ulong addr,
-                                    uint64_t val, int size)
- {
-     DPRINTF_CACHE_CONTROL("st addr:%08x, val:%" PRIx64 ", size:%d\n",
-@@ -534,7 +534,7 @@ static void leon3_cache_control_st(CPUSPARCState *env, target_ulong addr,
-         val &= ~CACHE_CTRL_IP;
-         val &= ~CACHE_CTRL_DP;
- 
--        env->cache_control = val;
-+        cpu->cache_control = val;
-         break;
-     case 0x04:              /* Instruction cache configuration */
-     case 0x08:              /* Data cache configuration */
-@@ -546,7 +546,7 @@ static void leon3_cache_control_st(CPUSPARCState *env, target_ulong addr,
-     };
- }
- 
--static uint64_t leon3_cache_control_ld(CPUSPARCState *env, target_ulong addr,
-+static uint64_t leon3_cache_control_ld(SPARCCPU *cpu, target_ulong addr,
-                                        int size)
- {
-     uint64_t ret = 0;
-@@ -558,7 +558,7 @@ static uint64_t leon3_cache_control_ld(CPUSPARCState *env, target_ulong addr,
- 
-     switch (addr) {
-     case 0x00:              /* Cache control */
--        ret = env->cache_control;
-+        ret = cpu->cache_control;
-         break;
- 
-         /* Configuration registers are read and only always keep those
-@@ -599,7 +599,7 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
-         case 0x08:          /* Leon3 Instruction Cache config */
-         case 0x0C:          /* Leon3 Date Cache config */
-             if (env->def.features & CPU_FEATURE_CACHE_CTRL) {
--                ret = leon3_cache_control_ld(env, addr, size);
-+                ret = leon3_cache_control_ld(env_archcpu(env), addr, size);
-             } else {
-                 qemu_log_mask(LOG_UNIMP,
-                               "%08x: unimplemented access size: %d\n", addr,
-@@ -819,7 +819,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
-         case 0x08:          /* Leon3 Instruction Cache config */
-         case 0x0C:          /* Leon3 Date Cache config */
-             if (env->def.features & CPU_FEATURE_CACHE_CTRL) {
--                leon3_cache_control_st(env, addr, val, size);
-+                leon3_cache_control_st(env_archcpu(env), addr, val, size);
-             } else {
-                 qemu_log_mask(LOG_UNIMP,
-                               "%08x: unimplemented access size: %d\n", addr,
--- 
-2.47.1
+It seems that it irrelative with numa memory
+> +    } else {
+> +        size = info->ram_size;
+> +    }
+> +    /*
+> +     * Try to load the initrd near the kernel image
+> +     */
+> +    if (size <= gap) {
+> +        if (initrd_end <= (base + gap)) {
+> +            initrd_offset = initrd_start;
+> +            return ;
+> +        }
+no else here. otherwise the sentence as following "size -= gap;" will be 
+negative.
+> +    }
+> +
+> +    /*
+> +     * Try to load initrd in the high memory of node0
+> +     */
+> +    size -= gap;
+> +    base = VIRT_HIGHMEM_BASE;
+> +    initrd_start = ROUND_UP(base, 64 * KiB);
+> +    initrd_end = initrd_start + initrd_size;
+> +    if (initrd_end <= (base + size)) {
+it is a little complicated,  just the following will be ok
+    if (initrd_size <= size) {
+        initrd_offset = base;
+         return;
+    }
+
+Regards
+Bibo Mao
+> +        initrd_offset = initrd_start;
+> +        return ;
+> +    }
+> +
+> +    if (nb_numa_nodes == 0) {
+> +        error_report("memory too small for initial ram disk '%s',"
+> +             "You need to expand the memory space",
+> +             info->initrd_filename);
+> +    } else {
+> +        error_report("memory too small for initial ram disk '%s',"
+> +            "You need to expand the memory space of node0",
+> +            info->initrd_filename);
+> +
+> +    }
+> +    exit(1);
+> +}
+> +
+>   static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>   {
+>       uint64_t kernel_entry, kernel_low, kernel_high;
+> @@ -261,16 +316,9 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>       if (info->initrd_filename) {
+>           initrd_size = get_image_size(info->initrd_filename);
+>           if (initrd_size > 0) {
+> -            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
+> -
+> -            if (initrd_offset + initrd_size > info->ram_size) {
+> -                error_report("memory too small for initial ram disk '%s'",
+> -                             info->initrd_filename);
+> -                exit(1);
+> -            }
+> -
+> +            find_initrd_loadoffset(info, kernel_high, kernel_size);
+>               initrd_size = load_image_targphys(info->initrd_filename, initrd_offset,
+> -                                              info->ram_size - initrd_offset);
+> +                                              initrd_size);
+>           }
+>   
+>           if (initrd_size == (target_ulong)-1) {
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index a5840ff968..eb62abec0e 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -750,6 +750,7 @@ static void virt_init(MachineState *machine)
+>       qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
+>   
+>       lvms->bootinfo.ram_size = ram_size;
+> +    lvms->bootinfo.numa_state = machine->numa_state;
+>       loongarch_load_kernel(machine, &lvms->bootinfo);
+>   }
+>   
+> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+> index b3b870df1f..e3887d7cc6 100644
+> --- a/include/hw/loongarch/boot.h
+> +++ b/include/hw/loongarch/boot.h
+> @@ -98,6 +98,7 @@ struct efi_initrd {
+>   
+>   struct loongarch_boot_info {
+>       uint64_t ram_size;
+> +    struct NumaState *numa_state;
+>       const char *kernel_filename;
+>       const char *kernel_cmdline;
+>       const char *initrd_filename;
+> 
 
 
