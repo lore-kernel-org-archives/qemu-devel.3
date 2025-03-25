@@ -4,86 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03ED0C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 15:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B55C3600B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 16:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx6d5-0005qK-L4; Tue, 25 Mar 2025 11:55:51 -0400
+	id 1tx6nz-0004QS-Ay; Tue, 25 Mar 2025 12:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx6d3-0005ps-O0
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:55:49 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tx6d1-0005yx-UG
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:55:49 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43d07ca6a80so29089465e9.1
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 08:55:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742918145; x=1743522945; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uTSRyU7OmmZxDsqp8vpgSBKkvfiWvPzZOW8ib7E9a2o=;
- b=oUMOhmbVswJvNEvy1+LY+Q3vHGJ/M4kgbQvDUyFFman1kQKVc/IkvYBnJK5mBCHwPO
- Y6hOp3riOBSKRd0rWpGyNe5Sb+UTC+uyy58C42iUGMkZK2DPTXhPSFHKF1BqHy5iWqke
- IBfQ/YqEVwpW39/vawH9I68kQZWZG6LfMvULMgviJAVi5U+c2jL0gZIRKla+B5c0HaYm
- q7QDpIM5RIdqpyV5HhPTuWNZKOzc7i/kPjRBHVogV6dIHycAV/zsjUgI0sAn5Ormc8Qn
- /0mmhFlY/go7kmObVeLZPkkpujdHfdgaRvLGo4PhACbeMojtNSccdBbaeCBYdjIx7HuD
- wQgg==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1tx6nw-0004Pj-Fb
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 12:07:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1tx6nu-0007Jr-7a
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 12:07:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742918821;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ehiVzbvvOQFr7YUJ9/vdGbUS2C1aGZiIVOQbC1KmTxg=;
+ b=JqDEjOt1Ts+OeWJN/PYDQsfoo/3P2pabCsSRW+AhSNzcPkRlV1KNejhXH4NKExJ+wcKs/+
+ 62FWr0CQl0Gk2u0meUNQ3lFFdJ90Rp6JO2rmZb+YZudNHXmk3t205HPyClSxthtsHw4Ptm
+ ukR3IQ74G9daVZuSCO7+CzmTEkTcQqA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-L--i5pZHOoquXAD6gUS4Aw-1; Tue, 25 Mar 2025 12:06:59 -0400
+X-MC-Unique: L--i5pZHOoquXAD6gUS4Aw-1
+X-Mimecast-MFC-AGG-ID: L--i5pZHOoquXAD6gUS4Aw_1742918818
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3913f546dfdso3136578f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 09:06:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742918145; x=1743522945;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uTSRyU7OmmZxDsqp8vpgSBKkvfiWvPzZOW8ib7E9a2o=;
- b=OUUtsM0zmDQEnPqhCy0nonqBLWt27flo8s2dK8G5lKuzxPUGKACMJ5h59I2Hk452Tw
- BlDL2natDML4FS4vWgss/CMv2DSKjZfchgsocBChJyqTSWQ68YdQaw4WF2Wh9/ZxAicH
- DEjHUdiqNgTlVtnJ5F+/UXXNFbF72bF3sWHlKr6f3sZ8XeOGCPwDrWiYAVrPNWnTE5VW
- jekh9gCsy+viqLmC9d9g7q6Ku0TJpa6vtnUsVqdJNK25JIWLm6Lqe2PycXLHXNmUanvQ
- IUtXz7IeYv6yyts/WRz0qdGnWq6VmT0+XGgvv9v4wR17JgW+0kh+sqS1cApGvQSUvLyK
- mhPA==
-X-Gm-Message-State: AOJu0YzmUiGtCBfJIWOWmaHh6u4dZ5STt6O+lxe1ljo945krOkknRVx2
- qed49an2YsTE1ZWwg4FxwpyYDyse/xeDigegbhrwQSar4QvfKlV/TQPqV91AezB1FZp0kRfU3d4
- u
-X-Gm-Gg: ASbGncvG0GkO9+ygTzOK/wq9CpBiAuldlFGeaNKGTc5lZXcuA2fV4rZUDQdjt5i0Lwn
- WWJusWQaurO0CD1EeTVndElUtFXil/QY3gzWE4XTTy6M45VUY6UOj9fBi/9QqAyBWDbM0DQwClt
- aHBAP6muCau2ePV+XWOr916RyTy36PHeGP2cymZRy4Jz1/wqWPUI4MbxmvPpPb7Hi21qTRJJLRI
- 1vZoFybJlgJzXlqFuzCJZooqFDO4sBuSwz6h2drct86aStRdJhuRVMqBcXSgIPfJkHcs38Cu2Yq
- KZaNwl934GPfJD0obInLcXbH6WREcA0xsuzc147Ra/V+UtmRidyo8ySQSXFbpkFelnb0vJDuAIO
- lXZgnDjUDzEYAj5CzlAuTObkUa9gNEg==
-X-Google-Smtp-Source: AGHT+IFFvzhxS//Ekl0XCK+aH+qOMTvGsWVyfqXD3XSW/v/yAR8SgzlXv1hSrbY4YPwRFHqhvyeClA==
-X-Received: by 2002:a05:6000:2b10:b0:391:401f:bfd8 with SMTP id
- ffacd0b85a97d-3997f939a54mr11684861f8f.55.1742918145474; 
- Tue, 25 Mar 2025 08:55:45 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3997f9eff6esm14028941f8f.100.2025.03.25.08.55.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Mar 2025 08:55:44 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1] gdbstub/helpers: Remove ldtul_p() macro definitions
-Date: Tue, 25 Mar 2025 16:55:43 +0100
-Message-ID: <20250325155543.95684-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ d=1e100.net; s=20230601; t=1742918818; x=1743523618;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ehiVzbvvOQFr7YUJ9/vdGbUS2C1aGZiIVOQbC1KmTxg=;
+ b=Vb0440iJZYzMRdAF09PlwkquAur2AjJVgBbxikLGDBMGaAUUM9ixUMIvalkRLGLWwE
+ wpU6sAuauy/1TCiE+mKsJBoQaGeSReUvywLuWsp1xLzzABYI9accp3UkOFEHmlwzF/gY
+ VizG+e/IlW6My3JCXKIZrswU8eb+bM7HcfRxfIeQhOSFekmR8zz9WTqjRBn5oyPrP+Nh
+ 3vhMIf3dTVyKuGvy2oTey7FZY5Vikk2RL19bDSD5V02HEN/6rZrjvI5U+Vsx7oX1+OnE
+ 1jZ1RKXXt8zPf68J42EjecdnIqMv7upQrIDpCkH+xmniEiEJd46XZzHT+MFQ0ppajJhj
+ 66SQ==
+X-Gm-Message-State: AOJu0YwY38jDmdyzXsMBT+cx8Eo0sjuwA8+6/NzFjTehk6LHJJwNIJJH
+ YpfOZc67wwcZnbiZ7Klyjc0wF1YtGo+wIp9LsMTzc4gGmmR4sTSEcQp+z0MNw2JXYEkZI7iAFhD
+ HQyJ/eWqVneeSPPRSfbZWaP7gW+VYekXKs0deVxHgU54xwIanIvOr
+X-Gm-Gg: ASbGncszgjgucVGg/TwYE0ae6CyC0QizfIDg+bVs10exlYzerq+EoZHk8Uja1i4Yx9A
+ h8Sj5ajdPJn1Mi9+Jrp6oOWOgL4hUuKySSlWSfDYiRJ9uc5il0yr93fbV4ZxFcKNJqgSCbfnqlT
+ HzR/8qG0dBd4FrmH3ZvLMgJl047ixsZoe0cufrUgJHaCzaW9bd/w3tXzR+tkfzW8fuGpFTjq9hb
+ /4CriNDYeKO61KMPa3ij1BWnmx6o/H6zcVn6vI/TSYhSA6BWjmHjmoJ1zO2cEaArxH8yHRfaCkk
+ owNw1FFAemUSD7JC6g+mcTVEsPLU2P5essuEA5pLO/sZada6EsQ9GWgrW+FK+Pku8oP26pJnPg=
+ =
+X-Received: by 2002:a05:6000:2801:b0:39a:c9cb:8296 with SMTP id
+ ffacd0b85a97d-39ac9cb82ffmr1855246f8f.22.1742918817855; 
+ Tue, 25 Mar 2025 09:06:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzjwPgzg4o/qXq6inyog6I78Gddk11DDmqtMmY52xljdoT7Rvla6jHSHRiRdM2pLcDj7Fnrw==
+X-Received: by 2002:a05:6000:2801:b0:39a:c9cb:8296 with SMTP id
+ ffacd0b85a97d-39ac9cb82ffmr1855218f8f.22.1742918817530; 
+ Tue, 25 Mar 2025 09:06:57 -0700 (PDT)
+Received: from localhost
+ (p200300cfd74f9db6ee8035b86ef736e5.dip0.t-ipconnect.de.
+ [2003:cf:d74f:9db6:ee80:35b8:6ef7:36e5])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d43f556afsm203550785e9.19.2025.03.25.09.06.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Mar 2025 09:06:56 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PATCH 02/15] fuse: Ensure init clean-up even with error_fatal
+Date: Tue, 25 Mar 2025 17:06:42 +0100
+Message-ID: <20250325160655.119407-1-hreitz@redhat.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250325160529.117543-1-hreitz@redhat.com>
+References: <20250325160529.117543-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,37 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are no more use of ldtul_p() in the code base,
-remove the definitions.
+When exports are created on the command line (with the storage daemon),
+errp is going to point to error_fatal.  Without ERRP_GUARD, we would
+exit immediately when *errp is set, i.e. skip the clean-up code under
+the `fail` label.  Use ERRP_GUARD so we always run that code.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Based-on:
-- https://lore.kernel.org/qemu-devel/20250325154058.92735-6-philmd@linaro.org/ (mips)
-- https://lore.kernel.org/qemu-devel/20250325154528.93845-1-philmd@linaro.org/ (x86)
-- https://lore.kernel.org/qemu-devel/20250325154913.95283-1-philmd@linaro.org/ (riscv)
----
- include/gdbstub/helpers.h | 2 --
- 1 file changed, 2 deletions(-)
+As far as I know, this has no actual impact right now[1], but it is
+still better to make this right.
 
-diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
-index 6f7cc48adcb..3d4a13b919c 100644
---- a/include/gdbstub/helpers.h
-+++ b/include/gdbstub/helpers.h
-@@ -94,12 +94,10 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
- 
- #if TARGET_LONG_BITS == 64
- #define gdb_get_regl(buf, val) gdb_get_reg64(buf, val)
--#define ldtul_p(addr) ldq_p(addr)
- #define ldtul_le_p(addr) ldq_le_p(addr)
- #define ldtul_be_p(addr) ldq_be_p(addr)
- #else
- #define gdb_get_regl(buf, val) gdb_get_reg32(buf, val)
--#define ldtul_p(addr) ldl_p(addr)
- #define ldtul_le_p(addr) ldl_le_p(addr)
- #define ldtul_be_p(addr) ldl_be_p(addr)
- #endif
+[1] Not cleaning up the mount point is the only thing I can imagine
+    would be problematic, but that is the last thing we attempt, so if
+    it fails, it will clean itself up.
+
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ block/export/fuse.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index a12f479492..7c035dd6ca 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -119,6 +119,7 @@ static int fuse_export_create(BlockExport *blk_exp,
+                               BlockExportOptions *blk_exp_args,
+                               Error **errp)
+ {
++    ERRP_GUARD(); /* ensure clean-up even with error_fatal */
+     FuseExport *exp = container_of(blk_exp, FuseExport, common);
+     BlockExportOptionsFuse *args = &blk_exp_args->u.fuse;
+     int ret;
 -- 
-2.47.1
+2.48.1
 
 
