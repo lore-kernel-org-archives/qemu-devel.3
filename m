@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C964BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24214C36008
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 06:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1twyAO-0008Bf-3n; Tue, 25 Mar 2025 02:53:40 -0400
+	id 1twy7m-0004cg-Eg; Tue, 25 Mar 2025 02:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy9X-0006IB-Jd; Tue, 25 Mar 2025 02:52:49 -0400
+ id 1twy7k-0004Zu-IJ; Tue, 25 Mar 2025 02:50:56 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1twy9T-0001xr-QI; Tue, 25 Mar 2025 02:52:47 -0400
+ id 1twy7i-0001eN-Fn; Tue, 25 Mar 2025 02:50:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E6BE1107D7D;
- Tue, 25 Mar 2025 09:49:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A2CEF107D63;
+ Tue, 25 Mar 2025 09:49:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 890751D5E88;
- Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 459541D5E72;
+ Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7E30F57058; Tue, 25 Mar 2025 09:50:43 +0300 (MSK)
+ id 3596A5702C; Tue, 25 Mar 2025 09:50:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Deepak Gupta <debug@rivosinc.com>,
- Ved Shanbhogue <ved@rivosinc.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.2.3 59/69] target/riscv: fixes a bug against `ssamoswap`
- behavior in M-mode
-Date: Tue, 25 Mar 2025 09:50:32 +0300
-Message-Id: <20250325065043.3263864-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.17 30/34] target/arm: Simplify pstate_sm check in
+ sve_access_check
+Date: Tue, 25 Mar 2025 09:50:25 +0300
+Message-Id: <20250325065031.3263718-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
-References: <qemu-stable-9.2.3-20250325094901@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
+References: <qemu-stable-7.2.17-20250325094839@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -64,69 +62,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Deepak Gupta <debug@rivosinc.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Commit f06bfe3dc38c ("target/riscv: implement zicfiss instructions") adds
-`ssamoswap` instruction. `ssamoswap` takes the code-point from existing
-reserved encoding (and not a zimop like other shadow stack instructions).
-If shadow stack is not enabled (via xenvcfg.SSE) and effective priv is
-less than M then `ssamoswap` must result in an illegal instruction
-exception. However if effective priv is M, then `ssamoswap` results in
-store/AMO access fault. See Section "22.2.3. Shadow Stack Memory
-Protection" of priv spec.
+In StreamingMode, fp_access_checked is handled already.
+We cannot fall through to fp_access_check lest we fall
+foul of the double-check assertion.
 
-Fixes: f06bfe3dc38c ("target/riscv: implement zicfiss instructions")
-
-Reported-by: Ved Shanbhogue <ved@rivosinc.com>
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250306064636.452396-2-debug@rivosinc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d2c5759c8dd4c00195d4ebecc7d009e41df6baef)
+Cc: qemu-stable@nongnu.org
+Fixes: 285b1d5fcef ("target/arm: Handle SME in sve_access_check")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250307190415.982049-3-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: move declaration of 'ret' to top of block]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit cc7abc35dfa790ba6c20473c03745428c1c626b6)
+(Mjt: target/arm/tcg/translate-a64.c is target/arm/translate-a64.c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index e3ebc4977c..b0096adcd0 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -15,6 +15,13 @@
-  * You should have received a copy of the GNU General Public License along with
-  * this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
-+
-+#define REQUIRE_ZICFISS(ctx) do {        \
-+    if (!ctx->cfg_ptr->ext_zicfiss) {    \
-+        return false;                    \
-+    }                                    \
-+} while (0)
-+
- static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+diff --git a/target/arm/translate-a64.c b/target/arm/translate-a64.c
+index 00463a1e35..190574cb29 100644
+--- a/target/arm/translate-a64.c
++++ b/target/arm/translate-a64.c
+@@ -1208,23 +1208,23 @@ static bool fp_access_check(DisasContext *s)
+ bool sve_access_check(DisasContext *s)
  {
-     if (!ctx->bcfi_enabled) {
-@@ -77,6 +84,11 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
- static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
- {
-     REQUIRE_A_OR_ZAAMO(ctx);
-+    REQUIRE_ZICFISS(ctx);
-+    if (ctx->priv == PRV_M) {
-+        generate_exception(ctx, RISCV_EXCP_STORE_AMO_ACCESS_FAULT);
+     if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
++        bool ret;
++
+         assert(dc_isar_feature(aa64_sme, s));
+-        if (!sme_sm_enabled_check(s)) {
+-            goto fail_exit;
+-        }
+-    } else if (s->sve_excp_el) {
++        ret = sme_sm_enabled_check(s);
++        s->sve_access_checked = (ret ? 1 : -1);
++        return ret;
 +    }
-+
-     if (!ctx->bcfi_enabled) {
-         return false;
++    if (s->sve_excp_el) {
++        /* Assert that we only raise one exception per instruction. */
++        assert(!s->sve_access_checked);
+         gen_exception_insn_el(s, 0, EXCP_UDEF,
+                               syn_sve_access_trap(), s->sve_excp_el);
+-        goto fail_exit;
++        s->sve_access_checked = -1;
++        return false;
      }
-@@ -97,6 +109,11 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
- {
-     REQUIRE_64BIT(ctx);
-     REQUIRE_A_OR_ZAAMO(ctx);
-+    REQUIRE_ZICFISS(ctx);
-+    if (ctx->priv == PRV_M) {
-+        generate_exception(ctx, RISCV_EXCP_STORE_AMO_ACCESS_FAULT);
-+    }
-+
-     if (!ctx->bcfi_enabled) {
-         return false;
-     }
+     s->sve_access_checked = 1;
+     return fp_access_check(s);
+-
+- fail_exit:
+-    /* Assert that we only raise one exception per instruction. */
+-    assert(!s->sve_access_checked);
+-    s->sve_access_checked = -1;
+-    return false;
+ }
+ 
+ /*
 -- 
 2.39.5
 
