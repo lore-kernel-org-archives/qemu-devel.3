@@ -4,98 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC75C35FFC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 14:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DBE1C35FFC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Mar 2025 15:07:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tx5Zh-0003ml-NS; Tue, 25 Mar 2025 10:48:17 -0400
+	id 1tx5rG-0001Mv-9D; Tue, 25 Mar 2025 11:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx5Zc-0003lz-3G; Tue, 25 Mar 2025 10:48:12 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tx5r6-0001ME-2l
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:06:17 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=TX69=WM=kaod.org=clg@ozlabs.org>)
- id 1tx5ZZ-0004Hl-GA; Tue, 25 Mar 2025 10:48:11 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMXpT41srz4xM5;
- Wed, 26 Mar 2025 01:48:01 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMXpR0lB4z4xM3;
- Wed, 26 Mar 2025 01:47:58 +1100 (AEDT)
-Message-ID: <952b3afa-dc63-4230-bdff-5decabc8c25c@kaod.org>
-Date: Tue, 25 Mar 2025 15:47:57 +0100
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tx5r4-0006y3-0n
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 11:06:15 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PCff21018769
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:06:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ wLyqui0SXNF9Icq5LG0f+pnQefBbWdQ01haZYMMRZD0=; b=Eo7K33I5g3uCaDF3
+ x1p2IxNlDrvc0VYd3pT91SQi5lqn5E3QW9tk1s6m/PCx9hHo88BlcuuYx4WRudx7
+ MEC2PyoxVXQ0oo7nCM+PblBZaj3FgCYt0SSk3vBOvvzqgC12p3qIBLiFCjbebBRa
+ w4uUs3fdD1LJ3AlZqaqj+luD2gsze7shmue6fP7dFM1mV4/RcZKHNYBJSGtLmJF7
+ YFizwxQu/ah8N1oNpEpqHsc+rGtWAX/oQNSpyMqr0YrhonFZG/HQUf5Ng+9Fkip4
+ JVcsx/JAJqKROltpuxGOv1C8QCNZfU2ufzf7wUftfvyksXETnBvhuY3vn3cPDP1R
+ 7E55wA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45hjjnrhem-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 15:06:11 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-3032f4eca83so5042997a91.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 08:06:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742915170; x=1743519970;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wLyqui0SXNF9Icq5LG0f+pnQefBbWdQ01haZYMMRZD0=;
+ b=tKfRldDCTmytpgunWgMLBIG/fhZoDYcT9hQNrqoTsYZPgHUmvLcF/zjNNCT6t2m7nC
+ hXOWa3YDD8+OnSMkL/pNuzee8LC7AuOGkQQr+SCdCmQlrSxio+m4hSlI2Lt8XzxW91rF
+ NjEg7WyveW2rdGwGyDdSICJXrNnilJXsnjfmbKWkiIYN78U1LZow0VA+yVEYqFHZ4zOb
+ aKH2RY5Oa0gV37+qUIZtLC/KMX6w9BTs/u/DqNn9N64kwBgG2Ojh5UTGRF6PCtkc2rKy
+ v5b80KJh7dPAuzrb1ikL8bUs1DJSeYjXOOKfD495Z5+EjnYALbEZOvTD6H7qq6F+nAtp
+ RtVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXF2xXr9WrnIjpFTe1M3wynfwVR5nI+SDIfR+7XS5SdU9l0dajNGVkOioxF2anRfN40e00GVQQy62g6@nongnu.org
+X-Gm-Message-State: AOJu0YyRirnkI5d4lp8PwS4WaVOL0BUnWWdTIDdsuNBF9IQaj5xfaD3o
+ pTjKKeDPS2dWzEOGy48Jd1SQdr2Nv/w0skJ1dbVMQIcc/kLngX9ykNmw7iLEYsMD4MNlqHwjdzO
+ xZ9gv7UgA6tyPhFvSyjLrDn49ZtXfaIbv3/D+YNS4nZVqpcMUlPVX3A==
+X-Gm-Gg: ASbGncuso1xL7Ou74brCRLYgpevz+obWdfXT0KEt2W8towQB606+/BMqPJQousXKUdq
+ OqajPoALKatcJiMy7F9ey7f/xLbJdwDiLI6EpL9eJDUSZiDnAcLWaiDqgiXjx6vWgkO84+3ObLC
+ rT1X4RYOc5Fa8mk32tB98FJ2dBp9gCIVrhoiOvfvNkwbhqdlqqSo0Mf7uEsUZnsAcLuAvczo5DD
+ Y1q0TXntMiJmmKfhXVNB7WQSxW3ZFjQFUzqxYBAtzQytk8VTdJUtkpOmva68NHjLHa84fRuCYV/
+ pJybQ4D6ShCAwTViEdSjbW+1OrB3NG3lIsExQ4LuX39m+V6+TajLbYqkEaV3UYxIWAxldh+cxA=
+ =
+X-Received: by 2002:a05:6a20:3d89:b0:1f5:535c:82dc with SMTP id
+ adf61e73a8af0-1fe4330dcf3mr29199212637.42.1742915169899; 
+ Tue, 25 Mar 2025 08:06:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAInEQ7saIeGXJdhjXTIpbms51pnLId6UcthyUbXj0VB9lpMWGHEO75q58UMRNaxKRBu+Tjg==
+X-Received: by 2002:a05:6a20:3d89:b0:1f5:535c:82dc with SMTP id
+ adf61e73a8af0-1fe4330dcf3mr29199146637.42.1742915169324; 
+ Tue, 25 Mar 2025 08:06:09 -0700 (PDT)
+Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af8a2a4761fsm9150220a12.65.2025.03.25.08.06.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Mar 2025 08:06:08 -0700 (PDT)
+Message-ID: <fb8116b7-4658-4ed8-9c89-fd7b377ef380@oss.qualcomm.com>
+Date: Tue, 25 Mar 2025 10:06:06 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/10] ppc/pnv: Introduce Power11 PowerNV machine
-To: Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250325112319.927190-1-adityag@linux.ibm.com>
- <20250325112319.927190-8-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250325112319.927190-8-adityag@linux.ibm.com>
+Subject: Re: [RFC PATCH] Hexagon (target/hexagon) analyze all reads before
+ writes
+To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
+Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com
+References: <20250325021440.81386-1-ltaylorsimpson@gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250325021440.81386-1-ltaylorsimpson@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=TX69=WM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+X-Authority-Analysis: v=2.4 cv=fNc53Yae c=1 sm=1 tr=0 ts=67e2c663 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=DvPxcWX3HN2qFr1vO_AA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: DutVJHBz3OGSHc0Vp7s2omLOblg8RMkW
+X-Proofpoint-GUID: DutVJHBz3OGSHc0Vp7s2omLOblg8RMkW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-25_06,2025-03-25_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=856 priorityscore=1501 mlxscore=0
+ adultscore=0 spamscore=0 bulkscore=0 suspectscore=0 phishscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503250106
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,118 +131,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/25/25 12:23, Aditya Gupta wrote:
-> The Powernv11 machine doesn't have XIVE & PHBs as of now
-> 
-> XIVE2 interface and PHB5 added in later patches to Powernv11 machine
-> 
-> Also add mention of Power11 to powernv documentation
-> 
-> Cc: Cédric Le Goater <clg@kaod.org>
-> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+
+On 3/24/2025 9:14 PM, Taylor Simpson wrote:
+> I noticed that analyze_packet is marking the implicit pred reads after
+> marking all the writes.  However, the semantics of the instrucion and
+> packet are to do all the reads, then do the operation, then do all the
+> writes.
+>
+> Here is the old code
+> static void analyze_packet(DisasContext *ctx)
+> {
+>      Packet *pkt = ctx->pkt;
+>      ctx->read_after_write = false;
+>      ctx->has_hvx_overlap = false;
+>      for (int i = 0; i < pkt->num_insns; i++) {
+>          Insn *insn = &pkt->insn[i];
+>          ctx->insn = insn;
+>          if (opcode_analyze[insn->opcode]) {
+>              opcode_analyze[insn->opcode](ctx);
+>          }
+>          mark_implicit_reg_writes(ctx);
+>          mark_implicit_pred_writes(ctx);
+>          mark_implicit_pred_reads(ctx);
+>      }
+>
+>      ctx->need_commit = need_commit(ctx);
+> }
+>
+> Recall that opcode_analyze[insn->opcode](ctx) will mark all the
+> explicit reads then all the explicit writes.
+>
+> To properly handle the semantics, we'll create two new functions
+>      mark_implicit_reads
+>      mark_implicit_writes
+> Then we change gen_analyze_funcs.py to add a call to the former
+> after all the explicit reads and a call to the latter after all
+> the explicit_writes.
+>
+> The reason this is an RFC patch is I can't find any instructions
+> where this distinction makes a difference in ctx->need_commit which
+> determines if the packet commit can be short-circuited.  However, this
+> could change in the future if the architecture introduces an
+> instruction with an implicit read of a register that is also written
+> (either implicit or explicit).  Then, anlayze_packet would detect
+> a read-after-write, and the packet would not short-circuit.  The
+> execution would be correct, but the performance would not be optimal.
+>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 > ---
->   docs/system/ppc/powernv.rst |  9 +++++----
->   hw/ppc/pnv.c                | 36 ++++++++++++++++++++++++++++++++++++
->   2 files changed, 41 insertions(+), 4 deletions(-)
-> 
-> diff --git a/docs/system/ppc/powernv.rst b/docs/system/ppc/powernv.rst
-> index f3ec2cc69c0d..5154794cc8cd 100644
-> --- a/docs/system/ppc/powernv.rst
-> +++ b/docs/system/ppc/powernv.rst
-> @@ -1,5 +1,5 @@
-> -PowerNV family boards (``powernv8``, ``powernv9``, ``powernv10``)
-> -==================================================================
-> +PowerNV family boards (``powernv8``, ``powernv9``, ``powernv10``, ``powernv11``)
-> +================================================================================
+
+I found no regressions when testing this patch downstream.  I agree that 
+this reordering makes sense regardless of whether we can find a test 
+that fails now.
+
+
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+
+Tested-by: Brian Cain <brian.cain@oss.qualcomm.com>
+
+
+>   target/hexagon/translate.c          | 18 +++++++++++++++---
+>   target/hexagon/gen_analyze_funcs.py |  4 ++++
+>   2 files changed, 19 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index fe7858703c..5271c4e022 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -37,6 +37,10 @@
+>   #include "exec/helper-info.c.inc"
+>   #undef  HELPER_H
 >   
->   PowerNV (as Non-Virtualized) is the "bare metal" platform using the
->   OPAL firmware. It runs Linux on IBM and OpenPOWER systems and it can
-> @@ -15,11 +15,12 @@ beyond the scope of what QEMU addresses today.
->   Supported devices
->   -----------------
+> +/* Forward declarations referenced in analyze_funcs_generated.c.inc */
+> +static void mark_implicit_reads(DisasContext *ctx);
+> +static void mark_implicit_writes(DisasContext *ctx);
+> +
+>   #include "analyze_funcs_generated.c.inc"
 >   
-> - * Multi processor support for POWER8, POWER8NVL and POWER9.
-> + * Multi processor support for POWER8, POWER8NVL, POWER9, Power10 and Power11.
->    * XSCOM, serial communication sideband bus to configure chiplets.
->    * Simple LPC Controller.
->    * Processor Service Interface (PSI) Controller.
-> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10).
-> + * Interrupt Controller, XICS (POWER8) and XIVE (POWER9) and XIVE2 (Power10 &
-> +   Power11).
->    * POWER8 PHB3 PCIe Host bridge and POWER9 PHB4 PCIe Host bridge.
->    * Simple OCC is an on-chip micro-controller used for power management tasks.
->    * iBT device to handle BMC communication, with the internal BMC simulator
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 006ff62efd79..3e63b2891279 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -3145,6 +3145,37 @@ static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
->       pmc->i2c_init = pnv_rainier_i2c_init;
+>   typedef void (*AnalyzeInsn)(DisasContext *ctx);
+> @@ -378,6 +382,17 @@ static void mark_implicit_pred_reads(DisasContext *ctx)
+>       mark_implicit_pred_read(ctx, A_IMPLICIT_READS_P3, 3);
 >   }
 >   
-> +static void pnv_machine_power11_class_init(ObjectClass *oc, void *data)
+> +static void mark_implicit_reads(DisasContext *ctx)
 > +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +    PnvMachineClass *pmc = PNV_MACHINE_CLASS(oc);
-> +    static const char compat[] = "qemu,powernv11\0ibm,powernv";
-> +
-> +    pmc->compat = compat;
-> +    pmc->compat_size = sizeof(compat);
-> +    pmc->max_smt_threads = 4;
-> +    pmc->has_lpar_per_thread = true;
-> +    pmc->quirk_tb_big_core = true;
-> +    pmc->dt_power_mgt = pnv_dt_power_mgt;
-> +
-> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
-
-There was a lot of work done to have dynamic PHBs in the PowerNV
-machines. This was to add support in libvirt and this goal was
-abandoned when people left. I think we should consider removing
-it as it adds unnecessary complexity.
-
-Anyhow,
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-+
-> +    mc->desc = "IBM PowerNV (Non-Virtualized) Power11";
-> +    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power11_v2.0");
-> +
-> +    object_class_property_add_bool(oc, "big-core",
-> +                                   pnv_machine_get_big_core,
-> +                                   pnv_machine_set_big_core);
-> +    object_class_property_set_description(oc, "big-core",
-> +                              "Use big-core (aka fused-core) mode");
-> +
-> +    object_class_property_add_bool(oc, "lpar-per-core",
-> +                                   pnv_machine_get_lpar_per_core,
-> +                                   pnv_machine_set_lpar_per_core);
-> +    object_class_property_set_description(oc, "lpar-per-core",
-> +                              "Use 1 LPAR per core mode");
+> +    mark_implicit_pred_reads(ctx);
 > +}
 > +
->   static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
+> +static void mark_implicit_writes(DisasContext *ctx)
+> +{
+> +    mark_implicit_reg_writes(ctx);
+> +    mark_implicit_pred_writes(ctx);
+> +}
+> +
+>   static void analyze_packet(DisasContext *ctx)
 >   {
->       CPUPPCState *env = cpu_env(cs);
-> @@ -3258,6 +3289,11 @@ static void pnv_machine_class_init(ObjectClass *oc, void *data)
+>       Packet *pkt = ctx->pkt;
+> @@ -389,9 +404,6 @@ static void analyze_packet(DisasContext *ctx)
+>           if (opcode_analyze[insn->opcode]) {
+>               opcode_analyze[insn->opcode](ctx);
+>           }
+> -        mark_implicit_reg_writes(ctx);
+> -        mark_implicit_pred_writes(ctx);
+> -        mark_implicit_pred_reads(ctx);
 >       }
 >   
->   static const TypeInfo types[] = {
-> +    {
-> +        .name          = MACHINE_TYPE_NAME("powernv11"),
-> +        .parent        = TYPE_PNV_MACHINE,
-> +        .class_init    = pnv_machine_power11_class_init,
-> +    },
->       {
->           .name          = MACHINE_TYPE_NAME("powernv10-rainier"),
->           .parent        = MACHINE_TYPE_NAME("powernv10"),
-
+>       ctx->need_commit = need_commit(ctx);
+> diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
+> index 3ac7cc2cfe..fdefd5b4b3 100755
+> --- a/target/hexagon/gen_analyze_funcs.py
+> +++ b/target/hexagon/gen_analyze_funcs.py
+> @@ -67,6 +67,8 @@ def gen_analyze_func(f, tag, regs, imms):
+>           if reg.is_read():
+>               reg.analyze_read(f, regno)
+>   
+> +    f.write("    mark_implicit_reads(ctx);\n")
+> +
+>       ## Analyze the register writes
+>       for regno, register in enumerate(regs):
+>           reg_type, reg_id = register
+> @@ -74,6 +76,8 @@ def gen_analyze_func(f, tag, regs, imms):
+>           if reg.is_written():
+>               reg.analyze_write(f, tag, regno)
+>   
+> +    f.write("    mark_implicit_writes(ctx);\n")
+> +
+>       f.write("}\n\n")
+>   
+>   
 
