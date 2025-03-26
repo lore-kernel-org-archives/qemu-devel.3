@@ -4,63 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F21C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 16:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8F0C3600E
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 16:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txTnK-00005u-QJ; Wed, 26 Mar 2025 12:39:58 -0400
+	id 1txTui-0001xI-O4; Wed, 26 Mar 2025 12:47:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1txTXO-0005kT-4E; Wed, 26 Mar 2025 12:23:30 -0400
-Received: from smtp.eurecom.fr ([193.55.113.210])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1txTue-0001wu-2v
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 12:47:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1txTXI-00042J-AP; Wed, 26 Mar 2025 12:23:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
- t=1743006204; x=1774542204;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=ib5IvQ3tvyGQ/iuonjN8bNwSr8FqBwTNLajh/EN271E=;
- b=S3vFjzJzJXdqy/23e9UfQ8iSBDMHcnO8RxalXsWA6pkn4dA6gf/aEoiP
- wv/WDSK5d+1onWAN50PTnXOTwJfwOAfn48Yr9xziCNk6XPwslUrJ98Sht
- 5B+n83JbH3E/DXuSw07nPqKdcfmP3Del1BwEQCq3G87pQyHex+iiM1DNX o=;
-X-CSE-ConnectionGUID: +wusofiwQ2ySHDERDtzK8Q==
-X-CSE-MsgGUID: 4yUF5vo4R0Gwuh1tm1NJGA==
-X-IronPort-AV: E=Sophos;i="6.14,278,1736809200"; 
-   d="scan'208";a="547941"
-Received: from waha.eurecom.fr (HELO smtps.eurecom.fr) ([10.3.2.236])
- by drago1i.eurecom.fr with ESMTP; 26 Mar 2025 17:23:19 +0100
-Received: from marco-eurecom-desktop.s3.eurecom.fr (unknown [193.55.114.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1txTuc-0006v9-Aw
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 12:47:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743007648;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=1KUk7x98FtWWrAmK8I0Soo44pS23TmyqbhFHljuhj+4=;
+ b=Swpwzx9/N3pnpbg6/X1UmCduumS8xQFYlH4+EdpxiNB6PcUGzB+Dl6wvguLG4Y3tSrBu5c
+ PAS0/S2HsYXnUxiOybjYyzbZw9K2H24Ri7vEUBbYx0BkCIGErrlF9g+/n1RC1x5Ns4KU7u
+ 0dnyxq6QupICIv6PcK2D9GO7DkZll9U=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-SSdqDKYuPVmH9_TTs_fDew-1; Wed,
+ 26 Mar 2025 12:47:25 -0400
+X-MC-Unique: SSdqDKYuPVmH9_TTs_fDew-1
+X-Mimecast-MFC-AGG-ID: SSdqDKYuPVmH9_TTs_fDew_1743007644
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtps.eurecom.fr (Postfix) with ESMTPSA id F11D027CF;
- Wed, 26 Mar 2025 17:23:18 +0100 (CET)
-From: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-To: Peter Xu <peterx@redhat.com>,
-	Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Marco Cavenati <Marco.Cavenati@eurecom.fr>,
- qemu-trivial@nongnu.org
-Subject: [PATCH] migration: fix SEEK_CUR offset calculation in
- qio_channel_block_seek
-Date: Wed, 26 Mar 2025 17:22:30 +0100
-Message-ID: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
-X-Mailer: git-send-email 2.43.0
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BAC6C1801A12; Wed, 26 Mar 2025 16:47:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.107])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5EA9C180B486; Wed, 26 Mar 2025 16:47:21 +0000 (UTC)
+Date: Wed, 26 Mar 2025 16:47:18 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Valentin David <valentin.david@gmail.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Valentin David <valentin.david@canonical.com>
+Subject: Re: [PATCH] hw/smbios/smbios.c: Add missing NUL terminal to string
+ from path= parameter
+Message-ID: <Z-QvlvtsCErUo7_M@redhat.com>
+References: <20250326155254.2273939-1-valentin.david@canonical.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=193.55.113.210;
- envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250326155254.2273939-1-valentin.david@canonical.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 26 Mar 2025 12:39:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,34 +84,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SEEK_CUR case in qio_channel_block_seek was incorrectly using the
-'whence' parameter instead of the 'offset' parameter when calculating the
-new position.
+On Wed, Mar 26, 2025 at 04:52:54PM +0100, Valentin David wrote:
+> Without it, it seems the data gets garbage at the end of the string.
+> 
+> Signed-off-by: Valentin David <valentin.david@canonical.com>
+> ---
+>  hw/smbios/smbios.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> index 02a09eb9cd..7522e9a172 100644
+> --- a/hw/smbios/smbios.c
+> +++ b/hw/smbios/smbios.c
+> @@ -1283,6 +1283,7 @@ static int save_opt_one(void *opaque,
+>                  return -1;
+>              }
+>              g_byte_array_append(data, (guint8 *)buf, ret);
+> +            g_byte_array_append(data, (guint8 *)"\0", 1);
 
-Fixes: 65cf200a51ddc6d0a28ecceac30dc892233cddd7 ("migration: introduce a QIOChannel impl for BlockDriverState VMState")
+That is inside the loop body, so it is appending an extra '\0' after
+every 'read'.
 
-Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
----
- migration/channel-block.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The fix for this issue is posted here
 
-diff --git a/migration/channel-block.c b/migration/channel-block.c
-index fff8d87094..b0477f5b6d 100644
---- a/migration/channel-block.c
-+++ b/migration/channel-block.c
-@@ -123,7 +123,7 @@ qio_channel_block_seek(QIOChannel *ioc,
-         bioc->offset = offset;
-         break;
-     case SEEK_CUR:
--        bioc->offset += whence;
-+        bioc->offset += offset;
-         break;
-     case SEEK_END:
-         error_setg(errp, "Size of VMstate region is unknown");
+https://lists.nongnu.org/archive/html/qemu-devel/2025-03/msg05826.html
+
+>          }
+>  
+>          qemu_close(fd);
+
+
+> -- 
+> 2.48.1
+> 
+> 
+
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
