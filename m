@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EBE8C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE0DC36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txKqI-0002Yc-W1; Wed, 26 Mar 2025 03:06:27 -0400
+	id 1txKrz-0003Th-DN; Wed, 26 Mar 2025 03:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKqH-0002X5-Hx
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:06:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKrx-0003SR-NG
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:08:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKqD-0008NM-SS
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:06:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKrv-0008Tz-5j
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:08:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742972781;
+ s=mimecast20190719; t=1742972886;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=drJ9+jtEwKa7/rVBzT5hbtbRJRAyz2Nu3xD0dZ9wXoI=;
- b=H5A5ALq4K14+D+axp9Nq+PcHnAgfBAL2CqMhzz8vGgJiHr2wT7TviLuWe2/rc0CI0VzxCC
- ZqqiBpQmd8mffjS0R8bukG/EkRfgUgol8zzgCjuP/8Cr9hulfdhtDNMjNv/zRacEJGZgiv
- XyUbTd+Qm3LwyyjHyUO8ph1B1sApG8Y=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tQnS6nyEQ0TREGeJZ0Vc5XZMQe1Yf+GKltcexw19h2Y=;
+ b=KmTQlWgKNyrB0AsTzTEecMJ/xCPXEspRvAi9rfnpgMzbry7vyw0z2zwbg4Rr9a6MCJyRbe
+ Tahwlb9ADbm/5PzYK7psU0KddbdeXdnn02PUU5/qe13qOZ9sC9IHoupWRUb2/Mr+ZDddNN
+ ofez8mfevHqMKI4itgoI7tAmmadKGbs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-3-Z7cgXoPTORm7H3YIElb7Sw-1; Wed, 26 Mar 2025 03:06:19 -0400
-X-MC-Unique: Z7cgXoPTORm7H3YIElb7Sw-1
-X-Mimecast-MFC-AGG-ID: Z7cgXoPTORm7H3YIElb7Sw_1742972778
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3913f546dfdso3460239f8f.1
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 00:06:19 -0700 (PDT)
+ us-mta-19--f6UsoPON2G5zvBg2XroRA-1; Wed, 26 Mar 2025 03:08:04 -0400
+X-MC-Unique: -f6UsoPON2G5zvBg2XroRA-1
+X-Mimecast-MFC-AGG-ID: -f6UsoPON2G5zvBg2XroRA_1742972884
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39143311936so2571666f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 00:08:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742972778; x=1743577578;
+ d=1e100.net; s=20230601; t=1742972883; x=1743577683;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=drJ9+jtEwKa7/rVBzT5hbtbRJRAyz2Nu3xD0dZ9wXoI=;
- b=W/yjksRHKjDIlEHEZ9GHcfH7etC2ik/5aud7BhZ/AIH3TJXH0lxKTz8teXIkwWMNO7
- ituuMtrRRldHBgInJcymAjU3ZiSGjLDBnrlKXVNrEgzMlpeYMKZcttsuROQaW59b+hP+
- M8jrW4ofxiDLc7/xt87MGLcBFv/JmWJap9QJVYnLR1UOlk7kxK3E2yCT7SsOg0yB+jSM
- qOyFy6IWbjFTtwZqEDG/k6itbKiKfvnIcIsJm4OoB+Kk10Iyx6tg8tISeKsOtLeEZuOg
- p8Xdb99MuRw1s5FK1Roww8D5USv2sxOKFce336W5UC8H75o0LxdMQJMNPeZ5zC/3ClIL
- XFAw==
+ bh=tQnS6nyEQ0TREGeJZ0Vc5XZMQe1Yf+GKltcexw19h2Y=;
+ b=qObC9P694EdrsDzqSLlEdA+4UevopMjXPlkiEsOFUsKMwT/SwyXy8bBgmBvTa4klZO
+ edmUA4UuCFT3xhv/WnYa6/BW2CS34oxpHl5PUwiQSRxjJRmyQTh1HJOhJe0xMauWG0dI
+ cszeG4eQrS1Awc7oHF+ZrD/HSXh4fi4to5NUBD++rEvkQpq1PLSg/AOvWgN5N7H69DIF
+ qBCiGabt4rXJtk0HBECegHj/tG59tvSjd5g3WexAFguS963XirVV3ug9BzNerVTMmLXn
+ /xF0AQZqaZZbjj5aIvyIt8kEobh6Xtt+q4yRixad6aAT/tWbCPwHY5rWUQFaHfe3sN0v
+ IXSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7kmCGaXbibFhRKNhF6moJfCDXViQdMPstXo6samFspZoAKm9PFWsjIrUkFxas+POrI8pv7upLT/Dw@nongnu.org
-X-Gm-Message-State: AOJu0Yx6cy4H6Ops8lV1+rsTPapWLxAdCgVT7C3lW0NmUvT2pZRYEGb+
- Orrk6/ogNjtchgumgrq6jCmNrbNaF9uRFI1mjQELVlXtX4p86g/qpCX8SLU5EgGkJ5/ygXu4n+8
- n0fCAwZJ/V2isRQDcgx80S01s+ZErOOLGKlUUVxMAMEfUvl+zLoCZ
-X-Gm-Gg: ASbGncvm4RJs/oafnUZI29RjI1BCr5Hq+t2Ef24UjApkr9mvGSxgaU+LFfTSHttZcUH
- 1BpwXN/5tl+jl7is24VTaf2hNaK4zMyh8VSuEmY0r4gtnZ5VyLycsrVi98sfRRIaL3YHXaGgtFf
- Quf6gt7j0pBkwqCtaFraMB+/tQDjVuN/aO9pEUoT4PPpdiTSSVWVovsHywc+jRvGZSibAoffqHE
- 5mea8mPlOt4ElORxll1bS+KabUVlf3xq1Zf045yEeTWA2Rc6CHlpGNSIGiu39O1BTBRCd5en4Lu
- fHSFqebC7G/g43FBvHYQZifqQ4Meip8koL7hfbl4SN8tJuo=
-X-Received: by 2002:a5d:59a2:0:b0:38f:6287:6474 with SMTP id
- ffacd0b85a97d-3997f8fc43dmr17769701f8f.15.1742972778405; 
- Wed, 26 Mar 2025 00:06:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3B4PZkQe5Wwo1w+nT2LuBmw4tGl459lz0kdWn8jxS5aNYDRvKEcmNDO4FPTIJ6R76vspGNw==
-X-Received: by 2002:a5d:59a2:0:b0:38f:6287:6474 with SMTP id
- ffacd0b85a97d-3997f8fc43dmr17769660f8f.15.1742972777995; 
- Wed, 26 Mar 2025 00:06:17 -0700 (PDT)
+ AJvYcCVmn0AkogU3KZcH51/29smekiYXQ5hCD5NP0ze6HkPDq2mKmUCllUSfXJjxPsZSx5AW7T5hJLqZaMRk@nongnu.org
+X-Gm-Message-State: AOJu0YzxvyyFe1z3xdUj+vBePLbjzVKQ5FRVUeApFY0UwbPBeDr3vdim
+ iDhlnn3vLkxSWt6ivO4FRxHzmyd//YnQuoethgf46JeRu7qrqkIrTDl8Rrfw/iq2v+ZyyTEhwAn
+ u+EobIbmPvXjG4cvokLp6jqX+j5vDGnl3PI0qUASvwuSbYQcIH1Ex
+X-Gm-Gg: ASbGncuzthg7znkBbfK16yOaiT4PCmz7UQqsyUIf7r9k91rx0XNWW4Wv5MopFtOyUWF
+ mc6JLPnrT5FOK4OB26Jlx4labqKG+cZMWV09Xq6OacqRMQdMwczgT+khPOVjthOK0/hWue15ifM
+ e/7Cb6ZkZcnOJkFi5+C/aDAk2Vt3OKaaid9JywJUDQIv2smRQ4fuWsdtFlSgYGg67Pr9ffLUpEb
+ 9FJRj8b8AdpE2cBnmVN1odstcfNVuEparx0b+PmA2pNj6SuCQFJkJBnLwrp3Vyg3+75JVWHuIRI
+ mKsYvFcUtjxSW1hCfl9PS8KRq2Kmp/Jn/jA4usvr+tDYG3o=
+X-Received: by 2002:a05:6000:2103:b0:391:2954:de27 with SMTP id
+ ffacd0b85a97d-3997f93c2b0mr13726050f8f.45.1742972883563; 
+ Wed, 26 Mar 2025 00:08:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE63swLJGzt/NTloV+pF2evcRitL5Pqk/nYn5YRnQVyojEkZQ60gWxrMHNMX6FPT5uw9VdOEA==
+X-Received: by 2002:a05:6000:2103:b0:391:2954:de27 with SMTP id
+ ffacd0b85a97d-3997f93c2b0mr13726012f8f.45.1742972883167; 
+ Wed, 26 Mar 2025 00:08:03 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-49-206.web.vodafone.de.
  [109.43.49.206]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f55c3dsm224273005e9.23.2025.03.26.00.06.16
+ ffacd0b85a97d-3997f9b565bsm16165021f8f.58.2025.03.26.00.08.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Mar 2025 00:06:17 -0700 (PDT)
-Message-ID: <3ebe072b-f94b-4a59-9683-0c4af2891393@redhat.com>
-Date: Wed, 26 Mar 2025 08:06:15 +0100
+ Wed, 26 Mar 2025 00:08:02 -0700 (PDT)
+Message-ID: <dc996e2a-e161-49b9-81b6-5b49e29a596d@redhat.com>
+Date: Wed, 26 Mar 2025 08:08:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 06/12] hw/i2c/pca954x: Categorize and add
+Subject: Re: [PATCH-for-10.0 07/12] hw/misc/axp2xx: Categorize and add
  description
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -96,7 +96,7 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
  Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org
 References: <20250325224310.8785-1-philmd@linaro.org>
- <20250325224310.8785-7-philmd@linaro.org>
+ <20250325224310.8785-8-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -141,7 +141,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250325224310.8785-7-philmd@linaro.org>
+In-Reply-To: <20250325224310.8785-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -172,47 +172,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 25/03/2025 23.43, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/i2c/i2c_mux_pca954x.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
+>   hw/misc/axp2xx.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
-> index 779cc4e66ed..100b8d86093 100644
-> --- a/hw/i2c/i2c_mux_pca954x.c
-> +++ b/hw/i2c/i2c_mux_pca954x.c
-> @@ -175,12 +175,18 @@ I2CBus *pca954x_i2c_get_bus(I2CSlave *mux, uint8_t channel)
->   static void pca9546_class_init(ObjectClass *klass, void *data)
->   {
->       Pca954xClass *s = PCA954X_CLASS(klass);
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->desc = "PCA9546 I2C multiplexer";
->       s->nchans = PCA9546_CHANNEL_COUNT;
->   }
+> diff --git a/hw/misc/axp2xx.c b/hw/misc/axp2xx.c
+> index af646878cd2..747af430479 100644
+> --- a/hw/misc/axp2xx.c
+> +++ b/hw/misc/axp2xx.c
+> @@ -232,6 +232,7 @@ static void axp2xx_class_init(ObjectClass *oc, void *data)
+>       ResettableClass *rc = RESETTABLE_CLASS(oc);
 >   
->   static void pca9548_class_init(ObjectClass *klass, void *data)
->   {
->       Pca954xClass *s = PCA954X_CLASS(klass);
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->desc = "PCA9548 I2C multiplexer";
->       s->nchans = PCA9548_CHANNEL_COUNT;
->   }
->   
-> @@ -226,13 +232,13 @@ static void pca954x_class_init(ObjectClass *klass, void *data)
->   
->       rc->phases.enter = pca954x_enter_reset;
->   
-> -    dc->desc = "Pca954x i2c-mux";
->       dc->realize = pca954x_realize;
->   
->       k->write_data = pca954x_write_data;
->       k->receive_byte = pca954x_read_byte;
->   
->       device_class_set_props(dc, pca954x_props);
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+>       rc->phases.enter = axp2xx_reset_enter;
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
 
-Clear DEVICE_CATEGORY_MISC ?
+That should not be necessary - since I2C devices are in the MISC category by 
+default.
 
   Thomas
+
+
+
+>       dc->vmsd = &vmstate_axp2xx;
+>       isc->event = axp2xx_event;
+>       isc->recv = axp2xx_rx;
+> @@ -250,7 +251,9 @@ static const TypeInfo axp2xx_info = {
+>   static void axp209_class_init(ObjectClass *oc, void *data)
+>   {
+>       AXP2xxClass *sc = AXP2XX_CLASS(oc);
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+>   
+> +    dc->desc = "AXP209 power system management";
+>       sc->reset_enter = axp209_reset_enter;
+>   }
+>   
+> @@ -263,7 +266,9 @@ static const TypeInfo axp209_info = {
+>   static void axp221_class_init(ObjectClass *oc, void *data)
+>   {
+>       AXP2xxClass *sc = AXP2XX_CLASS(oc);
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+>   
+> +    dc->desc = "AXP221 power system management";
+>       sc->reset_enter = axp221_reset_enter;
+>   }
+>   
 
 
