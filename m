@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298FAC3600E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 19:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4AB9C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 20:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txWtP-0003Wv-5c; Wed, 26 Mar 2025 15:58:27 -0400
+	id 1txX70-0003WY-8Z; Wed, 26 Mar 2025 16:12:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1txWtO-0003WK-7S
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 15:58:26 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1txX6v-0003W6-1B
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 16:12:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1txWtL-0008J2-1W
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 15:58:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1txX6s-0001wB-Ui
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 16:12:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743019100;
+ s=mimecast20190719; t=1743019941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MjP/row18jXL73vj5teE531SmQt9p6smZ45KD4CgyMc=;
- b=KbbZN8ADwHLjpNbuBbCuvJ9+xkrPWSoMNkkUgZ/K57IvwjNhOPJ5hwftgFc/nLVaaikG4z
- GJ+Yvi18DJpaSj+k7ES9qtE4d1308SL+kS7vtLKsUmGavfiXVCImUyR/fS81ifd3a5Pf99
- sgv7k0NHwWkeegEB8t8mlW16q3bWc70=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-292-HM3tYCnSNjqq4kiAAJYWmg-1; Wed,
- 26 Mar 2025 15:58:17 -0400
-X-MC-Unique: HM3tYCnSNjqq4kiAAJYWmg-1
-X-Mimecast-MFC-AGG-ID: HM3tYCnSNjqq4kiAAJYWmg_1743019094
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E052F18004A9; Wed, 26 Mar 2025 19:58:12 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.152])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 55E631801A6D; Wed, 26 Mar 2025 19:58:06 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Hanna Reitz <hreitz@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-trivial@nongnu.org,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-block@nongnu.org,
- Lukas Straub <lukasstraub2@web.de>, Jiri Pirko <jiri@resnulli.us>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Zhenwei Pi <pizhenwei@bytedance.com>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Subject: [PATCH v2 1/4] docs/qapi-domain: add return-nodesc
-Date: Wed, 26 Mar 2025 15:57:53 -0400
-Message-ID: <20250326195756.330817-2-jsnow@redhat.com>
-In-Reply-To: <20250326195756.330817-1-jsnow@redhat.com>
-References: <20250326195756.330817-1-jsnow@redhat.com>
+ bh=T7ggLutzIxFrsNcyu+MhNLd8yVQvqhnKVLpfhrmbTjE=;
+ b=ZP2n1H2+zNJmjlOt82WsHnoqhE0Uc3KlX6YxsZRVRC3fvhTmInF470i+LyNRvT1lmpAgqH
+ BLhaF+JnjuhFgVe5UY441mycwpxM06kP9nxdgn0IFEbckbZF6pl17t/oI0u3v+MeVgEfnb
+ 0wX0p3ChL6m4aVhKaWGmUwh8dF7qwvg=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-520-taOkONiWMLKJ5P7a3y6TAw-1; Wed, 26 Mar 2025 16:12:18 -0400
+X-MC-Unique: taOkONiWMLKJ5P7a3y6TAw-1
+X-Mimecast-MFC-AGG-ID: taOkONiWMLKJ5P7a3y6TAw_1743019938
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2ff8340d547so291348a91.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 13:12:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743019937; x=1743624737;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T7ggLutzIxFrsNcyu+MhNLd8yVQvqhnKVLpfhrmbTjE=;
+ b=XyJF7Od2hM9iAVdTnHXVwjVtTAMkMi1deaavu0sjKrxXe6dnJoF9OcSMFpLRB6j8Lm
+ EKZszZBrfPVG/zvteAif4aCUPljC9g036dD7/tbT9lIWTj/Bj9KY767JQXQPnd4Xabhj
+ q8/7CA8ErEGdiPp30IG5m2pQqUT6NqiE3uP8CBleUijcPCoc+SaHdirrac78NCsIQ2dV
+ atGS7j6eC7mGDWKDwJssbWc0pS4HNLQ4QI37OlFcDlPSNiyEjENacbjrN+otWedC19Ca
+ wfWgSb/1mp9rAj7nLTk+YYYDc/tBx8sOgdQao1ywy94mYBC9Iylz8F9TBu26X7BfoXQs
+ eGgg==
+X-Gm-Message-State: AOJu0Yw2uFKK1ksOWbXKOF6AfIeV8YQJxIj9wQJCfy2SozoDkY0oonAn
+ ZxX0RCQoGIcvZz2vWHBmV//7nXNbG2bIAe51Mbs+Oqbt2gXv3ZPjShJ7Ok8Tn/mqw+BM8taQboM
+ ie7+4JaXFjdeLrj1267TGaXq6POMWHPVh4Q7Tl1RuRaHLm0yIBGx8t2k2vhL/f8sn/S+KLndscQ
+ RCaqXgH1yHpQuN0+YCvYW6q5RGVpc=
+X-Gm-Gg: ASbGncuEE7eiqK/R0Tv4Ao7fghYSgpoq/CrRQkWHaqxuSaVBROqiyU71rn+fQRMQdQo
+ dkQkb9pkD7TFvAmVz8m31QdzxJoVqGXp/ytWQw5WWeaIyl31AXj1Kt8ABoC53NZs2WtE0z8UGaA
+ 9R2U1Qho38jvaZcSBJbhhwp0E6HRBu
+X-Received: by 2002:a17:90b:2645:b0:2ef:19d0:2261 with SMTP id
+ 98e67ed59e1d1-303a815d2ccmr1826475a91.16.1743019937686; 
+ Wed, 26 Mar 2025 13:12:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGz7zBUDlE8ZdK7/k77bzZGouDqMuxZYGa7wshUI1Qa6WV1Rm4DuhDGHPt9x2pAutHWYfAdFg3kgeieS7S/rgs=
+X-Received: by 2002:a17:90b:2645:b0:2ef:19d0:2261 with SMTP id
+ 98e67ed59e1d1-303a815d2ccmr1826427a91.16.1743019937271; Wed, 26 Mar 2025
+ 13:12:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+References: <20250321222347.299121-1-jsnow@redhat.com>
+ <20250321222347.299121-4-jsnow@redhat.com>
+ <87a598fhnp.fsf@pond.sub.org>
+In-Reply-To: <87a598fhnp.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 26 Mar 2025 16:12:04 -0400
+X-Gm-Features: AQ5f1JrH3HB9jm21Bnt4gplYii6SK5JSSGTj6qvnEY6wznDtQF42_zHkoF4PrCk
+Message-ID: <CAFn=p-aixsXRdE86tDS9kBd4azBQ7KU-h-utNkCndykbORAZ8w@mail.gmail.com>
+Subject: Re: [PATCH 3/5] python: update missing dependencies from minreqs
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, Peter Maydell <peter.maydell@linaro.org>
+Content-Type: multipart/alternative; boundary="00000000000032ac070631447413"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -85,9 +83,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,86 +101,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This form is used to annotate a return type without an accompanying
-description, for when there is no "Returns:" information in the source
-doc, but we have a return type we want to generate a cross-reference to.
+--00000000000032ac070631447413
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The syntax is:
+On Wed, Mar 26, 2025 at 2:08=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-:return-nodesc: TypeName
+> John Snow <jsnow@redhat.com> writes:
+>
+> > A few transitive dependencies were left floating; as a result, pip's
+> > dependency solver can pull in newer dependencies, which we don't
+> > want. Pin them down.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> What problem exactly does this fix?  Make target check-minreqs?
+>
 
-It's primarily necessary because Sphinx always expects both a type and a
-description for the prior form and will format it accordingly. To have a
-reasonable rendering when the body is missing, we need to use a
-different info field list entirely.
+I'm not sure it's a "problem" as such, but an inconsistency. Yes, it's with
+check-minreqs -- without this patch, pip is free to choose newer versions
+of these dependencies as appropriate. Though unlikely at this point, in
+theory, new dependency updates could be selected by pip and invalidate the
+concept of an entirely fixed/pinned virtual environment.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- docs/devel/qapi-domain.rst | 30 ++++++++++++++++++++++++++++++
- docs/sphinx/qapi_domain.py |  8 ++++++++
- 2 files changed, 38 insertions(+)
+That these transitive dependencies were not frozen initially was an
+oversight.
 
-diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
-index a748529f515..5ca060fa04c 100644
---- a/docs/devel/qapi-domain.rst
-+++ b/docs/devel/qapi-domain.rst
-@@ -242,6 +242,36 @@ Example::
-              }
- 
- 
-+``:return-nodesc:``
-+-------------------
-+
-+Document the return type of a QAPI command, without an accompanying description.
-+
-+:availability: This field list is only available in the body of the
-+               Command directive.
-+:syntax: ``:return-nodesc: type``
-+:type: `sphinx.util.docfields.Field
-+       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.Field.html?private=1>`_
-+
-+
-+Example::
-+
-+   .. qapi:command:: query-replay
-+      :since: 5.2
-+
-+      Retrieve the record/replay information.  It includes current
-+      instruction count which may be used for ``replay-break`` and
-+      ``replay-seek`` commands.
-+
-+      :return-nodesc: ReplayInfo
-+
-+      .. qmp-example::
-+
-+          -> { "execute": "query-replay" }
-+          <- { "return": {
-+                 "mode": "play", "filename": "log.rr", "icount": 220414 }
-+             }
-+
- ``:value:``
- -----------
- 
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index c94af5719ca..d6d4a70f3df 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -529,6 +529,14 @@ class QAPICommand(QAPIObject):
-                 names=("return",),
-                 can_collapse=True,
-             ),
-+            # :return-nodesc: TypeName
-+            CompatField(
-+                "returnvalue",
-+                label=_("Return"),
-+                names=("return-nodesc",),
-+                bodyrolename="type",
-+                has_arg=False,
-+            ),
-         ]
-     )
- 
--- 
-2.48.1
+check-minreqs is supposed to build the exact same venv every time without
+fail. Without this change, it's *possible* that it might do something
+different on release day if someone releases a new package. No good,
+probably.
+
+
+>
+> > ---
+> >  python/tests/minreqs.txt | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+> > index a3f423efd84..19c0f5e4c50 100644
+> > --- a/python/tests/minreqs.txt
+> > +++ b/python/tests/minreqs.txt
+> > @@ -38,10 +38,14 @@ pyflakes=3D=3D2.5.0
+> >
+> >  # Transitive mypy dependencies
+> >  mypy-extensions=3D=3D1.0.0
+> > +tomli=3D=3D1.1.0
+> >  typing-extensions=3D=3D4.7.1
+> >
+> >  # Transitive pylint dependencies
+> >  astroid=3D=3D2.15.4
+> > +dill=3D=3D0.2
+> >  lazy-object-proxy=3D=3D1.4.0
+> > +platformdirs=3D=3D2.2.0
+> >  toml=3D=3D0.10.0
+> > +tomlkit=3D=3D0.10.1
+> >  wrapt=3D=3D1.14.0
+>
+>
+
+--00000000000032ac070631447413
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Mar 26,=
+ 2025 at 2:08=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
+hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
+ target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; A few transitive dependencies were left floating; as a result, pip&#39=
+;s<br>
+&gt; dependency solver can pull in newer dependencies, which we don&#39;t<b=
+r>
+&gt; want. Pin them down.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+<br>
+What problem exactly does this fix?=C2=A0 Make target check-minreqs?<br></b=
+lockquote><div><br></div><div>I&#39;m not sure it&#39;s a &quot;problem&quo=
+t; as such, but an inconsistency. Yes, it&#39;s with check-minreqs -- witho=
+ut this patch, pip is free to choose newer versions of these dependencies a=
+s appropriate. Though unlikely at this point, in theory, new dependency upd=
+ates could be selected by pip and invalidate the concept of an entirely fix=
+ed/pinned virtual environment.</div><div><br></div><div>That these transiti=
+ve dependencies were not frozen initially was an oversight.</div><div><br><=
+/div><div>check-minreqs is supposed to build the exact same venv every time=
+ without fail. Without this change, it&#39;s *possible* that it might do so=
+mething different on release day if someone releases a new package. No good=
+, probably.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+<br>
+&gt; ---<br>
+&gt;=C2=A0 python/tests/minreqs.txt | 4 ++++<br>
+&gt;=C2=A0 1 file changed, 4 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt<br>
+&gt; index a3f423efd84..19c0f5e4c50 100644<br>
+&gt; --- a/python/tests/minreqs.txt<br>
+&gt; +++ b/python/tests/minreqs.txt<br>
+&gt; @@ -38,10 +38,14 @@ pyflakes=3D=3D2.5.0<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Transitive mypy dependencies<br>
+&gt;=C2=A0 mypy-extensions=3D=3D1.0.0<br>
+&gt; +tomli=3D=3D1.1.0<br>
+&gt;=C2=A0 typing-extensions=3D=3D4.7.1<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Transitive pylint dependencies<br>
+&gt;=C2=A0 astroid=3D=3D2.15.4<br>
+&gt; +dill=3D=3D0.2<br>
+&gt;=C2=A0 lazy-object-proxy=3D=3D1.4.0<br>
+&gt; +platformdirs=3D=3D2.2.0<br>
+&gt;=C2=A0 toml=3D=3D0.10.0<br>
+&gt; +tomlkit=3D=3D0.10.1<br>
+&gt;=C2=A0 wrapt=3D=3D1.14.0<br>
+<br>
+</blockquote></div></div>
+
+--00000000000032ac070631447413--
 
 
