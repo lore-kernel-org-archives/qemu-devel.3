@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83231C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 06:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F616C36017
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 06:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txKfC-0004kZ-8B; Wed, 26 Mar 2025 02:55:01 -0400
+	id 1txKi8-0005th-R4; Wed, 26 Mar 2025 02:58:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKf2-0004jK-Ky
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 02:54:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKi0-0005s2-VU
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 02:57:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKev-0006g5-36
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 02:54:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKhy-00076K-8W
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 02:57:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742972080;
+ s=mimecast20190719; t=1742972269;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=r6HFgaWpGsCe0cUf/qQJ8aW2AJY4tDE2A9JgLWqBZSM=;
- b=jFCF/RuU2ukLKiulfK8r0yk7h7wOiT5JS4uLdmRgUISWTQJShVfIj8LBBTVDkwl/abOQJR
- 1j1+BVPG3J77NMzXNZ0F6EzuOCQMLWGVYtP3hFHz3FJDgXdxTo+unSMelsjsSJK/Kncbcs
- eGYiqnjpwYceqdtf6caPW8FTCpv7Bcc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0AzN5xSX6LaAYJWnW+KDdVoFZ+K7nFU8tIcY6uPQyCg=;
+ b=EDvmrPmCFK2TuifPpZe5Iamm1Ct5weylMYQT8D0iRgo34nYftLmGe9hWv+3KqdIBm0wx+2
+ YinZ2i8am8ySsWgCK7v0m9lrlJMT3/+sQNmGOUTfw0SliKdD4UtNd2Iro53j2TDdi19ATs
+ exR8fx7fye1nhkIYVe1QNz9TkROzdgc=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-gHHmApjVP3KVY8X04edHsg-1; Wed, 26 Mar 2025 02:54:37 -0400
-X-MC-Unique: gHHmApjVP3KVY8X04edHsg-1
-X-Mimecast-MFC-AGG-ID: gHHmApjVP3KVY8X04edHsg_1742972076
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43ced8c2eb7so48008305e9.1
- for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 23:54:36 -0700 (PDT)
+ us-mta-41-9j5dNUd_NY2BBEpggBNIVw-1; Wed, 26 Mar 2025 02:57:48 -0400
+X-MC-Unique: 9j5dNUd_NY2BBEpggBNIVw-1
+X-Mimecast-MFC-AGG-ID: 9j5dNUd_NY2BBEpggBNIVw_1742972267
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac384a889easo55143666b.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 23:57:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742972076; x=1743576876;
+ d=1e100.net; s=20230601; t=1742972267; x=1743577067;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=r6HFgaWpGsCe0cUf/qQJ8aW2AJY4tDE2A9JgLWqBZSM=;
- b=S1VbEKXxZHqTlUE1IikWe6B/oVPSVExeno5GqNErmb5AKQx6IwaXC+npb5MRq9Lj9l
- 3A4UprLq640kg+gwiLN0SShNu+fnZj7HGZLJ/aQzfgHs2M4aJhWfpkjigqpBvmcdSJaE
- qPONcFzOhcvM4l3jcy8YDHlShZJcrDCsylgrJILCq+69j6UIRJLc/OT+Df7QGHUDyQiw
- QwIio2HDgi11qDqAKJeNUwfnlzD5seXMOpeu4Tc2inr0qCe1+xCmptnxrxicTCUcI6wD
- 4YVBweyT5I5VS+c5sv/Xkwuqhozk2KHD9+jrLG+cr4vqc9HkginsTEFyGaZUL5kxg+Ed
- m80g==
+ bh=0AzN5xSX6LaAYJWnW+KDdVoFZ+K7nFU8tIcY6uPQyCg=;
+ b=vqYHNEbOQmWaCLmxRJ1pbu66blv4lWuKxsZLXZxHrfYaHs3GjmNiuBhivvidlktX4/
+ tdtVbpvBIGVIInFg8qduKZj7EA166lfRStxyX2pYCFjbqFKFCUutTzZ+ki8QQh23trCl
+ 9cEkF3sRxG+w/+8WnQpk2CMoaTg7jlZ6Ou5efP1acEGmt8EzKnXFP3Gd6LWpHg2YQ04M
+ O1Bkpn3lYcff8x3swOqTzeHs9Lu2AUJpoCweqGe5kxewQ3es4H7j2pFwmO/tPa6eua43
+ rycRabWeUnVk4RLeBC9ah0Avk+0VDXmQG7iIiUOBMeu4KUKVqnoGdH+2nvrHZAzMZY93
+ nN7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVp6Vp/yg6RwMW+Yq7YxWTTuMVgstUJuGihRKbiAmkMoN0f+r7ENOQyLFRA940jToH3Co6Pi5zNbdMR@nongnu.org
-X-Gm-Message-State: AOJu0YyJ4OZrg1JoHeUhvK8Luz8OGyGTKNxmdGKn1ep0+y9u44zG/9Sv
- TmtgVkDvyQlTBVxpsd8uQEOCB+pPf8x73sII259m9zOsYTHPKtiIjk4HsE/ggoUMvjQ7H41m5Wp
- jOyHVJP3/H+mjhK00JJ0Iig8T4uQEGmNH51v2Sw4t5Nqeeq1Kemhy
-X-Gm-Gg: ASbGncsaQiTBJ2ngFYesOOrLF2g83q/+xbHB9DQ2+AslsgdP+VS8bqm9PluXsS+w3w3
- tRCH5X+V7uHnr5KLPVko6gAyGOXJM9G6bmfb2mcSW17d642oddHhJ4SaT7wJ+szL41fdSNrtGHu
- Wc3AOfaVErZdGUPf+Ul5tZ7PSQtChAo18NaSzdGQ6esoCNRVmPgOpcogHwupo0GRYigSkRdeqiW
- 3FO3MYeLPqAMTI4h5aJ8ptQruu9Luu5LHXkROYZxKfmPhd/GqsMKyxxcUYMtmaQl0OZZ7dEzCmz
- hP4Gr8p18Jn4A2iZ3wlWGZIWTRl1vfSKose+5xGqiEp4zLk=
-X-Received: by 2002:a05:600c:3489:b0:43c:efae:a73 with SMTP id
- 5b1f17b1804b1-43d509ea0f8mr221007245e9.10.1742972075847; 
- Tue, 25 Mar 2025 23:54:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHHd4KYAdVU0t94g5JizrZILYgia6va6y28pbKl3IGVI6k0VhXjWEShp2+mZSbGYR1RRrs3iA==
-X-Received: by 2002:a05:600c:3489:b0:43c:efae:a73 with SMTP id
- 5b1f17b1804b1-43d509ea0f8mr221006805e9.10.1742972075396; 
- Tue, 25 Mar 2025 23:54:35 -0700 (PDT)
+ AJvYcCVXnA9xLw3+mvvj8y824gxfCVyF9Ua4ysoSE/y3SPBJAFFdaUTabUQq8Jp4Zo9OIj9omwH+U9gT9lnR@nongnu.org
+X-Gm-Message-State: AOJu0YwPZe7Z5PkN2RNhBkXqKc1h//eTtWig3Eum9T2JtajngkhZmATT
+ wu3CIAw44WvXESU+baPgv1SiCt91LhL5jwjWjzm7eXue+zFupdA0Sze+fBtGSCAWUh3/qpbB7h2
+ D4yhmR0E/xxOKu9579EY7ThzaPj09wQYT0wptJ6dquQSmH0x6/0Pa
+X-Gm-Gg: ASbGncupCrqImLOPiUxKkCayT/XWI0PQ9Qxqo0BYu9t3eMR+rJQqUrkVqv5aex11q53
+ oFDJ2p2VP2EjJPjoDGadbOIOHeQpFKFVw2ks6HhktIFswy01XOCn/mHbS5GudNrTht2oot9HNHg
+ 145AkDs+qP5ZRoHkdruopJ35n54joU+AhXQ4GyhAbTOrVK78Xm45t5U8C3qirYXORwMJinjqMR+
+ vOCPVAwD9aY2gb9qwJGJHB6KUkDhKWR5Ho96khaEKCfqfcar9IXKJqYzeb70/8RzRrV8phCRQw4
+ JI2X7rlmfaHILBOYPmpmd0SRdhSl2ZhDVj/++QqOIL/mtSg=
+X-Received: by 2002:a17:907:c7d4:b0:ac3:ed4d:c9a1 with SMTP id
+ a640c23a62f3a-ac6e0a73a92mr246437066b.17.1742972266679; 
+ Tue, 25 Mar 2025 23:57:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7EJCkIKUkngBDOL29POb95x1GwPTZGLp9DNd1rrFPCVFwv0QNuPDGQcDIJYFWYwZmR58SHg==
+X-Received: by 2002:a17:907:c7d4:b0:ac3:ed4d:c9a1 with SMTP id
+ a640c23a62f3a-ac6e0a73a92mr246433666b.17.1742972266229; 
+ Tue, 25 Mar 2025 23:57:46 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-49-206.web.vodafone.de.
  [109.43.49.206]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d43f33242sm224529015e9.5.2025.03.25.23.54.33
+ a640c23a62f3a-ac3ef8e532asm987682966b.56.2025.03.25.23.57.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Mar 2025 23:54:34 -0700 (PDT)
-Message-ID: <23a964b8-dd02-4160-b03d-8fba70611ac8@redhat.com>
-Date: Wed, 26 Mar 2025 07:54:32 +0100
+ Tue, 25 Mar 2025 23:57:45 -0700 (PDT)
+Message-ID: <befafa24-f2a5-4c7c-963d-4ea89e44fb69@redhat.com>
+Date: Wed, 26 Mar 2025 07:57:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-10.0 12/12] hw/s390x/zpci: Re-categorize as BRIDGE
+Subject: Re: [PATCH-for-10.0 01/12] hw/audio/wm8750: Categorize and add
+ description
+From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
@@ -95,8 +97,8 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
  Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org
 References: <20250325224310.8785-1-philmd@linaro.org>
- <20250325224310.8785-13-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20250325224310.8785-2-philmd@linaro.org>
+ <892797b6-8d2f-4234-840f-e36ef94b0701@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -140,7 +142,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250325224310.8785-13-philmd@linaro.org>
+In-Reply-To: <892797b6-8d2f-4234-840f-e36ef94b0701@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -168,28 +170,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/03/2025 23.43, Philippe Mathieu-Daudé wrote:
-> A 'zpci' device encapsulate a PCI device to be usable
-> by System/Z. Categorize it as bridge.
+On 26/03/2025 07.47, Thomas Huth wrote:
+> On 25/03/2025 23.42, Philippe Mathieu-Daudé wrote:
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/audio/wm8750.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/hw/audio/wm8750.c b/hw/audio/wm8750.c
+>> index 8d381dbc658..6c1bb20fb75 100644
+>> --- a/hw/audio/wm8750.c
+>> +++ b/hw/audio/wm8750.c
+>> @@ -721,6 +721,8 @@ static void wm8750_class_init(ObjectClass *klass, void 
+>> *data)
+>>       sc->send = wm8750_tx;
+>>       dc->vmsd = &vmstate_wm8750;
+>>       device_class_set_props(dc, wm8750_properties);
+>> +    set_bit(DEVICE_CATEGORY_SOUND, dc->categories);
+>> +    dc->desc = "WM8750 Stereo CODEC";
+>>   }
+>>   static const TypeInfo wm8750_info = {
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/s390x/s390-pci-bus.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index 2591ee49c11..dbfe24f6eca 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -1562,7 +1562,7 @@ static void s390_pci_device_class_init(ObjectClass *klass, void *data)
->       DeviceClass *dc = DEVICE_CLASS(klass);
->   
->       dc->desc = "zpci device";
-> -    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-It's not really a bridge (in the sense of a PCI bridge) ... I think it's 
-maybe better to keep it in the MISC category to avoid confusion.
+Looking at this twice, I think the patch is not OK in its current shape: The 
+wm8750 device now shows up twice in the output of "-device help", once in 
+the "Sound" category and once in the "Misc" category (inherited from I2C 
+device). That's somewhat ugly. I guess you'd need to remove the MISC bit 
+here to clean that up?
 
   Thomas
 
