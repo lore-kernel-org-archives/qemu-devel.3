@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FD7C3600E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 18:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBAE2C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 18:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txVOM-00086F-Ng; Wed, 26 Mar 2025 14:22:18 -0400
+	id 1txVSZ-0000Uz-Al; Wed, 26 Mar 2025 14:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txVOK-000862-FV
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 14:22:16 -0400
-Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
+ id 1txVSN-0000Tr-8q
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 14:26:27 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1txVOI-0002Fj-5l
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 14:22:15 -0400
-Received: by mail-oa1-x32.google.com with SMTP id
- 586e51a60fabf-2a01bcd0143so64379fac.2
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 11:22:12 -0700 (PDT)
+ id 1txVSL-0002lc-77
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 14:26:27 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-2c7e5fb8c38so51280fac.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 11:26:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743013331; x=1743618131; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743013583; x=1743618383; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AcXJ7fq0Dl3Kd4BIHX1PKV/gHpCOgUzmQq36/CNy9eM=;
- b=tUOGb7VjgYCQRLY9UkRj0McZ5rKf4yk8YjL0/LBovBozZiMv7FUOq/kLnAmeM8Vceq
- I3OmE6YUre8qsWNNxgR32i89l6HB0hoaKlshS5eTcsa85SX1fkqO7ZThpQcN7EV3l1yg
- iZpdJ7YWOgWI7WSVylbzCvQ0fL40fsDz+EGtDTsM7G8Zraq9Mb3ytmjhDSyvt/KNIsoK
- Xb95bY2G9OWspkHXlEMAFHkxRrDdHD3iAlUo9qrFTbzQu7PUDHWCdaPkzLJMO1lngR0y
- APjsiNBlSpYp2K8Kq9C2+Ix71eCGeUlbrwILhVaVzrRUcIaTz4DLTG/eXMvdWAD8s79R
- 1P1w==
+ bh=6LgpZRLhA0HGtc6l0Eja7ojaPjTlpePfziAt3iuU+W4=;
+ b=D/igSPvQeQQ2wBnA1FIbEII+qvYrpoLCQU6ay3fmfAQsQDVwlLWdnl1dNKm98S+WRv
+ ZCDBR4NUih5gHExz+ru/+KK1tsGYzxJPZNGkczopcwebYODhx+9cewmU5fiySyyDXHc/
+ 6qxSnHWPuYSFhzpkm/RO06s1OIFndXsa3kB1m6/UGImgAkYDhdXgXJcUyatGzLVyAd5t
+ kmz6zNFq06zcJ+PC03oll0LIjZAsg9H5srulqDSvscC9DtTAc4rmFKtMc3BZjpAkMu3c
+ zSfkDd5oYge4kKAHrb+theZ573EQBQBPQRsAgdOoPVjk4e2wSNgKbKBTUZEQlWoQpxhL
+ QdQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743013331; x=1743618131;
+ d=1e100.net; s=20230601; t=1743013583; x=1743618383;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AcXJ7fq0Dl3Kd4BIHX1PKV/gHpCOgUzmQq36/CNy9eM=;
- b=GoKUNKhYi09TR6hOz4F+0Qq3GkHw//iUC73FOhh6K9lT1mVsGnqTflXpxjVrhlNRsD
- w0GTPi/C+G6jGU8gxerh1DLi7IAN+apM16oOhqhFyDbgCTSaIlt85SXzJWKsaahkBuRi
- Mrh/TArkVxmXwiifCkJbrbH3v6sph1i+3umD/B09uBzCba4QMDruRgCTwnRWkFe1PNnZ
- LY3Nn+LKwWGv3J0mjR4/KuzVEbZnVanRHcadSyZrWyIoAvNwmiKpG7T6eeFVNTgx4uwm
- J+xYHOJ6t3uapJHnAAs5ZNnq47VDay3YHd7pdoIyxzPdda8QgISfm+JYbOwc+UJVHnj3
- duYQ==
-X-Gm-Message-State: AOJu0YxV+ddoPgOQbVhCDZ0PxmLp1bZ5ZPBI5WoMW5wvECEEIqWa5ydY
- V2b4svln6FwArnU7ACOOQHC5/2Na/8sfYWVEoqWxFJQFfR7gEbjJabesln+y5/ByF/mwBziaSf0
- u
-X-Gm-Gg: ASbGncskp1VWmCY4QQy0w3OQSOMCdPXLFvR5UHLQhqfHnxQhm1DCDVdYHYUMwWG/avk
- hvYYanULFDdOPgVIc7P0ktxDebjj4hOYdsSiwlwo+LeUOYMI745ejh3wZ5BK7kS1RSE9VvrirOC
- QICDmTjKKqkVqiZIghGgS8e/v5FfcPTHG5nIX5RiMnohMYiCezK/KRXyBs8DxkVlI/R5aCFvljJ
- g7cUIB49bA3Fn0BC6xMHYfMuJ38SAfJkYsxInpN7I2h/rTbeBw8JrfesjOXeDiCY5BPSwMpZ3p6
- Gr7Alt4pwe+ysaPF3Keah3Wz/b9ONZXEyUw92u70HMcLoXwNo5rORz28aMgXPG96Yz2w1o/lCwd
- Et4eVFwboCq+axV0nrPDKcA==
-X-Google-Smtp-Source: AGHT+IHLeECy/7I6UrgP/XYltmIuHqhewYPhqASI+In8S29HxkhHT1/jJRJ2SdS5NbhztNj69fww3Q==
-X-Received: by 2002:a05:6870:b51f:b0:2c2:cd87:7521 with SMTP id
- 586e51a60fabf-2c847eebf26mr308009fac.4.1743013330674; 
- Wed, 26 Mar 2025 11:22:10 -0700 (PDT)
+ bh=6LgpZRLhA0HGtc6l0Eja7ojaPjTlpePfziAt3iuU+W4=;
+ b=Q5z2v8VVZF+nXTF9yL8+WF9YOwbJpIuw7dt3ICdeVuxvwOTPd/eRIpXfJjC2zFQNba
+ cbYCUBxBYbkj3SdG0kjTcj42oNXUyXNiLHOu7VvtrvJ7FtE7HMriqOBgThWeTTfHENPq
+ sdolj8pjTtLAs+zbr+ccBwRxzlCO/HQBjpMehpZvaIfFy6t1s3rSsykdDbqWWgHaXOUQ
+ ZqeCCY9yzA8rkMeDchFoVbxeJdwYnEJ1MQ4+hFgIb1VL7Do6+4j9jp7vJr73NnJC5hI3
+ kVLiD8WfRyjQNElrZXKkFZSWeJqGdt2Bdr9NyJ5zSW55Z9mZNd92orhIIthtTFZBE/2N
+ 2GfA==
+X-Gm-Message-State: AOJu0YxK5D9LikSvhZ+aLHwBZAAf/TurT6rJcqZrbEK7K7azIXsnHsjY
+ s72Y6Wbwf7v85A392qo2t4zBHZXHtmgQ1E8shygCZucquvoXp/xKMZVLELv8Vepapx/2HUJdtm9
+ t
+X-Gm-Gg: ASbGncv1D4hWGJjb+alqZz70phTkLp46jMId8TGVLKjuyBweVmGF9LfsJ3YDf1+z5dE
+ XMlT+gSEciJXelSdZVaH0YTbcMwSZdQy53S2XiWS2peFt6SomhNhTk0Jw2HwMJ4XfUSSirB7miz
+ n2Qm0lDYRI4MgnQU9wTf5pUC4V5TvjwjoCOTS9Jes+gubD3rBPm3AgcDXZumLuxlVFre+jS+y9y
+ c433mPVe6XytqvENhFqVVIkvv3rR+q78ULFrKzPCrNik38hCGgblrp3EoBZvhahGH/uQksF1OIw
+ FVQk5Uz1tDRtgSkOLTLk9V1Lp9qjp79s5Soovs7///BjkcresOQCBc7qo05CFLzoRhAByYrqnEX
+ FdPhaQHgIwjUNBCg5+eDzUw==
+X-Google-Smtp-Source: AGHT+IHacoO94vyVCBFyFocbqZpIDyGfiJXU9RCD9xPEYW4VzyoiJC3uR2PXn8AwCuK1Zp8qKRuAKg==
+X-Received: by 2002:a05:6871:3585:b0:29e:3921:b1ea with SMTP id
+ 586e51a60fabf-2c84820e329mr329201fac.30.1743013583477; 
+ Wed, 26 Mar 2025 11:26:23 -0700 (PDT)
 Received: from [172.20.102.85] (syn-071-042-197-003.biz.spectrum.com.
  [71.42.197.3]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2c77f05d2dbsm3178876fac.39.2025.03.26.11.22.09
+ 586e51a60fabf-2c77ecbf0dcsm3179182fac.23.2025.03.26.11.26.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Mar 2025 11:22:10 -0700 (PDT)
-Message-ID: <1ba52ba5-6d68-483b-88ef-727fd369e4c0@linaro.org>
-Date: Wed, 26 Mar 2025 13:22:08 -0500
+ Wed, 26 Mar 2025 11:26:23 -0700 (PDT)
+Message-ID: <8b5e37b4-8679-46ef-a32f-6c95d36af2db@linaro.org>
+Date: Wed, 26 Mar 2025 13:26:21 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 6/8] target/mips: Introduce mips_cpu_is_64bit()
- helper
+Subject: Re: [PATCH-for-10.1 8/8] target/mips: Introduce
+ mips_env_64bit_enabled() helper
 To: qemu-devel@nongnu.org
 References: <20250325154058.92735-1-philmd@linaro.org>
- <20250325154058.92735-7-philmd@linaro.org>
+ <20250325154058.92735-9-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250325154058.92735-7-philmd@linaro.org>
+In-Reply-To: <20250325154058.92735-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::32;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,46 +105,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/25 10:40, Philippe Mathieu-Daudé wrote:
-> mips_cpu_is_64bit() returns whether the CPU is a
-> 32-bit or a 64-bit one.
+> mips_env_64bit_enabled() returns whether the CPU is running
+> in 32-bit or 64-bit (behavior which might change at runtime).
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/mips/cpu-qom.h | 2 ++
->   target/mips/cpu.c     | 6 ++++++
->   2 files changed, 8 insertions(+)
+>   target/mips/internal.h | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> diff --git a/target/mips/cpu-qom.h b/target/mips/cpu-qom.h
-> index 9acf647420c..52996e7c354 100644
-> --- a/target/mips/cpu-qom.h
-> +++ b/target/mips/cpu-qom.h
-> @@ -33,4 +33,6 @@ OBJECT_DECLARE_CPU_TYPE(MIPSCPU, MIPSCPUClass, MIPS_CPU)
->   #define MIPS_CPU_TYPE_SUFFIX "-" TYPE_MIPS_CPU
->   #define MIPS_CPU_TYPE_NAME(model) model MIPS_CPU_TYPE_SUFFIX
->   
-> +bool mips_cpu_is_64bit(MIPSCPU *cpu);
-> +
->   #endif
-> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-> index d8930468b7d..05b3ce42af5 100644
-> --- a/target/mips/cpu.c
-> +++ b/target/mips/cpu.c
-> @@ -516,6 +516,12 @@ static void mips_cpu_initfn(Object *obj)
->   #endif
+> diff --git a/target/mips/internal.h b/target/mips/internal.h
+> index 28eb28936ba..8107a59b908 100644
+> --- a/target/mips/internal.h
+> +++ b/target/mips/internal.h
+> @@ -225,6 +225,11 @@ static inline void mips_env_set_pc(CPUMIPSState *env, target_ulong value)
+>       }
 >   }
 >   
-> +bool mips_cpu_is_64bit(MIPSCPU *cpu)
+> +static inline bool mips_env_64bit_enabled(CPUMIPSState *env)
 > +{
-> +    return !!object_class_dynamic_cast(OBJECT_CLASS(CPU(cpu)->cc),
-> +                                       TYPE_MIPS64_CPU);
+> +    return env->hflags & MIPS_HFLAG_64;
 > +}
+> +
+>   static inline bool mips_env_is_bigendian(CPUMIPSState *env)
+>   {
+>       return extract32(env->CP0_Config0, CP0C0_BE, 1);
 
-This is very nearly object_dynamic_cast.  So why not just
-
-   return object_dynamic_cast(OBJECT(cpu), TYPE_MIPS64_CPU);
-
-?
-
+Maybe delay this until you need it?
 
 r~
 
