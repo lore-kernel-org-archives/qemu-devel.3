@@ -4,67 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B019FC3600D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 08:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2814EC3600E
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 08:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txLYW-0007qv-10; Wed, 26 Mar 2025 03:52:08 -0400
+	id 1txLjz-0006oi-Td; Wed, 26 Mar 2025 04:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1txLYT-0007qZ-TH
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:52:06 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1txLjy-0006oV-Hx
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 04:03:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1txLYS-0006FU-0u
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:52:05 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1txLjv-0007Pu-UK
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 04:03:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742975523;
+ s=mimecast20190719; t=1742976234;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VCB+BDSo2XaU6TJRsFXZkh52bSQojAysgtuVHJHhrng=;
- b=QuwMdz9wjNlmcPBL0Kik85S+P4d/9LAq4fCaobgbEPmTGzxWfcTwC3sMQdoiPGPukfEnT7
- +gK+zxDc3KDyOpUd6FV0b/0Zz+wEBFu9TdFKmBj0y+K/Ms2iB5tHcYjEVYwMx6UPxp5xtc
- 9zolSxbly3W8PDX5n9OLLouZU0Wmw6Q=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-4rlLz1r8NGGOuTG-ulsoUA-1; Wed,
- 26 Mar 2025 03:52:00 -0400
-X-MC-Unique: 4rlLz1r8NGGOuTG-ulsoUA-1
-X-Mimecast-MFC-AGG-ID: 4rlLz1r8NGGOuTG-ulsoUA_1742975519
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DFAB180899B; Wed, 26 Mar 2025 07:51:59 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.226.180])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7E66319560AD; Wed, 26 Mar 2025 07:51:56 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	Alex Williamson <alex.williamson@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- John Levon <john.levon@nutanix.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>
-Subject: [PATCH for-10.1 v2 06/37] vfio: Introduce a new header file for
- internal migration services
-Date: Wed, 26 Mar 2025 08:50:51 +0100
-Message-ID: <20250326075122.1299361-7-clg@redhat.com>
-In-Reply-To: <20250326075122.1299361-1-clg@redhat.com>
-References: <20250326075122.1299361-1-clg@redhat.com>
+ bh=p17Gyc8KM3sO3ECFKMRQ1WTq16uzasIlGV7XQ3r0hL4=;
+ b=U8Jz+lTu3qccYMA9/1Sv4AdqZVWc+2IF06Q1hEFTnHjSQKQU38g+yGJYisQSIy8rQIudE9
+ baIPc38EPhvCUUdviziTPbR99w+7VT4Qf8LxiCtTh5mMu2xHb+9OTRnk4B3yp0gqWvLcFb
+ ZK+m2DdkcsSZ3C2Zsi60zMJUo/BviWA=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-628-Olo6GG1xM6yb5jBKD4gEZw-1; Wed, 26 Mar 2025 04:03:53 -0400
+X-MC-Unique: Olo6GG1xM6yb5jBKD4gEZw-1
+X-Mimecast-MFC-AGG-ID: Olo6GG1xM6yb5jBKD4gEZw_1742976232
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3011bee1751so10473585a91.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 01:03:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742976232; x=1743581032;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=p17Gyc8KM3sO3ECFKMRQ1WTq16uzasIlGV7XQ3r0hL4=;
+ b=K5xVJ7o1TSrzvo7sdgP39vKgqAIgmNWRfwkovmXuF7LJ8jP3N/GWkm1KqQExXuhCxu
+ Ljd3Uva4VbHxn8DZ0U2ofugR33fb0O/pHs61IR7A3XHBBVLOUw3z35PIuh4T5xeAfSdt
+ igfTDNHsuLJPCR58yy0FUdKlgqULZwL2KfMQYjPuNtS9NxUCJgQ6CceEsi+8V9EGNMEb
+ glyjrqOAjmrt3BvPBPPDXaERYDz3lI6BiqAv3unNQLKfVB2gUjhi3cKBiQDn7CsneYUT
+ Jrqnaito9ysjHOQV1DRLbvF4akzdODnN2JrQd/6Rk/tKwUDFcifNpgnbMrhGcREJQHS1
+ ctRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCMQ+sX+TYJ3+bZwNoCwtDgwUgj3XD/6FxF5ZD5Qrt8sUe5DS2WdyPVUudIl7zMVTQFVrJxOBaTGAf@nongnu.org
+X-Gm-Message-State: AOJu0YyKRZASNtPJ8AOHn4QWkWq+9J4FBmERG1TQ92dlt/al0Px8nVci
+ pL7vuyzzjZwbKsWrQYRXhowuDpo1kIa2sbkYzWLmWNXsdJMnos9ibzGzuz45AmFXyUeLNeUSRKI
+ hR4H2HBPRm4IYu24Z9p10QX9bSmqhhoNu7bVSie/Wp3GRBdF5XOkYFr0VeZmH0EsWxHnnryKd4c
+ bzlmG5218/oSqZrArzt0LdbP4mUDA=
+X-Gm-Gg: ASbGncsMatDORP3zUaU0E/H3zwS/5EjmF7T0RqqisVDAK6Asrs/tQfrXkguo90f6I0J
+ uXvhJUzy3uyHDoRbVGfOTh16mx6WSGzgWvxalsDTjInuMt1zGDlsvH5oZWlXyxmP//vg3wTo=
+X-Received: by 2002:a17:90b:48c2:b0:2fa:15ab:4de7 with SMTP id
+ 98e67ed59e1d1-3030fe83954mr41032757a91.12.1742976232027; 
+ Wed, 26 Mar 2025 01:03:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGmGp4PpVOdPtKLeG0/HA2ZsyXdif5rYB8/d8PZ2NgzoN+R7WPPXC3EtiycgdYl/nGNs7C+zh4hYtlcw+l5w2Y=
+X-Received: by 2002:a17:90b:48c2:b0:2fa:15ab:4de7 with SMTP id
+ 98e67ed59e1d1-3030fe83954mr41032715a91.12.1742976231659; Wed, 26 Mar 2025
+ 01:03:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20250324135929.74945-1-sahilcdq@proton.me>
+ <20250324135929.74945-4-sahilcdq@proton.me>
+ <a878b49b-0d00-483a-a5b6-27d048c4ebc7@gmail.com>
+In-Reply-To: <a878b49b-0d00-483a-a5b6-27d048c4ebc7@gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 26 Mar 2025 09:03:14 +0100
+X-Gm-Features: AQ5f1JpKK4JVSO6S5X5deVHD_vz-hasY1tg1kZfycqrDZ_mf9RzQJ2oB8IRTwoo
+Message-ID: <CAJaqyWdAX6=ZvJdugW2_SmjQDZ31EhMfn=qodoWkZmjd2kY73A@mail.gmail.com>
+Subject: Re: [RFC v5 3/7] vhost: Forward descriptors to device via packed SVQ
+To: Sahil Siddiq <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ sahilcdq@proton.me
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,253 +106,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gather all VFIO migration related declarations into
-"vfio-migration-internal.h" to reduce exposure of VFIO internals in
-"hw/vfio/vfio-common.h".
+On Mon, Mar 24, 2025 at 3:14=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com=
+> wrote:
+>
+> Hi,
+>
+> I had a few queries here.
+>
+> On 3/24/25 7:29 PM, Sahil Siddiq wrote:
+> > Implement the insertion of available buffers in the descriptor area of
+> > packed shadow virtqueues. It takes into account descriptor chains, but
+> > does not consider indirect descriptors.
+> >
+> > Enable the packed SVQ to forward the descriptors to the device.
+> >
+> > Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+> > ---
+> > Changes from v4 -> v5:
+> > - This was commit #2 in v4. This has been reordered to commit #3
+> >    based on review comments.
+> > - vhost-shadow-virtqueue.c:
+> >    (vhost_svq_valid_features): Move addition of enums to commit #6
+> >    based on review comments.
+> >    (vhost_svq_add_packed): Set head_idx to buffer id instead of vring's
+> >    index.
+> >    (vhost_svq_kick): Split into vhost_svq_kick_split and
+> >    vhost_svq_kick_packed.
+> >    (vhost_svq_add): Use new vhost_svq_kick_* functions.
+> >
+> >   hw/virtio/vhost-shadow-virtqueue.c | 117 +++++++++++++++++++++++++++-=
+-
+> >   1 file changed, 112 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shado=
+w-virtqueue.c
+> > index 4f74ad402a..6e16cd4bdf 100644
+> > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > @@ -193,10 +193,83 @@ static void vhost_svq_add_split(VhostShadowVirtqu=
+eue *svq,
+> >       /* Update the avail index after write the descriptor */
+> >       smp_wmb();
+> >       avail->idx =3D cpu_to_le16(svq->shadow_avail_idx);
+> > +}
+> > +
+> > +/**
+> > + * Write descriptors to SVQ packed vring
+> > + *
+> > + * @svq: The shadow virtqueue
+> > + * @out_sg: The iovec to the guest
+> > + * @out_num: Outgoing iovec length
+> > + * @in_sg: The iovec from the guest
+> > + * @in_num: Incoming iovec length
+> > + * @sgs: Cache for hwaddr
+> > + * @head: Saves current free_head
+> > + */
+> > +static void vhost_svq_add_packed(VhostShadowVirtqueue *svq,
+> > +                                 const struct iovec *out_sg, size_t ou=
+t_num,
+> > +                                 const struct iovec *in_sg, size_t in_=
+num,
+> > +                                 hwaddr *sgs, unsigned *head)
+> > +{
+> > +    uint16_t id, curr, i, head_flags =3D 0, head_idx;
+> > +    size_t num =3D out_num + in_num;
+> > +    unsigned n;
+> > +
+> > +    struct vring_packed_desc *descs =3D svq->vring_packed.vring.desc;
+> > +
+> > +    head_idx =3D svq->vring_packed.next_avail_idx;
+>
+> Since "svq->vring_packed.next_avail_idx" is part of QEMU internals and no=
+t
+> stored in guest memory, no endianness conversion is required here, right?
+>
 
-Cc: Kirti Wankhede <kwankhede@nvidia.com>
-Cc: Avihai Horon <avihaih@nvidia.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/vfio-migration-internal.h | 72 +++++++++++++++++++++++++++++++
- include/hw/vfio/vfio-common.h     | 52 +---------------------
- hw/vfio/common.c                  |  1 +
- hw/vfio/migration-multifd.c       |  1 +
- hw/vfio/migration.c               |  1 +
- hw/vfio/pci.c                     |  1 +
- 6 files changed, 77 insertions(+), 51 deletions(-)
- create mode 100644 hw/vfio/vfio-migration-internal.h
+Right!
 
-diff --git a/hw/vfio/vfio-migration-internal.h b/hw/vfio/vfio-migration-internal.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..ab6a1bad9b513aa61557905e72e5c6b264372276
---- /dev/null
-+++ b/hw/vfio/vfio-migration-internal.h
-@@ -0,0 +1,72 @@
-+/*
-+ * VFIO migration
-+ *
-+ * Copyright Red Hat, Inc. 2025
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_VFIO_VFIO_MIGRATION_INTERNAL_H
-+#define HW_VFIO_VFIO_MIGRATION_INTERNAL_H
-+
-+#ifdef CONFIG_LINUX
-+#include <linux/vfio.h>
-+#endif
-+
-+#include "qemu/typedefs.h"
-+#include "qemu/notify.h"
-+
-+/*
-+ * Flags to be used as unique delimiters for VFIO devices in the migration
-+ * stream. These flags are composed as:
-+ * 0xffffffff => MSB 32-bit all 1s
-+ * 0xef10     => Magic ID, represents emulated (virtual) function IO
-+ * 0x0000     => 16-bits reserved for flags
-+ *
-+ * The beginning of state information is marked by _DEV_CONFIG_STATE,
-+ * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
-+ * certain state information is marked by _END_OF_STATE.
-+ */
-+#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
-+#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
-+#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
-+#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
-+#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
-+
-+typedef struct VFIODevice VFIODevice;
-+typedef struct VFIOMultifd VFIOMultifd;
-+
-+typedef struct VFIOMigration {
-+    struct VFIODevice *vbasedev;
-+    VMChangeStateEntry *vm_state;
-+    NotifierWithReturn migration_state;
-+    uint32_t device_state;
-+    int data_fd;
-+    void *data_buffer;
-+    size_t data_buffer_size;
-+    uint64_t mig_flags;
-+    uint64_t precopy_init_size;
-+    uint64_t precopy_dirty_size;
-+    bool multifd_transfer;
-+    VFIOMultifd *multifd;
-+    bool initial_data_sent;
-+
-+    bool event_save_iterate_started;
-+    bool event_precopy_empty_hit;
-+} VFIOMigration;
-+
-+bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp);
-+void vfio_migration_exit(VFIODevice *vbasedev);
-+int vfio_save_device_config_state(QEMUFile *f, void *opaque, Error **errp);
-+int vfio_load_device_config_state(QEMUFile *f, void *opaque);
-+
-+#ifdef CONFIG_LINUX
-+int vfio_migration_set_state(VFIODevice *vbasedev,
-+                             enum vfio_device_mig_state new_state,
-+                             enum vfio_device_mig_state recover_state,
-+                             Error **errp);
-+#endif
-+
-+void vfio_migration_add_bytes_transferred(unsigned long val);
-+
-+#endif /* HW_VFIO_VFIO_MIGRATION_INTERNAL_H */
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 8bb206d755adab4efee32a173c920d9aa4833685..920ad154b4f82b9c244b5b9e8da44f7583e5ead0 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -23,7 +23,6 @@
- 
- #include "exec/memory.h"
- #include "qemu/queue.h"
--#include "qemu/notify.h"
- #include "ui/console.h"
- #include "hw/display/ramfb.h"
- #ifdef CONFIG_LINUX
-@@ -36,23 +35,6 @@
- 
- #define VFIO_MSG_PREFIX "vfio %s: "
- 
--/*
-- * Flags to be used as unique delimiters for VFIO devices in the migration
-- * stream. These flags are composed as:
-- * 0xffffffff => MSB 32-bit all 1s
-- * 0xef10     => Magic ID, represents emulated (virtual) function IO
-- * 0x0000     => 16-bits reserved for flags
-- *
-- * The beginning of state information is marked by _DEV_CONFIG_STATE,
-- * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
-- * certain state information is marked by _END_OF_STATE.
-- */
--#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
--#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
--#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
--#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
--#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
--
- enum {
-     VFIO_DEVICE_TYPE_PCI = 0,
-     VFIO_DEVICE_TYPE_PLATFORM = 1,
-@@ -78,27 +60,6 @@ typedef struct VFIORegion {
-     uint8_t nr; /* cache the region number for debug */
- } VFIORegion;
- 
--typedef struct VFIOMultifd VFIOMultifd;
--
--typedef struct VFIOMigration {
--    struct VFIODevice *vbasedev;
--    VMChangeStateEntry *vm_state;
--    NotifierWithReturn migration_state;
--    uint32_t device_state;
--    int data_fd;
--    void *data_buffer;
--    size_t data_buffer_size;
--    uint64_t mig_flags;
--    uint64_t precopy_init_size;
--    uint64_t precopy_dirty_size;
--    bool multifd_transfer;
--    VFIOMultifd *multifd;
--    bool initial_data_sent;
--
--    bool event_save_iterate_started;
--    bool event_precopy_empty_hit;
--} VFIOMigration;
--
- struct VFIOGroup;
- 
- typedef struct VFIOContainer {
-@@ -136,6 +97,7 @@ typedef struct VFIOIOMMUFDContainer {
- OBJECT_DECLARE_SIMPLE_TYPE(VFIOIOMMUFDContainer, VFIO_IOMMU_IOMMUFD);
- 
- typedef struct VFIODeviceOps VFIODeviceOps;
-+typedef struct VFIOMigration VFIOMigration;
- 
- typedef struct VFIODevice {
-     QLIST_ENTRY(VFIODevice) next;
-@@ -290,13 +252,9 @@ extern VFIODeviceList vfio_device_list;
- extern const MemoryListener vfio_memory_listener;
- extern int vfio_kvm_device_fd;
- 
--void vfio_migration_add_bytes_transferred(unsigned long val);
- bool vfio_device_state_is_running(VFIODevice *vbasedev);
- bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
- 
--int vfio_save_device_config_state(QEMUFile *f, void *opaque, Error **errp);
--int vfio_load_device_config_state(QEMUFile *f, void *opaque);
--
- #ifdef CONFIG_LINUX
- int vfio_get_region_info(VFIODevice *vbasedev, int index,
-                          struct vfio_region_info **info);
-@@ -311,16 +269,8 @@ struct vfio_info_cap_header *
- vfio_get_device_info_cap(struct vfio_device_info *info, uint16_t id);
- struct vfio_info_cap_header *
- vfio_get_cap(void *ptr, uint32_t cap_offset, uint16_t id);
--
--int vfio_migration_set_state(VFIODevice *vbasedev,
--                             enum vfio_device_mig_state new_state,
--                             enum vfio_device_mig_state recover_state,
--                             Error **errp);
- #endif
- 
--bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp);
--void vfio_migration_exit(VFIODevice *vbasedev);
--
- int vfio_bitmap_alloc(VFIOBitmap *vbmap, hwaddr size);
- bool vfio_devices_all_dirty_tracking_started(
-     const VFIOContainerBase *bcontainer);
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index a4ec60e018df7dc9bbbeac27120907b0f7bf2f83..9bbd798e3e9e0b7a7620d4b1f34f1ef5e8ac42c1 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -44,6 +44,7 @@
- #include "migration/qemu-file.h"
- #include "system/tcg.h"
- #include "system/tpm.h"
-+#include "vfio-migration-internal.h"
- 
- VFIODeviceList vfio_device_list =
-     QLIST_HEAD_INITIALIZER(vfio_device_list);
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index 09aa57f5f890f37f7e36c857fd813f55b1da2fce..1eba74beb0f207804e9c80935eacb0de19589b85 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -22,6 +22,7 @@
- #include "io/channel-buffer.h"
- #include "migration/qemu-file.h"
- #include "migration-multifd.h"
-+#include "vfio-migration-internal.h"
- #include "trace.h"
- 
- #define VFIO_DEVICE_STATE_CONFIG_STATE (1)
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 96d294794bc3056baa3b0b4e23488402db5de797..2a72a8e07542096276cc7c386359ad375e7d24c8 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -31,6 +31,7 @@
- #include "pci.h"
- #include "trace.h"
- #include "hw/hw.h"
-+#include "vfio-migration-internal.h"
- 
- /*
-  * This is an arbitrary size based on migration of mlx5 devices, where typically
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 7f1532fbed9aed2eae2c98f6fd79a9056ff1e84f..158deca06cb240622a254f5059c47873e5fcc7de 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -44,6 +44,7 @@
- #include "migration/blocker.h"
- #include "migration/qemu-file.h"
- #include "system/iommufd.h"
-+#include "vfio-migration-internal.h"
- 
- #define TYPE_VFIO_PCI_NOHOTPLUG "vfio-pci-nohotplug"
- 
--- 
-2.49.0
+> > +    i =3D head_idx;
+> > +    id =3D svq->free_head;
+> > +    curr =3D id;
+> > +    *head =3D id;
+>
+> Should head be the buffer id or the idx of the descriptor ring where the
+> first descriptor of a descriptor chain is inserted?
+>
+
+The buffer id of the *last* descriptor of a chain. See "2.8.6 Next
+Flag: Descriptor Chaining" at [1].
+
+> > +    /* Write descriptors to SVQ packed vring */
+> > +    for (n =3D 0; n < num; n++) {
+> > +        uint16_t flags =3D cpu_to_le16(svq->vring_packed.avail_used_fl=
+ags |
+> > +                                     (n < out_num ? 0 : VRING_DESC_F_W=
+RITE) |
+> > +                                     (n + 1 =3D=3D num ? 0 : VRING_DES=
+C_F_NEXT));
+> > +        if (i =3D=3D head_idx) {
+> > +            head_flags =3D flags;
+> > +        } else {
+> > +            descs[i].flags =3D flags;
+> > +        }
+> > +
+> > +        descs[i].addr =3D cpu_to_le64(sgs[n]);
+> > +        descs[i].id =3D id;
+> > +        if (n < out_num) {
+> > +            descs[i].len =3D cpu_to_le32(out_sg[n].iov_len);
+> > +        } else {
+> > +            descs[i].len =3D cpu_to_le32(in_sg[n - out_num].iov_len);
+> > +        }
+> > +
+> > +        curr =3D cpu_to_le16(svq->desc_next[curr]);
+> > +
+> > +        if (++i >=3D svq->vring_packed.vring.num) {
+> > +            i =3D 0;
+> > +            svq->vring_packed.avail_used_flags ^=3D
+> > +                1 << VRING_PACKED_DESC_F_AVAIL |
+> > +                1 << VRING_PACKED_DESC_F_USED;
+> > +        }
+> > +    }
+> >
+> > +    if (i <=3D head_idx) {
+> > +        svq->vring_packed.avail_wrap_counter ^=3D 1;
+> > +    }
+> > +
+> > +    svq->vring_packed.next_avail_idx =3D i;
+> > +    svq->shadow_avail_idx =3D i;
+> > +    svq->free_head =3D curr;
+> > +
+> > +    /*
+> > +     * A driver MUST NOT make the first descriptor in the list
+> > +     * available before all subsequent descriptors comprising
+> > +     * the list are made available.
+> > +     */
+> > +    smp_wmb();
+> > +    svq->vring_packed.vring.desc[head_idx].flags =3D head_flags;
+> >   }
+> >
+> > -static void vhost_svq_kick(VhostShadowVirtqueue *svq)
+> > +static void vhost_svq_kick_split(VhostShadowVirtqueue *svq)
+> >   {
+> >       bool needs_kick;
+> >
+> > @@ -209,7 +282,8 @@ static void vhost_svq_kick(VhostShadowVirtqueue *sv=
+q)
+> >       if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) =
+{
+> >           uint16_t avail_event =3D le16_to_cpu(
+> >                   *(uint16_t *)(&svq->vring.used->ring[svq->vring.num])=
+);
+> > -        needs_kick =3D vring_need_event(avail_event, svq->shadow_avail=
+_idx, svq->shadow_avail_idx - 1);
+> > +        needs_kick =3D vring_need_event(avail_event, svq->shadow_avail=
+_idx,
+> > +                     svq->shadow_avail_idx - 1);
+> >       } else {
+> >           needs_kick =3D
+> >                   !(svq->vring.used->flags & cpu_to_le16(VRING_USED_F_N=
+O_NOTIFY));
+> > @@ -222,6 +296,30 @@ static void vhost_svq_kick(VhostShadowVirtqueue *s=
+vq)
+> >       event_notifier_set(&svq->hdev_kick);
+> >   }
+> >
+> > +static void vhost_svq_kick_packed(VhostShadowVirtqueue *svq)
+> > +{
+> > +    bool needs_kick;
+> > +
+> > +    /*
+> > +     * We need to expose the available array entries before checking
+> > +     * notification suppressions.
+> > +     */
+> > +    smp_mb();
+> > +
+> > +    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
+> > +        return;
+> > +    } else {
+> > +        needs_kick =3D (svq->vring_packed.vring.device->flags !=3D
+> > +                      cpu_to_le16(VRING_PACKED_EVENT_FLAG_DISABLE));
+> > +    }
+> > +
+> > +    if (!needs_kick) {
+> > +        return;
+> > +    }
+> > +
+> > +    event_notifier_set(&svq->hdev_kick);
+> > +}
+> > +
+> >   /**
+> >    * Add an element to a SVQ.
+> >    *
+> > @@ -258,13 +356,22 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, cons=
+t struct iovec *out_sg,
+> >           return -EINVAL;
+> >       }
+> >
+> > -    vhost_svq_add_split(svq, out_sg, out_num, in_sg,
+> > -                        in_num, sgs, &qemu_head);
+> > +    if (svq->is_packed) {
+> > +        vhost_svq_add_packed(svq, out_sg, out_num, in_sg,
+> > +                             in_num, sgs, &qemu_head);
+> > +    } else {
+> > +        vhost_svq_add_split(svq, out_sg, out_num, in_sg,
+> > +                            in_num, sgs, &qemu_head);
+> > +    }
+> >
+> >       svq->num_free -=3D ndescs;
+> >       svq->desc_state[qemu_head].elem =3D elem;
+> >       svq->desc_state[qemu_head].ndescs =3D ndescs;
+>
+> *head in vhost_svq_add_packed() is stored in "qemu_head" here.
+>
+
+Sorry I don't get this, can you expand?
+
+[1] https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
+
+> > -    vhost_svq_kick(svq);
+> > +    if (svq->is_packed) {
+> > +        vhost_svq_kick_packed(svq);
+> > +    } else {
+> > +        vhost_svq_kick_split(svq);
+> > +    }
+> >       return 0;
+> >   }
+> >
+>
+> Thanks,
+> Sahil
+>
 
 
