@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2814EC3600E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 08:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F8FC36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 08:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txLjz-0006oi-Td; Wed, 26 Mar 2025 04:03:59 -0400
+	id 1txLpw-0000sC-4N; Wed, 26 Mar 2025 04:10:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1txLjy-0006oV-Hx
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 04:03:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=gtQ3=WN=kaod.org=clg@ozlabs.org>)
+ id 1txLpn-0000r8-DL; Wed, 26 Mar 2025 04:10:01 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1txLjv-0007Pu-UK
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 04:03:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742976234;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p17Gyc8KM3sO3ECFKMRQ1WTq16uzasIlGV7XQ3r0hL4=;
- b=U8Jz+lTu3qccYMA9/1Sv4AdqZVWc+2IF06Q1hEFTnHjSQKQU38g+yGJYisQSIy8rQIudE9
- baIPc38EPhvCUUdviziTPbR99w+7VT4Qf8LxiCtTh5mMu2xHb+9OTRnk4B3yp0gqWvLcFb
- ZK+m2DdkcsSZ3C2Zsi60zMJUo/BviWA=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-Olo6GG1xM6yb5jBKD4gEZw-1; Wed, 26 Mar 2025 04:03:53 -0400
-X-MC-Unique: Olo6GG1xM6yb5jBKD4gEZw-1
-X-Mimecast-MFC-AGG-ID: Olo6GG1xM6yb5jBKD4gEZw_1742976232
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3011bee1751so10473585a91.1
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 01:03:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742976232; x=1743581032;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=p17Gyc8KM3sO3ECFKMRQ1WTq16uzasIlGV7XQ3r0hL4=;
- b=K5xVJ7o1TSrzvo7sdgP39vKgqAIgmNWRfwkovmXuF7LJ8jP3N/GWkm1KqQExXuhCxu
- Ljd3Uva4VbHxn8DZ0U2ofugR33fb0O/pHs61IR7A3XHBBVLOUw3z35PIuh4T5xeAfSdt
- igfTDNHsuLJPCR58yy0FUdKlgqULZwL2KfMQYjPuNtS9NxUCJgQ6CceEsi+8V9EGNMEb
- glyjrqOAjmrt3BvPBPPDXaERYDz3lI6BiqAv3unNQLKfVB2gUjhi3cKBiQDn7CsneYUT
- Jrqnaito9ysjHOQV1DRLbvF4akzdODnN2JrQd/6Rk/tKwUDFcifNpgnbMrhGcREJQHS1
- ctRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCMQ+sX+TYJ3+bZwNoCwtDgwUgj3XD/6FxF5ZD5Qrt8sUe5DS2WdyPVUudIl7zMVTQFVrJxOBaTGAf@nongnu.org
-X-Gm-Message-State: AOJu0YyKRZASNtPJ8AOHn4QWkWq+9J4FBmERG1TQ92dlt/al0Px8nVci
- pL7vuyzzjZwbKsWrQYRXhowuDpo1kIa2sbkYzWLmWNXsdJMnos9ibzGzuz45AmFXyUeLNeUSRKI
- hR4H2HBPRm4IYu24Z9p10QX9bSmqhhoNu7bVSie/Wp3GRBdF5XOkYFr0VeZmH0EsWxHnnryKd4c
- bzlmG5218/oSqZrArzt0LdbP4mUDA=
-X-Gm-Gg: ASbGncsMatDORP3zUaU0E/H3zwS/5EjmF7T0RqqisVDAK6Asrs/tQfrXkguo90f6I0J
- uXvhJUzy3uyHDoRbVGfOTh16mx6WSGzgWvxalsDTjInuMt1zGDlsvH5oZWlXyxmP//vg3wTo=
-X-Received: by 2002:a17:90b:48c2:b0:2fa:15ab:4de7 with SMTP id
- 98e67ed59e1d1-3030fe83954mr41032757a91.12.1742976232027; 
- Wed, 26 Mar 2025 01:03:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGmGp4PpVOdPtKLeG0/HA2ZsyXdif5rYB8/d8PZ2NgzoN+R7WPPXC3EtiycgdYl/nGNs7C+zh4hYtlcw+l5w2Y=
-X-Received: by 2002:a17:90b:48c2:b0:2fa:15ab:4de7 with SMTP id
- 98e67ed59e1d1-3030fe83954mr41032715a91.12.1742976231659; Wed, 26 Mar 2025
- 01:03:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=gtQ3=WN=kaod.org=clg@ozlabs.org>)
+ id 1txLpi-0008Mn-SL; Wed, 26 Mar 2025 04:09:57 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZMzwV31dvz4x1t;
+ Wed, 26 Mar 2025 19:09:46 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZMzwR6kMyz4x0t;
+ Wed, 26 Mar 2025 19:09:43 +1100 (AEDT)
+Message-ID: <6e830dd1-88c1-4029-bae7-d2817d95262f@kaod.org>
+Date: Wed, 26 Mar 2025 09:09:40 +0100
 MIME-Version: 1.0
-References: <20250324135929.74945-1-sahilcdq@proton.me>
- <20250324135929.74945-4-sahilcdq@proton.me>
- <a878b49b-0d00-483a-a5b6-27d048c4ebc7@gmail.com>
-In-Reply-To: <a878b49b-0d00-483a-a5b6-27d048c4ebc7@gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 26 Mar 2025 09:03:14 +0100
-X-Gm-Features: AQ5f1JpKK4JVSO6S5X5deVHD_vz-hasY1tg1kZfycqrDZ_mf9RzQJ2oB8IRTwoo
-Message-ID: <CAJaqyWdAX6=ZvJdugW2_SmjQDZ31EhMfn=qodoWkZmjd2kY73A@mail.gmail.com>
-Subject: Re: [RFC v5 3/7] vhost: Forward descriptors to device via packed SVQ
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- sahilcdq@proton.me
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 07/10] ppc/pnv: Introduce Power11 PowerNV machine
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250325112319.927190-1-adityag@linux.ibm.com>
+ <20250325112319.927190-8-adityag@linux.ibm.com>
+ <952b3afa-dc63-4230-bdff-5decabc8c25c@kaod.org>
+ <8567b41e-f2b8-413c-93b8-15c74788c171@linux.ibm.com>
+ <5a08e139-a18d-4aae-836f-0ec0bb8fadc9@kaod.org>
+ <6d610966-cdc0-42c2-abb8-e80b4be1178d@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <6d610966-cdc0-42c2-abb8-e80b4be1178d@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=gtQ3=WN=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,235 +115,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 24, 2025 at 3:14=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com=
-> wrote:
->
-> Hi,
->
-> I had a few queries here.
->
-> On 3/24/25 7:29 PM, Sahil Siddiq wrote:
-> > Implement the insertion of available buffers in the descriptor area of
-> > packed shadow virtqueues. It takes into account descriptor chains, but
-> > does not consider indirect descriptors.
-> >
-> > Enable the packed SVQ to forward the descriptors to the device.
-> >
-> > Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
-> > ---
-> > Changes from v4 -> v5:
-> > - This was commit #2 in v4. This has been reordered to commit #3
-> >    based on review comments.
-> > - vhost-shadow-virtqueue.c:
-> >    (vhost_svq_valid_features): Move addition of enums to commit #6
-> >    based on review comments.
-> >    (vhost_svq_add_packed): Set head_idx to buffer id instead of vring's
-> >    index.
-> >    (vhost_svq_kick): Split into vhost_svq_kick_split and
-> >    vhost_svq_kick_packed.
-> >    (vhost_svq_add): Use new vhost_svq_kick_* functions.
-> >
-> >   hw/virtio/vhost-shadow-virtqueue.c | 117 +++++++++++++++++++++++++++-=
--
-> >   1 file changed, 112 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shado=
-w-virtqueue.c
-> > index 4f74ad402a..6e16cd4bdf 100644
-> > --- a/hw/virtio/vhost-shadow-virtqueue.c
-> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> > @@ -193,10 +193,83 @@ static void vhost_svq_add_split(VhostShadowVirtqu=
-eue *svq,
-> >       /* Update the avail index after write the descriptor */
-> >       smp_wmb();
-> >       avail->idx =3D cpu_to_le16(svq->shadow_avail_idx);
-> > +}
-> > +
-> > +/**
-> > + * Write descriptors to SVQ packed vring
-> > + *
-> > + * @svq: The shadow virtqueue
-> > + * @out_sg: The iovec to the guest
-> > + * @out_num: Outgoing iovec length
-> > + * @in_sg: The iovec from the guest
-> > + * @in_num: Incoming iovec length
-> > + * @sgs: Cache for hwaddr
-> > + * @head: Saves current free_head
-> > + */
-> > +static void vhost_svq_add_packed(VhostShadowVirtqueue *svq,
-> > +                                 const struct iovec *out_sg, size_t ou=
-t_num,
-> > +                                 const struct iovec *in_sg, size_t in_=
-num,
-> > +                                 hwaddr *sgs, unsigned *head)
-> > +{
-> > +    uint16_t id, curr, i, head_flags =3D 0, head_idx;
-> > +    size_t num =3D out_num + in_num;
-> > +    unsigned n;
-> > +
-> > +    struct vring_packed_desc *descs =3D svq->vring_packed.vring.desc;
-> > +
-> > +    head_idx =3D svq->vring_packed.next_avail_idx;
->
-> Since "svq->vring_packed.next_avail_idx" is part of QEMU internals and no=
-t
-> stored in guest memory, no endianness conversion is required here, right?
->
+On 3/25/25 18:38, Aditya Gupta wrote:
+> On 25/03/25 22:45, Cédric Le Goater wrote:
+> 
+>> On 3/25/25 18:07, Aditya Gupta wrote:
+>>> On 25/03/25 20:17, Cédric Le Goater wrote:
+>>>
+>>>> On 3/25/25 12:23, Aditya Gupta wrote:
+>>>>> <...snip...>
+>>>>>
+>>>>> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
+>>>>
+>>>> There was a lot of work done to have dynamic PHBs in the PowerNV
+>>>> machines. This was to add support in libvirt and this goal was
+>>>> abandoned when people left. I think we should consider removing
+>>>> it as it adds unnecessary complexity.
+>>>>
+>>> Thanks for telling the history behind it, agreed this is unnecessary, will remove in v7.
+>>
+>> One nice about it IIRC was being able to tune the number of
+>> PHBs per chip, which reduced booting time (for 16s) and also
+>> provided support to test various chip configs. Check that first.
+>>
+> I tried some variations of 'device_add/device_del'. Unable to see how to dynamically add/remove phbs.
 
-Right!
+I don't think hotplug works, this would require FW support, only
+coldplug is supported : devices should be defined on the command
+line.
 
-> > +    i =3D head_idx;
-> > +    id =3D svq->free_head;
-> > +    curr =3D id;
-> > +    *head =3D id;
->
-> Should head be the buffer id or the idx of the descriptor ring where the
-> first descriptor of a descriptor chain is inserted?
->
+> 
+> Do you have any options to device_add/del which I can try, I want to see if the dynamic addition/removal of PHB changes if i remove that '_allow_dynamic_sysbus_dev' call.
+> 
+> 
+>> Also, you should add functional tests for the powernv11 machine.
+>>
+>> See under tests/functional/test_ppc64_powernv.py.
+>>
+> Currently the test uses op-build kernels, which don't support Power11, working on that side, will post as soon as op-build creates a new release with p11 support (any linux >= 6.9).
 
-The buffer id of the *last* descriptor of a chain. See "2.8.6 Next
-Flag: Descriptor Chaining" at [1].
+And is that planned ? I doubt it since open-power boxes are out
+of business.
 
-> > +    /* Write descriptors to SVQ packed vring */
-> > +    for (n =3D 0; n < num; n++) {
-> > +        uint16_t flags =3D cpu_to_le16(svq->vring_packed.avail_used_fl=
-ags |
-> > +                                     (n < out_num ? 0 : VRING_DESC_F_W=
-RITE) |
-> > +                                     (n + 1 =3D=3D num ? 0 : VRING_DES=
-C_F_NEXT));
-> > +        if (i =3D=3D head_idx) {
-> > +            head_flags =3D flags;
-> > +        } else {
-> > +            descs[i].flags =3D flags;
-> > +        }
-> > +
-> > +        descs[i].addr =3D cpu_to_le64(sgs[n]);
-> > +        descs[i].id =3D id;
-> > +        if (n < out_num) {
-> > +            descs[i].len =3D cpu_to_le32(out_sg[n].iov_len);
-> > +        } else {
-> > +            descs[i].len =3D cpu_to_le32(in_sg[n - out_num].iov_len);
-> > +        }
-> > +
-> > +        curr =3D cpu_to_le16(svq->desc_next[curr]);
-> > +
-> > +        if (++i >=3D svq->vring_packed.vring.num) {
-> > +            i =3D 0;
-> > +            svq->vring_packed.avail_used_flags ^=3D
-> > +                1 << VRING_PACKED_DESC_F_AVAIL |
-> > +                1 << VRING_PACKED_DESC_F_USED;
-> > +        }
-> > +    }
-> >
-> > +    if (i <=3D head_idx) {
-> > +        svq->vring_packed.avail_wrap_counter ^=3D 1;
-> > +    }
-> > +
-> > +    svq->vring_packed.next_avail_idx =3D i;
-> > +    svq->shadow_avail_idx =3D i;
-> > +    svq->free_head =3D curr;
-> > +
-> > +    /*
-> > +     * A driver MUST NOT make the first descriptor in the list
-> > +     * available before all subsequent descriptors comprising
-> > +     * the list are made available.
-> > +     */
-> > +    smp_wmb();
-> > +    svq->vring_packed.vring.desc[head_idx].flags =3D head_flags;
-> >   }
-> >
-> > -static void vhost_svq_kick(VhostShadowVirtqueue *svq)
-> > +static void vhost_svq_kick_split(VhostShadowVirtqueue *svq)
-> >   {
-> >       bool needs_kick;
-> >
-> > @@ -209,7 +282,8 @@ static void vhost_svq_kick(VhostShadowVirtqueue *sv=
-q)
-> >       if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) =
-{
-> >           uint16_t avail_event =3D le16_to_cpu(
-> >                   *(uint16_t *)(&svq->vring.used->ring[svq->vring.num])=
-);
-> > -        needs_kick =3D vring_need_event(avail_event, svq->shadow_avail=
-_idx, svq->shadow_avail_idx - 1);
-> > +        needs_kick =3D vring_need_event(avail_event, svq->shadow_avail=
-_idx,
-> > +                     svq->shadow_avail_idx - 1);
-> >       } else {
-> >           needs_kick =3D
-> >                   !(svq->vring.used->flags & cpu_to_le16(VRING_USED_F_N=
-O_NOTIFY));
-> > @@ -222,6 +296,30 @@ static void vhost_svq_kick(VhostShadowVirtqueue *s=
-vq)
-> >       event_notifier_set(&svq->hdev_kick);
-> >   }
-> >
-> > +static void vhost_svq_kick_packed(VhostShadowVirtqueue *svq)
-> > +{
-> > +    bool needs_kick;
-> > +
-> > +    /*
-> > +     * We need to expose the available array entries before checking
-> > +     * notification suppressions.
-> > +     */
-> > +    smp_mb();
-> > +
-> > +    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
-> > +        return;
-> > +    } else {
-> > +        needs_kick =3D (svq->vring_packed.vring.device->flags !=3D
-> > +                      cpu_to_le16(VRING_PACKED_EVENT_FLAG_DISABLE));
-> > +    }
-> > +
-> > +    if (!needs_kick) {
-> > +        return;
-> > +    }
-> > +
-> > +    event_notifier_set(&svq->hdev_kick);
-> > +}
-> > +
-> >   /**
-> >    * Add an element to a SVQ.
-> >    *
-> > @@ -258,13 +356,22 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, cons=
-t struct iovec *out_sg,
-> >           return -EINVAL;
-> >       }
-> >
-> > -    vhost_svq_add_split(svq, out_sg, out_num, in_sg,
-> > -                        in_num, sgs, &qemu_head);
-> > +    if (svq->is_packed) {
-> > +        vhost_svq_add_packed(svq, out_sg, out_num, in_sg,
-> > +                             in_num, sgs, &qemu_head);
-> > +    } else {
-> > +        vhost_svq_add_split(svq, out_sg, out_num, in_sg,
-> > +                            in_num, sgs, &qemu_head);
-> > +    }
-> >
-> >       svq->num_free -=3D ndescs;
-> >       svq->desc_state[qemu_head].elem =3D elem;
-> >       svq->desc_state[qemu_head].ndescs =3D ndescs;
->
-> *head in vhost_svq_add_packed() is stored in "qemu_head" here.
->
+You could use a buildroot image instead. :
 
-Sorry I don't get this, can you expand?
+   https://github.com/buildroot/buildroot/blob/master/configs/qemu_ppc64le_powernv8_defconfig
 
-[1] https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
+Thanks,
 
-> > -    vhost_svq_kick(svq);
-> > +    if (svq->is_packed) {
-> > +        vhost_svq_kick_packed(svq);
-> > +    } else {
-> > +        vhost_svq_kick_split(svq);
-> > +    }
-> >       return 0;
-> >   }
-> >
->
-> Thanks,
-> Sahil
->
+C.
 
 
