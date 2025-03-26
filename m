@@ -4,70 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12373C36005
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 02:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19FCBC36005
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 03:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txGuU-00059q-CJ; Tue, 25 Mar 2025 22:54:30 -0400
+	id 1txHPi-0001UB-Vn; Tue, 25 Mar 2025 23:26:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1txGuS-00059T-CA
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 22:54:28 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1txGuO-0002c6-Kg
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 22:54:28 -0400
-Received: from loongson.cn (unknown [10.20.42.126])
- by gateway (Coremail) with SMTP id _____8CxieBUbONnPZqmAA--.38838S3;
- Wed, 26 Mar 2025 10:54:12 +0800 (CST)
-Received: from [10.20.42.126] (unknown [10.20.42.126])
- by front1 (Coremail) with SMTP id qMiowMBxn8VRbONnyddgAA--.25980S3;
- Wed, 26 Mar 2025 10:54:11 +0800 (CST)
-Subject: Re: [PATCH] hw/loongarch/boot: Adjust the loading position of the
- initrd
-To: bibo mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
-References: <20250319083216.438159-1-lixianglai@loongson.cn>
- <7eb54b16-84ad-8b3e-fe5f-bc7435917fe3@loongson.cn>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <607fcf63-1d51-c2f8-593d-7e59702406e9@loongson.cn>
-Date: Wed, 26 Mar 2025 10:51:57 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1txHPd-0001Tf-Pg
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 23:26:44 -0400
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1txHPb-0006Wz-VL
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 23:26:41 -0400
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-601c12ac8d0so3169028eaf.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Mar 2025 20:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1742959597; x=1743564397; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=x9igzxqMJAtjM6FYhJTJXDaNbz0GNfpXcZOZmvCUVGE=;
+ b=Qg+jcUlPYs+fBPP5vdnmi8RxkWHE0RvD2WcQlDUdGZhsDos+GFJlc+GN4I0qQgD137
+ 38PgaHd7GwFL5+RD7qCNKw402+A9VX/94161mqSj6xuGHaT+d0VA5e2flC2atYONcGlx
+ LWUg2FXsk1s30C3N1C+1+SioI2sxuq9Hrg6Jo1rpLBWD7kZ7PSPQAEqmJGhc9yn8POkO
+ XtGhcgkMfSyRG2nbR3PzY0fHreicvCL5KUQD4fdFNrvg3CgsiGNWigcLbqsOt8YMAesq
+ cM/HvT6TI+CLsU7A42uytaEzHdGhWb3UN478rxW6aAD6eLwUiMNSiO/ul+4m3FFB0EHs
+ i8zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742959597; x=1743564397;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x9igzxqMJAtjM6FYhJTJXDaNbz0GNfpXcZOZmvCUVGE=;
+ b=qg/wqLBeNgGJGerNXvxSrDv/RdTMDx4KOJGs+qPRwcQOVssQOuJ4edqW4dsO9LcgMs
+ 9vOm+9LDMdb+Isiy1q61abo6enU+6ZordRe7Rg2+72KBUbk2i5JpC67hFRk0SYyfSDNy
+ rPrpDMDZ8macpwQizlp6j1aQpCNMdT4YdEEjf5dxMMzV1Wa+8gOXlnS3XEY+tAEEZta1
+ 8W0esunVft6jSMsiU6WOJhjomlin5D5EqE1TAtl3mcI06CBbpwbBL4K23c7KpWOHoPtg
+ HOyynmZMUkZlC0Gm+FDj+e9HHlRjS3sq5YVC1n0audwRRPmb61mHmGqY6YYajJMUEbrn
+ 3tCQ==
+X-Gm-Message-State: AOJu0YzSEpQWTlNSHa1juPOibpN1j6paEghQ+gJb36K5W0aM9dH2lVMo
+ zEDmiAdscyNCzcEIXoiLHYMPwolIrLVO7R0Z54LlZgNAngbA1hGtHKMs4ClZrmqF7m8NRb1kFHl
+ Ko1EpFEal3suwE/g9HPgWldvpVMWDLwCV+tIwNA==
+X-Gm-Gg: ASbGncu+P+OgN4YvX89XZvcObKqeOaeG8L0m+SSVIh5oLD2BXfmxKnQlGhfwVZF5euX
+ dNIv2J0A7dZBneoBFhAVUiAB3tLxSbjjnxKRRPLTMhwpQpccPPPBMwJrnScRj1mbEJuafd/v9Gb
+ p1opUpOFnDu2+7kfmZyhvr9mD1aBYz
+X-Google-Smtp-Source: AGHT+IHQSJCXy9YClLaelpDEvv5A7PbQ5+2sHFeL4x6XGXLFVVxsfTj3/PH0sh3YItzWVrv0wQwEhr9UDOM13EWwVNQ=
+X-Received: by 2002:a05:6871:5812:b0:296:5928:7a42 with SMTP id
+ 586e51a60fabf-2c7802e74ffmr11507336fac.22.1742959596616; Tue, 25 Mar 2025
+ 20:26:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <7eb54b16-84ad-8b3e-fe5f-bc7435917fe3@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMBxn8VRbONnyddgAA--.25980S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW3WFyxGF15GFW3Cw45ZFW7WrX_yoW3JFy5pr
- s7JrW5JryDArn5Jr1xJr1UWFy7Ar18G3Z8XryxXFy8JrsFyr1jqr1UXryvgryDJw4rJF1U
- Jr1UXrnrZF17JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+References: <20250318070136.38898-1-jay.chang@sifive.com>
+ <20250318070136.38898-2-jay.chang@sifive.com>
+ <19189ed9-0459-4c7d-902a-fcacb2595f07@ventanamicro.com>
+In-Reply-To: <19189ed9-0459-4c7d-902a-fcacb2595f07@ventanamicro.com>
+From: Jay Chang <jay.chang@sifive.com>
+Date: Wed, 26 Mar 2025 11:26:24 +0800
+X-Gm-Features: AQ5f1JptqyggyUBJoa-VxCaY70EpdnUlDe8C17elF6v7ftfChfxG4ghcA1QpZpI
+Message-ID: <CACNNAjPrStVBHRFWj_+O68KqS6Mz_8brU5N2R39tsKeWZmPBKg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] target/riscv: Restrict midelegh access to S-mode harts
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Frank Chang <frank.chang@sifive.com>
+Content-Type: multipart/alternative; boundary="0000000000009d5a9d063136671c"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=jay.chang@sifive.com; helo=mail-oo1-xc2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.031,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,188 +97,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000009d5a9d063136671c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Thanks for the feedback!
 
-Hi bibo mao:
-> Xianglai,
+You're right =E2=80=94 I missed initializing csr_priv.
+In this case, we only want to check for privilege M-mode CSRs along with
+the smaia condition.
+I=E2=80=99ll fix it by adding:
+
+"int csr_priv =3D get_field(csrno, 0x300);"
+
+Jay
+
+On Wed, Mar 19, 2025 at 8:59=E2=80=AFPM Daniel Henrique Barboza <
+dbarboza@ventanamicro.com> wrote:
+
 >
-> Thanks for your patch, some comments inline.
 >
-> On 2025/3/19 下午4:32, Xianglai Li wrote:
->> When only the -kernel parameter is used to load the elf kernel,
->> the initrd is loaded in the ram. If the initrd size is too large,
->> the loading fails, resulting in a VM startup failure.
->> This patch first loads initrd near the kernel.
->> When the nearby memory space of the kernel is insufficient,
->> it tries to load it to the starting position of high-end memory.
->> If there is still not enough, qemu will report an error
->> and ask the user to increase the memory space for the
->> virtual machine to boot.
->>
->> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->> ---
->> Cc: Bibo Mao <maobibo@loongson.cn>
->> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
->> Cc: Song Gao <gaosong@loongson.cn>
->> Cc: Xianglai Li <lixianglai@loongson.cn>
->>
->>   hw/loongarch/boot.c         | 66 ++++++++++++++++++++++++++++++++-----
->>   hw/loongarch/virt.c         |  1 +
->>   include/hw/loongarch/boot.h |  1 +
->>   3 files changed, 59 insertions(+), 9 deletions(-)
->>
->> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
->> index 354cf458c8..3f094ebb39 100644
->> --- a/hw/loongarch/boot.c
->> +++ b/hw/loongarch/boot.c
->> @@ -235,6 +235,61 @@ static int64_t load_loongarch_linux_image(const 
->> char *filename,
->>       return size;
->>   }
->>   +static void find_initrd_loadoffset(struct loongarch_boot_info *info,
->> +                uint64_t kernel_high, ssize_t kernel_size)
->> +{
->> +    hwaddr base, size, gap;
->> +    ram_addr_t initrd_end, initrd_start;
->> +    int nb_numa_nodes;
->> +    NodeInfo *numa_info;
->> +
->> +    base = VIRT_LOWMEM_BASE;
->> +    gap = VIRT_LOWMEM_SIZE;
->> +    nb_numa_nodes = info->numa_state->num_nodes;
->> +    numa_info = info->numa_state->nodes;
->> +    initrd_start = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
->> +    initrd_end = initrd_start + initrd_size;
->> +
->> +    if (nb_numa_nodes) {
->> +        size = numa_info[0].node_mem;
-> why is memory size of the node0 calculated here?
-> initrd memory can be put at these places:
-> 1) near kernel at low memory region.
-> 2) start from high memory region located at VIRT_HIGHMEM_BASE
+> On 3/18/25 4:01 AM, Jay Chang wrote:
+> > RISC-V AIA Spec states:
+> > "For a machine-level environment, extension Smaia encompasses all added
+> > CSRs and all modifications to interrupt response behavior that the AIA
+> > specifies for a hart, over all privilege levels. For a supervisor-level
+> > environment, extension Ssaia is essentially the same as Smaia except
+> > excluding the machine-level CSRs and behavior not directly visible to
+> > supervisor level."
+> >
+> > Since midelegh is an AIA machine-mode CSR, add Smaia extension check in
+> > aia_smode32 predicate.
+> >
+> > Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> > Signed-off-by: Jay Chang <jay.chang@sifive.com>
+> > ---
+> >   target/riscv/csr.c | 7 +++++--
+> >   1 file changed, 5 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> > index 975d6e307f..c3dd8e6cda 100644
+> > --- a/target/riscv/csr.c
+> > +++ b/target/riscv/csr.c
+> > @@ -372,8 +372,11 @@ static RISCVException aia_smode(CPURISCVState *env=
+,
+> int csrno)
+> >   static RISCVException aia_smode32(CPURISCVState *env, int csrno)
+> >   {
+> >       int ret;
+> > +    int csr_priv;
+> >
+> > -    if (!riscv_cpu_cfg(env)->ext_ssaia) {
+> > +    if (csr_priv =3D=3D PRV_M && !riscv_cpu_cfg(env)->ext_smaia) {
+> > +        return RISCV_EXCP_ILLEGAL_INST;
+> > +    } else if (!riscv_cpu_cfg(env)->ext_ssaia) {
+> >           return RISCV_EXCP_ILLEGAL_INST;
+> >       }
 >
-> It seems that it irrelative with numa memory
-
-When the initrd cannot be loaded in the low memory,
-we plan to load the initrd to the starting address of the high memory,
-so we need to determine whether the high memory has enough space to put 
-the initrd.
-Meanwhile, we hope that the initrd can be loaded on node0 as much as 
-possible
-and avoid crossing memory nodes as much as possible.
-
-When qemu specifies the node0 memory size and when no node0 memory size 
-is specified,
-the calculation method of the node0 memory size is different,
-so we introduce the calculation of the node0 memory here.
-
-If the memory size of node 0 is completely unable to load initrd,
-we will ask users to increase the memory size of node 0,
-and do not consider loading initrd to other memory nodes,
-so as to simplify the calculation process
-
->> +    } else {
->> +        size = info->ram_size;
->> +    }
->> +    /*
->> +     * Try to load the initrd near the kernel image
->> +     */
->> +    if (size <= gap) {
->> +        if (initrd_end <= (base + gap)) {
->> +            initrd_offset = initrd_start;
->> +            return ;
->> +        }
-> no else here. otherwise the sentence as following "size -= gap;" will 
-> be negative.
-
-Yes,This is a bug, I will fix it!
->> +    }
->> +
->> +    /*
->> +     * Try to load initrd in the high memory of node0
->> +     */
->> +    size -= gap;
->> +    base = VIRT_HIGHMEM_BASE;
->> +    initrd_start = ROUND_UP(base, 64 * KiB);
->> +    initrd_end = initrd_start + initrd_size;
->> +    if (initrd_end <= (base + size)) {
-> it is a little complicated,  just the following will be ok
->    if (initrd_size <= size) {
->        initrd_offset = base;
->         return;
->    }
+> I believe this won't compile:
 >
-Ok!!
+> ../target/riscv/csr.c: In function =E2=80=98aia_smode32=E2=80=99:
+> ../target/riscv/csr.c:377:8: error: =E2=80=98csr_priv=E2=80=99 is used un=
+initialized
+> [-Werror=3Duninitialized]
+>    377 |     if (csr_priv =3D=3D PRV_M && !riscv_cpu_cfg(env)->ext_smaia)=
+ {
+>        |        ^
+> ../target/riscv/csr.c:375:9: note: =E2=80=98csr_priv=E2=80=99 was declare=
+d here
+>    375 |     int csr_priv;
+>        |         ^~~~~~~~
+> cc1: all warnings being treated as errors
+> [2171/2988] Compiling C object
+> libqemu-riscv64-softmmu.a.p/target_riscv_translate.c.o
+> ninja: build stopped: subcommand failed.
+>
+>
+> Perhaps the idea here is doing a "int csr_priv =3D env->priv;", but in th=
+at
+> case you
+> might as well just use env->priv directly. Thanks,
+>
+>
+> Daniel
+>
+> >
+> > @@ -5832,7 +5835,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D =
+{
+> >       [CSR_MVIP]     =3D { "mvip",     aia_any, NULL, NULL, rmw_mvip   =
+ },
+> >
+> >       /* Machine-Level High-Half CSRs (AIA) */
+> > -    [CSR_MIDELEGH] =3D { "midelegh", aia_any32, NULL, NULL, rmw_midele=
+gh
+> },
+> > +    [CSR_MIDELEGH] =3D { "midelegh", aia_smode32, NULL, NULL,
+> rmw_midelegh },
+> >       [CSR_MIEH]     =3D { "mieh",     aia_any32, NULL, NULL, rmw_mieh
+>  },
+> >       [CSR_MVIENH]   =3D { "mvienh",   aia_any32, NULL, NULL, rmw_mvien=
+h
+>  },
+> >       [CSR_MVIPH]    =3D { "mviph",    aia_any32, NULL, NULL, rmw_mviph
+> },
+>
+>
 
-Thanks!
-Xianglai.
+--0000000000009d5a9d063136671c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Regards
-> Bibo Mao
->> +        initrd_offset = initrd_start;
->> +        return ;
->> +    }
->> +
->> +    if (nb_numa_nodes == 0) {
->> +        error_report("memory too small for initial ram disk '%s',"
->> +             "You need to expand the memory space",
->> +             info->initrd_filename);
->> +    } else {
->> +        error_report("memory too small for initial ram disk '%s',"
->> +            "You need to expand the memory space of node0",
->> +            info->initrd_filename);
->> +
->> +    }
->> +    exit(1);
->> +}
->> +
->>   static int64_t load_kernel_info(struct loongarch_boot_info *info)
->>   {
->>       uint64_t kernel_entry, kernel_low, kernel_high;
->> @@ -261,16 +316,9 @@ static int64_t load_kernel_info(struct 
->> loongarch_boot_info *info)
->>       if (info->initrd_filename) {
->>           initrd_size = get_image_size(info->initrd_filename);
->>           if (initrd_size > 0) {
->> -            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 
->> 64 * KiB);
->> -
->> -            if (initrd_offset + initrd_size > info->ram_size) {
->> -                error_report("memory too small for initial ram disk 
->> '%s'",
->> -                             info->initrd_filename);
->> -                exit(1);
->> -            }
->> -
->> +            find_initrd_loadoffset(info, kernel_high, kernel_size);
->>               initrd_size = 
->> load_image_targphys(info->initrd_filename, initrd_offset,
->> -                                              info->ram_size - 
->> initrd_offset);
->> +                                              initrd_size);
->>           }
->>             if (initrd_size == (target_ulong)-1) {
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index a5840ff968..eb62abec0e 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
->> @@ -750,6 +750,7 @@ static void virt_init(MachineState *machine)
->> qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
->>         lvms->bootinfo.ram_size = ram_size;
->> +    lvms->bootinfo.numa_state = machine->numa_state;
->>       loongarch_load_kernel(machine, &lvms->bootinfo);
->>   }
->>   diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
->> index b3b870df1f..e3887d7cc6 100644
->> --- a/include/hw/loongarch/boot.h
->> +++ b/include/hw/loongarch/boot.h
->> @@ -98,6 +98,7 @@ struct efi_initrd {
->>     struct loongarch_boot_info {
->>       uint64_t ram_size;
->> +    struct NumaState *numa_state;
->>       const char *kernel_filename;
->>       const char *kernel_cmdline;
->>       const char *initrd_filename;
->>
+<div dir=3D"ltr"><p class=3D"gmail-">Thanks for the feedback!</p>
+<p class=3D"gmail-">You&#39;re right =E2=80=94 I missed initializing <code>=
+csr_priv</code>.<br>
+In this case, we only want to check for privilege M-mode CSRs along with th=
+e <code>smaia</code> condition.<br>
+I=E2=80=99ll fix it by adding:</p><p class=3D"gmail-">&quot;int csr_priv =
+=3D get_field(csrno, 0x300);&quot;<br><br>Jay</p></div><br><div class=3D"gm=
+ail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On W=
+ed, Mar 19, 2025 at 8:59=E2=80=AFPM Daniel Henrique Barboza &lt;<a href=3D"=
+mailto:dbarboza@ventanamicro.com">dbarboza@ventanamicro.com</a>&gt; wrote:<=
+br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+<br>
+On 3/18/25 4:01 AM, Jay Chang wrote:<br>
+&gt; RISC-V AIA Spec states:<br>
+&gt; &quot;For a machine-level environment, extension Smaia encompasses all=
+ added<br>
+&gt; CSRs and all modifications to interrupt response behavior that the AIA=
+<br>
+&gt; specifies for a hart, over all privilege levels. For a supervisor-leve=
+l<br>
+&gt; environment, extension Ssaia is essentially the same as Smaia except<b=
+r>
+&gt; excluding the machine-level CSRs and behavior not directly visible to<=
+br>
+&gt; supervisor level.&quot;<br>
+&gt; <br>
+&gt; Since midelegh is an AIA machine-mode CSR, add Smaia extension check i=
+n<br>
+&gt; aia_smode32 predicate.<br>
+&gt; <br>
+&gt; Reviewed-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com"=
+ target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
+&gt; Signed-off-by: Jay Chang &lt;<a href=3D"mailto:jay.chang@sifive.com" t=
+arget=3D"_blank">jay.chang@sifive.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0target/riscv/csr.c | 7 +++++--<br>
+&gt;=C2=A0 =C2=A01 file changed, 5 insertions(+), 2 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/target/riscv/csr.c b/target/riscv/csr.c<br>
+&gt; index 975d6e307f..c3dd8e6cda 100644<br>
+&gt; --- a/target/riscv/csr.c<br>
+&gt; +++ b/target/riscv/csr.c<br>
+&gt; @@ -372,8 +372,11 @@ static RISCVException aia_smode(CPURISCVState *en=
+v, int csrno)<br>
+&gt;=C2=A0 =C2=A0static RISCVException aia_smode32(CPURISCVState *env, int =
+csrno)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int ret;<br>
+&gt; +=C2=A0 =C2=A0 int csr_priv;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -=C2=A0 =C2=A0 if (!riscv_cpu_cfg(env)-&gt;ext_ssaia) {<br>
+&gt; +=C2=A0 =C2=A0 if (csr_priv =3D=3D PRV_M &amp;&amp; !riscv_cpu_cfg(env=
+)-&gt;ext_smaia) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return RISCV_EXCP_ILLEGAL_INST;<br>
+&gt; +=C2=A0 =C2=A0 } else if (!riscv_cpu_cfg(env)-&gt;ext_ssaia) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return RISCV_EXCP_ILLEGAL_INST=
+;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+I believe this won&#39;t compile:<br>
+<br>
+../target/riscv/csr.c: In function =E2=80=98aia_smode32=E2=80=99:<br>
+../target/riscv/csr.c:377:8: error: =E2=80=98csr_priv=E2=80=99 is used unin=
+itialized [-Werror=3Duninitialized]<br>
+=C2=A0 =C2=A0377 |=C2=A0 =C2=A0 =C2=A0if (csr_priv =3D=3D PRV_M &amp;&amp; =
+!riscv_cpu_cfg(env)-&gt;ext_smaia) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 ^<br>
+../target/riscv/csr.c:375:9: note: =E2=80=98csr_priv=E2=80=99 was declared =
+here<br>
+=C2=A0 =C2=A0375 |=C2=A0 =C2=A0 =C2=A0int csr_priv;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~~~~~<br>
+cc1: all warnings being treated as errors<br>
+[2171/2988] Compiling C object libqemu-riscv64-softmmu.a.p/target_riscv_tra=
+nslate.c.o<br>
+ninja: build stopped: subcommand failed.<br>
+<br>
+<br>
+Perhaps the idea here is doing a &quot;int csr_priv =3D env-&gt;priv;&quot;=
+, but in that case you<br>
+might as well just use env-&gt;priv directly. Thanks,<br>
+<br>
+<br>
+Daniel<br>
+<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; @@ -5832,7 +5835,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D=
+ {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[CSR_MVIP]=C2=A0 =C2=A0 =C2=A0=3D { &quot;mv=
+ip&quot;,=C2=A0 =C2=A0 =C2=A0aia_any, NULL, NULL, rmw_mvip=C2=A0 =C2=A0 },<=
+br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Machine-Level High-Half CSRs (AIA) */<br>
+&gt; -=C2=A0 =C2=A0 [CSR_MIDELEGH] =3D { &quot;midelegh&quot;, aia_any32, N=
+ULL, NULL, rmw_midelegh },<br>
+&gt; +=C2=A0 =C2=A0 [CSR_MIDELEGH] =3D { &quot;midelegh&quot;, aia_smode32,=
+ NULL, NULL, rmw_midelegh },<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[CSR_MIEH]=C2=A0 =C2=A0 =C2=A0=3D { &quot;mi=
+eh&quot;,=C2=A0 =C2=A0 =C2=A0aia_any32, NULL, NULL, rmw_mieh=C2=A0 =C2=A0 =
+=C2=A0},<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[CSR_MVIENH]=C2=A0 =C2=A0=3D { &quot;mvienh&=
+quot;,=C2=A0 =C2=A0aia_any32, NULL, NULL, rmw_mvienh=C2=A0 =C2=A0},<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0[CSR_MVIPH]=C2=A0 =C2=A0 =3D { &quot;mviph&q=
+uot;,=C2=A0 =C2=A0 aia_any32, NULL, NULL, rmw_mviph=C2=A0 =C2=A0 },<br>
+<br>
+</blockquote></div>
 
+--0000000000009d5a9d063136671c--
 
