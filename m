@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A3CC36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C95C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txKlm-0007yN-RA; Wed, 26 Mar 2025 03:01:46 -0400
+	id 1txKoY-0000iu-SE; Wed, 26 Mar 2025 03:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKlY-0007um-1L
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:01:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKoX-0000gq-A3
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:04:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKlT-0007fp-MZ
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:01:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKoV-000858-9Y
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:04:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742972485;
+ s=mimecast20190719; t=1742972673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cwI4kN4d6EhahWzWKQoQcV95NzHBntr4dj9JSzJqlts=;
- b=ZoqsLbF15tliakLxdPmLIbb+FK0/52LNdD83/KPzGtsGHPBBWXj8QD6x5nnnG5oESqA9hE
- on/rCymZTYEd1wDV010+47LrlgAtKzH0inwjiN+t/LldWQ7wUdHN9JeXMhZyEBqFJWr4oD
- 1SHNmpYrGsCdcb3aYBam6uLTSkSHTwM=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Nn6ZBd52+1Kv9h+jz3c9LMyowoLV/U5a/PjT7dhlX3g=;
+ b=DVutlrGsjN2GWtzGSBcj9TwkCRUWq2qjTPG4AkWFngH6IBqkX1ylFWJLmhvns0f5n2J+xi
+ UZQPoQ8eD+mvQT/PCNPGDZOzxGozJt59yisSSZFr3Yt+pnjZoeOjjqnx9nQC0Bd+NpU2ER
+ 6Ps4hQ8zTIutf/GDWcoKwqIy8CIbrKo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-cnqKrEcAOtmFlkwmjDJczQ-1; Wed, 26 Mar 2025 03:01:23 -0400
-X-MC-Unique: cnqKrEcAOtmFlkwmjDJczQ-1
-X-Mimecast-MFC-AGG-ID: cnqKrEcAOtmFlkwmjDJczQ_1742972482
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5e6a64bd1ecso5588985a12.2
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 00:01:23 -0700 (PDT)
+ us-mta-424-wt4fIFUkPdWS5cBsgcBlhQ-1; Wed, 26 Mar 2025 03:04:32 -0400
+X-MC-Unique: wt4fIFUkPdWS5cBsgcBlhQ-1
+X-Mimecast-MFC-AGG-ID: wt4fIFUkPdWS5cBsgcBlhQ_1742972671
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39134c762ebso2647258f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 00:04:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742972482; x=1743577282;
+ d=1e100.net; s=20230601; t=1742972671; x=1743577471;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cwI4kN4d6EhahWzWKQoQcV95NzHBntr4dj9JSzJqlts=;
- b=jWIXNdg2NC4xEma2hyZVgTSCbeGnl5ai0ysiBy9zfOvSaZv3PTpgZJhWbHJ7RN4YFe
- 1EvgafGyMUEfk9e0FQd361pkjYgd4UCTlJ5VkPpPvjwZ7Ua32Rbj1n4O3Pdoi/e1X4Ie
- WT/r50hBQAjfB0cyS5Im0GxAgmIVg5kl6EltaSRzZxVTfV/uW9KHVj7L1syYFZlWP2wT
- m/2/vQG2Y4F73lczXyf2jTA+Q+RwEWPNwtn0yRQC3RU0ZFmwIaUOapbhc1qNiWnWPSsg
- QNgHlBwqhpcECqZ6WzbOH4xKYSF3bfuu4sMu74sENfMvW26YYldh5k31m1lZsoq7Aua/
- b/Mw==
+ bh=Nn6ZBd52+1Kv9h+jz3c9LMyowoLV/U5a/PjT7dhlX3g=;
+ b=cb46gCZ+fKwUCNSFT952MfFr/sdUnDkDdaLpviT2sOG9KY/eNt2Qoav3IfpI6tKkzQ
+ F1/CvDPsop9JDoR5kkbBS4DhUaqOlHii6JIgWZzCY4IKofDooIpb5j7rY0sfYXhFRcnt
+ xfadVz7t1AtxWqotRGkq9UnH0nUqVZ00WkkEQT/QGGtDFKIaQxUl1xW9vv2gQ4nyhkrk
+ 41GE4BZJ8CnDfHZ23QxQRx46gBYOT+kEKHeI/T/5RFRZqRmdlrfXIlzdVNAD3S7YF2py
+ gUPpX4AmxZC7A7TXP15a/5MlrDRraxde13fctEbydH3l/W4UZ38ZUVwt7SFahHbVhDii
+ OyJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5KMA1AqH/sIznbcYRH3yjT949QST/a3YAdIKlYzGMOfdFDKAN6h3BYoj+17iN/PLuVyKDAQLijzC7@nongnu.org
-X-Gm-Message-State: AOJu0YwAIv9IfMRpifOlTusH48xZVuvCizYcMqtyWzUrvZKwt7mblzfs
- 3JZwQk6556eQYtQ3PYb5E4k7MKg9UNFCuZ7UU8IveYiXDiX2b9k1HJX47ogDtDYYkK+g/ChRuh+
- LhRrg1tnV5fniXOURKEWgb3uYXu61Vr+m2hoTEkdEqPyWZx+6ucXT
-X-Gm-Gg: ASbGncuCwCzzSrw2doJC1IAFTXTyf6e4+n6Ngl7mWi/UtBTUdORNy3R/tibg+gOGr/7
- yd9PE3DkbjloWDf0QJndDEoGTiVj9kTSC8ykpxlolg/QKPexg7gxAX0HEVoq475/FvI1ASS2L0l
- vkrwqozEZiRZiz2qfLHR4/NHGMtIG7u33QylO9auRTX8jOZ2amO3KAU8W1vRPZlUgm0o5FmDzZL
- PyphIU8/Nl8Yma688JxWln24gayfhB02Pa7+Ahdq5wJ3ktAvCQukkjC/LBQpUbrSaGAR7nNx9Dv
- TRHnHBqprvBAjFPEfa3E6EhPY8Yk66kE67nRlAHVDOpAQVQ=
-X-Received: by 2002:a17:907:7289:b0:abf:6b14:6cfb with SMTP id
- a640c23a62f3a-ac3f20d8b45mr2128265666b.5.1742972482079; 
- Wed, 26 Mar 2025 00:01:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmk8yHgBA7w7Beg0Gqbyx32SBWzNewFXB/WMkfVdGioBgObs20nbPWckLny1vW2Xc2FXzgvg==
-X-Received: by 2002:a17:907:7289:b0:abf:6b14:6cfb with SMTP id
- a640c23a62f3a-ac3f20d8b45mr2128256566b.5.1742972481358; 
- Wed, 26 Mar 2025 00:01:21 -0700 (PDT)
+ AJvYcCVvO7pDuab5DUUwJ2ZCuNbu/7Z6UusmYgtS1Rq6BdNb+u5/xyi5oWqgLn6rs1xto1Lp9CgnW+VrUkPt@nongnu.org
+X-Gm-Message-State: AOJu0YwXTMPbjI0X2JlM99AbgOjHPhJ3375iMnPe4Yf/StDerqBnPs8A
+ j5oHGtMOinKjjNgGvBOQfOFEGEtw0+/MMwKpT4tRaekldGkSKp399vx8aX31or3Mgb9zdThErWc
+ lY2/rlFCrp00ZsBq6VBKwWTbia1fQX18F7QhpSQGnpzOG1wHbFkDj
+X-Gm-Gg: ASbGncvPa5MkYvWNV86UBOIkLxRsXfdzEqdXgk25/Jfw5ueqbRo3tnmaX3hYJBeFnfW
+ uFtulXIgodwcQo+0WjYSj85qOV97kTQMTTxp8Tahyxc7HRFWfE7GJxuscO8I6HeBTh2lZlK4Uwc
+ vPsyINqpFeLGzEQro7OUMySZUpiy2exkLSKtqECy19zbkBrFRe2KO4YjPhse58WYmcCvatnyMsz
+ ifAq/dcj6fp3xZI9eY09OFiTkVTZlzONu1g4n0sdKETcXZAK7cRpyyCsAC/LBSuGj+QU5bRorfS
+ DwJ0NnP0Z75aejQG8PUv/Z5AiftyMLVTXKwIsY5GfauHtOo=
+X-Received: by 2002:a5d:6d09:0:b0:38f:28a1:501e with SMTP id
+ ffacd0b85a97d-3997f8ed9dfmr18176386f8f.8.1742972671134; 
+ Wed, 26 Mar 2025 00:04:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHG/QgaYcYNFauvypNi8EOsqoHEGlRin1xz+TdQd1Bvo4gPI2XwP7Eaa+LfE4tn+BLzm0b2w==
+X-Received: by 2002:a5d:6d09:0:b0:38f:28a1:501e with SMTP id
+ ffacd0b85a97d-3997f8ed9dfmr18176347f8f.8.1742972670745; 
+ Wed, 26 Mar 2025 00:04:30 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-49-206.web.vodafone.de.
  [109.43.49.206]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3efbde4a9sm983186166b.141.2025.03.26.00.01.19
+ ffacd0b85a97d-3997f9e65f0sm16021046f8f.74.2025.03.26.00.04.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Mar 2025 00:01:20 -0700 (PDT)
-Message-ID: <74345aa8-f44c-49a7-b1b1-d5962f61c5e6@redhat.com>
-Date: Wed, 26 Mar 2025 08:01:18 +0100
+ Wed, 26 Mar 2025 00:04:30 -0700 (PDT)
+Message-ID: <be2356f9-0d64-4a28-b6f7-5ab997b756aa@redhat.com>
+Date: Wed, 26 Mar 2025 08:04:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 03/12] hw/display/dm163: Add description
+Subject: Re: [PATCH-for-10.0 04/12] hw/dma/i82374: Categorize and add
+ description
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
@@ -95,7 +96,7 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
  Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org
 References: <20250325224310.8785-1-philmd@linaro.org>
- <20250325224310.8785-4-philmd@linaro.org>
+ <20250325224310.8785-5-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -140,7 +141,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250325224310.8785-4-philmd@linaro.org>
+In-Reply-To: <20250325224310.8785-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -171,22 +172,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 25/03/2025 23.43, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/display/dm163.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/dma/i82374.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/hw/display/dm163.c b/hw/display/dm163.c
-> index 75a91f62bd3..f6f0ec0c632 100644
-> --- a/hw/display/dm163.c
-> +++ b/hw/display/dm163.c
-> @@ -330,7 +330,7 @@ static void dm163_class_init(ObjectClass *klass, void *data)
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       ResettableClass *rc = RESETTABLE_CLASS(klass);
+> diff --git a/hw/dma/i82374.c b/hw/dma/i82374.c
+> index 9652d47adcd..0bf69ef399b 100644
+> --- a/hw/dma/i82374.c
+> +++ b/hw/dma/i82374.c
+> @@ -150,6 +150,8 @@ static void i82374_class_init(ObjectClass *klass, void *data)
+>       dc->realize = i82374_realize;
+>       dc->vmsd = &vmstate_i82374;
+>       device_class_set_props(dc, i82374_properties);
+> +    dc->desc = "Intel 82374 DMA controller";
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>   }
 >   
-> -    dc->desc = "DM163";
-> +    dc->desc = "DM163 8x3-channel constant current LED driver";
->       dc->vmsd = &vmstate_dm163;
->       dc->realize = dm163_realize;
->       rc->phases.hold = dm163_reset_hold;
+>   static const TypeInfo i82374_info = {
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
