@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2399C36005
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 02:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12373C36005
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 02:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txGL0-0007jO-E7; Tue, 25 Mar 2025 22:17:52 -0400
+	id 1txGuU-00059q-CJ; Tue, 25 Mar 2025 22:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1txGKk-0007iM-2U
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 22:17:34 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1txGKh-0005ru-Ug
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 22:17:33 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1742955441; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=S18HT2wI3UvbDW7FmX0ScJ6iw1himhHn4Y3nVgeKmDSDzWj6SWL2QS+IQSIGANdKKRIMODFmwnSWLLpLw2oiadmyZjGRezYfzSFrsC+3RdozwGboCx0CZMgOnA98ZsCKUGCBqgKM7E1roxtHHPE+R0l/MQa0PxOgVJtTR4Wy+W4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1742955441;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=rO0aJmwIt1FtyUhTCeq6crOmo2ad4nWEqGmEitkKXZA=; 
- b=nncJV44eCb3i0+y1XZADYoisfFh3p69i3eQbl16nInJiNE+k+sgYbfkX2u8pGc5wkuWAJA7KDhZir6F2RSo6dqlAilWVHYcujZd/Acoxm0+slgxRHU0eevtvXd5jcrBslTENPD/Zs9dZERixELcs7fpMwOEmeEjlWNHdSkMWdpk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1742955441; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=rO0aJmwIt1FtyUhTCeq6crOmo2ad4nWEqGmEitkKXZA=;
- b=HG9H7y8K+UOlpLj77cHjkGGLZOKDwaUylqhSEsMEpv834/OH6nhqfL2tY0CMzwYi
- ychN2dDF7yrEkTotkijqRgxcDpOwrDvuGs0IGvjldeduVl3tuyBjEUrwwshFxGf0tTW
- yymnHZYTijYtzeBiqT3UiI+2CU8uNE1FUsgjVyHc=
-Received: by mx.zohomail.com with SMTPS id 17429554397381009.3380613602087;
- Tue, 25 Mar 2025 19:17:19 -0700 (PDT)
-Message-ID: <11ccee8d-7378-42d0-878e-91b61affb1cb@collabora.com>
-Date: Wed, 26 Mar 2025 05:17:16 +0300
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1txGuS-00059T-CA
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 22:54:28 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1txGuO-0002c6-Kg
+ for qemu-devel@nongnu.org; Tue, 25 Mar 2025 22:54:28 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8CxieBUbONnPZqmAA--.38838S3;
+ Wed, 26 Mar 2025 10:54:12 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowMBxn8VRbONnyddgAA--.25980S3;
+ Wed, 26 Mar 2025 10:54:11 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch/boot: Adjust the loading position of the
+ initrd
+To: bibo mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
+References: <20250319083216.438159-1-lixianglai@loongson.cn>
+ <7eb54b16-84ad-8b3e-fe5f-bc7435917fe3@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <607fcf63-1d51-c2f8-593d-7e59702406e9@loongson.cn>
+Date: Wed, 26 Mar 2025 10:51:57 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] ui/console-gl: Add a helper to create a texture
- with linear memory layout
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-References: <20250325234115.1332883-1-vivek.kasireddy@intel.com>
- <20250325234115.1332883-5-vivek.kasireddy@intel.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <7eb54b16-84ad-8b3e-fe5f-bc7435917fe3@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-In-Reply-To: <20250325234115.1332883-5-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: qMiowMBxn8VRbONnyddgAA--.25980S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW3WFyxGF15GFW3Cw45ZFW7WrX_yoW3JFy5pr
+ s7JrW5JryDArn5Jr1xJr1UWFy7Ar18G3Z8XryxXFy8JrsFyr1jqr1UXryvgryDJw4rJF1U
+ Jr1UXrnrZF17JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.031,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,29 +83,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/25 02:39, Vivek Kasireddy wrote:
-> +void surface_gl_create_texture_from_fd(DisplaySurface *surface,
-> +                                       int fd, GLuint *texture)
-> +{
-> +    unsigned long size = surface_stride(surface) * surface_height(surface);
-> +    GLuint mem_obj;
-> +
-> +    if (!epoxy_has_gl_extension("GL_EXT_memory_object") ||
-> +        !epoxy_has_gl_extension("GL_EXT_memory_object_fd")) {
-> +        return;
-> +    }
-> +
-> +#ifdef GL_EXT_memory_object_fd
-> +    glCreateMemoryObjectsEXT(1, &mem_obj);
-> +    glImportMemoryFdEXT(mem_obj, size, GL_HANDLE_TYPE_OPAQUE_FD_EXT, fd);
-> +    if (!glIsMemoryObjectEXT(mem_obj)) {
 
-This check should always succeed. glGetError() should be used for
-glImportMemoryFdEXT() failure checking.
 
-Won't hurt to print error messages instead of failing silently.
+Hi bibo mao:
+> Xianglai,
+>
+> Thanks for your patch, some comments inline.
+>
+> On 2025/3/19 下午4:32, Xianglai Li wrote:
+>> When only the -kernel parameter is used to load the elf kernel,
+>> the initrd is loaded in the ram. If the initrd size is too large,
+>> the loading fails, resulting in a VM startup failure.
+>> This patch first loads initrd near the kernel.
+>> When the nearby memory space of the kernel is insufficient,
+>> it tries to load it to the starting position of high-end memory.
+>> If there is still not enough, qemu will report an error
+>> and ask the user to increase the memory space for the
+>> virtual machine to boot.
+>>
+>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>> ---
+>> Cc: Bibo Mao <maobibo@loongson.cn>
+>> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>> Cc: Song Gao <gaosong@loongson.cn>
+>> Cc: Xianglai Li <lixianglai@loongson.cn>
+>>
+>>   hw/loongarch/boot.c         | 66 ++++++++++++++++++++++++++++++++-----
+>>   hw/loongarch/virt.c         |  1 +
+>>   include/hw/loongarch/boot.h |  1 +
+>>   3 files changed, 59 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+>> index 354cf458c8..3f094ebb39 100644
+>> --- a/hw/loongarch/boot.c
+>> +++ b/hw/loongarch/boot.c
+>> @@ -235,6 +235,61 @@ static int64_t load_loongarch_linux_image(const 
+>> char *filename,
+>>       return size;
+>>   }
+>>   +static void find_initrd_loadoffset(struct loongarch_boot_info *info,
+>> +                uint64_t kernel_high, ssize_t kernel_size)
+>> +{
+>> +    hwaddr base, size, gap;
+>> +    ram_addr_t initrd_end, initrd_start;
+>> +    int nb_numa_nodes;
+>> +    NodeInfo *numa_info;
+>> +
+>> +    base = VIRT_LOWMEM_BASE;
+>> +    gap = VIRT_LOWMEM_SIZE;
+>> +    nb_numa_nodes = info->numa_state->num_nodes;
+>> +    numa_info = info->numa_state->nodes;
+>> +    initrd_start = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
+>> +    initrd_end = initrd_start + initrd_size;
+>> +
+>> +    if (nb_numa_nodes) {
+>> +        size = numa_info[0].node_mem;
+> why is memory size of the node0 calculated here?
+> initrd memory can be put at these places:
+> 1) near kernel at low memory region.
+> 2) start from high memory region located at VIRT_HIGHMEM_BASE
+>
+> It seems that it irrelative with numa memory
 
--- 
-Best regards,
-Dmitry
+When the initrd cannot be loaded in the low memory,
+we plan to load the initrd to the starting address of the high memory,
+so we need to determine whether the high memory has enough space to put 
+the initrd.
+Meanwhile, we hope that the initrd can be loaded on node0 as much as 
+possible
+and avoid crossing memory nodes as much as possible.
+
+When qemu specifies the node0 memory size and when no node0 memory size 
+is specified,
+the calculation method of the node0 memory size is different,
+so we introduce the calculation of the node0 memory here.
+
+If the memory size of node 0 is completely unable to load initrd,
+we will ask users to increase the memory size of node 0,
+and do not consider loading initrd to other memory nodes,
+so as to simplify the calculation process
+
+>> +    } else {
+>> +        size = info->ram_size;
+>> +    }
+>> +    /*
+>> +     * Try to load the initrd near the kernel image
+>> +     */
+>> +    if (size <= gap) {
+>> +        if (initrd_end <= (base + gap)) {
+>> +            initrd_offset = initrd_start;
+>> +            return ;
+>> +        }
+> no else here. otherwise the sentence as following "size -= gap;" will 
+> be negative.
+
+Yes,This is a bug, I will fix it!
+>> +    }
+>> +
+>> +    /*
+>> +     * Try to load initrd in the high memory of node0
+>> +     */
+>> +    size -= gap;
+>> +    base = VIRT_HIGHMEM_BASE;
+>> +    initrd_start = ROUND_UP(base, 64 * KiB);
+>> +    initrd_end = initrd_start + initrd_size;
+>> +    if (initrd_end <= (base + size)) {
+> it is a little complicated,  just the following will be ok
+>    if (initrd_size <= size) {
+>        initrd_offset = base;
+>         return;
+>    }
+>
+Ok!!
+
+Thanks!
+Xianglai.
+
+> Regards
+> Bibo Mao
+>> +        initrd_offset = initrd_start;
+>> +        return ;
+>> +    }
+>> +
+>> +    if (nb_numa_nodes == 0) {
+>> +        error_report("memory too small for initial ram disk '%s',"
+>> +             "You need to expand the memory space",
+>> +             info->initrd_filename);
+>> +    } else {
+>> +        error_report("memory too small for initial ram disk '%s',"
+>> +            "You need to expand the memory space of node0",
+>> +            info->initrd_filename);
+>> +
+>> +    }
+>> +    exit(1);
+>> +}
+>> +
+>>   static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>>   {
+>>       uint64_t kernel_entry, kernel_low, kernel_high;
+>> @@ -261,16 +316,9 @@ static int64_t load_kernel_info(struct 
+>> loongarch_boot_info *info)
+>>       if (info->initrd_filename) {
+>>           initrd_size = get_image_size(info->initrd_filename);
+>>           if (initrd_size > 0) {
+>> -            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 
+>> 64 * KiB);
+>> -
+>> -            if (initrd_offset + initrd_size > info->ram_size) {
+>> -                error_report("memory too small for initial ram disk 
+>> '%s'",
+>> -                             info->initrd_filename);
+>> -                exit(1);
+>> -            }
+>> -
+>> +            find_initrd_loadoffset(info, kernel_high, kernel_size);
+>>               initrd_size = 
+>> load_image_targphys(info->initrd_filename, initrd_offset,
+>> -                                              info->ram_size - 
+>> initrd_offset);
+>> +                                              initrd_size);
+>>           }
+>>             if (initrd_size == (target_ulong)-1) {
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index a5840ff968..eb62abec0e 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -750,6 +750,7 @@ static void virt_init(MachineState *machine)
+>> qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
+>>         lvms->bootinfo.ram_size = ram_size;
+>> +    lvms->bootinfo.numa_state = machine->numa_state;
+>>       loongarch_load_kernel(machine, &lvms->bootinfo);
+>>   }
+>>   diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+>> index b3b870df1f..e3887d7cc6 100644
+>> --- a/include/hw/loongarch/boot.h
+>> +++ b/include/hw/loongarch/boot.h
+>> @@ -98,6 +98,7 @@ struct efi_initrd {
+>>     struct loongarch_boot_info {
+>>       uint64_t ram_size;
+>> +    struct NumaState *numa_state;
+>>       const char *kernel_filename;
+>>       const char *kernel_cmdline;
+>>       const char *initrd_filename;
+>>
+
 
