@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34544C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 17:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2D0C3600E
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 17:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txUku-0000mD-Ml; Wed, 26 Mar 2025 13:41:33 -0400
+	id 1txUpz-0000XS-DV; Wed, 26 Mar 2025 13:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1txUkr-0000cB-I2
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 13:41:30 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1txUpu-0000WT-1N
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 13:46:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1txUkp-0005gi-O6
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 13:41:29 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1txUps-0006J9-5u
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 13:46:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743010886;
+ s=mimecast20190719; t=1743011199;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ekskBF5GBKj4mH3h42hATvRtDb2eBG485Gn9iKgB1aU=;
- b=NGimQkIv1jD5v7xlWFj6wfxjHRCA7GOUcioMMuqLcTflxIIEGyDDaqbX5U9mOlAcqb/jTI
- Lr9GChcI+q9vb0RLmi2Z+U6gAG/tyqtb3rPzCLnuT4I52pSC8QnO34KlNLC5Jy8lwPPWH8
- fFuSXBlKosXlSlt3N1Q5vAt33sXR7Lg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=u3iIZQ1bQlGpgGnlFkW1x0J+ijLDY61xtufX+Vg/IQY=;
+ b=H20WduOR0nZIR6fAKFX0BKIKBZ/tvEB9WcHgNIWed3pp6he8xp0FwweTRLbKaUAT5lljWt
+ 9gR02TvhnKM39GmGk6BZ+wS1/pvf8pMR/3BYcR/FupgWFF546b3DdiIMAqdJl2a3dBtG6Z
+ guRVqeh5YVJeLvDV/wpDxlDrt8Mt4gc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-WAJJEppKPFWVHOQxz4CdVg-1; Wed,
- 26 Mar 2025 13:41:23 -0400
-X-MC-Unique: WAJJEppKPFWVHOQxz4CdVg-1
-X-Mimecast-MFC-AGG-ID: WAJJEppKPFWVHOQxz4CdVg_1743010881
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-1XCfcm5JN2CiAyuUavEoKw-1; Wed,
+ 26 Mar 2025 13:46:33 -0400
+X-MC-Unique: 1XCfcm5JN2CiAyuUavEoKw-1
+X-Mimecast-MFC-AGG-ID: 1XCfcm5JN2CiAyuUavEoKw_1743011192
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74999196D2DC; Wed, 26 Mar 2025 17:41:21 +0000 (UTC)
-Received: from gondolin.redhat.com (unknown [10.67.24.38])
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B40C196B356; Wed, 26 Mar 2025 17:46:32 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.113])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 12D10180B489; Wed, 26 Mar 2025 17:41:06 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH for-10.1 v4 13/13] arm/cpu: switch to a generated
- cpu-sysregs.h.inc
-Date: Wed, 26 Mar 2025 18:37:23 +0100
-Message-ID: <20250326173723.389988-14-cohuck@redhat.com>
-In-Reply-To: <20250326173723.389988-1-cohuck@redhat.com>
-References: <20250326173723.389988-1-cohuck@redhat.com>
+ id 21EBC180B48B; Wed, 26 Mar 2025 17:46:30 +0000 (UTC)
+Date: Wed, 26 Mar 2025 13:46:29 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: ~h0lyalg0rithm <surajshirvankar@gmail.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH qemu 1/1] Add IOURING_SETUP_SINGLE_ISSUER flag to improve
+ iouring performance
+Message-ID: <20250326174629.GA909841@fedora>
+References: <174293621917.22751.11381319865102029969-0@git.sr.ht>
+ <174293621917.22751.11381319865102029969-1@git.sr.ht>
+ <Z-Q1yDqmS3gniW4X@redhat.com>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="pRyw0oLiMdVf6SQX"
+Content-Disposition: inline
+In-Reply-To: <Z-Q1yDqmS3gniW4X@redhat.com>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -74,7 +72,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,82 +88,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generated against Linux 6.14-rc1.
 
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- target/arm/cpu-sysregs.h.inc | 43 +++++++++++++++++++++++++-----------
- 1 file changed, 30 insertions(+), 13 deletions(-)
+--pRyw0oLiMdVf6SQX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index 6c9f9981cc5d..02aae133eb67 100644
---- a/target/arm/cpu-sysregs.h.inc
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -1,18 +1,8 @@
--DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
--DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
--DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
--DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
--DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
--DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
--DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
--DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
--DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
--DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
--DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
--DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-+
- DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
- DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
- DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
- DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
- DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
- DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
-@@ -23,13 +13,40 @@ DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
- DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
- DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
- DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
--DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
- DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
-+DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
- DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
- DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
- DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
- DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
- DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
- DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
-+DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-+DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
-+DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
- DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
-+DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-+DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
-+DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
-+DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
-+DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
-+DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
-+DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
-+DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
-+DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-+DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
-+DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
-+DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
-+DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
-+DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-+DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
-+DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
-+DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
-+DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
-+DEF(GMID_EL1, 3, 1, 0, 0, 4)
-+DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
-+DEF(CSSELR_EL1, 3, 2, 0, 0, 0)
- DEF(CTR_EL0, 3, 3, 0, 0, 1)
-+DEF(DCZID_EL0, 3, 3, 0, 0, 7)
-+
--- 
-2.48.1
+On Wed, Mar 26, 2025 at 06:13:44PM +0100, Kevin Wolf wrote:
+> Am 25.03.2025 um 21:49 hat ~h0lyalg0rithm geschrieben:
+> > From: Suraj Shirvankar <surajshirvankar@gmail.com>
+> >=20
+> > Signed-off-by: Suraj Shirvankar <surajshirvankar@gmail.com>
+> > ---
+> >  util/fdmon-io_uring.c | 8 +++++++-
+> >  1 file changed, 7 insertions(+), 1 deletion(-)
+>=20
+> As Stefan already mentioned, the commit message should say why we want
+> to set this flag and why it is correct to do so.
+>=20
+> Is there a reason why you change the io_uring_queue_init() call in
+> util/fdmon-io_uring.c, but not the one in block/io_uring.c?
+
+I only asked Suraj to look at util/fdmon-io_uring.c because I expect
+block/io_uring.c's io_uring context to go away soon.
+
+In my local io_uring branches I have prepared commits that replace the
+io_uring context in block/io_uring.c with aio_add_sqe() calls that use
+the AioContext's fdmon-io_uring.c io_uring context.
+
+Stefan
+
+>=20
+> If so, please document it in the commit message, too.
+>=20
+> Kevin
+>=20
+
+--pRyw0oLiMdVf6SQX
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfkPXUACgkQnKSrs4Gr
+c8ioBQf/XehQSy9Xy2T3lC3LykG6ez4kWekGJ/hVPYaoaOh9z8iJVt7qlKo6vtDi
+5A4aYX/guEOxCEBEb2wytUttJyr6bXN+I9YC2WCnqReXCyDzG8fSSTwka5SqLkf2
+bsqPZ5pOus4tk559Ts+WfSMkG4mHfRgMUToJNuSy5rsHLnhWm2oWYlHOkM83oNST
+A7mMsBRI8yYVanpuskTNDSsCKrJjrMym0xzjHWm54bEqmczMp4U9suvWY9DgHIRn
+iijNXfvovkMagnvgeHp7vKK+X3MCj5IvtU5E9DoZvN9UoCu71h8jTDTHYicP0Y4A
+mQKdSpjw91hW44L572P41EDmH8uJvQ==
+=zRrH
+-----END PGP SIGNATURE-----
+
+--pRyw0oLiMdVf6SQX--
 
 
