@@ -4,92 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC96BC36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 12:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBB4C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 12:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txQ1E-0002a3-1J; Wed, 26 Mar 2025 08:38:04 -0400
+	id 1txQ1p-0003P2-Nw; Wed, 26 Mar 2025 08:38:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1txQ19-0002X0-0N
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:37:59 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1txQ16-0008Bu-VG
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:37:58 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5e5b56fc863so10081498a12.3
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 05:37:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742992675; x=1743597475; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oSh/YK+sRnu723a7KDPxkVNE36njQX4SU4OluJcMA7Y=;
- b=CZI3cxpgNgXn/Jk1xJ9obIYOmcW+3sUM92O6j6A0WnVmnZe6tavgg2s2oXIwAe/3fu
- GqtkSEBmI6Hf1fnT3UEzfzMyf03kJpjylRQGSKGU2fhtG+r0nh3H0qHpyOMsB6xXBZ5m
- ZNxwmBId4DlQ/XHa84MuVQUrz6XKHexMJf7wdDg0d8F6+MHZ+OTaYy/2Er15ouYILAeG
- v9d6innBUkSL9eCunmd1JjPaZScR56u86WEl2ORYMrvHEVKSJtXC3ZpLsF49YSslm/ji
- 59VLmUwGfJLS42w551AxBRHPGdzPqJfpS8skdMwcQUSb4tdq92fU3FBQH+LRojtPpIz/
- pHdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742992675; x=1743597475;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=oSh/YK+sRnu723a7KDPxkVNE36njQX4SU4OluJcMA7Y=;
- b=IHzE3n9zpaOWuVAStgrj9N/csmwbpiykHhqBgtQPrROQ9b1BJWpL3aFAEHQHULzDOj
- xVZ3tLxa7PvLD5niJJJcFdB+rVdF9SwNl8JVV9V7KxLTu15zTJVY2ZTrIz2HaBX+hxHF
- zDx61m2k2g+3lXZKQ7U9D5QLOeXCp8dMu7l2Xu1cckZmdHeuLNrp+3AqIHi6/Wvmfomr
- cFdNT3gTvNID27jDuEUhiPFpn+NUAwAmhiU7Q1s3gDTMzFnatT96gwX+1etvxuhUYRmf
- sI+oYyLEqyFzjXfS1qqh6NPY9uu0fY+NvL2LA+gVDflGToiei4upVSnkrhRmK8vLrcEF
- k1uQ==
-X-Gm-Message-State: AOJu0Yw8KLgSDGah1d0mtJZOSBcVsgMuCghl6CdpkeKFjeqF+U0iz1v1
- veEhly1qWturotz11xwZYLoeLbwHwAxliSZsy7Wv0DY08AGZ4b+ggKZL76xZCe8fZo9BZFT5Jlp
- X
-X-Gm-Gg: ASbGnctZ5IzkYQ9UOUk3dxOHXWBI9RDDC5aohhXA49lXzQjQ6CNvbXIY4Tk1l3Svd+m
- dBr3KNe4dCDZHiZxYOzj7XdQVfL+J5xSN8YL2u9pkCpU4cS1Qh4OG3lltvWHZi2rIrjre9DNesy
- jMsJL9wRtgISokKbphEij1/Jxr6JwXZ16TMORBQLP08BjMxQtbE/g+Y/i8zHzqJQpyy6lw5VJ2e
- ts1xMRB0wYiN0NI8jtZ+1gLfdiUHVZ9zAxrFOuHpL4f0bA22MQu59T9V9JWLbST2H6F3nYW/uor
- H2umOXWzS3ZrnxprVPBSaU6HpTqyMnop4wx118wJUnxTA1I=
-X-Google-Smtp-Source: AGHT+IHvRJAMGNX9QCqIxNOdhs+3QTKqfB71HpW0GK3VHBX+6W/6patj/rfR9aIuNHv2d+JMCkd1pQ==
-X-Received: by 2002:a17:906:6a0d:b0:abf:6f87:c732 with SMTP id
- a640c23a62f3a-ac3f2238aaamr2029360266b.20.1742992674547; 
- Wed, 26 Mar 2025 05:37:54 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3efbe8ea3sm1027939366b.147.2025.03.26.05.37.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Mar 2025 05:37:54 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 480875F90B;
- Wed, 26 Mar 2025 12:37:53 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Louis-Vincent DERIAN <louis-vincent.derian@st.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,  Vincent BEUNARDEAU
- <vincent.beunardeau@st.com>,  Nelson Petit TAMBA
- <nelsonpetit.tamba@st.com>,  Francois PENALOSA <francois.penalosa@st.com>
-Subject: Re: Inquiry About ISO 26262 Certification for QEMU Software
-In-Reply-To: <VI1PR10MB367772124137F1672AA1F58DA5A62@VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM>
- (Louis-Vincent DERIAN's message of "Wed, 26 Mar 2025 09:22:30 +0000")
-References: <VI1PR10MB367772124137F1672AA1F58DA5A62@VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Wed, 26 Mar 2025 12:37:53 +0000
-Message-ID: <87iknw0xy6.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txQ1n-0003ML-RQ
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:38:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txQ1l-0008NL-91
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:38:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742992715;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Yciz4tSyoKiaED6D8a2yLdjj7vS3P3qQl2+NQMPJ8AU=;
+ b=YXOBE7fvZL1vZMfJ1J49oC6xlKDToPL8N8JWs2N530E2qSgSLspLdKeczmQByXHfl1z3vL
+ +bLIDmiopVmo276fADMW+Q/RihWPZNfJVItW5Hnrs/7QvOijvquvuBelR76EgelGkE2A/S
+ ubx1rJGqw4qGi07SKIqRb+om4KW8k/k=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-ERrnVlaUMFSwaTXF8jbbHw-1; Wed,
+ 26 Mar 2025 08:38:33 -0400
+X-MC-Unique: ERrnVlaUMFSwaTXF8jbbHw-1
+X-Mimecast-MFC-AGG-ID: ERrnVlaUMFSwaTXF8jbbHw_1742992712
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAC24180AB19; Wed, 26 Mar 2025 12:38:32 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.225.114])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3F6EE195609D; Wed, 26 Mar 2025 12:38:29 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>
+Cc: qemu-block@nongnu.org
+Subject: [PATCH] Revert "iotests: Stop NBD server in test 162 before starting
+ the next one"
+Date: Wed, 26 Mar 2025 13:38:27 +0100
+Message-ID: <20250326123827.920305-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,57 +80,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Louis-Vincent DERIAN <louis-vincent.derian@st.com> writes:
+From: Thomas Huth <thuth@redhat.com>
 
-> Hello,
->
->=20=20
->
-> My name is Louis-Vincent DERIAN, and I work for STMicroelectronics. We ar=
-e interested in using your software to facilitate
-> our development and testing processes. However, we need to know if
-> QEMU has ISO 26262 certification.
+This reverts commit e2668ba1ed44ad56f2f1653ff5f53b277d534fac.
 
-The QEMU project doesn't have any certifications, as an open source
-project it is provided as is. There may be 3rd parties interested in
-certifying a particular version of QEMU but I suspect it would involve a
-lot of effort to audit the code base.
+This commit made test 162 fail occasionally with:
 
-> Could you please provide us with information about the ISO 26262 certific=
-ation of your software? If it is not certified, could
-> you explain the reason? Is it because certification is not required
-> for this type of tool?
+ 162   fail       [13:06:40] [13:06:40]   0.2s   (last: 0.2s)  output mismatch
+ --- tests/qemu-iotests/162.out
+ +++ tests/qemu-iotests/scratch/qcow2-file-162/162.out.bad
+ @@ -3,6 +3,7 @@
+  === NBD ===
+  qemu-img: Could not open 'json:{"driver": "nbd", "host": -1}': address
+   resolution failed for -1:10809: Name or service not known
+  image: nbd://localhost:PORT
+ +./common.rc: line 371: kill: (891116) - No such process
+  image: nbd+unix://?socket=42
 
-Because no one has done the work or is willing to pay for it.
+The nbd server should normally terminate automatically, so trying to
+kill it here now seems to cause a race that will cause a test failure
+when the server terminated before the kill command has been executed.
 
-QEMU is a very large project and supports a wide range of devices with
-different levels of quality in the implementation. The project does make
-some statements around principles for secure use of QEMU:
+The "Stop NBD server" patch has originally been written to solve another
+problem with a hanging nbd server, but since that problem has been properly
+solved by commit 1453e04c63, we now don't need the "_stop_nbd_server" here
+anymore.
 
-  https://qemu.readthedocs.io/en/master/system/security.html
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qemu-iotests/162 | 1 -
+ 1 file changed, 1 deletion(-)
 
-In short we treat bugs in virtualisation use cases as potential security
-bugs but the emulation use case shouldn't be relied upon for guest
-isolation or security guarantees.
+diff --git a/tests/qemu-iotests/162 b/tests/qemu-iotests/162
+index 956c2c5f339..94dae60d304 100755
+--- a/tests/qemu-iotests/162
++++ b/tests/qemu-iotests/162
+@@ -65,7 +65,6 @@ done
+ 
+ $QEMU_IMG info "json:{'driver': 'nbd', 'host': 'localhost', 'port': $port}" \
+     | grep '^image' | sed -e "s/$port/PORT/"
+-_stop_nbd_server
+ 
+ # This is a test for NBD's bdrv_refresh_filename() implementation: It expects
+ # either host or path to be set, but it must not assume that they are set to
+-- 
+2.49.0
 
->
->=20=20
->
-> Thank you for your assistance. We look forward to your response.
->
->=20=20
->
-> Best regards,
->
->=20=20
->
-> Louis-Vincent DERIAN
->
->=20=20
->
-> ST Restricted
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
