@@ -4,113 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 932E9C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 17:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1732AC3600E
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 17:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txUTC-0002ML-1d; Wed, 26 Mar 2025 13:23:14 -0400
+	id 1txUhi-0004yK-DP; Wed, 26 Mar 2025 13:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1txUTA-0002Lu-DC; Wed, 26 Mar 2025 13:23:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1txUhg-0004xk-U0
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 13:38:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1txUT8-0003Ao-Gq; Wed, 26 Mar 2025 13:23:12 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52QFvNEr032156;
- Wed, 26 Mar 2025 17:23:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Wgjt40
- wIIlKObQrfb7GVq4l5s+GiGOOMxmVWA1++7wg=; b=sVf+Jvke+uWRTt689GEbCU
- sTPIZ4UhQmTm8E4bc4fwWMdYlLWL3NCTQmT3HTX0XOr/sTHpaLZB1J0eAG+RbAMk
- sMxDTt5nlFbTseUTh0varnITqIHfimjKKGaHjdGWz8Jd4pnrYdJ7HGDTdov/3iql
- n9SNPcR1X21UyBVkknPzZkVK+kNiAIsMQ44zZunaAidEiPRE7Jp7BMTgRJKa2E1w
- pbETap2rb+x0JA2cDjZFED+mlyTFnVydVr71MIrlL+SvTR5EGsFHnfN99XXfk5Mh
- EmCZ4h1XfFBZPbk6nr4nJ00IqZ56hp6qBOU/km+zR0k/9KdxzEWNdGnngeQw/OMA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3q0n8r6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 17:23:01 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52QHIaE5007214;
- Wed, 26 Mar 2025 17:23:01 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3q0n8r4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 17:23:01 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52QEOX9i020105;
- Wed, 26 Mar 2025 17:23:00 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j8hp1e96-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 17:23:00 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52QHMu4520775276
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Mar 2025 17:22:56 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5D5C32004B;
- Wed, 26 Mar 2025 17:22:56 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BA6620040;
- Wed, 26 Mar 2025 17:22:54 +0000 (GMT)
-Received: from [9.39.30.126] (unknown [9.39.30.126])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Mar 2025 17:22:54 +0000 (GMT)
-Message-ID: <1b46fa60-6460-42fb-b77b-fe03cb9ea591@linux.ibm.com>
-Date: Wed, 26 Mar 2025 22:52:53 +0530
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1txUhe-00054w-QA
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 13:38:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743010690;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Bxv4ehpPzDtjZQ/zQRfM+KrR6+mrhCmVABlE68fDoiE=;
+ b=Gqg/CUAV5MKnjXmhgpHbTsadSVqjaNU/EuoC8RTtWrvfvuPVDfpjufmCX+O5X/sjKVqq3p
+ depYDAQWRVYT00vgekedjxD8SRB5o1QQ2j0LcYShrXbg8OgC0ehfXd/3nPU+0ZDtJwMJ4v
+ E/a+VFdf4xsIPb0/waRO3YxCKa/twBU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-YBmEI9RNPZecn65CrsiB_Q-1; Wed,
+ 26 Mar 2025 13:38:07 -0400
+X-MC-Unique: YBmEI9RNPZecn65CrsiB_Q-1
+X-Mimecast-MFC-AGG-ID: YBmEI9RNPZecn65CrsiB_Q_1743010685
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CBF73180034D; Wed, 26 Mar 2025 17:38:03 +0000 (UTC)
+Received: from gondolin.redhat.com (unknown [10.67.24.38])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 75AA9180B489; Wed, 26 Mar 2025 17:37:47 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH for-10.1 v4 01/13] arm/cpu: Add sysreg definitions in
+ cpu-sysregs.h
+Date: Wed, 26 Mar 2025 18:37:11 +0100
+Message-ID: <20250326173723.389988-2-cohuck@redhat.com>
+In-Reply-To: <20250326173723.389988-1-cohuck@redhat.com>
+References: <20250326173723.389988-1-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/10] ppc/pnv: Introduce Power11 PowerNV machine
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250325112319.927190-1-adityag@linux.ibm.com>
- <20250325112319.927190-8-adityag@linux.ibm.com>
- <952b3afa-dc63-4230-bdff-5decabc8c25c@kaod.org>
- <8567b41e-f2b8-413c-93b8-15c74788c171@linux.ibm.com>
- <5a08e139-a18d-4aae-836f-0ec0bb8fadc9@kaod.org>
- <6d610966-cdc0-42c2-abb8-e80b4be1178d@linux.ibm.com>
- <6e830dd1-88c1-4029-bae7-d2817d95262f@kaod.org>
- <2ffb5a70-be51-45e9-82a1-b71362221577@kaod.org>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <2ffb5a70-be51-45e9-82a1-b71362221577@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: TCZKdsONKzjgGzCyG8GROf62nbRf4uiv
-X-Proofpoint-GUID: haOQjwJYd5ZWE9YLLicDnfwUHzyVmJzg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-26_08,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 adultscore=0 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503260104
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,52 +90,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/25 16:12, Cédric Le Goater wrote:
+From: Eric Auger <eric.auger@redhat.com>
 
-> [ ... ]
->
->> You could use a buildroot image instead. :
->>
->> https://github.com/buildroot/buildroot/blob/master/configs/qemu_ppc64le_powernv8_defconfig
->
-> Images pushed here :
->
-> https://github.com/legoater/qemu-ppc-boot/tree/main/buildroot/qemu_ppc64le_powernv8-2025.02
->
->   qemu-system-ppc64 -m 1G -M powernv10 \
->     -kernel ./buildroot/qemu_ppc64le_powernv8-2025.02/vmlinux \
->     -append root=/dev/nvme0n1 \
->     -device nvme,bus=pcie.2,addr=0x0,drive=drive0,serial=1234 \
->     -drive 
-> file=./buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2,if=none,id=drive0,format=raw,cache=none 
-> \
->     -device e1000e,bus=pcie.1,addr=0x0,netdev=net0 \
->     -netdev user,id=net0 \
->     -serial mon:stdio -nographic -snapshot
->
->   [    0.010515922,5] OPAL v7.1-106-g785a5e307 starting...
->   ...
->   [    0.000000][    T0] Linux version 6.12.9 (legoater@ryzen) 
-> (powerpc64le-buildroot-linux-gnu-gcc.br_real (Buildroot 2025.02) 
-> 13.3.0, GNU ld (GNU Binutils) 2.43.1) #1 SMP Wed Mar 26 11:11:35 CET 2025
->   ...
->
-> Please use these images or the opbuild image which should also work but
-> the CPU won't be recognized as a POWER11.
+This new header contains macros that define aarch64 registers.
+In a subsequent patch, this will be replaced by a more exhaustive
+version that will be generated from linux arch/arm64/tools/sysreg
+file. Those macros are sufficient to migrate the storage of those
+ID regs from named fields in isar struct to an array cell.
 
-Thank you, will use those images then.
+[CH: reworked to use different structures]
+[CH: moved accessors from the patches first using them to here,
+     dropped interaction with writable registers, which will happen
+     later]
+[CH: use DEF magic suggested by rth]
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ target/arm/cpu-sysregs.h     | 42 +++++++++++++++++++++++++++++++
+ target/arm/cpu-sysregs.h.inc | 35 ++++++++++++++++++++++++++
+ target/arm/cpu.h             | 49 ++++++++++++++++++++++++++++++++++++
+ target/arm/cpu64.c           | 22 ++++++++++++++++
+ 4 files changed, 148 insertions(+)
+ create mode 100644 target/arm/cpu-sysregs.h
+ create mode 100644 target/arm/cpu-sysregs.h.inc
 
-opbuild image boots but since it doesn't "print" p11 in its dmesg log, the
-powernv test fails with it. Will use your images.
+diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+new file mode 100644
+index 000000000000..38590b477454
+--- /dev/null
++++ b/target/arm/cpu-sysregs.h
+@@ -0,0 +1,42 @@
++/*
++ * Definitions for Arm ID system registers
++ *
++ * SPDX-License-Identifier: LGPL-2.0-or-later
++ */
++#ifndef ARM_CPU_SYSREGS_H
++#define ARM_CPU_SYSREGS_H
++
++/*
++ * Following is similar to the coprocessor regs encodings, but with an argument
++ * ordering that matches the ARM ARM. We also reuse the various CP_REG_ defines
++ * that actually are the same as the equivalent KVM_REG_ values.
++ */
++#define ENCODE_ID_REG(op0, op1, crn, crm, op2)          \
++    (((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
++     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
++     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
++     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
++     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
++
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) NAME##_IDX,
++
++typedef enum ARMIDRegisterIdx {
++#include "cpu-sysregs.h.inc"
++    NUM_ID_IDX,
++} ARMIDRegisterIdx;
++
++#undef DEF
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
++    SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
++
++typedef enum ARMSysRegs {
++#include "cpu-sysregs.h.inc"
++} ARMSysRegs;
++
++#undef DEF
++
++extern const uint32_t id_register_sysreg[NUM_ID_IDX];
++
++int get_sysreg_idx(ARMSysRegs sysreg);
++
++#endif /* ARM_CPU_SYSREGS_H */
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+new file mode 100644
+index 000000000000..6c9f9981cc5d
+--- /dev/null
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -0,0 +1,35 @@
++DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
++DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
++DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
++DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
++DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
++DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
++DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
++DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
++DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
++DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
++DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
++DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
++DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
++DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
++DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
++DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
++DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
++DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
++DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
++DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
++DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
++DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
++DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
++DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
++DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
++DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
++DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
++DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
++DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
++DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
++DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
++DEF(CTR_EL0, 3, 3, 0, 0, 1)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index a8177c6c2e89..5048c85b188c 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -30,6 +30,7 @@
+ #include "qapi/qapi-types-common.h"
+ #include "target/arm/multiprocessing.h"
+ #include "target/arm/gtimer.h"
++#include "target/arm/cpu-sysregs.h"
+ 
+ #ifdef TARGET_AARCH64
+ #define KVM_HAVE_MCE_INJECTION 1
+@@ -855,6 +856,53 @@ typedef struct {
+     uint32_t map, init, supported;
+ } ARMVQMap;
+ 
++/* REG is ID_XXX */
++#define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        uint64_t regval = i_->idregs[REG ## _EL1_IDX];                  \
++        regval = FIELD_DP64(regval, REG, FIELD, VALUE);                 \
++        i_->idregs[REG ## _EL1_IDX] = regval;                           \
++    })
++
++#define FIELD_DP32_IDREG(ISAR, REG, FIELD, VALUE)                       \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        uint64_t regval = i_->idregs[REG ## _EL1_IDX];                  \
++        regval = FIELD_DP32(regval, REG, FIELD, VALUE);                 \
++        i_->idregs[REG ## _EL1_IDX] = regval;                           \
++    })
++
++#define FIELD_EX64_IDREG(ISAR, REG, FIELD)                              \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        FIELD_EX64(i_->idregs[REG ## _EL1_IDX], REG, FIELD);            \
++    })
++
++#define FIELD_EX32_IDREG(ISAR, REG, FIELD)                              \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        FIELD_EX32(i_->idregs[REG ## _EL1_IDX], REG, FIELD);            \
++    })
++
++#define FIELD_SEX64_IDREG(ISAR, REG, FIELD)                             \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        FIELD_SEX64(i_->idregs[REG ## _EL1_IDX], REG, FIELD);           \
++    })
++
++#define SET_IDREG(ISAR, REG, VALUE)                                     \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        i_->idregs[REG ## _EL1_IDX] = VALUE;                            \
++    })
++
++#define GET_IDREG(ISAR, REG)                                            \
++    ({                                                                  \
++        const ARMISARegisters *i_ = (ISAR);                             \
++        i_->idregs[REG ## _EL1_IDX];                                    \
++    })
++
+ /**
+  * ARMCPU:
+  * @env: #CPUARMState
+@@ -1063,6 +1111,7 @@ struct ArchCPU {
+         uint64_t id_aa64zfr0;
+         uint64_t id_aa64smfr0;
+         uint64_t reset_pmcr_el0;
++        uint64_t idregs[NUM_ID_IDX];
+     } isar;
+     uint64_t midr;
+     uint32_t revidr;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 8188ede5cc8a..62eff5375c19 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -36,6 +36,28 @@
+ #include "cpu-features.h"
+ #include "cpregs.h"
+ 
++/* convert between <register>_IDX and SYS_<register> */
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
++    [NAME##_IDX] = SYS_##NAME,
++
++const uint32_t id_register_sysreg[NUM_ID_IDX] = {
++#include "cpu-sysregs.h.inc"
++};
++
++#undef DEF
++#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
++    case SYS_##NAME: return NAME##_IDX;
++
++int get_sysreg_idx(ARMSysRegs sysreg)
++{
++    switch (sysreg) {
++#include "cpu-sysregs.h.inc"
++    }
++    g_assert_not_reached();
++}
++
++#undef DEF
++
+ void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
+ {
+     /*
+-- 
+2.48.1
 
-
-Thanks,
-
-- Aditya Gupta
-
->
-> Thanks,
->
-> C.
->
 
