@@ -4,56 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6627CC36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 09:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A1DC36010
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 09:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txN3o-0005ph-G6; Wed, 26 Mar 2025 05:28:32 -0400
+	id 1txN6m-0008Tm-10; Wed, 26 Mar 2025 05:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1txN3b-0005WX-3r; Wed, 26 Mar 2025 05:28:19 -0400
-Received: from szxga01-in.huawei.com ([45.249.212.187])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1txN6A-0008RI-JN
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:31:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
- id 1txN3Y-0002tK-HN; Wed, 26 Mar 2025 05:28:18 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.48])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4ZN1ZQ6xcbzvWv5;
- Wed, 26 Mar 2025 17:24:14 +0800 (CST)
-Received: from kwepemk500007.china.huawei.com (unknown [7.202.194.92])
- by mail.maildlp.com (Postfix) with ESMTPS id B4D48185910;
- Wed, 26 Mar 2025 17:28:11 +0800 (CST)
-Received: from huawei.com (10.246.99.19) by kwepemk500007.china.huawei.com
- (7.202.194.92) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 26 Mar
- 2025 17:28:10 +0800
-To: <qemu-devel@nongnu.org>
-CC: <stefanha@redhat.com>, <kwolf@redhat.com>, <fam@euphon.net>,
- <hreitz@redhat.com>, <alex.chen@huawei.com>, <chenjianfei3@huawei.com>,
- <eric.fangyi@huawei.com>, <luolongmin@huawei.com>, <mujinsheng@huawei.com>,
- <qemu-block@nongnu.org>, <qemu-stable@nongnu.org>, <renxuming@huawei.com>,
- <suxiaodong1@huawei.com>, <wangjian161@huawei.com>, <wangyan122@huawei.com>,
- <yebiaoxiang@huawei.com>, <zhuyangyang14@huawei.com>, <zoudongjie@huawei.com>
-Subject: [PATCH v3 2/2] qapi/throttle: add timeout parameter for
- qmp_block_set_io_throttle()
-Date: Wed, 26 Mar 2025 17:26:34 +0800
-Message-ID: <20250326092634.1691355-3-zoudongjie@huawei.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20250326092634.1691355-1-zoudongjie@huawei.com>
-References: <20250326092634.1691355-1-zoudongjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1txN67-0003Mn-8t
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:30:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742981451;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=r+mDRhxCXg/J+ccPFl7rg148xFIbllxWiEEQqChfTPQ=;
+ b=WmjcE3KjZcF0XS3N5JL62iWBuzcGEEoHnkujNCJf1Qah2YNz0j/Ax69SfOoetC6f4crOpY
+ y2AFYTvWlsgXXsTpU8L91oe1tsUGnjdVFpf1/dira6sYHW8A5n/VkRBijwlXUAhpHw9wNg
+ T+V4VSOdMDMRPGC3nxZhuzhzKbQx0E4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-52-m8HXSSytM3Sy1HeM6GmQlA-1; Wed,
+ 26 Mar 2025 05:30:49 -0400
+X-MC-Unique: m8HXSSytM3Sy1HeM6GmQlA-1
+X-Mimecast-MFC-AGG-ID: m8HXSSytM3Sy1HeM6GmQlA_1742981448
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AA72180AF55; Wed, 26 Mar 2025 09:30:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.107])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D3B0319541A5; Wed, 26 Mar 2025 09:30:46 +0000 (UTC)
+Date: Wed, 26 Mar 2025 09:30:43 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 03/15] tests/functional: Convert reverse_debugging tests
+ to the functional framework
+Message-ID: <Z-PJQwDMG3QYP563@redhat.com>
+References: <20250325200026.344006-1-thuth@redhat.com>
+ <20250325200026.344006-4-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.246.99.19]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- kwepemk500007.china.huawei.com (7.202.194.92)
-Received-SPF: pass client-ip=45.249.212.187;
- envelope-from=zoudongjie@huawei.com; helo=szxga01-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250325200026.344006-4-thuth@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -68,140 +84,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zoudongjie <zoudongjie@huawei.com>
-From:  zoudongjie via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhu Yangyang <zhuyangyang14@huawei.com>
+On Tue, Mar 25, 2025 at 09:00:11PM +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> These tests are using the gdb-related library functions from the
+> Avocado framework which we don't have in the functional framework
+> yet. So for the time being, keep those imports and skip the test
+> if the Avocado framework is not installed on the host.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  MAINTAINERS                                   |   2 +-
+>  tests/functional/meson.build                  |   4 +
+>  .../reverse_debugging.py                      | 114 +++---------------
+>  .../functional/test_aarch64_reverse_debug.py  |  37 ++++++
+>  tests/functional/test_ppc64_reverse_debug.py  |  41 +++++++
+>  tests/functional/test_x86_64_reverse_debug.py |  36 ++++++
+>  6 files changed, 138 insertions(+), 96 deletions(-)
+>  rename tests/{avocado => functional}/reverse_debugging.py (66%)
+>  create mode 100755 tests/functional/test_aarch64_reverse_debug.py
+>  create mode 100755 tests/functional/test_ppc64_reverse_debug.py
+>  create mode 100755 tests/functional/test_x86_64_reverse_debug.py
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 8f470a1c9b7..73ccf5e5176 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3670,7 +3670,7 @@ F: docs/system/replay.rst
+>  F: stubs/replay.c
+>  F: tests/avocado/replay_kernel.py
+>  F: tests/avocado/replay_linux.py
+> -F: tests/avocado/reverse_debugging.py
+> +F: tests/functional/*reverse_debug*.py
+>  F: tests/functional/*replay*.py
+>  F: qapi/replay.json
+>  
 
-Calling qmp_block_set_io_throttle() will be blocked for a long time
-when a network disk is configured and the network failure is just about
-to occur.
+> diff --git a/tests/functional/test_aarch64_reverse_debug.py b/tests/functional/test_aarch64_reverse_debug.py
+> new file mode 100755
+> index 00000000000..82925bf5908
+> --- /dev/null
+> +++ b/tests/functional/test_aarch64_reverse_debug.py
+> @@ -0,0 +1,37 @@
+> +#!/usr/bin/env python3
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# Reverse debugging test
+> +#
+> +# Copyright (c) 2020 ISP RAS
+> +#
+> +# Author:
+> +#  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +from qemu_test import Asset, skipIfMissingImports
+> +from reverse_debugging import ReverseDebugging
+> +
+> +
+> +@skipIfMissingImports('avocado')
 
-Therefore, we add a timeout parameter for qmp_block_set_io_throttle to control
-its execution duration.
+Would it make sense to specialize this to 'avocado.utils' ?
 
-The default value of timeout is 0, that is infinite wait, consistent with
-previous behavior.
+> +class ReverseDebugging_AArch64(ReverseDebugging):
+> +
+> +    REG_PC = 32
+> +
+> +    KERNEL_ASSET = Asset(
+> +        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
+> +         'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+> +        '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
+> +
+> +    def test_aarch64_virt(self):
+> +        self.set_machine('virt')
+> +        self.cpu = 'cortex-a53'
+> +        kernel_path = self.KERNEL_ASSET.fetch()
+> +        self.reverse_debugging(args=('-kernel', kernel_path))
+> +
+> +
+> +if __name__ == '__main__':
+> +    ReverseDebugging.main()
 
-Signed-off-by: Zhu Yangyang <zhuyangyang14@huawei.com>
----
- block/block-backend.c                       | 14 +++++++++++++-
- block/qapi-system.c                         | 10 +++++++++-
- include/system/block-backend-global-state.h |  1 +
- qapi/block-core.json                        |  5 ++++-
- 4 files changed, 27 insertions(+), 3 deletions(-)
+> diff --git a/tests/functional/test_x86_64_reverse_debug.py b/tests/functional/test_x86_64_reverse_debug.py
+> new file mode 100755
+> index 00000000000..aba31f68748
+> --- /dev/null
+> +++ b/tests/functional/test_x86_64_reverse_debug.py
+> @@ -0,0 +1,36 @@
+> +#!/usr/bin/env python3
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# Reverse debugging test
+> +#
+> +# Copyright (c) 2020 ISP RAS
+> +#
+> +# Author:
+> +#  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +from qemu_test import skipIfMissingImports, skipFlakyTest
+> +from reverse_debugging import ReverseDebugging
+> +
+> +
+> +@skipIfMissingImports('avocado')
+> +class ReverseDebugging_X86_64(ReverseDebugging):
+> +
+> +    REG_PC = 0x10
+> +    REG_CS = 0x12
+> +    def get_pc(self, g):
+> +        return self.get_reg_le(g, self.REG_PC) \
+> +            + self.get_reg_le(g, self.REG_CS) * 0x10
+> +
+> +    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/1992")
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index a402db13f2..fc1554ea55 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -2679,20 +2679,32 @@ void blk_set_io_limits(BlockBackend *blk, ThrottleConfig *cfg)
- }
- 
- void blk_io_limits_disable(BlockBackend *blk)
-+{
-+    blk_io_limits_disable_timeout(blk, 0);
-+}
-+
-+int blk_io_limits_disable_timeout(BlockBackend *blk, uint64_t timeout_ns)
- {
-     BlockDriverState *bs = blk_bs(blk);
-     ThrottleGroupMember *tgm = &blk->public.throttle_group_member;
-+    int ret = 0;
-+
-     assert(tgm->throttle_state);
-     GLOBAL_STATE_CODE();
-     if (bs) {
-         bdrv_ref(bs);
--        bdrv_drained_begin(bs);
-+        ret = bdrv_drained_begin_timeout(bs, timeout_ns);
-+        if (ret < 0) {
-+            goto out;
-+        }
-     }
-     throttle_group_unregister_tgm(tgm);
-+out:
-     if (bs) {
-         bdrv_drained_end(bs);
-         bdrv_unref(bs);
-     }
-+    return ret;
- }
- 
- /* should be called before blk_set_io_limits if a limit is set */
-diff --git a/block/qapi-system.c b/block/qapi-system.c
-index 54b7409b2b..3b7ba0959c 100644
---- a/block/qapi-system.c
-+++ b/block/qapi-system.c
-@@ -423,6 +423,7 @@ void qmp_block_set_io_throttle(BlockIOThrottle *arg, Error **errp)
-     ThrottleConfig cfg;
-     BlockDriverState *bs;
-     BlockBackend *blk;
-+    uint64_t timeout_ns;
- 
-     blk = qmp_get_blk(arg->device, arg->id, errp);
-     if (!blk) {
-@@ -444,6 +445,10 @@ void qmp_block_set_io_throttle(BlockIOThrottle *arg, Error **errp)
-     cfg.buckets[THROTTLE_OPS_READ].avg  = arg->iops_rd;
-     cfg.buckets[THROTTLE_OPS_WRITE].avg = arg->iops_wr;
- 
-+    timeout_ns = 0; /* 0 means infinite */
-+    if (arg->has_timeout) {
-+        timeout_ns = arg->timeout * NANOSECONDS_PER_SECOND;
-+    }
-     if (arg->has_bps_max) {
-         cfg.buckets[THROTTLE_BPS_TOTAL].max = arg->bps_max;
-     }
-@@ -502,7 +507,10 @@ void qmp_block_set_io_throttle(BlockIOThrottle *arg, Error **errp)
-         blk_set_io_limits(blk, &cfg);
-     } else if (blk_get_public(blk)->throttle_group_member.throttle_state) {
-         /* If all throttling settings are set to 0, disable I/O limits */
--        blk_io_limits_disable(blk);
-+        if (blk_io_limits_disable_timeout(blk, timeout_ns) < 0) {
-+            error_setg(errp, "Blk io limits disable timeout");
-+            return;
-+        }
-     }
- }
- 
-diff --git a/include/system/block-backend-global-state.h b/include/system/block-backend-global-state.h
-index 35b5e8380b..8a2a6cbda4 100644
---- a/include/system/block-backend-global-state.h
-+++ b/include/system/block-backend-global-state.h
-@@ -110,6 +110,7 @@ int blk_probe_geometry(BlockBackend *blk, HDGeometry *geo);
- 
- void blk_set_io_limits(BlockBackend *blk, ThrottleConfig *cfg);
- void blk_io_limits_disable(BlockBackend *blk);
-+int blk_io_limits_disable_timeout(BlockBackend *blk, uint64_t timeout_ns);
- void blk_io_limits_enable(BlockBackend *blk, const char *group);
- void blk_io_limits_update_group(BlockBackend *blk, const char *group);
- void blk_set_force_allow_inactivate(BlockBackend *blk);
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index b1937780e1..88ef593efd 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2626,6 +2626,9 @@
- #
- # @group: throttle group name (Since 2.4)
- #
-+# @timeout: In seconds. Timeout for block_set_io_throttle,
-+#     0 means no limit. Defaults to 0. (Since 10.0)
-+#
- # Features:
- #
- # @deprecated: Member @device is deprecated.  Use @id instead.
-@@ -2642,7 +2645,7 @@
-             '*bps_max_length': 'int', '*bps_rd_max_length': 'int',
-             '*bps_wr_max_length': 'int', '*iops_max_length': 'int',
-             '*iops_rd_max_length': 'int', '*iops_wr_max_length': 'int',
--            '*iops_size': 'int', '*group': 'str' } }
-+            '*iops_size': 'int', '*group': 'str', '*timeout': 'uint32'} }
- 
- ##
- # @ThrottleLimits:
+This bug refers to ppc64. Was this a copy and paste mistake, does
+that bug need updating to also mention x86_64 ?
+
+> +    def test_x86_64_pc(self):
+> +        self.set_machine('pc')
+> +        # start with BIOS only
+> +        self.reverse_debugging()
+> +
+> +
+> +if __name__ == '__main__':
+> +    ReverseDebugging.main()
+> -- 
+> 2.49.0
+> 
+
+With regards,
+Daniel
 -- 
-2.33.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
