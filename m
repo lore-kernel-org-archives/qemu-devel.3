@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50812C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94F2C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txKte-0004tv-E7; Wed, 26 Mar 2025 03:09:54 -0400
+	id 1txKvM-0006Iv-2I; Wed, 26 Mar 2025 03:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKtY-0004eE-Mg
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:09:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKvD-0006HY-Lv
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:11:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKtW-0000GG-LY
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:09:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKvA-0000kO-MB
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:11:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742972986;
+ s=mimecast20190719; t=1742973087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RTkQpEP0DtawZv/lKaYOBa3LIUrtWDiasRfk/WwVn0U=;
- b=BAQnVm1GlcnBGeFQ8BbyxH+UU3gB0wLqIIbwr4UglpoFg65+WlO2jNKuwkkam9vESeDbDt
- 8Ru5YfiAiEYYswzb8cZA/zZqYY+oKC5LjoMVG8AZAmycnCu3u/YBim/RCjV11GIly1liKn
- 7TQM1mtl4EJFtD60/edi8Hnt934Vsb8=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=THEv36KpBBarWgZktqKvC4JvFDh02ckSQqqp41UVzz0=;
+ b=ZgvpWkCuravxxoNxFI9MZzwzujrQDthelN3PkKVTN8LSTAFXlvXmVNuv00aknIFQt4JJOa
+ /Zjdc0/yO5QlP/Dcypxo3tm/nbRsxDGfA59QXJvT0aSpWGpAGoZKn8RY5ZfRRQi6wlTSDZ
+ t6XFvw0IfVJaw+/DG1C/kd1L9OR9vO8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-0kXR3HXPPcq9lTTbRltPjw-1; Wed, 26 Mar 2025 03:09:44 -0400
-X-MC-Unique: 0kXR3HXPPcq9lTTbRltPjw-1
-X-Mimecast-MFC-AGG-ID: 0kXR3HXPPcq9lTTbRltPjw_1742972982
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5e5c5ea184dso5902096a12.0
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 00:09:43 -0700 (PDT)
+ us-mta-277-KKXVrLcZOwmrrU7uy6rt2Q-1; Wed, 26 Mar 2025 03:11:26 -0400
+X-MC-Unique: KKXVrLcZOwmrrU7uy6rt2Q-1
+X-Mimecast-MFC-AGG-ID: KKXVrLcZOwmrrU7uy6rt2Q_1742973085
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3914bc0cc4aso3267156f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 00:11:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742972982; x=1743577782;
+ d=1e100.net; s=20230601; t=1742973085; x=1743577885;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RTkQpEP0DtawZv/lKaYOBa3LIUrtWDiasRfk/WwVn0U=;
- b=sHdrPQFZeVyArWq2DWiLaSyX8LBQWUuwvZCeFqQZxXgD0I5lTU10/4mF0KEWnWzAtO
- V5sv4FoZ0gu5MDRZ8kxPFPAfXILIYEfB1OQhcPLvQPd7Lp90lDpzJOdSDRS8WFrp8aJ7
- dm0EyWF6JetFg7zpUP0ldRPx7N82YuO31DoP925qh67SLoi2kaVBAG12a8nBFT1St44z
- C0L/ezwY8SaYPoUtgyrl0iCQQChMJqqeOMwzEYY364geA9J5kLpBfomVjWtkBciIUiO9
- MkPsOUa+q8pyA0vURGfXPJ1M17dEliV74CmjzPjWNOlag2sH0caKYLqpSAdOV6iP2a5X
- 1TSw==
+ bh=THEv36KpBBarWgZktqKvC4JvFDh02ckSQqqp41UVzz0=;
+ b=GWcA8XIrnQItg//937YnDWhA4LBgh0a/Z64jG3U5g5BJg9mleJK5Qa9KJhJlbL3INh
+ 44VOOzboV9yRbLKNUjK9GENCuCo3lUW4cbQpCBz55asxOj9DaFWNeaxCBRRaDb7ZCusP
+ DnPnq8HIjZ9cBsqq907WBF245NKKM38ZWk+q5iWHSHpqLwbuoW0GCsGn37LK1ZXV//k+
+ /3cKbLFGxV1c20xZlNN48N3j6XSw2NCkouvLjI8VA1ZrIay2srAZOYaEzdo8wiORFlBT
+ cDwuhgB8s45B8wY86cNCWdia/vbQhWWA9Jl4OP7vSURS4Aar2ZyqBC2Vw0laotWwrGHp
+ CyHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMsMrKjw1XLlYgu0NSex8qOmiFiLANTzFcL4BF83NuTZiwGH30lwPSJjZzDhhb/r1BRPyy5SZiHOYq@nongnu.org
-X-Gm-Message-State: AOJu0Yz8ybqZGJnIAkqJTa1QxcZDeeKgVMd++yt/Jw34ylcZBkjBh719
- 96bHcLTv48FAn/T0viYgNGz/Oviydji0/9YzxBWHaMNFCWZaR2Ud1uOB2qeRG/cuzvQYJ4Ex4ML
- +rCeElPxZET835yVPW7Lk5Rf0WlgpfzwQXGzGg44HO5fNFE+5tWV96UVbyOwn
-X-Gm-Gg: ASbGncvOjyWsFcuQWYRZKkBNL5ky+Qn3ihLZqan+AHxsB0+S1H5M9wDo0kqB6jww+Pi
- DmGNHxHlOaXt97YC+vxj3Fk2BA1OsMo0IEidBbhrGViAz/ThWR1xILU0j99I7ZpJyf1VG7LbsKL
- EWPdV5EOGIANVw/YAJLV55oNaVQo/hozn6zahDhEXxHzR6tliUL/dmbt+PuF7V5Fzx9jS+wAVnn
- wC6Mfh04Gfz0yLOEAe0tfyFfW/IC5IH86Xli1DFOfkrpEZhnV33zwQUUrRNhjbPAOAzvxwCEYE/
- JebCTzofo6Fy+d38u5cq9uOaKTQ9ous0m8DS1txuCsn06pk=
-X-Received: by 2002:a17:907:7295:b0:ac6:dd5c:bdfc with SMTP id
- a640c23a62f3a-ac6dd5cec3cmr340148966b.50.1742972982508; 
- Wed, 26 Mar 2025 00:09:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrB3XdNsAKJJmoGVobshEQc9GuuJ8mqEZu8lfd9CRq5x6GRcjw9SM4HOe5Y04Ff75w8umj1A==
-X-Received: by 2002:a17:907:7295:b0:ac6:dd5c:bdfc with SMTP id
- a640c23a62f3a-ac6dd5cec3cmr340146666b.50.1742972982047; 
- Wed, 26 Mar 2025 00:09:42 -0700 (PDT)
+ AJvYcCUEkxnJuQhsHAC2yhTu1tR34/PdbWxP28Z9Aaj5Xk8DlKsRNe0uPMEIaHXkSWD1YiyiBPJWfSnkngn3@nongnu.org
+X-Gm-Message-State: AOJu0Yxepn5a6ioQFK9picbzS/MY73tw7QM2+s8vi4QXXPf2uafru+NW
+ LUxOde2fYpfJYHMhTj8m7E8mpY+ZZzerWfls5ps4lGg1EgiaDZvNqYQ0uX8e3Lc/0IZdhr7j9Bl
+ jHexix0emHYr3LiJpE5w/HyJU/oycUbf2IRRmWJVajl9/RrFLugKDMa+py41C
+X-Gm-Gg: ASbGncsyV3EDD8l2WSWMwBJS6DbZFLbw/1j0D6iENPz2dkKU01TmUflFuibfnqW2tbh
+ cyg3FwrOtcAM9dOYUyGOFwrj19J2QIXQ103fti36DFDgxIEQ0qRcKSoc7e1jjOLegZpFYbrOe9/
+ vNVGTLb8DrZBEWyrrFkoll8m7L+UahGisSDqq2oLE/HjESz5dJzdImsQfkWboXX/KRGtnECtILZ
+ 8HeCC4UzeFLA0+gCxbTlmwCMHUs999aU3KxaHSo5HW1RZTuRsitbFSNltdBwFL+4WPPOZj4N45l
+ Y/mJNvvajFh1IN13L+Bi0HJlDvbbi8aQEiXgJ80s36SgyRY=
+X-Received: by 2002:a5d:6d88:0:b0:391:1473:336a with SMTP id
+ ffacd0b85a97d-3997f937d76mr16420235f8f.36.1742973084842; 
+ Wed, 26 Mar 2025 00:11:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOfBtZG95rfGG7FysdnAT5+OjCNmSfZiFUknRkszNfXRNHP32uDIHJWKkAN5hisZGqDWFvag==
+X-Received: by 2002:a5d:6d88:0:b0:391:1473:336a with SMTP id
+ ffacd0b85a97d-3997f937d76mr16420216f8f.36.1742973084385; 
+ Wed, 26 Mar 2025 00:11:24 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-49-206.web.vodafone.de.
  [109.43.49.206]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac3efbdecedsm983445566b.140.2025.03.26.00.09.40
+ 5b1f17b1804b1-43d4fd9eb21sm173525825e9.32.2025.03.26.00.11.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Mar 2025 00:09:41 -0700 (PDT)
-Message-ID: <8f522412-8711-48b0-bf85-f9bed7bb94d4@redhat.com>
-Date: Wed, 26 Mar 2025 08:09:39 +0100
+ Wed, 26 Mar 2025 00:11:23 -0700 (PDT)
+Message-ID: <73da19f5-9a72-4500-a7a0-e219feaef875@redhat.com>
+Date: Wed, 26 Mar 2025 08:11:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 09/12] hw/nvram/xlnx-efuse: Do not expose as
- user-creatable
+Subject: Re: [PATCH-for-10.0 11/12] hw/sensor/temp: Categorize and add
+ description
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
@@ -96,7 +96,7 @@ Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
  Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org
 References: <20250325224310.8785-1-philmd@linaro.org>
- <20250325224310.8785-10-philmd@linaro.org>
+ <20250325224310.8785-12-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -141,7 +141,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250325224310.8785-10-philmd@linaro.org>
+In-Reply-To: <20250325224310.8785-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -153,7 +153,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,28 +170,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/03/2025 23.43, Philippe Mathieu-Daudé wrote:
-> This device is part of SoC components thus can not
-> be created manually.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/nvram/xlnx-efuse.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   hw/sensor/dps310.c  | 2 ++
+>   hw/sensor/emc141x.c | 6 ++++++
+>   hw/sensor/tmp105.c  | 2 ++
+>   hw/sensor/tmp421.c  | 4 ++++
+>   4 files changed, 14 insertions(+)
 > 
-> diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
-> index 29e7dd539ec..176e88fcd17 100644
-> --- a/hw/nvram/xlnx-efuse.c
-> +++ b/hw/nvram/xlnx-efuse.c
-> @@ -280,6 +280,8 @@ static void efuse_class_init(ObjectClass *klass, void *data)
->   
->       dc->realize = efuse_realize;
->       device_class_set_props(dc, efuse_properties);
-> +    /* Reason: Part of Xilinx SoC */
-> +    dc->user_creatable = false;
->   }
->   
->   static const TypeInfo efuse_info = {
+> diff --git a/hw/sensor/dps310.c b/hw/sensor/dps310.c
+> index 6966a53248b..e1e6df6b60a 100644
+> --- a/hw/sensor/dps310.c
+> +++ b/hw/sensor/dps310.c
+> @@ -207,6 +207,8 @@ static void dps310_class_init(ObjectClass *klass, void *data)
+>       k->send = dps310_tx;
+>       device_class_set_legacy_reset(dc, dps310_reset);
+>       dc->vmsd = &vmstate_dps310;
+> +    dc->desc = "Infineon DPS310 temperature and humidity sensor";
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Not necessary - I2C device again.
+
+  Thomas
 
 
