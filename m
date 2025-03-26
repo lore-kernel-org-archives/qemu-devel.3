@@ -4,93 +4,192 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26CC0C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 12:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5790C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 12:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txPYw-0002Rg-UH; Wed, 26 Mar 2025 08:08:50 -0400
+	id 1txPh5-0004yC-W9; Wed, 26 Mar 2025 08:17:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1txPYt-0002O9-CD
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:08:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <prvs=51802bb3d1=louis-vincent.derian@st.com>)
+ id 1txMyA-0003fP-Cl
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:22:44 -0400
+Received: from mx08-00178001.pphosted.com ([91.207.212.93])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1txPYr-0003Qc-DG
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:08:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742990923;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+UY1arTL+T7gB0D6k5osfySS6w21iYXBKfhlOnNCepM=;
- b=c1EVGc6OviYqRhNIii6CWrV0hvVxJr+4o3Wljj4PXGOpimSYdTA0MTXukCFYti+CD7yJBy
- wkQiNzAWrW2GMCGlpZX7F9TSyXqWzqm4QWZl5Nfh/BUfRClPuK/8FrHcQFw6125TVR5l+y
- 6X1kl+auoU4JKSs78rGH8OIepXEf2S8=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-Kvoz043hNgCnC6Rpke74Zg-1; Wed, 26 Mar 2025 08:08:40 -0400
-X-MC-Unique: Kvoz043hNgCnC6Rpke74Zg-1
-X-Mimecast-MFC-AGG-ID: Kvoz043hNgCnC6Rpke74Zg_1742990920
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2ff6aaa18e8so10430578a91.1
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 05:08:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742990920; x=1743595720;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+UY1arTL+T7gB0D6k5osfySS6w21iYXBKfhlOnNCepM=;
- b=ZeC0xgOG84BGwEjiN5AbzQtHYHJDpP7wlTg5FZ1WHbIBXtilEmlE3iykhynhJrLGB0
- UAa0BKBsztv8F6GVsYxIS1LUMsMkvKI4qb3mD9ST7JMpn9UI5sQOJigATgJcvh5hYmaR
- v1QnHsVa/pcQi2Z6FN6Xoj5TeNHpvIrQk7OU3iSSjhjyV244Bc0h50CzyKMss97Y19/p
- SuNrzX085zQao7qaeu05oU5JI/B+yJsm/fAezCQ8F6kexGo6HL2dZpUQn1ZsTU4/CaZP
- Dp7XawK/trrQxMOWPMWqJuYzQLeTD9mVIUZxiNefNS/XAgjPmkQa+HozBL9vzHUGqqOp
- sJhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIhMN+qVR/zo4a26GOM7foJq6dk+GbaBekzGMri5Y36v6JheTXMZMoYTr6AxVk2GU9N4QmgccE8+3l@nongnu.org
-X-Gm-Message-State: AOJu0YwnHntYKgPUhgUi1egrP1+kBnqvpDuRKH37vYMZxfkGBzSMru22
- cGPumFBtR/dI823vLaZTJaujqNHsJBNnYwLO+eJuiqkdxWfL0ki9v6XxZdEGD90CCADR8h55TiJ
- 3jPe61Jd+DIsTfKSayGmG8Z+fCZDSnq0AI8sXfQwntRexPtoYB8soahovB0Tdg90aRnHQGxob9v
- 0/bcJbuufEqJ+ZnNSRFlUEUGsVsnM=
-X-Gm-Gg: ASbGncueik7s+PsDwUyeI1GAFsOCtMX8BhqOdgOv36VbyydJBwlGiJ/7fjqeZ6N1l8o
- PQC8Z0VirQN6R4flSs+ERpRdsjzO08FyYhUItXCayQ6fd1wBaEUaHqMIpk0x4mvcbJOyD+CU=
-X-Received: by 2002:a17:90b:2647:b0:2f7:7680:51a6 with SMTP id
- 98e67ed59e1d1-3030fe6a058mr26571499a91.6.1742990919509; 
- Wed, 26 Mar 2025 05:08:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFO1KeARrVa+p2C6nWkzML+r/jwppMQw/d4eQDlLPj21Cqkc4rpAZPVP/gYDNbySezhFCiTNzSWBAX6j4KjOdI=
-X-Received: by 2002:a17:90b:2647:b0:2f7:7680:51a6 with SMTP id
- 98e67ed59e1d1-3030fe6a058mr26571460a91.6.1742990918951; Wed, 26 Mar 2025
- 05:08:38 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <prvs=51802bb3d1=louis-vincent.derian@st.com>)
+ id 1txMy7-00029a-Vv
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:22:41 -0400
+Received: from pps.filterd (m0369457.ppops.net [127.0.0.1])
+ by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52Q7YPbn019497
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 10:22:34 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=st.com; h=cc
+ :content-type:date:from:message-id:mime-version:subject:to; s=
+ STMicroelectronics; bh=lo0pIADOxTObSjWOER6nPYTv8gC6fuIpTYAHiD98j
+ TU=; b=yDPzxQdB6WBjUKHTaUCWBjpDgTstP2DsDDEIKT4J7bKC3YZRDF3jfzANJ
+ fC5W1hb7w0MDtY44mWAho7sg+7SCfZ9BXjaMZwLCCyB1jxsM8xoiWM0v3G5Ltsba
+ Gvz4yjY9Gjpsx3u//v2CwfSkqCVUg1tisyM171I8dYXcHgcaAXRj1qw3H8PNyM1h
+ 4xRNptxI2JIBtQQoakKQqNWc357YS6r2caJH9Xyb733PpBolCNhTiXzSYh2DtWUl
+ paT1UQDGomDhDkD7jFclzBvtQNPVcp1wzQDruPkvQTsT8OEqs0s4AcpD3Dpn14tw
+ eOFgqv5Jtaj7VMzKbCbax3lJl8Ryg==
+Received: from du2pr03cu002.outbound.protection.outlook.com
+ (mail-northeuropeazlp17012026.outbound.protection.outlook.com [40.93.64.26])
+ by mx07-00178001.pphosted.com (PPS) with ESMTPS id 45j91seeeh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 10:22:34 +0100 (CET)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NmuEp6hVoDOH2U57LmX9q5S3WHeqoCXgDvRdjpVRlmabkhVuCWhFBoDlLZWudE8qUAwRxHMbsKhjRb8zS5jwGRfShNCkU4bIPcua0EVTUmJKfTzkwH717JDVHiFdvcnjJnltnoNN76Ii6thsZyfJQmrVTWvSQeKgHPud8JS1sJuPef2xr13bef6fY0fydKr2NnLklgVtp4OpAscNWmNBdO6DKd51hwqxTMRaMRXQnNrhmm1+N1hUnlWjdbgaZNE/2ADRL72ZgwBrZn3nleuTc2hoLW1lQwF7+/MATh3e5bTLGCcZl1w15ptFc8pzhLOkVtbBmwZGWcr54jQjIeKXUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lo0pIADOxTObSjWOER6nPYTv8gC6fuIpTYAHiD98jTU=;
+ b=uDrJT8HmYzBjlSbhgT5RYdBXiF1CK6BV1ApzsEEpeGCoSToJgAkvzOaR54YQfA0REKXvFv78/V+SfNWq0V0EiEs0r2a4HU2U5pwGElzX/mzcGEY39Cb7W+xCM8APokTVMK8IrgyhynxR3xwlxRZ7YRVseMxxsZvK4CB4PZIh/PKky7ACF9XYMuIAhhhlp8LEVzPCjh8QOFE8L5m8l8rm6jCYIFivvPQaIywh56jfc9+dl5Ajj+3rg7ebbKPgB7z3v1I0gED/oMhEyGKbFLQ1z0yXm75AmubepSV7HPJIp0zGwCG48b7/SlSpWrvXGGl+MBI4jTgNUo7Y4AcmBPjmTg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=st.com; dmarc=pass action=none header.from=st.com; dkim=pass
+ header.d=st.com; arc=none
+Received: from VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:800:137::11)
+ by AS2PR10MB7903.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:647::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Wed, 26 Mar
+ 2025 09:22:31 +0000
+Received: from VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::3490:f52e:112f:9dfc]) by VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::3490:f52e:112f:9dfc%4]) with mapi id 15.20.8534.043; Wed, 26 Mar 2025
+ 09:22:30 +0000
+From: Louis-Vincent DERIAN <louis-vincent.derian@st.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Vincent BEUNARDEAU <vincent.beunardeau@st.com>, Nelson Petit TAMBA
+ <nelsonpetit.tamba@st.com>, Francois PENALOSA <francois.penalosa@st.com>
+Subject: Inquiry About ISO 26262 Certification for QEMU Software
+Thread-Topic: Inquiry About ISO 26262 Certification for QEMU Software
+Thread-Index: AdueMEZFExG0o3iwT5q7XsZuAqdk9Q==
+Date: Wed, 26 Mar 2025 09:22:30 +0000
+Message-ID: <VI1PR10MB367772124137F1672AA1F58DA5A62@VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_ActionId=19de7918-fbcf-49ab-818c-6be77f206ea0;
+ MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_ContentBits=0;
+ MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_Enabled=true;
+ MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_Method=Privileged;
+ MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_Name=23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0;
+ MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_SetDate=2025-03-26T09:22:29Z;
+ MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_SiteId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;
+ MSIP_Label_23add6c0-cfdb-4bb9-b90f-bf23b83aa6c0_Tag=10, 0, 1, 1;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VI1PR10MB3677:EE_|AS2PR10MB7903:EE_
+x-ms-office365-filtering-correlation-id: b52c08e1-4985-4771-aeeb-08dd6c47bbe7
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|3613699012|38070700018|8096899003; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?U5tCumqP5AzVS0nF8aSw6VcFHLsmDzN6vssyYZHDlHhpu4FWSM2AngfOWCE7?=
+ =?us-ascii?Q?vSYCwLrrkwtA2eamRkLzdzZVcv+Rnv+q+2hYLgae6vUaV8x4yCHa3TexbAJs?=
+ =?us-ascii?Q?6hBqtGSFiiGHj6To+EdfQaJ+YvA+JjYqQ87Q0VvhHYUfUg1HaoUo8BM15UEV?=
+ =?us-ascii?Q?zXuvPvmKG+5UvlvG2gWjY+wqqEz8bSqaojSY+BvYVtWiKEjWISJWACLVjZwy?=
+ =?us-ascii?Q?v6fMWVJ2Lns5KASliMkdtuBjAeN8SBybetBSv+OwjtPcYmcn8LHb9vZMFNuD?=
+ =?us-ascii?Q?AxZdXWHAZ/lmZlj42x5i+U3GNIo6b80QiAhRi8PXMFghUuZ+sn40yjvTZ8Ed?=
+ =?us-ascii?Q?h3DtQg/Lp0euLnKM2EtVduMXDKqSR0dLcYpY7mqf9xuiinu1tjJIw7ODt/bX?=
+ =?us-ascii?Q?kh6Rovk43gRqZY0tBZUcQu8jTviCTX/24HCJLAo3uox79nAOp22/ivIi0ngU?=
+ =?us-ascii?Q?zDyFGpeuiK/aQ6Xk6VDGdLe9fJXKr79/rbLgQDcWUXryWIE/E5yTcO0rhj/0?=
+ =?us-ascii?Q?+8RBq6tOnPfrKhLPqMJX05LvJtTRSNdlldgzfSVBr0Ky6FsYuGiYlkKeSRsT?=
+ =?us-ascii?Q?HooXNBEOHRt5xRE13+33FLumanqKiiyKnFpIIER/7Li4WcfNklv6CrPChhY8?=
+ =?us-ascii?Q?rIHJbN5KEnHlz+R3+YmStipnau3FdTdEPs77woGpz1ipArkISn3p6btI4Lx1?=
+ =?us-ascii?Q?l6syY5hzepwjVBnNWXE2a+Qb4z+YIIDFdJWeNH5UED61ywhG/o6olmLnWul/?=
+ =?us-ascii?Q?fkEblFlJCQGmvm+DyfY/5J0Gm5hshfUnswcu4pe4H6Vou6oOwMcGo8aVrIhu?=
+ =?us-ascii?Q?7krs3u9PIKQk8M0ri2nDgGp4qY11NzxEr2ZNUrEba6y9tzPzvk1+gS2+ql95?=
+ =?us-ascii?Q?1TXJWv27GYz50m8A7qWhI4OwckWxJ/a+QTs7gmsVGlLiNRwyAJW8iOCauNwF?=
+ =?us-ascii?Q?jJ4+PqH1jdnifXi5+urgoi4LcM3LdpeL8uCpIanorr3KCl9keEtRIYqs3dEP?=
+ =?us-ascii?Q?UHWlp0XmUvYzjxBBABrpyt7cH/K2yulbsOxi/JgsT/vdHwAXR5M3CW/RGjVf?=
+ =?us-ascii?Q?X+iuJTdpYNIKepJg92PHmn8IAAGN5rgg4JD/nd0eHvnH0mBINg9dUlTaH0us?=
+ =?us-ascii?Q?OdqxR8ydX/h61lWiAXFGKAoWVir9Pl+hFoBWnsJNz73nZAxzXOjxywdtkiTu?=
+ =?us-ascii?Q?GrsBiYakxeJHBMLhjbWsjyjTtR5Xjw9Y188CiWtyeWL/xXrJlo6zB8GEGoNG?=
+ =?us-ascii?Q?aZLJIsK2rLrCGot9YxiFJLs5HSoUvvpSZkB08OucRAvRyf3IaGn8t3dVdwgW?=
+ =?us-ascii?Q?7I1mqBtulQ5ev+9liI+UjUudxNQzkgDxG2lL2i/Uupkj+nFxqh15y9VpYpS8?=
+ =?us-ascii?Q?fBzAkFXlVT52e3cdYR9MzvcGrUIWHReVu+MP+QQ8p/WK0FRL6EX8sa3Cwgwn?=
+ =?us-ascii?Q?NIOeHYemuwivGkQU2kTd5F/QS2LvdBsHO/nYknQ1U1vbAtT+SYOu7g=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(3613699012)(38070700018)(8096899003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?m/rsQH/u1qmf26v+oBTot3Zudrpq80YDED0F8Niq8EwctULg+PccWt881UI1?=
+ =?us-ascii?Q?H/VEjWJszEj0lOYltY6TYoCOvmVqBpsQEkcUUzkyH1AoxERMsLAIh2VlBGAN?=
+ =?us-ascii?Q?K86m4gfMuKPIeo21RZWhoMRz4vfDFKzAaX/UtV4M1GLqwPHcjAxZhn6RVsw2?=
+ =?us-ascii?Q?caTC8enCqFuCw892aSuSd7mxiKdOq59ZE+1N0O6G9jqQaKftGwulyX0yfkSv?=
+ =?us-ascii?Q?RAUGdnjTJIrShUfKa9zQSnHJRKxV9/jb/c/9rNEMwXDryXcjg9db1EKSNJxo?=
+ =?us-ascii?Q?iNOnX/dyn7dfRIDZXbpor8mSfjZwwMYggs4WHxKArX+E0obOKwTF41mMW5v9?=
+ =?us-ascii?Q?zRMkPLbmtuADq64qPuihdFgEFvNQyR9pt37unviaowOStVFnRyk/8uabno/o?=
+ =?us-ascii?Q?omijDeLp9isq7JRdWGbEUziNASZkbxI1RctGO+LpAj1r+TFOm0NgEMTQ5E8V?=
+ =?us-ascii?Q?xjl1Doeu3llntvXNf8xagfw2KXIAwdl+9BTwTTu5vZ7+EU7QdAaZguysRgXZ?=
+ =?us-ascii?Q?7WJYJTH7FLzchXKdvsbWr9sbGBTjuW/I+cMXA0/jWZVz9EKhDCWkz84YhMyJ?=
+ =?us-ascii?Q?XFbRyziJJ4pUO8fXgBQix02eDHpPDJnJvmGupic4aumWHfBAhy0nUGeesogQ?=
+ =?us-ascii?Q?tw3C+ZOa+3uDz5o6VwM+PvEACMa+tkxSVqPcnlS7snCTCkPHzrR0Bvk+qVA0?=
+ =?us-ascii?Q?2A712INaYuot7qjVnsrA2hMsLw0+JmznchkcxnwxQ13syHS9xEllQdesesmM?=
+ =?us-ascii?Q?Amvf+gX4P3OWHzu+bngC/lXf56lmaIddvQQTDGriuke1bumqsdYbAZBvmsko?=
+ =?us-ascii?Q?qd8CjGzs4UeyWIQDxFcMykAKgCsMI7JGvgpRZnaQtvHlC8j6MM+98wylLZU6?=
+ =?us-ascii?Q?HdW4TUQ4R9wJ2W2Em39kKXsZXeSJnfthik1OO8d/p1lkfPp77hJ/A8W/9ff8?=
+ =?us-ascii?Q?nDFWOpmwN5EqaUt1kCcKcGpwHBKYfWqQDAJ6ybo7KOJoNvtXQkBKCQF3Z76P?=
+ =?us-ascii?Q?KsW2pnkuEoLV3D6+6riBi0f1hcXKYMdolB6CbmW9+7iTIyJ1wGH7EHabNxUN?=
+ =?us-ascii?Q?1k4Qe/rwBltlrIvJqbQc97489AbVODelVk8G2LPJv8HHG9w+IODEPSosmB/u?=
+ =?us-ascii?Q?T42N+0TNHFXwHenljUoZ4PvCxZDASCZXUGP+AsqnHztZfJqJtdiHNfqfc5lr?=
+ =?us-ascii?Q?Fb9/hlOz4huU0YXTHF1YI4kQiq9Ud7y9Bwg6yq3WLW+UXzWEXhqs55x5CXAz?=
+ =?us-ascii?Q?IhzbvB/xO9xo5DEbrvkTgNri5PC8FQdySXv6ISuQVMXfPTsISoGbHOsOnRSi?=
+ =?us-ascii?Q?1OncHjrEfU5JqHoRvYbas1ifio6dLBZ+kDQ+rssaDhW6/yKH0uZWQYgkggBX?=
+ =?us-ascii?Q?Dul5e31QWfbqDm360nMLadRZ+zeWKkLGQ2uMZOGXyynUfEu48Uq53r6MR+u3?=
+ =?us-ascii?Q?5jpxXmChBKb6TRe0+qzvoaxW9T4fVPiz957D0nS/mK0g04ZTZrciTkoqz/Xf?=
+ =?us-ascii?Q?94bd74pPQD8IR+NTgijB5vt7KiBqWAheg7bqGjut0mUdxWFz9F6pNGNcfqMt?=
+ =?us-ascii?Q?Vnm7aVFXplqGuzhRdZ9RRhAbm2kPZ2EER1gd94paocKBCb6Wj84Rv2bOcKuK?=
+ =?us-ascii?Q?gg=3D=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_VI1PR10MB367772124137F1672AA1F58DA5A62VI1PR10MB3677EURP_"
 MIME-Version: 1.0
-References: <20250324135929.74945-1-sahilcdq@proton.me>
- <20250324135929.74945-8-sahilcdq@proton.me>
-In-Reply-To: <20250324135929.74945-8-sahilcdq@proton.me>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 26 Mar 2025 13:08:02 +0100
-X-Gm-Features: AQ5f1JrhfwGGxKGc6Dz4lWVBBw7vH0RWg_RIydy_4cevCt0QVubKQlcROY_n5NQ
-Message-ID: <CAJaqyWfkGpRCv1a0qS3XC3Tnco-YSVH-CHd3itFG4V41tnc3wQ@mail.gmail.com>
-Subject: Re: [RFC v5 7/7] vdpa: Support setting vring_base for packed SVQ
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- sahilcdq@proton.me
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-OriginatorOrg: ST.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR10MB3677.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: b52c08e1-4985-4771-aeeb-08dd6c47bbe7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Mar 2025 09:22:30.7453 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: coTs/IgA+Ds+rV/O06ckeV0OwaWTgT/yzS6etbdJtL7GJhGHBU188+VJzIqUJbo01n88HDazRncOO5V+IFmB3T24ME5vMcRiHZtObtCJoIU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR10MB7903
+X-Proofpoint-ORIG-GUID: g8URS935eoASJg5URmcgB09pKzBI6gWQ
+X-Proofpoint-GUID: g8URS935eoASJg5URmcgB09pKzBI6gWQ
+X-Authority-Analysis: v=2.4 cv=IooecK/g c=1 sm=1 tr=0 ts=67e3c75a cx=c_pps
+ a=719hTBcD+nui0Lrnfyw6ng==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=Vs1iUdzkB0EA:10
+ a=H5OGdu5hBBwA:10 a=FUbXzq8tPBIA:10 a=NaPKodZWmO3TErddyr0A:9 a=CjuIK1q_8ugA:10
+ a=ZXulRonScM0A:10 a=yMhMjlubAAAA:8 a=SSmOFEACAAAA:8 a=SnzeEgHfTsCzNEyqBrkA:9
+ a=dic6gvCqUgM7a1Zz:21 a=gKO2Hq4RSVkA:10 a=UiCQ7L4-1S4A:10 a=hTZeC7Yk6K0A:10
+ a=frz4AuCg-hUA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-26_02,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ spamscore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 mlxlogscore=642 phishscore=0 mlxscore=0
+ impostorscore=0 suspectscore=0 clxscore=1031 priorityscore=1501
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503260056
+Received-SPF: pass client-ip=91.207.212.93;
+ envelope-from=prvs=51802bb3d1=louis-vincent.derian@st.com;
+ helo=mx08-00178001.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 26 Mar 2025 08:17:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,78 +204,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 24, 2025 at 3:00=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com=
-> wrote:
->
-> This commit is the first in a series to add support for packed
-> virtqueues in vhost_shadow_virtqueue.
->
-> Linux commit 1225c216d954 ("vp_vdpa: allow set vq state to initial
-> state after reset") enabled the vp_vdpa driver to set the vq state to
-> the device's initial state. This works differently for split and packed
-> vqs.
->
-> With shadow virtqueues enabled, vhost-vdpa sets the vring base using
-> the VHOST_SET_VRING_BASE ioctl. The payload (vhost_vring_state)
-> differs for split and packed vqs. The implementation in QEMU currently
-> uses the payload required for split vqs (i.e., the num field of
-> vhost_vring_state is set to 0). The kernel throws EOPNOTSUPP when this
-> payload is used with packed vqs.
->
-> This patch sets the num field in the payload appropriately so vhost-vdpa
-> (with the vp_vdpa driver) can use packed SVQs.
->
-> Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05106.h=
-tml
-> Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat.co=
-m
-> Link: 1225c216d954 ("vp_vdpa: allow set vq state to initial state after r=
-eset")
-> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
-> Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> ---
-> Changes from v4 -> v5:
-> - Initially commit #5 in v4.
-> - Fix coding style of commit block as stated by checkpatch.pl.
->
->  hw/virtio/vhost-vdpa.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
->
-> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-> index 58c8931d89..0625e349b3 100644
-> --- a/hw/virtio/vhost-vdpa.c
-> +++ b/hw/virtio/vhost-vdpa.c
-> @@ -1265,6 +1265,21 @@ static bool vhost_vdpa_svq_setup(struct vhost_dev =
-*dev,
->      };
->      int r;
->
-> +    /*
-> +     * In Linux, the upper 16 bits of s.num is encoded as
-> +     * the last used idx while the lower 16 bits is encoded
-> +     * as the last avail idx when using packed vqs. The most
-> +     * significant bit for each idx represents the counter
-> +     * and should be set in both cases while the remaining
-> +     * bits are cleared.
-> +     */
-> +    if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
-> +        uint32_t last_avail_idx =3D 0 | (1 << VRING_PACKED_EVENT_F_WRAP_=
-CTR);
-> +        uint32_t last_used_idx =3D 0 | (1 << VRING_PACKED_EVENT_F_WRAP_C=
-TR);
-> +
-> +        s.num =3D (last_used_idx << 16) | last_avail_idx;
-> +    }
-> +
+--_000_VI1PR10MB367772124137F1672AA1F58DA5A62VI1PR10MB3677EURP_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-This should be added before 6/7 so we don't declare we support packed
-without this.
+Hello,
 
->      r =3D vhost_vdpa_set_dev_vring_base(dev, &s);
->      if (unlikely(r)) {
->          error_setg_errno(errp, -r, "Cannot set vring base");
-> --
-> 2.48.1
+My name is Louis-Vincent DERIAN, and I work for STMicroelectronics. We are =
+interested in using your software to facilitate our development and testing=
+ processes. However, we need to know if QEMU has ISO 26262 certification.
+Could you please provide us with information about the ISO 26262 certificat=
+ion of your software? If it is not certified, could you explain the reason?=
+ Is it because certification is not required for this type of tool?
+
+Thank you for your assistance. We look forward to your response.
+
+Best regards,
+
+Louis-Vincent DERIAN
+
+
+
+ST Restricted
+
+--_000_VI1PR10MB367772124137F1672AA1F58DA5A62VI1PR10MB3677EURP_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	mso-ligatures:standardcontextual;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Arial",sans-serif;
+	color:#002052;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052">Hello,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052">My name is Louis-Vincent DERIAN, and I =
+work for STMicroelectronics. We are interested in using your software to fa=
+cilitate our development and testing processes.
+ However, we need to know if QEMU has ISO 26262 certification.<o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052">Could you please provide us with inform=
+ation about the ISO 26262 certification of your software? If it is not cert=
+ified, could you explain the reason? Is it because
+ certification is not required for this type of tool?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052">Thank you for your assistance. We look =
+forward to your response.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052">Best regards,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052">Louis-Vincent DERIAN<o:p></o:p></span><=
+/p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:#002052"><o:p>&nbsp;</o:p></span></p>
+</div>
+<br>
+<p style=3D"font-family:Arial;font-size:12pt;color:#FF0000;margin:5pt;font-=
+style:normal;font-weight:normal;text-decoration:none;" align=3D"Right">
+ST Restricted<br>
+</p>
+</body>
+</html>
 
+--_000_VI1PR10MB367772124137F1672AA1F58DA5A62VI1PR10MB3677EURP_--
 
