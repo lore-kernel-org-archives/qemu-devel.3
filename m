@@ -4,72 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD08DC36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 14:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1A0C3600B
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 14:17:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txRVC-0002E3-Gz; Wed, 26 Mar 2025 10:13:06 -0400
+	id 1txRYw-0003AH-8e; Wed, 26 Mar 2025 10:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@flatgalaxy.com>)
- id 1txR6B-0002OK-Qz
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 09:47:16 -0400
-Received: from sender4-op-o12.zoho.com ([136.143.188.12])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1txRYT-00038r-AY
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 10:16:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@flatgalaxy.com>)
- id 1txR68-0001dG-Ob
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 09:47:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1742996809; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=jSe9p62Sbl3vq0npVO/JGOTEUcul0hNfn9w9yjiAX7hjWZPe2vIDdj1vUWjbqFH8ihVt64LB17iFkR1VTkNZmgGn+6MLzcJ9G+MDesw67m9zUJtVq6EmwcHCBFN3lJXRXtgUmD1Nmwzo3sedmyKKq5EG4N7ig+gwyoyKXRjd3g8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1742996809;
- h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Reply-To:Reply-To:References:Subject:Subject:To:To:Message-Id;
- bh=Ya+Cm4FcXfK633y9VAHmLdegNMjCm41gaYy/Jk/KfH4=; 
- b=n/sjplzCLpW/wvuNdDhiqRAg3lh97yADKSwCXXD0aZoOk+mrLIGRhrXk7bDT3rJ+YcsHwQEVaL0BmvfqCB5PZX/mt3oiqIznZXGYbFCvAPSyj+nVucWoRe1suGKzkwHQLQ2RabtbNbSi0kf/SwZA1L4FsW/Rb7y3b5hxZAo+CDk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=flatgalaxy.com;
- spf=pass  smtp.mailfrom=michael@flatgalaxy.com;
- dmarc=pass header.from=<michael@flatgalaxy.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1742996809; 
- s=zoho; d=flatgalaxy.com; i=michael@flatgalaxy.com;
- h=Content-Type:Message-ID:Date:Date:MIME-Version:Reply-To:Reply-To:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Message-Id;
- bh=Ya+Cm4FcXfK633y9VAHmLdegNMjCm41gaYy/Jk/KfH4=;
- b=rou/0vVCyyGEAsuJ8refixLvnWsTb1moU2TuJa9ZUtPbfzksv9Y6/VAruO9FNzB2
- 9yfE8cTslqsiFaEkGyplMlM9yFqq1qCWhWsyuzbuIty5Fbg9Oy2k0wU/Ors8RLrBQDc
- 0hqA6hJW23eVBbWhqi2cwBKpdYVwmDPtoXfmWloA=
-Received: by mx.zohomail.com with SMTPS id 1742996806299356.7061399281512;
- Wed, 26 Mar 2025 06:46:46 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------0QKeZsXDRuAj9Zm00KDaCOJr"
-Message-ID: <e742d858-f84f-48a0-8f8a-5ad8e4d48a61@flatgalaxy.com>
-Date: Wed, 26 Mar 2025 08:46:44 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1txRYP-0005Lr-QJ
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 10:16:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742998583;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=n3VDAgxe1/ZgMeKkPn2r0thVEuTOhIV30Ca57Tpx4sw=;
+ b=eDvWMxgtvPkLdZYo5rp3WpiJ/kT/A83WPyQNs73iuVwM/ubVLCTUh9471RY/MnoAv0+xU9
+ ahAm0wNiUJWl/aN2/VhujkF6kACY1OuLTWR3LitEqO4TB7tfTGuX2Gbz5YqCxc6XhsjFx3
+ 3QhRjzzJVNy8mSMZ08mYtiHrg20xh28=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-333-JRHi2DT2Msaj4NzjUiBuTQ-1; Wed, 26 Mar 2025 10:16:22 -0400
+X-MC-Unique: JRHi2DT2Msaj4NzjUiBuTQ-1
+X-Mimecast-MFC-AGG-ID: JRHi2DT2Msaj4NzjUiBuTQ_1742998581
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912539665cso477418f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 07:16:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742998581; x=1743603381;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n3VDAgxe1/ZgMeKkPn2r0thVEuTOhIV30Ca57Tpx4sw=;
+ b=vsjGw4vnMAoSQW9ESy8JNrwmjdm+LukAFI5sFRaCSmBF0edgILhg5zBoTZzKOQbeO7
+ c3K4yRqSkX6ayNGtzoU7edvO3VIu6WzxbA0pkNXLbNhMN1CvSh/IX7p8Ob5E/DeEMtKi
+ Mu5usCZVYId2EBZrliB1lHAAcXg0bVkbVLOUEQINumZNKlqm9v1f5Mwrfp3Rp2loGdrg
+ uvwyKwfYGr8cDSmgOy+0OKRMbLI1qvpsjGWN8XRIHiTtDN9e4nP8S+J10YDe5lMzG1vN
+ qd3ka28Dty8ZEK+eK1tjHBsAz+N6NUIPXNfFVw/ReY2pjH9cobNJWrM4rSSIXTnY3Ejm
+ yWbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxhrxTRtXuBpGaEbmgMC7298vjGL1AxN/Mu20fXLT0DezxzN6VHS8OIG9p2sybE+szifQXUztdFTn/@nongnu.org
+X-Gm-Message-State: AOJu0Yy22cTHBLzY45jQRz3PW2LbdfVZF0Zn6qGMqVMqRg3OjgZBUBxG
+ 3TpgDQWybJuf6O2ZBT22kGobDMHZOZH15pndLmeJyMjXoNEetL+cTB6piPz+DKXa9AL0Uqa1XTV
+ ezTkg31UcXcojjlb0NkrBqXy/5JhUTDe/O5+6jS2gYG2b8la1S0hc
+X-Gm-Gg: ASbGncu3UsT2UlIivlQovxtDIstVQETGNW6OOVOZUtCnjmYkKoq5TnmsbkddXSr2FCr
+ auMcexePzmPeP1J3KPDLhcKFEaq4yN+rSDC08EVKmZNqxPGt/HU9VjUV2uBO9O0T8h0rw7ODv3E
+ AeCFqJUbOrtvyNSjR6JQuRnIS9b72HxEJz2fJYcpUDgdWJoRpRoHGT8/x3Bej12fKctkfRw/6pK
+ 2DHT45Anzf6KedVm5ZLda4z/RP4Pxvj6DLAy20JtAKggv8+XHo/s9fWJO5oTdLHLgXDzPBTzP9q
+ KyAgkgI0IEqCqhmgI1zOerKEYI18bld0NhQdukvCeLUD4Z9KMjoAyzIwN8j5MaY=
+X-Received: by 2002:a5d:47ad:0:b0:391:386d:5971 with SMTP id
+ ffacd0b85a97d-39acc455d39mr3844562f8f.14.1742998580955; 
+ Wed, 26 Mar 2025 07:16:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4/cBUQiHxBcxIKwjDNTFZcdLfhZNvVowORs8e0MW/RAF86faUxaGOBDgh2R0FtBfSSprCUw==
+X-Received: by 2002:a5d:47ad:0:b0:391:386d:5971 with SMTP id
+ ffacd0b85a97d-39acc455d39mr3844496f8f.14.1742998580486; 
+ Wed, 26 Mar 2025 07:16:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3997f9b3dd5sm16842775f8f.45.2025.03.26.07.16.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Mar 2025 07:16:19 -0700 (PDT)
+Message-ID: <af531bef-4597-4729-bdcc-f6b7e3647266@redhat.com>
+Date: Wed, 26 Mar 2025 15:16:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] migration/rdma: Remove qemu_rdma_broken_ipv6_kernel
-To: Jack Wang <jinpu.wang@ionos.com>, qemu-devel@nongnu.org, farosas@suse.de, 
- peterx@redhat.com, mrgalaxy@nvidia.com
-Cc: Li Zhijian <lizhijian@fujitsu.com>, Yu Zhang <yu.zhang@ionos.com>,
- linux-rdma@vger.kernel.org
-References: <20250326095224.9918-1-jinpu.wang@ionos.com>
+Subject: Re: [RFC PATCH v2 15/20] hw/arm/smmuv3: Forward invalidation commands
+ to hw
 Content-Language: en-US
-From: Michael Galaxy <michael@flatgalaxy.com>
-In-Reply-To: <20250326095224.9918-1-jinpu.wang@ionos.com>
-X-ZohoMailClient: External
-Received-SPF: permerror client-ip=136.143.188.12;
- envelope-from=michael@flatgalaxy.com; helo=sender4-op-o12.zoho.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-16-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250311141045.66620-16-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_KAM_HTML_FONT_INVALID=0.01,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 26 Mar 2025 10:13:04 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,489 +118,179 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: michael@flatgalaxy.com
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------0QKeZsXDRuAj9Zm00KDaCOJr
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Excellent find. Thank you very much for checking on the history. 
-Hopefully my comments were not too hard to read. =)
-
-FYI: I've since left Akamai last year and now work at Nvidia.
-
-Reviewed-by: Michael Galaxy <mrgalaxy@nvidia.com>
-
-On 3/26/25 04:52, Jack Wang wrote:
-> I hit following error which testing migration in pure RoCE env:
-> "-incoming rdma:[::]:8089: RDMA ERROR: You only have RoCE / iWARP devices in your
-> systems and your management software has specified '[::]', but IPv6 over RoCE /
-> iWARP is not supported in Linux.#012'."
+On 3/11/25 3:10 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
 >
-> In our setup, we use rdma bind on ipv6 on target host, while connect from source
-> with ipv4, remove the qemu_rdma_broken_ipv6_kernel, migration just work
-> fine.
+> Use the provided smmuv3-accel helper functions to issue the
+> command to physical SMMUv3.
 >
-> Checking the git history, the function was added since introducing of
-> rdma migration, which is more than 10 years ago. linux-rdma has
-> improved support on RoCE/iWARP for ipv6 over past years. There are a few fixes
-> back in 2016 seems related to the issue, eg:
-> aeb76df46d11 ("IB/core: Set routable RoCE gid type for ipv4/ipv6 networks")
->
-> other fixes back in 2018, eg:
-> 052eac6eeb56 RDMA/cma: Update RoCE multicast routines to use net namespace
-> 8d20a1f0ecd5 RDMA/cma: Fix rdma_cm raw IB path setting for RoCE
-> 9327c7afdce3 RDMA/cma: Provide a function to set RoCE path record L2 parameters
-> 5c181bda77f4 RDMA/cma: Set default GID type as RoCE when resolving RoCE route
-> 3c7f67d1880d IB/cma: Fix default RoCE type setting
-> be1d325a3358 IB/core: Set RoCEv2 MGID according to spec
-> 63a5f483af0e IB/cma: Set default gid type to RoCEv2
->
-> So remove the outdated function and it's usage.
->
-> Cc: Peter Xu<peterx@redhat.com>
-> Cc: Li Zhijian<lizhijian@fujitsu.com>
-> Cc: Yu Zhang<yu.zhang@ionos.com>
-> Cc:qemu-devel@nongnu.org
-> Cc:linux-rdma@vger.kernel.org
-> Cc:michael@flatgalaxy.com
-> Signed-off-by: Jack Wang<jinpu.wang@ionos.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 > ---
->   migration/rdma.c | 157 -----------------------------------------------
->   1 file changed, 157 deletions(-)
+>  hw/arm/smmuv3-internal.h | 11 ++++++++
+>  hw/arm/smmuv3.c          | 58 +++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 68 insertions(+), 1 deletion(-)
 >
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 76fb0349238a..5ce628ddeef0 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -767,149 +767,6 @@ static void qemu_rdma_dump_gid(const char *who, struct rdma_cm_id *id)
->       trace_qemu_rdma_dump_gid(who, sgid, dgid);
->   }
->   
-> -/*
-> - * As of now, IPv6 over RoCE / iWARP is not supported by linux.
-> - * We will try the next addrinfo struct, and fail if there are
-> - * no other valid addresses to bind against.
-> - *
-> - * If user is listening on '[::]', then we will not have a opened a device
-> - * yet and have no way of verifying if the device is RoCE or not.
-> - *
-> - * In this case, the source VM will throw an error for ALL types of
-> - * connections (both IPv4 and IPv6) if the destination machine does not have
-> - * a regular infiniband network available for use.
-> - *
-> - * The only way to guarantee that an error is thrown for broken kernels is
-> - * for the management software to choose a *specific* interface at bind time
-> - * and validate what time of hardware it is.
-> - *
-> - * Unfortunately, this puts the user in a fix:
-> - *
-> - *  If the source VM connects with an IPv4 address without knowing that the
-> - *  destination has bound to '[::]' the migration will unconditionally fail
-> - *  unless the management software is explicitly listening on the IPv4
-> - *  address while using a RoCE-based device.
-> - *
-> - *  If the source VM connects with an IPv6 address, then we're OK because we can
-> - *  throw an error on the source (and similarly on the destination).
-> - *
-> - *  But in mixed environments, this will be broken for a while until it is fixed
-> - *  inside linux.
-> - *
-> - * We do provide a *tiny* bit of help in this function: We can list all of the
-> - * devices in the system and check to see if all the devices are RoCE or
-> - * Infiniband.
-> - *
-> - * If we detect that we have a *pure* RoCE environment, then we can safely
-> - * thrown an error even if the management software has specified '[::]' as the
-> - * bind address.
-> - *
-> - * However, if there is are multiple hetergeneous devices, then we cannot make
-> - * this assumption and the user just has to be sure they know what they are
-> - * doing.
-> - *
-> - * Patches are being reviewed on linux-rdma.
-> - */
-> -static int qemu_rdma_broken_ipv6_kernel(struct ibv_context *verbs, Error **errp)
-> -{
-> -    /* This bug only exists in linux, to our knowledge. */
-> -#ifdef CONFIG_LINUX
-> -    struct ibv_port_attr port_attr;
-> -
-> -    /*
-> -     * Verbs are only NULL if management has bound to '[::]'.
-> -     *
-> -     * Let's iterate through all the devices and see if there any pure IB
-> -     * devices (non-ethernet).
-> -     *
-> -     * If not, then we can safely proceed with the migration.
-> -     * Otherwise, there are no guarantees until the bug is fixed in linux.
-> -     */
-> -    if (!verbs) {
-> -        int num_devices;
-> -        struct ibv_device **dev_list = ibv_get_device_list(&num_devices);
-> -        bool roce_found = false;
-> -        bool ib_found = false;
-> -
-> -        for (int x = 0; x < num_devices; x++) {
-> -            verbs = ibv_open_device(dev_list[x]);
-> -            /*
-> -             * ibv_open_device() is not documented to set errno.  If
-> -             * it does, it's somebody else's doc bug.  If it doesn't,
-> -             * the use of errno below is wrong.
-> -             * TODO Find out whether ibv_open_device() sets errno.
-> -             */
-> -            if (!verbs) {
-> -                if (errno == EPERM) {
-> -                    continue;
-> -                } else {
-> -                    error_setg_errno(errp, errno,
-> -                                     "could not open RDMA device context");
-> -                    return -1;
-> -                }
-> -            }
-> -
-> -            if (ibv_query_port(verbs, 1, &port_attr)) {
-> -                ibv_close_device(verbs);
-> -                error_setg(errp,
-> -                           "RDMA ERROR: Could not query initial IB port");
-> -                return -1;
-> -            }
-> -
-> -            if (port_attr.link_layer == IBV_LINK_LAYER_INFINIBAND) {
-> -                ib_found = true;
-> -            } else if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
-> -                roce_found = true;
-> -            }
-> -
-> -            ibv_close_device(verbs);
-> -
-> -        }
-> -
-> -        if (roce_found) {
-> -            if (ib_found) {
-> -                warn_report("migrations may fail:"
-> -                            " IPv6 over RoCE / iWARP in linux"
-> -                            " is broken. But since you appear to have a"
-> -                            " mixed RoCE / IB environment, be sure to only"
-> -                            " migrate over the IB fabric until the kernel "
-> -                            " fixes the bug.");
-> -            } else {
-> -                error_setg(errp, "RDMA ERROR: "
-> -                           "You only have RoCE / iWARP devices in your systems"
-> -                           " and your management software has specified '[::]'"
-> -                           ", but IPv6 over RoCE / iWARP is not supported in Linux.");
-> -                return -1;
-> -            }
-> -        }
-> -
-> -        return 0;
-> -    }
-> -
-> -    /*
-> -     * If we have a verbs context, that means that some other than '[::]' was
-> -     * used by the management software for binding. In which case we can
-> -     * actually warn the user about a potentially broken kernel.
-> -     */
-> -
-> -    /* IB ports start with 1, not 0 */
-> -    if (ibv_query_port(verbs, 1, &port_attr)) {
-> -        error_setg(errp, "RDMA ERROR: Could not query initial IB port");
-> -        return -1;
-> -    }
-> -
-> -    if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
-> -        error_setg(errp, "RDMA ERROR: "
-> -                   "Linux kernel's RoCE / iWARP does not support IPv6 "
-> -                   "(but patches on linux-rdma in progress)");
-> -        return -1;
-> -    }
-> -
-> -#endif
-> -
-> -    return 0;
-> -}
-> -
->   /*
->    * Figure out which RDMA device corresponds to the requested IP hostname
->    * Also create the initial connection manager identifiers for opening
-> @@ -964,13 +821,6 @@ static int qemu_rdma_resolve_host(RDMAContext *rdma, Error **errp)
->           ret = rdma_resolve_addr(rdma->cm_id, NULL, e->ai_dst_addr,
->                   RDMA_RESOLVE_TIMEOUT_MS);
->           if (ret >= 0) {
-> -            if (e->ai_family == AF_INET6) {
-> -                ret = qemu_rdma_broken_ipv6_kernel(rdma->cm_id->verbs,
-> -                                                   local_errp);
-> -                if (ret < 0) {
-> -                    continue;
-> -                }
-> -            }
->               error_free(err);
->               goto route;
->           }
-> @@ -2672,13 +2522,6 @@ static int qemu_rdma_dest_init(RDMAContext *rdma, Error **errp)
->           if (ret < 0) {
->               continue;
->           }
-> -        if (e->ai_family == AF_INET6) {
-> -            ret = qemu_rdma_broken_ipv6_kernel(listen_id->verbs,
-> -                                               local_errp);
-> -            if (ret < 0) {
-> -                continue;
-> -            }
-> -        }
->           error_free(err);
->           break;
->       }
---------------0QKeZsXDRuAj9Zm00KDaCOJr
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index 4602ae6728..546f8faac0 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -235,6 +235,17 @@ static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s)
+>  #define Q_CONS_WRAP(q) (((q)->cons & WRAP_MASK(q)) >> (q)->log2size)
+>  #define Q_PROD_WRAP(q) (((q)->prod & WRAP_MASK(q)) >> (q)->log2size)
+>  
+> +static inline int smmuv3_q_ncmds(SMMUQueue *q)
+> +{
+> +        uint32_t prod = Q_PROD(q);
+> +        uint32_t cons = Q_CONS(q);
+> +
+> +        if (Q_PROD_WRAP(q) == Q_CONS_WRAP(q))
+> +                return prod - cons;
+> +        else
+> +                return WRAP_MASK(q) - cons + prod;
+> +}
+> +
+>  static inline bool smmuv3_q_full(SMMUQueue *q)
+>  {
+>      return ((q->cons ^ q->prod) & WRAP_INDEX_MASK(q)) == WRAP_MASK(q);
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 83159db1d4..e0f225d0df 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1297,10 +1297,18 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>      SMMUCmdError cmd_error = SMMU_CERROR_NONE;
+>      SMMUQueue *q = &s->cmdq;
+>      SMMUCommandType type = 0;
+> +    SMMUCommandBatch batch = {};
+> +    uint32_t ncmds = 0;
+init looks useless
+> +
+>  
+>      if (!smmuv3_cmdq_enabled(s)) {
+>          return 0;
+>      }
+> +
+> +    ncmds = smmuv3_q_ncmds(q);
+> +    batch.cmds = g_new0(Cmd, ncmds);
+> +    batch.cons = g_new0(uint32_t, ncmds);
+> +
+>      /*
+>       * some commands depend on register values, typically CR0. In case those
+>       * register values change while handling the command, spec says it
+> @@ -1395,6 +1403,13 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>  
+>              trace_smmuv3_cmdq_cfgi_cd(sid);
+>              smmuv3_flush_config(sdev);
+> +
+> +            if (smmuv3_accel_batch_cmds(sdev->smmu, sdev, &batch, &cmd,
+> +                                        &q->cons, true)) {
+> +                cmd_error = SMMU_CERROR_ILL;
+I understand you collect all batchable commands all together (those
+sharing the same dev_cache prop) and the batch is executed either when
+the cache target changes or at the very end of the queue consumption.
+Since you don't batch all kinds of commands don't you have a risk to
+send commands out of order?
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Excellent find. Thank you very much for checking on the history.
-      Hopefully my comments were not too hard to read. =)<br>
-      <br>
-      FYI: I've since left Akamai last year and now work at Nvidia. <br>
-      <br>
-      <span
-style="font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"
-      id="docs-internal-guid-a0b80d43-7fff-af1c-cef3-0fa87a1a56f8">Reviewed-by: Michael Galaxy <a class="moz-txt-link-rfc2396E" href="mailto:mrgalaxy@nvidia.com">&lt;mrgalaxy@nvidia.com&gt;</a>
+Eric
+> +                break;
+> +            }
+> +
+>              break;
+>          }
+>          case SMMU_CMD_TLBI_NH_ASID:
+> @@ -1418,6 +1433,13 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>              trace_smmuv3_cmdq_tlbi_nh_asid(asid);
+>              smmu_inv_notifiers_all(&s->smmu_state);
+>              smmu_iotlb_inv_asid_vmid(bs, asid, vmid);
+> +
+> +            if (smmuv3_accel_batch_cmds(bs, NULL, &batch, &cmd, &q->cons,
+> +                                        false)) {
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+> +
+>              break;
+>          }
+>          case SMMU_CMD_TLBI_NH_ALL:
+> @@ -1445,6 +1467,12 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>              trace_smmuv3_cmdq_tlbi_nsnh();
+>              smmu_inv_notifiers_all(&s->smmu_state);
+>              smmu_iotlb_inv_all(bs);
+> +
+> +            if (smmuv3_accel_batch_cmds(bs, NULL, &batch, &cmd, &q->cons,
+> +                                        false)) {
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+>              break;
+>          case SMMU_CMD_TLBI_NH_VAA:
+>          case SMMU_CMD_TLBI_NH_VA:
+> @@ -1453,7 +1481,24 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>                  break;
+>              }
+>              smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1);
+> +
+> +            if (smmuv3_accel_batch_cmds(bs, NULL, &batch, &cmd, &q->cons,
+> +                                        false)) {
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+> +            break;
+> +        case SMMU_CMD_ATC_INV:
+> +        {
+> +            SMMUDevice *sdev = smmu_find_sdev(bs, CMD_SID(&cmd));
+> +
+> +            if (smmuv3_accel_batch_cmds(sdev->smmu, sdev, &batch, &cmd,
+> +                                        &q->cons, true)) {
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+>              break;
+> +        }
+>          case SMMU_CMD_TLBI_S12_VMALL:
+>          {
+>              int vmid = CMD_VMID(&cmd);
+> @@ -1485,7 +1530,6 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>          case SMMU_CMD_TLBI_EL2_ASID:
+>          case SMMU_CMD_TLBI_EL2_VA:
+>          case SMMU_CMD_TLBI_EL2_VAA:
+> -        case SMMU_CMD_ATC_INV:
+>          case SMMU_CMD_PRI_RESP:
+>          case SMMU_CMD_RESUME:
+>          case SMMU_CMD_STALL_TERM:
+> @@ -1511,12 +1555,24 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>          queue_cons_incr(q);
+>      }
+>  
+> +    qemu_mutex_lock(&s->mutex);
+> +    if (!cmd_error && batch.ncmds) {
+> +        if (smmuv3_accel_issue_cmd_batch(bs, &batch)) {
+> +            q->cons = batch.cons[batch.ncmds];
+> +            cmd_error = SMMU_CERROR_ILL;
+> +        }
+> +    }
+> +    qemu_mutex_unlock(&s->mutex);
+> +
+>      if (cmd_error) {
+>          trace_smmuv3_cmdq_consume_error(smmu_cmd_string(type), cmd_error);
+>          smmu_write_cmdq_err(s, cmd_error);
+>          smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
+>      }
+>  
+> +    g_free(batch.cmds);
+> +    g_free(batch.cons);
+> +
+>      trace_smmuv3_cmdq_consume_out(Q_PROD(q), Q_CONS(q),
+>                                    Q_PROD_WRAP(q), Q_CONS_WRAP(q));
+>  
+Thanks
 
-</span></p>
-    <div class="moz-cite-prefix">On 3/26/25 04:52, Jack Wang wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:20250326095224.9918-1-jinpu.wang@ionos.com">
-      <pre wrap="" class="moz-quote-pre">I hit following error which testing migration in pure RoCE env:
-"-incoming rdma:[::]:8089: RDMA ERROR: You only have RoCE / iWARP devices in your
-systems and your management software has specified '[::]', but IPv6 over RoCE /
-iWARP is not supported in Linux.#012'."
+Eric
 
-In our setup, we use rdma bind on ipv6 on target host, while connect from source
-with ipv4, remove the qemu_rdma_broken_ipv6_kernel, migration just work
-fine.
-
-Checking the git history, the function was added since introducing of
-rdma migration, which is more than 10 years ago. linux-rdma has
-improved support on RoCE/iWARP for ipv6 over past years. There are a few fixes
-back in 2016 seems related to the issue, eg:
-aeb76df46d11 ("IB/core: Set routable RoCE gid type for ipv4/ipv6 networks")
-
-other fixes back in 2018, eg:
-052eac6eeb56 RDMA/cma: Update RoCE multicast routines to use net namespace
-8d20a1f0ecd5 RDMA/cma: Fix rdma_cm raw IB path setting for RoCE
-9327c7afdce3 RDMA/cma: Provide a function to set RoCE path record L2 parameters
-5c181bda77f4 RDMA/cma: Set default GID type as RoCE when resolving RoCE route
-3c7f67d1880d IB/cma: Fix default RoCE type setting
-be1d325a3358 IB/core: Set RoCEv2 MGID according to spec
-63a5f483af0e IB/cma: Set default gid type to RoCEv2
-
-So remove the outdated function and it's usage.
-
-Cc: Peter Xu <a class="moz-txt-link-rfc2396E" href="mailto:peterx@redhat.com">&lt;peterx@redhat.com&gt;</a>
-Cc: Li Zhijian <a class="moz-txt-link-rfc2396E" href="mailto:lizhijian@fujitsu.com">&lt;lizhijian@fujitsu.com&gt;</a>
-Cc: Yu Zhang <a class="moz-txt-link-rfc2396E" href="mailto:yu.zhang@ionos.com">&lt;yu.zhang@ionos.com&gt;</a>
-Cc: <a class="moz-txt-link-abbreviated" href="mailto:qemu-devel@nongnu.org">qemu-devel@nongnu.org</a>
-Cc: <a class="moz-txt-link-abbreviated" href="mailto:linux-rdma@vger.kernel.org">linux-rdma@vger.kernel.org</a>
-Cc: <a class="moz-txt-link-abbreviated" href="mailto:michael@flatgalaxy.com">michael@flatgalaxy.com</a>
-Signed-off-by: Jack Wang <a class="moz-txt-link-rfc2396E" href="mailto:jinpu.wang@ionos.com">&lt;jinpu.wang@ionos.com&gt;</a>
----
- migration/rdma.c | 157 -----------------------------------------------
- 1 file changed, 157 deletions(-)
-
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 76fb0349238a..5ce628ddeef0 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -767,149 +767,6 @@ static void qemu_rdma_dump_gid(const char *who, struct rdma_cm_id *id)
-     trace_qemu_rdma_dump_gid(who, sgid, dgid);
- }
- 
--/*
-- * As of now, IPv6 over RoCE / iWARP is not supported by linux.
-- * We will try the next addrinfo struct, and fail if there are
-- * no other valid addresses to bind against.
-- *
-- * If user is listening on '[::]', then we will not have a opened a device
-- * yet and have no way of verifying if the device is RoCE or not.
-- *
-- * In this case, the source VM will throw an error for ALL types of
-- * connections (both IPv4 and IPv6) if the destination machine does not have
-- * a regular infiniband network available for use.
-- *
-- * The only way to guarantee that an error is thrown for broken kernels is
-- * for the management software to choose a *specific* interface at bind time
-- * and validate what time of hardware it is.
-- *
-- * Unfortunately, this puts the user in a fix:
-- *
-- *  If the source VM connects with an IPv4 address without knowing that the
-- *  destination has bound to '[::]' the migration will unconditionally fail
-- *  unless the management software is explicitly listening on the IPv4
-- *  address while using a RoCE-based device.
-- *
-- *  If the source VM connects with an IPv6 address, then we're OK because we can
-- *  throw an error on the source (and similarly on the destination).
-- *
-- *  But in mixed environments, this will be broken for a while until it is fixed
-- *  inside linux.
-- *
-- * We do provide a *tiny* bit of help in this function: We can list all of the
-- * devices in the system and check to see if all the devices are RoCE or
-- * Infiniband.
-- *
-- * If we detect that we have a *pure* RoCE environment, then we can safely
-- * thrown an error even if the management software has specified '[::]' as the
-- * bind address.
-- *
-- * However, if there is are multiple hetergeneous devices, then we cannot make
-- * this assumption and the user just has to be sure they know what they are
-- * doing.
-- *
-- * Patches are being reviewed on linux-rdma.
-- */
--static int qemu_rdma_broken_ipv6_kernel(struct ibv_context *verbs, Error **errp)
--{
--    /* This bug only exists in linux, to our knowledge. */
--#ifdef CONFIG_LINUX
--    struct ibv_port_attr port_attr;
--
--    /*
--     * Verbs are only NULL if management has bound to '[::]'.
--     *
--     * Let's iterate through all the devices and see if there any pure IB
--     * devices (non-ethernet).
--     *
--     * If not, then we can safely proceed with the migration.
--     * Otherwise, there are no guarantees until the bug is fixed in linux.
--     */
--    if (!verbs) {
--        int num_devices;
--        struct ibv_device **dev_list = ibv_get_device_list(&amp;num_devices);
--        bool roce_found = false;
--        bool ib_found = false;
--
--        for (int x = 0; x &lt; num_devices; x++) {
--            verbs = ibv_open_device(dev_list[x]);
--            /*
--             * ibv_open_device() is not documented to set errno.  If
--             * it does, it's somebody else's doc bug.  If it doesn't,
--             * the use of errno below is wrong.
--             * TODO Find out whether ibv_open_device() sets errno.
--             */
--            if (!verbs) {
--                if (errno == EPERM) {
--                    continue;
--                } else {
--                    error_setg_errno(errp, errno,
--                                     "could not open RDMA device context");
--                    return -1;
--                }
--            }
--
--            if (ibv_query_port(verbs, 1, &amp;port_attr)) {
--                ibv_close_device(verbs);
--                error_setg(errp,
--                           "RDMA ERROR: Could not query initial IB port");
--                return -1;
--            }
--
--            if (port_attr.link_layer == IBV_LINK_LAYER_INFINIBAND) {
--                ib_found = true;
--            } else if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
--                roce_found = true;
--            }
--
--            ibv_close_device(verbs);
--
--        }
--
--        if (roce_found) {
--            if (ib_found) {
--                warn_report("migrations may fail:"
--                            " IPv6 over RoCE / iWARP in linux"
--                            " is broken. But since you appear to have a"
--                            " mixed RoCE / IB environment, be sure to only"
--                            " migrate over the IB fabric until the kernel "
--                            " fixes the bug.");
--            } else {
--                error_setg(errp, "RDMA ERROR: "
--                           "You only have RoCE / iWARP devices in your systems"
--                           " and your management software has specified '[::]'"
--                           ", but IPv6 over RoCE / iWARP is not supported in Linux.");
--                return -1;
--            }
--        }
--
--        return 0;
--    }
--
--    /*
--     * If we have a verbs context, that means that some other than '[::]' was
--     * used by the management software for binding. In which case we can
--     * actually warn the user about a potentially broken kernel.
--     */
--
--    /* IB ports start with 1, not 0 */
--    if (ibv_query_port(verbs, 1, &amp;port_attr)) {
--        error_setg(errp, "RDMA ERROR: Could not query initial IB port");
--        return -1;
--    }
--
--    if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
--        error_setg(errp, "RDMA ERROR: "
--                   "Linux kernel's RoCE / iWARP does not support IPv6 "
--                   "(but patches on linux-rdma in progress)");
--        return -1;
--    }
--
--#endif
--
--    return 0;
--}
--
- /*
-  * Figure out which RDMA device corresponds to the requested IP hostname
-  * Also create the initial connection manager identifiers for opening
-@@ -964,13 +821,6 @@ static int qemu_rdma_resolve_host(RDMAContext *rdma, Error **errp)
-         ret = rdma_resolve_addr(rdma-&gt;cm_id, NULL, e-&gt;ai_dst_addr,
-                 RDMA_RESOLVE_TIMEOUT_MS);
-         if (ret &gt;= 0) {
--            if (e-&gt;ai_family == AF_INET6) {
--                ret = qemu_rdma_broken_ipv6_kernel(rdma-&gt;cm_id-&gt;verbs,
--                                                   local_errp);
--                if (ret &lt; 0) {
--                    continue;
--                }
--            }
-             error_free(err);
-             goto route;
-         }
-@@ -2672,13 +2522,6 @@ static int qemu_rdma_dest_init(RDMAContext *rdma, Error **errp)
-         if (ret &lt; 0) {
-             continue;
-         }
--        if (e-&gt;ai_family == AF_INET6) {
--            ret = qemu_rdma_broken_ipv6_kernel(listen_id-&gt;verbs,
--                                               local_errp);
--            if (ret &lt; 0) {
--                continue;
--            }
--        }
-         error_free(err);
-         break;
-     }
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------0QKeZsXDRuAj9Zm00KDaCOJr--
 
