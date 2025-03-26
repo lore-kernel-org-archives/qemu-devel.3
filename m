@@ -4,148 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0121C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 19:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C437BC36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 19:47:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txWQH-00088D-4G; Wed, 26 Mar 2025 15:28:22 -0400
+	id 1txWiM-0000DY-Ix; Wed, 26 Mar 2025 15:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1txWQC-00087G-46; Wed, 26 Mar 2025 15:28:17 -0400
-Received: from mail-sn1nam02on2060d.outbound.protection.outlook.com
- ([2a01:111:f403:2406::60d]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1txWiG-0000By-HI
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 15:47:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1txWQ7-0003e8-F5; Wed, 26 Mar 2025 15:28:14 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=y95YGrSLQ9P9E9kh52e+Fo3a4+G/GhjJhr+OHp7xepVgNsnPf128HeqjcYU3BSlo+c/c/+7VzkN0VdrWFu/cPieHGSZwvhAbzWuIoPmhU9JJarhnK3zRgaA1GCA1R/cABnNoPF1goP9+buoZj6Qy2ttB12uZm3lI6yR68CB4jAOM2gpaqL33cQNGQlBp8E4kf01EESJCuzewg00yN20RzvFzRQ0KFVO3b5vzSSzYsDkvh+reNcRPfk/duszeezG+UvcGE29HVMCG1vMQc9NKmGBFWuuI6F1gjKuhLjb6bL1YPgUW/QnJC6JUnut+VM0ST7zTIXYGttehQpRKoN8xzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gRrvf20+mRjhc1O65XdzHFxlY0Tsh9aWhuLHkJftEbM=;
- b=kzRIjnjhXL7xQ/6cAbjWQHilNjlEDSF4OlghSmoQUEzKzFQl5dLBXuOCdoISDdhdvteZfp+ei6peuYNKfki3KA3tsiry3YU3qtnlK8Sidytuygbfrm9bgH2iRNIW9hLxjFUfBXK8K6Aa2wYzomnPxFbltTZY8Oz7rUZX6s5zDWz6JqpwgD4qsDos5vFolBXniP8/FadduAGqMv9ooPsNqtaqNruCEuoQLYu1zfhiix6LAvY+HjeMNGQQhsfnSX5DWJzUkC91B8PvCgWMJ66viaTv6htNwM9Jw1NvTKBbp9ar55xvZrQT4MU4Z4GVrbraLs0yfpKw4oqyGGsVvEjLnA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gRrvf20+mRjhc1O65XdzHFxlY0Tsh9aWhuLHkJftEbM=;
- b=op5CMP/78onRq1pGLwS/pw3RP68BpJiCPK/jo/5r1btJkreZvknADcklmlo17M71g8sBV5PhIGrGdmH9b77FAaw4oHdyqvbN1rqZ+VbWJoO8vLIYhDy6+Xx0rCgMfmYKlkuWlYdGj34Iq0P+3ca2XTRU42CVpzVZWUM/gYcl2iZ8A30NC/WRjxyVK/smY9sYBpP/nS+DUAxL7hqqEajdXuTrdYcz4RIrFoHzIJhlZPFlgoKEnoCCEFRRgenJU8gVmKHPUMCUc5zIJO1p3+npOUKCANtsF+Dew8H1yS43TjZwRUrWwnUoOvqYpBO+d7teB1C+10H1lLxNfzbYyehwNg==
-Received: from BYAPR05CA0021.namprd05.prod.outlook.com (2603:10b6:a03:c0::34)
- by PH7PR12MB7940.namprd12.prod.outlook.com (2603:10b6:510:275::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Wed, 26 Mar
- 2025 19:28:01 +0000
-Received: from SJ1PEPF00001CE8.namprd03.prod.outlook.com
- (2603:10b6:a03:c0:cafe::2b) by BYAPR05CA0021.outlook.office365.com
- (2603:10b6:a03:c0::34) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.36 via Frontend Transport; Wed,
- 26 Mar 2025 19:28:01 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- SJ1PEPF00001CE8.mail.protection.outlook.com (10.167.242.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8534.20 via Frontend Transport; Wed, 26 Mar 2025 19:28:01 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 26 Mar
- 2025 12:27:53 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Wed, 26 Mar 2025 12:27:53 -0700
-Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.126.190.182)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Wed, 26 Mar 2025 12:27:50 -0700
-Date: Wed, 26 Mar 2025 12:27:47 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
- <jgg@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH v2 15/20] hw/arm/smmuv3: Forward invalidation
- commands to hw
-Message-ID: <Z+RVM8Cr+EcnhDaJ@nvidia.com>
-References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-16-shameerali.kolothum.thodi@huawei.com>
- <af531bef-4597-4729-bdcc-f6b7e3647266@redhat.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1txWiD-0006ev-FP
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 15:46:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743018410;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UPN6BjASvB8/TtkqY6LyqfElcrN2uxS1LZuLL+yoeR8=;
+ b=hrM0VTOTmZNUdLePo/UneEAPsZ4wjItM4Eu2l94T8FreniDzA1uPVBvwNSAJN9QMBA96TY
+ Nc5/N52wAP1BpPhCWATmeh6QAoYidDyjdNM/Veo42NQBtukQsJOXEcmom/AGjfX1DWD9nk
+ la1SaZ/5V92ftgBAyOHG+iSSdDkn2js=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-LzqyDaqGMy2QYVhpSibqqQ-1; Wed, 26 Mar 2025 15:46:46 -0400
+X-MC-Unique: LzqyDaqGMy2QYVhpSibqqQ-1
+X-Mimecast-MFC-AGG-ID: LzqyDaqGMy2QYVhpSibqqQ_1743018405
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2ff4b130bb2so293028a91.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 12:46:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743018405; x=1743623205;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UPN6BjASvB8/TtkqY6LyqfElcrN2uxS1LZuLL+yoeR8=;
+ b=Vp7jcK8Ojv3AtEpx7TulBPgdAW4Vplbd8wl4QUmy1ibZmUZWrYJpxiAmJETPARNje7
+ FEp0DnK3MQSvy9Xh21OLB1ViES7+6q30GVDlHK7NBEHRsg30LXLF8b8zXbG0E0VaITSa
+ ymyYrWmUvqpSXdL7rqHRp7rHrsasSeO1DC+rF9puVHGI3WeiQvvm3GcotEBkRFXCoqig
+ 4fpWLp3hqJ8l/zt3IL7w+W4p5HQC6gy4kwkHE9HMB4ugyUJARFJj7BqeMrQLtVP8q3iw
+ V4/tz+Uwe4YnT+NCjhATCC5bHmY2B4I+/b5DcZV0DC0h84mhKKWzH5nBWSPPEwnSuZqM
+ cF/Q==
+X-Gm-Message-State: AOJu0Yx5lqv7PD+EwKdUL/L31pEWJleWx2TdQeyGJdYwtur5ggTlKqvc
+ ZoWPfXUNw8Zmv3Ox92/3bUnIbxMcmKbqgMTld5MKvrTxi7sELdXcpXiBCrSryCLInKa++3O16ev
+ j1PWOJsGScATNMPnifP7zk5HFFVd6VeX7DwVgrKC294axPcXBcRpo5bqJI01NgEtMO8WNR6w558
+ RSNgGVIqmxtu4yfWdhoBq5QBbGbQU=
+X-Gm-Gg: ASbGncvu4EYhvbwSCSFCObPq+RtRXupx60MxUhwcXqUyXFk8S9+2721L2kMMENT0WxZ
+ d9QlbagYgT9eU5u1lypYrDqRfoN3Zq4JkS4J8Sz5SDoKv7Ct3cbdiFGiPWQ1b2Fv2VnKCowOBc6
+ qKsXjMW1AJpDTMUUFWraE7LnHS5ldy
+X-Received: by 2002:a17:90b:5485:b0:2ff:682b:b759 with SMTP id
+ 98e67ed59e1d1-303a7c54a6amr1469234a91.7.1743018405495; 
+ Wed, 26 Mar 2025 12:46:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5uFSNEavsSIlIefkTotudz6TBg8KZHIPk/F/p9ipTERvx60acmk90m3ubgFWRgqpqTGvfaHItb4t2hesswiQ=
+X-Received: by 2002:a17:90b:5485:b0:2ff:682b:b759 with SMTP id
+ 98e67ed59e1d1-303a7c54a6amr1469183a91.7.1743018405187; Wed, 26 Mar 2025
+ 12:46:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <af531bef-4597-4729-bdcc-f6b7e3647266@redhat.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE8:EE_|PH7PR12MB7940:EE_
-X-MS-Office365-Filtering-Correlation-Id: e97a46b7-5582-4a3d-e674-08dd6c9c52b3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|7416014|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?y+Ewe+uoNIeiLQBOICXdSW/yTvtFiw4t9amgG0qb+u8fN06dWb9xSL0fPFtb?=
- =?us-ascii?Q?PBT6JkTvIKjFQDirpxMVAVhm4kOU0VGimOtPql0+0c85VBVAkot8JuPuVMPm?=
- =?us-ascii?Q?fQZLHsBajyy1HSEO/BxMY2Vrou4bFgrHeMQYAXnQLUQzrRiQ37Q9RgDhRiDP?=
- =?us-ascii?Q?nC7LuPbtv5fHI/zJS9lsR02gw3nJgEyiOHOmdCR5tXHgtrloGtRSftCV3Dk1?=
- =?us-ascii?Q?RgNE8g6AAEo7x4HTaqrkfJy6hQVDkA+8Kf85s6qfqdFjpNd7COeet+sK9Joj?=
- =?us-ascii?Q?TShdf1b5+qL7g9G4o9vmjoZcc1i8X+MBG9aAt9hgRgn0a1/DqxgigUIXyzT9?=
- =?us-ascii?Q?yw8dzjM4wSrSnRGaXEJui2lQVa0pk9MqLeVnb+0t3HF7WO1pIv1vzGYJHCOU?=
- =?us-ascii?Q?NwGfhV04n8Y6q4HQoTcR57IR3yDilbQuUnpfs3pLORUfmxNj+q47yvryXH5x?=
- =?us-ascii?Q?Akej0+4k/yFBagreHABSgI3wXmR6brbzlfwf+QSoFxmsmqVrCL0RPdKtilin?=
- =?us-ascii?Q?RbN+dAJxV5mlis/ChzdrO54H+xsZMYcSC7rZOHyH02E0p6DkLlSSSX9yOOzw?=
- =?us-ascii?Q?r5NS+7+MsxuCi5yHB7RF61zC31kM0qZ/VdX6nrmOckCWWDrcekzJiSzIBDTP?=
- =?us-ascii?Q?z8eR3lqiNDKhVm8VKeGxmWbqEZBpIAyDHYcZS85/QAw/6NA6xcDqd65TQ4oz?=
- =?us-ascii?Q?a07iVbmv8uSJ71ulESDxvS/Rt/u9mrQgYDRWGzEzU/XEZvvMKrZ1SegFdb6S?=
- =?us-ascii?Q?xMejOFumrhmN+decGU9u0sBk9p9Qt8LvPReErm2bADFc9QDk5+ydT+UkvBTP?=
- =?us-ascii?Q?TTXBCknpKapm9nJnLNMBeOu7R4II0wKwRXqCmJ3MViBzDK+nUgYfCMNCsOqD?=
- =?us-ascii?Q?V8AsxPgoOIyCw6nSBZxL9rX2m6le8yf/o8PnRuK0TxGXX0w/s7Ruz4vQEXfY?=
- =?us-ascii?Q?WK9X1CCVcEGkBojZO6m1D+AxnCg8/rlESPkQbAbhgM6h9HDu6Hi53CZk+69A?=
- =?us-ascii?Q?v84yBnILshu67v/U4c+PwDRcOKx7LFIaTOQmWJdhS/ic1SUCHuUoU7+oK7rg?=
- =?us-ascii?Q?jRRJW0JPJkpE3U2rm7NEe0h4El08Fl4riIwTalZ0G1dZVFyClEEQOzRfcqZI?=
- =?us-ascii?Q?DNplxanVvuslsbPPUpLcngpk8UKFJLkLjBKgme1oXNpM/JFAAN70+z0ZTzFv?=
- =?us-ascii?Q?I2DTSX+tJQ9wgIR/ZukwTzo8orLd89ctUfgVfJhMP48EqxpOs8VmyVYWxBHi?=
- =?us-ascii?Q?b48To1G/50Os1JikSdemRjTft3aZVgavbpVhn93nHiBeMAH8yg0HtT+B8pTC?=
- =?us-ascii?Q?27XngMdbgKrqoqs5NlvOCjYzNylEzd0e0o6auyjjQNGCWf9hIUj7aUwLfH4s?=
- =?us-ascii?Q?5GAf7jy9GoDvIJfN1dbpMlPAYpsM1rwE8/7Vkk9N9wrPU1VD/kUNWdF+F+3y?=
- =?us-ascii?Q?fXUE/GrCvAr92xm2SeyUU8hmWg94Y0W1dbh/OxKzQvChZKTnFyPQGG91+e0f?=
- =?us-ascii?Q?ns4EafaUx8lCkdQ=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(7416014)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Mar 2025 19:28:01.4385 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e97a46b7-5582-4a3d-e674-08dd6c9c52b3
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CE8.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7940
-Received-SPF: permerror client-ip=2a01:111:f403:2406::60d;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
+References: <20250322010857.309490-1-jsnow@redhat.com>
+ <20250322010857.309490-4-jsnow@redhat.com>
+ <87bjtpmop6.fsf@pond.sub.org>
+In-Reply-To: <87bjtpmop6.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 26 Mar 2025 15:46:32 -0400
+X-Gm-Features: AQ5f1JoNQBBGbMyhENwsMH68JYt3ES2KNCnWhC-Z9BujdyP7tge7AIZrXY7rmm4
+Message-ID: <CAFn=p-ZJT0p7LHiBPn5deZnGSq6vtyF5b8G7pmmzUyRPtDURtQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] qapi: remove trivial "Returns:" sections
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Lukas Straub <lukasstraub2@web.de>, 
+ Fabiano Rosas <farosas@suse.de>, Eduardo Habkost <eduardo@habkost.net>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, qemu-trivial@nongnu.org, 
+ Jason Wang <jasowang@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Yanan Wang <wangyanan55@huawei.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org, 
+ Zhenwei Pi <pizhenwei@bytedance.com>, Mads Ynddal <mads@ynddal.dk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Eric Blake <eblake@redhat.com>, Jiri Pirko <jiri@resnulli.us>
+Content-Type: multipart/alternative; boundary="000000000000e0ebd9063144182c"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,29 +120,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 26, 2025 at 03:16:18PM +0100, Eric Auger wrote:
-> > @@ -1395,6 +1403,13 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-> >  
-> >              trace_smmuv3_cmdq_cfgi_cd(sid);
-> >              smmuv3_flush_config(sdev);
-> > +
-> > +            if (smmuv3_accel_batch_cmds(sdev->smmu, sdev, &batch, &cmd,
-> > +                                        &q->cons, true)) {
-> > +                cmd_error = SMMU_CERROR_ILL;
-> I understand you collect all batchable commands all together (those
-> sharing the same dev_cache prop) and the batch is executed either when
-> the cache target changes or at the very end of the queue consumption.
-> Since you don't batch all kinds of commands don't you have a risk to
-> send commands out of order?
+--000000000000e0ebd9063144182c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes, that could happen. But would it have some real risk?
+On Tue, Mar 25, 2025 at 5:42=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-This practice has an assumption that the guest OS would group
-each batch with a proper CMD_SYNC like Linux does. So it could
-reduce the amount of ioctls. If we can think of some real risk
-when the guest OS doesn't, yes, I think we would have to flush
-the batch if any non-accel command appear in-between.
+> John Snow <jsnow@redhat.com> writes:
+>
+> > The new qapidoc transmogrifier can generate "Returns" statements with
+> > type information just fine, so we can remove it from the source where i=
+t
+> > doesn't add anything particularly novel or helpful and just repeats the
+> > type info.
+> >
+> > This patch does not touch Returns: lines that add some information
+> > (potentially helpful, potentially not) but repeats the type information
+> > to remove that type.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> This is a clear improvement for the generated docs.  For instance,
+> blockdev-snapshot-delete-internal-sync goes from
+>
+>     Return:
+>        "SnapshotInfo" -- SnapshotInfo
+>
+> to
+>
+>     Return:
+>        "SnapshotInfo"
+>
+> However, I see that *triplicated* in my testing.  I observed similar
+> issues with the previous patch, so let's discuss that there and ignore
+> it here.
+>
+> The impact on schema file egonomics is less clear.
+>
+> This patch removes a bunch of "Returns:" sections that make the
+> generated docs look bad.  How can we stop people from writing such
+> sections?
+>
+> Developers tend to refer to the schema file instead of the generated
+> documentation.  Information is spread across doc comment and schema
+> code.  Both describe the syntactic structure.  Only the schema code has
+> types, optional, and such.  The doc comment describes semantics.  In
+> practice, skimming the doc comment is often enough.
+>
+> Except for the return value.  The doc comment's "Returns:" section is
+> optional.  When it's absent, the generated docs are bad (but this patch
+> fixes that).  Moreover, the doc comment doesn't fully describe the
+> syntactic structure then.  Unwary readers may not be aware of that trap,
+> and miss the return value.
+>
+> The inliner you posted before needs to know where the inlined stuff
+> goes.  Obvious when there are argument descriptions or a "Returns:".
+> For the cases where we have nothing useful, you proposed an explicit
+> marker "Details:" (how exactly it's spelled doesn't matter here, only
+> that an explicit marker can be necessary).  Could removing "Returns:"
+> make the marker necessary more often?  Can our tooling reliably detect
+> the need for the marker?
+>
 
-Thanks
-Nicolin
+Well, tooling can at least be certain when it isn't certain.
+
+The warning I have in my inliner branch-fork-whatever now basically just
+looks at the sections and if there's non-plaintext sections between the
+start and the ending, it treats the beginning as intro and the ending as
+details.
+
+In the case there is *nothing else at all*, i.e. no returns, no
+arguments/members, no errors, no features - i.e. it's a single QAPIDoc
+Section - the inliner will count the *paragraphs*. If it's *one* paragraph,
+it deduces that it's an intro section and does not consider it ambiguous.
+If there are multiple paragraphs, however, that's when it emits a warning.
+
+A computer is never going to be able to reliably determine *intent*, but
+syntactically I think that's a pretty narrow circumstance to yelp over:
+"Documentation contains only a single plaintext section that consists of
+two or more paragraphs". In practice, that's a reasonably rare occurrence
+and is most likely to occur with query commands that take no arguments,
+have no features, and do not document return value semantics.
+
+--000000000000e0ebd9063144182c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 25,=
+ 2025 at 5:42=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
+hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
+ target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; The new qapidoc transmogrifier can generate &quot;Returns&quot; statem=
+ents with<br>
+&gt; type information just fine, so we can remove it from the source where =
+it<br>
+&gt; doesn&#39;t add anything particularly novel or helpful and just repeat=
+s the<br>
+&gt; type info.<br>
+&gt;<br>
+&gt; This patch does not touch Returns: lines that add some information<br>
+&gt; (potentially helpful, potentially not) but repeats the type informatio=
+n<br>
+&gt; to remove that type.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+<br>
+This is a clear improvement for the generated docs.=C2=A0 For instance,<br>
+blockdev-snapshot-delete-internal-sync goes from<br>
+<br>
+=C2=A0 =C2=A0 Return:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;SnapshotInfo&quot; -- SnapshotInfo<br>
+<br>
+to<br>
+<br>
+=C2=A0 =C2=A0 Return:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;SnapshotInfo&quot;<br>
+<br>
+However, I see that *triplicated* in my testing.=C2=A0 I observed similar<b=
+r>
+issues with the previous patch, so let&#39;s discuss that there and ignore<=
+br>
+it here.<br>
+<br>
+The impact on schema file egonomics is less clear.<br>
+<br>
+This patch removes a bunch of &quot;Returns:&quot; sections that make the<b=
+r>
+generated docs look bad.=C2=A0 How can we stop people from writing such<br>
+sections?<br>
+<br>
+Developers tend to refer to the schema file instead of the generated<br>
+documentation.=C2=A0 Information is spread across doc comment and schema<br=
+>
+code.=C2=A0 Both describe the syntactic structure.=C2=A0 Only the schema co=
+de has<br>
+types, optional, and such.=C2=A0 The doc comment describes semantics.=C2=A0=
+ In<br>
+practice, skimming the doc comment is often enough.<br>
+<br>
+Except for the return value.=C2=A0 The doc comment&#39;s &quot;Returns:&quo=
+t; section is<br>
+optional.=C2=A0 When it&#39;s absent, the generated docs are bad (but this =
+patch<br>
+fixes that).=C2=A0 Moreover, the doc comment doesn&#39;t fully describe the=
+<br>
+syntactic structure then.=C2=A0 Unwary readers may not be aware of that tra=
+p,<br>
+and miss the return value.<br>
+<br>
+The inliner you posted before needs to know where the inlined stuff<br>
+goes.=C2=A0 Obvious when there are argument descriptions or a &quot;Returns=
+:&quot;.<br>
+For the cases where we have nothing useful, you proposed an explicit<br>
+marker &quot;Details:&quot; (how exactly it&#39;s spelled doesn&#39;t matte=
+r here, only<br>
+that an explicit marker can be necessary).=C2=A0 Could removing &quot;Retur=
+ns:&quot;<br>
+make the marker necessary more often?=C2=A0 Can our tooling reliably detect=
+<br>
+the need for the marker?<br></blockquote><div><br></div><div>Well, tooling =
+can at least be certain when it isn&#39;t certain.</div><div><br></div><div=
+>The warning I have in my inliner branch-fork-whatever now basically just l=
+ooks at the sections and if there&#39;s non-plaintext sections between the =
+start and the ending, it treats the beginning as intro and the ending as de=
+tails.</div><div><br></div><div>In the case there is *nothing else at all*,=
+ i.e. no returns, no arguments/members, no errors, no features - i.e. it&#3=
+9;s a single QAPIDoc Section - the inliner will count the *paragraphs*. If =
+it&#39;s *one* paragraph, it deduces that it&#39;s an intro section and doe=
+s not consider it ambiguous. If there are multiple paragraphs, however, tha=
+t&#39;s when it emits a warning.</div><div><br></div><div>A computer is nev=
+er going to be able to reliably determine *intent*, but syntactically I thi=
+nk that&#39;s a pretty narrow circumstance to yelp over: &quot;Documentatio=
+n contains only a single plaintext section that consists of two or more par=
+agraphs&quot;. In practice, that&#39;s a reasonably rare occurrence and is =
+most likely to occur with query commands that take no arguments, have no fe=
+atures, and do not document return value semantics.</div></div></div>
+
+--000000000000e0ebd9063144182c--
+
 
