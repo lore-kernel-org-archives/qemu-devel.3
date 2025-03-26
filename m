@@ -4,82 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF9BC36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 11:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92456C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 11:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txOYK-0008Cf-R5; Wed, 26 Mar 2025 07:04:08 -0400
+	id 1txOtR-0005ZX-GN; Wed, 26 Mar 2025 07:25:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1txOXu-000856-JJ
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 07:03:42 -0400
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1txOXr-0001YJ-KK
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 07:03:41 -0400
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-477296dce76so40356071cf.3
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 04:03:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742987018; x=1743591818; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4YxsTWgtAz93C25tbko7byv9rzXfbIXWcnm3e2MKIGc=;
- b=bztarESTO/gd1/Lyfr/3Iz4S5m6Ld71QULZOdCsP73zQiWd/7aXLwfocXSzZolVXJN
- TWJYNqWCXIbTgH++rXlHH7e5y9C8af9Bh2db72WcOQgHzAsmgv6g9seuo1dOB3R6HGH7
- mkrcU0OI2/8mlKpayha4X1PGsamkNsqiibBTrzIEMqlhVo+IcrXq2US6vlMEXVe6XIvl
- kUKoF8h9qHGCd23c3Jeij1kqPELQ6a/0lBqd8DyM7IirCG3xhFTewtBG20ShErxwo5Yv
- zKvEShb2m4xcwiOqzw/mv9rdwHQPaZvSF6IGjlfnAaD0W0MsWTUa2N61qKwFuO6TVo7J
- 9byA==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1txOtN-0005ZH-Bu
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 07:25:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1txOtL-0006ED-Gx
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 07:25:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742988349;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jD/7nvPVW9fep+uEZMyWP3w9EGMOQduv4LVRjkhbt1Q=;
+ b=ezl6iHuUmsGoVQmtFjhcuPcpRdIMqMlAXxBiql5X9bOzhrO88oDXWrxlbK4duL0GkR9UeM
+ ANbqIc+T8tGVR/PSsR3WJD9+Fj7Ao1ua47PhkvvJbsnJlQuuUp0PTjj56W2JnkYduH2lj/
+ /EcJDnrCfLOGTFf7r7CLd/R71fVVTmE=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-fcKJhLxgNHG5O73DqHr0xQ-1; Wed, 26 Mar 2025 07:25:47 -0400
+X-MC-Unique: fcKJhLxgNHG5O73DqHr0xQ-1
+X-Mimecast-MFC-AGG-ID: fcKJhLxgNHG5O73DqHr0xQ_1742988346
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2254e500a73so83433895ad.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 04:25:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742987018; x=1743591818;
+ d=1e100.net; s=20230601; t=1742988346; x=1743593146;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4YxsTWgtAz93C25tbko7byv9rzXfbIXWcnm3e2MKIGc=;
- b=RO1H7xZ0gv04+S1263X+dAMCsbYmvyk1IGsBpNIVNBjnm79va43gTM2WhScx5n/RLh
- m2J8c8/w01q5GcpKnPgL3a//imDYExEE3YSxJvYyEObkbWqPHxsK+kWlvIlhtmdtqkMB
- zS/L5ZEdx/me0FJaL0ke+gcwETYDfCxySZ1NSE73aOBtz1uWe3xrtLw1k5EJUxbLMoe5
- SLwSNtiHaKekuF4+GTDkcA0sIGStV9V8tybfyD4oTihXrM6r8Q7wMHYB3+pmx7TtqXvc
- 8u0Jx2Z1WKN/Wz/XwxPdmBTKDKKkDdXoVB5cxMenAUBN+XMvOgL2yXJosJhpvNYnhrYu
- b/mg==
-X-Gm-Message-State: AOJu0YxrIriVCiCySIFh6/NUFYMdPmg16236Fn/hT0kfYaU/+1maWlTb
- j1ZSgL6Wo2hqYJ1We+SrB97bNNLaO5Mo004fscPg/lRb4LAqZ7dk4EIdYAhp5EJHg9RSuDAvsr+
- QQKj0DEpioncvtYcqGQVepaOFPzX0tdRZHLs=
-X-Gm-Gg: ASbGnctkazBgq6MJBfeRw+VBdNuXIVoGBYsyz3nEucOAE/zjB04bo748sttcxfWovif
- 0eO5RQ9KoYR+b1hkiwZki2RK4PVyxp6acF6lEnDdzxzEKP2pFG/GnkCEMtIpI0lj4HbMfP1cn8+
- JMRNEaah1nqTNvsUmzYcTqHmHvwbc1UX8swivVLdf6J8OJ1AoI/CN9w8MBlbcJcjg+pyypuw==
-X-Google-Smtp-Source: AGHT+IGuw8xxq2YpHrzO7Xs4I+gRPbKQcJFmyvyo1cLIt9T5qO9V1SWol44jKcRFXHOov3Z+Le/Gz6mp7uLgCwpZEVQ=
-X-Received: by 2002:a05:622a:259b:b0:476:8a27:6b01 with SMTP id
- d75a77b69052e-4771de4f520mr402681871cf.47.1742987018475; Wed, 26 Mar 2025
- 04:03:38 -0700 (PDT)
+ bh=jD/7nvPVW9fep+uEZMyWP3w9EGMOQduv4LVRjkhbt1Q=;
+ b=hZn3Jzvsn0CFcsV6/ob6sjqMnTaHmv/AqnSfV0GhTR8hsvX+T6gCNxwLyyWsVaZzy2
+ oD4d+ZRj2vbSXE18j0C0C6KNSAPdOVvL7EI/MRdVmvrsIhNZJD9rkThrra1SMI6rYYXI
+ L+n5SvPEznjL4/3bR9MN/KPGTZJA3vX3KZPKZ2y9tTscgZX/ebZUjY70uKQLMzNkAS6t
+ 0oInoHTbQ2WJVzVJ9qH+k6dnaXlS5QJyWX6ZadP/yoobfmWUwa4OW4I4PAU2OmjQ3e1U
+ PnJgSedeGjq/wdxsSzR90ulf/mR8vFFfnQIIPIljiVrkeCJ1jF7HvYwpz0EkYW0g5spi
+ 0ZIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV15w5OnspRFeeT0MuNzzJuS3PeQM9kO7t9UcLs06faohPqDTOdrGnQ3iS30sX2hiRgdKsQwmGjZD8P@nongnu.org
+X-Gm-Message-State: AOJu0YxoR52ZKn0nDKlOaPzA4Qj/KK9gzGiCg5CG4WTM/yakjBKZ/Bxq
+ JHRbMoWO96xBHmCnUhrDS5Z2pjE+9JVr3CGBL2sMFxQmbcFIIH4g1kK12jYe6S9KDQE32b8rpt5
+ hMFD6nnmZ1KZ8de/ak1yat5Gab0eO7DuC7cWy6dKqa5pXQPAhLw9zRl9QilbX0JMZM77MD9apxw
+ SS3iX7TAuWdiyxtBe/vJFk5wYmm90=
+X-Gm-Gg: ASbGncvreftmhN42GpWWdzLRKWb1kwzGAgAASCT5FqOxW+K5IB1s8EMiGrovzywHjya
+ IWJo7MtTtsvtoyN7N/clQ5ahPSmvbftk/zlOTkWcN4QjHf0a5DWf54vW09AAqsQwApUY3qCs=
+X-Received: by 2002:a17:903:2346:b0:223:fb3a:8631 with SMTP id
+ d9443c01a7336-22780da4870mr340373255ad.24.1742988345946; 
+ Wed, 26 Mar 2025 04:25:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFBQRwQHxU00hROnZIyGH1xtGjZao7lg/C1G7Ptdld8iDPGtO4tnW/KcOX0AwIVBCKq3jgbVmUo5SPRUKWzt48=
+X-Received: by 2002:a17:903:2346:b0:223:fb3a:8631 with SMTP id
+ d9443c01a7336-22780da4870mr340372525ad.24.1742988345324; Wed, 26 Mar 2025
+ 04:25:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250326093418.397269-1-yuq825@gmail.com>
- <20250326093418.397269-5-yuq825@gmail.com>
-In-Reply-To: <20250326093418.397269-5-yuq825@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 26 Mar 2025 15:03:23 +0400
-X-Gm-Features: AQ5f1JpI5rDx2foX_5PnjQILVGgC8f1A43s5w8eEoTJ9Olav5flR_PXR0tj0RAA
-Message-ID: <CAJ+F1CKH_7HktXeMRX3Dv3i-foRorHVHpk4bxch1YFD22YR_Wg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/6] ui/egl: support multi-plane dmabuf when egl
- export/import
-To: yuq825@gmail.com
-Cc: qemu-devel@nongnu.org
+References: <20250324135929.74945-1-sahilcdq@proton.me>
+ <20250324135929.74945-2-sahilcdq@proton.me>
+In-Reply-To: <20250324135929.74945-2-sahilcdq@proton.me>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 26 Mar 2025 12:25:07 +0100
+X-Gm-Features: AQ5f1JqE_rUx9zXXx6oYVbJeEhjaMSodp_fYFctOmgfPmu9T7zIxqWATwNUeSI8
+Message-ID: <CAJaqyWc0sH0o9MnnJPO8jLbpQVyec+QeG_TE2hnWxoiBqmivFA@mail.gmail.com>
+Subject: Re: [RFC v5 1/7] vhost: Refactor vhost_svq_add_split
+To: Sahil Siddiq <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ sahilcdq@proton.me
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x829.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,366 +105,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 26, 2025 at 1:34=E2=80=AFPM <yuq825@gmail.com> wrote:
+On Mon, Mar 24, 2025 at 2:59=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com=
+> wrote:
 >
-> From: Qiang Yu <yuq825@gmail.com>
+> This commit refactors vhost_svq_add_split and vhost_svq_add to simplify
+> their implementation and prepare for the addition of packed vqs in the
+> following commits.
 >
-> v2:
->   * use new dmabuf API and check length
->
-> Signed-off-by: Qiang Yu <yuq825@gmail.com>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
+> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
 > ---
->  include/ui/egl-helpers.h |  5 ++-
->  ui/dbus-listener.c       | 19 +++++----
->  ui/egl-helpers.c         | 91 ++++++++++++++++++++++++++++++----------
->  ui/spice-display.c       | 58 ++++++++++++++++---------
->  4 files changed, 121 insertions(+), 52 deletions(-)
+> No changes from v4 -> v5.
 >
-> diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
-> index 4b8c0d2281..fb80e15142 100644
-> --- a/include/ui/egl-helpers.h
-> +++ b/include/ui/egl-helpers.h
-> @@ -46,8 +46,9 @@ extern int qemu_egl_rn_fd;
->  extern struct gbm_device *qemu_egl_rn_gbm_dev;
+
+You can carry the Acked-by from previous series if you make no changes
+(or even small changes).
+
+Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+
+>  hw/virtio/vhost-shadow-virtqueue.c | 107 +++++++++++------------------
+>  1 file changed, 41 insertions(+), 66 deletions(-)
 >
->  int egl_rendernode_init(const char *rendernode, DisplayGLMode mode);
-> -int egl_get_fd_for_texture(uint32_t tex_id, EGLint *stride, EGLint *four=
-cc,
-> -                           EGLuint64KHR *modifier);
-> +bool egl_dmabuf_export_texture(uint32_t tex_id, int *fd, EGLint *offset,
-> +                               EGLint *stride, EGLint *fourcc, int *num_=
-planes,
-> +                               EGLuint64KHR *modifier);
->
->  void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf);
->  void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf);
-> diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-> index 65373d519c..90147972cd 100644
-> --- a/ui/dbus-listener.c
-> +++ b/ui/dbus-listener.c
-> @@ -504,19 +504,22 @@ static void dbus_scanout_texture(DisplayChangeListe=
-ner *dcl,
->                                 backing_width, backing_height, x, y, w, h=
-);
->  #ifdef CONFIG_GBM
->      g_autoptr(QemuDmaBuf) dmabuf =3D NULL;
-> -    int fd;
-> -    uint32_t offset =3D 0, stride, fourcc;
-> +    int fd[DMABUF_MAX_PLANES], num_planes;
-> +    uint32_t offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES], fourc=
-c;
->      uint64_t modifier;
->
->      assert(tex_id);
-> -    fd =3D egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&=
-fourcc,
-> -                                &modifier);
-> -    if (fd < 0) {
-> -        error_report("%s: failed to get fd for texture", __func__);
-> +    if (!egl_dmabuf_export_texture(tex_id, fd, (EGLint *)offset, (EGLint=
- *)stride,
-> +                                   (EGLint *)&fourcc, &num_planes, &modi=
-fier)) {
-> +        error_report("%s: failed to export dmabuf for texture", __func__=
-);
-> +        return;
-> +    }
-> +    if (num_planes > 1) {
-> +        error_report("%s: does not support multi-plane dmabuf", __func__=
-);
->          return;
->      }
-> -    dmabuf =3D qemu_dmabuf_new(w, h, &offset, &stride, x, y, backing_wid=
-th,
-> -                             backing_height, fourcc, modifier, &fd, 1,
-> +    dmabuf =3D qemu_dmabuf_new(w, h, offset, stride, x, y, backing_width=
-,
-> +                             backing_height, fourcc, modifier, fd, num_p=
-lanes,
->                               false, backing_y_0_top);
->
->      dbus_scanout_dmabuf(dcl, dmabuf);
-> diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-> index 8c0e394d2b..f76d0c04a2 100644
-> --- a/ui/egl-helpers.c
-> +++ b/ui/egl-helpers.c
-> @@ -283,44 +283,85 @@ err:
->      return -1;
+> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
+virtqueue.c
+> index 2481d49345..4f74ad402a 100644
+> --- a/hw/virtio/vhost-shadow-virtqueue.c
+> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> @@ -139,87 +139,48 @@ static bool vhost_svq_translate_addr(const VhostSha=
+dowVirtqueue *svq,
 >  }
 >
-> -int egl_get_fd_for_texture(uint32_t tex_id, EGLint *stride, EGLint *four=
-cc,
-> -                           EGLuint64KHR *modifier)
-> +bool egl_dmabuf_export_texture(uint32_t tex_id, int *fd, EGLint *offset,
-> +                               EGLint *stride, EGLint *fourcc, int *num_=
-planes,
-> +                               EGLuint64KHR *modifier)
->  {
->      EGLImageKHR image;
-> -    EGLint num_planes, fd;
-> +    EGLuint64KHR modifiers[DMABUF_MAX_PLANES];
->
->      image =3D eglCreateImageKHR(qemu_egl_display, eglGetCurrentContext()=
+>  /**
+> - * Write descriptors to SVQ vring
+> + * Write descriptors to SVQ split vring
+>   *
+>   * @svq: The shadow virtqueue
+> - * @sg: Cache for hwaddr
+> - * @iovec: The iovec from the guest
+> - * @num: iovec length
+> - * @addr: Descriptors' GPAs, if backed by guest memory
+> - * @more_descs: True if more descriptors come in the chain
+> - * @write: True if they are writeable descriptors
+> - *
+> - * Return true if success, false otherwise and print error.
+> + * @out_sg: The iovec to the guest
+> + * @out_num: Outgoing iovec length
+> + * @in_sg: The iovec from the guest
+> + * @in_num: Incoming iovec length
+> + * @sgs: Cache for hwaddr
+> + * @head: Saves current free_head
+>   */
+> -static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwadd=
+r *sg,
+> -                                        const struct iovec *iovec, size_=
+t num,
+> -                                        const hwaddr *addr, bool more_de=
+scs,
+> -                                        bool write)
+> +static void vhost_svq_add_split(VhostShadowVirtqueue *svq,
+> +                                const struct iovec *out_sg, size_t out_n=
+um,
+> +                                const struct iovec *in_sg, size_t in_num=
 ,
->                                EGL_GL_TEXTURE_2D_KHR,
->                                (EGLClientBuffer)(unsigned long)tex_id,
->                                NULL);
->      if (!image) {
-> -        return -1;
-> +        return false;
->      }
->
->      eglExportDMABUFImageQueryMESA(qemu_egl_display, image, fourcc,
-> -                                  &num_planes, modifier);
-> -    if (num_planes !=3D 1) {
-> -        eglDestroyImageKHR(qemu_egl_display, image);
-> -        return -1;
+> +                                hwaddr *sgs, unsigned *head)
+>  {
+> +    unsigned avail_idx, n;
+>      uint16_t i =3D svq->free_head, last =3D svq->free_head;
+> -    unsigned n;
+> -    uint16_t flags =3D write ? cpu_to_le16(VRING_DESC_F_WRITE) : 0;
+> +    vring_avail_t *avail =3D svq->vring.avail;
+>      vring_desc_t *descs =3D svq->vring.desc;
+> -    bool ok;
+> -
+> -    if (num =3D=3D 0) {
+> -        return true;
 > -    }
-> -    eglExportDMABUFImageMESA(qemu_egl_display, image, &fd, stride, NULL)=
-;
-> +                                  num_planes, modifiers);
-> +    eglExportDMABUFImageMESA(qemu_egl_display, image, fd, stride, offset=
-);
->      eglDestroyImageKHR(qemu_egl_display, image);
+> +    size_t num =3D in_num + out_num;
 >
-> -    return fd;
-> +    /* Only first modifier matters. */
-> +    if (modifier)
-> +        *modifier =3D modifiers[0];
+> -    ok =3D vhost_svq_translate_addr(svq, sg, iovec, num, addr);
+> -    if (unlikely(!ok)) {
+> -        return false;
+> -    }
+> +    *head =3D svq->free_head;
+>
+>      for (n =3D 0; n < num; n++) {
+> -        if (more_descs || (n + 1 < num)) {
+> -            descs[i].flags =3D flags | cpu_to_le16(VRING_DESC_F_NEXT);
+> +        descs[i].flags =3D cpu_to_le16(n < out_num ? 0 : VRING_DESC_F_WR=
+ITE);
+> +        if (n + 1 < num) {
+> +            descs[i].flags |=3D cpu_to_le16(VRING_DESC_F_NEXT);
+>              descs[i].next =3D cpu_to_le16(svq->desc_next[i]);
+> +        }
 > +
-> +    return true;
+> +        descs[i].addr =3D cpu_to_le64(sgs[n]);
+> +        if (n < out_num) {
+> +            descs[i].len =3D cpu_to_le32(out_sg[n].iov_len);
+>          } else {
+> -            descs[i].flags =3D flags;
+> +            descs[i].len =3D cpu_to_le32(in_sg[n - out_num].iov_len);
+>          }
+> -        descs[i].addr =3D cpu_to_le64(sg[n]);
+> -        descs[i].len =3D cpu_to_le32(iovec[n].iov_len);
+>
+>          last =3D i;
+>          i =3D svq->desc_next[i];
+>      }
+>
+>      svq->free_head =3D svq->desc_next[last];
+> -    return true;
+> -}
+> -
+> -static bool vhost_svq_add_split(VhostShadowVirtqueue *svq,
+> -                                const struct iovec *out_sg, size_t out_n=
+um,
+> -                                const hwaddr *out_addr,
+> -                                const struct iovec *in_sg, size_t in_num=
+,
+> -                                const hwaddr *in_addr, unsigned *head)
+> -{
+> -    unsigned avail_idx;
+> -    vring_avail_t *avail =3D svq->vring.avail;
+> -    bool ok;
+> -    g_autofree hwaddr *sgs =3D g_new(hwaddr, MAX(out_num, in_num));
+> -
+> -    *head =3D svq->free_head;
+> -
+> -    /* We need some descriptors here */
+> -    if (unlikely(!out_num && !in_num)) {
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "Guest provided element with no descriptors");
+> -        return false;
+> -    }
+> -
+> -    ok =3D vhost_svq_vring_write_descs(svq, sgs, out_sg, out_num, out_ad=
+dr,
+> -                                     in_num > 0, false);
+> -    if (unlikely(!ok)) {
+> -        return false;
+> -    }
+> -
+> -    ok =3D vhost_svq_vring_write_descs(svq, sgs, in_sg, in_num, in_addr,=
+ false,
+> -                                     true);
+> -    if (unlikely(!ok)) {
+> -        return false;
+> -    }
+>
+>      /*
+>       * Put the entry in the available array (but don't update avail->idx=
+ until
+> @@ -233,7 +194,6 @@ static bool vhost_svq_add_split(VhostShadowVirtqueue =
+*svq,
+>      smp_wmb();
+>      avail->idx =3D cpu_to_le16(svq->shadow_avail_idx);
+>
+> -    return true;
 >  }
 >
->  void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
->  {
->      EGLImageKHR image =3D EGL_NO_IMAGE_KHR;
->      EGLint attrs[64];
-> -    int i =3D 0;
-> +    int i =3D 0, j;
->      uint64_t modifier =3D qemu_dmabuf_get_modifier(dmabuf);
->      uint32_t texture =3D qemu_dmabuf_get_texture(dmabuf);
-> +    int nfds, noffsets, nstrides;
-> +    const int *fds =3D qemu_dmabuf_get_fds(dmabuf, &nfds);
-> +    const uint32_t *offsets =3D qemu_dmabuf_get_offsets(dmabuf, &noffset=
-s);
-> +    const uint32_t *strides =3D qemu_dmabuf_get_strides(dmabuf, &nstride=
-s);
-> +    uint32_t num_planes =3D qemu_dmabuf_get_num_planes(dmabuf);
-> +
-> +    EGLint fd_attrs[] =3D {
-> +        EGL_DMA_BUF_PLANE0_FD_EXT,
-> +        EGL_DMA_BUF_PLANE1_FD_EXT,
-> +        EGL_DMA_BUF_PLANE2_FD_EXT,
-> +        EGL_DMA_BUF_PLANE3_FD_EXT,
-> +    };
-> +    EGLint offset_attrs[] =3D {
-> +        EGL_DMA_BUF_PLANE0_OFFSET_EXT,
-> +        EGL_DMA_BUF_PLANE1_OFFSET_EXT,
-> +        EGL_DMA_BUF_PLANE2_OFFSET_EXT,
-> +        EGL_DMA_BUF_PLANE3_OFFSET_EXT,
-> +    };
-> +    EGLint stride_attrs[] =3D {
-> +        EGL_DMA_BUF_PLANE0_PITCH_EXT,
-> +        EGL_DMA_BUF_PLANE1_PITCH_EXT,
-> +        EGL_DMA_BUF_PLANE2_PITCH_EXT,
-> +        EGL_DMA_BUF_PLANE3_PITCH_EXT,
-> +    };
-> +    EGLint modifier_lo_attrs[] =3D {
-> +        EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT,
-> +        EGL_DMA_BUF_PLANE1_MODIFIER_LO_EXT,
-> +        EGL_DMA_BUF_PLANE2_MODIFIER_LO_EXT,
-> +        EGL_DMA_BUF_PLANE3_MODIFIER_LO_EXT,
-> +    };
-> +    EGLint modifier_hi_attrs[] =3D {
-> +        EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT,
-> +        EGL_DMA_BUF_PLANE1_MODIFIER_HI_EXT,
-> +        EGL_DMA_BUF_PLANE2_MODIFIER_HI_EXT,
-> +        EGL_DMA_BUF_PLANE3_MODIFIER_HI_EXT,
-> +    };
+>  static void vhost_svq_kick(VhostShadowVirtqueue *svq)
+> @@ -276,16 +236,31 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const =
+struct iovec *out_sg,
+>      unsigned ndescs =3D in_num + out_num;
+>      bool ok;
 >
->      if (texture !=3D 0) {
->          return;
->      }
->
-> +    assert(nfds >=3D num_planes);
-> +    assert(noffsets >=3D num_planes);
-> +    assert(nstrides >=3D num_planes);
-> +
->      attrs[i++] =3D EGL_WIDTH;
->      attrs[i++] =3D qemu_dmabuf_get_backing_width(dmabuf);
->      attrs[i++] =3D EGL_HEIGHT;
-> @@ -328,18 +369,22 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
->      attrs[i++] =3D EGL_LINUX_DRM_FOURCC_EXT;
->      attrs[i++] =3D qemu_dmabuf_get_fourcc(dmabuf);
->
-> -    attrs[i++] =3D EGL_DMA_BUF_PLANE0_FD_EXT;
-> -    attrs[i++] =3D qemu_dmabuf_get_fds(dmabuf, NULL)[0];
-> -    attrs[i++] =3D EGL_DMA_BUF_PLANE0_PITCH_EXT;
-> -    attrs[i++] =3D qemu_dmabuf_get_strides(dmabuf, NULL)[0];
-> -    attrs[i++] =3D EGL_DMA_BUF_PLANE0_OFFSET_EXT;
-> -    attrs[i++] =3D 0;
-> -    if (modifier !=3D DRM_FORMAT_MOD_INVALID) {
-> -        attrs[i++] =3D EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT;
-> -        attrs[i++] =3D (modifier >>  0) & 0xffffffff;
-> -        attrs[i++] =3D EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT;
-> -        attrs[i++] =3D (modifier >> 32) & 0xffffffff;
-> +    for (j =3D 0; j < num_planes; j++) {
-> +        attrs[i++] =3D fd_attrs[j];
-> +        /* fd[1-3] may be -1 if using a joint buffer for all planes */
-> +        attrs[i++] =3D fds[j] >=3D 0 ? fds[j] : fds[0];
-> +        attrs[i++] =3D stride_attrs[j];
-> +        attrs[i++] =3D strides[j];
-> +        attrs[i++] =3D offset_attrs[j];
-> +        attrs[i++] =3D offsets[j];
-> +        if (modifier !=3D DRM_FORMAT_MOD_INVALID) {
-> +            attrs[i++] =3D modifier_lo_attrs[j];
-> +            attrs[i++] =3D (modifier >>  0) & 0xffffffff;
-> +            attrs[i++] =3D modifier_hi_attrs[j];
-> +            attrs[i++] =3D (modifier >> 32) & 0xffffffff;
-> +        }
->      }
-> +
->      attrs[i++] =3D EGL_NONE;
->
->      image =3D eglCreateImageKHR(qemu_egl_display,
-> diff --git a/ui/spice-display.c b/ui/spice-display.c
-> index 40547edb5e..d7ebb3682d 100644
-> --- a/ui/spice-display.c
-> +++ b/ui/spice-display.c
-> @@ -876,19 +876,24 @@ static void spice_gl_switch(DisplayChangeListener *=
-dcl,
->                              struct DisplaySurface *new_surface)
->  {
->      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay, dc=
-l);
-> -    EGLint stride, fourcc;
-> -    int fd;
->
->      if (ssd->ds) {
->          surface_gl_destroy_texture(ssd->gls, ssd->ds);
->      }
->      ssd->ds =3D new_surface;
->      if (ssd->ds) {
-> +        uint32_t offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES];
-> +        int fd[DMABUF_MAX_PLANES], num_planes, fourcc;
-> +
->          surface_gl_create_texture(ssd->gls, ssd->ds);
-> -        fd =3D egl_get_fd_for_texture(ssd->ds->texture,
-> -                                    &stride, &fourcc,
-> -                                    NULL);
-> -        if (fd < 0) {
-> +        if (!egl_dmabuf_export_texture(ssd->ds->texture, fd, (EGLint *)o=
-ffset,
-> +                                       (EGLint *)stride, &fourcc, &num_p=
-lanes, NULL)) {
-> +            surface_gl_destroy_texture(ssd->gls, ssd->ds);
-> +            return;
-> +        }
-> +
-> +        if (num_planes > 1) {
-> +            fprintf(stderr, "%s: does not support multi-plane texture\n"=
-, __func__);
->              surface_gl_destroy_texture(ssd->gls, ssd->ds);
->              return;
->          }
-> @@ -899,10 +904,10 @@ static void spice_gl_switch(DisplayChangeListener *=
-dcl,
->                                      fourcc);
->
->          /* note: spice server will close the fd */
-> -        spice_qxl_gl_scanout(&ssd->qxl, fd,
-> +        spice_qxl_gl_scanout(&ssd->qxl, fd[0],
->                               surface_width(ssd->ds),
->                               surface_height(ssd->ds),
-> -                             stride, fourcc, false);
-> +                             stride[0], fourcc, false);
->          ssd->have_surface =3D true;
->          ssd->have_scanout =3D false;
->
-> @@ -941,20 +946,24 @@ static void qemu_spice_gl_scanout_texture(DisplayCh=
-angeListener *dcl,
->                                            void *d3d_tex2d)
->  {
->      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay, dc=
-l);
-> -    EGLint stride =3D 0, fourcc =3D 0;
-> -    int fd =3D -1;
-> +    EGLint offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES], fourcc =
-=3D 0;
-> +    int fd[DMABUF_MAX_PLANES], num_planes;
->
->      assert(tex_id);
-> -    fd =3D egl_get_fd_for_texture(tex_id, &stride, &fourcc, NULL);
-> -    if (fd < 0) {
-> -        fprintf(stderr, "%s: failed to get fd for texture\n", __func__);
-> +    if (!egl_dmabuf_export_texture(tex_id, fd, offset, stride, &fourcc,
-> +                                   &num_planes, NULL)) {
-> +        fprintf(stderr, "%s: failed to export dmabuf for texture\n", __f=
-unc__);
-> +        return;
+> +    /* We need some descriptors here */
+> +    if (unlikely(!ndescs)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Guest provided element with no descriptors");
+> +        return -EINVAL;
 > +    }
-> +    if (num_planes > 1) {
-> +        fprintf(stderr, "%s: does not support multi-plane dmabuf\n", __f=
-unc__);
->          return;
->      }
->      trace_qemu_spice_gl_scanout_texture(ssd->qxl.id, w, h, fourcc);
->
->      /* note: spice server will close the fd */
-> -    spice_qxl_gl_scanout(&ssd->qxl, fd, backing_width, backing_height,
-> -                         stride, fourcc, y_0_top);
-> +    spice_qxl_gl_scanout(&ssd->qxl, fd[0], backing_width, backing_height=
-,
-> +                         stride[0], fourcc, y_0_top);
->      qemu_spice_gl_monitor_config(ssd, x, y, w, h);
->      ssd->have_surface =3D false;
->      ssd->have_scanout =3D true;
-> @@ -1064,15 +1073,26 @@ static void qemu_spice_gl_update(DisplayChangeLis=
-tener *dcl,
->              /* dest framebuffer */
->              if (ssd->blit_fb.width  !=3D width ||
->                  ssd->blit_fb.height !=3D height) {
-> +                int fds[DMABUF_MAX_PLANES], num_planes;
-> +                uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_=
-PLANES];
 > +
->                  trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, width,
->                                                    height);
->                  egl_fb_destroy(&ssd->blit_fb);
->                  egl_fb_setup_new_tex(&ssd->blit_fb,
->                                       width, height);
-> -                fd =3D egl_get_fd_for_texture(ssd->blit_fb.texture,
-> -                                            &stride, &fourcc, NULL);
-> -                spice_qxl_gl_scanout(&ssd->qxl, fd, width, height,
-> -                                     stride, fourcc, false);
-> +                if (!egl_dmabuf_export_texture(ssd->blit_fb.texture, fds=
-,
-> +                                               (EGLint *)offsets, (EGLin=
-t *)strides,
-> +                                               &fourcc, &num_planes, NUL=
-L)) {
-> +                    fprintf(stderr, "%s: failed to export dmabuf for tex=
-ture\n", __func__);
-> +                    return;
-> +                }
-> +                if (num_planes > 1) {
-> +                    fprintf(stderr, "%s: does not support multi-plane dm=
-abuf\n", __func__);
-> +                    return;
-> +                }
-> +                spice_qxl_gl_scanout(&ssd->qxl, fds[0], width, height,
-> +                                     strides[0], fourcc, false);
->              }
->          } else {
->              stride =3D qemu_dmabuf_get_strides(dmabuf, NULL)[0];
+>      if (unlikely(ndescs > vhost_svq_available_slots(svq))) {
+>          return -ENOSPC;
+>      }
+>
+> -    ok =3D vhost_svq_add_split(svq, out_sg, out_num, out_addr, in_sg, in=
+_num,
+> -                             in_addr, &qemu_head);
+> +    g_autofree hwaddr *sgs =3D g_new(hwaddr, ndescs);
+> +    ok =3D vhost_svq_translate_addr(svq, sgs, out_sg, out_num, out_addr)=
+;
+>      if (unlikely(!ok)) {
+>          return -EINVAL;
+>      }
+>
+> +    ok =3D vhost_svq_translate_addr(svq, sgs + out_num, in_sg, in_num, i=
+n_addr);
+> +    if (unlikely(!ok)) {
+> +        return -EINVAL;
+> +    }
+> +
+> +    vhost_svq_add_split(svq, out_sg, out_num, in_sg,
+> +                        in_num, sgs, &qemu_head);
+> +
+>      svq->num_free -=3D ndescs;
+>      svq->desc_state[qemu_head].elem =3D elem;
+>      svq->desc_state[qemu_head].ndescs =3D ndescs;
 > --
-> 2.43.0
+> 2.48.1
 >
 
-
---=20
-Marc-Andr=C3=A9 Lureau
 
