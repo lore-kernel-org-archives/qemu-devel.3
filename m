@@ -4,154 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94F2C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F28C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 07:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txKvM-0006Iv-2I; Wed, 26 Mar 2025 03:11:40 -0400
+	id 1txKw8-0006aO-Tv; Wed, 26 Mar 2025 03:12:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKvD-0006HY-Lv
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:11:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1txKvv-0006VA-Ii
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:12:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txKvA-0000kO-MB
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:11:30 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1txKvr-0000v4-CW
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:12:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742973087;
+ s=mimecast20190719; t=1742973130;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=THEv36KpBBarWgZktqKvC4JvFDh02ckSQqqp41UVzz0=;
- b=ZgvpWkCuravxxoNxFI9MZzwzujrQDthelN3PkKVTN8LSTAFXlvXmVNuv00aknIFQt4JJOa
- /Zjdc0/yO5QlP/Dcypxo3tm/nbRsxDGfA59QXJvT0aSpWGpAGoZKn8RY5ZfRRQi6wlTSDZ
- t6XFvw0IfVJaw+/DG1C/kd1L9OR9vO8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-KKXVrLcZOwmrrU7uy6rt2Q-1; Wed, 26 Mar 2025 03:11:26 -0400
-X-MC-Unique: KKXVrLcZOwmrrU7uy6rt2Q-1
-X-Mimecast-MFC-AGG-ID: KKXVrLcZOwmrrU7uy6rt2Q_1742973085
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3914bc0cc4aso3267156f8f.3
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 00:11:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742973085; x=1743577885;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=THEv36KpBBarWgZktqKvC4JvFDh02ckSQqqp41UVzz0=;
- b=GWcA8XIrnQItg//937YnDWhA4LBgh0a/Z64jG3U5g5BJg9mleJK5Qa9KJhJlbL3INh
- 44VOOzboV9yRbLKNUjK9GENCuCo3lUW4cbQpCBz55asxOj9DaFWNeaxCBRRaDb7ZCusP
- DnPnq8HIjZ9cBsqq907WBF245NKKM38ZWk+q5iWHSHpqLwbuoW0GCsGn37LK1ZXV//k+
- /3cKbLFGxV1c20xZlNN48N3j6XSw2NCkouvLjI8VA1ZrIay2srAZOYaEzdo8wiORFlBT
- cDwuhgB8s45B8wY86cNCWdia/vbQhWWA9Jl4OP7vSURS4Aar2ZyqBC2Vw0laotWwrGHp
- CyHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEkxnJuQhsHAC2yhTu1tR34/PdbWxP28Z9Aaj5Xk8DlKsRNe0uPMEIaHXkSWD1YiyiBPJWfSnkngn3@nongnu.org
-X-Gm-Message-State: AOJu0Yxepn5a6ioQFK9picbzS/MY73tw7QM2+s8vi4QXXPf2uafru+NW
- LUxOde2fYpfJYHMhTj8m7E8mpY+ZZzerWfls5ps4lGg1EgiaDZvNqYQ0uX8e3Lc/0IZdhr7j9Bl
- jHexix0emHYr3LiJpE5w/HyJU/oycUbf2IRRmWJVajl9/RrFLugKDMa+py41C
-X-Gm-Gg: ASbGncsyV3EDD8l2WSWMwBJS6DbZFLbw/1j0D6iENPz2dkKU01TmUflFuibfnqW2tbh
- cyg3FwrOtcAM9dOYUyGOFwrj19J2QIXQ103fti36DFDgxIEQ0qRcKSoc7e1jjOLegZpFYbrOe9/
- vNVGTLb8DrZBEWyrrFkoll8m7L+UahGisSDqq2oLE/HjESz5dJzdImsQfkWboXX/KRGtnECtILZ
- 8HeCC4UzeFLA0+gCxbTlmwCMHUs999aU3KxaHSo5HW1RZTuRsitbFSNltdBwFL+4WPPOZj4N45l
- Y/mJNvvajFh1IN13L+Bi0HJlDvbbi8aQEiXgJ80s36SgyRY=
-X-Received: by 2002:a5d:6d88:0:b0:391:1473:336a with SMTP id
- ffacd0b85a97d-3997f937d76mr16420235f8f.36.1742973084842; 
- Wed, 26 Mar 2025 00:11:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOfBtZG95rfGG7FysdnAT5+OjCNmSfZiFUknRkszNfXRNHP32uDIHJWKkAN5hisZGqDWFvag==
-X-Received: by 2002:a5d:6d88:0:b0:391:1473:336a with SMTP id
- ffacd0b85a97d-3997f937d76mr16420216f8f.36.1742973084385; 
- Wed, 26 Mar 2025 00:11:24 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-43-49-206.web.vodafone.de.
- [109.43.49.206]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d4fd9eb21sm173525825e9.32.2025.03.26.00.11.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Mar 2025 00:11:23 -0700 (PDT)
-Message-ID: <73da19f5-9a72-4500-a7a0-e219feaef875@redhat.com>
-Date: Wed, 26 Mar 2025 08:11:21 +0100
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=naSjevSN3OVpX6b/AaK1aCW9CcYMYdxrkJtWckzBRKY=;
+ b=PwOXkjbCe61uqqe10sseIiNdWf0O87RdMNuzTa+DEvckW1g1HY/3k23G/NvWIfuuau1UHl
+ ay17LNgIimB3E0SKY95wy8y/d7tXhYcHv7r1KE2BZ6ii91o5C4GzMd2HgSCPSDI5el7SRr
+ PExq30eHEr0OMfJCT2gjWUtkXK+TKyQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-AhV3C2AAMG26kCjmrWCwHg-1; Wed,
+ 26 Mar 2025 03:12:08 -0400
+X-MC-Unique: AhV3C2AAMG26kCjmrWCwHg-1
+X-Mimecast-MFC-AGG-ID: AhV3C2AAMG26kCjmrWCwHg_1742973127
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6652C1800262
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 07:12:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25E8F18001F6
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 07:12:06 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2D55321E66C5; Wed, 26 Mar 2025 08:12:03 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: jsnow@redhat.com,
+	crosa@redhat.com
+Subject: [PATCH] python: Drop redundant warn_unused_configs = True
+Date: Wed, 26 Mar 2025 08:12:03 +0100
+Message-ID: <20250326071203.238931-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 11/12] hw/sensor/temp: Categorize and add
- description
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
- <balaton@eik.bme.hu>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
- Samuel Tardieu <sam@rfc1149.net>, qemu-block@nongnu.org,
- Patrick Leis <venture@google.com>, David Hildenbrand <david@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
- Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20250325224310.8785-1-philmd@linaro.org>
- <20250325224310.8785-12-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250325224310.8785-12-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -169,28 +83,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/03/2025 23.43, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/sensor/dps310.c  | 2 ++
->   hw/sensor/emc141x.c | 6 ++++++
->   hw/sensor/tmp105.c  | 2 ++
->   hw/sensor/tmp421.c  | 4 ++++
->   4 files changed, 14 insertions(+)
-> 
-> diff --git a/hw/sensor/dps310.c b/hw/sensor/dps310.c
-> index 6966a53248b..e1e6df6b60a 100644
-> --- a/hw/sensor/dps310.c
-> +++ b/hw/sensor/dps310.c
-> @@ -207,6 +207,8 @@ static void dps310_class_init(ObjectClass *klass, void *data)
->       k->send = dps310_tx;
->       device_class_set_legacy_reset(dc, dps310_reset);
->       dc->vmsd = &vmstate_dps310;
-> +    dc->desc = "Infineon DPS310 temperature and humidity sensor";
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+strict = True implies warn_unused_configs = True.
 
-Not necessary - I2C device again.
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ python/setup.cfg | 1 -
+ 1 file changed, 1 deletion(-)
 
-  Thomas
+diff --git a/python/setup.cfg b/python/setup.cfg
+index cf5af7e664..990e04ea3b 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -79,7 +79,6 @@ exclude = __pycache__,
+ [mypy]
+ strict = True
+ python_version = 3.8
+-warn_unused_configs = True
+ namespace_packages = True
+ warn_unused_ignores = False
+ 
+-- 
+2.48.1
 
 
