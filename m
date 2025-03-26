@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93160C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 17:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 932E9C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 17:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txURW-0001eY-7h; Wed, 26 Mar 2025 13:21:30 -0400
+	id 1txUTC-0002ML-1d; Wed, 26 Mar 2025 13:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1txURT-0001dq-UN; Wed, 26 Mar 2025 13:21:27 -0400
+ id 1txUTA-0002Lu-DC; Wed, 26 Mar 2025 13:23:12 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1txURR-00032K-JH; Wed, 26 Mar 2025 13:21:27 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52QH3hHs011342;
- Wed, 26 Mar 2025 17:21:14 GMT
+ id 1txUT8-0003Ao-Gq; Wed, 26 Mar 2025 13:23:12 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52QFvNEr032156;
+ Wed, 26 Mar 2025 17:23:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=bMaGXZ
- hkF7umsd8a1YUjUyYM/Jc0+0rNhjO4+zltAB4=; b=YQb+cKuQYImzW08sOVlPMn
- ALT4az64yolH87DGFVcM66MJQVbrKRU6WN3K0tC6dVzOrXeiaY6sZZElgF/qlgc9
- GbJdgKNglbnxoEHWS6i0NSJvJnLEeoq1L8OwdwEdILgAabXK3hSTlVDb5XBxQ92u
- VevK5CTMVWdhp9q1aO5ntW4UZMYFE3NqWCJsaur1qDL+/KBUEnDhYO6u9gf+wby5
- aLhFe1gWG3aBfzvxDstzgDHx55hvjHP+HYYzPHChFn0xW7hDOGEEVXjgT/Lwn0E8
- vxObwvTOgo3UwojuB7dmEe0RDbS0bWgqP/mj4WI6uCuDM7/GKPIZxYbp7kYQQ85Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Wgjt40
+ wIIlKObQrfb7GVq4l5s+GiGOOMxmVWA1++7wg=; b=sVf+Jvke+uWRTt689GEbCU
+ sTPIZ4UhQmTm8E4bc4fwWMdYlLWL3NCTQmT3HTX0XOr/sTHpaLZB1J0eAG+RbAMk
+ sMxDTt5nlFbTseUTh0varnITqIHfimjKKGaHjdGWz8Jd4pnrYdJ7HGDTdov/3iql
+ n9SNPcR1X21UyBVkknPzZkVK+kNiAIsMQ44zZunaAidEiPRE7Jp7BMTgRJKa2E1w
+ pbETap2rb+x0JA2cDjZFED+mlyTFnVydVr71MIrlL+SvTR5EGsFHnfN99XXfk5Mh
+ EmCZ4h1XfFBZPbk6nr4nJ00IqZ56hp6qBOU/km+zR0k/9KdxzEWNdGnngeQw/OMA
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3nqn8ht-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3q0n8r6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 17:21:14 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52QHLEeQ015452;
- Wed, 26 Mar 2025 17:21:14 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3nqn8hr-1
+ Wed, 26 Mar 2025 17:23:01 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52QHIaE5007214;
+ Wed, 26 Mar 2025 17:23:01 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3q0n8r4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 17:21:13 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52QH5DKZ030352;
- Wed, 26 Mar 2025 17:21:13 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j7hthmff-1
+ Wed, 26 Mar 2025 17:23:01 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52QEOX9i020105;
+ Wed, 26 Mar 2025 17:23:00 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j8hp1e96-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 17:21:13 +0000
+ Wed, 26 Mar 2025 17:23:00 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52QHL99T29950482
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52QHMu4520775276
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Mar 2025 17:21:09 GMT
+ Wed, 26 Mar 2025 17:22:56 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFB4C2004B;
- Wed, 26 Mar 2025 17:21:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5D5C32004B;
+ Wed, 26 Mar 2025 17:22:56 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 277CA20040;
- Wed, 26 Mar 2025 17:21:08 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7BA6620040;
+ Wed, 26 Mar 2025 17:22:54 +0000 (GMT)
 Received: from [9.39.30.126] (unknown [9.39.30.126])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Mar 2025 17:21:07 +0000 (GMT)
-Message-ID: <4ef14a73-576b-47c1-b1c0-bc7b234fac87@linux.ibm.com>
-Date: Wed, 26 Mar 2025 22:51:06 +0530
+ Wed, 26 Mar 2025 17:22:54 +0000 (GMT)
+Message-ID: <1b46fa60-6460-42fb-b77b-fe03cb9ea591@linux.ibm.com>
+Date: Wed, 26 Mar 2025 22:52:53 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v6 07/10] ppc/pnv: Introduce Power11 PowerNV machine
@@ -83,22 +83,23 @@ References: <20250325112319.927190-1-adityag@linux.ibm.com>
  <5a08e139-a18d-4aae-836f-0ec0bb8fadc9@kaod.org>
  <6d610966-cdc0-42c2-abb8-e80b4be1178d@linux.ibm.com>
  <6e830dd1-88c1-4029-bae7-d2817d95262f@kaod.org>
+ <2ffb5a70-be51-45e9-82a1-b71362221577@kaod.org>
 Content-Language: en-US
 From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <6e830dd1-88c1-4029-bae7-d2817d95262f@kaod.org>
+In-Reply-To: <2ffb5a70-be51-45e9-82a1-b71362221577@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: leIALaCp6Gpq-YqRxfL-6zZPXjWKbo3c
-X-Proofpoint-GUID: 4eLobgZwx2iFCUaNg445MU8oXJgWD_Au
+X-Proofpoint-ORIG-GUID: TCZKdsONKzjgGzCyG8GROf62nbRf4uiv
+X-Proofpoint-GUID: haOQjwJYd5ZWE9YLLicDnfwUHzyVmJzg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-26_08,2025-03-26_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
- spamscore=0 clxscore=1015 mlxlogscore=920 bulkscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ mlxscore=0 malwarescore=0
+ suspectscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 phishscore=0
+ mlxlogscore=999 priorityscore=1501 adultscore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2503260104
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -125,92 +126,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/25 13:39, Cédric Le Goater wrote:
+On 26/03/25 16:12, Cédric Le Goater wrote:
 
-> On 3/25/25 18:38, Aditya Gupta wrote:
->> <...snip...>
+> [ ... ]
+>
+>> You could use a buildroot image instead. :
 >>
->> On 25/03/25 22:45, Cédric Le Goater wrote:
->>> One nice about it IIRC was being able to tune the number of
->>> PHBs per chip, which reduced booting time (for 16s) and also
->>> provided support to test various chip configs. Check that first.
->>>
->> I tried some variations of 'device_add/device_del'. Unable to see how 
->> to dynamically add/remove phbs.
+>> https://github.com/buildroot/buildroot/blob/master/configs/qemu_ppc64le_powernv8_defconfig
 >
-> I don't think hotplug works, this would require FW support, only
-> coldplug is supported : devices should be defined on the command
-> line.
-
-
-Got it. Thanks for mentioning this, found a bug in my patch:
-
-
-     $ ./build/qemu-system-ppc64 -nographic -M powernv11 -nodefaults 
--serial mon:stdio -device pnv-phb -device pnv-phb-root-port
-     <$QEMU_DIR>/include/hw/ppc/pnv_chip.h:110:PNV10_CHIP: Object 
-0x564afddb5e00 is not an instance of type pnv10-chip
-     [1]    1253963 IOT instruction (core dumped) 
-./build/qemu-system-ppc64 -nographic -M powernv11 -nodefaults -serial  
--devic
-
-Happens due to 'pnv_pec_add_phb' assuming phb5 to be related to pnv10:
-
-
-     if (phb->version == 4) {
-         Pnv9Chip *chip9 = PNV9_CHIP(chip);
-
-         pecs = chip9->pecs;
-     } else if (phb->version == 5) {
-         Pnv10Chip *chip10 = PNV10_CHIP(chip);
-
-         pecs = chip10->pecs;
-     }
-
-
-Top of my mind, hacky ways come up to differentiate Pnv11Chip and 
-Pnv10Chip, other (still hacky) might be to add "pecs" as a property to 
-the chip objects and get it that way, still feels hacky.
-
-Can't pass extra args (pecs) to the function, without handling this 
-pnv10 vs pnv11 in the callers.
-
-
-Is adding a callback to PnvChipClass->get_pecs a good idea, similar to 
-xive callbacks on the chipclass ?
-
-Will think of alternate ways. Thanks.
-
-
+> Images pushed here :
 >
->>
->> Do you have any options to device_add/del which I can try, I want to 
->> see if the dynamic addition/removal of PHB changes if i remove that 
->> '_allow_dynamic_sysbus_dev' call.
->>
->>
->>> Also, you should add functional tests for the powernv11 machine.
->>>
->>> See under tests/functional/test_ppc64_powernv.py.
->>>
->> Currently the test uses op-build kernels, which don't support 
->> Power11, working on that side, will post as soon as op-build creates 
->> a new release with p11 support (any linux >= 6.9).
+> https://github.com/legoater/qemu-ppc-boot/tree/main/buildroot/qemu_ppc64le_powernv8-2025.02
 >
-> And is that planned ? I doubt it since open-power boxes are out
-> of business.
+>   qemu-system-ppc64 -m 1G -M powernv10 \
+>     -kernel ./buildroot/qemu_ppc64le_powernv8-2025.02/vmlinux \
+>     -append root=/dev/nvme0n1 \
+>     -device nvme,bus=pcie.2,addr=0x0,drive=drive0,serial=1234 \
+>     -drive 
+> file=./buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2,if=none,id=drive0,format=raw,cache=none 
+> \
+>     -device e1000e,bus=pcie.1,addr=0x0,netdev=net0 \
+>     -netdev user,id=net0 \
+>     -serial mon:stdio -nographic -snapshot
 >
-> You could use a buildroot image instead. :
+>   [    0.010515922,5] OPAL v7.1-106-g785a5e307 starting...
+>   ...
+>   [    0.000000][    T0] Linux version 6.12.9 (legoater@ryzen) 
+> (powerpc64le-buildroot-linux-gnu-gcc.br_real (Buildroot 2025.02) 
+> 13.3.0, GNU ld (GNU Binutils) 2.43.1) #1 SMP Wed Mar 26 11:11:35 CET 2025
+>   ...
 >
-> https://github.com/buildroot/buildroot/blob/master/configs/qemu_ppc64le_powernv8_defconfig
->
-I was thinking there should be. I will ask.
+> Please use these images or the opbuild image which should also work but
+> the CPU won't be recognized as a POWER11.
+
+Thank you, will use those images then.
+
+opbuild image boots but since it doesn't "print" p11 in its dmesg log, the
+powernv test fails with it. Will use your images.
 
 
 Thanks,
 
 - Aditya Gupta
 
+>
 > Thanks,
 >
 > C.
