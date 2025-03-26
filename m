@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC4CC3600C
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 09:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BFA0C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 09:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txNSA-0005CK-5l; Wed, 26 Mar 2025 05:53:42 -0400
+	id 1txNTN-00065p-RG; Wed, 26 Mar 2025 05:54:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1txNS2-00055e-FS
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:53:35 -0400
+ id 1txNSr-0005gW-9U
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:54:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1txNRz-0005fn-6F
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:53:33 -0400
+ id 1txNSo-0005m1-8g
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:54:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742982807;
+ s=mimecast20190719; t=1742982861;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p/kffvu6uPG4x0fUyImwW1jl/zVDgl3NFbT5tn/546A=;
- b=bIfv13iildpPNa78LGIrpNkW3PA6gC817vHFxkCUvnvSOhaoIIcOWFa3uZe64cICwgywQX
- itBUF+S6sZBrALqgeolah37ufRzDRwtsYtlJQTW5rP5HRxiCyKrcdaz5XntJ/GnBhRLIrL
- Fq88B9v/IIbcLHi0ULRwmHKaom7JtRc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=eEyIVRYikyglEO3X+ManrtearNq6s+6uCJsIh9Ggo8g=;
+ b=M5VrHhSLAIUVroSpoz2x81mE/3Y4dkaWw4cxkxKv7Ca5tpV0dvObeLplM+o5IQPmgCBDIe
+ v6YMOx9rh2VznfCFcRVwHohf4tBGKOSLFCmkGuWwme3hTjAjaTL7VjxP+Iw0i8LgBStrxC
+ MIlXPbn9fOBSRfeGzrT+vxeS8QDVTjc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-394-FhxkfUT8Mf2MpBEHaqYAHA-1; Wed,
- 26 Mar 2025 05:53:25 -0400
-X-MC-Unique: FhxkfUT8Mf2MpBEHaqYAHA-1
-X-Mimecast-MFC-AGG-ID: FhxkfUT8Mf2MpBEHaqYAHA_1742982804
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-BjMmeL6jMlOHq8lzJ5vRVg-1; Wed,
+ 26 Mar 2025 05:54:20 -0400
+X-MC-Unique: BjMmeL6jMlOHq8lzJ5vRVg-1
+X-Mimecast-MFC-AGG-ID: BjMmeL6jMlOHq8lzJ5vRVg_1742982859
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4AE32196D2D8; Wed, 26 Mar 2025 09:53:24 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B432196B377; Wed, 26 Mar 2025 09:54:19 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.107])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C0631801756; Wed, 26 Mar 2025 09:53:22 +0000 (UTC)
-Date: Wed, 26 Mar 2025 09:53:19 +0000
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2B64180B487; Wed, 26 Mar 2025 09:54:17 +0000 (UTC)
+Date: Wed, 26 Mar 2025 09:54:14 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 04/15] tests/functional: Convert the i386 replay avocado
- test
-Message-ID: <Z-POj8hzCCFd9CPJ@redhat.com>
+Subject: Re: [PATCH 06/15] tests/functional: Convert the 32-bit big endian
+ Wheezy mips test
+Message-ID: <Z-POxn3quZD7ygas@redhat.com>
 References: <20250325200026.344006-1-thuth@redhat.com>
- <20250325200026.344006-5-thuth@redhat.com>
+ <20250325200026.344006-7-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250325200026.344006-5-thuth@redhat.com>
+In-Reply-To: <20250325200026.344006-7-thuth@redhat.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,21 +91,27 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 25, 2025 at 09:00:12PM +0100, Thomas Huth wrote:
+On Tue, Mar 25, 2025 at 09:00:14PM +0100, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> Since this was the last test in tests/avocado/replay_kernel.py,
-> we can remove that Avocado file now.
+> The test checks some entries in /proc and the output of some commands ...
+> we put these checks into exportable functions now so that they can
+> be reused more easily.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com
+> Additionally the linux_ssh_mips_malta.py uses SSH to test the networking
+> of the guest. Since we don't have a SSH module in the functional
+> framework yet, let's use the check_http_download() function here instead.
+> 
+> And while we're at it, also switch the NIC to e1000 now to get some more
+> test coverage, since the "pcnet" device is already tested in the test
+> test_mips_malta_cpio.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  MAINTAINERS                          |   1 -
->  tests/avocado/replay_kernel.py       | 110 ---------------------------
->  tests/functional/meson.build         |   1 +
->  tests/functional/test_i386_replay.py |  28 +++++++
->  4 files changed, 29 insertions(+), 111 deletions(-)
->  delete mode 100644 tests/avocado/replay_kernel.py
->  create mode 100755 tests/functional/test_i386_replay.py
+>  tests/avocado/linux_ssh_mips_malta.py |   8 --
+>  tests/functional/meson.build          |   2 +-
+>  tests/functional/test_mips_malta.py   | 108 +++++++++++++++++++++++++-
+>  3 files changed, 107 insertions(+), 11 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
