@@ -4,113 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D927C36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 13:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50BFC36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 13:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txR7A-0002Tg-Pe; Wed, 26 Mar 2025 09:48:16 -0400
+	id 1txRCE-0003yc-1c; Wed, 26 Mar 2025 09:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1txR75-0002TP-DW; Wed, 26 Mar 2025 09:48:12 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1txRC8-0003xF-9c
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 09:53:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1txR73-0001gl-JU; Wed, 26 Mar 2025 09:48:11 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52QBtwtP026130;
- Wed, 26 Mar 2025 13:47:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UDkwNe
- c/tAHRSWwkr/tMoWJkSYNzDuK5KjULm+90H3w=; b=IZm+MuVFmxgImXN09H7goN
- /7ifrOQY3oLbURQxY/TMcONmEn0CYtD/6QD6gU3xORDp+31FoyzoQvKaOsmq4ykW
- qf3HwLsGJJY4NYw4e7NE7c7lz5trASGW+DCSOjgE9Yd8y77ZS3po6rpN9eAwE3tQ
- IglwFu5rqm81TGR0x+hAWX4ZYbu6oxB6q773s4lBKYyek/Jw1+dXOxtZXHmazOAS
- v9IsVAcOzoPUnn5gZBgaAmqQJuHYyYBaxgyoXguMHruhZqKHdbnI6+ltsElHTRnM
- WwCadZMYeqRVDtVfg0XE5zxz74lyi7mC/1Rdb//jKamkXJcMUWEhlCvQwNiISgjA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kwwqebpu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 13:47:53 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52QDEfVh016248;
- Wed, 26 Mar 2025 13:47:53 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kwwqebpp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 13:47:53 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52QADtje020082;
- Wed, 26 Mar 2025 13:47:51 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j8hp0hyk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Mar 2025 13:47:51 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52QDlmW330999094
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Mar 2025 13:47:48 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 55B0A5805C;
- Wed, 26 Mar 2025 13:47:50 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AFB8A58051;
- Wed, 26 Mar 2025 13:47:48 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.118.127]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Mar 2025 13:47:48 +0000 (GMT)
-Message-ID: <0a88b9e599a4ea8e7437f8ab645987f24dbae605.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 2/4] hw/s390x/skeys: Introduce TYPE_DUMP_SKEYS_INTERFACE
-From: Eric Farman <farman@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
- Anton Johansson <anjo@rev.ng>, "Daniel P ." =?ISO-8859-1?Q?Berrang=E9?=	
- <berrange@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao
- Liu	 <zhao1.liu@intel.com>, Christian Borntraeger
- <borntraeger@linux.ibm.com>, Ilya Leoshkevich	 <iii@linux.ibm.com>,
- Eduardo Habkost <eduardo@habkost.net>, Yanan Wang	
- <wangyanan55@huawei.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex =?ISO-8859-1?Q?Benn=E9e?=	 <alex.bennee@linaro.org>, Eric Blake
- <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>, Halil
- Pasic <pasic@linux.ibm.com>, Markus Armbruster <armbru@redhat.com>
-Date: Wed, 26 Mar 2025 09:47:48 -0400
-In-Reply-To: <20250310151414.11550-3-philmd@linaro.org>
-References: <20250310151414.11550-1-philmd@linaro.org>
- <20250310151414.11550-3-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1txRC6-0002UX-Jt
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 09:53:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1742997200;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bfDzmsWlUwF7J6hxY5lIe1L8gpPE8N7iisO+7RvgFd0=;
+ b=d40MltxzVKRRp8KPHwL2KFe+zAVA3GvZuyhuL9nyJqgjF8h0IvdDVkZmlrjkcGATeZrm5j
+ PTPpL3ZKxS7mPCEnxqIti1R6PQVjnnWdDCxOt0zlPCowKPMHR3LF5NZh2me2ECRaC+Isgu
+ FiwqhzoaEfZMjkcgAro4U97RZhewve8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-GX2vTOJ2MP-RrYNi8CvvYg-1; Wed,
+ 26 Mar 2025 09:53:16 -0400
+X-MC-Unique: GX2vTOJ2MP-RrYNi8CvvYg-1
+X-Mimecast-MFC-AGG-ID: GX2vTOJ2MP-RrYNi8CvvYg_1742997195
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D30F118EBE99; Wed, 26 Mar 2025 13:53:13 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.113])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7DDDD1955D81; Wed, 26 Mar 2025 13:53:12 +0000 (UTC)
+Date: Wed, 26 Mar 2025 09:53:11 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: vitalif@yourcmc.ru
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: Can I contribute Vitastor block driver? Or maybe introduce a
+ QAPI plugin system?
+Message-ID: <20250326135311.GA783416@fedora>
+References: <bd5c6126f8c345b1eeac617d4023fa58@yourcmc.ru>
+ <871pukb08s.fsf@pond.sub.org>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: KWbdq15bS85XSBON01BW85hR0Bs-Bdy6
-X-Proofpoint-ORIG-GUID: vh2S9y38_r3TR6IhIkRoTawbD8qQNfwx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-26_06,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0
- bulkscore=0 clxscore=1015 mlxlogscore=779 spamscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503260082
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="WtsyDcb1nTGtoBhz"
+Content-Disposition: inline
+In-Reply-To: <871pukb08s.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,19 +88,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2025-03-10 at 16:14 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
-> The storage keys are part of the machine memory.
->=20
-> Introduce the TYPE_DUMP_SKEYS_INTERFACE type,
-> allowing machine using storage keys to dump them
-> when a DumpSKeysInterface::qmp_dump_skeys() callback
-> is provided.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/hw/s390x/storage-keys.h | 15 +++++++++++++++
->  hw/s390x/s390-skeys.c           |  5 +++++
->  2 files changed, 20 insertions(+)
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+--WtsyDcb1nTGtoBhz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Mar 26, 2025 at 10:38:11AM +0100, Markus Armbruster wrote:
+> I'm not speaking for the QEMU project.  I hope to be helpful anyway.  I
+> am the QAPI maintainer, so my thoughts carry a bit more weight there.
+>=20
+> I understand your block driver depends on your libvitastor_client
+> library.
+>=20
+> Dependencies that aren't available on at least one supported build
+> platform (and thus covered by CI) are problematic.  For Linux,
+> "available" generally means "provided by the distribution".  I doubt
+> there's a way around getting your library packaged by distributions.
+>=20
+> The QAPI schema is (for better or worse) fixed at compile time by
+> design.  Changing that would be a major undertaking.  Whether the
+> benefits could justify the costs and risks seems rather doubtful to me.
+>=20
+> In my experience, the project invites contributions, not out-of-tree
+> extensions.  The latter require external interfaces, which can only be
+> harder to maintain than internal ones.  There's also the risk of abuse
+> to circumvent the GPL (I have absolutely no reason to assume you'd try
+> that!).
+
+I want to share experience with QEMU block drivers over the years.
+Special-purpose QEMU block drivers are being used less in favor of host
+kernel drivers. Kernel drivers make the storage available to all
+workloads (e.g. containers) on the system, not just QEMU VMs. In
+particular, it reduces the amount of QEMU-specific support needed to
+integrate into orchestration software (e.g. Kubernetes). Just a single
+storage plugin for, say, Kubernetes, enables both container and VM
+workloads if you provide a host kernel driver for your storage.
+
+There can be performance advantages of implementing a QEMU block driver
+compared to a host kernel driver, but I think in the long term it's
+worth prioritizing a host kernel driver because it will reduce
+maintenance for you and make your storage usable with more types of
+workloads.
+
+But the decision is up to you. A QEMU block driver might be preferrable.
+
+Some more details about what Markus mentioned:
+
+The first step is to ensure that dependencies are under licenses that
+are compatible with the GPLv2.
+
+If you want the block driver to be widely available to users, the next
+step is to get dependencies packaged for for popular Linux distros. The
+distro's QEMU packages need to link against the dependencies, so they
+need to be in the distribution's package repositories, not in
+third-party repositories.
+
+Alternatively, if you will continue to distribute your own QEMU and do
+not want to go through the effort of getting the dependencies into
+distros, then you could contribute continuous integration (CI) jobs that
+build with the third-party dependencies. However, the disadvantage is
+that most users will be unable to use the block driver and the userbase
+will be greatly limited.
+
+Both of these approaches put the block driver (and associated QAPI
+schema changes) in qemu.git/master and you would be the maintainer of
+the block driver.
+
+Stefan
+
+--WtsyDcb1nTGtoBhz
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfkBscACgkQnKSrs4Gr
+c8ggogf+Ilh+hrcKSH7naTOekSmCPGL39Qmft7jBIYw0rJW7JZRFCfBD+fAOZEdk
+KZJVKKxpemviCsPEpRQMg9T16Vveri509dt/eCS2qhw+6ObO9fPp3DzO8v6whVVQ
+4tA0jnM1RLOFJ9GYxM+HmZrIdwzpBERfyc/mkd523jpoGi3PhU0aPNtGf2lv+c/s
+q43wuSSS7pP/hjLqJnCvrceicDjZOAulDLBmLoXedct+03AqFnduE8YpUvjoCNbB
+bU6NaWDOVTFdDUUqwtfDvlwSA2aaAvha20R0YsGxu43omztM4Ec6iaTHQKy/dPJ3
+mrrINwIKiJgWrFOw4HjRatPVSOsiAg==
+=PUOL
+-----END PGP SIGNATURE-----
+
+--WtsyDcb1nTGtoBhz--
+
 
