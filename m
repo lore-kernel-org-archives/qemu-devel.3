@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3338DC3600D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 08:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B019FC3600D
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 08:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txLZ5-0008QI-PR; Wed, 26 Mar 2025 03:52:44 -0400
+	id 1txLYW-0007qv-10; Wed, 26 Mar 2025 03:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1txLYz-0008Hl-8K
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:52:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1txLYT-0007qZ-TH
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:52:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1txLYw-0006I8-Pe
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:52:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1txLYS-0006FU-0u
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 03:52:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1742975553;
+ s=mimecast20190719; t=1742975523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DjSRON+Xutm3y59Hd26/mlUTyhZxzIo490emPlOEId0=;
- b=QmG2OI/KXAtRTbkAzwhHOlNylo5qcUGiC5KSssbazDfxZ+Nm8tM+2Kz3JurmHmKzd+tsoo
- FstJwEJIIFZVTzlnV+eChQbGNvyWOa6wcNn0Y70upmCEFTueEK2KOy/jPt7bZkwyB3CLy/
- xD7TeI/UodsuPt4uM6iSpVw7QYuGrzI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=VCB+BDSo2XaU6TJRsFXZkh52bSQojAysgtuVHJHhrng=;
+ b=QuwMdz9wjNlmcPBL0Kik85S+P4d/9LAq4fCaobgbEPmTGzxWfcTwC3sMQdoiPGPukfEnT7
+ +gK+zxDc3KDyOpUd6FV0b/0Zz+wEBFu9TdFKmBj0y+K/Ms2iB5tHcYjEVYwMx6UPxp5xtc
+ 9zolSxbly3W8PDX5n9OLLouZU0Wmw6Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-FIDqWiR4MlKWnP9TLtpQWw-1; Wed,
- 26 Mar 2025 03:52:30 -0400
-X-MC-Unique: FIDqWiR4MlKWnP9TLtpQWw-1
-X-Mimecast-MFC-AGG-ID: FIDqWiR4MlKWnP9TLtpQWw_1742975549
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-4rlLz1r8NGGOuTG-ulsoUA-1; Wed,
+ 26 Mar 2025 03:52:00 -0400
+X-MC-Unique: 4rlLz1r8NGGOuTG-ulsoUA-1
+X-Mimecast-MFC-AGG-ID: 4rlLz1r8NGGOuTG-ulsoUA_1742975519
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EBAAD196D2D3; Wed, 26 Mar 2025 07:52:28 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9DFAB180899B; Wed, 26 Mar 2025 07:51:59 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.226.180])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 812D119560AB; Wed, 26 Mar 2025 07:52:25 +0000 (UTC)
+ id 7E66319560AD; Wed, 26 Mar 2025 07:51:56 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
@@ -52,25 +52,26 @@ Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  John Levon <john.levon@nutanix.com>,
  Joao Martins <joao.m.martins@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH for-10.1 v2 14/37] vfio: Move VFIOAddressSpace helpers into
- container-base.c
-Date: Wed, 26 Mar 2025 08:50:59 +0100
-Message-ID: <20250326075122.1299361-15-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>
+Subject: [PATCH for-10.1 v2 06/37] vfio: Introduce a new header file for
+ internal migration services
+Date: Wed, 26 Mar 2025 08:50:51 +0100
+Message-ID: <20250326075122.1299361-7-clg@redhat.com>
 In-Reply-To: <20250326075122.1299361-1-clg@redhat.com>
 References: <20250326075122.1299361-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,284 +89,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIOAddressSpace is a common object used by VFIOContainerBase which is
-declared in "hw/vfio/vfio-container-base.h". Move the VFIOAddressSpace
-related services into "container-base.c".
+Gather all VFIO migration related declarations into
+"vfio-migration-internal.h" to reduce exposure of VFIO internals in
+"hw/vfio/vfio-common.h".
 
-While at it, rename :
-
-  vfio_get_address_space -> vfio_address_space_get
-  vfio_put_address_space -> vfio_address_space_put
-
-to better reflect the namespace these routines belong to.
-
+Cc: Kirti Wankhede <kwankhede@nvidia.com>
+Cc: Avihai Horon <avihaih@nvidia.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h         |  5 ---
- include/hw/vfio/vfio-container-base.h |  6 ++++
- hw/ppc/spapr_pci_vfio.c               |  5 ++-
- hw/vfio/common.c                      | 47 -------------------------
- hw/vfio/container-base.c              | 50 +++++++++++++++++++++++++++
- hw/vfio/container.c                   |  6 ++--
- hw/vfio/iommufd.c                     |  6 ++--
- 7 files changed, 64 insertions(+), 61 deletions(-)
+ hw/vfio/vfio-migration-internal.h | 72 +++++++++++++++++++++++++++++++
+ include/hw/vfio/vfio-common.h     | 52 +---------------------
+ hw/vfio/common.c                  |  1 +
+ hw/vfio/migration-multifd.c       |  1 +
+ hw/vfio/migration.c               |  1 +
+ hw/vfio/pci.c                     |  1 +
+ 6 files changed, 77 insertions(+), 51 deletions(-)
+ create mode 100644 hw/vfio/vfio-migration-internal.h
 
+diff --git a/hw/vfio/vfio-migration-internal.h b/hw/vfio/vfio-migration-internal.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..ab6a1bad9b513aa61557905e72e5c6b264372276
+--- /dev/null
++++ b/hw/vfio/vfio-migration-internal.h
+@@ -0,0 +1,72 @@
++/*
++ * VFIO migration
++ *
++ * Copyright Red Hat, Inc. 2025
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_VFIO_VFIO_MIGRATION_INTERNAL_H
++#define HW_VFIO_VFIO_MIGRATION_INTERNAL_H
++
++#ifdef CONFIG_LINUX
++#include <linux/vfio.h>
++#endif
++
++#include "qemu/typedefs.h"
++#include "qemu/notify.h"
++
++/*
++ * Flags to be used as unique delimiters for VFIO devices in the migration
++ * stream. These flags are composed as:
++ * 0xffffffff => MSB 32-bit all 1s
++ * 0xef10     => Magic ID, represents emulated (virtual) function IO
++ * 0x0000     => 16-bits reserved for flags
++ *
++ * The beginning of state information is marked by _DEV_CONFIG_STATE,
++ * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
++ * certain state information is marked by _END_OF_STATE.
++ */
++#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
++#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
++#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
++#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
++#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
++
++typedef struct VFIODevice VFIODevice;
++typedef struct VFIOMultifd VFIOMultifd;
++
++typedef struct VFIOMigration {
++    struct VFIODevice *vbasedev;
++    VMChangeStateEntry *vm_state;
++    NotifierWithReturn migration_state;
++    uint32_t device_state;
++    int data_fd;
++    void *data_buffer;
++    size_t data_buffer_size;
++    uint64_t mig_flags;
++    uint64_t precopy_init_size;
++    uint64_t precopy_dirty_size;
++    bool multifd_transfer;
++    VFIOMultifd *multifd;
++    bool initial_data_sent;
++
++    bool event_save_iterate_started;
++    bool event_precopy_empty_hit;
++} VFIOMigration;
++
++bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp);
++void vfio_migration_exit(VFIODevice *vbasedev);
++int vfio_save_device_config_state(QEMUFile *f, void *opaque, Error **errp);
++int vfio_load_device_config_state(QEMUFile *f, void *opaque);
++
++#ifdef CONFIG_LINUX
++int vfio_migration_set_state(VFIODevice *vbasedev,
++                             enum vfio_device_mig_state new_state,
++                             enum vfio_device_mig_state recover_state,
++                             Error **errp);
++#endif
++
++void vfio_migration_add_bytes_transferred(unsigned long val);
++
++#endif /* HW_VFIO_VFIO_MIGRATION_INTERNAL_H */
 diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index e23626856e6ff96939a4660f059833f166aa88e9..b2d4ff68650b205dca42ef00c7dfc7f2505b7e51 100644
+index 8bb206d755adab4efee32a173c920d9aa4833685..920ad154b4f82b9c244b5b9e8da44f7583e5ead0 100644
 --- a/include/hw/vfio/vfio-common.h
 +++ b/include/hw/vfio/vfio-common.h
-@@ -120,11 +120,6 @@ struct VFIODeviceOps {
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO \
-             TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
+@@ -23,7 +23,6 @@
  
--VFIOAddressSpace *vfio_get_address_space(AddressSpace *as);
--void vfio_put_address_space(VFIOAddressSpace *space);
--void vfio_address_space_insert(VFIOAddressSpace *space,
--                               VFIOContainerBase *bcontainer);
+ #include "exec/memory.h"
+ #include "qemu/queue.h"
+-#include "qemu/notify.h"
+ #include "ui/console.h"
+ #include "hw/display/ramfb.h"
+ #ifdef CONFIG_LINUX
+@@ -36,23 +35,6 @@
+ 
+ #define VFIO_MSG_PREFIX "vfio %s: "
+ 
+-/*
+- * Flags to be used as unique delimiters for VFIO devices in the migration
+- * stream. These flags are composed as:
+- * 0xffffffff => MSB 32-bit all 1s
+- * 0xef10     => Magic ID, represents emulated (virtual) function IO
+- * 0x0000     => 16-bits reserved for flags
+- *
+- * The beginning of state information is marked by _DEV_CONFIG_STATE,
+- * _DEV_SETUP_STATE, or _DEV_DATA_STATE, respectively. The end of a
+- * certain state information is marked by _END_OF_STATE.
+- */
+-#define VFIO_MIG_FLAG_END_OF_STATE      (0xffffffffef100001ULL)
+-#define VFIO_MIG_FLAG_DEV_CONFIG_STATE  (0xffffffffef100002ULL)
+-#define VFIO_MIG_FLAG_DEV_SETUP_STATE   (0xffffffffef100003ULL)
+-#define VFIO_MIG_FLAG_DEV_DATA_STATE    (0xffffffffef100004ULL)
+-#define VFIO_MIG_FLAG_DEV_INIT_DATA_SENT (0xffffffffef100005ULL)
 -
- void vfio_disable_irqindex(VFIODevice *vbasedev, int index);
- void vfio_unmask_single_irqindex(VFIODevice *vbasedev, int index);
- void vfio_mask_single_irqindex(VFIODevice *vbasedev, int index);
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index 4cff9943ab4861a25d07b5ebd1200509ebfab12d..b33231b94013e0b535b77887109a97f9128f1c15 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -71,6 +71,11 @@ typedef struct VFIORamDiscardListener {
-     QLIST_ENTRY(VFIORamDiscardListener) next;
- } VFIORamDiscardListener;
+ enum {
+     VFIO_DEVICE_TYPE_PCI = 0,
+     VFIO_DEVICE_TYPE_PLATFORM = 1,
+@@ -78,27 +60,6 @@ typedef struct VFIORegion {
+     uint8_t nr; /* cache the region number for debug */
+ } VFIORegion;
  
-+VFIOAddressSpace *vfio_address_space_get(AddressSpace *as);
-+void vfio_address_space_put(VFIOAddressSpace *space);
-+void vfio_address_space_insert(VFIOAddressSpace *space,
-+                               VFIOContainerBase *bcontainer);
-+
- int vfio_container_dma_map(VFIOContainerBase *bcontainer,
-                            hwaddr iova, ram_addr_t size,
-                            void *vaddr, bool readonly);
-@@ -163,4 +168,5 @@ struct VFIOIOMMUClass {
-                        MemoryRegionSection *section);
-     void (*release)(VFIOContainerBase *bcontainer);
- };
-+
- #endif /* HW_VFIO_VFIO_CONTAINER_BASE_H */
-diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio.c
-index 1722a5bfa3983d42baac558f22410e36eed375f5..e318d0d912f3e90d1289e4bc2195bf68418e5206 100644
---- a/hw/ppc/spapr_pci_vfio.c
-+++ b/hw/ppc/spapr_pci_vfio.c
-@@ -24,7 +24,6 @@
- #include "hw/pci-host/spapr.h"
- #include "hw/pci/msix.h"
- #include "hw/pci/pci_device.h"
--#include "hw/vfio/vfio-common.h"
- #include "hw/vfio/vfio-container.h"
- #include "qemu/error-report.h"
- #include CONFIG_DEVICES /* CONFIG_VFIO_PCI */
-@@ -86,7 +85,7 @@ static int vfio_eeh_container_op(VFIOContainer *container, uint32_t op)
+-typedef struct VFIOMultifd VFIOMultifd;
+-
+-typedef struct VFIOMigration {
+-    struct VFIODevice *vbasedev;
+-    VMChangeStateEntry *vm_state;
+-    NotifierWithReturn migration_state;
+-    uint32_t device_state;
+-    int data_fd;
+-    void *data_buffer;
+-    size_t data_buffer_size;
+-    uint64_t mig_flags;
+-    uint64_t precopy_init_size;
+-    uint64_t precopy_dirty_size;
+-    bool multifd_transfer;
+-    VFIOMultifd *multifd;
+-    bool initial_data_sent;
+-
+-    bool event_save_iterate_started;
+-    bool event_precopy_empty_hit;
+-} VFIOMigration;
+-
+ struct VFIOGroup;
  
- static VFIOContainer *vfio_eeh_as_container(AddressSpace *as)
- {
--    VFIOAddressSpace *space = vfio_get_address_space(as);
-+    VFIOAddressSpace *space = vfio_address_space_get(as);
-     VFIOContainerBase *bcontainer = NULL;
+ typedef struct VFIOContainer {
+@@ -136,6 +97,7 @@ typedef struct VFIOIOMMUFDContainer {
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOIOMMUFDContainer, VFIO_IOMMU_IOMMUFD);
  
-     if (QLIST_EMPTY(&space->containers)) {
-@@ -106,7 +105,7 @@ static VFIOContainer *vfio_eeh_as_container(AddressSpace *as)
-     }
+ typedef struct VFIODeviceOps VFIODeviceOps;
++typedef struct VFIOMigration VFIOMigration;
  
- out:
--    vfio_put_address_space(space);
-+    vfio_address_space_put(space);
-     return container_of(bcontainer, VFIOContainer, bcontainer);
- }
+ typedef struct VFIODevice {
+     QLIST_ENTRY(VFIODevice) next;
+@@ -290,13 +252,9 @@ extern VFIODeviceList vfio_device_list;
+ extern const MemoryListener vfio_memory_listener;
+ extern int vfio_kvm_device_fd;
  
+-void vfio_migration_add_bytes_transferred(unsigned long val);
+ bool vfio_device_state_is_running(VFIODevice *vbasedev);
+ bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
+ 
+-int vfio_save_device_config_state(QEMUFile *f, void *opaque, Error **errp);
+-int vfio_load_device_config_state(QEMUFile *f, void *opaque);
+-
+ #ifdef CONFIG_LINUX
+ int vfio_get_region_info(VFIODevice *vbasedev, int index,
+                          struct vfio_region_info **info);
+@@ -311,16 +269,8 @@ struct vfio_info_cap_header *
+ vfio_get_device_info_cap(struct vfio_device_info *info, uint16_t id);
+ struct vfio_info_cap_header *
+ vfio_get_cap(void *ptr, uint32_t cap_offset, uint16_t id);
+-
+-int vfio_migration_set_state(VFIODevice *vbasedev,
+-                             enum vfio_device_mig_state new_state,
+-                             enum vfio_device_mig_state recover_state,
+-                             Error **errp);
+ #endif
+ 
+-bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp);
+-void vfio_migration_exit(VFIODevice *vbasedev);
+-
+ int vfio_bitmap_alloc(VFIOBitmap *vbmap, hwaddr size);
+ bool vfio_devices_all_dirty_tracking_started(
+     const VFIOContainerBase *bcontainer);
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 33f7191c7fec76bb3f46b96e25dc1872808ccc8c..a8cece570a6092103a5cf573b5343e1d8817bde7 100644
+index a4ec60e018df7dc9bbbeac27120907b0f7bf2f83..9bbd798e3e9e0b7a7620d4b1f34f1ef5e8ac42c1 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -48,8 +48,6 @@
+@@ -44,6 +44,7 @@
+ #include "migration/qemu-file.h"
+ #include "system/tcg.h"
+ #include "system/tpm.h"
++#include "vfio-migration-internal.h"
  
  VFIODeviceList vfio_device_list =
      QLIST_HEAD_INITIALIZER(vfio_device_list);
--static QLIST_HEAD(, VFIOAddressSpace) vfio_address_spaces =
--    QLIST_HEAD_INITIALIZER(vfio_address_spaces);
+diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+index 09aa57f5f890f37f7e36c857fd813f55b1da2fce..1eba74beb0f207804e9c80935eacb0de19589b85 100644
+--- a/hw/vfio/migration-multifd.c
++++ b/hw/vfio/migration-multifd.c
+@@ -22,6 +22,7 @@
+ #include "io/channel-buffer.h"
+ #include "migration/qemu-file.h"
+ #include "migration-multifd.h"
++#include "vfio-migration-internal.h"
+ #include "trace.h"
  
- #ifdef CONFIG_KVM
+ #define VFIO_DEVICE_STATE_CONFIG_STATE (1)
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 96d294794bc3056baa3b0b4e23488402db5de797..2a72a8e07542096276cc7c386359ad375e7d24c8 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -31,6 +31,7 @@
+ #include "pci.h"
+ #include "trace.h"
+ #include "hw/hw.h"
++#include "vfio-migration-internal.h"
+ 
  /*
-@@ -1393,51 +1391,6 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
-     return 0;
- }
+  * This is an arbitrary size based on migration of mlx5 devices, where typically
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 7f1532fbed9aed2eae2c98f6fd79a9056ff1e84f..158deca06cb240622a254f5059c47873e5fcc7de 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -44,6 +44,7 @@
+ #include "migration/blocker.h"
+ #include "migration/qemu-file.h"
+ #include "system/iommufd.h"
++#include "vfio-migration-internal.h"
  
--VFIOAddressSpace *vfio_get_address_space(AddressSpace *as)
--{
--    VFIOAddressSpace *space;
--
--    QLIST_FOREACH(space, &vfio_address_spaces, list) {
--        if (space->as == as) {
--            return space;
--        }
--    }
--
--    /* No suitable VFIOAddressSpace, create a new one */
--    space = g_malloc0(sizeof(*space));
--    space->as = as;
--    QLIST_INIT(&space->containers);
--
--    if (QLIST_EMPTY(&vfio_address_spaces)) {
--        qemu_register_reset(vfio_reset_handler, NULL);
--    }
--
--    QLIST_INSERT_HEAD(&vfio_address_spaces, space, list);
--
--    return space;
--}
--
--void vfio_put_address_space(VFIOAddressSpace *space)
--{
--    if (!QLIST_EMPTY(&space->containers)) {
--        return;
--    }
--
--    QLIST_REMOVE(space, list);
--    g_free(space);
--
--    if (QLIST_EMPTY(&vfio_address_spaces)) {
--        qemu_unregister_reset(vfio_reset_handler, NULL);
--    }
--}
--
--void vfio_address_space_insert(VFIOAddressSpace *space,
--                               VFIOContainerBase *bcontainer)
--{
--    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
--    bcontainer->space = space;
--}
--
- struct vfio_device_info *vfio_get_device_info(int fd)
- {
-     struct vfio_device_info *info;
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 749a3fd29dd6fc9143f14edf7e4ac6238315fcce..2c2d8329e3cf0f21386cb0896dd366c8d0ccdb60 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -14,6 +14,56 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/vfio/vfio-container-base.h"
-+#include "hw/vfio/vfio-common.h" /* vfio_reset_handler */
-+#include "system/reset.h"
-+
-+static QLIST_HEAD(, VFIOAddressSpace) vfio_address_spaces =
-+    QLIST_HEAD_INITIALIZER(vfio_address_spaces);
-+
-+VFIOAddressSpace *vfio_address_space_get(AddressSpace *as)
-+{
-+    VFIOAddressSpace *space;
-+
-+    QLIST_FOREACH(space, &vfio_address_spaces, list) {
-+        if (space->as == as) {
-+            return space;
-+        }
-+    }
-+
-+    /* No suitable VFIOAddressSpace, create a new one */
-+    space = g_malloc0(sizeof(*space));
-+    space->as = as;
-+    QLIST_INIT(&space->containers);
-+
-+    if (QLIST_EMPTY(&vfio_address_spaces)) {
-+        qemu_register_reset(vfio_reset_handler, NULL);
-+    }
-+
-+    QLIST_INSERT_HEAD(&vfio_address_spaces, space, list);
-+
-+    return space;
-+}
-+
-+void vfio_address_space_put(VFIOAddressSpace *space)
-+{
-+    if (!QLIST_EMPTY(&space->containers)) {
-+        return;
-+    }
-+
-+    QLIST_REMOVE(space, list);
-+    g_free(space);
-+
-+    if (QLIST_EMPTY(&vfio_address_spaces)) {
-+        qemu_unregister_reset(vfio_reset_handler, NULL);
-+    }
-+}
-+
-+void vfio_address_space_insert(VFIOAddressSpace *space,
-+                               VFIOContainerBase *bcontainer)
-+{
-+    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
-+    bcontainer->space = space;
-+}
+ #define TYPE_VFIO_PCI_NOHOTPLUG "vfio-pci-nohotplug"
  
- int vfio_container_dma_map(VFIOContainerBase *bcontainer,
-                            hwaddr iova, ram_addr_t size,
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 8badeb98ec052ad1fa7b5d45bb1733b1184bc6fb..9b86e24a4072e579bcdc2c060ce42608ee44ee2e 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -546,7 +546,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-     VFIOAddressSpace *space;
-     VFIOIOMMUClass *vioc;
- 
--    space = vfio_get_address_space(as);
-+    space = vfio_address_space_get(as);
- 
-     /*
-      * VFIO is currently incompatible with discarding of RAM insofar as the
-@@ -675,7 +675,7 @@ close_fd_exit:
-     close(fd);
- 
- put_space_exit:
--    vfio_put_address_space(space);
-+    vfio_address_space_put(space);
- 
-     return false;
- }
-@@ -714,7 +714,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
-         close(container->fd);
-         object_unref(container);
- 
--        vfio_put_address_space(space);
-+        vfio_address_space_put(space);
-     }
- }
- 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 7196c4080125674ec58b1ebf02dad84b4387c355..a520d40afc00d79ae8617fd3c40433e228583b5a 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -486,7 +486,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-         goto err_connect_bind;
-     }
- 
--    space = vfio_get_address_space(as);
-+    space = vfio_address_space_get(as);
- 
-     /*
-      * The HostIOMMUDevice data from legacy backend is static and doesn't need
-@@ -606,7 +606,7 @@ err_discard_disable:
- err_attach_container:
-     iommufd_cdev_container_destroy(container);
- err_alloc_ioas:
--    vfio_put_address_space(space);
-+    vfio_address_space_put(space);
-     iommufd_cdev_unbind_and_disconnect(vbasedev);
- err_connect_bind:
-     close(vbasedev->fd);
-@@ -631,7 +631,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
-     vfio_cpr_unregister_container(bcontainer);
-     iommufd_cdev_detach_container(vbasedev, container);
-     iommufd_cdev_container_destroy(container);
--    vfio_put_address_space(space);
-+    vfio_address_space_put(space);
- 
-     iommufd_cdev_unbind_and_disconnect(vbasedev);
-     close(vbasedev->fd);
 -- 
 2.49.0
 
