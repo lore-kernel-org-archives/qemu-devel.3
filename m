@@ -4,76 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A85FDC36008
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 16:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E9ACC36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 16:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txTvR-00023X-Aw; Wed, 26 Mar 2025 12:48:21 -0400
+	id 1txTws-0003F5-M4; Wed, 26 Mar 2025 12:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1txTvP-000231-Hs
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 12:48:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1txTwo-0003En-Qu
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 12:49:47 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1txTvN-0006x3-V5
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 12:48:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743007696;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X5gGlxgmqvP9h7yYb1aGtSKOi+Zb9pOpPJDK0vOOMqs=;
- b=H9XcqkKyPVdft1P2oYRpbct64MNEuY+CY9oVoTOlmEHEMTQx1UzDZkCvpRl5lKSb8hYZyn
- wmW89xs+UABMDfMxy4xORk/GVYwnNHdjNRq+sp2SmW7BDQQtnGnVbsHzZ8eWQLMmFhblg/
- FddaSN1sVbelKZqgcnodSwIV/teCT/A=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-SwN1m-Q9Pja8A_n_facRGw-1; Wed,
- 26 Mar 2025 12:48:15 -0400
-X-MC-Unique: SwN1m-Q9Pja8A_n_facRGw-1
-X-Mimecast-MFC-AGG-ID: SwN1m-Q9Pja8A_n_facRGw_1743007694
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5F5C180025F; Wed, 26 Mar 2025 16:48:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.107])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22C1B180B486; Wed, 26 Mar 2025 16:48:11 +0000 (UTC)
-Date: Wed, 26 Mar 2025 16:48:08 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Subject: Re: [PATCH] migration: fix SEEK_CUR offset calculation in
- qio_channel_block_seek
-Message-ID: <Z-QvyGTjqgF2LpIZ@redhat.com>
-References: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1txTwn-00074Y-1X
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 12:49:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=uqs3nVSEDLTX3WSzeUOrqrcwsd59qotMKHM6F6OwNkM=; b=oU/aWVya4Dbk12c
+ dcTYmBBEXIsOe9r0gczv84S3wWVYZlMxj3NbNmfEao3sXbqMzWC2R76HOHJFPH1fWtEhdbuV8LTbn
+ FZ0I2yirazm/I65fZ2RhXWCPqFCLlrIF0kTeNzLb2hdxEUZMy0AUYMzLoDw9p50ZZrwx1L9zsQF3s
+ fs=;
+Date: Wed, 26 Mar 2025 17:50:19 +0100
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH-for-10.1 0/8] target/mips: Make 'cpu-qom.h' target agnostic
+Message-ID: <zqjy2bvjr7os5lklrtfvulkcsfkcfximusiqfpi746xvidjjoq@eudwr657y4x7>
+References: <20250325154058.92735-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20250325154058.92735-1-philmd@linaro.org>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,30 +66,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 26, 2025 at 05:22:30PM +0100, Marco Cavenati wrote:
-> The SEEK_CUR case in qio_channel_block_seek was incorrectly using the
-> 'whence' parameter instead of the 'offset' parameter when calculating the
-> new position.
+On 25/03/25, Philippe Mathieu-Daudé wrote:
+> - Remove the TARGET_MIPS64 use in 'cpu-qom.h' to
+>   make it target agnostic
+> - Introduce mips_cpu_is_64bit() as a runtime check
+>   for compile time TARGET_MIPS64 definition
+> - Replace the ldtul_p() gdbstub call by ldn_p()
+> - Rename few symbols to avoid future linkage clash
 > 
-> Fixes: 65cf200a51ddc6d0a28ecceac30dc892233cddd7 ("migration: introduce a QIOChannel impl for BlockDriverState VMState")
+> Philippe Mathieu-Daudé (8):
+>   cpus: Open code OBJECT_DECLARE_TYPE() in OBJECT_DECLARE_CPU_TYPE()
+>   target/mips: Declare CPU QOM types using DEFINE_TYPES() macro
+>   target/mips: Make MIPS_CPU common to new MIPS32_CPU / MIPS64_CPU types
+>   target/mips: Prefix MMU API with 'mips_'
+>   target/mips: Replace ldtul_p() -> ldn_p(sizeof(target_ulong))
+>   target/mips: Introduce mips_cpu_is_64bit() helper
+>   target/mips: Get CPU register size using mips_cpu_is_64bit()
+>   target/mips: Introduce mips_env_64bit_enabled() helper
 > 
-> Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-> ---
->  migration/channel-block.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  include/hw/core/cpu.h               |  7 ++++-
+>  target/mips/cpu-qom.h               | 14 +++++-----
+>  target/mips/internal.h              |  5 ++++
+>  target/mips/tcg/tcg-internal.h      |  2 +-
+>  target/mips/cpu.c                   | 42 ++++++++++++++++++++---------
+>  target/mips/gdbstub.c               | 14 +++++++---
+>  target/mips/tcg/system/tlb_helper.c |  2 +-
+>  7 files changed, 61 insertions(+), 25 deletions(-)
+> 
+> -- 
+> 2.47.1
+> 
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 
