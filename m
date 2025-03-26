@@ -4,97 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17BF6C3600B
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 13:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33868C36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 13:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txQMP-0003HL-BR; Wed, 26 Mar 2025 08:59:57 -0400
+	id 1txQgF-0008K6-85; Wed, 26 Mar 2025 09:20:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1txQMM-0003GN-IE
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:59:54 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1txQMK-0003gw-Jv
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 08:59:54 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5ed1ac116e3so3307105a12.3
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 05:59:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1742993991; x=1743598791; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bLWThP5RJlI8Sp2zxUy02RozxFdYqn8OMQLJqsK60xU=;
- b=D7nc5Ntepkt64M/NdibYg5E0q6+4R45Z0oHcFDRmF1eu+IHhxar9c1Tzm5zTo6WlOD
- wbr3VGduCXZq+OjfWiSrAAyUo9Lj0TBKvqOlloJ9AGlE+ThOcg6t6If8956Z3nUfQngl
- 3s5NHvb1Kto1nf8FIXJmIjOEJR8xg6Kh1/po5g1gPWQsN5LCxCkKHwtp8XS2iyiW76gJ
- T8tqrljQq6neK5vemka2KRUXcKhploiDIPZlaxThb5f0qc6zNcnKjkX4VX45sTiTdLVZ
- rhFtMP89yu4hU4FA4ZW2sWZWz/Dz4mph/svjANHsNj17A3Jh+1P5QAC13mZsb7Gku4h4
- ZmKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742993991; x=1743598791;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bLWThP5RJlI8Sp2zxUy02RozxFdYqn8OMQLJqsK60xU=;
- b=fpMT1SuE8DCS7ofKg3q2zey813PJrvtJSaDo8escUq5yGu4QBEx1p/SLVsw4RpVwp4
- PGBdKr3m5B6poN7gdkx8MJU44124++KL4tsCz1gvld1DfmxUJlhl2MT5c5DcokqSKqht
- 2kkGoMk2DFHNZNZqsQKcLOpNozlBOLpsr7+xyIcpCr8IuP52JK4zkcuZIL6z56i+rZc+
- mziV5SXKBxMH1PlNGzllM6B2sSfB8RFdVYHZrRNyOlW41YimJnAz1nYPRnt8hFRRiXGS
- MY4HOBF/w0VkRvDtmaGGyNYNggDMldiViUcoayRgYTbos0JSU/ZxNGjwZVSDTl2vFph6
- jUSQ==
-X-Gm-Message-State: AOJu0YwRF9/evzQ/Y5+sPmP/LZB46ygo+yU5CELLtOhwTdt8AuxAXfe5
- 4e2XjKc3/PszUz45TyidrgRprKdupCkSdWD1Rb/bFNIhdZYh288KTRVCt0aveyA=
-X-Gm-Gg: ASbGncuS2Lu9a4W5UVcMlsYFvqUlxp93XCO130VpKUSptjj+T+Z7KuZxJlhrYJVzCmi
- 34WWfbXgiM4gFQq0aRtMpsXlIMT3nm975LibK2yRpRdorGCJkDbFiosvdtpXIllu0k+tmxoZ/PF
- qcBsZYLeGPAp46SxatODAR8L9h7h6FzrQh6MnHTEFZkjcxRUEUv7EpsX53xIdH0MQKF9mluYEzx
- QDW6XO8PePTp4H0CNkU3DPt7OYgem+ayDHX9CYsItr6jLxHBWIB+5thy+QITyNyTckdx43s7mrC
- w8n7JAi3zOnnXGbNzWt3m0DWKEq0+ElpusrZ//eNF0PwhdM=
-X-Google-Smtp-Source: AGHT+IE4Ze165SClKZyPuYnYyy9nSco7MxgJMth8q3FPIMzRWwvq6xJaFnG1bd09WfPKXNPW2hXjgg==
-X-Received: by 2002:a05:6402:51ce:b0:5e5:c847:1a56 with SMTP id
- 4fb4d7f45d1cf-5ebcd4337a5mr17874692a12.10.1742993990656; 
- Wed, 26 Mar 2025 05:59:50 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ebccfae4casm9203023a12.34.2025.03.26.05.59.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Mar 2025 05:59:47 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C9F405F90B;
- Wed, 26 Mar 2025 12:59:46 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Anton Johansson
- <anjo@rev.ng>,  Riku Voipio <riku.voipio@iki.fi>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Nicholas Piggin <npiggin@gmail.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  qemu-ppc@nongnu.org
-Subject: Re: [PATCH-for-10.1 2/5] gdbstub: Remove ldtul_be_p() and
- ldtul_le_p() macros
-In-Reply-To: <20250325130221.76116-3-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 25 Mar 2025 14:02:17
- +0100")
-References: <20250325130221.76116-1-philmd@linaro.org>
- <20250325130221.76116-3-philmd@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Wed, 26 Mar 2025 12:59:46 +0000
-Message-ID: <87cye40wxp.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1txQgB-0008Ir-Ri; Wed, 26 Mar 2025 09:20:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1txQgA-0006wV-4p; Wed, 26 Mar 2025 09:20:23 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52Q8OIB6011284;
+ Wed, 26 Mar 2025 13:20:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3s8TbJ
+ frwe/5PkfIXZ9j9BfIJOtMfWmkprnj9htbYw8=; b=LuQ9YARAM/Gxd0sXgSHnkU
+ YWszEtqY1Y/t86eBWfSZWwS+ydZeFeZiquwtLgNQOxbDmhqLju/eKKZgGqmQP6tX
+ 1TApp7KIYlAs4sZtXzn2Vy37MFeVrrKalfy/prE3XunOaOcbqdeh72E8pSbup7NB
+ b4WzyrsE8PLU2WSxnEdLk/qXcg74BupB4xV+Ymf1p79/5ZUCJ1Mge8VVEIPwglwI
+ 8MeVDBf4jqG9s+OhL2gej8AGFUrclZFylyXzsyNgdhVrD51DlGST5zA+iz/jtDSl
+ i6KkepYWbu15xcLoP6MxwlgzeGUJb3yA/qp3E2pXkVY+O9Ed78eOpHFi46T5AXtA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3nqkv7g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Mar 2025 13:20:09 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52QDC1LI020947;
+ Wed, 26 Mar 2025 13:20:09 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45m3nqkv7e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Mar 2025 13:20:09 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52Q9GUOh025443;
+ Wed, 26 Mar 2025 13:20:08 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j7x08m0f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Mar 2025 13:20:08 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52QDK7f637225060
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Mar 2025 13:20:07 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 525E458051;
+ Wed, 26 Mar 2025 13:20:07 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CEC125805A;
+ Wed, 26 Mar 2025 13:20:05 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.118.127]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 26 Mar 2025 13:20:05 +0000 (GMT)
+Message-ID: <6653951fe8afed27c217e44aeed70a6d3798a818.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 5/7] target/s390x: Declare
+ s390_set_qemu_cpu_model/cpu_list in cpu_models.h
+From: Eric Farman <farman@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Daniel Henrique
+ Barboza <danielhb413@gmail.com>, David Hildenbrand <david@redhat.com>,
+ Christian Borntraeger	 <borntraeger@linux.ibm.com>, Artyom Tarasenko
+ <atar4qemu@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>, Richard
+ Henderson	 <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, Nicholas
+ Piggin	 <npiggin@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>, Mark
+ Cave-Ayland	 <mark.cave-ayland@ilande.co.uk>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>
+Date: Wed, 26 Mar 2025 09:20:05 -0400
+In-Reply-To: <20250324185837.46506-6-philmd@linaro.org>
+References: <20250324185837.46506-1-philmd@linaro.org>
+ <20250324185837.46506-6-philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 2Vcl4f4W1J9HB6vxr2x1wTyciqUyQdDv
+X-Proofpoint-GUID: nDdXLDUDcvfcirkYF8U5-3mCV-zaX580
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-26_06,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
+ spamscore=0 clxscore=1011 mlxlogscore=602 bulkscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503260079
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,44 +126,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
-
-> Last uses of ldtul_be_p() were removed in commit 78920b4ff2b
-> ("target/sparc: Use explicit big-endian LD/ST API"), and of
-> ldtul_le_p() in 39631d57d7c ("target/riscv: Use explicit
-> little-endian LD/ST API"). Remove these legacy macros.
-
-I'm guessing these are commits in your tree because I can't see them in
-origin.
-
-
->
+On Mon, 2025-03-24 at 19:58 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
+> Both s390_cpu_list() and s390_set_qemu_cpu_model() are
+> defined in cpu_models.c, move their declarations in the
+> related "cpu_models.h" header. Use full path to header
+> in s390-virtio-ccw.c file.
+>=20
+> Suggested-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  include/gdbstub/helpers.h | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
-> index 6f7cc48adcb..26140ef1ac0 100644
-> --- a/include/gdbstub/helpers.h
-> +++ b/include/gdbstub/helpers.h
-> @@ -95,13 +95,9 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf=
-, int len)
->  #if TARGET_LONG_BITS =3D=3D 64
->  #define gdb_get_regl(buf, val) gdb_get_reg64(buf, val)
->  #define ldtul_p(addr) ldq_p(addr)
-> -#define ldtul_le_p(addr) ldq_le_p(addr)
-> -#define ldtul_be_p(addr) ldq_be_p(addr)
->  #else
->  #define gdb_get_regl(buf, val) gdb_get_reg32(buf, val)
->  #define ldtul_p(addr) ldl_p(addr)
-> -#define ldtul_le_p(addr) ldl_le_p(addr)
-> -#define ldtul_be_p(addr) ldl_be_p(addr)
->  #endif
->=20=20
->  #endif /* _GDBSTUB_HELPERS_H_ */
+>  target/s390x/cpu.h         | 4 ----
+>  target/s390x/cpu_models.h  | 3 +++
+>  hw/s390x/s390-virtio-ccw.c | 2 +-
+>  3 files changed, 4 insertions(+), 5 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+(resending with reply-all)
+
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
