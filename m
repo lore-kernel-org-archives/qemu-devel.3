@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82AAC3600C
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 09:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C93BC36008
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 09:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txN9o-0000xR-My; Wed, 26 Mar 2025 05:34:44 -0400
+	id 1txN9n-0000wd-FC; Wed, 26 Mar 2025 05:34:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1txN9n-0000wz-E4
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:34:43 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1txN9i-0000wH-UK
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:34:39 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1txN9l-0003Wi-Hp
- for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:34:43 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-225477548e1so127779085ad.0
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 02:34:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yuq825@gmail.com>) id 1txN9g-0003WQ-Va
+ for qemu-devel@nongnu.org; Wed, 26 Mar 2025 05:34:38 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2255003f4c6so126918135ad.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 02:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1742981679; x=1743586479; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TJXmFtW3xpZS/E0hzVsrasLFEbBGzKrORRb7gCBCf34=;
- b=Ginp3pmlljz5g1WM+uFLMfXjOIRTBbJJ2FfdHVJDUbaSKsuDhqetFhO3eZhn83CO8C
- q8UB1lq6l5xnpTYOV584/lWAIfX+UYDApdf3YWWoYUDFdKf8+tWB6CrYe5zqVfCaxvB0
- FQgA8gWVX9dw9+JnyqYubYBi9bMp8Fy1w4icDBgu2nG9pOki4oRck/+n+AatMwgToCh2
- YRNiwhhajUAnxvYc17cYpJkfeT5HpuGZMnVxuamO3R2bwX46mB6QNCip4dbJzsv+1PD4
- yRfvsmr98srGTTbI0sjzPdM3wkjZXmYGUQPVvnrI43AeUq9Qcgkfou0QO2gqHuKwTFRA
- RS1w==
+ d=gmail.com; s=20230601; t=1742981675; x=1743586475; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AFzJoEt0Ixt5u8WKVL91yF4RT8EZ3t7tZkR0nOBMuJ4=;
+ b=TW1pJNrpJwKU45Oib0LMyIWIR0sa8BmXEeheF/LNZhwdEf9P8Pk8S8j32lqTz+GBLj
+ q45+cdAHshV9Y8I/bDQ1z4VOepCxqV96ypEEN/Le8LFv/2LeaKL63Qlwlfc/Gfzn3Obz
+ chXWMuSHoFTCtvKEEPSntw3QzK+Gi/K+MnqRcUfCJsoOZzgZMU2KZo6TodbPiQRaC2TF
+ vLUsuLEnfqp0BGjmV/sOWJehjLGyFP05b8iQ3E97KTr9t+N+yGDt+z5iOA3OSXzhCs7S
+ uZvmGJvWBtq3CaRYR3fmeRmDKP+a+wlSkbfO0wxqgH4+POTC12GfvbJnvDcGUCF4rRNo
+ 4hNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1742981679; x=1743586479;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TJXmFtW3xpZS/E0hzVsrasLFEbBGzKrORRb7gCBCf34=;
- b=tw2uoXRPsHEKhZw1YlTyF6CxwcRvvBd3EXD/2kcFp9z43vdwb8DJoYS9b3QiHIcLpu
- z57S5djAPROSu0kvXEjMalrYpNFWcH987d+NILM4AEzb1BQUI+RUtjwppDb1m0CoMM+A
- nGD0YsFVp6dYnohLywqOB2BpYNhW8u+uCZmvA9U62fr5J7y91CB5cdkjix+kOkOKGfwP
- AMy/tKREntKYFJLFeA67sjq0YUhFYU2HLqcs2NxNJn/qd5UWv6GtVwchIIBldJMyQmtR
- 71oypxuCeNuEB2NTOQf+IfR3dHTdQAZBjJWoiExB9frCO9oxIvQ86SR3RC1ZM1eIEXEq
- PUUw==
-X-Gm-Message-State: AOJu0Yztet+fNZsl63gJT5Qz88ts7E1Mk6Pu49EfzMJ2QIz5CVpty5OB
- QLSYu9XeUBEcfeTlpFwaxiMta9Jc7E81764uOQLJyACg0p6EE1y7XhaUb175
-X-Gm-Gg: ASbGncvBQj9SkiTMq8Zu6gwAWbbwJB/V4reD3wzt6UAlywhaEOKQCKNdA/ltMw9HeAO
- npMDG+8pCAq6lCtrVv3U8/K5HPfjHpil1p1L15UMppQBGH6Bo3VDGZ4NDJHpS0+vfzpCLzW+6DX
- HiJuIxka1t1qVKG7qwTJmH+RRrEcVtM76gYhwXq1bGlm48djDV/N5ahSfeyergDZSfqWAanv959
- qtMITHyP6ygkIeg7zdFn8Z2sbf7yt/l8/VfrVMah9xvAflB4Rv3O/LfNUtojjOW9txM/p+hjyna
- pdlL6Y/Fsow+8f3A7zRpIi3JBUwf1LIXfDzrR9tT1w2HjQCjL3rH3sfMbEJupPg61w+w1AGDEfR
- HmEKIdMnhBk5SzGMAFyVW
-X-Google-Smtp-Source: AGHT+IE+UHmVvMjAbSulO5GFvXf0xugw8ZDMzZ8QEoZqtFet67V0YYIjv0lXviev2Sg1S+6SiFD2Tw==
-X-Received: by 2002:a05:6a00:ac8:b0:736:4ebd:e5a with SMTP id
- d2e1a72fcca58-73905a63bd5mr35314224b3a.20.1742981679403; 
- Wed, 26 Mar 2025 02:34:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1742981675; x=1743586475;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AFzJoEt0Ixt5u8WKVL91yF4RT8EZ3t7tZkR0nOBMuJ4=;
+ b=ByN3U1BurDS5DSt84yfs9B7D9gnhZ5Ix9MCRI0dVLRN1q1P3150RvNwHYnrI4zbLSy
+ IJEsNTo8sjCa+EpKB7erzCpGjtXE4FHowA10u4pyq3s7JndGzHPrci96Z9MqPMVfFL44
+ orSz87lFqQREiAJNDgReFVtcSu7QFBf3wvWPEnzDcuvX4QiRoUFBlK7pAXW5YRICho5A
+ r7Zp8REQxPkcMOo+uzmUimxLLMi31J6FDGQNe3TjdKSl4j7sLkQlSGPqyxZ5FbZv2m1K
+ 24hJtup/+XnVx7MioG5UxID7KWMYip1A5UUMx1Orm9ZQ1Hsab6qtDaKDc9g5IqsKG7Oz
+ qrjQ==
+X-Gm-Message-State: AOJu0Yz9gErPKllFVUoEpwVlsLEJr2f/bXQC9EKoalEARPa2AMtPSPN4
+ 0T0fqHZLevgNsjE3zrGQeORbSg+dFmznL0Snr0rXWgeiE6Kgg1xycUd2X/sw
+X-Gm-Gg: ASbGncsJeht5y3gAhuJzDV6G7TRaTB7kI78DtiXxsPFmJTpWxQA0Wwvj09iR0tOWUXA
+ TKG5VxaEIbuXtDS0nDYBMxf+xl/3PYFYdNfRWeYhVotoOLtzlgD16cr1XcvCxli43u/TawfVcrH
+ cGYb19Ppsv4Yfd7s8+Z5CK7ELKL9L7g9vOPnevLPtrPig5DlTTBG/usIW27DB6zWSLqBKmi/PVT
+ 1ITXC+WCeDqjvciVxuTCoSbc4XZvHV4Sshi9OeKtkUhu2XEhfRs/hmzO/5KNlHvglPhwapg16MJ
+ 19msrMxlUADcTSsZrEHCz1ChusmUsm6wAV4qsbX7YjUXEL7pbfRHbw6HFVwol+NDt7UZYNrqm3k
+ KcZyglRw18h3ToEAmXNve
+X-Google-Smtp-Source: AGHT+IE/m6ZJHsMixaTLNC71+XnyBHlDVr2Q85xAMEo3slO1t4MgJObpXmstOwW/TXNu32LRoCF5Qg==
+X-Received: by 2002:a05:6a00:a29:b0:736:39d4:ccf6 with SMTP id
+ d2e1a72fcca58-739059763admr37531431b3a.8.1742981674891; 
+ Wed, 26 Mar 2025 02:34:34 -0700 (PDT)
 Received: from localhost.localdomain (awork062150.netvigator.com.
  [203.198.28.150]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73905fd57f7sm11729684b3a.44.2025.03.26.02.34.37
+ d2e1a72fcca58-73905fd57f7sm11729684b3a.44.2025.03.26.02.34.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Mar 2025 02:34:39 -0700 (PDT)
+ Wed, 26 Mar 2025 02:34:34 -0700 (PDT)
 From: yuq825@gmail.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
  Qiang Yu <yuq825@gmail.com>
-Subject: [PATCH v2 2/6] ui/egl: require EGL_EXT_image_dma_buf_import_modifiers
-Date: Wed, 26 Mar 2025 17:34:14 +0800
-Message-ID: <20250326093418.397269-3-yuq825@gmail.com>
+Subject: [PATCH v2 0/6] ui: support multi plane texture
+Date: Wed, 26 Mar 2025 17:34:12 +0800
+Message-ID: <20250326093418.397269-1-yuq825@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250326093418.397269-1-yuq825@gmail.com>
-References: <20250326093418.397269-1-yuq825@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=yuq825@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=yuq825@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,54 +99,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Qiang Yu <yuq825@gmail.com>
 
-It's used already, just check it explicitly.
+mesa/radeonsi is going to support explicit modifier with this MR:
+  * https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/31658
 
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
----
- ui/egl-helpers.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+The side effect is some texture will become multi-plane which
+breaks qemu. Because qemu currently only support single plane
+texture.
 
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index d194d004b7..432863d702 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -257,6 +257,11 @@ int egl_rendernode_init(const char *rendernode, DisplayGLMode mode)
-         error_report("egl: EGL_MESA_image_dma_buf_export not supported");
-         goto err;
-     }
-+    if (!epoxy_has_egl_extension(qemu_egl_display,
-+                                 "EGL_EXT_image_dma_buf_import_modifiers")) {
-+        error_report("egl: EGL_EXT_image_dma_buf_import_modifiers not supported");
-+        goto err;
-+    }
- 
-     qemu_egl_rn_ctx = qemu_egl_init_ctx();
-     if (!qemu_egl_rn_ctx) {
-@@ -308,7 +313,7 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     EGLImageKHR image = EGL_NO_IMAGE_KHR;
-     EGLint attrs[64];
-     int i = 0;
--    uint64_t modifier;
-+    uint64_t modifier = qemu_dmabuf_get_modifier(dmabuf);
-     uint32_t texture = qemu_dmabuf_get_texture(dmabuf);
- 
-     if (texture != 0) {
-@@ -328,15 +333,12 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     attrs[i++] = qemu_dmabuf_get_strides(dmabuf, NULL)[0];
-     attrs[i++] = EGL_DMA_BUF_PLANE0_OFFSET_EXT;
-     attrs[i++] = 0;
--#ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
--    modifier = qemu_dmabuf_get_modifier(dmabuf);
-     if (modifier) {
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT;
-         attrs[i++] = (modifier >>  0) & 0xffffffff;
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT;
-         attrs[i++] = (modifier >> 32) & 0xffffffff;
-     }
--#endif
-     attrs[i++] = EGL_NONE;
- 
-     image = eglCreateImageKHR(qemu_egl_display,
+For example, texture with DCC (a compressed format) enabled modifier
+will expose one plane for compressed data, another plane with metadata
+for compression.
+
+This patch serial fix qemu to support multi-plane texture for
+DBus and SPICE display, other display seems not affected by multi
+plane.
+
+This patch serial also depends on the spice changes here:
+  * https://gitlab.freedesktop.org/spice/spice/-/merge_requests/232
+
+SPICE client change here:
+  * https://gitlab.freedesktop.org/spice/spice-gtk/-/merge_requests/130
+
+DBus client change here:
+  * https://gitlab.com/marcandre.lureau/qemu-display/-/merge_requests/5
+
+v2:
+  * change dmabuf API for array length
+  * check spice_qxl_gl_scanout2 API instead of bumping spice version
+
+Qiang Yu (6):
+  ui/dmabuf: extend QemuDmaBuf to support multi-plane
+  ui/egl: require EGL_EXT_image_dma_buf_import_modifiers
+  ui/egl: use DRM_FORMAT_MOD_INVALID as default modifier
+  ui/egl: support multi-plane dmabuf when egl export/import
+  ui/dbus: change dbus ScanoutDMABUF interface
+  ui/spice: support multi plane dmabuf scanout
+
+ hw/display/vhost-user-gpu.c     |   9 ++-
+ hw/display/virtio-gpu-udmabuf.c |   8 ++-
+ hw/vfio/display.c               |   7 +-
+ include/ui/dmabuf.h             |  20 +++---
+ include/ui/egl-helpers.h        |   5 +-
+ meson.build                     |   5 ++
+ ui/dbus-display1.xml            |  37 ++++++++++
+ ui/dbus-listener.c              | 123 ++++++++++++++++++++++++++++----
+ ui/dmabuf.c                     |  77 +++++++++++++-------
+ ui/egl-helpers.c                | 102 +++++++++++++++++++-------
+ ui/spice-display.c              | 102 ++++++++++++++++++--------
+ 11 files changed, 385 insertions(+), 110 deletions(-)
+
 -- 
 2.43.0
 
