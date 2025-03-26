@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 455F5C36005
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 03:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B447C28B30
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Mar 2025 04:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txHZ6-0003X3-5Z; Tue, 25 Mar 2025 23:36:28 -0400
+	id 1txIOb-0001vw-C3; Wed, 26 Mar 2025 00:29:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1txHZ4-0003Wk-Gq
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 23:36:26 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1txHYy-0007sy-Cn
- for qemu-devel@nongnu.org; Tue, 25 Mar 2025 23:36:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1742960180; x=1774496180;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=5lbOm40wW6H+uY1VgylzfldJsVnXOZbIS8SjKrOhmx0=;
- b=LfMraw2uITylWI4ZpSb0zdTYOIThh/25hh5MVmFWAm2+0zlRZsJ9odXA
- pLpwXpshIJWqPsJN3BXM1aLcU0g+P4uiMjfqVGD0P1lYc/k9IihgtQ31X
- KfztB41Jf2YiM184w/Ia7eWNADbPpeeRyp+D5LbLag0Vu5W/mMcT36nk4
- 1v6GLdU9HIa3GFogVu1QKNJV1AryQ1clUiooR8r332SlnzZFGWmRJ6fFG
- jemwoD2yAtzKj70Ebrpa4nbTfFHt1mP5W8W0BIuDBOsiNNrXspJ0no90O
- hIE2Im/ZW7ABJMyzLOOiK4prEg8LlV9e2FKr73gy+IPd4S5q0RhNkTENT Q==;
-X-CSE-ConnectionGUID: eurX2Y7ASWKNFvrHbZkKHA==
-X-CSE-MsgGUID: JYj3WJP6RLef2hUmV65ekg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11384"; a="31834297"
-X-IronPort-AV: E=Sophos;i="6.14,276,1736841600"; d="scan'208";a="31834297"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Mar 2025 20:36:15 -0700
-X-CSE-ConnectionGUID: cO75iQ3uQiqwaOIRS8hllg==
-X-CSE-MsgGUID: yWYrdEgdTSSYrnuCQi16YA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,276,1736841600"; d="scan'208";a="129723204"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Mar 2025 20:36:12 -0700
-Message-ID: <81e9d055-377c-4521-9588-a6bad60b3a6d@intel.com>
-Date: Wed, 26 Mar 2025 11:36:09 +0800
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1txIOa-0001vd-In; Wed, 26 Mar 2025 00:29:40 -0400
+Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1txIOZ-0005q2-3g; Wed, 26 Mar 2025 00:29:40 -0400
+Received: by mail-ua1-x92f.google.com with SMTP id
+ a1e0cc1a2514c-86d6ac4d5a9so2819744241.1; 
+ Tue, 25 Mar 2025 21:29:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742963377; x=1743568177; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rVwLhSFwhHn9DNl7470PwKbuDEGkkBmwZ0Tjj4+9ZrA=;
+ b=fR2Uqmu+YfwXCDFIDufQF7s5bl51mGkTjs9tPqKAMRKNtWINm4YhfMDCfeaefEhKgy
+ 6bHQu+AObDrcqCrTst+sQ4179Ih+L/NVnjAQ0XuJb4OUZ0Fv+kDOFVPwh4pA0m6s/1+b
+ +16QcEbBfFCr2PXooAfUneA9MNBlUQPq2lxSlQrmsgfZmpt+lwvKiYMXBPDRDHS31eSO
+ 274cE1lLtNZuX0WQ2NPP993yi3RZbeUxW/zLqFl2n7SkHM8PZmVEqpyJAp7KhPgGqkRU
+ n7a1FTphkji3/f0lb59SoZAXa75mFe60Ggv2oH5iwbJj3lkAcdyUK2SS7fj5//ezmJbe
+ u24A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742963377; x=1743568177;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rVwLhSFwhHn9DNl7470PwKbuDEGkkBmwZ0Tjj4+9ZrA=;
+ b=Sr8XXxwwZT06LLlSUi9k8UlOzso/vRyuFWapI3CUekhFIgC32dpeWCLvYaeQJWKnfa
+ x320OJsFtqZT+rtBvDuiKs14cngjUKKsNTOBlZKkOepPrB/QxSaqDE6o6aoP+k0QUI08
+ 74vaQrkRcFYx4IqQqJudhtXRBq7NOw4IdROCt1DWLeLwwSAZtT+MLxC6e9X2zInByCsN
+ 9N1RuDJFQj5hfOVLvdkSXcXz2wTwGUuu6qG72AnzBTm6PjS3lJJTYVrguWdyoReankyE
+ 5alHJMjQiDFK3oF+Cg/iRizShII2DCYWcUDl55CKD+lkD80UWcPcMdczwvKxIO3W4KcH
+ qyaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX2SQN55Yk6qs1zljU7U5Wpomo7p7vTozYAXqz6n8KNGbqgrY/SHcxnS46APrThDNhQhMXnVZ4r/uVc@nongnu.org
+X-Gm-Message-State: AOJu0Yx24y3m2wfmfW4fRSLAtKjPoCcG/KMT+rt+P/g6YoYzK7gFPQU3
+ PrdZMtMQBp+7TEpOAb//b07AYTHZc7YuVgmAwMaa8FAaybbb16EVLfeyNJvRraAZMoQA1huxjhc
+ 67euAlY0/0FOkDATjF0BVt0+85n4=
+X-Gm-Gg: ASbGncsnpyyo7uesWTwtKVUwRh9C0oheXw7Cn0sKvPSVxH3i/ax5H72fjRKX3M3GkN1
+ Jim6RPT7Oi/3YehdXbutHRiDXuKALDfGTYSdRdGkC6L5KgU/XRKw5jwYmJKSfe3f56Lvdwkr1GX
+ MVCoUjoUlvoA6qzFBynRZkDxIXwfl1drN0vUEgsphRj6jvdH+/d2b/WS0N
+X-Google-Smtp-Source: AGHT+IGZuQlE9pojuJGVu4qoVYdItNtvr8HPj1tdPMe+To3BDDX43A6moct7i1hhmMgh7eZWyMtDoZ/YrI9bai010dc=
+X-Received: by 2002:a05:6102:330a:b0:4bb:eb4a:f9ef with SMTP id
+ ada2fe7eead31-4c50d4803a0mr13539356137.4.1742963377099; Tue, 25 Mar 2025
+ 21:29:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 52/52] docs: Add TDX documentation
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-References: <20250124132048.3229049-1-xiaoyao.li@intel.com>
- <20250124132048.3229049-53-xiaoyao.li@intel.com>
- <Z-L6CSajU284qAJ4@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Z-L6CSajU284qAJ4@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.776, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20250325154913.95283-1-philmd@linaro.org>
+In-Reply-To: <20250325154913.95283-1-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 26 Mar 2025 14:29:11 +1000
+X-Gm-Features: AQ5f1JoQNC_nFX46iIL6A61mXgbHT4_ep3Hvr3sRHovO87uzmSl7E0I-REtELdY
+Message-ID: <CAKmqyKP97-97+VcixXx6m66RTyy95UR2+AjFrWaRZRpRr1FmSg@mail.gmail.com>
+Subject: Re: [PATCH-for-10.1 v2] target/riscv/gdbstub: Replace ldtul_p() ->
+ ldn_p(sizeof(target_ulong))
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Alistair Francis <alistair.francis@wdc.com>,
+ qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Weiwei Li <liwei1518@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,73 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/2025 2:46 AM, Daniel P. Berrangé wrote:
-> On Fri, Jan 24, 2025 at 08:20:48AM -0500, Xiaoyao Li wrote:
->> Add docs/system/i386/tdx.rst for TDX support, and add tdx in
->> confidential-guest-support.rst
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
-> 
->> ---
->>   docs/system/confidential-guest-support.rst |   1 +
->>   docs/system/i386/tdx.rst                   | 156 +++++++++++++++++++++
->>   docs/system/target-i386.rst                |   1 +
->>   3 files changed, 158 insertions(+)
->>   create mode 100644 docs/system/i386/tdx.rst
-> 
-> 
->> +Launching a TD (TDX VM)
->> +-----------------------
->> +
->> +To launch a TD, the necessary command line options are tdx-guest object and
->> +split kernel-irqchip, as below:
->> +
->> +.. parsed-literal::
->> +
->> +    |qemu_system_x86| \\
->> +        -object tdx-guest,id=tdx0 \\
->> +        -machine ...,kernel-irqchip=split,confidential-guest-support=tdx0 \\
->> +        -bios OVMF.fd \\
->> +
->> +Restrictions
->> +------------
->> +
->> + - kernel-irqchip must be split;
-> 
-> Is there a reason why we don't make QEMU set kernel-irqchip=split
-> automatically when tdx-guest is enabled ?
-> 
-> It feels silly to default to a configuration that is known to be
-> broken with TDX. I thought about making libvirt automatically
-> set kernel-irqchip=split, or even above that making virt-install
-> automatically set it. Addressing it in QEMU would seem the most
-> appropriate place though.
+On Wed, Mar 26, 2025 at 1:50=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Replace the few ldtul_p() calls by a generic ldn_p() ones.
+> No logical change.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-For x86, if not with machine older than machine-4.0, the default 
-kernel_irqchip is set to split when users don't set a value explicitly:
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-  if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-         s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? 
-ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-     }
+Alistair
 
-
-I think QEMU should only set it to split automatically for TDX guest 
-when users don't provide a explicit value. And current code just works 
-as expected.
-
-Further, I think we can at least add the check in tdx_kvm_init() like this
-
-if (kvm_state->kernel_irqchip_split != ON_OFF_AUTO_ON) {
-	error_setg(errp, "TDX VM requires kernel_irqchip to be split");
-	return -EINVAL;
-}
-
-Are you OK with it?
-
-> 
-> With regards,
-> Daniel
-
+> ---
+>  target/riscv/gdbstub.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index 18e88f416af..c1dc54e47d6 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -193,7 +193,7 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *m=
+em_buf, int n)
+>      CPURISCVState *env =3D &cpu->env;
+>
+>      if (n < CSR_TABLE_SIZE) {
+> -        target_ulong val =3D ldtul_p(mem_buf);
+> +        target_ulong val =3D ldn_p(mem_buf, sizeof(val));
+>          int result;
+>
+>          result =3D riscv_csrrw_debug(env, n, NULL, val, -1);
+> @@ -229,15 +229,17 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint=
+8_t *mem_buf, int n)
+>          RISCVCPU *cpu =3D RISCV_CPU(cs);
+>          CPURISCVState *env =3D &cpu->env;
+>
+> -        target_ulong new_priv =3D ldtul_p(mem_buf) & 0x3;
+> +        target_ulong new_priv;
+> +        size_t regsize =3D sizeof(new_priv);
+>          bool new_virt =3D 0;
+>
+> +        new_priv =3D ldn_p(mem_buf, regsize) & 0x3;
+>          if (new_priv =3D=3D PRV_RESERVED) {
+>              new_priv =3D PRV_S;
+>          }
+>
+>          if (new_priv !=3D PRV_M) {
+> -            new_virt =3D (ldtul_p(mem_buf) & BIT(2)) >> 2;
+> +            new_virt =3D (ldn_p(mem_buf, regsize) & BIT(2)) >> 2;
+>          }
+>
+>          if (riscv_has_ext(env, RVH) && new_virt !=3D env->virt_enabled) =
+{
+> --
+> 2.47.1
+>
+>
 
