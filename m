@@ -4,63 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF478C3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 15:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8D2C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 16:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txpdZ-00082l-Ly; Thu, 27 Mar 2025 11:59:21 -0400
+	id 1txpgN-0001JJ-0f; Thu, 27 Mar 2025 12:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1txpdY-00082N-3d
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 11:59:20 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1txpgF-00018y-Ae
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 12:02:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1txpdW-0000Sn-Dm
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 11:59:19 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1txpgB-0000py-W9
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 12:02:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743091157;
+ s=mimecast20190719; t=1743091322;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=j/EaxZKjsouVrj5QrKUdrly+je/MOb4lndH/Ho81qbk=;
- b=LJhxSws72bxLOWsflnY40R2+SQYv3vt2B3rV/2vZ0WHHDbrLFaHNfvQsJQkdIWfFLf8fHU
- x3J1axTpjrHvqxD/cdHTH3f+VZ6CnH2CtBCTAnzQz4vHkPTnmRk2MZXd6nwaiRojVr3uZd
- 4WSO/7ABjyhhZ9Ge3ZJpzKXpViHH5Dk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-gzFMMr_uNiqPWHgxr25B0A-1; Thu,
- 27 Mar 2025 11:59:14 -0400
-X-MC-Unique: gzFMMr_uNiqPWHgxr25B0A-1
-X-Mimecast-MFC-AGG-ID: gzFMMr_uNiqPWHgxr25B0A_1743091153
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CDC818EBE8F; Thu, 27 Mar 2025 15:59:13 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.93])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E6F0430001A1; Thu, 27 Mar 2025 15:59:12 +0000 (UTC)
-Date: Thu, 27 Mar 2025 11:59:11 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH 15/15] fuse: Increase MAX_WRITE_SIZE with a second buffer
-Message-ID: <20250327155911.GO37458@fedora>
-References: <20250325160529.117543-1-hreitz@redhat.com>
- <20250325160655.119407-14-hreitz@redhat.com>
+ bh=JygwnAMXBsEKS5txt3cQn43ym86BDJ4XSiG/nBJ7ad8=;
+ b=L11/fu1MqwQyOOXNrFpqPzX9H6d/JBInYbSmyU3p+VZCwBM95JkuXEZJLXcg0fXj9HAQnQ
+ WRNpXWwIBQ9cavoQ1VuU04aFYJ9a1HS/5btT2XEA99uHAemUexqfoHNwk0Y1MeyTuU6nwl
+ v2nRI4SUI079lBqFZXb/kfpAEk9TAcY=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-481-2lJiLizeME-TsuDAAo9_jg-1; Thu, 27 Mar 2025 12:01:59 -0400
+X-MC-Unique: 2lJiLizeME-TsuDAAo9_jg-1
+X-Mimecast-MFC-AGG-ID: 2lJiLizeME-TsuDAAo9_jg_1743091318
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-2c2c24379a1so920476fac.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 09:01:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743091318; x=1743696118;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JygwnAMXBsEKS5txt3cQn43ym86BDJ4XSiG/nBJ7ad8=;
+ b=OuU2Glsvbso5w68pTq3h6hpmq0L8KPVUXmntve9a5+29WoWAngv25cCbEuvjZ23xDQ
+ 7nL1rUqrAD+vrKxqY/nxZu3F4iaPzTN8wE6GNOjfmh2NlvoVk/LDozwKUZtsoTyGzS5h
+ h/e7vw0ieArWZaaGsphwr4LKLvPB5TkXz6hOTOK9w2qw0VDtr5a3LfCYkAFw6Lmf4L4F
+ ElTWQAJJkG9Fj3QrViJoHo75tODj3MlLUGfBg7YyfsEUO/yq8l/eBTYPnT1jIsPcGeSV
+ uuLcx2fdAjTpPcVXj+h0M7vn9c3I9yeSk1vX/z8jYSmpRCNPzI1UG5QT9u7iIZxVRrgJ
+ kdxA==
+X-Gm-Message-State: AOJu0YyM3srfMo2RFsdkhdSL9hWegaz7UGxjoK/1Z/iAP4dA0jRXXqGF
+ MXaVef3RcMd3SDzGLKc9YtssWotuVCMxRCzRgt4TjeMO5O3OXy8Qt/1lFAEWsKUGjQa9Plpxo4u
+ ROP/T5Tt7ughFNtbNxdbQC7rCx+FuoChxQLF8cJA0LvKwHsYcJt6AiR8GHIVneWE6ok1+EneWed
+ wbPdkVoWcbbN4jGSHzpEMK/n9b7GQ=
+X-Gm-Gg: ASbGncvkN/ua58D5VJep/gJULoyT5eT35j2ecVAUe6tD7MiCmfn/SMaj9216aEoMaTW
+ autVCiv2mGmPWqveCEaGv34Q2GKYHddIEkKHQj9etMFZyyQWGFv6Xh8KkzVPsM8++SCR+hb9ebJ
+ I=
+X-Received: by 2002:a05:6871:b13:b0:2a3:c59f:4cba with SMTP id
+ 586e51a60fabf-2c848018e3emr2330080fac.17.1743091318542; 
+ Thu, 27 Mar 2025 09:01:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMwnqUYbo3dGDGbMM4VqUkyrGUpH7o2X+OOsyM5W4ZPCuOt6lhE+U+01GJcI5qyjqHwFOKcxfKafOFA2hAJjk=
+X-Received: by 2002:a05:6871:b13:b0:2a3:c59f:4cba with SMTP id
+ 586e51a60fabf-2c848018e3emr2330060fac.17.1743091318134; Thu, 27 Mar 2025
+ 09:01:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="GVg2Z/JA2mxFdA7I"
-Content-Disposition: inline
-In-Reply-To: <20250325160655.119407-14-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+References: <20250318123846.1370312-1-ppandit@redhat.com>
+ <CAE8KmOwiyboWwyjV=gA=GqJSQxQKwm7uG=Jxh3Y1xnJEarYD=g@mail.gmail.com>
+ <87friya6e6.fsf@suse.de>
+In-Reply-To: <87friya6e6.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Thu, 27 Mar 2025 21:31:40 +0530
+X-Gm-Features: AQ5f1JpD8Krdii16-35NJox_0k3-BZDHD4Xse7RznxvXXyYJCJv9B5nzNAKQ6ak
+Message-ID: <CAE8KmOz_3QYE0MgxROKTGajNA5NVWzKKBmB0fsjOePbS2wrpWA@mail.gmail.com>
+Subject: Re: [PATCH v8 0/7] Allow to enable multifd and postcopy migration
+ together
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,7 +88,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,66 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 27 Mar 2025 at 20:05, Fabiano Rosas <farosas@suse.de> wrote:
+> I'll get to it soon. I need to send a PR for the recent SNP breakage and
+> also check Li Zhijian's RDMA series first.
 
---GVg2Z/JA2mxFdA7I
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* I see, okay. Thank you for an update, I appreciate it.
 
-On Tue, Mar 25, 2025 at 05:06:55PM +0100, Hanna Czenczek wrote:
-> We probably want to support larger write sizes than just 4k; 64k seems
-> nice.  However, we cannot read partial requests from the FUSE FD, we
-> always have to read requests in full; so our read buffer must be large
-> enough to accommodate potential 64k writes if we want to support that.
->=20
-> Always allocating FuseRequest objects with 64k buffers in them seems
-> wasteful, though.  But we can get around the issue by splitting the
-> buffer into two and using readv(): One part will hold all normal (up to
-> 4k) write requests and all other requests, and a second part (the
-> "spill-over buffer") will be used only for larger write requests.  Each
-> FuseQueue has its own spill-over buffer, and only if we find it used
-> when reading a request will we move its ownership into the FuseRequest
-> object and allocate a new spill-over buffer for the queue.
->=20
-> This way, we get to support "large" write sizes without having to
-> allocate big buffers when they aren't used.
->=20
-> Also, this even reduces the size of the FuseRequest objects because the
-> read buffer has to have at least FUSE_MIN_READ_BUFFER (8192) bytes; but
-> the requests we support are not quite so large (except for >4k writes),
-> so until now, we basically had to have useless padding in there.
->=20
-> With the spill-over buffer added, the FUSE_MIN_READ_BUFFER requirement
-> is easily met and we can decrease the size of the buffer portion that is
-> right inside of FuseRequest.
->=20
-> As for benchmarks, the benefit of this patch can be shown easily by
-> writing a 4G image (with qemu-img convert) to a FUSE export:
-> - Before this patch: Takes 25.6 s (14.4 s with -t none)
-> - After this patch: Takes 4.5 s (5.5 s with -t none)
->=20
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  block/export/fuse.c | 137 ++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 118 insertions(+), 19 deletions(-)
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---GVg2Z/JA2mxFdA7I
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfldc8ACgkQnKSrs4Gr
-c8jFsAf/TAlWHprBIIRNtVAbQmN+sQlUkzRhvXpKeEKq6UN7jRn01wn8912xggwG
-ciWpkGT5c51YmZ8IH9uYxNG6q72eN9Pt97yDyKMshjZrK5n3DK8CKSw4IzkkREAo
-WrM9vDRlclfttBDTXIo2/zT7SGw/566doqKtD+dsg3oQhSNewTvb30G4DI0bGYUQ
-spFpVojhZ+9ajD7/pnQTa6fvF2gc9SnM/Xh8QxmLIvX29EqYHxsXlKecOdSvD0sK
-lt/Qi/lMynPclX+fqPYm2xyZnuD/N35o3RAjzDtKY+2Yz+RD5z2Wq+fef6hFLfwk
-JPYVh7+UrB5Woc5pv2IWZb+gWHNqaQ==
-=+N/h
------END PGP SIGNATURE-----
-
---GVg2Z/JA2mxFdA7I--
+Thank you.
+---
+  - Prasad
 
 
