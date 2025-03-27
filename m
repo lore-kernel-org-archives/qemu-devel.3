@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D56B7C3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 18:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B36C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 18:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txsBn-00072w-LU; Thu, 27 Mar 2025 14:42:52 -0400
+	id 1txsDe-0007uq-5k; Thu, 27 Mar 2025 14:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1txsBi-00072G-UF
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:42:47 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1txsDb-0007ua-Nv
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:44:43 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1txsBg-0005vH-H4
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:42:46 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2ff6e91cff5so2450591a91.2
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 11:42:41 -0700 (PDT)
+ id 1txsDZ-00060G-LN
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:44:43 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-223f4c06e9fso26655465ad.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 11:44:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743100961; x=1743705761; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:subject:from:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=MqMS+1Azi3Xbg4a4/24GcWgoztdierzewFWy4CcOyVc=;
- b=EIOrr3TO0fIO/sPwePBOKZpsAuW2G4Cgf6XZ1LTqFJzt9eUGZStqqezWQELMDTfvJ/
- 9wy0FBx1UHTtak+t7xRoxeX8BkCmAsyUUtsCbvttssIxp96IGertxWGHcOdSviBKiaYs
- m3/JuifqRjjG/NZ145WbnM5Xq2u2hzAhROK1oKwd0tR774fEKYqJe2FHSIJbsDxkxbM3
- dmwdSs4nBnwU/nqoUDLHcS7Swrg1AimABiDkSq5YznuOmDHwdFjdt/ryQwj1lKoGeVB6
- 6QBIsMEEgy4ooDgD0WD++BbIyZEn020+0h6GJWbG3LjWoONgkR45h1qL1FoHu2XbkOZ+
- 9+jA==
+ d=gmail.com; s=20230601; t=1743101079; x=1743705879; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=ssfpK+FNUKOPlvCbQKHWKMok5KI7rCFZqT41M1izfpw=;
+ b=L89rr4B2ELyhrjR5kd6pEQshtGZ46hUVGsjcfZW1yrrzIFUJFjs8577EMUz/ZKnB1V
+ IHODGPVRpggUGKtpJmWU4t+JznZFQhQ6bLbRN5zkxeqk/GYlnpek/T8tYf4+AEx7UEF4
+ Ol/oR3HGXR4iXuyebb6/lSVwR5U1i/Y1rZbFu9VxKOn3iiOtgGsIizvV5kzBYp2diyEZ
+ nxey7q587mA2RvI3gCRKucDGtQ712hkhn1tM+0lqPBgyUfIiy9dJ8jem3wFtqKc03PQT
+ 6DE2IykwZogSEnmWcciNRcfkc2pf/SL8GMdQsncAzgApWB6HulN0wwQakmd5N+pvT1R4
+ Qkvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743100961; x=1743705761;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:subject:from:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MqMS+1Azi3Xbg4a4/24GcWgoztdierzewFWy4CcOyVc=;
- b=NXHSRa4Zc6N7LOHBsZ52Q6DcVIEXwWRkTRcae3ovd+3gx7PKnpJtQ1DC9Dwny7Jhk0
- H+6vIma2fdqluoAeVCEfUOkK7Q+yxK7XjDbPG/T0XmB/YbUYuKpSbVK/0gvYx6/hmJQ7
- 7R9y8k424wzXbFlUm7sIyJog+boRU/+45R/lBNn74Qi1+MxwBpF1xYwAfqznPPsvHaXU
- zJ2v5gJcN+EDWgre9SWC0KHpg5Uym9q776gCa2PR/PLPT+y+thkbVpUkvDQj0hUzo5yc
- xaERrqYthP8ox7SSUcx91JQzd6SI06qKiqVVp7pe/gUz1oZUJ3BryCYXC8awKMHaWxnd
- JQzA==
+ d=1e100.net; s=20230601; t=1743101079; x=1743705879;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ssfpK+FNUKOPlvCbQKHWKMok5KI7rCFZqT41M1izfpw=;
+ b=rFEoR71JoRnbLQYDANefEieGBxzxnNiKkurx/J9J2y3IVsX9EQhTZfuY+miU1ltwpQ
+ qDAiCVfiyUWK+sKhlMBjfH/TR7u5A9t2cuJCd7MFUmaRsw822LquowjQvrcLNzZSlciL
+ G1FoJjin+lsMlGqs8eh3worRFe0xKh+B34AB/YkGxzEQiRXOcBITsMSZij7ScydWQJ/W
+ TIpuO/My9F0GSeeFAjf0gvA1AXhymEWh0UlTJ4eIk7MxGDSm83ZcmwPpkUv3424eEzct
+ iFcaan2SFPv3AfvuxswzurRNJzpLshVA41V3Y02LSmqZiaq88LMlAHWsxNUB8zIxW2ea
+ P+gw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0COKry3jK1TT4N1CRWozm/4U+XENUMjIt2X697xrTzF7ZUw9a+tZ7qXqmmD9eZEv56/GmFBz1xSlA@nongnu.org
-X-Gm-Message-State: AOJu0Yx5jPvkA7SDKmATAdSZxD6jl1f7P+KUhfAG5VZ0e7MPW+iFlN1T
- YNXEfnd7M3H6UloNp0xhJ55WLXjevMTjeKcKhkeTKnOjSPX1sASU
-X-Gm-Gg: ASbGncsqHSJ/5/20O1bQxvxeAGWztjxyI4VO817yyT+IxLovLF9ki+VUTDXVP+YxqK0
- 83RR4d89AYhP4CXa/FA5z5y08E+QHllhADvA5UR6ncxU6afCp5CBRy+cVxhPf4oF03i6/LPX2yU
- t6L+5Tm1G/C4cdDFU/M68MPoPgIBN3zIwCn/LobXHKYhZGtJbY1wBi7MO8QbFs/opT4saNPLggI
- bYUyP5jihbBBDMIxsnK9DZJ2QWVQXJbQg1Cz9hXfjqm7EaZCot8+eQF4+PlVoXlTp41tA4IQqsU
- 1uXXkyPNkOkhokWnVJ8Q4n+Upp7OBmR0pV1ZqdK29N0xEQZXvoh1fwAdJfZbTJ86x8AN3SWU7po
- M4tRSqYwubguT2kMRJtvoYtI=
-X-Google-Smtp-Source: AGHT+IHdgx7c7yxeDXBUYBhZhTng+XCCMBgXmrBRnYyeUapicBJjCzUmuAo5BSMr3HroH2MnKIiQNg==
-X-Received: by 2002:a17:90a:c88c:b0:2ee:d63f:d8f with SMTP id
- 98e67ed59e1d1-303a7d73507mr6807215a91.13.1743100960421; 
- Thu, 27 Mar 2025 11:42:40 -0700 (PDT)
+ AJvYcCUmqxYU3tiuwu5QR8WPvBRw2uEJN6Y9KsBWgimGucxV8j8tSiQB3yswxtHLKR+Iw3TwsMb0GxMwz7lh@nongnu.org
+X-Gm-Message-State: AOJu0YzXzPK7/WF7K8uDq2dnhs92OUtST1/Zt/XWjhfBKrVjP862UA0E
+ W1HZ7cGwJQjZtGB9I8tOnB6PR+Xr3NsCjResj3ckq45M0WCVDD0H
+X-Gm-Gg: ASbGncsxO2JbVOacDJpf18sFBoRZ+IOFDmkpoeqOMw56GiZnMzht5rg57rP+vMYMA7X
+ f7Yltzy01QTEqQ65eybC+ob5xw7vYcSrAV2raCQmUJi3wD23vAyxiN3yIOfxh+fgRypm7SdZEXS
+ jo+9ch7RHsxoJya3oecnTPGh9eIybGVJ7kYI1/qpFk5bwPbyCYJ+/oMwg0jims5Cu1Uz+zx8tMY
+ 5pp1DDZuoBqw7T9hPkqi/Q2ow3JwY3YP06W4oKRtruil5PRt+Xxk0Xl1LkNxAW6ibXyaEDXlZ83
+ EHRBFM3rvYfE+LnruWtFr0PocAD4XpvqvqPeS2IG6Zq1nqYMEEyque7Wkt+Aeu1hoL/rSSXOjka
+ q94QwqrlZKguXgMZr9o6thr8=
+X-Google-Smtp-Source: AGHT+IGDrpfWeaafyTIFomLAc69JQK8uMpiI7i2JYWQjFqlQ06vIyiGXGO+1Ay4RKAHOFmk1gNuZ/A==
+X-Received: by 2002:a17:902:ce08:b0:224:3d:2ffd with SMTP id
+ d9443c01a7336-2291ddd8289mr19419575ad.17.1743101079070; 
+ Thu, 27 Mar 2025 11:44:39 -0700 (PDT)
 Received: from ?IPV6:2401:4900:1c7e:7fd6:5c7b:30a9:c6b6:f81d?
  ([2401:4900:1c7e:7fd6:5c7b:30a9:c6b6:f81d])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3039f1d430asm2598638a91.35.2025.03.27.11.42.38
+ d2e1a72fcca58-73970def163sm168860b3a.28.2025.03.27.11.44.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 11:42:39 -0700 (PDT)
-Message-ID: <2fa2b2b2-dc9f-4a63-b24f-50cb190dadcf@gmail.com>
-Date: Fri, 28 Mar 2025 00:12:36 +0530
+ Thu, 27 Mar 2025 11:44:38 -0700 (PDT)
+Message-ID: <1b956efb-16bd-485f-bc6c-fcbbaaff6c9d@gmail.com>
+Date: Fri, 28 Mar 2025 00:14:35 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Sahil Siddiq <icegambit91@gmail.com>
-Subject: Re: [RFC v5 3/7] vhost: Forward descriptors to device via packed SVQ
+Subject: Re: [RFC v5 7/7] vdpa: Support setting vring_base for packed SVQ
 To: Eugenio Perez Martin <eperezma@redhat.com>
 Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
  sahilcdq@proton.me
 References: <20250324135929.74945-1-sahilcdq@proton.me>
- <20250324135929.74945-4-sahilcdq@proton.me>
- <a878b49b-0d00-483a-a5b6-27d048c4ebc7@gmail.com>
- <CAJaqyWdAX6=ZvJdugW2_SmjQDZ31EhMfn=qodoWkZmjd2kY73A@mail.gmail.com>
+ <20250324135929.74945-8-sahilcdq@proton.me>
+ <CAJaqyWfkGpRCv1a0qS3XC3Tnco-YSVH-CHd3itFG4V41tnc3wQ@mail.gmail.com>
 Content-Language: en-US
+From: Sahil Siddiq <icegambit91@gmail.com>
 Autocrypt: addr=icegambit91@gmail.com; keydata=
  xsDNBGcgaYEBDADpKUSKbchLCMdCuZGkuF50/7BiraKc8Ch+mk4T+2+E2/6qXAkalvCkFoqx
  3/sa35rconZAFzB/r19e7i3UajIQjATvENrGxqe/IFqcJxo2Jr1HQBwCrsmlQoUCilSC6nDi
@@ -116,11 +115,11 @@ Autocrypt: addr=icegambit91@gmail.com; keydata=
  kn6WekD80DYbAfKyFAXQCO/nclZ82RNmJbDRi3AeMFrxKi6KgdGCp1Izhj9USaMOVqcuV2p0
  Rsoq+sFqWOKaHWnQHCM9RkynQVqrgUaSawEbGlCP1KIhVmjfjVsmsCaKkUb9T6VeO+ZNe+Pn
  rPgMe6IIvn24UuW2f6fIt0AaqOWq
-In-Reply-To: <CAJaqyWdAX6=ZvJdugW2_SmjQDZ31EhMfn=qodoWkZmjd2kY73A@mail.gmail.com>
+In-Reply-To: <CAJaqyWfkGpRCv1a0qS3XC3Tnco-YSVH-CHd3itFG4V41tnc3wQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=icegambit91@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=icegambit91@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -146,245 +145,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
-On 3/26/25 1:33 PM, Eugenio Perez Martin wrote:
-> On Mon, Mar 24, 2025 at 3:14 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
->> On 3/24/25 7:29 PM, Sahil Siddiq wrote:
->>> Implement the insertion of available buffers in the descriptor area of
->>> packed shadow virtqueues. It takes into account descriptor chains, but
->>> does not consider indirect descriptors.
->>>
->>> Enable the packed SVQ to forward the descriptors to the device.
->>>
->>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
->>> ---
->>> Changes from v4 -> v5:
->>> - This was commit #2 in v4. This has been reordered to commit #3
->>>     based on review comments.
->>> - vhost-shadow-virtqueue.c:
->>>     (vhost_svq_valid_features): Move addition of enums to commit #6
->>>     based on review comments.
->>>     (vhost_svq_add_packed): Set head_idx to buffer id instead of vring's
->>>     index.
->>>     (vhost_svq_kick): Split into vhost_svq_kick_split and
->>>     vhost_svq_kick_packed.
->>>     (vhost_svq_add): Use new vhost_svq_kick_* functions.
->>>
->>>    hw/virtio/vhost-shadow-virtqueue.c | 117 +++++++++++++++++++++++++++--
->>>    1 file changed, 112 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
->>> index 4f74ad402a..6e16cd4bdf 100644
->>> --- a/hw/virtio/vhost-shadow-virtqueue.c
->>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
->>> @@ -193,10 +193,83 @@ static void vhost_svq_add_split(VhostShadowVirtqueue *svq,
->>>        /* Update the avail index after write the descriptor */
->>>        smp_wmb();
->>>        avail->idx = cpu_to_le16(svq->shadow_avail_idx);
->>> +}
->>> +
->>> +/**
->>> + * Write descriptors to SVQ packed vring
->>> + *
->>> + * @svq: The shadow virtqueue
->>> + * @out_sg: The iovec to the guest
->>> + * @out_num: Outgoing iovec length
->>> + * @in_sg: The iovec from the guest
->>> + * @in_num: Incoming iovec length
->>> + * @sgs: Cache for hwaddr
->>> + * @head: Saves current free_head
->>> + */
->>> +static void vhost_svq_add_packed(VhostShadowVirtqueue *svq,
->>> +                                 const struct iovec *out_sg, size_t out_num,
->>> +                                 const struct iovec *in_sg, size_t in_num,
->>> +                                 hwaddr *sgs, unsigned *head)
->>> +{
->>> +    uint16_t id, curr, i, head_flags = 0, head_idx;
->>> +    size_t num = out_num + in_num;
->>> +    unsigned n;
->>> +
->>> +    struct vring_packed_desc *descs = svq->vring_packed.vring.desc;
->>> +
->>> +    head_idx = svq->vring_packed.next_avail_idx;
+On 3/26/25 5:38 PM, Eugenio Perez Martin wrote:
+> On Mon, Mar 24, 2025 at 3:00 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
+>> [...]
+>> Link: https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg05106.html
+>> Link: https://lore.kernel.org/r/20210602021536.39525-4-jasowang@redhat.com
+>> Link: 1225c216d954 ("vp_vdpa: allow set vq state to initial state after reset")
+>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+>> Acked-by: Eugenio Pérez <eperezma@redhat.com>
+>> ---
+>> Changes from v4 -> v5:
+>> - Initially commit #5 in v4.
+>> - Fix coding style of commit block as stated by checkpatch.pl.
 >>
->> Since "svq->vring_packed.next_avail_idx" is part of QEMU internals and not
->> stored in guest memory, no endianness conversion is required here, right?
+>>   hw/virtio/vhost-vdpa.c | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
 >>
+>> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+>> index 58c8931d89..0625e349b3 100644
+>> --- a/hw/virtio/vhost-vdpa.c
+>> +++ b/hw/virtio/vhost-vdpa.c
+>> @@ -1265,6 +1265,21 @@ static bool vhost_vdpa_svq_setup(struct vhost_dev *dev,
+>>       };
+>>       int r;
+>>
+>> +    /*
+>> +     * In Linux, the upper 16 bits of s.num is encoded as
+>> +     * the last used idx while the lower 16 bits is encoded
+>> +     * as the last avail idx when using packed vqs. The most
+>> +     * significant bit for each idx represents the counter
+>> +     * and should be set in both cases while the remaining
+>> +     * bits are cleared.
+>> +     */
+>> +    if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
+>> +        uint32_t last_avail_idx = 0 | (1 << VRING_PACKED_EVENT_F_WRAP_CTR);
+>> +        uint32_t last_used_idx = 0 | (1 << VRING_PACKED_EVENT_F_WRAP_CTR);
+>> +
+>> +        s.num = (last_used_idx << 16) | last_avail_idx;
+>> +    }
+>> +
 > 
-> Right!
+> This should be added before 6/7 so we don't declare we support packed
+> without this.
 
-Understood.
-
->>> +    i = head_idx;
->>> +    id = svq->free_head;
->>> +    curr = id;
->>> +    *head = id;
->>
->> Should head be the buffer id or the idx of the descriptor ring where the
->> first descriptor of a descriptor chain is inserted?
->>
-> 
-> The buffer id of the *last* descriptor of a chain. See "2.8.6 Next
-> Flag: Descriptor Chaining" at [1].
-
-Ah, yes. The second half of my question in incorrect.
-
-The tail descriptor of the chain includes the buffer id. In this implementation
-we place the same tail buffer id in other locations of the descriptor ring since
-they will be ignored anyway [1].
-
-The explanation below frames my query better.
-
->>> +    /* Write descriptors to SVQ packed vring */
->>> +    for (n = 0; n < num; n++) {
->>> +        uint16_t flags = cpu_to_le16(svq->vring_packed.avail_used_flags |
->>> +                                     (n < out_num ? 0 : VRING_DESC_F_WRITE) |
->>> +                                     (n + 1 == num ? 0 : VRING_DESC_F_NEXT));
->>> +        if (i == head_idx) {
->>> +            head_flags = flags;
->>> +        } else {
->>> +            descs[i].flags = flags;
->>> +        }
->>> +
->>> +        descs[i].addr = cpu_to_le64(sgs[n]);
->>> +        descs[i].id = id;
->>> +        if (n < out_num) {
->>> +            descs[i].len = cpu_to_le32(out_sg[n].iov_len);
->>> +        } else {
->>> +            descs[i].len = cpu_to_le32(in_sg[n - out_num].iov_len);
->>> +        }
->>> +
->>> +        curr = cpu_to_le16(svq->desc_next[curr]);
->>> +
->>> +        if (++i >= svq->vring_packed.vring.num) {
->>> +            i = 0;
->>> +            svq->vring_packed.avail_used_flags ^=
->>> +                1 << VRING_PACKED_DESC_F_AVAIL |
->>> +                1 << VRING_PACKED_DESC_F_USED;
->>> +        }
->>> +    }
->>>
->>> +    if (i <= head_idx) {
->>> +        svq->vring_packed.avail_wrap_counter ^= 1;
->>> +    }
->>> +
->>> +    svq->vring_packed.next_avail_idx = i;
->>> +    svq->shadow_avail_idx = i;
->>> +    svq->free_head = curr;
->>> +
->>> +    /*
->>> +     * A driver MUST NOT make the first descriptor in the list
->>> +     * available before all subsequent descriptors comprising
->>> +     * the list are made available.
->>> +     */
->>> +    smp_wmb();
->>> +    svq->vring_packed.vring.desc[head_idx].flags = head_flags;
->>>    }
->>>
->>> -static void vhost_svq_kick(VhostShadowVirtqueue *svq)
->>> +static void vhost_svq_kick_split(VhostShadowVirtqueue *svq)
->>>    {
->>>        bool needs_kick;
->>>
->>> @@ -209,7 +282,8 @@ static void vhost_svq_kick(VhostShadowVirtqueue *svq)
->>>        if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
->>>            uint16_t avail_event = le16_to_cpu(
->>>                    *(uint16_t *)(&svq->vring.used->ring[svq->vring.num]));
->>> -        needs_kick = vring_need_event(avail_event, svq->shadow_avail_idx, svq->shadow_avail_idx - 1);
->>> +        needs_kick = vring_need_event(avail_event, svq->shadow_avail_idx,
->>> +                     svq->shadow_avail_idx - 1);
->>>        } else {
->>>            needs_kick =
->>>                    !(svq->vring.used->flags & cpu_to_le16(VRING_USED_F_NO_NOTIFY));
->>> @@ -222,6 +296,30 @@ static void vhost_svq_kick(VhostShadowVirtqueue *svq)
->>>        event_notifier_set(&svq->hdev_kick);
->>>    }
->>>
->>> +static void vhost_svq_kick_packed(VhostShadowVirtqueue *svq)
->>> +{
->>> +    bool needs_kick;
->>> +
->>> +    /*
->>> +     * We need to expose the available array entries before checking
->>> +     * notification suppressions.
->>> +     */
->>> +    smp_mb();
->>> +
->>> +    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
->>> +        return;
->>> +    } else {
->>> +        needs_kick = (svq->vring_packed.vring.device->flags !=
->>> +                      cpu_to_le16(VRING_PACKED_EVENT_FLAG_DISABLE));
->>> +    }
->>> +
->>> +    if (!needs_kick) {
->>> +        return;
->>> +    }
->>> +
->>> +    event_notifier_set(&svq->hdev_kick);
->>> +}
->>> +
->>>    /**
->>>     * Add an element to a SVQ.
->>>     *
->>> @@ -258,13 +356,22 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const struct iovec *out_sg,
->>>            return -EINVAL;
->>>        }
->>>
->>> -    vhost_svq_add_split(svq, out_sg, out_num, in_sg,
->>> -                        in_num, sgs, &qemu_head);
->>> +    if (svq->is_packed) {
->>> +        vhost_svq_add_packed(svq, out_sg, out_num, in_sg,
->>> +                             in_num, sgs, &qemu_head);
->>> +    } else {
->>> +        vhost_svq_add_split(svq, out_sg, out_num, in_sg,
->>> +                            in_num, sgs, &qemu_head);
->>> +    }
->>>
->>>        svq->num_free -= ndescs;
->>>        svq->desc_state[qemu_head].elem = elem;
->>>        svq->desc_state[qemu_head].ndescs = ndescs;
->>
->> *head in vhost_svq_add_packed() is stored in "qemu_head" here.
->>
-> 
-> Sorry I don't get this, can you expand?
-
-Sure. In vhost_svq_add(), after the descriptors have been added
-(either using vhost_svq_add_split or vhost_svq_add_packed),
-VirtQueueElement elem and ndescs are both saved in the
-svq->desc_state array. "elem" and "ndescs" are later used when
-the guest consumes used descriptors from the device in
-vhost_svq_get_buf_(split|packed).
-
-For split vqs, the index of svq->desc where elem and ndescs are
-saved matches the index of the descriptor ring where the head of
-the descriptor ring is placed.
-
-In vhost_svq_add_split:
-
-*head = svq->free_head;
-[...]
-avail_idx = svq->shadow_avail_idx & (svq->vring.num - 1);
-avail->ring[avail_idx] = cpu_to_le16(*head);
-
-"qemu_head" in vhost_svq_add gets its value from "*head" in
-vhost_svq_add_split:
-
-svq->desc_state[qemu_head].elem = elem;
-svq->desc_state[qemu_head].ndescs = ndescs;
-
-For packed vq, something similar has to be done. My approach was
-to have the index of svq->desc_state match the buffer id in the
-tail of the descriptor ring.
-
-The entire chain is written to the descriptor ring in the loop
-in vhost_svq_add_packed. I am not sure if the index of
-svq->desc_state should be the buffer id or if it should be a
-descriptor index ("head_idx" or the index corresponding to the
-tail of the chain).
+Sure, I'll change the ordering in the next patch series.
 
 Thanks,
 Sahil
-
-[1] https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg03512.html
 
