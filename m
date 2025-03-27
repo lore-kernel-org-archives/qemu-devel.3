@@ -4,105 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB684C3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 06:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C84C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 07:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txh7a-0005oR-H7; Thu, 27 Mar 2025 02:53:46 -0400
+	id 1txheQ-0004qf-Ae; Thu, 27 Mar 2025 03:27:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1txh7Y-0005nr-HQ
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:53:44 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1txh7V-00052q-R2
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:53:44 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22398e09e39so14268225ad.3
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 23:53:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1743058420; x=1743663220;
- darn=nongnu.org; 
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/Perkpg+QLyIIBp8z2j495n9UzfO+OOijJkCXO07XLs=;
- b=EE3sxf9Vyx5G4XDZU54AinfdG95J5VQLYwGenBQois2yNWPvHPYJ0sJHgNUQdzAIlX
- KZOurxpNRdH7g44c22cgY7hDCKwWIQkhEjtzk3G/reKbjfYlfr0vT/YCCD73CW0r763d
- BXwjoQXxZEhdFOE/rn0bTWMnbHEW0dUi0EjFU129R5NaAU0GuhMP6SF/IbHfPGu6RimN
- etyqr7OlkSKKYnOuSsIF6rVhKE6c9xVhog98wFlr+NVNOrRewcPfVrfKQPAnag3SED00
- 09CaCdjMsddPeiFZW0/xG5XYwixpRNg27ahfJmuDzZD/rgUBejqot3fsKP1OujaMo6KS
- btkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743058420; x=1743663220;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/Perkpg+QLyIIBp8z2j495n9UzfO+OOijJkCXO07XLs=;
- b=nn7mhfw+q+rqPXn15LoAT3MS0uXnri8lR/8y5MakXdEVTWm4XDkimCnNFyV9KCSpik
- x6ogv+juVGgIhJwiikY+WaMvijld0eGb9mz1+tDW9miVQC+R6auZg8cW6tAz/Y1KuLRB
- wHM7EMNc1wdpGUdE6bNoO3Yn9zgnFWGMyjCEnJK7pQRKq9fbrg+jMl0/tBle5CzxcW2S
- 96gAargET/UIk/AAR7czn652WLgweoyCAWoO57yBJyP/fGPcD/V/b+Wxf0zwj6fKIjx1
- FApBZ5Q2TM9wUazO/L2EYLxs+mS0DzC3jw+/uIlddqCkHWIfE8GACNMJ3ZgfX7L++cP7
- 8FlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV3Gfrrq6z+33ND8hzM7tL9OOoAJMDXpUu4jfZ5pISQsWPw55i0WpjxCfOb8iAwxEYTY9liuWgZ0Z+H@nongnu.org
-X-Gm-Message-State: AOJu0YxjYfxN0gTy2yGfXBJ0xxH6bCMwhUMEf0a468vXoMkq/jHDpNoq
- SC7SiD5/EJM8KTj/bSG2YFD+tZNNueP3UFr71agv3YnIBO1fOyl1BK4wYmVbrwc=
-X-Gm-Gg: ASbGncuS5ctnGD5x0/uu+X68dhhtdDJccV/OVBQESGerFgK+LdrXsmtF4vMXFOfcJ25
- 508iMNkgoi6MROSkzT+E3RLmMQ7PLeSe4ua1Se4D5kwGaeu3TSTWLNs+0lQAlvJ24RVtEVukUnQ
- bNfyj33+ajlMpGPV/M5B5hNLqfNZhXY3L+KKb3Hxzc4elUScMyRd0aie7ieo5sbCO30h6aVmk2C
- SOjO0urByff2gOWWoVDgYpgjLMlDbAh+wM14QMt8BThdYccY+RTntqZgx3JNHM5TKwQfE7ikpcc
- QYAF3InRClIPkKasT9wY0vnvV6FqcAcg2pSDHWKJm2WRqKxkqw==
-X-Google-Smtp-Source: AGHT+IHH2UI18xdU1T0DpN7Y3C/Wy7/0tKCnGXlT/9fcqzdrugqWuY/Lfg6WHfdtJ+uqyfMfyNAESw==
-X-Received: by 2002:a17:902:ccd2:b0:211:e812:3948 with SMTP id
- d9443c01a7336-2280455d75fmr40839275ad.0.1743058419575; 
- Wed, 26 Mar 2025 23:53:39 -0700 (PDT)
-Received: from smtpclient.apple ([23.163.8.27])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f4581csm122089405ad.59.2025.03.26.23.53.35
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 26 Mar 2025 23:53:39 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
-Subject: Re: [PATCH v2 3/3] vhost-user: return failure if backend crash when
- live migration
-From: Haoqian He <haoqian.he@smartx.com>
-In-Reply-To: <hoq242tlgchxwzm3ukckyunkqpppiq4zfzpqrauhjdy7wbdiaq@wr26zlpznr5s>
-Date: Thu, 27 Mar 2025 14:53:24 +0800
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- Li Feng <fengli@smartx.com>, yuhua@smartx.com,
- Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "open list:Block layer core" <qemu-block@nongnu.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1txheP-0004qU-17
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 03:27:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1txheN-0000uf-3A
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 03:27:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743060456;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DubE5UoFWzPzzHp3H+HUqKhUqK7dYazF7KVKriZzk6s=;
+ b=aHD5qz+1xD2YWJbiH6I0pOZaIy5FX6+o6OnyTyFjuGD87eXWgRhcUuARBwCxsUGjg6DvN0
+ w9RGxKrGkEXxcFhThVVKNCt0ZhUT1fCL9eIkExXjGNY1+q8LBBnHI98C25CtdXrJHAWRvk
+ tRJ9v/iFSK8GwugwmIHrcscLXr0mHsE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-aCW0x2PcNTGyxPlKO4SNbg-1; Thu,
+ 27 Mar 2025 03:27:35 -0400
+X-MC-Unique: aCW0x2PcNTGyxPlKO4SNbg-1
+X-Mimecast-MFC-AGG-ID: aCW0x2PcNTGyxPlKO4SNbg_1743060452
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 563421801A12; Thu, 27 Mar 2025 07:27:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF3091801751; Thu, 27 Mar 2025 07:27:21 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 11ADB21E66C5; Thu, 27 Mar 2025 08:27:19 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Peter Xu <peterx@redhat.com>,  "Gonglei
+ (Arei)" <arei.gonglei@huawei.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Michael
+ Tokarev <mjt@tls.msk.ru>,  Lukas Straub <lukasstraub2@web.de>,  Fabiano
+ Rosas <farosas@suse.de>,  Eduardo Habkost <eduardo@habkost.net>,  Stefan
+ Berger <stefanb@linux.vnet.ibm.com>,  qemu-trivial@nongnu.org,  Jason Wang
+ <jasowang@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,  Yanan
+ Wang <wangyanan55@huawei.com>,  Zhao Liu <zhao1.liu@intel.com>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  "Michael
+ S. Tsirkin" <mst@redhat.com>,  qemu-block@nongnu.org,  Zhenwei Pi
+ <pizhenwei@bytedance.com>,  Mads Ynddal <mads@ynddal.dk>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Eric Blake
+ <eblake@redhat.com>,  Jiri Pirko <jiri@resnulli.us>
+Subject: Re: [PATCH 3/4] qapi: remove trivial "Returns:" sections
+In-Reply-To: <CAFn=p-ZJT0p7LHiBPn5deZnGSq6vtyF5b8G7pmmzUyRPtDURtQ@mail.gmail.com>
+ (John Snow's message of "Wed, 26 Mar 2025 15:46:32 -0400")
+References: <20250322010857.309490-1-jsnow@redhat.com>
+ <20250322010857.309490-4-jsnow@redhat.com>
+ <87bjtpmop6.fsf@pond.sub.org>
+ <CAFn=p-ZJT0p7LHiBPn5deZnGSq6vtyF5b8G7pmmzUyRPtDURtQ@mail.gmail.com>
+Date: Thu, 27 Mar 2025 08:27:19 +0100
+Message-ID: <8734ez2aso.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <8E231839-A758-4F80-B517-EDF0A780C6A0@smartx.com>
-References: <20250309090708.3928953-1-haoqian.he@smartx.com>
- <20250314101535.1059308-1-haoqian.he@smartx.com>
- <20250314101535.1059308-4-haoqian.he@smartx.com>
- <5wblbg4qq7lmfrycksxo45ynh566gbzocwtim6yy6hiibus66a@fb75vbwpz5r5>
- <C1643EB1-EBA7-4627-A1E9-BB4F8CC688A2@smartx.com>
- <scj244d5eifrvxe7qgz4aszeg7wbjxzhh6tdccuzxkj5k3jxvi@ujonxzfmd3tb>
- <4DC039FB-6711-4FAC-9FCF-FB59E6B1151E@smartx.com>
- <hoq242tlgchxwzm3ukckyunkqpppiq4zfzpqrauhjdy7wbdiaq@wr26zlpznr5s>
-To: Stefano Garzarella <sgarzare@redhat.com>
-X-Mailer: Apple Mail (2.3731.500.231)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,119 +107,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John Snow <jsnow@redhat.com> writes:
 
-> 2025=E5=B9=B43=E6=9C=8825=E6=97=A5 17:51=EF=BC=8CStefano Garzarella =
-<sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On Tue, Mar 25, 2025 at 04:39:46PM +0800, Haoqian He wrote:
->>> 2025=E5=B9=B43=E6=9C=8824=E6=97=A5 22:31=EF=BC=8CStefano Garzarella =
-<sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->>> On Thu, Mar 20, 2025 at 08:21:30PM +0800, Haoqian He wrote:
->>>>> 2025=E5=B9=B43=E6=9C=8819=E6=97=A5 23:20=EF=BC=8CStefano =
-Garzarella <sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->>>>> On Fri, Mar 14, 2025 at 06:15:34AM -0400, Haoqian He wrote:
->=20
-> [...]
->=20
->>>>>> diff --git a/include/hw/virtio/virtio.h =
-b/include/hw/virtio/virtio.h
->>>>>> index 6386910280..c99d56f519 100644
->>>>>> --- a/include/hw/virtio/virtio.h
->>>>>> +++ b/include/hw/virtio/virtio.h
->>>>>> @@ -187,6 +187,7 @@ struct VirtioDeviceClass {
->>>>>> void (*set_config)(VirtIODevice *vdev, const uint8_t *config);
->>>>>> void (*reset)(VirtIODevice *vdev);
->>>>>> void (*set_status)(VirtIODevice *vdev, uint8_t val);
->>>>>> +    int (*set_status_ext)(VirtIODevice *vdev, uint8_t val);
->>>>>=20
->>>>> Why we need a new callback instead having `set_status` returning =
-int ?
->>>>=20
->>>> Because there are other devices such as virtio-net, virtio-ballon, =
-etc.,
->>>> we only focus on vhost-user-blk/scsi when live migration.
->>>=20
->>> Why only them?
->>>=20
->>> What I mean, is why in devices where it's not important, don't we =
-just return 0?
->>> It seems more complicated to maintain and confusing for new devices =
-to have 2 callbacks for the same thing.
->>>=20
->>> Stefano
->>=20
->> The series of these patches only want to fix that the inflight IO =
-can't be
->> completed due to the disconnection between and the vhost-user backend =
-for
->> vhost-user-blk / scsi devices during live migration. For other virito =
-devices
->> the issue does not exist, and `vm_state_notify` cannot distinguish =
-specific
->> devices, it's better not to return error.
->=20
-> Why for example for vhost-user-fs it doesn't exist?
->=20
->>=20
->> I try to list the virtio sub-devices as follows:
->>=20
->> hw/virtio/virtio-iommu.c:    vdc->set_status =3D =
-virtio_iommu_set_status;
->> hw/virtio/virtio-balloon.c:    vdc->set_status =3D =
-virtio_balloon_set_status;
->> hw/virtio/virtio-rng.c:    vdc->set_status =3D virtio_rng_set_status;
->> hw/virtio/virtio-crypto.c:    vdc->set_status =3D =
-virtio_crypto_set_status;
->> hw/virtio/vhost-vsock.c:    vdc->set_status =3D =
-vhost_vsock_set_status;
->> hw/virtio/vhost-user-vsock.c:    vdc->set_status =3D vuv_set_status;
->> hw/virtio/vhost-user-scmi.c:    vdc->set_status =3D =
-vu_scmi_set_status;
->> hw/virtio/vhost-user-fs.c:    vdc->set_status =3D vuf_set_status;
->> hw/virtio/vhost-user-base.c:    vdc->set_status =3D vub_set_status;
->> hw/virtio/vdpa-dev.c:    vdc->set_status =3D =
-vhost_vdpa_device_set_status;
->> tests/qtest/libqos/virtio-pci.c:    .set_status =3D =
-qvirtio_pci_set_status,
->> tests/qtest/libqos/virtio-pci-modern.c:    .set_status =3D =
-set_status,
->> tests/qtest/libqos/virtio-mmio.c:    .set_status =3D =
-qvirtio_mmio_set_status,
->> hw/scsi/vhost-user-scsi.c:    vdc->set_status =3D =
-vhost_user_scsi_set_status;
->> hw/scsi/vhost-scsi.c:    vdc->set_status =3D vhost_scsi_set_status;
->> hw/net/virtio-net.c:    vdc->set_status =3D virtio_net_set_status;
->> hw/char/virtio-serial-bus.c:    vdc->set_status =3D set_status;
->> hw/block/vhost-user-blk.c:    vdc->set_status =3D =
-vhost_user_blk_set_status;
->> hw/block/virtio-blk.c:    vdc->set_status =3D virtio_blk_set_status;
->>=20
->> If the new function pointer type is not added, the number of =
-functions affected
->> will be very huge. Although it may seem a bit complicated to use two =
-callbacks,
->> it's much safer.
->=20
-> I can understand that it requires more change, but I don't understand =
-why it's safer, can you elaborate?
->=20
-> Anyway let's see what Michael says, if it's okay for him to have 2 =
-callbacks for the same thing but differing only by the return value, no =
-objection for me.
->=20
-> Thanks,
-> Stefano
->=20
+> On Tue, Mar 25, 2025 at 5:42=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > The new qapidoc transmogrifier can generate "Returns" statements with
+>> > type information just fine, so we can remove it from the source where =
+it
+>> > doesn't add anything particularly novel or helpful and just repeats the
+>> > type info.
+>> >
+>> > This patch does not touch Returns: lines that add some information
+>> > (potentially helpful, potentially not) but repeats the type information
+>> > to remove that type.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>>
+>> This is a clear improvement for the generated docs.  For instance,
+>> blockdev-snapshot-delete-internal-sync goes from
+>>
+>>     Return:
+>>        "SnapshotInfo" -- SnapshotInfo
+>>
+>> to
+>>
+>>     Return:
+>>        "SnapshotInfo"
+>>
+>> However, I see that *triplicated* in my testing.  I observed similar
+>> issues with the previous patch, so let's discuss that there and ignore
+>> it here.
+>>
+>> The impact on schema file egonomics is less clear.
+>>
+>> This patch removes a bunch of "Returns:" sections that make the
+>> generated docs look bad.  How can we stop people from writing such
+>> sections?
 
-Hi Stefano, I removed set_status_ext in patch v3, and only changed the =
-return
-type of set_status to int. The new changes were applied to all =
-vhost-user
-devices, and virtio returned 0 for other devices.
+Plan A: catch it in review.  If that turns out to be overly bothersome,
+we need to think about better tooling.
 
-Could you please review patch v3 is reasonable?
+>> Developers tend to refer to the schema file instead of the generated
+>> documentation.  Information is spread across doc comment and schema
+>> code.  Both describe the syntactic structure.  Only the schema code has
+>> types, optional, and such.  The doc comment describes semantics.  In
+>> practice, skimming the doc comment is often enough.
+>>
+>> Except for the return value.  The doc comment's "Returns:" section is
+>> optional.  When it's absent, the generated docs are bad (but this patch
+>> fixes that).  Moreover, the doc comment doesn't fully describe the
+>> syntactic structure then.  Unwary readers may not be aware of that trap,
+>> and miss the return value.
 
-Thanks,
-Haoqian
+I've since pondered this some more, and also talked with John.
+
+When doc comments look like they provide a certain kind of information,
+but they are actually unrealiable, that's less than ideal for its
+readers.
+
+This has always been the case for member / argument descriptions.  We
+didn't require them initially, and when we started to, things had gotten
+so bad that I had to provide an escape hatch: pragma
+documentation-exceptions still lists 44 offenders in qapi/ and one in
+qga/.
+
+Most of the offenders are doc bugs.  But not all: documenting the
+members of QKeyCode one by one would be silly.
+
+It has also always been the case for return value descriptions.  We
+still don't require them.  Your series uncovered ten in qapi/ and one in
+qga/.  Your series adds 46 in qapi/.  Possibly more after review of the
+last patch.  Missing Returns goes from rare to common.
+
+This does not create doc bugs.  Generated documentation actually
+improves.
+
+I figure developers just have to mind that the doc comment need not be
+complete.
+
+>> The inliner you posted before needs to know where the inlined stuff
+>> goes.  Obvious when there are argument descriptions or a "Returns:".
+>> For the cases where we have nothing useful, you proposed an explicit
+>> marker "Details:" (how exactly it's spelled doesn't matter here, only
+>> that an explicit marker can be necessary).  Could removing "Returns:"
+>> make the marker necessary more often?  Can our tooling reliably detect
+>> the need for the marker?
+>>
+>
+> Well, tooling can at least be certain when it isn't certain.
+>
+> The warning I have in my inliner branch-fork-whatever now basically just
+> looks at the sections and if there's non-plaintext sections between the
+> start and the ending, it treats the beginning as intro and the ending as
+> details.
+
+The non-plaintext sections are: Returns, Errors, Since, TODO.
+
+Returns and Errors are reliable anchors for the inliner.  The inliner
+inlines argument sections.  They need to go next to Returns / Errors
+sections, if any, because they get rendered together in as single
+two-column thing.
+
+Since feels useless as an anchor.  Does the inline ignore it?  I don't
+remember.  Every definition doc should have it, and we commonly put it
+at the very end (currently 776 out of 984 times).  When we don't, it's
+usually followed by examples only, and occasionally by notes.  Putting
+it always last would be better.  If we manage to replace handwritten by
+computed since information, Since goes away.
+
+TODO is the odd duck.  It can go anywhere, which makes its use as anchor
+questionable.  It's rare (I count 7 instances).  One of them presses it
+into service to separate intro and example (commit 14b48aaab92).  Your
+inliner series has a replacement for this hack; I believe the
+replacement can serve as a reliable anchor.
+
+> In the case there is *nothing else at all*, i.e. no returns, no
+> arguments/members, no errors, no features - i.e. it's a single QAPIDoc
+> Section - the inliner will count the *paragraphs*. If it's *one* paragrap=
+h,
+> it deduces that it's an intro section and does not consider it ambiguous.
+> If there are multiple paragraphs, however, that's when it emits a warning.
+
+This is a heuristic.  We'll discuss it in review of the inliner.
+
+> A computer is never going to be able to reliably determine *intent*, but
+> syntactically I think that's a pretty narrow circumstance to yelp over:
+> "Documentation contains only a single plaintext section that consists of
+> two or more paragraphs". In practice, that's a reasonably rare occurrence
+> and is most likely to occur with query commands that take no arguments,
+
+... or refer to a complex type for their arguments ...
+
+> have no features, and do not document return value semantics.
+
+... and do not document errors.
+
+I'd be interested in the existing instances if you can track them down
+easily.
 
 
