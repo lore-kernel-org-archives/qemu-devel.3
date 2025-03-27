@@ -4,89 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B8EC36013
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 18:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC60C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 18:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txruK-00088u-DX; Thu, 27 Mar 2025 14:24:51 -0400
+	id 1txrx9-0001sU-2h; Thu, 27 Mar 2025 14:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txru0-00086U-Sm
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:24:32 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txrty-0003Wa-9q
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:24:28 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3997205e43eso1087971f8f.0
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 11:24:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743099863; x=1743704663; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uF5SeKhZI3Nn+8j2LeUDfw3h5jEFvSqO/j0ufeklhgk=;
- b=nvcdJNC2rqN8oOmQeDefQqRhqTziGQo2OLXDjxiLOfPygO1KavHWaoYsuaV5GVCVNC
- bJTiDuU5Ekl01X3QL4FGF6XlC5x3WubuUU3HRBNfAI/MVPfT0WshA/Q3VLPnPpk5KTUO
- 7PRJPkBQLECh7s6h4fWPfJq7xE7lmV+lTFGummPqSP8c/T39KrhvAFwQY3BglWLFylkp
- nPP/Zv0ZMsJRMAWlaTbnN82bShRWbhlDXtlMT3690VRjM455GwSd9MmK2NWhy4RSO0EA
- Pw6UhOEbDFx5I95aKnPTe4TtnPg30BG/2oHlIipuwtAjKhYrMUlfP/Hx0ZrQzcmZ2fbz
- 0ciw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743099863; x=1743704663;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uF5SeKhZI3Nn+8j2LeUDfw3h5jEFvSqO/j0ufeklhgk=;
- b=gE/BFke5rnLJKO/mpkOf2T18Q9/LfcencgOsPb6MFb5Sm0rYiPHy86r6FLzI79QDHm
- 43suvoo3aWrZoQDA5TFG6mePuJe1ia6appqulSJ5a2vcMohSOJwdyUeR/nDnWdKbHzVE
- LT4Q+Fh2s7JfRpTKjCWbFpp1wK+D0OxVxnQ1z0A/tgu6jx1/cLc5spe18vyz0JO1qm3y
- NmF9oC0SJFz2WU5Xn4Fg/C9TwMTP5fRGl9MnsjfoSj0eWmMRVKE6sJmknDIHI6Ap7F98
- A90IfatQbutlE2n0zC8EAl6thCXSwOjbgQoeJXELrVF6/u9Iflz5a3t12OHav7PG6HAv
- A1pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJvRiZ5qVZ6IGIwpi9KS3DhMIEGDJZ4seGyU6UruyoaiIhfjHtAnNwvs2gNNZcdz1vt+9XR3XwNUYf@nongnu.org
-X-Gm-Message-State: AOJu0YyT/QxXbIimJiG++/6Ix+IQYYeM1aT+1LTU0IKnvbMoJN/Ktx0b
- Tk4kqqZfZ8SWx3XhuJ6dhl+SZzCZTY7SSlK3gsF1mZ1ihVB7JI5NuUbDSS9/lN4=
-X-Gm-Gg: ASbGncsRRGwwaf/4OTyjpiZRO/scaaEl4G+2JlJml0dSv9BjN+YI3kZBeiyC+BpmsDf
- CpZJ5VS7J4oKdcCv5dXMP9D8R27nTdj8ia4FnTXpyJX1vfrl+OEWPpzeiNi3pQwj00wTjuV4PZe
- sNnCXvC/H3JTO9xCkkNN1Jx9oeWu4waJsYpUt6/JbjcdXZWUWfjlXRcT9A5smgJ520wG+fb2M9E
- 1PCsHsHlBDnWJzn1+5J8TOFTU9LfxechZpaptJc2LEMLzOgcEWCj2H4rfgBvjDWO5AvLddMfjp5
- 71rJY9b3wAPalfwjKTLwUKKzDqV1Qm/dAy7rN7X+bG/Q7Aa7OjCXaLvdALAOWbZp7oWaQ5NWfz6
- ZxMJq6hJJck7R
-X-Google-Smtp-Source: AGHT+IGC2U3NfupT7WV9N1+73Zezzt/oxYu+Zpf76nlIGuQnb3UXEX6eatXrfD2mDW2kEWojPzBQ2Q==
-X-Received: by 2002:a05:6000:40e1:b0:391:255a:748b with SMTP id
- ffacd0b85a97d-39ad1784903mr4518139f8f.39.1743099863076; 
- Thu, 27 Mar 2025 11:24:23 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8314f5c6sm46747875e9.40.2025.03.27.11.24.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 11:24:22 -0700 (PDT)
-Message-ID: <dee36972-4483-492d-a64f-17c0d0000f59@linaro.org>
-Date: Thu, 27 Mar 2025 19:24:21 +0100
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1txrx7-0001sD-D1; Thu, 27 Mar 2025 14:27:41 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1txrx4-00047c-TJ; Thu, 27 Mar 2025 14:27:41 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52RCSIGI000593;
+ Thu, 27 Mar 2025 18:27:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GGMzb3
+ lJiuuKxzzkxjmkZd58BsBqO+LnaNCIkYL6ZJE=; b=oh0Qnk26w1Swup0dQOlOzD
+ kuZ89kf3wToOEA9FcYozqheCFMwjB2JRut5VVfUpT24IKdUBwPeOE1AW1n5wIbqP
+ w0biT/jKkkNWclvXU+FzF5A5KN4zpLVrlypcwxjG8Saka1QIxcYaE8DyE6A/EW6K
+ DFOkb8K7V9Q996+e3KIVQJ86a1cDvvluddQSaKwaDPJtbvnHtrJ9dgSAnLKi67LQ
+ rWh6IEzah8RgU9Vt+C34GxUbqpo/inZ8GdEgAk+opQWD338h1SK2695co8gBO7np
+ WRBWWKyxFyzM58A0zm08Lu5ZpkCeW/12hNEo0U2dBcuy19IQW8LNdByJdo3e2bPw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45n6q2a478-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Mar 2025 18:27:32 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52RIQtWW009966;
+ Thu, 27 Mar 2025 18:27:32 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45n6q2a476-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Mar 2025 18:27:32 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52RH0ud3009694;
+ Thu, 27 Mar 2025 18:27:31 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j9rkxfdm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Mar 2025 18:27:31 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52RIRRDU42140000
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Mar 2025 18:27:27 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 826F12004F;
+ Thu, 27 Mar 2025 18:27:27 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6000A20043;
+ Thu, 27 Mar 2025 18:27:25 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.214.220])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 27 Mar 2025 18:27:25 +0000 (GMT)
+Date: Thu, 27 Mar 2025 23:57:17 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?utf-8?B?RnLDqWTDqXJpYw==?= Barrat <fbarrat@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v6 07/10] ppc/pnv: Introduce Power11 PowerNV machine
+Message-ID: <d6tnw62l274b6sa3oh7fvw7wzqqewgci4pjqll6uu3g75h5is6@rlnypq2fpisr>
+References: <20250325112319.927190-1-adityag@linux.ibm.com>
+ <20250325112319.927190-8-adityag@linux.ibm.com>
+ <952b3afa-dc63-4230-bdff-5decabc8c25c@kaod.org>
+ <8567b41e-f2b8-413c-93b8-15c74788c171@linux.ibm.com>
+ <5a08e139-a18d-4aae-836f-0ec0bb8fadc9@kaod.org>
+ <6d610966-cdc0-42c2-abb8-e80b4be1178d@linux.ibm.com>
+ <6e830dd1-88c1-4029-bae7-d2817d95262f@kaod.org>
+ <4ef14a73-576b-47c1-b1c0-bc7b234fac87@linux.ibm.com>
+ <d9f75038-5a29-4216-b363-cf467a28edb4@kaod.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/11] hw/avr: Prepare for TARGET_PAGE_SIZE > 256
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mrolnik@gmail.com, pierrick.bouvier@linaro.org
-References: <20250325224403.4011975-1-richard.henderson@linaro.org>
- <20250325224403.4011975-11-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250325224403.4011975-11-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d9f75038-5a29-4216-b363-cf467a28edb4@kaod.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 2vlNPZT9Gtcy0WA_UpSXTPKj3qWiYQGQ
+X-Proofpoint-GUID: 8NhrHuITHPHefDhV5zmVn0ogrr6ZGyiB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-27_03,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=846
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxscore=0
+ impostorscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502280000 definitions=main-2503270126
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,74 +126,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/25 23:44, Richard Henderson wrote:
-> If i/o does not cover the entire first page, allocate a portion
-> of ram as an i/o device, so that the entire first page is i/o.
+On 25/03/26 11:09PM, Cédric Le Goater wrote:
+> On 3/26/25 18:21, Aditya Gupta wrote:
+> > On 26/03/25 13:39, Cédric Le Goater wrote:
+> > 
+> > > On 3/25/25 18:38, Aditya Gupta wrote:
+> > > > <...snip...>
+> > > > 
+> > > > On 25/03/25 22:45, Cédric Le Goater wrote:
+> > > > > One nice about it IIRC was being able to tune the number of
+> > > > > PHBs per chip, which reduced booting time (for 16s) and also
+> > > > > provided support to test various chip configs. Check that first.
+> > > > > 
+> > > > I tried some variations of 'device_add/device_del'. Unable to see how to dynamically add/remove phbs.
+> > > 
+> > > I don't think hotplug works, this would require FW support, only
+> > > coldplug is supported : devices should be defined on the command
+> > > line.
+> > 
+> > 
+> > Got it. Thanks for mentioning this, found a bug in my patch:
+> > 
+> > 
+> >      $ ./build/qemu-system-ppc64 -nographic -M powernv11 -nodefaults -serial mon:stdio -device pnv-phb -device pnv-phb-root-port
+> >      <$QEMU_DIR>/include/hw/ppc/pnv_chip.h:110:PNV10_CHIP: Object 0x564afddb5e00 is not an instance of type pnv10-chip
+> >      [1]    1253963 IOT instruction (core dumped) ./build/qemu-system-ppc64 -nographic -M powernv11 -nodefaults -serial -devic
+> > 
+> > Happens due to 'pnv_pec_add_phb' assuming phb5 to be related to pnv10:
+> > 
+> > 
+> >      if (phb->version == 4) {
+> >          Pnv9Chip *chip9 = PNV9_CHIP(chip);
+> > 
+> >          pecs = chip9->pecs;
+> >      } else if (phb->version == 5) {
+> >          Pnv10Chip *chip10 = PNV10_CHIP(chip);
+> > 
+> >          pecs = chip10->pecs;
+> >      }
+> > 
+> > 
+> > Top of my mind, hacky ways come up to differentiate Pnv11Chip and Pnv10Chip, other (still hacky) might be to add "pecs" as a property to the chip objects and get it that way, still feels hacky.
+> > 
 > 
-> While memory_region_init_ram_device_ptr is happy to allocate
-> the RAMBlock, it does not register the ram for migration.
-> Do this by hand.
+> The pnv-phb and pnv-phb-root-port devices introduced too much
+> complexity for an unused feature. It is time to step back and
+> deprecate.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   hw/avr/atmega.h |  1 +
->   hw/avr/atmega.c | 39 ++++++++++++++++++++++++++++++++-------
->   2 files changed, 33 insertions(+), 7 deletions(-)
+> The segfault on P11 should be fixed. Failing gracefully is OK.
+
+Sure Cedric, for now I have removed the dynamic phbs in powernv11, so it
+fails like this:
+
+    ./build/qemu-system-ppc64 -nographic -M powernv11 -nodefaults -serial mon:stdio -device pnv-phb -device pnv-phb-root-port
+    qemu-system-ppc64: -device pnv-phb: Parameter 'driver' expects a dynamic sysbus device type for the machine
+
+Regarding deprecating for p10, don't know, as you said it gave benefits
+in power10 bringup, maybe since it's working for power10 it might keep
+it. I haven't personally needed it though.
+
+Thanks,
+- Aditya Gupta
+
 > 
-> diff --git a/hw/avr/atmega.h b/hw/avr/atmega.h
-> index a99ee15c7e..9ac4678231 100644
-> --- a/hw/avr/atmega.h
-> +++ b/hw/avr/atmega.h
-> @@ -41,6 +41,7 @@ struct AtmegaMcuState {
->       MemoryRegion flash;
->       MemoryRegion eeprom;
->       MemoryRegion sram;
-> +    MemoryRegion sram_io;
->       DeviceState *io;
->       AVRMaskState pwr[POWER_MAX];
->       AVRUsartState usart[USART_MAX];
-
-> @@ -240,11 +239,37 @@ static void atmega_realize(DeviceState *dev, Error **errp)
->       qdev_realize(DEVICE(&s->cpu), NULL, &error_abort);
->       cpudev = DEVICE(&s->cpu);
->   
-> -    /* SRAM */
-> -    memory_region_init_ram(&s->sram, OBJECT(dev), "sram", mc->sram_size,
-> -                           &error_abort);
-> -    memory_region_add_subregion(get_system_memory(),
-> -                                OFFSET_DATA + mc->io_size, &s->sram);
-> +    /*
-> +     * SRAM
-> +     *
-> +     * Softmmu is not able mix i/o and ram on the same page.
-> +     * Therefore in all cases, the first page exclusively contains i/o.
-> +     *
-> +     * If the MCU's i/o region matches the page size, then we can simply
-> +     * allocate all ram starting at the second page.  Otherwise, we must
-> +     * allocate some ram as i/o to complete the first page.
-> +     */
-> +    assert(mc->io_size == 0x100 || mc->io_size == 0x200);
-> +    if (mc->io_size >= TARGET_PAGE_SIZE) {
-> +        memory_region_init_ram(&s->sram, OBJECT(dev), "sram", mc->sram_size,
-> +                               &error_abort);
-> +        memory_region_add_subregion(get_system_memory(),
-> +                                    OFFSET_DATA + mc->io_size, &s->sram);
-> +    } else {
-> +        int sram_io_size = TARGET_PAGE_SIZE - mc->io_size;
-> +        void *sram_io_mem = g_malloc0(sram_io_size);
-
-Please declare sram_io_mem in AtmegaMcuState, after sram_io.
-
-> +
-> +        memory_region_init_ram_device_ptr(&s->sram_io, OBJECT(dev), "sram-as-io",
-> +                                          sram_io_size, sram_io_mem);
-> +        memory_region_add_subregion(get_system_memory(),
-> +                                    OFFSET_DATA + mc->io_size, &s->sram_io);
-> +        vmstate_register_ram(&s->sram_io, dev);
-> +
-> +        memory_region_init_ram(&s->sram, OBJECT(dev), "sram",
-> +                               mc->sram_size - sram_io_size, &error_abort);
-> +        memory_region_add_subregion(get_system_memory(),
-> +                                    OFFSET_DATA + TARGET_PAGE_SIZE, &s->sram);
-> +    }
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+> 
+> 
+> > Can't pass extra args (pecs) to the function, without handling this pnv10 vs pnv11 in the callers.
+> > 
+> > 
+> > Is adding a callback to PnvChipClass->get_pecs a good idea, similar to xive callbacks on the chipclass ?
+> > 
+> > Will think of alternate ways. Thanks.
+> > 
+> > 
+> > > 
+> > > > 
+> > > > Do you have any options to device_add/del which I can try, I want to see if the dynamic addition/removal of PHB changes if i remove that '_allow_dynamic_sysbus_dev' call.
+> > > > 
+> > > > 
+> > > > > Also, you should add functional tests for the powernv11 machine.
+> > > > > 
+> > > > > See under tests/functional/test_ppc64_powernv.py.
+> > > > > 
+> > > > Currently the test uses op-build kernels, which don't support Power11, working on that side, will post as soon as op-build creates a new release with p11 support (any linux >= 6.9).
+> > > 
+> > > And is that planned ? I doubt it since open-power boxes are out
+> > > of business.
+> > > 
+> > > You could use a buildroot image instead. :
+> > > 
+> > > https://github.com/buildroot/buildroot/blob/master/configs/qemu_ppc64le_powernv8_defconfig
+> > > 
+> > I was thinking there should be. I will ask.
+> > 
+> > 
+> > Thanks,
+> > 
+> > - Aditya Gupta
+> > 
+> > > Thanks,
+> > > 
+> > > C.
+> > > 
+> 
 
