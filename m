@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEA03C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 06:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99C8C3600E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 06:45:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txgyE-0002SC-Ou; Thu, 27 Mar 2025 02:44:06 -0400
+	id 1txgyN-0002Uc-3m; Thu, 27 Mar 2025 02:44:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1txgyD-0002Rr-FA
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:44:05 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1txgyK-0002To-SY
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:44:12 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1txgy9-0004En-S6
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:44:05 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-223f4c06e9fso11759445ad.1
- for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 23:43:57 -0700 (PDT)
+ id 1txgyI-0004Fw-II
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:44:12 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22435603572so12615485ad.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 23:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1743057837; x=1743662637;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1743057849; x=1743662649;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C+zfiR6YSWsh1kwihUZptaCkLfGMteo+gW0ow9r6wKY=;
- b=2XjP96Mpvef4wUOzG+7nNwpRqO1cvX0Pxk9qVCAWCIKWO8XIhyFDDp9kVc/cY2DIda
- GhDa7d/tMuJAxplRC7OikfGAdDbYKaHeAL3VrwsgBMm3szka4FT5dU3mP5qpl9h8ifGZ
- 6bih/8s3QvUBwpaLXnf1cQ3rxvkZs4wIw21OzpN4gIYnJqR6fHUUkpe8eEs1pDP/r+Kr
- 1tVaC7gyC/nG2F8F0SI9voxAXU/qVkqXGOPQRv3hx53vzOUwkBnOZHZ1sS6ZwV7zW6fv
- 0Pt7pGBLRkl2mOS/nVlcYxQw6m015Z6Wy1NngBc0FFkilX/7uuZr4gb+qCiowHEneGfZ
- 9bJA==
+ bh=4NXX1X4hRiRNZUknx8LsP9b/fPPtl0kWy3TtPAhKCeU=;
+ b=XG1lz4C5yat9FB3R1xnvmFDgvGFcFMntF9uHuu7uEMlK02lTcvaGS0zVWxuqpux8tO
+ HOpoXwsQhKOJStAWhAk97A6OHsExK6bnyDqxHo1rqpMz9adrJeyi9B74b8ZUMmywUMRT
+ VV6uIX0OhSFprG5rvPE8FjSrZtb+FuFW++GbQu64Vts+kpGv6xD5h7RhRzObh/216RHl
+ 681eaEGCoX/kC8H5Rv5aHtMoQzgJV3373jutwDcQiv3c7GGkzhoZy1E7KdDVCIY8HHcK
+ hyM+KmI+2DSGsNrGGQ0A1vnmOhgNek0K/DuvYr0C4KpbPONS9kALkTQ7r2jECmwuGrBh
+ TxBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743057837; x=1743662637;
+ d=1e100.net; s=20230601; t=1743057849; x=1743662649;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C+zfiR6YSWsh1kwihUZptaCkLfGMteo+gW0ow9r6wKY=;
- b=sy6cv/QuQXmNSc10eqZMPS/MB5nfFKucugh8BCQljQZm0ZVcvoAZgUBP6G64RuGxsZ
- m8CSMufQT/bbg8GztW4RfrfnL9ajWvVyn7CF2R2MGcbuBYeaBc2OrE6I3uHMCOs1awcn
- +UFed39pUgI7yWrLa+rSeSgsY2jAQfE4FWNvLBGWbXy3wocZOF7kQNHuVx9erPejcziE
- Db9RTOQOj0KUKQ3EmNYOCTZzvJlg4C/Pa7GLDqKUPQfYalMV/gmVFaa1plOwD3X6wdRJ
- CPJcdP5E1CfQ4jyZ0tSqNvZym/fMERy9EPYgZ5VJiX6QRN47MSh2f0owXGXldM5+dKAv
- hKvQ==
-X-Gm-Message-State: AOJu0Yx+DztVhoDYVzL+wl2Yp+rPoAn0Dd/1RZirK73Y2eiq3Aln1jYv
- tq6K2qBFlOIvR3nwZTWcGAj1ZMzWlvDydj0wqYGAZdpIFhp1dV3tayAQ92ZPcE13JiO5UDRSETD
- LrWE=
-X-Gm-Gg: ASbGncuUZoNoML7usA41+hocarWPxMZ5DqKCx2pRc/LvDXNWxhnX9ld90jgZ7ydugZX
- 4mw8KtQxBMAhbDTPMW8iFSQ6o9uoJ1SRZuN5Bj0f8NQH5WdL9qOOXuFC41NWvcRIMXn46QP7d6m
- zLV5IPqN6/DQP8U0L6mBO3xVeY3OQAw/x974+gxtkDUwBMBU/RXI0LfKzU1BAL4dIPOSn7j+A9m
- dhzbjsR9JqglNnqygZSp+Wr4jfoLUbr/hiooSzPbKA7Vom/oWBg7JbgyBRg3DrpDExuFjW8dEY1
- hymBeCeRkG2RuYmCtqQERPCNp+PLMtZGto3yXqgW/g==
-X-Google-Smtp-Source: AGHT+IEieRCHW4TwTVVXc4ir3LRkvx9yWwzXIHRYWzATDJCO+YtsxOOyxsQ+3EIIOu/npBDkBI6Fog==
-X-Received: by 2002:a17:902:dac8:b0:226:194f:48ef with SMTP id
- d9443c01a7336-227efb00eafmr95433845ad.13.1743057836599; 
- Wed, 26 Mar 2025 23:43:56 -0700 (PDT)
+ bh=4NXX1X4hRiRNZUknx8LsP9b/fPPtl0kWy3TtPAhKCeU=;
+ b=CzHA2+rpGwJLSqncuu9nbtSndKkaQiPXXZwC9f64TmQozmW28EPhvU54cAHKuFlr5q
+ 1cVO2SrO9Ptm6a3oeGXPrHjkrggHXYcZEJm3fgeCp5wtGkbwF9NEmUroSLCbG8/xbhtV
+ vd4O3/u1F3kYgTMPLJXKN7kBfFUAyu1nuwSsHmCMghoUij5cKdt16MWN838kgctvdrjp
+ ID2FQg+ShSLplf0LyS97WztJBXaZopC8/cWzO+LlPGjbib49KHmkoU2pRX/hRAjz6+hd
+ eQyWDG4Mysk8yfnC+jbZ8tC8hZc+WbHYK2qQrNcZqxuy+IS0UrK7CVYqiZREeGH4GONm
+ A0tQ==
+X-Gm-Message-State: AOJu0YxBIvD+8b4Rc6MRTxv5oPlicdIQLgVk0zqEbHWgC7RoJgnqNI26
+ Ui5XhNeHkRrlX1S1X4LniYOMJNObzPi0l9Io4HfYiYDTReqe6ji9kAbj0Z4lDcCLm0YwevnZjEV
+ FyJM=
+X-Gm-Gg: ASbGncstnDKzC4WBHd8YUG0VP7RhqrBpb4QDh6qycNoX1HI5lEvmKiURjLbRaLQBY7h
+ jsZXW4Ij1UaC0k6rGoitmjrdg7KLYeGJB6FuPNqT5K1vFgcz18T/VB4KinQSCaYGe7L+P1/U+Rh
+ O0QgJm9IdfBzeSPUluzZvtwhGaIW111ot6plieL7mRQ9k+zGX66JFnZZSekyV9eGVx5lbnoOq5b
+ dA0KWiN8CjNdZmp2qSX1T/J+XNqxWJ7OwriE+crPUk5ZsUmAUwIk4m3WkhinQL1Uc47v/JR+eox
+ +KQ98yt3ZQurzJVbGT2UVG250e+qIRs=
+X-Google-Smtp-Source: AGHT+IHaOhLpe6TbeM+DqsxZp8oHnSg44s7BnhqVeoz3PH/V5XigwqmHEVGhiMCVf2y/Ww08jEXj4A==
+X-Received: by 2002:a17:902:daca:b0:223:fabd:4f99 with SMTP id
+ d9443c01a7336-2280482a885mr40124565ad.5.1743057848723; 
+ Wed, 26 Mar 2025 23:44:08 -0700 (PDT)
 Received: from fedora.smartx.com ([2001:df0:a640:1::4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f4599fsm121983015ad.67.2025.03.26.23.43.51
+ d9443c01a7336-22780f4599fsm121983015ad.67.2025.03.26.23.44.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Mar 2025 23:43:56 -0700 (PDT)
+ Wed, 26 Mar 2025 23:44:08 -0700 (PDT)
 From: Haoqian He <haoqian.he@smartx.com>
 To: qemu-devel@nongnu.org, sgarzare@redhat.com, mst@redhat.com,
  raphael@enfabrica.net
@@ -84,16 +84,18 @@ Cc: fengli@smartx.com, yuhua@smartx.com, Kevin Wolf <kwolf@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  qemu-block@nongnu.org (open list:Block layer core),
  virtio-fs@lists.linux.dev (open list:virtiofs)
-Subject: [PATCH v3 0/3] vhost: fix the IO error after live migration
-Date: Thu, 27 Mar 2025 02:43:44 -0400
-Message-ID: <20250327064348.3595732-1-haoqian.he@smartx.com>
+Subject: [PATCH v3 2/3] vhost: return failure if stop virtqueue failed in
+ vhost_dev_stop
+Date: Thu, 27 Mar 2025 02:43:46 -0400
+Message-ID: <20250327064348.3595732-3-haoqian.he@smartx.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20250314101535.1059308-1-haoqian.he@smartx.com>
+In-Reply-To: <20250327064348.3595732-1-haoqian.he@smartx.com>
 References: <20250314101535.1059308-1-haoqian.he@smartx.com>
+ <20250327064348.3595732-1-haoqian.he@smartx.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=haoqian.he@smartx.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -115,68 +117,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the end of the VM live migration, the vhost device will be stopped.
-Currently, if the vhost-user backend crashes, vhost device's set_status()
-would not return failure, live migration won't perceive the disconnection
-with the backend. After the live migration is successful, the stale inflight
-IO will be submitted to the migration target host, which may be leading to
-the IO error.
+This patch captures the error of vhost_virtqueue_stop() in vhost_dev_stop()
+and returns the error upward.
 
-The following patch series fixes the issue by making the live migration
-aware of the loss of connection with the vhost-user backend and aborting
-the live migration.
+Specifically, if QEMU is disconnected from the vhost backend, some actions
+in vhost_dev_stop() will fail, such as sending vhost-user messages to the
+backend (GET_VRING_BASE, SET_VRING_ENABLE) and vhost_reset_status.
 
+Considering that both set_vring_enable and vhost_reset_status require setting
+the specific virtio feature bit, we can capture vhost_virtqueue_stop()'s
+error to indicate that QEMU has lost connection with the backend.
+
+This patch is the pre patch for 'vhost-user: return failure if backend crashes
+when live migration', which makes the live migration aware of the loss of
+connection with the vhost-user backend and aborts the live migration.
+
+Signed-off-by: Haoqian He <haoqian.he@smartx.com>
 ---
-  v1 ... v2
-    1. Fix some grammar issues in commit message.
-    2. Remove assert in vhost_scsi_common_stop and return error upwards.
+ hw/virtio/vhost.c         | 23 +++++++++++++----------
+ include/hw/virtio/vhost.h |  8 +++++---
+ 2 files changed, 18 insertions(+), 13 deletions(-)
 
-  v2 ... v3
-    1. Added more detailed comments and commit message.
-    2. Change the newly added type name and parameter name.
-    3. Remove set_status_ext, change the return type of set_status to int.
-
-Haoqian He (3):
-  system/runstate: add VM state change cb with return value
-  vhost: return failure if stop virtqueue failed in vhost_dev_stop
-  vhost-user: return failure if backend crash when live migration
-
- backends/vhost-user.c                  | 20 +++++++--------
- hw/block/vhost-user-blk.c              | 27 +++++++++++---------
- hw/block/virtio-blk.c                  |  7 +++---
- hw/char/virtio-serial-bus.c            |  3 ++-
- hw/core/vm-change-state-handler.c      | 18 ++++++++-----
- hw/display/vhost-user-gpu.c            | 12 ++++++---
- hw/input/virtio-input.c                |  3 ++-
- hw/net/virtio-net.c                    |  3 ++-
- hw/scsi/scsi-bus.c                     |  2 +-
- hw/scsi/vhost-scsi-common.c            | 13 +++++-----
- hw/scsi/vhost-scsi.c                   |  5 ++--
- hw/scsi/vhost-user-scsi.c              | 18 +++++++------
- hw/vfio/migration.c                    |  2 +-
- hw/virtio/vdpa-dev.c                   |  5 ++--
- hw/virtio/vhost-user-base.c            | 23 ++++++++++-------
- hw/virtio/vhost-user-fs.c              | 23 ++++++++++-------
- hw/virtio/vhost-user-scmi.c            | 27 ++++++++++++--------
- hw/virtio/vhost-user-vsock.c           | 15 +++++++----
- hw/virtio/vhost-vsock-common.c         | 12 ++++-----
- hw/virtio/vhost-vsock.c                | 11 ++++----
- hw/virtio/vhost.c                      | 23 +++++++++--------
- hw/virtio/virtio-balloon.c             |  3 ++-
- hw/virtio/virtio-crypto.c              |  3 ++-
- hw/virtio/virtio-iommu.c               |  3 ++-
- hw/virtio/virtio-rng.c                 |  5 ++--
- hw/virtio/virtio.c                     | 23 +++++++++++------
- include/hw/virtio/vhost-scsi-common.h  |  2 +-
- include/hw/virtio/vhost-vsock-common.h |  2 +-
- include/hw/virtio/vhost.h              |  8 +++---
- include/hw/virtio/virtio.h             |  2 +-
- include/system/runstate.h              | 13 +++++++---
- include/system/vhost-user-backend.h    |  2 +-
- system/cpus.c                          |  8 ++++--
- system/runstate.c                      | 35 ++++++++++++++++++++++----
- 34 files changed, 239 insertions(+), 142 deletions(-)
-
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 6aa72fd434..bdd945c18d 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1368,10 +1368,10 @@ fail_alloc_desc:
+     return r;
+ }
+ 
+-void vhost_virtqueue_stop(struct vhost_dev *dev,
+-                          struct VirtIODevice *vdev,
+-                          struct vhost_virtqueue *vq,
+-                          unsigned idx)
++int vhost_virtqueue_stop(struct vhost_dev *dev,
++                         struct VirtIODevice *vdev,
++                         struct vhost_virtqueue *vq,
++                         unsigned idx)
+ {
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_state state = {
+@@ -1381,7 +1381,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
+ 
+     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
+         /* Don't stop the virtqueue which might have not been started */
+-        return;
++        return 0;
+     }
+ 
+     r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
+@@ -1412,6 +1412,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
+                        0, virtio_queue_get_avail_size(vdev, idx));
+     vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
+                        0, virtio_queue_get_desc_size(vdev, idx));
++    return r;
+ }
+ 
+ static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
+@@ -2136,9 +2137,10 @@ fail_features:
+ }
+ 
+ /* Host notifiers must be enabled at this point. */
+-void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
++int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+ {
+     int i;
++    int rc = 0;
+ 
+     /* should only be called after backend is connected */
+     assert(hdev->vhost_ops);
+@@ -2157,10 +2159,10 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+         vhost_dev_set_vring_enable(hdev, false);
+     }
+     for (i = 0; i < hdev->nvqs; ++i) {
+-        vhost_virtqueue_stop(hdev,
+-                             vdev,
+-                             hdev->vqs + i,
+-                             hdev->vq_index + i);
++        rc |= vhost_virtqueue_stop(hdev,
++                                   vdev,
++                                   hdev->vqs + i,
++                                   hdev->vq_index + i);
+     }
+     if (hdev->vhost_ops->vhost_reset_status) {
+         hdev->vhost_ops->vhost_reset_status(hdev);
+@@ -2177,6 +2179,7 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+     hdev->started = false;
+     vdev->vhost_started = false;
+     hdev->vdev = NULL;
++    return rc;
+ }
+ 
+ int vhost_net_set_backend(struct vhost_dev *hdev,
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index a9469d50bc..fd96ec9c39 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -232,8 +232,10 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
+  * Stop the vhost device. After the device is stopped the notifiers
+  * can be disabled (@vhost_dev_disable_notifiers) and the device can
+  * be torn down (@vhost_dev_cleanup).
++ *
++ * Return: 0 on success, != 0 on error when stopping dev.
+  */
+-void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
++int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
+ 
+ /**
+  * DOC: vhost device configuration handling
+@@ -333,8 +335,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write);
+ 
+ int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vdev,
+                           struct vhost_virtqueue *vq, unsigned idx);
+-void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
+-                          struct vhost_virtqueue *vq, unsigned idx);
++int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
++                         struct vhost_virtqueue *vq, unsigned idx);
+ 
+ void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
+ void vhost_dev_free_inflight(struct vhost_inflight *inflight);
 -- 
 2.44.0
 
