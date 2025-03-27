@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F26F8C3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 19:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2AAFC3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 20:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txtIB-0000Oy-JY; Thu, 27 Mar 2025 15:53:31 -0400
+	id 1txtWB-0003Zq-E9; Thu, 27 Mar 2025 16:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1txtI2-0000OM-DR; Thu, 27 Mar 2025 15:53:24 -0400
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1txtW6-0003ZV-4D; Thu, 27 Mar 2025 16:07:54 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1txtHz-0006kb-OC; Thu, 27 Mar 2025 15:53:22 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52RDfHpI029887;
- Thu, 27 Mar 2025 19:53:14 GMT
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1txtW3-0000bu-EX; Thu, 27 Mar 2025 16:07:53 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52RE37Vf008008;
+ Thu, 27 Mar 2025 20:07:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dWC4rE
- 0bNxlCdwDd0jxwSEKlaw4DSwqvsP8O0fhegDo=; b=Phlzd6eQkE5H3+g0ntzVvf
- +2+l/v3snrN//yn6RNQnUYgIg93jBxvE+pvKENQOCMAAP6AcDHvphw7voWncsN9o
- eOoBLH/nyi2yC4PGlGn733vTMoe4rxv3hSlL3h9ZjVhq3AKVaMSFj25swF/E5NwI
- 1yhC1AlGhyCwZR/WdTF+3kOxRDM9+Jz3e2LTddIHWMAfcdnAP5ZLa2sqcx8fEFDJ
- Tc/NxmuJBemXmvGTIpNDygUMoL2ma5GEJlyDrrPgpICmZAW/jFWPArVbSkRYEplT
- itENClGs+kh5IJ57VcC6Bzu+L5sgmKpdP9khSgZY0BvirCEmTLk6zyBSCafxA7gw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45my29cy40-1
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=KBCt0NpS+ZIoKkiDy0tBfDOKZsUi
+ n+JyqQTTgGx3WCs=; b=avE7eJ1tPFfbB50zqs9DR9W3KGd3OySpxbzLrIIqwVlW
+ oJaefPEkIJu4rab/5kGWeoo172NQjejtYCKVN+FmLA4Sj1VBWIJJCXqpK9wedhvE
+ 36Nq9DzpFRogiXwEEP83Tske2u3/mS5hbcYG5gxDX39nBFIKLXRRfz2j48G2tVRd
+ 1v9sO1mjJy6+o/vNcHk/TjURS3o2EEC2n2nvymqA/81Dun6x595IWKP1RCpDYkZJ
+ rj6gzYiEzHuDpS87iw6C1mvMpz6Lzu4jgiidXVVbkbqtnex7TJ+YvHcAS5hMbHdz
+ ghO/1Pmtmp74G3T2XXLACwcWRv5c4Ba+iyzDdzZDkg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45n83pa2t2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Mar 2025 19:53:13 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52RJoQHL012250;
- Thu, 27 Mar 2025 19:53:12 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j91mexty-1
+ Thu, 27 Mar 2025 20:07:46 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52RK7kuI016053;
+ Thu, 27 Mar 2025 20:07:46 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45n83pa2t1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Mar 2025 19:53:12 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52RJrBkU25297478
+ Thu, 27 Mar 2025 20:07:45 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52RH0Wsj005796;
+ Thu, 27 Mar 2025 20:07:45 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45ja82psf2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Mar 2025 20:07:45 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52RK7fJO56885716
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Mar 2025 19:53:11 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5B1575805A;
- Thu, 27 Mar 2025 19:53:11 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 800BA5805C;
- Thu, 27 Mar 2025 19:53:10 +0000 (GMT)
-Received: from [9.61.251.62] (unknown [9.61.251.62])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 27 Mar 2025 19:53:10 +0000 (GMT)
-Message-ID: <a2bae416-8d95-44ea-9cf5-fff5f9bf09f8@linux.ibm.com>
-Date: Thu, 27 Mar 2025 12:53:09 -0700
+ Thu, 27 Mar 2025 20:07:41 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5FCED20043;
+ Thu, 27 Mar 2025 20:07:41 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 53AE020040;
+ Thu, 27 Mar 2025 20:07:39 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.214.220])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 27 Mar 2025 20:07:39 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: [PATCH v7 0/7] Power11 support for QEMU [PowerNV]
+Date: Fri, 28 Mar 2025 01:37:31 +0530
+Message-ID: <20250327200738.1524401-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] util: Add functions for s390x mmio read/write
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-block@nongnu.org, fam@euphon.net,
- philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com
-References: <20250326181007.1099-1-alifm@linux.ibm.com>
- <20250326181007.1099-2-alifm@linux.ibm.com> <20250327192052.GC46883@fedora>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20250327192052.GC46883@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: YHgfqaW2V_JXAkAPsfZpN3RQ1oSk0VxS
-X-Proofpoint-ORIG-GUID: YHgfqaW2V_JXAkAPsfZpN3RQ1oSk0VxS
+X-Proofpoint-GUID: f7sqKknOuXZ63H3cs1RwnVn9cCHb8eAm
+X-Proofpoint-ORIG-GUID: phGja_sIMDv5yMQcpKY96NkToi9LmcZI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-27_03,2025-03-27_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 bulkscore=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=946 suspectscore=0 impostorscore=0
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503270131
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ bulkscore=0 malwarescore=0
+ adultscore=0 suspectscore=0 mlxlogscore=999 impostorscore=0
+ priorityscore=1501 mlxscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503270135
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -110,98 +115,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Overview
+============
 
-On 3/27/2025 12:20 PM, Stefan Hajnoczi wrote:
-> On Wed, Mar 26, 2025 at 11:10:06AM -0700, Farhan Ali wrote:
->> Starting with z15 (or newer) we can execute mmio
->> instructions from userspace. On older platforms
->> where we don't have these instructions available
->> we can fallback to using system calls to access
->> the PCI mapped resources.
->>
->> This patch adds helper functions for mmio reads
->> and writes for s390x.
->>
->> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
->> ---
->>   include/qemu/s390x_pci_mmio.h |  17 ++++++
->>   util/meson.build              |   2 +
->>   util/s390x_pci_mmio.c         | 105 ++++++++++++++++++++++++++++++++++
->>   3 files changed, 124 insertions(+)
->>   create mode 100644 include/qemu/s390x_pci_mmio.h
->>   create mode 100644 util/s390x_pci_mmio.c
->>
->> diff --git a/include/qemu/s390x_pci_mmio.h b/include/qemu/s390x_pci_mmio.h
->> new file mode 100644
->> index 0000000000..be61b5ae29
->> --- /dev/null
->> +++ b/include/qemu/s390x_pci_mmio.h
->> @@ -0,0 +1,17 @@
->> +/*
->> + * s390x PCI MMIO definitions
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +#ifndef S390X_PCI_MMIO_H
->> +#define S390X_PCI_MMIO_H
->> +
->> +uint64_t s390x_pci_mmio_read_64(const void *ioaddr);
->> +uint32_t s390x_pci_mmio_read_32(const void *ioaddr);
->> +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val);
->> +void s390x_pci_mmio_write_32(void *ioaddr, uint32_t val);
->> +
->> +#endif
->> diff --git a/util/meson.build b/util/meson.build
->> index 780b5977a8..acb21592f9 100644
->> --- a/util/meson.build
->> +++ b/util/meson.build
->> @@ -131,4 +131,6 @@ elif cpu in ['ppc', 'ppc64']
->>     util_ss.add(files('cpuinfo-ppc.c'))
->>   elif cpu in ['riscv32', 'riscv64']
->>     util_ss.add(files('cpuinfo-riscv.c'))
->> +elif cpu == 's390x'
->> +  util_ss.add(files('s390x_pci_mmio.c'))
->>   endif
->> diff --git a/util/s390x_pci_mmio.c b/util/s390x_pci_mmio.c
->> new file mode 100644
->> index 0000000000..2e0825d617
->> --- /dev/null
->> +++ b/util/s390x_pci_mmio.c
->> @@ -0,0 +1,105 @@
->> +/*
->> + * s390x PCI MMIO definitions
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include <unistd.h>
->> +#include <sys/syscall.h>
->> +#include "qemu/osdep.h"
-> This should be the first #include in the file. From
-> docs/devel/style.rst:
->
->    Include directives
->    ------------------
->    
->    Order include directives as follows:
->    
->    .. code-block:: c
->    
->        #include "qemu/osdep.h"  /* Always first... */
->        #include <...>           /* then system headers... */
->        #include "..."           /* and finally QEMU headers. */
->
-> Otherwise:
->
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Add support for Power11 powernv machine type.
 
-Will fix in next revision. Thanks!
+As Power11 core is same as Power10, hence much of the code has been reused
+from Power10.
 
+Split Powernv11 chip/machine code into commits introducing: chip,machine,xive,phb
+This is to try to keep the code smaller in each commit, but can squash the
+xive/phb commits into respective chip/machine commit
+
+Power11 PSeries already added in QEMU in:
+  commit 273db89bcaf4 ("ppc/pseries: Add Power11 cpu type")
+
+Git Tree for Testing
+====================
+
+QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-powernv-v7
+
+Has been tested with following cases:
+* '-M powernv' / '-M powernv10' / '-M powernv11'
+* '-smp' option tested
+
+skiboot with Power11 support: https://github.com/open-power/skiboot, since
+commit 785a5e3
+
+Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+
+Changelog
+=========
+v7:
+  + use Power10 models of homer, sbe, occ, psi, lpc. As they are same.
+  + switch powernv tests to use buildroot images instead of op-build images
+  + add functional test for powernv11
+  - remove dynamic sysbus device for PHBs, so no more dynamic number of
+  PHBs in Power11 as it became complex to handle it and not much used
+
+v6 (https://lore.kernel.org/qemu-devel/20250325112319.927190-1-adityag@linux.ibm.com/):
+  + make Pnv11Chip's parent as PnvChip, instead of Pnv10Chip
+  + rebase on upstream/master
+
+v5 (https://lore.kernel.org/qemu-devel/57ce8d50-db92-44f0-96a9-e1297eea949f@kaod.org/):
+  + add chiptod
+  + add instance_init for P11 to use P11 models
+  + move patch introducing Pnv11Chip to the last
+  + update skiboot.lid to skiboot's upstream/master
+
+v4:
+  + patch #5: fix memory leak in pnv_chip_power10_quad_realize
+  - no change in other patches
+
+v3:
+  + patch #1: version power11 as power11_v2.0
+  + patch #2: split target hw/pseries code into patch #2
+  + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
+  + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
+  + patch #6-#11: no change
+  - remove commit to make Power11 as default
+
+v2:
+  + split powernv patch into homer,lpc,occ,psi,sbe
+  + reduce code duplication by reusing power10 code
+  + make power11 as default
+  + rebase on qemu upstream/master
+  + add more information in commit descriptions
+  + update docs
+  + update skiboot.lid
+
+Aditya Gupta (7):
+  ppc/pnv: Introduce Pnv11Chip
+  ppc/pnv: Introduce Power11 PowerNV machine
+  ppc/pnv: Add XIVE2 controller to Power11
+  ppc/pnv: Add PHB5 PCIe Host bridge to Power11
+  ppc/pnv: Add ChipTOD model for Power11
+  tests/powernv: Switch to buildroot images instead of op-build
+  tests/powernv: Add PowerNV test for Power11
+
+ docs/system/ppc/powernv.rst            |   9 +-
+ hw/ppc/pnv.c                           | 546 +++++++++++++++++++++++++
+ hw/ppc/pnv_chiptod.c                   |  59 +++
+ hw/ppc/pnv_core.c                      |  17 +
+ include/hw/ppc/pnv.h                   |  38 ++
+ include/hw/ppc/pnv_chip.h              |   7 +
+ include/hw/ppc/pnv_chiptod.h           |   2 +
+ include/hw/ppc/pnv_xscom.h             |  49 +++
+ tests/functional/test_ppc64_powernv.py |  34 +-
+ 9 files changed, 743 insertions(+), 18 deletions(-)
+
+-- 
+2.49.0
 
 
