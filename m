@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBCDC3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 06:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875B3C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 06:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txgOX-0000h1-5J; Thu, 27 Mar 2025 02:07:13 -0400
+	id 1txgSl-0002xE-D4; Thu, 27 Mar 2025 02:11:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1txgOJ-0000fU-JD; Thu, 27 Mar 2025 02:07:01 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1txgOH-0007uO-59; Thu, 27 Mar 2025 02:06:59 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9802510963C;
- Thu, 27 Mar 2025 09:05:35 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 521911D91E1;
- Thu, 27 Mar 2025 09:06:48 +0300 (MSK)
-Message-ID: <44124379-3349-45cf-9238-8a847d8b2770@tls.msk.ru>
-Date: Thu, 27 Mar 2025 09:06:47 +0300
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1txgSg-0002wk-JW
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:11:31 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1txgSd-0000Kz-C2
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 02:11:29 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5dbe706f94fso116316a12.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Mar 2025 23:11:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ionos.com; s=google; t=1743055885; x=1743660685; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1MZf+ZSYR6fIPp4jsPiKvTkvw2gubQAjPggbDk/bBS4=;
+ b=d7PFSz6e5q30OMWQ2p/J7EWV+ZRSoIak+7ZLDwOLCs6FRVUua0TkcvCeX8gbkesh81
+ iDUnxB4IZd7FPSsIorpCPMzrT21Rxgyy9FqKBefBDSPJIkkcHwTKNecsV73JPQsrBaif
+ fCMrHJgSXBkaD5HnPOJsk4+LgPFCFdoIjpFSlMY6iky1JVQC9iP8rTACWC8TwA8igXvs
+ j8REwb2Z8yKS6Bem4UVECn5XeK9Cmd230tsMTp08i42eivak4jCtvrbPHEjUDuZ9S/YC
+ 0u62cmmjO43V/f3C8PCXaQwwLTXeEZJ1dtTsim1G5Za4gemtzSo9gROrqtATyGS5BW/6
+ 0HUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743055885; x=1743660685;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1MZf+ZSYR6fIPp4jsPiKvTkvw2gubQAjPggbDk/bBS4=;
+ b=ZOxEzYnf5VMHDaNZUC57vMGjs8IAQlegvSRKJ1ZXFjLlAZXqn15zoiz0pWhfNfsWrZ
+ o5A4QPONNyMQ32cTTiLoqSmCh0/brZxREwDXgPZj0u5rrty44vBVql93sR4KcSpp3MW/
+ UWuOtzF9ah8rTJcpAJenDku/kKQ1vJ3a6G7uHNueg2CdfHb3q5bp8Zq/v+NeiFDOR4X1
+ XNnjWCxl4rrNYh9ANR3MnHjYxIwoAoCpCDdv90k+cfUvPIX0zvD85+2YpIoX5DIuh6l5
+ fEsIQkFD16aeVAhUuwrYIOAQRdm7a43f65giFDEKmg03IFgh2aOjs6qAfxdeNSah5X5a
+ Xc2w==
+X-Gm-Message-State: AOJu0YzoViVXc0UpNM6VYBkWi1rwFusuxeMHBQZHzM5Yy5ELTgmuI43t
+ TDn+eIUsY9EQeOr4keVb75nvU4a70IF0yrpGnjlKVa4ijfhHRtJvVa8ejYDT0WAuo97BJiBiqwA
+ VFTA=
+X-Gm-Gg: ASbGncubIsTk0N/u2yqNSQO8GY4OyTuToytJ3Z9Vs3dTKSIefsVGSKy+XXgvbmhojfh
+ i27QXGEryfpuAQdH9xhcmFewdiX7xURuy6pkDB9fDQU9hPMOCNKnq1pMgTvbZtafterReCDsBFf
+ oh+qNlbQch3vae1ZOlQEIead3wpVg1ErCaRxtlHYe59zeGG7Rn5PnXAtsTfDP6CJO8/WOe2KusR
+ O8EjE+VWPlh2WsZh5Q8f8/GLsbP9pYVn5VKbv9NpxkfY/f3QZpCeODUcbqLO40Us7KFK9ZxOaAT
+ VRaLkEwlu8BY/FfOAoYyJ82/Oq0rgRF0TvQuCQHsOBKIyU5GKU/jE4w=
+X-Google-Smtp-Source: AGHT+IHbWsSIAIW0UA1kZVQwwgRV3ZNaGr9o7plLVVIZ4ygGwbk/67YFocWuSYvzNriggXVQi0wNNg==
+X-Received: by 2002:a17:906:c147:b0:abf:663b:22c5 with SMTP id
+ a640c23a62f3a-ac701c34213mr53152666b.13.1743055884525; 
+ Wed, 26 Mar 2025 23:11:24 -0700 (PDT)
+Received: from lb02065.fritz.box ([2001:9e8:1460:e800:83eb:8e1c:ef0f:4d81])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac3efb64895sm1155894166b.113.2025.03.26.23.11.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Mar 2025 23:11:24 -0700 (PDT)
+From: Jack Wang <jinpu.wang@ionos.com>
+To: qemu-devel@nongnu.org,
+	farosas@suse.de,
+	peterx@redhat.com
+Cc: Li Zhijian <lizhijian@fujitsu.com>, Yu Zhang <yu.zhang@ionos.com>,
+ linux-rdma@vger.kernel.org, michael@flatgalaxy.com,
+ Michael Galaxy <mrgalaxy@nvidia.com>
+Subject: [PATCH] migration/rdma: Remove qemu_rdma_broken_ipv6_kernel
+Date: Thu, 27 Mar 2025 07:11:23 +0100
+Message-ID: <20250327061123.14453-1-jinpu.wang@ionos.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: qemu-devel@nongnu.org
-Cc: qemu-stable <qemu-stable@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [ANNOUNCE] QEMU 9.2.3 Stable released
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------pZkJJomolqXjZ9snPhy20E2d"
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: permerror client-ip=2a00:1450:4864:20::529;
+ envelope-from=jinpu.wang@ionos.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,185 +100,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------pZkJJomolqXjZ9snPhy20E2d
-Content-Type: multipart/mixed; boundary="------------tfQadHbQorQW0FTRWkM0cBcG";
- protected-headers="v1"
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <44124379-3349-45cf-9238-8a847d8b2770@tls.msk.ru>
-Subject: [ANNOUNCE] QEMU 9.2.3 Stable released
+I hit following error which testing migration in pure RoCE env:
+"-incoming rdma:[::]:8089: RDMA ERROR: You only have RoCE / iWARP devices in your
+systems and your management software has specified '[::]', but IPv6 over RoCE /
+iWARP is not supported in Linux.#012'."
 
---------------tfQadHbQorQW0FTRWkM0cBcG
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+In our setup, we use rdma bind on ipv6 on target host, while connect from source
+with ipv4, remove the qemu_rdma_broken_ipv6_kernel, migration just work
+fine.
 
-SGkgZXZlcnlvbmUsDQoNClRoZSBRRU1VIHY5LjIuMyBzdGFibGUgcmVsZWFzZSBpcyBub3cg
-YXZhaWxhYmxlLg0KDQpZb3UgY2FuIGdyYWIgdGhlIHRhcmJhbGwgZnJvbSBvdXIgZG93bmxv
-YWQgcGFnZSBoZXJlOg0KDQogICBodHRwczovL3d3dy5xZW11Lm9yZy9kb3dubG9hZC8jc291
-cmNlDQoNCiAgIGh0dHBzOi8vZG93bmxvYWQucWVtdS5vcmcvcWVtdS05LjIuMy50YXIueHoN
-CiAgIGh0dHBzOi8vZG93bmxvYWQucWVtdS5vcmcvcWVtdS05LjIuMy50YXIueHouc2lnIChz
-aWduYXR1cmUpDQoNCnY5LjIuMyBpcyBub3cgdGFnZ2VkIGluIHRoZSBvZmZpY2lhbCBxZW11
-LmdpdCByZXBvc2l0b3J5LCBhbmQgdGhlDQpzdGFibGUtOS4yIGJyYW5jaCBoYXMgYmVlbiB1
-cGRhdGVkIGFjY29yZGluZ2x5Og0KDQogICBodHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9q
-ZWN0L3FlbXUvLS9jb21taXRzL3N0YWJsZS05LjINCg0KVGhlcmUgYXJlIDY5IGNoYW5nZXMg
-c2luY2UgdGhlIHByZXZpb3VzIHY5LjIuMiByZWxlYXNlLg0KDQpUaGFuayB5b3UgZXZlcnlv
-bmUgd2hvIGhhcyBiZWVuIGludm9sdmVkIGFuZCBoZWxwZWQgd2l0aCB0aGUgc3RhYmxlIHNl
-cmllcyENCg0KL21qdA0KDQpDaGFuZ2Vsb2cgKHN0YWJsZS05LjItaGFzaCBtYXN0ZXItaGFz
-aCBBdXRob3IgTmFtZTogQ29tbW1pdC1TdWJqZWN0KToNCg0KOTAyN2FhNjM5NSBNaWNoYWVs
-IFRva2FyZXY6DQogIFVwZGF0ZSB2ZXJzaW9uIGZvciA5LjIuMyByZWxlYXNlDQpiMWVmYTVj
-MjM2IDdiOGNiZTUxNjIgU3RldmVuIExlZToNCiAgaHcvaW50Yy9hc3BlZWQ6IEZpeCBJUlEg
-aGFuZGxlciBtYXNrIGNoZWNrDQpkZjkxNjhiMDE5IDc4ODc3YjJlMDYgSmFtaW4gTGluOg0K
-ICBody9taXNjL2FzcGVlZF9oYWNlOiBGaXggYnVmZmVyIG92ZXJmbG93IGluIGhhc19wYWRk
-aW5nIGZ1bmN0aW9uDQozY2RkMWY0NWFhIDRlOWUyNDc4ZGYgQ2hhbyBMaXU6DQogIHRhcmdl
-dC9yaXNjdjogZml4IGhhbmRsaW5nIG9mIG5vcCBmb3IgdnN0YXJ0ID49IHZsIGluIHNvbWUg
-dmVjdG9yIGluc3RydWN0aW9uDQo3ZjVmM2U1YWNkIGU4Mzg0NTMxNmEgQ2hhbyBMaXU6DQog
-IHRhcmdldC9yaXNjdjogcmVmYWN0b3IgVlNUQVJUX0NIRUNLX0VBUkxZX0VYSVQoKSB0byBh
-Y2NlcHQgdmwgYXMgYSBwYXJhbWV0ZXINCjE1NGVkNTYxYjMgMTRmYjZkYmJjNSBNaWNoYWVs
-IFRva2FyZXY6DQogIE1ha2VmaWxlOiAibWFrZSBkaXN0IiBnZW5lcmF0ZXMgYSAueHosIG5v
-dCAuYnoyDQozZTdkOGQyMjMzIDczYzBjOTA0ZmMgTmljaG9sYXMgUGlnZ2luOg0KICB0YXJn
-ZXQvcHBjOiBGaXggZTIwMCBkdXBsaWNhdGUgU1BScw0KNjcyNmQ0ODc0YiA4ZGVmZTlkYTA4
-IE5pY2hvbGFzIFBpZ2dpbjoNCiAgdGFyZ2V0L3BwYzogRml4IGZhY2lsaXR5IGludGVycnVw
-dCBjaGVja3MgZm9yIFZTWA0KNjRlMTZlMzg4NiAxNDkwZDBiY2RmIEhhcnNoIFByYXRlZWsg
-Qm9yYToNCiAgcHBjL3NwYXByOiBmaXggZGVmYXVsdCBjcHUgZm9yIHByZS05LjAgbWFjaGlu
-ZXMuDQo3Mzc2OGRhZTRhIGNhMjczN2Q2ZWMgWWFvIFppOg0KICBob3N0L2luY2x1ZGUvbG9v
-bmdhcmNoNjQ6IEZpeCBpbmxpbmUgYXNzZW1ibHkgY29tcGF0aWJpbGl0eSB3aXRoIENsYW5n
-DQpkODNiNjFmNTljIDFhMDEwZDIyYjcgUmljaGFyZCBIZW5kZXJzb246DQogIGxpbnV4LXVz
-ZXIvcmlzY3Y6IEZpeCBoYW5kbGluZyBvZiBjcHUgbWFzayBpbiByaXNjdl9od3Byb2JlIHN5
-c2NhbGwNCjgwM2E2ODY0ZWYgZDJjNTc1OWM4ZCBEZWVwYWsgR3VwdGE6DQogIHRhcmdldC9y
-aXNjdjogZml4ZXMgYSBidWcgYWdhaW5zdCBgc3NhbW9zd2FwYCBiZWhhdmlvciBpbiBNLW1v
-ZGUNCjY4YTkwMTM0YzAgODZjNzhiMjgwNiBEZWVwYWsgR3VwdGE6DQogIHRhcmdldC9yaXNj
-djogZml4IGFjY2VzcyBwZXJtaXNzaW9uIGNoZWNrcyBmb3IgQ1NSX1NTUA0KOWMzMjczYzE2
-ZSA2NzJjYjI5ZDFlIFNhbnRpYWdvIE1vbnNlcnJhdCBDYW1wYW5lbGxvOg0KICBkb2NzL2Fi
-b3V0L2VtdWxhdGlvbjogRml4IGJyb2tlbiBsaW5rDQpiY2Y5MjgyZjUzIGIwMjdmNTVhOTkg
-S29uc3RhbnRpbiBTaGtvbG55eToNCiAgdmRwYTogQWxsb3cgdkRQQSB0byB3b3JrIG9uIGJp
-Zy1lbmRpYW4gbWFjaGluZQ0KY2RhMzdhNmJkNyA1MGU5NzU0MTQ5IEtvbnN0YW50aW4gU2hr
-b2xueXk6DQogIHZkcGE6IEZpeCBlbmRpYW4gYnVncyBpbiBzaGFkb3cgdmlydHF1ZXVlDQpi
-YjUwY2M5ZTc1IDAyY2U2Y2VhNzEgR3VvIEhvbmd5dToNCiAgdGFyZ2V0L2xvb25nYXJjaDog
-Rml4IHZsZGkgaW5zdA0KZDA4ZTUzOGRlOCBjYzdhYmMzNWRmIFJpY2hhcmQgSGVuZGVyc29u
-Og0KICB0YXJnZXQvYXJtOiBTaW1wbGlmeSBwc3RhdGVfc20gY2hlY2sgaW4gc3ZlX2FjY2Vz
-c19jaGVjaw0KYTc1ZTQxNWNhNSAyOThhMDQ5OThmIFJpY2hhcmQgSGVuZGVyc29uOg0KICB0
-YXJnZXQvYXJtOiBNYWtlIERpc2FzQ29udGV4dC57ZnAsIHN2ZX1fYWNjZXNzX2NoZWNrZWQg
-dHJpc3RhdGUNCmNmOGJkNjRkNGYgZTZjMzhkMmFiNSBKb2UgS29tbG9kaToNCiAgdXRpbC9j
-YWNoZWZsdXNoOiBNYWtlIGZpcnN0IERTQiB1bmNvbmRpdGlvbmFsIG9uIGFhcmNoNjQNCjBj
-ODVjOTc0NmYgNDgxNzBjMmQ4NiBHcmVnIEt1cno6DQogIGRvY3M6IFJlbmFtZSBkZWZhdWx0
-LWNvbmZpZ3MgdG8gY29uZmlncw0KNDkwYzczN2JjNyBiNzVjNWY5ODc5IEtldmluIFdvbGY6
-DQogIGJsb2NrOiBaZXJvIGJsb2NrIGRyaXZlciBzdGF0ZSBiZWZvcmUgcmVvcGVuaW5nDQo3
-MDRlYWY4MjE5IDNhMTFiNjUzYTYgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6k6DQogIGh3L3hl
-bi9odm06IEZpeCBBYXJjaDY0IHR5cG8NCjY2MjAzMzU0MTggNzAwZDNkNmRkNCBQZXRlciBN
-YXlkZWxsOg0KICBody9uZXQvc21jOTFjMTExOiBEb24ndCBhbGxvdyBkYXRhIHJlZ2lzdGVy
-IGFjY2VzcyB0byBvdmVycnVuIGJ1ZmZlcg0KZThmZDk3ZmMxZSBhYWQ2ZjI2NGFkIFBldGVy
-IE1heWRlbGw6DQogIGh3L25ldC9zbWM5MWMxMTE6IFNhbml0aXplIHBhY2tldCBsZW5ndGgg
-b24gdHgNCmU5ZjZjMzIzMzkgMmZhM2E1Yjk0NiBQZXRlciBNYXlkZWxsOg0KICBody9uZXQv
-c21jOTFjMTExOiBTYW5pdGl6ZSBwYWNrZXQgbnVtYmVycw0KZjNkYTY5MzRjZCAyOWMwNDFj
-YTdmIE5pY2hvbGFzIFBpZ2dpbjoNCiAgcHBjL3Budi9vY2M6IEZpeCBjb21tb24gYXJlYSBz
-ZW5zb3Igb2Zmc2V0cw0KYzk2YjhjMGUzOSA2OGFkY2M3ODRiIFN0ZWZhbm8gU3RhYmVsbGlu
-aToNCiAgeGVuOiBObyBuZWVkIHRvIGZsdXNoIHRoZSBtYXBjYWNoZSBmb3IgZ3JhbnRzDQph
-ZWFkZTBhMjUxIGU3ODkxYzU3NWYgRXVnZW5pbyBQw6lyZXo6DQogIG5ldDogbW92ZSBiYWNr
-ZW5kIGNsZWFudXAgdG8gTklDIGNsZWFudXANCjllMDBkNzRhOWEgZGIwZDQwMTdmOSBFdWdl
-bmlvIFDDqXJlejoNCiAgbmV0OiBwYXJhbWV0ZXJpemUgdGhlIHJlbW92aW5nIGNsaWVudCBm
-cm9tIG5jIGxpc3QNCjVjZjNiNDgwOTQgMDJhZTMxNTQ2NyBQZXRlciBNYXlkZWxsOg0KICB1
-dGlsL3FlbXUtdGltZXIuYzogRG9uJ3Qgd2FycCB0aW1lciBmcm9tIHRpbWVybGlzdF9yZWFy
-bSgpDQplYzM2ZDUyMmNlIGVlNzg2Y2ExMTUgUGV0ZXIgTWF5ZGVsbDoNCiAgdGFyZ2V0L2Fy
-bTogQ29ycmVjdCBTVFJEIGF0b21pY2l0eQ0KZjcyZTY5N2YyNCBjZGUzMjQ3NjUxIFBldGVy
-IE1heWRlbGw6DQogIHRhcmdldC9hcm06IENvcnJlY3QgTERSRCBhdG9taWNpdHkgYW5kIGZh
-dWx0IGJlaGF2aW91cg0KM2M4NGE2M2UyYyA5YTlkOWU4MjA5IEFsZXggQmVubsOpZToNCiAg
-aHcvYXJtOiBlbmFibGUgc2VjdXJlIEVMMiB0aW1lcnMgZm9yIHNic2EgbWFjaGluZQ0KNDcy
-YTQyMDc2MSA1ZGNhZWE4YmNkIEFsZXggQmVubsOpZToNCiAgaHcvYXJtOiBlbmFibGUgc2Vj
-dXJlIEVMMiB0aW1lcnMgZm9yIHZpcnQgbWFjaGluZQ0KYWIzN2Q2YmQ4OSBmOWY5OWQ3Y2E1
-IEFsZXggQmVubsOpZToNCiAgdGFyZ2V0L2FybTogSW1wbGVtZW50IFNFTDIgcGh5c2ljYWwg
-YW5kIHZpcnR1YWwgdGltZXJzDQo3MzlkYWJiMWFkIDAyYzY0OGEwYTEgUGV0ZXIgTWF5ZGVs
-bDoNCiAgdGFyZ2V0L2FybTogUmVmYWN0b3IgaGFuZGxpbmcgb2YgdGltZXIgb2Zmc2V0IGZv
-ciBkaXJlY3QgcmVnaXN0ZXIgYWNjZXNzZXMNCjY5YjRlZDAyNTkgNGFlY2Q0YjQ0MiBQZXRl
-ciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBBbHdheXMgYXBwbHkgQ05UVk9GRl9FTDIgZm9y
-IENOVFZfVFZBTF9FTDAyIGFjY2Vzc2VzDQpiNjkyYWVhODAzIGJkZDY0MTU0MWYgUGV0ZXIg
-TWF5ZGVsbDoNCiAgdGFyZ2V0L2FybTogTWFrZSBDTlRQU18qIFVOREVGIGZyb20gU2VjdXJl
-IEVMMSB3aGVuIFNlY3VyZSBFTDIgaXMgZW5hYmxlZA0KMDMzMzY3ZDBhZiA1NzA5MDM4YWE4
-IFBldGVyIE1heWRlbGw6DQogIHRhcmdldC9hcm06IERvbid0IGFwcGx5IENOVFZPRkZfRUwy
-IGZvciBFTDJfVklSVCB0aW1lcg0KY2VmYjAwOTc2MiBkYjZjMjE5MjgzIFBldGVyIE1heWRl
-bGw6DQogIHRhcmdldC9hcm06IEFwcGx5IGNvcnJlY3QgdGltZXIgb2Zmc2V0IHdoZW4gY2Fs
-Y3VsYXRpbmcgZGVhZGxpbmVzDQo0MTNmN2JhNmE4IDNiMmUyMmMwYmIgUGF0cmljayBWZW50
-dXJlOg0KICBody9ncGlvOiBucGNtN3h4OiBmaXh1cCBvdXQtb2YtYm91bmRzIGFjY2Vzcw0K
-ODBmNjZmM2QyMiA4N2M4YjRmYzNjIE1hcmt1cyBBcm1icnVzdGVyOg0KICBkb2NzL2Fib3V0
-L2J1aWxkLXBsYXRmb3JtczogQ29ycmVjdCBtaW5pbXVtIHN1cHBvcnRlZCBQeXRob24gdmVy
-c2lvbg0KMDA3ZWE2ZDZlZCAyYWQ2MzhhM2QxIERlbmlzIFJhc3R5b2dpbjoNCiAgYmxvY2sv
-cWVkOiBmaXggdXNlLWFmdGVyLWZyZWUgYnkgbnVsbGlmeWluZyB0aW1lciBwb2ludGVyIGFm
-dGVyIGZyZWUNCjU2ZTE5MGQ3M2UgMzUyMWY5Y2FkYyBSb2RyaWdvIERpYXMgQ29ycmVhOg0K
-ICBnb2xkZmlzaF9ydGM6IEZpeCB0aWNrX29mZnNldCBtaWdyYXRpb24NCjQyNmJlZWM5NmEg
-Yzg2ZWRjNTQ3NiBEYW5pZWwgSGVucmlxdWUgQmFyYm96YToNCiAgdGFyZ2V0L3Jpc2N2OiB0
-aHJvdyBkZWJ1ZyBleGNlcHRpb24gYmVmb3JlIHBhZ2UgZmF1bHQNCjE0MDgyNjZkMWMgM2Zi
-YTc2ZTYxYyBEYW5pZWwgSGVucmlxdWUgQmFyYm96YToNCiAgdGFyZ2V0L3Jpc2N2L2RlYnVn
-LmM6IHVzZSB3cCBzaXplID0gNCBmb3IgMzItYml0IENQVXMNCjFmYzBhNThhOTggYmYzYWRm
-OTNmMSBNYXggQ2hvdToNCiAgdGFyZ2V0L3Jpc2N2OiBydnY6IEZpeCBpbmNvcnJlY3Qgdmxl
-biBjb21wYXJpc29uIGluIHByb3Bfdmxlbl9zZXQNCjM5NDA4ZjZmMTQgZmZkNDU1OTYzZiBN
-YXggQ2hvdToNCiAgdGFyZ2V0L3Jpc2N2OiBydnY6IEZpeCB1bmV4cGVjdGVkIGJlaGF2aW9y
-IG9mIHZlY3RvciByZWR1Y3Rpb24gaW5zdHJ1Y3Rpb25zIHdoZW4gdmwgaXMgMA0KMTY1NDk5
-MzBiYiAxMmMzNjUzMTVhIEpvZWxsZSB2YW4gRHluZToNCiAgdGFyZ2V0L2FybS9odmY6IHNp
-Z24gZXh0ZW5kIHRoZSBkYXRhIGZvciBhIGxvYWQgb3BlcmF0aW9uIHdoZW4gU1NFPTENCjU3
-NjMzOGVlYTEgZmQyMDc2NzdhOCBKb2VsbGUgdmFuIER5bmU6DQogIHRhcmdldC9hcm0vaHZm
-OiBEaXNhYmxlIFNNRSBmZWF0dXJlDQo0NGE3ZTBhYWY3IDZkZWJmYjJjYjEgUGFvbG8gQm9u
-emluaToNCiAgcGh5c21lbTogcmVwbGFjZSBhc3NlcnRpb24gd2l0aCBlcnJvcg0KN2Y2Njdm
-YzdmZSA3YmQ0ZWFhODQ3IEJpYm8gTWFvOg0KICB0YXJnZXQvbG9vbmdhcmNoL2dkYnN0dWI6
-IEZpeCBnZGJzdHViIGluY29ycmVjdGx5IGhhbmRsaW5nIHNvbWUgcmVnaXN0ZXJzDQpkYzIw
-M2E1OTg3IGU4N2I2ZWZiMTEgTWF0aWFzIEV6ZXF1aWVsIFZhcmEgTGFyc2VuOg0KICB2aG9z
-dC11c2VyLXNuZDogY29ycmVjdCB0aGUgY2FsY3VsYXRpb24gb2YgY29uZmlnX3NpemUNCjI5
-ODM0MGMxNTIgMTMxZmU2NGU2MyBBbGV4YW5kZXIgR3JhZjoNCiAgaHcvdmlydGlvL3ZpcnRp
-by1uc206IFJlc3BvbmQgd2l0aCBjb3JyZWN0IGxlbmd0aA0KOWI4NzhiZDkyNyA4M2NiMThh
-YzQ1IFN0ZWZhbm8gR2FyemFyZWxsYToNCiAgY3J5cHRvZGV2L3Zob3N0OiBhbGxvY2F0ZSBD
-cnlwdG9EZXZCYWNrZW5kVmhvc3QgdXNpbmcgZ19tZW0wKCkNCmQxYjg0MjNmYjggMzY4NDcx
-N2I3NCBTYWlyYWogS29kaWxrYXI6DQogIGFtZF9pb21tdTogVXNlIGNvcnJlY3QgYml0bWFz
-ayB0byBzZXQgY2FwYWJpbGl0eSBCQVINCjg0ODU4NDcxZTYgNjNkYzBiODY0NyBTYWlyYWog
-S29kaWxrYXI6DQogIGFtZF9pb21tdTogVXNlIGNvcnJlY3QgRFRFIGZpZWxkIGZvciBpbnRl
-cnJ1cHQgcGFzc3Rocm91Z2gNCmVjYWY1NTU0MzkgMzhlZjM4MzA3MyBUaG9tYXMgSHV0aDoN
-CiAgaHcvaTM4Ni9taWNyb3ZtOiBGaXggY3Jhc2ggdGhhdCBvY2N1cnMgd2hlbiBpbnRyb3Nw
-ZWN0aW5nIHRoZSBtaWNyb3ZtIG1hY2hpbmUNCjFlNGNlM2RkODcgZGU1MzgyODhlNCBUaG9t
-YXMgSHV0aDoNCiAgaHcvaTM4Ni9wYzogRml4IGNyYXNoIHRoYXQgb2NjdXJzIHdoZW4gaW50
-cm9zcGVjdGluZyBUWVBFX1BDX01BQ0hJTkUgbWFjaGluZXMNCjRmNWFkYmU2OTcgYmM4MmFm
-NmIwZCBBa2loaWtvIE9kYWtpOg0KICBody9uZXQ6IEZpeCBOVUxMIGRlcmVmZXJlbmNlIHdp
-dGggc29mdHdhcmUgUlNTDQo0Mzc5OTlhZTgxIDQ2NGNlNzFhOTYgQmVybmhhcmQgQmVzY2hv
-dzoNCiAgS2NvbmZpZzogRXh0cmFjdCBDT05GSUdfVVNCX0NISVBJREVBIGZyb20gQ09ORklH
-X0lNWA0KM2ZmYmRjM2UxMiAyYjk1YTJkMDFiIFBldGVyIE1heWRlbGw6DQogIHRhcmdldC9h
-cm06IENvcnJlY3QgZXJyb3JzIGluIFdGSS9XRkUgdHJhcHBpbmcNCjM3NjAwNzA0ZGQgNGQ0
-MzZmYjA1YyBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBIb25vdXIgU0RDUi5UREND
-IGFuZCBTQ1IuVEVSUiBpbiBBQXJjaDMyIEVMMyBub24tTW9uaXRvciBtb2Rlcw0KN2E5ZmEz
-OTg1NiBkMDRjNmMzYzAwIFBldGVyIE1heWRlbGw6DQogIGh3L2ludGMvYXJtX2dpY3YzX2Nw
-dWlmOiBEb24ndCBkb3duZ3JhZGUgbW9uaXRvciB0cmFwcyBmb3IgQUFyY2gzMiBFTDMNCjY4
-YjExNWRkYWUgNGNmNDk0ODY1MSBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBNYWtl
-IENQX0FDQ0VTU19UUkFQcyB0byBBQXJjaDMyIEVMMyBiZSBNb25pdG9yIHRyYXBzDQphOThj
-N2NlZTE3IDcwN2Q0NzhlZDggUGV0ZXIgTWF5ZGVsbDoNCiAgdGFyZ2V0L2FybTogUmVwb3J0
-IGNvcnJlY3Qgc3luZHJvbWUgZm9yIFVOREVGSU5FRCBMT1Igc3lzcmVncyB3aGVuIE5TPTAN
-CjQxOTQ1YzZiYmIgY2NkYTc5Mjk0NSBQZXRlciBNYXlkZWxsOg0KICB0YXJnZXQvYXJtOiBS
-ZXBvcnQgY29ycmVjdCBzeW5kcm9tZSBmb3IgVU5ERUZJTkVEIFMxRTIgQVQgb3BzIGF0IEVM
-Mw0KNzk4OGU3YzZiYSAxOTYwZDk3MDFlIFBldGVyIE1heWRlbGw6DQogIHRhcmdldC9hcm06
-IFJlcG9ydCBjb3JyZWN0IHN5bmRyb21lIGZvciBVTkRFRklORUQgQVQgb3BzIHdpdGggd3Jv
-bmcgTlNFLCBOUw0KNGE0NDI2Mjc1YiBiODE5ZmQ2OTk0IFBldGVyIE1heWRlbGw6DQogIHRh
-cmdldC9hcm06IFJlcG9ydCBjb3JyZWN0IHN5bmRyb21lIGZvciBVTkRFRklORUQgQ05UUFNf
-Kl9FTDEgZnJvbSBFTDIgYW5kIE5TIEVMMQ0K
+Checking the git history, the function was added since introducing of
+rdma migration, which is more than 10 years ago. linux-rdma has
+improved support on RoCE/iWARP for ipv6 over past years. There are a few fixes
+back in 2016 seems related to the issue, eg:
+aeb76df46d11 ("IB/core: Set routable RoCE gid type for ipv4/ipv6 networks")
 
---------------tfQadHbQorQW0FTRWkM0cBcG--
+other fixes back in 2018, eg:
+052eac6eeb56 RDMA/cma: Update RoCE multicast routines to use net namespace
+8d20a1f0ecd5 RDMA/cma: Fix rdma_cm raw IB path setting for RoCE
+9327c7afdce3 RDMA/cma: Provide a function to set RoCE path record L2 parameters
+5c181bda77f4 RDMA/cma: Set default GID type as RoCE when resolving RoCE route
+3c7f67d1880d IB/cma: Fix default RoCE type setting
+be1d325a3358 IB/core: Set RoCEv2 MGID according to spec
+63a5f483af0e IB/cma: Set default gid type to RoCEv2
 
---------------pZkJJomolqXjZ9snPhy20E2d
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+So remove the outdated function and it's usage.
 
------BEGIN PGP SIGNATURE-----
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Li Zhijian <lizhijian@fujitsu.com>
+Cc: Yu Zhang <yu.zhang@ionos.com>
+Cc: qemu-devel@nongnu.org
+Cc: linux-rdma@vger.kernel.org
+Cc: michael@flatgalaxy.com
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Tested-by: Li zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Michael Galaxy <mrgalaxy@nvidia.com>
+---
+v1: drop RFC, fix build error (zhijian), collect Reviewed-by and Tested-by
 
-iQIzBAEBCgAdFiEEZKoqtTHVaQM2a/75gqpKJDselHgFAmfk6vgACgkQgqpKJDse
-lHjPrA/+JH9l7qy7QokOrBex7MS2vrsUhiFb34gqSUYIjco7HpD2UOIyjwgEThZY
-nbKC2NmMQFr04EfH9OPjMcBrKBOuJefNe/+Zw2iVoPsq+ozBHatO9EamTcC30qFp
-pmjA2BXwkLC7pkIY9uZDlLBZjLZFbjNKBlxmXNXq3CVFWVrN7yUkXQfmdHz+/QaN
-MbcP20nMc8kqcwR79x5J18kTbEDHCXu4gaZyvZ5hTNAVocNY1pAGahjK7UWW6emy
-HxFrn9XlZ1utmgq6dSVkVuCuCrf5mX5eQXg/4NihmbIya4Lv37PrHuj/Ho8m2osw
-hEijY//LhO4mVJByCubuzFp8X9wYbUKrCnzk/FA55MP3Lgbut+6pFZSWYNMR8/rN
-EtXHjoK5EgaoQk5TlexOFvoObGriM17wCz08xLoKn15OvQcoA1smUhEOSw75/c5S
-NBPxeCWvkRuto9ND6JqQmXFkl0Q58HXaEYLz1Cdp+pmYaRFPBhhQ/0YHf5WDGAQW
-+xyR7nIBFBOylQOAUiMaZJtT4ic3CphoLzasT5rK3nq9IJC45vRA0BfSGaMSwFdX
-orOjuzAX4Ae4ftBg71p8fZOKyHkkS5nt1KiwxhN0TcSi+IQm2FixaaDigRfxSQBP
-eG6a5rGwUtFrQxhqxuEB0DFgor2Wvwhh52pZQGMl39yD4GUhfDs=
-=anI6
------END PGP SIGNATURE-----
+ migration/rdma.c | 159 -----------------------------------------------
+ 1 file changed, 159 deletions(-)
 
---------------pZkJJomolqXjZ9snPhy20E2d--
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 76fb0349238a..e228520b8e01 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -767,149 +767,6 @@ static void qemu_rdma_dump_gid(const char *who, struct rdma_cm_id *id)
+     trace_qemu_rdma_dump_gid(who, sgid, dgid);
+ }
+ 
+-/*
+- * As of now, IPv6 over RoCE / iWARP is not supported by linux.
+- * We will try the next addrinfo struct, and fail if there are
+- * no other valid addresses to bind against.
+- *
+- * If user is listening on '[::]', then we will not have a opened a device
+- * yet and have no way of verifying if the device is RoCE or not.
+- *
+- * In this case, the source VM will throw an error for ALL types of
+- * connections (both IPv4 and IPv6) if the destination machine does not have
+- * a regular infiniband network available for use.
+- *
+- * The only way to guarantee that an error is thrown for broken kernels is
+- * for the management software to choose a *specific* interface at bind time
+- * and validate what time of hardware it is.
+- *
+- * Unfortunately, this puts the user in a fix:
+- *
+- *  If the source VM connects with an IPv4 address without knowing that the
+- *  destination has bound to '[::]' the migration will unconditionally fail
+- *  unless the management software is explicitly listening on the IPv4
+- *  address while using a RoCE-based device.
+- *
+- *  If the source VM connects with an IPv6 address, then we're OK because we can
+- *  throw an error on the source (and similarly on the destination).
+- *
+- *  But in mixed environments, this will be broken for a while until it is fixed
+- *  inside linux.
+- *
+- * We do provide a *tiny* bit of help in this function: We can list all of the
+- * devices in the system and check to see if all the devices are RoCE or
+- * Infiniband.
+- *
+- * If we detect that we have a *pure* RoCE environment, then we can safely
+- * thrown an error even if the management software has specified '[::]' as the
+- * bind address.
+- *
+- * However, if there is are multiple hetergeneous devices, then we cannot make
+- * this assumption and the user just has to be sure they know what they are
+- * doing.
+- *
+- * Patches are being reviewed on linux-rdma.
+- */
+-static int qemu_rdma_broken_ipv6_kernel(struct ibv_context *verbs, Error **errp)
+-{
+-    /* This bug only exists in linux, to our knowledge. */
+-#ifdef CONFIG_LINUX
+-    struct ibv_port_attr port_attr;
+-
+-    /*
+-     * Verbs are only NULL if management has bound to '[::]'.
+-     *
+-     * Let's iterate through all the devices and see if there any pure IB
+-     * devices (non-ethernet).
+-     *
+-     * If not, then we can safely proceed with the migration.
+-     * Otherwise, there are no guarantees until the bug is fixed in linux.
+-     */
+-    if (!verbs) {
+-        int num_devices;
+-        struct ibv_device **dev_list = ibv_get_device_list(&num_devices);
+-        bool roce_found = false;
+-        bool ib_found = false;
+-
+-        for (int x = 0; x < num_devices; x++) {
+-            verbs = ibv_open_device(dev_list[x]);
+-            /*
+-             * ibv_open_device() is not documented to set errno.  If
+-             * it does, it's somebody else's doc bug.  If it doesn't,
+-             * the use of errno below is wrong.
+-             * TODO Find out whether ibv_open_device() sets errno.
+-             */
+-            if (!verbs) {
+-                if (errno == EPERM) {
+-                    continue;
+-                } else {
+-                    error_setg_errno(errp, errno,
+-                                     "could not open RDMA device context");
+-                    return -1;
+-                }
+-            }
+-
+-            if (ibv_query_port(verbs, 1, &port_attr)) {
+-                ibv_close_device(verbs);
+-                error_setg(errp,
+-                           "RDMA ERROR: Could not query initial IB port");
+-                return -1;
+-            }
+-
+-            if (port_attr.link_layer == IBV_LINK_LAYER_INFINIBAND) {
+-                ib_found = true;
+-            } else if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
+-                roce_found = true;
+-            }
+-
+-            ibv_close_device(verbs);
+-
+-        }
+-
+-        if (roce_found) {
+-            if (ib_found) {
+-                warn_report("migrations may fail:"
+-                            " IPv6 over RoCE / iWARP in linux"
+-                            " is broken. But since you appear to have a"
+-                            " mixed RoCE / IB environment, be sure to only"
+-                            " migrate over the IB fabric until the kernel "
+-                            " fixes the bug.");
+-            } else {
+-                error_setg(errp, "RDMA ERROR: "
+-                           "You only have RoCE / iWARP devices in your systems"
+-                           " and your management software has specified '[::]'"
+-                           ", but IPv6 over RoCE / iWARP is not supported in Linux.");
+-                return -1;
+-            }
+-        }
+-
+-        return 0;
+-    }
+-
+-    /*
+-     * If we have a verbs context, that means that some other than '[::]' was
+-     * used by the management software for binding. In which case we can
+-     * actually warn the user about a potentially broken kernel.
+-     */
+-
+-    /* IB ports start with 1, not 0 */
+-    if (ibv_query_port(verbs, 1, &port_attr)) {
+-        error_setg(errp, "RDMA ERROR: Could not query initial IB port");
+-        return -1;
+-    }
+-
+-    if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
+-        error_setg(errp, "RDMA ERROR: "
+-                   "Linux kernel's RoCE / iWARP does not support IPv6 "
+-                   "(but patches on linux-rdma in progress)");
+-        return -1;
+-    }
+-
+-#endif
+-
+-    return 0;
+-}
+-
+ /*
+  * Figure out which RDMA device corresponds to the requested IP hostname
+  * Also create the initial connection manager identifiers for opening
+@@ -955,7 +812,6 @@ static int qemu_rdma_resolve_host(RDMAContext *rdma, Error **errp)
+ 
+     /* Try all addresses, saving the first error in @err */
+     for (struct rdma_addrinfo *e = res; e != NULL; e = e->ai_next) {
+-        Error **local_errp = err ? NULL : &err;
+ 
+         inet_ntop(e->ai_family,
+             &((struct sockaddr_in *) e->ai_dst_addr)->sin_addr, ip, sizeof ip);
+@@ -964,13 +820,6 @@ static int qemu_rdma_resolve_host(RDMAContext *rdma, Error **errp)
+         ret = rdma_resolve_addr(rdma->cm_id, NULL, e->ai_dst_addr,
+                 RDMA_RESOLVE_TIMEOUT_MS);
+         if (ret >= 0) {
+-            if (e->ai_family == AF_INET6) {
+-                ret = qemu_rdma_broken_ipv6_kernel(rdma->cm_id->verbs,
+-                                                   local_errp);
+-                if (ret < 0) {
+-                    continue;
+-                }
+-            }
+             error_free(err);
+             goto route;
+         }
+@@ -2663,7 +2512,6 @@ static int qemu_rdma_dest_init(RDMAContext *rdma, Error **errp)
+ 
+     /* Try all addresses, saving the first error in @err */
+     for (e = res; e != NULL; e = e->ai_next) {
+-        Error **local_errp = err ? NULL : &err;
+ 
+         inet_ntop(e->ai_family,
+             &((struct sockaddr_in *) e->ai_dst_addr)->sin_addr, ip, sizeof ip);
+@@ -2672,13 +2520,6 @@ static int qemu_rdma_dest_init(RDMAContext *rdma, Error **errp)
+         if (ret < 0) {
+             continue;
+         }
+-        if (e->ai_family == AF_INET6) {
+-            ret = qemu_rdma_broken_ipv6_kernel(listen_id->verbs,
+-                                               local_errp);
+-            if (ret < 0) {
+-                continue;
+-            }
+-        }
+         error_free(err);
+         break;
+     }
+-- 
+2.43.0
+
 
