@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF34C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 08:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2238C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 08:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txiEg-0007t9-3q; Thu, 27 Mar 2025 04:05:10 -0400
+	id 1txiG5-0000O7-Bk; Thu, 27 Mar 2025 04:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1txiEe-0007oy-RL
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:05:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txiG4-0000Nu-4y
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:06:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1txiEb-0005p0-Cl
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:05:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txiG2-00061w-Bw
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:06:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743062703;
+ s=mimecast20190719; t=1743062791;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IeCtW1/PNqTmwPNXbCZXWpF2FWJ6/VtxQKIlbEVRpXA=;
- b=f820SC5n/VeE8wS9sqSdfn13VaKEJUJVKErV24H4mvLdkBbAMnRsPQ1bZQMPMG1SJpWT2i
- ILtq7PY9Wnflfrljao5D/0HrCLiV3gutgwcPjIOcw/7AduIbrNS82MuY7UK5XP2PUa9wfm
- LH8v8/5j3GADyMcVwNVyn/vrBnsA67Y=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jyrX5+gf0v3ERSESOyhfYHCoU2YcBYbGxw5i9X5uDQQ=;
+ b=TVlHq1+REEWj+9jbnaZWvMlJo9ryWqUt2E1QqGx9EXMCmpt3IXKhXDzpB+cEd1HbprbOIk
+ j8FUBKEHUC1xlJvwtjVh7bM3gNbQ6S94GT1muuK6g4fTRJveEndHHc/WeSRahlFggue6eF
+ r8DtljKQpcWKUJpRAdj1QPirBwLPbrc=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-670-dfoqht34PR2YigneRq6Bmg-1; Thu,
- 27 Mar 2025 04:04:59 -0400
-X-MC-Unique: dfoqht34PR2YigneRq6Bmg-1
-X-Mimecast-MFC-AGG-ID: dfoqht34PR2YigneRq6Bmg_1743062697
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-SthLBaDrM4SDgl7dD2wL8A-1; Thu,
+ 27 Mar 2025 04:06:27 -0400
+X-MC-Unique: SthLBaDrM4SDgl7dD2wL8A-1
+X-Mimecast-MFC-AGG-ID: SthLBaDrM4SDgl7dD2wL8A_1743062786
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61A711800267; Thu, 27 Mar 2025 08:04:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.22.74.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A022D180175A; Thu, 27 Mar 2025 08:04:54 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A986F21E66C5; Thu, 27 Mar 2025 09:04:51 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: zoudongjie <zoudongjie@huawei.com>
-Cc: <alex.chen@huawei.com>,  <chenjianfei3@huawei.com>,
- <eric.fangyi@huawei.com>,  <fam@euphon.net>,  <hreitz@redhat.com>,
- <kwolf@redhat.com>,  <luolongmin@huawei.com>,  <mujinsheng@huawei.com>,
- <qemu-block@nongnu.org>,  <qemu-devel@nongnu.org>,
- <qemu-stable@nongnu.org>,  <renxuming@huawei.com>,
- <stefanha@redhat.com>,  <suxiaodong1@huawei.com>,
- <wangjian161@huawei.com>,  <wangyan122@huawei.com>,
- <yebiaoxiang@huawei.com>,  <zhuyangyang14@huawei.com>
-Subject: Re: [PATCH v3 2/2] qapi/throttle: add timeout parameter for
- qmp_block_set_io_throttle()
-In-Reply-To: <20250327075626.715156-1-zoudongjie@huawei.com>
- (zoudongjie@huawei.com's message of "Thu, 27 Mar 2025 15:56:26 +0800")
-References: <87bjto9kz3.fsf@pond.sub.org>
- <20250327075626.715156-1-zoudongjie@huawei.com>
-Date: Thu, 27 Mar 2025 09:04:51 +0100
-Message-ID: <8734ey2924.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ id B1045180035C
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 08:06:25 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.126])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0EEAF19560AB; Thu, 27 Mar 2025 08:06:23 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 0/6] Functional test fixes for 10.0-rc2
+Date: Thu, 27 Mar 2025 09:06:16 +0100
+Message-ID: <20250327080622.954388-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,35 +80,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-zoudongjie <zoudongjie@huawei.com> writes:
+ Hi Stefan!
 
-> On Wed, Mar 26, 2025 at 10:53:20 +0100, Markus wrote:
->> zoudongjie via <qemu-devel@nongnu.org> writes:
->> 
->> > From: Zhu Yangyang <zhuyangyang14@huawei.com>
->> >
->> > Calling qmp_block_set_io_throttle() will be blocked for a long time
->> > when a network disk is configured and the network failure is just about
->> > to occur.
+The following changes since commit b876e721f1c939f3e83ac85bd3c1c2821e12b3fa:
 
-What other commands could similarly block?
+  Update version for v10.0.0-rc1 release (2025-03-25 13:58:14 -0400)
 
->> > Therefore, we add a timeout parameter for qmp_block_set_io_throttle to control
->> > its execution duration.
->> 
->> What's the QMP reply when a block_set_io_throttle command times out?
->
-> The reply is:
-> {"id":"libvirt-484","error":{"class":"GenericError","desc":"Blk io limits disable timeout"}}
+are available in the Git repository at:
 
-I find the error message confusing.  Suggest "command timed out".
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-03-27
 
->> >
->> > The default value of timeout is 0, that is infinite wait, consistent with
->> > previous behavior.
->> >
->> > Signed-off-by: Zhu Yangyang <zhuyangyang14@huawei.com>
+for you to fetch changes up to 5a8d024f8d3f55846cb8385b025d795fee4afd35:
 
-[...]
+  tests/functional/test_vnc: Skip test if VNC support is not available (2025-03-27 08:59:35 +0100)
+
+----------------------------------------------------------------
+* Make some functional tests more robust
+* Fix a typo in the s390x code
+
+----------------------------------------------------------------
+Peter Maydell (1):
+      tests/functional/meson.build: Bump arm_aspeed_bletchley timeout
+
+Philippe Mathieu-Daudé (1):
+      target/s390x: Fix a typo in s390_cpu_class_init()
+
+Thomas Huth (4):
+      tests/functional/test_ppc64_replay: Mark the e500 test as flaky
+      tests/functional: Add missing require_netdev('user') statements
+      tests/functional/test_aarch64_virt_gpu: Skip if "dbus" display isn't available
+      tests/functional/test_vnc: Skip test if VNC support is not available
+
+ MAINTAINERS                                  |  2 +-
+ target/s390x/cpu.c                           |  2 +-
+ tests/functional/meson.build                 |  2 +-
+ tests/functional/test_aarch64_rme_sbsaref.py |  1 +
+ tests/functional/test_aarch64_rme_virt.py    |  4 +++-
+ tests/functional/test_aarch64_virt_gpu.py    |  2 ++
+ tests/functional/test_arm_bpim2u.py          |  2 ++
+ tests/functional/test_arm_cubieboard.py      |  2 ++
+ tests/functional/test_arm_orangepi.py        |  4 ++++
+ tests/functional/test_ppc64_hv.py            |  3 +++
+ tests/functional/test_ppc64_replay.py        |  3 ++-
+ tests/functional/test_vnc.py                 | 26 ++++++++++++++++++++++----
+ tests/functional/test_x86_64_kvm_xen.py      |  1 +
+ 13 files changed, 45 insertions(+), 9 deletions(-)
 
 
