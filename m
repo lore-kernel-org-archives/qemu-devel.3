@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7CCC36010
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 14:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68784C36011
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 14:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txoWK-00026P-Pv; Thu, 27 Mar 2025 10:47:48 -0400
+	id 1txoaz-0004g8-Bs; Thu, 27 Mar 2025 10:52:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1txoWG-00022l-Cq; Thu, 27 Mar 2025 10:47:45 -0400
-Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1txoWD-0006lV-Vf; Thu, 27 Mar 2025 10:47:44 -0400
-Received: by mail-qk1-x735.google.com with SMTP id
- af79cd13be357-7c54a9d3fcaso112113885a.2; 
- Thu, 27 Mar 2025 07:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743086854; x=1743691654; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nteguibeVn3jH35/nVKmHLKNfKm/mJ7uq24j+XbEzF8=;
- b=Ljc9RPZEqcePxutoDLIZ3+g8W+GHgGMdQF3Ki3ivaYJ4lGnbsr9J8UtLRnbek01dLN
- A9H/Dler73SYsjpRjHEskOAzA43gYz45QRy95V8p+FbpfotRbxK0hp5nvAvYW0McNf6f
- GlPrwGpiXiBjskOk+Q5RvXHS1ER0P5AI32UHiRpsd7bKVoKhV+L57TyfXPdPnJs2V4dM
- P/BPUxkhHnTxW+upjzpsfkGZd0vmhRcv1eyH0gTdoDu+gUWmLzxONLFJifqgYkSniE7R
- tVPYhLe+F7Giw3bzhqh1Mny0BQRjscYYWvYuyGEJjiC7VU3yInYq1WBckqf1EGiMderF
- EvBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743086854; x=1743691654;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nteguibeVn3jH35/nVKmHLKNfKm/mJ7uq24j+XbEzF8=;
- b=YBHJXGr1+mmz9FJs207PGQF46pLs2BRtFd57oGbZKe98JM2rOQkxXzEZa1OXLQan9t
- /NUzfORKCOTppDQmPVYiKXJU9srcmN6le8oH5k+vLL9x3tt/GRZfznR9OJ6len67iNm6
- Rf9lFqfejuFZ11xlpsYenM9TWKcEqWwzmWBq8Wg7Y0SkBaE2V4jsahnioyoJlP7fkV5R
- CjgvGF+U0s0wjf1NYG0pY7Rs/NNFLnYxzxuDcYqBaVaPBM2i/BlLYwwiAKKujjzN7ETy
- TO+XtGOkMV/xkN8hJDIrFdHoOi/p3Tw5SK3YTQ9TkmhZEgSZHL/dXf2IAy8uUg/BKj4h
- NEwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrpU3QhhWdIpTZxMvRa9wXwmCpfa4u7wCnIJJncWqo6fLEZMZL4KWB3aRNCi7nvP+k8EjoRF+mgb1+GhI=@nongnu.org,
- AJvYcCWhjgyV98kKY9UkvhdSn4Xudg2BVyhP8MvzHRQUk71+dJ6X+438ZNBve/lD4GdlTM/laqVr7TYvRV7R@nongnu.org
-X-Gm-Message-State: AOJu0Ywsq1KFxaxd/FF5A/ii4BSXFvbNeXIXNOEdxXmMPOfsP3D0u91B
- 4T8IZ27WByQdJ01TMfQJkUxB8SO5qM5Pif5DkE7kIH1JL5ana1xw
-X-Gm-Gg: ASbGncszk9JOe9U3IR3/5mMMHdhwabX3rJlrhMSVS/t2rNj7WKPHpjaC/bs5Dx/0aUm
- 1v2D2feq7pkwcfFc5ektEje1LwycncBgH6iGSJwUvsjF3EbMWPRh34EATIlXuH2kjyjUfIkIgpo
- h5Xz+AEVTW0SnATQF+Dhi6KHTBus/WY9VHMHjooL1ELNSKT6dOVgUAErxBUB6jnJlbRhNuLBhoY
- 7hXoTfB39tNQUZRRUtLPtgcqY+5vkIrRJnvP7UM+uwCQA25doSVhnavYzJ13JZWsKhXQHDGBdWb
- PaitBZbaQtSTqCLtlH+gzoyu4An8GReVfw==
-X-Google-Smtp-Source: AGHT+IErFlaejL01/9DO5qxTBIqanQpM+JkB4bgyqKaJHeVbDaE5+DMcKxl2ahPE8EVKseTfPwTWIw==
-X-Received: by 2002:a05:620a:40d2:b0:7c0:6419:8bd3 with SMTP id
- af79cd13be357-7c5ed9fa21fmr464888385a.22.1743086854293; 
- Thu, 27 Mar 2025 07:47:34 -0700 (PDT)
-Received: from localhost ([94.140.3.102]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c5f768e744sm1622185a.48.2025.03.27.07.47.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Mar 2025 07:47:32 -0700 (PDT)
-From: Stefan Hajnoczi <stefanha@gmail.com>
-X-Google-Original-From: Stefan Hajnoczi <stefanha@fedora>
-Date: Thu, 27 Mar 2025 10:47:31 -0400
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH 01/15] fuse: Copy write buffer content before polling
-Message-ID: <20250327144731.GA37458@fedora>
-References: <20250325160529.117543-1-hreitz@redhat.com>
- <20250325160635.118812-1-hreitz@redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="1TUTtNN3RcMHqkAU"
-Content-Disposition: inline
-In-Reply-To: <20250325160635.118812-1-hreitz@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
- envelope-from=stefanha@gmail.com; helo=mail-qk1-x735.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1txoaq-0004aw-RY
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 10:52:28 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1txoal-0007mJ-Tf
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 10:52:28 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52RCTLin027032;
+ Thu, 27 Mar 2025 14:52:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2023-11-20; bh=/oGiHv9w
+ UeBDC0FpA6TOCJgiUoDG0a8Qu4dW23KG/rU=; b=Keo20Z/BE3YzTaNByOgwUd5R
+ noHzEkotXHQrRIHMSdyrBYY+hXxgCMqWfB96eE6T1EjbTH5mk0wLFCU89V1cNAga
+ UlWE4qERZ5Y1u7bqKsCSV78/DTZw36xQifanh37QYM2cKK3KFuPi8tW0ngrXOAfy
+ LCswRuhnAzI8MrOckPgVYJrqeW3GpUvLQsye33vDBHmCe61MAB3DcJXBcrwhAM9h
+ pQciDowNxTZXVZSsAm5bWmnBW4IdP4T7Iubd0Ne0Tu982g7smDuNXxIwm3iDUraM
+ /jDqBrk+q4ImiFn5AX3io3c3dYt0yhapYhaaRAbL5PvuJutRfj+5WY4/cpS2sQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45hn874qvb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Mar 2025 14:52:19 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 52RDKT6A023050; Thu, 27 Mar 2025 14:52:18 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 45jjcgqq1w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Mar 2025 14:52:18 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52REqH7L009100;
+ Thu, 27 Mar 2025 14:52:17 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 45jjcgqpw0-1; Thu, 27 Mar 2025 14:52:17 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V2] migration: cpr breaks SNP guest
+Date: Thu, 27 Mar 2025 07:52:10 -0700
+Message-Id: <1743087130-429075-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-27_01,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ phishscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
+ definitions=main-2503270101
+X-Proofpoint-GUID: dTvbSQBvncC81kab_KZy-2f2y7ORcKPz
+X-Proofpoint-ORIG-GUID: dTvbSQBvncC81kab_KZy-2f2y7ORcKPz
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,183 +98,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+With aux-ram-share=off, booting an SNP guest fails with:
 
---1TUTtNN3RcMHqkAU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  ../util/error.c:68: error_setv: Assertion `*errp == NULL' failed.
 
-On Tue, Mar 25, 2025 at 05:06:35PM +0100, Hanna Czenczek wrote:
-> Polling in I/O functions can lead to nested read_from_fuse_export()
+This is because a CPR blocker for the guest_memfd ramblock is added
+twice, once in ram_block_add_cpr_blocker because aux-ram-share=off so
+rb->fd < 0, and once in ram_block_add for a specific guest_memfd blocker.
 
-"Polling" means several different things. "aio_poll()" or "nested event
-loop" would be clearer.
+To fix, add the guest_memfd blocker iff a generic one would not be
+added by ram_block_add_cpr_blocker.
 
-> calls, overwriting the request buffer's content.  The only function
-> affected by this is fuse_write(), which therefore must use a bounce
-> buffer or corruption may occur.
->=20
-> Note that in addition we do not know whether libfuse-internal structures
-> can cope with this nesting, and even if we did, we probably cannot rely
-> on it in the future.  This is the main reason why we want to remove
-> libfuse from the I/O path.
->=20
-> I do not have a good reproducer for this other than:
->=20
-> $ dd if=3D/dev/urandom of=3Dimage bs=3D1M count=3D4096
-> $ dd if=3D/dev/zero of=3Dcopy bs=3D1M count=3D4096
-> $ touch fuse-export
-> $ qemu-storage-daemon \
->     --blockdev file,node-name=3Dfile,filename=3Dcopy \
->     --export \
->     fuse,id=3Dexp,node-name=3Dfile,mountpoint=3Dfuse-export,writable=3Dtr=
-ue \
->     &
->=20
-> Other shell:
-> $ qemu-img convert -p -n -f raw -O raw -t none image fuse-export
-> $ killall -SIGINT qemu-storage-daemon
-> $ qemu-img compare image copy
-> Content mismatch at offset 0!
->=20
-> (The -t none in qemu-img convert is important.)
->=20
-> I tried reproducing this with throttle and small aio_write requests from
-> another qemu-io instance, but for some reason all requests are perfectly
-> serialized then.
->=20
-> I think in theory we should get parallel writes only if we set
-> fi->parallel_direct_writes in fuse_open().  In fact, I can confirm that
-> if we do that, that throttle-based reproducer works (i.e. does get
-> parallel (nested) write requests).  I have no idea why we still get
-> parallel requests with qemu-img convert anyway.
->=20
-> Also, a later patch in this series will set fi->parallel_direct_writes
-> and note that it makes basically no difference when running fio on the
-> current libfuse-based version of our code.  It does make a difference
-> without libfuse.  So something quite fishy is going on.
->=20
-> I will try to investigate further what the root cause is, but I think
-> for now let's assume that calling blk_pwrite() can invalidate the buffer
-> contents through nested polling.
->=20
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  block/export/fuse.c | 24 +++++++++++++++++++++---
->  1 file changed, 21 insertions(+), 3 deletions(-)
->=20
-> diff --git a/block/export/fuse.c b/block/export/fuse.c
-> index 465cc9891d..a12f479492 100644
-> --- a/block/export/fuse.c
-> +++ b/block/export/fuse.c
-> @@ -301,6 +301,12 @@ static void read_from_fuse_export(void *opaque)
->          goto out;
->      }
-> =20
-> +    /*
-> +     * Note that polling in any request-processing function can lead to =
-a nested
-> +     * read_from_fuse_export() call, which will overwrite the contents of
-> +     * exp->fuse_buf.  Anything that takes a buffer needs to take care t=
-hat the
-> +     * content is copied before potentially polling.
-> +     */
->      fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
+Fixes: 094a3dbc55df ("migration: ram block cpr blockers")
+Reported-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reported-by: Michael Roth <michael.roth@amd.com>
+Tested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ system/physmem.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-It seems safer to allocate a fuse_buf per request instead copying the
-data buffer only for write requests. Other request types might be
-affected too (e.g. nested reads of different sizes).
+diff --git a/system/physmem.c b/system/physmem.c
+index e97de3e..333a5eb 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -158,6 +158,7 @@ static void io_mem_init(void);
+ static void memory_map_init(void);
+ static void tcg_log_global_after_sync(MemoryListener *listener);
+ static void tcg_commit(MemoryListener *listener);
++static bool ram_is_cpr_compatible(RAMBlock *rb);
+ 
+ /**
+  * CPUAddressSpace: all the information a CPU needs about an AddressSpace
+@@ -1908,13 +1909,18 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             goto out_free;
+         }
+ 
+-        error_setg(&new_block->cpr_blocker,
+-                   "Memory region %s uses guest_memfd, "
+-                   "which is not supported with CPR.",
+-                   memory_region_name(new_block->mr));
+-        migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
+-                                  MIG_MODE_CPR_TRANSFER,
+-                                  -1);
++        /*
++         * Add a specific guest_memfd blocker if a generic one would not be
++         * added by ram_block_add_cpr_blocker.
++         */
++        if (ram_is_cpr_compatible(new_block)) {
++            error_setg(&new_block->cpr_blocker,
++                       "Memory region %s uses guest_memfd, "
++                       "which is not supported with CPR.",
++                       memory_region_name(new_block->mr));
++            migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
++                                      MIG_MODE_CPR_TRANSFER, -1);
++        }
+     }
+ 
+     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+-- 
+1.8.3.1
 
-I guess later on in this series a per-request fuse_buf will be
-introduced anyway, so it doesn't matter what we do in this commit.
-
-> =20
->  out:
-> @@ -624,6 +630,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t ino=
-de, const char *buf,
->                         size_t size, off_t offset, struct fuse_file_info =
-*fi)
->  {
->      FuseExport *exp =3D fuse_req_userdata(req);
-> +    void *copied;
->      int64_t length;
->      int ret;
-> =20
-> @@ -638,6 +645,14 @@ static void fuse_write(fuse_req_t req, fuse_ino_t in=
-ode, const char *buf,
->          return;
->      }
-> =20
-> +    /*
-> +     * Heed the note on read_from_fuse_export(): If we poll (which any b=
-lk_*()
-> +     * I/O function may do), read_from_fuse_export() may be nested, over=
-writing
-> +     * the request buffer content.  Therefore, we must copy it here.
-> +     */
-> +    copied =3D blk_blockalign(exp->common.blk, size);
-> +    memcpy(copied, buf, size);
-> +
->      /**
->       * Clients will expect short writes at EOF, so we have to limit
->       * offset+size to the image length.
-> @@ -645,7 +660,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t ino=
-de, const char *buf,
->      length =3D blk_getlength(exp->common.blk);
->      if (length < 0) {
->          fuse_reply_err(req, -length);
-> -        return;
-> +        goto free_buffer;
->      }
-> =20
->      if (offset + size > length) {
-> @@ -653,19 +668,22 @@ static void fuse_write(fuse_req_t req, fuse_ino_t i=
-node, const char *buf,
->              ret =3D fuse_do_truncate(exp, offset + size, true, PREALLOC_=
-MODE_OFF);
->              if (ret < 0) {
->                  fuse_reply_err(req, -ret);
-> -                return;
-> +                goto free_buffer;
->              }
->          } else {
->              size =3D length - offset;
->          }
->      }
-> =20
-> -    ret =3D blk_pwrite(exp->common.blk, offset, size, buf, 0);
-> +    ret =3D blk_pwrite(exp->common.blk, offset, size, copied, 0);
->      if (ret >=3D 0) {
->          fuse_reply_write(req, size);
->      } else {
->          fuse_reply_err(req, -ret);
->      }
-> +
-> +free_buffer:
-> +    qemu_vfree(copied);
->  }
-> =20
->  /**
-> --=20
-> 2.48.1
->=20
->=20
-
---1TUTtNN3RcMHqkAU
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmflZQIACgkQnKSrs4Gr
-c8hIuggAiCBxC5BRCq9pXrGlH6QdnNKI7ZhLXNH0dyOf6j67GVYFd9qrhB3p+nvG
-W5gv2DqFGe2ncdBU4kdoEaBEEztx6sKqYvsCJqnAx4wnePWLzHLYlxJ3NRqn/Zt1
-DtJhnMvwQC8q3LrwSNSyaMTwN0NDLgGVz+eYhfYu3mVsXOguiwsr4nytPYy7ah5B
-vaH6DJlewgr3uTYqqTLmz62IdqaGeHSqtgZ0I50WXXKcWHVFxcsmmgvVmfjWUzlR
-3/E//gLRQqtt2597f9D9Wy3EefTN/Wy+aNT187Je5iCMVgoQTnfKYgxWKZxqRFgE
-Cs15giOveJVSaMW8Pg26fAo4hmFGAA==
-=EJG1
------END PGP SIGNATURE-----
-
---1TUTtNN3RcMHqkAU--
 
