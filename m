@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB7BDC3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 17:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7076C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 17:32:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txqfS-0006PF-QK; Thu, 27 Mar 2025 13:05:23 -0400
+	id 1txr4H-0002a4-Bb; Thu, 27 Mar 2025 13:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txqfN-0006Nf-OZ
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 13:05:17 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1txr41-0002Z5-Mj
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 13:30:47 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txqfL-0000li-O1
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 13:05:17 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-39ac8e7688aso1031870f8f.2
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 10:05:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1txr3y-0004qT-E6
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 13:30:45 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-22435603572so27135345ad.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 10:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743095114; x=1743699914; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1743096640; x=1743701440; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZH8VyodyFqnviPSXYW3qleDr3/hzkqlJCBLUq6bj3K4=;
- b=ityBlR2m/11/luNGt3no8h+gV3v+3VtU+Fv0bntHngHSSLABkBzP6Rp67UE/R0rChp
- AX4G5OWL35urzYmD9BTtvArDQv2HDxbqTkWu68YXFirWQ15n4lbEwNbihqUPv/6Q6w5s
- hxdT149rEjB2OTIh7e8oow4rzCvpOOZo+dz17GMmqO1+RVMSBrrqBqhMShJOD94tx0ZW
- Z2xIhB2eufnsDnuGLaR07Hj8mMvqe2XmNHYvtZAGI5caeEb20eJxBQz9UDdNrh8g60sr
- JcyqRxsC3iBrJ1DVFRWCuOG1f5q9LYw6DyMyC+aU4q9/brz319j//iutoOhOE5+KFT0p
- uD8w==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4K79JuADZVxew8NZh1Y0DBPTYMqkjfLhjKMzpJ5yDl8=;
+ b=gWy/SpM/j9XbzPUSaCu8/R7M0WYU9IFGG8+ug/HxFUCHr/+yKxuDVHFMT/FMiZEgao
+ qhDg52jGLNAnCElIQTWyYPJdORR/EcLdmzRuynJZMm7DMz0me3zhqqc4hJ1hfa2iPWWh
+ db7/UfJkATQj20B/gRMsMjUIl3sBfqFwSWcC5RZqf0uy78PVpfoHb09U+B0B5bs6FCpJ
+ yYXkq1jjUw3kMWesHOg8Lp9l3nkY/gZAQHjah4MfY85lJMyG9UYRSkRImW44+C51ThAu
+ u7OgZ6v+H5Oawa2TV9e9rGC6jJTvpCqzcN+hVDjCWy4EAr31CHkTfehSIRlZ8XvmQcmv
+ EyWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743095114; x=1743699914;
+ d=1e100.net; s=20230601; t=1743096640; x=1743701440;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZH8VyodyFqnviPSXYW3qleDr3/hzkqlJCBLUq6bj3K4=;
- b=FEjiKcCUtBC+veE11R6zJwrjwCItVg8pobbOJ5sbqmlJ5Al0tojgfqOjAAcbTc2qiS
- UhG9KW7gNbEzJIcGEJy+q363e/JXXkhdz/C2BDeVFbRih12dzayYAcVq9hWpZTiDLHGz
- I+r7Dy3fqEmG/N7JjU69emdygXoNUvJUFdWh8qcmvCVW5AMBPp/jY2mJXuyUzVrXJH8i
- MjK7ZPuoSfEEd7xNPdl2qmmv/aZj12jqgE64rf3JLsguY1cxYZv5WvJU/TLdPhLKPcp+
- IGeoJPfqUsS32ajA8SQCRhvPDdE8/csbvTgqlkbnvRRPulslYkemjyE4gOW3wPs1LXyp
- 7olw==
+ bh=4K79JuADZVxew8NZh1Y0DBPTYMqkjfLhjKMzpJ5yDl8=;
+ b=d9OEvbV80A3Fbrbi+OPYhdwaeHctikGqv3kj+q0AfvmqvEU3kg/QwyS/u/vH+m0uVQ
+ 4SrT9cQ67AjgeowiDYoPyJyuWqQDowN8SSHhdHol5k3QAst7qBG2T68Hfrb4JTybxLRr
+ wAn4kvv2rkMJQoK69kai0HZ4+tyiNOG3ZavFF4LygKlYa3od2ifltgT/36QFUz1INeNl
+ ZmNHRdgA3WreKRL9KvfmmQHDEiXeNwmnMPltUsGbFpSNgOt1fvvvmuJ5RYRWx9K5Icc3
+ MxUVVQjJUu1pydnuEOZ9LQWgeTLkskx4QMhrRRCSzaxxmDDcEfXrBPI/aTa1t9//ZZ16
+ MCCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVOhPupY/CPW/hzeOdFIvzvKUf8Jfpw+eM4v84xCK5e2YxZ7s3eOvGd9h/t6tDebt0UZtp8tDDlLRHE@nongnu.org
-X-Gm-Message-State: AOJu0YzundzkXysdO5iMlGd8sQXOjIe48G3HURChEARU50E0byBpEEKK
- ZMWDFvY1Ivz09HHu5EvnTjLgG+79Q4AcwyS1fglIgDajB1bmMcoIAt+HtH2yQR1KW0Bqbx/KPBE
- I
-X-Gm-Gg: ASbGnctsQjyycAVRiSIm2gVo8a4tlMBDdjMCdNk6Ol8AjDRCPu/NhXuWkOv8hn4hpXV
- EUZSvo9bPrfqVDY08dChZ0q57XoE5UkRf2XFpPCfIROiOemY8N3w9UWr4WMfUSVDYTc58fzeA1F
- iqwgcGB/2b93eMBmRtHOOOqryAiD28XI7veDZoKP5gBkWEts6hUGPhIXNqPlqi8sr3LX9+YYPNR
- 38Weu0PdA0sQk+NRgCjAbeRaTEGskhXy2pd+MG9iHB4d/UUFFpioHCHcPwNKnVz1fazJsvarI/K
- p4xzVnFIY2D3cWuc9msD2Sot7CRkcuFxnJWPUJxpGabvbpEC75E7ScMb/GyyAZMOetlux6W0Eoo
- JfObdXTXPDiyz0SC5sBrHnaw=
-X-Google-Smtp-Source: AGHT+IGwlYSXe8kVnq1NBgpYAI3coNB5nbJUTImRqmQBfZG8iOz5/p/LuBB67fsqf6/uxu13iSQdBQ==
-X-Received: by 2002:a05:6000:2a5:b0:391:1806:e23d with SMTP id
- ffacd0b85a97d-39ad1740291mr3777928f8f.6.1743095113539; 
- Thu, 27 Mar 2025 10:05:13 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b662c1csm82601f8f.28.2025.03.27.10.05.12
+ AJvYcCXsgV/mQIFTCGXCSXgdPT5XF7l/ntfO149DNcniFrDNLFUDkvJpLi+xD9Tm9eyfO9m+nvdElZs3gp7l@nongnu.org
+X-Gm-Message-State: AOJu0YxtxZNkda/6XQNyujSeaHGjW9AXCUMEWAybewVrZAY1DNdK7QWr
+ GqUrNqSvop7i+Jil5H0mC+RutA3ua0aGsyGi/+m/N8khfoAu17BnEzEt06QehIE=
+X-Gm-Gg: ASbGncug8RTV4vy8iV/mYhL+hbXGp86j/mSAUGU2shRw+uwUAwaDTuGtzIgjNiuHPvl
+ ss6+P0fBwcpv/w9CFScQVj6iA+I+2AH1BDZhX11UE0MH/WgUwMUb5aetZ6IMDSFI/A8dWYSKuN4
+ PUTVffSRz+YwEUR6wA4K1/gE1fjCvCPiUzTCgKD7czAOnUGWJ7ba/T+CzJU6oS56Fswf6Nm+X6c
+ JQ9DoyKLQv+oAxjHuP6P6osZMAr5QKE8PDzDJBMIRpvV2rduRiS6kVxzT5qwsVLzUr3tsSv1n6f
+ yPi/J/EStiUs9Pkg+XPkF5+R5Aa5Pury4eiE0O9XjWCwhzkvCRjCGGDnBz2hJSTgI0cDJLaUICT
+ vAqm4Z+aHQiFzREfTjvTT
+X-Google-Smtp-Source: AGHT+IGDceHEvbz/CWhvfA6ITVTCoB7wLMNq8oMDJQ1J2t6lLQZTKm0CnL8DAwgftRQD4YC31SIDSg==
+X-Received: by 2002:a05:6a20:c707:b0:1f3:194b:30ae with SMTP id
+ adf61e73a8af0-1fea2d2ca7emr8466536637.1.1743096640042; 
+ Thu, 27 Mar 2025 10:30:40 -0700 (PDT)
+Received: from [192.168.68.110] (201-69-66-189.dial-up.telesp.net.br.
+ [201.69.66.189]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af93b69f6ccsm155346a12.20.2025.03.27.10.30.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 10:05:13 -0700 (PDT)
-Message-ID: <8b6ac33d-429c-4ef2-a964-7b44249b2790@linaro.org>
-Date: Thu, 27 Mar 2025 18:05:12 +0100
+ Thu, 27 Mar 2025 10:30:39 -0700 (PDT)
+Message-ID: <f26e12e9-1510-4be3-bd91-13b860e78418@ventanamicro.com>
+Date: Thu, 27 Mar 2025 14:30:36 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 6/8] target/mips: Introduce mips_cpu_is_64bit()
- helper
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250325154058.92735-1-philmd@linaro.org>
- <20250325154058.92735-7-philmd@linaro.org>
- <1ba52ba5-6d68-483b-88ef-727fd369e4c0@linaro.org>
+Subject: Re: [PATCH v2 1/5] target/riscv: pmp: don't allow RLB to bypass rule
+ privileges
+To: =?UTF-8?Q?Lo=C3=AFc_Lefort?= <loic@rivosinc.com>, qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li
+ <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20250313193011.720075-1-loic@rivosinc.com>
+ <20250313193011.720075-2-loic@rivosinc.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1ba52ba5-6d68-483b-88ef-727fd369e4c0@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250313193011.720075-2-loic@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,47 +108,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/3/25 19:22, Richard Henderson wrote:
-> On 3/25/25 10:40, Philippe Mathieu-Daudé wrote:
->> mips_cpu_is_64bit() returns whether the CPU is a
->> 32-bit or a 64-bit one.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/mips/cpu-qom.h | 2 ++
->>   target/mips/cpu.c     | 6 ++++++
->>   2 files changed, 8 insertions(+)
->>
->> diff --git a/target/mips/cpu-qom.h b/target/mips/cpu-qom.h
->> index 9acf647420c..52996e7c354 100644
->> --- a/target/mips/cpu-qom.h
->> +++ b/target/mips/cpu-qom.h
->> @@ -33,4 +33,6 @@ OBJECT_DECLARE_CPU_TYPE(MIPSCPU, MIPSCPUClass, 
->> MIPS_CPU)
->>   #define MIPS_CPU_TYPE_SUFFIX "-" TYPE_MIPS_CPU
->>   #define MIPS_CPU_TYPE_NAME(model) model MIPS_CPU_TYPE_SUFFIX
->> +bool mips_cpu_is_64bit(MIPSCPU *cpu);
->> +
->>   #endif
->> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
->> index d8930468b7d..05b3ce42af5 100644
->> --- a/target/mips/cpu.c
->> +++ b/target/mips/cpu.c
->> @@ -516,6 +516,12 @@ static void mips_cpu_initfn(Object *obj)
->>   #endif
->>   }
->> +bool mips_cpu_is_64bit(MIPSCPU *cpu)
->> +{
->> +    return !!object_class_dynamic_cast(OBJECT_CLASS(CPU(cpu)->cc),
->> +                                       TYPE_MIPS64_CPU);
->> +}
-> 
-> This is very nearly object_dynamic_cast.  So why not just
-> 
->    return object_dynamic_cast(OBJECT(cpu), TYPE_MIPS64_CPU);
-> 
-> ?
 
-Good point!
+
+On 3/13/25 4:30 PM, Loïc Lefort wrote:
+> When Smepmp is supported, mseccfg.RLB allows bypassing locks when writing CSRs
+> but should not affect interpretation of actual PMP rules.
+> 
+> This is not the case with the current implementation where pmp_hart_has_privs
+> calls pmp_is_locked which implements mseccfg.RLB bypass.
+> 
+> This commit implements the correct behavior by removing mseccfg.RLB bypass from
+> pmp_is_locked.
+> 
+> RLB bypass when writing CSRs is implemented by adding a new pmp_is_readonly
+> function that calls pmp_is_locked and check mseccfg.RLB. pmp_write_cfg and
+> pmpaddr_csr_write are changed to use this new function.
+> 
+> Signed-off-by: Loïc Lefort <loic@rivosinc.com>
+> ---
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/pmp.c | 43 +++++++++++++++++++++++--------------------
+>   1 file changed, 23 insertions(+), 20 deletions(-)
+> 
+> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+> index b0841d44f4..e1e5ca589e 100644
+> --- a/target/riscv/pmp.c
+> +++ b/target/riscv/pmp.c
+> @@ -45,11 +45,6 @@ static inline uint8_t pmp_get_a_field(uint8_t cfg)
+>    */
+>   static inline int pmp_is_locked(CPURISCVState *env, uint32_t pmp_index)
+>   {
+> -    /* mseccfg.RLB is set */
+> -    if (MSECCFG_RLB_ISSET(env)) {
+> -        return 0;
+> -    }
+> -
+>       if (env->pmp_state.pmp[pmp_index].cfg_reg & PMP_LOCK) {
+>           return 1;
+>       }
+> @@ -62,6 +57,15 @@ static inline int pmp_is_locked(CPURISCVState *env, uint32_t pmp_index)
+>       return 0;
+>   }
+>   
+> +/*
+> + * Check whether a PMP is locked for writing or not.
+> + * (i.e. has LOCK flag and mseccfg.RLB is unset)
+> + */
+> +static int pmp_is_readonly(CPURISCVState *env, uint32_t pmp_index)
+> +{
+> +    return pmp_is_locked(env, pmp_index) && !MSECCFG_RLB_ISSET(env);
+> +}
+> +
+>   /*
+>    * Count the number of active rules.
+>    */
+> @@ -90,39 +94,38 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
+>   static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+>   {
+>       if (pmp_index < MAX_RISCV_PMPS) {
+> -        bool locked = true;
+> +        bool readonly = true;
+>   
+>           if (riscv_cpu_cfg(env)->ext_smepmp) {
+>               /* mseccfg.RLB is set */
+>               if (MSECCFG_RLB_ISSET(env)) {
+> -                locked = false;
+> +                readonly = false;
+>               }
+>   
+>               /* mseccfg.MML is not set */
+> -            if (!MSECCFG_MML_ISSET(env) && !pmp_is_locked(env, pmp_index)) {
+> -                locked = false;
+> +            if (!MSECCFG_MML_ISSET(env) && !pmp_is_readonly(env, pmp_index)) {
+> +                readonly = false;
+>               }
+>   
+>               /* mseccfg.MML is set */
+>               if (MSECCFG_MML_ISSET(env)) {
+>                   /* not adding execute bit */
+>                   if ((val & PMP_LOCK) != 0 && (val & PMP_EXEC) != PMP_EXEC) {
+> -                    locked = false;
+> +                    readonly = false;
+>                   }
+>                   /* shared region and not adding X bit */
+>                   if ((val & PMP_LOCK) != PMP_LOCK &&
+>                       (val & 0x7) != (PMP_WRITE | PMP_EXEC)) {
+> -                    locked = false;
+> +                    readonly = false;
+>                   }
+>               }
+>           } else {
+> -            if (!pmp_is_locked(env, pmp_index)) {
+> -                locked = false;
+> -            }
+> +            readonly = pmp_is_readonly(env, pmp_index);
+>           }
+>   
+> -        if (locked) {
+> -            qemu_log_mask(LOG_GUEST_ERROR, "ignoring pmpcfg write - locked\n");
+> +        if (readonly) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "ignoring pmpcfg write - read only\n");
+>           } else if (env->pmp_state.pmp[pmp_index].cfg_reg != val) {
+>               /* If !mseccfg.MML then ignore writes with encoding RW=01 */
+>               if ((val & PMP_WRITE) && !(val & PMP_READ) &&
+> @@ -524,14 +527,14 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+>               uint8_t pmp_cfg = env->pmp_state.pmp[addr_index + 1].cfg_reg;
+>               is_next_cfg_tor = PMP_AMATCH_TOR == pmp_get_a_field(pmp_cfg);
+>   
+> -            if (pmp_is_locked(env, addr_index + 1) && is_next_cfg_tor) {
+> +            if (pmp_is_readonly(env, addr_index + 1) && is_next_cfg_tor) {
+>                   qemu_log_mask(LOG_GUEST_ERROR,
+> -                              "ignoring pmpaddr write - pmpcfg + 1 locked\n");
+> +                              "ignoring pmpaddr write - pmpcfg+1 read only\n");
+>                   return;
+>               }
+>           }
+>   
+> -        if (!pmp_is_locked(env, addr_index)) {
+> +        if (!pmp_is_readonly(env, addr_index)) {
+>               if (env->pmp_state.pmp[addr_index].addr_reg != val) {
+>                   env->pmp_state.pmp[addr_index].addr_reg = val;
+>                   pmp_update_rule_addr(env, addr_index);
+> @@ -542,7 +545,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+>               }
+>           } else {
+>               qemu_log_mask(LOG_GUEST_ERROR,
+> -                          "ignoring pmpaddr write - locked\n");
+> +                          "ignoring pmpaddr write - read only\n");
+>           }
+>       } else {
+>           qemu_log_mask(LOG_GUEST_ERROR,
 
 
