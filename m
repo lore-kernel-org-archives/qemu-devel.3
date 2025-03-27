@@ -4,83 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A049C3600E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 11:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19EE9C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 11:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txlPl-0000PP-He; Thu, 27 Mar 2025 07:28:49 -0400
+	id 1txlk5-0003tu-IJ; Thu, 27 Mar 2025 07:49:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txlPj-0000Oy-L6
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 07:28:47 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txlPh-000774-DI
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 07:28:46 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22622ddcc35so24265005ad.2
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 04:28:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743074923; x=1743679723; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:from:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to; bh=U/JXAmLgWTRI8yQPinWvWYgmGiBzmhZrTg7DO/hG6pk=;
- b=np8xY6TPzab746GR3HstAN9HE4zpAp0i9yGEViqTv3J3dvzOsP1ORxMEmyuRpb1aC8
- sUKvv8igMNnr01ZeTOJoUxjv+igvjl0wCbzQhhy6jFHBwxKgKoU+5uKLcmjiPqCk83q2
- vmLs7r5JRSKevxsHm2xSMpO7wSeZAjHXY5UWlqQcgjWpebPZ3QGud4tmNCSy8WJZeYmt
- YpqRTSwRAO5Q9gZSdswWx+M4fDPrMJjP267HfNr5Tean/EN2jbwBn/D7l0A4il48EMWz
- e/l/MWF6IU4OBzmXA2okWtDPcznUimoYbtkWiE7cv+znv6yngeSI75Wozqn8tYB6X9am
- 8LsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743074923; x=1743679723;
- h=content-transfer-encoding:cc:to:subject:from:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=U/JXAmLgWTRI8yQPinWvWYgmGiBzmhZrTg7DO/hG6pk=;
- b=XhMdnE9ZMHq9SEiFnmSX89+Kp8k7bPPvUCng4WTEQta58INJdu8S8R/rLUJvI0Hi6Z
- KlN7G0zSd088F83WyJjJH8pFRqNI+932LUpYAwm5gChDmV5szLZNU3vWJ8Bur/bBALZv
- gn6mtxX60IpMjCitIqzTomBFpioBorzMVdPlTgqGzw5T5gfZnphdiWFZKVPVGFm7YIOS
- /URsKrl1Y2GC/y7QkhuB/AdtO9vdyruHzhYGWV+3jz0BlFt7zZ42W7RoxGdLx/H1T4Gq
- Ybl9KYVZ1HoOE0gIXUpiqBsxGhGh40l7TqFBl6Se83ZB4HNfTuN5Sf9l4Y8EWtAltUJw
- r/Hg==
-X-Gm-Message-State: AOJu0Yy8JP+fMkj2BIdteZuXXKjGxM/fh3uuG7uoOJe4Dg0kv1UFN03S
- giR59w1jSAUahGDx0Tn9Za0/BIMH2Z9kBekHWayJOrA6a8eoTYWUU4tl/w==
-X-Gm-Gg: ASbGncvtK22+5ULdvm1p12irQrMD2fffjyj/yzACgh55cpVLyLyMc8QRKRXpWPlutco
- 03w5VPt6esjcl6yAOqHJyPjjD3Q6gShMyZgyEFo1WW5yasXbjS9bGSKaqVjtBoiz6e1ME+X10gT
- VKD380MNYwBK5KIwDd+8O8NRdPUz108JlXWotvG49IEpldNeBZp7P/aTNs+VNWMl/m1ph1yU3Oa
- 3ldcJdsAKnQ36SqWqB2OVQThlRxuevkIbWBAzczV7KDqoBZUJPa/0gnwTsK/50OXxkUDbb254RO
- vuGEeclT/W/JbEDu9SBadQyr+3O9Nh5dfocMT9l9akV8HM3jhMrDkP40EGI9wque
-X-Google-Smtp-Source: AGHT+IFWqXW92VTGjKPKmDWb6ua2PJWzDo5BHr2xGztxbrhRsX21o4UycTQR+uMnJNX52SRHAHWJ/w==
-X-Received: by 2002:a05:6a00:1410:b0:736:55ec:ea94 with SMTP id
- d2e1a72fcca58-739610ca9c2mr4616647b3a.20.1743074923083; 
- Thu, 27 Mar 2025 04:28:43 -0700 (PDT)
-Received: from [192.168.31.221] ([124.64.23.229])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7390615654esm14384521b3a.130.2025.03.27.04.28.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 04:28:42 -0700 (PDT)
-Message-ID: <551d9eaf-dce0-4cf0-95b1-d2347bfaa1a6@gmail.com>
-Date: Thu, 27 Mar 2025 19:28:39 +0800
+ (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
+ id 1txlk2-0003sq-HV; Thu, 27 Mar 2025 07:49:46 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
+ id 1txljz-0000vT-Sj; Thu, 27 Mar 2025 07:49:46 -0400
+Received: from mail.maildlp.com (unknown [172.19.162.112])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4ZNhf74bwmz1jBVp;
+ Thu, 27 Mar 2025 19:44:47 +0800 (CST)
+Received: from kwepemd200012.china.huawei.com (unknown [7.221.188.145])
+ by mail.maildlp.com (Postfix) with ESMTPS id 372E61402CD;
+ Thu, 27 Mar 2025 19:49:28 +0800 (CST)
+Received: from kwepemg100001.china.huawei.com (7.202.181.18) by
+ kwepemd200012.china.huawei.com (7.221.188.145) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Thu, 27 Mar 2025 19:49:27 +0800
+Received: from kwepemg100001.china.huawei.com ([7.202.181.18]) by
+ kwepemg100001.china.huawei.com ([7.202.181.18]) with mapi id 15.02.1544.011;
+ Thu, 27 Mar 2025 19:49:27 +0800
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, lex Williamson
+ <alex.williamson@redhat.com>
+CC: "Wangzhou (B)" <wangzhou1@hisilicon.com>, liuyonglong
+ <liuyonglong@huawei.com>, jiangkunkun <jiangkunkun@huawei.com>, "libai (G)"
+ <libai12@huawei.com>, tangchengchang <tangchengchang@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+Subject: Re: Questions about vfio-pci
+Thread-Topic: Questions about vfio-pci
+Thread-Index: AdufDTdm4raav9tJRXuEMJF2Lkz38w==
+Date: Thu, 27 Mar 2025 11:49:27 +0000
+Message-ID: <04da2c1331e049c69d3fb3330403724d@huawei.com>
+Accept-Language: en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.67.121.183]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Zheng Huang <hz1624917200@gmail.com>
-Subject: [PATCH] hw/net/e1000: fix memory leak in timer_del()
-To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@daynix.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=hz1624917200@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=45.249.212.191;
+ envelope-from=yangjinqian1@huawei.com; helo=szxga05-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,85 +72,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  yangjinqian <yangjinqian1@huawei.com>
+From:  yangjinqian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-This patch addresses a memory leak bug in the usages of `timer_del()`.
-The issue arisesfrom the incorrect use of the ambiguous timer API 
-`timer_del()`, which does not free the timer object. The leak sanitizer
-report this issue during fuzzing. The correct API `timer_free()` freed
-the timer object instead.
-
-In addition, I'd like to ask for a way to fix all 100+ wrong usages. In my
-opinion, the best way to fix this is to hide to `timer_del()` API and
-eliminate all usages of it.
-
-ps: Sorry for the mistake in subject of the previous mail.
-
-Signed-off-by: Zheng Huang <hz1624917200@outlook.com>
-
-
----
- hw/net/e1000.c       | 6 +++---
- hw/net/e1000e_core.c | 8 ++++----
- 2 files changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/hw/net/e1000.c b/hw/net/e1000.c
-index 3d0b227703..5dddf9e0a7 100644
---- a/hw/net/e1000.c
-+++ b/hw/net/e1000.c
-@@ -379,9 +379,9 @@ static void e1000_reset_hold(Object *obj, ResetType type)
-     E1000BaseClass *edc = E1000_GET_CLASS(d);
-     uint8_t *macaddr = d->conf.macaddr.a;
- 
--    timer_del(d->autoneg_timer);
--    timer_del(d->mit_timer);
--    timer_del(d->flush_queue_timer);
-+    timer_free(d->autoneg_timer);
-+    timer_free(d->mit_timer);
-+    timer_free(d->flush_queue_timer);
-     d->mit_timer_on = 0;
-     d->mit_irq_level = 0;
-     d->mit_ide = 0;
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index 2413858790..61fdc8a3e9 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -127,7 +127,7 @@ static inline void
- e1000e_intrmgr_stop_timer(E1000IntrDelayTimer *timer)
- {
-     if (timer->running) {
--        timer_del(timer->timer);
-+        timer_free(timer->timer);
-         timer->running = false;
-     }
- }
-@@ -360,13 +360,13 @@ e1000e_intrmgr_fire_all_timers(E1000ECore *core)
-     int i;
- 
-     if (core->itr.running) {
--        timer_del(core->itr.timer);
-+        timer_free(core->itr.timer);
-         e1000e_intrmgr_on_throttling_timer(&core->itr);
-     }
- 
-     for (i = 0; i < E1000E_MSIX_VEC_NUM; i++) {
-         if (core->eitr[i].running) {
--            timer_del(core->eitr[i].timer);
-+            timer_free(core->eitr[i].timer);
-             e1000e_intrmgr_on_msix_throttling_timer(&core->eitr[i]);
-         }
-     }
-@@ -3452,7 +3452,7 @@ static void e1000e_reset(E1000ECore *core, bool sw)
- {
-     int i;
- 
--    timer_del(core->autoneg_timer);
-+    timer_free(core->autoneg_timer);
- 
-     e1000e_intrmgr_reset(core);
- 
--- 
-2.34.1
+PiANCj4gSGVsbG8gSmlucWlhbg0KPiANCj4gT24gMy8yNS8yNSAwOTowMCwgeWFuZ2ppbnFpYW4g
+dmlhIHdyb3RlOg0KPiA+IEhpLA0KPiA+DQo+ID4gSSdtIG9ic2VydmluZyBpbnRlcm1pdHRlbnQg
+ZmFpbHVyZXMgd2hlbiBlbmFibGluZyB0aGUgSE5TMyBuZXR3b3JrDQo+ID4gcG9ydCBpbiBWTSB1
+c2luZw0KPiA+DQo+ID4gUUVNVSB3aXRoIHRoZSBtYWlubGluZSBrZXJuZWwuDQo+IA0KPiANCj4g
+V291bGQgeW91IG1pbmQgb3BlbmluZyBhIGdpdGxhYiBpc3N1ZSB3aXRoIG1vcmUgZGV0YWlscyBv
+biB0aGUgY29udGV4dCwgaG9zdCwNCj4gZ3Vlc3QsIEhXID8NCj4gDQo+ICAgICBodHRwczovL2dp
+dGxhYi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS9pc3N1ZXMvDQo+IA0KPiBUaGFua3MsDQo+IA0K
+PiBDLg0KPiANCj4gDQpIaSwgQ8OpZHJpYw0KDQpJJ3ZlIGFkZGVkIHRoZSBkZXRhaWxzIHRvIHRo
+ZSBnaXRsYWIgaXNzdWUuDQoNCmh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2plY3QvcWVtdS8t
+L2lzc3Vlcy8yODg0DQoNCnRoYW5rcywNCkppbnFpYW4NCj4gDQo+IA0KPiA+IEhOUzMgZHJpdmUg
+aW4ga2VybmVsOg0KPiA+DQo+ID4gc3RhdGljIGludCBobnMzX25pY19uZXRfdXAoc3RydWN0IG5l
+dF9kZXZpY2UgKm5ldGRldikNCj4gPg0KPiA+IHsNCj4gPg0KPiA+IC4uLi4uLg0KPiA+DQo+ID4g
+IMKgwqDCoMKgwqDCoCAvKiBlbmFibGUgdGhlIHZlY3RvcnMgKi8NCj4gPg0KPiA+ICDCoMKgwqDC
+oMKgwqAgZm9yIChpID0gMDsgaSA8IHZlY3Rvcl9udW07IGkrKykNCj4gPg0KPiA+IHsNCj4gPg0K
+PiA+IG5hcGlfZW5hYmxlKG5hcGkpOw0KPiA+DQo+ID4gIMKgwqDCoMKgwqDCoCDCoMKgwqDCoMKg
+IGVuYWJsZV9pcnEodmVjdG9yX2lycSk7DQo+ID4NCj4gPiAgwqDCoMKgwqDCoMKgIMKgwqDCoMKg
+wqAgaG5zM19tYXNrX3ZlY3Rvcl9pcnEodHFwX3ZlY3RvciwgMSk7DQo+ID4NCj4gPiAgwqDCoMKg
+wqDCoMKgIH0NCj4gPg0KPiA+IC4uLi4uLg0KPiA+DQo+ID4gfQ0KPiA+DQo+ID4gV2hlbiB0aGUg
+Vk0gaGFzIHR3byB2Q1BVcywgdGhlIGd1ZXN0IEhOUzMgZHJpdmVyIHBlcmZvcm1zIHR3bw0KPiA+
+IHNlcXVlbnRpYWwNCj4gPg0KPiA+IGVuYWJsZV9pcnEgb3BlcmF0aW9ucyAodmVjdG9yX251bT0y
+KS4gVGhlIGVuYWJsZV9pcnEgd2lsbCB0cmFwIGludG8NCj4gPiBLVk0gZm9yIGludGVycnVwdA0K
+PiA+DQo+ID4gY29uZmlndXJhdGlvbiBhbmQgZXhpdCB0byBRRU1VIGZvciBQQ0kgZGV2aWNlIGVt
+dWxhdGlvbi4gV2hlbg0KPiA+IGVtdWxhdGluZyBpbnRlcnJ1cHQNCj4gPg0KPiA+IGVuYWJsaW5n
+IGluIFFFTVUsIHZmaW9fW2ludHgvbXNpL21zaXhdX2VuYWJsZSBjYWxscw0KPiA+IHZmaW9fZGlz
+YWJsZV9pbnRlcnJ1cHRzIHRvIGRpc2FibGUNCj4gPg0KPiA+IGFsbCBpbnRlcnJ1cHRzIG9uIHRo
+ZSB2ZGV2Lg0KPiA+DQo+ID4gVGhlIHF1ZXN0aW9ucyBhcmU6DQo+ID4NCj4gPiAxLldoeSBkb2Vz
+IHRoZSB2ZmlvLXBjaSBkaXNhYmxlIGFsbCBpbnRlcnJ1cHRzIG9mIHRoZSBkZXZpY2UgYmVmb3Jl
+IGVuYWJsaW5nDQo+IGlycXM/DQo+ID4NCj4gPiAyLklzIHRoaXMgYSBub3JtYWwgdmZpby1wY2kg
+cHJvY2VzcyBvciBhIHByb2JsZW0/DQo+ID4NCj4gPiBUaGFua3MNCj4gPg0KPiA+IEppbnFpYW4N
+Cj4gPg0KPiANCj4gV291bGQNCj4gDQoNCg==
 
