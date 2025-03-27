@@ -4,44 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178A5C3600E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 18:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B8EC36013
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 18:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txruc-0008CJ-Ci; Thu, 27 Mar 2025 14:25:13 -0400
+	id 1txruK-00088u-DX; Thu, 27 Mar 2025 14:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1txruA-00087e-IN
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:24:39 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1txru7-0003Wm-46
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:24:37 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.98.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1txrtw-00000000T8V-1ZU8; Thu, 27 Mar 2025 19:24:24 +0100
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: kvm@vger.kernel.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH] target/i386: Reset parked vCPUs together with the online ones
-Date: Thu, 27 Mar 2025 19:24:16 +0100
-Message-ID: <e8b85a5915f79aa177ca49eccf0e9b534470c1cd.1743099810.git.maciej.szmigiero@oracle.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txru0-00086U-Sm
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:24:32 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1txrty-0003Wa-9q
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 14:24:28 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3997205e43eso1087971f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 11:24:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743099863; x=1743704663; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uF5SeKhZI3Nn+8j2LeUDfw3h5jEFvSqO/j0ufeklhgk=;
+ b=nvcdJNC2rqN8oOmQeDefQqRhqTziGQo2OLXDjxiLOfPygO1KavHWaoYsuaV5GVCVNC
+ bJTiDuU5Ekl01X3QL4FGF6XlC5x3WubuUU3HRBNfAI/MVPfT0WshA/Q3VLPnPpk5KTUO
+ 7PRJPkBQLECh7s6h4fWPfJq7xE7lmV+lTFGummPqSP8c/T39KrhvAFwQY3BglWLFylkp
+ nPP/Zv0ZMsJRMAWlaTbnN82bShRWbhlDXtlMT3690VRjM455GwSd9MmK2NWhy4RSO0EA
+ Pw6UhOEbDFx5I95aKnPTe4TtnPg30BG/2oHlIipuwtAjKhYrMUlfP/Hx0ZrQzcmZ2fbz
+ 0ciw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743099863; x=1743704663;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uF5SeKhZI3Nn+8j2LeUDfw3h5jEFvSqO/j0ufeklhgk=;
+ b=gE/BFke5rnLJKO/mpkOf2T18Q9/LfcencgOsPb6MFb5Sm0rYiPHy86r6FLzI79QDHm
+ 43suvoo3aWrZoQDA5TFG6mePuJe1ia6appqulSJ5a2vcMohSOJwdyUeR/nDnWdKbHzVE
+ LT4Q+Fh2s7JfRpTKjCWbFpp1wK+D0OxVxnQ1z0A/tgu6jx1/cLc5spe18vyz0JO1qm3y
+ NmF9oC0SJFz2WU5Xn4Fg/C9TwMTP5fRGl9MnsjfoSj0eWmMRVKE6sJmknDIHI6Ap7F98
+ A90IfatQbutlE2n0zC8EAl6thCXSwOjbgQoeJXELrVF6/u9Iflz5a3t12OHav7PG6HAv
+ A1pg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJvRiZ5qVZ6IGIwpi9KS3DhMIEGDJZ4seGyU6UruyoaiIhfjHtAnNwvs2gNNZcdz1vt+9XR3XwNUYf@nongnu.org
+X-Gm-Message-State: AOJu0YyT/QxXbIimJiG++/6Ix+IQYYeM1aT+1LTU0IKnvbMoJN/Ktx0b
+ Tk4kqqZfZ8SWx3XhuJ6dhl+SZzCZTY7SSlK3gsF1mZ1ihVB7JI5NuUbDSS9/lN4=
+X-Gm-Gg: ASbGncsRRGwwaf/4OTyjpiZRO/scaaEl4G+2JlJml0dSv9BjN+YI3kZBeiyC+BpmsDf
+ CpZJ5VS7J4oKdcCv5dXMP9D8R27nTdj8ia4FnTXpyJX1vfrl+OEWPpzeiNi3pQwj00wTjuV4PZe
+ sNnCXvC/H3JTO9xCkkNN1Jx9oeWu4waJsYpUt6/JbjcdXZWUWfjlXRcT9A5smgJ520wG+fb2M9E
+ 1PCsHsHlBDnWJzn1+5J8TOFTU9LfxechZpaptJc2LEMLzOgcEWCj2H4rfgBvjDWO5AvLddMfjp5
+ 71rJY9b3wAPalfwjKTLwUKKzDqV1Qm/dAy7rN7X+bG/Q7Aa7OjCXaLvdALAOWbZp7oWaQ5NWfz6
+ ZxMJq6hJJck7R
+X-Google-Smtp-Source: AGHT+IGC2U3NfupT7WV9N1+73Zezzt/oxYu+Zpf76nlIGuQnb3UXEX6eatXrfD2mDW2kEWojPzBQ2Q==
+X-Received: by 2002:a05:6000:40e1:b0:391:255a:748b with SMTP id
+ ffacd0b85a97d-39ad1784903mr4518139f8f.39.1743099863076; 
+ Thu, 27 Mar 2025 11:24:23 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d8314f5c6sm46747875e9.40.2025.03.27.11.24.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Mar 2025 11:24:22 -0700 (PDT)
+Message-ID: <dee36972-4483-492d-a64f-17c0d0000f59@linaro.org>
+Date: Thu, 27 Mar 2025 19:24:21 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.083, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/11] hw/avr: Prepare for TARGET_PAGE_SIZE > 256
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mrolnik@gmail.com, pierrick.bouvier@linaro.org
+References: <20250325224403.4011975-1-richard.henderson@linaro.org>
+ <20250325224403.4011975-11-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250325224403.4011975-11-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -58,76 +102,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On 25/3/25 23:44, Richard Henderson wrote:
+> If i/o does not cover the entire first page, allocate a portion
+> of ram as an i/o device, so that the entire first page is i/o.
+> 
+> While memory_region_init_ram_device_ptr is happy to allocate
+> the RAMBlock, it does not register the ram for migration.
+> Do this by hand.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   hw/avr/atmega.h |  1 +
+>   hw/avr/atmega.c | 39 ++++++++++++++++++++++++++++++++-------
+>   2 files changed, 33 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/avr/atmega.h b/hw/avr/atmega.h
+> index a99ee15c7e..9ac4678231 100644
+> --- a/hw/avr/atmega.h
+> +++ b/hw/avr/atmega.h
+> @@ -41,6 +41,7 @@ struct AtmegaMcuState {
+>       MemoryRegion flash;
+>       MemoryRegion eeprom;
+>       MemoryRegion sram;
+> +    MemoryRegion sram_io;
+>       DeviceState *io;
+>       AVRMaskState pwr[POWER_MAX];
+>       AVRUsartState usart[USART_MAX];
 
-Commit 3f2a05b31ee9 ("target/i386: Reset TSCs of parked vCPUs too on VM
-reset") introduced a way to reset TSCs of parked vCPUs during VM reset to
-prevent them getting desynchronized with the online vCPUs and therefore
-causing the KVM PV clock to lose PVCLOCK_TSC_STABLE_BIT.
+> @@ -240,11 +239,37 @@ static void atmega_realize(DeviceState *dev, Error **errp)
+>       qdev_realize(DEVICE(&s->cpu), NULL, &error_abort);
+>       cpudev = DEVICE(&s->cpu);
+>   
+> -    /* SRAM */
+> -    memory_region_init_ram(&s->sram, OBJECT(dev), "sram", mc->sram_size,
+> -                           &error_abort);
+> -    memory_region_add_subregion(get_system_memory(),
+> -                                OFFSET_DATA + mc->io_size, &s->sram);
+> +    /*
+> +     * SRAM
+> +     *
+> +     * Softmmu is not able mix i/o and ram on the same page.
+> +     * Therefore in all cases, the first page exclusively contains i/o.
+> +     *
+> +     * If the MCU's i/o region matches the page size, then we can simply
+> +     * allocate all ram starting at the second page.  Otherwise, we must
+> +     * allocate some ram as i/o to complete the first page.
+> +     */
+> +    assert(mc->io_size == 0x100 || mc->io_size == 0x200);
+> +    if (mc->io_size >= TARGET_PAGE_SIZE) {
+> +        memory_region_init_ram(&s->sram, OBJECT(dev), "sram", mc->sram_size,
+> +                               &error_abort);
+> +        memory_region_add_subregion(get_system_memory(),
+> +                                    OFFSET_DATA + mc->io_size, &s->sram);
+> +    } else {
+> +        int sram_io_size = TARGET_PAGE_SIZE - mc->io_size;
+> +        void *sram_io_mem = g_malloc0(sram_io_size);
 
-The way this was done was by registering a parked vCPU-specific QEMU reset
-callback via qemu_register_reset().
+Please declare sram_io_mem in AtmegaMcuState, after sram_io.
 
-However, it turns out that on particularly device-rich VMs QEMU reset
-callbacks can take a long time to execute (which isn't surprising,
-considering that they involve resetting all of VM devices).
-
-In particular, their total runtime can exceed the 1-second TSC
-synchronization window introduced in KVM commit 5d3cb0f6a8e3 ("KVM:
-Improve TSC offset matching").
-Since the TSCs of online vCPUs are only reset from "synchronize_post_reset"
-AccelOps handler (which runs after all qemu_register_reset() handlers) this
-essentially makes that fix ineffective on these VMs.
-
-The easiest way to guarantee that these parked vCPUs are reset at the same
-time as the online ones (regardless how long it takes for VM devices to
-reset) is to piggyback on post-reset vCPU synchronization handler for one
-of online vCPUs - as there is no generic post-reset AccelOps handler that
-isn't per-vCPU.
-
-The first online vCPU was selected for that since it is easily available
-under "first_cpu" define.
-This does not create an ordering issue since the order of vCPU TSC resets
-does not matter.
-
-Fixes: 3f2a05b31ee9 ("target/i386: Reset TSCs of parked vCPUs too on VM reset")
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
- accel/kvm/kvm-all.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index f89568bfa397..951e8214e079 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -437,9 +437,8 @@ int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
-     return kvm_fd;
- }
- 
--static void kvm_reset_parked_vcpus(void *param)
-+static void kvm_reset_parked_vcpus(KVMState *s)
- {
--    KVMState *s = param;
-     struct KVMParkedVcpu *cpu;
- 
-     QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
-@@ -2738,7 +2737,6 @@ static int kvm_init(MachineState *ms)
-     }
- 
-     qemu_register_reset(kvm_unpoison_all, NULL);
--    qemu_register_reset(kvm_reset_parked_vcpus, s);
- 
-     if (s->kernel_irqchip_allowed) {
-         kvm_irqchip_create(s);
-@@ -2908,6 +2906,10 @@ static void do_kvm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg
- void kvm_cpu_synchronize_post_reset(CPUState *cpu)
- {
-     run_on_cpu(cpu, do_kvm_cpu_synchronize_post_reset, RUN_ON_CPU_NULL);
-+
-+    if (cpu == first_cpu) {
-+        kvm_reset_parked_vcpus(kvm_state);
-+    }
- }
- 
- static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
+> +
+> +        memory_region_init_ram_device_ptr(&s->sram_io, OBJECT(dev), "sram-as-io",
+> +                                          sram_io_size, sram_io_mem);
+> +        memory_region_add_subregion(get_system_memory(),
+> +                                    OFFSET_DATA + mc->io_size, &s->sram_io);
+> +        vmstate_register_ram(&s->sram_io, dev);
+> +
+> +        memory_region_init_ram(&s->sram, OBJECT(dev), "sram",
+> +                               mc->sram_size - sram_io_size, &error_abort);
+> +        memory_region_add_subregion(get_system_memory(),
+> +                                    OFFSET_DATA + TARGET_PAGE_SIZE, &s->sram);
+> +    }
 
