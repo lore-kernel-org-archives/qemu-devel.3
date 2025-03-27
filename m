@@ -4,78 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2DE5C36013
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 20:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA10FC3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 20:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txtbo-00014n-SN; Thu, 27 Mar 2025 16:13:48 -0400
+	id 1txttc-0004Mq-95; Thu, 27 Mar 2025 16:32:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txtbi-00011G-RW
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 16:13:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1txtbd-0001dd-L2
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 16:13:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743106414;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=A0F6DJ4DM1vES6Xf91qq6/TeoP+CHFuIWZc22mSAr/8=;
- b=MKbY88tg9osuk87pvyjyGGzlgHOS7vW68lk79lIt1Qxo+npLqIyiais/BzpRqP62j9WgfP
- 1YmHiqh6AChdY4FM7HV9uR7uYp5zTHc2CfjgJT/gCB8y7oPwuRSGh0dl8wzxMxbeN2LCuY
- QCjT4enj6wHx8UBxf0F0Cu8WOxI/zgw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-R9pbuLPhOteRXVgi2WrcVw-1; Thu,
- 27 Mar 2025 16:13:30 -0400
-X-MC-Unique: R9pbuLPhOteRXVgi2WrcVw-1
-X-Mimecast-MFC-AGG-ID: R9pbuLPhOteRXVgi2WrcVw_1743106408
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C5CA1933B69; Thu, 27 Mar 2025 20:13:24 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.33.126])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BAC1A180B486; Thu, 27 Mar 2025 20:13:15 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Beniamino Galvani <b.galvani@gmail.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1txtta-0004MR-2Z; Thu, 27 Mar 2025 16:32:10 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1txttU-00048A-MB; Thu, 27 Mar 2025 16:32:09 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5e6f4b3ebe5so2739797a12.0; 
+ Thu, 27 Mar 2025 13:31:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1743107512; x=1743712312; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xRva02BIpqgcEgGjsHLXlgEs/CvX+XGoESnQeztOR/U=;
+ b=W/kvrdLypMqb156og+7zKOkba/EbP7Mq3hSKwSno938vLtkKA3m2YYIaAZN7F10rDK
+ LoA+YURB/D6/Y2uuVpDc3Y32TsVhii0j+5IltVTqQPl3nGbL8aRa0EbR+LKmJ4odAIby
+ JKrExX1S/glS+4LQU+Kvak5FNe9T5esnFMQApvBupjux9K3M8yuVEZLpzIcfbh3s+cfi
+ 2sTvNL773O3NVUdWPNT/w3wecQkitIvD/Mkv1rY32KZVGkG5OES2Ev6YMY04nj63SUMF
+ Q4QuOBAsfO61bJE6icKWXxcOLqWWVGKZxwEzwn2PDBsy55zuXb40ZyJ+ESW2ZyCx3b5x
+ gFxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743107512; x=1743712312;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xRva02BIpqgcEgGjsHLXlgEs/CvX+XGoESnQeztOR/U=;
+ b=YdO0/ZtxkNGAp4oVeoDfPPikmM5/0bBf1uITKFO2mPU5J0om+uar836aVBJ4B37dyv
+ tYtAyjsOFP7I4i2Yu6sA8/mUajDOCKdbGOVCoQVilAkiHt1sDKCQ3xPXRVCPdWp9Vyuv
+ ngtG4VomngthOAxgXXMWsXEC4qHgNzpUC56rNoADIDgAvQRiIlAaChGpVGUbrdbiJnVC
+ RV3oaz0s08YvyDJU7ZGMsqFqQV0BUem6ITli07DmTRt6m3BDPiUkEDRIRbfWQOrvQVUg
+ nz0wdorURfDbX4ujpv824grYvrRRxMTbZ454Qv6oC72UKNQ7wWE0utSIhnktmf770pzd
+ EB2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV45SpzMSr9CSqy9pgPKAaIZvA6GpA+JB4W8IzcP6oU6xAnk+EVDAunKDB5la38fDdlj9iaZEdTSuC6jA==@nongnu.org,
+ AJvYcCVQ5mUQT7T01xbHoeU3J0uX6PN8BEozyH2EZw1PPZACpCBsEWcuiU705UqI1nxbh/sHrHS1pV3DsQ==@nongnu.org,
+ AJvYcCVc7FtQyt1AuP20ao4/RsE2Nqnk+6pL9JFN4+D1aDYTSQ929ldLDDIHdhaGIjqpdqrz6dffBHXMg51SZQ==@nongnu.org,
+ AJvYcCWKtsixI7R4H3KpYjaAqpJH0Kq/YuiF2FZzA4qa7KVzbntANZnGuJppTZXFrPzrALXR3UDCbI2qmT4=@nongnu.org,
+ AJvYcCX+XJnTr/8GIdSvutPRgEEIXNVfUCsLmWmj2BKwQKtWZLMht2APCja2RBrSI376mQ8s5VzqiP1BYulAkw==@nongnu.org
+X-Gm-Message-State: AOJu0YyF6XjU0Y5oYEA5opDeyzAsiobLhQ3XGLSa3ol0GCVWfj+O5PYN
+ ZK+C5495Ov32Nv0d+4RhItqHFkmvfsUN+O7DjQrIi2Yc63LM2OUf
+X-Gm-Gg: ASbGncvwdKx0bo9MmOCPo8/Jh5EN+su485JHuAoJVcI8EOGghBLvj3GdnaQ9KR0feFR
+ Adu+MFNuClWCW1VmLPqYLHCfDCHt+p1nA35HNtuaDunK1OtvY8e66K64xCb6Ou5DoS2s20ZIgXV
+ tAuYwz6lCNrJRXjjR1yUxxwMDqRinByCbm06vdnd1lg5lkFtZ01jNBVnXVSM1ec994xmH4biZR3
+ a2xNARPSjKDZ0F7A05+n1qvGv1Yje5Xe8YaTULYJjIRHr5MfBPFv1WFKoJWyn49W+9BhgYcgUzi
+ wGZ3kQA2EmS47bB3NumV0MWiyD9ocE1HBFM29lhNyLGTqfSUVbV5IAAz0pA5ytEfbC7Q4jVjObV
+ q9I5lZ2BdZaqyfprevTXsXzRmB34Kc5BgkBT8lPwpNrB10BlOnZb6PBZcO/USCZU=
+X-Google-Smtp-Source: AGHT+IG55z0YhH4CG1HN/2e/KDzBE2BO/cdF0vNwiMC9M+kWoY+6oiiFIBx1oKoV1PYthQrl/yfMSA==
+X-Received: by 2002:a17:907:96a5:b0:ac3:5c8e:d3f5 with SMTP id
+ a640c23a62f3a-ac6faf163b0mr480044266b.27.1743107511756; 
+ Thu, 27 Mar 2025 13:31:51 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-1d64-9300-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
+ [2a02:3100:1d64:9300:69d2:56f6:a5af:50a8])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac7192ea05fsm49891666b.86.2025.03.27.13.31.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Mar 2025 13:31:51 -0700 (PDT)
+Date: Thu, 27 Mar 2025 20:31:37 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+CC: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?ISO-8859-1?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Samuel Tardieu <sam@rfc1149.net>,
+ qemu-block@nongnu.org, Patrick Leis <venture@google.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] tests/functional: Remove semicolons at the end of lines
-Date: Thu, 27 Mar 2025 21:13:05 +0100
-Message-ID: <20250327201305.996241-1-thuth@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>, Halil Pasic <pasic@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Hanna Reitz <hreitz@redhat.com>, Hao Wu <wuhaotsh@google.com>,
+ qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH-for-10.0 10/12] hw/rtc: Categorize and add description
+In-Reply-To: <20250325224310.8785-11-philmd@linaro.org>
+References: <20250325224310.8785-1-philmd@linaro.org>
+ <20250325224310.8785-11-philmd@linaro.org>
+Message-ID: <02CA7571-F36C-4ABB-BEBD-71582944B3F9@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,357 +121,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
 
-Yes, we are all C coders who try to write Python code for testing...
-but still, let's better avoid semicolons at the end of the lines
-to keep "pylint" happy!
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/aspeed.py                    |  2 +-
- tests/functional/test_aarch64_aspeed.py       |  2 +-
- tests/functional/test_arm_aspeed_ast2500.py   |  6 ++--
- tests/functional/test_arm_aspeed_ast2600.py   | 36 +++++++++----------
- tests/functional/test_arm_aspeed_bletchley.py |  4 +--
- tests/functional/test_arm_aspeed_palmetto.py  |  4 +--
- tests/functional/test_arm_aspeed_romulus.py   |  4 +--
- .../functional/test_arm_aspeed_witherspoon.py |  4 +--
- tests/functional/test_arm_bpim2u.py           |  2 +-
- tests/functional/test_arm_cubieboard.py       |  2 +-
- tests/functional/test_arm_orangepi.py         |  2 +-
- tests/functional/test_s390x_topology.py       | 12 +++----
- 12 files changed, 40 insertions(+), 40 deletions(-)
+Am 25=2E M=C3=A4rz 2025 22:43:08 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
+ <philmd@linaro=2Eorg>:
+>Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>---
+> hw/rtc/ds1338=2Ec  | 2 ++
+> hw/rtc/m41t80=2Ec  | 2 ++
+> hw/rtc/rs5c372=2Ec | 2 ++
 
-diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
-index 77dc8930fa4..7a40d5dda73 100644
---- a/tests/functional/aspeed.py
-+++ b/tests/functional/aspeed.py
-@@ -44,7 +44,7 @@ def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'
- 
-     def do_test_arm_aspeed_buildroot_poweroff(self):
-         exec_command_and_wait_for_pattern(self, 'poweroff',
--                                          'System halted');
-+                                          'System halted')
- 
-     def do_test_arm_aspeed_sdk_start(self, image):
-         self.require_netdev('user')
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index c25c9662782..c7f3b3b319f 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -85,7 +85,7 @@ def start_ast2700_test(self, name):
- 
-         exec_command_and_wait_for_pattern(self,
-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
--            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
-+            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-diff --git a/tests/functional/test_arm_aspeed_ast2500.py b/tests/functional/test_arm_aspeed_ast2500.py
-index 1ffba6c9953..ddc6459f710 100755
---- a/tests/functional/test_arm_aspeed_ast2500.py
-+++ b/tests/functional/test_arm_aspeed_ast2500.py
-@@ -22,17 +22,17 @@ def test_arm_ast2500_evb_buildroot(self):
-         image_path = self.ASSET_BR2_202411_AST2500_FLASH.fetch()
- 
-         self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-+                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
-         self.do_test_arm_aspeed_buildroot_start(image_path, '0x0',
-                                                 'ast2500-evb login:')
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-+             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
-+                    property='temperature', value=18000)
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
- 
-diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
-index 6ae4ed636ac..5ef52f06595 100755
---- a/tests/functional/test_arm_aspeed_ast2600.py
-+++ b/tests/functional/test_arm_aspeed_ast2600.py
-@@ -27,38 +27,38 @@ def test_arm_ast2600_evb_buildroot(self):
-         image_path = self.ASSET_BR2_202411_AST2600_FLASH.fetch()
- 
-         self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-+                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
-         self.vm.add_args('-device',
--                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
-+                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32')
-         self.vm.add_args('-device',
--                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
-+                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42')
-         self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00',
-                                                 'ast2600-evb login:')
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-+             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
-+                    property='temperature', value=18000)
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32');
-+             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32')
-         year = time.strftime("%Y")
--        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year);
-+        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year)
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
--             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
-+             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64')
-         exec_command_and_wait_for_pattern(self,
--             'i2cset -y 3 0x42 0x64 0x00 0xaa i', '#');
-+             'i2cset -y 3 0x42 0x64 0x00 0xaa i', '#')
-         exec_command_and_wait_for_pattern(self,
-              'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
--             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
-+             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff')
-         self.do_test_arm_aspeed_buildroot_poweroff()
- 
-     ASSET_BR2_202302_AST2600_TPM_FLASH = Asset(
-@@ -90,10 +90,10 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
- 
-         exec_command_and_wait_for_pattern(self,
-             'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
--            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
-+            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)')
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/class/tpm/tpm0/pcr-sha256/0',
--            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0');
-+            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0')
- 
-         self.do_test_arm_aspeed_buildroot_poweroff()
- 
-@@ -107,9 +107,9 @@ def test_arm_ast2600_evb_sdk(self):
-         self.archive_extract(self.ASSET_SDK_V806_AST2600_A2)
- 
-         self.vm.add_args('-device',
--            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test');
-+            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
-         self.vm.add_args('-device',
--            'ds1338,bus=aspeed.i2c.bus.5,address=0x32');
-+            'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file("ast2600-a2", "image-bmc"))
- 
-@@ -120,20 +120,20 @@ def test_arm_ast2600_evb_sdk(self):
- 
-         exec_command_and_wait_for_pattern(self,
-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-5/device/new_device',
--            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d');
-+            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-              'cat /sys/class/hwmon/hwmon19/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
-+                    property='temperature', value=18000)
-         exec_command_and_wait_for_pattern(self,
-              'cat /sys/class/hwmon/hwmon19/temp1_input', '18000')
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-5/device/new_device',
--             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32');
-+             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32')
-         year = time.strftime("%Y")
-         exec_command_and_wait_for_pattern(self,
--             '/sbin/hwclock -f /dev/rtc1', year);
-+             '/sbin/hwclock -f /dev/rtc1', year)
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_bletchley.py b/tests/functional/test_arm_aspeed_bletchley.py
-index 0da856c5ed4..5a60b24b3d2 100644
---- a/tests/functional/test_arm_aspeed_bletchley.py
-+++ b/tests/functional/test_arm_aspeed_bletchley.py
-@@ -12,14 +12,14 @@ class BletchleyMachine(AspeedTest):
- 
-     ASSET_BLETCHLEY_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/bletchley-bmc/openbmc-20250128071329/obmc-phosphor-image-bletchley-20250128071329.static.mtd.xz',
--        'db21d04d47d7bb2a276f59d308614b4dfb70b9c7c81facbbca40a3977a2d8844');
-+        'db21d04d47d7bb2a276f59d308614b4dfb70b9c7c81facbbca40a3977a2d8844')
- 
-     def test_arm_ast2600_bletchley_openbmc(self):
-         image_path = self.uncompress(self.ASSET_BLETCHLEY_FLASH)
- 
-         self.do_test_arm_aspeed_openbmc('bletchley-bmc', image=image_path,
-                                         uboot='2019.04', cpu_id='0xf00',
--                                        soc='AST2600 rev A3');
-+                                        soc='AST2600 rev A3')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_palmetto.py b/tests/functional/test_arm_aspeed_palmetto.py
-index 35d832bc98e..ff0b821be65 100755
---- a/tests/functional/test_arm_aspeed_palmetto.py
-+++ b/tests/functional/test_arm_aspeed_palmetto.py
-@@ -12,14 +12,14 @@ class PalmettoMachine(AspeedTest):
- 
-     ASSET_PALMETTO_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/palmetto-bmc/openbmc-20250128071432/obmc-phosphor-image-palmetto-20250128071432.static.mtd',
--        'bce7c392eec75c707a91cfc8fad7ca9a69d7e4f10df936930d65c1cb9897ac81');
-+        'bce7c392eec75c707a91cfc8fad7ca9a69d7e4f10df936930d65c1cb9897ac81')
- 
-     def test_arm_ast2400_palmetto_openbmc(self):
-         image_path = self.ASSET_PALMETTO_FLASH.fetch()
- 
-         self.do_test_arm_aspeed_openbmc('palmetto-bmc', image=image_path,
-                                         uboot='2019.04', cpu_id='0x0',
--                                        soc='AST2400 rev A1');
-+                                        soc='AST2400 rev A1')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_romulus.py b/tests/functional/test_arm_aspeed_romulus.py
-index b97ed951b1f..0447212bbf0 100755
---- a/tests/functional/test_arm_aspeed_romulus.py
-+++ b/tests/functional/test_arm_aspeed_romulus.py
-@@ -12,14 +12,14 @@ class RomulusMachine(AspeedTest):
- 
-     ASSET_ROMULUS_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/romulus-bmc/openbmc-20250128071340/obmc-phosphor-image-romulus-20250128071340.static.mtd',
--        '6d031376440c82ed9d087d25e9fa76aea75b42f80daa252ec402c0bc3cf6cf5b');
-+        '6d031376440c82ed9d087d25e9fa76aea75b42f80daa252ec402c0bc3cf6cf5b')
- 
-     def test_arm_ast2500_romulus_openbmc(self):
-         image_path = self.ASSET_ROMULUS_FLASH.fetch()
- 
-         self.do_test_arm_aspeed_openbmc('romulus-bmc', image=image_path,
-                                         uboot='2019.04', cpu_id='0x0',
--                                        soc='AST2500 rev A1');
-+                                        soc='AST2500 rev A1')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_witherspoon.py b/tests/functional/test_arm_aspeed_witherspoon.py
-index ea1ce89b05c..51a2d47af28 100644
---- a/tests/functional/test_arm_aspeed_witherspoon.py
-+++ b/tests/functional/test_arm_aspeed_witherspoon.py
-@@ -12,14 +12,14 @@ class WitherspoonMachine(AspeedTest):
- 
-     ASSET_WITHERSPOON_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/witherspoon-bmc/openbmc-20240618035022/obmc-phosphor-image-witherspoon-20240618035022.ubi.mtd',
--        '937d9ed449ea6c6cbed983519088a42d0cafe276bcfe4fce07772ca6673f9213');
-+        '937d9ed449ea6c6cbed983519088a42d0cafe276bcfe4fce07772ca6673f9213')
- 
-     def test_arm_ast2500_witherspoon_openbmc(self):
-         image_path = self.ASSET_WITHERSPOON_FLASH.fetch()
- 
-         self.do_test_arm_aspeed_openbmc('witherspoon-bmc', image=image_path,
-                                         uboot='2016.07', cpu_id='0x0',
--                                        soc='AST2500 rev A1');
-+                                        soc='AST2500 rev A1')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/test_arm_bpim2u.py
-index 8de6ccba881..8bed64b702f 100755
---- a/tests/functional/test_arm_bpim2u.py
-+++ b/tests/functional/test_arm_bpim2u.py
-@@ -163,7 +163,7 @@ def test_arm_bpim2u_openwrt_22_03_3(self):
-                 self, 'Hit any key to stop autoboot:', '=>')
-         exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
-                                                 kernel_command_line + "'", '=>')
--        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-+        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
- 
-         self.wait_for_console_pattern(
-             'Please press Enter to activate this console.')
-diff --git a/tests/functional/test_arm_cubieboard.py b/tests/functional/test_arm_cubieboard.py
-index b87a28154da..1eaca0272bb 100755
---- a/tests/functional/test_arm_cubieboard.py
-+++ b/tests/functional/test_arm_cubieboard.py
-@@ -128,7 +128,7 @@ def test_arm_cubieboard_openwrt_22_03_2(self):
-                 self, 'Hit any key to stop autoboot:', '=>')
-         exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
-                                                 kernel_command_line + "'", '=>')
--        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-+        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
- 
-         self.wait_for_console_pattern(
-             'Please press Enter to activate this console.')
-diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
-index 1815f56e027..f9bfa8c78d9 100755
---- a/tests/functional/test_arm_orangepi.py
-+++ b/tests/functional/test_arm_orangepi.py
-@@ -174,7 +174,7 @@ def test_arm_orangepi_armbian(self):
-         exec_command_and_wait_for_pattern(self, ' ', '=>')
-         exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
-                                                 kernel_command_line + "'", '=>')
--        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-+        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
- 
-         self.wait_for_console_pattern('systemd[1]: Hostname set ' +
-                                       'to <orangepipc>')
-diff --git a/tests/functional/test_s390x_topology.py b/tests/functional/test_s390x_topology.py
-index eefd9729cb2..1b5dc651353 100755
---- a/tests/functional/test_s390x_topology.py
-+++ b/tests/functional/test_s390x_topology.py
-@@ -217,12 +217,12 @@ def test_polarization(self):
-         self.assertEqual(res['return']['polarization'], 'horizontal')
-         self.check_topology(0, 0, 0, 0, 'medium', False)
- 
--        self.guest_set_dispatching('1');
-+        self.guest_set_dispatching('1')
-         res = self.vm.qmp('query-s390x-cpu-polarization')
-         self.assertEqual(res['return']['polarization'], 'vertical')
-         self.check_topology(0, 0, 0, 0, 'medium', False)
- 
--        self.guest_set_dispatching('0');
-+        self.guest_set_dispatching('0')
-         res = self.vm.qmp('query-s390x-cpu-polarization')
-         self.assertEqual(res['return']['polarization'], 'horizontal')
-         self.check_topology(0, 0, 0, 0, 'medium', False)
-@@ -283,7 +283,7 @@ def test_entitlement(self):
-         self.check_polarization('vertical:high')
-         self.check_topology(0, 0, 0, 0, 'high', False)
- 
--        self.guest_set_dispatching('0');
-+        self.guest_set_dispatching('0')
-         self.check_polarization("horizontal")
-         self.check_topology(0, 0, 0, 0, 'high', False)
- 
-@@ -310,11 +310,11 @@ def test_dedicated(self):
-         self.check_topology(0, 0, 0, 0, 'high', True)
-         self.check_polarization("horizontal")
- 
--        self.guest_set_dispatching('1');
-+        self.guest_set_dispatching('1')
-         self.check_topology(0, 0, 0, 0, 'high', True)
-         self.check_polarization("vertical:high")
- 
--        self.guest_set_dispatching('0');
-+        self.guest_set_dispatching('0')
-         self.check_topology(0, 0, 0, 0, 'high', True)
-         self.check_polarization("horizontal")
- 
-@@ -360,7 +360,7 @@ def test_dedicated_error(self):
- 
-         self.check_topology(0, 0, 0, 0, 'high', True)
- 
--        self.guest_set_dispatching('1');
-+        self.guest_set_dispatching('1')
- 
-         self.check_topology(0, 0, 0, 0, 'high', True)
- 
--- 
-2.49.0
+For rs5c372:
+Acked-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
+> 3 files changed, 6 insertions(+)
+>
+>diff --git a/hw/rtc/ds1338=2Ec b/hw/rtc/ds1338=2Ec
+>index 8dd17fdc07c=2E=2E56162917c1b 100644
+>--- a/hw/rtc/ds1338=2Ec
+>+++ b/hw/rtc/ds1338=2Ec
+>@@ -230,6 +230,8 @@ static void ds1338_class_init(ObjectClass *klass, voi=
+d *data)
+>     k->send =3D ds1338_send;
+>     device_class_set_legacy_reset(dc, ds1338_reset);
+>     dc->vmsd =3D &vmstate_ds1338;
+>+    dc->desc =3D "Maxim DS1338 RTC";
+>+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> }
+>=20
+> static const TypeInfo ds1338_types[] =3D {
+>diff --git a/hw/rtc/m41t80=2Ec b/hw/rtc/m41t80=2Ec
+>index 96006956798=2E=2E55f52d95c51 100644
+>--- a/hw/rtc/m41t80=2Ec
+>+++ b/hw/rtc/m41t80=2Ec
+>@@ -99,6 +99,8 @@ static void m41t80_class_init(ObjectClass *klass, void =
+*data)
+>     DeviceClass *dc =3D DEVICE_CLASS(klass);
+>     I2CSlaveClass *sc =3D I2C_SLAVE_CLASS(klass);
+>=20
+>+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>+    dc->desc =3D "ST M41T80 RTC";
+>     dc->realize =3D m41t80_realize;
+>     sc->send =3D m41t80_send;
+>     sc->recv =3D m41t80_recv;
+>diff --git a/hw/rtc/rs5c372=2Ec b/hw/rtc/rs5c372=2Ec
+>index 5542f74085a=2E=2E98067ad06d1 100644
+>--- a/hw/rtc/rs5c372=2Ec
+>+++ b/hw/rtc/rs5c372=2Ec
+>@@ -216,6 +216,8 @@ static void rs5c372_class_init(ObjectClass *klass, vo=
+id *data)
+>     I2CSlaveClass *k =3D I2C_SLAVE_CLASS(klass);
+>     ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+>=20
+>+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>+    dc->desc =3D "Ricoh RS5C372 RTC";
+>     k->event =3D rs5c372_event;
+>     k->recv =3D rs5c372_recv;
+>     k->send =3D rs5c372_send;
 
