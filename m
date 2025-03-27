@@ -4,85 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBEDAC3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 12:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D557C3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 12:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txm26-0000Gu-Mj; Thu, 27 Mar 2025 08:08:26 -0400
+	id 1txm6C-0001GK-Mf; Thu, 27 Mar 2025 08:12:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1txm23-0000GV-7R
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 08:08:23 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1txm69-0001G0-Gs
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 08:12:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1txm20-0003je-4q
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 08:08:22 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1txm67-0004ba-Dd
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 08:12:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743077291;
+ s=mimecast20190719; t=1743077554;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ytR52ZsGoKKMskNDGYl79GxMTeoGnxb1II61VTEyL8E=;
- b=Lz3XpPLD19143yq6SRyNX9ZJZyLptoaGm515mwqCTdkd5y7IMZb+rZQbzW3EG948YQUNib
- R0tMiFflJwHh3QUchXKWMSPUc8ph3Wv/T3RNSnassWsuUFazOwwQRhzUo7xJpch6kkKcAV
- zam4wtn82xPmY9nB0JHuknohjgK6fVw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PfubVpgqXGRI9eYlcuGKHQOk0qdzRxhF/TXCN7Equwo=;
+ b=X11wRqEG7SDzuLiMm7reMi3TYb8fLVOHrhHprn4EfzbDADz96JAqI0Mqb0zPxpTokLdr3u
+ T49d96YuzT6C4vg7y521RJ7zHIN5tCMjyus8jjHL0KLwEj4n3p/3W8OmU3ubSm2caD7M97
+ p5Av21W2ZRvsghBbZEjv7mspxKbMbuE=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-aJFocHbjM2Od3wZymEl2ZQ-1; Thu, 27 Mar 2025 08:08:10 -0400
-X-MC-Unique: aJFocHbjM2Od3wZymEl2ZQ-1
-X-Mimecast-MFC-AGG-ID: aJFocHbjM2Od3wZymEl2ZQ_1743077290
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43ceeaf1524so4721065e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 05:08:10 -0700 (PDT)
+ us-mta-310-kSg3w0bSNbi1R54peJoqxg-1; Thu, 27 Mar 2025 08:12:33 -0400
+X-MC-Unique: kSg3w0bSNbi1R54peJoqxg-1
+X-Mimecast-MFC-AGG-ID: kSg3w0bSNbi1R54peJoqxg_1743077552
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ab68fbe53a4so97406566b.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 05:12:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743077284; x=1743682084;
+ d=1e100.net; s=20230601; t=1743077552; x=1743682352;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ytR52ZsGoKKMskNDGYl79GxMTeoGnxb1II61VTEyL8E=;
- b=J3+djYMCq9CU16xGiAr8hlhYTTjAr7Q1twtM/sHczUMg4VGGfhwSg8NBigqW4Aq+Zd
- W8G15QjQTZSd0NhlV0mfvorA/c3kd9zEOhxI3EjISvuzoctHM9oO90tI7+vsQTUunsxq
- NccIEkRuQS4eDXhgMznVsmksug4pfhXsogg+gdhceIPI5u+zWrj9fZnFtusAglqMCQnY
- qUEvKi3Yj3CMGGMicL/z3lRwSWPQyq2HXO2X6k0uVLQ5I4OOVlzZEbri6h6TNe4znwRn
- S3h/FMMEBGeq2rIQ/cOE+uWL3ZypNikgZFuqQCVwixRQWWOLEZNYlmzHc6mB2Ouv52oS
- qoEg==
-X-Gm-Message-State: AOJu0Yzdi3vbuZlCXpJUrCmXclWAxhxu9Gs2uK6hvKmk83leJQEqICcC
- 0c7kMzez5hJ11rsl72WKY4IT8aujX04yv0B/EJRIKh+VR/kDHwLdfWb2yFGjXGG3B2ozj1YsZg1
- TJb8ECb0CI/JlXxzjEophcbNQxqDO+3P+VKVjQYdkH16fccUA11eVY6O3sHnpoakCSXcs+mrqw4
- QwZ0WykwZdtIhMWfmGvUSCkWmbWQA=
-X-Gm-Gg: ASbGncuHQeBypDeaekuMeR3vSml6Rz4Yiuk4zGjoWOT3CaRWKjo1OqP6zHjSpQBe6G9
- 3Qq0aK8N9LIITDi0ocrsKvaktak2I/Ym+jvLVPVRVgZpBRg7gpWBwcE1bXqqEuzu912lb/kPBT+
- U=
-X-Received: by 2002:a7b:c019:0:b0:439:873a:1114 with SMTP id
- 5b1f17b1804b1-43d849af83amr24483985e9.6.1743077284504; 
- Thu, 27 Mar 2025 05:08:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFY6n4u9QfILk6WCLdXDKUbUwjFws+rlEWcW9zFaHQ6ZXrkhzaHsXu1ADc4y11q/l9w2wNFZV6f70LXCWNeHk0=
-X-Received: by 2002:a7b:c019:0:b0:439:873a:1114 with SMTP id
- 5b1f17b1804b1-43d849af83amr24483715e9.6.1743077284009; Thu, 27 Mar 2025
- 05:08:04 -0700 (PDT)
+ bh=PfubVpgqXGRI9eYlcuGKHQOk0qdzRxhF/TXCN7Equwo=;
+ b=iJcGDd+jZ67y/lEXcyM6GGKm2eSjGpGn68Q0YfZUYRPAtNQK97YNqjzIhOFYznQHxg
+ RZYLfM12OATgxwF+cZutC/sQyS/nk8fGxSvZ00Ki4qUKao9egIv+A1uFygFg5Qqy4l4r
+ CZ1+XcAb9IvIavC/QQsMYfrIqVkmzr5ZTQItmOmB2cNKWSJB7nrTjHv+HmtXOK66kAOS
+ ZprXCL1riq8TOhvsnxitkUcdY4EiUE7j1GuM0K65inWJh0uPTE4uurpz6P3fGv17BCJ4
+ 9ZlDqWvazP3G9d0XMiq2bx1IGvPYfh/a29fsXr56axIcWGzwj5J4csKAHxRiJAXDRERY
+ Z5vA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWwL53tkF4tjc3SZJ9g6vzf+wHMhSBSu8mtOnaCgq8jtwM/+krO1cAYv9wTIk7S5ozUjhptH+IZvdhg@nongnu.org
+X-Gm-Message-State: AOJu0Yz1bYbmhD591m1qd1kQxrUROHnTL/Mmko7oIH8ou58NfRsranfr
+ nb9rGLOlDDVZ7GknHwTSpF2WKJBuR0ft1oCS010p6naqnZlSvX0zTJAAry/hX0ot4FvCNQwk6TL
+ aK2z/cGB1HOCc98eqOHVh9Xhm9rtkIkcGg0N3VAnm4ilJz6w7LcYgnbfjzT3prEtnbALOdYGi7X
+ sPUbKCOPBCouzI1eAxBlwVavbWkNE=
+X-Gm-Gg: ASbGncupAQ3jOQMxYzRExxRuhcdoVYTEZ5f5DMw+V0g4SLbzi/HfPSvSn6R7ReF6T/7
+ /aMZfEIiPrT9A/IbahG0wYI3KTMaVjcm8WqhQ6FpqOZwngkjh5UanKeOpXp9+F68gS4hnUdlA
+X-Received: by 2002:a17:906:c148:b0:ac3:f0b7:6ad3 with SMTP id
+ a640c23a62f3a-ac6fb0fd638mr311990066b.40.1743077551543; 
+ Thu, 27 Mar 2025 05:12:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHzjle6VYrmWZwvVnuRGZu759JTXsrL+XYCKKiOuBoJDeCM3Lp8Uj4xVK6h3Eg7tVQcwGSVax2W0JLdQ5dRvA=
+X-Received: by 2002:a17:906:c148:b0:ac3:f0b7:6ad3 with SMTP id
+ a640c23a62f3a-ac6fb0fd638mr311985966b.40.1743077551005; Thu, 27 Mar 2025
+ 05:12:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250326075122.1299361-1-clg@redhat.com>
- <20250326075122.1299361-4-clg@redhat.com>
-In-Reply-To: <20250326075122.1299361-4-clg@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 27 Mar 2025 17:37:47 +0530
-X-Gm-Features: AQ5f1JoyMUQw38KWkltuR_HhF4F9IbwEHrvEB9PFv8ozHMTrKpAnvT2iWgVdxFE
-Message-ID: <CAE8KmOxcLbYBJ+Jb_R8Orw7aAXbYGWme6eDXFjUvLL=Dbz+79A@mail.gmail.com>
-Subject: Re: [PATCH for-10.1 v2 03/37] vfio: Introduce a new header file for
- external migration services
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
- Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>, 
- Zhenzhong Duan <zhenzhong.duan@intel.com>, John Levon <john.levon@nutanix.com>,
- Joao Martins <joao.m.martins@oracle.com>, Kirti Wankhede <kwankhede@nvidia.com>
+References: <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <Z9vSeF67fNazkxBh@8bytes.org>
+ <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
+ <CAK3XEhNeB29eaPxZ_1Cc7WfEzOGZZPcvTc5uC1XAdtG0uNfDRw@mail.gmail.com>
+ <h2s75tkddnrmodbbr7hxugrivpbhq7cfpbmhmgqmnn5mlafedk@jhv5cobgtjkc>
+ <CAK3XEhPYmBsn2-=PMR7qVQHiu0ydoh3EfJOEuunLccriSkKipg@mail.gmail.com>
+ <53jhridwtejsuy4qojjr66rcjdebnyarwke4bs3m3w2afmqhe6@pab5zfyo46fx>
+ <4f6a21a9-746e-45ac-88c7-dc0204480a86@amazon.com>
+ <kmqzqeaatk3iyrpl4tvfxtfv6gefyusxpyxtz5bollw7jlp3wk@5c4zawrzehwq>
+ <d79cff63-324f-4624-aef3-b6570cdb23e2@amazon.com>
+ <rtbmlitus6unzibiatblquot2bthx4dmozbxgcbovisial6qar@konful7gzrsz>
+ <6d815066-9977-4683-a2d5-871dda3e5369@amazon.com>
+In-Reply-To: <6d815066-9977-4683-a2d5-871dda3e5369@amazon.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Thu, 27 Mar 2025 17:42:18 +0530
+X-Gm-Features: AQ5f1Joe91tPCIqSX_4Ey6DMexNoY_T0WUsk6aIehWOA7g7lNxDr0Uy_HsdQfyE
+Message-ID: <CAK3XEhNMGYmLU0JBxN87B8S58NKfw8K7edy-1Rt=XWZydvTKEQ@mail.gmail.com>
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Alexander Graf <graf@amazon.com>
+Cc: Gerd Hoffman <kraxel@redhat.com>,
+ =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -107,169 +125,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Mar 2025 at 13:24, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
-> The migration core subsystem makes use of the VFIO migration API to
-> collect statistics on the number of bytes transferred. These services
-> are declared in "hw/vfio/vfio-common.h" which also contains VFIO
-> internal declarations. Move the migration declarations into a new
-> header file "hw/vfio/vfio-migration.h" to reduce the exposure of VFIO
-> internals.
+On Wed, Mar 26, 2025 at 8:52=E2=80=AFPM Alexander Graf <graf@amazon.com> wr=
+ote:
 >
-> While at it, use a 'vfio_migration_' prefix for these services.
 >
-> To be noted, vfio_migration_add_bytes_transferred() is a VFIO
-> migration internal service which we will moved in the subsequent
-> patches.
+> On 26.03.25 13:27, Gerd Hoffman wrote:
+> >    Hi,
+> >
+> >> The problem is that add-ons are
+> >>
+> >>    1) Separate binaries. So you need to match multiple files.
+> >>    2) In this case, get generated out of the vendor (RH)'s control in =
+a
+> >> one-off fashion.
+> >>
+> >> I don't think "signing" is the correct way to address the latter. It's
+> >> rather hashing. But I agree with you that it could (should?) be hashin=
+g at
+> >> the PE loader level similar or identical to Secure Boot rather than a
+> >> separate hashing mechanism.
+> > Secure boot offers signing and hashing.  You can add both signing
+> > certificates and authenticode hashes to 'db'.
+> >
+> >>> Not sure I understand the point you are trying to raise.  Add-ons
+> >>> signatures are checked too.
+> >> 2 points here here:
+> >>
+> >>    1) With add-ons, there are multiple binaries. We can't only pass a =
+single
+> >> one.
+> > Sure.  You'll go need some container, say a cpio archive, but that is
+> > something vmfwupdate loader and loaded firmware have to agree on and no=
+t
+> > something we have to worry about too much for the vmfwupdate interface
+> > design.
+> >
+> >>    2) The security posture of the system may be different between 2 va=
+lidly
+> >> signed images. Think of Daniel's example of verbose kernel output. May=
+be I
+> >> consider verbose kernel output already inacceptable, while RH thinks i=
+t's an
+> >> ok posture to have. The user needs to have the chance to differentiate
+> >> between a system booted with or without verbose kernel output.
+> > You easily get that by looking at the vTPM measurements.  So not sure
+> > what you are asking for, do you want be able to also do that without a
+> > vTPM?
+>
+>
+> All of this should work without vTPMs. Why add complexity when you don't
+> need it? The industry is already struggling to deal with TPMs alone.
+> There are way too many potential holes in a solution where you first
+> have to reason about the integrity of your TPM before you can trust it.
+> All of the vTPM in SEV-SNP talk is a house of cards I'm happy to push
+> (blow to keep the analogy?) against as hard as I can.
+>
+>
+> >
+> >>>> So we need some equivalent of a hash page.
+> >>> Ok.  So two opaque blobs, one which is measured into the launch
+> >>> measurement and one which is not?  That gives you the option to pass
+> >>> around hashes (or any other data) and leave a trace in the launch
+> >>> measurement should you need that.
+> >> Yes, I think you want to have one or multiple pages with what effectiv=
+ely is
+> >> a db append variable update blob.
+> > Makes sense to me.
+> >
+> >> Or even a full variable store blob.
+> > Hmm, not sure.  I'd rather go for passing efi signature database
+> > appendix, probably for both allow ('db') and deny ('dbx').  That is
+> > going to work better I think, variable store format is an
+> > firmware-internal implementation detail I'd avoid encoding that in
+> > some interface.
+> >
+> >> The IGVM should dictate the physical location of that blob so that you
+> >> can precalculate the launch digest with the blob included.
+> > Hmm, right.  Physical location matters for the launch measurement, so
+> > adding opaque_measured_addr to struct vmfwupdate isn't going to work
+> > very well.
+> >
+> >> Ukify.py then generates the blob along with the FUKI.
+> > Doesn't fly from a distro point of view.  The UKI is signed, so RH ship=
+s
+> > that and the customer can't modify it to update the blob, say with some
+> > additional hashes for 'db'.
+>
+>
+> I don't follow. Is RH going to ship a UKI or a FUKI? And if RH ships the
+> UKI, ukify could still take a UKI as input and generate a FUKI based on
+> it, no? During that process, it would generate a db which gets put at a
+> fixed location in RAM so the (RH provided) firmware picks it up and
+> validates the UKI it loads is exactly that one UKI.
+>
+> We can extend that with an additional signature flow, where the ukify
+> generated db contains a signature for the UKI instead. But I would
+> generally advise against optimizing for certificate based flows until
+> revocation is sorted out. And since revocation requires a new dbx in
+> this scheme and that means a different launch digest per revocation, you
+> may as well just directly only use hashes.
+>
+>
+> > Effectively we need something roughly equivalent to shim's MokList.  Th=
+e
+> > distro ships a default configuration (like the cert compiled into the
+> > shim binary) which works fine for most people.  For IGVM that would be =
+a
+> > default efi variable store compiled into the firmware binary.
+>
+>
+> This only makes sense in a world where RH ships an SVSM and that's all
+> you want to attest. But that's a different flow from what we describe
+> here. To actually get workload attestation, you need to include your
+> rootfs in the attestation. And the only entity that can do that is the
+> end customer. And they will typically do that through something like
+> dm-verity or fs-verity and a hash provided on the kernel command line.
+>
+>
+> >
+> > If you need additional stuff (like the signer cert for the nvidia
+> > driver) there must be some way to add hashes and certificates to db/dbx=
+.
+> >
+> > Does it make sense to simply move the firmware update sections from the
+> > main UKI to an add-on?  That would allow customers to easily use their
+> > own if they wish, without breaking the RH signature on the UKI.
+>
+>
+> I'm still not convinced "RH signature" is a useful marker at execution
+> time of confidential workloads. It may be an interesting one at assembly
+> time, but after that we're folding everything into a single launch
+> digest anyway, for good reasons.
+>
+>
+> >
+> >> I agree, from a vmfwupdate point of view, we would basically have an I=
+GVM.
+> >> The IGVM describes 2 special page (ranges?): One for the CPUID special=
+ page,
+> >> one for the variable store seed. To precalculate the launch digest you=
+ would
+> >> need the firmware IGVM, and the seed blob.
+> > Guess we'll have to update the IGVM format spec for that, so we have
+> > page types for 'db' and 'dbx'.  With that it should be possible to load
+> > the igvm, find + update the pages + write it out again.  Then wrap it
+> > into an UKI add-on + copy to ESP.
+> >
+> > RH default igvm/add-on would simply have empty 'db' and 'dbx' pages.
+> >
+> > Looks workable to me.
+>
+>
+> I would personally consider the "RH binary adds RH signature into binary
+> by default" a backdoor, but that's you call :).
+>
+> I agree with the plan to amend the IGVM spec with the UEFI variable
+> update page. I don't think it should be "db" and "dbx" pages. It should
+> be a more generic. In fact, why not make it a loader UEFI (PE) binary?
+> The binary installs the db/dbx updates and chain loads the actual
+> payload UKIs using a file format that's private between the loader
+> binary and the sd-boot stub.
+>
+>
+> >
+> >> All unauthenticated data, such as locations of the UKI and its add-ons=
+ gets
+> >> passed as parameter to the firmware IGVM.
+> > i.e. have a IGVM parameter for opaque_addr + opaque_size instead of
+> > placing this in the vmfwupdate struct?
+>
+>
+> It would be a pretty natural fit for it, no?
+>
+>
+> >
+> > take care,
+> >    Gerd
+> >
+> > PS: in Berlin tomorrow?
+>
+>
+> Yup, let's sync up! :)
 
-* Small nitpick:  ...we will move  OR  ...will be moved
-
-> diff --git a/include/hw/vfio/vfio-migration.h b/include/hw/vfio/vfio-migr=
-ation.h
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..0d4ecd33d5d8c214bb77e0652=
-b4405b6e43bcafa
-> --- /dev/null
-> +++ b/include/hw/vfio/vfio-migration.h
-> @@ -0,0 +1,16 @@
-> +/*
-> + * VFIO migration interface
-> + *
-> + * Copyright Red Hat, Inc. 2025
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_VFIO_VFIO_MIGRATION_H
-> +#define HW_VFIO_VFIO_MIGRATION_H
-> +
-> +bool vfio_migration_active(void);
-> +int64_t vfio_migration_bytes_transferred(void);
-> +void vfio_migration_reset_bytes_transferred(void);
-> +
-> +#endif /* HW_VFIO_VFIO_MIGRATION_H */
-> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> index 378f6f3bf01f6a4155fb424f8028cb5380f27f02..09aa57f5f890f37f7e36c857f=
-d813f55b1da2fce 100644
-> --- a/hw/vfio/migration-multifd.c
-> +++ b/hw/vfio/migration-multifd.c
-> @@ -11,6 +11,7 @@
->
->  #include "qemu/osdep.h"
->  #include "hw/vfio/vfio-common.h"
-> +#include "hw/vfio/vfio-migration.h"
->  #include "migration/misc.h"
->  #include "qapi/error.h"
->  #include "qemu/bswap.h"
-> @@ -575,7 +576,7 @@ vfio_save_complete_precopy_thread_config_state(VFIODe=
-vice *vbasedev,
->          return false;
->      }
->
-> -    vfio_mig_add_bytes_transferred(packet_len);
-> +    vfio_migration_add_bytes_transferred(packet_len);
->
->      return true;
->  }
-> @@ -645,7 +646,7 @@ vfio_multifd_save_complete_precopy_thread(SaveLiveCom=
-pletePrecopyThreadData *d,
->              goto thread_exit;
->          }
->
-> -        vfio_mig_add_bytes_transferred(packet_size);
-> +        vfio_migration_add_bytes_transferred(packet_size);
->      }
->
->      if (!vfio_save_complete_precopy_thread_config_state(vbasedev,
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 8bf65b8e11094b8363692dba3084b762362c7dd6..582d65932a6c590eaecd8bf0b=
-765f27d93896c72 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -17,6 +17,7 @@
->
->  #include "system/runstate.h"
->  #include "hw/vfio/vfio-common.h"
-> +#include "hw/vfio/vfio-migration.h"
->  #include "migration/misc.h"
->  #include "migration/savevm.h"
->  #include "migration/vmstate.h"
-> @@ -373,7 +374,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigra=
-tion *migration)
->      qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
->      qemu_put_be64(f, data_size);
->      qemu_put_buffer(f, migration->data_buffer, data_size);
-> -    vfio_mig_add_bytes_transferred(data_size);
-> +    vfio_migration_add_bytes_transferred(data_size);
->
->      trace_vfio_save_block(migration->vbasedev->name, data_size);
->
-> @@ -1047,22 +1048,22 @@ static int vfio_block_migration(VFIODevice *vbase=
-dev, Error *err, Error **errp)
->
->  /* ---------------------------------------------------------------------=
-- */
->
-> -int64_t vfio_mig_bytes_transferred(void)
-> +int64_t vfio_migration_bytes_transferred(void)
->  {
->      return MIN(qatomic_read(&bytes_transferred), INT64_MAX);
->  }
->
-> -void vfio_mig_reset_bytes_transferred(void)
-> +void vfio_migration_reset_bytes_transferred(void)
->  {
->      qatomic_set(&bytes_transferred, 0);
->  }
->
-> -void vfio_mig_add_bytes_transferred(unsigned long val)
-> +void vfio_migration_add_bytes_transferred(unsigned long val)
->  {
->      qatomic_add(&bytes_transferred, val);
->  }
->
-> -bool vfio_mig_active(void)
-> +bool vfio_migration_active(void)
->  {
->      VFIODevice *vbasedev;
->
-> diff --git a/migration/target.c b/migration/target.c
-> index f5d8cfe7c2a3473f4bd3f5068145598c60973c58..12fd399f0c521c5c28535b58f=
-24feab6845947fd 100644
-> --- a/migration/target.c
-> +++ b/migration/target.c
-> @@ -11,21 +11,21 @@
->  #include CONFIG_DEVICES
->
->  #ifdef CONFIG_VFIO
-> -#include "hw/vfio/vfio-common.h"
-> +#include "hw/vfio/vfio-migration.h"
->  #endif
->
->  #ifdef CONFIG_VFIO
->  void migration_populate_vfio_info(MigrationInfo *info)
->  {
-> -    if (vfio_mig_active()) {
-> +    if (vfio_migration_active()) {
->          info->vfio =3D g_malloc0(sizeof(*info->vfio));
-> -        info->vfio->transferred =3D vfio_mig_bytes_transferred();
-> +        info->vfio->transferred =3D vfio_migration_bytes_transferred();
->      }
->  }
->
->  void migration_reset_vfio_bytes_transferred(void)
->  {
-> -    vfio_mig_reset_bytes_transferred();
-> +    vfio_migration_reset_bytes_transferred();
->  }
->  #else
->  void migration_populate_vfio_info(MigrationInfo *info)
-> --
-
-* Looks okay.
-Reviewed-by:  Prasad Pandit <pjp@fedoraproject.org>
-
-Thank you.
----
-  - Prasad
+Unfortunately I won't be there. Vitaly will be. So you three can sync
+along with anyone else who is there. We should have a call after for
+those who are not lucky to be attending.
 
 
