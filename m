@@ -4,98 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54433C3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 13:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD48C36011
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 13:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txn6c-0004jW-1R; Thu, 27 Mar 2025 09:17:10 -0400
+	id 1txnPc-0007tw-Ab; Thu, 27 Mar 2025 09:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=xaMj=WO=kaod.org=clg@ozlabs.org>)
- id 1txn6E-0004ha-1l; Thu, 27 Mar 2025 09:16:54 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1txnPa-0007tW-Pp
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 09:36:46 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=xaMj=WO=kaod.org=clg@ozlabs.org>)
- id 1txn6A-0004K4-Gb; Thu, 27 Mar 2025 09:16:44 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZNkgv5gjkz4xD9;
- Fri, 28 Mar 2025 00:16:27 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZNkgr16Csz4wcr;
- Fri, 28 Mar 2025 00:16:22 +1100 (AEDT)
-Message-ID: <2a0225c6-09c6-41b0-b279-fa7cf0cd6d9d@kaod.org>
-Date: Thu, 27 Mar 2025 14:16:19 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when
- I2CM_DMA_TX/RX_ADDR set first
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com
-References: <20250327074419.563306-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250327074419.563306-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=xaMj=WO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.083, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1txnPY-0006Du-LA
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 09:36:46 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52RCT3oY002906;
+ Thu, 27 Mar 2025 13:36:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2023-11-20; bh=gBiSO0xc
+ BsE3DfqIVxokL31I4pL9pAR9foOpmAf3V5c=; b=HS4oVxOhXAje+GqM4rAfItKD
+ eXT8HvB0/zWuXQNb9yJS9TAZeiNOGoJ3BiHe+Gm7hDsW2ZKjf4DpikNXAzSGEGML
+ zPHnCSST+uzONXKNTI/mbnl7Dsc/6IEoMoxKiWRmoKObvIIs5QMGNzFXWEfY6auy
+ 2tzjpzQ7HPuzq76pxkvQpkIaCi4kuwdK57QMhUhBAVdcz35XBnIoMJFRawU85U6U
+ b1MqYD3c80jo1/6zMu4LHNhl6M+QuRcJTU1ta6V5Lac/wUFWGA/DgPSvCpfG91b1
+ P8n6gPWqcTYl00+Gek80+YI9Lf/DWrrFvQfH1KUEdi2f42KHdpsZbxT4xLK8VQ==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45hn5mcn04-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Mar 2025 13:36:41 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 52RDY7s0029562; Thu, 27 Mar 2025 13:36:40 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 45jjc3sr06-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Mar 2025 13:36:40 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 52RDad4n023019;
+ Thu, 27 Mar 2025 13:36:39 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 45jjc3sqyx-1; Thu, 27 Mar 2025 13:36:39 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1] migration: cpr breaks SNP guest
+Date: Thu, 27 Mar 2025 06:36:38 -0700
+Message-Id: <1743082598-428927-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-27_01,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 bulkscore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
+ definitions=main-2503270093
+X-Proofpoint-GUID: Bo7OPaIQJr5Q828YaOmAkygO3KdAYg0p
+X-Proofpoint-ORIG-GUID: Bo7OPaIQJr5Q828YaOmAkygO3KdAYg0p
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,76 +98,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin
+With aux-ram-share=off, booting an SNP guest fails with:
 
-On 3/27/25 08:44, Jamin Lin wrote:
-> In the previous design, the I2C model would update I2CC_DMA_LEN (0x54) based on
-> the value of I2CM_DMA_LEN (0x1C) when the firmware set either I2CM_DMA_TX_ADDR
-> (0x30) or I2CM_DMA_RX_ADDR (0x34). However, this only worked correctly if the
-> firmware set I2CM_DMA_LEN before setting I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR.
-> 
-> If the firmware instead set I2CM_DMA_TX_ADDR or I2CM_DMA_RX_ADDR before setting
-> I2CM_DMA_LEN, the value written to I2CC_DMA_LEN would be incorrect.
-> 
-> To fix this issue, the model should be updated to set I2CC_DMA_LEN when the
-> firmware writes to the I2CM_DMA_LEN register, rather than when it writes to the
-> I2CM_DMA_RX_ADDR and I2CM_DMA_TX_ADDR registers.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Fixes: ba2cccd (aspeed: i2c: Add new mode support)
-> Change-Id: Ibb4039773a88ba4f2ebda7f1ab5b5f9e99d22456
+  ../util/error.c:68: error_setv: Assertion `*errp == NULL' failed.
 
-It looks like this is breaking the functional test. Could you check please ?
+This is because a CPR blocker for the guest_memfd ramblock is added
+twice, once in ram_block_add_cpr_blocker because aux-ram-share=off so
+rb->fd < 0, and once in ram_block_add for a specific guest_memfd blocker.
 
+To fix, add the guest_memfd blocker iff a generic one would not be
+added by ram_block_add_cpr_blocker.
 
-Thanks,
+Fixes: 094a3dbc55df ("migration: ram block cpr blockers")
+Reported-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reported-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ system/physmem.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-C.
-
-
-
-> ---
->   hw/i2c/aspeed_i2c.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index a8fbb9f44a..c68b8a5ec0 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -656,8 +656,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->           bus->dma_dram_offset =
->               deposit64(bus->dma_dram_offset, 0, 32,
->                         FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
-> -        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
-> -                                                     TX_BUF_LEN) + 1;
->           break;
->       case A_I2CM_DMA_RX_ADDR:
->           bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
-> @@ -665,8 +663,6 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->           bus->dma_dram_offset =
->               deposit64(bus->dma_dram_offset, 0, 32,
->                         FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
-> -        bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
-> -                                                     RX_BUF_LEN) + 1;
->           break;
->       case A_I2CM_DMA_LEN:
->           w1t = FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||
-> @@ -679,10 +675,16 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->           if (FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T)) {
->               ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, RX_BUF_LEN,
->                                FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN));
-> +            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
-> +                                                         I2CM_DMA_LEN,
-> +                                                         RX_BUF_LEN) + 1;
->           }
->           if (FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN_W1T)) {
->               ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN, TX_BUF_LEN,
->                                FIELD_EX32(value, I2CM_DMA_LEN, TX_BUF_LEN));
-> +            bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs,
-> +                                                         I2CM_DMA_LEN,
-> +                                                         TX_BUF_LEN) + 1;
->           }
->           break;
->       case A_I2CM_DMA_LEN_STS:
+diff --git a/system/physmem.c b/system/physmem.c
+index e97de3e..cfafb06 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1908,13 +1908,18 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             goto out_free;
+         }
+ 
+-        error_setg(&new_block->cpr_blocker,
+-                   "Memory region %s uses guest_memfd, "
+-                   "which is not supported with CPR.",
+-                   memory_region_name(new_block->mr));
+-        migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
+-                                  MIG_MODE_CPR_TRANSFER,
+-                                  -1);
++        /*
++         * Add a specific guest_memfd blocker if a generic one would not be
++         * added by ram_block_add_cpr_blocker.
++         */
++        if (new_block->fd >= 0 && qemu_ram_is_shared(new_block)) {
++            error_setg(&new_block->cpr_blocker,
++                       "Memory region %s uses guest_memfd, "
++                       "which is not supported with CPR.",
++                       memory_region_name(new_block->mr));
++            migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
++                                      MIG_MODE_CPR_TRANSFER, -1);
++        }
+     }
+ 
+     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
+-- 
+1.8.3.1
 
 
