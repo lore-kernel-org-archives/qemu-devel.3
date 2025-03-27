@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040F5C3600E
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 10:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A049C3600E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 11:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txkpP-0000N1-Tb; Thu, 27 Mar 2025 06:51:15 -0400
+	id 1txlPl-0000PP-He; Thu, 27 Mar 2025 07:28:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txkpN-0000MS-KX
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 06:51:13 -0400
+ id 1txlPj-0000Oy-L6
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 07:28:47 -0400
 Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txkpL-0000h7-AF
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 06:51:13 -0400
+ id 1txlPh-000774-DI
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 07:28:46 -0400
 Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2264aefc45dso22845395ad.0
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 03:51:10 -0700 (PDT)
+ d9443c01a7336-22622ddcc35so24265005ad.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 04:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743072669; x=1743677469; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743074923; x=1743679723; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:from:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to; bh=BoZKhiYdB7y0VsWGB1lwV+BmgJ4aOh0AR7Uj+91th2Y=;
- b=fUC5DyvakFd7tzI5Q+/YjpQmmuWfF/yuwikvy0JjwfksgTfP8ysAx7/JQyi0RCsM7Z
- 0mv9Kx9My+474Rao6vRomXG3zdy/yU6vQVH4sVaIgJ3CReqy8WP3r/Qu8KiL2lsiFkKj
- StvzoJnCbcgy/cWpxbtc+9Gs/EhuYGxUi7OqJdh3t8OE8zp1NiUtbpeeE2N+uTopg8dV
- eAfC/9TB8uF5KEGks3Gb782CJRmzT6Dt95GI6ns6PoPRUwOr/jlG3hEgYyXkbGJww+5m
- PUhp3OC1AcwGXUI/dukeXlGRNSaHWlKRubrgZeAE/qkzC7viYeIsnu57CVN+M98eXlbz
- uviw==
+ :reply-to; bh=U/JXAmLgWTRI8yQPinWvWYgmGiBzmhZrTg7DO/hG6pk=;
+ b=np8xY6TPzab746GR3HstAN9HE4zpAp0i9yGEViqTv3J3dvzOsP1ORxMEmyuRpb1aC8
+ sUKvv8igMNnr01ZeTOJoUxjv+igvjl0wCbzQhhy6jFHBwxKgKoU+5uKLcmjiPqCk83q2
+ vmLs7r5JRSKevxsHm2xSMpO7wSeZAjHXY5UWlqQcgjWpebPZ3QGud4tmNCSy8WJZeYmt
+ YpqRTSwRAO5Q9gZSdswWx+M4fDPrMJjP267HfNr5Tean/EN2jbwBn/D7l0A4il48EMWz
+ e/l/MWF6IU4OBzmXA2okWtDPcznUimoYbtkWiE7cv+znv6yngeSI75Wozqn8tYB6X9am
+ 8LsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743072669; x=1743677469;
+ d=1e100.net; s=20230601; t=1743074923; x=1743679723;
  h=content-transfer-encoding:cc:to:subject:from:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=BoZKhiYdB7y0VsWGB1lwV+BmgJ4aOh0AR7Uj+91th2Y=;
- b=WRiypSSP9RP+2jdAafSGAP3x6/Q4qUPnu2akHt2dmt32yl9YIsoTfd6shTJoSCoRPn
- qFdWMvoC0AT0+ErlyB2lSMFZ3z61HbAtHvoOw2rPe7ficnxo4PM/FDzvVdmklYmfwNej
- CVtSelS4uBvfL28NLXrZUNgkxiEJ10iZD+T9mP59fAzUUf0X/fLA8FqRM8Jn6AmGO1CZ
- KIxCCDbflRHI8BH/oC00JAUo1ql4xFVddCKUUS9CnJZRzI5iCkcV7kyY5ysIT2IE5coN
- dgAUGvT+mK5adkbYIHP86xyAZLDd/ImaOcGfMj/s3XVfitH1wocaJxjn8zQjtFEcAI4/
- zRsg==
-X-Gm-Message-State: AOJu0YwuHRU1Yx1wPHE92VrdRh1vXePIrKkHf5Jbym6zE/tM167mxwFt
- LJJwmulOyRJK5s3LMncnyFSYkQJIBrsOUbKSHUHUdhtCGmKnl+UJq2Q2zQ==
-X-Gm-Gg: ASbGnctDuG5eNP3ahz0djUtrAvReIYNJDvh5xmXMKQvzF2jbwgWuiXXP9hOCIZ76wyn
- ny8vhwORaLUntSGbhV7U4F/enAFXE0gK23d9Z24+sdQR3noxmtdbDPRw8apExkJ1MBssPpfcLFe
- izRIHJ7+A/I1XSHPeNHYDSG52y2lhdppA1C+QEbomA8FZcNNRpet2aRM9NkZWHouf3qYhmJqiiS
- grA9zSgS6z0vPaHQ4eLEEpin6ffMHw8aUL7dMMkIt3/khcrlLzq+PA6mvT4ixZeM9VI4zl5MTgH
- WT8dcyOFIrtx4UeWFxaUc5vDuWXXuFUCNw+OuEf4boFQKNDYlGXkHU3bqoayAarp
-X-Google-Smtp-Source: AGHT+IH10qg1boEfgWWdKWuo08B7c/SIHxLOUqQi0gL/0DyE1TIDJM0G1KsOQf58m5oSjyyT9tYWDA==
-X-Received: by 2002:a17:902:fc46:b0:220:e9ef:ec98 with SMTP id
- d9443c01a7336-22804840f08mr53051815ad.19.1743072669050; 
- Thu, 27 Mar 2025 03:51:09 -0700 (PDT)
+ bh=U/JXAmLgWTRI8yQPinWvWYgmGiBzmhZrTg7DO/hG6pk=;
+ b=XhMdnE9ZMHq9SEiFnmSX89+Kp8k7bPPvUCng4WTEQta58INJdu8S8R/rLUJvI0Hi6Z
+ KlN7G0zSd088F83WyJjJH8pFRqNI+932LUpYAwm5gChDmV5szLZNU3vWJ8Bur/bBALZv
+ gn6mtxX60IpMjCitIqzTomBFpioBorzMVdPlTgqGzw5T5gfZnphdiWFZKVPVGFm7YIOS
+ /URsKrl1Y2GC/y7QkhuB/AdtO9vdyruHzhYGWV+3jz0BlFt7zZ42W7RoxGdLx/H1T4Gq
+ Ybl9KYVZ1HoOE0gIXUpiqBsxGhGh40l7TqFBl6Se83ZB4HNfTuN5Sf9l4Y8EWtAltUJw
+ r/Hg==
+X-Gm-Message-State: AOJu0Yy8JP+fMkj2BIdteZuXXKjGxM/fh3uuG7uoOJe4Dg0kv1UFN03S
+ giR59w1jSAUahGDx0Tn9Za0/BIMH2Z9kBekHWayJOrA6a8eoTYWUU4tl/w==
+X-Gm-Gg: ASbGncvtK22+5ULdvm1p12irQrMD2fffjyj/yzACgh55cpVLyLyMc8QRKRXpWPlutco
+ 03w5VPt6esjcl6yAOqHJyPjjD3Q6gShMyZgyEFo1WW5yasXbjS9bGSKaqVjtBoiz6e1ME+X10gT
+ VKD380MNYwBK5KIwDd+8O8NRdPUz108JlXWotvG49IEpldNeBZp7P/aTNs+VNWMl/m1ph1yU3Oa
+ 3ldcJdsAKnQ36SqWqB2OVQThlRxuevkIbWBAzczV7KDqoBZUJPa/0gnwTsK/50OXxkUDbb254RO
+ vuGEeclT/W/JbEDu9SBadQyr+3O9Nh5dfocMT9l9akV8HM3jhMrDkP40EGI9wque
+X-Google-Smtp-Source: AGHT+IFWqXW92VTGjKPKmDWb6ua2PJWzDo5BHr2xGztxbrhRsX21o4UycTQR+uMnJNX52SRHAHWJ/w==
+X-Received: by 2002:a05:6a00:1410:b0:736:55ec:ea94 with SMTP id
+ d2e1a72fcca58-739610ca9c2mr4616647b3a.20.1743074923083; 
+ Thu, 27 Mar 2025 04:28:43 -0700 (PDT)
 Received: from [192.168.31.221] ([124.64.23.229])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f3b596sm126114915ad.16.2025.03.27.03.51.07
+ d2e1a72fcca58-7390615654esm14384521b3a.130.2025.03.27.04.28.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 03:51:08 -0700 (PDT)
-Message-ID: <55d118e8-d3aa-41f9-a4a4-cffed1c30e78@gmail.com>
-Date: Thu, 27 Mar 2025 18:51:06 +0800
+ Thu, 27 Mar 2025 04:28:42 -0700 (PDT)
+Message-ID: <551d9eaf-dce0-4cf0-95b1-d2347bfaa1a6@gmail.com>
+Date: Thu, 27 Mar 2025 19:28:39 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Zheng Huang <hz1624917200@gmail.com>
-Subject: [PATCH] hw/net/virtio-net: fix memory leak in timer_del()
+Subject: [PATCH] hw/net/e1000: fix memory leak in timer_del()
 To: qemu-devel@nongnu.org
 Cc: akihiko.odaki@daynix.com
 Content-Type: text/plain; charset=UTF-8
@@ -107,6 +107,8 @@ the timer object instead.
 In addition, I'd like to ask for a way to fix all 100+ wrong usages. In my
 opinion, the best way to fix this is to hide to `timer_del()` API and
 eliminate all usages of it.
+
+ps: Sorry for the mistake in subject of the previous mail.
 
 Signed-off-by: Zheng Huang <hz1624917200@outlook.com>
 
