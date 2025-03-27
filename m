@@ -4,87 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1F4C3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 13:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32AAC3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 13:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txmt2-0007Vy-Kt; Thu, 27 Mar 2025 09:03:08 -0400
+	id 1txmvx-0000zJ-Dx; Thu, 27 Mar 2025 09:06:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1txmt0-0007VB-UB
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 09:03:06 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1txmsz-0001xi-1S
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 09:03:06 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-224191d92e4so18049905ad.3
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 06:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1743080582; x=1743685382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QhUmyCnCJH47I6FdFjUF7qnokOxyiOlkbqeZeFnvYxM=;
- b=n9nDblnMH8pHH+7O5Jz4/CyzIXDpmpZZRtUDereR98Rd3ffceA1aeES1z+EZfM3U4a
- izlGnvHkjDLpTwmXNWSKygwVyEG4rbgP6zztuD1t+9quGN6fUDXUwI7YXei03236/o/A
- OYc82tehUAthartqTrLQ7cbaoG7vs5jen05/PCjNQj9Cml3r+Rfuk0crWX7xDyPM5Cxt
- 7mcLm5PbrKOvD3OMF7wbjTZNbr/H8lpkyxjAfOQtilM3nEdCfMItb85v7TCxOYf7OCrR
- GnBt+qE4JRfP9LGByEYVgqh9hbiTz79uiNMn+ZUXMSckzSv0wIW2IqKTD8XTuYxdvuAp
- Z7wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743080582; x=1743685382;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QhUmyCnCJH47I6FdFjUF7qnokOxyiOlkbqeZeFnvYxM=;
- b=R/7hsQ6KQR8bllHUryU3q+kHb85dL5l+0tQu6RGHVhP3gDIMzN53UL79l0y5mNLzxi
- 2V39jZLO7JuOUHFydnHqfslKNsmWgYoD9w4uH11jeiyJZEmql8wyshEYcNawUX5boskY
- grcJI1DHBy6ZTxGKJBrTpCTmwuicFyCa+FRpsD1+ew0UVCyB9xsUxOA0b/PcG3F/vhFA
- WiS6wIVg9ZdQUwEFt2Qy3zewQ+q9bsi8ZJOnNvqKM1JAqaTMA4D5Iss6BPeTrpakIcux
- m7WnzQhKC1hti4DoQD5R8oNqQ2HQJmwTP+r8UmV+aap3AbZmsmmX3UAom2Mc+KB8nR7w
- GZFg==
-X-Gm-Message-State: AOJu0Yyd7EatJ9abmfhG9IOgRqNcCA7r4tsWPfUwSRpEHjzWgVJGi3FN
- 2LT//jWjCJEkLNn4tlLN1Xuz/sTH4oEYQ5AwysoeDB9nXm1aYwGRaNUpvi9AmiWuAgRD0jLCg/0
- 7
-X-Gm-Gg: ASbGncurh8Nsi2M/nIN3Zntg/QAs3ciEha5t9rtx+rjWWbfjf5UPmQfPPcp+gNAAM1F
- BkgnCUArgyMGPAsKdW5pce27HOMNvel1USdQB0MuS9A9+usnSFKlM/bpbP8fmdTrtGJ1zj9c95k
- 9RopRT6Q0+7PSXwfSf5GKJOxLDv0obMndKrCrD9s8MI+Xnpx92r4oz5e491TVw9VwD6PVvMq/Ds
- JLnh/2DnQng5pHTtVusC8zp2eGHJd9xA2QD0iFLDoUyKGsaFIMlx8NCCBKauGpJNCHaakLWiEX/
- h7vjz+M+y32aI9D6J6IhmTwpreD/dhCZ8eea2vcH2jLi15q1cqaWDIblKMviOJS0Ob36jYWF3qP
- 46GUMKtb1lEAf6aJrqNueMoKQ1taEo7UqKg==
-X-Google-Smtp-Source: AGHT+IFSaBar3pl65ES5L8QcW7meBKWZz2rUipMMTldGWW48KYx6BCANTEmqEh4ZD1BOKYSTR3h5XQ==
-X-Received: by 2002:a05:6a21:99a1:b0:1f5:79c4:5da2 with SMTP id
- adf61e73a8af0-1fea2f4bd97mr7210398637.31.1743080582259; 
- Thu, 27 Mar 2025 06:03:02 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com
- (201-69-66-189.dial-up.telesp.net.br. [201.69.66.189])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af8a2805e0esm12654038a12.29.2025.03.27.06.02.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Mar 2025 06:03:01 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-10.1] hw/riscv: do not mark any machine as default
-Date: Thu, 27 Mar 2025 10:02:56 -0300
-Message-ID: <20250327130256.653357-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1txmvH-0000jG-UX; Thu, 27 Mar 2025 09:05:29 -0400
+Received: from mail-dm6nam12on2061b.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::61b]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1txmvE-0002M4-RK; Thu, 27 Mar 2025 09:05:27 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CH+uT9+H/7dKdCvQgxQNW9ijPTbkUuogGBZpLy5ZSzyVaB0Vw8AkXQLObHEeiIlXq36+ZwGzanfqisCA/x9HY8Rlc7H4w3Wh/Rk6gdkd3CrK75dg4foFO+3gRJLKI3lCC8DIAMHQXCAvlrsOnx+yEWtdG+7VHj563HpKR9lEa4nnPBPwBZJjrbuvBfu0O6n18DfgaRd5OtjpxKn88v7RrsQ58X7Z43WOdWMVxNcxnWuii/HBaaCKSmjRbGUTgsTq/baDsyFKmAFonbVQJq3x4PVN/+LEWSiz9zytvNaboN3Fuw9vdBNq5yixlOFLgQnTMcIj2fvKT2big8LnCUAhmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oIU0pbd/AI5BzDjdm09x4D4LC9D8v5pdu2L+CGeu158=;
+ b=eULrQTwEQisA0nEcBusbQZeuRHp01F9wQiKATnFWXUfXa60H0992pOzxVfR6pZfFHb/lwBq+wB+QF2kHtLfCFBk9B6McHWNAoGc8inabQ+mlLjJtnyGNBjdYOgCQWdJpYYTsOWFH/XGoPJUvwjJqHWPXQgdGstBmN+FsV6yqYlwglcP/GsAZ48PiPqlCgqc2HQ0ZMaiJh+bwOZcTmrBJurygrImpMEAsJrldLRC9VW0eyUED0LdGpyN0p7VmCpuN8RlpIHfpnzMRR0cqG4DmZE8wLM4qnV/66ycu2Ri3c7A22SjjrFi/9fQOAme9fNgELrAb63A5hsHZXmtjGXgabg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oIU0pbd/AI5BzDjdm09x4D4LC9D8v5pdu2L+CGeu158=;
+ b=f5W+Ob04r6rWQhH6fq3b0Gn+hFDXAuK0CC4qS3/d1e+XfCVr3bjh1vHVbOrHUOBboDBL7uVgdNJxYb1vb7tHE/6CJFYUxIAqYCMaHYlhdv84Vi4QKmjPK8vvHpT8+ZtdaXFS09zdJYGAJJaoCc1BhSP5JuxBWnDAmYT1NPN2CK7fKb/34oXvFuVmd2vig9scRROMirzxboT26J38LswdZM/oGUM3WURt2s3mr4j6NShD04C/hD6S9ZeLVMe/o9r+tdL8OvHHksyyTs69wc+owJRdNo+1kbYrOGK4zyLw6/sPMdAe8aQXKFGXA/BCgfrfx7++MH2xCxNcIrfM0pMEFg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by SJ2PR12MB8012.namprd12.prod.outlook.com (2603:10b6:a03:4c7::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.44; Thu, 27 Mar
+ 2025 13:05:08 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8534.042; Thu, 27 Mar 2025
+ 13:05:08 +0000
+Date: Thu, 27 Mar 2025 10:05:07 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, nicolinc@nvidia.com, ddutile@redhat.com,
+ berrange@redhat.com, nathanc@nvidia.com, mochs@nvidia.com,
+ smostafa@google.com, linuxarm@huawei.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org
+Subject: Re: [RFC PATCH v2 17/20] hw/arm/smmuv3: Check idr registers for
+ STE_S1CDMAX and STE_S1STALLD
+Message-ID: <Z+VNA+hFu0LJn19l@nvidia.com>
+References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
+ <20250311141045.66620-18-shameerali.kolothum.thodi@huawei.com>
+ <477323cb-12d3-484c-8ad9-61229ede3efe@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <477323cb-12d3-484c-8ad9-61229ede3efe@redhat.com>
+X-ClientProxiedBy: BN8PR15CA0063.namprd15.prod.outlook.com
+ (2603:10b6:408:80::40) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ2PR12MB8012:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2a3028ed-3932-48f4-ad3c-08dd6d300030
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?0Q1QPP6R7gwvNKyXwNICPvZJZkBCEN6v/5cNu8eRvwU7LpxXEs6pXQFwT0IG?=
+ =?us-ascii?Q?viDw0IHNlzIIdE8rnDTxGGocorC9DHdVxE+9/OnCThLxT0mNpQ4ereACf+c8?=
+ =?us-ascii?Q?cW8CeZBlihvJlTFkKdhh+FPdFb1BWzwGYBNl6b6iADVsTbIwll0Uri+nnoWq?=
+ =?us-ascii?Q?YmkXWUp8pD2q2/t7kJHPog7MP2e1eswLH2aiKs0+bQdeNFsjS7+WIq9sU3UI?=
+ =?us-ascii?Q?zGC8B6KltJDZTzThRGNH7SCsH55JNC8ZikNnFsvPJc69p1URQnFtKBjWDsXQ?=
+ =?us-ascii?Q?rNv/vkjD6LE2HPDBMApf+qmAvFfWmWg4slotbTOizhX3M8ODOg6gSSlfUwnK?=
+ =?us-ascii?Q?4ICHf2i3ZmxDChWgynsHzhniRGFpsujqYtyg3V7d1ZWQBA2INdts491BjImf?=
+ =?us-ascii?Q?Z3Wt6jPqLdNfUly2O0O/KefIr5R7FI8tYaqzOpvrA5GgLWwOrXQrDOHUOIu2?=
+ =?us-ascii?Q?Ute6bhh7tbfI+MHsHo/2uY2yiZRy46rDbZdkJUjaRuOUKu0wao9ZJB4+UvsC?=
+ =?us-ascii?Q?yWKdXR37l3ocr4omEyrR0UkhufdD+MZpJugZeqdmDYekkLak4NZ7mKDiT+X2?=
+ =?us-ascii?Q?DR38p8sPG2bZP6sS2zgLQj504S1ZUH6MYT6UfrSjkd0dTzIBjFKAAFvteZLo?=
+ =?us-ascii?Q?heweJ+qwa3YtXGLiKu3YojTVfyhxzX6FhCImc3i4DpsDKA96YORncXzlKfYi?=
+ =?us-ascii?Q?6EomXlmdXQ2EC7GexnC53stBs7gSUGFf+J9smYGlvdc8tZpj4+XuL5ZBcE9y?=
+ =?us-ascii?Q?MmkmBqLjn9QvBdlIiy8IuKwUnnB0GSb8nJ2zKe9N52XR8/IP3tR0tUcvEt5l?=
+ =?us-ascii?Q?brmminzS7l0UWkN0IhAL0N9cUZpDVzKlhFJY+rIrtsDriJ3AW5cBk6baDtrg?=
+ =?us-ascii?Q?qPaCZEt5GuG45l0U6cj9NBiTkC+MVu4btxVbd8gRjfhuVnGQWq2Crt24USWh?=
+ =?us-ascii?Q?Jtj+VoiByKn6AxYUs4T06EsWMLkrlPKEiD5VSNFdayT0BTx52VIXFoBS02nG?=
+ =?us-ascii?Q?+k9c+CaVa9n2zuIz45ppCKjD2Do/M8WdsugTr9sRXDDbgEmHk4n4LCOKcwBS?=
+ =?us-ascii?Q?BSbx3217VTQNjjhBch+2LqZ7ljD7UCKZu0hXLRFT2KzuMMEb4A86LkgkbROe?=
+ =?us-ascii?Q?GI22aeFkM4kK/zxLwUq/eoazk02VRwhdPOM86JL1whsfvM75Fk7OcxaYN8pU?=
+ =?us-ascii?Q?xG+Bc8U5mciD3Rtt2hFmc8UgI7S7yPpR/Am+tWRcTnXJ6AksSjomLgkqKjtP?=
+ =?us-ascii?Q?NDgMJQWsca4GDH1V/PTcUVQpT4oduzu2VaPyly9E5/Rxegh4t/yG4vsmHXiI?=
+ =?us-ascii?Q?yqh5M+2h8IDdqlTdYJPHu+Pra2YegBI77F/CMPfJA8Cmjc0nTBAgOW9yX6DA?=
+ =?us-ascii?Q?QS/R9N7kDu2RpiWytPafFESFo8BW?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB8659.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?jwMEu1FeKCHrhAbZuujrqDaOecbAAaD63TxuZacs1AaD2w1gX798AiPXar0T?=
+ =?us-ascii?Q?hTbe/3C3R3+NIlUumJrJuNHHeyxgAwAPA040u5C5v+cS1MHhTsrpYxyXdNEi?=
+ =?us-ascii?Q?eYwtwg/h//u3hDqOVO+bn2u2F8CjO0jha1E2PkvEId0gzhpZhpEXKnP3KXac?=
+ =?us-ascii?Q?8fESPpYNq2N1SEgjTvOothLeLOwBU14a4zpE1+RMW10KhQYZkPUm4hfXWkCM?=
+ =?us-ascii?Q?juRDaXzD958rx1jo/1MIkbw3JCbh37pIVW5BgWAxSxdkGXtLRZwDAvcWTGC+?=
+ =?us-ascii?Q?uf5gBM4e2TAiVl5O9Rv4IscWcBalmOU7UL6hHeLVZ7ehWF/Xp6IoExMDCqTz?=
+ =?us-ascii?Q?0NH41yESuMF+RZltJtdaLKZSoliA6jpvP43FbSqBPNw5V/xrccX+QxSB9q/7?=
+ =?us-ascii?Q?uF3CmmcdRg9RqgHESDDb/yA1/yXdCRpSuge9w5I4NIPi+XH7vznVea4kvmmZ?=
+ =?us-ascii?Q?T07uJiwcrcJg6BKUZKSI1OU/E1adHj30tMi2k2y3CXYOw/SKj00HRjNeg+D4?=
+ =?us-ascii?Q?Bf6by+lp+w5ip+p3uyPJC0rTGQsi/3F+U14Mj999SbcKgWvLFySNrKf1STls?=
+ =?us-ascii?Q?CBN397/BkG3vCU535WCpdrI24zqPdC18orKtVM0PZjqb72TEdzdWddgl2otZ?=
+ =?us-ascii?Q?64nZ9XfncvpOvnNsM0t26S0Qe+0qE/daoFBMqhjgsLSyrcZNFEH6Eh3x7dk8?=
+ =?us-ascii?Q?qSugIu6uPez3//IVMeSXbGqVUK9w2tFNNmoaESlQlRwtK+Va53STx4NG1A/T?=
+ =?us-ascii?Q?xgSImegmvhIrlPzUzB17kX8ttT7lpi0CHab43N8dkp8ApR9+nDm0UMPpPjsx?=
+ =?us-ascii?Q?EPFlD8I+XR6dgjoWkqfiRKLLsYpNia8AqCmlMyIW7TkWTGCpR9iFCYPP08RS?=
+ =?us-ascii?Q?AOA4Q09q6vVcNGzYTfCBvVqG+NK1w3f7XfTXt1ho96zMmNGwdfY9SNznHggG?=
+ =?us-ascii?Q?pAQJ93nle37Axw81wBvWORcMdAE8d1B0+HHEjCpFkPpTOPHBrvHm7CoQ+ubl?=
+ =?us-ascii?Q?lFIy7V9suNU8YF+Szak2ejAvSnxjRhPU2yIj7CAzaBhH3Ekldrhl3UR/RlrC?=
+ =?us-ascii?Q?fnWYF5JKA+ghOTVhsY1AgJg6dpZAEim+C0M/kOXC9/NA6CB/DP7LlxvLTWaj?=
+ =?us-ascii?Q?hmNk1qrgo4MmUDVBdzVqc4AaKDrsof8q4CMfYfDrpCHRQQMP+AvVjpiGWOx9?=
+ =?us-ascii?Q?9Ib0diWZhf4AjOzRNlRK/wN7Kx50K8p9VdBXnj6WjF2qiGkFLTJbXS/XuEtX?=
+ =?us-ascii?Q?vXqwbCnuhTP/it+7AKxwLYMqHBztMj7mKt7t/fxRhSrKqNM9Yana0NzIFWdz?=
+ =?us-ascii?Q?uymt3YCUK5ZYverk/cr0ezqkAh4wg8mDBuRfMhvcrBM+0ovPqzuGm7fhuVr7?=
+ =?us-ascii?Q?14KcDrjtsJv2EyInrdTULW+iDbRMVD2DpoqR0ER/U2rWS1PVcE69zR0o0YNU?=
+ =?us-ascii?Q?x+z+jXWLKcIsGHfpjQKNGJNk3jvG+aTzBixnrSUtg2G4McQlhefHpte60yZq?=
+ =?us-ascii?Q?tX3ryPNFi++zxVyitZudugGju77/CjZ3yWxMQI/NrIGmng+Y/eN3BmASLmHG?=
+ =?us-ascii?Q?MCrYHKxyOqAA5HePCDo=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2a3028ed-3932-48f4-ad3c-08dd6d300030
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2025 13:05:08.7519 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: w1sis5A3h4xKyfJIGIx2p4vu6k4IvY+iezkdJKTSehhWoJPI4kSeFXY/1QdQ1GUk
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8012
+Received-SPF: permerror client-ip=2a01:111:f403:2417::61b;
+ envelope-from=jgg@nvidia.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,54 +164,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 5b4beba124 ("RISC-V Spike Machines") added the Spike machine and
-made it default for qemu-system-riscv32/64. It was the first RISC-V
-machine added in QEMU so setting it as default was sensible.
+On Wed, Mar 26, 2025 at 06:18:49PM +0100, Eric Auger wrote:
+> Again I think we need to understand the consequence of having a more
+> comprehensive support of SSID. This also holds with old the IDR fields
+> that may be inherited from the HW and we don't support yet in the
+> emulation code
 
-Today we have 7 risc64 and 6 riscv32 machines and having 'spike' as
-default machine is not intuitive. For example, [1] is a bug that was
-opened with the 'virt' board in mind, but given that the user didn't
-pass a '-machine' option, the user was using 'spike' without knowing.
+To be very clear, and this is in one of the uapi header comments, the
+vmm should not be copying IDR fields blindly. It should refer to the
+physical HW IDR to build the virtual one only for bits which make
+sense and match its own paravirtualization capabilities.
 
-The QEMU archs that defines a default machine usually defines it as the
-most used machine, e.g. PowerPC uses 'pseries' as default. So in theory
-we could change the default to the 'virt' machine, but that would make
-existing command lines that don't specify a machine option to act
-weird: they would silently use 'virt' instead of 'spike'.
+Also, I don't think any of the emulation SW in qemu can use a pasid,
+so isn't it OK to just ignore the non-zero SSIDs in the CD table, and
+continue to advertise a vPCI device without a PASID cap??
 
-Being explicit in the command line is desirable when we have a handful
-of boards available, so remove the default machine setting from RISC-V
-and make it obligatory to specify the board.
-
-After this patch we'll throw an error if no machine is specified:
-
-$ ./build/qemu-system-riscv64 --nographic qemu-system-riscv64: No
-machine specified, and there is no default Use -machine help to list
-supported machines
-
-'spike' users that aren't specifying their machines in the command line
-will be impacted and will need to add '-M spike' in their scripts.
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2467
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- hw/riscv/spike.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index 74a20016f1..ba88d3a07b 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -349,7 +349,6 @@ static void spike_machine_class_init(ObjectClass *oc, void *data)
-     mc->desc = "RISC-V Spike board";
-     mc->init = spike_board_init;
-     mc->max_cpus = SPIKE_CPUS_MAX;
--    mc->is_default = true;
-     mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-     mc->possible_cpu_arch_ids = riscv_numa_possible_cpu_arch_ids;
-     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
--- 
-2.48.1
-
+Jason
 
