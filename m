@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B155FC3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 10:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040F5C3600E
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 10:52:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txkjS-0006Tr-M9; Thu, 27 Mar 2025 06:45:06 -0400
+	id 1txkpP-0000N1-Tb; Thu, 27 Mar 2025 06:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txkjP-0006Sc-Vz
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 06:45:04 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1txkpN-0000MS-KX
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 06:51:13 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txkjN-0008Ng-Rf
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 06:45:03 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2ff69365e1dso985920a91.3
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 03:45:01 -0700 (PDT)
+ id 1txkpL-0000h7-AF
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 06:51:13 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2264aefc45dso22845395ad.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 03:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743072300; x=1743677100; darn=nongnu.org;
- h=content-transfer-encoding:to:subject:from:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=7jLladIlUr/9BE3wBxz9RQ/0MgwAqu7Zp2tJf38KPes=;
- b=nV8py48kPzzXccfjU+v4xuaMJLLhgzqBBv8V/rvqtTcUdin4Aw37GtX94DAr4BtLfe
- nnFXQyZyk93xsRKBGLT6PAjG4o6f8IZ6lIt9GcsPmHXThqWUSw+mgPJvuGOrVRGZ0y6i
- Y+nfM9YyvzECb5IRY1h3zWudqUOtTPMbeppN8TAgUQz2f+4W0pPdb+H/rYmosLaIky9F
- fMkf71C2mGpcJOIYTUjS5/LvnMFQyHKuQ3kqavoP6FXvo/U4js1kgOrISPhgoc7LaacH
- y2fwjntKsjLpFJ1EpsDtuEsxCsEaNxssGqpYDojO9So3OmMaCAZBf+LZaz2iOIEVbzA5
- ZamQ==
+ d=gmail.com; s=20230601; t=1743072669; x=1743677469; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:from:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to; bh=BoZKhiYdB7y0VsWGB1lwV+BmgJ4aOh0AR7Uj+91th2Y=;
+ b=fUC5DyvakFd7tzI5Q+/YjpQmmuWfF/yuwikvy0JjwfksgTfP8ysAx7/JQyi0RCsM7Z
+ 0mv9Kx9My+474Rao6vRomXG3zdy/yU6vQVH4sVaIgJ3CReqy8WP3r/Qu8KiL2lsiFkKj
+ StvzoJnCbcgy/cWpxbtc+9Gs/EhuYGxUi7OqJdh3t8OE8zp1NiUtbpeeE2N+uTopg8dV
+ eAfC/9TB8uF5KEGks3Gb782CJRmzT6Dt95GI6ns6PoPRUwOr/jlG3hEgYyXkbGJww+5m
+ PUhp3OC1AcwGXUI/dukeXlGRNSaHWlKRubrgZeAE/qkzC7viYeIsnu57CVN+M98eXlbz
+ uviw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743072300; x=1743677100;
- h=content-transfer-encoding:to:subject:from:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7jLladIlUr/9BE3wBxz9RQ/0MgwAqu7Zp2tJf38KPes=;
- b=koXMUxbGo5O4THZJfUYialmYriCxuFq776ZN+PL9mLWvl+Tv9sjEWhCudocpdpvgXU
- mxnItr1j20QkenYftegpPd2OLPQpGLvyEI8XOCwsqWq/R88r01UVJaHnbVWR9znRx/yx
- eJ9oEf9TA+XzAFILZBR0abdCpu5o8Oxahtth0tsB2cMHkf+/8iIP6NQonNZ83O7KTuo8
- kOKgdFixsPoLM+PoPj/k67LePkGnMUwkkVo2Z9wRZMHNZQJbJKkURe1ZVE2bju1Hm7zU
- k1I4ISucyoJpgRvnja+43FkGXyn27kJzJv7y4M2v2sPoHMuQJSFrHwQXCAHsXDG5M7qo
- mQcA==
-X-Gm-Message-State: AOJu0YxIc9tnU623TEz/I8nRRjb8QFdEjDCuUQUcnljD5uXr+gcsKji2
- B+xtYQA46k1+0e3G0Ey9TWIf1XenF4okrITe9YyRjboHLhXtidS56o/Q7Q==
-X-Gm-Gg: ASbGncvMTj7lHGP7Op0LuPt+KQGD64enuTS1UUm2qNxYzIUBoQUoRlrI0cWG/rRSnpf
- 5QgDqEFmJsRyGfQEeFirI7E2H/RWkuuaeN1so32LfMkO4lxw3iBKtvQbeUXky/1H5lG/yCiFMrs
- A+Fa7bdngdWWIjUXFPjrArZv01EsYwxwdgSmS5UknV5Wi5b/FjsIhrq7TGGKFxStalHZf0ux+ZP
- l8BKuMOv03XetXcuaqEdv3qFqDFYjeUgpRQDL7o1O2tiqNZbbSfiQeFVSaLQkFgGC18J/tEqrWw
- J64Hqq8zV1lIz5D6fMDIpT7iQJ8vqV0IWAHDdeRyrJPB8S90SHC93bCJb5qmwYrxLA==
-X-Google-Smtp-Source: AGHT+IHKF2JErnq3d+jK1LHFQABdX8HhVoM+GyydtgsE4bJNsN4wTOIWL1tWcXr+mq+CuVUl7JLlEQ==
-X-Received: by 2002:a17:90b:2c84:b0:2ee:e518:c1d8 with SMTP id
- 98e67ed59e1d1-303a917ab9amr4465886a91.30.1743072299695; 
- Thu, 27 Mar 2025 03:44:59 -0700 (PDT)
-Received: from [192.168.31.221] ([221.216.117.46])
+ d=1e100.net; s=20230601; t=1743072669; x=1743677469;
+ h=content-transfer-encoding:cc:to:subject:from:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=BoZKhiYdB7y0VsWGB1lwV+BmgJ4aOh0AR7Uj+91th2Y=;
+ b=WRiypSSP9RP+2jdAafSGAP3x6/Q4qUPnu2akHt2dmt32yl9YIsoTfd6shTJoSCoRPn
+ qFdWMvoC0AT0+ErlyB2lSMFZ3z61HbAtHvoOw2rPe7ficnxo4PM/FDzvVdmklYmfwNej
+ CVtSelS4uBvfL28NLXrZUNgkxiEJ10iZD+T9mP59fAzUUf0X/fLA8FqRM8Jn6AmGO1CZ
+ KIxCCDbflRHI8BH/oC00JAUo1ql4xFVddCKUUS9CnJZRzI5iCkcV7kyY5ysIT2IE5coN
+ dgAUGvT+mK5adkbYIHP86xyAZLDd/ImaOcGfMj/s3XVfitH1wocaJxjn8zQjtFEcAI4/
+ zRsg==
+X-Gm-Message-State: AOJu0YwuHRU1Yx1wPHE92VrdRh1vXePIrKkHf5Jbym6zE/tM167mxwFt
+ LJJwmulOyRJK5s3LMncnyFSYkQJIBrsOUbKSHUHUdhtCGmKnl+UJq2Q2zQ==
+X-Gm-Gg: ASbGnctDuG5eNP3ahz0djUtrAvReIYNJDvh5xmXMKQvzF2jbwgWuiXXP9hOCIZ76wyn
+ ny8vhwORaLUntSGbhV7U4F/enAFXE0gK23d9Z24+sdQR3noxmtdbDPRw8apExkJ1MBssPpfcLFe
+ izRIHJ7+A/I1XSHPeNHYDSG52y2lhdppA1C+QEbomA8FZcNNRpet2aRM9NkZWHouf3qYhmJqiiS
+ grA9zSgS6z0vPaHQ4eLEEpin6ffMHw8aUL7dMMkIt3/khcrlLzq+PA6mvT4ixZeM9VI4zl5MTgH
+ WT8dcyOFIrtx4UeWFxaUc5vDuWXXuFUCNw+OuEf4boFQKNDYlGXkHU3bqoayAarp
+X-Google-Smtp-Source: AGHT+IH10qg1boEfgWWdKWuo08B7c/SIHxLOUqQi0gL/0DyE1TIDJM0G1KsOQf58m5oSjyyT9tYWDA==
+X-Received: by 2002:a17:902:fc46:b0:220:e9ef:ec98 with SMTP id
+ d9443c01a7336-22804840f08mr53051815ad.19.1743072669050; 
+ Thu, 27 Mar 2025 03:51:09 -0700 (PDT)
+Received: from [192.168.31.221] ([124.64.23.229])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22780f3b40esm125475135ad.12.2025.03.27.03.44.58
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-22780f3b596sm126114915ad.16.2025.03.27.03.51.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 03:44:59 -0700 (PDT)
-Message-ID: <97f99f82-6a82-471e-aa22-65604fa5f509@gmail.com>
-Date: Thu, 27 Mar 2025 18:44:57 +0800
+ Thu, 27 Mar 2025 03:51:08 -0700 (PDT)
+Message-ID: <55d118e8-d3aa-41f9-a4a4-cffed1c30e78@gmail.com>
+Date: Thu, 27 Mar 2025 18:51:06 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Zheng Huang <hz1624917200@gmail.com>
 Subject: [PATCH] hw/net/virtio-net: fix memory leak in timer_del()
 To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@daynix.com
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=hz1624917200@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,46 +104,72 @@ The issue arisesfrom the incorrect use of the ambiguous timer API
 report this issue during fuzzing. The correct API `timer_free()` freed
 the timer object instead.
 
-Also I'd like to ask for a way to fix all 100+ wrong usages. In my
+In addition, I'd like to ask for a way to fix all 100+ wrong usages. In my
 opinion, the best way to fix this is to hide to `timer_del()` API and
 eliminate all usages of it.
 
 Signed-off-by: Zheng Huang <hz1624917200@outlook.com>
 
----
- hw/net/virtio-net.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index de87cfadff..ca403821e0 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -422,7 +422,7 @@ static void virtio_net_set_status(struct VirtIODevice *vdev, uint8_t status)
-             }
-         } else {
-             if (q->tx_timer) {
--                timer_del(q->tx_timer);
-+                timer_free(q->tx_timer);
-             } else {
-                 qemu_bh_cancel(q->tx_bh);
-             }
-@@ -2844,7 +2844,7 @@ static void virtio_net_handle_tx_timer(VirtIODevice *vdev, VirtQueue *vq)
+---
+ hw/net/e1000.c       | 6 +++---
+ hw/net/e1000e_core.c | 8 ++++----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+index 3d0b227703..5dddf9e0a7 100644
+--- a/hw/net/e1000.c
++++ b/hw/net/e1000.c
+@@ -379,9 +379,9 @@ static void e1000_reset_hold(Object *obj, ResetType type)
+     E1000BaseClass *edc = E1000_GET_CLASS(d);
+     uint8_t *macaddr = d->conf.macaddr.a;
  
-     if (q->tx_waiting) {
-         /* We already have queued packets, immediately flush */
--        timer_del(q->tx_timer);
-+        timer_free(q->tx_timer);
-         virtio_net_tx_timer(q);
-     } else {
-         /* re-arm timer to flush it (and more) on next tick */
-@@ -3982,7 +3982,7 @@ static void virtio_net_reset(VirtIODevice *vdev)
-     n->nobcast = 0;
-     /* multiqueue is disabled by default */
-     n->curr_queue_pairs = 1;
--    timer_del(n->announce_timer.tm);
-+    timer_free(n->announce_timer.tm);
-     n->announce_timer.round = 0;
-     n->status &= ~VIRTIO_NET_S_ANNOUNCE;
+-    timer_del(d->autoneg_timer);
+-    timer_del(d->mit_timer);
+-    timer_del(d->flush_queue_timer);
++    timer_free(d->autoneg_timer);
++    timer_free(d->mit_timer);
++    timer_free(d->flush_queue_timer);
+     d->mit_timer_on = 0;
+     d->mit_irq_level = 0;
+     d->mit_ide = 0;
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 2413858790..61fdc8a3e9 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -127,7 +127,7 @@ static inline void
+ e1000e_intrmgr_stop_timer(E1000IntrDelayTimer *timer)
+ {
+     if (timer->running) {
+-        timer_del(timer->timer);
++        timer_free(timer->timer);
+         timer->running = false;
+     }
+ }
+@@ -360,13 +360,13 @@ e1000e_intrmgr_fire_all_timers(E1000ECore *core)
+     int i;
+ 
+     if (core->itr.running) {
+-        timer_del(core->itr.timer);
++        timer_free(core->itr.timer);
+         e1000e_intrmgr_on_throttling_timer(&core->itr);
+     }
+ 
+     for (i = 0; i < E1000E_MSIX_VEC_NUM; i++) {
+         if (core->eitr[i].running) {
+-            timer_del(core->eitr[i].timer);
++            timer_free(core->eitr[i].timer);
+             e1000e_intrmgr_on_msix_throttling_timer(&core->eitr[i]);
+         }
+     }
+@@ -3452,7 +3452,7 @@ static void e1000e_reset(E1000ECore *core, bool sw)
+ {
+     int i;
+ 
+-    timer_del(core->autoneg_timer);
++    timer_free(core->autoneg_timer);
+ 
+     e1000e_intrmgr_reset(core);
  
 -- 
 2.34.1
