@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A687C3600B
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 08:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4459AC3600B
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Mar 2025 08:04:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txiAl-0005GK-Pq; Thu, 27 Mar 2025 04:01:07 -0400
+	id 1txiDb-00074A-RB; Thu, 27 Mar 2025 04:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1txiAb-0005Dy-6S
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:00:57 -0400
+ id 1txiDY-00071O-8i
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:04:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1txiAZ-0004rl-9d
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:00:56 -0400
+ id 1txiDV-0005Pb-Uy
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 04:03:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743062453;
+ s=mimecast20190719; t=1743062636;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LxfaTQSdvHZjS7LjY13E1smQ5Ve382WxRDisOF5oFTI=;
- b=AS9xwMCaKjPx8jWpzIdf+nCVmlUVco/ML/GZ0aky4jGEZ2msWjSPP1MSb6YWKS9r871kLD
- hVwD8WFc5iVCthqw+LfSVofIkdSNJFdekbpnsafiNdxvNZBWhW8nwiPkZJuSxsFT1a/ng3
- A5cXHtA9ibbLFsTMR9XSGpeQyt/eLQs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KqiZ8b0K7F3/LhHoQ8DE2457h5HuEEasSkiMMWavqyk=;
+ b=e+nkKZ0svL43TK/2EjhkKLHMsI+g9OFF93jsgpiu8Eh1qcNpzkAu7nYpkdOD52ATLLqwco
+ 4MKOrCyeGoyqjLjgHKpZ/WxhlvUpKYpQjBrvbbyBeJl9TjtfKpLVCpqKILey1bfHvGy3Cc
+ sHWZl5h8ZfWjtC4LmBgpKaxroVLT224=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-Y70aC2MJOAaA76WpmjynpA-1; Thu, 27 Mar 2025 04:00:49 -0400
-X-MC-Unique: Y70aC2MJOAaA76WpmjynpA-1
-X-Mimecast-MFC-AGG-ID: Y70aC2MJOAaA76WpmjynpA_1743062448
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-391425471ddso531933f8f.0
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 01:00:48 -0700 (PDT)
+ us-mta-478-QAWpRr_7PtmRi_-UGguuQQ-1; Thu, 27 Mar 2025 04:03:24 -0400
+X-MC-Unique: QAWpRr_7PtmRi_-UGguuQQ-1
+X-Mimecast-MFC-AGG-ID: QAWpRr_7PtmRi_-UGguuQQ_1743062603
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43935e09897so3908445e9.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 01:03:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743062448; x=1743667248;
+ d=1e100.net; s=20230601; t=1743062603; x=1743667403;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LxfaTQSdvHZjS7LjY13E1smQ5Ve382WxRDisOF5oFTI=;
- b=LYzKhDGYzobwEKrcq0thFbkHVPWtcAbhELbkupfmoAi4ZVHRgaxPRzpTLpNI/9NCLJ
- S3/XyBbSTBF+v3H/temOL1NjqEKqGNBD17cPawvaq+S+3+1t8DFOMKdsH3mu/UKAfDoR
- 7d06xI2RUk/VCqKuNC0nMbD5F8TUi9HrIJ9iqYfn4Luy9W3i+misJJ8kGVTIhOATa9/K
- PrInd89+AikciVjBe3SU9RlQG24c8Bw2VYQkGWkSHByH9il8L5vtrzmOLe5du/JYd/tJ
- 5Be5AZRk0QwUakLesSNykoGIvNy/TSm9S1Y3zRWhPVG5ajye3fUMYGGdoKLM7M9C/imH
- WgHw==
+ bh=KqiZ8b0K7F3/LhHoQ8DE2457h5HuEEasSkiMMWavqyk=;
+ b=ATyPXN3s5XA06vAbT1XKD+PROupwx5VX0AGz9tJAOIJyl7Ri7DXCmjwuDNwux9MkuG
+ fCufxZkYOTAHWdoLlzq+DxKjPECRSa4Cq4SAxrm+5aRFuXWK9BGn9LuJXr/DTmhEiGp0
+ N70k8a2SuNn85N4vqUqeJw0X715ZO2RkypdMXsHuTVOt24FPFsx2B5B5gGZpCYCMlloG
+ LABfmlojvjsDooh7sEya91DjsL+wHPdXqjd2FWDOOsbxNnmxBGIJFYBWjGBHtV/zj5Gc
+ I+wboCom09orwsgvbbHgsnTSB3ZQdX1S60+b7c9t6+RWI5SpVNw41k2PUEX4gKAJBbdG
+ TLFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGnyghbX0upuCHIDeuyVJDTG1qLYTpU5m3V8qUTk3r90hTo7UwOf4vtO/LLBlkpDm9UfP70kKiw6oz@nongnu.org
-X-Gm-Message-State: AOJu0Yw9HY8VhMe24yoWobkrcpesJzssIAADpzI18r79XtVGUXKaoPhs
- DH7h9vA3+T9gl3bysLgv8KgmzeyAEDyo5V/X3AeCNHQfmz7oGuAnRTEKVBKJBAE8F0v++vLOPOR
- k2vJj/rEjF6/BYvXGkkZFBh8C7EnVxLCx3UJOQRqZQeSvdsPee94R
-X-Gm-Gg: ASbGnctsv2pNqX+HrMuwxoHdGZI8w96KGrmzFg9xDfAoZi7VkU4wNFqc3yZQMevrS7h
- tiT7GCPR+XX0hy3prAymOdFnfJyhZ7tu1uaqL/2bk2P6mGo6F9KOjiW+GPMiCLSayUn3nFUkHtV
- oFvGCYzw0DTlBhAtH4q/ob1RTbFCnOzFpWCqdE0TgRzaZp5qlmSCswXM5698fMdUGzwCS+ChHE2
- Mqvclmm4AqaEtmiesfIcMfjKvUU5oLoGm218Pqlvry6GLLfefvF874f0cLf2twc0AXitRs/or+X
- PcXpbghTv4K7Qsr1Bvzed8hrrExG85P8QoIY1/9tpMPZtxXvwnrCbJPB9r0iqDE=
-X-Received: by 2002:a5d:6c6e:0:b0:390:d73a:4848 with SMTP id
- ffacd0b85a97d-39ad17890d7mr1679282f8f.47.1743062447594; 
- Thu, 27 Mar 2025 01:00:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFImWHHKPP2XVOKF3TWzwH3mT8wImobp+z9D6Zm6z916TMvv9iqaThYMrsAPO2Cw9+AOaSG0g==
-X-Received: by 2002:a5d:6c6e:0:b0:390:d73a:4848 with SMTP id
- ffacd0b85a97d-39ad17890d7mr1679225f8f.47.1743062447108; 
- Thu, 27 Mar 2025 01:00:47 -0700 (PDT)
+ AJvYcCXy7bRNHUJE6fX7tnYXwazGqtq0Y6+9gWmrsFVTa0TRiDelY7vDAkAa40NEnZCUJrx2Z5i/ZI0Oj+xW@nongnu.org
+X-Gm-Message-State: AOJu0YzXwGM8j+7eKuBcly4e4odYIifPdUHdR0M6RWTX8CBZmADljIp/
+ zv9qLyyh7FEhW/iB5zdmckc3MNZrjLVtYRwb6YkSV1PW4RBdUJz2tfb4b3Iw4s2yje6Q5O4LjZ5
+ gQkUlAGb3xMyKfJJU7CC3ks+Vb+rb8CsAkm7fxguyxBrnyzKhNs6x
+X-Gm-Gg: ASbGnctxro+A+gF8H6aEdqg2MkmfQW28ywPC+3h+zA7c834M5g2a+W14nMa6p84gKry
+ BTOc2yjJJKP4LHqEE4MgBim0JxIJOSeeo+y/JHRw6Xa7S9RpUf9y9FPFl39NdKBWdM/bPva6iSg
+ ojYAOOgLjx/zY5azAPfZlIetRpUzBLP4HWF/niqDaD0+iPXxD6Qf68HWN3olZvImk0pdi7w7n+x
+ OwipH9QUEMn5HOG1w2xXgjJTwmbLI+kSK6nkcGBIRz3H00P2W7dP1J5DcxQ1x+3Qrq3rR8t3eb4
+ /YkJH2y1dxqx3sgGW6Qs84471QCmpNQkvpytiF2Ki/wKGegkpoMWEIZNmNfdAFg=
+X-Received: by 2002:a05:6000:4211:b0:391:12a5:3cb3 with SMTP id
+ ffacd0b85a97d-39ad173d283mr2019561f8f.3.1743062603484; 
+ Thu, 27 Mar 2025 01:03:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWPSfV/cpz6/HaxFI/9RXxa4cZvxRGF3r6ND+r/lOM0crXYJfkj4n3q7x42cBkf2BGTu3xGw==
+X-Received: by 2002:a05:6000:4211:b0:391:12a5:3cb3 with SMTP id
+ ffacd0b85a97d-39ad173d283mr2019508f8f.3.1743062603045; 
+ Thu, 27 Mar 2025 01:03:23 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39acb5d0c33sm5861863f8f.26.2025.03.27.01.00.45
+ ffacd0b85a97d-3997f9e64casm19147079f8f.73.2025.03.27.01.03.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 01:00:46 -0700 (PDT)
-Message-ID: <deb9fd73-fc27-4eec-83dd-71f3f6908aa4@redhat.com>
-Date: Thu, 27 Mar 2025 09:00:44 +0100
+ Thu, 27 Mar 2025 01:03:22 -0700 (PDT)
+Message-ID: <8ccf83fd-0d32-4491-a812-f1d29d44f08c@redhat.com>
+Date: Thu, 27 Mar 2025 09:03:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 13/20] hw/arm/smmuv3-accel: Introduce helpers to
- batch and issue cache invalidations
+Subject: Re: [RFC PATCH v2 15/20] hw/arm/smmuv3: Forward invalidation commands
+ to hw
 Content-Language: en-US
 To: Nicolin Chen <nicolinc@nvidia.com>
 Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
@@ -91,13 +91,13 @@ Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
  wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
  jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
 References: <20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com>
- <20250311141045.66620-14-shameerali.kolothum.thodi@huawei.com>
- <e23b4803-02d1-4850-8b6e-ad398a66a31c@redhat.com>
- <Z+RSeDAuUFtryi4E@nvidia.com>
+ <20250311141045.66620-16-shameerali.kolothum.thodi@huawei.com>
+ <af531bef-4597-4729-bdcc-f6b7e3647266@redhat.com>
+ <Z+RVM8Cr+EcnhDaJ@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <Z+RSeDAuUFtryi4E@nvidia.com>
+In-Reply-To: <Z+RVM8Cr+EcnhDaJ@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -126,110 +126,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 3/26/25 8:16 PM, Nicolin Chen wrote:
-> On Wed, Mar 26, 2025 at 02:38:04PM +0100, Eric Auger wrote:
->>> +/* Update batch->ncmds to the number of execute cmds */
->>> +int smmuv3_accel_issue_cmd_batch(SMMUState *bs, SMMUCommandBatch *batch)
->>> +{
->>> +    SMMUv3AccelState *s_accel = ARM_SMMUV3_ACCEL(bs);
->>> +    uint32_t total = batch->ncmds;
->>> +    IOMMUFDViommu *viommu_core;
->>> +    int ret;
+On 3/26/25 8:27 PM, Nicolin Chen wrote:
+> On Wed, Mar 26, 2025 at 03:16:18PM +0100, Eric Auger wrote:
+>>> @@ -1395,6 +1403,13 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>>>  
+>>>              trace_smmuv3_cmdq_cfgi_cd(sid);
+>>>              smmuv3_flush_config(sdev);
 >>> +
->>> +    if (!bs->accel) {
->>> +        return 0;
->>> +    }
->>> +
->>> +    if (!s_accel->viommu) {
->>> +        return 0;
->>> +    }
->>> +    viommu_core = &s_accel->viommu->core;
->>> +    ret = iommufd_backend_invalidate_cache(viommu_core->iommufd,
->>> +                                           viommu_core->viommu_id,
->>> +                                           IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3,
->>> +                                           sizeof(Cmd), &batch->ncmds,
->>> +                                           batch->cmds);
->>> +    if (total != batch->ncmds) {
->>> +        error_report("%s failed: ret=%d, total=%d, done=%d",
->>> +                      __func__, ret, total, batch->ncmds);
->> some commands may have been executed (batch->ncmds !=0). Is the
->> batch_cmds array updated accordingly? In the kernel doc I don't see any
->> mention of that.
-> The uAPI kdoc of ioctl(IOMMU_HWPT_INVALIDATE) mentions:
->  * @entry_num: Input the number of cache invalidation requests in the array.
->  *             Output the number of requests successfully handled by kernel.
-I was rather talking about the array of cmd itself but I guess it is
-left unchanged.  don't know if we are supposed to retry sending failed
-cmds or not.
->
->> Do you need to report a cmd_error as we do for some
->> other cmds?
-> Yes, we do. And we did (in this patch)? cons would be updated:
-> +    if (batch->ncmds && (dev_cache != batch->dev_cache)) {
-> +        ret = smmuv3_accel_issue_cmd_batch(bs, batch);
-> +        if (ret) {
-> +            *cons = batch->cons[batch->ncmds];
-> +            return ret;
-cons is updated but error is not logged in this patch.
-> +        }
-> +    }
->
->>> +        return ret;
->>> +    }
->>> +
->>> +    batch->ncmds = 0;
->>> +    batch->dev_cache = false;
->>> +    return ret;
->>> +}
->>> +
->>> +int smmuv3_accel_batch_cmds(SMMUState *bs, SMMUDevice *sdev,
->> I was confused by the name. The helper adds a single Cmd to the batch,
->> right? so batch_cmd would better suited.
-> Yea, it could be "smmuv3_accel_batch_cmd".
->
->>> +                            SMMUCommandBatch *batch, Cmd *cmd,
->>> +                            uint32_t *cons, bool dev_cache)
->>> +{
->>> +    int ret;
->>> +
->>> +    if (!bs->accel) {
->>> +        return 0;
->>> +    }
->>> +
->>> +    if (sdev) {
->>> +        SMMUv3AccelDevice *accel_dev;
->>> +        accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
->>> +        if (!accel_dev->s1_hwpt) {
->> can it happen? in the positive can you add some comment to describe in
->> which condition?
-> I recall this is for device cache specifically (i.e. CGFI_CD[_ALL]
-> and ATC_INV) that I had in smmuv3_cmdq_consume(). Perhaps it gets
-> here because Shameer separated the accel code from the non-accel
-> smmuv3 file.
->
-> This condition is to check if the device is attached to an accel
-> HWPT, particularly to exclude commands being issued for emulated
-> devices. Surely, if a device isn't attached to an accel stage-1
-> HWPT any more, we probably shouldn't forward the commands to the
-> kernel? Though I start to suspect that we might need a lock for
-> accel_dev->s1_hwpt?
-Yes worth to dig in and add a comment
+>>> +            if (smmuv3_accel_batch_cmds(sdev->smmu, sdev, &batch, &cmd,
+>>> +                                        &q->cons, true)) {
+>>> +                cmd_error = SMMU_CERROR_ILL;
+>> I understand you collect all batchable commands all together (those
+>> sharing the same dev_cache prop) and the batch is executed either when
+>> the cache target changes or at the very end of the queue consumption.
+>> Since you don't batch all kinds of commands don't you have a risk to
+>> send commands out of order?
+> Yes, that could happen. But would it have some real risk?
 
-Thanks
+OK. I don't know but this needs to be studied.
 
 Eric
 >
->>> +/**
->>> + * SMMUCommandBatch - batch of invalidation commands for smmuv3-accel
->>> + * @cmds: Pointer to list of commands
->>> + * @cons: Pointer to list of CONS corresponding to the commands
->>> + * @ncmds: Total ncmds in the batch
->> number of commands
-> OK.
->
->>> + * @dev_cache: Issue to a device cache
->> indicate whether the invalidation command batch targets device cache?
-> Maybe "invalidation command batch targeting device cache or TLB".
+> This practice has an assumption that the guest OS would group
+> each batch with a proper CMD_SYNC like Linux does. So it could
+> reduce the amount of ioctls. If we can think of some real risk
+> when the guest OS doesn't, yes, I think we would have to flush
+> the batch if any non-accel command appear in-between.
 >
 > Thanks
 > Nicolin
