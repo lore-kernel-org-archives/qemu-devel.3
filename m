@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC79AC3600C
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE85C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyFxL-0002yG-Hu; Fri, 28 Mar 2025 16:05:31 -0400
+	id 1tyFx8-0002v4-8I; Fri, 28 Mar 2025 16:05:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tyFxH-0002x2-1i
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:28 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tyFx0-0002sw-RA
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:10 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tyFxE-0007rv-QB
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:26 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-39149bccb69so2283016f8f.2
- for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:05:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tyFwy-0007oM-Q5
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:10 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3feaedb6670so1502691b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743192323; x=1743797123; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1743192307; x=1743797107; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VwY4WJryALHSQoXzXfLC9JfmzrSmGh7ppOY/ir+1Mdk=;
- b=BY5WXnI6noQvR+piRfg+v2SVUIFtrdvqlIwHQS5JkUo1dmbbPtj9WYh/KuFmhc+0rC
- GKg0kyQj7+y9XMDF40eAbGjV+TjS7eFwU/oQTe6cv0EnshJP30QuOe2Ett4434X6KbLp
- vEVCDCmX7U5XBAVKMWpRVRJOzzWr4QCzSCKRV8E+KJVp27S8WMtVaIzcW+6aNJRlqbUx
- mBreGl+KnrCjHggwlrGiZhYEXeKCwiZtXvJs7tQxkrW71W4GP7mGeuqHEQFOwaalvpXF
- RTf5bzH9h5a2fIx7TVDaS8V2fBHo0YEU0HKlNIdOCCtsF6HMjRK14D1ZHzk2rly0P7DB
- m5hw==
+ bh=QGhoY6BYqtu06nSyGAEKOAb5PFFvnmUxpNglBsInFeg=;
+ b=BlVYescgQ1fqkHZs1HJPPQVSQ6EQhoKadYbviGywVhBJGS54FUicuXGF8t1ktZmNaN
+ F6Rn67pPhczdu7KcwoO6cUIou1i9UmsEtJXeWPiAegkTCR/81yMs8cdSmbbvBey0ZF08
+ Zc9JKJflxG5FE4YPnAnNnAcun253R1Sm7WffBcjcqNK1hSCX2f4BRB9Bqo3u0N2Iqi74
+ QOED+6Hfst/NxaFfspjGirZj8t8QYAylQjPiV+MgayhTvpylttG8Prm4g9xWYTNmmWyz
+ r9Jie/081YG24JG7MiiiwRRvQ1ZYhw60jUIoavUTbfh8SG/1hh0/Sy9psRzADxpTzqSb
+ 9DPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743192323; x=1743797123;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VwY4WJryALHSQoXzXfLC9JfmzrSmGh7ppOY/ir+1Mdk=;
- b=gWLqHO61RHQ8jNJVzVAmyZHuX565ysFCU6CBaBp2Fmm6Tl8nZDc9TtwTRd7zgsPhRz
- P7onKBoIwrEbhbRG6t30BS8IfEMk8BXA1Uqhxz32vyqZ3gpkFenjayluwPnFzM9cc8bF
- qN8krJ0yJmJhxnCfO5KtMmgrei+3hhSrYams9OnOYG9yNxIP98sONE03Ui1KjYKWmbzA
- gBL0Li1Eond6vJT0v+6E64pq+Jn3lwy7EoToHeEJGnQRd39PllzXQiHPu5hELQU04jke
- HYaSPm1xKpzyAuWLV3Csu2Wv5WDv15I5tIff+h8xpIDo74OnNKd4wI2l2TO3EFIp7t/7
- GrAg==
-X-Gm-Message-State: AOJu0YzD8QDmZWoK62gjx7Cavg18MV11H23mQsR9lc3lfKhPX4WQBcER
- GNeI+ow/cedDZqEO8bJcUk5dqiivxyv+7i6ZOkmFfp31s7m+EszHnIL29aU52hU=
-X-Gm-Gg: ASbGncttP/9biKa/CcsPOTkhJtyFs+ed5pru8iclHRSzRGGjqkZzAP6YwiIl0Ta+zrD
- U5ruFvuLJ6jTvYIQlppJMHcSzPvx1etEuGuhZrWb0fYtSfe37im58JCabNI+dRJsBgoQSC+nZY/
- jCqyqBThBcTarYYALrHPPQc5UuAh1Q+ZC+upqqh2xLwlUSX4PWCga4exBAqORKZXKqnSa3FFzip
- IUljqjVzOcEXQEU33wKCfX0UGCFmJkIvJYAyVJnELyn1yBSMtKCWM3754eNmzC5X0jyfK+uAdkW
- X5dblAauViVmhbeX/1CcoC1WjgbOhjR9GEQ99Ja/xPZi2Ic=
-X-Google-Smtp-Source: AGHT+IE9/eiT5Qwo6vJg1Tzqi0CiIbqcA1+ZKfMH8S5v2cQMwj5Y/PA4nr+13qs/+Cb/jXPIY/+fSw==
-X-Received: by 2002:a05:6000:4282:b0:385:fd07:8616 with SMTP id
- ffacd0b85a97d-39c12097a74mr512017f8f.0.1743192322654; 
- Fri, 28 Mar 2025 13:05:22 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b658b5dsm3518993f8f.3.2025.03.28.13.05.21
+ d=1e100.net; s=20230601; t=1743192307; x=1743797107;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QGhoY6BYqtu06nSyGAEKOAb5PFFvnmUxpNglBsInFeg=;
+ b=U5kQp08SAz27iMxMfc/VIDf4sgOXZTRDX8YYX+wd8T51DGdsMfrSirgikhNYYAIFHf
+ PUdeGVnVYYEdp8G+XiD/0DnxRVysxm1wo1CJt7MfAm0W6yIO/uY4NWov8nOO8j7HrKS3
+ XAiPRYpfS7kXgTy6P/Cw95lT1ZW7etEC7LiEHVBEsu+DyKcm+1YqJplEJcqzv5cIuozD
+ KIRZzdquWKuLWrhDjcCKa6iwzPvKYDA2P6gKZ8s2uBX9QpCsPWp71E9QPFul1pQPoDRN
+ bpiGmjlVqqAh4IWHyCboIyk6kGZyj2aQmI91G/hB5mkAcTeqBj5UXlz66KVeaJjCRmz1
+ hqLA==
+X-Gm-Message-State: AOJu0Yx4OCITwPV7dM2l22vhHxuwHSFGFLY/9ItWWzOEQCdNX74fdflQ
+ UnwAbIaE+yLeyNBN/UeEbNOeufyo13YIn5TFrmjRYeOE6QiQAy4eXNA+bm/RQXrNDEXJjp89D4U
+ a
+X-Gm-Gg: ASbGnctmUmup2z+mtv6crUwQfM2P9wFQQX4d/Nm0Ow6fgpcBO3jnayMnfqI2YmKAXg9
+ VVz3BMbEtVXyMjZU7ndc366P/fZ7N4D/FLXtBIjqjaRgnWoSIwvrtixyJa9KRT0QfwDvwnof02G
+ Af1mcAdpLjmN1NR5kDSD09+3ExWCX4ZJdfTG4RiWHqj2oyA55lKyknriUAn4VCUGjEeuccqv2hq
+ uQ9TcX7U8WHlVWAYzQ0CC+ECRfr80eCUKjmZdOtDqIflBy1JjXtNBhYus71KErlsIddRgaJ+fm5
+ ntshv9YQaaxhTlDuG7jxlzzVBOHsDUmR2IuWLgJ4/O4qFZ1sqsLPoV0j9PKu/uY8li6Bvf4P/c/
+ /dwMQzCDi1oE=
+X-Google-Smtp-Source: AGHT+IGZ9womr7pxwp6oiaADgSVpsQ45UQRmjTALzu4Vuu6snojiP0S69zp+txPkDKtqqJNwdhCe6g==
+X-Received: by 2002:a05:6808:3846:b0:3f3:d802:14f1 with SMTP id
+ 5614622812f47-3ff0f502f80mr489239b6e.12.1743192302510; 
+ Fri, 28 Mar 2025 13:05:02 -0700 (PDT)
+Received: from stoup.. (syn-071-042-197-003.biz.spectrum.com. [71.42.197.3])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3ff052799b6sm465104b6e.37.2025.03.28.13.05.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Mar 2025 13:05:21 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 36F9A5F839;
- Fri, 28 Mar 2025 20:05:20 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
- berrange@redhat.com,  peter.maydell@linaro.org,  qemu-arm@nongnu.org,
- thuth@redhat.com
-Subject: Re: [PATCH] tests/functional/test_aarch64_rme_virt: fix sporadic
- failure
-In-Reply-To: <20250328183816.2687925-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Fri, 28 Mar 2025 11:38:16 -0700")
-References: <20250328183816.2687925-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 28 Mar 2025 20:05:20 +0000
-Message-ID: <877c482a67.fsf@draig.linaro.org>
+ Fri, 28 Mar 2025 13:05:02 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org,
+	philmd@linaro.org
+Subject: [PATCH 1/9] include/exec: Move tb_{,
+ set_}page_addr[01] to translation-block.h
+Date: Fri, 28 Mar 2025 15:04:51 -0500
+Message-ID: <20250328200459.483089-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250328200459.483089-1-richard.henderson@linaro.org>
+References: <20250328200459.483089-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,45 +102,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Move the accessor functions for TranslationBlock
+into the header related to the structure.
 
-> This test was randomly failing on our CI, and on dev machines,
-> especially with QEMU debug builds.
->
-> From the information collected, it's related to an implementation choice
-> in edk2 QEMU virt support. The workaround is to disable KASLR, to avoid
-> accessing protected memory.
-> Note: this is *not* needed for the similar test_aarch64_rme_sbsaref.
->
-> More information is available on the associated GitLab issue.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2823
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/exec/exec-all.h          | 49 -------------------------------
+ include/exec/translation-block.h | 50 ++++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 49 deletions(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 19b0eda44a..fcad3446fe 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -123,55 +123,6 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+ #endif /* !CONFIG_USER_ONLY */
+ #endif /* CONFIG_TCG */
+ 
+-static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    return tb->itree.start;
+-#else
+-    return tb->page_addr[0];
+-#endif
+-}
+-
+-static inline tb_page_addr_t tb_page_addr1(const TranslationBlock *tb)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    tb_page_addr_t next = tb->itree.last & TARGET_PAGE_MASK;
+-    return next == (tb->itree.start & TARGET_PAGE_MASK) ? -1 : next;
+-#else
+-    return tb->page_addr[1];
+-#endif
+-}
+-
+-static inline void tb_set_page_addr0(TranslationBlock *tb,
+-                                     tb_page_addr_t addr)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    tb->itree.start = addr;
+-    /*
+-     * To begin, we record an interval of one byte.  When the translation
+-     * loop encounters a second page, the interval will be extended to
+-     * include the first byte of the second page, which is sufficient to
+-     * allow tb_page_addr1() above to work properly.  The final corrected
+-     * interval will be set by tb_page_add() from tb->size before the
+-     * node is added to the interval tree.
+-     */
+-    tb->itree.last = addr;
+-#else
+-    tb->page_addr[0] = addr;
+-#endif
+-}
+-
+-static inline void tb_set_page_addr1(TranslationBlock *tb,
+-                                     tb_page_addr_t addr)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    /* Extend the interval to the first byte of the second page.  See above. */
+-    tb->itree.last = addr;
+-#else
+-    tb->page_addr[1] = addr;
+-#endif
+-}
+-
+ /* TranslationBlock invalidate API */
+ void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
+ void tb_invalidate_phys_range(tb_page_addr_t start, tb_page_addr_t last);
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index 3c69bc71a9..8b8e730561 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -13,6 +13,7 @@
+ #include "exec/vaddr.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "qemu/interval-tree.h"
++#include "exec/target_page.h"
+ #endif
+ 
+ /*
+@@ -157,4 +158,53 @@ static inline uint32_t tb_cflags(const TranslationBlock *tb)
+ bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
+ void tcg_cflags_set(CPUState *cpu, uint32_t flags);
+ 
++static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
++{
++#ifdef CONFIG_USER_ONLY
++    return tb->itree.start;
++#else
++    return tb->page_addr[0];
++#endif
++}
++
++static inline tb_page_addr_t tb_page_addr1(const TranslationBlock *tb)
++{
++#ifdef CONFIG_USER_ONLY
++    tb_page_addr_t next = tb->itree.last & TARGET_PAGE_MASK;
++    return next == (tb->itree.start & TARGET_PAGE_MASK) ? -1 : next;
++#else
++    return tb->page_addr[1];
++#endif
++}
++
++static inline void tb_set_page_addr0(TranslationBlock *tb,
++                                     tb_page_addr_t addr)
++{
++#ifdef CONFIG_USER_ONLY
++    tb->itree.start = addr;
++    /*
++     * To begin, we record an interval of one byte.  When the translation
++     * loop encounters a second page, the interval will be extended to
++     * include the first byte of the second page, which is sufficient to
++     * allow tb_page_addr1() above to work properly.  The final corrected
++     * interval will be set by tb_page_add() from tb->size before the
++     * node is added to the interval tree.
++     */
++    tb->itree.last = addr;
++#else
++    tb->page_addr[0] = addr;
++#endif
++}
++
++static inline void tb_set_page_addr1(TranslationBlock *tb,
++                                     tb_page_addr_t addr)
++{
++#ifdef CONFIG_USER_ONLY
++    /* Extend the interval to the first byte of the second page.  See above. */
++    tb->itree.last = addr;
++#else
++    tb->page_addr[1] = addr;
++#endif
++}
++
+ #endif /* EXEC_TRANSLATION_BLOCK_H */
+-- 
+2.43.0
 
-> ---
->  tests/functional/test_aarch64_rme_virt.py | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional=
-/test_aarch64_rme_virt.py
-> index f4ad4d33d58..a1abf584f0e 100755
-> --- a/tests/functional/test_aarch64_rme_virt.py
-> +++ b/tests/functional/test_aarch64_rme_virt.py
-> @@ -87,7 +87,9 @@ def test_aarch64_rme_virt(self):
->          self.vm.add_args('-fsdev', f'local,security_model=3Dnone,path=3D=
-{rme_stack},id=3Dshr0')
->          self.vm.add_args('-device', 'virtio-net-pci,netdev=3Dnet0')
->          self.vm.add_args('-netdev', 'user,id=3Dnet0')
-> -        self.vm.add_args('-append', 'root=3D/dev/vda')
-> +        # We need to add nokaslr to avoid triggering this sporadic bug:
-> +        # https://gitlab.com/qemu-project/qemu/-/issues/2823
-> +        self.vm.add_args('-append', 'root=3D/dev/vda nokaslr')
->=20=20
->          self.vm.launch()
->          # Wait for host VM boot to complete.
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
