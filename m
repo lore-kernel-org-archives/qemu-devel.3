@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16F3C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BCBC28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyGYu-0004oI-UG; Fri, 28 Mar 2025 16:44:20 -0400
+	id 1tyGic-00069q-Bj; Fri, 28 Mar 2025 16:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tyGYs-0004nP-TQ
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:44:18 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tyGiZ-00069J-D9
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:54:19 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tyGYq-0004ov-EJ
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:44:18 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43ce70f9afbso26514475e9.0
- for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:44:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tyGiX-0005om-EC
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:54:19 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-227914acd20so58766675ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:54:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743194655; x=1743799455; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1743195255; x=1743800055; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1fhdZIg8Bi6/9e5SfxEjlLeTz0e7FHLJzyLveaXoOhI=;
- b=rXyE8a97MJf4F0j74nPuIefQpjg9b4UcfH1/CJ/IV3+GF+fGqmtUQQniB2p7fu1GdC
- 3ADK+jLvWu74wara0NM8ArjZNYkEgBV7skvK3HFuN9VJsk8q9WGCTolhElQaF6lVVdpF
- ZDoQs5ZbAQK3ps99HvjuMnBcAjv4W2fZge2qH92vmo/2iFRJceUXcnMv6CDkpv+cbKBI
- k97Ly04Rg8el3FCZTa46XulK257ka+IlvV3AjvXhyVPYBuVPxqjT12Nu+UsHjwpSKdiD
- Q8nPldWTRv5tXSigzGJkJp0aaqeMfWDIrADFrysvtbk8bMLUOdWnJ6i2n33YdnsI+RUM
- sz/Q==
+ bh=ZzXDVlHz+CqgdRhxXJluD+mzWebhzxOJniT3TOye1l4=;
+ b=UgBnVQeBboPCZ97983GHvEvvS6qeJtd+JbYmJ3QKAtR6M52RoxhVirSDDh4GFMWl40
+ 13Pmk+cMBnodw7eqd/2ClORSoTvmp9JCxPr1sRIeturAASy7Xbshd5viGdoHn4H2zd2W
+ iKqxfOChst//Dvm0+rjdEZA8YVLp7QNlfO8mF/WXFAFtlvRU/nHOGT0eHFfZm4rKVrgx
+ 8b7iAKJgsjmF/zqRqgkbsmZgm9tj1ykt8MuO+vTQXSUf6l5MQ1aXe0kPXqvMX3MkAFbd
+ ErU9HOGpNtqiS9jdYLyHXI07V96os0iOUc3lzeYRxGc9eNMHk+lWx7gAFFJMVojIsdTU
+ FefA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743194655; x=1743799455;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743195255; x=1743800055;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1fhdZIg8Bi6/9e5SfxEjlLeTz0e7FHLJzyLveaXoOhI=;
- b=KTdgfyoxmbjZZZHo1qg2tXBXk4FTgnxjf9IpxrCfXJoeBHxfB7ygvM1C82yhOofeWv
- VAPpH7Ldo//lLqOEc/ob4l9skCHDYyWMsKovsoPYWOgw8Wu/FIxGEcz0ZrNTufgvAz+m
- bjXMlhcC0RbTBqTYGWGmf6nd7Nd05lIlBaD+j/NcC+SLhjuf5YCsAllRXteDpW4ObiN6
- 9cIA9m+IAF9+1QWYtCpwn/kyWePV1yXnZR2PvqwmyjTbZL5AVOibx4UcAJgkZTe/4oci
- FUn9DMX8KnyBtU9fFoRwOKjd3wn2HASiyeSoG35e3NR9Hte7c3nfPD7tN7GYyYa1h6TS
- sGtQ==
+ bh=ZzXDVlHz+CqgdRhxXJluD+mzWebhzxOJniT3TOye1l4=;
+ b=CLx2ng6PeljqclTV/jgfjAB2NHHEBvMOAIUtIlVAb/5TtrMw5Q9gyXdDylkAPG+it1
+ N7eeX/joUnbPtg/AlOqJ512Vb5u0IX5q7LFvdlmsVC7aIbfgveInCTBPK+2GrJx3h00y
+ tSCpYpmnQVRDBNU5KVE2LKE2gbmB4UUFoTLozwND77MsSpt1/dixNL4jJ41/BrekbQuE
+ b3/zaO4+tdKpg5zz4CtkYBOFYVRhE0EariAonCCkklXRm586Qf2HcdWrEmWMd9Pg7doE
+ fbunXdZMb+4qdCEWqL+OTC8QfwRMdCgrPf9M6Gh9mEiJk5Pffb89tqgGSvclqHe6RfNR
+ xvgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0w1LDp8JCXnyN8NdiD5HzcKtPYUyC6ONKu/a6kzDuvS9Dny0yGbPB+BgFfvZQeEgiy5WW6yQkUKmq@nongnu.org
-X-Gm-Message-State: AOJu0YxmYyzLg7VtxcjbkDKaMfSgFtKEXL5SBwvD4hpoDtDHzhTJzQNu
- mw/ULtnbThoH6zhP+6dZJAovKBw+KzHB7GH0j6UjT/rCDYMat4rSzbOOaXyf9bI=
-X-Gm-Gg: ASbGncu4B4DN7PvR6ueDzwA93Y0qFT92kjdVC2XVmA+v9XqrHIYHe5ARfdtlNMl8ux/
- Q7otojZs0KL2uB7b+79Nz4CkYF+gtcE0AuvkxAIG8bit4n8KzJ473t5j0OMtqpgD1F7MNo9lWyH
- bcD1tjhtMtCePhRVVPN54y1j54+lyIBFX7zxtBZdIdV9s1Dr+XVekIwIpuCEzTL+oJFDNwvl3uj
- rzr8w5AADZwSSwGSxXrHGxSMES45alI2sOBfDE6qYqmHCTk7G6M0UL9sQHXjQouSHjD3dSDpsfK
- 2AHkwOKqgwwLrAIjqfw+3Rat7Y+q4CKxAe1N1RnJD3tbguveux/xqJrjvENByQx1lr6JWNoaF3P
- TQRGBErRhl7Aa
-X-Google-Smtp-Source: AGHT+IGgP7gXxkmq5Jxf6HBLF99Iec86oKcTnIrWY0CdmZhPAOCK9OfUNmvXEoq5CzZdoj3WM8ZSAA==
-X-Received: by 2002:a5d:5982:0:b0:39c:e28:5f0d with SMTP id
- ffacd0b85a97d-39c120e33cfmr446437f8f.25.1743194654756; 
- Fri, 28 Mar 2025 13:44:14 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b7a4498sm3710618f8f.99.2025.03.28.13.44.12
+ AJvYcCVj1VmQ0NLq0d6UVcS6MSCJmyIBxMwdoZeOJT/Lzp/6dMSXHPY/2KI9UlYWTZ24+4r+lhu/OjcgYo78@nongnu.org
+X-Gm-Message-State: AOJu0YwRhzIvvxziPZWSkBtRCHvmNay5yyAUtrx8NkpkfCVgK7iCekhk
+ YoUzQCPxR7nNM21lDBdWLPli2KneMv5iVEGXw8isn5XBDVBfNAkS2EJlYXF8ypeVfTXb9NfPLza
+ oabQ=
+X-Gm-Gg: ASbGncsrYelIwO0SbV/z/fhtvlu53g1+oHLAVG2gWxY+C0TTj13HKuKJ2lD0aBZhCTm
+ zX9INOpckuQwQS3NfrqyoE/YOhDI8xejGtoNtOqovRTtbnktXU9PZqAa97gNRSFhPIUdcdfA/3B
+ ODmQUPFkwra96VYOK/wShy3+q8dBTPeLk30McJqud4T9J59X0qDwnN8Wk0o/MN8Rx3DseVJJ2Oc
+ NosZcOSZaF8q90pusr+za2MYQ9ILGS2x80H6rnyuWCf13DNH+dfG6QUHh2/Z6bK/oAagl8G0bCs
+ 2woh6c1hmfX0wadLnd7HJqGW6cWHBmw7NKj+CHWZyDCrq2iip+sG7eUb0Q==
+X-Google-Smtp-Source: AGHT+IFE+Scskz/hikVpB5j3RFeLpQj1REFpWbw0W0tTIKFsG6dAAZQfNLhzHx9/lh7lz21H5noBoQ==
+X-Received: by 2002:a05:6a00:1151:b0:728:f21b:ce4c with SMTP id
+ d2e1a72fcca58-7397f369169mr1847327b3a.5.1743195255369; 
+ Fri, 28 Mar 2025 13:54:15 -0700 (PDT)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73970e51a4asm2275958b3a.81.2025.03.28.13.54.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Mar 2025 13:44:13 -0700 (PDT)
-Message-ID: <b6b45e60-026e-4228-a5a1-451bbccdd7dc@linaro.org>
-Date: Fri, 28 Mar 2025 21:44:11 +0100
+ Fri, 28 Mar 2025 13:54:14 -0700 (PDT)
+Message-ID: <97cfd98c-4351-42df-be07-929f25268f31@linaro.org>
+Date: Fri, 28 Mar 2025 13:54:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] include: Add a header to define PCI MMIO functions
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: mjrosato@linux.ibm.com, schnelle@linux.ibm.com, qemu-block@nongnu.org,
- qemu-s390x@nongnu.org, stefanha@redhat.com, fam@euphon.net,
- kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com
-References: <20250328190627.3025-1-alifm@linux.ibm.com>
- <20250328190627.3025-3-alifm@linux.ibm.com>
+Subject: Re: [PATCH 0/9] single-binary: Restrict scope of TARGET_PAGE_BITS_MIN
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250328190627.3025-3-alifm@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20250328200459.483089-1-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250328200459.483089-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,40 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/25 20:06, Farhan Ali wrote:
-> Add a generic QEMU API for PCI MMIO reads/writes.
-> The functions access little endian memory and returns
-> the result in host cpu endianness.
+On 3/28/25 13:04, Richard Henderson wrote:
+> With this, TARGET_PAGE_BITS_MIN no longer exists outside of
+> page-vary-target.c, as that's the only place that needs the
+> information.
 > 
-> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-> ---
->   include/qemu/pci-mmio.h | 116 ++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 116 insertions(+)
->   create mode 100644 include/qemu/pci-mmio.h
+> Based-on: 20250318213209.2579218-1-richard.henderson@linaro.org
+> ("[PATCH v2 00/42] accel/tcg, codebase: Build once patches")
+> Based-on: 20250325224403.4011975-1-richard.henderson@linaro.org
+> ("[PATCH v2 00/11] target/avr: Increase page size")
+> Based-on: 20250328175526.368121-1-richard.henderson@linaro.org
+> ("[PATCH 0/3] target/mips: Revert TARGET_PAGE_BITS_VARY and bug fixes")
 > 
-> diff --git a/include/qemu/pci-mmio.h b/include/qemu/pci-mmio.h
-> new file mode 100644
-> index 0000000000..2ef92455b1
-> --- /dev/null
-> +++ b/include/qemu/pci-mmio.h
-> @@ -0,0 +1,116 @@
-> +/*
-> + * QEMU PCI MMIO API
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef QEMU_PCI_MMIO_H
-> +#define QEMU_PCI_MMIO_H
-> +
-> +#ifdef __s390x__
- > +#include "s390x_pci_mmio.h"
+> Which is a lot, so for avoidance of doubt:
+> https://gitlab.com/rth7680/qemu/-/commit/c8b593f1a907794b5767274cb3f5c70985638397
+> 
 
-Does this ifdef belong to the header instead?
-Otherwise remove?
+I'll rebase my hw/arm single binary series 'single-binary: start make 
+hw/arm/ common' on top of this series, so we can continue to expand the 
+house of cards for this topic.
 
-> +#endif
+Feel free to pick the cpu-all cleanup part if it's interesting and ready 
+for you.
+
+Regards,
+Pierrick
 
