@@ -4,50 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CEB7C28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 07:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E34C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 07:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ty4O6-0005xG-Mh; Fri, 28 Mar 2025 03:44:22 -0400
+	id 1ty4Q6-0006so-AP; Fri, 28 Mar 2025 03:46:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=v09i=WP=kaod.org=clg@ozlabs.org>)
- id 1ty4O4-0005wJ-3L; Fri, 28 Mar 2025 03:44:20 -0400
+ id 1ty4PU-0006oP-53; Fri, 28 Mar 2025 03:45:53 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=v09i=WP=kaod.org=clg@ozlabs.org>)
- id 1ty4O0-0004JC-8h; Fri, 28 Mar 2025 03:44:19 -0400
+ id 1ty4PQ-0004et-56; Fri, 28 Mar 2025 03:45:46 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZPCG134v3z4x3d;
- Fri, 28 Mar 2025 18:44:09 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZPCHg5w2Bz4wxh;
+ Fri, 28 Mar 2025 18:45:35 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZPCFt2TQrz4wcr;
- Fri, 28 Mar 2025 18:44:02 +1100 (AEDT)
-Message-ID: <f20a4de2-e231-4fa6-88fc-4dd594d4e03b@kaod.org>
-Date: Fri, 28 Mar 2025 08:44:00 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZPCHd2SXMz4x8R;
+ Fri, 28 Mar 2025 18:45:33 +1100 (AEDT)
+Message-ID: <bfcf0ecb-667a-47f6-ada2-1942c1ecb28e@kaod.org>
+Date: Fri, 28 Mar 2025 08:45:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Remove semicolons at the end of lines
-To: Thomas Huth <thuth@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>
-References: <20250327201305.996241-1-thuth@redhat.com>
+Subject: Re: [PATCH v7 5/7] ppc/pnv: Add ChipTOD model for Power11
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250327200738.1524401-1-adityag@linux.ibm.com>
+ <20250327200738.1524401-6-adityag@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -92,7 +84,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250327201305.996241-1-thuth@redhat.com>
+In-Reply-To: <20250327200738.1524401-6-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -119,17 +111,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/25 21:13, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 3/27/25 21:07, Aditya Gupta wrote:
+> Introduce Power11 ChipTod. The code has been copied from Power10 ChipTod
+> code as the Power11 core is same as Power10 core.
 > 
-> Yes, we are all C coders who try to write Python code for testing...
+> Cc: Cédric Le Goater <clg@kaod.org>
+> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
+> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+> Cc: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/pnv.c                 | 15 +++++++++
+>   hw/ppc/pnv_chiptod.c         | 59 ++++++++++++++++++++++++++++++++++++
+>   include/hw/ppc/pnv_chiptod.h |  2 ++
+>   3 files changed, 76 insertions(+)
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 8b92ad11ae8e..d7da0e79063d 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -2395,6 +2395,8 @@ static void pnv_chip_power11_instance_init(Object *obj)
+>       object_initialize_child(obj, "xive", &chip11->xive, TYPE_PNV_XIVE2);
+>       object_property_add_alias(obj, "xive-fabric", OBJECT(&chip11->xive),
+>                                 "xive-fabric");
+> +    object_initialize_child(obj, "chiptod", &chip11->chiptod,
+> +                            TYPE_PNV11_CHIPTOD);
+>       object_initialize_child(obj, "n1-chiplet", &chip11->n1_chiplet,
+>                               TYPE_PNV_N1_CHIPLET);
+>   
+> @@ -2545,6 +2547,19 @@ static void pnv_chip_power11_realize(DeviceState *dev, Error **errp)
+>       chip->dt_isa_nodename = g_strdup_printf("/lpcm-opb@%" PRIx64 "/lpc@0",
+>                                               (uint64_t) PNV11_LPCM_BASE(chip));
+>   
+> +    /* ChipTOD */
+> +    object_property_set_bool(OBJECT(&chip11->chiptod), "primary",
+> +                             chip->chip_id == 0, &error_abort);
+> +    object_property_set_bool(OBJECT(&chip11->chiptod), "secondary",
+> +                             chip->chip_id == 1, &error_abort);
+> +    object_property_set_link(OBJECT(&chip11->chiptod), "chip", OBJECT(chip),
+> +                             &error_abort);
+> +    if (!qdev_realize(DEVICE(&chip11->chiptod), NULL, errp)) {
+> +        return;
+> +    }
+> +    pnv_xscom_add_subregion(chip, PNV11_XSCOM_CHIPTOD_BASE,
+> +                            &chip11->chiptod.xscom_regs);
+> +
+>       /* HOMER (must be created before OCC) */
+>       object_property_set_link(OBJECT(&chip11->homer), "chip", OBJECT(chip),
+>                                &error_abort);
+> diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
+> index c8987ae67a2a..2e87ab62b2cf 100644
+> --- a/hw/ppc/pnv_chiptod.c
+> +++ b/hw/ppc/pnv_chiptod.c
+> @@ -210,6 +210,22 @@ static void chiptod_power10_broadcast_ttype(PnvChipTOD *sender,
+>       }
+>   }
+>   
+> +static void chiptod_power11_broadcast_ttype(PnvChipTOD *sender,
+> +                                            uint32_t trigger)
+> +{
+> +    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> +    int i;
+> +
+> +    for (i = 0; i < pnv->num_chips; i++) {
+> +        Pnv11Chip *chip11 = PNV11_CHIP(pnv->chips[i]);
+> +        PnvChipTOD *chiptod = &chip11->chiptod;
+> +
+> +        if (chiptod != sender) {
+> +            chiptod_receive_ttype(chiptod, trigger);
+> +        }
+> +    }
+> +}
+> +
+>   static PnvCore *pnv_chip_get_core_by_xscom_base(PnvChip *chip,
+>                                                   uint32_t xscom_base)
+>   {
+> @@ -283,6 +299,12 @@ static PnvCore *chiptod_power10_tx_ttype_target(PnvChipTOD *chiptod,
+>       }
+>   }
+>   
+> +static PnvCore *chiptod_power11_tx_ttype_target(PnvChipTOD *chiptod,
+> +                                               uint64_t val)
+> +{
+> +    return chiptod_power10_tx_ttype_target(chiptod, val);
+> +}
+> +
+>   static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+>                                       uint64_t val, unsigned size)
+>   {
+> @@ -520,6 +542,42 @@ static const TypeInfo pnv_chiptod_power10_type_info = {
+>       }
+>   };
+>   
+> +static int pnv_chiptod_power11_dt_xscom(PnvXScomInterface *dev, void *fdt,
+> +                             int xscom_offset)
+> +{
+> +    const char compat[] = "ibm,power-chiptod\0ibm,power11-chiptod";
+> +
+> +    return pnv_chiptod_dt_xscom(dev, fdt, xscom_offset, compat, sizeof(compat));
+> +}
+> +
+> +static void pnv_chiptod_power11_class_init(ObjectClass *klass, void *data)
+> +{
+> +    PnvChipTODClass *pctc = PNV_CHIPTOD_CLASS(klass);
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    PnvXScomInterfaceClass *xdc = PNV_XSCOM_INTERFACE_CLASS(klass);
+> +
+> +    dc->desc = "PowerNV ChipTOD Controller (Power11)";
+> +    device_class_set_props(dc, pnv_chiptod_properties);
+> +
+> +    xdc->dt_xscom = pnv_chiptod_power11_dt_xscom;
+> +
+> +    pctc->broadcast_ttype = chiptod_power11_broadcast_ttype;
+> +    pctc->tx_ttype_target = chiptod_power11_tx_ttype_target;
+> +
+> +    pctc->xscom_size = PNV_XSCOM_CHIPTOD_SIZE;
+> +}
+> +
+> +static const TypeInfo pnv_chiptod_power11_type_info = {
+> +    .name          = TYPE_PNV11_CHIPTOD,
+> +    .parent        = TYPE_PNV_CHIPTOD,
+> +    .instance_size = sizeof(PnvChipTOD),
+> +    .class_init    = pnv_chiptod_power11_class_init,
+> +    .interfaces    = (InterfaceInfo[]) {
+> +        { TYPE_PNV_XSCOM_INTERFACE },
+> +        { }
+> +    }
+> +};
+> +
+>   static void pnv_chiptod_reset(void *dev)
+>   {
+>       PnvChipTOD *chiptod = PNV_CHIPTOD(dev);
+> @@ -579,6 +637,7 @@ static void pnv_chiptod_register_types(void)
+>       type_register_static(&pnv_chiptod_type_info);
+>       type_register_static(&pnv_chiptod_power9_type_info);
+>       type_register_static(&pnv_chiptod_power10_type_info);
+> +    type_register_static(&pnv_chiptod_power11_type_info);
+>   }
+>   
+>   type_init(pnv_chiptod_register_types);
+> diff --git a/include/hw/ppc/pnv_chiptod.h b/include/hw/ppc/pnv_chiptod.h
+> index fde569bcbfa9..466b06560a28 100644
+> --- a/include/hw/ppc/pnv_chiptod.h
+> +++ b/include/hw/ppc/pnv_chiptod.h
+> @@ -17,6 +17,8 @@ OBJECT_DECLARE_TYPE(PnvChipTOD, PnvChipTODClass, PNV_CHIPTOD)
+>   DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV9_CHIPTOD, TYPE_PNV9_CHIPTOD)
+>   #define TYPE_PNV10_CHIPTOD TYPE_PNV_CHIPTOD "-POWER10"
+>   DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV10_CHIPTOD, TYPE_PNV10_CHIPTOD)
+> +#define TYPE_PNV11_CHIPTOD TYPE_PNV_CHIPTOD "-POWER11"
+> +DECLARE_INSTANCE_CHECKER(PnvChipTOD, PNV11_CHIPTOD, TYPE_PNV11_CHIPTOD)
+>   
+>   enum tod_state {
+>       tod_error = 0,
 
-nah, we just anticipated rust functional tests :)
-  
-> but still, let's better avoid semicolons at the end of the lines
-> to keep "pylint" happy!
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+Looks correct.
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -138,348 +275,6 @@ Thanks,
 
 C.
 
-> ---
->   tests/functional/aspeed.py                    |  2 +-
->   tests/functional/test_aarch64_aspeed.py       |  2 +-
->   tests/functional/test_arm_aspeed_ast2500.py   |  6 ++--
->   tests/functional/test_arm_aspeed_ast2600.py   | 36 +++++++++----------
->   tests/functional/test_arm_aspeed_bletchley.py |  4 +--
->   tests/functional/test_arm_aspeed_palmetto.py  |  4 +--
->   tests/functional/test_arm_aspeed_romulus.py   |  4 +--
->   .../functional/test_arm_aspeed_witherspoon.py |  4 +--
->   tests/functional/test_arm_bpim2u.py           |  2 +-
->   tests/functional/test_arm_cubieboard.py       |  2 +-
->   tests/functional/test_arm_orangepi.py         |  2 +-
->   tests/functional/test_s390x_topology.py       | 12 +++----
->   12 files changed, 40 insertions(+), 40 deletions(-)
-> 
-> diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
-> index 77dc8930fa4..7a40d5dda73 100644
-> --- a/tests/functional/aspeed.py
-> +++ b/tests/functional/aspeed.py
-> @@ -44,7 +44,7 @@ def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'
->   
->       def do_test_arm_aspeed_buildroot_poweroff(self):
->           exec_command_and_wait_for_pattern(self, 'poweroff',
-> -                                          'System halted');
-> +                                          'System halted')
->   
->       def do_test_arm_aspeed_sdk_start(self, image):
->           self.require_netdev('user')
-> diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-> index c25c9662782..c7f3b3b319f 100755
-> --- a/tests/functional/test_aarch64_aspeed.py
-> +++ b/tests/functional/test_aarch64_aspeed.py
-> @@ -85,7 +85,7 @@ def start_ast2700_test(self, name):
->   
->           exec_command_and_wait_for_pattern(self,
->               'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
-> -            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
-> +            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d')
->           exec_command_and_wait_for_pattern(self,
->               'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
->           self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-> diff --git a/tests/functional/test_arm_aspeed_ast2500.py b/tests/functional/test_arm_aspeed_ast2500.py
-> index 1ffba6c9953..ddc6459f710 100755
-> --- a/tests/functional/test_arm_aspeed_ast2500.py
-> +++ b/tests/functional/test_arm_aspeed_ast2500.py
-> @@ -22,17 +22,17 @@ def test_arm_ast2500_evb_buildroot(self):
->           image_path = self.ASSET_BR2_202411_AST2500_FLASH.fetch()
->   
->           self.vm.add_args('-device',
-> -                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-> +                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
->           self.do_test_arm_aspeed_buildroot_start(image_path, '0x0',
->                                                   'ast2500-evb login:')
->   
->           exec_command_and_wait_for_pattern(self,
->                'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
-> -             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-> +             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d')
->           exec_command_and_wait_for_pattern(self,
->                                'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
->           self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-> -                    property='temperature', value=18000);
-> +                    property='temperature', value=18000)
->           exec_command_and_wait_for_pattern(self,
->                                'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
->   
-> diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
-> index 6ae4ed636ac..5ef52f06595 100755
-> --- a/tests/functional/test_arm_aspeed_ast2600.py
-> +++ b/tests/functional/test_arm_aspeed_ast2600.py
-> @@ -27,38 +27,38 @@ def test_arm_ast2600_evb_buildroot(self):
->           image_path = self.ASSET_BR2_202411_AST2600_FLASH.fetch()
->   
->           self.vm.add_args('-device',
-> -                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-> +                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
->           self.vm.add_args('-device',
-> -                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
-> +                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32')
->           self.vm.add_args('-device',
-> -                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
-> +                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42')
->           self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00',
->                                                   'ast2600-evb login:')
->   
->           exec_command_and_wait_for_pattern(self,
->                'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
-> -             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-> +             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d')
->           exec_command_and_wait_for_pattern(self,
->                                'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
->           self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-> -                    property='temperature', value=18000);
-> +                    property='temperature', value=18000)
->           exec_command_and_wait_for_pattern(self,
->                                'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
->   
->           exec_command_and_wait_for_pattern(self,
->                'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
-> -             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32');
-> +             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32')
->           year = time.strftime("%Y")
-> -        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year);
-> +        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year)
->   
->           exec_command_and_wait_for_pattern(self,
->                'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
-> -             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
-> +             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64')
->           exec_command_and_wait_for_pattern(self,
-> -             'i2cset -y 3 0x42 0x64 0x00 0xaa i', '#');
-> +             'i2cset -y 3 0x42 0x64 0x00 0xaa i', '#')
->           exec_command_and_wait_for_pattern(self,
->                'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
-> -             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
-> +             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff')
->           self.do_test_arm_aspeed_buildroot_poweroff()
->   
->       ASSET_BR2_202302_AST2600_TPM_FLASH = Asset(
-> @@ -90,10 +90,10 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
->   
->           exec_command_and_wait_for_pattern(self,
->               'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
-> -            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
-> +            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)')
->           exec_command_and_wait_for_pattern(self,
->               'cat /sys/class/tpm/tpm0/pcr-sha256/0',
-> -            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0');
-> +            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0')
->   
->           self.do_test_arm_aspeed_buildroot_poweroff()
->   
-> @@ -107,9 +107,9 @@ def test_arm_ast2600_evb_sdk(self):
->           self.archive_extract(self.ASSET_SDK_V806_AST2600_A2)
->   
->           self.vm.add_args('-device',
-> -            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test');
-> +            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
->           self.vm.add_args('-device',
-> -            'ds1338,bus=aspeed.i2c.bus.5,address=0x32');
-> +            'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
->           self.do_test_arm_aspeed_sdk_start(
->               self.scratch_file("ast2600-a2", "image-bmc"))
->   
-> @@ -120,20 +120,20 @@ def test_arm_ast2600_evb_sdk(self):
->   
->           exec_command_and_wait_for_pattern(self,
->               'echo lm75 0x4d > /sys/class/i2c-dev/i2c-5/device/new_device',
-> -            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d');
-> +            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d')
->           exec_command_and_wait_for_pattern(self,
->                'cat /sys/class/hwmon/hwmon19/temp1_input', '0')
->           self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-> -                    property='temperature', value=18000);
-> +                    property='temperature', value=18000)
->           exec_command_and_wait_for_pattern(self,
->                'cat /sys/class/hwmon/hwmon19/temp1_input', '18000')
->   
->           exec_command_and_wait_for_pattern(self,
->                'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-5/device/new_device',
-> -             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32');
-> +             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32')
->           year = time.strftime("%Y")
->           exec_command_and_wait_for_pattern(self,
-> -             '/sbin/hwclock -f /dev/rtc1', year);
-> +             '/sbin/hwclock -f /dev/rtc1', year)
->   
->   if __name__ == '__main__':
->       AspeedTest.main()
-> diff --git a/tests/functional/test_arm_aspeed_bletchley.py b/tests/functional/test_arm_aspeed_bletchley.py
-> index 0da856c5ed4..5a60b24b3d2 100644
-> --- a/tests/functional/test_arm_aspeed_bletchley.py
-> +++ b/tests/functional/test_arm_aspeed_bletchley.py
-> @@ -12,14 +12,14 @@ class BletchleyMachine(AspeedTest):
->   
->       ASSET_BLETCHLEY_FLASH = Asset(
->           'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/bletchley-bmc/openbmc-20250128071329/obmc-phosphor-image-bletchley-20250128071329.static.mtd.xz',
-> -        'db21d04d47d7bb2a276f59d308614b4dfb70b9c7c81facbbca40a3977a2d8844');
-> +        'db21d04d47d7bb2a276f59d308614b4dfb70b9c7c81facbbca40a3977a2d8844')
->   
->       def test_arm_ast2600_bletchley_openbmc(self):
->           image_path = self.uncompress(self.ASSET_BLETCHLEY_FLASH)
->   
->           self.do_test_arm_aspeed_openbmc('bletchley-bmc', image=image_path,
->                                           uboot='2019.04', cpu_id='0xf00',
-> -                                        soc='AST2600 rev A3');
-> +                                        soc='AST2600 rev A3')
->   
->   if __name__ == '__main__':
->       AspeedTest.main()
-> diff --git a/tests/functional/test_arm_aspeed_palmetto.py b/tests/functional/test_arm_aspeed_palmetto.py
-> index 35d832bc98e..ff0b821be65 100755
-> --- a/tests/functional/test_arm_aspeed_palmetto.py
-> +++ b/tests/functional/test_arm_aspeed_palmetto.py
-> @@ -12,14 +12,14 @@ class PalmettoMachine(AspeedTest):
->   
->       ASSET_PALMETTO_FLASH = Asset(
->           'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/palmetto-bmc/openbmc-20250128071432/obmc-phosphor-image-palmetto-20250128071432.static.mtd',
-> -        'bce7c392eec75c707a91cfc8fad7ca9a69d7e4f10df936930d65c1cb9897ac81');
-> +        'bce7c392eec75c707a91cfc8fad7ca9a69d7e4f10df936930d65c1cb9897ac81')
->   
->       def test_arm_ast2400_palmetto_openbmc(self):
->           image_path = self.ASSET_PALMETTO_FLASH.fetch()
->   
->           self.do_test_arm_aspeed_openbmc('palmetto-bmc', image=image_path,
->                                           uboot='2019.04', cpu_id='0x0',
-> -                                        soc='AST2400 rev A1');
-> +                                        soc='AST2400 rev A1')
->   
->   if __name__ == '__main__':
->       AspeedTest.main()
-> diff --git a/tests/functional/test_arm_aspeed_romulus.py b/tests/functional/test_arm_aspeed_romulus.py
-> index b97ed951b1f..0447212bbf0 100755
-> --- a/tests/functional/test_arm_aspeed_romulus.py
-> +++ b/tests/functional/test_arm_aspeed_romulus.py
-> @@ -12,14 +12,14 @@ class RomulusMachine(AspeedTest):
->   
->       ASSET_ROMULUS_FLASH = Asset(
->           'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/romulus-bmc/openbmc-20250128071340/obmc-phosphor-image-romulus-20250128071340.static.mtd',
-> -        '6d031376440c82ed9d087d25e9fa76aea75b42f80daa252ec402c0bc3cf6cf5b');
-> +        '6d031376440c82ed9d087d25e9fa76aea75b42f80daa252ec402c0bc3cf6cf5b')
->   
->       def test_arm_ast2500_romulus_openbmc(self):
->           image_path = self.ASSET_ROMULUS_FLASH.fetch()
->   
->           self.do_test_arm_aspeed_openbmc('romulus-bmc', image=image_path,
->                                           uboot='2019.04', cpu_id='0x0',
-> -                                        soc='AST2500 rev A1');
-> +                                        soc='AST2500 rev A1')
->   
->   if __name__ == '__main__':
->       AspeedTest.main()
-> diff --git a/tests/functional/test_arm_aspeed_witherspoon.py b/tests/functional/test_arm_aspeed_witherspoon.py
-> index ea1ce89b05c..51a2d47af28 100644
-> --- a/tests/functional/test_arm_aspeed_witherspoon.py
-> +++ b/tests/functional/test_arm_aspeed_witherspoon.py
-> @@ -12,14 +12,14 @@ class WitherspoonMachine(AspeedTest):
->   
->       ASSET_WITHERSPOON_FLASH = Asset(
->           'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/witherspoon-bmc/openbmc-20240618035022/obmc-phosphor-image-witherspoon-20240618035022.ubi.mtd',
-> -        '937d9ed449ea6c6cbed983519088a42d0cafe276bcfe4fce07772ca6673f9213');
-> +        '937d9ed449ea6c6cbed983519088a42d0cafe276bcfe4fce07772ca6673f9213')
->   
->       def test_arm_ast2500_witherspoon_openbmc(self):
->           image_path = self.ASSET_WITHERSPOON_FLASH.fetch()
->   
->           self.do_test_arm_aspeed_openbmc('witherspoon-bmc', image=image_path,
->                                           uboot='2016.07', cpu_id='0x0',
-> -                                        soc='AST2500 rev A1');
-> +                                        soc='AST2500 rev A1')
->   
->   if __name__ == '__main__':
->       AspeedTest.main()
-> diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/test_arm_bpim2u.py
-> index 8de6ccba881..8bed64b702f 100755
-> --- a/tests/functional/test_arm_bpim2u.py
-> +++ b/tests/functional/test_arm_bpim2u.py
-> @@ -163,7 +163,7 @@ def test_arm_bpim2u_openwrt_22_03_3(self):
->                   self, 'Hit any key to stop autoboot:', '=>')
->           exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
->                                                   kernel_command_line + "'", '=>')
-> -        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-> +        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
->   
->           self.wait_for_console_pattern(
->               'Please press Enter to activate this console.')
-> diff --git a/tests/functional/test_arm_cubieboard.py b/tests/functional/test_arm_cubieboard.py
-> index b87a28154da..1eaca0272bb 100755
-> --- a/tests/functional/test_arm_cubieboard.py
-> +++ b/tests/functional/test_arm_cubieboard.py
-> @@ -128,7 +128,7 @@ def test_arm_cubieboard_openwrt_22_03_2(self):
->                   self, 'Hit any key to stop autoboot:', '=>')
->           exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
->                                                   kernel_command_line + "'", '=>')
-> -        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-> +        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
->   
->           self.wait_for_console_pattern(
->               'Please press Enter to activate this console.')
-> diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
-> index 1815f56e027..f9bfa8c78d9 100755
-> --- a/tests/functional/test_arm_orangepi.py
-> +++ b/tests/functional/test_arm_orangepi.py
-> @@ -174,7 +174,7 @@ def test_arm_orangepi_armbian(self):
->           exec_command_and_wait_for_pattern(self, ' ', '=>')
->           exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
->                                                   kernel_command_line + "'", '=>')
-> -        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-> +        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
->   
->           self.wait_for_console_pattern('systemd[1]: Hostname set ' +
->                                         'to <orangepipc>')
-> diff --git a/tests/functional/test_s390x_topology.py b/tests/functional/test_s390x_topology.py
-> index eefd9729cb2..1b5dc651353 100755
-> --- a/tests/functional/test_s390x_topology.py
-> +++ b/tests/functional/test_s390x_topology.py
-> @@ -217,12 +217,12 @@ def test_polarization(self):
->           self.assertEqual(res['return']['polarization'], 'horizontal')
->           self.check_topology(0, 0, 0, 0, 'medium', False)
->   
-> -        self.guest_set_dispatching('1');
-> +        self.guest_set_dispatching('1')
->           res = self.vm.qmp('query-s390x-cpu-polarization')
->           self.assertEqual(res['return']['polarization'], 'vertical')
->           self.check_topology(0, 0, 0, 0, 'medium', False)
->   
-> -        self.guest_set_dispatching('0');
-> +        self.guest_set_dispatching('0')
->           res = self.vm.qmp('query-s390x-cpu-polarization')
->           self.assertEqual(res['return']['polarization'], 'horizontal')
->           self.check_topology(0, 0, 0, 0, 'medium', False)
-> @@ -283,7 +283,7 @@ def test_entitlement(self):
->           self.check_polarization('vertical:high')
->           self.check_topology(0, 0, 0, 0, 'high', False)
->   
-> -        self.guest_set_dispatching('0');
-> +        self.guest_set_dispatching('0')
->           self.check_polarization("horizontal")
->           self.check_topology(0, 0, 0, 0, 'high', False)
->   
-> @@ -310,11 +310,11 @@ def test_dedicated(self):
->           self.check_topology(0, 0, 0, 0, 'high', True)
->           self.check_polarization("horizontal")
->   
-> -        self.guest_set_dispatching('1');
-> +        self.guest_set_dispatching('1')
->           self.check_topology(0, 0, 0, 0, 'high', True)
->           self.check_polarization("vertical:high")
->   
-> -        self.guest_set_dispatching('0');
-> +        self.guest_set_dispatching('0')
->           self.check_topology(0, 0, 0, 0, 'high', True)
->           self.check_polarization("horizontal")
->   
-> @@ -360,7 +360,7 @@ def test_dedicated_error(self):
->   
->           self.check_topology(0, 0, 0, 0, 'high', True)
->   
-> -        self.guest_set_dispatching('1');
-> +        self.guest_set_dispatching('1')
->   
->           self.check_topology(0, 0, 0, 0, 'high', True)
->   
+
 
 
