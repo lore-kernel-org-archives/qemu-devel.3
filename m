@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67057C3600B
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 02:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B741EC36005
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 03:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1txziY-0000lO-B7; Thu, 27 Mar 2025 22:45:11 -0400
+	id 1ty0I9-00085K-LE; Thu, 27 Mar 2025 23:21:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txziQ-0000k2-1o
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 22:45:03 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1ty0I7-00084u-NW
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 23:21:55 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
- id 1txziN-0006sM-MS
- for qemu-devel@nongnu.org; Thu, 27 Mar 2025 22:45:01 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-301e05b90caso2888287a91.2
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 19:44:59 -0700 (PDT)
+ id 1ty0I5-0004HF-S8
+ for qemu-devel@nongnu.org; Thu, 27 Mar 2025 23:21:55 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22622ddcc35so48410075ad.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 20:21:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743129898; x=1743734698; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7Gk7nn7VAoqQb2xnUC8gyJUjH3N/ijAkhDdX9RfT55k=;
- b=mo83eM9UGz4vpGKzD2Cgs66+eUSlDHNYmLaDShGQj6i82eS0s3dmt27vadoNP0OvQw
- l+yJVksW1kQTIFhU1gLwLSLcal6woGybaA/jNb7SPtjrzqOklz8lmnCzlRSuFPMw7SNy
- gqMJCNIkV0k1ivE33vqbtin26QsNvFVo6sFyvKCSLxJAsQHyQRV54+pUrEKf2RBe2JDL
- eXwYmkuXaju1bUHTQUvRslq/t9cPJnMr126jFnvEmIXr6HZcV+dimWUjycAVkGPPu5S2
- fkLvpI0IO1hBSfZ5Rg9reWZ5dQUUTc2OTlD8s9+0wm92Db9otaXDhOCXxZG2RBbmC8wx
- fG5Q==
+ d=gmail.com; s=20230601; t=1743132112; x=1743736912; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:from:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=OGk1quvDzx3nrT5033tZIZ5fhSbgio0BulPWNIPHYpI=;
+ b=d+GP3vCf+l7WdZR/27S6LEuHCKA21V7RU/l5UM5uIXqkpC45oaywnEj3X+AjLQYCuw
+ 3XLNeehS3nTh1JOgU73KvFsp6bFflhr+wyuke0mZB9RTBoSrJ4CnbLD/566dQV8EuTwi
+ u5Fz9DaSajVDHW781pq3n0q2ncPquZ2MYJ2iw+ZQSu9qMeaD//tnEvPBp3GKX2KY+4SO
+ zldzqwRT4CnWuraALIXhGzkgLhhFNjRFBXSlzen3ufOiEo/MwuLiHtKxR8f73wubdsGA
+ Ab7FSK8SWYJ5DX78xyTY9D+jn+zYjC+Q55IXn4a+P7tu4+pQmbimLwlHUD4LHGGNFR2o
+ 0lpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743129898; x=1743734698;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=7Gk7nn7VAoqQb2xnUC8gyJUjH3N/ijAkhDdX9RfT55k=;
- b=fyuTDgniCLcNVDt0L5b3PvRgDOZzVUjRzOPUmR1GSqpW4mLoH1YcL6ST3XJcX+C0VR
- Zj/b2rxU/cO8aEHd3+1nwweALNmNI2u73XZhklo6KMp3I2VdW00FWnJXkNXDY7Ui9HOF
- B0LGe+GBvb0qjwWuwzTXpzjGFuVO5nyzh0Hi5azya85gOjeqSvEoh7b/UCz30QjZp+98
- ZR0GCVDU48Vg33nfuHS/vnL9uRgDmH4m6kbBZ8+vX54A0WfNkKh6RExCU4QfMidTUKir
- pMV4FmJsUdKFMsUcQpmB2ivydbBkhbBbOKQHx1ESKcmJY//OMWta+7/MMyj/mgQy+h5t
- POCA==
-X-Gm-Message-State: AOJu0YzZ+weVAAX7hFymasNAk7A9BM4D52KMES+HkWPYt4r8lfeR+3Kw
- 6L0jGDOeAILPSQ8TSj/pJSPz0VyM8WMQ0kXj0V2DdkwSrKPWc59n
-X-Gm-Gg: ASbGncsyXMpZDKd0dFj0pzhUCI7lrH6kA3z5KodMIaXb7ohH8x/Ebsvoq6+Tra+zYVR
- d5NPPvQ1kU7unC+0+Cor7Dxbk6TGbAWeSNnMABdT/Sdo4NBYZeBmfm1Accke9Pniw+cMIiNxm7O
- q9014ejU1GyMiVyrcn5/ivlzW0kQs1opV1kgOI6s31yoNAg/53tAD1VTfH9aNeyoY6mL6Sc1GEM
- MmyQCygAR8sYaQMKk7MWkN2t2WY7kd5dCrH8Rgyh5LhNZ2psT1D7sDFrTwU+5zv/52yoGHp7HGv
- NnsjQKg125kiA55YwAu0Dt8BZzdEfLs9wtwfMflWIrHAzaLHYC+QJvjXuMN7u0lm
-X-Google-Smtp-Source: AGHT+IGRIuvUlR7URQ+9VV6ZlJ7Nr6Nm1XIIOQDKDXdwwDPDdPIGvawx6/f43AA/EPWd9GtAzf0CBg==
-X-Received: by 2002:a17:90b:540c:b0:2ff:53a4:74f0 with SMTP id
- 98e67ed59e1d1-303a9192fabmr9332478a91.29.1743129897866; 
- Thu, 27 Mar 2025 19:44:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743132112; x=1743736912;
+ h=content-transfer-encoding:to:subject:from:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OGk1quvDzx3nrT5033tZIZ5fhSbgio0BulPWNIPHYpI=;
+ b=DDmhwystArC/5ojjbXGN4yL64Rx95aXg7Gn/dQbf2en0fSY4SjPPERv0yUkdsdKMsn
+ MdG8gqZ1ue25zVo9xydEkQVPcXReercp60nhvJ1GIt2IbjWoPrJNm6D7ABSa+Q3O4YUj
+ JyvK9qWGOHbpjpiqXnpV75NJIIkdEkr0Q3lMhpAXb4C1DDF0mOp0siMlm1lOyM0kTYS2
+ BScKab2A8imtv48MH3QjATIGKhX5+lfn6NZo8Zphz5qRwvpQh6ZQXp4yiSfnG5cizVzh
+ JyTINDAoawwDx1kF86covMuce8lcxK14k+MNgWqSzhRejHfjUg+zWk1OvzuybmQsuU28
+ +u5A==
+X-Gm-Message-State: AOJu0YwbQv76pPocj1hSogfsfR960Sl2PzAzLpaFUBo+TlUPKurlmnST
+ N9ITDC5BTiAB9NQ5QjE7e825Vyo15ADea1xc2ZlTNds5n4XVouFzt0tppA==
+X-Gm-Gg: ASbGncty6iQcgtx2Oku8022kzpRVOLWAumqyc4ftRaETw6WCJEAc1cm9pkSDc3inCsV
+ M73ZZe3tltPDaQY0gqtGLiFfiDZBI/ORHGz8aepc0liF7wTmB42Ouws14n1ckudIkP6hCQrNq9N
+ j73hzWH9UAu0uGQzT39zrsYrRCj9yLaBqSdjZf9mrYkDalBfQquOIFV873o971Xcmve4blTZAVm
+ 9BAATKKT8TOl4kCSxPrPxB2WWQS/m54/E+AdVUfcgzBLmb2KSB5pgi9qtfYZXuVXqLBKW7lJDVi
+ jGB6LEEYpIOO8ItcIGjk9zQ1b09eskA5qRzqu4iBCqYlw8aw9HwkOVA4Uns++d83Bs1uSxrD804
+ =
+X-Google-Smtp-Source: AGHT+IHqZ95w//EjI70SGk89lp8jJkpbJShJGmAoI4vLiXAPhjjNcyHkef6M/MMsNKrdl5r+bh3Afg==
+X-Received: by 2002:a05:6a00:228a:b0:736:ab48:18f0 with SMTP id
+ d2e1a72fcca58-73960e0c149mr7388292b3a.1.1743132111566; 
+ Thu, 27 Mar 2025 20:21:51 -0700 (PDT)
 Received: from [192.168.31.221] ([124.64.23.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-305170e2049sm670309a91.39.2025.03.27.19.44.56
+ d2e1a72fcca58-739710b8001sm638733b3a.156.2025.03.27.20.21.50
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 19:44:57 -0700 (PDT)
-Message-ID: <96a03cba-5386-474d-9ee3-f93a9d81fab4@gmail.com>
-Date: Fri, 28 Mar 2025 10:44:54 +0800
+ Thu, 27 Mar 2025 20:21:51 -0700 (PDT)
+Message-ID: <73cd69f9-ff9b-4cd4-b8aa-265f9d6067b9@gmail.com>
+Date: Fri, 28 Mar 2025 11:21:49 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Re: [PATCH] hw/net/e1000: fix memory leak in timer_del()
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <551d9eaf-dce0-4cf0-95b1-d2347bfaa1a6@gmail.com>
- <CAE8KmOwQBxbjp4a_-kuv_m8SBbFPLsyzQbdqF2nEHs3nG+sQOg@mail.gmail.com>
 From: Zheng Huang <hz1624917200@gmail.com>
-In-Reply-To: <CAE8KmOwQBxbjp4a_-kuv_m8SBbFPLsyzQbdqF2nEHs3nG+sQOg@mail.gmail.com>
+Subject: [PATCH] hw/scsi/lsi53c895a: fix memory leak in lsi_scsi_realize()
+To: qemu-devel@nongnu.org
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=hz1624917200@gmail.com; helo=mail-pj1-x102d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,46 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Prasad,
+Hi,
+This patch addresses a memory leak bug in the usages of `timer_del()`.
+The issue arisesfrom the incorrect use of the ambiguous timer API 
+`timer_del()`, which does not free the timer object. The LeakSanitizer
+report this issue during fuzzing. The correct API `timer_free()` freed
+the timer object instead.
 
-在 2025/3/27 20:40, Prasad Pandit wrote:
->> @@ -360,13 +360,13 @@ e1000e_intrmgr_fire_all_timers(E1000ECore *core)
->>      int i;
->>
->>      if (core->itr.running) {
->> -        timer_del(core->itr.timer);
->> +        timer_free(core->itr.timer);
->>          e1000e_intrmgr_on_throttling_timer(&core->itr);
->>      }
->>
->>      for (i = 0; i < E1000E_MSIX_VEC_NUM; i++) {
->>          if (core->eitr[i].running) {
->> -            timer_del(core->eitr[i].timer);
->> +            timer_free(core->eitr[i].timer);
->>              e1000e_intrmgr_on_msix_throttling_timer(&core->eitr[i]);
->>          }
->>      }
->> @@ -3452,7 +3452,7 @@ static void e1000e_reset(E1000ECore *core, bool sw)
->>  {
->>      int i;
->>
->> -    timer_del(core->autoneg_timer);
->> +    timer_free(core->autoneg_timer);
->>
->>      e1000e_intrmgr_reset(core);
-> 
-> * I doubt if this is correct; Because timer_del() API explicitly says
-> -> /* stop a timer, but do not dealloc it */
-> 
-> * Secondly: autoneg_timer/mit_timer/flush_queue_timer objects are
-> freed in 'pci_e1000_uninit()/e1000e_pci_uninit()' functions via
-> timer_free() calls. So the memory leak could be because the respective
-> *_pci__uninit() function is not called?
+=================================================================
+==2586273==ERROR: LeakSanitizer: detected memory leaks
 
-Yes, you are right. I mistakenly assumed that there's no way to reenable a
-`_del()`ed timer. Thank you sincerely for pointing out this. I'll check the
-usage carefully in other occurences.
+Direct leak of 48 byte(s) in 1 object(s) allocated from:
+    #0 0x55f2afd89879 in calloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:75:3
+    #1 0x7f443b93ac50 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5ec50) (BuildId: 224ac2a88b72bc8e2fe8566ee28fae789fc69241)
+    #2 0x55f2b053962e in timer_new /root/qemu/include/qemu/timer.h:542:12
+    #3 0x55f2b0514771 in timer_new_us /root/qemu/include/qemu/timer.h:582:12
+    #4 0x55f2b0514288 in lsi_scsi_realize /root/qemu/build-fuzz/../hw/scsi/lsi53c895a.c:2350:24
+    #5 0x55f2b0452d26 in pci_qdev_realize /root/qemu/build-fuzz/../hw/pci/pci.c:2174:9
 
-Best regard,
-Zheng
+
+Signed-off-by: Zheng Huang <hz1624917200@outlook.com>
+
+---
+ hw/scsi/lsi53c895a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index d85e384ad6..6689ebba25 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -2372,7 +2372,7 @@ static void lsi_scsi_exit(PCIDevice *dev)
+     LSIState *s = LSI53C895A(dev);
+ 
+     address_space_destroy(&s->pci_io_as);
+-    timer_del(s->scripts_timer);
++    timer_free(s->scripts_timer);
+ }
+ 
+ static void lsi_class_init(ObjectClass *klass, void *data)
+-- 
+2.34.1
 
