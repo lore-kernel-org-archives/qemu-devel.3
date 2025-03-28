@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E9E0C28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE557C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyGE2-0005NN-46; Fri, 28 Mar 2025 16:22:46 -0400
+	id 1tyGEy-0006Cl-Al; Fri, 28 Mar 2025 16:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tyGDy-0005Md-0M
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:22:42 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tyGEw-0006C2-Lx
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:23:42 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tyGDw-0002Ic-9u
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:22:41 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4393dc02b78so18385545e9.3
- for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:22:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tyGEo-0002Li-W8
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:23:36 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-ac3fcf5ab0dso414347766b.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:23:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743193358; x=1743798158; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1743193413; x=1743798213; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1TnxPi0dQ/ZDTWUWWKj0FrguvPjfOZPpXfOZ53G2lYY=;
- b=IPKxDv2UqLAPfLqyqm+LNIr4CsynHu6Y6Vced1Ym069rysEtjCbxT57lNKrIFXZWOf
- vDGEsEmG0bPhohDRptjGFjQS2F5CNSxeDACHeukhOvf86n4A9AMB3sNVVoo46QiujHhT
- +rabhoJPsbU2zD5Kt4WSggzwUKU7C5/6jZyCMiTV6Jl03YF9JJc7LGkB0XZywaTaieRg
- 1rTaIoIqjMV8hzkZ2V+Zu8pjrQHhE01BVhUsUNAFJiZfUiyGyhOI+PSz8LCOY9tKGJhI
- LW5hlGKSootTQ4/GBZKT0BzpYi43WPuUYP8jceByVdi6Db+gTApuJl+4iqqFN/+fYAND
- 62KA==
+ bh=1x6sHAMxZ1XBwLoRXFPjJEj7GHPCztnAuUyT2DMD0No=;
+ b=SffkH1XnW+ZJ/8fSWQ7exkWXccxGc/Y+waJqa+4tT45d8cX6bVrC2+NlfX/ljYymlD
+ ddGvCK6Fq5hjyCWsHwB2XBjeeRJwOTElgCXfq7oYcjV7cc8RUG8I8L2rsHc9H03NkKPS
+ MjFORFiI7NGDo/C/JTkBVCNwNj0WSR+ePQlKxdOXWjndOGifGwjNipujunIeC19ybh02
+ uCtagfFM0nhVFox3JSPyx2y6m5ECxW4q8Xb2yw9VAy/HH1DofcaXh6wNEue8cl/T/ihs
+ dqvgmWrfRiWrWutLYb3+eiBQ2MCpKBFsxE+aScU0IbOyPb6v+aXPSHR0Jr7qtTchHz3h
+ Am5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743193358; x=1743798158;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743193413; x=1743798213;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1TnxPi0dQ/ZDTWUWWKj0FrguvPjfOZPpXfOZ53G2lYY=;
- b=HNL/p3bNRN/IO0Eo31cxWBsshFRNJMXbCHob403eW8USVYgn7zC3zHbu46GDg1fl7Z
- xBINma1nD/S7EKQ2/MtrHPfamssJliaNzSUFt96MJw4Di0Uv8EE1ISfiX7F4pMtd0+Fa
- 2yUmX4aXpBzile596Hl2Q0+LajP3LB+yVvlMvDX2NtjwmMWhdmfrvimayK8tuHiU5g6t
- sT/vVV31g1VJQInN8AdSuMMgoEKGu0SYq2MeVl2LL90pfvvEpXYV/VMqiRPVJY71dU+3
- BvbCm04ImnS5nq+0YXk9iZFAwrp01/ZmPoc4+WGWoGX/LaGDMHc2mPyzYBZjHxKdOrN9
- TKbA==
+ bh=1x6sHAMxZ1XBwLoRXFPjJEj7GHPCztnAuUyT2DMD0No=;
+ b=BaCGo6A2gZDg66ZmHllaajju/IFZ3X5xBvVnqxc5QH1qjXIwCseE0DkGfjfDVj+H8Q
+ sf2TXZ+Qxk6FnP+NKDPyn35HkAT6BfV7Zm6vKUms7kPdIs6Q0CFZOww7/lWWvI7tRbpt
+ 7NS2EO2peuAIcYCAqqf3EyyrdDuFnaJTs7qX1KnqLm6nJdaE9poRBeJyxMIXKa7YZSJm
+ kkIEyIRdChRgg88Md93/oJ6suxvi+DMVwPE8ntgk4xwx8vvM08fp6chNsl6CdIpyt+pQ
+ 1WSu0NLaqz83TY7Qoj5TSAqtWXem9FNEhzhIpKzEOY8/3lPw3Ht56lkN5sOVDW0WzgOp
+ J3nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCcAHunaqOfsEisK94CVXN5txAa+hk9W0gvZIWwIKIT4HooqQ3IrYtrDGIJchQmVR5Nad/GhX0qRpE@nongnu.org
-X-Gm-Message-State: AOJu0YyqZSrL9XcEHP4DF9rIUr3Pq14Izd3swEx9yx2cfupyImG0qjlR
- VqUejez6iNL1d24RFCr5g0E9dVmJDVgXaRUUUMXGjwl5AmlgxKcTMnvbqGhpM78=
-X-Gm-Gg: ASbGnct0sokMQFw50P+sbhfh/JVE73d/QHX0Blybsi4ciZw65BHHKwIhtvSYMvmzm3g
- xSURQOsSYfUx8TJZTBGC0I9kJeEFLg2vwykqxfzIXJvAJxLMeOlPWerXJv1fMGzRaS8LCIPrZ1f
- unN4ZoqvjNr2EKsDhDaVoxM4Z+iUMVbs0QEKxs2L99Te/HgLOOEWw2rG2tYrwno18G6b8JQcvRU
- NVybwRic92QQCz8sfrrerEAq+XqGOh/k0lsnrueSkl1+fyyPPjljl5VjKlfkGCLnKlBwycmmV3l
- 4F+SPKRNk4OxG1HuVeq9mKD9J94cx7lgZaD2RFUkjfsPt9ceRnC2QoZUMeDTaMdf+h+/Omv4l/e
- qBYxaVM8hXtpL
-X-Google-Smtp-Source: AGHT+IFvzqsCvtv3x8BHHWmUEduXHzwMr9ImzzT2Zi3qiriqWHnEMtyIVSvAL6U0aghRdOSRLkyfjQ==
-X-Received: by 2002:a05:6000:2d84:b0:399:71d4:a9 with SMTP id
- ffacd0b85a97d-39c1211d344mr265920f8f.52.1743193358340; 
- Fri, 28 Mar 2025 13:22:38 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b662c05sm3547480f8f.23.2025.03.28.13.22.36
+ AJvYcCW+1O+5SEKquxw03jYHutoZtSZ7blHuC0q9A/dP5F3MqLP7wWnrf0efRXVpl+JZBhHAu6Nu6Cr9dCAA@nongnu.org
+X-Gm-Message-State: AOJu0YyppinJ1PEBA4JY6oIhxX7o+8MUSBqkZkp4uDRAOX3HE6/WGc5t
+ 16cSfj3eqMZ6k9ZiZRNd7ZYVJsaJT586DUkNVW2iYk+PzFjLmjdPINqLE3OD4Oo=
+X-Gm-Gg: ASbGncthCuUjICi3X6qLZZtOOSET5IJ7A/vVSXY4RJ+VZE56ADfF4HD0SqB0ttGH00F
+ URQ9H5nRc0qI0cboNRLZ8VyVslSrtkBZ8T0FFiZkbrh2dtW3aI+DtDZUHIcDYWkWPVO2qIyRDjW
+ yjzlZlBKr4KyVxTAxVXK3PhcoMH7CTLQDmbxRTbpPP/VJbTdAo/wR8LHix3gmtkAoWprnocLaXV
+ TTI5Ehfo/iiEfpTk+7hjsSJy9WxTTG8CIFSJiM4wf15spYTW92szcuUkT2VwbErLehEa2x2ROdb
+ fPlSXf0u/2451rhXMjvgiS4W9kIANEWdutDt8SwgOU1kglsZ+pt8M2kfny8=
+X-Google-Smtp-Source: AGHT+IHQatjWPyYQhyhT6ZhXoD/xJ8b2wXj5HBhqw0hybx1yz33nol90oWnUTxP+76Krm6DVK3NTTw==
+X-Received: by 2002:a17:906:7955:b0:ac3:3e40:e183 with SMTP id
+ a640c23a62f3a-ac738975d0bmr63510266b.3.1743193413019; 
+ Fri, 28 Mar 2025 13:23:33 -0700 (PDT)
+Received: from [10.154.28.14] ([193.32.126.156])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac71961f8acsm209181366b.98.2025.03.28.13.23.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Mar 2025 13:22:37 -0700 (PDT)
-Message-ID: <6bdec69d-1ee2-4315-81cb-16e4e54724a7@linaro.org>
-Date: Fri, 28 Mar 2025 21:22:36 +0100
+ Fri, 28 Mar 2025 13:23:32 -0700 (PDT)
+Message-ID: <77796c03-cbe8-422b-bdd0-dcf94f80184c@linaro.org>
+Date: Fri, 28 Mar 2025 13:23:29 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] accel/tcg: Split out tlb-bounds.h
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250328200459.483089-1-richard.henderson@linaro.org>
- <20250328200459.483089-7-richard.henderson@linaro.org>
+Subject: Re: [PATCH 7/9] include/exec: Redefine tlb-flags with absolute values
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250328200459.483089-7-richard.henderson@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20250328200459.483089-1-richard.henderson@linaro.org>
+ <20250328200459.483089-8-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250328200459.483089-8-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +103,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/25 21:04, Richard Henderson wrote:
-> The CPU_TLB_DYN_{MIN,MAX}_BITS definitions are not required
-> outside of cputlb.c and translate-all.c.
+On 3/28/25 13:04, Richard Henderson wrote:
+> Don't base the values on TARGET_PAGE_BITS_MIN, but do verify
+> that TLB_FLAGS_MASK does not overlap minimum page size.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/tb-internal.h   | 27 ---------------------------
->   accel/tcg/tlb-bounds.h    | 32 ++++++++++++++++++++++++++++++++
->   accel/tcg/cputlb.c        |  1 +
->   accel/tcg/translate-all.c |  1 +
->   4 files changed, 34 insertions(+), 27 deletions(-)
->   create mode 100644 accel/tcg/tlb-bounds.h
+>   include/exec/tlb-flags.h | 68 +++++++++++++++++++---------------------
+>   accel/tcg/cputlb.c       |  2 ++
+>   2 files changed, 34 insertions(+), 36 deletions(-)
+> 
+> diff --git a/include/exec/tlb-flags.h b/include/exec/tlb-flags.h
+> index 54a6bae768..357e79095c 100644
+> --- a/include/exec/tlb-flags.h
+> +++ b/include/exec/tlb-flags.h
+> @@ -19,54 +19,29 @@
+>   #ifndef TLB_FLAGS_H
+>   #define TLB_FLAGS_H
+>   
+> -#include "exec/cpu-defs.h"
+> +/*
+> + * Flags returned for lookup of a TLB virtual address.
+> + */
+>   
+>   #ifdef CONFIG_USER_ONLY
+>   
+>   /*
+> - * Allow some level of source compatibility with softmmu.  We do not
+> - * support any of the more exotic features, so only invalid pages may
+> - * be signaled by probe_access_flags().
+> + * Allow some level of source compatibility with softmmu.
+> + * Invalid is set when the page does not have requested permissions.
+> + * MMIO is set when we want the target helper to use the functional
+> + * interface for load/store so that plugins see the access.
+>    */
+> -#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
+> -#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 2))
+> -#define TLB_WATCHPOINT      0
+> +#define TLB_INVALID_MASK     (1 << 0)
+> +#define TLB_MMIO             (1 << 1)
+> +#define TLB_WATCHPOINT       0
+>   
+>   #else
+>   
+> -/*
+> - * Flags stored in the low bits of the TLB virtual address.
+> - * These are defined so that fast path ram access is all zeros.
+> - * The flags all must be between TARGET_PAGE_BITS and
+> - * maximum address alignment bit.
+> - *
+> - * Use TARGET_PAGE_BITS_MIN so that these bits are constant
+> - * when TARGET_PAGE_BITS_VARY is in effect.
+> - *
+> - * The count, if not the placement of these bits is known
+> - * to tcg/tcg-op-ldst.c, check_max_alignment().
+> - */
+> -/* Zero if TLB entry is valid.  */
+> -#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
+> -/*
+> - * Set if TLB entry references a clean RAM page.  The iotlb entry will
+> - * contain the page physical address.
+> - */
+> -#define TLB_NOTDIRTY        (1 << (TARGET_PAGE_BITS_MIN - 2))
+> -/* Set if the slow path must be used; more flags in CPUTLBEntryFull. */
+> -#define TLB_FORCE_SLOW      (1 << (TARGET_PAGE_BITS_MIN - 3))
+> -
+> -/*
+> - * Use this mask to check interception with an alignment mask
+> - * in a TCG backend.
+> - */
+> -#define TLB_FLAGS_MASK \
+> -    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_FORCE_SLOW)
+> -
+>   /*
+>    * Flags stored in CPUTLBEntryFull.slow_flags[x].
+>    * TLB_FORCE_SLOW must be set in CPUTLBEntry.addr_idx[x].
+>    */
+> +
+>   /* Set if TLB entry requires byte swap.  */
+>   #define TLB_BSWAP            (1 << 0)
+>   /* Set if TLB entry contains a watchpoint.  */
+> @@ -82,6 +57,27 @@
+>       (TLB_BSWAP | TLB_WATCHPOINT | TLB_CHECK_ALIGNED | \
+>        TLB_DISCARD_WRITE | TLB_MMIO)
+>   
+> +/*
+> + * Flags stored in CPUTLBEntry.addr_idx[x].
+> + * These must be above the largest alignment (64 bytes),
+> + * and below the smallest page size (1024 bytes).
+> + * This leaves bits [9:6] available for use.
+> + */
+> +
+> +/* Zero if TLB entry is valid.  */
+> +#define TLB_INVALID_MASK     (1 << 6)
+> +/* Set if TLB entry references a clean RAM page.  */
+> +#define TLB_NOTDIRTY         (1 << 7)
+> +/* Set if the slow path must be used; more flags in CPUTLBEntryFull. */
+> +#define TLB_FORCE_SLOW       (1 << 8)
+> +
+> +/*
+> + * Use this mask to check interception with an alignment mask
+> + * in a TCG backend.
+> + */
+> +#define TLB_FLAGS_MASK \
+> +    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_FORCE_SLOW)
+> +
+>   /* The two sets of flags must not overlap. */
+>   QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & TLB_SLOW_FLAGS_MASK);
+>   
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index a717f357d5..39314e86f3 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -49,6 +49,8 @@
+>   #endif
+>   #include "tcg/tcg-ldst.h"
+>   
+> +QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & ((1u < TARGET_PAGE_BITS_MIN) - 1));
+> +
+>   /* DEBUG defines, enable DEBUG_TLB_LOG to log to the CPU_LOG_MMU target */
+>   /* #define DEBUG_TLB */
+>   /* #define DEBUG_TLB_LOG */
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hurrah!
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+Maybe we could define MEMOP_MAX_ALIGNMENT, reuse use that in 
+check_max_alignment(), and add a compile time check here as well.
+
+We can as well mention in a comment that all architectures now have the 
+same placement for those flags, simplifying MMU management when we'll 
+mix several architectures.
 
