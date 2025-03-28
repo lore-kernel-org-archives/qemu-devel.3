@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B786C28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 07:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0751C36013
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 07:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ty4Wz-0000Gk-6z; Fri, 28 Mar 2025 03:53:33 -0400
+	id 1ty4Y8-0001C0-QM; Fri, 28 Mar 2025 03:54:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=v09i=WP=kaod.org=clg@ozlabs.org>)
- id 1ty4Wr-0000Cu-Lj; Fri, 28 Mar 2025 03:53:25 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1ty4Y6-0001BH-Ij
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 03:54:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=v09i=WP=kaod.org=clg@ozlabs.org>)
- id 1ty4Wp-0005GR-Nq; Fri, 28 Mar 2025 03:53:25 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZPCSc27WNz4x3d;
- Fri, 28 Mar 2025 18:53:20 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZPCSY5qH4z4x04;
- Fri, 28 Mar 2025 18:53:17 +1100 (AEDT)
-Message-ID: <e8528a55-f0cd-4841-bcec-375e0d07204b@kaod.org>
-Date: Fri, 28 Mar 2025 08:53:15 +0100
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1ty4Y4-0005Pp-P6
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 03:54:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743148479;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cwzAUbpwlv4rc3tyiWvz4Lzh2MBD2bnnMEGFgBHoEA0=;
+ b=ZZJvsKG5seFcEwURv0Gynn6GPFVLgR16XuXERz0n1lMLHBHK1q8WcGOeVTtaUI/0WRIquW
+ yEiloJgVtPtNct5Zg7/olsSp8jld0gtLY6tpvw4v/RNcaWCGJmsRFhWDw2NA5TlvJeE6u/
+ URWUOv3+BHjhvheGJ7eCWqI4W8pupHA=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-LYJN6eL8NjqfX-YT916YzA-1; Fri, 28 Mar 2025 03:54:38 -0400
+X-MC-Unique: LYJN6eL8NjqfX-YT916YzA-1
+X-Mimecast-MFC-AGG-ID: LYJN6eL8NjqfX-YT916YzA_1743148477
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3032f4eca83so3218598a91.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 00:54:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743148477; x=1743753277;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cwzAUbpwlv4rc3tyiWvz4Lzh2MBD2bnnMEGFgBHoEA0=;
+ b=iHF1gZNCw5Ly/ZYBPMbd2YASInqCsEEgyimR+2KatBR5uO9jF47tWEnGkyHz0hpOsy
+ sD1Lrkace79MNkyGMou5i2ZoJ72dPVRteEKhyW5lBBu0HJBPai7VhaGBFjZ1aGoINPcj
+ IUuKZ9YrhIUKg6n0EtYRyjqORo98BIq2TsTkcDCrmEfBofPlF2/iFum8E7pXTANjYgK/
+ C4689DDe4Aeb4ibpRkp6cgCVGbCyfcSY3PUrykI8qkvwFT/afb5SKnQF1FfzOmqa7XgP
+ go8w3WKrQuHCoM/ZjE2CDCJnItK/XMrqLv4W5q8Do6df/zOQ82nEqBFHv8U2F1+mxEGI
+ HoVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWOdYZlDd6xun9MrfTuecJJx4kz10VfoMqKPPex6IK7om3c2KZqMHKIMfM5pWo1VhKEc8JZrbLf3Khs@nongnu.org
+X-Gm-Message-State: AOJu0Yz9Y2UtuXgb1oSztEseFUWIDs8NyrgfNtVwcJcWXo+gxqBZa9Dt
+ 6i9Iw5JvKYI/aTZ2QrEF7603rMHB9SrxIL7pPB1h17SBMKTsaelZl/bA80y4OMUKqX7YRDU+Is/
+ fct1RAeSC2zLR8Kb+loLUVvjk4GwM641U26ZasaMBxT/GEBiQT48jGIWaSCYuHeiaU35OsSJSLE
+ MDDfb+oXrU6lYl7xVax6B5DKEO5WH6wsdNW6o=
+X-Gm-Gg: ASbGncsigJx4dbSAZyhGLa3o7MFh2MCkOK7WX/LxcLHl+G/QJ3+/q+ZuWhUQB61UnwA
+ 5jWkb7rDDPZCeqvdsiBjRRGbP2LvZ9DC3gHdIhjHebcs7ooSjliI6M8dt/6zQ+R4c09yZqMc=
+X-Received: by 2002:a17:90b:520f:b0:2ff:702f:7172 with SMTP id
+ 98e67ed59e1d1-303a916d67dmr10981305a91.33.1743148476841; 
+ Fri, 28 Mar 2025 00:54:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtLO+8CaBUb5NZRwlXDesJG8cIm+Ei7Hlx8SsQkR7Z/O8sXrpJTVWor3AWpEXc6ZV2uLwde0/OMuIJHoeNRC0=
+X-Received: by 2002:a17:90b:520f:b0:2ff:702f:7172 with SMTP id
+ 98e67ed59e1d1-303a916d67dmr10981282a91.33.1743148476376; Fri, 28 Mar 2025
+ 00:54:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 7/7] tests/powernv: Add PowerNV test for Power11
-To: Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250327200738.1524401-1-adityag@linux.ibm.com>
- <20250327200738.1524401-8-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250327200738.1524401-8-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=v09i=WP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.083, RCVD_IN_DNSWL_MED=-2.3,
+References: <20250324135929.74945-1-sahilcdq@proton.me>
+ <20250324135929.74945-6-sahilcdq@proton.me>
+ <49e5e2e1-4715-4949-93d5-b4e0f5425bbf@gmail.com>
+ <CAJaqyWckqkkE=sB6yk1RhV8DVoPBAODqdNfgq5Vc0DLGo2_TNw@mail.gmail.com>
+ <5a3f55be-5b5d-4a77-9e3d-0dbf1f4c7705@gmail.com>
+In-Reply-To: <5a3f55be-5b5d-4a77-9e3d-0dbf1f4c7705@gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Fri, 28 Mar 2025 08:53:59 +0100
+X-Gm-Features: AQ5f1JpCG0TD5Tttvi9M1aDH9wFwxExWkBQfiuJZO6aNq-qwkk3q5055Qc_a47A
+Message-ID: <CAJaqyWcR0-mtfx=o127gCFFkuAzqRWto-Nusq1TDm=tK7OnK7w@mail.gmail.com>
+Subject: Re: [RFC v5 5/7] vhost: Forward descriptors to guest via packed vqs
+To: Sahil Siddiq <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ sahilcdq@proton.me
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,40 +108,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/25 21:07, Aditya Gupta wrote:
-> With all Power11 support in place, add Power11 PowerNV test.
-> 
-> Cc: Cédric Le Goater <clg@kaod.org>
-> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   tests/functional/test_ppc64_powernv.py | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/tests/functional/test_ppc64_powernv.py b/tests/functional/test_ppc64_powernv.py
-> index 2b4db1cf99b4..9ada832b7816 100755
-> --- a/tests/functional/test_ppc64_powernv.py
-> +++ b/tests/functional/test_ppc64_powernv.py
-> @@ -116,5 +116,9 @@ def test_powernv10(self):
->           self.set_machine('powernv10')
->           self.do_test_ppc64_powernv('P10')
->   
-> +    def test_powernv11(self):
-> +        self.set_machine('powernv11')
-> +        self.do_test_ppc64_powernv('Power11')
-> +
->   if __name__ == '__main__':
->       LinuxKernelTest.main()
+On Fri, Mar 28, 2025 at 6:22=E2=80=AFAM Sahil Siddiq <icegambit91@gmail.com=
+> wrote:
+>
+> Hi,
+>
+> On 3/26/25 2:04 PM, Eugenio Perez Martin wrote:
+> > On Mon, Mar 24, 2025 at 3:34=E2=80=AFPM Sahil Siddiq <icegambit91@gmail=
+.com> wrote:
+> >>
+> >> Hi,
+> >>
+> >> I had a few more queries here as well.
+> >>
+> >> On 3/24/25 7:29 PM, Sahil Siddiq wrote:
+> >>> Detect when used descriptors are ready for consumption by the guest v=
+ia
+> >>> packed virtqueues and forward them from the device to the guest.
+> >>>
+> >>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+> >>> ---
+> >>> Changes from v4 -> v5:
+> >>> - New commit.
+> >>> - vhost-shadow-virtqueue.c:
+> >>>     (vhost_svq_more_used): Split into vhost_svq_more_used_split and
+> >>>     vhost_svq_more_used_packed.
+> >>>     (vhost_svq_enable_notification): Handle split and packed vqs.
+> >>>     (vhost_svq_disable_notification): Likewise.
+> >>>     (vhost_svq_get_buf): Split into vhost_svq_get_buf_split and
+> >>>     vhost_svq_get_buf_packed.
+> >>>     (vhost_svq_poll): Use new functions.
+> >>>
+> >>>    hw/virtio/vhost-shadow-virtqueue.c | 121 +++++++++++++++++++++++++=
++---
+> >>>    1 file changed, 110 insertions(+), 11 deletions(-)
+> >>>
+> >>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-sha=
+dow-virtqueue.c
+> >>> index 126957231d..8430b3c94a 100644
+> >>> --- a/hw/virtio/vhost-shadow-virtqueue.c
+> >>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> >>> @@ -463,7 +463,7 @@ static void vhost_handle_guest_kick_notifier(Even=
+tNotifier *n)
+> >>>        vhost_handle_guest_kick(svq);
+> >>>    }
+> >>>
+> >>> -static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
+> >>> +static bool vhost_svq_more_used_split(VhostShadowVirtqueue *svq)
+> >>>    {
+> >>>        uint16_t *used_idx =3D &svq->vring.used->idx;
+> >>>        if (svq->last_used_idx !=3D svq->shadow_used_idx) {
+> >>> @@ -475,6 +475,22 @@ static bool vhost_svq_more_used(VhostShadowVirtq=
+ueue *svq)
+> >>>        return svq->last_used_idx !=3D svq->shadow_used_idx;
+> >>>    }
+> >>>
+> >>> +static bool vhost_svq_more_used_packed(VhostShadowVirtqueue *svq)
+> >>> +{
+> >>> +    bool avail_flag, used_flag, used_wrap_counter;
+> >>> +    uint16_t last_used_idx, last_used, flags;
+> >>> +
+> >>> +    last_used_idx =3D svq->last_used_idx;
+> >>> +    last_used =3D last_used_idx & ~(1 << VRING_PACKED_EVENT_F_WRAP_C=
+TR);
+> >>
+> >> In the linux kernel, last_used is calculated as:
+> >>
+> >> last_used_idx & ~(-(1 << VRING_PACKED_EVENT_F_WRAP_CTR))
+> >>
+> >> ...instead of...
+> >>
+> >> last_used_idx & ~(1 << VRING_PACKED_EVENT_F_WRAP_CTR)
+> >>
+> >> Isn't the second option good enough if last_used_idx is uint16_t
+> >> and VRING_PACKED_EVENT_F_WRAP_CTR is defined as 15.
+> >>
+> >
+> > I think it is good enough with the u16 restrictions but it's just
+> > defensive code.
+> >
+>
+> Got it. I think it'll be better then to follow the implementation in
+> the kernel to keep it more robust.
+>
+> >>> +    used_wrap_counter =3D !!(last_used_idx & (1 << VRING_PACKED_EVEN=
+T_F_WRAP_CTR));
+> >>> +
+> >>> +    flags =3D le16_to_cpu(svq->vring_packed.vring.desc[last_used].fl=
+ags);
+> >>> +    avail_flag =3D !!(flags & (1 << VRING_PACKED_DESC_F_AVAIL));
+> >>> +    used_flag =3D !!(flags & (1 << VRING_PACKED_DESC_F_USED));
+> >>> +
+> >>> +    return avail_flag =3D=3D used_flag && used_flag =3D=3D used_wrap=
+_counter;
+> >>> +}
+> >>> +
+> >>
+> >> Also in the implementation of vhost_svq_more_used_split() [1], I haven=
+'t
+> >> understood why the following condition:
+> >>
+> >> svq->last_used_idx !=3D svq->shadow_used_idx
+> >>
+> >> is checked before updating the value of "svq->shadow_used_idx":
+> >>
+> >> svq->shadow_used_idx =3D le16_to_cpu(*(volatile uint16_t *)used_idx)
+> >>
+> >
+> > As far as I know this is used to avoid concurrent access to guest's
+> > used_idx, avoiding cache sharing, the memory barrier, and the
+> > potentially costly volatile access.
+> >
+>
+> By concurrent access, do you mean in case one thread has already updated
+> the value of used_idx?
+>
 
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
+Yes, concurrent access by the driver and the device. This could be the
+case of different threads if the device is virtual in QEMU. The two
+CPU threads are accessing the same memory region.
 
 
