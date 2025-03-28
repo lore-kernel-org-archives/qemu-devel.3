@@ -4,134 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFFFC28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D539DC28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyGQk-0001SB-3C; Fri, 28 Mar 2025 16:35:54 -0400
+	id 1tyGT4-0002Gq-6i; Fri, 28 Mar 2025 16:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
- id 1tyGQh-0001Rq-V0
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:35:52 -0400
-Received: from mail-dm6nam11on2078.outbound.protection.outlook.com
- ([40.107.223.78] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
- id 1tyGQe-0003wV-8y
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:35:51 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FOUI/Gnz8n2J9vNh9oW3UTrcMpmmf6tYpJSxGDpA/A9dtFdYQ2PhRnudhJG8TdvCTH3wlKoWRaLOdmplnM1LlEp8y3ajWPOGp4ww39JBDHX/EThiMwhBE2wXpXcrge0dzCTpzNIAHF1taRroFIcw+tf7MPMwM+/iykTWXqmyP4UlaTq4oYTblz6HJNE+COE4z1FQprzPpc60wGDPtihM/sTTUVrt97B2qNfhMFjNXeQFrfyDvgzg6AqPxpKBiRZFo1/u9xNImg8rUhNVWLm0HyRyECst54InxIuZA5uAil5GKyhMVKEJJZztRY8xyHOdJVmIJemGs1P/mDBUy2lMLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=p6c4vrdcUl6OB478viD1C+bFcJJfOLl/5+YYSOUHV14=;
- b=OmZQNqmO4YfjiDuBnR1ecjq9Z7XKSQHjNd4PgU6QQlykytGSoifkuYtTnXhp4lB9QcpBR4OqzUHd3OH3Q0jvFMD4EtywJ9jEuoVyMeN2ojZlnt68bwjUnsiLJ0ZVPLSInb06vF34fFNhv5ArHn1tQBceabEtrpwzbBLqk9S3zkm0nfMQz4NFZOzvKC6noHjMaFys2ni44pgn4utvJ9gjGmE2EGIuoaNj3Nx9Qc+pL/aDrqlH6K5ThEyL3AR3QPxPIAyaC6j9WudHWp5YeK9sR7ccOao5XDI/NcWTa/zwx6CaMLTqRXT5q0Bs+IuHM1wMzA3pe9ZI2Z/2uhBVhpwvww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=p6c4vrdcUl6OB478viD1C+bFcJJfOLl/5+YYSOUHV14=;
- b=dUZQ49kqsSrLZ8/HMLs4MFNvnA/nKvcz7L3b8byAJ1FEmcl5p7+K4qSjJ/bqDRK0BBRuum05W0eUs3wEI+opk+HxlfJvMnMznbIVoIT6xMiUbzb8gZ7GaQD45E3li1zv4R82A1l7PpU9J82GZSQTEPZVs+U975tbTTagnU9JlXE=
-Received: from SJ0PR05CA0078.namprd05.prod.outlook.com (2603:10b6:a03:332::23)
- by IA1PR12MB6281.namprd12.prod.outlook.com (2603:10b6:208:3e7::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.44; Fri, 28 Mar
- 2025 20:30:39 +0000
-Received: from SJ5PEPF000001F5.namprd05.prod.outlook.com
- (2603:10b6:a03:332:cafe::78) by SJ0PR05CA0078.outlook.office365.com
- (2603:10b6:a03:332::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.43 via Frontend Transport; Fri,
- 28 Mar 2025 20:30:39 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SJ5PEPF000001F5.mail.protection.outlook.com (10.167.242.73) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8534.20 via Frontend Transport; Fri, 28 Mar 2025 20:30:39 +0000
-Received: from tlendack-t1.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 28 Mar
- 2025 15:30:38 -0500
-From: Tom Lendacky <thomas.lendacky@amd.com>
-To: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH] i386/kvm: Prefault memory on page state change
-Date: Fri, 28 Mar 2025 15:30:24 -0500
-Message-ID: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
-X-Mailer: git-send-email 2.46.2
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tyGT2-0002G6-Ch
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:38:16 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tyGSz-00048M-O0
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:38:15 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-ac2bdea5a38so435211666b.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:38:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743194292; x=1743799092; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d9EnVl9s2P+Lgj71AX5kjcQwbusZmnmuRhjjOzqDFzo=;
+ b=RuiNN+ogZEGRTcMb5CrUX6aNTRDBgtVn530LojQNM5tA7U3iD6Sxs/AjYN3Gq0Q7U8
+ ZeFG8Xks6NlZ60kjFk5sZesZrIXftk1YdKE3K7vStERDG5tGdEzkDrXZ/V0eYjKDuETg
+ 3AfKUNqgYP2pOFdWaERnhHkbo35g8juMCMm7f4Qs6t3AkKn47B6lMZK6DOIprgXBHe8d
+ 8LQvZSU4nFBZzkUVm3PjSrAwOUY8RYhmfbsVQBp915FFQjJ80/D+McJ1L1sicPhRrgVf
+ cHbSJdk4jmbwJKWjYoHvEjdxMw/gabvZ9/mxWxc/2xE3E979JwkS9KQSakXt0r8RFOq7
+ TYcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743194292; x=1743799092;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d9EnVl9s2P+Lgj71AX5kjcQwbusZmnmuRhjjOzqDFzo=;
+ b=OjyD8X+hL8FKYDp/ztRiqxr6jS/xK2RVahcMzG69alzmewOAWsYlU6QrH0apEDiKaa
+ 8x1WAvd3mCDH/RMhaC2bIujuQLyVsc93yThlvVeVSXvJCwhOgP2FjUnx9tNfbH0jFdoi
+ OvSQ99Dr1PD0M+rEqOdfy5+hwnsO0JB3gVTqjACVwCmBzyEFp5FEfGlkzQVW/1ybbbZ3
+ oJjBXEU/CKQFWrVn3Aw+wcqmYMoDEhpLqTE5PfRggW3TtKy9gqw5olbVvayXU7I45MCZ
+ 6dPeYYFpu6jF82tSEA2kDqn5qBbbD0xz4q+FZGC7MNy4TbdjmALJ9CnBF70SM2B58G4m
+ pnxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8wXzgoBpvP8MMzlNPmtHvwqYKFF14u3NapwR0yj9geIDFAKQisXIebWw39EZjUQ0524w+QZbJrht1@nongnu.org
+X-Gm-Message-State: AOJu0YwuEljCkTKTx9GsEYgQAHZNMQ8Tpoel2xZQEPcO5h9tWOiWX1o9
+ a/a7w/Bsza4ImWyBhEW3ePHqdXA77fgBtqviOpvwUh0+6so+Aa3R+33jPNzdJ2g=
+X-Gm-Gg: ASbGncumi62UUtn376EhLiM22rEVwTWyif2H6W9Rq3haaQkIbjZrLeOiCkRnG/FSzxE
+ qkf91ZZQFiJucb3RHuDCEGq5jGtYvRiemiSgMrk4KVizvzCd84F59Mk/CvzqEdlsJZ56/Gy3Q/N
+ N0LKCf873iz1DrAIAZmLONWFWIkgIHrKitBRKuu5q8a6Odwfqp8Q+fGCZ8Grf6cONztx9aw5wI5
+ /yTATB5atFQnKeJTvRubJsZx56EcPbGABhbK3vcpg/xiXt+r6EfMb0OD3F6+Zb5wn+iyxqVGRC9
+ O0k2sX6W8S8mspeOvENq0Y8NcizjkGVF4LmHEID2Ri9OAb8buz5+1qvnhIQ=
+X-Google-Smtp-Source: AGHT+IHKy/2GRH18TSCYz+M1c2A/Q5NKOKH3aSG2/XnfmsNyy6MhYB+RZxa4sECk/RyDX6W7qlv2bQ==
+X-Received: by 2002:a17:907:97c9:b0:ac2:622f:39c1 with SMTP id
+ a640c23a62f3a-ac738a27e47mr54843466b.22.1743194291779; 
+ Fri, 28 Mar 2025 13:38:11 -0700 (PDT)
+Received: from [10.154.28.14] ([193.32.126.156])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac71967fdbbsm208513166b.135.2025.03.28.13.38.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Mar 2025 13:38:10 -0700 (PDT)
+Message-ID: <4c16b4e5-c5b1-4c1e-9d5b-c94bafd0a6c9@linaro.org>
+Date: Fri, 28 Mar 2025 13:38:07 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F5:EE_|IA1PR12MB6281:EE_
-X-MS-Office365-Filtering-Correlation-Id: 46dc4762-d35a-4257-e2fc-08dd6e37677a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|34020700016|36860700013|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?fujIVgKifcK/hYpirgO9r5Qx8jCY542/EABFns/R2gELiKkFfVBGTIu6ZtLN?=
- =?us-ascii?Q?QpwoHf8a43SdAEaIxgKG6bBOKOnR/1kqXmmW3gX+5kTBvGK5uiIIH7Dj5dhL?=
- =?us-ascii?Q?6FYx30efK75llMwYHNwh2gX/vzF6KQfXWcmEh0l4cFdt6tIA8i7fy+ie+Jrn?=
- =?us-ascii?Q?7izg0BSHTlPL957pBtWMb0V9w++GnbtIlh2ad0mYzLZV0Ca60g8bKiskPHhi?=
- =?us-ascii?Q?87B6x1OoZmf/Km387Au3BnxTcgZJE1opeUiaVaduDCtIhimUjcmk1cVAmvKN?=
- =?us-ascii?Q?6kQgcVou5/SGi32RYhDBlT7NwAog55FwS5yXQYPJIh4oLhXx3lBlbrDubQ3+?=
- =?us-ascii?Q?FVXfjgNOIa6/S+Bd1Fo85p0b6XRHNDccSTSXukUVKtGoVYfKTxvd+xB00KNr?=
- =?us-ascii?Q?mqp1sPi4kBHdMeUWMjOtRdjYV848AsmUOC0y3WNaPdwsYbx2qZaOkZDvDpmJ?=
- =?us-ascii?Q?GY2mrqolCj81dezu1+LLgdIdTlogTxFUCC1pku1xxE51fkN/CDNTzM+U3uwy?=
- =?us-ascii?Q?A/oRYGInuV8DjGzZ51IzFSuo5zb6T5Lt2+1QIRAjfy+tmk42NhU35THMxvfo?=
- =?us-ascii?Q?60oX3z1SFseJ5oj84GNzY5GjRkYyP1pAaTi27v7BpE0pxRpoDwRtHi6++8KY?=
- =?us-ascii?Q?l73bmIg1LLH3RcX0qdbNRNn6cGdc4goFj/ZIyhOey+jrF9rYPkIIN5XWDs9r?=
- =?us-ascii?Q?2aYRWPtvagQsBWx74BmdzTUSYMXR4jhXnLIbg+YJsvR/cYSCaze86yBXqKJz?=
- =?us-ascii?Q?CQWIfBIwFE9neYxy2w8gNFkmcOsdw2mERJSvwOOpAh52NAOTPj/BUM3ajTTL?=
- =?us-ascii?Q?SD0FsDlM0624LgAeydq9a3fGKRugFA46F7hziLmuthSMEy7E6Scnr7RFF1PG?=
- =?us-ascii?Q?n8tLmq6GNLOTabq+mMpbEFrwTuoyw4xWIWO7rmCZ/wVBbscf2n4YgeA9gb7R?=
- =?us-ascii?Q?2VeAt+m5SJiJA7RZwhYPdcJI6vaYDxy9qwY9XiXFFF5VDOyZSuYDwpTIGfRS?=
- =?us-ascii?Q?oCDlcWKUMtv7viHOiASqqGob7FPZEi1jtBuPTnwHc9PbEv2P+3cv00ZhkjC7?=
- =?us-ascii?Q?XCc+zpoJmauJl3NR4IRWfxISNPfmrr3k5CFMbwCLyXkc/Qq6TfrpbZ+U+IcI?=
- =?us-ascii?Q?SwmyPyD0NJTlqYGJSnt7AU5w6ufxCLtEHeURAJvU/AzhcdGgMhlpKskECQuQ?=
- =?us-ascii?Q?5+SNqCYKzD8TA/+Mp7cNhG29NmglPZLMiTqxccqdduTocfSVbyB3MlMT47/E?=
- =?us-ascii?Q?oWogZXA133Aj7tmm6g/kXx45MIb7sEvdyBEFV0UBWrNDsDE7T01MFHKAVDZ9?=
- =?us-ascii?Q?bO5eKSkJ+8/BHjov6Zkk4ECZM1O/VyjxM6OYAg2ZMew1ILm4Y7DwSMWmx00n?=
- =?us-ascii?Q?am0RQ82W7wRpDDL9IfJmMXTK93eoVyA+ez/sy3Ovc/qqLXKtVX8wkwYDquzV?=
- =?us-ascii?Q?HtMTjXhNwO+r6XDHYFBdVxOwfzE6ax1HeY0ht94wDYxOwNNVXPfcUw=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(34020700016)(36860700013)(376014)(82310400026);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Mar 2025 20:30:39.3435 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 46dc4762-d35a-4257-e2fc-08dd6e37677a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001F5.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6281
-Received-SPF: permerror client-ip=40.107.223.78;
- envelope-from=Thomas.Lendacky@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 9/9] page-vary: Restrict scope of TARGET_PAGE_BITS_MIN
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20250328200459.483089-1-richard.henderson@linaro.org>
+ <20250328200459.483089-10-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250328200459.483089-10-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,124 +103,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A page state change is typically followed by an access of the page(s) and
-results in another VMEXIT in order to map the page into the nested page
-table. Depending on the size of page state change request, this can
-generate a number of additional VMEXITs. For example, under SNP, when
-Linux is utilizing lazy memory acceptance, memory is typically accepted in
-4M chunks. A page state change request is submitted to mark the pages as
-private, followed by validation of the memory. Since the guest_memfd
-currently only supports 4K pages, each page validation will result in
-VMEXIT to map the page, resulting in 1024 additional exits.
+On 3/28/25 13:04, Richard Henderson wrote:
+> The only place we really need to know the minimum is within
+> page-vary-target.c.  Rename the target/arm TARGET_PAGE_BITS_MIN
+> to TARGE_PAGE_BITS_LEGACY to emphasize what it really means.
+> Move the assertions related to minimum page size as well.
+> 
 
-When performing a page state change, invoke KVM_PRE_FAULT_MEMORY for the
-size of the page state change in order to pre-map the pages and avoid the
-additional VMEXITs. This helps speed up boot times.
+s/TARGE_PAGE_BITS_LEGACY/TARGET_PAGE_BITS_LEGACY
 
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
----
- accel/kvm/kvm-all.c   |  2 ++
- include/system/kvm.h  |  1 +
- target/i386/kvm/kvm.c | 31 ++++++++++++++++++++++++++-----
- 3 files changed, 29 insertions(+), 5 deletions(-)
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/exec/cpu-defs.h    | 10 ++--------
+>   include/exec/poison.h      |  1 +
+>   include/exec/target_page.h |  1 -
+>   include/qemu/osdep.h       |  6 ++++++
+>   target/alpha/cpu-param.h   |  1 -
+>   target/arm/cpu-param.h     |  3 +--
+>   target/ppc/cpu-param.h     |  1 -
+>   accel/tcg/cputlb.c         |  1 -
+>   page-vary-target.c         | 39 +++++++++++++++++++++++++++++++++++---
+>   9 files changed, 46 insertions(+), 17 deletions(-)
+> 
+> diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
+> index 9f955f53fd..e01acb7c90 100644
+> --- a/include/exec/cpu-defs.h
+> +++ b/include/exec/cpu-defs.h
+> @@ -34,14 +34,8 @@
+>   #ifndef TARGET_VIRT_ADDR_SPACE_BITS
+>   # error TARGET_VIRT_ADDR_SPACE_BITS must be defined in cpu-param.h
+>   #endif
+> -#ifndef TARGET_PAGE_BITS
+> -# ifdef TARGET_PAGE_BITS_VARY
+> -#  ifndef TARGET_PAGE_BITS_MIN
+> -#   error TARGET_PAGE_BITS_MIN must be defined in cpu-param.h
+> -#  endif
+> -# else
+> -#  error TARGET_PAGE_BITS must be defined in cpu-param.h
+> -# endif
+> +#if !defined(TARGET_PAGE_BITS) && !defined(TARGET_PAGE_BITS_VARY)
+> +# error TARGET_PAGE_BITS must be defined in cpu-param.h
+>   #endif
+>   
+>   #include "exec/target_long.h"
+> diff --git a/include/exec/poison.h b/include/exec/poison.h
+> index 4180a5a489..c4f7ee22bf 100644
+> --- a/include/exec/poison.h
+> +++ b/include/exec/poison.h
+> @@ -44,6 +44,7 @@
+>   #pragma GCC poison TARGET_FMT_lu
+>   
+>   #pragma GCC poison TARGET_PHYS_ADDR_SPACE_BITS
+> +#pragma GCC poison TARGET_PAGE_BITS_LEGACY
+>   
+>   #pragma GCC poison CONFIG_ALPHA_DIS
+>   #pragma GCC poison CONFIG_HPPA_DIS
+> diff --git a/include/exec/target_page.h b/include/exec/target_page.h
+> index e4bd7f7767..ca0ebbc8bb 100644
+> --- a/include/exec/target_page.h
+> +++ b/include/exec/target_page.h
+> @@ -41,7 +41,6 @@ extern const TargetPageBits target_page;
+>   # endif
+>   # define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
+>   #else
+> -# define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
+>   # define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
+>   # define TARGET_PAGE_MASK    ((TARGET_PAGE_TYPE)-1 << TARGET_PAGE_BITS)
+>   #endif
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index 4397a90680..321a52d7f0 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -50,6 +50,12 @@
+>    */
+>   #pragma GCC poison TARGET_WORDS_BIGENDIAN
+>   
+> +/*
+> + * TARGET_PAGE_BITS_MIN was repaced by TARGET_PAGE_BITS_LEGACY
+> + * for system mode.  Prevent it from creeping back in.
+> + */
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index f89568bfa3..0cd487cea7 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -93,6 +93,7 @@ bool kvm_allowed;
- bool kvm_readonly_mem_allowed;
- bool kvm_vm_attributes_allowed;
- bool kvm_msi_use_devid;
-+bool kvm_pre_fault_memory_supported;
- static bool kvm_has_guest_debug;
- static int kvm_sstep_flags;
- static bool kvm_immediate_exit;
-@@ -2732,6 +2733,7 @@ static int kvm_init(MachineState *ms)
-         kvm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-         kvm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
-         (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-+    kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
- 
-     if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-         s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index ab17c09a55..492ea8a383 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -42,6 +42,7 @@ extern bool kvm_gsi_routing_allowed;
- extern bool kvm_gsi_direct_mapping;
- extern bool kvm_readonly_mem_allowed;
- extern bool kvm_msi_use_devid;
-+extern bool kvm_pre_fault_memory_supported;
- 
- #define kvm_enabled()           (kvm_allowed)
- /**
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 6c749d4ee8..7c39d30c5f 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5999,9 +5999,11 @@ static bool host_supports_vmx(void)
-  * because private/shared page tracking is already provided through other
-  * means, these 2 use-cases should be treated as being mutually-exclusive.
-  */
--static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
-+static int kvm_handle_hc_map_gpa_range(X86CPU *cpu, struct kvm_run *run)
- {
-+    struct kvm_pre_fault_memory mem;
-     uint64_t gpa, size, attributes;
-+    int ret;
- 
-     if (!machine_require_guest_memfd(current_machine))
-         return -EINVAL;
-@@ -6012,13 +6014,32 @@ static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
- 
-     trace_kvm_hc_map_gpa_range(gpa, size, attributes, run->hypercall.flags);
- 
--    return kvm_convert_memory(gpa, size, attributes & KVM_MAP_GPA_RANGE_ENCRYPTED);
-+    ret = kvm_convert_memory(gpa, size, attributes & KVM_MAP_GPA_RANGE_ENCRYPTED);
-+    if (ret || !kvm_pre_fault_memory_supported) {
-+        return ret;
-+    }
-+
-+    /*
-+     * Opportunistically pre-fault memory in. Failures are ignored so that any
-+     * errors in faulting in the memory will get captured in KVM page fault
-+     * path when the guest first accesses the page.
-+     */
-+    memset(&mem, 0, sizeof(mem));
-+    mem.gpa = gpa;
-+    mem.size = size;
-+    while (mem.size) {
-+        if (kvm_vcpu_ioctl(CPU(cpu), KVM_PRE_FAULT_MEMORY, &mem)) {
-+            break;
-+        }
-+    }
-+
-+    return 0;
- }
- 
--static int kvm_handle_hypercall(struct kvm_run *run)
-+static int kvm_handle_hypercall(X86CPU *cpu, struct kvm_run *run)
- {
-     if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
--        return kvm_handle_hc_map_gpa_range(run);
-+        return kvm_handle_hc_map_gpa_range(cpu, run);
- 
-     return -EINVAL;
- }
-@@ -6118,7 +6139,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-         break;
- #endif
-     case KVM_EXIT_HYPERCALL:
--        ret = kvm_handle_hypercall(run);
-+        ret = kvm_handle_hypercall(cpu, run);
-         break;
-     default:
-         fprintf(stderr, "KVM: unknown exit reason %d\n", run->exit_reason);
+s/repaced/replaced
 
-base-commit: 0f15892acaf3f50ecc20c6dad4b3ebdd701aa93e
--- 
-2.46.2
+> +#pragma GCC poison TARGET_PAGE_BITS_MIN
+> +
+>   #include "qemu/compiler.h"
+>   
+>   /* Older versions of C++ don't get definitions of various macros from
+> diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
+> index ff06e41497..63989e71c0 100644
+> --- a/target/alpha/cpu-param.h
+> +++ b/target/alpha/cpu-param.h
+> @@ -18,7 +18,6 @@
+>    * a 4k minimum to match x86 host, which can minimize emulation issues.
+>    */
+>   # define TARGET_PAGE_BITS_VARY
+> -# define TARGET_PAGE_BITS_MIN 12
+>   # define TARGET_VIRT_ADDR_SPACE_BITS  63
+>   #else
+>   # define TARGET_PAGE_BITS 13
+> diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
+> index 896b35bd6d..a7ae42d17d 100644
+> --- a/target/arm/cpu-param.h
+> +++ b/target/arm/cpu-param.h
+> @@ -24,7 +24,6 @@
+>   # else
+>   /* Allow user-only to vary page size from 4k */
+>   #  define TARGET_PAGE_BITS_VARY
+> -#  define TARGET_PAGE_BITS_MIN  12
+>   # endif
+>   # else
+>   #  define TARGET_PAGE_BITS 12
+> @@ -35,7 +34,7 @@
+>    * have to support 1K tiny pages.
+>    */
+>   # define TARGET_PAGE_BITS_VARY
+> -# define TARGET_PAGE_BITS_MIN  10
+> +# define TARGET_PAGE_BITS_LEGACY 10
+>   #endif /* !CONFIG_USER_ONLY */
+>   
+>   /* ARM processors have a weak memory model */
+> diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
+> index 6c4525fdf3..553ad2f4c6 100644
+> --- a/target/ppc/cpu-param.h
+> +++ b/target/ppc/cpu-param.h
+> @@ -33,7 +33,6 @@
+>   #ifdef CONFIG_USER_ONLY
+>   /* Allow user-only to vary page size from 4k */
+>   # define TARGET_PAGE_BITS_VARY
+> -# define TARGET_PAGE_BITS_MIN 12
+>   #else
+>   # define TARGET_PAGE_BITS 12
+>   #endif
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 39314e86f3..0de46903dd 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -49,7 +49,6 @@
+>   #endif
+>   #include "tcg/tcg-ldst.h"
+>   
+> -QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & ((1u < TARGET_PAGE_BITS_MIN) - 1));
+>   
+>   /* DEBUG defines, enable DEBUG_TLB_LOG to log to the CPU_LOG_MMU target */
+>   /* #define DEBUG_TLB */
+> diff --git a/page-vary-target.c b/page-vary-target.c
+> index 6251d948cf..d83f9a6a90 100644
+> --- a/page-vary-target.c
+> +++ b/page-vary-target.c
+> @@ -23,19 +23,45 @@
+>   #include "exec/page-vary.h"
+>   #include "exec/target_page.h"
+>   
+> +
+> +/*
+> + * For system mode, the minimum comes from the number of bits
+> + * required for maximum alignment (6) and the number of bits
+> + * required for TLB_FLAGS_MASK (3).
+> + *
+> + * For user mode, TARGET_PAGE_BITS_VARY is a hack to allow the target
+> + * page size to match the host page size.  Mostly, this reduces the
+> + * ordinary target page size to run on a host with 4KiB pages (i.e. x86).
+> + * There is no true minimum required by the implementation, but keep the
+> + * same minimum as for system mode for sanity.
+> + * See linux-user/mmap.c, mmap_h_lt_g and mmap_h_gt_g.
+> + */
+> +#define TARGET_PAGE_BITS__MIN 9
+> +
+> +#ifndef TARGET_PAGE_BITS_VARY
+> +QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS__MIN);
+> +#endif
+> +
+> +#ifndef CONFIG_USER_ONLY
+> +#include "exec/tlb-flags.h"
+> +
+> +QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & ((1u < TARGET_PAGE_BITS__MIN) - 1));
+> +
+>   int migration_legacy_page_bits(void)
+>   {
+>   #ifdef TARGET_PAGE_BITS_VARY
+> -    return TARGET_PAGE_BITS_MIN;
+> +    QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS_LEGACY < TARGET_PAGE_BITS__MIN);
+> +    return TARGET_PAGE_BITS_LEGACY;
+>   #else
+>       return TARGET_PAGE_BITS;
+>   #endif
+>   }
+> +#endif
+>   
+>   bool set_preferred_target_page_bits(int bits)
+>   {
+> +    assert(bits >= TARGET_PAGE_BITS__MIN);
+>   #ifdef TARGET_PAGE_BITS_VARY
+> -    assert(bits >= TARGET_PAGE_BITS_MIN);
+>       return set_preferred_target_page_bits_common(bits);
+>   #else
+>       return true;
+> @@ -44,5 +70,12 @@ bool set_preferred_target_page_bits(int bits)
+>   
+>   void finalize_target_page_bits(void)
+>   {
+> -    finalize_target_page_bits_common(TARGET_PAGE_BITS_MIN);
+> +#ifndef TARGET_PAGE_BITS_VARY
+> +    finalize_target_page_bits_common(TARGET_PAGE_BITS);
+> +#elif defined(CONFIG_USER_ONLY)
+> +    assert(target_page.bits != 0);
+> +    finalize_target_page_bits_common(target_page.bits);
+> +#else
+> +    finalize_target_page_bits_common(TARGET_PAGE_BITS_LEGACY);
+> +#endif
+>   }
 
+Great!
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+Any chance we would rename TARGET_PAGE_BITS__MIN? (MIN_ALL? ALL_MIN? 
+ARCH_MIN? any other idea)
+I know it's restricted to this file only, but the __ is surprising.
 
