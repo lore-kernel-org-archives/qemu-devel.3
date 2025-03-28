@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957FBC28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 19:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4316C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 19:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyF2p-0006qZ-Rw; Fri, 28 Mar 2025 15:07:07 -0400
+	id 1tyF2p-0006qB-5O; Fri, 28 Mar 2025 15:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1tyF2W-0006kw-HF; Fri, 28 Mar 2025 15:06:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1tyF2Z-0006l9-2Q; Fri, 28 Mar 2025 15:06:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1tyF2S-0008Ku-KN; Fri, 28 Mar 2025 15:06:48 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52SE3Cwe017920;
- Fri, 28 Mar 2025 19:06:37 GMT
+ id 1tyF2W-0008OQ-B1; Fri, 28 Mar 2025 15:06:50 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52SIe45V028163;
+ Fri, 28 Mar 2025 19:06:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=J0mwcD75hRL6j0S6B
- 13UW9e3EdY89HRLmo8A7+2dqFo=; b=PCK9fiAC+J5jca3XKh5PC8bByyN8AYr8M
- gNkF5KeOGWm4077NbiGNVohjTjQBw3NJIb5OHTwqbr0Ee8lfVSFuUg3isNvzimSo
- un7b6XHoohotbTu1XM8kUOhLdsVjHF9x2DD3VZBGMxPoRV8Pd2EPnxA66uGlPxz2
- 8E4NFHlXgBQcj8s2G5WdqLpjdqUON4aeo7mLiBOSB9ziDJZ0I3qpoZ6CmDoyc8TE
- ImlxP4F5k1t3xIfm5W196jvYeWsYUUpri1GSLN+bmatDnOfbRB94T27s7QrgawiL
- Laf+h5dzLXiNJu2Zzo3U1D7B/ZOl50lAw2q0dOxsWPYABNV2ey3+Q==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45nw6p9kkf-1
+ :mime-version:references:subject:to; s=pp1; bh=ApBKIxcvkYHwABDFs
+ m6vwkCfcskVCxxcrZbUhNz2sdk=; b=UOP7d1a6myyIIdqYE0pTNGVxt3n3wHSro
+ q6fgE0Kat2aRnPdFedCKXSOBR+jJ2J0+ZjsWCJcrV7lbQRIS2PuCDHQwJPAdwx4V
+ RigZj6kx7/y36UIhMhTwhTQTd3iYTOAq/9BLHJ2PQwvQ/j7c8YyOqgXII33vRbX4
+ b7NtIGG6W5sT4W+gVsxb9ShzKusopVceONNFvAUZnNNQT+nrpHicByYPnV0OVBUC
+ rhPcsjnVAKVRaTGzWCIPvJutJnlRQyD6pBcuyFYhKtU4CuvRtT/dhfr1FNCVi4tf
+ 0lwu2on1n56MPXSGL11CK22YjaH2PXDmUDnIlltyaLzpYJAslPkww==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45ndupwu1x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 28 Mar 2025 19:06:36 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52SGXprB030418;
- Fri, 28 Mar 2025 19:06:35 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j7htv31v-1
+ Fri, 28 Mar 2025 19:06:34 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52SHLBs8012239;
+ Fri, 28 Mar 2025 19:06:34 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j91mksuq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 28 Mar 2025 19:06:35 +0000
+ Fri, 28 Mar 2025 19:06:34 +0000
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52SJ6W9625559576
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52SJ6WF929033106
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 28 Mar 2025 19:06:32 GMT
+ Fri, 28 Mar 2025 19:06:33 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DBDF25805C;
- Fri, 28 Mar 2025 19:06:33 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD5965805A;
+ by IMSVA (Postfix) with ESMTP id A996D58060;
  Fri, 28 Mar 2025 19:06:32 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B0A0F5805A;
+ Fri, 28 Mar 2025 19:06:31 +0000 (GMT)
 Received: from IBM-D32RQW3.ibm.com (unknown [9.61.244.227])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 28 Mar 2025 19:06:32 +0000 (GMT)
+ Fri, 28 Mar 2025 19:06:31 +0000 (GMT)
 From: Farhan Ali <alifm@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: alifm@linux.ibm.com, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
  qemu-block@nongnu.org, qemu-s390x@nongnu.org, stefanha@redhat.com,
  fam@euphon.net, philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com,
  thuth@redhat.com
-Subject: [PATCH v2 2/3] include: Add a header to define PCI MMIO functions
-Date: Fri, 28 Mar 2025 12:06:26 -0700
-Message-ID: <20250328190627.3025-3-alifm@linux.ibm.com>
+Subject: [PATCH v2 1/3] util: Add functions for s390x mmio read/write
+Date: Fri, 28 Mar 2025 12:06:25 -0700
+Message-ID: <20250328190627.3025-2-alifm@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250328190627.3025-1-alifm@linux.ibm.com>
 References: <20250328190627.3025-1-alifm@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 2mcVHPskHn3GEU9IBFL19nAaVkp1quhX
-X-Proofpoint-GUID: 2mcVHPskHn3GEU9IBFL19nAaVkp1quhX
+X-Proofpoint-GUID: bwII2NYyqgBiudUD21LzNM1IWc3e2JAf
+X-Proofpoint-ORIG-GUID: bwII2NYyqgBiudUD21LzNM1IWc3e2JAf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-28_09,2025-03-27_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0 mlxlogscore=715
- suspectscore=0 impostorscore=0 clxscore=1015 phishscore=0 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ clxscore=1015 phishscore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
+ mlxlogscore=662 priorityscore=1501 mlxscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2503280129
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -108,24 +108,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a generic QEMU API for PCI MMIO reads/writes.
-The functions access little endian memory and returns
-the result in host cpu endianness.
+Starting with z15 (or newer) we can execute mmio
+instructions from userspace. On older platforms
+where we don't have these instructions available
+we can fallback to using system calls to access
+the PCI mapped resources.
 
+This patch adds helper functions for mmio reads
+and writes for s390x.
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 ---
- include/qemu/pci-mmio.h | 116 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 116 insertions(+)
- create mode 100644 include/qemu/pci-mmio.h
+ include/qemu/s390x_pci_mmio.h |  23 ++++++
+ util/meson.build              |   2 +
+ util/s390x_pci_mmio.c         | 148 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 173 insertions(+)
+ create mode 100644 include/qemu/s390x_pci_mmio.h
+ create mode 100644 util/s390x_pci_mmio.c
 
-diff --git a/include/qemu/pci-mmio.h b/include/qemu/pci-mmio.h
+diff --git a/include/qemu/s390x_pci_mmio.h b/include/qemu/s390x_pci_mmio.h
 new file mode 100644
-index 0000000000..2ef92455b1
+index 0000000000..aead791475
 --- /dev/null
-+++ b/include/qemu/pci-mmio.h
-@@ -0,0 +1,116 @@
++++ b/include/qemu/s390x_pci_mmio.h
+@@ -0,0 +1,23 @@
 +/*
-+ * QEMU PCI MMIO API
++ * s390x PCI MMIO definitions
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Farhan Ali <alifm@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef S390X_PCI_MMIO_H
++#define S390X_PCI_MMIO_H
++
++uint8_t s390x_pci_mmio_read_8(const void *ioaddr);
++uint16_t s390x_pci_mmio_read_16(const void *ioaddr);
++uint32_t s390x_pci_mmio_read_32(const void *ioaddr);
++uint64_t s390x_pci_mmio_read_64(const void *ioaddr);
++
++void s390x_pci_mmio_write_8(void *ioaddr, uint8_t val);
++void s390x_pci_mmio_write_16(void *ioaddr, uint16_t val);
++void s390x_pci_mmio_write_32(void *ioaddr, uint32_t val);
++void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val);
++
++
++#endif
+diff --git a/util/meson.build b/util/meson.build
+index 780b5977a8..acb21592f9 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -131,4 +131,6 @@ elif cpu in ['ppc', 'ppc64']
+   util_ss.add(files('cpuinfo-ppc.c'))
+ elif cpu in ['riscv32', 'riscv64']
+   util_ss.add(files('cpuinfo-riscv.c'))
++elif cpu == 's390x'
++  util_ss.add(files('s390x_pci_mmio.c'))
+ endif
+diff --git a/util/s390x_pci_mmio.c b/util/s390x_pci_mmio.c
+new file mode 100644
+index 0000000000..820458a026
+--- /dev/null
++++ b/util/s390x_pci_mmio.c
+@@ -0,0 +1,148 @@
++/*
++ * s390x PCI MMIO definitions
 + *
 + * Copyright 2025 IBM Corp.
 + * Author(s): Farhan Ali <alifm@linux.ibm.com>
@@ -133,113 +182,145 @@ index 0000000000..2ef92455b1
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef QEMU_PCI_MMIO_H
-+#define QEMU_PCI_MMIO_H
++#include "qemu/osdep.h"
++#include <unistd.h>
++#include <sys/syscall.h>
++#include "qemu/s390x_pci_mmio.h"
++#include "elf.h"
 +
-+#ifdef __s390x__
-+#include "s390x_pci_mmio.h"
-+#endif
++union register_pair {
++    unsigned __int128 pair;
++    struct {
++        uint64_t even;
++        uint64_t odd;
++    };
++};
 +
-+static inline uint8_t qemu_pci_mmio_read_8(const void *ioaddr)
++static bool is_mio_supported;
++
++static __attribute__((constructor)) void check_is_mio_supported(void)
 +{
-+    uint8_t ret = 0;
-+#ifdef __s390x__
-+    ret = s390x_pci_mmio_read_8(ioaddr);
-+#else
-+    /* Prevent the compiler from optimizing away the load */
-+    ret = *((volatile uint8_t *)ioaddr);
-+#endif
-+
-+    return ret;
++    is_mio_supported = !!(qemu_getauxval(AT_HWCAP) & HWCAP_S390_PCI_MIO);
 +}
 +
-+static inline uint16_t qemu_pci_mmio_read_16(const void *ioaddr)
++static uint64_t s390x_pcilgi(const void *ioaddr, size_t len)
 +{
-+    uint16_t ret = 0;
-+#ifdef __s390x__
-+    ret = s390x_pci_mmio_read_16(ioaddr);
-+#else
-+    /* Prevent the compiler from optimizing away the load */
-+    ret = *((volatile uint16_t *)ioaddr);
-+#endif
++    union register_pair ioaddr_len = { .even = (uint64_t)ioaddr,
++                                       .odd = len };
++    uint64_t val;
++    int cc;
 +
-+    return le16_to_cpu(ret);
++    asm volatile(
++        /* pcilgi */
++        ".insn   rre,0xb9d60000,%[val],%[ioaddr_len]\n"
++        "ipm     %[cc]\n"
++        "srl     %[cc],28\n"
++        : [cc] "=d"(cc), [val] "=d"(val),
++        [ioaddr_len] "+&d"(ioaddr_len.pair) :: "cc");
++
++    if (cc) {
++        val = -1ULL;
++    }
++
++    return val;
 +}
 +
-+static inline uint32_t qemu_pci_mmio_read_32(const void *ioaddr)
++static void s390x_pcistgi(void *ioaddr, uint64_t val, size_t len)
 +{
-+    uint32_t ret = 0;
-+#ifdef __s390x__
-+    ret = s390x_pci_mmio_read_32(ioaddr);
-+#else
-+    /* Prevent the compiler from optimizing away the load */
-+    ret = *((volatile uint32_t *)ioaddr);
-+#endif
++    union register_pair ioaddr_len = {.even = (uint64_t)ioaddr, .odd = len};
 +
-+    return le32_to_cpu(ret);
++    asm volatile (
++        /* pcistgi */
++        ".insn   rre,0xb9d40000,%[val],%[ioaddr_len]\n"
++        : [ioaddr_len] "+&d" (ioaddr_len.pair)
++        : [val] "d" (val)
++        : "cc", "memory");
 +}
 +
-+static inline uint64_t qemu_pci_mmio_read_64(const void *ioaddr)
++uint8_t s390x_pci_mmio_read_8(const void *ioaddr)
 +{
-+    uint64_t ret = 0;
-+#ifdef __s390x__
-+    ret = s390x_pci_mmio_read_64(ioaddr);
-+#else
-+    /* Prevent the compiler from optimizing away the load */
-+    ret = *((volatile uint64_t *)ioaddr);
-+#endif
++    uint8_t val = 0;
 +
-+    return le64_to_cpu(ret);
++    if (is_mio_supported) {
++        val = s390x_pcilgi(ioaddr, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_read, ioaddr, &val, sizeof(val));
++    }
++    return val;
 +}
 +
-+static inline void qemu_pci_mmio_write_8(void *ioaddr, uint8_t val)
++uint16_t s390x_pci_mmio_read_16(const void *ioaddr)
 +{
++    uint16_t val = 0;
 +
-+#ifdef __s390x__
-+    s390x_pci_mmio_write_8(ioaddr, val);
-+#else
-+    /* Prevent the compiler from optimizing away the store */
-+    *((volatile uint8_t *)ioaddr) = val;
-+#endif
++    if (is_mio_supported) {
++        val = s390x_pcilgi(ioaddr, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_read, ioaddr, &val, sizeof(val));
++    }
++    return val;
 +}
 +
-+static inline void qemu_pci_mmio_write_16(void *ioaddr, uint16_t val)
++uint32_t s390x_pci_mmio_read_32(const void *ioaddr)
 +{
-+    val = cpu_to_le16(val);
++    uint32_t val = 0;
 +
-+#ifdef __s390x__
-+    s390x_pci_mmio_write_16(ioaddr, val);
-+#else
-+    /* Prevent the compiler from optimizing away the store */
-+    *((volatile uint16_t *)ioaddr) = val;
-+#endif
++    if (is_mio_supported) {
++        val = s390x_pcilgi(ioaddr, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_read, ioaddr, &val, sizeof(val));
++    }
++    return val;
 +}
 +
-+static inline void qemu_pci_mmio_write_32(void *ioaddr, uint32_t val)
++uint64_t s390x_pci_mmio_read_64(const void *ioaddr)
 +{
-+    val = cpu_to_le32(val);
++    uint64_t val = 0;
 +
-+#ifdef __s390x__
-+    s390x_pci_mmio_write_32(ioaddr, val);
-+#else
-+    /* Prevent the compiler from optimizing away the store */
-+    *((volatile uint32_t *)ioaddr) = val;
-+#endif
++    if (is_mio_supported) {
++        val = s390x_pcilgi(ioaddr, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_read, ioaddr, &val, sizeof(val));
++    }
++    return val;
 +}
 +
-+static inline void qemu_pci_mmio_write_64(void *ioaddr, uint64_t val)
++void s390x_pci_mmio_write_8(void *ioaddr, uint8_t val)
 +{
-+    val = cpu_to_le64(val);
-+
-+#ifdef __s390x__
-+    s390x_pci_mmio_write_64(ioaddr, val);
-+#else
-+    /* Prevent the compiler from optimizing away the store */
-+    *((volatile uint64_t *)ioaddr) = val;
-+#endif
++    if (is_mio_supported) {
++        s390x_pcistgi(ioaddr, val, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_write, ioaddr, &val, sizeof(val));
++    }
 +}
 +
-+#endif
++void s390x_pci_mmio_write_16(void *ioaddr, uint16_t val)
++{
++    if (is_mio_supported) {
++        s390x_pcistgi(ioaddr, val, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_write, ioaddr, &val, sizeof(val));
++    }
++}
++
++void s390x_pci_mmio_write_32(void *ioaddr, uint32_t val)
++{
++    if (is_mio_supported) {
++        s390x_pcistgi(ioaddr, val, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_write, ioaddr, &val, sizeof(val));
++    }
++}
++
++void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val)
++{
++    if (is_mio_supported) {
++        s390x_pcistgi(ioaddr, val, sizeof(val));
++    } else {
++        syscall(__NR_s390_pci_mmio_write, ioaddr, &val, sizeof(val));
++    }
++}
++
 -- 
 2.43.0
 
