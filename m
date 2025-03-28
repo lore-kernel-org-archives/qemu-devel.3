@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D7AC28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 05:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9976DC28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 05:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ty27N-0004uW-I0; Fri, 28 Mar 2025 01:18:57 -0400
+	id 1ty2Aw-0005tZ-HS; Fri, 28 Mar 2025 01:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1ty27L-0004tr-6L
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:18:55 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1ty2Au-0005t6-Pf
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:22:36 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1ty27J-00027k-GQ
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:18:54 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-303a66af07eso2453081a91.2
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 22:18:52 -0700 (PDT)
+ id 1ty2Ar-0002lf-KA
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:22:35 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2ff6cf448b8so3969387a91.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 22:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743139131; x=1743743931; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743139352; x=1743744152; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=qxe6/vH6pc4ou9pzuZ4OfaKT5uzIZ0TXJ/5poEzgEAQ=;
- b=GoKvNMRpHqE8zfCT6yYki2VztniAyVcFl83mwLv7R8iXgFYWgiB5xTC0EmdGxQOdx0
- i7OTIjl07EQvi5KDFQZn7TB7uQ13FPqoO2JQgkNBM3mW3g/hqo6ysxyclqrnCOP3texJ
- YC78cITcjD0Y5Wul501edzY/5Qu8VLa6tM8ccL8keQpbSyacpqgtA0MFV8FG4mHNVyP2
- mmds9WUCSSLbHjiRowE0F85kp3t/rNJ312KCud0msA8HoVsm+RODx0KcgBWYpg/R4CY/
- w76Ujzp921GuJbFuYEaXu1St6iZS7GIh/jyUnZakEgoayrsZfrw+TB4KDfkhlBA7vxAl
- fzFA==
+ bh=XHMzNp3b69w9snRrUjSwrNXx6DGtzGaJ9IdIbxLF6Y0=;
+ b=BsRtn42T2H7l0d7cGtUKs8UU9MRzQ9y0h/+p7B9kd79wVfnRYctTpw2Jbld8Ehp9id
+ BVUta/1z5IjM13ixn6mnTH6L6z7KXKpsm2YqUggvq3UesL1OBaj2rOrPolzkzipUqxDz
+ b2rksd9rn+YoMGN/XY273bRWnW7Gf6wmTsxxSx2T6iIiSchC8WIoPKxLyQEV1NMmiWWJ
+ Xd1YOx+etqtHnhxQB4FG5W8Mdr8H+nFpVIp8NS9kdNexTGUWgYMhz959MntMDOZKLN8+
+ Of7ybXvqxorJMhS3vOeczfTpEXS5PUGNr6lJC+DQxrXw10d1F5wjvWBMcfQwyH+yz2ke
+ gA/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743139131; x=1743743931;
+ d=1e100.net; s=20230601; t=1743139352; x=1743744152;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qxe6/vH6pc4ou9pzuZ4OfaKT5uzIZ0TXJ/5poEzgEAQ=;
- b=BNuS7DujWO7UY6ftR+ys8SQbg7vagDgG/BC1qGsy2WrGmWzpsdW1M0EjqZ7NhvdySn
- BGk3BpFiXqHg1vzHh57yQODPKlYmIPHJv7WEGicqm8Q4wPUH3HSu96Li7adRh4/4QgQr
- D6QIVqYhtYSLTKfMcldip/y8p7y2Voki0M9uV5cfkbXIVB3DhuazqOzx+Nu3l0JFYO8s
- 40MUEDEclYiqScYs9vmDur1emmAdKogX9l4N5ot55YZCwccZfeTuQy+2ypPWSYDBTh9P
- zeGIMlu1IE4MI8GZ/KZNNRNBwt9qaWm8OuoWNLXTSAsqTJcLsAr6T6YQY5hCDMl4PT9O
- fuVQ==
+ bh=XHMzNp3b69w9snRrUjSwrNXx6DGtzGaJ9IdIbxLF6Y0=;
+ b=m/fhRHjselukSOQ8utXW1sRX6L3s35clbRcmG3s3XzviuIq+HmpqlwRJMgmVZY2bmM
+ HMy7vt2gJ1KUpxh3go6iF2DkicdQX/aD6IUPCXdR0vtYvNm5wA1O5iKHJ44hZ5GqMdHW
+ /dE2ab/pxs7aWB8O/RCtlhCITNBzt9tbf1YSS40fL40LXjZDMI19ZEpMlOxgkjk5l8M2
+ rIz5ABYzRacoXdbAcdArXDmgvXFJUnxS2sA3yIeCKYerKU/jlrwVXSBvpltqCwKOC5uC
+ Hw5nRhneOvkvlXczy5z1HbV99IwxgcDwzzYLIaVsILJ2swpxlCc/FzOwm2NFeheUcBUP
+ ndjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFEXJApGpruBwtdSRTtu3ancl4ghAT/y6fU3/7LHdBb+OTw0pwSTS5ChiixyM1bjw79a0lz9ZBSbNY@nongnu.org
-X-Gm-Message-State: AOJu0YzL9Cbj59j2ET9nfrLWH/BLW3+DEdrimNKUE53UxWTWNgBmjtWD
- v8z3uqJorBnnTjGuMbl1ip3U9M2EwjZOsKnPAXXzU0d3qb/Iwezz
-X-Gm-Gg: ASbGncs7xQoN4tQkYqn9xvjgpYkf+3BAp25OBuUHCyiBjLjuUbj7slZR1r9xWmqruhm
- M+OmUoBrKgRs0/Tl+8V0tHupqzYRwEK0bgXf56bPNuzT4YV0SLUS3CH85HwYWHj+a/TxAOQHtAO
- uRYPJqviBzE6lJ+Mk4gzY4w1Wqq0b4VnMRR81T7V/771lMT27w0zp2vaBNyXAREszJzJUSDKnDf
- dr+yZUopvnRBafphUL+xssF6blgx7YrHYfuVKq2gOrCvN8OnBUK5DaiSx4ZT8uAdwO0l2wr4OWn
- evVCuQYe+dYp9DNEZ5UKNz4IvUgQMauiTOSUlG0K57eIQbw81ja36zUFOd0N/cMftBk8rUT3sx/
- GIFY13jOt7+dZ
-X-Google-Smtp-Source: AGHT+IF9bCVwPyYoBqdlYEEtKjix1alx//zabe4W09YJocELPC0MZxY1jLQKIrY5b/AspiNdcPm4rQ==
-X-Received: by 2002:a05:6a20:9147:b0:1f5:56fe:b437 with SMTP id
- adf61e73a8af0-1fea2f4c37fmr11628430637.32.1743139131396; 
- Thu, 27 Mar 2025 22:18:51 -0700 (PDT)
+ AJvYcCWtjLZN8xMlJI7n0Du4boNng8S9vcwnyyWLGpsF6z8qZALYY3JeUpWa7ffZDjb3QSf5tnI2Lrau2tgF@nongnu.org
+X-Gm-Message-State: AOJu0YwnYK+lANndwfutokefPrzSniSvOcbG9TiodV1lo2HxUBVsZl7u
+ /bA4oqd+L7g6VGuo3hC3Hs30YU9H3HTwXHqxHT5UiAsNrxzwpFTA
+X-Gm-Gg: ASbGncs0BgERC5Ks6we7AtqCFwnrHOKl0F/56JaS8Va8U+CkC0tAN2spQ5pehqEzsxP
+ Ei3HHQW5jZuqCUCQkfNm4ClOvr91HN7eSOsGxR53yPhOfxxPA1/BnS6OBme2bYVxxSoqt4CjYox
+ Pg4FhEuJnwy7vxNVOIxXZLATQaDWhRBXratHY+4qXz69T9l+0z01lDNSnVbFYzQnYHMKNa0HR9o
+ axC+jsAmtQcCBQ08FaHOigcXmkV952dYLWByKT2l39afErSugk9APEM0V3kcIGVRRxSWTRDTUZj
+ 0wOfz6yAv2EWgv23Scak57jFMf6Puo9FCtuSm0Pt7TKFUDmhs/v9p/h4klbh1pT7rLVVDFX3nb3
+ /X4InpWR6ikrf5OHRKA7WDqM=
+X-Google-Smtp-Source: AGHT+IElAMaRtgss49/WtnKv7dLz7nBZMb433bpUZlfV7smombqxPT6oFGutQI5ZQKbDLmlbU6sIjg==
+X-Received: by 2002:a17:90a:f947:b0:2ea:712d:9a82 with SMTP id
+ 98e67ed59e1d1-303a8d80a3emr9655561a91.29.1743139351918; 
+ Thu, 27 Mar 2025 22:22:31 -0700 (PDT)
 Received: from ?IPV6:2401:4900:1c7e:7fd6:5c7b:30a9:c6b6:f81d?
  ([2401:4900:1c7e:7fd6:5c7b:30a9:c6b6:f81d])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af93b6a02cdsm649753a12.26.2025.03.27.22.18.49
+ d2e1a72fcca58-73971068581sm816922b3a.114.2025.03.27.22.22.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 22:18:50 -0700 (PDT)
-Message-ID: <f69ea09f-e66b-4ae4-8211-f7c0683b8bdc@gmail.com>
-Date: Fri, 28 Mar 2025 10:48:47 +0530
+ Thu, 27 Mar 2025 22:22:31 -0700 (PDT)
+Message-ID: <5a3f55be-5b5d-4a77-9e3d-0dbf1f4c7705@gmail.com>
+Date: Fri, 28 Mar 2025 10:52:28 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 1/7] vhost: Refactor vhost_svq_add_split
+Subject: Re: [RFC v5 5/7] vhost: Forward descriptors to guest via packed vqs
 To: Eugenio Perez Martin <eperezma@redhat.com>
 Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
  sahilcdq@proton.me
 References: <20250324135929.74945-1-sahilcdq@proton.me>
- <20250324135929.74945-2-sahilcdq@proton.me>
- <CAJaqyWc0sH0o9MnnJPO8jLbpQVyec+QeG_TE2hnWxoiBqmivFA@mail.gmail.com>
+ <20250324135929.74945-6-sahilcdq@proton.me>
+ <49e5e2e1-4715-4949-93d5-b4e0f5425bbf@gmail.com>
+ <CAJaqyWckqkkE=sB6yk1RhV8DVoPBAODqdNfgq5Vc0DLGo2_TNw@mail.gmail.com>
 Content-Language: en-US
 From: Sahil Siddiq <icegambit91@gmail.com>
 Autocrypt: addr=icegambit91@gmail.com; keydata=
@@ -115,11 +116,11 @@ Autocrypt: addr=icegambit91@gmail.com; keydata=
  kn6WekD80DYbAfKyFAXQCO/nclZ82RNmJbDRi3AeMFrxKi6KgdGCp1Izhj9USaMOVqcuV2p0
  Rsoq+sFqWOKaHWnQHCM9RkynQVqrgUaSawEbGlCP1KIhVmjfjVsmsCaKkUb9T6VeO+ZNe+Pn
  rPgMe6IIvn24UuW2f6fIt0AaqOWq
-In-Reply-To: <CAJaqyWc0sH0o9MnnJPO8jLbpQVyec+QeG_TE2hnWxoiBqmivFA@mail.gmail.com>
+In-Reply-To: <CAJaqyWckqkkE=sB6yk1RhV8DVoPBAODqdNfgq5Vc0DLGo2_TNw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=icegambit91@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=icegambit91@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -145,25 +146,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
-On 3/26/25 4:55 PM, Eugenio Perez Martin wrote:
-> On Mon, Mar 24, 2025 at 2:59 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
+On 3/26/25 2:04 PM, Eugenio Perez Martin wrote:
+> On Mon, Mar 24, 2025 at 3:34 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
 >>
->> This commit refactors vhost_svq_add_split and vhost_svq_add to simplify
->> their implementation and prepare for the addition of packed vqs in the
->> following commits.
+>> Hi,
 >>
->> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
->> ---
->> No changes from v4 -> v5.
+>> I had a few more queries here as well.
+>>
+>> On 3/24/25 7:29 PM, Sahil Siddiq wrote:
+>>> Detect when used descriptors are ready for consumption by the guest via
+>>> packed virtqueues and forward them from the device to the guest.
+>>>
+>>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+>>> ---
+>>> Changes from v4 -> v5:
+>>> - New commit.
+>>> - vhost-shadow-virtqueue.c:
+>>>     (vhost_svq_more_used): Split into vhost_svq_more_used_split and
+>>>     vhost_svq_more_used_packed.
+>>>     (vhost_svq_enable_notification): Handle split and packed vqs.
+>>>     (vhost_svq_disable_notification): Likewise.
+>>>     (vhost_svq_get_buf): Split into vhost_svq_get_buf_split and
+>>>     vhost_svq_get_buf_packed.
+>>>     (vhost_svq_poll): Use new functions.
+>>>
+>>>    hw/virtio/vhost-shadow-virtqueue.c | 121 ++++++++++++++++++++++++++---
+>>>    1 file changed, 110 insertions(+), 11 deletions(-)
+>>>
+>>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+>>> index 126957231d..8430b3c94a 100644
+>>> --- a/hw/virtio/vhost-shadow-virtqueue.c
+>>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+>>> @@ -463,7 +463,7 @@ static void vhost_handle_guest_kick_notifier(EventNotifier *n)
+>>>        vhost_handle_guest_kick(svq);
+>>>    }
+>>>
+>>> -static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
+>>> +static bool vhost_svq_more_used_split(VhostShadowVirtqueue *svq)
+>>>    {
+>>>        uint16_t *used_idx = &svq->vring.used->idx;
+>>>        if (svq->last_used_idx != svq->shadow_used_idx) {
+>>> @@ -475,6 +475,22 @@ static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
+>>>        return svq->last_used_idx != svq->shadow_used_idx;
+>>>    }
+>>>
+>>> +static bool vhost_svq_more_used_packed(VhostShadowVirtqueue *svq)
+>>> +{
+>>> +    bool avail_flag, used_flag, used_wrap_counter;
+>>> +    uint16_t last_used_idx, last_used, flags;
+>>> +
+>>> +    last_used_idx = svq->last_used_idx;
+>>> +    last_used = last_used_idx & ~(1 << VRING_PACKED_EVENT_F_WRAP_CTR);
+>>
+>> In the linux kernel, last_used is calculated as:
+>>
+>> last_used_idx & ~(-(1 << VRING_PACKED_EVENT_F_WRAP_CTR))
+>>
+>> ...instead of...
+>>
+>> last_used_idx & ~(1 << VRING_PACKED_EVENT_F_WRAP_CTR)
+>>
+>> Isn't the second option good enough if last_used_idx is uint16_t
+>> and VRING_PACKED_EVENT_F_WRAP_CTR is defined as 15.
 >>
 > 
-> You can carry the Acked-by from previous series if you make no changes
-> (or even small changes).
-> 
-> Acked-by: Eugenio Pérez <eperezma@redhat.com>
+> I think it is good enough with the u16 restrictions but it's just
+> defensive code.
 > 
 
-Understood.
+Got it. I think it'll be better then to follow the implementation in
+the kernel to keep it more robust.
+
+>>> +    used_wrap_counter = !!(last_used_idx & (1 << VRING_PACKED_EVENT_F_WRAP_CTR));
+>>> +
+>>> +    flags = le16_to_cpu(svq->vring_packed.vring.desc[last_used].flags);
+>>> +    avail_flag = !!(flags & (1 << VRING_PACKED_DESC_F_AVAIL));
+>>> +    used_flag = !!(flags & (1 << VRING_PACKED_DESC_F_USED));
+>>> +
+>>> +    return avail_flag == used_flag && used_flag == used_wrap_counter;
+>>> +}
+>>> +
+>>
+>> Also in the implementation of vhost_svq_more_used_split() [1], I haven't
+>> understood why the following condition:
+>>
+>> svq->last_used_idx != svq->shadow_used_idx
+>>
+>> is checked before updating the value of "svq->shadow_used_idx":
+>>
+>> svq->shadow_used_idx = le16_to_cpu(*(volatile uint16_t *)used_idx)
+>>
+> 
+> As far as I know this is used to avoid concurrent access to guest's
+> used_idx, avoiding cache sharing, the memory barrier, and the
+> potentially costly volatile access.
+> 
+
+By concurrent access, do you mean in case one thread has already updated
+the value of used_idx?
 
 Thanks,
 Sahil
