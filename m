@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E3AC28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 06:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693C2C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 07:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ty3b7-0004OP-5Z; Fri, 28 Mar 2025 02:53:45 -0400
+	id 1ty3mG-00008u-Ln; Fri, 28 Mar 2025 03:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ty3b0-0004Mq-I5
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 02:53:38 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ty3ay-0005Ln-TQ
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 02:53:38 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2279915e06eso40266695ad.1
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 23:53:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743144815; x=1743749615; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IT1ob+oVVHNmCb9rLnPe9cCt40MLH5r5ys2O5Wne8FI=;
- b=F1v73rhZOhr4HsVCbIgLVVHXuAWBmsz14+E5vUNox2gL7nLku4ei1yvK2G9wPxcxFU
- gG44ROOStFdfbhdMyVxUJIat0yGMaeKkWBcY5AUVTh+4+AMGWLzwvDBvnHghqHDjrYFm
- P+0FYaMGf7xQ9PJThUJpReNGDuPJ2uKY/UDyNKQhsZMYHYFNJBoTPLZxg8mzgj7kPxZI
- TteNRgZZedrDzl/97A3uQEIXfQCNwJf+C8PrT9Dlgkde1nMdNQHuYtepEgkMfgYOMv+Z
- pP+QLVgvhSehLiWvkBoriLPYCucgtpKjR2nQLbzD+q9fKkPBm5BXLs/vrILfyEjqyk5l
- BObA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743144815; x=1743749615;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IT1ob+oVVHNmCb9rLnPe9cCt40MLH5r5ys2O5Wne8FI=;
- b=hRErjyNjv6o7/KByH6a+zouv61OP0RdjlCIIb29Qi8ptE/9tr7sw2KhtptcwjVGgbn
- FWbguik9boivoTY5rBX9NsDbgElSWq6BiT0hJ4vD7PPsD5eAC3iimgK5swx5SuMZL///
- seg1Euwld1AQSjBqaYS98+AJBV2ZWMqHhqvlvtQRvrfILL4UFaRAZH+5Da3uu6RKpuoQ
- HZsHYBHH9yP7TRLIJzp2yPtcivqKv1v9SmXU85s0naghjV/fpWGwUMN9+3F7B2hO0HSm
- DVh8Ta2aqebJzXtnpqS3xJGTkHpGZhYJghuqkJayarqTwuuD9zq2NEESNBVsn//zmReP
- +eQA==
-X-Gm-Message-State: AOJu0YxDVAFDIZ9n3/b0ZoYA7IgVhKyWDIhjgYRrLm7uDbenzYjHThTs
- pJRjMaimoeMEObq2G6nywfarKTqY5OeaV5pkGEp8Re/i0TlqT/1BuZP3qQ==
-X-Gm-Gg: ASbGncuuHzkPb9aV2k/UxE5wXc+JYM9PCc22Wub7WX/uS+qMiYpjKlhDNvYOGeeETRv
- LqkpWWcKARbSYc8bApHPWsOuf2rR7IGZ9wRXeck6O3s4OoeLDqCARRia+onWPcMta2tO1OS4PPw
- 3tMLsL87ah27BEiUKHE1XpZO7ZAQtoH9mcmCX0HK3PtW6dB4unO6dLJnrmfvlbMqqAkpZIX3X3u
- 2FJACpged45evF7fC8yXrMw0MV4Y5ohhpomPjwhbWQWhBLb046Ir1d/OTFoqMl36tQmAttNtj5l
- kPoAhgFSG3EnaDxS9LkCsC7v2q6X+y91afjM3UeMh3LX6WXbwSnPIrJ+rbS8jx20ahYKr69NUa/
- 1jjKPcQ8gz5UYOFtWcexsD6si2gjtgnZFzVcPn/aT49D6CF89c48=
-X-Google-Smtp-Source: AGHT+IFbH2sgTOLp+gjjFLuf3vptBDaJAnlyXboP1rYs2VsujiMe/2McQdiDc1YfF3LZk5x1+mCHYQ==
-X-Received: by 2002:a17:902:d50a:b0:220:d909:1734 with SMTP id
- d9443c01a7336-22804851d85mr92835975ad.14.1743144815177; 
- Thu, 27 Mar 2025 23:53:35 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291f1cf8fesm10633025ad.110.2025.03.27.23.53.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Mar 2025 23:53:34 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrea Bolognani <abologna@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 3/3] Revert "target/riscv/kvm: add missing KVM CSRs"
-Date: Fri, 28 Mar 2025 16:53:18 +1000
-Message-ID: <20250328065318.1990698-4-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250328065318.1990698-1-alistair.francis@wdc.com>
-References: <20250328065318.1990698-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ty3mC-00005M-Ue
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 03:05:13 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ty3m9-0007FX-SN
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 03:05:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743145510; x=1774681510;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=3VrD5zHLNmhvqCcMQwahBVO9FyNPlzkMVC74SBwRArE=;
+ b=iTECGOCW38ujMtshadGm4bA81C/FsuOIuteel7c+i9j/fPltbrjbawNv
+ SyV+E2TrgpboONsw0WQFlRah2HxKl2ODR1c0WSHLYuZ9B94IAVrtMX66+
+ x2fZ3Fl/wl5ydG12/MWs0A81HPakOf85+c9a3oDLLwY8szisc1GXbQmrg
+ t7cOaV4hffgvkEFV+/FxP90Q+1/2KrNiBKLwJBnVi9cHiRbVSO/9/8wii
+ jE0uSV43Fkrh7BNiNVHPgL2GT9WZWSB844G7ycoZ00usri9sR8iMZm0dL
+ 5a1UQ14VwtMId7DDahxZ7kTfJHsgnEmqxeGAx+YPEnwTI4t3JD3opeVAf A==;
+X-CSE-ConnectionGUID: TULHVagQRb+NiaqMHMZkeQ==
+X-CSE-MsgGUID: jf8PVQ7ESsa5VAsSB5pBcw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11385"; a="43745162"
+X-IronPort-AV: E=Sophos;i="6.14,282,1736841600"; d="scan'208";a="43745162"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Mar 2025 00:05:05 -0700
+X-CSE-ConnectionGUID: B6JoLXGdTASS06qJH0cDtA==
+X-CSE-MsgGUID: 38nDZmjxR1aEBymOqAkQ+A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,282,1736841600"; d="scan'208";a="162606902"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Mar 2025 00:05:04 -0700
+Message-ID: <7b4d0c5f-eb9e-4fc1-bc85-c08b1e674586@intel.com>
+Date: Fri, 28 Mar 2025 15:05:00 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 2/8] migration: ram block cpr blockers
+To: Steven Sistare <steven.sistare@oracle.com>,
+ Michael Roth <michael.roth@amd.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
+References: <20250307181551.19887-1-farosas@suse.de>
+ <20250307181551.19887-3-farosas@suse.de>
+ <829e27d6-eb6b-8a26-e982-0ba936888c6a@amd.com>
+ <9576dc01-e26c-1fc4-6534-ac79c71331b5@amd.com>
+ <174301860426.2151434.16431559419990134889@amd.com> <87msd7a6td.fsf@suse.de>
+ <20250326213443.jl3r77hqh6gy2h4w@amd.com>
+ <307f12e8-7de0-42b2-97ab-997c2dc3f39c@oracle.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <307f12e8-7de0-42b2-97ab-997c2dc3f39c@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.782, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,67 +93,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On 3/27/2025 8:27 PM, Steven Sistare wrote:
+> On 3/26/2025 5:34 PM, Michael Roth wrote:
+>> On Wed, Mar 26, 2025 at 05:13:50PM -0300, Fabiano Rosas wrote:
+>>> Michael Roth <michael.roth@amd.com> writes:
+>>>
+>>>> Quoting Tom Lendacky (2025-03-26 14:21:31)
+>>>>> On 3/26/25 13:46, Tom Lendacky wrote:
+>>>>>> On 3/7/25 12:15, Fabiano Rosas wrote:
+>>>>>>> From: Steve Sistare <steven.sistare@oracle.com>
+>>>>>>>
+>>>>>>> Unlike cpr-reboot mode, cpr-transfer mode cannot save volatile 
+>>>>>>> ram blocks
+>>>>>>> in the migration stream file and recreate them later, because the 
+>>>>>>> physical
+>>>>>>> memory for the blocks is pinned and registered for vfio.  Add a 
+>>>>>>> blocker
+>>>>>>> for volatile ram blocks.
+>>>>>>>
+>>>>>>> Also add a blocker for RAM_GUEST_MEMFD.  Preserving guest_memfd 
+>>>>>>> may be
+>>>>>>> sufficient for CPR, but it has not been tested yet.
+>>>>>>>
+>>>>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>>>>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>>>>>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>>>>>>> Reviewed-by: David Hildenbrand <david@redhat.com>
+>>>>>>> Message-ID: <1740667681-257312-1-git-send-email- 
+>>>>>>> steven.sistare@oracle.com>
+>>>>>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>>>>>> ---
+>>>>>>>   include/exec/memory.h   |  3 ++
+>>>>>>>   include/exec/ramblock.h |  1 +
+>>>>>>>   migration/savevm.c      |  2 ++
+>>>>>>>   system/physmem.c        | 66 ++++++++++++++++++++++++++++++++++ 
+>>>>>>> +++++++
+>>>>>>>   4 files changed, 72 insertions(+)
+>>>>>>
+>>>>>> This patch breaks booting an SNP guest as it triggers the following
+>>>>>> assert:
+>>>>>>
+>>>>>> qemu-system-x86_64: ../util/error.c:68: error_setv: Assertion 
+>>>>>> `*errp == NULL' failed.
+>>>>>>
+>>>
+>>> Usually this means the error has already been set previously, which is
+>>> not allowed.
+>>>
+>>>>>> I tracked it to the err_setg() call in ram_block_add_cpr_blocker().
+>>>>>> It looks like the error message is unable to be printed because
+>>>>>> rb->cpr_blocker is NULL.
+>>>>>>
+>>>>>> Adding aux-ram-share=on to the -machine object gets me past the 
+>>>>>> error and
+>>>>>> therefore the assertion, but isn't that an incompatible change to 
+>>>>>> how an
+>>>>>> SNP guest has to be started?
+>>>>>
+>>>>> If I update the err_setg() call to use the errp parameter that is 
+>>>>> passed
+>>>>> into ram_block_add_cpr_blocker(), I get the following message and then
+>>>>> the guest launch terminates:
+>>>>>
+>>>
+>>> The usage at ram_block_add_cpr_blocker() is correct, the cpr_blocker
+>>> gets initialized and registered as a migration blocker. The errp only
+>>> becomes relevant later when migration starts and the error condition is
+>>> met.
+>>>
+>>>>> qemu-system-x86_64: Memory region pc.bios is not compatible with CPR.
+>>>>> share=on is required for memory-backend objects, and aux-ram- 
+>>>>> share=on is
+>>>>> required.
+>>>
+>>> Since errp is an &error_fatal, it causes QEMU to exit, so this^ error
+>>> message is bogus.
+>>>
+>>>>>
+>>>>> The qemu parameters I used prior to this patch that allowed an SNP 
+>>>>> guest
+>>>>> to launch were:
+>>>>>
+>>>>> -machine type=q35,confidential-guest-support=sev0,memory-backend=ram1
+>>>>> -object memory-backend- 
+>>>>> memfd,id=ram1,size=16G,share=true,prealloc=false
+>>>>>
+>>>>> With these parameters after this patch, the launch fails.
+>>>>
+>>>> I think it might be failing because the caller of
+>>>> ram_block_add_cpr_blocker() is passing in &error_abort, but if the
+>>>> error_setg() is call on a properly initialized cpr_blocker value then
+>>>> SNP is still able to boot for me.
+>>>> I'm not sure where the best spot is
+>>>> to initialize cpr_blocker, it probably needs to be done before either
+>>>> ram_block_add_cpr_blocker() or ram_block_del_cpr_blocker() are 
+>>>> callable,
+>>>> but the following avoids the reported crash at least:
+>>>>
+>>>> diff --git a/system/physmem.c b/system/physmem.c
+>>>> index 44dd129662..bff0fdcaac 100644
+>>>> --- a/system/physmem.c
+>>>> +++ b/system/physmem.c
+>>>> @@ -4176,6 +4176,7 @@ void ram_block_add_cpr_blocker(RAMBlock *rb, 
+>>>> Error **errp)
+>>>>           return;
+>>>>       }
+>>>>
+>>>> +    rb->cpr_blocker = NULL;
+>>>
+>>> Could it be the cpr_blocker already got set at ram_block_add() in the
+>>> RAM_GUEST_MEMFD path?
+>>
+>> That seems to be the case: in some cases ram_block_add() sets cpr_blocker
+>> when (new_block->flags & RAM_GUEST_MEMFD) is true, and then soon after
+>> when ram_block_add_cpr_blocker() is called on the same RAMBlock:
+>>
+>>    2025-03-26T21:08:15.092427Z qemu-system-x86_64: warning: 
+>> ram_block_add: new_block 0x55c247e4c880 new_block->cpr_blocker (nil) 
+>> name ram1
+>>    2025-03-26T21:08:15.124710Z qemu-system-x86_64: warning: 
+>> ram_block_add: new_block 0x55c2480fde00 new_block->cpr_blocker (nil) 
+>> name pc.bios
+>>    2025-03-26T21:08:15.126190Z qemu-system-x86_64: warning: 
+>> ram_block_add_cpr_blocker: rb 0x55c2480fde00 rb->cpr_blocker 
+>> 0x55c2480fe050 name pc.bios
+>>    2025-03-26T21:08:15.138582Z qemu-system-x86_64: warning: 
+>> ram_block_add: new_block 0x55c247e3c1e0 new_block->cpr_blocker (nil) 
+>> name pc.rom
+>>    2025-03-26T21:08:15.138938Z qemu-system-x86_64: warning: 
+>> ram_block_add_cpr_blocker: rb 0x55c247e3c1e0 rb->cpr_blocker 
+>> 0x55c247e3c890 name pc.rom
+>>    2025-03-26T21:08:16.185577Z qemu-system-x86_64: warning: 
+>> ram_block_add_cpr_blocker: rb 0x55c248db9200 rb->cpr_blocker (nil) 
+>> name /rom@etc/acpi/tables
+>>    2025-03-26T21:08:16.187140Z qemu-system-x86_64: warning: 
+>> ram_block_add_cpr_blocker: rb 0x55c248085620 rb->cpr_blocker (nil) 
+>> name /rom@etc/table-loader
+>>    2025-03-26T21:08:16.188029Z qemu-system-x86_64: warning: 
+>> ram_block_add_cpr_blocker: rb 0x55c2480ce220 rb->cpr_blocker (nil) 
+>> name /rom@etc/acpi/rsd
+> 
+> Thanks everyone for debugging this.  To summarize, 
+> ram_block_add_cpr_blocker already blocks
+> guest_memfd, because rb->fd < 0.  The fix is to delete this redundant 
+> code in ram_block_add:
+> 
+>          error_setg(&new_block->cpr_blocker,
+>                     "Memory region %s uses guest_memfd, "
+>                     "which is not supported with CPR.",
+>                     memory_region_name(new_block->mr));
+>          migrate_add_blocker_modes(&new_block->cpr_blocker, errp,
+>                                    MIG_MODE_CPR_TRANSFER, 
+> MIG_MODE_CPR_EXEC,
+>                                    -1);
 
-This commit breaks KVM boot on older kernels, like reported in [1], due
-to senvcfg not being available in them.
+I just encountered the same issue with TDX guest, after rebasing TDX 
+code to 10.0.0-rc0.
 
-There's also another problem related to scounteren. Using a recent
-enough guest buildroot, 'ping' will be build with rdtime support. In
-this case, doing a ping in a KVM guest while exposing scounteren will
-result in an error. The root cause relates to how KVM handles
-scounteren, but QEMU can work around it by initializing scounteren with
-the host value during init().
+thank you all for the reporting and quick solution for it.
 
-Fixing these issues in a non-rushed-bandaid manner results in an amount
-of design changes that I don't feel comfortable pushing during code
-freeze, so for 10.0 we'll remove the CSRs and re-introduce them in 10.1
-with the adequate support.
-
-This reverts commit 4db19d5b21e058e6eb3474b6be470d1184afaa9e.
-
-[1] https://lore.kernel.org/qemu-riscv/CABJz62OfUDHYkQ0T3rGHStQprf1c7_E0qBLbLKhfv=+jb0SYAw@mail.gmail.com/
-
-Reported-by: Andrea Bolognani <abologna@redhat.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250327152052.707657-1-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/kvm/kvm-cpu.c | 6 ------
- 1 file changed, 6 deletions(-)
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 4ffeeaa1c9..0f4997a918 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -624,8 +624,6 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-     env->stval = 0;
-     env->mip = 0;
-     env->satp = 0;
--    env->scounteren = 0;
--    env->senvcfg = 0;
- }
- 
- static int kvm_riscv_get_regs_csr(CPUState *cs)
-@@ -641,8 +639,6 @@ static int kvm_riscv_get_regs_csr(CPUState *cs)
-     KVM_RISCV_GET_CSR(cs, env, stval, env->stval);
-     KVM_RISCV_GET_CSR(cs, env, sip, env->mip);
-     KVM_RISCV_GET_CSR(cs, env, satp, env->satp);
--    KVM_RISCV_GET_CSR(cs, env, scounteren, env->scounteren);
--    KVM_RISCV_GET_CSR(cs, env, senvcfg, env->senvcfg);
- 
-     return 0;
- }
-@@ -660,8 +656,6 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
-     KVM_RISCV_SET_CSR(cs, env, stval, env->stval);
-     KVM_RISCV_SET_CSR(cs, env, sip, env->mip);
-     KVM_RISCV_SET_CSR(cs, env, satp, env->satp);
--    KVM_RISCV_SET_CSR(cs, env, scounteren, env->scounteren);
--    KVM_RISCV_SET_CSR(cs, env, senvcfg, env->senvcfg);
- 
-     return 0;
- }
--- 
-2.48.1
+> I will submit a fix (unless Tom or Michael would prefer to author it).
+> 
+> - Steve
+> 
 
 
