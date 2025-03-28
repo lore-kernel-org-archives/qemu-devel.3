@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A4DC28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 08:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D48C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 08:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ty4d9-0002ss-4I; Fri, 28 Mar 2025 03:59:55 -0400
+	id 1ty4fy-0003xQ-NK; Fri, 28 Mar 2025 04:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=v09i=WP=kaod.org=clg@ozlabs.org>)
- id 1ty4d5-0002sN-UQ; Fri, 28 Mar 2025 03:59:53 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1ty4fx-0003x7-Me; Fri, 28 Mar 2025 04:02:49 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=v09i=WP=kaod.org=clg@ozlabs.org>)
- id 1ty4d2-00063Y-MK; Fri, 28 Mar 2025 03:59:50 -0400
+ id 1ty4fu-0006qS-E6; Fri, 28 Mar 2025 04:02:49 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZPCc00KrLz4wxh;
- Fri, 28 Mar 2025 18:59:44 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZPCgR0XPJz4x3d;
+ Fri, 28 Mar 2025 19:02:43 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZPCbx43cHz4wj2;
- Fri, 28 Mar 2025 18:59:41 +1100 (AEDT)
-Message-ID: <e54f558e-643c-4fc2-ad93-04c6e6901357@kaod.org>
-Date: Fri, 28 Mar 2025 08:59:39 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZPCgN4RdXz4wj2;
+ Fri, 28 Mar 2025 19:02:40 +1100 (AEDT)
+Message-ID: <c2f2fb9a-3cf9-4d5c-bf2a-01522b047759@kaod.org>
+Date: Fri, 28 Mar 2025 09:02:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/7] tests/powernv: Switch to buildroot images instead
- of op-build
+Subject: Re: [PATCH v7 0/7] Power11 support for QEMU [PowerNV]
 To: Aditya Gupta <adityag@linux.ibm.com>,
  Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -40,7 +39,6 @@ To: Aditya Gupta <adityag@linux.ibm.com>,
  <fbarrat@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
 References: <20250327200738.1524401-1-adityag@linux.ibm.com>
- <20250327200738.1524401-7-adityag@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -85,16 +83,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250327200738.1524401-7-adityag@linux.ibm.com>
+In-Reply-To: <20250327200738.1524401-1-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=v09i=WP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -40
 X-Spam_score: -4.1
 X-Spam_bar: ----
 X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.083, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,98 +111,115 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/27/25 21:07, Aditya Gupta wrote:
-> As op-build images haven't been updated from long time (and may not get
-> updated in future), use buildroot images provided by cedric [1].
+> Overview
+> ============
 > 
-> Use existing nvme device being used in the test to mount the initrd.
+> Add support for Power11 powernv machine type.
 > 
-> Also replace the check for "zImage loaded message" to skiboot's message
-> when it starts the kernel: "Starting kernel at", since we are no longer
-> using zImage from op-build
+> As Power11 core is same as Power10, hence much of the code has been reused
+> from Power10.
 > 
-> This is required for newer processor tests such as Power11, as the
-> op-build kernel image is old and doesn't support Power11.
+> Split Powernv11 chip/machine code into commits introducing: chip,machine,xive,phb
+> This is to try to keep the code smaller in each commit, but can squash the
+> xive/phb commits into respective chip/machine commit
 > 
-> Power11 test has been added in a later patch.
+> Power11 PSeries already added in QEMU in:
+>    commit 273db89bcaf4 ("ppc/pseries: Add Power11 cpu type")
 > 
-> [1]: https://github.com/legoater/qemu-ppc-boot/tree/main/buildroot/qemu_ppc64le_powernv8-2025.02
+> Git Tree for Testing
+> ====================
 > 
-> Cc: Cédric Le Goater <clg@kaod.org>
-> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   tests/functional/test_ppc64_powernv.py | 30 ++++++++++++++------------
->   1 file changed, 16 insertions(+), 14 deletions(-)
+> QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-powernv-v7
 > 
-> diff --git a/tests/functional/test_ppc64_powernv.py b/tests/functional/test_ppc64_powernv.py
-> index 685e2178ed78..2b4db1cf99b4 100755
-> --- a/tests/functional/test_ppc64_powernv.py
-> +++ b/tests/functional/test_ppc64_powernv.py
-> @@ -18,9 +18,14 @@ class powernvMachine(LinuxKernelTest):
->       good_message = 'VFS: Cannot open root device'
->   
->       ASSET_KERNEL = Asset(
-> -        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-> -         'releases/29/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
-> -        '383c2f5c23bc0d9d32680c3924d3fd7ee25cc5ef97091ac1aa5e1d853422fc5f')
-> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc64le_powernv8-2025.02/vmlinux'),
-> +        '6fd29aff9ad4362511ea5d0acbb510667c7031928e97d64ec15bbc5daf4b8151')
-> +
-> +    ASSET_INITRD = Asset(
-> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
-> +        'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
->   
->       def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
->           self.require_accelerator("tcg")
-> @@ -78,27 +83,24 @@ def test_linux_big_boot(self):
->           wait_for_console_pattern(self, console_pattern, self.panic_message)
->           wait_for_console_pattern(self, self.good_message, self.panic_message)
->   
-> -
-> -    ASSET_EPAPR_KERNEL = Asset(
-> -        ('https://github.com/open-power/op-build/releases/download/v2.7/'
-> -         'zImage.epapr'),
-> -        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
-> -
->       def do_test_ppc64_powernv(self, proc):
->           self.require_accelerator("tcg")
-> -        kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        initrd_path = self.ASSET_INITRD.fetch()
->           self.vm.set_console()
->           self.vm.add_args('-kernel', kernel_path,
-> -                         '-append', 'console=tty0 console=hvc0',
-> +                         '-drive',
-> +                         f'file={initrd_path},format=raw,if=none,id=drive0,readonly=on',
-> +                         '-append', 'root=/dev/nvme0n1 console=tty0 console=hvc0',
->                            '-device', 'pcie-pci-bridge,id=bridge1,bus=pcie.1,addr=0x0',
-> -                         '-device', 'nvme,bus=pcie.2,addr=0x0,serial=1234',
-> +                         '-device', 'nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234',
->                            '-device', 'e1000e,bus=bridge1,addr=0x3',
->                            '-device', 'nec-usb-xhci,bus=bridge1,addr=0x2')
->           self.vm.launch()
->   
->           self.wait_for_console_pattern("CPU: " + proc + " generation processor")
-> -        self.wait_for_console_pattern("zImage starting: loaded")
-> -        self.wait_for_console_pattern("Run /init as init process")
-> +        self.wait_for_console_pattern("INIT: Starting kernel at ")
-> +        self.wait_for_console_pattern("Run /sbin/init as init process")
->           # Device detection output driven by udev probing is sometimes cut off
->           # from console output, suspect S14silence-console init script.
->   
+> Has been tested with following cases:
+> * '-M powernv' / '-M powernv10' / '-M powernv11'
+> * '-smp' option tested
+> 
+> skiboot with Power11 support: https://github.com/open-power/skiboot, since
+> commit 785a5e3
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+In OPAL, the Power11 "CPU: PXYZ generation processor" string seems
+inconsistent with the previous generations :
+
+[    0.033505806,6] CPU: P8 generation processor
+[    0.072640552,5] PLAT: Detected QEMU POWER8 platform
+[    0.035156993,6] CPU: P9 generation processor
+[    0.062078034,5] PLAT: Detected QEMU POWER9 platform
+[    0.026078226,6] CPU: P10 generation processor
+[    0.044514479,5] PLAT: Detected QEMU POWER10 platform
+[    0.022154632,6] CPU: Power11 generation processor
+[    0.038760508,5] PLAT: Detected QEMU Power11 platform
+
 
 Thanks,
 
 C.
 
+
+
+> 
+> Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+> 
+> Changelog
+> =========
+> v7:
+>    + use Power10 models of homer, sbe, occ, psi, lpc. As they are same.
+>    + switch powernv tests to use buildroot images instead of op-build images
+>    + add functional test for powernv11
+>    - remove dynamic sysbus device for PHBs, so no more dynamic number of
+>    PHBs in Power11 as it became complex to handle it and not much used
+> 
+> v6 (https://lore.kernel.org/qemu-devel/20250325112319.927190-1-adityag@linux.ibm.com/):
+>    + make Pnv11Chip's parent as PnvChip, instead of Pnv10Chip
+>    + rebase on upstream/master
+> 
+> v5 (https://lore.kernel.org/qemu-devel/57ce8d50-db92-44f0-96a9-e1297eea949f@kaod.org/):
+>    + add chiptod
+>    + add instance_init for P11 to use P11 models
+>    + move patch introducing Pnv11Chip to the last
+>    + update skiboot.lid to skiboot's upstream/master
+> 
+> v4:
+>    + patch #5: fix memory leak in pnv_chip_power10_quad_realize
+>    - no change in other patches
+> 
+> v3:
+>    + patch #1: version power11 as power11_v2.0
+>    + patch #2: split target hw/pseries code into patch #2
+>    + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
+>    + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
+>    + patch #6-#11: no change
+>    - remove commit to make Power11 as default
+> 
+> v2:
+>    + split powernv patch into homer,lpc,occ,psi,sbe
+>    + reduce code duplication by reusing power10 code
+>    + make power11 as default
+>    + rebase on qemu upstream/master
+>    + add more information in commit descriptions
+>    + update docs
+>    + update skiboot.lid
+> 
+> Aditya Gupta (7):
+>    ppc/pnv: Introduce Pnv11Chip
+>    ppc/pnv: Introduce Power11 PowerNV machine
+>    ppc/pnv: Add XIVE2 controller to Power11
+>    ppc/pnv: Add PHB5 PCIe Host bridge to Power11
+>    ppc/pnv: Add ChipTOD model for Power11
+>    tests/powernv: Switch to buildroot images instead of op-build
+>    tests/powernv: Add PowerNV test for Power11
+> 
+>   docs/system/ppc/powernv.rst            |   9 +-
+>   hw/ppc/pnv.c                           | 546 +++++++++++++++++++++++++
+>   hw/ppc/pnv_chiptod.c                   |  59 +++
+>   hw/ppc/pnv_core.c                      |  17 +
+>   include/hw/ppc/pnv.h                   |  38 ++
+>   include/hw/ppc/pnv_chip.h              |   7 +
+>   include/hw/ppc/pnv_chiptod.h           |   2 +
+>   include/hw/ppc/pnv_xscom.h             |  49 +++
+>   tests/functional/test_ppc64_powernv.py |  34 +-
+>   9 files changed, 743 insertions(+), 18 deletions(-)
+> 
 
 
