@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9976DC28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 05:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5835C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 05:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ty2Aw-0005tZ-HS; Fri, 28 Mar 2025 01:22:38 -0400
+	id 1ty2Lu-0007wm-1z; Fri, 28 Mar 2025 01:33:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1ty2Au-0005t6-Pf
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:22:36 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1ty2Ls-0007wM-No
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:33:56 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1ty2Ar-0002lf-KA
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:22:35 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2ff6cf448b8so3969387a91.3
- for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 22:22:33 -0700 (PDT)
+ id 1ty2Lr-0004AY-1j
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 01:33:56 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2ff615a114bso4450084a91.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Mar 2025 22:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743139352; x=1743744152; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743140033; x=1743744833; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=XHMzNp3b69w9snRrUjSwrNXx6DGtzGaJ9IdIbxLF6Y0=;
- b=BsRtn42T2H7l0d7cGtUKs8UU9MRzQ9y0h/+p7B9kd79wVfnRYctTpw2Jbld8Ehp9id
- BVUta/1z5IjM13ixn6mnTH6L6z7KXKpsm2YqUggvq3UesL1OBaj2rOrPolzkzipUqxDz
- b2rksd9rn+YoMGN/XY273bRWnW7Gf6wmTsxxSx2T6iIiSchC8WIoPKxLyQEV1NMmiWWJ
- Xd1YOx+etqtHnhxQB4FG5W8Mdr8H+nFpVIp8NS9kdNexTGUWgYMhz959MntMDOZKLN8+
- Of7ybXvqxorJMhS3vOeczfTpEXS5PUGNr6lJC+DQxrXw10d1F5wjvWBMcfQwyH+yz2ke
- gA/A==
+ bh=xymrStJaY7dbxbtpmmsm7xi1LNGlJ+HGXVfRoFbm5Rs=;
+ b=l6fvIH5XHlSI1glri9zDmrdpgOpHfMsqxtOcGBZk36gkxpIhjurCtSp5feVzS97O/I
+ XUewwXm3+GUAGHyqypjHeulWW5JCEqnSBRBZV+3lJcVjapHEZsIOrJNWASMVZMZ/4eZv
+ n6OWEmo1ictBokX+Evk2o4HtcMSl220u8/cQgBZifX7AURL7Z+5D0/Cg83rbNkSKf9dg
+ IeQmz+vVo54LFN+BeAvu1esY3tqGzHDD6MmA3jB1Qt+waD2OkpFDqBVUY/Zgc34EZ6lA
+ BSpkEGrF58Xcai7yzA2j66c4RQcfvZAvRXEswFPSs9sxA91wO2a1f+qd7dPUDIm963mw
+ 7weQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743139352; x=1743744152;
+ d=1e100.net; s=20230601; t=1743140033; x=1743744833;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XHMzNp3b69w9snRrUjSwrNXx6DGtzGaJ9IdIbxLF6Y0=;
- b=m/fhRHjselukSOQ8utXW1sRX6L3s35clbRcmG3s3XzviuIq+HmpqlwRJMgmVZY2bmM
- HMy7vt2gJ1KUpxh3go6iF2DkicdQX/aD6IUPCXdR0vtYvNm5wA1O5iKHJ44hZ5GqMdHW
- /dE2ab/pxs7aWB8O/RCtlhCITNBzt9tbf1YSS40fL40LXjZDMI19ZEpMlOxgkjk5l8M2
- rIz5ABYzRacoXdbAcdArXDmgvXFJUnxS2sA3yIeCKYerKU/jlrwVXSBvpltqCwKOC5uC
- Hw5nRhneOvkvlXczy5z1HbV99IwxgcDwzzYLIaVsILJ2swpxlCc/FzOwm2NFeheUcBUP
- ndjA==
+ bh=xymrStJaY7dbxbtpmmsm7xi1LNGlJ+HGXVfRoFbm5Rs=;
+ b=TZypEx6oSkIK7hxxgRy2Dsoj+MvYZZxFGqArv62vBzdB9RvHEHZl0bObKmi8+7EtOV
+ LAOd1ivqePnUeq/Qm/pRj1v+dzX+de0KgZqeWzyxINErorDCOPsVH+VTnT4rLJbkkWml
+ TzbxTujiI7c3gaoln8Q7oN0QFPb8BgrX3Uh2KGOXIIV8lc22/+wC4NX7bw7EkCgJ8fsy
+ lN+RWrmK2vRI+O0os1E77ZV7jYKBTwyMyLazmlTZXUEvpMjidcaA1F8FrhdVGZXKUQuP
+ j23c//EJaE9Cy2Kb7KZGHLAP3q9HFMQ0KeB5cXoo/SNpGDM4GA6W+lkmXOss+PaI7sNX
+ hqdg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWtjLZN8xMlJI7n0Du4boNng8S9vcwnyyWLGpsF6z8qZALYY3JeUpWa7ffZDjb3QSf5tnI2Lrau2tgF@nongnu.org
-X-Gm-Message-State: AOJu0YwnYK+lANndwfutokefPrzSniSvOcbG9TiodV1lo2HxUBVsZl7u
- /bA4oqd+L7g6VGuo3hC3Hs30YU9H3HTwXHqxHT5UiAsNrxzwpFTA
-X-Gm-Gg: ASbGncs0BgERC5Ks6we7AtqCFwnrHOKl0F/56JaS8Va8U+CkC0tAN2spQ5pehqEzsxP
- Ei3HHQW5jZuqCUCQkfNm4ClOvr91HN7eSOsGxR53yPhOfxxPA1/BnS6OBme2bYVxxSoqt4CjYox
- Pg4FhEuJnwy7vxNVOIxXZLATQaDWhRBXratHY+4qXz69T9l+0z01lDNSnVbFYzQnYHMKNa0HR9o
- axC+jsAmtQcCBQ08FaHOigcXmkV952dYLWByKT2l39afErSugk9APEM0V3kcIGVRRxSWTRDTUZj
- 0wOfz6yAv2EWgv23Scak57jFMf6Puo9FCtuSm0Pt7TKFUDmhs/v9p/h4klbh1pT7rLVVDFX3nb3
- /X4InpWR6ikrf5OHRKA7WDqM=
-X-Google-Smtp-Source: AGHT+IElAMaRtgss49/WtnKv7dLz7nBZMb433bpUZlfV7smombqxPT6oFGutQI5ZQKbDLmlbU6sIjg==
-X-Received: by 2002:a17:90a:f947:b0:2ea:712d:9a82 with SMTP id
- 98e67ed59e1d1-303a8d80a3emr9655561a91.29.1743139351918; 
- Thu, 27 Mar 2025 22:22:31 -0700 (PDT)
+ AJvYcCVZOB45g+CbDw8KTFERQz8ThaDCd5STQnnrmW4iF4fD9BL9x3SKFmg+VMzTRkepp+FMUopN/01Xh7xX@nongnu.org
+X-Gm-Message-State: AOJu0YyzIFmiMNX1wy/9ntT5MYmYgrbS4+fktaFYr9Ra7+SMsjBjTx7t
+ oF7n4Ep48wAuRLqDkORX8DlrHP+AHr58VEADaAa4Fjhi7Wiyv5DG
+X-Gm-Gg: ASbGncuGGn5mrThVIzn+S7RK3ieSuQERtS+PTfiwz3hAgViZoBXJWEuXL+5hhhXsHfF
+ SzLzRUf/t5HLUcqmkBVklD0qdqvOt7grPDqt8a2e2OKtgBqJBuYCUXLdiGeLcUYbULlVte2Qh3H
+ FWnkRTk/dSUoZXEwLZUvFxfynyfn6WbI2UyvIbW2a5DVic4VCCy0xnuY3Cj3gnS9OVmr42qHYPQ
+ t8buByJU8MnSXOmiWnE4lyd2MvRh/jyLDshYICW8qNSOU5kmeSnIRb2x3uuVbkrq01dk409Oa7t
+ lJb46LWU14cokjuGA+I5jvvQvyAlIyGTsMSsCywlk/46pBQ8cFxIOSB7cPNuxu67ZLtmvf7xFto
+ Ku9iDiBCYYqDe
+X-Google-Smtp-Source: AGHT+IF/XI3FlRK4a1qsNZG8L/tfM+hFPMoEzp6pgiyR/n//cwkN+jIe0/6aVSVECPefC8VDunEa/A==
+X-Received: by 2002:a05:6a00:2918:b0:736:5813:8c46 with SMTP id
+ d2e1a72fcca58-7397271aadcmr2652350b3a.8.1743140032364; 
+ Thu, 27 Mar 2025 22:33:52 -0700 (PDT)
 Received: from ?IPV6:2401:4900:1c7e:7fd6:5c7b:30a9:c6b6:f81d?
  ([2401:4900:1c7e:7fd6:5c7b:30a9:c6b6:f81d])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73971068581sm816922b3a.114.2025.03.27.22.22.29
+ d2e1a72fcca58-73971090aeesm829306b3a.124.2025.03.27.22.33.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Mar 2025 22:22:31 -0700 (PDT)
-Message-ID: <5a3f55be-5b5d-4a77-9e3d-0dbf1f4c7705@gmail.com>
-Date: Fri, 28 Mar 2025 10:52:28 +0530
+ Thu, 27 Mar 2025 22:33:51 -0700 (PDT)
+Message-ID: <18a9abc3-6be2-46ca-9228-a53b5c668374@gmail.com>
+Date: Fri, 28 Mar 2025 11:03:47 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 5/7] vhost: Forward descriptors to guest via packed vqs
+Subject: Re: [RFC v5 6/7] vhost: Validate transport device features for packed
+ vqs
 To: Eugenio Perez Martin <eperezma@redhat.com>
 Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
  sahilcdq@proton.me
 References: <20250324135929.74945-1-sahilcdq@proton.me>
- <20250324135929.74945-6-sahilcdq@proton.me>
- <49e5e2e1-4715-4949-93d5-b4e0f5425bbf@gmail.com>
- <CAJaqyWckqkkE=sB6yk1RhV8DVoPBAODqdNfgq5Vc0DLGo2_TNw@mail.gmail.com>
+ <20250324135929.74945-7-sahilcdq@proton.me>
+ <CAJaqyWecV3X9PmRHikjkGYT1jbN_ygyKYqvi5AuMtb_aE9oZ0g@mail.gmail.com>
 Content-Language: en-US
 From: Sahil Siddiq <icegambit91@gmail.com>
 Autocrypt: addr=icegambit91@gmail.com; keydata=
@@ -116,11 +116,11 @@ Autocrypt: addr=icegambit91@gmail.com; keydata=
  kn6WekD80DYbAfKyFAXQCO/nclZ82RNmJbDRi3AeMFrxKi6KgdGCp1Izhj9USaMOVqcuV2p0
  Rsoq+sFqWOKaHWnQHCM9RkynQVqrgUaSawEbGlCP1KIhVmjfjVsmsCaKkUb9T6VeO+ZNe+Pn
  rPgMe6IIvn24UuW2f6fIt0AaqOWq
-In-Reply-To: <CAJaqyWckqkkE=sB6yk1RhV8DVoPBAODqdNfgq5Vc0DLGo2_TNw@mail.gmail.com>
+In-Reply-To: <CAJaqyWecV3X9PmRHikjkGYT1jbN_ygyKYqvi5AuMtb_aE9oZ0g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=icegambit91@gmail.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=icegambit91@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -146,105 +146,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
-On 3/26/25 2:04 PM, Eugenio Perez Martin wrote:
-> On Mon, Mar 24, 2025 at 3:34 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
+On 3/26/25 5:36 PM, Eugenio Perez Martin wrote:
+> On Mon, Mar 24, 2025 at 3:00 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
 >>
->> Hi,
+>> Validate transport device features required for utilizing packed SVQ
+>> that both guests can use with the SVQ and SVQs can use with vdpa.
 >>
->> I had a few more queries here as well.
+>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+>> ---
+>> Changes from v4 -> v5:
+>> - Split from commit #2 in v4.
 >>
->> On 3/24/25 7:29 PM, Sahil Siddiq wrote:
->>> Detect when used descriptors are ready for consumption by the guest via
->>> packed virtqueues and forward them from the device to the guest.
->>>
->>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
->>> ---
->>> Changes from v4 -> v5:
->>> - New commit.
->>> - vhost-shadow-virtqueue.c:
->>>     (vhost_svq_more_used): Split into vhost_svq_more_used_split and
->>>     vhost_svq_more_used_packed.
->>>     (vhost_svq_enable_notification): Handle split and packed vqs.
->>>     (vhost_svq_disable_notification): Likewise.
->>>     (vhost_svq_get_buf): Split into vhost_svq_get_buf_split and
->>>     vhost_svq_get_buf_packed.
->>>     (vhost_svq_poll): Use new functions.
->>>
->>>    hw/virtio/vhost-shadow-virtqueue.c | 121 ++++++++++++++++++++++++++---
->>>    1 file changed, 110 insertions(+), 11 deletions(-)
->>>
->>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
->>> index 126957231d..8430b3c94a 100644
->>> --- a/hw/virtio/vhost-shadow-virtqueue.c
->>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
->>> @@ -463,7 +463,7 @@ static void vhost_handle_guest_kick_notifier(EventNotifier *n)
->>>        vhost_handle_guest_kick(svq);
->>>    }
->>>
->>> -static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
->>> +static bool vhost_svq_more_used_split(VhostShadowVirtqueue *svq)
->>>    {
->>>        uint16_t *used_idx = &svq->vring.used->idx;
->>>        if (svq->last_used_idx != svq->shadow_used_idx) {
->>> @@ -475,6 +475,22 @@ static bool vhost_svq_more_used(VhostShadowVirtqueue *svq)
->>>        return svq->last_used_idx != svq->shadow_used_idx;
->>>    }
->>>
->>> +static bool vhost_svq_more_used_packed(VhostShadowVirtqueue *svq)
->>> +{
->>> +    bool avail_flag, used_flag, used_wrap_counter;
->>> +    uint16_t last_used_idx, last_used, flags;
->>> +
->>> +    last_used_idx = svq->last_used_idx;
->>> +    last_used = last_used_idx & ~(1 << VRING_PACKED_EVENT_F_WRAP_CTR);
+>>   hw/virtio/vhost-shadow-virtqueue.c | 3 +++
+>>   1 file changed, 3 insertions(+)
 >>
->> In the linux kernel, last_used is calculated as:
->>
->> last_used_idx & ~(-(1 << VRING_PACKED_EVENT_F_WRAP_CTR))
->>
->> ...instead of...
->>
->> last_used_idx & ~(1 << VRING_PACKED_EVENT_F_WRAP_CTR)
->>
->> Isn't the second option good enough if last_used_idx is uint16_t
->> and VRING_PACKED_EVENT_F_WRAP_CTR is defined as 15.
->>
+>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+>> index 8430b3c94a..035ab1e66f 100644
+>> --- a/hw/virtio/vhost-shadow-virtqueue.c
+>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+>> @@ -33,6 +33,9 @@ bool vhost_svq_valid_features(uint64_t features, Error **errp)
+>>            ++b) {
+>>           switch (b) {
+>>           case VIRTIO_F_ANY_LAYOUT:
+>> +        case VIRTIO_F_RING_PACKED:
+>> +        case VIRTIO_F_RING_RESET:
+>> +        case VIRTIO_RING_F_INDIRECT_DESC:
 > 
-> I think it is good enough with the u16 restrictions but it's just
-> defensive code.
+> This should only enable _F_RING_PACKED, there is no code supporting
+> either reset or indirect descriptors.
 > 
 
-Got it. I think it'll be better then to follow the implementation in
-the kernel to keep it more robust.
+Without _F_RING_RESET and _RING_F_INDIRECT_DESC, I get the following error:
 
->>> +    used_wrap_counter = !!(last_used_idx & (1 << VRING_PACKED_EVENT_F_WRAP_CTR));
->>> +
->>> +    flags = le16_to_cpu(svq->vring_packed.vring.desc[last_used].flags);
->>> +    avail_flag = !!(flags & (1 << VRING_PACKED_DESC_F_AVAIL));
->>> +    used_flag = !!(flags & (1 << VRING_PACKED_DESC_F_USED));
->>> +
->>> +    return avail_flag == used_flag && used_flag == used_wrap_counter;
->>> +}
->>> +
->>
->> Also in the implementation of vhost_svq_more_used_split() [1], I haven't
->> understood why the following condition:
->>
->> svq->last_used_idx != svq->shadow_used_idx
->>
->> is checked before updating the value of "svq->shadow_used_idx":
->>
->> svq->shadow_used_idx = le16_to_cpu(*(volatile uint16_t *)used_idx)
->>
-> 
-> As far as I know this is used to avoid concurrent access to guest's
-> used_idx, avoiding cache sharing, the memory barrier, and the
-> potentially costly volatile access.
-> 
+qemu-system-x86_64: -netdev type=vhost-vdpa,vhostdev=/dev/vhost-vdpa-0,x-svq=true,id=vhost-vdpa0: SVQ Invalid device feature flags, offer: 0x1071011ffa7, ok: 0x70011ffa7
 
-By concurrent access, do you mean in case one thread has already updated
-the value of used_idx?
+Evaluating 0x1071011ffa7 & ~0x70011ffa7 gives me 0x10010000000 as the
+set of invalid features. This corresponds to _F_RING_RESET (1 << 40)
+and _RING_F_INDIRECT_DESC (1 << 28) [1].
+
+I get this error when x-svq=true irrespective of whether split vqs or packed
+vqs are used.
+
+Is there a way to turn them off in the QEMU command?
 
 Thanks,
 Sahil
+
+[1] https://gitlab.com/qemu-project/qemu/-/blob/master/include/standard-headers/linux/virtio_config.h
 
