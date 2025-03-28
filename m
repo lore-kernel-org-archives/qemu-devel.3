@@ -4,56 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43115C28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 14:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8B5C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 16:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyAW4-00069X-CK; Fri, 28 Mar 2025 10:17:00 -0400
+	id 1tyCMG-0000om-I5; Fri, 28 Mar 2025 12:15:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tyAVl-00068j-Ex
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 10:16:41 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1tyCM5-0000ni-FP; Fri, 28 Mar 2025 12:14:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tyAVi-0006hO-Am
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 10:16:41 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 170764E6010;
- Fri, 28 Mar 2025 15:16:34 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id eyBOEj-bIvYW; Fri, 28 Mar 2025 15:16:31 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C49B64E6001; Fri, 28 Mar 2025 15:16:31 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C2C0974577D;
- Fri, 28 Mar 2025 15:16:31 +0100 (CET)
-Date: Fri, 28 Mar 2025 15:16:31 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Paolo Bonzini <pbonzini@redhat.com>
-cc: rakeshj <rakeshjb010@gmail.com>, qemu-devel@nongnu.org, 
- marcandre.lureau@redhat.com, philmd@linaro.org, thuth@redhat.com
-Subject: Re: [PATCH] hw/pci-host/gt64120.c: Fix PCI host bridge endianness
- handling
-In-Reply-To: <ca76bcb1-7cea-4153-ae74-02718a6a1cfb@redhat.com>
-Message-ID: <971ac7f1-618d-c94a-93db-9ba887bdc997@eik.bme.hu>
-References: <20250327153627.307040-1-rakeshjb010@gmail.com>
- <364c91ef-b086-9aea-4073-e0be49b77d76@eik.bme.hu>
- <ca76bcb1-7cea-4153-ae74-02718a6a1cfb@redhat.com>
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1tyCM2-0005Tf-GH; Fri, 28 Mar 2025 12:14:48 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52SCRuoJ011179;
+ Fri, 28 Mar 2025 16:14:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=RHDZXk
+ 4BKNFCQ9WAa8i9qag5x/ll1/870SqJIvG4AUI=; b=sZuKOaPWMQYEkwaaqcFzZd
+ 5jpXP76WYiawKEmrVqNcDilYocgg1+n6pgd2ZsSA5TbWcv3VKDJX4t8kQNJ/D7AK
+ 2RhgwsIGQxyPwpBauFnBBiDRhI/996NL9XYRN3skV2CmAVF/Uuz5mG4xdc29cqUl
+ gjUS0EFOlN/ccJrM2hi7VBBk94+zsCV2pFTqbAAAFFZ26TJl9vtLGquP3b3nEfIW
+ 1DU7wyllMcKI8gq2j9+ly2UcooRdVQ1tqyfNvtPDeiWoBAXrDAS7YZvvIAap0fSY
+ +y0CC3b/JqNXVrwIj2PA34A8zR16jKdFtc2jZse2H5OkaWCm/okMzL7sk8Qeobsw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45nut2h6rn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Mar 2025 16:14:24 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52SGBNP4031016;
+ Fri, 28 Mar 2025 16:14:23 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45nut2h6re-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Mar 2025 16:14:23 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52SEDDi2009694;
+ Fri, 28 Mar 2025 16:14:22 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j9rm2x04-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Mar 2025 16:14:22 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52SGEIp159638028
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 28 Mar 2025 16:14:19 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DAFD820040;
+ Fri, 28 Mar 2025 16:14:18 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F2FE92004B;
+ Fri, 28 Mar 2025 16:14:17 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.171.51.25]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 28 Mar 2025 16:14:17 +0000 (GMT)
+Message-ID: <d3f978823d97b329993f9374422ea4effdd8eae4.camel@linux.ibm.com>
+Subject: Re: [PATCH] tests/functional: Remove semicolons at the end of lines
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@kaod.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Beniamino Galvani <b.galvani@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, Niek Linnenbank
+ <nieklinnenbank@gmail.com>, Halil Pasic <pasic@linux.ibm.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Eric Farman
+ <farman@linux.ibm.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ "Daniel P ." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Date: Fri, 28 Mar 2025 17:14:17 +0100
+In-Reply-To: <20250327201305.996241-1-thuth@redhat.com>
+References: <20250327201305.996241-1-thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-438291374-1743171391=:17461"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zfvsikr9uEtEKouFlrW8MJr63R8qiH4L
+X-Proofpoint-GUID: uugSM969TBSxLUMZUA6RB4vtWp4VsmzL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-28_08,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ phishscore=0 clxscore=1011 mlxscore=0 suspectscore=0 mlxlogscore=827
+ impostorscore=0 spamscore=0 bulkscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503280111
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,118 +125,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, 2025-03-27 at 21:13 +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+>=20
+> Yes, we are all C coders who try to write Python code for testing...
+> but still, let's better avoid semicolons at the end of the lines
+> to keep "pylint" happy!
+>=20
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
---3866299591-438291374-1743171391=:17461
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
-On Fri, 28 Mar 2025, Paolo Bonzini wrote:
-> On 3/27/25 21:50, BALATON Zoltan wrote:
->> On Thu, 27 Mar 2025, rakeshj wrote:
->>> The GT-64120 PCI controller requires special handling where:
->>> 1. Host bridge (device 0) must use native endianness
->>> 2. Other devices follow MByteSwap bit in GT_PCI0_CMD
->>> 
->>> Previous implementation accidentally swapped all accesses, breaking
->>> host bridge detection (lspci -d 11ab:4620). This fix:
->>> 
->>> - Adds device filtering via (phb->config_reg & 0x00FFF800)
->>> - Preserves native endianness for host bridge
->>> - Maintains swapping for other devices in big-endian mode
->>> 
->>> Fixes: 145e2198 ("hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRIDGE 
->>> MemoryRegionOps")
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2826
->>> Signed-off-by: rakeshj <rakeshjb010@gmail.com>
->>> ---
->>> hw/pci-host/gt64120.c | 37 ++++++++++++++++++++++++++++++++++++-
->>> 1 file changed, 36 insertions(+), 1 deletion(-)
->>> 
->>> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
->>> index d5c13a89b6..098f8e5988 100644
->>> --- a/hw/pci-host/gt64120.c
->>> +++ b/hw/pci-host/gt64120.c
->>> @@ -320,11 +320,46 @@ static void gt64120_isd_mapping(GT64120State *s)
->>>     memory_region_transaction_commit();
->>> }
->>> 
->>> +static uint64_t gt64120_pci_data_read(void *opaque, hwaddr addr, unsigned 
->>> size)
->>> +{
->>> +    GT64120State *s = opaque;
->>> +    PCIHostState *phb = PCI_HOST_BRIDGE(s);
->>> +    uint32_t val = pci_data_read(phb->bus, phb->config_reg, size);
->>> +
->>> +    /* Only swap for non-bridge devices in big-endian mode */
->>> +    if (!(s->regs[GT_PCI0_CMD] & 1) && (phb->config_reg & 0x00fff800)) {
->>> +        val = bswap32(val);
->> 
->> I don't know if this is the best way to fix this issue as I don't know what 
->> the issue is in the first place (isn't PCI usually little endian?) 
->
-> Yes but this particular PCI host bridge is the exception, as it is the only 
-> user of pci_host_data_be_ops.
->
->> but I think you can't just use bswap here because it also needs to take 
->> into account the endianness of the host QEMU is running on.
->
-> It should be fine.  You should take into account:
->
-> - the endianness produced by pci_data_read/pci_data_write (always little 
-> endian)
->
-> - the endianness expected by the guest (big endian under the conditions in 
-> the patch)
->
-> - the endianness expected by memory.c (always little endian, as specified in 
-> gt64120_pci_data_ops)
->
-> Because there is either zero or one mismatch, bswap32 is fine.
+[...]
 
-This may worth a comment but I'm still not convinced this works on big 
-endian host because I think pci_data_read returns val in host endianness 
-and if you want big endian then you only need to bswap on LE host not on 
-BE host. Was this tested on BE host and confirmed it works?
-
-Regards,
-BALATON Zoltan
-
-> *However*, there is some extra complication that is unnecessary after this 
-> patch:
->
-> - right now the !(s->regs[GT_PCI0_CMD] & 1) that you have added is dead code: 
-> if it was ever 1, gt64120_update_pci_cfgdata_mapping() would pick 
-> pci_host_data_ops[1] and gt64120_pci_data_read/write would not run at all!
->
-> - but alternatively you could keep that conditional, and get rid completely 
-> of gt64120_update_pci_cfgdata_mapping().  Just keep the initialization code
->
->    memory_region_init_io(&phb->data_mem, OBJECT(phb),
->                          &gt64120_pci_data_ops,
->                          s, "pci-conf-data", 4);
->    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << 2,
->                                        &phb->data_mem, 1);
->
-> at the end of gt64120_realize() where the sister region phb->conf_mem is 
-> already being initialized.  This would actually make me happy.
->
-> Either way, pci_host_data_be_ops is dead after this patch and you can remove 
-> it; and since you are at it, you may also want to remove the wrong comment
->
->    /*
->     * PCI_CONFIG_ADDR is parent_obj.config_reg, via pci_host_conf_be_ops,
->     * so that we can map PCI_CONFIG_DATA to pci_host_data_be_ops.
->     */
->
-> in include/hw/pci-host/dino.h: DINO emulation has *never* used 
-> pci_host_data_be_ops.
->
-> This has snowballed a bit, but it should not be a problem. :)
->
-> Paolo
->
->
---3866299591-438291374-1743171391=:17461--
+--=20
+IBM Deutschland Research & Development GmbH
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Gesch=C3=A4ftsf=C3=BChrung: David Faller
+Sitz der Gesellschaft: B=C3=B6blingen / Registergericht: Amtsgericht Stuttg=
+art, HRB 243294
 
