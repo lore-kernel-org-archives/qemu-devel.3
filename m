@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FA8C28B20
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC39C28B20
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Mar 2025 20:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyFx8-0002v7-Sy; Fri, 28 Mar 2025 16:05:19 -0400
+	id 1tyFxA-0002vD-7Z; Fri, 28 Mar 2025 16:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tyFx1-0002ta-8r
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:12 -0400
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ id 1tyFx2-0002tu-JF
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:13 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tyFwz-0007om-7c
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:10 -0400
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3f6a92f2328so1343243b6e.0
- for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:05:08 -0700 (PDT)
+ id 1tyFx0-0007p4-GJ
+ for qemu-devel@nongnu.org; Fri, 28 Mar 2025 16:05:12 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-72c27166ab3so1491967a34.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 13:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743192308; x=1743797108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743192309; x=1743797109; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8Musv96uqDqGBH3VebH5aXYMcN88bZT/SnScT9B79DM=;
- b=Z3c1EtrysxkK8kGjNuI6g2+Ip5MUMZAVEv9sM0WhLHqixvk7C7afL2mPS8FwUDJz+S
- V1Tw5WzPrMNDwkdPWlY5u0DF3fxbuemaQ+AUd7PBohccGqAV+7ZTyCwve5PQCLjtpB36
- t/h9udWLRSQTs3AbgGEkHGTgjYU3xv/pBdtBGnOTi0h9//zEejXa+A5QBwR/WNsz7t6T
- PmsuC5wFJwJ0BcO811TpDwb4oMrhHBrRzAyvLt1KpmXDR9jJJxIDDqy7aZ644QLBol58
- lL8y+U1fCPjAcXFM5agLkzW+kC4A2fJKsvQFmRVTyvoCoLCB3R2mV4vcUcyIdrVmASM7
- WLxQ==
+ bh=2gHs8eWFpnWN3yMoh+lxCbsbSFzac6+W/s5SOrn3Ec8=;
+ b=m/IDPQH3D2oH2Xgsu3By4sI8EJp1aHWCR5ghMd5a3EWdwP5y3PERLnW9N7702Obu5O
+ hLIh+9xcSX+7I2QJSp/jmK5zfAqPC6rHDRMlMica8u9pqS5L9XZ8QjPSLXKHUyhhWcHa
+ goxqIFkjz6PL7lBqVxMNX4anOgYntkapmzelayjYsEnfRY+aZ051+JH9EmBZ7LHy/Mir
+ XBbro2qqv33t7d4k4v4C/SRrPi0sC9Gp1X4wpSnALXmloxw8zo5ET1v+Q++uNQ2yqlW3
+ BF59zof3M+bGt4JEBlRUMI6GN8w9USLRmlrvDHWy5u56iClpldKvG4146js3msJ8kQqn
+ gEsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743192308; x=1743797108;
+ d=1e100.net; s=20230601; t=1743192309; x=1743797109;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8Musv96uqDqGBH3VebH5aXYMcN88bZT/SnScT9B79DM=;
- b=DftZ9X3d95ZRQp6jZl5f++rg+m18fnyqSbpinBqSHE1zqeJAJwTuRGzogdqFeDE6EY
- 6Wj0WG5TTVp0rGc1uUJbsoOQ6qVDT5hgRl9e+Dz5Yd4bsHT8GaJcUALDt0NkOPQyy9VE
- 0EqEZb8pmT8eipz2TmPKvjF+jh+RoZMUeI4rz4f/582B/6b/Cx2DAs/j+nG/+ZV/E6+7
- f5fafjcDSFh1OmkhnMcoOwVt840GdsMOBJ9oMHfiqv/mZQmC23NPuPMHOFFou3qgrlIV
- KbkO7T9rsaO4WZr3M7DZt6YBwsiKj30lDIq3U1xf0V4HZv2EF5mVGlzyAcf9akpkCu2n
- erDg==
-X-Gm-Message-State: AOJu0YxHq/BXD5/EFkTU+t6gkCOy2nOaI/sXxO5B4pOPRSYb8YkTpsTz
- uhU02at2iSAdr8ga6IV3kg1r5vIXxYyWQVC/mOlWsSV4+zvH/MVxrmqC9Y8BrO6QehTOGxGxRM1
- K
-X-Gm-Gg: ASbGncu90CKJH5lIFhwOyI8sHwPQA+aTK0s/JytMO+axJSvi6tfHfCGVK6fjPtHAd63
- lRAGXxr/ly6ug+GnTGyfU5iPjeiaeVRME6TQn/wMkNYqiNeMgTAREB27VrkBSGH4qCalC6SAAln
- gxCMAJeugg+P6P+7jARvVZXzTIVQukisLkBWIxS+BAmAB2Advh8chrwj5B/OUC4dOc8/UwkaCj+
- lNqhP15IT7RSalmKAkHHi53eq/qBkhhNEAwYECarv7QYzjoVworAg8rYc3vCKHE6S6BSp3D9DSy
- WOnCQ1vEwi2ZCr4rHOJuAOrohff8FbK8gOoobUbwQw8pumZQHkxGx+rApLx/W1g+es6BVelDbqL
- /gKxQwfAwf/4=
-X-Google-Smtp-Source: AGHT+IH54HqArmbarM9uoxXC1Y6I8bgouOcwvzNXNd9c1G+dMUBRy/g4Bkb5af/T+ZUxBg5EWhs9LQ==
-X-Received: by 2002:a05:6808:2388:b0:3f7:5223:84c7 with SMTP id
- 5614622812f47-3ff0ed043ffmr496221b6e.19.1743192307794; 
- Fri, 28 Mar 2025 13:05:07 -0700 (PDT)
+ bh=2gHs8eWFpnWN3yMoh+lxCbsbSFzac6+W/s5SOrn3Ec8=;
+ b=CLnA1aAHES3E4EwVYR1L+vy1qOEZRJWnskd/G1+Zy+JzIRcfr19nWNhy/mPC3Gu+w0
+ o/ck91bPnl5+owSL8CHxtjoZXaG+d8EmsGNT5+U11+4q8OVISb62wGFXR4qMz38ym19E
+ YtO6fmifEy3GkCTJirE62vnqxGjjehvYB2DYwN8xWWnMwqnign91yw9aPgQ3+AdXv6kd
+ yAdRSdUk28ogaiCRAXZPF8CjQSX7aitjlwlaM2ZcHe/6spKXY9OxJ9AtBRrF2Cl+qI/0
+ 2dlGqW+cyTk+8ROfOKUvaHpWhAQy6Hb2MS3RHvaVC0eOjhRfGdXzCo7CLutaYHJy4v9k
+ Q2Jg==
+X-Gm-Message-State: AOJu0Yxz5LJiBhadAMtFecZXNe+YmB/Qu9B9FrjCAsAXO7Cu8fzj1chP
+ W9+rlPB85gE4TFjbiMfANYz7VkVOXzg0yb0nYkebS3bqrWFEAFS1kSmIz5nVHtaxBpeOJzU03Yq
+ +
+X-Gm-Gg: ASbGncuZPjGgHBP4mdaWTsObO4GA4lj69xDhpAPZnOf4RGi1U3D6QQkhr8BoXVtZtfO
+ ho7tULnualo6JKfjkhpCAPfYz5AOAKJjuv1qzNXiSvUtfLg+PQtrewIQ/4NkEOKOPlZTcQIuVV4
+ mmWIHEUHCFE+9UgkHNtnw7HE5L4iK8N7SPFojEWgmy40FW2RAAOw5pg6hwVrotO6A3isl9Un48n
+ NOzCm0YWZp1dJPq5whdY2qIaKvHcLal2ZWAj2IMZZnjN6cK+5O3cxmwe/Zg5amDS/YEM7BKrBVE
+ cG5F/yYPmh5McKrYXcT0zTbREZC2B9pKCVSZGvx8qXTbVAprfo5egNbTlHG314/Oktbz8NwRqYR
+ nXpGmzsxoB48=
+X-Google-Smtp-Source: AGHT+IHghG/wEczC9QMQtmkN8bq9NllHLuUryQ3lmO3RTJCVqLCbQQgm5qBRpAWRSnQ2FYyviLauOA==
+X-Received: by 2002:a05:6808:11d0:b0:3fa:7909:2716 with SMTP id
+ 5614622812f47-3ff0f5fa01fmr370720b6e.39.1743192308522; 
+ Fri, 28 Mar 2025 13:05:08 -0700 (PDT)
 Received: from stoup.. (syn-071-042-197-003.biz.spectrum.com. [71.42.197.3])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ff052799b6sm465104b6e.37.2025.03.28.13.05.07
+ 5614622812f47-3ff052799b6sm465104b6e.37.2025.03.28.13.05.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Mar 2025 13:05:07 -0700 (PDT)
+ Fri, 28 Mar 2025 13:05:08 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH 7/9] include/exec: Redefine tlb-flags with absolute values
-Date: Fri, 28 Mar 2025 15:04:57 -0500
-Message-ID: <20250328200459.483089-8-richard.henderson@linaro.org>
+Subject: [PATCH 8/9] page-vary: Move and rename qemu_target_page_bits_min
+Date: Fri, 28 Mar 2025 15:04:58 -0500
+Message-ID: <20250328200459.483089-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250328200459.483089-1-richard.henderson@linaro.org>
 References: <20250328200459.483089-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,126 +101,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Don't base the values on TARGET_PAGE_BITS_MIN, but do verify
-that TLB_FLAGS_MASK does not overlap minimum page size.
+Rename to migration_legacy_page_bits, to make it clear that
+we cannot change the value without causing a migration break.
+Move to page-vary.h and page-vary-target.c.
+Define via TARGET_PAGE_BITS if not TARGET_PAGE_BITS_VARY.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/tlb-flags.h | 68 +++++++++++++++++++---------------------
- accel/tcg/cputlb.c       |  2 ++
- 2 files changed, 34 insertions(+), 36 deletions(-)
+ include/exec/page-vary.h   | 9 +++++++++
+ include/exec/target_page.h | 1 -
+ migration/savevm.c         | 6 +++---
+ page-target.c              | 5 -----
+ page-vary-target.c         | 9 +++++++++
+ 5 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/include/exec/tlb-flags.h b/include/exec/tlb-flags.h
-index 54a6bae768..357e79095c 100644
---- a/include/exec/tlb-flags.h
-+++ b/include/exec/tlb-flags.h
-@@ -19,54 +19,29 @@
- #ifndef TLB_FLAGS_H
- #define TLB_FLAGS_H
- 
--#include "exec/cpu-defs.h"
-+/*
-+ * Flags returned for lookup of a TLB virtual address.
-+ */
- 
- #ifdef CONFIG_USER_ONLY
- 
- /*
-- * Allow some level of source compatibility with softmmu.  We do not
-- * support any of the more exotic features, so only invalid pages may
-- * be signaled by probe_access_flags().
-+ * Allow some level of source compatibility with softmmu.
-+ * Invalid is set when the page does not have requested permissions.
-+ * MMIO is set when we want the target helper to use the functional
-+ * interface for load/store so that plugins see the access.
+diff --git a/include/exec/page-vary.h b/include/exec/page-vary.h
+index 54ddde308a..101c25911c 100644
+--- a/include/exec/page-vary.h
++++ b/include/exec/page-vary.h
+@@ -49,4 +49,13 @@ bool set_preferred_target_page_bits(int bits);
   */
--#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
--#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 2))
--#define TLB_WATCHPOINT      0
-+#define TLB_INVALID_MASK     (1 << 0)
-+#define TLB_MMIO             (1 << 1)
-+#define TLB_WATCHPOINT       0
+ void finalize_target_page_bits(void);
  
- #else
- 
--/*
-- * Flags stored in the low bits of the TLB virtual address.
-- * These are defined so that fast path ram access is all zeros.
-- * The flags all must be between TARGET_PAGE_BITS and
-- * maximum address alignment bit.
-- *
-- * Use TARGET_PAGE_BITS_MIN so that these bits are constant
-- * when TARGET_PAGE_BITS_VARY is in effect.
-- *
-- * The count, if not the placement of these bits is known
-- * to tcg/tcg-op-ldst.c, check_max_alignment().
-- */
--/* Zero if TLB entry is valid.  */
--#define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
--/*
-- * Set if TLB entry references a clean RAM page.  The iotlb entry will
-- * contain the page physical address.
-- */
--#define TLB_NOTDIRTY        (1 << (TARGET_PAGE_BITS_MIN - 2))
--/* Set if the slow path must be used; more flags in CPUTLBEntryFull. */
--#define TLB_FORCE_SLOW      (1 << (TARGET_PAGE_BITS_MIN - 3))
--
--/*
-- * Use this mask to check interception with an alignment mask
-- * in a TCG backend.
-- */
--#define TLB_FLAGS_MASK \
--    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_FORCE_SLOW)
--
- /*
-  * Flags stored in CPUTLBEntryFull.slow_flags[x].
-  * TLB_FORCE_SLOW must be set in CPUTLBEntry.addr_idx[x].
-  */
-+
- /* Set if TLB entry requires byte swap.  */
- #define TLB_BSWAP            (1 << 0)
- /* Set if TLB entry contains a watchpoint.  */
-@@ -82,6 +57,27 @@
-     (TLB_BSWAP | TLB_WATCHPOINT | TLB_CHECK_ALIGNED | \
-      TLB_DISCARD_WRITE | TLB_MMIO)
- 
-+/*
-+ * Flags stored in CPUTLBEntry.addr_idx[x].
-+ * These must be above the largest alignment (64 bytes),
-+ * and below the smallest page size (1024 bytes).
-+ * This leaves bits [9:6] available for use.
++/**
++ * migration_legacy_page_bits
++ *
++ * For migration compatibility with qemu v2.9, prior to the introduction
++ * of the configuration/target-page-bits section, return the value of
++ * TARGET_PAGE_BITS that the target had then.
 + */
++int migration_legacy_page_bits(void);
 +
-+/* Zero if TLB entry is valid.  */
-+#define TLB_INVALID_MASK     (1 << 6)
-+/* Set if TLB entry references a clean RAM page.  */
-+#define TLB_NOTDIRTY         (1 << 7)
-+/* Set if the slow path must be used; more flags in CPUTLBEntryFull. */
-+#define TLB_FORCE_SLOW       (1 << 8)
-+
-+/*
-+ * Use this mask to check interception with an alignment mask
-+ * in a TCG backend.
-+ */
-+#define TLB_FLAGS_MASK \
-+    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_FORCE_SLOW)
-+
- /* The two sets of flags must not overlap. */
- QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & TLB_SLOW_FLAGS_MASK);
+ #endif /* EXEC_PAGE_VARY_H */
+diff --git a/include/exec/target_page.h b/include/exec/target_page.h
+index 8e89e5cbe6..e4bd7f7767 100644
+--- a/include/exec/target_page.h
++++ b/include/exec/target_page.h
+@@ -63,7 +63,6 @@ static inline int qemu_target_page_bits(void)
+     return TARGET_PAGE_BITS;
+ }
  
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index a717f357d5..39314e86f3 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -49,6 +49,8 @@
+-int qemu_target_page_bits_min(void);
+ size_t qemu_target_pages_to_MiB(size_t pages);
+ 
  #endif
- #include "tcg/tcg-ldst.h"
+diff --git a/migration/savevm.c b/migration/savevm.c
+index c33200a33f..0c12e373b4 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -50,6 +50,7 @@
+ #include "system/cpus.h"
+ #include "system/memory.h"
+ #include "exec/target_page.h"
++#include "exec/page-vary.h"
+ #include "trace.h"
+ #include "qemu/iov.h"
+ #include "qemu/job.h"
+@@ -339,7 +340,7 @@ static int configuration_pre_load(void *opaque)
+      * predates the variable-target-page-bits support and is using the
+      * minimum possible value for this CPU.
+      */
+-    state->target_page_bits = qemu_target_page_bits_min();
++    state->target_page_bits = migration_legacy_page_bits();
+     return 0;
+ }
  
-+QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & ((1u < TARGET_PAGE_BITS_MIN) - 1));
+@@ -462,8 +463,7 @@ static const VMStateInfo vmstate_info_capability = {
+  */
+ static bool vmstate_target_page_bits_needed(void *opaque)
+ {
+-    return qemu_target_page_bits()
+-        > qemu_target_page_bits_min();
++    return qemu_target_page_bits() > migration_legacy_page_bits();
+ }
+ 
+ static const VMStateDescription vmstate_target_page_bits = {
+diff --git a/page-target.c b/page-target.c
+index 321e43d06f..8fcd5443b5 100644
+--- a/page-target.c
++++ b/page-target.c
+@@ -9,11 +9,6 @@
+ #include "qemu/osdep.h"
+ #include "exec/target_page.h"
+ 
+-int qemu_target_page_bits_min(void)
+-{
+-    return TARGET_PAGE_BITS_MIN;
+-}
+-
+ /* Convert target pages to MiB (2**20). */
+ size_t qemu_target_pages_to_MiB(size_t pages)
+ {
+diff --git a/page-vary-target.c b/page-vary-target.c
+index 84ddeb7c26..6251d948cf 100644
+--- a/page-vary-target.c
++++ b/page-vary-target.c
+@@ -23,6 +23,15 @@
+ #include "exec/page-vary.h"
+ #include "exec/target_page.h"
+ 
++int migration_legacy_page_bits(void)
++{
++#ifdef TARGET_PAGE_BITS_VARY
++    return TARGET_PAGE_BITS_MIN;
++#else
++    return TARGET_PAGE_BITS;
++#endif
++}
 +
- /* DEBUG defines, enable DEBUG_TLB_LOG to log to the CPU_LOG_MMU target */
- /* #define DEBUG_TLB */
- /* #define DEBUG_TLB_LOG */
+ bool set_preferred_target_page_bits(int bits)
+ {
+ #ifdef TARGET_PAGE_BITS_VARY
 -- 
 2.43.0
 
