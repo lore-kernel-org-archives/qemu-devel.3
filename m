@@ -4,54 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB48AC36008
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 13:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0314C36008
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 13:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyW5J-0001Gu-PE; Sat, 29 Mar 2025 09:18:50 -0400
+	id 1tyWVq-00049D-Tu; Sat, 29 Mar 2025 09:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tyW5E-0001GJ-4T
- for qemu-devel@nongnu.org; Sat, 29 Mar 2025 09:18:44 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tyWVh-00048e-Ag; Sat, 29 Mar 2025 09:46:08 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tyW59-0008LD-3t
- for qemu-devel@nongnu.org; Sat, 29 Mar 2025 09:18:43 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 661254E6031;
- Sat, 29 Mar 2025 14:18:33 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id MMfjYfMqA2Ff; Sat, 29 Mar 2025 14:18:30 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E49144E6029; Sat, 29 Mar 2025 14:18:30 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E2B5A74577C;
- Sat, 29 Mar 2025 14:18:30 +0100 (CET)
-Date: Sat, 29 Mar 2025 14:18:30 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: rakeshj <rakeshjb010@gmail.com>, qemu-devel@nongnu.org, 
- pbonzini@redhat.com, thuth@redhat.com, marcandre.lureau@redhat.com
-Subject: Re: [PATCH v2] hw/pci-host/gt64120.c: Fix PCI host bridge endianness
- handling
-In-Reply-To: <5cfc6e91-b50e-4541-b924-50306459a11b@linaro.org>
-Message-ID: <e4ad2e1d-4cfc-115b-5144-df389e70f027@eik.bme.hu>
-References: <20250329004941.372000-1-rakeshjb010@gmail.com>
- <5cfc6e91-b50e-4541-b924-50306459a11b@linaro.org>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1tyWVe-0004F2-4A; Sat, 29 Mar 2025 09:46:04 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52T1WR6u012296;
+ Sat, 29 Mar 2025 13:45:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=28WuMh
+ C/1BKYI6Et3YQVP5IlO9UpjAsCwP14o+qxzKc=; b=IdYrFL8I8fxBsFa4CW3Get
+ jlcaXly1/fYShYBKwaMYvUvJpjxqxKtbCC1X95ZCnzdshBpB+tsQR5Eu/getEEfN
+ L3NyX860fK3fkBoTOuvqsJF88eEqykv2a9I9mIo2rmta/95bH+dFmaStVQ4I/ZgG
+ 4pvkYQoJB38JgMnjV/6qjqdIfqoyyT/J3hwkoEEhzDLDOAdUWUVsRPIehf0LztN5
+ p3lYqAOw4qXiEN4oyAZ+ZrkNagRJHrvhGBzCl9+Gy1gCb8tOvf0/QfDvLZ2p77sI
+ oWeboaNrdJf5w+WJSa+ykn6iujtzl7i6Ufex7VlSls6T+HTBSEDJZo8O3eeDjFEA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45p79j26vq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 29 Mar 2025 13:45:54 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52TDjswM018988;
+ Sat, 29 Mar 2025 13:45:54 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45p79j26vn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 29 Mar 2025 13:45:54 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52TCNrip025443;
+ Sat, 29 Mar 2025 13:45:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j7x0qw7s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 29 Mar 2025 13:45:53 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52TDjn2j42139912
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 29 Mar 2025 13:45:49 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 71DEA20043;
+ Sat, 29 Mar 2025 13:45:49 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E24F720040;
+ Sat, 29 Mar 2025 13:45:46 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.216.105])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Sat, 29 Mar 2025 13:45:46 +0000 (GMT)
+Date: Sat, 29 Mar 2025 19:15:21 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH] target/ppc: Deprecate Power8E and Power8NVL
+Message-ID: <hn6lrnkskpfuoyxlnqtv5hw5iwzwpvryjxpl33q2jwuznpcp3g@2m2rq326vju3>
+References: <20250328040608.1580515-1-adityag@linux.ibm.com>
+ <1c786c2f-1773-43d2-a4ea-531e0373df43@kaod.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-157987653-1743254310=:12301"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1c786c2f-1773-43d2-a4ea-531e0373df43@kaod.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 90bWBhmTxtnWB8e9nRGTUiXmmL98eO1z
+X-Proofpoint-ORIG-GUID: WguQGQGS9zDmLRktBbfHlFz29EY6ql1D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-29_01,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 spamscore=0
+ mlxlogscore=999 clxscore=1015 priorityscore=1501 phishscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503290096
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -69,250 +120,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 25/03/28 08:23AM, Cédric Le Goater wrote:
+> On 3/28/25 05:06, Aditya Gupta wrote:
+> > Power8E and Power8NVL variants are not of much use in QEMU now, and not
+> > being maintained either.
+> > 
+> > Deprecate the 8E and 8NVL variants.
+> > 
+> > After deprecation, QEMU will print a warning like below when the
+> > CPU/Chips are used:
+> > 
+> >      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
+> >      qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
+> >      ...
+> >      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8e -nographic
+> >      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
+> >      ...
+> >      $ ./build/qemu-system-ppc64 -M pseries --cpu power8e -nographic
+> >      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
+> >      ...
+> > 
+> > Suggested-by: Cédric Le Goater <clg@kaod.org>
+> > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> 
+> Please update the documentation too.
+> 
+> https://qemu.readthedocs.io/en/v9.2.0/about/deprecated.html
 
---3866299591-157987653-1743254310=:12301
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Sure Cédric, will mention it there.
 
-On Sat, 29 Mar 2025, Philippe Mathieu-Daudé wrote:
-> Hi Rakesh,
->
-> On 29/3/25 01:49, rakeshj wrote:
->> The GT-64120 PCI controller requires special handling where:
->> 1. Host bridge (device 0) must use native endianness
->> 2. Other devices follow MByteSwap bit in GT_PCI0_CMD
->> 
->> Previous implementation accidentally swapped all accesses, breaking
->> host bridge detection (lspci -d 11ab:4620).
->> 
->> This patch:
->> - Adds custom read/write handlers to preserve native big-endian for the 
->> host
->>    bridge (phb->config_reg & 0x00fff800 == 0).
->
-> Here you check for bus == 0 && device == 0, is that what you want? (I'm
-> confused because you only describe "for the host bridge").
->
-> If so I'd rather add a self-describing method:
->
-> static bool is_phb_dev0(const PCIHostState *phb)
-> {
->     return extract32(phb->config_reg, 11, 5 /* dev */ + 8 /* bus) == 0;
-> }
+> 
+> 
+> > 
+> > ---
+> > Cover Letter
+> > ============
+> > 
+> > For me, Power8NVL won't even boot, getting stuck somewhere in early boot
+> > in OPAL.
+> 
+> Looks like a skiboot issue. skiboot-v6.4 works fine.
 
-There are already macros such as PCI_BUS_NUM PCI_FUNC. Are they any use 
-instead of another function?
+Yes, did a git bisect, this seems to be the first bad commit:
 
-Regards,
-BALATON Zoltan
+    c5424f683ee3f8d07faeb87f41f4572c6afd67b1 is the first bad commit
+    commit c5424f683ee3f8d07faeb87f41f4572c6afd67b1 (HEAD)
+    Author: Nicholas Piggin <npiggin@gmail.com>
+    Date:   Sun Oct 3 11:22:08 2021 +1000
+    
+        Remove support for POWER8 DD1
+        
+        This significantly simplifies the SLW code.
+        
+        HILE is now always supported.
+        
+		...
 
->> - Swaps non-bridge devices when MByteSwap = 0, using size-appropriate swaps
->>    (bswap16 for 2-byte, bswap32 for 4-byte) to convert PCI's little-endian 
->> data
->>    to match the MIPS guest's big-endian expectation; no swap occurs for the 
->> host
->>    bridge or when MByteSwap = 1 (little-endian mode).
->> - Removes gt64120_update_pci_cfgdata_mapping(), moving data_mem 
->> initialization
->>    to gt64120_realize()
->> - Removes unused pci_host_data_be_ops and a misleading comment in dino.h.
->> 
->> Fixes: 145e2198 ("hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRIDGE 
->> MemoryRegionOps")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2826
->> Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
->> ---
->>   hw/pci-host/gt64120.c      | 83 ++++++++++++++++++++++----------------
->>   hw/pci/pci_host.c          |  6 ---
->>   include/hw/pci-host/dino.h |  5 +--
->>   include/hw/pci/pci_host.h  |  1 -
->>   4 files changed, 50 insertions(+), 45 deletions(-)
->> 
->> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
->> index d5c13a89b6..4e45d0aa53 100644
->> --- a/hw/pci-host/gt64120.c
->> +++ b/hw/pci-host/gt64120.c
->> @@ -320,38 +320,6 @@ static void gt64120_isd_mapping(GT64120State *s)
->>       memory_region_transaction_commit();
->>   }
->>   -static void gt64120_update_pci_cfgdata_mapping(GT64120State *s)
->> -{
->> -    /* Indexed on MByteSwap bit, see Table 158: PCI_0 Command, Offset: 
->> 0xc00 */
->> -    static const MemoryRegionOps *pci_host_data_ops[] = {
->> -        &pci_host_data_be_ops, &pci_host_data_le_ops
->> -    };
->> -    PCIHostState *phb = PCI_HOST_BRIDGE(s);
->> -
->> -    memory_region_transaction_begin();
->> -
->> -    /*
->> -     * The setting of the MByteSwap bit and MWordSwap bit in the PCI 
->> Internal
->> -     * Command Register determines how data transactions from the CPU 
->> to/from
->> -     * PCI are handled along with the setting of the Endianness bit in the 
->> CPU
->> -     * Configuration Register. See:
->> -     * - Table 16: 32-bit PCI Transaction Endianness
->> -     * - Table 158: PCI_0 Command, Offset: 0xc00
->> -     */
->> -
->> -    if (memory_region_is_mapped(&phb->data_mem)) {
->> -        memory_region_del_subregion(&s->ISD_mem, &phb->data_mem);
->> -        object_unparent(OBJECT(&phb->data_mem));
->> -    }
->> -    memory_region_init_io(&phb->data_mem, OBJECT(phb),
->> -                          pci_host_data_ops[s->regs[GT_PCI0_CMD] & 1],
->> -                          s, "pci-conf-data", 4);
->> -    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << 2,
->> -                                        &phb->data_mem, 1);
->> -
->> -    memory_region_transaction_commit();
->> -}
->> -
->>   static void gt64120_pci_mapping(GT64120State *s)
->>   {
->>       memory_region_transaction_begin();
->> @@ -645,7 +613,6 @@ static void gt64120_writel(void *opaque, hwaddr addr,
->>       case GT_PCI0_CMD:
->>       case GT_PCI1_CMD:
->>           s->regs[saddr] = val & 0x0401fc0f;
->> -        gt64120_update_pci_cfgdata_mapping(s);
->>           break;
->>       case GT_PCI0_TOR:
->>       case GT_PCI0_BS_SCS10:
->> @@ -1024,6 +991,49 @@ static const MemoryRegionOps isd_mem_ops = {
->>       },
->>   };
->>   +static uint64_t gt64120_pci_data_read(void *opaque, hwaddr addr, 
->> unsigned size)
->> +{
->> +    GT64120State *s = opaque;
->> +    PCIHostState *phb = PCI_HOST_BRIDGE(s);
->> +    uint32_t val = pci_data_read(phb->bus, phb->config_reg, size);
->
-> You check the Enable bit in the write path but not here, any reason?
->> +
->> +    /* Only swap for non-bridge devices in big-endian mode */
->> +    if (!(s->regs[GT_PCI0_CMD] & 1) && (phb->config_reg & 0x00fff800)) {
->
-> Please use instead of (s->regs[GT_PCI0_CMD] & 1):
->
->  bswap = FIELD_EX32(s->regs[GT_PCI0_CMD]m GT_PCI0_CMD, MByteSwap);
->
->> +        if (size == 2) {
->> +            val = bswap16(val);
->> +        } else if (size == 4) {
->> +            val = bswap32(val);
->> +        }
->> +    }
->> +    return val;
->> +}
->> +
->> +static void gt64120_pci_data_write(void *opaque, hwaddr addr,
->> +    uint64_t val, unsigned size)
->> +{
->> +    GT64120State *s = opaque;
->> +    PCIHostState *phb = PCI_HOST_BRIDGE(s);
->> +    if (!(s->regs[GT_PCI0_CMD] & 1) && (phb->config_reg & 0x00fff800)) {
->> +        if (size == 2) {
->> +            val = bswap16(val);
->> +        } else if (size == 4) {
->> +            val = bswap32(val);
->> +        }
->> +    }
->> +    if (phb->config_reg & (1u << 31))
->> +        pci_data_write(phb->bus, phb->config_reg | (addr & 3), val, size);
->> +}
->> +
->> +static const MemoryRegionOps gt64120_pci_data_ops = {
->> +    .read = gt64120_pci_data_read,
->> +    .write = gt64120_pci_data_write,
->> +    .endianness = DEVICE_LITTLE_ENDIAN,
->> +    .valid = {
->> +        .min_access_size = 1,
->> +        .max_access_size = 4,
->> +    },
->> +};
->
-> Per GT64120 rev 1.4, chapter "6.2.2 PCI Master CPU Byte Swapping":
->
->  When the GT–64120 is configured for 64-bit PCI mode, byte
->  swapping occurs across all 8 byte lanes when the ByteSwap
->  bit is set for PCI_0.
->
->>   static void gt64120_reset(DeviceState *dev)
->>   {
->>       GT64120State *s = GT64120_PCI_HOST_BRIDGE(dev);
->> @@ -1178,7 +1188,6 @@ static void gt64120_reset(DeviceState *dev)
->>         gt64120_isd_mapping(s);
->>       gt64120_pci_mapping(s);
->> -    gt64120_update_pci_cfgdata_mapping(s);
->>   }
->>     static void gt64120_realize(DeviceState *dev, Error **errp)
->> @@ -1202,6 +1211,12 @@ static void gt64120_realize(DeviceState *dev, Error 
->> **errp)
->>       memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGADDR << 
->> 2,
->>                                           &phb->conf_mem, 1);
->>   +    memory_region_init_io(&phb->data_mem, OBJECT(phb),
->> +                          &gt64120_pci_data_ops,
->> +                          s, "pci-conf-data", 4);
->> +    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << 2,
->> +                                        &phb->data_mem, 1);
->> +
->>         /*
->>        * The whole address space decoded by the GT-64120A doesn't generate
->
-> Please split the changes below in a distinct cleanup patch.
->
->> diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
->> index 80f91f409f..56f7f28a1a 100644
->> --- a/hw/pci/pci_host.c
->> +++ b/hw/pci/pci_host.c
->> @@ -217,12 +217,6 @@ const MemoryRegionOps pci_host_data_le_ops = {
->>       .endianness = DEVICE_LITTLE_ENDIAN,
->>   };
->>   -const MemoryRegionOps pci_host_data_be_ops = {
->> -    .read = pci_host_data_read,
->> -    .write = pci_host_data_write,
->> -    .endianness = DEVICE_BIG_ENDIAN,
->> -};
->> -
->>   static bool pci_host_needed(void *opaque)
->>   {
->>       PCIHostState *s = opaque;
->> diff --git a/include/hw/pci-host/dino.h b/include/hw/pci-host/dino.h
->> index fd7975c798..df509dbc18 100644
->> --- a/include/hw/pci-host/dino.h
->> +++ b/include/hw/pci-host/dino.h
->> @@ -109,10 +109,7 @@ static const uint32_t reg800_keep_bits[DINO800_REGS] = 
->> {
->>   struct DinoState {
->>       PCIHostState parent_obj;
->>   -    /*
->> -     * PCI_CONFIG_ADDR is parent_obj.config_reg, via pci_host_conf_be_ops,
->> -     * so that we can map PCI_CONFIG_DATA to pci_host_data_be_ops.
->> -     */
->> +
->>       uint32_t config_reg_dino; /* keep original copy, including 2 lowest 
->> bits */
->>         uint32_t iar0;
->> diff --git a/include/hw/pci/pci_host.h b/include/hw/pci/pci_host.h
->> index e52d8ec2cd..954dd446fa 100644
->> --- a/include/hw/pci/pci_host.h
->> +++ b/include/hw/pci/pci_host.h
->> @@ -68,6 +68,5 @@ uint32_t pci_data_read(PCIBus *s, uint32_t addr, unsigned 
->> len);
->>   extern const MemoryRegionOps pci_host_conf_le_ops;
->>   extern const MemoryRegionOps pci_host_conf_be_ops;
->>   extern const MemoryRegionOps pci_host_data_le_ops;
->> -extern const MemoryRegionOps pci_host_data_be_ops;
->>     #endif /* PCI_HOST_H */
->
->
---3866299591-157987653-1743254310=:12301--
+So support has been removed from skiboot sometime back ?
+
+So releases before this are working with 8nvl. Maybe I can mention this
+also in the deprecation in QEMU that newer versions of skiboot don't
+support booting 8NVL QEMU.
+
+> 
+> > 
+> > No direct way to deprecate the pnv chips, a field like deprecation_note
+> > could be added, but felt not needed as the chip will only get used if
+> > the user requests corresponding 8E / 8NVL CPU, which will print
+> > deprecation warning.
+> > 
+> > Also, no separate pnv machine for 8E and 8NVL, user has to pass --cpu,
+> > which will throw the deprecation warning. So just deprecating CPUs should
+> > be enough.
+> > 
+> > Power8 itself also can be a candidate for deprecation if not needed ?
+> 
+> That's a bit early.
+
+Got it
+
+> 
+> run 'qemu-system-ppc64  -cpu ?' to see which CPUs are currently
+> available.
+
+Checked, lists a lot of CPUs. This gave me the idea to print
+"(deprecated)" in that list for deprecated CPUs (currently only 8e and
+8nvl), like QEMU's 'cpu_list'.
+
+Thanks,
+- Aditya G
+
+> 
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+> > Will follow up if decided.
+> > ---
+> > ---
+> >   target/ppc/cpu-models.c | 17 ++++++++++++++---
+> >   1 file changed, 14 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+> > index ece348178188..6f2062e2c484 100644
+> > --- a/target/ppc/cpu-models.c
+> > +++ b/target/ppc/cpu-models.c
+> > @@ -32,17 +32,22 @@
+> >   /* PowerPC CPU definitions                                                 */
+> >   #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
+> >       glue(glue(glue(glue(pvr, _), svr), _), type)
+> > -#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
+> > +#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _is_deprecated) \
+> >       static void                                                             \
+> >       glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
+> >       (ObjectClass *oc, void *data)                                           \
+> >       {                                                                       \
+> >           DeviceClass *dc = DEVICE_CLASS(oc);                                 \
+> > +        CPUClass *cc    = CPU_CLASS(oc);                                    \
+> >           PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
+> >                                                                               \
+> >           pcc->pvr          = _pvr;                                           \
+> >           pcc->svr          = _svr;                                           \
+> >           dc->desc          = _desc;                                          \
+> > +                                                                            \
+> > +        if (_is_deprecated) {                                               \
+> > +            cc->deprecation_note = "CPU is unmaintained.";                  \
+> > +        }                                                                   \
+> >       }                                                                       \
+> >                                                                               \
+> >       static const TypeInfo                                                   \
+> > @@ -63,6 +68,12 @@
+> >       type_init(                                                              \
+> >           glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_register_types))
+> > +#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
+> > +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, false)
+> > +
+> > +#define POWERPC_DEPRECATED_CPU(_name, _pvr, _type, _desc)                   \
+> > +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type, true)
+> > +
+> >   #define POWERPC_DEF(_name, _pvr, _type, _desc)                              \
+> >       POWERPC_DEF_SVR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type)
+> > @@ -722,11 +733,11 @@
+> >                   "POWER7 v2.3")
+> >       POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
+> >                   "POWER7+ v2.1")
+> > -    POWERPC_DEF("power8e_v2.1",  CPU_POWERPC_POWER8E_v21,            POWER8,
+> > +    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
+> >                   "POWER8E v2.1")
+> >       POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
+> >                   "POWER8 v2.0")
+> > -    POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
+> > +    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
+> >                   "POWER8NVL v1.0")
+> >       POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
+> >                   "POWER9 v2.0")
+> 
 
