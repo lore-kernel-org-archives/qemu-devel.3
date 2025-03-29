@@ -4,53 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B2BC36008
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B26AC3600C
 	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 07:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyQcD-0008Mh-AO; Sat, 29 Mar 2025 03:28:25 -0400
+	id 1tyQbS-0007rQ-LG; Sat, 29 Mar 2025 03:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+594cbcab689638b006ed+7888+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1tyQc4-0008HP-PD; Sat, 29 Mar 2025 03:28:19 -0400
+ id 1tyQbR-0007rA-Af
+ for qemu-devel@nongnu.org; Sat, 29 Mar 2025 03:27:37 -0400
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+594cbcab689638b006ed+7888+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1tyQc3-0001VQ-8A; Sat, 29 Mar 2025 03:28:16 -0400
+ id 1tyQbO-0001Oc-MV
+ for qemu-devel@nongnu.org; Sat, 29 Mar 2025 03:27:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=MIME-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=zqRQRvMqP58GGF27+w0jE5jRAVowyr7RhMyHFpDNVVc=; b=QCZYPfrTmJC1L40gJOHb3mhIMy
- /OFPSVEY3XPCzol6EsuV3ddhGUEf59B/mpcEQiY0RgxL6onoJagGoImOgat/0WNXmSLnrw+gQvWiy
- cSYU+bO5DLRJbMeXojfPECrnjtRBzj+0F0R6eos9IdQrInONm/Tj6Lz+rvJum/bBpRfHfnvemMHUw
- n2s8JNelP2uT/SZpouu53FkPfDLXnhmt1yZaVLtr9rkfMTIH1MPeeVPzIkIGtkhp0ybV40aSq2YY2
- dy38wrHyfwSqanHIJOiRFZxR/4OZ/q/b7DMzE8/MVGRJTMB3XtH9MRdYCzl8zU0+PH2Gg6dU0FzVp
- NSJ/rV0w==;
+ bh=HnZPEk9UVXO97oByhY1kPBILN3/ybKngIwjXlZ8Szg8=; b=P5vKrR+g1j635ApVQ2RQxn7ZYD
+ 8FxH4jYSm8/aYfnLkIs0X7PywPoBcii9SGrAKOitP6XMIGERy525nwGNIpwvk5uu1womMGcw4cfHe
+ YeHN6mJKkgMyrDmDtkZzWM1RvOE+vpSFqRUa3uS9R02b7L0GfmnHAqWdIo37hbyJHdOSqrNIDAvzT
+ 2Ufc5DiaGOnzzY0RXeV4e74UgmL+dnve+yRSpsoK7A9uAN59avAhbaeLDrRf0S1NlBjyDq7MenKkl
+ 8nr1AFEZX9Z7wjRBY6onFPdg405SmC+tkUmY8CiIm4RFStOWArMcfGxMv2DdVd1FxWV3OIYuSmzzj
+ 4BQu1LEA==;
 Received: from [172.31.31.145] (helo=u09cd745991455d.lumleys.internal)
  by desiato.infradead.org with esmtpsa (Exim 4.98.1 #2 (Red Hat Linux))
- id 1tyQbz-00000006Ih3-4AXv; Sat, 29 Mar 2025 07:28:12 +0000
-Message-ID: <1512f2704fe0a3acc6e673d69e1173543f920608.camel@infradead.org>
-Subject: Re: [PATCH 1/2] i386/xen: Move KVM_XEN_HVM_CONFIG ioctl to
- kvm_xen_init_vcpu()
+ id 1tyQbC-00000006IgY-2vJd; Sat, 29 Mar 2025 07:27:25 +0000
+Message-ID: <87d71fa37d3dbf0a4f03f1c29a56d9d6726f98df.camel@infradead.org>
+Subject: Re: [PATCH] hw/acpi: Remove legacy reset handling from vmclock
 From: David Woodhouse <dwmw2@infradead.org>
-To: qemu-devel@nongnu.org
-Cc: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
- <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, xen-devel@lists.xenproject.org,
- qemu-block@nongnu.org,  kvm@vger.kernel.org, Sean Christopherson
- <seanjc@google.com>
-Date: Sat, 29 Mar 2025 07:28:11 +0000
-In-Reply-To: <20250207143724.30792-1-dwmw2@infradead.org>
-References: <20250207143724.30792-1-dwmw2@infradead.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>, Cornelia Huck <cohuck@redhat.com>, Peter Hilber
+ <quic_philber@quicinc.com>, "Mohamed Abuelfotoh, Hazem"
+ <abuehaze@amazon.com>,  paul <paul@xen.org>
+Date: Sat, 29 Mar 2025 07:27:22 +0000
+In-Reply-To: <3d1b617f001b4ee989101748d120992c81a63a63.camel@infradead.org>
+References: <20250116140315.2455143-1-dwmw2@infradead.org>
+ <20250116140315.2455143-4-dwmw2@infradead.org>
+ <CAFEAcA9CKgumt-6V_EjCipm1DYdYw5GETNoSbUKeRsGEVhNv_Q@mail.gmail.com>
+ <2498d8fa34f6503879f99f671b58055bb6a63fdc.camel@infradead.org>
+ <CAFEAcA9=Z11c3LkSqsODQ40EutN0KSvywxFAciFfj=OpvytuHw@mail.gmail.com>
+ <9097119d6e4c6a1f0a9c8fd3516b02008a1d8ffd.camel@infradead.org>
+ <3d1b617f001b4ee989101748d120992c81a63a63.camel@infradead.org>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/pkcs7-signature"; 
- boundary="=-NVTjRxKb98yb4LXt36VZ"
+ boundary="=-Fdr9G++IpnmzJKWEOTOC"
 User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -81,26 +88,38 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---=-NVTjRxKb98yb4LXt36VZ
+--=-Fdr9G++IpnmzJKWEOTOC
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, 2025-02-07 at 14:37 +0000, David Woodhouse wrote:
+On Fri, 2025-02-07 at 14:34 +0000, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
 >=20
-> At the time kvm_xen_init() is called, hyperv_enabled() doesn't yet work, =
-so
-> the correct MSR index to use for the hypercall page isn't known.
+> The vmclock device only has a reset method in order to plug its memory
+> region into the system memory. It was originally done this way in order
+> to defer the memory_region_add_subregion_overlap() from vmclock_realize()=
+,
+> but that doesn't seem to be necessary (any longer?).
 >=20
-> Rather than setting it to the default and then shifting it later for the
-> Hyper-V case with a confusing second call to kvm_init_xen(), just do it
-> once in kvm_xen_init_vcpu().
+> Still, allowing the platform code to do this is cleaner because it lets
+> the address be specified by the platform, easing the port to Arm and
+> other platforms in future. And the platform has to be involved anyway
+> because of the need to include the device in the ACPI tables (or DT).
+>=20
+> So drop the reset method and provide a vmclock_mmio_map() function
+> instead, called from pc_machine_done().
+>=20
+> Shift the ACPI table build into #ifdef CONFIG_ACPI_VMCLOCK too while
+> we're at it, since it looks like that wouldn't have built when vmclock
+> wasn't enabled.
 >=20
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 
-Ping?
+Found this lurking in my working tree when I came to do something else.
+Was it OK?
 
---=-NVTjRxKb98yb4LXt36VZ
+
+--=-Fdr9G++IpnmzJKWEOTOC
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -179,22 +198,22 @@ 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
-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
+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
-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
+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
 
 
---=-NVTjRxKb98yb4LXt36VZ--
+--=-Fdr9G++IpnmzJKWEOTOC--
 
