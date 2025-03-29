@@ -4,90 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B64C36008
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 05:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 452ADC36008
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 05:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyOwr-0006IO-OW; Sat, 29 Mar 2025 01:41:38 -0400
+	id 1tyPDU-0008E9-HJ; Sat, 29 Mar 2025 01:58:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tyOwp-0006I0-So; Sat, 29 Mar 2025 01:41:35 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1tyPDR-0008Dk-L9; Sat, 29 Mar 2025 01:58:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tyOwn-0003nL-Ou; Sat, 29 Mar 2025 01:41:35 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9175C10A97E;
- Sat, 29 Mar 2025 08:40:01 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6A2DE1DB2DE;
- Sat, 29 Mar 2025 08:41:17 +0300 (MSK)
-Message-ID: <a5f19b09-f222-4747-8b52-b2fd67a6832e@tls.msk.ru>
-Date: Sat, 29 Mar 2025 08:41:17 +0300
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1tyPDP-0005PX-SF; Sat, 29 Mar 2025 01:58:45 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52T316C2017588;
+ Sat, 29 Mar 2025 05:58:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=L1MU0P
+ VmS8MSsNQaFkimzXUI6P8JlXkrZAg6FFnAujw=; b=FlDJk3G3SWHQsZAotO2J6M
+ elH03MxXm1PGd2Y0rCP7CWy2GfFlcTAhYu4sJtj2RjkfpMD02pzCZKDVDQZCbja0
+ bptGHwtKYgjqvCvYcGLaALNgTbsRv4ji6drLAZtag8N9lT6yXTCQE9Xne0J7wIEJ
+ INTPceVmAtPPUJW46/i22q9ApboHkiKX53NxazC8EZJz9mjWE35R5ZN7o3K7627V
+ mqtaFQ1ZsT+cOTYVikt0oKulCVeB+HfYEMirdvKf1+dmQYTfMyF54yZMf6chDF54
+ tREP0u6MAhcOlU02puWP28jN+QRDvJ2R97S1YSJoDcXk01lU2Ty+UliVEWhcsR+A
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45p8k90m9n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 29 Mar 2025 05:58:30 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52T4nNU6009694;
+ Sat, 29 Mar 2025 05:58:29 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45j9rm67w2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 29 Mar 2025 05:58:29 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52T5wSOK31064794
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 29 Mar 2025 05:58:28 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D6B1058056;
+ Sat, 29 Mar 2025 05:58:28 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EE7615803F;
+ Sat, 29 Mar 2025 05:58:27 +0000 (GMT)
+Received: from [9.61.241.221] (unknown [9.61.241.221])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 29 Mar 2025 05:58:27 +0000 (GMT)
+Message-ID: <9a5dca15-47db-485e-a847-99f1d4b895d4@linux.ibm.com>
+Date: Fri, 28 Mar 2025 22:58:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: fix SEEK_CUR offset calculation in
- qio_channel_block_seek
-To: Marco Cavenati <Marco.Cavenati@eurecom.fr>, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
+Subject: Re: [PATCH v2 2/3] include: Add a header to define PCI MMIO functions
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: mjrosato@linux.ibm.com, schnelle@linux.ibm.com, qemu-block@nongnu.org,
+ qemu-s390x@nongnu.org, stefanha@redhat.com, fam@euphon.net,
+ kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com
+References: <20250328190627.3025-1-alifm@linux.ibm.com>
+ <20250328190627.3025-3-alifm@linux.ibm.com>
+ <26acd91e-e9d2-4b04-8158-fe0fd0c530e9@linaro.org>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <26acd91e-e9d2-4b04-8158-fe0fd0c530e9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: buRox8L5sRu7cDlco2JYWkVfp8qH4Mat
+X-Proofpoint-ORIG-GUID: buRox8L5sRu7cDlco2JYWkVfp8qH4Mat
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-29_01,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0
+ lowpriorityscore=0 mlxlogscore=999 bulkscore=0 impostorscore=0 mlxscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2503290040
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,39 +113,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.03.2025 19:22, Marco Cavenati wrote:
-> The SEEK_CUR case in qio_channel_block_seek was incorrectly using the
-> 'whence' parameter instead of the 'offset' parameter when calculating the
-> new position.
-> 
-> Fixes: 65cf200a51ddc6d0a28ecceac30dc892233cddd7 ("migration: introduce a QIOChannel impl for BlockDriverState VMState")
-> 
-> Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-> ---
->   migration/channel-block.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/migration/channel-block.c b/migration/channel-block.c
-> index fff8d87094..b0477f5b6d 100644
-> --- a/migration/channel-block.c
-> +++ b/migration/channel-block.c
-> @@ -123,7 +123,7 @@ qio_channel_block_seek(QIOChannel *ioc,
->           bioc->offset = offset;
->           break;
->       case SEEK_CUR:
-> -        bioc->offset += whence;
-> +        bioc->offset += offset;
->           break;
->       case SEEK_END:
->           error_setg(errp, "Size of VMstate region is unknown");
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+On 3/28/2025 1:38 PM, Philippe Mathieu-Daudé wrote:
+> On 28/3/25 20:06, Farhan Ali wrote:
+>> Add a generic QEMU API for PCI MMIO reads/writes.
+>> The functions access little endian memory and returns
+>> the result in host cpu endianness.
+>>
+>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+>> ---
+>>   include/qemu/pci-mmio.h | 116 ++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 116 insertions(+)
+>>   create mode 100644 include/qemu/pci-mmio.h
+>>
+>> diff --git a/include/qemu/pci-mmio.h b/include/qemu/pci-mmio.h
+>> new file mode 100644
+>> index 0000000000..2ef92455b1
+>> --- /dev/null
+>> +++ b/include/qemu/pci-mmio.h
+>> @@ -0,0 +1,116 @@
+>> +/*
+>> + * QEMU PCI MMIO API
+>> + *
+>> + * Copyright 2025 IBM Corp.
+>> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#ifndef QEMU_PCI_MMIO_H
+>> +#define QEMU_PCI_MMIO_H
+>> +
+>
+> Missing:
+>
+> #include "qemu/bswap.h"
+>
+Thanks, will add this. Though I didn't have any issue compiling, but i 
+think we should add this.
 
-This is a (trivial) bugfix, I'd say it should be in 10.0.
-Will you guys send a pullreq for the block layer, or should
-I make a single-patch pullreq from the trivial tree?
 
-Thanks,
-
-/mjt
+>> +#ifdef __s390x__
+>> +#include "s390x_pci_mmio.h"
+>> +#endif
+>> +
+>> +static inline uint8_t qemu_pci_mmio_read_8(const void *ioaddr)
+>> +{
+>> +    uint8_t ret = 0;
+>> +#ifdef __s390x__
+>> +    ret = s390x_pci_mmio_read_8(ioaddr);
+>> +#else
+>> +    /* Prevent the compiler from optimizing away the load */
+>> +    ret = *((volatile uint8_t *)ioaddr);
+>> +#endif
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static inline uint16_t qemu_pci_mmio_read_16(const void *ioaddr)
+>> +{
+>> +    uint16_t ret = 0;
+>> +#ifdef __s390x__
+>> +    ret = s390x_pci_mmio_read_16(ioaddr);
+>> +#else
+>> +    /* Prevent the compiler from optimizing away the load */
+>> +    ret = *((volatile uint16_t *)ioaddr);
+>> +#endif
+>> +
+>> +    return le16_to_cpu(ret);
+>> +}
+>
+> Otherwise:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>
+>
 
