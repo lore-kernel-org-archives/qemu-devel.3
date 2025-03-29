@@ -4,106 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F2BC36008
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 08:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED4CC36008
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 08:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyRMO-0007YX-O3; Sat, 29 Mar 2025 04:16:10 -0400
+	id 1tyRiz-0002vY-36; Sat, 29 Mar 2025 04:39:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tyRMI-0007Xv-JA
- for qemu-devel@nongnu.org; Sat, 29 Mar 2025 04:16:02 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tyRMF-00079Z-0M
- for qemu-devel@nongnu.org; Sat, 29 Mar 2025 04:16:01 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2240b4de12bso25434535ad.2
- for <qemu-devel@nongnu.org>; Sat, 29 Mar 2025 01:15:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1tyRis-0002uc-HR; Sat, 29 Mar 2025 04:39:24 -0400
+Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1tyRiq-0001Jq-1H; Sat, 29 Mar 2025 04:39:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1743236157; x=1743840957;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sCRkO8v+2k1YmAtHJ0D7+mQ9SXBzHZb8iVLfpQpK7Pc=;
- b=bR6y5RSNKqAhOnTT+W0xVkSjnRjoEnL+cOp21agOX396ybeju6xornhrtBG679Uw/7
- Fx6OqSwxeUKmX4SKRelLgvRtkwTR7fKjN2cIOW8cogGheHofMahrcqSHnSJDVhpjTnAE
- LVPWSAznJOeRPjLeBwM1l3O3L7vwOKz6QvpDtcxl/41/AEWuU4Qc+yGSlK2XFODiGhE7
- 3zjtkU4hV4qVWl/mDdE7C0hoMSZr+ml5oJlyLG+5+Dpr8Zb3o2wBNCEx9L+4/TfrnOWe
- mky+886XgyamA6alvTXSPsDFN+0FtULM1UXiOTtf2qDNx1NSY0YxIxkc26Mh/YfpdANz
- k4+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743236157; x=1743840957;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sCRkO8v+2k1YmAtHJ0D7+mQ9SXBzHZb8iVLfpQpK7Pc=;
- b=BUQCu+oUHA63jNC0UJwTFrgfTfZJPVkpz4lzYJ/fyUHcPZyRYiyYk3/1buppKIMerC
- yy8LZ8jtaVdscXcRhFyH1syUgkoyFrn1K+a3/GQSzh2ddWfDhNXf1GINy41ayCghdS3l
- B4E5QaRTNbqv0bjhbYv5du6He2SRm0TP8aA5E5lSqnbPkJ1NwOVbNT1f/3mXkbi0AQaI
- gZ5rib2nBwtqkDONvQnewO48hKfy6FZNanFMxOiI5yq44FN6ygnkXuGhr7T9bCnY1C2Z
- R9EbttQB9WGEe8K9t6RKNoxUFC081sV1GfDKQhNJV4N16ilfPYFyZwlSWiWFLU9VowXr
- 8S2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhW3JcgmhOTbAXOJWGx+xKi00+adHEPM7+Iwt2GZsY1QPSlpi68/gTLwOwV6MYIOaCmxVINCHWz3Pe@nongnu.org
-X-Gm-Message-State: AOJu0YzWECRy5otOtAIDH3qwqyGHY8K+2ND+wHDDrGMo0JgunvSfkk2z
- eTQ//sNkNsQ7kSg4+O0xy9fsMuJrHJRg0Zguuv3R7ux7BR72URvXzd0FGdCb/O4=
-X-Gm-Gg: ASbGnctOGEE2XBKcpjEWNB5AMxZ4cy4Pq5x+AupU/TPQiexSXIbNOhmQ2vLd1UNAwg3
- hwC7dqYMDlH8dyAm3bZM128LniRixlFsH1hngEGkBrinMaYDyzHo6j5LnX8bWznfUoSMMUikHTJ
- gW3NHhwe10I/S1R2l33c/fmD9APyUDy9rrCS0ZQ+oeqj4h1LQed+kJwyHJlLzJw8QxuGX35R6ym
- LY241fqmtVFZx5VZGXw5CGBHJ1tW1bK5fWmAG4XKq1nHLaUEESYoPMmNLJhUApOtR3yNVHM+z75
- zo2hjJzjDoYTlS5YNH1YlPwh6XPZ99HmeZmZpZPfvuZG5S1sxkKmBBzZKQbG5TtUAZM2
-X-Google-Smtp-Source: AGHT+IFLzMno6jfCZHUYLawzpd4uXQgCbKGeJWvEi1sgCAWJP5dULhsaegUqnSB/R3YedHhlTEB2yA==
-X-Received: by 2002:a05:6a00:991:b0:736:a77d:5412 with SMTP id
- d2e1a72fcca58-73980395977mr3360511b3a.12.1743236157069; 
- Sat, 29 Mar 2025 01:15:57 -0700 (PDT)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739710ccf1fsm3058896b3a.163.2025.03.29.01.15.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 29 Mar 2025 01:15:56 -0700 (PDT)
-Message-ID: <0ac28f60-49c9-4864-a5e0-412b2220d108@daynix.com>
-Date: Sat, 29 Mar 2025 17:15:51 +0900
+ d=linux.alibaba.com; s=default;
+ t=1743237550; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=bRxVVxf+4htzbJXWTvgpKNYSyXChRz14wKVu/BFHdR0=;
+ b=uq3SWTF0lV/UmHYqEOvtX9YxqsifSUpuPJ3u0vhQ1zl1IFLwPipWd30Z0J9bDjhk9qa03d++xn1dXVO08lZCUmk38kClZ9Y85tmTEkYKN23EE+O0wACycfcjB0C9oupuF6RYUDr7MCIT3/zeCQyZM27Cw6Nvwqv4QM8F0Nv23lE=
+Received: from 30.166.64.61(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WTIWZP4_1743237238 cluster:ay36) by smtp.aliyun-inc.com;
+ Sat, 29 Mar 2025 16:33:58 +0800
+Message-ID: <d0a8d305-04c6-49b4-9827-36cfad80c108@linux.alibaba.com>
+Date: Sat, 29 Mar 2025 16:33:57 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/11] gdbstub: introduce target independent gdb
- register helper
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250324102142.67022-1-alex.bennee@linaro.org>
- <20250324102142.67022-5-alex.bennee@linaro.org>
- <87ikny4t2t.fsf@draig.linaro.org>
+Subject: Re: [PATCH v2 1/5] target/riscv: pmp: don't allow RLB to bypass rule
+ privileges
+To: =?UTF-8?Q?Lo=C3=AFc_Lefort?= <loic@rivosinc.com>, qemu-devel@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <20250313193011.720075-1-loic@rivosinc.com>
+ <20250313193011.720075-2-loic@rivosinc.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <87ikny4t2t.fsf@draig.linaro.org>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20250313193011.720075-2-loic@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.118;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-118.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,186 +71,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/03/24 19:32, Alex Bennée wrote:
-> Alex Bennée <alex.bennee@linaro.org> writes:
-> 
->> The current helper.h functions rely on hard coded assumptions about
->> target endianess to use the tswap macros. We also end up double
->> swapping a bunch of values if the target can run in multiple endianess
->> modes. Avoid this by getting the target to pass the endianess and size
->> via a MemOp and fixing up appropriately.
->>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>
->> ---
->> v2
->>    - use unsigned consistently
->>    - fix some rouge whitespace
->>    - add typed reg32/64 wrappers
->>    - pass void * to underlying helper to avoid casting
->> ---
->>   include/gdbstub/registers.h | 55 +++++++++++++++++++++++++++++++++++++
->>   gdbstub/gdbstub.c           | 23 ++++++++++++++++
->>   2 files changed, 78 insertions(+)
->>   create mode 100644 include/gdbstub/registers.h
->>
->> diff --git a/include/gdbstub/registers.h b/include/gdbstub/registers.h
->> new file mode 100644
->> index 0000000000..2220f58efe
->> --- /dev/null
->> +++ b/include/gdbstub/registers.h
->> @@ -0,0 +1,55 @@
->> +/*
->> + * GDB Common Register Helpers
->> + *
->> + * Copyright (c) 2025 Linaro Ltd
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef GDB_REGISTERS_H
->> +#define GDB_REGISTERS_H
->> +
->> +#include "exec/memop.h"
->> +
->> +/**
->> + * gdb_get_register_value() - get register value for gdb
->> + * mo: size and endian MemOp
->> + * buf: GByteArray to store in target order
->> + * val: pointer to value in host order
->> + *
->> + * This replaces the previous legacy read functions with a single
->> + * function to handle all sizes. Passing @mo allows the target mode to
->> + * be taken into account and avoids using hard coded tswap() macros.
->> + *
->> + * There are wrapper functions for the common sizes you can use to
->> + * keep type checking.
->> + *
->> + * Returns the number of bytes written to the array.
->> + */
->> +int gdb_get_register_value(MemOp op, GByteArray *buf, void *val);
->> +
->> +/**
->> + * gdb_get_reg32_value() - type checked wrapper for gdb_get_register_value()
->> + * mo: size and endian MemOp
->> + * buf: GByteArray to store in target order
->> + * val: pointer to uint32_t value in host order
->> + */
->> +static inline int gdb_get_reg32_value(MemOp op, GByteArray *buf, uint32_t *val) {
->> +    g_assert((op & MO_SIZE) == MO_32);
->> +    return gdb_get_register_value(op, buf, val);
->> +}
->> +
->> +/**
->> + * gdb_get_reg64_value() - type checked wrapper for gdb_get_register_value()
->> + * mo: size and endian MemOp
->> + * buf: GByteArray to store in target order
->> + * val: pointer to uint32_t value in host order
->> + */
->> +static inline int gdb_get_reg64_value(MemOp op, GByteArray *buf, uint64_t *val) {
->> +    g_assert((op & MO_SIZE) == MO_64);
->> +    return gdb_get_register_value(op, buf, val);
->> +}
->> +
->> +#endif /* GDB_REGISTERS_H */
->> +
->> +
->> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
->> index b6d5e11e03..e799fdc019 100644
->> --- a/gdbstub/gdbstub.c
->> +++ b/gdbstub/gdbstub.c
->> @@ -32,6 +32,7 @@
->>   #include "exec/gdbstub.h"
->>   #include "gdbstub/commands.h"
->>   #include "gdbstub/syscalls.h"
->> +#include "gdbstub/registers.h"
->>   #ifdef CONFIG_USER_ONLY
->>   #include "accel/tcg/vcpu-state.h"
->>   #include "gdbstub/user.h"
->> @@ -45,6 +46,7 @@
->>   #include "system/runstate.h"
->>   #include "exec/replay-core.h"
->>   #include "exec/hwaddr.h"
->> +#include "exec/memop.h"
->>   
->>   #include "internals.h"
->>   
->> @@ -551,6 +553,27 @@ static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
->>       return 0;
->>   }
->>   
->> +/*
->> + * Target helper function to read value into GByteArray, target
->> + * supplies the size and target endianess via the MemOp.
->> + */
->> +int gdb_get_register_value(MemOp op, GByteArray *buf, void *val)
->> +{
->> +    unsigned bytes = memop_size(op);
->> +
->> +    if (op & MO_BSWAP) {
->> +        uint8_t *ptr = &((uint8_t *) val)[bytes - 1];
->> +        for (unsigned i = bytes; i > 0; i--) {
->> +            g_byte_array_append(buf, ptr--, 1);
->> +        };
-> 
-> I forgot to fix this up. Hopefully the following seems a little less
-> like pointer abuse:
-> 
-> /*
->   * Target helper function to read value into GByteArray, target
->   * supplies the size and target endianess via the MemOp.
->   */
-> int gdb_get_register_value(MemOp op, GByteArray *buf, void *val)
-> {
->      unsigned bytes = memop_size(op);
 
-Nitpick: I would name it "size" instead of "bytes" for consistency.
+On 2025/3/14 03:30, Loïc Lefort wrote:
+> When Smepmp is supported, mseccfg.RLB allows bypassing locks when writing CSRs
+> but should not affect interpretation of actual PMP rules.
+>
+> This is not the case with the current implementation where pmp_hart_has_privs
+> calls pmp_is_locked which implements mseccfg.RLB bypass.
+>
+> This commit implements the correct behavior by removing mseccfg.RLB bypass from
+> pmp_is_locked.
+>
+> RLB bypass when writing CSRs is implemented by adding a new pmp_is_readonly
+> function that calls pmp_is_locked and check mseccfg.RLB. pmp_write_cfg and
+> pmpaddr_csr_write are changed to use this new function.
+>
+> Signed-off-by: Loïc Lefort <loic@rivosinc.com>
 
->      uint8_t *data = val;
+Reviewed-by: LIU Zhiwei  <zhiwei_liu@linux.alibaba.com>
 
-It's unclear what "data" means. This can be named "bytes", "val8", 
-"octets", etc to differentiate from "val".
+Zhiwei
 
-> 
->      if (op & MO_BSWAP) {
->          uint8_t *ptr = &data[bytes - 1];
->          do {
->              g_byte_array_append(buf, ptr--, 1);
->          } while (ptr >= data);
-
-It may be better to initialize ptr to point the position after the last 
-element:
-
-uint8_t *ptr = &data[bytes];
-
-while (ptr > data) {
-   g_byte_array_append(buf, --ptr, 1);
-}
-
-Strictly speaking, this is well-defined when bytes == 0, which is not in 
-the original version, and you don't need to write decrements at two 
-places (initialization and update).
-
->      } else {
->          g_byte_array_append(buf, val, bytes);
->      }
-> 
->      return bytes;
-> }
-> 
-> 
->> +    } else {
->> +        g_byte_array_append(buf, val, bytes);
->> +    }
->> +
->> +    return bytes;
->> +}
->> +
->> +
->>   static void gdb_register_feature(CPUState *cpu, int base_reg,
->>                                    gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
->>                                    const GDBFeature *feature)
-> 
-
+> ---
+>   target/riscv/pmp.c | 43 +++++++++++++++++++++++--------------------
+>   1 file changed, 23 insertions(+), 20 deletions(-)
+>
+> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+> index b0841d44f4..e1e5ca589e 100644
+> --- a/target/riscv/pmp.c
+> +++ b/target/riscv/pmp.c
+> @@ -45,11 +45,6 @@ static inline uint8_t pmp_get_a_field(uint8_t cfg)
+>    */
+>   static inline int pmp_is_locked(CPURISCVState *env, uint32_t pmp_index)
+>   {
+> -    /* mseccfg.RLB is set */
+> -    if (MSECCFG_RLB_ISSET(env)) {
+> -        return 0;
+> -    }
+> -
+>       if (env->pmp_state.pmp[pmp_index].cfg_reg & PMP_LOCK) {
+>           return 1;
+>       }
+> @@ -62,6 +57,15 @@ static inline int pmp_is_locked(CPURISCVState *env, uint32_t pmp_index)
+>       return 0;
+>   }
+>   
+> +/*
+> + * Check whether a PMP is locked for writing or not.
+> + * (i.e. has LOCK flag and mseccfg.RLB is unset)
+> + */
+> +static int pmp_is_readonly(CPURISCVState *env, uint32_t pmp_index)
+> +{
+> +    return pmp_is_locked(env, pmp_index) && !MSECCFG_RLB_ISSET(env);
+> +}
+> +
+>   /*
+>    * Count the number of active rules.
+>    */
+> @@ -90,39 +94,38 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
+>   static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+>   {
+>       if (pmp_index < MAX_RISCV_PMPS) {
+> -        bool locked = true;
+> +        bool readonly = true;
+>   
+>           if (riscv_cpu_cfg(env)->ext_smepmp) {
+>               /* mseccfg.RLB is set */
+>               if (MSECCFG_RLB_ISSET(env)) {
+> -                locked = false;
+> +                readonly = false;
+>               }
+>   
+>               /* mseccfg.MML is not set */
+> -            if (!MSECCFG_MML_ISSET(env) && !pmp_is_locked(env, pmp_index)) {
+> -                locked = false;
+> +            if (!MSECCFG_MML_ISSET(env) && !pmp_is_readonly(env, pmp_index)) {
+> +                readonly = false;
+>               }
+>   
+>               /* mseccfg.MML is set */
+>               if (MSECCFG_MML_ISSET(env)) {
+>                   /* not adding execute bit */
+>                   if ((val & PMP_LOCK) != 0 && (val & PMP_EXEC) != PMP_EXEC) {
+> -                    locked = false;
+> +                    readonly = false;
+>                   }
+>                   /* shared region and not adding X bit */
+>                   if ((val & PMP_LOCK) != PMP_LOCK &&
+>                       (val & 0x7) != (PMP_WRITE | PMP_EXEC)) {
+> -                    locked = false;
+> +                    readonly = false;
+>                   }
+>               }
+>           } else {
+> -            if (!pmp_is_locked(env, pmp_index)) {
+> -                locked = false;
+> -            }
+> +            readonly = pmp_is_readonly(env, pmp_index);
+>           }
+>   
+> -        if (locked) {
+> -            qemu_log_mask(LOG_GUEST_ERROR, "ignoring pmpcfg write - locked\n");
+> +        if (readonly) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "ignoring pmpcfg write - read only\n");
+>           } else if (env->pmp_state.pmp[pmp_index].cfg_reg != val) {
+>               /* If !mseccfg.MML then ignore writes with encoding RW=01 */
+>               if ((val & PMP_WRITE) && !(val & PMP_READ) &&
+> @@ -524,14 +527,14 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+>               uint8_t pmp_cfg = env->pmp_state.pmp[addr_index + 1].cfg_reg;
+>               is_next_cfg_tor = PMP_AMATCH_TOR == pmp_get_a_field(pmp_cfg);
+>   
+> -            if (pmp_is_locked(env, addr_index + 1) && is_next_cfg_tor) {
+> +            if (pmp_is_readonly(env, addr_index + 1) && is_next_cfg_tor) {
+>                   qemu_log_mask(LOG_GUEST_ERROR,
+> -                              "ignoring pmpaddr write - pmpcfg + 1 locked\n");
+> +                              "ignoring pmpaddr write - pmpcfg+1 read only\n");
+>                   return;
+>               }
+>           }
+>   
+> -        if (!pmp_is_locked(env, addr_index)) {
+> +        if (!pmp_is_readonly(env, addr_index)) {
+>               if (env->pmp_state.pmp[addr_index].addr_reg != val) {
+>                   env->pmp_state.pmp[addr_index].addr_reg = val;
+>                   pmp_update_rule_addr(env, addr_index);
+> @@ -542,7 +545,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+>               }
+>           } else {
+>               qemu_log_mask(LOG_GUEST_ERROR,
+> -                          "ignoring pmpaddr write - locked\n");
+> +                          "ignoring pmpaddr write - read only\n");
+>           }
+>       } else {
+>           qemu_log_mask(LOG_GUEST_ERROR,
 
