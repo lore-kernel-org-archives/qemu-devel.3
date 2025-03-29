@@ -4,103 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4324C36008
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 14:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35482C36008
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 14:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyX9W-0003hd-UJ; Sat, 29 Mar 2025 10:27:15 -0400
+	id 1tyXQk-0007u1-OU; Sat, 29 Mar 2025 10:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tyX9U-0003gu-MU; Sat, 29 Mar 2025 10:27:12 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tyX9S-00020Q-Er; Sat, 29 Mar 2025 10:27:12 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52TAkaxr012098;
- Sat, 29 Mar 2025 14:26:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=PEf6knpaalwasNKMBfkvXCUEafdy
- f4nAoze8UTsjWJU=; b=AD3i3jDa+eM8wVS8MrEJfFnrWXsIFbMlp2awgaG+aACM
- MM3TCdimSLZOoNshqVilg0+ZME4fZT4jzv+HS9C381g9E3idLjJAVONVNt1lg8tZ
- lq+hpDEUolbAXM2cuneLmW/HC5ewX/LoEDjmmwFeuMQ+rmYeD/lGM7hxRkhZNz+X
- Izqi2bofPsLG3qv0rWowz3OgBy9N7RoRc6w1V6T1hCrfd2xv5+6A0DLSTM5n28Tl
- 2zCwkbLN/+I6qKSg4nvjE7pmHXqO2oCOB5y8Lky5KopMT3CsRnpRmTLxGL7dt1/B
- 0eYvb2vh1QNyTe8dZZ+x1lF0FeNJzWEX8mkxMLU4uw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45p988swb0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 29 Mar 2025 14:26:58 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52TEQvwu023748;
- Sat, 29 Mar 2025 14:26:57 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45p988sway-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 29 Mar 2025 14:26:57 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52TDZg5o020001;
- Sat, 29 Mar 2025 14:26:56 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j8hpfv7a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 29 Mar 2025 14:26:56 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52TEQqhM18284866
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 29 Mar 2025 14:26:52 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A1DE620043;
- Sat, 29 Mar 2025 14:26:52 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 736A520040;
- Sat, 29 Mar 2025 14:26:50 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.216.105])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 29 Mar 2025 14:26:50 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: [PATCH v2] target/ppc: Deprecate Power8E and Power8NVL
-Date: Sat, 29 Mar 2025 19:56:41 +0530
-Message-ID: <20250329142641.2502003-1-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1tyXQi-0007sl-Bc
+ for qemu-devel@nongnu.org; Sat, 29 Mar 2025 10:45:00 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1tyXQg-0004Dx-9B
+ for qemu-devel@nongnu.org; Sat, 29 Mar 2025 10:45:00 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-227b650504fso67154825ad.0
+ for <qemu-devel@nongnu.org>; Sat, 29 Mar 2025 07:44:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1743259496; x=1743864296; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UDy/waYHc2WMJ63eIScaA3Qlr2ckg0rO6MTqODUDDkU=;
+ b=RW4NN7UBzlMOUitdYaxFZFpE8y4bLL0P22GBsdM1rjxJIQA14tBRfjdL9AZfMk0wZY
+ CYdgi7KNfdN6r4J2CMS690HIQ5oT+MJm3D2uSidPGThyQPUaWWcAksfBXi0dL2RyqpP/
+ 878wuukeDXOrUfwF72YPHtlPPbffl8vIBycQWJ2vJO1avFZUZT38q2RSeEsyO8mgf0bj
+ 2y9YsSDRu857/ZJjX04hgcl/Ld9iPEMHK5BcUy0dUeHXdzfoFwRpMOO4WyfkIBMCa1sw
+ 5UNabhsl64BG6K+Of4TUUHIRRxYRvkNCkVzj/3sIiQBwKQelumAxWE3WqwIrkMInUmFH
+ GHeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743259496; x=1743864296;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UDy/waYHc2WMJ63eIScaA3Qlr2ckg0rO6MTqODUDDkU=;
+ b=uYmYb/pRcOFN4aKyPmDkWx/Rrv8en2eVoo4yvNXiPt8EzUx87grQPILtPOZBkXl8Gv
+ XGI7Cl9FRoX/Vw9xr8V9chAOFZhmmZmvl+g8QjoRkqkU/+OXA7fZjtz+O1V3iAXvCI3e
+ 2kwUFIrUPv66iHa/i2WKMMjp7TWDoj6W4qixmBG65Ln69O2g2kG7qW2XqeQBos8qIdVw
+ ebJuLmF/BErDEGswU6IICfdzEtujHQXFPnyUUI7dO79AnmRVpJ1Vldzg48X3iGj6218U
+ Nf+H/EW8GCX5cGLPW/Pg7Ebpyi/pHLPG2D2xwAe3hq80hOMik6pRNRdZsZOFzNfpS2lr
+ FV8w==
+X-Gm-Message-State: AOJu0YyxbsqU1HKANri3iS0G7tRycMLGGQxkJcLwdGyAynkadlMomLXK
+ N13xdMtfHEdmUjHPmfVLaUpIUz9rLMr6AI6Itlsd1dk8iRLZSHtRhjQAMCR5B6e5k3koTakvmbu
+ ozrdk4UflRdjFVbRk4B0o/HWFdPwEiACkF+Elb19CIMC8M5Ew+hzwpr18eK6oUx/DhlGjJ8Y3I/
+ +DpjjrXPiktSiMDMl74DfGdR8nxvh7PQS2VQyO6Q==
+X-Gm-Gg: ASbGncuUzFsbgJuPHW+bl3C0scI1ySQrG9UQ11RASUwt97gGgYIxm2LITMLgBem0npF
+ 3JW7FWR90Rz4F7ca51K6T7KXSwI0a25h0Ivb91nzAKFbLU1+Fnqlwv+K5yF6NxelNp5bCPzG0kF
+ UuUTxTVRf3inkpg57Y3sKfg/1xg8MiSAn4v0Ue5W0CNyEORPy9eGOtzK0T+49xvzLltZYey6rsX
+ bhCAMUZsHSqv8u5arxUbyRFuRryf+j6SNhXJc+42lTSbthxVTu2/maNditiVa+zvbV/LiC3N3JW
+ cXviSmeomFSibWZHhUGpyYlPghxy8ylKvAVNn5yaMJuuesD192tQlsMjp4wK12aLr+6SUfu4or1
+ cPuLGz40RdO8n9Q==
+X-Google-Smtp-Source: AGHT+IH8AGx1KdBpp9voT/jagfzcUlMBvZwqK19LQi7VTLIGcf5HEdnNHddf0PkH1ynihlEPMoD/0Q==
+X-Received: by 2002:a17:902:e94d:b0:215:b1a3:4701 with SMTP id
+ d9443c01a7336-2292f9557a6mr46671665ad.13.1743259496439; 
+ Sat, 29 Mar 2025 07:44:56 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3039f6b6bcbsm6737196a91.45.2025.03.29.07.44.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 29 Mar 2025 07:44:56 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, antonb@tenstorrent.com,
+ Max Chou <max.chou@sifive.com>
+Subject: [PATCH v2 01/12] target/riscv: rvv: Source vector registers cannot
+ overlap mask register
+Date: Sat, 29 Mar 2025 22:44:35 +0800
+Message-ID: <20250329144446.2619306-2-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250329144446.2619306-1-max.chou@sifive.com>
+References: <20250329144446.2619306-1-max.chou@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: RTJL6rukGJHQRIaBHo61PIMWFHEMrnX1
-X-Proofpoint-GUID: 4lbObyd8Ki5NfLB7Uz4pie0h0jMjr-Er
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-29_01,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- priorityscore=1501 phishscore=0 adultscore=0 mlxlogscore=999
- impostorscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
- spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503290104
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,177 +108,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power8E and Power8NVL variants are not of much use in QEMU now, and not
-being maintained either.
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-Newer skiboot might not be able to boot Power8NVL since skiboot v7.0
+Add the relevant ISA paragraphs explaining why source (and destination)
+registers cannot overlap the mask register.
 
-Deprecate the 8E and 8NVL variants.
-
-After deprecation, QEMU will print a warning like below when the
-CPU/Chips are used:
-
-    $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
-    qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
-    ...
-    $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8e -nographic
-    qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
-    ...
-    $ ./build/qemu-system-ppc64 -M pseries --cpu power8e -nographic
-    qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
-    ...
-
-Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
---cpu ?':
-
-    $ ./build/qemu-system-ppc64 --cpu help
-      ...
-      power8e_v2.1     PVR 004b0201 (deprecated)
-      power8e          (alias for power8e_v2.1)
-      power8nvl_v1.0   PVR 004c0100 (deprecated)
-      power8nvl        (alias for power8nvl_v1.0)
-      power8_v2.0      PVR 004d0200
-      power8           (alias for power8_v2.0)
-      power9_v2.0      PVR 004e1200
-      power9_v2.2      PVR 004e1202
-      ...
-
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
-Cover Letter
-============
+ target/riscv/insn_trans/trans_rvv.c.inc | 29 ++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-Power8E and Power8NVL are not maintained, and not useful to qemu, and
-upstream skiboot also has removed support till Power8 DD1.
-Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
-to be exact:
-
-    commit c5424f683ee3 ("Remove support for POWER8 DD1")
-
-No direct way to deprecate the pnv chips, a field like deprecation_note
-could be added, but felt not needed as the chip will only get used if
-the user requests corresponding 8E / 8NVL CPU, which will print
-deprecation warning.
-
-Also, no separate pnv machine for 8E and 8NVL, user has to pass --cpu,
-which will throw the deprecation warning. So just deprecating CPUs should
-be enough.
-
-Changelog
-=========
-v2:
-  + add mention to docs/about/deprecated.rst
-  + add '(deprecated)' in output of qemu-system-ppc64 --cpu help
----
----
- docs/about/deprecated.rst |  9 +++++++++
- target/ppc/cpu-models.c   | 17 ++++++++++++++---
- target/ppc/cpu_init.c     |  7 ++++++-
- 3 files changed, 29 insertions(+), 4 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index e2b4f077d453..d6b39db2aaca 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -275,6 +275,15 @@ embedded 405 for power management (OCC) and other internal tasks, it
- is theoretically possible to use QEMU to model them. Let's keep the
- CPU implementation for a while before removing all support.
- 
-+Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.0)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The Power8E and Power8NVL variants of Power8 are not really useful anymore
-+in qemu, and are old and unmaintained now.
-+
-+The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
-+be considered deprecated.
-+
- System emulator machines
- ------------------------
- 
-diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-index ece348178188..6f2062e2c484 100644
---- a/target/ppc/cpu-models.c
-+++ b/target/ppc/cpu-models.c
-@@ -32,17 +32,22 @@
- /* PowerPC CPU definitions                                                 */
- #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
-     glue(glue(glue(glue(pvr, _), svr), _), type)
--#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-+#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _is_deprecated) \
-     static void                                                             \
-     glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
-     (ObjectClass *oc, void *data)                                           \
-     {                                                                       \
-         DeviceClass *dc = DEVICE_CLASS(oc);                                 \
-+        CPUClass *cc    = CPU_CLASS(oc);                                    \
-         PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
-                                                                             \
-         pcc->pvr          = _pvr;                                           \
-         pcc->svr          = _svr;                                           \
-         dc->desc          = _desc;                                          \
-+                                                                            \
-+        if (_is_deprecated) {                                               \
-+            cc->deprecation_note = "CPU is unmaintained.";                  \
-+        }                                                                   \
-     }                                                                       \
-                                                                             \
-     static const TypeInfo                                                   \
-@@ -63,6 +68,12 @@
-     type_init(                                                              \
-         glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_register_types))
- 
-+#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-+    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, false)
-+
-+#define POWERPC_DEPRECATED_CPU(_name, _pvr, _type, _desc)                   \
-+    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type, true)
-+
- #define POWERPC_DEF(_name, _pvr, _type, _desc)                              \
-     POWERPC_DEF_SVR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type)
- 
-@@ -722,11 +733,11 @@
-                 "POWER7 v2.3")
-     POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
-                 "POWER7+ v2.1")
--    POWERPC_DEF("power8e_v2.1",  CPU_POWERPC_POWER8E_v21,            POWER8,
-+    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
-                 "POWER8E v2.1")
-     POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
-                 "POWER8 v2.0")
--    POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
-+    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
-                 "POWER8NVL v1.0")
-     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
-                 "POWER9 v2.0")
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 7decc09aec8f..fade53f7e2d6 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7143,6 +7143,7 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
- {
-     ObjectClass *oc = data;
-     PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-+    CPUClass *cc = CPU_CLASS(oc);
-     DeviceClass *family = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
-     const char *typename = object_class_get_name(oc);
-     char *name;
-@@ -7153,7 +7154,11 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index b9883a5d323..20b1cb127b4 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -100,10 +100,33 @@ static bool require_scale_rvfmin(DisasContext *s)
      }
+ }
  
-     name = cpu_model_from_type(typename);
--    qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
-+    if (cc->deprecation_note) {
-+        qemu_printf("  %-16s PVR %08x (deprecated)\n", name, pcc->pvr);
-+    } else {
-+        qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
-+    }
-     for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
-         PowerPCCPUAlias *alias = &ppc_cpu_aliases[i];
-         ObjectClass *alias_oc = ppc_cpu_class_by_name(alias->model);
+-/* Destination vector register group cannot overlap source mask register. */
+-static bool require_vm(int vm, int vd)
++/*
++ * Source and destination vector register groups cannot overlap source mask
++ * register:
++ *
++ * A vector register cannot be used to provide source operands with more than
++ * one EEW for a single instruction. A mask register source is considered to
++ * have EEW=1 for this constraint. An encoding that would result in the same
++ * vector register being read with two or more different EEWs, including when
++ * the vector register appears at different positions within two or more vector
++ * register groups, is reserved.
++ * (Section 5.2)
++ *
++ * A destination vector register group can overlap a source vector
++ * register group only if one of the following holds:
++ *  1. The destination EEW equals the source EEW.
++ *  2. The destination EEW is smaller than the source EEW and the overlap
++ *     is in the lowest-numbered part of the source register group.
++ *  3. The destination EEW is greater than the source EEW, the source EMUL
++ *     is at least 1, and the overlap is in the highest-numbered part of
++ *     the destination register group.
++ * For the purpose of determining register group overlap constraints, mask
++ * elements have EEW=1.
++ * (Section 5.2)
++ */
++static bool require_vm(int vm, int v)
+ {
+-    return (vm != 0 || vd != 0);
++    return (vm != 0 || v != 0);
+ }
+ 
+ static bool require_nf(int vd, int nf, int lmul)
 -- 
-2.49.0
+2.43.0
 
 
