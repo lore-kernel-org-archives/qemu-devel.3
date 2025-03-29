@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F536C28B20
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 00:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B64C36008
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Mar 2025 05:42:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyKQC-0003NW-KE; Fri, 28 Mar 2025 20:51:36 -0400
+	id 1tyOwr-0006IO-OW; Sat, 29 Mar 2025 01:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rakeshjb010@gmail.com>)
- id 1tyKQ5-0003MW-JD
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 20:51:29 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rakeshjb010@gmail.com>)
- id 1tyKQ3-00022o-9e
- for qemu-devel@nongnu.org; Fri, 28 Mar 2025 20:51:29 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-224341bbc1dso54195395ad.3
- for <qemu-devel@nongnu.org>; Fri, 28 Mar 2025 17:51:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743209483; x=1743814283; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=b6dRV/gmP6XKztMr0DilB2F3dYs3TGhJCLHvAGSaEsk=;
- b=Xo9BMUhxDyrtwsaZzMBdNYFhsfTJ0PNmxrvxMZ8MM0yVh5GdBBedacDMCSycP7nGI+
- em3EGZQNL2x4srW971z3JU8m+YyU9LHPKfKPekrQ/AY6b8OXFMDZy0i/sxqIfD3xSnQ1
- UqNWSTsWyw9VMfdA6XyqYp4WMExklGWVzmSLCMKDphB6zo0JNAKnBL43ibcuSCyhWWo9
- 4uoTvsNplTnAZ6kAyxo/TQggwUskTH6+keWXh574ZYy0TuogEstjAvWyuImwkbHxFT46
- uVC6lvxqOvaET+GiID2hQF8MHMET7M5PhzZHFgmQqRN45y97S7kV3R0tx5fMvkl2kC7I
- Z+eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743209483; x=1743814283;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=b6dRV/gmP6XKztMr0DilB2F3dYs3TGhJCLHvAGSaEsk=;
- b=ZnAhpgmAJKS8w2SiKD0yCk/pnOgdBE/MyX3TpB/i6P3K2YZPtcoVz/pGf6ksCrd4jR
- YBEcotJW6ZyEXsiIZ6ELaGvmHdB8vZTqEphFkgqKGOQE6tlBAa7zY7XddeNV1vcd+jkW
- H9g6D9+2xJFbWtoTU7S3HD2dTWrj9/EfJusMbbsy60kT+wSdJzHntBTWoA2BgD3TqIzC
- 16RQXN5LIbGd9y7qJSW4UCc2BxI3t+Zo+sQW+CCyhrmR8LgntIWzb57kzFvR3SU9sirk
- jWWeN1nl3tNfFaDUL0/1eZTfmRA7ukiAPcWqmXCOv5TxvnBfgBQw1gm+Uwy0oUk8UqrP
- VP8w==
-X-Gm-Message-State: AOJu0YzTSawyb7vNXrhaBQaQIBPG+PnPFGkxUHHaVkw6e/AnXUUIm3MN
- 66SaVi4hK3zi3WTuBlVstdpQtIjtVPlfNEB73C5hellb7/a+RsNkdds7rbv34qY=
-X-Gm-Gg: ASbGncuoni2TD0i8LLFzCk3hfU6ZRck2EAFXsXWs7lZK8kh5op0ZP1s5N3stShvLshZ
- XhGrHaXrm65DqnkI+uYncCqoebCRq0q06U8K5y11zUe5DVzZzB98OlU4tmGjko5Mq3rBiZUlt/L
- FveGRiSkpGGrPBrkCVQRqvrGd4EPnQQiHlAZNtVUhhuGdnlwk0zFzZJVOMvPXVrueURryKrV+1R
- H5/Bca5ihxv0z0npHs6FM7jN0uLhR7srKHzXrDk7+ziEBQdMUs7o1SRzjte6qOaiYtBpsL96vex
- XUXQ5dauWUVk689zdNV+vouSMR6pPOg33nYx7H1plWXl8w==
-X-Google-Smtp-Source: AGHT+IFZ952FEj5oVWl5oUd6K6Pi0e0MP7aVmg9FTwkU+2lIMKh4eYu41f/I3wFp8ZIFZO6yqTboFA==
-X-Received: by 2002:a17:903:2446:b0:223:525b:2a7 with SMTP id
- d9443c01a7336-2292f95f084mr16429885ad.15.1743209483111; 
- Fri, 28 Mar 2025 17:51:23 -0700 (PDT)
-Received: from blackjackal.. ([2409:40f4:26:6ed:f7a3:9166:cf5c:f0])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73971090aeesm2453825b3a.124.2025.03.28.17.51.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Mar 2025 17:51:22 -0700 (PDT)
-From: rakeshj <rakeshjb010@gmail.com>
-To: qemu-devel@nongnu.org,
-	pbonzini@redhat.com,
-	thuth@redhat.com
-Cc: balaton@eik.bme.hu,
-	marcandre.lureau@redhat.com,
-	rakeshjb010@gmail.com
-Subject: [PATCH v2] hw/pci-host/gt64120.c: Fix PCI host bridge endianness
- handling
-Date: Sat, 29 Mar 2025 06:19:40 +0530
-Message-ID: <20250329004941.372000-1-rakeshjb010@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tyOwp-0006I0-So; Sat, 29 Mar 2025 01:41:35 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1tyOwn-0003nL-Ou; Sat, 29 Mar 2025 01:41:35 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9175C10A97E;
+ Sat, 29 Mar 2025 08:40:01 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6A2DE1DB2DE;
+ Sat, 29 Mar 2025 08:41:17 +0300 (MSK)
+Message-ID: <a5f19b09-f222-4747-8b52-b2fd67a6832e@tls.msk.ru>
+Date: Sat, 29 Mar 2025 08:41:17 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=rakeshjb010@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] migration: fix SEEK_CUR offset calculation in
+ qio_channel_block_seek
+To: Marco Cavenati <Marco.Cavenati@eurecom.fr>, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+References: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250326162230.3323199-1-Marco.Cavenati@eurecom.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,201 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GT-64120 PCI controller requires special handling where:
-1. Host bridge (device 0) must use native endianness
-2. Other devices follow MByteSwap bit in GT_PCI0_CMD
+26.03.2025 19:22, Marco Cavenati wrote:
+> The SEEK_CUR case in qio_channel_block_seek was incorrectly using the
+> 'whence' parameter instead of the 'offset' parameter when calculating the
+> new position.
+> 
+> Fixes: 65cf200a51ddc6d0a28ecceac30dc892233cddd7 ("migration: introduce a QIOChannel impl for BlockDriverState VMState")
+> 
+> Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+> ---
+>   migration/channel-block.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/migration/channel-block.c b/migration/channel-block.c
+> index fff8d87094..b0477f5b6d 100644
+> --- a/migration/channel-block.c
+> +++ b/migration/channel-block.c
+> @@ -123,7 +123,7 @@ qio_channel_block_seek(QIOChannel *ioc,
+>           bioc->offset = offset;
+>           break;
+>       case SEEK_CUR:
+> -        bioc->offset += whence;
+> +        bioc->offset += offset;
+>           break;
+>       case SEEK_END:
+>           error_setg(errp, "Size of VMstate region is unknown");
 
-Previous implementation accidentally swapped all accesses, breaking
-host bridge detection (lspci -d 11ab:4620).
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-This patch:
-- Adds custom read/write handlers to preserve native big-endian for the host
-  bridge (phb->config_reg & 0x00fff800 == 0).
-- Swaps non-bridge devices when MByteSwap = 0, using size-appropriate swaps
-  (bswap16 for 2-byte, bswap32 for 4-byte) to convert PCI's little-endian data
-  to match the MIPS guest's big-endian expectation; no swap occurs for the host
-  bridge or when MByteSwap = 1 (little-endian mode).
-- Removes gt64120_update_pci_cfgdata_mapping(), moving data_mem initialization
-  to gt64120_realize()
-- Removes unused pci_host_data_be_ops and a misleading comment in dino.h.
+This is a (trivial) bugfix, I'd say it should be in 10.0.
+Will you guys send a pullreq for the block layer, or should
+I make a single-patch pullreq from the trivial tree?
 
-Fixes: 145e2198 ("hw/mips/gt64xxx_pci: Endian-swap using PCI_HOST_BRIDGE MemoryRegionOps")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2826
-Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
----
- hw/pci-host/gt64120.c      | 83 ++++++++++++++++++++++----------------
- hw/pci/pci_host.c          |  6 ---
- include/hw/pci-host/dino.h |  5 +--
- include/hw/pci/pci_host.h  |  1 -
- 4 files changed, 50 insertions(+), 45 deletions(-)
+Thanks,
 
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index d5c13a89b6..4e45d0aa53 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -320,38 +320,6 @@ static void gt64120_isd_mapping(GT64120State *s)
-     memory_region_transaction_commit();
- }
- 
--static void gt64120_update_pci_cfgdata_mapping(GT64120State *s)
--{
--    /* Indexed on MByteSwap bit, see Table 158: PCI_0 Command, Offset: 0xc00 */
--    static const MemoryRegionOps *pci_host_data_ops[] = {
--        &pci_host_data_be_ops, &pci_host_data_le_ops
--    };
--    PCIHostState *phb = PCI_HOST_BRIDGE(s);
--
--    memory_region_transaction_begin();
--
--    /*
--     * The setting of the MByteSwap bit and MWordSwap bit in the PCI Internal
--     * Command Register determines how data transactions from the CPU to/from
--     * PCI are handled along with the setting of the Endianness bit in the CPU
--     * Configuration Register. See:
--     * - Table 16: 32-bit PCI Transaction Endianness
--     * - Table 158: PCI_0 Command, Offset: 0xc00
--     */
--
--    if (memory_region_is_mapped(&phb->data_mem)) {
--        memory_region_del_subregion(&s->ISD_mem, &phb->data_mem);
--        object_unparent(OBJECT(&phb->data_mem));
--    }
--    memory_region_init_io(&phb->data_mem, OBJECT(phb),
--                          pci_host_data_ops[s->regs[GT_PCI0_CMD] & 1],
--                          s, "pci-conf-data", 4);
--    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << 2,
--                                        &phb->data_mem, 1);
--
--    memory_region_transaction_commit();
--}
--
- static void gt64120_pci_mapping(GT64120State *s)
- {
-     memory_region_transaction_begin();
-@@ -645,7 +613,6 @@ static void gt64120_writel(void *opaque, hwaddr addr,
-     case GT_PCI0_CMD:
-     case GT_PCI1_CMD:
-         s->regs[saddr] = val & 0x0401fc0f;
--        gt64120_update_pci_cfgdata_mapping(s);
-         break;
-     case GT_PCI0_TOR:
-     case GT_PCI0_BS_SCS10:
-@@ -1024,6 +991,49 @@ static const MemoryRegionOps isd_mem_ops = {
-     },
- };
- 
-+static uint64_t gt64120_pci_data_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    GT64120State *s = opaque;
-+    PCIHostState *phb = PCI_HOST_BRIDGE(s);
-+    uint32_t val = pci_data_read(phb->bus, phb->config_reg, size);
-+    
-+    /* Only swap for non-bridge devices in big-endian mode */
-+    if (!(s->regs[GT_PCI0_CMD] & 1) && (phb->config_reg & 0x00fff800)) {
-+        if (size == 2) {
-+            val = bswap16(val);
-+        } else if (size == 4) {
-+            val = bswap32(val); 
-+        }
-+    }
-+    return val;
-+}
-+
-+static void gt64120_pci_data_write(void *opaque, hwaddr addr, 
-+    uint64_t val, unsigned size)
-+{
-+    GT64120State *s = opaque;
-+    PCIHostState *phb = PCI_HOST_BRIDGE(s);
-+    if (!(s->regs[GT_PCI0_CMD] & 1) && (phb->config_reg & 0x00fff800)) {
-+        if (size == 2) {
-+            val = bswap16(val);
-+        } else if (size == 4) {
-+            val = bswap32(val);
-+        }
-+    }
-+    if (phb->config_reg & (1u << 31))
-+        pci_data_write(phb->bus, phb->config_reg | (addr & 3), val, size);
-+}
-+
-+static const MemoryRegionOps gt64120_pci_data_ops = {
-+    .read = gt64120_pci_data_read,
-+    .write = gt64120_pci_data_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
- static void gt64120_reset(DeviceState *dev)
- {
-     GT64120State *s = GT64120_PCI_HOST_BRIDGE(dev);
-@@ -1178,7 +1188,6 @@ static void gt64120_reset(DeviceState *dev)
- 
-     gt64120_isd_mapping(s);
-     gt64120_pci_mapping(s);
--    gt64120_update_pci_cfgdata_mapping(s);
- }
- 
- static void gt64120_realize(DeviceState *dev, Error **errp)
-@@ -1202,6 +1211,12 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGADDR << 2,
-                                         &phb->conf_mem, 1);
- 
-+    memory_region_init_io(&phb->data_mem, OBJECT(phb),
-+                          &gt64120_pci_data_ops,
-+                          s, "pci-conf-data", 4);
-+    memory_region_add_subregion_overlap(&s->ISD_mem, GT_PCI0_CFGDATA << 2,
-+                                        &phb->data_mem, 1);
-+
- 
-     /*
-      * The whole address space decoded by the GT-64120A doesn't generate
-diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-index 80f91f409f..56f7f28a1a 100644
---- a/hw/pci/pci_host.c
-+++ b/hw/pci/pci_host.c
-@@ -217,12 +217,6 @@ const MemoryRegionOps pci_host_data_le_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
--const MemoryRegionOps pci_host_data_be_ops = {
--    .read = pci_host_data_read,
--    .write = pci_host_data_write,
--    .endianness = DEVICE_BIG_ENDIAN,
--};
--
- static bool pci_host_needed(void *opaque)
- {
-     PCIHostState *s = opaque;
-diff --git a/include/hw/pci-host/dino.h b/include/hw/pci-host/dino.h
-index fd7975c798..df509dbc18 100644
---- a/include/hw/pci-host/dino.h
-+++ b/include/hw/pci-host/dino.h
-@@ -109,10 +109,7 @@ static const uint32_t reg800_keep_bits[DINO800_REGS] = {
- struct DinoState {
-     PCIHostState parent_obj;
- 
--    /*
--     * PCI_CONFIG_ADDR is parent_obj.config_reg, via pci_host_conf_be_ops,
--     * so that we can map PCI_CONFIG_DATA to pci_host_data_be_ops.
--     */
-+
-     uint32_t config_reg_dino; /* keep original copy, including 2 lowest bits */
- 
-     uint32_t iar0;
-diff --git a/include/hw/pci/pci_host.h b/include/hw/pci/pci_host.h
-index e52d8ec2cd..954dd446fa 100644
---- a/include/hw/pci/pci_host.h
-+++ b/include/hw/pci/pci_host.h
-@@ -68,6 +68,5 @@ uint32_t pci_data_read(PCIBus *s, uint32_t addr, unsigned len);
- extern const MemoryRegionOps pci_host_conf_le_ops;
- extern const MemoryRegionOps pci_host_conf_be_ops;
- extern const MemoryRegionOps pci_host_data_le_ops;
--extern const MemoryRegionOps pci_host_data_be_ops;
- 
- #endif /* PCI_HOST_H */
--- 
-2.43.0
-
+/mjt
 
