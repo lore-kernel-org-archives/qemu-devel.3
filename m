@@ -4,105 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9726C36011
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 21:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F56C28B20
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 22:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyzxC-0001hx-GV; Sun, 30 Mar 2025 17:12:26 -0400
+	id 1tz1F6-0003oE-QG; Sun, 30 Mar 2025 18:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tyzx2-0001fM-Ar; Sun, 30 Mar 2025 17:12:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tz1Ex-0003nq-4r; Sun, 30 Mar 2025 18:34:51 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tyzx0-0000ZF-IH; Sun, 30 Mar 2025 17:12:16 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52UCSFxh030826;
- Sun, 30 Mar 2025 21:12:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=a0fqaa
- j2Qm+FSIeOQjmUbRdNIgVZH9jWoALEU4iR+6E=; b=i5VtFQAXWpR4tONh84b0jH
- 7KJkAdcZxBzPlYAsnrIphCssXnU0hc+ajs/NrBETKrOwJMJ3MzT68iDCKOh1MvRR
- C8jD63T8gr1uc/NbmTVFOd2Dfi2iAj8d+u4AXC6d03zhyz/svs1Y4r/0Cojp3r+l
- dEF6LcMhZfTQ5OaHs7tti+gLr+NlxIEn7qJq95Ha50+l89lMkIIwC9iHo67AlqMB
- fk3l/zzPNddwhiknfzMV2CtZ95csFY86BFLozJg06BN62h+omCp6YWsyKna05U6y
- CSQng/FEEiv1GClijGcDS90tV2xwyBL1Ru3xJAZgCpp1LPi1HTZz//gyDKAxc/ww
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45q602havb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 30 Mar 2025 21:12:04 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52ULC3jN011136;
- Sun, 30 Mar 2025 21:12:03 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45q602hava-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 30 Mar 2025 21:12:03 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52UIYpIc014576;
- Sun, 30 Mar 2025 21:12:02 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45pvpku15d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 30 Mar 2025 21:12:02 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 52ULBwvs33817240
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 30 Mar 2025 21:11:58 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7770120040;
- Sun, 30 Mar 2025 21:11:58 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C944420043;
- Sun, 30 Mar 2025 21:11:55 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.31.121]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Sun, 30 Mar 2025 21:11:55 +0000 (GMT)
-Date: Mon, 31 Mar 2025 02:41:53 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tz1Ev-0002Jh-4v; Sun, 30 Mar 2025 18:34:50 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9BA9E4E6041;
+ Mon, 31 Mar 2025 00:34:44 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id rA3qO74CbdBC; Mon, 31 Mar 2025 00:34:42 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 930724E6036; Mon, 31 Mar 2025 00:34:42 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] ppc/vof: Make nextprop behave more like Open Firmware
+To: qemu-devel@nongnu.org,
+    qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH v3] target/ppc: Deprecate Power8E and Power8NVL
-Message-ID: <kmi2wetaykeizglx4s7czufesvx4w6smpelqdirkxvvxbcftgt@7smdxe7bo3lm>
-References: <20250329180427.2566964-1-adityag@linux.ibm.com>
- <b306727d-48d4-4e0e-8d62-569b89d7fcea@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b306727d-48d4-4e0e-8d62-569b89d7fcea@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: srIbulwL9G_uZivI61V07EUf15alK9-k
-X-Proofpoint-ORIG-GUID: 2PwVcomYsaqFcf_--3H7PX07U4al_a_M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-30_09,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 suspectscore=0 mlxlogscore=457 priorityscore=1501
- adultscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503300148
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>
+Message-Id: <20250330223442.930724E6036@zero.eik.bme.hu>
+Date: Mon, 31 Mar 2025 00:34:42 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,18 +60,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/03/30 10:24AM, Philippe Mathieu-Daudé wrote:
-> On 29/3/25 19:04, Aditya Gupta wrote:
-> > <...snip...>
-> >
-> > +        if (_deprecation_note) {                                            \
-> > +            cc->deprecation_note = _deprecation_note;                       \
-> 
-> As mentioned in v2, we can just assign, no need to check.
-> Otherwise LGTM, thanks!
+The FDT does not normally store name properties but reconsrtucts it
+from path but each node in Open Firmware should at least have this
+property. This is correctly handled in getprop but nextprop should
+also return it even if not present as a property. This patch fixes
+that and also skips phandle which does not appear in Open Firmware
+and only added for internal use by VOF.
 
-Thanks Philippe, fixed and sent v4.
+Explicit name properties are still allowed because they are needed
+e.g. on the root node that guests expect to have specific names as
+seen on real machines instead of being empty so sometimes the node
+name may need to be overriden.
 
-- Aditya G
-                                                                     \
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+I've tested this with pegasos2 but don't know how to test spapr.
+
+ hw/ppc/vof.c | 56 ++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 41 insertions(+), 15 deletions(-)
+
+diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+index 09cb77de93..2c00d11521 100644
+--- a/hw/ppc/vof.c
++++ b/hw/ppc/vof.c
+@@ -353,34 +353,60 @@ static uint32_t vof_nextprop(const void *fdt, uint32_t phandle,
+ {
+     int offset, nodeoff = fdt_node_offset_by_phandle(fdt, phandle);
+     char prev[OF_PROPNAME_LEN_MAX + 1];
+-    const char *tmp;
++    const char *tmp = NULL;
+ 
+     if (readstr(prevaddr, prev, sizeof(prev))) {
+         return PROM_ERROR;
+     }
+-
+-    fdt_for_each_property_offset(offset, fdt, nodeoff) {
+-        if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
+-            return 0;
++    /*
++     * "name" may or may not be present in fdt but we should still return it.
++     * Do that first and then skip it if seen later. Also skip phandle which is
++     * an internal value we added in vof_build_dt but should not appear here.
++     */
++    if (prev[0] == '\0') {
++        tmp = "name";
++    } else {
++        if (strcmp(prev, "name") == 0) {
++            prev[0] = '\0';
+         }
+-        if (prev[0] == '\0' || strcmp(prev, tmp) == 0) {
+-            if (prev[0] != '\0') {
++        fdt_for_each_property_offset(offset, fdt, nodeoff) {
++            if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
++                return 0;
++            }
++            if (strcmp(tmp, "name") == 0 || strcmp(tmp, "phandle") == 0) {
++                continue;
++            }
++            if (prev[0] == '\0') {
++                break;
++            }
++            if (strcmp(prev, tmp) == 0) {
+                 offset = fdt_next_property_offset(fdt, offset);
+-                if (offset < 0) {
+-                    return 0;
+-                }
++                break;
+             }
++        }
++        if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
++            return 0;
++        }
++        if (strcmp(tmp, "name") == 0 || strcmp(tmp, "phandle") == 0) {
++            offset = fdt_next_property_offset(fdt, offset);
+             if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
+                 return 0;
+             }
+-
+-            if (VOF_MEM_WRITE(nameaddr, tmp, strlen(tmp) + 1) != MEMTX_OK) {
+-                return PROM_ERROR;
++        }
++        /* name and phandle can follow each other so check again */
++        if (strcmp(tmp, "name") == 0 || strcmp(tmp, "phandle") == 0) {
++            offset = fdt_next_property_offset(fdt, offset);
++            if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
++                return 0;
+             }
+-            return 1;
+         }
+     }
+-
++    if (tmp) {
++        if (VOF_MEM_WRITE(nameaddr, tmp, strlen(tmp) + 1) != MEMTX_OK) {
++            return PROM_ERROR;
++        }
++        return 1;
++    }
+     return 0;
+ }
+ 
+-- 
+2.41.3
+
 
