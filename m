@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6EEC28B20
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E842CC36011
 	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 21:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tyzka-0004Ye-HB; Sun, 30 Mar 2025 16:59:24 -0400
+	id 1tyzkU-0004X3-NV; Sun, 30 Mar 2025 16:59:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tyzkO-0004WZ-2A; Sun, 30 Mar 2025 16:59:13 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1tyzkM-0004WI-Is; Sun, 30 Mar 2025 16:59:10 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tyzkM-0007SN-7f; Sun, 30 Mar 2025 16:59:11 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ac73723b2d5so302790066b.3; 
- Sun, 30 Mar 2025 13:59:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743368347; x=1743973147; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HA5m80PGHeMhp6Qte+bs8EECaUJOTtoErWdt8fGztaw=;
- b=IcoMEteBHbyrO3qVhexoLeiCYQ5UrHWEs6duKC97CCtfXgQuvvfiprk6P1XxbwPaCO
- 5zfVUw8/bqGVcqvxru/RitOlIorKAanyQ0qG43EkxQ2rBXG0blePS1o7r8B7PvWW2SIv
- FFnv0IBlS3j/E//2OYob776hLNH5sva1coJG4qc3C3kKFKr1VyyyL7eXrjNfcR/G6wwS
- BisJdBar7skCZh1iGIfoPjuPvcGOnUCyvonPiLg0pKsEg+uvBC1CnvGzR1HfwLsMnlIf
- 9T/btdfu74forEaHB1YBLjEyT1UANX+h3bPGw9NZEHSo9ccdGpM7NlX2/1DA2zhN3zp4
- 9K/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743368347; x=1743973147;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HA5m80PGHeMhp6Qte+bs8EECaUJOTtoErWdt8fGztaw=;
- b=TQZ8JBzAAxo6gYvwAUk2ptFBbax8AdbYnu1eo7Efzr7MRgtuRmx5DIY712KJlk3kid
- Rvlt9YCEShvlQWNJcDThyff1HyzzfUGreBj7Y4OhpghMLRhv4XG1LimxA4yzgt2lcEWT
- 40QccsWZ8ykNWqTQK443SXlBqIVE724+sXKI5MU041v+biSQ9/JIzTef7yHp/yGVGWof
- X45yR9wZMBOiHdIfhNxpWhrecs2m2kYT8vxoPXJs66EZBt1OuCH8GoSoxo69Bzr2gmyq
- s4Y4P1f3m6tYYSxANXx0I0+dSuM9ny2ElnA+hiGzP85y8dRLS5CDVJOneoit5tKGjpEq
- eYUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQasJIXEZHHwE0q/O7FFJlClmeF0LYe2fU7TCasavaCmJMeuKIu3wWPfUpVJwr9Af1lUwOCnQRTdo=@nongnu.org
-X-Gm-Message-State: AOJu0Yz5hBHuJdlqX8SY8Djuek/pMqGu6p/RLEMsOsM8e6h1slTeIqe/
- S6ETEphaflR4x/CeBKWOT7wydpY4+v7DVuWG/bzpkcvNxNLo00Qr/PpRnA==
-X-Gm-Gg: ASbGncs7K9iki6d9r7tWX+L6p5ULgN6gDeQXwj+zL6jMjz19n06Ul3EXyBXhf7ERlWL
- DoPHzkuidRobZdNESaZm8e8dukvmYvDu2ObNtPwSBdOrdBK4aKkxTyINKale/el+tHBG02sWldL
- lagQKMLMJ8XpvjtFF0VYFr8WseUx1kj3XVQGfYjUSYr2VRMOhBc5AGu8AIMGXcTUHFJek+GjqvB
- qqjsLdvO+7gWQN9BNOjKDL2z/TZs+E+3SE40gA8+1Mznh27fZw07yDbd1WES6Gb3Xip3zlAk3q7
- tGpCCTwr7lnJ/zpr8HqeO/fm6O5OE09uu9aQY59Px+VgAGB8u12o3dVkCYaWuQlv3Emw6vZEGKO
- N15bnEMjv5bSkGB5vOoTdtXU35QlvkVgS/wrX/9R11M3TeldSLLqfOhRslNqNSPN/xA==
-X-Google-Smtp-Source: AGHT+IF2MZWaFC925Fs+H9r0Zm2vTNCxqZjeGB2uLkRcTbrBH9lt9YvJmnr7W2fmdFQURiFoMYNaLg==
-X-Received: by 2002:a17:907:97c9:b0:ac3:8626:615 with SMTP id
- a640c23a62f3a-ac738c20c5bmr686124266b.49.1743368347148; 
+ id 1tyzkK-0007SC-KY; Sun, 30 Mar 2025 16:59:10 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ac345bd8e13so650836366b.0; 
  Sun, 30 Mar 2025 13:59:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1743368346; x=1743973146; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=StYftgc5iHlTGp6x4Dv1YFEFA9vPoOzDhm2ng6GqJik=;
+ b=iZy/avF2n58U+X8V6+BTOrLdxuBBLyNbjqwJZtHpyjQLNkR17vKalAmStjlxf/MiWu
+ jSDIvt8zCHmWgeFCl1vFCLRw+U8XLI2xEAAmIWYF74aod8hAWTxcF7sA3SncE1H6vPmK
+ mPXjNgWI0mFUHMF1zwV4tt/rMofYVBNNBaPrDn3xg50pmHa25zPYY08qtdXa4Z/uUb3X
+ wwsg3lmU048TiAOlwN5sWaiWSSFjVmMDm5giONPcObyVEVY1ztrWsXm0EnYbMM0NS3rk
+ +xTW7ty48hPN2c6KdUMjv4tqU1Y5kwbLZfyzMJwldMNIyUHNK+JzlY9xYsfMs2xZY1Rx
+ IGGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743368346; x=1743973146;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=StYftgc5iHlTGp6x4Dv1YFEFA9vPoOzDhm2ng6GqJik=;
+ b=CYxPKKh2EH+PEnN7Zhti09rD6K3vvRftZsNJFLB7AaFMyAX6TF8N1wSdb5HU7oUicQ
+ iC4sPdKcqkNAuuQEbbmKt2ds0UdBd4Jwt3xHJ7xfBbPp1WcNWmaPSEpmzfE7ffwt4yFo
+ p5MxuhFAso+t1fKmrcchiBtymO96cOoBpAXgyl5A/coDL1Hd2UQhRdXAJcYeVOamaGWL
+ 4vOr34qn9QqHNO/3vPcUhvmeva1ub/Td3FSaZ8E1mAsQWKdzJq6e+99VcfQS7X3htI2f
+ BJRBuduorWB+qWnzk+Wf/Iv5P07FDQwE2SGOhF5ZWOw3SeE9rNI51h1tpCkcHm37DEjR
+ ybtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsr6w4o1fW6HYLC+zh4cp2GXlPGT4wu9TJONKYNboUlb2LhGl7ZqPNQYtBeOt2IUCgC6hNT4VRFQI=@nongnu.org
+X-Gm-Message-State: AOJu0YzpoitS5n7VipXILFKY7Yg160xCr8NftVrRONJkYknVm9Xqlzxg
+ W621/DY/LjznX/WhSiGPhzKu8mbf6Mffcjt26jH4ZWzN6z4qpvV0KU6G7g==
+X-Gm-Gg: ASbGnct7P+rTqeWf8RtD4ekdIdybElD0sp439OZ87zGhwP8qzdzMc0y8SV+/oDKoB1N
+ QyLLnIIAi4CH5qw6X0zjf06ODAjS5VRW/TH31eeZ2MDoE+r6h5Ya0nPblzFgAhc242XgLJRK5QD
+ FoniIFyerrPIVeha8IY8w0CbpnLl4EfE/xsVSUkX/e/WzSKhUFo5AK26f8jEN6w7lX37O+6Xhs0
+ g4Nzpl4iITtyo+u2d7dAT+JR0w4EZIrVHAu6NXZEZJ8K2AnGKsBJ1n6T2Aa56K9+OFrp9485x3n
+ 8Z6rSd3lRqZqfrOG004U7c7KqpM+uUuF0zGnb/4nP9mbxDvvXT/vLKe6lGpi76+YYvPuhQJhNVa
+ +WaF/MMMAohc7flE9T8uDiaatQirS2IE96OEJKvcNKHCKRan2soApaBSYVvM2x2ZqJg==
+X-Google-Smtp-Source: AGHT+IEEfyCCmm1IOl+oCEhENGmsCQw0P2ZLIr4EL/dcHgNLzbyV7NQBbfKoV4ztC7X250+5Ab7gbQ==
+X-Received: by 2002:a17:907:7e96:b0:ac7:37da:cd46 with SMTP id
+ a640c23a62f3a-ac738ba8055mr532992266b.49.1743368345529; 
+ Sun, 30 Mar 2025 13:59:05 -0700 (PDT)
 Received: from localhost.localdomain
  (dynamic-2a02-3100-2ddd-7900-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:2ddd:7900:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac71967fdbbsm520902466b.135.2025.03.30.13.59.06
+ a640c23a62f3a-ac71967fdbbsm520902466b.135.2025.03.30.13.59.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Mar 2025 13:59:06 -0700 (PDT)
+ Sun, 30 Mar 2025 13:59:05 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 2/2] rust/hw/char/pl011/src/device: Implement logging
-Date: Sun, 30 Mar 2025 22:58:57 +0200
-Message-ID: <20250330205857.1615-3-shentey@gmail.com>
+Subject: [PATCH 0/2] Initial logging support for Rust
+Date: Sun, 30 Mar 2025 22:58:55 +0200
+Message-ID: <20250330205857.1615-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250330205857.1615-1-shentey@gmail.com>
-References: <20250330205857.1615-1-shentey@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,61 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that there is logging support in Rust for QEMU, use it in the pl011 device.
-
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- rust/hw/char/pl011/src/device.rs | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index bf88e0b00a..d5470fae11 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -8,9 +8,11 @@
-     chardev::{CharBackend, Chardev, Event},
-     impl_vmstate_forward,
-     irq::{IRQState, InterruptSource},
-+    log::{LOG_GUEST_ERROR, LOG_UNIMP},
-     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
-     prelude::*,
-     qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
-+    qemu_log_mask,
-     qom::{ObjectImpl, Owned, ParentField},
-     static_assert,
-     sysbus::{SysBusDevice, SysBusDeviceImpl},
-@@ -298,8 +300,7 @@ pub(self) fn write(
-             DMACR => {
-                 self.dmacr = value;
-                 if value & 3 > 0 {
--                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
--                    eprintln!("pl011: DMA not implemented");
-+                    qemu_log_mask!(LOG_UNIMP, "pl011: DMA not implemented\n");
-                 }
-             }
-         }
-@@ -535,7 +536,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
-                 u64::from(device_id[(offset - 0xfe0) >> 2])
-             }
-             Err(_) => {
--                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
-+                qemu_log_mask!(LOG_GUEST_ERROR, "pl011_read: Bad offset {offset}\n");
-                 0
-             }
-             Ok(field) => {
-@@ -567,7 +568,10 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
-                 .borrow_mut()
-                 .write(field, value as u32, &self.char_backend);
-         } else {
--            eprintln!("write bad offset {offset} value {value}");
-+            qemu_log_mask!(
-+                LOG_GUEST_ERROR,
-+                "pl011_write: Bad offset {offset} value {value}\n"
-+            );
-         }
-         if update_irq {
-             self.update();
--- 
-2.49.0
-
+This series introduces a qemu_log_mask!() macro which works similar to the =
+C=0D
+version while catering to Rust expectations. It is just a thin wrapper arou=
+nd=0D
+qemu_log(). The macro then gets used in the pl011 device which either had i=
+ts=0D
+logging commented out or relied on eprintln!() which can't be silenced by u=
+sers.=0D
+=0D
+Note that this is my first Rust contribution, so please check if the usage =
+of=0D
+`unsafe` is sound.=0D
+=0D
+Bernhard Beschow (2):=0D
+  rust/qemu-api: Add initial logging support based on C API=0D
+  rust/hw/char/pl011/src/device: Implement logging=0D
+=0D
+ docs/devel/rust.rst              |  1 +=0D
+ rust/wrapper.h                   |  2 ++=0D
+ rust/hw/char/pl011/src/device.rs | 12 ++++---=0D
+ rust/qemu-api/meson.build        |  1 +=0D
+ rust/qemu-api/src/lib.rs         |  1 +=0D
+ rust/qemu-api/src/log.rs         | 55 ++++++++++++++++++++++++++++++++=0D
+ 6 files changed, 68 insertions(+), 4 deletions(-)=0D
+ create mode 100644 rust/qemu-api/src/log.rs=0D
+=0D
+-- =0D
+2.49.0=0D
+=0D
 
