@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C19B3C28B20
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 09:42:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC418C28B20
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 09:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1typAx-0008Nh-Ii; Sun, 30 Mar 2025 05:41:55 -0400
+	id 1typHR-0001IW-Tl; Sun, 30 Mar 2025 05:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1typAw-0008NT-Sj; Sun, 30 Mar 2025 05:41:54 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1typHP-0001I4-5I; Sun, 30 Mar 2025 05:48:35 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1typAt-0004Xk-42; Sun, 30 Mar 2025 05:41:54 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-ab771575040so909369366b.1; 
- Sun, 30 Mar 2025 02:41:50 -0700 (PDT)
+ id 1typHN-00058I-Nu; Sun, 30 Mar 2025 05:48:34 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-ac2dfdf3c38so643608166b.3; 
+ Sun, 30 Mar 2025 02:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743327708; x=1743932508; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=u76IOBSMbjJcH5OQHSSw28t6GnCDxPKsnRcq6i4Xx/A=;
- b=Vq8wbVuVdJDvOS2qsOKUhUOxqWxgPLKGEluMoqyTleoPMx1ptq079mz0FFkncH+QKg
- XTpTCZk3LfXk3oecBzoYplQZS/1CVnmVC/FicHfnxIM2+/dHsuPooUwdPfAHSM6/Rywq
- NjMkuhTpRGydsqMPGJ+Qavy/VGkQLYwLGgyTfnE8U2a5lJ0EOrzp8bZgJXhJ1KNjhO64
- eUgjW4aOTG+B2o2kd2RimWjgHR+AMjD+f4yBf3p1T7lRFRtpzBvxToTDdQberz2eC7W4
- PDjSkcjNY6TEWRT5KvjT9tZanAkkxkPped4Xs33mJJYTcWcXpDYI6nGoXXhb5573vlIe
- tn0Q==
+ d=gmail.com; s=20230601; t=1743328112; x=1743932912; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eRdudXDYt8RHgefvNy4Ckoqy5VflOX9G0dwjwHRqJVc=;
+ b=h3qQDH17DWr5MHrGBZEkPFLxLGAqBxThkzpDy98ifrrK2QfNYQ2LhsNJy6g2Pj2nFy
+ +mZxAvjsic91ZHJxYDpjxv1Znx8nn3mmGj/fin04KzXoTaWW9MkYM0EOIjio1d8Xvy+8
+ KBibvxAjLZ2G2GpAHEpAjeaUknQz39YPt+X+fbBfaddeC0iyhohMkUL2tegBcat/9zm5
+ rFmHEkA3rsf/nKwoJunJppvEq29ITQ3VR4yP8cQy940H5gLvBBocqzo0N4IEq8jK+t3j
+ Gy+f1ecK5NVVzHeu/Z+908g9nSKyOSMd43giYhppwHWI3ctvRtgKKWt+MYcd6fsYZ20g
+ wSag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743327708; x=1743932508;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u76IOBSMbjJcH5OQHSSw28t6GnCDxPKsnRcq6i4Xx/A=;
- b=qKYYbaijWylNkFWPn899xu3s4bQjSgqxzj3iLIWWTl909L3oti/mz5loljGVQwe59H
- 8i0koCxe5Trmxdp9jTmydKqHi7G0y8fyvEs7YLXqL35JeHZgz4RGwn/TP7qxqL8Y6MEC
- Vmo4Z4ryDiWCvmLkmeV8JCqm3Li0tnIUiHNSEGh4zAXs/+ZwBFLU6p3d0Vk5DBOcxu1b
- YPVjnICTJ+RDoHuxKRd2oLnuVz+4V+qKsRVtfwoR4FfeQkRlWdQtMBYPLss/jNdL18OV
- v3dPxmkzkuSYpqLqGgnx/nDoNXabpVU1tJPCcuUvAAvyiWVwnwJn9wCwEPuztg1MKlev
- k8cg==
+ d=1e100.net; s=20230601; t=1743328112; x=1743932912;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eRdudXDYt8RHgefvNy4Ckoqy5VflOX9G0dwjwHRqJVc=;
+ b=N3HaIA+czzF9Mn/DljPuORvU2Pd0rJbRptKpxJAq5H+g5rU5IVFGiTyibJsieFK2XV
+ QLerDOMjrGVEzU6V5HEv2ln7KtbFAlFpGE6PEPsohCgHmGXn/M8BjOt5VrwAQRM3M8CJ
+ M1wpFD/lpKkJFr26mkzWlwUQJihUE09frTJ6lyJg0ONvcPaZ9oVWGqkPn4lDsAT8fzGI
+ K4XgOl3MIkkOEaMTuoD60O6Mpf7Dies0RX0cn/NNkmX2sRfZ6h5JsoHunoJOpuyCjc32
+ 0Bec+jGUQ6z5zCoVT7/jCdhAdjPMKezNMxlST4aXPRic8VeotENUTXnVnfGqjg/UoPsc
+ HSFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTWz46a4KHPVxFme1ZzXrqSqgd0TniaCgzOjKXiLKxIL8ORH4x5NdFcWHvbLXZ6Qvc++TGT8Wq+Q==@nongnu.org
-X-Gm-Message-State: AOJu0YyKpf4kWH5d+KmGWFnxTmJhFnZe5wD1gF9hnpOzyLD7EwMzTjoG
- oIcLel9uD48sfSNrhKQ8GbfuV1YH3ub8uUPP0i0TCXYbdqp3EuVAX3OBjg==
-X-Gm-Gg: ASbGncvplqdw6q1EK9nM1tZ/67f/mgke8x9ESC6IYg2UIJXHBC7rDoXzcP7ldbG6bW1
- 6PnNPIDdXLnK4+XRL7kjIt3sUckmyXrKiV0DyvdOQZam5DFc9oNX760Ky54Plx2kCAsAY86WON6
- 70zgAy0SNCw9Z+OdF3p1YevGeHF3kw3Gg+uT5SbZ4gYFB5ifK89P3Lvg/U3O0+zAniU+Ry14v3P
- x/sI8HshEH1e2/p358oFl9b0XOjL9B2TXufDAiLEBNHhp8CK5LLW3OLOpUfcIzXH31FOCD7FQ1o
- Dq1esWSpz1i89KFPXY4gKC6OHmHRZP5FCyDXnnq0RoYy67tPfAatZ6vD4PF9kGeUg4+0RJxJQTw
- EotBtBulPkw0OevexBL044GBohL/INQbKnfOpVMUicel1qxrcocluVC/XZH98geqM
-X-Google-Smtp-Source: AGHT+IGLcEAYAVGAQ35ewzCxaHx0uVn8AWMneMNoyY3lfcSzDmhkSFjeyEnvtgzJyEcgZJdR50ONnw==
-X-Received: by 2002:a17:907:9816:b0:ac4:3d0:8bca with SMTP id
- a640c23a62f3a-ac7369be91fmr444984966b.29.1743327707807; 
- Sun, 30 Mar 2025 02:41:47 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-2ddd-7900-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:2ddd:7900:219:99ff:feb2:2458])
+ AJvYcCVrBWg3cxilEKvUjpWVz30mw3wOuplqVqEttW68Qt4w3kWIpr38wcZ5pLN/pm7wyKMTpjQeh2cPlg==@nongnu.org,
+ AJvYcCWKh3+2xvxAj9PG6McSsV1n33iZ2w6yLRITH348mEF5qVPxiQgcu7gsqKyw7qN3ePtA5VOjVqgzn15dnw==@nongnu.org
+X-Gm-Message-State: AOJu0YxCSZh6QsqyqAZJx7zNjf8Rd/fqcli1mYLskJD+9flPgp3cWJrH
+ 83gkYRUvxAaso0CFwwHCcNi0IgdE41Rom1LoXpUQ8bIbfHRimEaZ
+X-Gm-Gg: ASbGncsmrzI0K7KVsKpI06LTx9JUR2KxE9W3hWGB8WX+6/xK4j2DSy3N3F7O/zdZvFa
+ 5Idrq5C5sfIxTDWBjGi/RbGnEZbpBHbcbZd7C1AqvH1aflVavXZ8Bk6lU12d8OL4BFdN3f69dTA
+ Pu+xMkVVDkVI7H/ngfeyE1N1utTy7MlAsHBh9N7iaX3m3eKjVaUJDJufbEJJg7Pi9Tzh4WyURWG
+ 2ujnO0OAR6+gDLyDrLeWuDIpZe/8A31dsu08xKWWX8jsUfpQHuebBnl2yDPqCs6PvIGYksrKhHR
+ TBmiXf0gCpqMyZrK7FRBeQ/kdApv6NrIy8ujgPZXJ9iHMrHHwQkMJ4oImuhsl4GfidwkR0n29tP
+ 2mDRQuTHemUCpTeS++GBsgQwNXPEsXpWt6SHLljlBPzi5r12nSwG1
+X-Google-Smtp-Source: AGHT+IExwKQIT8sAh+WknFelYKSQjI3YJdL51UtwnRtaMfbhZzmteV7fSeTgsrEbISbQZWZ8p6z5ew==
+X-Received: by 2002:a17:907:3f12:b0:ac6:b639:5a1a with SMTP id
+ a640c23a62f3a-ac738b0ba28mr483032066b.28.1743328111543; 
+ Sun, 30 Mar 2025 02:48:31 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-2ddd-7900-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
+ [2a02:3100:2ddd:7900:69d2:56f6:a5af:50a8])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac7196e954csm457914666b.171.2025.03.30.02.41.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Mar 2025 02:41:47 -0700 (PDT)
+ a640c23a62f3a-ac71922babbsm455901066b.5.2025.03.30.02.48.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 30 Mar 2025 02:48:31 -0700 (PDT)
+Date: Sun, 30 Mar 2025 09:48:30 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/functional: Add test for imx8mp-evk board with USDHC
- coverage
-Date: Sun, 30 Mar 2025 11:41:39 +0200
-Message-ID: <20250330094139.11948-1-shentey@gmail.com>
-X-Mailer: git-send-email 2.49.0
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 0/3] i.MX 8M Plus EVK Fixes
+In-Reply-To: <c794ca2f-43f7-4abd-86d0-650eb53602d4@linaro.org>
+References: <20250318205709.28862-1-shentey@gmail.com>
+ <c794ca2f-43f7-4abd-86d0-650eb53602d4@linaro.org>
+Message-ID: <CEA374C6-D7EC-42DE-B8DA-EF6704C6527A@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,118 +106,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a functional test which boots Debian 12 on the imx8mp-evk board. Since
-the root filesystem resides on an SD card, the test also verifies the basic
-operation of the USDHC.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- MAINTAINERS                                 |  1 +
- tests/functional/meson.build                |  1 +
- tests/functional/test_aarch64_imx8mp_evk.py | 69 +++++++++++++++++++++
- 3 files changed, 71 insertions(+)
- create mode 100644 tests/functional/test_aarch64_imx8mp_evk.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d54b5578f8..4ceffa89dc 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -833,6 +833,7 @@ F: include/hw/arm/fsl-imx8mp.h
- F: include/hw/misc/imx8mp_*.h
- F: include/hw/pci-host/fsl_imx8m_phy.h
- F: docs/system/arm/imx8mp-evk.rst
-+F: tests/functional/test_aarch64_imx8mp_evk.py
- F: tests/qtest/rs5c372-test.c
- 
- MPS2 / MPS3
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 0f8be30fe2..aaaf3472f1 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -75,6 +75,7 @@ tests_aarch64_system_quick = [
- 
- tests_aarch64_system_thorough = [
-   'aarch64_aspeed',
-+  'aarch64_imx8mp_evk',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-   'aarch64_replay',
-diff --git a/tests/functional/test_aarch64_imx8mp_evk.py b/tests/functional/test_aarch64_imx8mp_evk.py
-new file mode 100644
-index 0000000000..5419d3c525
---- /dev/null
-+++ b/tests/functional/test_aarch64_imx8mp_evk.py
-@@ -0,0 +1,69 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import LinuxKernelTest, Asset
-+
-+class Imx8mpEvkMachine(LinuxKernelTest):
-+
-+    ASSET_IMAGE = Asset(
-+        ('https://cloud.debian.org/images/cloud/bookworm/20231210-1590/'
-+         'debian-12-generic-arm64-20231210-1590.tar.xz'),
-+        '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b359')
-+
-+    KERNEL_OFFSET = 0x51000000
-+    KERNEL_SIZE = 32622528
-+    INITRD_OFFSET = 0x76000000
-+    INITRD_SIZE = 30987766
-+    DTB_OFFSET = 0x64F51000
-+    DTB_SIZE = 45 * 1024
-+
-+    def extract(self, in_path, out_path, offset, size):
-+        try:
-+            with open(in_path, "rb") as source:
-+                source.seek(offset)
-+                data = source.read(size)
-+            with open(out_path, "wb") as target:
-+                target.write(data)
-+        except (IOError, ValueError) as e:
-+            self.log.error(f"Failed to extract {out_path}: {e}")
-+            raise
-+
-+    def setUp(self):
-+        super().setUp()
-+
-+        self.ASSET_IMAGE.fetch()
-+        self.archive_extract(self.ASSET_IMAGE)
-+
-+        self.image_path = self.scratch_file("disk.raw")
-+        self.kernel_path = self.scratch_file("linux")
-+        self.initrd_path = self.scratch_file("initrd.zstd")
-+        self.dtb_path = self.scratch_file("imx8mp-evk.dtb")
-+
-+        self.extract(self.image_path, self.kernel_path,
-+                     self.KERNEL_OFFSET, self.KERNEL_SIZE)
-+        self.extract(self.image_path, self.initrd_path,
-+                     self.INITRD_OFFSET, self.INITRD_SIZE)
-+        self.extract(self.image_path, self.dtb_path,
-+                     self.DTB_OFFSET, self.DTB_SIZE)
-+
-+    def test_aarch64_imx8mp_evk_usdhc(self):
-+        self.set_machine('imx8mp-evk')
-+        self.vm.set_console(console_index=1)
-+        self.vm.add_args('-m', '2G',
-+                         '-smp', '4',
-+                         '-accel', 'tcg',
-+                         '-kernel', self.kernel_path,
-+                         '-initrd', self.initrd_path,
-+                         '-dtb', self.dtb_path,
-+                         '-append', 'root=/dev/mmcblk2p1',
-+                         '-drive', f'file={self.image_path},if=sd,bus=2,'
-+                                    'format=raw,id=mmcblk2')
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Welcome to ')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
--- 
-2.49.0
+Am 27=2E M=C3=A4rz 2025 16:19:32 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
+ <philmd@linaro=2Eorg>:
+>
+>> Bernhard Beschow (3):
+>>    hw/arm/imx8mp-evk: Fix reference count of SoC object
+>>    hw/arm/fsl-imx8mp: Derive struct FslImx8mpState from
+>>      TYPE_SYS_BUS_DEVICE
+>>    hw/arm/fsl-imx8mp: Remove unused define
+>
+>Series queued to hw-misc, thanks!
 
+Thanks, Phil!
 
