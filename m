@@ -4,90 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC92C28B20
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 08:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEFC2C28B20
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 08:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tynxq-0002DL-LR; Sun, 30 Mar 2025 04:24:18 -0400
+	id 1tynzE-0002z3-0L; Sun, 30 Mar 2025 04:25:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tynxm-0002Ce-Cr
- for qemu-devel@nongnu.org; Sun, 30 Mar 2025 04:24:16 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tynzC-0002yc-TS
+ for qemu-devel@nongnu.org; Sun, 30 Mar 2025 04:25:42 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tynxk-0003tI-AF
- for qemu-devel@nongnu.org; Sun, 30 Mar 2025 04:24:13 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3912d2c89ecso3148625f8f.2
- for <qemu-devel@nongnu.org>; Sun, 30 Mar 2025 01:24:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tynzB-0004DD-7g
+ for qemu-devel@nongnu.org; Sun, 30 Mar 2025 04:25:42 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4394a0c65fcso34109485e9.1
+ for <qemu-devel@nongnu.org>; Sun, 30 Mar 2025 01:25:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743323048; x=1743927848; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743323139; x=1743927939; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=divQ2CncxackwiMkwlRFw619BjrM69wJW1gT81QYt6A=;
- b=ngxRjIPCkTy7Om+ewKr0GA6rMNHTKq2Wt6/2vKV0pRbxObn/f6Jwz9nR9GYsLgoyJh
- CKpIkJpLLm4FJwozc3PuTggR4d5awc9AAZV4lt3bb5SrIwXxiCU7eKbd5+rBbekgtzkc
- XvGtcSyGtF36GXc94qTHzvifetqH2UhVzkV3U6HRnYZzvUKXZwCCoRcFS/cLrTaiCZbI
- W83l96zxa3w1TAUVC4wy3omV6SipgCgj9LJMpGR1ZQDiuxFNDZ8o+XFAYuySZY5Cp+3R
- wW+oT91P5T+bJp2cxcBlqHHHe6yCwUgOao6gXsvI8SsDXajSUoyvADXdhfqbgtJAzqHC
- ZSbQ==
+ bh=AcYIndhl14cmw23q+DOBnpn4QIlK83HGn3hyGxMylyc=;
+ b=UWEEtY2ZppKhxde1OdjkeQeO7guBVpKEhRI5fsCDv7/EqjLcV1eeZGGCPLr2Gd58jH
+ +cfBCdwlSkcz7QhRZhavWuviKSyEItNV4nBjGW49LhJdE8VKI2ChtiK9R3wkWMxTsY96
+ sNILmQsHmXmZDfZT6bXxbNjq0yZPCVgT4V/JLr7kYjdJO+ft1OisAu6KaunzmTEbBK2U
+ RNkXrAHQRCoTwUGXztSAcL8qs5f4NbuQtKS9bg9cLbKl1YYudR3khUAjEYy8J5FQW+nK
+ JHJD3khiPxfTN+lizJxUoWY9wTIfA7QjRrykTu+7FRpyjTtpJ+riodRZyvm/KNL6sakz
+ AAeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743323048; x=1743927848;
+ d=1e100.net; s=20230601; t=1743323139; x=1743927939;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=divQ2CncxackwiMkwlRFw619BjrM69wJW1gT81QYt6A=;
- b=D6pNc7P5y7oa/R2Qdojc3ClF1v96abhPPzAFHZB+LWLiUJP6wFR24b12PVWcSwRFoN
- BUxdvP6L4071k88qGkkXVmJBHeOfrtB2n4ylXk4vMni0U8tiPIvl/MJmzxI/aZFvtYJs
- 1uo6+J6pLqsch+6mdj/YLBocuzu1HQepiBAPGBJLKL0xFIckDzVjRWSYHuqNiGq4Aqht
- M69bmi8VApZ2Vf5s5dNFARX5m4xl5dAdaQSog7rESVy3L3L8H3BuROfE96XGkYzt4zv5
- SnJvlk2Sn1gXNDgQRjWPA13w9iuwBNinnlWgAhMyFSfdyKzOkebTw8O3NXVDwc/7cqJi
- GXTA==
-X-Gm-Message-State: AOJu0Yw3GNdp67zpgpFHxRUKditDnAsy8QjF26GlH7eO+z0DYlHy9JnE
- /cTk990j9mpDOh6fV1xtkhglZwPEEvUjDztSnOtX+7wM0b2BUDIBxuqNVuFYlJ4=
-X-Gm-Gg: ASbGncswNDJbNTBp5nDJsDL9rRDKLUckORT7axXgeL4qGkWanQkJRnbzyVlgWrFqvjs
- rIu4/N2Mojpc0W0dyo8OXvbHbOFmEiazQ7ek+pq+aWiJhglzu29aAD4qiRcU9B95IDupsUiwQ/d
- oce5WHkIyBzLlszNLYdVOxeKCKOit+d1U5XfY2pc3T1Ctc2zxgu342lreXZUtLlBcslBrzj5rok
- 8R2s/o/ozRorQ99U4TCijiTre4pkLDVYo7QurtbH9lnUrc76kmUCvfK5uXcDmb2qCZ8qLW19jpr
- 1oMBWp2poKOPvcdFjXzAyjp1Wuchx2nNPfRTB77w3UzQPWLQTq0ljDLgST+O0FJ6n27bXeXqaVa
- rG28=
-X-Google-Smtp-Source: AGHT+IGyLe+XkTueodN4TYZF6f7n2geQOPznw8o1bs6U35L9naeyw2s0T6bIZqpuu6krKEbZ0LsXKA==
-X-Received: by 2002:a5d:47a7:0:b0:391:487f:280b with SMTP id
- ffacd0b85a97d-39c120cb53amr3977561f8f.10.1743323048199; 
- Sun, 30 Mar 2025 01:24:08 -0700 (PDT)
+ bh=AcYIndhl14cmw23q+DOBnpn4QIlK83HGn3hyGxMylyc=;
+ b=qqOIG1hBSY5Ca/YK0nFiFAjEdS2PcsqC2noc20GYxQJtKLjGBmwhaBilMjeM55pi62
+ zV1mPtEcVLGWLfDR8RfZkoD4xfUCjmRGDAa9PRbi4dIez4XqRjsMsFaFF2MPC5Gu4rD5
+ HwemMemFxU5s9eo7GR3eQYU99W2H798QhIL4oEJMaDApO03/xnqS9+Urz4w9FNJBDinK
+ GDz6CTZswFcvdUHvQywb8t9WkoRyWsJEn63ZbLFP8pczNgweL4lctO+nM3tbUcf4fUFy
+ u86DtstM0J3io02vFCAi5S5VMWUo5Y4rBQ/b8nB4TWsFfAM6249wpHtfUXXurpvxQiBq
+ C51Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbF6T4lrJMNDqm5fM3TABnX2UilmtqjQ8d/uQTtmOJ/Cy88hHBPrGdttLnKUVKQ288SQd69E5u9SFX@nongnu.org
+X-Gm-Message-State: AOJu0Yy1ESkL656Mk1LhtBVefay3Iu8nfKyX/iJu2s61aSWYAT0gWlcI
+ 9+CQWJWC1aq209wvNCvgdMCVAFq+FxsGe8X+3lpCUcfVNZa7+weA91+14zXVtos=
+X-Gm-Gg: ASbGncvICi+I6RR89FQ+NAfnNpoC4wTdR8iqaDJizT3Sb+4n2y1JwJ8fEOSTS/Co2bq
+ r1okSi8ESBLLoq8xYZmV7gxWoQA+VxARUnZ80onxm9IsdBrcbufexGbFpXtfUbEBzJ590qmHF2s
+ WrbgGru7e89NXt//zO1hLr3MyG+6VJ30av9mgOT6OAwSmJuusbWlhxj7dnmK6/pg52GtJgTukW7
+ LrCV32OrBvQlLJqNgrnjKVJ1f1rMObxCqa/4OqnUHgMHLh7SSFh+y/qyebqzuPyJBUsf1jCHorU
+ gmJotVJIDLdjEN8s5ueGtloA6ulMaXW+OvM9Z9r6zqUL/OMXdtIisJ2eImIecDzSr0kB9azdjKy
+ tFT8=
+X-Google-Smtp-Source: AGHT+IHe+y3Ztuy4v1H86YIezz8B5wo87c+zBoOHzm36A/SO3bUdFHDTysx/YSidoK0yEQ5XOBZ8bQ==
+X-Received: by 2002:a05:600c:16c4:b0:43d:300f:fa4a with SMTP id
+ 5b1f17b1804b1-43ddccbfe45mr32952945e9.12.1743323139476; 
+ Sun, 30 Mar 2025 01:25:39 -0700 (PDT)
 Received: from [10.155.70.213] (63.170.88.92.rev.sfr.net. [92.88.170.63])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b658c87sm8043513f8f.9.2025.03.30.01.24.04
+ 5b1f17b1804b1-43d90000a09sm84312955e9.35.2025.03.30.01.25.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 30 Mar 2025 01:24:06 -0700 (PDT)
-Message-ID: <b306727d-48d4-4e0e-8d62-569b89d7fcea@linaro.org>
-Date: Sun, 30 Mar 2025 10:24:03 +0200
+ Sun, 30 Mar 2025 01:25:38 -0700 (PDT)
+Message-ID: <eec76ce0-c3ca-48ed-befe-e0930d4a39d9@linaro.org>
+Date: Sun, 30 Mar 2025 10:25:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/ppc: Deprecate Power8E and Power8NVL
-To: Aditya Gupta <adityag@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Nicholas Piggin <npiggin@gmail.com>,
+Subject: Re: [PATCH v2 01/11] include/exec: fix assert in size_memop
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, David Gibson <david@gibson.dropbear.id.au>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250329180427.2566964-1-adityag@linux.ibm.com>
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
+References: <20250324102142.67022-1-alex.bennee@linaro.org>
+ <20250324102142.67022-2-alex.bennee@linaro.org>
+ <4fbe53ce-047e-4efc-a0a6-f59342e1f3ea@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250329180427.2566964-1-adityag@linux.ibm.com>
+In-Reply-To: <4fbe53ce-047e-4efc-a0a6-f59342e1f3ea@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,75 +116,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/3/25 19:04, Aditya Gupta wrote:
-> Power8E and Power8NVL variants are not of much use in QEMU now, and not
-> being maintained either.
+On 29/3/25 08:51, Akihiko Odaki wrote:
+> On 2025/03/24 19:21, Alex Bennée wrote:
+>> We can handle larger sized memops now, expand the range of the assert.
+>>
+>> Fixes: 4b473e0c60 (tcg: Expand MO_SIZE to 3 bits)
+>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>
+>> ---
+>> v2
+>>    - instead of 128 use 1 << MO_SIZE for future proofing
+>> ---
+>>   include/exec/memop.h | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/include/exec/memop.h b/include/exec/memop.h
+>> index 407a47d82c..6afe50a7d0 100644
+>> --- a/include/exec/memop.h
+>> +++ b/include/exec/memop.h
+>> @@ -162,8 +162,8 @@ static inline unsigned memop_size(MemOp op)
+>>   static inline MemOp size_memop(unsigned size)
+>>   {
+>>   #ifdef CONFIG_DEBUG_TCG
+>> -    /* Power of 2 up to 8.  */
+>> -    assert((size & (size - 1)) == 0 && size >= 1 && size <= 8);
+>> +    /* Power of 2 up to 128.  */
 > 
-> Newer skiboot might not be able to boot Power8NVL since skiboot v7.0
+> It may be better to avoid writing the literal number (128) in the 
+> comment too.
 > 
-> Deprecate the 8E and 8NVL variants.
+> Perhaps it is easier to simply remove the comment instead of updating it 
+> to explain the assertion without the literal number.
+> (size & (size - 1)) == 0 looks cryptic, but it can be replaced with 
+> is_power_of_2(), which is more obvious and will not need an explanation.
+
++1 for is_power_of_2()
+
 > 
-> After deprecation, QEMU will print a warning like below when the
-> CPU/Chips are used:
+> Regards,
+> Akihiko Odaki
 > 
->      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
->      qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
->      ...
->      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8e -nographic
->      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
->      ...
->      $ ./build/qemu-system-ppc64 -M pseries --cpu power8e -nographic
->      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
->      ...
-> 
-> Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
-> --cpu ?':
-> 
->      $ ./build/qemu-system-ppc64 --cpu help
->        ...
->        power8e_v2.1     PVR 004b0201 (deprecated)
->        power8e          (alias for power8e_v2.1)
->        power8nvl_v1.0   PVR 004c0100 (deprecated)
->        power8nvl        (alias for power8nvl_v1.0)
->        power8_v2.0      PVR 004d0200
->        power8           (alias for power8_v2.0)
->        power9_v2.0      PVR 004e1200
->        power9_v2.2      PVR 004e1202
->        ...
-> 
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>> +    assert((size & (size - 1)) == 0 && size >= 1 && size <= (1 << 
+>> MO_SIZE));
+>>   #endif
+>>       return (MemOp)ctz32(size);
+>>   }
 > 
 
-
-> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-> index ece348178188..0a2227802c06 100644
-> --- a/target/ppc/cpu-models.c
-> +++ b/target/ppc/cpu-models.c
-> @@ -32,17 +32,22 @@
->   /* PowerPC CPU definitions                                                 */
->   #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
->       glue(glue(glue(glue(pvr, _), svr), _), type)
-> -#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-> +#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _deprecation_note) \
->       static void                                                             \
->       glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
->       (ObjectClass *oc, void *data)                                           \
->       {                                                                       \
->           DeviceClass *dc = DEVICE_CLASS(oc);                                 \
-> +        CPUClass *cc    = CPU_CLASS(oc);                                    \
->           PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
->                                                                               \
->           pcc->pvr          = _pvr;                                           \
->           pcc->svr          = _svr;                                           \
->           dc->desc          = _desc;                                          \
-> +                                                                            \
-> +        if (_deprecation_note) {                                            \
-> +            cc->deprecation_note = _deprecation_note;                       \
-
-As mentioned in v2, we can just assign, no need to check.
-Otherwise LGTM, thanks!
-
-> +        }                                                                   \
->       }                                                                       \
 
