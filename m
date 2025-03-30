@@ -4,87 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 869ADC28B20
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 10:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C7ABC28B20
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Mar 2025 11:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1typY8-0003tO-A3; Sun, 30 Mar 2025 06:05:52 -0400
+	id 1tyrEd-0004Yx-44; Sun, 30 Mar 2025 07:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1typY6-0003su-Q9
- for qemu-devel@nongnu.org; Sun, 30 Mar 2025 06:05:50 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1typY4-0006qr-OY
- for qemu-devel@nongnu.org; Sun, 30 Mar 2025 06:05:50 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ac2af2f15d1so466025366b.1
- for <qemu-devel@nongnu.org>; Sun, 30 Mar 2025 03:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743329146; x=1743933946; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
- :reply-to; bh=RLzDUT9juDmhvwIq920XpGL0rFD8vWVPvyawvZiMQwk=;
- b=UIS3eoYuFRaobhjBOxOTfjums6QekqamduXno5w/y/98T5+Bi6TVYvhTlQn4eP8YGn
- +1l81oXBgHf+NEP7LI6/ox106kzHL/kjmYyK3FQlILHsTxRIOx5M9eplSABepXWaJXlu
- HQ9TSV/DhrWjquJUmenC2T1xIIWCLjXwIKqC+PylgfjJfSOsAVjLVLtSioWlQ1170HZJ
- tqQU0uh9Jn1RkUtzF7HvyBTeqys/0nzbSz6g3i6QlHfUJ9lQNnhj1WMXp/NrAUl1TxuV
- SmsJNyqhtLt+ozyYz5UWX9TkoHyDR0beAwlPzQxXbH0nInNzznzdCT6QSu6DoH+taoXU
- u1mQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tyrEa-0004Yi-1o
+ for qemu-devel@nongnu.org; Sun, 30 Mar 2025 07:53:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tyrEY-0004B9-JJ
+ for qemu-devel@nongnu.org; Sun, 30 Mar 2025 07:53:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743335624;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oAKgY6AgpsAtsU8/g6bWCu3wRTFW8cKREhDmG+0WvKo=;
+ b=DFLVLh6CGOaJLcXnEn57Ij+cYJa8ZjFJHgMrQpYP4qoM7VV1WI0L50RU67pZGTaAK2F8rt
+ u6TtGb8R0HDPRbqbvqdO52rZJPWRVEthpNu3GuRN/dWdVG4PcKbUCAz3+Y0C+k6dXtb16N
+ Iv6kq1v/pniN58bp8uIWGnHAISkHOVU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-446-mHXpSoJkMHiQjxjV0rzVUA-1; Sun, 30 Mar 2025 07:53:41 -0400
+X-MC-Unique: mHXpSoJkMHiQjxjV0rzVUA-1
+X-Mimecast-MFC-AGG-ID: mHXpSoJkMHiQjxjV0rzVUA_1743335620
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d007b2c79so30085535e9.2
+ for <qemu-devel@nongnu.org>; Sun, 30 Mar 2025 04:53:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743329146; x=1743933946;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1743335620; x=1743940420;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RLzDUT9juDmhvwIq920XpGL0rFD8vWVPvyawvZiMQwk=;
- b=bq26ILyoKAngBWuep1LDnEnbKLBnQn3GYYdIzQhVIHvSllpsncZVWMR0WFppyW21HU
- Z+gj2dB6vd6us1hcNLL84LCgQtFdVKT85U3RvppZuQcD7NZjLZbh0ZnsECFIu5eD5aPP
- 7VpfgJTsPnOOMSLFM7VEtdVg9msY7xxrN0EYU52xtXmmBtcSJZrNndxr5qhrp1R2Sfp5
- VrCnTpbneQaUcDVYEogJgyqQDA1L+UA+qgGDbW9SMyBcntNVGNjoZ65zshf7KDDI19JR
- 18sOaTk5pt/U2ETSbSNVQVLT/9e7ipbs9KRrzWTlIRCntJwAyqE0JYxEpMDeL7QoW2EY
- 0TXA==
-X-Gm-Message-State: AOJu0YymxoiUkT9h3FipDKLJadSakso9t4uaJwsHdxcedH8hZzwFdqQu
- jMIt5lxBovtNl6kUrEJOJ2fkwalEZC04GkH4iXXo1NVn89lpoK/cSqBO4Q==
-X-Gm-Gg: ASbGncsweeAh4eH/lmaG2mDmJEZwv5+kFErDV70I0aiC7YPkaiiHdQa7W5XZnzycQtt
- xTUfqdkoETHw7qqCGf/ACKDa4zC2AYcOqnHlHqCfSQF0RBXczXppqw31SISxBoVmo6rwFSfAyss
- q6Zz0MvUDwaqLZay29l7BgWyluLLed4UH4Y0TGSKxjSydR+dyBjtYzZed182I990BExx0E/AXTH
- TeRESPoAHpC2bvcbJowvuU1PVQl7+QaKW0ep1t9iCdzsiKsW9A8VYkA0JlLKdzZZER8Q9499pX0
- 2mOvKmbSrIaApmS8sT9v/7HxHowFqpjJnoDLH/nIymcUhTiAaZ7dar7knfQ/6uf6Hm0rCEZWwqA
- Oo/b9iVhiwqwEDy2BBwQh6IwJTkStv+f8SSysatYzhrWXvBVyd8cr1kAHrxpIdJ4=
-X-Google-Smtp-Source: AGHT+IEeDf9XcQryqUvrM+igi5Xw24J+4g/fUBRjdzxUh71270Z0ATVC1iPfVnXfJgxrjr4BARhzKg==
-X-Received: by 2002:a17:907:7250:b0:abc:b96:7bd2 with SMTP id
- a640c23a62f3a-ac738975e17mr498565866b.11.1743329145870; 
- Sun, 30 Mar 2025 03:05:45 -0700 (PDT)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-2ddd-7900-69d2-56f6-a5af-50a8.310.pool.telefonica.de.
- [2a02:3100:2ddd:7900:69d2:56f6:a5af:50a8])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac7192ea05fsm455755066b.86.2025.03.30.03.05.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 30 Mar 2025 03:05:45 -0700 (PDT)
-Date: Sun, 30 Mar 2025 10:05:45 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Pavel Pisa <pisa@fel.cvut.cz>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Matyas Bobek <bobekmat@fel.cvut.cz>
-Subject: =?US-ASCII?Q?Re=3A_Plea_for_advice_with_PCIe_on_QEMU_for_iM?=
- =?US-ASCII?Q?X6_and_plan_to_add_FlexCAN_controller_support?=
-In-Reply-To: <202410021706.01967.pisa@fel.cvut.cz>
-References: <202410021706.01967.pisa@fel.cvut.cz>
-Message-ID: <E4AF9EE3-C829-4E26-A3F0-91F627CB1BE1@gmail.com>
+ bh=oAKgY6AgpsAtsU8/g6bWCu3wRTFW8cKREhDmG+0WvKo=;
+ b=Qu4u4tHy7pfIazkly6Dna8nb2EX4f4mmc2N/rA3K6aLjCIlkOXb6oy4L+z17yMEC2S
+ R5U863MTrCz/Q1FMr51YXqdbEEbNCuQQI3jF2TLtNdPTayA/puctvbbSkxDatFUnQkIl
+ 8Oa4LnrToeKi0aDB00Qo3epoiHHwLCde4W9u4wa+GAHO9k00cLiKn75D3jrNF5uSNNwY
+ Bc75MQSMFkohWAY19eNhIp3KGm9XfhrnX3+fmlh7OMi6m9dexpQqR0Blm9qy+j41kvGK
+ YF1S99tdJfvzJXuTn9kHzJROKtGmuhOP5Q/Qx1iXVAL/PELxCdmZQZ6o+S+l5jh/HtNw
+ Mj/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpuhoMLxvim7kghmtX7h2bris9wgCfBRvZUMYTACEOVfFU0hd8V3UESraZz693ce51sjcbFrRJLX5i@nongnu.org
+X-Gm-Message-State: AOJu0YzDxND/ypFtpnraRZ0tWaSR4A6B0lYV17leowHUBvZovXfHkIUb
+ ErF76sE+28s9N2VdrWJ5HitEsGcbq0Fszv3gS2mhtuBLY7MABXq7XjYqJb6UpdpHzziSlxYFlmm
+ MLCedghU5JBI5Bn3Tbl2gigC0qJj0aPpS6OW+2cUiIHPW/n6MzAHcRi0eM2MixrQBSIsK4XsiUJ
+ kmuM1iEiz2jbv4XvFoBr34yXZCusM=
+X-Gm-Gg: ASbGncvB4v9ktC/2H5FFRhzfe+GT3PGlb2UkA30bGHMCSqxFdkBZN/Az6DNje2KjBjL
+ d0tzSCYdiks3VZrcmAMOQF7ucMcRksmFAHwevXQYaKUtxhS2ex0iQPjKAarbKH5vJdTy1IHw=
+X-Received: by 2002:a05:600c:198f:b0:43c:fb8e:aec0 with SMTP id
+ 5b1f17b1804b1-43db61dffcamr35725495e9.1.1743335619753; 
+ Sun, 30 Mar 2025 04:53:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEfxIq4lR1iJAyhkL/svUdyAHXysacUR4XIoP+4GG27TPSBI3GvAoDH0MOSfA5SfMccnEwTenDyUl1f/B5Sq0E=
+X-Received: by 2002:a05:600c:198f:b0:43c:fb8e:aec0 with SMTP id
+ 5b1f17b1804b1-43db61dffcamr35725355e9.1.1743335619304; Sun, 30 Mar 2025
+ 04:53:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20250327153627.307040-1-rakeshjb010@gmail.com>
+ <364c91ef-b086-9aea-4073-e0be49b77d76@eik.bme.hu>
+ <ca76bcb1-7cea-4153-ae74-02718a6a1cfb@redhat.com>
+ <971ac7f1-618d-c94a-93db-9ba887bdc997@eik.bme.hu>
+ <CABgObfbL0b7G-Okq=0xnbDMJ4viu0Uk8gduuTUeCS0C4Xtn6aw@mail.gmail.com>
+ <3956f3b4-2317-4e7f-a2b4-e53546473d62@linaro.org>
+ <CAD8nu1gB2sBPCNaWpycXRp1sC+kasN_T1E=0x-=3vLmTwThY_w@mail.gmail.com>
+In-Reply-To: <CAD8nu1gB2sBPCNaWpycXRp1sC+kasN_T1E=0x-=3vLmTwThY_w@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sun, 30 Mar 2025 13:53:27 +0200
+X-Gm-Features: AQ5f1JolR98UKX0vPFiNcPPaPZsvzKZGgxhJJD2AVhxVqzVMXYeSjG_zJmeemm4
+Message-ID: <CABgObfbrtZa3JhycioL1uRzMvg_q42Y5Et5SiTDZLg+qHuN5SA@mail.gmail.com>
+Subject: Re: [PATCH] hw/pci-host/gt64120.c: Fix PCI host bridge endianness
+ handling
+To: Rakesh J <rakeshjb010@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ marcandre.lureau@redhat.com, thuth@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.077,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,93 +112,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, Mar 29, 2025 at 12:31=E2=80=AFPM Rakesh J <rakeshjb010@gmail.com> w=
+rote:
+>  Paolo: You pointed out the size issue with .min_access_size =3D 1 and .m=
+ax_access_size =3D 4, where bswap32 was wrong for 2-byte accesses. I=E2=80=
+=99ve fixed this with size-appropriate swaps (bswap16 for 2-byte, bswap32 f=
+or 4-byte). On the extra swap idea, I stuck with a single swap since it ali=
+gns PCI LE with guest BE expectations without overcomplicating it=E2=80=94l=
+et me know if I misunderstood.
 
+The extra swap (compared to what the "regular" PCI data ops do) is
+exactly what you were doing.
 
-Am 2=2E Oktober 2024 15:06:01 UTC schrieb Pavel Pisa <pisa@fel=2Ecvut=2Ecz=
->:
->Dear Nikita and other,
+>  I=E2=80=99ve sent [PATCH v2] incorporating changes:
+> 1.Removed gt64120_update_pci_cfgdata_mapping() and moved initialization c=
+ode
+>   to gt64120_realize() for a simpler MByteSwap check.
+> 2.Removed unused pci_host_data_be_ops and a misleading comment in dino.h
 >
->my student Matyas Bobek has chosen to work
->on QEMU CAN support in a frame of his study
->final project=2E
->
->We have identified iMX6 FlexCAN as the next interesting
->CAN controller for emulation=2E
+> 3.Size-specific swaps (bswap16 and bswap32)
+>  I included bswap16 for 2-byte accesses in v2=E2=80=94should this be rest=
+ricted to 4-byte only (bswap32) per the spec, or does GT-64120 expect 2-byt=
+e config swaps too? It=E2=80=99s a minor tweak, so I left it in v2 for now=
+=E2=80=94happy to adjust in a v3 if needed.
 
-I'd be interested in emulating FlexCAN as well! Is there any repository fo=
-r a sneak preview?
+Which swap to use is not really related to what the GT-64120 does, but
+to the interface between memory.c and the MemoryRegionOps. When
+access_size =3D=3D 2, QEMU wants the result in bits 0..15 so you need to
+use bswap16. With bswap32, the result would be in bits 16..31.
 
->One of our industrial partners
->is using iMX6 based system with CAN and iMX6 SabreLite
->is supported by QEMU=2E iMX6 is often used in industry
->still and FlexCAN has use even for iMX8 emulation
->if it is added into QEMU in the future=2E
+Paolo
 
-As luck would have it, QEMU will support i=2EMX 8M Plus in the upcoming re=
-lease: <https://lore=2Ekernel=2Eorg/qemu-devel/20250225180510=2E1318207-32-=
-peter=2Emaydell@linaro=2Eorg/> I'm more than happy to integrate FlexCAN emu=
-lation!
-
->
->In the preparatory work, we want to setup
->shared directory between host and guest
->kernel using 9P FS on PCI virtio=2E
->
->The development environment is based on current
->mainline QEMU and mainline Linux kernel sources=2E
->
->We use standard QEMU options
->
->  -virtfs local,path=3Dshareddir,security_model=3Dnone,mount_tag=3Dshared=
-dir
->
->and the 1af4:1009 is seen by monitor command "info pci"
->but on the guest kernel side only "16c3:abcd" DWC_usb3 / PCIe bridge
->is seen but none from the mapped devices, virtio (1af4:1009),
->CTU CAN FD, Kvaser CAN=2E
-
-Should be fixed in master / QEMU 10=2E0 by <https://lore=2Ekernel=2Eorg/qe=
-mu-devel/20250225180510=2E1318207-30-peter=2Emaydell@linaro=2Eorg/>
-
->
->The imx6q-sabrelite DTS is used with standard device-tree
->
->https://git=2Ekernel=2Eorg/pub/scm/linux/kernel/git/torvalds/linux=2Egit/=
-tree/arch/arm/boot/dts/nxp/imx/imx6q-sabrelite=2Edts
->
->We hope that all required drivers are enabled
->in the kernel=2E But it is possible that something
->has been overlooked=2E
->
->Do you have some hint or some kernel
->and QEMU working example for iMX6 PCIe
->device mapping?
-
-When adding a PCI device via command line, add `bus=3Ddw-pcie` as an addit=
-ional option as a workaround for earlier QEMUs=2E
-
-Best regards,
-Bernhard
-
->
->Thanks in advance=2E
->
->Best wishes,
->
->                Pavel
->--
->                Pavel Pisa
->    phone:      +420 603531357
->    e-mail:     pisa@cmp=2Efelk=2Ecvut=2Ecz
->    Department of Control Engineering FEE CVUT
->    Karlovo namesti 13, 121 35, Prague 2
->    university: http://control=2Efel=2Ecvut=2Ecz/
->    personal:   http://cmp=2Efelk=2Ecvut=2Ecz/~pisa
->    social:     https://social=2Ekernel=2Eorg/ppisa
->    projects:   https://www=2Eopenhub=2Enet/accounts/ppisa
->    CAN related:http://canbus=2Epages=2Efel=2Ecvut=2Ecz/
->    RISC-V education: https://comparch=2Eedu=2Ecvut=2Ecz/
->    Open Technologies Research Education and Exchange Services
->    https://gitlab=2Efel=2Ecvut=2Ecz/otrees/org/-/wikis/home
->
 
