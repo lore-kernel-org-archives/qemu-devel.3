@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6342C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 13:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB19C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 13:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzFUA-0004gS-Jq; Mon, 31 Mar 2025 09:47:30 -0400
+	id 1tzFZC-0005rd-HN; Mon, 31 Mar 2025 09:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tzFTx-0004fB-P3
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:47:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tzFTu-00015n-20
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:47:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743428830;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ryzNhrfeki9G2uOfkinWL8llLZe4Cg4Q2i67J4a28Ws=;
- b=hX7O2wXRjtxqkupzroPyQvF//nDQTVjokl47PRJq4PhpkoYHlHTBJ+LoGA+sSekoI6/b4A
- ndlWAlEcO9Nwrg3PR97bozUf/uriLa08xka9lLhehTsd6sMdagCnrCBqMle+GpEHRpYjF1
- XOhI9SLYxFpRbGRcFvMpiWFriOCXVxI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-V9gr6DP4NW6IsXB4hGysig-1; Mon,
- 31 Mar 2025 09:47:05 -0400
-X-MC-Unique: V9gr6DP4NW6IsXB4hGysig-1
-X-Mimecast-MFC-AGG-ID: V9gr6DP4NW6IsXB4hGysig_1743428824
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05F15195608A; Mon, 31 Mar 2025 13:46:59 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.29])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 67D7B1801752; Mon, 31 Mar 2025 13:46:57 +0000 (UTC)
-Date: Mon, 31 Mar 2025 09:46:56 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Farhan Ali <alifm@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, fam@euphon.net,
- philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com
-Subject: Re: [PATCH v2 2/3] include: Add a header to define PCI MMIO functions
-Message-ID: <20250331134656.GC190936@fedora>
-References: <20250328190627.3025-1-alifm@linux.ibm.com>
- <20250328190627.3025-3-alifm@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1tzFZ9-0005rO-LM
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:52:39 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1tzFZ7-0001k6-UE
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:52:39 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22928d629faso48260685ad.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 06:52:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1743429155; x=1744033955; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:to:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=pDmh587MNtmbO4Hi7j8VcvMCR3H/Msk9nHMXgpFAZ/Q=;
+ b=Ftrm+OVIq3cah9zTY2g2pbS25ZqTh3WuLH/jJpBPmMOeDFGIVGcHeMHPVpfPFcdE7O
+ w1rlMhn+vvCFIyVkdlPyadxn5gvTvsCPYH29/+aa9r8a1MI4ZLxd2aniXzcVt8dLIhNz
+ deAFcWUgLu3xTrsoXL96nTtv06+dskI2e/sAtywSlsTdVm0YOQ3PasfJSKFPFI2byK9P
+ F5pHPTwbdh2nqza/2Ki4gLi8B1nnru5+NJhPf35vFnmlPou/qB7+bLA9l1mJJan2EukJ
+ /dbJ69+tcIyGTSGhbmEp/2XQR0enYKu2WAQOg9jCIv3+u4Iseut2MLTWVnQ4kJ8HzqnS
+ OKyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743429155; x=1744033955;
+ h=content-transfer-encoding:subject:from:to:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pDmh587MNtmbO4Hi7j8VcvMCR3H/Msk9nHMXgpFAZ/Q=;
+ b=B3qZvkcfmCdA3h7J32FgYcx8dSy9uGcDnadALpA/+FQqc/SEPPS0eyQOIf3nGdmRQ0
+ jiA6ITw7VEYCW7+akI2rNGEegvflZnW4pl3EZ9yKSTiStHN6vqPr0S9rFJhnld1ocFTI
+ W9dOTuddzC4cjSCEKLLX37m4WFDi4rPKBET3LAoKiF9pNHrYQvMzw1G8SJ4nWwrGH1fF
+ Y0j9/zP0nOgmuEKoyWC1s3j5Y/Bxs3RgIiUpYhlpRTLP6am0TmvAu0G7XxwoTopxkH/O
+ W4E7Tz9wMeFJ4gT3F2UtFFKplCPy2XPgCm0lbyvqzORPLvHRvK3v7p53l3XWuI64QBc0
+ bDAg==
+X-Gm-Message-State: AOJu0YwSYD9gaPYoYgaBD0R7Z7qVsrioTkWOkjynPsi//fij3o2fdyqn
+ UAYnkSSObkiVZSEv6HR5EdNkwkZGsFb4z0ztpaLogmRWjzVo7QeYUibO1A==
+X-Gm-Gg: ASbGnctJj1JKLHzi8Z2Efanp1UdYfV6zFT2kZMbmBKeQ2+4kYiRLsXECOz9f04PF92/
+ rdNygQWCG/dkFUvbXwn6fX5nc+uvDoMBTGiCbsUCsqnE3WQSR+9+VoelKStC2S3s35M9K2y3RgN
+ rBMN3pXmv7h7iDNHXIbDZLuuH2HJLoQrabztBq1iW8T+wO74p30Vd+29rKuRmYwMvdjMLa96uRh
+ F5HskQcAJdPIjXPz4KhNu9OwvJGlWixxTXdRl5Od4mnSLDYRXdOVjkpaOcprT3ukDbANyi0/VP+
+ AbAlVSnss9jk05pkZxmvb8rUag8Q6JW3UlTLzMHHATG5ZI2O+q+lL2uLo40leX3b
+X-Google-Smtp-Source: AGHT+IGZq5bwtTuwxV/xfamWPb6QYX3Z1pgqDWZCetsGwMZjjBiwZ/uBlgM4nTvT3s8kEa+4dXfK7Q==
+X-Received: by 2002:a17:902:e74e:b0:223:f9a4:3f9c with SMTP id
+ d9443c01a7336-2292f949436mr142440435ad.9.1743429154739; 
+ Mon, 31 Mar 2025 06:52:34 -0700 (PDT)
+Received: from [192.168.31.221] ([124.64.23.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2291f1dee68sm68929535ad.205.2025.03.31.06.52.33
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Mar 2025 06:52:34 -0700 (PDT)
+Message-ID: <a4e34adc-a425-4183-bb4f-f1b8197125eb@gmail.com>
+Date: Mon, 31 Mar 2025 21:52:31 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="+zMIgSSGKgDsimyF"
-Content-Disposition: inline
-In-Reply-To: <20250328190627.3025-3-alifm@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.198,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: qemu-devel@nongnu.org
+From: Zheng Huang <hz1624917200@gmail.com>
+Subject: [PATCH] hw/9pfs: add cleanup operation for 9p-synth
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,176 +97,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
+This patch adds a cleanup operation for 9p-synth, which fixes a memory
+leak bug in synth_init() and other related operations. All child nodes
+of synth_root need to be freed before the entire filesystem exits.
 
---+zMIgSSGKgDsimyF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+If you have any better ideas for the implementation, please feel free
+to share them.
 
-On Fri, Mar 28, 2025 at 12:06:26PM -0700, Farhan Ali wrote:
-> Add a generic QEMU API for PCI MMIO reads/writes.
-> The functions access little endian memory and returns
-> the result in host cpu endianness.
->=20
-> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-> ---
->  include/qemu/pci-mmio.h | 116 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 116 insertions(+)
->  create mode 100644 include/qemu/pci-mmio.h
->=20
-> diff --git a/include/qemu/pci-mmio.h b/include/qemu/pci-mmio.h
-> new file mode 100644
-> index 0000000000..2ef92455b1
-> --- /dev/null
-> +++ b/include/qemu/pci-mmio.h
-> @@ -0,0 +1,116 @@
-> +/*
-> + * QEMU PCI MMIO API
+Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
 
-QEMU also emulates PCI devices that handle MMIO accesses. It is easy to
-get confused between host PCI MMIO accesses and emulated guest PCI MMIO
-accesses if the name is just "PCI MMIO API".
 
-Please update the commit message, filenames, function names, and doc
-comments to make it clear that this is only for host PCI MMIO accesses
-(e.g. Linux VFIO BAR accesses).
+---
+ hw/9pfs/9p-synth.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-For example "qemu/host-pci-mmio.h", "API for host PCI MMIO accesses
-(e.g. Linux VFIO BARs)", and host_pci_mmio_read_8().
-
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef QEMU_PCI_MMIO_H
-> +#define QEMU_PCI_MMIO_H
-> +
-> +#ifdef __s390x__
-> +#include "s390x_pci_mmio.h"
-> +#endif
-> +
-> +static inline uint8_t qemu_pci_mmio_read_8(const void *ioaddr)
-> +{
-> +    uint8_t ret =3D 0;
-> +#ifdef __s390x__
-> +    ret =3D s390x_pci_mmio_read_8(ioaddr);
-> +#else
-> +    /* Prevent the compiler from optimizing away the load */
-> +    ret =3D *((volatile uint8_t *)ioaddr);
-> +#endif
-> +
-> +    return ret;
-> +}
-> +
-> +static inline uint16_t qemu_pci_mmio_read_16(const void *ioaddr)
-> +{
-> +    uint16_t ret =3D 0;
-> +#ifdef __s390x__
-> +    ret =3D s390x_pci_mmio_read_16(ioaddr);
-> +#else
-> +    /* Prevent the compiler from optimizing away the load */
-> +    ret =3D *((volatile uint16_t *)ioaddr);
-> +#endif
-> +
-> +    return le16_to_cpu(ret);
-> +}
-> +
-> +static inline uint32_t qemu_pci_mmio_read_32(const void *ioaddr)
-> +{
-> +    uint32_t ret =3D 0;
-> +#ifdef __s390x__
-> +    ret =3D s390x_pci_mmio_read_32(ioaddr);
-> +#else
-> +    /* Prevent the compiler from optimizing away the load */
-> +    ret =3D *((volatile uint32_t *)ioaddr);
-> +#endif
-> +
-> +    return le32_to_cpu(ret);
-> +}
-> +
-> +static inline uint64_t qemu_pci_mmio_read_64(const void *ioaddr)
-> +{
-> +    uint64_t ret =3D 0;
-> +#ifdef __s390x__
-> +    ret =3D s390x_pci_mmio_read_64(ioaddr);
-> +#else
-> +    /* Prevent the compiler from optimizing away the load */
-> +    ret =3D *((volatile uint64_t *)ioaddr);
-> +#endif
-> +
-> +    return le64_to_cpu(ret);
-> +}
-> +
-> +static inline void qemu_pci_mmio_write_8(void *ioaddr, uint8_t val)
-> +{
-> +
-> +#ifdef __s390x__
-> +    s390x_pci_mmio_write_8(ioaddr, val);
-> +#else
-> +    /* Prevent the compiler from optimizing away the store */
-> +    *((volatile uint8_t *)ioaddr) =3D val;
-> +#endif
-> +}
-> +
-> +static inline void qemu_pci_mmio_write_16(void *ioaddr, uint16_t val)
-> +{
-> +    val =3D cpu_to_le16(val);
-> +
-> +#ifdef __s390x__
-> +    s390x_pci_mmio_write_16(ioaddr, val);
-> +#else
-> +    /* Prevent the compiler from optimizing away the store */
-> +    *((volatile uint16_t *)ioaddr) =3D val;
-> +#endif
-> +}
-> +
-> +static inline void qemu_pci_mmio_write_32(void *ioaddr, uint32_t val)
-> +{
-> +    val =3D cpu_to_le32(val);
-> +
-> +#ifdef __s390x__
-> +    s390x_pci_mmio_write_32(ioaddr, val);
-> +#else
-> +    /* Prevent the compiler from optimizing away the store */
-> +    *((volatile uint32_t *)ioaddr) =3D val;
-> +#endif
-> +}
-> +
-> +static inline void qemu_pci_mmio_write_64(void *ioaddr, uint64_t val)
-> +{
-> +    val =3D cpu_to_le64(val);
-> +
-> +#ifdef __s390x__
-> +    s390x_pci_mmio_write_64(ioaddr, val);
-> +#else
-> +    /* Prevent the compiler from optimizing away the store */
-> +    *((volatile uint64_t *)ioaddr) =3D val;
-> +#endif
-> +}
-> +
-> +#endif
-> --=20
-> 2.43.0
->=20
-
---+zMIgSSGKgDsimyF
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfqnM8ACgkQnKSrs4Gr
-c8jhJwf+LFiDyrfjCOHzUJ3Jtzaqn4gbZuMJ9ilVlbxg7QDAUXE2FEfJBO9KqLNQ
-lQyhkdeQHTb7EkcLxh+IcoD4r3lIGh1xhPHSekrOKqHAyRZ/cRzYb0VKBuwvHl/6
-cgva6u/joD7TNwNehoLBk5Vpha5i/4zBLv25ks9VWel7M2kfUl5emQ9UUrMpiPvD
-DAmIqThPx1yDa2Iw8EQ9UIsrN92D76JRv8shmYTNfdcObagmAD6OgKhs4IItn4YU
-jsp/O6Gd29arDcZrwQmaM1we98x4hb6m+3VdR+sr0tHWSdlROMAu1H+6C0GJk2Eo
-EImvZLyzzgi1B2ZVvD8MxJEvEHNDdg==
-=IS8k
------END PGP SIGNATURE-----
-
---+zMIgSSGKgDsimyF--
+diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+index 2abaf3a291..ead8b9e3be 100644
+--- a/hw/9pfs/9p-synth.c
++++ b/hw/9pfs/9p-synth.c
+@@ -24,6 +24,7 @@
+ #include "qemu/rcu.h"
+ #include "qemu/rcu_queue.h"
+ #include "qemu/cutils.h"
++#include "qobject/qlist.h"
+ #include "system/qtest.h"
+ 
+ /* Root node for synth file system */
+@@ -136,6 +137,19 @@ int qemu_v9fs_synth_add_file(V9fsSynthNode *parent, int mode,
+     return 0;
+ }
+ 
++// Must call after get synth_mutex
++static void v9fs_recursive_free_node(V9fsSynthNode *node)
++{
++    V9fsSynthNode *entry;
++
++    for (entry = QLIST_FIRST(&node->child); entry;) {
++        V9fsSynthNode *next = QLIST_NEXT(entry, sibling);
++        v9fs_recursive_free_node(entry);
++        g_free(entry);
++        entry = next;
++    }
++}
++
+ static void synth_fill_statbuf(V9fsSynthNode *node, struct stat *stbuf)
+ {
+     stbuf->st_dev = 0;
+@@ -615,8 +629,22 @@ static int synth_init(FsContext *ctx, Error **errp)
+     return 0;
+ }
+ 
++
++static void synth_cleanup(FsContext *ctx)
++{
++    // recursively free all child nodes of synth_root
++    // V9fsSynthNode *tmp;
++    QEMU_LOCK_GUARD(&synth_mutex);
++    v9fs_recursive_free_node(&synth_root);
++    // QLIST_FOREACH(tmp, &synth_root.child, sibling) {
++    //     v9fs_recursive_free_node(tmp);
++    // }
++    QLIST_INIT(&synth_root.child);
++}
++
+ FileOperations synth_ops = {
+     .init         = synth_init,
++    .cleanup      = synth_cleanup,
+     .lstat        = synth_lstat,
+     .readlink     = synth_readlink,
+     .close        = synth_close,
+-- 
+2.34.1
 
 
